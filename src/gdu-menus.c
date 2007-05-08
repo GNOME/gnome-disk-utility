@@ -36,12 +36,20 @@ static const gchar *ui =
         "    <menu action='file'>"
         "      <menuitem action='quit'/>"
         "    </menu>"
+        "    <menu action='action'>"
+        "      <menuitem action='mount'/>"        
+        "      <menuitem action='unmount'/>"        
+        "      <menuitem action='eject'/>"        
+        "    </menu>"
         "    <menu action='help'>"
         "      <menuitem action='contents'/>"
         "      <menuitem action='about'/>"
         "    </menu>"
         "  </menubar>"
         "  <toolbar>"
+        "    <toolitem action='mount'/>"        
+        "    <toolitem action='unmount'/>"        
+        "    <toolitem action='eject'/>"        
         "    <toolitem action='contents'/>"
         "    <toolitem action='quit'/>"
         "  </toolbar>"
@@ -49,8 +57,15 @@ static const gchar *ui =
 
 static GtkActionEntry entries[] = {
         {"file", NULL, N_("_File"), NULL, NULL, NULL },
-        {"view", NULL, N_("_View"), NULL, NULL, NULL },
+        {"action", NULL, N_("_Action"), NULL, NULL, NULL },
         {"help", NULL, N_("_Help"), NULL, NULL, NULL },
+
+        {"mount", "gdu-mount", N_("_Mount"), NULL, N_("Mount"),
+         G_CALLBACK (mount_action_callback)},
+        {"unmount", "gdu-unmount", N_("_Unmount"), NULL, N_("Unmount"), 
+         G_CALLBACK (unmount_action_callback)},
+        {"eject", "gdu-eject", N_("_Eject"), NULL, N_("Eject"),
+         G_CALLBACK (eject_action_callback)},
 
         {"quit", GTK_STOCK_QUIT, N_("_Quit"), "<Ctrl>Q", N_("Quit"), 
          G_CALLBACK (quit_action_callback)},

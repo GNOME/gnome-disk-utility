@@ -36,6 +36,8 @@ static GtkWidget *notebook;
 
 static GtkWidget *summary_vbox;
 
+static GtkUIManager *ui_manager;
+
 static void
 _remove_child (GtkWidget *widget, gpointer user_data)
 {
@@ -199,6 +201,85 @@ info_page_show_for_device (GdmDevice *device)
 static GdmDevice *now_showing = NULL;
 
 static void
+do_action (const char *action)
+{
+        if (now_showing != NULL) {
+                char *cmdline;
+                const char *udi;
+                udi = gdm_device_get_udi (now_showing);
+
+                cmdline = g_strdup_printf ("gnome-mount %s --hal-udi %s", action, udi);
+                g_debug ("running '%s'", cmdline);
+                g_spawn_command_line_async (cmdline, NULL);
+                g_free (cmdline);
+        }
+}
+
+void
+mount_action_callback (GtkAction *action, gpointer data)
+{
+        g_debug ("mount action");
+        do_action ("");
+}
+
+void
+unmount_action_callback (GtkAction *action, gpointer data)
+{
+        g_debug ("unmount action");
+        do_action ("--unmount");
+}
+
+void
+eject_action_callback (GtkAction *action, gpointer data)
+{
+        g_debug ("eject action");
+        do_action ("--eject");
+}
+
+static void
+update_action_buttons (GdmDevice *device)
+{
+        GtkAction *a;
+        gboolean can_mount = FALSE;
+        gboolean can_unmount = FALSE;
+        gboolean can_eject = FALSE;
+        gboolean is_drv;
+        gboolean is_vol;
+
+        is_drv = gdm_device_test_capability (device, "storage");
+        is_vol = gdm_device_test_capability (device, "volume");
+
+        if (is_vol) {
+                gboolean mounted;
+                mounted = gdm_device_get_property_bool (device, "volume.is_mounted");
+                if (mounted) {
+                        can_unmount = TRUE;
+                } else {
+                        const char *fsusage;
+                        fsusage = gdm_device_get_property_string (device, "volume.fsusage");
+                        if (fsusage != NULL && g_ascii_strcasecmp (fsusage, "filesystem") == 0)
+                                can_mount = TRUE;
+                }
+                /* TODO: should check storage.removable */
+                can_eject = TRUE;                
+        }
+
+        if (is_drv) {
+                gboolean removable;
+                removable = gdm_device_get_property_bool (device, "storage.removable");
+                if (removable)
+                        can_eject = TRUE;
+        }
+
+        a = gtk_ui_manager_get_action (ui_manager, "/toolbar/mount");
+        gtk_action_set_sensitive (a, can_mount);
+        a = gtk_ui_manager_get_action (ui_manager, "/toolbar/unmount");
+        gtk_action_set_sensitive (a, can_unmount);
+        a = gtk_ui_manager_get_action (ui_manager, "/toolbar/eject");
+        gtk_action_set_sensitive (a, can_eject);
+}
+
+static void
 device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
         GdmDevice *device;
@@ -210,6 +291,7 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
         if (device != NULL) {
                 now_showing = device;
                 info_page_show_for_device (device);
+                update_action_buttons (device);
         }
 }
 
@@ -218,7 +300,7 @@ device_removed (GdmPool *pool, GdmDevice *device, gpointer user_data)
 {
         GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
 
-        /* if device we currently show is removed.. go to computer device */
+        /* TODO FIX: if device we currently show is removed.. go to computer device */
         if (now_showing == device) {
                 gdu_device_tree_select_device (GTK_TREE_VIEW (treeview), 
                                                gdm_pool_get_device_by_udi (device_pool, 
@@ -232,6 +314,7 @@ device_property_changed (GdmPool *pool, GdmDevice *device, const char *key, gpoi
         //GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
         if (device == now_showing) {
                 info_page_show_for_device (device);
+                update_action_buttons (device);
         }
 }
 
@@ -242,7 +325,6 @@ create_window (const gchar * geometry)
         GtkWidget *vbox;
         GtkWidget *menubar;
         GtkWidget *toolbar;
-        GtkUIManager *ui_manager;
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
         GtkWidget *treeview_scrolled_window;

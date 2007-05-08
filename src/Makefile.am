@@ -5,9 +5,9 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-menus.h			gdu-menus.c			\
 	gdu-device-tree.h		gdu-device-tree.c
 
-gnome_disk_utility_CPPFLAGS = 			\
+gnome_disk_utility_CPPFLAGS = 				\
 	-I$(top_srcdir)					\
-	-DG_LOG_DOMAIN=\"GnomeDeviceManager\"		\
+	-DG_LOG_DOMAIN=\"GnomeDiskUtility\"		\
 	-DDATADIR=\""$(pkgdatadir)"\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED)				\

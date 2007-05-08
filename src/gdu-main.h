@@ -22,4 +22,12 @@
 #ifndef GDU_MAIN_H
 #define GDU_MAIN_H
 
+#include <gtk/gtk.h>
+
+void mount_action_callback (GtkAction *action, gpointer data);
+
+void unmount_action_callback (GtkAction *action, gpointer data);
+
+void eject_action_callback (GtkAction *action, gpointer data);
+
 #endif /* GDU_MAIN_H */

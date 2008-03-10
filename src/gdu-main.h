@@ -23,11 +23,15 @@
 #define GDU_MAIN_H
 
 #include <gtk/gtk.h>
+#include "gdu-device.h"
 
 void mount_action_callback (GtkAction *action, gpointer data);
 
 void unmount_action_callback (GtkAction *action, gpointer data);
 
 void eject_action_callback (GtkAction *action, gpointer data);
+
+char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
+char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
 
 #endif /* GDU_MAIN_H */

@@ -20,14 +20,15 @@
  */
 
 
-#ifndef GNOME_DISK_UTILITY_DEVICE_TREE_H
-#define GNOME_DISK_UTILITY_DEVICE_TREE_H
+#ifndef GNOME_DISK_UTILITY_TREE_H
+#define GNOME_DISK_UTILITY_TREE_H
 
 #include <gtk/gtk.h>
-#include <gnome-device-manager/gdm-pool.h>
 
-GtkTreeView *gdu_device_tree_new                 (GdmPool     *pool);
-GdmDevice   *gdu_device_tree_get_selected_device (GtkTreeView *tree_view);
-void         gdu_device_tree_select_device       (GtkTreeView *tree_view, GdmDevice *device);
+#include "gdu-pool.h"
 
-#endif /* GNOME_DISK_UTILITY_DEVICE_TREE_H */
+GtkTreeView *gdu_tree_new                 (GduPool     *pool);
+GduDevice   *gdu_tree_get_selected_device (GtkTreeView *tree_view);
+void         gdu_tree_select_device       (GtkTreeView *tree_view, GduDevice *device);
+
+#endif /* GNOME_DISK_UTILITY_TREE_H */

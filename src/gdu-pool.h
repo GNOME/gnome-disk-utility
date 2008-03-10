@@ -23,6 +23,7 @@
 #define GDU_POOL_H
 
 #include "gdu-device.h"
+#include "gdu-presentable.h"
 
 #define GDU_TYPE_POOL             (gdu_pool_get_type ())
 #define GDU_POOL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_POOL, GduPool))
@@ -52,12 +53,15 @@ struct _GduPoolClass
         /* signals */
         void (*device_added) (GduPool *pool, GduDevice *device);
         void (*device_removed) (GduPool *pool, GduDevice *device);
-        void (*device_changed) (GduPool *pool, GduDevice *device);
+        void (*presentable_added) (GduPool *pool, GduPresentable *presentable);
+        void (*presentable_removed) (GduPool *pool, GduPresentable *presentable);
 };
 
 GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
 GduDevice  *gdu_pool_get_by_object_path (GduPool *pool, const char *object_path);
+
 GList      *gdu_pool_get_devices        (GduPool *pool);
+GList      *gdu_pool_get_presentables   (GduPool *pool);
 
 #endif /* GDU_POOL_H */

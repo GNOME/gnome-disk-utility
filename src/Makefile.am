@@ -17,6 +17,9 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\
 	gdu-device.c			gdu-device.h			\
+	gdu-drive.c			gdu-drive.h			\
+	gdu-volume.c			gdu-volume.h			\
+	gdu-presentable.c		gdu-presentable.h		\
 	$(BUILT_SOURCES)
 
 gnome_disk_utility_CPPFLAGS = 				\

@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-device-tree.h
+/* gdu-presentable-tree.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -27,8 +27,8 @@
 
 #include "gdu-pool.h"
 
-GtkTreeView *gdu_tree_new                 (GduPool     *pool);
-GduDevice   *gdu_tree_get_selected_device (GtkTreeView *tree_view);
-void         gdu_tree_select_device       (GtkTreeView *tree_view, GduDevice *device);
+GtkTreeView      *gdu_tree_new                      (GduPool     *pool);
+GduPresentable   *gdu_tree_get_selected_presentable (GtkTreeView *tree_view);
+void              gdu_tree_select_presentable       (GtkTreeView *tree_view, GduPresentable *presentable);
 
 #endif /* GNOME_DISK_UTILITY_TREE_H */

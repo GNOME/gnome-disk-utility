@@ -30,7 +30,7 @@
 #include "gdu-menus.h"
 #include "gdu-tree.h"
 
-static GduPool *device_pool;
+static GduPool *pool;
 static GtkWidget *notebook;
 
 static GtkWidget *summary_vbox;
@@ -170,18 +170,23 @@ msdos_part_type_to_string (int msdos_type)
 }
 
 static void
-info_page_show_for_device (GduDevice *device)
+info_page_show_for_presentable (GduPresentable *presentable)
 {
         int n;
         GList *i;
         GList *kv_pairs;
         int num_pairs;
         GtkTable *info_table;
+        GduDevice *device;
 
         /* delete all old widgets */
         gtk_container_foreach (GTK_CONTAINER (summary_vbox),
                                _remove_child,
                                summary_vbox);
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL)
+                goto out;
 
         kv_pairs = NULL;
 
@@ -375,9 +380,12 @@ info_page_show_for_device (GduDevice *device)
         }
 
         gtk_widget_show_all (summary_vbox);
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
-static GduDevice *now_showing = NULL;
+static GduPresentable *now_showing = NULL;
 
 static void
 do_action (const char *action)
@@ -418,7 +426,7 @@ eject_action_callback (GtkAction *action, gpointer data)
 }
 
 static void
-update_action_buttons (GduDevice *device)
+update_action_buttons (GduPresentable *presentable)
 {
         GtkAction *a;
         gboolean can_mount = FALSE;
@@ -466,31 +474,24 @@ update_action_buttons (GduDevice *device)
 static void
 device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
-        GduDevice *device;
+        GduPresentable *presentable;
         GtkTreeView *device_tree_view;
 
         device_tree_view = gtk_tree_selection_get_tree_view (selection);
-        device = gdu_tree_get_selected_device (device_tree_view);
+        presentable = gdu_tree_get_selected_presentable (device_tree_view);
 
-        if (device != NULL) {
-                now_showing = device;
-                info_page_show_for_device (device);
-                update_action_buttons (device);
+        if (presentable != NULL) {
+                now_showing = presentable;
+                info_page_show_for_presentable (presentable);
+                update_action_buttons (presentable);
         }
 }
 
 static void
-device_removed (GduPool *pool, GduDevice *device, gpointer user_data)
+presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
         //GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
-        /* TODO FIX: if device we currently show is removed.. go to computer device */
-}
-
-static void
-device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
-{
-        //GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
-        /* TODO FIX: if device we currently show is removed.. go to computer device */
+        /* TODO FIX: if presentable we currently show is removed.. go to computer presentable */
 }
 
 static GtkWidget *
@@ -509,8 +510,8 @@ create_window (const gchar * geometry)
 
         app = NULL;
 
-        device_pool = gdu_pool_new ();
-        if (device_pool == NULL) {
+        pool = gdu_pool_new ();
+        if (pool == NULL) {
                 goto out;
         }
 
@@ -535,7 +536,7 @@ create_window (const gchar * geometry)
         treeview_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-        treeview = GTK_WIDGET (gdu_tree_new (device_pool));
+        treeview = GTK_WIDGET (gdu_tree_new (pool));
         gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), treeview);
 
         /* notebook */
@@ -572,12 +573,11 @@ create_window (const gchar * geometry)
         gtk_widget_grab_focus (treeview);
 #if 0
         gdu_tree_select_device (GTK_TREE_VIEW (treeview),
-                                gdu_pool_get_device_by_udi (device_pool,
+                                gdu_pool_get_device_by_udi (pool,
                                                             "/org/freedesktop/Hal/devices/computer"));
 #endif
 
-        g_signal_connect (device_pool, "device_removed", (GCallback) device_removed, treeview);
-        g_signal_connect (device_pool, "device_changed", (GCallback) device_changed, treeview);
+        g_signal_connect (pool, "presentable_removed", (GCallback) presentable_removed, treeview);
 
         g_signal_connect (app, "delete-event", gtk_main_quit, NULL);
 

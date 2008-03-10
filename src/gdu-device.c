@@ -523,7 +523,8 @@ struct _GduDevicePrivate
 
 enum {
         CHANGED,
-        LAST_SIGNAL
+        REMOVED,
+        LAST_SIGNAL,
 };
 
 static GObjectClass *parent_class = NULL;
@@ -561,6 +562,14 @@ gdu_device_class_init (GduDeviceClass *klass)
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduDeviceClass, changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
+        signals[REMOVED] =
+                g_signal_new ("removed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduDeviceClass, removed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE, 0);
@@ -623,6 +632,12 @@ gdu_device_changed (GduDevice   *device)
 {
         update_info (device);
         g_signal_emit (device, signals[CHANGED], 0);
+}
+
+void
+gdu_device_removed (GduDevice   *device)
+{
+        g_signal_emit (device, signals[REMOVED], 0);
 }
 
 const char *
@@ -802,8 +817,6 @@ gdu_device_partition_table_get_count (GduDevice *device)
 {
         return device->priv->props->partition_table_count;
 }
-
-
 
 gboolean
 gdu_device_is_drive (GduDevice *device)

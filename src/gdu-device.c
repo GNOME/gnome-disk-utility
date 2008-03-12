@@ -738,6 +738,8 @@ gdu_device_new_from_object_path (GduPool *pool, const char *object_path)
         if (!update_info (device))
                 goto error;
 
+        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
+
         return device;
 error:
         g_object_unref (device);
@@ -745,15 +747,17 @@ error:
 }
 
 void
-gdu_device_changed (GduDevice   *device)
+gdu_device_changed (GduDevice *device)
 {
+        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
         update_info (device);
         g_signal_emit (device, signals[CHANGED], 0);
 }
 
 void
-gdu_device_removed (GduDevice   *device)
+gdu_device_removed (GduDevice *device)
 {
+        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
         g_signal_emit (device, signals[REMOVED], 0);
 }
 

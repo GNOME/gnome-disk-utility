@@ -109,6 +109,45 @@ find_iter_by_presentable (GtkTreeStore *store, GduPresentable *presentable, GtkT
 }
 
 static void
+presentable_changed (GduPresentable *presentable, gpointer user_data)
+{
+        GtkTreeView *tree_view = GTK_TREE_VIEW (user_data);
+        char *name;
+        char *icon_name;
+        GtkTreeStore *store;
+        GtkTreeIter iter;
+        GdkPixbuf *pixbuf;
+
+        store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+
+        /* update name and icon */
+        if (find_iter_by_presentable (store, presentable, &iter)) {
+
+                name = gdu_presentable_get_name (presentable);
+                icon_name = gdu_presentable_get_icon_name (presentable);
+                pixbuf = NULL;
+                if (icon_name != NULL) {
+                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                           icon_name,
+                                                           24,
+                                                           0,
+                                                           NULL);
+                }
+
+                gtk_tree_store_set (store,
+                                    &iter,
+                                    ICON_COLUMN, pixbuf,
+                                    TITLE_COLUMN, name,
+                                    -1);
+
+                g_free (name);
+                g_free (icon_name);
+                if (pixbuf != NULL)
+                        g_object_unref (pixbuf);
+        }
+}
+
+static void
 add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, GtkTreeIter *iter_out)
 {
         GtkTreeIter  iter;
@@ -163,6 +202,7 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
         else
                 object_path = "";
 
+        /* sort by offset so we get partitions in the right order */
         sortname = g_strdup_printf ("%016lld_%s", gdu_presentable_get_offset (presentable), object_path);
 
         gtk_tree_store_append (store, &iter, parent_iter);
@@ -190,6 +230,9 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                         gtk_tree_path_free (path);
                 }
         }
+
+        g_signal_connect (presentable, "changed", (GCallback) presentable_changed, tree_view);
+
 out:
         if (device != NULL)
                 g_object_unref (device);
@@ -207,10 +250,12 @@ device_tree_presentable_removed (GduPool *pool, GduPresentable *presentable, gpo
 {
         GtkTreeIter iter;
         GtkTreeStore *store;
+        GtkTreeView *tree_view = GTK_TREE_VIEW (user_data);
 
-        store = GTK_TREE_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (user_data)));
+        store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
         if (find_iter_by_presentable (store, presentable, &iter)) {
                 gtk_tree_store_remove (store, &iter);
+                g_signal_handlers_disconnect_by_func (presentable, (GCallback) presentable_changed, tree_view);
         }
 }
 
@@ -268,7 +313,6 @@ gdu_tree_new (GduPool *pool)
         /* add / remove rows when hal reports presentable add / remove */
         g_signal_connect (pool, "presentable_added", (GCallback) device_tree_presentable_added, tree_view);
         g_signal_connect (pool, "presentable_removed", (GCallback) device_tree_presentable_removed, tree_view);
-        /* TODO: changed */
 
         return tree_view;
 }

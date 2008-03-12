@@ -37,6 +37,8 @@ static GtkWidget *summary_vbox;
 
 static GtkUIManager *ui_manager;
 
+static GduPresentable *presentable_now_showing = NULL;
+
 static void
 _remove_child (GtkWidget *widget, gpointer user_data)
 {
@@ -388,16 +390,14 @@ out:
                 g_object_unref (device);
 }
 
-static GduPresentable *now_showing = NULL;
-
 static void
 do_action (const char *action)
 {
 #if 0
-        if (now_showing != NULL) {
+        if (presentable_now_showing != NULL) {
                 char *cmdline;
                 const char *object_path;
-                object_path = gdu_device_get_object_path (now_showing);
+                object_path = gdu_device_get_object_path (presentable_now_showing);
 
                 cmdline = g_strdup_printf ("gnome-mount %s --hal-udi %s", action, udi);
                 g_debug ("running '%s'", cmdline);
@@ -475,6 +475,13 @@ update_action_buttons (GduPresentable *presentable)
 }
 
 static void
+presentable_changed (GduPresentable *presentable, gpointer user_data)
+{
+        info_page_show_for_presentable (presentable);
+        update_action_buttons (presentable);
+}
+
+static void
 device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
         GduPresentable *presentable;
@@ -484,9 +491,19 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
         presentable = gdu_tree_get_selected_presentable (device_tree_view);
 
         if (presentable != NULL) {
-                now_showing = presentable;
-                info_page_show_for_presentable (presentable);
-                update_action_buttons (presentable);
+
+                if (presentable_now_showing != NULL) {
+                        g_signal_handlers_disconnect_by_func (presentable_now_showing,
+                                                              (GCallback) presentable_changed,
+                                                              NULL);
+                }
+
+                presentable_now_showing = presentable;
+
+                g_signal_connect (presentable_now_showing, "changed", (GCallback) presentable_changed, NULL);
+
+                info_page_show_for_presentable (presentable_now_showing);
+                update_action_buttons (presentable_now_showing);
         }
 }
 

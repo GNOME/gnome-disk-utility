@@ -73,6 +73,8 @@ gboolean gdu_device_is_media_available (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
+gboolean gdu_device_is_mounted (GduDevice *device);
+const char *gdu_device_get_mount_path (GduDevice *device);
 
 const char *gdu_device_id_get_usage (GduDevice *device);
 const char *gdu_device_id_get_type (GduDevice *device);

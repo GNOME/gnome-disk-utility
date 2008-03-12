@@ -245,7 +245,10 @@ info_page_show_for_presentable (GduPresentable *presentable)
                 }
         } else {
                 kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Mount Point")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-"))); /* TODO */
+                if (gdu_device_is_mounted (device))
+                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_mount_path (device)));
+                else
+                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
                 kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Label")));
                 kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_id_get_label (device)));
                 kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));

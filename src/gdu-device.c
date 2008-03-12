@@ -333,8 +333,10 @@ typedef struct
         gboolean device_is_removable;
         gboolean device_is_media_available;
         gboolean device_is_drive;
-        guint64 device_size;
-        guint64 device_block_size;
+        gboolean device_is_mounted;
+        char    *device_mount_path;
+        guint64  device_size;
+        guint64  device_block_size;
 
         char    *id_usage;
         char    *id_type;
@@ -426,6 +428,18 @@ device_properties_get (DBusGConnection *bus,
                 object_path,
                 "org.freedesktop.DeviceKit.Disks.Device",
                 "device-is-drive");
+        props->device_is_mounted = get_property_boolean (
+                bus,
+                "org.freedesktop.DeviceKit.Disks",
+                object_path,
+                "org.freedesktop.DeviceKit.Disks.Device",
+                "device-is-mounted");
+        props->device_mount_path = get_property_string (
+                bus,
+                "org.freedesktop.DeviceKit.Disks",
+                object_path,
+                "org.freedesktop.DeviceKit.Disks.Device",
+                "device-mount-path");
         props->device_size = get_property_uint64 (
                 bus,
                 "org.freedesktop.DeviceKit.Disks",
@@ -591,6 +605,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->device_file);
         g_strfreev (props->device_file_by_id);
         g_strfreev (props->device_file_by_path);
+        g_free (props->device_mount_path);
         g_free (props->id_usage);
         g_free (props->id_type);
         g_free (props->id_version);
@@ -817,6 +832,18 @@ gboolean
 gdu_device_is_partition_table (GduDevice *device)
 {
         return device->priv->props->device_is_partition_table;
+}
+
+gboolean
+gdu_device_is_mounted (GduDevice *device)
+{
+        return device->priv->props->device_is_mounted;
+}
+
+const char *
+gdu_device_get_mount_path (GduDevice *device)
+{
+        return device->priv->props->device_mount_path;
 }
 
 

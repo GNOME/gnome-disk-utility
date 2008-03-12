@@ -146,7 +146,7 @@ gdu_presentable_get_offset (GduPresentable *presentable)
 {
   GduPresentableIface *iface;
 
-  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), 0);
 
   iface = GDU_PRESENTABLE_GET_IFACE (presentable);
 

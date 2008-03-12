@@ -42,12 +42,18 @@ struct _GduPresentableIface
         void (*removed) (GduPresentable *presentable);
 
         /* virtual table */
-        GduDevice * (*get_device) (GduPresentable *presentable);
+        GduDevice *      (*get_device)                (GduPresentable *presentable);
         GduPresentable * (*get_enclosing_presentable) (GduPresentable *presentable);
+        char *           (*get_name)                  (GduPresentable *presentable);
+        char *           (*get_icon_name)             (GduPresentable *presentable);
+        guint64          (*get_offset)                (GduPresentable *presentable);
 };
 
 GType           gdu_presentable_get_type                  (void) G_GNUC_CONST;
 GduDevice      *gdu_presentable_get_device                (GduPresentable *presentable);
 GduPresentable *gdu_presentable_get_enclosing_presentable (GduPresentable *presentable);
+char *          gdu_presentable_get_name                  (GduPresentable *presentable);
+char *          gdu_presentable_get_icon_name             (GduPresentable *presentable);
+guint64         gdu_presentable_get_offset                (GduPresentable *presentable);
 
 #endif /* GDU_PRESENTABLE_H */

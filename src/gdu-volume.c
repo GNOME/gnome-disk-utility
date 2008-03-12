@@ -23,7 +23,9 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
+#include <stdlib.h>
 
+#include "gdu-main.h"
 #include "gdu-pool.h"
 #include "gdu-volume.h"
 #include "gdu-presentable.h"
@@ -91,7 +93,7 @@ gdu_volume_new_from_device (GduDevice *device, GduPresentable *enclosing_present
 
         volume = GDU_VOLUME (g_object_new (GDU_TYPE_VOLUME, NULL));
         volume->priv->device = g_object_ref (device);
-        volume->priv->enclosing_presentable = 
+        volume->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 
         g_signal_connect (device, "changed", (GCallback) device_changed, volume);
@@ -116,9 +118,67 @@ gdu_volume_get_enclosing_presentable (GduPresentable *presentable)
         return NULL;
 }
 
+static char *
+gdu_volume_get_name (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        const char *label;
+        char *result;
+        gboolean is_extended_partition;
+        char *strsize;
+        guint64 size;
+
+        label = gdu_device_id_get_label (volume->priv->device);
+        size = gdu_device_get_size (volume->priv->device);
+
+        /* see comment in gdu_pool_add_device_by_object_path() for how to avoid hardcoding 0x05 etc. types */
+        is_extended_partition = FALSE;
+        if (gdu_device_is_partition (volume->priv->device) &&
+            strcmp (gdu_device_partition_get_scheme (volume->priv->device), "mbr") == 0) {
+                int type;
+                type = strtol (gdu_device_partition_get_type (volume->priv->device), NULL, 0);
+                if (type == 0x05 || type == 0x0f || type == 0x85)
+                        is_extended_partition = TRUE;
+        }
+
+        if (is_extended_partition) {
+                size = gdu_device_partition_get_size (volume->priv->device);
+                strsize = gdu_util_get_size_for_display (size, FALSE);
+                result = g_strdup_printf (_("%s Extended Partition"), strsize);
+                g_free (strsize);
+        } else if (label != NULL && strlen (label) > 0) {
+                result = g_strdup (label);
+        } else {
+                strsize = gdu_util_get_size_for_display (size, FALSE);
+                result = g_strdup_printf (_("%s Partition"), strsize);
+                g_free (strsize);
+        }
+
+        return result;
+}
+
+static char *
+gdu_volume_get_icon_name (GduPresentable *presentable)
+{
+        //GduVolume *volume = GDU_VOLUME (presentable);
+        return g_strdup ("drive-harddisk");
+}
+
+static guint64
+gdu_volume_get_offset (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        if (gdu_device_is_partition (volume->priv->device))
+                return gdu_device_partition_get_offset (volume->priv->device);
+        return 0;
+}
+
 static void
 gdu_volume_presentable_iface_init (GduPresentableIface *iface)
 {
         iface->get_device = gdu_volume_get_device;
         iface->get_enclosing_presentable = gdu_volume_get_enclosing_presentable;
+        iface->get_name = gdu_volume_get_name;
+        iface->get_icon_name = gdu_volume_get_icon_name;
+        iface->get_offset = gdu_volume_get_offset;
 }

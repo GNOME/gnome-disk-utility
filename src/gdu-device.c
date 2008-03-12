@@ -36,6 +36,46 @@
  */
 
 static char *
+get_property_object_path (DBusGConnection *bus,
+                          const char *svc_name,
+                          const char *obj_path,
+                          const char *if_name,
+                          const char *prop_name)
+{
+        char *ret;
+        DBusGProxy *proxy;
+        GValue value = { 0 };
+        GError *error = NULL;
+
+        ret = NULL;
+	proxy = dbus_g_proxy_new_for_name (bus,
+                                           svc_name,
+                                           obj_path,
+                                           "org.freedesktop.DBus.Properties");
+        if (!dbus_g_proxy_call (proxy,
+                                "Get",
+                                &error,
+                                G_TYPE_STRING,
+                                if_name,
+                                G_TYPE_STRING,
+                                prop_name,
+                                G_TYPE_INVALID,
+                                G_TYPE_VALUE,
+                                &value,
+                                G_TYPE_INVALID)) {
+                g_warning ("error: %s\n", error->message);
+                g_error_free (error);
+                goto out;
+        }
+
+        ret = (char *) g_value_get_boxed (&value);
+
+out:
+        g_object_unref (proxy);
+        return ret;
+}
+
+static char *
 get_property_string (DBusGConnection *bus,
                      const char *svc_name,
                      const char *obj_path,
@@ -149,6 +189,46 @@ get_property_uint64 (DBusGConnection *bus,
         }
 
         ret = (guint64) g_value_get_uint64 (&value);
+
+out:
+        g_object_unref (proxy);
+        return ret;
+}
+
+static GArray *
+get_property_uint64_array (DBusGConnection *bus,
+                           const char *svc_name,
+                           const char *obj_path,
+                           const char *if_name,
+                           const char *prop_name)
+{
+        GArray *ret;
+        DBusGProxy *proxy;
+        GValue value = { 0 };
+        GError *error = NULL;
+
+        ret = 0;
+	proxy = dbus_g_proxy_new_for_name (bus,
+                                           svc_name,
+                                           obj_path,
+                                           "org.freedesktop.DBus.Properties");
+        if (!dbus_g_proxy_call (proxy,
+                                "Get",
+                                &error,
+                                G_TYPE_STRING,
+                                if_name,
+                                G_TYPE_STRING,
+                                prop_name,
+                                G_TYPE_INVALID,
+                                G_TYPE_VALUE,
+                                &value,
+                                G_TYPE_INVALID)) {
+                g_warning ("error: %s\n", error->message);
+                g_error_free (error);
+                goto out;
+        }
+
+        ret = (GArray*) g_value_get_boxed (&value);
 
 out:
         g_object_unref (proxy);
@@ -274,6 +354,9 @@ typedef struct
 
         char    *partition_table_scheme;
         int      partition_table_count;
+        int      partition_table_max_number;
+        GArray  *partition_table_offsets;
+        GArray  *partition_table_sizes;
 
         char    *drive_vendor;
         char    *drive_model;
@@ -387,7 +470,7 @@ device_properties_get (DBusGConnection *bus,
                 "org.freedesktop.DeviceKit.Disks.Device",
                 "id-label");
 
-        props->partition_slave = get_property_string (
+        props->partition_slave = get_property_object_path (
                 bus,
                 "org.freedesktop.DeviceKit.Disks",
                 object_path,
@@ -454,6 +537,24 @@ device_properties_get (DBusGConnection *bus,
                 object_path,
                 "org.freedesktop.DeviceKit.Disks.Device",
                 "partition-table-count");
+        props->partition_table_max_number = get_property_int (
+                bus,
+                "org.freedesktop.DeviceKit.Disks",
+                object_path,
+                "org.freedesktop.DeviceKit.Disks.Device",
+                "partition-table-max-number");
+        props->partition_table_offsets = get_property_uint64_array (
+                bus,
+                "org.freedesktop.DeviceKit.Disks",
+                object_path,
+                "org.freedesktop.DeviceKit.Disks.Device",
+                "partition-table-offsets");
+        props->partition_table_sizes = get_property_uint64_array (
+                bus,
+                "org.freedesktop.DeviceKit.Disks",
+                object_path,
+                "org.freedesktop.DeviceKit.Disks.Device",
+                "partition-table-sizes");
 
         props->drive_vendor = get_property_string (
                 bus,
@@ -501,6 +602,8 @@ device_properties_free (DeviceProperties *props)
         g_free (props->partition_uuid);
         g_strfreev (props->partition_flags);
         g_free (props->partition_table_scheme);
+        g_array_free (props->partition_table_offsets, TRUE);
+        g_array_free (props->partition_table_sizes, TRUE);
         g_free (props->drive_model);
         g_free (props->drive_vendor);
         g_free (props->drive_revision);
@@ -587,7 +690,6 @@ update_info (GduDevice *device)
         if (device->priv->props != NULL)
                 device_properties_free (device->priv->props);
         device->priv->props = device_properties_get (device->priv->bus, device->priv->object_path);
-
         return TRUE;
 }
 
@@ -816,6 +918,24 @@ int
 gdu_device_partition_table_get_count (GduDevice *device)
 {
         return device->priv->props->partition_table_count;
+}
+
+int
+gdu_device_partition_table_get_max_number (GduDevice *device)
+{
+        return device->priv->props->partition_table_max_number;
+}
+
+GArray *
+gdu_device_partition_table_get_offsets (GduDevice *device)
+{
+        return device->priv->props->partition_table_offsets;
+}
+
+GArray *
+gdu_device_partition_table_get_sizes (GduDevice *device)
+{
+        return device->priv->props->partition_table_sizes;
 }
 
 gboolean

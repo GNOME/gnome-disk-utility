@@ -20,6 +20,7 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-drive.c			gdu-drive.h			\
 	gdu-volume.c			gdu-volume.h			\
 	gdu-presentable.c		gdu-presentable.h		\
+	gdu-volume-hole.c		gdu-volume-hole.h		\
 	$(BUILT_SOURCES)
 
 gnome_disk_utility_CPPFLAGS = 				\

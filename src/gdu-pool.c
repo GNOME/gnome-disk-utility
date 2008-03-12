@@ -27,6 +27,7 @@
 #include "gdu-pool.h"
 #include "gdu-drive.h"
 #include "gdu-volume.h"
+#include "gdu-volume-hole.h"
 
 #include "devkit-disks-daemon-glue.h"
 
@@ -46,9 +47,10 @@ struct _GduPoolPrivate
         DBusGConnection *bus;
         DBusGProxy *proxy;
 
-        GHashTable *devices;
-        GHashTable *drives;
-        GHashTable *volumes;
+        GHashTable *devices;     /* object path -> GduDevice* */
+        GHashTable *volumes;     /* object path -> GduVolume* */
+        GHashTable *drives;      /* object path -> GduDrive* */
+        GHashTable *drive_holes; /* object path -> GList of GduVolumeHole* */
 
         GList *presentables;
 };
@@ -56,13 +58,38 @@ struct _GduPoolPrivate
 G_DEFINE_TYPE (GduPool, gdu_pool, G_TYPE_OBJECT);
 
 static void
+remove_holes (GduPool *pool, const char *drive_object_path)
+{
+        GList *l;
+        GList *holes;
+
+        holes = g_hash_table_lookup (pool->priv->drive_holes, drive_object_path);
+        for (l = holes; l != NULL; l = l->next) {
+                GduPresentable *presentable = l->data;
+                pool->priv->presentables = g_list_remove (pool->priv->presentables, presentable);
+                g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, presentable);
+                g_object_unref (presentable);
+        }
+        g_hash_table_remove (pool->priv->drive_holes, drive_object_path);
+}
+
+static void
+free_list_of_holes (gpointer data)
+{
+        GList *l = data;
+        g_list_foreach (l, (GFunc) g_object_unref, NULL);
+        g_list_free (l);
+}
+
+static void
 gdu_pool_finalize (GduPool *pool)
 {
         dbus_g_connection_unref (pool->priv->bus);
         g_object_unref (pool->priv->proxy);
         g_hash_table_unref (pool->priv->devices);
-        g_hash_table_unref (pool->priv->drives);
         g_hash_table_unref (pool->priv->volumes);
+        g_hash_table_unref (pool->priv->drives);
+        g_hash_table_unref (pool->priv->drive_holes);
 
         g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
         g_list_free (pool->priv->presentables);
@@ -127,6 +154,195 @@ gdu_pool_init (GduPool *pool)
         pool->priv = g_new0 (GduPoolPrivate, 1);
 }
 
+typedef struct {
+        int number;
+        guint64 offset;
+        guint64 size;
+} PartEntry;
+
+static int
+part_entry_compare (PartEntry *pa, PartEntry *pb, gpointer user_data)
+{
+        if (pa->offset > pb->offset)
+                return 1;
+        if (pa->offset < pb->offset)
+                return -1;
+        return 0;
+}
+
+static void
+add_holes (GduPool *pool,
+           GduDrive *drive,
+           GduPresentable *presentable,
+           gboolean ignore_logical,
+           guint64 start,
+           guint64 size)
+{
+        int n, num_entries;
+        int max_number;
+        guint64 *offsets;
+        guint64 *sizes;
+        GduDevice *drive_device;
+        GduVolumeHole *hole;
+        PartEntry *entries;
+        guint64 cursor;
+        guint64 gap_size;
+        guint64 gap_position;
+
+        drive_device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+
+        /* no point if adding holes if there's no media */
+        if (!gdu_device_is_media_available (drive_device))
+                goto out;
+
+        /*g_print ("Adding holes for %s between %lld and %lld (ignore_logical=%d)\n",
+                 gdu_device_get_device_file (drive_device),
+                 start,
+                 start + size,
+                 ignore_logical);*/
+
+        offsets = (guint64*) ((gdu_device_partition_table_get_offsets (drive_device))->data);
+        sizes = (guint64*) ((gdu_device_partition_table_get_sizes (drive_device))->data);
+        max_number = gdu_device_partition_table_get_max_number (drive_device);
+
+        entries = g_new0 (PartEntry, max_number);
+        for (n = 0, num_entries = 0; n < max_number; n++) {
+                /* ignore unused partition table entries */
+                if (offsets[n] == 0)
+                        continue;
+
+                /* only consider partitions in the given space */
+                if (offsets[n] <= start)
+                        continue;
+                if (offsets[n] >= start + size)
+                        continue;
+
+                /* ignore logical partitions if requested */
+                if (ignore_logical) {
+                        if (n >= 4)
+                                continue;
+                }
+
+                entries[num_entries].number = n + 1;
+                entries[num_entries].offset = offsets[n];
+                entries[num_entries].size = sizes[n];
+                num_entries++;
+                //g_print ("%d: offset=%lld size=%lld\n", entries[n].number, entries[n].offset, entries[n].size);
+        }
+        entries = g_realloc (entries, num_entries * sizeof (PartEntry));
+
+        g_qsort_with_data (entries, num_entries, sizeof (PartEntry), (GCompareDataFunc) part_entry_compare, NULL);
+
+        for (n = 0, cursor = start; n <= num_entries; n++) {
+                if (n < num_entries) {
+
+                        /*g_print (" %d: offset=%lldMB size=%lldMB\n",
+                                 entries[n].number,
+                                 entries[n].offset / (1000 * 1000),
+                                 entries[n].size / (1000 * 1000));*/
+
+
+                        gap_size = entries[n].offset - cursor;
+                        gap_position = entries[n].offset - gap_size;
+                        cursor = entries[n].offset + entries[n].size;
+                } else {
+                        /* trailing free space */
+                        gap_size = start + size - cursor;
+                        gap_position = start + size - gap_size;
+                }
+
+                /* ignore free space < 1MB */
+                if (gap_size >= 1024 * 1024) {
+                        GList *hole_list;
+                        char *orig_key;
+
+                        /*g_print ("  -> adding gap=%lldMB @ %lldMB\n",
+                                 gap_size / (1000 * 1000),
+                                 gap_position  / (1000 * 1000));*/
+
+                        hole = gdu_volume_hole_new (gap_position, gap_size, presentable);
+                        hole_list = NULL;
+                        if (g_hash_table_lookup_extended (pool->priv->drive_holes,
+                                                          gdu_device_get_object_path (drive_device),
+                                                          (gpointer *) &orig_key,
+                                                          (gpointer *) &hole_list)) {
+                                g_hash_table_steal (pool->priv->drive_holes, orig_key);
+                                g_free (orig_key);
+                        }
+                        hole_list = g_list_prepend (hole_list, g_object_ref (hole));
+                        /*g_print ("hole list now len=%d for %s\n",
+                                   g_list_length (hole_list),
+                                   gdu_device_get_object_path (drive_device));*/
+                        g_hash_table_insert (pool->priv->drive_holes,
+                                             g_strdup (gdu_device_get_object_path (drive_device)),
+                                             hole_list);
+                        pool->priv->presentables = g_list_prepend (pool->priv->presentables, GDU_PRESENTABLE (hole));
+                        g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (hole));
+                }
+
+        }
+
+        g_free (entries);
+out:
+        g_object_unref (drive_device);
+}
+
+/* typically called on 'change' event for a drive */
+static void
+update_holes (GduPool *pool, const char *drive_object_path)
+{
+        GduDrive *drive;
+        GduDevice *drive_device;
+        GList *l;
+
+        /* first remove all existing holes */
+        remove_holes (pool, drive_object_path);
+
+        /* then add new holes */
+        drive = g_hash_table_lookup (pool->priv->drives, drive_object_path);
+        drive_device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+
+        /* add holes between primary partitions */
+        add_holes (pool,
+                   drive,
+                   GDU_PRESENTABLE (drive),
+                   TRUE,
+                   0,
+                   gdu_device_get_size (drive_device));
+
+        /* add holes between logical partitions residing in extended partitions */
+        for (l = pool->priv->presentables; l != NULL; l = l->next) {
+                GduPresentable *presentable = l->data;
+
+                if (gdu_presentable_get_enclosing_presentable (presentable) == GDU_PRESENTABLE (drive)) {
+                        GduDevice *partition_device;
+
+                        partition_device = gdu_presentable_get_device (presentable);
+                        if (partition_device != NULL &&
+                            gdu_device_is_partition (partition_device)) {
+                                int partition_type;
+                                partition_type = strtol (gdu_device_partition_get_type (partition_device), NULL, 0);
+                                if (partition_type == 0x05 ||
+                                    partition_type == 0x0f ||
+                                    partition_type == 0x85) {
+                                        add_holes (pool,
+                                                   drive,
+                                                   presentable,
+                                                   FALSE,
+                                                   gdu_device_partition_get_offset (partition_device),
+                                                   gdu_device_partition_get_size (partition_device));
+
+                                }
+                        }
+                        if (partition_device != NULL)
+                                g_object_unref (partition_device);
+                }
+        }
+
+        if (drive_device != NULL)
+                g_object_unref (drive_device);
+}
+
 static GduDevice *
 gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
 {
@@ -147,18 +363,29 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
 
                         pool->priv->presentables = g_list_prepend (pool->priv->presentables, GDU_PRESENTABLE (drive));
                         g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (drive));
+
+                        /* Now create and add GVolumeHole objects representing space on the partitioned
+                         * device space not yet claimed by any partition. We don't add holes for empty
+                         * space on the extended partition; that's handled below.
+                         */
+                        add_holes (pool,
+                                   drive,
+                                   GDU_PRESENTABLE (drive),
+                                   TRUE,
+                                   0,
+                                   gdu_device_get_size (device));
                 }
 
-                /* TODO: better metric than 'is_partition'.. e.g. whole disk devices etc. */
                 if (gdu_device_is_partition (device)) {
                         GduVolume *volume;
                         GduPresentable *enclosing_presentable;
 
-                        /* logical partitions are enclosed by the volume representing the extended partitions */
+                        /* make sure logical partitions are enclosed by the volume representing
+                         * the extended partition
+                         */
                         enclosing_presentable = NULL;
                         if (strcmp (gdu_device_partition_get_scheme (device), "mbr") == 0 &&
                             gdu_device_partition_get_number (device) > 4) {
-                                const char *drive_object_path;
                                 GHashTableIter iter;
                                 GduVolume *sibling;
 
@@ -168,22 +395,31 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                  * TODO: would be nice to have DeviceKit-disks properties to avoid
                                  *       harcoding this for msdos only.
                                  */
-                                drive_object_path = gdu_device_partition_get_slave (device);
                                 g_hash_table_iter_init (&iter, pool->priv->volumes);
                                 while (g_hash_table_iter_next (&iter, NULL, (gpointer *) &sibling)) {
-                                        int type;
+                                        int sibling_type;
                                         GduDevice *sibling_device;
 
                                         sibling_device = gdu_presentable_get_device (GDU_PRESENTABLE (sibling));
                                         if (!gdu_device_is_partition (sibling_device))
                                                 continue;
-                                        type = strtol (gdu_device_partition_get_type (sibling_device), NULL, 0);
-                                        if (type == 0x05 || type == 0x0f || type == 0x85) {
+                                        sibling_type = strtol (gdu_device_partition_get_type (sibling_device), NULL, 0);
+                                        if (sibling_type == 0x05 ||
+                                            sibling_type == 0x0f ||
+                                            sibling_type == 0x85) {
                                                 enclosing_presentable = GDU_PRESENTABLE (sibling);
                                                 break;
                                         }
                                 }
-                        } else {
+
+                                if (enclosing_presentable == NULL) {
+                                        g_warning ("TODO: FIXME: handle logical partition %s arriving "
+                                                   "before extended", gdu_device_get_device_file (device));
+                                        /* .. at least we'll fall back to the drive for now ... */
+                                }
+                        }
+
+                        if (enclosing_presentable == NULL) {
                                 GduDrive *enclosing_drive;
                                 enclosing_drive = g_hash_table_lookup (pool->priv->drives,
                                                                        gdu_device_partition_get_slave (device));
@@ -191,14 +427,43 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                 if (enclosing_drive != NULL)
                                         enclosing_presentable = GDU_PRESENTABLE (enclosing_drive);
                         }
-                        volume = gdu_volume_new_from_device (device, enclosing_presentable);
 
+                        /* add the partition */
+                        volume = gdu_volume_new_from_device (device, enclosing_presentable);
                         g_hash_table_insert (pool->priv->volumes, g_strdup (object_path), g_object_ref (volume));
                         pool->priv->presentables = g_list_prepend (pool->priv->presentables, GDU_PRESENTABLE (volume));
                         g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
+
+                        /* add holes for the extended partition */
+                        if (strcmp (gdu_device_partition_get_scheme (device), "mbr") == 0) {
+                                int partition_type;
+                                partition_type = strtol (gdu_device_partition_get_type (device), NULL, 0);
+                                if (partition_type == 0x05 ||
+                                    partition_type == 0x0f ||
+                                    partition_type == 0x85) {
+                                        GduDrive *enclosing_drive;
+
+                                        enclosing_drive = g_hash_table_lookup (
+                                                pool->priv->drives,
+                                                gdu_device_partition_get_slave (device));
+                                        if (enclosing_drive != NULL) {
+                                                /* Now create and add GVolumeHole objects representing space on
+                                                 * the extended partition not yet claimed by any partition.
+                                                 */
+                                                add_holes (pool,
+                                                           enclosing_drive,
+                                                           GDU_PRESENTABLE (volume),
+                                                           FALSE,
+                                                           gdu_device_partition_get_offset (device),
+                                                           gdu_device_partition_get_size (device));
+                                        }
+                                }
+                        }
+
                 }
 
-                /* TODO: Add GduVolumeEmpty objects to fill in gaps for room between partitions */
+                /* TODO: handle whole disk devices */
+
         }
 
         return device;
@@ -226,6 +491,9 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
                 g_signal_emit (pool, signals[DEVICE_REMOVED], 0, device);
                 g_hash_table_remove (pool->priv->devices, object_path);
+                g_hash_table_remove (pool->priv->volumes, object_path);
+                if (g_hash_table_remove (pool->priv->drives, object_path))
+                        remove_holes (pool, object_path);
 
                 for (l = pool->priv->presentables; l != NULL; l = ll) {
                         GduPresentable *presentable = GDU_PRESENTABLE (l->data);
@@ -235,15 +503,12 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
                         d = gdu_presentable_get_device (presentable);
                         if (d == device) {
-
-                                g_hash_table_remove (pool->priv->drives, object_path);
-                                g_hash_table_remove (pool->priv->volumes, object_path);
-
                                 pool->priv->presentables = g_list_remove (pool->priv->presentables, presentable);
                                 g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, presentable);
                                 g_object_unref (presentable);
                         }
-                        g_object_unref (d);
+                        if (d != NULL)
+                                g_object_unref (d);
                 }
         } else {
                 g_warning ("unknown device to remove, object_path='%s'", object_path);
@@ -258,6 +523,10 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         if ((device = gdu_pool_get_by_object_path (pool, object_path)) != NULL) {
                 gdu_device_changed (device);
+
+                if (g_hash_table_lookup (pool->priv->drives, object_path) != NULL)
+                        update_holes (pool, object_path);
+
         } else {
                 g_warning ("unknown device to on change, object_path='%s'", object_path);
         }
@@ -288,8 +557,9 @@ gdu_pool_new (void)
         }
 
         pool->priv->devices = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-        pool->priv->drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->volumes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+        pool->priv->drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+        pool->priv->drive_holes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, free_list_of_holes);
 
 	pool->priv->proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
                                                        "org.freedesktop.DeviceKit.Disks",

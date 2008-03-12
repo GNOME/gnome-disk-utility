@@ -116,3 +116,39 @@ gdu_presentable_get_enclosing_presentable (GduPresentable *presentable)
 
   return (* iface->get_enclosing_presentable) (presentable);
 }
+
+char *
+gdu_presentable_get_name (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_name) (presentable);
+}
+
+char *
+gdu_presentable_get_icon_name (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_icon_name) (presentable);
+}
+
+guint64
+gdu_presentable_get_offset (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_offset) (presentable);
+}

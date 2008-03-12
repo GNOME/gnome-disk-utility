@@ -115,12 +115,13 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
         GtkTreeIter  iter2;
         GtkTreeIter *parent_iter;
         GdkPixbuf   *pixbuf;
-        const char  *object_path;
         char        *name;
         char        *icon_name;
         GtkTreeStore *store;
         GduDevice *device;
         GduPresentable *enclosing_presentable;
+        const char  *object_path;
+        char *sortname;
 
         device = NULL;
 
@@ -144,60 +145,9 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                 g_object_unref (enclosing_presentable);
         }
 
-        device = gdu_presentable_get_device (presentable);
-
-        object_path = gdu_device_get_object_path (device);
-
-        name = g_strdup (object_path);
-        icon_name = g_strdup ("drive-harddisk"); //gdu_info_provider_get_icon_name (device);
-
         /* compute the name */
-        if (gdu_device_is_drive (device)) {
-                const char *vendor;
-                const char *model;
-                guint64 size;
-                gboolean is_removable;
-                char *strsize;
-
-                vendor = gdu_device_drive_get_vendor (device);
-                model = gdu_device_drive_get_model (device);
-                size = gdu_device_get_size (device);
-                is_removable = gdu_device_is_removable (device);
-                g_free (name);
-
-                strsize = NULL;
-                if (!is_removable && size > 0) {
-                        strsize = gdu_util_get_size_for_display (size, FALSE);
-                }
-
-                if (strsize != NULL) {
-                        name = g_strdup_printf ("%s %s %s",
-                                                strsize,
-                                                vendor != NULL ? vendor : "",
-                                                model != NULL ? model : "");
-                } else {
-                        name = g_strdup_printf ("%s %s",
-                                                vendor != NULL ? vendor : "",
-                                                model != NULL ? model : "");
-                }
-                g_free (strsize);
-        } if (gdu_device_is_partition (device)) {
-                const char *label;
-
-                label = gdu_device_id_get_label (device);
-                if (label != NULL && strlen (label) > 0) {
-                        name = g_strdup (label);
-                } else {
-                        char *strsize;
-                        guint64 size;
-                        size = gdu_device_get_size (device);
-                        strsize = gdu_util_get_size_for_display (size, FALSE);
-                        name = g_strdup_printf (_("%s Partition"), strsize);
-                        g_free (strsize);
-                }
-        }
-
-
+        name = gdu_presentable_get_name (presentable);
+        icon_name = gdu_presentable_get_icon_name (presentable);
         pixbuf = NULL;
         if (icon_name != NULL) {
                 pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -207,13 +157,22 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                                                    NULL);
         }
 
+        device = gdu_presentable_get_device (presentable);
+        if (device != NULL)
+                object_path = gdu_device_get_object_path (device);
+        else
+                object_path = "";
+
+        sortname = g_strdup_printf ("%016lld_%s", gdu_presentable_get_offset (presentable), object_path);
+
         gtk_tree_store_append (store, &iter, parent_iter);
         gtk_tree_store_set (store, &iter,
                             ICON_COLUMN, pixbuf,
                             TITLE_COLUMN, name,
                             PRESENTABLE_OBJ_COLUMN, presentable,
-                            SORTNAME_COLUMN, object_path,
+                            SORTNAME_COLUMN, sortname,
                             -1);
+        g_free (sortname);
 
         if (iter_out != NULL)
                 *iter_out = iter;

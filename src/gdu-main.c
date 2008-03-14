@@ -33,361 +33,51 @@
 static GduPool *pool;
 static GtkWidget *notebook;
 
-static GtkWidget *summary_vbox;
+static GList *table_labels = NULL;
 
 static GtkUIManager *ui_manager;
 
 static GduPresentable *presentable_now_showing = NULL;
 
 static void
-_remove_child (GtkWidget *widget, gpointer user_data)
-{
-        GtkContainer *container = GTK_CONTAINER (user_data);
-        gtk_container_remove (container, widget);
-}
-
-static const char *
-gpt_part_type_guid_to_string (const char *guid)
-{
-        int n;
-        /* see also http://en.wikipedia.org/wiki/GUID_Partition_Table */
-        static struct {
-                const char *guid;
-                char *name;
-        } part_type[] = {
-                {"024DEE41-33E7-11D3-9D69-0008C781F39F", N_("MBR Partition Scheme")},
-                {"C12A7328-F81F-11D2-BA4B-00A0C93EC93B", N_("EFI System Partition")},
-                /* Microsoft */
-                {"E3C9E316-0B5C-4DB8-817D-F92DF00215AE", N_("Microsoft Reserved Partition")},
-                {"EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")},
-                {"5808C8AA-7E8F-42E0-85D2-E1E90434CFB3", N_("LDM meta data Partition")},
-                {"AF9B60A0-1431-4F62-BC68-3311714A69AD", N_("LDM data Partition")},
-                /* Linux */
-                {"EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")}, /* Same GUID as MS! */
-                {"A19D880F-05FC-4D3B-A006-743F0F84911E", N_("Linux RAID Partition")},
-                {"0657FD6D-A4AB-43C4-84E5-0933C84B4F4F", N_("Linux Swap Partition")},
-                {"E6D6D379-F507-44C2-A23C-238F2A3DF928", N_("Linux LVM Partition")},
-                {"8DA63339-0007-60C0-C436-083AC8230908", N_("Linux Reserved Partition")},
-                /* Mac OS X */
-                {"48465300-0000-11AA-AA11-00306543ECAC", N_("Apple HFS/HFS+ Partition")},
-                {"55465300-0000-11AA-AA11-00306543ECAC", N_("Apple UFS Partition")},
-                {"52414944-0000-11AA-AA11-00306543ECAC", N_("Apple RAID Partition")},
-                /* TODO: add more entries */
-                {NULL,  NULL}
-        };
-
-        for (n = 0; part_type[n].name != NULL; n++) {
-                if (g_ascii_strcasecmp (part_type[n].guid, guid) == 0)
-                        return part_type[n].name;
-        }
-
-        return guid;
-}
-
-static const char *
-apm_part_type_to_string (const char *type)
-{
-        int n;
-        /* see also http://developer.apple.com/documentation/mac/Devices/Devices-126.html
-         * and http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html */
-        static struct {
-                const char *type;
-                char *name;
-        } part_type[] = {
-                {"Apple_Unix_SVR2", N_("Apple UFS Partition")},
-                {"Apple_HFS", N_("Apple HFS/HFS+ Partition")},
-                {"Apple_partition_map", N_("Apple Partition Map")},
-                {"DOS_FAT_12", N_("FAT 12")},
-                {"DOS_FAT_16", N_("FAT 16")},
-                {"DOS_FAT_32", N_("FAT 32")},
-                {"Windows_FAT_16", N_("FAT 16")},
-                {"Windows_FAT_32", N_("FAT 32")},
-                /* TODO: add more entries */
-                {NULL,  NULL}
-        };
-
-        for (n = 0; part_type[n].name != NULL; n++) {
-                if (g_ascii_strcasecmp (part_type[n].type, type) == 0)
-                        return part_type[n].name;
-        }
-
-        return type;
-}
-
-static const char *
-msdos_part_type_to_string (int msdos_type)
-{
-        int n;
-        /* see also http://www.win.tue.nl/~aeb/partitions/partition_types-1.html */
-        static struct {
-                int type;
-                char *name;
-        } part_type[] = {
-                {0x00,  N_("Empty")},
-                {0x01,  N_("FAT12")},
-                {0x04,  N_("FAT16 <32M")},
-                {0x05,  N_("Extended")},
-                {0x06,  N_("FAT16")},
-                {0x07,  N_("HPFS/NTFS")},
-                {0x0b,  N_("W95 FAT32")},
-                {0x0c,  N_("W95 FAT32 (LBA)")},
-                {0x0e,  N_("W95 FAT16 (LBA)")},
-                {0x0f,  N_("W95 Ext d (LBA)")},
-                {0x10,  N_("OPUS")},
-                {0x11,  N_("Hidden FAT12")},
-                {0x12,  N_("Compaq diagnostics")},
-                {0x14,  N_("Hidden FAT16 <32M")},
-                {0x16,  N_("Hidden FAT16")},
-                {0x17,  N_("Hidden HPFS/NTFS")},
-                {0x1b,  N_("Hidden W95 FAT32")},
-                {0x1c,  N_("Hidden W95 FAT32 (LBA)")},
-                {0x1e,  N_("Hidden W95 FAT16 (LBA)")},
-                {0x3c,  N_("PartitionMagic")},
-                {0x82,  N_("Linux swap")},
-                {0x83,  N_("Linux")},
-                {0x84,  N_("Hibernation")},
-                {0x85,  N_("Linux Extended")},
-                {0x8e,  N_("Linux LVM")},
-                {0xa0,  N_("Hibernation")},
-                {0xa5,  N_("FreeBSD")},
-                {0xa6,  N_("OpenBSD")},
-                {0xa8,  N_("Mac OS X")},
-                {0xaf,  N_("Mac OS X")},
-                {0xbe,  N_("Solaris boot")},
-                {0xbf,  N_("Solaris")},
-                {0xeb,  N_("BeOS BFS")},
-                {0xec,  N_("SkyOS SkyFS")},
-                {0xee,  N_("EFI GPT")},
-                {0xef,  N_("EFI (FAT-12/16/32")},
-                {0xfd,  N_("Linux RAID autodetect")},
-                {0x00,  NULL}
-        };
-
-        for (n = 0; part_type[n].name != NULL; n++) {
-                if (part_type[n].type == msdos_type)
-                        return part_type[n].name;
-        }
-
-        return _("Unknown");
-}
-
-static void
 info_page_show_for_presentable (GduPresentable *presentable)
 {
-        int n;
         GList *i;
+        GList *j;
         GList *kv_pairs;
-        int num_pairs;
-        GtkTable *info_table;
-        GduDevice *device;
 
-        /* delete all old widgets */
-        gtk_container_foreach (GTK_CONTAINER (summary_vbox),
-                               _remove_child,
-                               summary_vbox);
+        kv_pairs = gdu_presentable_get_info (presentable);
+        for (i = kv_pairs, j = table_labels; i != NULL && j != NULL; i = i->next, j = j->next) {
+                char *key;
+                char *key2;
+                char *value;
+                GtkWidget *key_label;
+                GtkWidget *value_label;
 
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL)
-                goto out;
-
-        kv_pairs = NULL;
-
-        if (gdu_device_is_drive (device)) {
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Vendor")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_vendor (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Model")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_model (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Revision")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_revision (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Serial Number")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_serial (device)));
-
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_device_file (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Connection")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-"))); /* TODO */
-
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Removable Media")));
-                if (gdu_device_is_removable (device)) {
-                        if (gdu_device_is_media_available (device)) {
-                                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Yes")));
-                        } else {
-                                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Yes (No media inserted)")));
-                        }
-                } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("No")));
-                }
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Media Type")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Disk"))); /* TODO */
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Capacity")));
-                if (gdu_device_is_media_available (device)) {
-                        kv_pairs = g_list_prepend (kv_pairs,
-                                                   gdu_util_get_size_for_display (gdu_device_get_size (device), TRUE));
-                } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-                }
-
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partitioning")));
-                if (gdu_device_is_partition_table (device)) {
-                        const char *scheme;
-                        char *name;
-                        scheme = gdu_device_partition_table_get_scheme (device);
-                        if (strcmp (scheme, "apm") == 0) {
-                                name = g_strdup (_("Apple Partition Map"));
-                        } else if (strcmp (scheme, "mbr") == 0) {
-                                name = g_strdup (_("Master Boot Record"));
-                        } else if (strcmp (scheme, "gpt") == 0) {
-                                name = g_strdup (_("GUID Partition Table"));
-                        } else {
-                                name = g_strdup_printf (_("Unknown (%s)"), scheme);
-                        }
-                        kv_pairs = g_list_prepend (kv_pairs, name);
-                } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-                }
-        } else {
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Mount Point")));
-                if (gdu_device_is_mounted (device))
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_mount_path (device)));
-                else
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Label")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_id_get_label (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_device_file (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("UUID")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_id_get_uuid (device)));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partition Number")));
-                if (gdu_device_is_partition (device)) {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup_printf (
-                                                           "%d",
-                                                           gdu_device_partition_get_number (device)));
-                } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-                }
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partition Type")));
-                if (gdu_device_is_partition (device)) {
-                        const char *type;
-                        const char *scheme;
-                        char *name;
-
-                        type = gdu_device_partition_get_type (device);
-                        scheme = gdu_device_partition_get_scheme (device);
-
-                        if (strcmp (scheme, "gpt") == 0) {
-                                name = g_strdup (gpt_part_type_guid_to_string (type));
-                        } else if (strcmp (scheme, "mbr") == 0) {
-                                int msdos_type;
-                                msdos_type = strtol (type, NULL, 0);
-                                name = g_strdup_printf (_("%s (0x%02x)"),
-                                                        msdos_part_type_to_string (msdos_type),
-                                                        msdos_type);
-                        } else if (strcmp (scheme, "apm") == 0) {
-                                name = g_strdup (apm_part_type_to_string (type));
-                        } else {
-                                if (strlen (type) > 0)
-                                        name = g_strdup_printf (_("Unknown (%s)"), type);
-                                else
-                                        name = g_strdup (_("-"));
-                        }
-                        kv_pairs = g_list_prepend (kv_pairs, name);
-                } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-                }
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Usage")));
-                {
-                        const char *usage;
-                        char *name;
-                        usage = gdu_device_id_get_usage (device);
-                        if (strcmp (usage, "filesystem") == 0) {
-                                name = g_strdup (_("File system"));
-                        } else if (strcmp (usage, "crypto") == 0) {
-                                name = g_strdup (_("Encrypted Block Device"));
-                        } else if (strcmp (usage, "raid") == 0) {
-                                name = g_strdup (_("Assembled Block Device"));
-                        } else {
-                                if (strlen (usage) > 0)
-                                        name = g_strdup_printf (_("Unknown (%s)"), usage);
-                                else
-                                        name = g_strdup (_("-"));
-                        }
-                        kv_pairs = g_list_prepend (kv_pairs, name);
-                }
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Capacity")));
-                kv_pairs = g_list_prepend (kv_pairs,
-                                           gdu_util_get_size_for_display (gdu_device_get_size (device), TRUE));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Type")));
-                kv_pairs = g_list_prepend (kv_pairs,
-                                           gdu_util_get_fstype_for_display (gdu_device_id_get_type (device),
-                                                                            gdu_device_id_get_version (device),
-                                                                            TRUE));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Available")));
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-"))); /* TODO */
-        }
-
-
-        kv_pairs = g_list_reverse (kv_pairs);
-
-        if (kv_pairs != NULL) {
-                int num_rows;
-
-                num_pairs = g_list_length (kv_pairs) / 2;
-                num_rows = (num_pairs + 1 ) /2;
-
-                info_table = GTK_TABLE (gtk_table_new (num_rows, 4, FALSE));
-                gtk_table_set_col_spacings (GTK_TABLE (info_table), 8);
-                gtk_table_set_row_spacings (GTK_TABLE (info_table), 4);
-                gtk_table_set_homogeneous (GTK_TABLE (info_table), TRUE);
-
-                for (i = kv_pairs, n = 0; i != NULL; i = i->next, n++) {
-                        char *key;
-                        char *key2;
-                        char *value;
-                        GtkWidget *key_label;
-                        GtkWidget *value_label;
-                        int column;
-                        int row;
-
-                        row = n / 2;
-                        column = (n & 1) * 2;
-
-                        key = i->data;
-                        i = i->next;
-                        if (i == NULL) {
-                                g_free (key);
-                                break;
-                        }
-                        value = i->data;
-
-                        key2 = g_strdup_printf ("<b>%s:</b>", key);
-
-                        key_label = gtk_label_new (NULL);
-                        gtk_label_set_markup (GTK_LABEL (key_label), key2);
-                        gtk_misc_set_alignment (GTK_MISC (key_label), 1.0, 0.5);
-
-                        value_label = gtk_label_new (NULL);
-                        gtk_label_set_markup (GTK_LABEL (value_label), value);
-                        gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
-                        gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
-                        gtk_label_set_ellipsize (GTK_LABEL (value_label), PANGO_ELLIPSIZE_END);
-
-                        gtk_table_attach_defaults (info_table, key_label,   column + 0, column + 1, row, row + 1);
-                        gtk_table_attach_defaults (info_table, value_label, column + 1, column + 2, row, row + 1);
-
+                key = i->data;
+                key_label = j->data;
+                i = i->next;
+                j = j->next;
+                if (i == NULL || j == NULL) {
                         g_free (key);
-                        g_free (key2);
-                        g_free (value);
+                        break;
                 }
-                g_list_free (kv_pairs);
+                value = i->data;
+                value_label = j->data;
 
-                /* add property pairs */
-                gtk_box_pack_start (GTK_BOX (summary_vbox), GTK_WIDGET (info_table), FALSE, FALSE, 0);
+                key2 = g_strdup_printf ("<b>%s:</b>", key);
+                gtk_label_set_markup (GTK_LABEL (key_label), key2);
+                gtk_label_set_markup (GTK_LABEL (value_label), value);
+                g_free (key2);
         }
+        g_list_foreach (kv_pairs, (GFunc) g_free, NULL);
+        g_list_free (kv_pairs);
 
-        gtk_widget_show_all (summary_vbox);
-out:
-        if (device != NULL)
-                g_object_unref (device);
+        /* clear remaining labels */
+        for ( ; j != NULL; j = j->next) {
+                GtkWidget *label = j->data;
+                gtk_label_set_markup (GTK_LABEL (label), "");
+        }
 }
 
 static void
@@ -527,6 +217,9 @@ create_window (const gchar * geometry)
         GtkWidget *treeview;
         GtkWidget *tab_summary_label;
         GtkTreeSelection *select;
+        GtkWidget *summary_vbox;
+        int row, column;
+        GtkTable *info_table;
 
         app = NULL;
 
@@ -566,6 +259,35 @@ create_window (const gchar * geometry)
         summary_vbox = gtk_vbox_new (FALSE, 10);
         gtk_container_set_border_width (GTK_CONTAINER (summary_vbox), 8);
         tab_summary_label = gtk_label_new (_("Summary"));
+
+        info_table = GTK_TABLE (gtk_table_new (5, 2 * 2, FALSE));
+        gtk_table_set_col_spacings (GTK_TABLE (info_table), 8);
+        gtk_table_set_row_spacings (GTK_TABLE (info_table), 4);
+        gtk_table_set_homogeneous (GTK_TABLE (info_table), TRUE);
+        table_labels = NULL;
+        for (row = 0; row < 5; row++) {
+                for (column = 0; column < 2; column++) {
+                        GtkWidget *key_label;
+                        GtkWidget *value_label;
+
+                        key_label = gtk_label_new (NULL);
+                        gtk_misc_set_alignment (GTK_MISC (key_label), 1.0, 0.5);
+
+                        value_label = gtk_label_new (NULL);
+                        gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
+                        gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
+                        gtk_label_set_ellipsize (GTK_LABEL (value_label), PANGO_ELLIPSIZE_END);
+
+                        gtk_table_attach_defaults (info_table, key_label,   column*2 + 0, column*2 + 1, row, row + 1);
+                        gtk_table_attach_defaults (info_table, value_label, column*2 + 1, column*2 + 2, row, row + 1);
+
+                        table_labels = g_list_append (table_labels, key_label);
+                        table_labels = g_list_append (table_labels, value_label);
+                }
+        }
+        gtk_box_pack_start (GTK_BOX (summary_vbox), GTK_WIDGET (info_table), FALSE, FALSE, 0);
+        gtk_widget_show_all (summary_vbox);
+
 
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();

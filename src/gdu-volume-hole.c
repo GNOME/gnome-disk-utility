@@ -127,6 +127,20 @@ gdu_volume_hole_get_offset (GduPresentable *presentable)
         return volume_hole->priv->offset;
 }
 
+static GList *
+gdu_volume_hole_get_info (GduPresentable *presentable)
+{
+        GduVolumeHole *volume_hole = GDU_VOLUME_HOLE (presentable);
+        GList *kv_pairs = NULL;
+
+	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Free Space")));
+        kv_pairs = g_list_prepend (kv_pairs,
+                                   gdu_util_get_size_for_display (volume_hole->priv->size, TRUE));
+
+        kv_pairs = g_list_reverse (kv_pairs);
+        return kv_pairs;
+}
+
 static void
 gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -135,4 +149,5 @@ gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
         iface->get_name = gdu_volume_hole_get_name;
         iface->get_icon_name = gdu_volume_hole_get_icon_name;
         iface->get_offset = gdu_volume_hole_get_offset;
+        iface->get_info = gdu_volume_hole_get_info;
 }

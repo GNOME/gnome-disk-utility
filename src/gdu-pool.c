@@ -48,6 +48,8 @@ struct _GduPoolPrivate
         DBusGConnection *bus;
         DBusGProxy *proxy;
 
+        char *inhibit_cookie;
+
         GHashTable *devices;     /* object path -> GduDevice* */
         GHashTable *volumes;     /* object path -> GduVolume* */
         GHashTable *drives;      /* object path -> GduDrive* */
@@ -85,6 +87,19 @@ free_list_of_holes (gpointer data)
 static void
 gdu_pool_finalize (GduPool *pool)
 {
+        GError *error;
+
+        /* uninhibit the daemon */
+        error = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_uninhibit_shutdown (pool->priv->proxy,
+                                                                 pool->priv->inhibit_cookie,
+                                                                 &error)) {
+                g_warning ("Couldn't uninhibit shutdown on disks daemon: %s", error->message);
+                g_error_free (error);
+        }
+
+        g_free (pool->priv->inhibit_cookie);
+
         dbus_g_connection_unref (pool->priv->bus);
         g_object_unref (pool->priv->proxy);
         g_hash_table_unref (pool->priv->devices);
@@ -632,7 +647,18 @@ gdu_pool_new (void)
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceJobChanged",
                                      G_CALLBACK (device_job_changed_signal_handler), pool, NULL);
 
+        /* inhibit the daemon */
+        error = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_inhibit_shutdown (pool->priv->proxy,
+                                                               &pool->priv->inhibit_cookie,
+                                                               &error)) {
+                g_warning ("Couldn't inhibit shutdown on disks daemon: %s", error->message);
+                g_error_free (error);
+                goto error;
+        }
+
         /* prime the list of devices */
+        error = NULL;
         if (!org_freedesktop_DeviceKit_Disks_enumerate_devices (pool->priv->proxy, &devices, &error)) {
                 g_warning ("Couldn't enumerate devices: %s", error->message);
                 g_error_free (error);

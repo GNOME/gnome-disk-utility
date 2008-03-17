@@ -25,7 +25,7 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
-#include "gdu-main.h"
+#include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-volume.h"
 #include "gdu-presentable.h"
@@ -80,6 +80,13 @@ device_changed (GduDevice *device, gpointer user_data)
 }
 
 static void
+device_job_changed (GduDevice *device, gpointer user_data)
+{
+        GduVolume *volume = GDU_VOLUME (user_data);
+        g_signal_emit_by_name (volume, "job-changed");
+}
+
+static void
 device_removed (GduDevice *device, gpointer user_data)
 {
         GduVolume *volume = GDU_VOLUME (user_data);
@@ -97,6 +104,7 @@ gdu_volume_new_from_device (GduDevice *device, GduPresentable *enclosing_present
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 
         g_signal_connect (device, "changed", (GCallback) device_changed, volume);
+        g_signal_connect (device, "job-changed", (GCallback) device_job_changed, volume);
         g_signal_connect (device, "removed", (GCallback) device_removed, volume);
 
         return volume;
@@ -144,7 +152,7 @@ gdu_volume_get_name (GduPresentable *presentable)
         if (is_extended_partition) {
                 size = gdu_device_partition_get_size (volume->priv->device);
                 strsize = gdu_util_get_size_for_display (size, FALSE);
-                result = g_strdup_printf (_("%s Extended Partition"), strsize);
+                result = g_strdup_printf (_("%s Extended"), strsize);
                 g_free (strsize);
         } else if (label != NULL && strlen (label) > 0) {
                 result = g_strdup (label);

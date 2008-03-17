@@ -1,7 +1,14 @@
 
-BUILT_SOURCES =                                         \
-        devkit-disks-daemon-glue.h                      \
-        devkit-disks-device-glue.h
+BUILT_SOURCES =                                         	\
+        devkit-disks-daemon-glue.h                      	\
+        devkit-disks-device-glue.h				\
+	gdu-marshal.h			gdu-marshal.c
+
+gdu-marshal.h: gdu-marshal.list
+	glib-genmarshal $< --prefix=gdu_marshal --header > $@
+
+gdu-marshal.c: gdu-marshal.list
+	echo "#include \"gdu-marshal.h\"" > $@ && glib-genmarshal $< --prefix=gdu_marshal --body >> $@
 
 devkit-disks-daemon-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.xml Makefile.am
 	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-daemon-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.xml
@@ -12,8 +19,9 @@ devkit-disks-device-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceK
 bin_PROGRAMS = gnome-disk-utility
 
 gnome_disk_utility_SOURCES = 						\
-	gdu-main.h			gdu-main.c			\
-	gdu-menus.h			gdu-menus.c			\
+					gdu-main.c			\
+	gdu-util.h			gdu-util.c			\
+	gdu-shell.h			gdu-shell.c			\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\
 	gdu-device.c			gdu-device.h			\

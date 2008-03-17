@@ -25,7 +25,7 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
-#include "gdu-main.h"
+#include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-volume-hole.h"
 #include "gdu-presentable.h"
@@ -107,7 +107,7 @@ gdu_volume_hole_get_name (GduPresentable *presentable)
         char *strsize;
 
         strsize = gdu_util_get_size_for_display (volume_hole->priv->size, FALSE);
-        result = g_strdup_printf (_("%s Free Space"), strsize);
+        result = g_strdup_printf (_("%s Unallocated"), strsize);
         g_free (strsize);
 
         return result;

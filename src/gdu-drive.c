@@ -24,7 +24,7 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 
-#include "gdu-main.h"
+#include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-drive.h"
 #include "gdu-presentable.h"
@@ -76,6 +76,13 @@ device_changed (GduDevice *device, gpointer user_data)
 }
 
 static void
+device_job_changed (GduDevice *device, gpointer user_data)
+{
+        GduDrive *drive = GDU_DRIVE (user_data);
+        g_signal_emit_by_name (drive, "job-changed");
+}
+
+static void
 device_removed (GduDevice *device, gpointer user_data)
 {
         GduDrive *drive = GDU_DRIVE (user_data);
@@ -90,6 +97,7 @@ gdu_drive_new_from_device (GduDevice *device)
         drive = GDU_DRIVE (g_object_new (GDU_TYPE_DRIVE, NULL));
         drive->priv->device = g_object_ref (device);
         g_signal_connect (device, "changed", (GCallback) device_changed, drive);
+        g_signal_connect (device, "job-changed", (GCallback) device_job_changed, drive);
         g_signal_connect (device, "removed", (GCallback) device_removed, drive);
 
         return drive;

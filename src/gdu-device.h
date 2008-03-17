@@ -53,8 +53,9 @@ struct _GduDeviceClass
         GObjectClass parent_class;
 
         /* signals */
-        void (*changed) (GduDevice *device);
-        void (*removed) (GduDevice *device);
+        void (*changed)     (GduDevice *device);
+        void (*job_changed) (GduDevice *device);
+        void (*removed)     (GduDevice *device);
 };
 
 GType       gdu_device_get_type              (void);
@@ -63,6 +64,15 @@ const char *gdu_device_get_object_path       (GduDevice   *device);
 GduDevice  *gdu_device_find_parent           (GduDevice   *device);
 
 void        gdu_device_changed               (GduDevice   *device);
+void        gdu_device_job_changed           (GduDevice   *device,
+                                              gboolean    job_in_progress,
+                                              const char *job_id,
+                                              gboolean    job_is_cancellable,
+                                              int         job_num_tasks,
+                                              int         job_cur_task,
+                                              const char *job_cur_task_id,
+                                              double      job_cur_task_percentage);
+
 void        gdu_device_removed               (GduDevice   *device);
 
 const char *gdu_device_get_device_file (GduDevice *device);
@@ -75,6 +85,14 @@ gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
+
+gboolean    gdu_device_job_in_progress (GduDevice *device);
+const char *gdu_device_job_get_id (GduDevice *device);
+gboolean    gdu_device_job_is_cancellable (GduDevice *device);
+int         gdu_device_job_get_num_tasks (GduDevice *device);
+int         gdu_device_job_get_cur_task (GduDevice *device);
+const char *gdu_device_job_get_cur_task_id (GduDevice *device);
+double      gdu_device_job_get_cur_task_percentage (GduDevice *device);
 
 const char *gdu_device_id_get_usage (GduDevice *device);
 const char *gdu_device_id_get_type (GduDevice *device);
@@ -102,5 +120,16 @@ const char *gdu_device_drive_get_vendor (GduDevice *device);
 const char *gdu_device_drive_get_model (GduDevice *device);
 const char *gdu_device_drive_get_revision (GduDevice *device);
 const char *gdu_device_drive_get_serial (GduDevice *device);
+
+/* fire and forget ops */
+void gdu_device_op_mkfs (GduDevice *device, const char *fstype, const char *fslabel, const char *fserase);
+void gdu_device_op_mount (GduDevice *device);
+void gdu_device_op_unmount (GduDevice *device);
+
+void gdu_device_op_cancel_job (GduDevice *device);
+
+/* error reporting */
+const char *gdu_device_job_get_last_error_message (GduDevice *device);
+void        gdu_device_job_clear_last_error_message (GduDevice *device);
 
 #endif /* GDU_DEVICE_H */

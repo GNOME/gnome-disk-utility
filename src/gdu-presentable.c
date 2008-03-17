@@ -81,6 +81,14 @@ gdu_presentable_base_init (gpointer g_class)
                     g_cclosure_marshal_VOID__VOID,
                     G_TYPE_NONE, 0);
 
+      g_signal_new ("job-changed",
+                    GDU_TYPE_PRESENTABLE,
+                    G_SIGNAL_RUN_LAST,
+                    G_STRUCT_OFFSET (GduPresentableIface, job_changed),
+                    NULL, NULL,
+                    g_cclosure_marshal_VOID__VOID,
+                    G_TYPE_NONE, 0);
+
       g_signal_new ("removed",
                     GDU_TYPE_PRESENTABLE,
                     G_SIGNAL_RUN_LAST,

@@ -23,7 +23,7 @@
 #include <glib/gi18n.h>
 #include <string.h>
 
-#include "gdu-main.h"
+#include "gdu-util.h"
 #include "gdu-tree.h"
 
 enum

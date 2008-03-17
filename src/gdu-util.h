@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-menus.h
+/* gdu-util.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -19,11 +19,12 @@
  * USA
  */
 
-#ifndef GNOME_DISK_UTILITY_MENUS_H
-#define GNOME_DISK_UTILITY_MENUS_H
+#ifndef GDU_UTIL_H
+#define GDU_UTIL_H
 
-#include <gtk/gtk.h>
+#include "gdu-device.h"
 
-GtkUIManager *gdu_create_ui_manager (const gchar * group, gpointer user_data);
+char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
+char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
 
-#endif /* GNOME_DISK_UTILITY_MENUS_H */
+#endif /* GDU_UTIL_H */

@@ -38,8 +38,9 @@ struct _GduPresentableIface
         GTypeInterface g_iface;
 
         /* signals */
-        void (*changed) (GduPresentable *presentable);
-        void (*removed) (GduPresentable *presentable);
+        void (*changed)     (GduPresentable *presentable);
+        void (*removed)     (GduPresentable *presentable);
+        void (*job_changed) (GduPresentable *presentable);
 
         /* virtual table */
         GduDevice *      (*get_device)                (GduPresentable *presentable);

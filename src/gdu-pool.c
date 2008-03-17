@@ -30,6 +30,7 @@
 #include "gdu-volume-hole.h"
 
 #include "devkit-disks-daemon-glue.h"
+#include "gdu-marshal.h"
 
 enum {
         DEVICE_ADDED,
@@ -532,6 +533,35 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         }
 }
 
+static void
+device_job_changed_signal_handler (DBusGProxy *proxy,
+                                   const char *object_path,
+                                   gboolean    job_in_progress,
+                                   const char *job_id,
+                                   gboolean    job_is_cancellable,
+                                   int         job_num_tasks,
+                                   int         job_cur_task,
+                                   const char *job_cur_task_id,
+                                   double      job_cur_task_percentage,
+                                   gpointer user_data)
+{
+        GduPool *pool = GDU_POOL (user_data);
+        GduDevice *device;
+
+        if ((device = gdu_pool_get_by_object_path (pool, object_path)) != NULL) {
+                gdu_device_job_changed (device,
+                                        job_in_progress,
+                                        job_id,
+                                        job_is_cancellable,
+                                        job_num_tasks,
+                                        job_cur_task,
+                                        job_cur_task_id,
+                                        job_cur_task_percentage);
+        } else {
+                g_warning ("unknown device to on job-change, object_path='%s'", object_path);
+        }
+}
+
 static int
 ptr_array_strcmp (const char **a, const char **b)
 {
@@ -561,6 +591,19 @@ gdu_pool_new (void)
         pool->priv->drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->drive_holes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, free_list_of_holes);
 
+        dbus_g_object_register_marshaller (
+                gdu_marshal_VOID__STRING_BOOLEAN_STRING_BOOLEAN_INT_INT_STRING_DOUBLE,
+                G_TYPE_NONE,
+                G_TYPE_STRING,
+                G_TYPE_BOOLEAN,
+                G_TYPE_STRING,
+                G_TYPE_BOOLEAN,
+                G_TYPE_INT,
+                G_TYPE_INT,
+                G_TYPE_STRING,
+                G_TYPE_DOUBLE,
+                G_TYPE_INVALID);
+
 	pool->priv->proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
                                                        "org.freedesktop.DeviceKit.Disks",
                                                        "/",
@@ -568,12 +611,26 @@ gdu_pool_new (void)
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceAdded", G_TYPE_STRING, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceRemoved", G_TYPE_STRING, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceChanged", G_TYPE_STRING, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy,
+                                 "DeviceJobChanged",
+                                 G_TYPE_STRING,
+                                 G_TYPE_BOOLEAN,
+                                 G_TYPE_STRING,
+                                 G_TYPE_BOOLEAN,
+                                 G_TYPE_INT,
+                                 G_TYPE_INT,
+                                 G_TYPE_STRING,
+                                 G_TYPE_DOUBLE,
+                                 G_TYPE_INVALID);
+
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceAdded",
                                      G_CALLBACK (device_added_signal_handler), pool, NULL);
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceRemoved",
                                      G_CALLBACK (device_removed_signal_handler), pool, NULL);
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceChanged",
                                      G_CALLBACK (device_changed_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceJobChanged",
+                                     G_CALLBACK (device_job_changed_signal_handler), pool, NULL);
 
         /* prime the list of devices */
         if (!org_freedesktop_DeviceKit_Disks_enumerate_devices (pool->priv->proxy, &devices, &error)) {

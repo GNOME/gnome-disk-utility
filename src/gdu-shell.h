@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "gdu-presentable.h"
+#include "gdu-pool.h"
 
 #define GDU_TYPE_SHELL             (gdu_shell_get_type ())
 #define GDU_SHELL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SHELL, GduShell))
@@ -57,5 +58,6 @@ GType           gdu_shell_get_type                 (void);
 GduShell       *gdu_shell_new                      (void);
 GtkWidget      *gdu_shell_get_toplevel             (GduShell *shell);
 GduPresentable *gdu_shell_get_selected_presentable (GduShell *shell);
+GduPool        *gdu_shell_get_pool                 (GduShell *shell);
 
 #endif /* GDU_SHELL_H */

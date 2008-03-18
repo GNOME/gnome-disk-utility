@@ -25,6 +25,7 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-page.h			gdu-page.c			\
 	gdu-page-erase.h		gdu-page-erase.c		\
 	gdu-page-summary.h		gdu-page-summary.c		\
+	gdu-page-partitioning.h		gdu-page-partitioning.c		\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\
 	gdu-device.c			gdu-device.h			\

@@ -731,3 +731,26 @@ gdu_pool_get_presentables (GduPool *pool)
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
 }
+
+GList *
+gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable)
+{
+        GList *l;
+        GList *ret;
+
+        ret = NULL;
+        for (l = pool->priv->presentables; l != NULL; l = l->next) {
+                GduPresentable *p = l->data;
+                GduPresentable *e;
+
+                e = gdu_presentable_get_enclosing_presentable (p);
+                if (e != NULL) {
+                        if (e == presentable)
+                                ret = g_list_prepend (ret, g_object_ref (p));
+
+                        g_object_unref (e);
+                }
+        }
+
+        return ret;
+}

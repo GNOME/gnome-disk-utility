@@ -161,6 +161,18 @@ gdu_presentable_get_offset (GduPresentable *presentable)
   return (* iface->get_offset) (presentable);
 }
 
+guint64
+gdu_presentable_get_size (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), 0);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_size) (presentable);
+}
+
 GList *
 gdu_presentable_get_info (GduPresentable *presentable)
 {

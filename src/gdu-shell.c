@@ -38,6 +38,7 @@
 #include "gdu-page.h"
 #include "gdu-page-erase.h"
 #include "gdu-page-summary.h"
+#include "gdu-page-partitioning.h"
 
 struct _GduShellPrivate
 {
@@ -118,6 +119,12 @@ GduPresentable *
 gdu_shell_get_selected_presentable (GduShell *shell)
 {
         return shell->priv->presentable_now_showing;
+}
+
+GduPool *
+gdu_shell_get_pool (GduShell *shell)
+{
+        return shell->priv->pool;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -672,6 +679,7 @@ create_window (GduShell *shell)
         shell->priv->notebook = gtk_notebook_new ();
         add_page (shell, GDU_TYPE_PAGE_SUMMARY);
         add_page (shell, GDU_TYPE_PAGE_ERASE);
+        add_page (shell, GDU_TYPE_PAGE_PARTITIONING);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->cluebar, FALSE, FALSE, 0);

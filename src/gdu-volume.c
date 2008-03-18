@@ -181,6 +181,15 @@ gdu_volume_get_offset (GduPresentable *presentable)
         return 0;
 }
 
+static guint64
+gdu_volume_get_size (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        if (gdu_device_is_partition (volume->priv->device))
+                return gdu_device_partition_get_size (volume->priv->device);
+        return gdu_device_get_size (volume->priv->device);
+}
+
 static const char *
 gpt_part_type_guid_to_string (const char *guid)
 {
@@ -403,5 +412,6 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_name = gdu_volume_get_name;
         iface->get_icon_name = gdu_volume_get_icon_name;
         iface->get_offset = gdu_volume_get_offset;
+        iface->get_size = gdu_volume_get_size;
         iface->get_info = gdu_volume_get_info;
 }

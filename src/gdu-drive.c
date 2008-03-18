@@ -165,6 +165,13 @@ gdu_drive_get_offset (GduPresentable *presentable)
         return 0;
 }
 
+static guint64
+gdu_drive_get_size (GduPresentable *presentable)
+{
+        GduDrive *drive = GDU_DRIVE (presentable);
+        return gdu_device_get_size (drive->priv->device);
+}
+
 static GList *
 gdu_drive_get_info (GduPresentable *presentable)
 {
@@ -238,5 +245,6 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_name = gdu_drive_get_name;
         iface->get_icon_name = gdu_drive_get_icon_name;
         iface->get_offset = gdu_drive_get_offset;
+        iface->get_size = gdu_drive_get_size;
         iface->get_info = gdu_drive_get_info;
 }

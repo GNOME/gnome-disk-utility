@@ -442,6 +442,7 @@ gdu_page_erase_init (GduPageErase *page)
 
 
         page->priv->main_vbox = gtk_vbox_new (FALSE, 10);
+        gtk_container_set_border_width (GTK_CONTAINER (page->priv->main_vbox), 8);
 
         /* volume format + label */
         label = gtk_label_new (NULL);

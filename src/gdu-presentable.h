@@ -48,6 +48,7 @@ struct _GduPresentableIface
         char *           (*get_name)                  (GduPresentable *presentable);
         char *           (*get_icon_name)             (GduPresentable *presentable);
         guint64          (*get_offset)                (GduPresentable *presentable);
+        guint64          (*get_size)                  (GduPresentable *presentable);
         GList *          (*get_info)                  (GduPresentable *presentable);
 };
 
@@ -57,6 +58,7 @@ GduPresentable *gdu_presentable_get_enclosing_presentable (GduPresentable *prese
 char           *gdu_presentable_get_name                  (GduPresentable *presentable);
 char           *gdu_presentable_get_icon_name             (GduPresentable *presentable);
 guint64         gdu_presentable_get_offset                (GduPresentable *presentable);
+guint64         gdu_presentable_get_size                  (GduPresentable *presentable);
 GList          *gdu_presentable_get_info                  (GduPresentable *presentable);
 
 #endif /* GDU_PRESENTABLE_H */

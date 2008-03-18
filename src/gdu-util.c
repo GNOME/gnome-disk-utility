@@ -170,3 +170,39 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
 
         return s;
 }
+
+char *
+gdu_get_job_description (const char *job_id)
+{
+        char *s;
+        if (strcmp (job_id, "Erase") == 0) {
+                s = g_strdup (_("Erasing"));
+        } else if (strcmp (job_id, "CreateFilesystem") == 0) {
+                s = g_strdup (_("Creating File System"));
+        } else if (strcmp (job_id, "Mount") == 0) {
+                s = g_strdup (_("Mounting"));
+        } else if (strcmp (job_id, "Unmount") == 0) {
+                s = g_strdup (_("Unmounting"));
+        } else {
+                s = g_strdup_printf ("%s", job_id);
+        }
+        return s;
+}
+
+char *
+gdu_get_task_description (const char *task_id)
+{
+        char *s;
+        if (strcmp (task_id, "zeroing") == 0) {
+                s = g_strdup (_("Zeroing data"));
+        } else if (strcmp (task_id, "sync") == 0) {
+                s = g_strdup (_("Flushing data to disk"));
+        } else if (strcmp (task_id, "mkfs") == 0) {
+                s = g_strdup (_("Creating File System"));
+        } else if (strlen (task_id) == 0) {
+                s = g_strdup ("");
+        } else {
+                s = g_strdup_printf ("%s", task_id);
+        }
+        return s;
+}

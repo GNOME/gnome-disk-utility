@@ -22,6 +22,9 @@ gnome_disk_utility_SOURCES = 						\
 					gdu-main.c			\
 	gdu-util.h			gdu-util.c			\
 	gdu-shell.h			gdu-shell.c			\
+	gdu-page.h			gdu-page.c			\
+	gdu-page-erase.h		gdu-page-erase.c		\
+	gdu-page-summary.h		gdu-page-summary.c		\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\
 	gdu-device.c			gdu-device.h			\

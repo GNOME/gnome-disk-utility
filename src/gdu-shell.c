@@ -35,21 +35,28 @@
 #include "gdu-pool.h"
 #include "gdu-tree.h"
 
+#include "gdu-page.h"
+#include "gdu-page-erase.h"
+#include "gdu-page-summary.h"
+
 struct _GduShellPrivate
 {
         GtkWidget *app_window;
         GduPool *pool;
 
+        /* an ordered list of GduPage objects (as they will appear in the UI) */
+        GList *pages;
+
+
         PolKitAction *pk_mount_action;
-        PolKitAction *pk_erase_action;
 
         PolKitGnomeAction *mount_action;
         PolKitGnomeAction *unmount_action;
         PolKitGnomeAction *eject_action;
-        PolKitGnomeAction *erase_action;
 
         GduPresentable *presentable_now_showing;
 
+        GtkActionGroup *action_group;
         GtkUIManager *ui_manager;
 
         GtkWidget *cluebar;
@@ -59,15 +66,9 @@ struct _GduShellPrivate
         int cluebar_pulse_timer_id;
 
         GtkWidget *notebook;
-        GtkWidget *summary_page;
-        GtkWidget *erase_page;
-
-        GtkWidget *page_erase_label_entry;
-        GtkWidget *page_erase_type_combo_box;
 
         GList *table_labels;
 
-        int secure_erase_option;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -113,49 +114,16 @@ gdu_shell_get_toplevel (GduShell *shell)
         return shell->priv->app_window;
 }
 
+GduPresentable *
+gdu_shell_get_selected_presentable (GduShell *shell)
+{
+        return shell->priv->presentable_now_showing;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 
-static gboolean fstype_combo_box_select (GtkComboBox *combo_box, const char *fstype);
-
 static void shell_update (GduShell *shell);
-
-
-static char *
-get_job_description (const char *job_id)
-{
-        char *s;
-        if (strcmp (job_id, "Erase") == 0) {
-                s = g_strdup (_("Erasing"));
-        } else if (strcmp (job_id, "CreateFilesystem") == 0) {
-                s = g_strdup (_("Creating File System"));
-        } else if (strcmp (job_id, "Mount") == 0) {
-                s = g_strdup (_("Mounting"));
-        } else if (strcmp (job_id, "Unmount") == 0) {
-                s = g_strdup (_("Unmounting"));
-        } else {
-                s = g_strdup_printf ("%s", job_id);
-        }
-        return s;
-}
-
-static char *
-get_task_description (const char *task_id)
-{
-        char *s;
-        if (strcmp (task_id, "zeroing") == 0) {
-                s = g_strdup (_("Zeroing data"));
-        } else if (strcmp (task_id, "sync") == 0) {
-                s = g_strdup (_("Flushing data to disk"));
-        } else if (strcmp (task_id, "mkfs") == 0) {
-                s = g_strdup (_("Creating File System"));
-        } else if (strlen (task_id) == 0) {
-                s = g_strdup ("");
-        } else {
-                s = g_strdup_printf ("%s", task_id);
-        }
-        return s;
-}
 
 static gboolean
 cluebar_pulse_timeout_handler (gpointer user_data)
@@ -222,8 +190,8 @@ update_cluebar (GduShell *shell, GduDevice *device)
                 gtk_widget_hide (shell->priv->cluebar_progress_bar);
 
         } else {
-                job_description = get_job_description (gdu_device_job_get_id (device));
-                task_description = get_task_description (gdu_device_job_get_cur_task_id (device));
+                job_description = gdu_get_job_description (gdu_device_job_get_id (device));
+                task_description = gdu_get_task_description (gdu_device_job_get_cur_task_id (device));
 
                 gtk_label_set_markup (GTK_LABEL (shell->priv->cluebar_label), job_description);
 
@@ -270,11 +238,8 @@ update_cluebar (GduShell *shell, GduDevice *device)
 static void
 shell_update (GduShell *shell)
 {
-        GList *i;
-        GList *j;
-        GList *kv_pairs;
+        GList *l;
         GduDevice *device;
-        gboolean show_erase;
         gboolean show_cluebar;
         gboolean job_in_progress;
         gboolean last_job_failed;
@@ -282,7 +247,6 @@ shell_update (GduShell *shell)
         gboolean can_unmount;
         gboolean can_eject;
 
-        show_erase = FALSE;
         show_cluebar = FALSE;
         job_in_progress = FALSE;
         last_job_failed = FALSE;
@@ -293,37 +257,12 @@ shell_update (GduShell *shell)
         /* figure out what pages in the notebook to show + update pages */
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                show_erase = TRUE;
-
                 if (gdu_device_job_in_progress (device)) {
                         job_in_progress = TRUE;
                 }
 
                 if (gdu_device_job_get_last_error_message (device) != NULL) {
                         last_job_failed = TRUE;
-                }
-
-                if (!job_in_progress) {
-                        if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                                if (!fstype_combo_box_select (GTK_COMBO_BOX (shell->priv->page_erase_type_combo_box),
-                                                              gdu_device_id_get_type (device))) {
-                                        /* if fstype of device isn't in creatable, clear selection item */
-                                        gtk_combo_box_set_active (GTK_COMBO_BOX (shell->priv->page_erase_type_combo_box), -1);
-                                        gtk_entry_set_text (GTK_ENTRY (shell->priv->page_erase_label_entry), "");
-                                } else {
-                                        /* it was.. choose the same label */
-                                        gtk_entry_set_text (GTK_ENTRY (shell->priv->page_erase_label_entry),
-                                                            gdu_device_id_get_label (device));
-                                }
-                        } else if (strlen (gdu_device_id_get_usage (device)) == 0) {
-                                /* couldn't identify anything; choose first in creatable fs list */
-                                gtk_combo_box_set_active (GTK_COMBO_BOX (shell->priv->page_erase_type_combo_box), 0);
-                                gtk_entry_set_text (GTK_ENTRY (shell->priv->page_erase_label_entry), "");
-                        } else {
-                                /* something else, not a file system, clear selection item */
-                                gtk_combo_box_set_active (GTK_COMBO_BOX (shell->priv->page_erase_type_combo_box), -1);
-                                gtk_entry_set_text (GTK_ENTRY (shell->priv->page_erase_label_entry), "");
-                        }
                 }
 
                 if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
@@ -341,20 +280,28 @@ shell_update (GduShell *shell)
 
         }
 
-        if (show_erase)
-                gtk_widget_show (shell->priv->erase_page);
-        else
-                gtk_widget_hide (shell->priv->erase_page);
+        for (l = shell->priv->pages; l != NULL; l = l->next) {
+                GduPage *page = GDU_PAGE (l->data);
+                gboolean show_page;
+                GtkWidget *page_widget;
 
-        /* make all pages insenstive if there's a job running on the device or the last job failed */
-        if (job_in_progress || last_job_failed) {
-                show_cluebar = TRUE;
-                gtk_widget_set_sensitive (shell->priv->summary_page, FALSE);
-                gtk_widget_set_sensitive (shell->priv->erase_page, FALSE);
-        } else {
-                gtk_widget_set_sensitive (shell->priv->summary_page, TRUE);
-                gtk_widget_set_sensitive (shell->priv->erase_page, TRUE);
+                show_page = gdu_page_update (page, shell->priv->presentable_now_showing);
+                page_widget = gdu_page_get_widget (page);
+
+                if (show_page)
+                        gtk_widget_show (page_widget);
+                else
+                        gtk_widget_hide (page_widget);
+
+                /* make the page insenstive if there's a job running on the device or the last job failed */
+                if (job_in_progress || last_job_failed)
+                        gtk_widget_set_sensitive (page_widget, FALSE);
+                else
+                        gtk_widget_set_sensitive (page_widget, TRUE);
         }
+
+        if (job_in_progress || last_job_failed)
+                show_cluebar = TRUE;
 
         /* cluebar handling */
         if (show_cluebar) {
@@ -372,44 +319,6 @@ shell_update (GduShell *shell)
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
         polkit_gnome_action_set_sensitive (shell->priv->unmount_action, can_unmount);
         polkit_gnome_action_set_sensitive (shell->priv->eject_action, can_eject);
-
-        /* shell->priv->eject_action sensitivity is updated in page_erase_type_combo_box_changed() triggered
-         * from above when updating the erase page
-         */
-
-        /* update key/value pairs on summary page */
-        kv_pairs = gdu_presentable_get_info (shell->priv->presentable_now_showing);
-        for (i = kv_pairs, j = shell->priv->table_labels; i != NULL && j != NULL; i = i->next, j = j->next) {
-                char *key;
-                char *key2;
-                char *value;
-                GtkWidget *key_label;
-                GtkWidget *value_label;
-
-                key = i->data;
-                key_label = j->data;
-                i = i->next;
-                j = j->next;
-                if (i == NULL || j == NULL) {
-                        g_free (key);
-                        break;
-                }
-                value = i->data;
-                value_label = j->data;
-
-                key2 = g_strdup_printf ("<b>%s:</b>", key);
-                gtk_label_set_markup (GTK_LABEL (key_label), key2);
-                gtk_label_set_markup (GTK_LABEL (value_label), value);
-                g_free (key2);
-        }
-        g_list_foreach (kv_pairs, (GFunc) g_free, NULL);
-        g_list_free (kv_pairs);
-
-        /* clear remaining labels */
-        for ( ; j != NULL; j = j->next) {
-                GtkWidget *label = j->data;
-                gtk_label_set_markup (GTK_LABEL (label), "");
-        }
 }
 
 static void
@@ -466,391 +375,6 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
         //GduShell *shell = user_data;
         //GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
         /* TODO FIX: if presentable we currently show is removed.. go to computer presentable */
-}
-
-static GtkWidget *
-create_summary_page (GduShell *shell)
-{
-        int row;
-        GtkWidget *vbox;
-        GtkWidget *info_table;
-
-        vbox = gtk_vbox_new (FALSE, 10);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
-
-        shell->priv->table_labels = NULL;
-
-        info_table = gtk_table_new (10, 2, FALSE);
-        gtk_table_set_col_spacings (GTK_TABLE (info_table), 8);
-        gtk_table_set_row_spacings (GTK_TABLE (info_table), 4);
-        for (row = 0; row < 10; row++) {
-
-                GtkWidget *key_label;
-                GtkWidget *value_label;
-
-                key_label = gtk_label_new (NULL);
-                gtk_misc_set_alignment (GTK_MISC (key_label), 1.0, 0.5);
-
-                value_label = gtk_label_new (NULL);
-                gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
-                gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
-                gtk_label_set_ellipsize (GTK_LABEL (value_label), PANGO_ELLIPSIZE_END);
-
-                gtk_table_attach (GTK_TABLE (info_table), key_label,   0, 1, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-                gtk_table_attach (GTK_TABLE (info_table), value_label, 1, 2, row, row + 1,
-                                  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-                shell->priv->table_labels = g_list_append (shell->priv->table_labels, key_label);
-                shell->priv->table_labels = g_list_append (shell->priv->table_labels, value_label);
-        }
-        gtk_box_pack_start (GTK_BOX (vbox), info_table, FALSE, FALSE, 0);
-
-        return vbox;
-}
-
-enum {
-        SECURE_ERASE_NONE,
-        SECURE_ERASE_OVERWRITE,
-        SECURE_ERASE_OVERWRITE3,
-        SECURE_ERASE_OVERWRITE7,
-        SECURE_ERASE_OVERWRITE35,
-};
-
-
-static void
-secure_erase_radio_toggled_none (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        shell->priv->secure_erase_option = SECURE_ERASE_NONE;
-}
-
-static void
-secure_erase_radio_toggled_overwrite (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        shell->priv->secure_erase_option = SECURE_ERASE_OVERWRITE;
-}
-
-static void
-secure_erase_radio_toggled_overwrite3 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        shell->priv->secure_erase_option = SECURE_ERASE_OVERWRITE3;
-}
-
-static void
-secure_erase_radio_toggled_overwrite7 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        shell->priv->secure_erase_option = SECURE_ERASE_OVERWRITE7;
-}
-
-static void
-secure_erase_radio_toggled_overwrite35 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        shell->priv->secure_erase_option = SECURE_ERASE_OVERWRITE35;
-}
-
-typedef struct
-{
-        char *id;
-        int max_label_len;
-        char *description;
-} CreatableFilesystem;
-
-/* TODO: retrieve this list from DeviceKit-disks */
-
-static CreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11},
-        {"ext3", 16},
-        {"empty", 0},
-};
-
-static int num_creatable_fstypes = sizeof (creatable_fstypes) / sizeof (CreatableFilesystem);
-
-static CreatableFilesystem *
-find_creatable_filesystem_for_fstype (const char *fstype)
-{
-        int n;
-        CreatableFilesystem *ret;
-
-        ret = NULL;
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                if (strcmp (fstype, creatable_fstypes[n].id) == 0) {
-                        ret = &(creatable_fstypes[n]);
-                        break;
-                }
-        }
-
-        return ret;
-}
-
-static GtkWidget *
-fstype_combo_box_create (void)
-{
-        int n;
-        GtkListStore *store;
-	GtkCellRenderer *renderer;
-        GtkWidget *combo_box;
-
-        store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                const char *fstype;
-                char *fstype_name;
-                GtkTreeIter iter;
-
-                fstype = creatable_fstypes[n].id;
-
-                if (strcmp (fstype, "empty") == 0) {
-                        fstype_name = g_strdup (_("Empty (don't create a file system)"));
-                } else {
-                        fstype_name = gdu_util_get_fstype_for_display (fstype, NULL, TRUE);
-                }
-
-                gtk_list_store_append (store, &iter);
-                gtk_list_store_set (store, &iter,
-                                    0, fstype,
-                                    1, fstype_name,
-                                    -1);
-
-                g_free (fstype_name);
-        }
-
-        combo_box = gtk_combo_box_new ();
-	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
-        g_object_unref (store);
-
-	renderer = gtk_cell_renderer_text_new ();
-	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, TRUE);
-	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), renderer,
-					"text", 1,
-					NULL);
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
-
-        return combo_box;
-}
-
-static gboolean
-fstype_combo_box_select (GtkComboBox *combo_box, const char *fstype)
-{
-        GtkTreeModel *model;
-        GtkTreeIter iter;
-        gboolean ret;
-
-        ret = FALSE;
-
-        model = gtk_combo_box_get_model (combo_box);
-        gtk_tree_model_get_iter_first (model, &iter);
-        do {
-                char *iter_fstype;
-
-                gtk_tree_model_get (model, &iter, 0, &iter_fstype, -1);
-                if (iter_fstype != NULL && strcmp (fstype, iter_fstype) == 0) {
-                        gtk_combo_box_set_active_iter (combo_box, &iter);
-                        ret = TRUE;
-                }
-                g_free (iter_fstype);
-        } while (!ret && gtk_tree_model_iter_next (model, &iter));
-
-        return ret;
-}
-
-static char *
-fstype_combo_box_get_selected (GtkComboBox *combo_box)
-{
-        GtkTreeModel *model;
-        GtkTreeIter iter;
-        char *fstype;
-
-        model = gtk_combo_box_get_model (combo_box);
-        fstype = NULL;
-        if (gtk_combo_box_get_active_iter (combo_box, &iter))
-                gtk_tree_model_get (model, &iter, 0, &fstype, -1);
-
-        return fstype;
-}
-
-static void
-page_erase_type_combo_box_changed (GtkComboBox *combo_box, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        char *fstype;
-        CreatableFilesystem *creatable_fs;
-        gboolean label_entry_sensitive;
-        gboolean can_erase;
-        int max_label_len;
-
-        label_entry_sensitive = FALSE;
-        can_erase = FALSE;
-        max_label_len = 0;
-
-        fstype = fstype_combo_box_get_selected (combo_box);
-        if (fstype != NULL) {
-                creatable_fs = find_creatable_filesystem_for_fstype (fstype);
-                if (creatable_fs != NULL) {
-                        max_label_len = creatable_fs->max_label_len;
-                }
-                can_erase = TRUE;
-        }
-
-        if (max_label_len > 0)
-                label_entry_sensitive = TRUE;
-
-        gtk_entry_set_max_length (GTK_ENTRY (shell->priv->page_erase_label_entry), max_label_len);
-        gtk_widget_set_sensitive (shell->priv->page_erase_label_entry, label_entry_sensitive);
-        polkit_gnome_action_set_sensitive (shell->priv->erase_action, can_erase);
-
-        g_free (fstype);
-}
-
-static GtkWidget *
-create_erase_page (GduShell *shell)
-{
-        GtkWidget *label;
-        GtkWidget *align;
-        GtkWidget *vbox;
-        GtkWidget *main_vbox;
-        GtkWidget *radio1;
-        GtkWidget *radio2;
-        GtkWidget *radio3;
-        GtkWidget *radio4;
-        GtkWidget *radio5;
-        GtkWidget *table;
-        GtkWidget *combo_box;
-        GtkWidget *entry;
-        GtkWidget *button;
-        GtkWidget *button_box;
-
-        main_vbox = gtk_vbox_new (FALSE, 10);
-
-        /* volume format + label */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Volume</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-        vbox = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox);
-        gtk_box_pack_start (GTK_BOX (main_vbox), align, FALSE, TRUE, 0);
-
-        /* explanatory text */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To erase a volume or disk, select it from the tree and then select the format and label to use."));
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-
-        /* file system label + type */
-        table = gtk_table_new (2, 2, FALSE);
-        gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-
-        entry = gtk_entry_new (); /* todo: set max length, sensitivity according to fstype */
-        //gtk_entry_set_text (GTK_ENTRY (entry), gdu_device_id_get_label (device));
-        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        shell->priv->page_erase_label_entry = entry;
-
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        combo_box = fstype_combo_box_create ();
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, 1, 2,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-
-        shell->priv->page_erase_type_combo_box = combo_box;
-
-        /* update sensivity of label */
-        g_signal_connect (shell->priv->page_erase_type_combo_box, "changed",
-                          G_CALLBACK (page_erase_type_combo_box_changed), shell);
-
-        /* secure erase */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Secure Erase</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-        vbox = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox);
-        gtk_box_pack_start (GTK_BOX (main_vbox), align, FALSE, TRUE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("Select if existing data on the volume should be erased before formatting it."));
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
-
-        radio1 = gtk_radio_button_new_with_mnemonic (NULL,
-                                                     _("_Don't overwrite data"));
-        radio2 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("_Overwrite data with zeroes"));
-        radio3 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes _3 times"));
-        radio4 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes _7 times"));
-        radio5 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes 3_5 times"));
-        gtk_box_pack_start (GTK_BOX (vbox), radio1, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio2, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio3, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio4, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio5, FALSE, TRUE, 0);
-        /* TODO: read this from gconf and visually indicate lockdown (admin may want to force sanitation policy) */
-        switch (shell->priv->secure_erase_option) {
-        case SECURE_ERASE_NONE:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio1), TRUE);
-                break;
-        case SECURE_ERASE_OVERWRITE:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
-                break;
-        case SECURE_ERASE_OVERWRITE3:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio3), TRUE);
-                break;
-        case SECURE_ERASE_OVERWRITE7:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio4), TRUE);
-                break;
-        case SECURE_ERASE_OVERWRITE35:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio5), TRUE);
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-        }
-	g_signal_connect (radio1, "toggled", G_CALLBACK (secure_erase_radio_toggled_none), shell);
-        g_signal_connect (radio2, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite), shell);
-	g_signal_connect (radio3, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite3), shell);
-	g_signal_connect (radio4, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite7), shell);
-	g_signal_connect (radio5, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite35), shell);
-
-
-        button_box = gtk_hbutton_box_new ();
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_END);
-        gtk_box_set_spacing (GTK_BOX (button_box), 6);
-
-        button = polkit_gnome_action_create_button (shell->priv->erase_action);
-        gtk_container_add (GTK_CONTAINER (button_box), button);
-        gtk_box_pack_start (GTK_BOX (vbox), button_box, TRUE, TRUE, 0);
-
-        return main_vbox;
 }
 
 static GtkWidget *
@@ -927,70 +451,6 @@ eject_action_callback (GtkAction *action, gpointer user_data)
         g_warning ("todo: eject");
 }
 
-static void
-erase_action_callback (GtkAction *action, gpointer user_data)
-{
-        GduShell *shell = user_data;
-        int response;
-        GtkWidget *dialog;
-        const char *fslabel;
-        char *fstype;
-        const char *fserase;
-        GduDevice *device;
-
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        g_assert (device != NULL);
-
-        fstype = fstype_combo_box_get_selected (GTK_COMBO_BOX (shell->priv->page_erase_type_combo_box));
-        if (GTK_WIDGET_IS_SENSITIVE (shell->priv->page_erase_label_entry))
-                fslabel = gtk_entry_get_text (GTK_ENTRY (shell->priv->page_erase_label_entry));
-        else
-                fslabel = "";
-
-        switch (shell->priv->secure_erase_option) {
-        case SECURE_ERASE_NONE:
-                fserase = "none";
-                break;
-        case SECURE_ERASE_OVERWRITE:
-                fserase = "full";
-                break;
-        case SECURE_ERASE_OVERWRITE3:
-                fserase = "full3pass";
-                break;
-        case SECURE_ERASE_OVERWRITE7:
-                fserase = "full7pass";
-                break;
-        case SECURE_ERASE_OVERWRITE35:
-                fserase = "full35pass";
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-        }
-
-        /* TODO: mention what drive the volume is on etc. */
-        dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (shell->priv->app_window),
-                                                     GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                     GTK_MESSAGE_WARNING,
-                                                     GTK_BUTTONS_CANCEL,
-                                                     _("<b><big>Are you sure you want to erase the volume?</big></b>"));
-
-        gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                                    _("All data on the volume will be irrecovably erase. Make sure data important to you is backed up. This action cannot be undone."));
-        /* ... until we add data recovery to g-d-u! */
-
-        gtk_dialog_add_button (GTK_DIALOG (dialog), _("Erase"), 0);
-
-        response = gtk_dialog_run (GTK_DIALOG (dialog));
-        gtk_widget_destroy (dialog);
-        if (response != 0)
-                goto out;
-
-        gdu_device_op_mkfs (device, fstype, fslabel, fserase);
-
-out:
-        g_free (fstype);
-}
 
 static void
 help_contents_action_callback (GtkAction *action, gpointer user_data)
@@ -1068,13 +528,12 @@ static GtkActionEntry entries[] = {
 static GtkUIManager *
 create_ui_manager (GduShell *shell)
 {
-        GtkActionGroup *action_group;
         GtkUIManager *ui_manager;
         GError *error;
 
-        action_group = gtk_action_group_new ("GnomeDiskUtilityActions");
-        gtk_action_group_set_translation_domain (action_group, NULL);
-        gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries), shell);
+        shell->priv->action_group = gtk_action_group_new ("GnomeDiskUtilityActions");
+        gtk_action_group_set_translation_domain (shell->priv->action_group, NULL);
+        gtk_action_group_add_actions (shell->priv->action_group, entries, G_N_ELEMENTS (entries), shell);
 
         /* -------------------------------------------------------------------------------- */
 
@@ -1090,7 +549,7 @@ create_ui_manager (GduShell *shell)
                       "self-blocked-icon-name", "gdu-mount",
                       NULL);
         g_signal_connect (shell->priv->mount_action, "activate", G_CALLBACK (mount_action_callback), shell);
-        gtk_action_group_add_action (action_group, GTK_ACTION (shell->priv->mount_action));
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->mount_action));
 
         /* -------------------------------------------------------------------------------- */
 
@@ -1106,7 +565,7 @@ create_ui_manager (GduShell *shell)
                       "self-blocked-icon-name", "gdu-unmount",
                       NULL);
         g_signal_connect (shell->priv->unmount_action, "activate", G_CALLBACK (unmount_action_callback), shell);
-        gtk_action_group_add_action (action_group, GTK_ACTION (shell->priv->unmount_action));
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->unmount_action));
 
         /* -------------------------------------------------------------------------------- */
 
@@ -1122,28 +581,12 @@ create_ui_manager (GduShell *shell)
                       "self-blocked-icon-name", "gdu-eject",
                       NULL);
         g_signal_connect (shell->priv->eject_action, "activate", G_CALLBACK (eject_action_callback), shell);
-        gtk_action_group_add_action (action_group, GTK_ACTION (shell->priv->eject_action));
-
-        /* -------------------------------------------------------------------------------- */
-
-        shell->priv->erase_action = polkit_gnome_action_new_default ("erase",
-                                                               shell->priv->pk_erase_action,
-                                                               _("_Erase"),
-                                                               _("Erase"));
-        g_object_set (shell->priv->erase_action,
-                      "auth-label", _("_Erase..."),
-                      "yes-icon-name", GTK_STOCK_CLEAR,
-                      "no-icon-name", GTK_STOCK_CLEAR,
-                      "auth-icon-name", GTK_STOCK_CLEAR,
-                      "self-blocked-icon-name", GTK_STOCK_CLEAR,
-                      NULL);
-        g_signal_connect (shell->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), shell);
-        gtk_action_group_add_action (action_group, GTK_ACTION (shell->priv->erase_action));
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->eject_action));
 
         /* -------------------------------------------------------------------------------- */
 
         ui_manager = gtk_ui_manager_new ();
-        gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
+        gtk_ui_manager_insert_action_group (ui_manager, shell->priv->action_group, 0);
 
         error = NULL;
         if (!gtk_ui_manager_add_ui_from_string
@@ -1161,9 +604,24 @@ create_polkit_actions (GduShell *shell)
 {
         shell->priv->pk_mount_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_mount_action, "org.freedesktop.devicekit.disks.mount");
+}
 
-        shell->priv->pk_erase_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_erase_action, "org.freedesktop.devicekit.disks.erase");
+static void
+add_page (GduShell *shell, GType type)
+{
+        GduPage *page;
+        char *name;
+        GtkWidget *tab_label;
+
+        page = g_object_new (type, "shell", shell, NULL);
+        name = gdu_page_get_name (page);
+
+        shell->priv->pages = g_list_append (shell->priv->pages, page);
+        tab_label = gtk_label_new (name);
+        gtk_notebook_append_page (GTK_NOTEBOOK (shell->priv->notebook),
+                                  gdu_page_get_widget (page),
+                                  tab_label);
+        g_free (name);
 }
 
 static void
@@ -1178,8 +636,6 @@ create_window (GduShell *shell)
         GtkWidget *treeview_scrolled_window;
         GtkWidget *treeview;
         GtkTreeSelection *select;
-        GtkWidget *summary_page_tab_label;
-        GtkWidget *erase_page_tab_label;
 
         shell->priv->pool = gdu_pool_new ();
 
@@ -1209,17 +665,13 @@ create_window (GduShell *shell)
         treeview = GTK_WIDGET (gdu_tree_new (shell->priv->pool));
         gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), treeview);
 
-        /* summary pane */
-
+        /* create a cluebar */
         shell->priv->cluebar = create_cluebar (shell);
-        shell->priv->summary_page = create_summary_page (shell);
-        summary_page_tab_label = gtk_label_new (_("Summary"));
-        shell->priv->erase_page = create_erase_page (shell);
-        erase_page_tab_label = gtk_label_new (_("Erase"));
 
+        /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
-        gtk_notebook_append_page (GTK_NOTEBOOK (shell->priv->notebook), shell->priv->summary_page, summary_page_tab_label);
-        gtk_notebook_append_page (GTK_NOTEBOOK (shell->priv->notebook), shell->priv->erase_page, erase_page_tab_label);
+        add_page (shell, GDU_TYPE_PAGE_SUMMARY);
+        add_page (shell, GDU_TYPE_PAGE_ERASE);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->cluebar, FALSE, FALSE, 0);

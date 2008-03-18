@@ -25,6 +25,8 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
+#include "gdu-presentable.h"
+
 #define GDU_TYPE_SHELL             (gdu_shell_get_type ())
 #define GDU_SHELL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SHELL, GduShell))
 #define GDU_SHELL_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_SHELL,  GduShellClass))
@@ -51,8 +53,9 @@ struct _GduShellClass
         GObjectClass parent_class;
 };
 
-GType        gdu_shell_get_type       (void);
-GduShell    *gdu_shell_new            (void);
-GtkWidget   *gdu_shell_get_toplevel   (GduShell *shell);
+GType           gdu_shell_get_type                 (void);
+GduShell       *gdu_shell_new                      (void);
+GtkWidget      *gdu_shell_get_toplevel             (GduShell *shell);
+GduPresentable *gdu_shell_get_selected_presentable (GduShell *shell);
 
 #endif /* GDU_SHELL_H */

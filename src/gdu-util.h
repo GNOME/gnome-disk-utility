@@ -22,9 +22,10 @@
 #ifndef GDU_UTIL_H
 #define GDU_UTIL_H
 
-#include "gdu-device.h"
-
 char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
+
+char *gdu_get_job_description (const char *job_id);
+char *gdu_get_task_description (const char *task_id);
 
 #endif /* GDU_UTIL_H */

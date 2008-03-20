@@ -38,6 +38,7 @@ main (int argc, char **argv)
 
         shell = gdu_shell_new ();
         gtk_widget_show_all (gdu_shell_get_toplevel (shell));
+        gdu_shell_update (shell);
         gtk_main ();
         g_object_unref (shell);
         return 0;

@@ -47,6 +47,9 @@ struct _GduShellPrivate
 
         GtkWidget *treeview;
 
+        /* the summary page is special; it's always shown */
+        GduPage *page_summary;
+
         /* an ordered list of GduPage objects (as they will appear in the UI) */
         GList *pages;
 
@@ -60,12 +63,6 @@ struct _GduShellPrivate
 
         GtkActionGroup *action_group;
         GtkUIManager *ui_manager;
-
-        GtkWidget *cluebar;
-        GtkWidget *cluebar_label;
-        GtkWidget *cluebar_progress_bar;
-        GtkWidget *cluebar_button;
-        int cluebar_pulse_timer_id;
 
         GtkWidget *notebook;
 
@@ -136,132 +133,23 @@ gdu_shell_get_pool (GduShell *shell)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-
-static void shell_update (GduShell *shell);
-
-static gboolean
-cluebar_pulse_timeout_handler (gpointer user_data)
-{
-        GduShell *shell = user_data;
-
-        gtk_progress_bar_pulse (GTK_PROGRESS_BAR (shell->priv->cluebar_progress_bar));
-        return TRUE;
-}
-
-static void
-cluebar_style_set (GtkWidget *widget, GtkStyle *previous_style, gpointer user_data)
-{
-        GtkStyle *style;
-        GdkColor default_fill_color = {0, 0xff00, 0xff00, 0xbf00};
-        GdkColor bg;
-
-        style = gtk_rc_get_style_by_paths (gtk_settings_get_default (), NULL, NULL, GTK_TYPE_BUTTON);
-        if (style != NULL) {
-                bg = style->bg[GTK_STATE_SELECTED];
-        } else {
-                bg = default_fill_color;
-        }
-
-        if (!gdk_color_equal (&bg, &widget->style->bg[GTK_STATE_NORMAL]))
-                gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &bg);
-}
-
-static void
-cluebar_button_clicked (GtkWidget *button, gpointer user_data)
-{
-        GduDevice *device;
-        GduShell *shell = user_data;
-
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        g_assert (device != NULL);
-
-        if (gdu_device_job_get_last_error_message (device) != NULL) {
-                gdu_device_job_clear_last_error_message (device);
-                shell_update (shell);
-        } else {
-                gdu_device_op_cancel_job (device);
-        }
-
-        g_object_unref (device);
-}
-
-static void
-update_cluebar (GduShell *shell, GduDevice *device)
-{
-        char *s;
-        char *job_description;
-        char *task_description;
-        double percentage;
-
-        if (gdu_device_job_get_last_error_message (device) != NULL) {
-                s = g_strdup_printf (_("<b>Job Failed:</b> %s"), gdu_device_job_get_last_error_message (device));
-                gtk_label_set_markup (GTK_LABEL (shell->priv->cluebar_label), s);
-                g_free (s);
-
-                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("_Dismiss"));
-                gtk_widget_set_sensitive (shell->priv->cluebar_button, TRUE);
-                gtk_widget_set_no_show_all (shell->priv->cluebar_progress_bar, TRUE);
-                gtk_widget_hide (shell->priv->cluebar_progress_bar);
-
-        } else {
-                job_description = gdu_get_job_description (gdu_device_job_get_id (device));
-                task_description = gdu_get_task_description (gdu_device_job_get_cur_task_id (device));
-
-                gtk_label_set_markup (GTK_LABEL (shell->priv->cluebar_label), job_description);
-
-                s = g_strdup_printf (_("%s (task %d of %d)"),
-                                     task_description,
-                                     gdu_device_job_get_cur_task (device) + 1,
-                                     gdu_device_job_get_num_tasks (device));
-                gtk_widget_set_tooltip_text (shell->priv->cluebar_progress_bar, s);
-                g_free (s);
-
-                percentage = gdu_device_job_get_cur_task_percentage (device);
-                if (percentage < 0) {
-                        gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR (shell->priv->cluebar_progress_bar), 1.0 / 50);
-                        gtk_progress_bar_pulse (GTK_PROGRESS_BAR (shell->priv->cluebar_progress_bar));
-                        if (shell->priv->cluebar_pulse_timer_id == 0) {
-                                shell->priv->cluebar_pulse_timer_id = g_timeout_add (1000 / 50,
-                                                                               cluebar_pulse_timeout_handler,
-                                                                               shell);
-                        }
-                } else {
-                        gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (shell->priv->cluebar_progress_bar),
-                                                       percentage / 100.0);
-                        if (shell->priv->cluebar_pulse_timer_id > 0) {
-                                g_source_remove (shell->priv->cluebar_pulse_timer_id);
-                                shell->priv->cluebar_pulse_timer_id = 0;
-                        }
-                }
-
-                g_free (job_description);
-                g_free (task_description);
-
-                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("_Cancel"));
-                gtk_widget_set_sensitive (shell->priv->cluebar_button, gdu_device_job_is_cancellable (device));
-
-                gtk_widget_set_no_show_all (shell->priv->cluebar_progress_bar, FALSE);
-                gtk_widget_show (shell->priv->cluebar_progress_bar);
-        }
-}
-
 /* called when a new presentable is selected
  *  - or a presentable changes
  *  - or the job state of a presentable changes
+ *
+ * and to update visibility of embedded widgets
  */
-static void
-shell_update (GduShell *shell)
+void
+gdu_shell_update (GduShell *shell)
 {
         GList *l;
         GduDevice *device;
-        gboolean show_cluebar;
         gboolean job_in_progress;
         gboolean last_job_failed;
         gboolean can_mount;
         gboolean can_unmount;
         gboolean can_eject;
 
-        show_cluebar = FALSE;
         job_in_progress = FALSE;
         last_job_failed = FALSE;
         can_mount = FALSE;
@@ -314,21 +202,8 @@ shell_update (GduShell *shell)
                         gtk_widget_set_sensitive (page_widget, TRUE);
         }
 
-        if (job_in_progress || last_job_failed)
-                show_cluebar = TRUE;
-
-        /* cluebar handling */
-        gtk_widget_set_no_show_all (shell->priv->cluebar, TRUE);
-        if (show_cluebar) {
-                update_cluebar (shell, device);
-                gtk_widget_show (shell->priv->cluebar);
-        } else {
-                if (shell->priv->cluebar_pulse_timer_id > 0) {
-                        g_source_remove (shell->priv->cluebar_pulse_timer_id);
-                        shell->priv->cluebar_pulse_timer_id = 0;
-                }
-                gtk_widget_hide (shell->priv->cluebar);
-        }
+        /* update summary page */
+        gdu_page_update (shell->priv->page_summary, shell->priv->presentable_now_showing);
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
@@ -341,7 +216,7 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
 {
         GduShell *shell = user_data;
         if (presentable == shell->priv->presentable_now_showing)
-                shell_update (shell);
+                gdu_shell_update (shell);
 }
 
 static void
@@ -349,7 +224,7 @@ presentable_job_changed (GduPresentable *presentable, gpointer user_data)
 {
         GduShell *shell = user_data;
         if (presentable == shell->priv->presentable_now_showing)
-                shell_update (shell);
+                gdu_shell_update (shell);
 }
 
 static void
@@ -380,7 +255,7 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
                 g_signal_connect (shell->priv->presentable_now_showing, "job-changed",
                                   (GCallback) presentable_job_changed, shell);
 
-                shell_update (shell);
+                gdu_shell_update (shell);
         }
 }
 
@@ -400,47 +275,6 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
         }
 }
 
-static GtkWidget *
-create_cluebar (GduShell *shell)
-{
-        GtkWidget *evbox;
-        GtkWidget *hbox;
-        GtkWidget *label;
-        GtkWidget *align;
-        GtkWidget *progress_bar;
-        GtkWidget *button;
-
-        evbox = gtk_event_box_new ();
-        g_signal_connect (evbox, "style-set", G_CALLBACK (cluebar_style_set), shell);
-
-        hbox = gtk_hbox_new (FALSE, 5);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-        progress_bar = gtk_progress_bar_new ();
-        g_signal_connect (progress_bar, "style-set", G_CALLBACK (cluebar_style_set), shell);
-        align = gtk_alignment_new (0.0, 0.0, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 6, 6, 0, 0);
-        gtk_container_add (GTK_CONTAINER (align), progress_bar);
-        gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
-
-        button = gtk_button_new_with_mnemonic (_("_Cancel"));
-        gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-
-        gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-        gtk_container_add (GTK_CONTAINER (evbox), hbox);
-
-        shell->priv->cluebar_label = label;
-        shell->priv->cluebar_progress_bar = progress_bar;
-        shell->priv->cluebar_button = button;
-
-        g_signal_connect (shell->priv->cluebar_button, "clicked", G_CALLBACK (cluebar_button_clicked), shell);
-
-        return evbox;
-}
 
 static void
 mount_action_callback (GtkAction *action, gpointer user_data)
@@ -665,7 +499,7 @@ create_window (GduShell *shell)
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);
-        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 900, 750);
+        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 900, 550);
         gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
 
         vbox = gtk_vbox_new (FALSE, 0);
@@ -687,18 +521,12 @@ create_window (GduShell *shell)
         shell->priv->treeview = GTK_WIDGET (gdu_tree_new (shell->priv->pool));
         gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
 
-        /* create a cluebar */
-        shell->priv->cluebar = create_cluebar (shell);
-        gtk_widget_set_no_show_all (shell->priv->cluebar, FALSE);
-
         /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
-        add_page (shell, GDU_TYPE_PAGE_SUMMARY);
         add_page (shell, GDU_TYPE_PAGE_ERASE);
         add_page (shell, GDU_TYPE_PAGE_PARTITIONING);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->cluebar, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->notebook, TRUE, TRUE, 0);
 
         /* setup and add horizontal pane */
@@ -708,6 +536,10 @@ create_window (GduShell *shell)
         gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
+
+        /* finally add the summary page */
+        shell->priv->page_summary = g_object_new (GDU_TYPE_PAGE_SUMMARY, "shell", shell, NULL);
+        gtk_box_pack_start (GTK_BOX (vbox), gdu_page_get_widget (shell->priv->page_summary), FALSE, FALSE, 0);
 
         select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->treeview));
         gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);

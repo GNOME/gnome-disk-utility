@@ -1202,14 +1202,6 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         gtk_box_pack_start (GTK_BOX (hbox), page->priv->drawing_area, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
         gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), hbox, TRUE, TRUE, 0);
-
-        /* don't show these by default; we'll turn them on/off depending on
-         * the presentable
-         */
-        gtk_widget_set_no_show_all (page->priv->create_part_vbox, TRUE);
-        gtk_widget_set_no_show_all (page->priv->delete_part_vbox, TRUE);
-        gtk_widget_set_no_show_all (page->priv->modify_part_vbox, TRUE);
-        gtk_widget_set_no_show_all (page->priv->create_part_table_vbox, TRUE);
 }
 
 
@@ -1268,11 +1260,6 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
         GduPresentable *toplevel_presentable;
         const char *scheme;
 
-        gtk_widget_set_no_show_all (page->priv->create_part_vbox, FALSE);
-        gtk_widget_set_no_show_all (page->priv->delete_part_vbox, FALSE);
-        gtk_widget_set_no_show_all (page->priv->modify_part_vbox, FALSE);
-        gtk_widget_set_no_show_all (page->priv->create_part_table_vbox, FALSE);
-
         show_page = FALSE;
         show_delete_part = FALSE;
         show_create_part = FALSE;
@@ -1325,7 +1312,7 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
         if (show_create_part) {
                 gtk_range_set_range (GTK_RANGE (page->priv->create_part_size_hscale), 0, size);
                 gtk_range_set_value (GTK_RANGE (page->priv->create_part_size_hscale), size);
-                gtk_widget_show_all (page->priv->create_part_vbox);
+                gtk_widget_show (page->priv->create_part_vbox);
 
                 /* only allow creation of extended partitions if there currently are none */
                 if (has_extended_partition (page, toplevel_presentable)) {
@@ -1334,28 +1321,28 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
                         gdu_util_fstype_combo_box_rebuild (page->priv->create_part_fstype_combo_box, scheme);
                 }
         } else {
-                gtk_widget_hide_all (page->priv->create_part_vbox);
+                gtk_widget_hide (page->priv->create_part_vbox);
         }
 
         if (show_modify_part) {
                 gtk_range_set_range (GTK_RANGE (page->priv->modify_part_resize_size_hscale), 0, size);
                 gtk_range_set_value (GTK_RANGE (page->priv->modify_part_resize_size_hscale), size);
                 /* TODO: more */
-                gtk_widget_show_all (page->priv->modify_part_vbox);
+                gtk_widget_show (page->priv->modify_part_vbox);
         } else {
-                gtk_widget_hide_all (page->priv->modify_part_vbox);
+                gtk_widget_hide (page->priv->modify_part_vbox);
         }
 
         if (show_delete_part) {
-                gtk_widget_show_all (page->priv->delete_part_vbox);
+                gtk_widget_show (page->priv->delete_part_vbox);
         } else {
-                gtk_widget_hide_all (page->priv->delete_part_vbox);
+                gtk_widget_hide (page->priv->delete_part_vbox);
         }
 
         if (show_create_part_table) {
-                gtk_widget_show_all (page->priv->create_part_table_vbox);
+                gtk_widget_show (page->priv->create_part_table_vbox);
         } else {
-                gtk_widget_hide_all (page->priv->create_part_table_vbox);
+                gtk_widget_hide (page->priv->create_part_table_vbox);
         }
 
 out:

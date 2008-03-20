@@ -25,8 +25,8 @@
 #include <stdlib.h>
 #include <glib/gi18n.h>
 #include <polkit-gnome/polkit-gnome.h>
-#include <math.h>
 
+#include "gdu-disk-widget.h"
 #include "gdu-page.h"
 #include "gdu-util.h"
 #include "gdu-page-partitioning.h"
@@ -36,7 +36,7 @@ struct _GduPagePartitioningPrivate
         GduShell *shell;
 
         GtkWidget *main_vbox;
-        GtkWidget *drawing_area;
+        GtkWidget *disk_widget;
 
         GtkWidget *create_part_table_vbox;
 
@@ -167,419 +167,6 @@ gdu_page_partitioning_class_init (GduPagePartitioningClass *klass)
 }
 
 static void
-rounded_rectangle (cairo_t *cr,
-		   double x, double y,
-		   double w, double h,
-		   double c,
-		   gboolean round_top_left, gboolean round_top_right,
-		   gboolean round_bottom_left, gboolean round_bottom_right)
-{
-	double r0, r1, r2, r3;
-
-	/* r0              r1
-	 *   ______________
-	 *  /              \
-	 *  |              |
-	 *  |              |
-	 *  |              |
-	 *  \______________/
-         * r3              r2
-	 */
-
-	if (w < 0 || h < 0)
-		return;
-
-	if (round_top_left) {
-		r0 = c;
-	} else {
-		r0 = 0;
-	}
-
-	if (round_bottom_left) {
-		r3 = c;
-	} else {
-		r3 = 0;
-	}
-
-	if (round_top_right) {
-		r1 = c;
-	} else {
-		r1 = 0;
-	}
-
-	if (round_bottom_right) {
-		r2 = c;
-	} else {
-		r2 = 0;
-	}
-
-
-	cairo_translate (cr, x, y);
-
-	cairo_move_to (cr, r0, 0);
-	cairo_line_to (cr, w - r1, 0);
-	if (r1 > 0) {
-		cairo_arc (cr,
-			   w - r1,
-			   r1,
-			   r1,
-			   -M_PI / 2,
-			   0);
-	}
-	cairo_line_to (cr, w, h - r2);
-	if (r2 > 0) {
-		cairo_arc (cr,
-			   w - r2,
-			   h - r2,
-			   r2,
-			   0,
-			   M_PI / 2);
-	}
-	cairo_line_to (cr, r3, h);
-	if (r3 > 0) {
-		cairo_arc (cr,
-			   c,
-			   h - r3,
-			   r3,
-			   M_PI / 2,
-			   M_PI);
-	}
-	cairo_line_to (cr, 0, r0);
-	if (r0 > 0) {
-		cairo_arc (cr,
-			   r0,
-			   r0,
-			   r0,
-			   M_PI,
-			   3 * M_PI / 2);
-	}
-	cairo_translate (cr, -x, -y);
-}
-
-static gint
-gdu_presentable_compare_offset_func (gconstpointer a, gconstpointer b)
-{
-        GduPresentable *pa = GDU_PRESENTABLE (a);
-        GduPresentable *pb = GDU_PRESENTABLE (b);
-        guint64 oa;
-        guint64 ob;
-
-        oa = gdu_presentable_get_offset (pa);
-        ob = gdu_presentable_get_offset (pb);
-
-        if (oa > ob)
-                return 1;
-        else if (oa < ob)
-                return -1;
-        else
-                return 0;
-}
-
-typedef struct
-{
-        double size;
-        GList *children;
-        GduPresentable *presentable;
-} Node;
-
-static void nodes_free (GList *nodes);
-
-static void
-node_free (Node *node)
-{
-        nodes_free (node->children);
-        g_object_unref (node->presentable);
-        g_free (node);
-}
-
-static void
-nodes_free (GList *nodes)
-{
-        GList *l;
-        for (l = nodes; l != NULL; l = l->next) {
-                Node *node = l->data;
-                node_free (node);
-        }
-}
-
-static gboolean
-squeeze_nodes (GList *nodes, double min_size)
-{
-        GList *l;
-        GList *j;
-        gboolean did_squeze;
-
-        did_squeze = FALSE;
-
-        for (l = nodes; l != NULL; l = l->next) {
-                Node *node = l->data;
-
-                if (node->size < min_size) {
-                        Node *victim;
-                        double amount_to_steal;
-
-                        /* this node is too small; steal from the biggest
-                         * node that can afford it
-                         *
-                         * TODO: we could steal evenly from wealth nodes
-                         */
-                        amount_to_steal = min_size - node->size;
-
-                        victim = NULL;
-                        for (j = nodes; j != NULL; j = j->next) {
-                                Node *candidate = j->data;
-
-                                if (candidate == node)
-                                        continue;
-
-                                if (candidate->size - amount_to_steal < min_size)
-                                        continue;
-
-                                if (victim == NULL) {
-                                        victim = candidate;
-                                        continue;
-                                }
-
-                                if (candidate->size > victim->size)
-                                        victim = candidate;
-                        }
-
-                        if (victim != NULL) {
-                                victim->size -= amount_to_steal;
-                                node->size += amount_to_steal;
-                                did_squeze = TRUE;
-                        }
-                }
-        }
-
-        return did_squeze;
-}
-
-static GList *
-generate_nodes (GduPagePartitioning *page,
-                GduPresentable *parent,
-                double at_pos,
-                double at_size)
-{
-        GList *enclosed;
-        GList *l;
-        guint64 part_offset;
-        guint64 part_size;
-        GList *nodes;
-
-        nodes = NULL;
-
-        enclosed = gdu_pool_get_enclosed_presentables (gdu_shell_get_pool (page->priv->shell), parent);
-        if (g_list_length (enclosed) == 0)
-                goto out;
-
-        enclosed = g_list_sort (enclosed, gdu_presentable_compare_offset_func);
-
-        part_offset = gdu_presentable_get_offset (parent);
-        part_size = gdu_presentable_get_size (parent);
-
-        for (l = enclosed; l != NULL; l = l->next) {
-                GduPresentable *p = GDU_PRESENTABLE (l->data);
-                guint64 offset;
-                guint64 size;
-                GList *embedded_nodes;
-                double g_pos;
-                double g_size;
-
-                offset = gdu_presentable_get_offset (p);
-                size = gdu_presentable_get_size (p);
-
-                g_pos = at_pos + at_size * (offset - part_offset) / part_size;
-                g_size = at_size * size / part_size;
-
-                /* this presentable may have enclosed presentables itself.. use them instead */
-                embedded_nodes = generate_nodes (page, p, g_pos, g_size);
-                if (embedded_nodes != NULL) {
-                        nodes = g_list_concat (nodes, embedded_nodes);
-                } else {
-                        Node *node;
-                        node = g_new0 (Node, 1);
-                        node->size = g_size;
-                        node->presentable = g_object_ref (p);
-                        nodes = g_list_append (nodes, node);
-                }
-        }
-
-out:
-        g_list_foreach (enclosed, (GFunc) g_object_unref, NULL);
-        g_list_free (enclosed);
-        return nodes;
-}
-
-static void
-draw_nodes (cairo_t *cr,
-            GduPagePartitioning *page,
-            GList *nodes,
-            double at_xpos,
-            double at_ypos,
-            double at_size)
-{
-        GList *l;
-        double x;
-        double y;
-        double w;
-        double h;
-
-        x = at_xpos;
-        y = at_ypos;
-
-        for (l = nodes; l != NULL; l = l->next) {
-                Node *node = l->data;
-                gboolean is_first;
-                gboolean is_last;
-                cairo_text_extents_t ext_s1;
-                cairo_text_extents_t ext_s2;
-                double ty;
-                char *s1;
-                char *s2;
-                GduDevice *device;
-
-                is_first = (l == nodes);
-                is_last = (l->next == NULL);
-
-                w = at_size;
-                h = node->size;
-
-                rounded_rectangle (cr, x, y, w, h, 4,
-                                   is_first, is_first, is_last, is_last);
-
-                if (node->presentable == page->priv->presentable)
-                        cairo_set_source_rgb (cr, 0.40, 0.40, 0.80);
-                else
-                        cairo_set_source_rgb (cr, 0.30, 0.30, 0.30);
-
-                cairo_set_line_width (cr, 1.5);
-                cairo_fill_preserve (cr);
-                cairo_set_source_rgb (cr, 0, 0, 0);
-                cairo_stroke (cr);
-
-                cairo_save (cr);
-
-		cairo_rectangle (cr, x, y, w, h);
-		cairo_clip (cr);
-
-		cairo_set_source_rgb (cr, 1, 1, 1);
-
-                device = gdu_presentable_get_device (node->presentable);
-                if (device == NULL) {
-                        /* empty space; e.g. hole */
-                        s1 = g_strdup (_("Unallocated Space"));
-                        s2 = gdu_util_get_size_for_display (gdu_presentable_get_size (node->presentable), FALSE);
-                } else {
-                        char *t1;
-                        char *t2;
-                        s1 = gdu_presentable_get_name (node->presentable);
-                        t1 = gdu_util_get_size_for_display (gdu_presentable_get_size (node->presentable), FALSE);
-                        t2 = gdu_util_get_fstype_for_display (gdu_device_id_get_type (device),
-                                                              gdu_device_id_get_version (device),
-                                                              FALSE);
-                        s2 = g_strdup_printf ("%s %s", t1, t2);
-                        g_free (t1);
-                        g_free (t2);
-                        g_object_unref (device);
-                }
-
-		cairo_select_font_face (cr, "sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_set_font_size (cr, 10);
-		cairo_text_extents (cr, s1, &ext_s1);
-		cairo_select_font_face (cr, "sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-		cairo_text_extents (cr, s2, &ext_s2);
-
-                ty = y + h / 2.0 - (ext_s1.height + 4.0 + ext_s2.height) / 2.0 + ext_s1.height;
-
-		cairo_select_font_face (cr, "sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-		cairo_move_to (cr, x + w/2 - ext_s1.width / 2, ty);
-		cairo_show_text (cr, s1);
-
-                ty += ext_s1.height + 4;
-
-		cairo_select_font_face (cr, "sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-		cairo_move_to (cr, x + w/2 - ext_s2.width / 2, ty);
-		cairo_show_text (cr, s2);
-
-                g_free (s1);
-                g_free (s2);
-
-                cairo_restore (cr);
-
-                y += h;
-        }
-}
-
-/**
- * find_toplevel_presentable:
- * @presentable: a #GduPresentable.
- *
- * Finds the top-level presentable for a given presentable.
- *
- * Returns: The presentable; caller must unref when done with it
- **/
-static GduPresentable *
-find_toplevel_presentable (GduPresentable *presentable)
-{
-        GduPresentable *parent;
-        GduPresentable *maybe_parent;
-
-        parent = presentable;
-        do {
-                maybe_parent = gdu_presentable_get_enclosing_presentable (parent);
-                if (maybe_parent != NULL) {
-                        g_object_unref (maybe_parent);
-                        parent = maybe_parent;
-                }
-        } while (maybe_parent != NULL);
-
-        return g_object_ref (parent);
-}
-
-static gboolean
-expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
-{
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
-        GduPresentable *parent;
-        int width;
-        int height;
-        GList *nodes;
-        gboolean not_to_scale;
-        cairo_t *cr;
-
-        width = widget->allocation.width;
-        height = widget->allocation.height;
-
-        /* first go up to the top-level parent */
-        parent = find_toplevel_presentable (page->priv->presentable);
-
-        cr = gdk_cairo_create (widget->window);
-        cairo_rectangle (cr,
-			 event->area.x, event->area.y,
-			 event->area.width, event->area.height);
-        cairo_clip (cr);
-
-
-        /* generate nodes for each presentable */
-        nodes = generate_nodes (page, parent, 4, height - 2*4);
-
-        /* make sure each node is at least 40 pixels */
-        not_to_scale = squeeze_nodes (nodes, 30);
-
-        /* draw the nodes */
-        draw_nodes (cr, page, nodes, 4, 4, width - 4*4);
-        nodes_free (nodes);
-
-        /* TODO: print disclaimer if we're not to scale */
-
-        cairo_destroy (cr);
-
-        g_object_unref (parent);
-        return TRUE;
-}
-
-static void
 delete_partition_callback (GtkAction *action, gpointer user_data)
 {
         GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
@@ -588,7 +175,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         GduDevice *device;
         GduPresentable *toplevel_presentable;
 
-        toplevel_presentable = find_toplevel_presentable (page->priv->presentable);
+        toplevel_presentable = gdu_util_find_toplevel_presentable (page->priv->presentable);
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
 
@@ -661,7 +248,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        toplevel_presentable = find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
@@ -931,10 +518,8 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
 
         hbox = gtk_hbox_new (FALSE, 10);
 
-        page->priv->drawing_area = gtk_drawing_area_new ();
-        gtk_widget_set_size_request (page->priv->drawing_area, 150, 150);
-        g_signal_connect (G_OBJECT (page->priv->drawing_area), "expose-event",
-                          G_CALLBACK (expose_event_callback), page);
+        page->priv->disk_widget = gdu_disk_widget_new (NULL);
+        gtk_widget_set_size_request (page->priv->disk_widget, 150, 150);
 
         vbox = gtk_vbox_new (FALSE, 10);
 
@@ -1199,7 +784,7 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
 
         /* ---------------- */
 
-        gtk_box_pack_start (GTK_BOX (hbox), page->priv->drawing_area, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), page->priv->disk_widget, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
         gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), hbox, TRUE, TRUE, 0);
 }
@@ -1217,11 +802,14 @@ has_extended_partition (GduPagePartitioning *page, GduPresentable *presentable)
         GList *l;
         GList *enclosed_presentables;
         gboolean ret;
+        GduPool *pool;
 
         ret = FALSE;
 
-        enclosed_presentables = gdu_pool_get_enclosed_presentables (gdu_shell_get_pool (page->priv->shell),
-                                                                    presentable);
+        pool = gdu_presentable_get_pool (presentable);
+        enclosed_presentables = gdu_pool_get_enclosed_presentables (pool, presentable);
+        g_object_unref (pool);
+
         for (l = enclosed_presentables; l != NULL; l = l->next) {
                 GduPresentable *p = l->data;
                 GduDevice *d;
@@ -1271,7 +859,7 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
 
         device = gdu_presentable_get_device (presentable);
 
-        toplevel_presentable = find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_presentable == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
@@ -1302,10 +890,11 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
                 g_object_unref (page->priv->presentable);
         page->priv->presentable = g_object_ref (presentable);
 
-        gtk_widget_queue_draw_area (page->priv->drawing_area,
+        gdu_disk_widget_set_presentable (GDU_DISK_WIDGET (page->priv->disk_widget), presentable);
+        gtk_widget_queue_draw_area (page->priv->disk_widget,
                                     0, 0,
-                                    page->priv->drawing_area->allocation.width,
-                                    page->priv->drawing_area->allocation.height);
+                                    page->priv->disk_widget->allocation.width,
+                                    page->priv->disk_widget->allocation.height);
 
         size = gdu_presentable_get_size (presentable);
 

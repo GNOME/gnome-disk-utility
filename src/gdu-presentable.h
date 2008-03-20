@@ -50,6 +50,7 @@ struct _GduPresentableIface
         guint64          (*get_offset)                (GduPresentable *presentable);
         guint64          (*get_size)                  (GduPresentable *presentable);
         GList *          (*get_info)                  (GduPresentable *presentable);
+        GduPool *        (*get_pool)                  (GduPresentable *presentable);
 };
 
 GType           gdu_presentable_get_type                  (void) G_GNUC_CONST;
@@ -60,5 +61,6 @@ char           *gdu_presentable_get_icon_name             (GduPresentable *prese
 guint64         gdu_presentable_get_offset                (GduPresentable *presentable);
 guint64         gdu_presentable_get_size                  (GduPresentable *presentable);
 GList          *gdu_presentable_get_info                  (GduPresentable *presentable);
+GduPool        *gdu_presentable_get_pool                  (GduPresentable *presentable);
 
 #endif /* GDU_PRESENTABLE_H */

@@ -125,12 +125,6 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
         gdu_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
 }
 
-GduPool *
-gdu_shell_get_pool (GduShell *shell)
-{
-        return shell->priv->pool;
-}
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* called when a new presentable is selected

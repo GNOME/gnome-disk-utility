@@ -20,6 +20,7 @@
  */
 
 #include <gtk/gtk.h>
+#include "gdu-presentable.h"
 
 #ifndef GDU_UTIL_H
 #define GDU_UTIL_H
@@ -53,5 +54,7 @@ GtkWidget *gdu_util_secure_erase_combo_box_create       (void);
 char      *gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box);
 
 char      *gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const char *fstype, guint64 size);
+
+GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable);
 
 #endif /* GDU_UTIL_H */

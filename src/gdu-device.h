@@ -62,6 +62,7 @@ GType       gdu_device_get_type              (void);
 GduDevice  *gdu_device_new_from_object_path  (GduPool     *pool, const char  *object_path);
 const char *gdu_device_get_object_path       (GduDevice   *device);
 GduDevice  *gdu_device_find_parent           (GduDevice   *device);
+GduPool    *gdu_device_get_pool              (GduDevice   *device);
 
 void        gdu_device_changed               (GduDevice   *device);
 void        gdu_device_job_changed           (GduDevice   *device,

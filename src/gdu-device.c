@@ -298,6 +298,12 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (GduDevice, gdu_device, G_TYPE_OBJECT);
 
+GduPool *
+gdu_device_get_pool (GduDevice *device)
+{
+        return g_object_ref (device->priv->pool);
+}
+
 static void
 gdu_device_finalize (GduDevice *device)
 {

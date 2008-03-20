@@ -278,7 +278,7 @@ add_holes (GduPool *pool,
                                  gap_size / (1000 * 1000),
                                  gap_position  / (1000 * 1000));*/
 
-                        hole = gdu_volume_hole_new (gap_position, gap_size, presentable);
+                        hole = gdu_volume_hole_new (pool, gap_position, gap_size, presentable);
                         hole_list = NULL;
                         if (g_hash_table_lookup_extended (pool->priv->drive_holes,
                                                           gdu_device_get_object_path (drive_device),

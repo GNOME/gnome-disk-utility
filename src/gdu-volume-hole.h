@@ -51,6 +51,6 @@ struct _GduVolumeHoleClass
 };
 
 GType            gdu_volume_hole_get_type  (void);
-GduVolumeHole   *gdu_volume_hole_new       (guint64 offset, guint64 size, GduPresentable *enclosing_presentable);
+GduVolumeHole   *gdu_volume_hole_new       (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable);
 
 #endif /* GDU_VOLUME_HOLE_H */

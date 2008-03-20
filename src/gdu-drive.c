@@ -236,6 +236,12 @@ gdu_drive_get_info (GduPresentable *presentable)
         return kv_pairs;
 }
 
+static GduPool *
+gdu_drive_get_pool (GduPresentable *presentable)
+{
+        GduDrive *drive = GDU_DRIVE (presentable);
+        return gdu_device_get_pool (drive->priv->device);
+}
 
 static void
 gdu_drive_presentable_iface_init (GduPresentableIface *iface)
@@ -247,4 +253,5 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_offset = gdu_drive_get_offset;
         iface->get_size = gdu_drive_get_size;
         iface->get_info = gdu_drive_get_info;
+        iface->get_pool = gdu_drive_get_pool;
 }

@@ -61,6 +61,5 @@ void            gdu_shell_update                   (GduShell       *shell);
 GduPresentable *gdu_shell_get_selected_presentable (GduShell       *shell);
 void            gdu_shell_select_presentable       (GduShell       *shell,
                                                     GduPresentable *presentable);
-GduPool        *gdu_shell_get_pool                 (GduShell       *shell);
 
 #endif /* GDU_SHELL_H */

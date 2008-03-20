@@ -35,6 +35,7 @@ struct _GduVolumeHolePrivate
         guint64 offset;
         guint64 size;
         GduPresentable *enclosing_presentable;
+        GduPool *pool;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -47,6 +48,8 @@ G_DEFINE_TYPE_WITH_CODE (GduVolumeHole, gdu_volume_hole, G_TYPE_OBJECT,
 static void
 gdu_volume_hole_finalize (GduVolumeHole *volume_hole)
 {
+        g_object_unref (volume_hole->priv->pool);
+
         if (volume_hole->priv->enclosing_presentable != NULL)
                 g_object_unref (volume_hole->priv->enclosing_presentable);
 
@@ -71,11 +74,12 @@ gdu_volume_hole_init (GduVolumeHole *volume_hole)
 }
 
 GduVolumeHole *
-gdu_volume_hole_new (guint64 offset, guint64 size, GduPresentable *enclosing_presentable)
+gdu_volume_hole_new (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable)
 {
         GduVolumeHole *volume_hole;
 
         volume_hole = GDU_VOLUME_HOLE (g_object_new (GDU_TYPE_VOLUME_HOLE, NULL));
+        volume_hole->priv->pool = g_object_ref (pool);
         volume_hole->priv->offset = offset;
         volume_hole->priv->size = size;
         volume_hole->priv->enclosing_presentable =
@@ -148,6 +152,13 @@ gdu_volume_hole_get_info (GduPresentable *presentable)
         return kv_pairs;
 }
 
+static GduPool *
+gdu_volume_hole_get_pool (GduPresentable *presentable)
+{
+        GduVolumeHole *volume_hole = GDU_VOLUME_HOLE (presentable);
+        return g_object_ref (volume_hole->priv->pool);
+}
+
 static void
 gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -158,4 +169,5 @@ gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
         iface->get_offset = gdu_volume_hole_get_offset;
         iface->get_size = gdu_volume_hole_get_size;
         iface->get_info = gdu_volume_hole_get_info;
+        iface->get_pool = gdu_volume_hole_get_pool;
 }

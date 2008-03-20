@@ -404,6 +404,13 @@ gdu_volume_get_info (GduPresentable *presentable)
         return kv_pairs;
 }
 
+static GduPool *
+gdu_volume_get_pool (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        return gdu_device_get_pool (volume->priv->device);
+}
+
 static void
 gdu_volume_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -414,4 +421,5 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_offset = gdu_volume_get_offset;
         iface->get_size = gdu_volume_get_size;
         iface->get_info = gdu_volume_get_info;
+        iface->get_pool = gdu_volume_get_pool;
 }

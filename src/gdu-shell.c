@@ -198,7 +198,7 @@ update_cluebar (GduShell *shell, GduDevice *device)
                 gtk_label_set_markup (GTK_LABEL (shell->priv->cluebar_label), s);
                 g_free (s);
 
-                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("Dismiss"));
+                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("_Dismiss"));
                 gtk_widget_set_sensitive (shell->priv->cluebar_button, TRUE);
                 gtk_widget_set_no_show_all (shell->priv->cluebar_progress_bar, TRUE);
                 gtk_widget_hide (shell->priv->cluebar_progress_bar);
@@ -237,7 +237,7 @@ update_cluebar (GduShell *shell, GduDevice *device)
                 g_free (job_description);
                 g_free (task_description);
 
-                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("Cancel"));
+                gtk_button_set_label (GTK_BUTTON (shell->priv->cluebar_button), _("_Cancel"));
                 gtk_widget_set_sensitive (shell->priv->cluebar_button, gdu_device_job_is_cancellable (device));
 
                 gtk_widget_set_no_show_all (shell->priv->cluebar_progress_bar, FALSE);
@@ -318,6 +318,7 @@ shell_update (GduShell *shell)
                 show_cluebar = TRUE;
 
         /* cluebar handling */
+        gtk_widget_set_no_show_all (shell->priv->cluebar, TRUE);
         if (show_cluebar) {
                 update_cluebar (shell, device);
                 gtk_widget_show (shell->priv->cluebar);
@@ -386,9 +387,17 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 static void
 presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
-        //GduShell *shell = user_data;
-        //GtkTreeView *treeview = GTK_TREE_VIEW (user_data);
-        /* TODO FIX: if presentable we currently show is removed.. go to computer presentable */
+        GduShell *shell = user_data;
+        GduPresentable *enclosing_presentable;
+
+        /* try going to the enclosing presentable if that one is available; otherwise go to the first one */
+        enclosing_presentable = gdu_presentable_get_enclosing_presentable (presentable);
+        if (enclosing_presentable != NULL) {
+                gdu_shell_select_presentable (shell, enclosing_presentable);
+                g_object_unref (enclosing_presentable);
+        } else {
+                gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+        }
 }
 
 static GtkWidget *
@@ -418,7 +427,7 @@ create_cluebar (GduShell *shell)
         gtk_container_add (GTK_CONTAINER (align), progress_bar);
         gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 
-        button = gtk_button_new_with_label (_("Cancel"));
+        button = gtk_button_new_with_mnemonic (_("_Cancel"));
         gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
         gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
@@ -680,6 +689,7 @@ create_window (GduShell *shell)
 
         /* create a cluebar */
         shell->priv->cluebar = create_cluebar (shell);
+        gtk_widget_set_no_show_all (shell->priv->cluebar, FALSE);
 
         /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
@@ -710,5 +720,7 @@ create_window (GduShell *shell)
         g_signal_connect (shell->priv->app_window, "delete-event", gtk_main_quit, NULL);
 
         gtk_widget_show_all (vbox);
+
+        gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
 }
 

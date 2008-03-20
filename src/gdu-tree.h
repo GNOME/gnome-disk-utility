@@ -30,5 +30,6 @@
 GtkTreeView      *gdu_tree_new                      (GduPool     *pool);
 GduPresentable   *gdu_tree_get_selected_presentable (GtkTreeView *tree_view);
 void              gdu_tree_select_presentable       (GtkTreeView *tree_view, GduPresentable *presentable);
+void              gdu_tree_select_first_presentable (GtkTreeView *tree_view);
 
 #endif /* GNOME_DISK_UTILITY_TREE_H */

@@ -371,3 +371,24 @@ gdu_tree_select_presentable (GtkTreeView *tree_view, GduPresentable *presentable
 out:
         ;
 }
+
+void
+gdu_tree_select_first_presentable (GtkTreeView *tree_view)
+{
+        GtkTreePath *path;
+        GtkTreeModel *tree_model;
+        GtkTreeIter iter;
+
+        tree_model = gtk_tree_view_get_model (tree_view);
+
+        if (gtk_tree_model_get_iter_first (tree_model, &iter)) {
+                path = gtk_tree_model_get_path (tree_model, &iter);
+                if (path == NULL)
+                        goto out;
+
+                gtk_tree_view_set_cursor (tree_view, path, NULL, FALSE);
+                gtk_tree_path_free (path);
+        }
+out:
+        ;
+}

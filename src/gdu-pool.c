@@ -254,10 +254,10 @@ add_holes (GduPool *pool,
         for (n = 0, cursor = start; n <= num_entries; n++) {
                 if (n < num_entries) {
 
-                        g_print (" %d: offset=%lldMB size=%lldMB\n",
+                        /*g_print (" %d: offset=%lldMB size=%lldMB\n",
                                  entries[n].number,
                                  entries[n].offset / (1000 * 1000),
-                                 entries[n].size / (1000 * 1000));
+                                 entries[n].size / (1000 * 1000));*/
 
 
                         gap_size = entries[n].offset - cursor;
@@ -274,9 +274,9 @@ add_holes (GduPool *pool,
                         GList *hole_list;
                         char *orig_key;
 
-                        g_print ("  -> adding gap=%lldMB @ %lldMB\n",
+                        /*g_print ("  -> adding gap=%lldMB @ %lldMB\n",
                                  gap_size / (1000 * 1000),
-                                 gap_position  / (1000 * 1000));
+                                 gap_position  / (1000 * 1000));*/
 
                         hole = gdu_volume_hole_new (gap_position, gap_size, presentable);
                         hole_list = NULL;

@@ -782,7 +782,8 @@ gdu_device_op_mkfs (GduDevice *device, const char *fstype, const char *fslabel, 
                                                                         (const char **) options,
                                                                         op_mkfs_cb,
                                                                         g_object_ref (device));
-        g_free (options[0]);
+        while (n >= 0)
+                g_free (options[n--]);
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -795,6 +796,9 @@ op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_d
                 g_warning ("op_mount_cb failed: %s", error->message);
                 job_set_failed (device, error);
                 g_error_free (error);
+        } else {
+                g_print ("yay mounted at '%s'\n", mount_path);
+                g_free (mount_path);
         }
         g_object_unref (device);
 }
@@ -833,13 +837,96 @@ void
 gdu_device_op_unmount (GduDevice *device)
 {
         char *options[16];
-
         options[0] = NULL;
-
         org_freedesktop_DeviceKit_Disks_Device_unmount_async (device->priv->proxy,
                                                               (const char **) options,
                                                               op_unmount_cb,
                                                               g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_delete_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_delete_partition_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_delete_partition (GduDevice *device)
+{
+        char *options[16];
+        options[0] = NULL;
+        org_freedesktop_DeviceKit_Disks_Device_delete_partition_async (device->priv->proxy,
+                                                                       (const char **) options,
+                                                                       op_delete_partition_cb,
+                                                                       g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_create_partition_cb (DBusGProxy *proxy, char *created_device_objpath, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+
+        if (error != NULL) {
+                g_warning ("op_create_partition_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        } else {
+                g_print ("yay objpath='%s'\n", created_device_objpath);
+                g_free (created_device_objpath);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_create_partition (GduDevice   *device,
+                                guint64      offset,
+                                guint64      size,
+                                const char  *type,
+                                const char  *label,
+                                char       **flags,
+                                const char  *fstype,
+                                const char  *fslabel,
+                                const char  *fserase)
+{
+        int n;
+        char *fsoptions[16];
+        char *options[16];
+
+        options[0] = NULL;
+
+        n = 0;
+        if (fslabel != NULL && strlen (fslabel) > 0) {
+                fsoptions[n++] = g_strdup_printf ("label=%s", fslabel);
+        }
+        if (fslabel != fserase && strlen (fserase) > 0) {
+                fsoptions[n++] = g_strdup_printf ("erase=%s", fserase);
+        }
+        fsoptions[n] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_create_partition_async (device->priv->proxy,
+                                                                       offset,
+                                                                       size,
+                                                                       type,
+                                                                       label,
+                                                                       (const char **) flags,
+                                                                       (const char **) options,
+                                                                       fstype,
+                                                                       (const char **) fsoptions,
+                                                                       op_create_partition_cb,
+                                                                       g_object_ref (device));
+
+        while (n >= 0)
+                g_free (fsoptions[n--]);
 }
 
 /* -------------------------------------------------------------------------------- */

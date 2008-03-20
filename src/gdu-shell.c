@@ -45,9 +45,10 @@ struct _GduShellPrivate
         GtkWidget *app_window;
         GduPool *pool;
 
+        GtkWidget *treeview;
+
         /* an ordered list of GduPage objects (as they will appear in the UI) */
         GList *pages;
-
 
         PolKitAction *pk_mount_action;
 
@@ -119,6 +120,12 @@ GduPresentable *
 gdu_shell_get_selected_presentable (GduShell *shell)
 {
         return shell->priv->presentable_now_showing;
+}
+
+void
+gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
+{
+        gdu_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
 }
 
 GduPool *
@@ -641,7 +648,6 @@ create_window (GduShell *shell)
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
         GtkWidget *treeview_scrolled_window;
-        GtkWidget *treeview;
         GtkTreeSelection *select;
 
         shell->priv->pool = gdu_pool_new ();
@@ -650,7 +656,7 @@ create_window (GduShell *shell)
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);
-        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 750, 550);
+        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 900, 750);
         gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
 
         vbox = gtk_vbox_new (FALSE, 0);
@@ -669,8 +675,8 @@ create_window (GduShell *shell)
         treeview_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-        treeview = GTK_WIDGET (gdu_tree_new (shell->priv->pool));
-        gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), treeview);
+        shell->priv->treeview = GTK_WIDGET (gdu_tree_new (shell->priv->pool));
+        gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
 
         /* create a cluebar */
         shell->priv->cluebar = create_cluebar (shell);
@@ -693,12 +699,12 @@ create_window (GduShell *shell)
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
 
-        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->treeview));
         gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
         g_signal_connect (select, "changed", (GCallback) device_tree_changed, shell);
 
         /* when starting up, set focus on tree view */
-        gtk_widget_grab_focus (treeview);
+        gtk_widget_grab_focus (shell->priv->treeview);
 
         g_signal_connect (shell->priv->pool, "presentable-removed", (GCallback) presentable_removed, shell);
         g_signal_connect (shell->priv->app_window, "delete-event", gtk_main_quit, NULL);

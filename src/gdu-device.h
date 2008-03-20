@@ -122,9 +122,22 @@ const char *gdu_device_drive_get_revision (GduDevice *device);
 const char *gdu_device_drive_get_serial (GduDevice *device);
 
 /* fire and forget ops */
-void gdu_device_op_mkfs (GduDevice *device, const char *fstype, const char *fslabel, const char *fserase);
-void gdu_device_op_mount (GduDevice *device);
-void gdu_device_op_unmount (GduDevice *device);
+void gdu_device_op_mkfs             (GduDevice   *device,
+                                     const char  *fstype,
+                                     const char  *fslabel,
+                                     const char  *fserase);
+void gdu_device_op_mount            (GduDevice   *device);
+void gdu_device_op_unmount          (GduDevice   *device);
+void gdu_device_op_delete_partition (GduDevice   *device);
+void gdu_device_op_create_partition (GduDevice   *device,
+                                     guint64      offset,
+                                     guint64      size,
+                                     const char  *type,
+                                     const char  *label,
+                                     char       **flags,
+                                     const char  *fstype,
+                                     const char  *fslabel,
+                                     const char  *fserase);
 
 void gdu_device_op_cancel_job (GduDevice *device);
 

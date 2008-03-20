@@ -19,13 +19,39 @@
  * USA
  */
 
+#include <gtk/gtk.h>
+
 #ifndef GDU_UTIL_H
 #define GDU_UTIL_H
 
 char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
 
+char *gdu_util_get_desc_for_part_type (const char *part_scheme, const char *part_type);
+
 char *gdu_get_job_description (const char *job_id);
 char *gdu_get_task_description (const char *task_id);
+
+
+typedef struct
+{
+        char *id;
+        int   max_label_len;
+} GduCreatableFilesystem;
+
+GList                  *gdu_util_get_creatable_filesystems (void);
+GduCreatableFilesystem *gdu_util_find_creatable_filesystem_for_fstype (const char *fstype);
+
+GtkWidget *gdu_util_fstype_combo_box_create       (const char *include_extended_partitions_for_scheme);
+void       gdu_util_fstype_combo_box_rebuild      (GtkWidget  *combo_box,
+                                                   const char *include_extended_partitions_for_scheme);
+gboolean   gdu_util_fstype_combo_box_select       (GtkWidget  *combo_box,
+                                                   const char *fstype);
+char      *gdu_util_fstype_combo_box_get_selected (GtkWidget  *combo_box);
+
+GtkWidget *gdu_util_secure_erase_combo_box_create       (void);
+char      *gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box);
+
+char      *gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const char *fstype, guint64 size);
 
 #endif /* GDU_UTIL_H */

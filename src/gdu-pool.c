@@ -204,6 +204,7 @@ add_holes (GduPool *pool,
         guint64 cursor;
         guint64 gap_size;
         guint64 gap_position;
+        const char *scheme;
 
         drive_device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
 
@@ -220,6 +221,7 @@ add_holes (GduPool *pool,
         offsets = (guint64*) ((gdu_device_partition_table_get_offsets (drive_device))->data);
         sizes = (guint64*) ((gdu_device_partition_table_get_sizes (drive_device))->data);
         max_number = gdu_device_partition_table_get_max_number (drive_device);
+        scheme = gdu_device_partition_table_get_scheme (drive_device);
 
         entries = g_new0 (PartEntry, max_number);
         for (n = 0, num_entries = 0; n < max_number; n++) {
@@ -235,7 +237,7 @@ add_holes (GduPool *pool,
 
                 /* ignore logical partitions if requested */
                 if (ignore_logical) {
-                        if (n >= 4)
+                        if (strcmp (scheme, "mbr") == 0 && n >= 4)
                                 continue;
                 }
 
@@ -252,10 +254,10 @@ add_holes (GduPool *pool,
         for (n = 0, cursor = start; n <= num_entries; n++) {
                 if (n < num_entries) {
 
-                        /*g_print (" %d: offset=%lldMB size=%lldMB\n",
+                        g_print (" %d: offset=%lldMB size=%lldMB\n",
                                  entries[n].number,
                                  entries[n].offset / (1000 * 1000),
-                                 entries[n].size / (1000 * 1000));*/
+                                 entries[n].size / (1000 * 1000));
 
 
                         gap_size = entries[n].offset - cursor;
@@ -267,14 +269,14 @@ add_holes (GduPool *pool,
                         gap_position = start + size - gap_size;
                 }
 
-                /* ignore free space < 1MB */
-                if (gap_size >= 1024 * 1024) {
+                /* ignore unallocated space that is less than 1% of the drive */
+                if (gap_size >= gdu_device_get_size (drive_device) / 100) {
                         GList *hole_list;
                         char *orig_key;
 
-                        /*g_print ("  -> adding gap=%lldMB @ %lldMB\n",
+                        g_print ("  -> adding gap=%lldMB @ %lldMB\n",
                                  gap_size / (1000 * 1000),
-                                 gap_position  / (1000 * 1000));*/
+                                 gap_position  / (1000 * 1000));
 
                         hole = gdu_volume_hole_new (gap_position, gap_size, presentable);
                         hole_list = NULL;

@@ -36,7 +36,7 @@ struct _GduPageErasePrivate
         GtkWidget *main_vbox;
         GtkWidget *page_erase_label_entry;
         GtkWidget *page_erase_type_combo_box;
-        int secure_erase_option;
+        GtkWidget *page_erase_secure_erase_combo_box;
 
         PolKitAction *pk_erase_action;
         PolKitGnomeAction *erase_action;
@@ -54,17 +54,9 @@ enum {
         PROP_SHELL,
 };
 
-typedef enum {
-        GDU_ERASE_TYPE_NONE,
-        GDU_ERASE_TYPE_OVERWRITE,
-        GDU_ERASE_TYPE_OVERWRITE3,
-        GDU_ERASE_TYPE_OVERWRITE7,
-        GDU_ERASE_TYPE_OVERWRITE35,
-} GduEraseType;
-
 static char         *gdu_page_erase_get_fstype     (GduPageErase *page);
 static char         *gdu_page_erase_get_fslabel    (GduPageErase *page);
-static GduEraseType  gdu_page_erase_get_erase_type (GduPageErase *page);
+static char         *gdu_page_erase_get_erase_type (GduPageErase *page);
 
 static void
 gdu_page_erase_finalize (GduPageErase *page)
@@ -147,169 +139,12 @@ gdu_page_erase_class_init (GduPageEraseClass *klass)
 
 }
 
-static gboolean fstype_combo_box_select (GtkComboBox *combo_box, const char *fstype);
-
 static void
-secure_erase_radio_toggled_none (GtkToggleButton *toggle_button, gpointer user_data)
+page_erase_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 {
-        GduPageErase *page = user_data;
-        page->priv->secure_erase_option = GDU_ERASE_TYPE_NONE;
-}
-
-static void
-secure_erase_radio_toggled_overwrite (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduPageErase *page = user_data;
-        page->priv->secure_erase_option = GDU_ERASE_TYPE_OVERWRITE;
-}
-
-static void
-secure_erase_radio_toggled_overwrite3 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduPageErase *page = user_data;
-        page->priv->secure_erase_option = GDU_ERASE_TYPE_OVERWRITE3;
-}
-
-static void
-secure_erase_radio_toggled_overwrite7 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduPageErase *page = user_data;
-        page->priv->secure_erase_option = GDU_ERASE_TYPE_OVERWRITE7;
-}
-
-static void
-secure_erase_radio_toggled_overwrite35 (GtkToggleButton *toggle_button, gpointer user_data)
-{
-        GduPageErase *page = user_data;
-        page->priv->secure_erase_option = GDU_ERASE_TYPE_OVERWRITE35;
-}
-
-typedef struct
-{
-        char *id;
-        int max_label_len;
-        char *description;
-} CreatableFilesystem;
-
-/* TODO: retrieve this list from DeviceKit-disks */
-
-static CreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11},
-        {"ext3", 16},
-        {"empty", 0},
-};
-
-static int num_creatable_fstypes = sizeof (creatable_fstypes) / sizeof (CreatableFilesystem);
-
-static CreatableFilesystem *
-find_creatable_filesystem_for_fstype (const char *fstype)
-{
-        int n;
-        CreatableFilesystem *ret;
-
-        ret = NULL;
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                if (strcmp (fstype, creatable_fstypes[n].id) == 0) {
-                        ret = &(creatable_fstypes[n]);
-                        break;
-                }
-        }
-
-        return ret;
-}
-
-static GtkWidget *
-fstype_combo_box_create (void)
-{
-        int n;
-        GtkListStore *store;
-	GtkCellRenderer *renderer;
-        GtkWidget *combo_box;
-
-        store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                const char *fstype;
-                char *fstype_name;
-                GtkTreeIter iter;
-
-                fstype = creatable_fstypes[n].id;
-
-                if (strcmp (fstype, "empty") == 0) {
-                        fstype_name = g_strdup (_("Empty (don't create a file system)"));
-                } else {
-                        fstype_name = gdu_util_get_fstype_for_display (fstype, NULL, TRUE);
-                }
-
-                gtk_list_store_append (store, &iter);
-                gtk_list_store_set (store, &iter,
-                                    0, fstype,
-                                    1, fstype_name,
-                                    -1);
-
-                g_free (fstype_name);
-        }
-
-        combo_box = gtk_combo_box_new ();
-	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
-        g_object_unref (store);
-
-	renderer = gtk_cell_renderer_text_new ();
-	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, TRUE);
-	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), renderer,
-					"text", 1,
-					NULL);
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
-
-        return combo_box;
-}
-
-static gboolean
-fstype_combo_box_select (GtkComboBox *combo_box, const char *fstype)
-{
-        GtkTreeModel *model;
-        GtkTreeIter iter;
-        gboolean ret;
-
-        ret = FALSE;
-
-        model = gtk_combo_box_get_model (combo_box);
-        gtk_tree_model_get_iter_first (model, &iter);
-        do {
-                char *iter_fstype;
-
-                gtk_tree_model_get (model, &iter, 0, &iter_fstype, -1);
-                if (iter_fstype != NULL && strcmp (fstype, iter_fstype) == 0) {
-                        gtk_combo_box_set_active_iter (combo_box, &iter);
-                        ret = TRUE;
-                }
-                g_free (iter_fstype);
-        } while (!ret && gtk_tree_model_iter_next (model, &iter));
-
-        return ret;
-}
-
-static char *
-fstype_combo_box_get_selected (GtkComboBox *combo_box)
-{
-        GtkTreeModel *model;
-        GtkTreeIter iter;
+        GduPageErase *page = GDU_PAGE_ERASE (user_data);
         char *fstype;
-
-        model = gtk_combo_box_get_model (combo_box);
-        fstype = NULL;
-        if (gtk_combo_box_get_active_iter (combo_box, &iter))
-                gtk_tree_model_get (model, &iter, 0, &fstype, -1);
-
-        return fstype;
-}
-
-static void
-page_erase_type_combo_box_changed (GtkComboBox *combo_box, gpointer user_data)
-{
-        GduPageErase *page = user_data;
-        char *fstype;
-        CreatableFilesystem *creatable_fs;
+        GduCreatableFilesystem *creatable_fs;
         gboolean label_entry_sensitive;
         gboolean can_erase;
         int max_label_len;
@@ -318,9 +153,9 @@ page_erase_type_combo_box_changed (GtkComboBox *combo_box, gpointer user_data)
         can_erase = FALSE;
         max_label_len = 0;
 
-        fstype = fstype_combo_box_get_selected (combo_box);
+        fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
         if (fstype != NULL) {
-                creatable_fs = find_creatable_filesystem_for_fstype (fstype);
+                creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
                 if (creatable_fs != NULL) {
                         max_label_len = creatable_fs->max_label_len;
                 }
@@ -340,7 +175,7 @@ page_erase_type_combo_box_changed (GtkComboBox *combo_box, gpointer user_data)
 static void
 erase_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduPageErase *page = user_data;
+        GduPageErase *page = GDU_PAGE_ERASE (user_data);
         int response;
         GtkWidget *dialog;
         char *fslabel;
@@ -356,26 +191,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         if (fslabel == NULL)
                 fslabel = g_strdup ("");
 
-        switch (gdu_page_erase_get_erase_type (page)) {
-        case GDU_ERASE_TYPE_NONE:
-                fserase = "none";
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE:
-                fserase = "full";
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE3:
-                fserase = "full3pass";
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE7:
-                fserase = "full7pass";
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE35:
-                fserase = "full35pass";
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-        }
+        fserase = gdu_page_erase_get_erase_type (page);
 
         /* TODO: mention what drive the volume is on etc. */
         dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (gdu_shell_get_toplevel (page->priv->shell)),
@@ -385,7 +201,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                                                      _("<b><big>Are you sure you want to erase the volume?</big></b>"));
 
         gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                                    _("All data on the volume will be irrecovably erase. Make sure data important to you is backed up. This action cannot be undone."));
+                                                    _("All data on the volume will be irrecovably erased. Make sure data important to you is backed up. This action cannot be undone."));
         /* ... until we add data recovery to g-d-u! */
 
         gtk_dialog_add_button (GTK_DIALOG (dialog), _("Erase"), 0);
@@ -398,6 +214,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         gdu_device_op_mkfs (device, fstype, fslabel, fserase);
 
 out:
+        g_object_unref (device);
         g_free (fstype);
         g_free (fslabel);
 }
@@ -405,14 +222,10 @@ out:
 static void
 gdu_page_erase_init (GduPageErase *page)
 {
+        int row;
         GtkWidget *label;
         GtkWidget *align;
         GtkWidget *vbox;
-        GtkWidget *radio1;
-        GtkWidget *radio2;
-        GtkWidget *radio3;
-        GtkWidget *radio4;
-        GtkWidget *radio5;
         GtkWidget *table;
         GtkWidget *combo_box;
         GtkWidget *entry;
@@ -462,106 +275,59 @@ gdu_page_erase_init (GduPageErase *page)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
-        /* file system label + type */
         table = gtk_table_new (2, 2, FALSE);
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
+        row = 0;
+
+        /* file system label */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-
-        entry = gtk_entry_new (); /* todo: set max length, sensitivity according to fstype */
-        //gtk_entry_set_text (GTK_ENTRY (entry), gdu_device_id_get_label (device));
-        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
+        entry = gtk_entry_new ();
+        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         page->priv->page_erase_label_entry = entry;
 
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+        row++;
 
+        /* type */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        combo_box = fstype_combo_box_create ();
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, 1, 2,
+        combo_box = gdu_util_fstype_combo_box_create (NULL);
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-
         page->priv->page_erase_type_combo_box = combo_box;
 
-        /* update sensivity of label */
-        g_signal_connect (page->priv->page_erase_type_combo_box, "changed",
-                          G_CALLBACK (page_erase_type_combo_box_changed), page);
+        row++;
 
         /* secure erase */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Secure Erase</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), label, FALSE, FALSE, 0);
-        vbox = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox);
-        gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), align, FALSE, TRUE, 0);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        combo_box = gdu_util_secure_erase_combo_box_create ();
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
+        page->priv->page_erase_secure_erase_combo_box = combo_box;
 
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("Select if existing data on the volume should be erased before formatting it."));
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
-        radio1 = gtk_radio_button_new_with_mnemonic (NULL,
-                                                     _("_Don't overwrite data"));
-        radio2 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("_Overwrite data with zeroes"));
-        radio3 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes _3 times"));
-        radio4 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes _7 times"));
-        radio5 = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1)),
-                                                     _("Overwrite data with zeroes 3_5 times"));
-        gtk_box_pack_start (GTK_BOX (vbox), radio1, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio2, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio3, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio4, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), radio5, FALSE, TRUE, 0);
-        /* TODO: read this from gconf and visually indicate lockdown (admin may want to force sanitation policy) */
-        switch (page->priv->secure_erase_option) {
-        case GDU_ERASE_TYPE_NONE:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio1), TRUE);
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE3:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio3), TRUE);
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE7:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio4), TRUE);
-                break;
-        case GDU_ERASE_TYPE_OVERWRITE35:
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio5), TRUE);
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-        }
-	g_signal_connect (radio1, "toggled", G_CALLBACK (secure_erase_radio_toggled_none), page);
-        g_signal_connect (radio2, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite), page);
-	g_signal_connect (radio3, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite3), page);
-	g_signal_connect (radio4, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite7), page);
-	g_signal_connect (radio5, "toggled", G_CALLBACK (secure_erase_radio_toggled_overwrite35), page);
+        /* update sensivity and length of fs label + entry */
+        g_signal_connect (page->priv->page_erase_type_combo_box, "changed",
+                          G_CALLBACK (page_erase_type_combo_box_changed), page);
 
 
         button_box = gtk_hbutton_box_new ();
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_END);
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
 
         button = polkit_gnome_action_create_button (page->priv->erase_action);
@@ -591,8 +357,8 @@ gdu_page_erase_update (GduPage *_page, GduPresentable *presentable)
                 goto out;
 
         if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                if (!fstype_combo_box_select (GTK_COMBO_BOX (page->priv->page_erase_type_combo_box),
-                                              gdu_device_id_get_type (device))) {
+                if (!gdu_util_fstype_combo_box_select (page->priv->page_erase_type_combo_box,
+                                                       gdu_device_id_get_type (device))) {
                         /* if fstype of device isn't in creatable, clear selection item */
                         gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->page_erase_type_combo_box), -1);
                         gtk_entry_set_text (GTK_ENTRY (page->priv->page_erase_label_entry), "");
@@ -622,7 +388,7 @@ out:
 static char *
 gdu_page_erase_get_fstype (GduPageErase *page)
 {
-        return fstype_combo_box_get_selected (GTK_COMBO_BOX (page->priv->page_erase_type_combo_box));
+        return gdu_util_fstype_combo_box_get_selected (page->priv->page_erase_type_combo_box);
 }
 
 static char *
@@ -638,10 +404,10 @@ gdu_page_erase_get_fslabel (GduPageErase *page)
         return ret;
 }
 
-static GduEraseType
+static char *
 gdu_page_erase_get_erase_type (GduPageErase *page)
 {
-        return page->priv->secure_erase_option;
+        return gdu_util_secure_erase_combo_box_get_selected (page->priv->page_erase_secure_erase_combo_box);
 }
 
 static GtkWidget *

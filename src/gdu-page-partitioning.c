@@ -38,6 +38,8 @@ struct _GduPagePartitioningPrivate
         GtkWidget *main_vbox;
         GtkWidget *drawing_area;
 
+        GtkWidget *create_part_table_vbox;
+
         GtkWidget *delete_part_vbox;
 
         GtkWidget *create_part_vbox;
@@ -1165,6 +1167,36 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
 
         /* TODO: connect signal for revert button */
 
+        /* -------------------------- */
+        /* Create new partition table */
+        /* -------------------------- */
+
+        vbox3 = gtk_vbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
+        page->priv->create_part_table_vbox = vbox3;
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition Table</b>"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        vbox2 = gtk_vbox_new (FALSE, 5);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_container_add (GTK_CONTAINER (align), vbox2);
+        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
+
+        /* explanatory text */
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition table, select the type and layout."));
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
+
+        table = gtk_table_new (4, 2, FALSE);
+        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+
+        row = 0;
+
         /* ---------------- */
 
         gtk_box_pack_start (GTK_BOX (hbox), page->priv->drawing_area, FALSE, FALSE, 0);
@@ -1177,6 +1209,7 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         gtk_widget_set_no_show_all (page->priv->create_part_vbox, TRUE);
         gtk_widget_set_no_show_all (page->priv->delete_part_vbox, TRUE);
         gtk_widget_set_no_show_all (page->priv->modify_part_vbox, TRUE);
+        gtk_widget_set_no_show_all (page->priv->create_part_table_vbox, TRUE);
 }
 
 
@@ -1229,6 +1262,7 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
         gboolean show_delete_part;
         gboolean show_create_part;
         gboolean show_modify_part;
+        gboolean show_create_part_table;
         guint64 size;
         GduDevice *toplevel_device;
         GduPresentable *toplevel_presentable;
@@ -1237,28 +1271,18 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
         gtk_widget_set_no_show_all (page->priv->create_part_vbox, FALSE);
         gtk_widget_set_no_show_all (page->priv->delete_part_vbox, FALSE);
         gtk_widget_set_no_show_all (page->priv->modify_part_vbox, FALSE);
+        gtk_widget_set_no_show_all (page->priv->create_part_table_vbox, FALSE);
 
         show_page = FALSE;
         show_delete_part = FALSE;
         show_create_part = FALSE;
         show_modify_part = FALSE;
+        show_create_part_table = FALSE;
 
         toplevel_presentable = NULL;
         toplevel_device = NULL;
 
         device = gdu_presentable_get_device (presentable);
-
-        if (device == NULL) {
-                show_create_part = TRUE;
-        } else {
-                if (gdu_device_is_partition (device)) {
-                    show_delete_part = TRUE;
-                    show_modify_part = TRUE;
-                }
-        }
-
-        if (!(show_create_part || show_delete_part || show_modify_part))
-                goto out;
 
         toplevel_presentable = find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
@@ -1266,6 +1290,23 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
                 goto out;
         }
+
+        if (device == NULL) {
+                show_create_part = TRUE;
+        } else {
+                if (gdu_device_is_partition (device)) {
+                        show_delete_part = TRUE;
+                        show_modify_part = TRUE;
+                }
+
+                if (gdu_device_is_partition_table (device) || toplevel_presentable == presentable) {
+                        show_create_part_table = TRUE;
+                }
+        }
+
+        if (!(show_create_part || show_delete_part || show_modify_part || show_create_part_table))
+                goto out;
+
         scheme = gdu_device_partition_table_get_scheme (toplevel_device);
 
         show_page = TRUE;
@@ -1309,6 +1350,12 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
                 gtk_widget_show_all (page->priv->delete_part_vbox);
         } else {
                 gtk_widget_hide_all (page->priv->delete_part_vbox);
+        }
+
+        if (show_create_part_table) {
+                gtk_widget_show_all (page->priv->create_part_table_vbox);
+        } else {
+                gtk_widget_hide_all (page->priv->create_part_table_vbox);
         }
 
 out:

@@ -173,6 +173,7 @@ job_failed_dismiss_button_clicked (GtkWidget *button, gpointer user_data)
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         if (device != NULL) {
                 gdu_device_job_clear_last_error_message (device);
+                gtk_label_set_markup (GTK_LABEL (page->priv->job_failed_reason_label), "");
                 gdu_shell_update (page->priv->shell);
         }
 }

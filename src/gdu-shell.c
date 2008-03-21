@@ -138,6 +138,7 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 void
 gdu_shell_update (GduShell *shell)
 {
+        int n;
         GList *l;
         GduDevice *device;
         gboolean job_in_progress;
@@ -145,6 +146,7 @@ gdu_shell_update (GduShell *shell)
         gboolean can_mount;
         gboolean can_unmount;
         gboolean can_eject;
+        GtkWidget *page_widget_currently_showing;
 
         job_in_progress = FALSE;
         last_job_failed = FALSE;
@@ -178,6 +180,10 @@ gdu_shell_update (GduShell *shell)
 
         }
 
+        page_widget_currently_showing = gtk_notebook_get_nth_page (
+                GTK_NOTEBOOK (shell->priv->notebook),
+                gtk_notebook_get_current_page (GTK_NOTEBOOK (shell->priv->notebook)));
+
         for (l = shell->priv->pages; l != NULL; l = l->next) {
                 GduPage *page = GDU_PAGE (l->data);
                 gboolean show_page;
@@ -186,16 +192,33 @@ gdu_shell_update (GduShell *shell)
                 show_page = gdu_page_update (page, shell->priv->presentable_now_showing);
                 page_widget = gdu_page_get_widget (page);
 
-                if (show_page)
+                if (show_page) {
                         gtk_widget_show (page_widget);
-                else
+                } else {
                         gtk_widget_hide (page_widget);
+                        if (page_widget == page_widget_currently_showing)
+                                page_widget_currently_showing = NULL;
+                }
 
                 /* make the page insenstive if there's a job running on the device or the last job failed */
                 if (job_in_progress || last_job_failed)
                         gtk_widget_set_sensitive (page_widget, FALSE);
                 else
                         gtk_widget_set_sensitive (page_widget, TRUE);
+        }
+
+        /* the page we were showing was switching away from */
+        if (page_widget_currently_showing == NULL) {
+                /* go to the first visible page */
+                for (n = 0; n < gtk_notebook_get_n_pages (GTK_NOTEBOOK (shell->priv->notebook)); n++) {
+                        GtkWidget *page_widget;
+
+                        page_widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (shell->priv->notebook), n);
+                        if (GTK_WIDGET_VISIBLE (page_widget)) {
+                                gtk_notebook_set_current_page (GTK_NOTEBOOK (shell->priv->notebook), n);
+                                break;
+                        }
+                }
         }
 
         /* update summary page */
@@ -525,10 +548,10 @@ create_window (GduShell *shell)
 
         /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
-        add_page (shell, GDU_TYPE_PAGE_ERASE);
-        add_page (shell, GDU_TYPE_PAGE_PARTITION_CREATE);
-        add_page (shell, GDU_TYPE_PAGE_PARTITION_MODIFY);
         add_page (shell, GDU_TYPE_PAGE_PARTITION_TABLE);
+        add_page (shell, GDU_TYPE_PAGE_PARTITION_MODIFY);
+        add_page (shell, GDU_TYPE_PAGE_PARTITION_CREATE);
+        add_page (shell, GDU_TYPE_PAGE_ERASE);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->notebook, TRUE, TRUE, 0);

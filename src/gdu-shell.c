@@ -38,7 +38,9 @@
 #include "gdu-page.h"
 #include "gdu-page-erase.h"
 #include "gdu-page-summary.h"
-#include "gdu-page-partitioning.h"
+#include "gdu-page-partition-create.h"
+#include "gdu-page-partition-modify.h"
+#include "gdu-page-partition-table.h"
 
 struct _GduShellPrivate
 {
@@ -259,13 +261,19 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
         GduShell *shell = user_data;
         GduPresentable *enclosing_presentable;
 
-        /* try going to the enclosing presentable if that one is available; otherwise go to the first one */
-        enclosing_presentable = gdu_presentable_get_enclosing_presentable (presentable);
-        if (enclosing_presentable != NULL) {
-                gdu_shell_select_presentable (shell, enclosing_presentable);
-                g_object_unref (enclosing_presentable);
-        } else {
-                gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+        if (presentable == shell->priv->presentable_now_showing) {
+
+                /* Try going to the enclosing presentable if that one
+                 * is available. Otherwise go to the first one.
+                 */
+
+                enclosing_presentable = gdu_presentable_get_enclosing_presentable (presentable);
+                if (enclosing_presentable != NULL) {
+                        gdu_shell_select_presentable (shell, enclosing_presentable);
+                        g_object_unref (enclosing_presentable);
+                } else {
+                        gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+                }
         }
 }
 
@@ -518,7 +526,9 @@ create_window (GduShell *shell)
         /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
         add_page (shell, GDU_TYPE_PAGE_ERASE);
-        add_page (shell, GDU_TYPE_PAGE_PARTITIONING);
+        add_page (shell, GDU_TYPE_PAGE_PARTITION_CREATE);
+        add_page (shell, GDU_TYPE_PAGE_PARTITION_MODIFY);
+        add_page (shell, GDU_TYPE_PAGE_PARTITION_TABLE);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->notebook, TRUE, TRUE, 0);

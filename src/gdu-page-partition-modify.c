@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-page-partitioning.c
+/* gdu-page-partition-modify.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -29,22 +29,14 @@
 #include "gdu-disk-widget.h"
 #include "gdu-page.h"
 #include "gdu-util.h"
-#include "gdu-page-partitioning.h"
+#include "gdu-page-partition-modify.h"
 
-struct _GduPagePartitioningPrivate
+struct _GduPagePartitionModifyPrivate
 {
         GduShell *shell;
 
         GtkWidget *main_vbox;
         GtkWidget *disk_widget;
-
-        GtkWidget *create_part_table_vbox;
-
-        GtkWidget *create_part_vbox;
-        GtkWidget *create_part_size_hscale;
-        GtkWidget *create_part_fstype_combo_box;
-        GtkWidget *create_part_fslabel_entry;
-        GtkWidget *create_part_secure_erase_combo_box;
 
         GtkWidget *modify_part_vbox;
         GtkWidget *modify_part_label_entry;
@@ -52,25 +44,23 @@ struct _GduPagePartitioningPrivate
         GtkWidget *modify_part_flag_boot_check_button;
         GtkWidget *modify_part_flag_required_check_button;
         GtkWidget *modify_part_revert_button;
+        GtkWidget *modify_part_secure_erase_combo_box;
 
         GduPresentable *presentable;
 
-        PolKitAction *pk_delete_partition_action;
-        PolKitGnomeAction *delete_partition_action;
-
-        PolKitAction *pk_create_partition_action;
-        PolKitGnomeAction *create_partition_action;
-
         PolKitAction *pk_modify_partition_action;
         PolKitGnomeAction *modify_partition_action;
+
+        PolKitAction *pk_delete_partition_action;
+        PolKitGnomeAction *delete_partition_action;
 };
 
 static GObjectClass *parent_class = NULL;
 
-static void gdu_page_partitioning_page_iface_init (GduPageIface *iface);
-G_DEFINE_TYPE_WITH_CODE (GduPagePartitioning, gdu_page_partitioning, G_TYPE_OBJECT,
+static void gdu_page_partition_modify_page_iface_init (GduPageIface *iface);
+G_DEFINE_TYPE_WITH_CODE (GduPagePartitionModify, gdu_page_partition_modify, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PAGE,
-                                                gdu_page_partitioning_page_iface_init))
+                                                gdu_page_partition_modify_page_iface_init))
 
 enum {
         PROP_0,
@@ -78,13 +68,10 @@ enum {
 };
 
 static void
-gdu_page_partitioning_finalize (GduPagePartitioning *page)
+gdu_page_partition_modify_finalize (GduPagePartitionModify *page)
 {
         polkit_action_unref (page->priv->pk_delete_partition_action);
         g_object_unref (page->priv->delete_partition_action);
-
-        polkit_action_unref (page->priv->pk_create_partition_action);
-        g_object_unref (page->priv->create_partition_action);
 
         polkit_action_unref (page->priv->pk_modify_partition_action);
         g_object_unref (page->priv->modify_partition_action);
@@ -99,12 +86,12 @@ gdu_page_partitioning_finalize (GduPagePartitioning *page)
 }
 
 static void
-gdu_page_partitioning_set_property (GObject      *object,
+gdu_page_partition_modify_set_property (GObject      *object,
                                     guint         prop_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (object);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (object);
 
         switch (prop_id) {
         case PROP_SHELL:
@@ -120,12 +107,12 @@ gdu_page_partitioning_set_property (GObject      *object,
 }
 
 static void
-gdu_page_partitioning_get_property (GObject     *object,
+gdu_page_partition_modify_get_property (GObject     *object,
                                     guint        prop_id,
                                     GValue      *value,
                                     GParamSpec  *pspec)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (object);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (object);
 
         switch (prop_id) {
         case PROP_SHELL:
@@ -139,18 +126,18 @@ gdu_page_partitioning_get_property (GObject     *object,
 }
 
 static void
-gdu_page_partitioning_class_init (GduPagePartitioningClass *klass)
+gdu_page_partition_modify_class_init (GduPagePartitionModifyClass *klass)
 {
         GObjectClass *obj_class = (GObjectClass *) klass;
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_partitioning_finalize;
-        obj_class->set_property = gdu_page_partitioning_set_property;
-        obj_class->get_property = gdu_page_partitioning_get_property;
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_partition_modify_finalize;
+        obj_class->set_property = gdu_page_partition_modify_set_property;
+        obj_class->get_property = gdu_page_partition_modify_get_property;
 
         /**
-         * GduPagePartitioning:shell:
+         * GduPagePartitionModify:shell:
          *
          * The #GduShell instance hosting this page.
          */
@@ -168,17 +155,22 @@ gdu_page_partitioning_class_init (GduPagePartitioningClass *klass)
 static void
 delete_partition_callback (GtkAction *action, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         int response;
         GtkWidget *dialog;
         GduDevice *device;
         GduPresentable *toplevel_presentable;
+        char *secure_erase;
+
+        secure_erase = NULL;
 
         toplevel_presentable = gdu_util_find_toplevel_presentable (page->priv->presentable);
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
-
-        g_return_if_fail (device != NULL);
+        if (device == NULL) {
+                g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
+                goto out;
+        }
 
         /* TODO: mention what drive the partition is on etc. */
         dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (gdu_shell_get_toplevel (page->priv->shell)),
@@ -200,127 +192,18 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         if (response != 0)
                 goto out;
 
-        gdu_device_op_delete_partition (device);
+        secure_erase = gdu_util_secure_erase_combo_box_get_selected (page->priv->modify_part_secure_erase_combo_box);
 
-        /* go to toplevel */
-        gdu_shell_select_presentable (page->priv->shell, toplevel_presentable);
+        gdu_device_op_delete_partition (device, secure_erase);
+
+        /* we'll automatically go to toplevel once we get a
+         * notification that the partition is removed
+         */
 
 out:
+        g_free (secure_erase);
         g_object_unref (toplevel_presentable);
         g_object_unref (device);
-}
-
-static void
-create_partition_callback (GtkAction *action, gpointer user_data)
-{
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
-        GduPresentable *presentable;
-        GduPresentable *toplevel_presentable;
-        GduDevice *toplevel_device;
-        GduDevice *device;
-        guint64 offset;
-        guint64 size;
-        char *type;
-        char *label;
-        char **flags;
-        char *fstype;
-        char *fslabel;
-        char *fserase;
-        const char *scheme;
-
-        type = NULL;
-        label = NULL;
-        flags = NULL;
-        device = NULL;
-        fstype = NULL;
-        fslabel = NULL;
-        fserase = NULL;
-        toplevel_presentable = NULL;
-        toplevel_device = NULL;
-
-        presentable = gdu_shell_get_selected_presentable (page->priv->shell);
-        g_assert (presentable != NULL);
-
-        device = gdu_presentable_get_device (presentable);
-        if (device != NULL) {
-                g_warning ("%s: device is supposed to be NULL",  __FUNCTION__);
-                goto out;
-        }
-
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
-        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
-        if (toplevel_device == NULL) {
-                g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
-                goto out;
-        }
-        if (!gdu_device_is_partition_table (toplevel_device)) {
-                g_warning ("%s: device for toplevel presentable is not a partition table", __FUNCTION__);
-                goto out;
-        }
-
-        offset = gdu_presentable_get_offset (presentable);
-        size = (guint64) gtk_range_get_value (GTK_RANGE (page->priv->create_part_size_hscale));
-        fstype = gdu_util_fstype_combo_box_get_selected (page->priv->create_part_fstype_combo_box);
-        fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (page->priv->create_part_fslabel_entry)));
-        fserase = gdu_util_secure_erase_combo_box_get_selected (page->priv->create_part_secure_erase_combo_box);
-
-        /* TODO: set flags */
-        flags = NULL;
-
-        /* default the partition type according to the kind of file system */
-        scheme = gdu_device_partition_table_get_scheme (toplevel_device);
-
-        /* see gdu_util.c:gdu_util_fstype_combo_box_create_store() */
-        if (strcmp (fstype, "msdos_extended_partition") == 0) {
-                type = g_strdup ("0x05");
-                g_free (fstype);
-                g_free (fslabel);
-                g_free (fserase);
-                fstype = g_strdup ("");
-                fslabel = g_strdup ("");
-                fserase = g_strdup ("");
-        } else {
-                type = gdu_util_get_default_part_type_for_scheme_and_fstype (scheme, fstype, size);
-                if (type == NULL) {
-                        g_warning ("Cannot determine default part type for scheme '%s' and fstype '%s'",
-                                   scheme, fstype);
-                        goto out;
-                }
-        }
-
-        /* set partition label to the file system label (TODO: handle max len) */
-        if (strcmp (scheme, "gpt") == 0 || strcmp (scheme, "apm") == 0) {
-                label = g_strdup (label);
-        } else {
-                label = g_strdup ("");
-        }
-
-        gdu_device_op_create_partition (toplevel_device,
-                                        offset,
-                                        size,
-                                        type,
-                                        label,
-                                        flags,
-                                        fstype,
-                                        fslabel,
-                                        fserase);
-
-        /* go to toplevel */
-        gdu_shell_select_presentable (page->priv->shell, toplevel_presentable);
-
-out:
-        g_free (type);
-        g_free (label);
-        g_strfreev (flags);
-        g_free (fstype);
-        g_free (fslabel);
-        g_free (fserase);
-        if (device != NULL)
-                g_object_unref (device);
-        if (toplevel_presentable != NULL)
-                g_object_unref (toplevel_presentable);
-        if (toplevel_device != NULL)
-                g_object_unref (toplevel_device);
 }
 
 static gboolean
@@ -338,7 +221,7 @@ has_flag (char **flags, const char *flag)
 }
 
 static void
-modify_part_update_revert_apply_sensitivity (GduPagePartitioning *page)
+modify_part_update_revert_apply_sensitivity (GduPagePartitionModify *page)
 {
         gboolean label_differ;
         gboolean type_differ;
@@ -395,7 +278,7 @@ out:
 }
 
 static void
-modify_part_revert (GduPagePartitioning *page)
+modify_part_revert (GduPagePartitionModify *page)
 {
         gboolean show_flag_boot;
         gboolean show_flag_required;
@@ -471,35 +354,35 @@ out:
 static void
 modify_part_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         modify_part_update_revert_apply_sensitivity (page);
 }
 
 static void
 modify_part_label_entry_changed (GtkWidget *combo_box, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         modify_part_update_revert_apply_sensitivity (page);
 }
 
 static void
 modify_part_flag_check_button_clicked (GtkWidget *check_button, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         modify_part_update_revert_apply_sensitivity (page);
 }
 
 static void
 modify_part_revert_button_clicked (GtkWidget *button, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         modify_part_revert (page);
 }
 
 static void
 modify_partition_callback (GtkAction *action, gpointer user_data)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (user_data);
         GduDevice *device;
         GPtrArray *flags;
         char *type;
@@ -561,47 +444,8 @@ out:
         if (device != NULL)
                 g_object_unref (device);
 }
-
 static void
-create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
-{
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (user_data);
-        char *fstype;
-        GduCreatableFilesystem *creatable_fs;
-        gboolean label_entry_sensitive;
-        int max_label_len;
-
-        label_entry_sensitive = FALSE;
-        max_label_len = 0;
-
-        fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
-        if (fstype != NULL) {
-                creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-                /* Note: there may not have a creatable file system... e.g. the user could
-                 *       select "Extended" on mbr partition tables.
-                 */
-                if (creatable_fs != NULL) {
-                        max_label_len = creatable_fs->max_label_len;
-                }
-        }
-
-        if (max_label_len > 0)
-                label_entry_sensitive = TRUE;
-
-        gtk_entry_set_max_length (GTK_ENTRY (page->priv->create_part_fslabel_entry), max_label_len);
-        gtk_widget_set_sensitive (page->priv->create_part_fslabel_entry, label_entry_sensitive);
-
-        g_free (fstype);
-}
-
-static char*
-create_part_size_format_value_callback (GtkScale *scale, gdouble value)
-{
-        return gdu_util_get_size_for_display ((guint64) value, FALSE);
-}
-
-static void
-gdu_page_partitioning_init (GduPagePartitioning *page)
+gdu_page_partition_modify_init (GduPagePartitionModify *page)
 {
         GtkWidget *hbox;
         GtkWidget *vbox;
@@ -614,11 +458,10 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         GtkWidget *entry;
         GtkWidget *combo_box;
         GtkWidget *check_button;
-        GtkWidget *hscale;
         GtkWidget *button_box;
         int row;
 
-        page->priv = g_new0 (GduPagePartitioningPrivate, 1);
+        page->priv = g_new0 (GduPagePartitionModifyPrivate, 1);
 
         page->priv->pk_delete_partition_action = polkit_action_new ();
         polkit_action_set_action_id (page->priv->pk_delete_partition_action, "org.freedesktop.devicekit.disks.erase");
@@ -636,25 +479,6 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
                       NULL);
         g_signal_connect (page->priv->delete_partition_action, "activate",
                           G_CALLBACK (delete_partition_callback), page);
-
-
-        page->priv->pk_create_partition_action = polkit_action_new ();
-        polkit_action_set_action_id (page->priv->pk_create_partition_action, "org.freedesktop.devicekit.disks.erase");
-        page->priv->create_partition_action = polkit_gnome_action_new_default (
-                "create-partition",
-                page->priv->pk_create_partition_action,
-                _("_Create"),
-                _("Create"));
-        g_object_set (page->priv->create_partition_action,
-                      "auth-label", _("_Create..."),
-                      "yes-icon-name", GTK_STOCK_ADD,
-                      "no-icon-name", GTK_STOCK_ADD,
-                      "auth-icon-name", GTK_STOCK_ADD,
-                      "self-blocked-icon-name", GTK_STOCK_ADD,
-                      NULL);
-        g_signal_connect (page->priv->create_partition_action, "activate",
-                          G_CALLBACK (create_partition_callback), page);
-
 
         page->priv->pk_modify_partition_action = polkit_action_new ();
         polkit_action_set_action_id (page->priv->pk_modify_partition_action, "org.freedesktop.devicekit.disks.erase");
@@ -684,109 +508,6 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         vbox = gtk_vbox_new (FALSE, 10);
 
         /* ---------------- */
-        /* Create partition */
-        /* ---------------- */
-
-        vbox3 = gtk_vbox_new (FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
-        page->priv->create_part_vbox = vbox3;
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
-        vbox2 = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox2);
-        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
-
-        /* explanatory text */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition, select the size and whether to create "
-                                                   "a file system. The partition type, label and flags can be changed "
-                                                   "after creation."));
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-
-        table = gtk_table_new (4, 2, FALSE);
-        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-
-        row = 0;
-
-        /* create size */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("S_ize:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        hscale = gtk_hscale_new_with_range (0, 100, 128 * 1024 * 1024);
-        gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        g_signal_connect (hscale, "format-value", (GCallback) create_part_size_format_value_callback, page);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
-        page->priv->create_part_size_hscale = hscale;
-
-        row++;
-
-        /* secure erase */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        combo_box = gdu_util_secure_erase_combo_box_create ();
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        page->priv->create_part_secure_erase_combo_box = combo_box;
-
-        row++;
-
-        /* _file system_ type */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        combo_box = gdu_util_fstype_combo_box_create (NULL);
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        page->priv->create_part_fstype_combo_box = combo_box;
-
-        row++;
-
-        /* _file system_ label */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        entry = gtk_entry_new ();
-        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-        page->priv->create_part_fslabel_entry = entry;
-
-        /* create button */
-        button_box = gtk_hbutton_box_new ();
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
-        gtk_box_set_spacing (GTK_BOX (button_box), 6);
-        gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
-        button = polkit_gnome_action_create_button (page->priv->create_partition_action);
-        gtk_container_add (GTK_CONTAINER (button_box), button);
-
-        /* update sensivity and length of fs label and ensure it's set initially */
-        g_signal_connect (page->priv->create_part_fstype_combo_box, "changed",
-                          G_CALLBACK (create_part_fstype_combo_box_changed), page);
-        create_part_fstype_combo_box_changed (page->priv->create_part_fstype_combo_box, page);
-
-        /* ---------------- */
         /* Modify partition */
         /* ---------------- */
 
@@ -795,7 +516,7 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         page->priv->modify_part_vbox = vbox3;
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Partition</b>"));
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Modify Partition</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
         vbox2 = gtk_vbox_new (FALSE, 5);
@@ -806,9 +527,7 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
 
         /* explanatory text */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("You can change the type, label, and flags of the partition. "
-                                                   "The partition can also be deleted to make room for other "
-                                                   "partitions."));
+        gtk_label_set_markup (GTK_LABEL (label), _("You can change the type, label, and flags of the partition. "));
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
@@ -869,9 +588,6 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
         gtk_container_add (GTK_CONTAINER (button_box), button);
         button = polkit_gnome_action_create_button (page->priv->modify_partition_action);
         gtk_container_add (GTK_CONTAINER (button_box), button);
-        button = polkit_gnome_action_create_button (page->priv->delete_partition_action);
-        gtk_container_add (GTK_CONTAINER (button_box), button);
-        gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (button_box), button, TRUE);
 
         g_signal_connect (page->priv->modify_part_type_combo_box, "changed",
                           G_CALLBACK (modify_part_type_combo_box_changed), page);
@@ -883,39 +599,34 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
                           G_CALLBACK (modify_part_flag_check_button_clicked), page);
         g_signal_connect (page->priv->modify_part_revert_button, "clicked",
                           G_CALLBACK (modify_part_revert_button_clicked), page);
-        /* TODO: connect signal for revert button */
-
-        /* -------------------------- */
-        /* Create new partition table */
-        /* -------------------------- */
-
-        vbox3 = gtk_vbox_new (FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
-        page->priv->create_part_table_vbox = vbox3;
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition Table</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
-        vbox2 = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox2);
-        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
-
-        /* explanatory text */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition table, select the type."));
+        gtk_label_set_markup (GTK_LABEL (label), _("The partition can also be deleted to make room for other "
+                                                   "partitions."));
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
 
-        table = gtk_table_new (4, 2, FALSE);
+        table = gtk_table_new (1, 2, FALSE);
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        combo_box = gdu_util_secure_erase_combo_box_create ();
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
+        page->priv->modify_part_secure_erase_combo_box = combo_box;
 
-        row = 0;
+        button_box = gtk_hbutton_box_new ();
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
+        gtk_box_set_spacing (GTK_BOX (button_box), 6);
+        gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
+        button = polkit_gnome_action_create_button (page->priv->delete_partition_action);
+        gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        /* ---------------- */
 
         gtk_box_pack_start (GTK_BOX (hbox), page->priv->disk_widget, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
@@ -923,67 +634,24 @@ gdu_page_partitioning_init (GduPagePartitioning *page)
 }
 
 
-GduPagePartitioning *
-gdu_page_partitioning_new (GduShell *shell)
+GduPagePartitionModify *
+gdu_page_partition_modify_new (GduShell *shell)
 {
-        return GDU_PAGE_PARTITIONING (g_object_new (GDU_TYPE_PAGE_PARTITIONING, "shell", shell, NULL));
+        return GDU_PAGE_PARTITION_MODIFY (g_object_new (GDU_TYPE_PAGE_PARTITION_MODIFY, "shell", shell, NULL));
 }
 
 static gboolean
-has_extended_partition (GduPagePartitioning *page, GduPresentable *presentable)
+gdu_page_partition_modify_update (GduPage *_page, GduPresentable *presentable)
 {
-        GList *l;
-        GList *enclosed_presentables;
-        gboolean ret;
-        GduPool *pool;
-
-        ret = FALSE;
-
-        pool = gdu_presentable_get_pool (presentable);
-        enclosed_presentables = gdu_pool_get_enclosed_presentables (pool, presentable);
-        g_object_unref (pool);
-
-        for (l = enclosed_presentables; l != NULL; l = l->next) {
-                GduPresentable *p = l->data;
-                GduDevice *d;
-
-                d = gdu_presentable_get_device (p);
-                if (d == NULL)
-                        continue;
-
-                if (gdu_device_is_partition (d)) {
-                        int partition_type;
-                        partition_type = strtol (gdu_device_partition_get_type (d), NULL, 0);
-                        if (partition_type == 0x05 ||
-                            partition_type == 0x0f ||
-                            partition_type == 0x85) {
-                                ret = TRUE;
-                                break;
-                        }
-                }
-
-        }
-        return ret;
-}
-
-static gboolean
-gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
-{
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (_page);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (_page);
         GduDevice *device;
         gboolean show_page;
-        gboolean show_create_part;
-        gboolean show_modify_part;
-        gboolean show_create_part_table;
         guint64 size;
         GduDevice *toplevel_device;
         GduPresentable *toplevel_presentable;
         const char *scheme;
 
         show_page = FALSE;
-        show_create_part = FALSE;
-        show_modify_part = FALSE;
-        show_create_part_table = FALSE;
 
         toplevel_presentable = NULL;
         toplevel_device = NULL;
@@ -997,24 +665,14 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
                 goto out;
         }
 
-        if (device == NULL) {
-                show_create_part = TRUE;
-        } else {
-                if (gdu_device_is_partition (device)) {
-                        show_modify_part = TRUE;
-                }
-
-                if (gdu_device_is_partition_table (device) || toplevel_presentable == presentable) {
-                        show_create_part_table = TRUE;
-                }
+        if (device != NULL && gdu_device_is_partition (device)) {
+                show_page = TRUE;
         }
 
-        if (!(show_create_part || show_modify_part || show_create_part_table))
+        if (!show_page)
                 goto out;
 
         scheme = gdu_device_partition_table_get_scheme (toplevel_device);
-
-        show_page = TRUE;
 
         if (page->priv->presentable != NULL)
                 g_object_unref (page->priv->presentable);
@@ -1028,33 +686,8 @@ gdu_page_partitioning_update (GduPage *_page, GduPresentable *presentable)
 
         size = gdu_presentable_get_size (presentable);
 
-        if (show_create_part) {
-                gtk_range_set_range (GTK_RANGE (page->priv->create_part_size_hscale), 0, size);
-                gtk_range_set_value (GTK_RANGE (page->priv->create_part_size_hscale), size);
-                gtk_widget_show (page->priv->create_part_vbox);
-
-                /* only allow creation of extended partitions if there currently are none */
-                if (has_extended_partition (page, toplevel_presentable)) {
-                        gdu_util_fstype_combo_box_rebuild (page->priv->create_part_fstype_combo_box, NULL);
-                } else {
-                        gdu_util_fstype_combo_box_rebuild (page->priv->create_part_fstype_combo_box, scheme);
-                }
-        } else {
-                gtk_widget_hide (page->priv->create_part_vbox);
-        }
-
-        if (show_modify_part) {
-                modify_part_revert (page);
-                gtk_widget_show (page->priv->modify_part_vbox);
-        } else {
-                gtk_widget_hide (page->priv->modify_part_vbox);
-        }
-
-        if (show_create_part_table) {
-                gtk_widget_show (page->priv->create_part_table_vbox);
-        } else {
-                gtk_widget_hide (page->priv->create_part_table_vbox);
-        }
+        modify_part_revert (page);
+        gtk_widget_show (page->priv->modify_part_vbox);
 
 out:
         if (device != NULL)
@@ -1068,22 +701,22 @@ out:
 }
 
 static GtkWidget *
-gdu_page_partitioning_get_widget (GduPage *_page)
+gdu_page_partition_modify_get_widget (GduPage *_page)
 {
-        GduPagePartitioning *page = GDU_PAGE_PARTITIONING (_page);
+        GduPagePartitionModify *page = GDU_PAGE_PARTITION_MODIFY (_page);
         return page->priv->main_vbox;
 }
 
 static char *
-gdu_page_partitioning_get_name (GduPage *page)
+gdu_page_partition_modify_get_name (GduPage *page)
 {
-        return g_strdup (_("Partitioning"));
+        return g_strdup (_("Modify Partition"));
 }
 
 static void
-gdu_page_partitioning_page_iface_init (GduPageIface *iface)
+gdu_page_partition_modify_page_iface_init (GduPageIface *iface)
 {
-        iface->get_widget = gdu_page_partitioning_get_widget;
-        iface->get_name = gdu_page_partitioning_get_name;
-        iface->update = gdu_page_partitioning_update;
+        iface->get_widget = gdu_page_partition_modify_get_widget;
+        iface->get_name = gdu_page_partition_modify_get_name;
+        iface->update = gdu_page_partition_modify_update;
 }

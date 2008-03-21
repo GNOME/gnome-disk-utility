@@ -129,7 +129,8 @@ void gdu_device_op_mkfs             (GduDevice   *device,
                                      const char  *fserase);
 void gdu_device_op_mount            (GduDevice   *device);
 void gdu_device_op_unmount          (GduDevice   *device);
-void gdu_device_op_delete_partition (GduDevice   *device);
+void gdu_device_op_delete_partition (GduDevice   *device,
+                                     const char  *secure_erase);
 void gdu_device_op_create_partition (GduDevice   *device,
                                      guint64      offset,
                                      guint64      size,

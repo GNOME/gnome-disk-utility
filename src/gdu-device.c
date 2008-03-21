@@ -865,14 +865,24 @@ op_delete_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 }
 
 void
-gdu_device_op_delete_partition (GduDevice *device)
+gdu_device_op_delete_partition (GduDevice *device, const char *secure_erase)
 {
+        int n;
         char *options[16];
-        options[0] = NULL;
+
+        n = 0;
+        if (secure_erase != NULL && strlen (secure_erase) > 0) {
+                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
+        }
+        options[n] = NULL;
+
         org_freedesktop_DeviceKit_Disks_Device_delete_partition_async (device->priv->proxy,
                                                                        (const char **) options,
                                                                        op_delete_partition_cb,
                                                                        g_object_ref (device));
+
+        while (n >= 0)
+                g_free (options[n--]);
 }
 
 /* -------------------------------------------------------------------------------- */

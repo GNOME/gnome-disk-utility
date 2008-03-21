@@ -144,6 +144,9 @@ void gdu_device_op_modify_partition (GduDevice   *device,
                                      const char  *type,
                                      const char  *label,
                                      char       **flags);
+void gdu_device_op_create_partition_table (GduDevice   *device,
+                                           const char  *scheme,
+                                           const char  *secure_erase);
 
 
 

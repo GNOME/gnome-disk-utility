@@ -55,12 +55,19 @@ char      *gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box);
 
 char      *gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const char *fstype, guint64 size);
 
+
 GtkWidget *gdu_util_part_type_combo_box_create       (const char *part_scheme);
 void       gdu_util_part_type_combo_box_rebuild      (GtkWidget  *combo_box,
                                                       const char *part_scheme);
 gboolean   gdu_util_part_type_combo_box_select       (GtkWidget  *combo_box,
                                                       const char *part_type);
 char      *gdu_util_part_type_combo_box_get_selected (GtkWidget  *combo_box);
+
+
+GtkWidget *gdu_util_part_table_type_combo_box_create       (void);
+gboolean   gdu_util_part_table_type_combo_box_select       (GtkWidget  *combo_box,
+                                                            const char *part_table_type);
+char      *gdu_util_part_table_type_combo_box_get_selected (GtkWidget  *combo_box);
 
 
 GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable);

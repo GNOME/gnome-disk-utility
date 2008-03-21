@@ -975,6 +975,44 @@ gdu_device_op_modify_partition (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+static void
+op_create_partition_table_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_create_partition_table_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_create_partition_table (GduDevice  *device,
+                                      const char *scheme,
+                                      const char *secure_erase)
+{
+        int n;
+        char *options[16];
+
+        n = 0;
+        if (secure_erase != NULL && strlen (secure_erase) > 0) {
+                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
+        }
+        options[n] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_create_partition_table_async (device->priv->proxy,
+                                                                             scheme,
+                                                                             (const char **) options,
+                                                                             op_create_partition_table_cb,
+                                                                             g_object_ref (device));
+
+        while (n >= 0)
+                g_free (options[n--]);
+}
+
+/* -------------------------------------------------------------------------------- */
+
 void
 gdu_device_op_cancel_job (GduDevice *device)
 {

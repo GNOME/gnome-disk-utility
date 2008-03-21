@@ -590,6 +590,107 @@ gdu_util_part_type_combo_box_get_selected (GtkWidget *combo_box)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GtkListStore *
+gdu_util_part_table_type_combo_box_create_store (void)
+{
+        GtkListStore *store;
+        GtkTreeIter iter;
+
+        store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+        /* TODO: get from daemon */
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                            0, "mbr",
+                            1, _("Master Boot Record"),
+                            -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                            0, "gpt",
+                            1, _("GUID Partition Table"),
+                            -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                            0, "apm",
+                            1, _("Apple Partition Map"),
+                            -1);
+
+        return store;
+}
+
+/**
+ * gdu_util_part_table_type_combo_box_create:
+ *
+ * Get a combo box with the partition tables types we can create.
+ *
+ * Returns: A #GtkComboBox widget
+ **/
+GtkWidget *
+gdu_util_part_table_type_combo_box_create (void)
+{
+        GtkListStore *store;
+	GtkCellRenderer *renderer;
+        GtkWidget *combo_box;
+
+        combo_box = gtk_combo_box_new ();
+        store = gdu_util_part_table_type_combo_box_create_store ();
+	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
+        g_object_unref (store);
+
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), renderer,
+					"text", 1,
+					NULL);
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
+
+        return combo_box;
+}
+
+gboolean
+gdu_util_part_table_type_combo_box_select (GtkWidget *combo_box, const char *part_table_type)
+{
+        GtkTreeModel *model;
+        GtkTreeIter iter;
+        gboolean ret;
+
+        ret = FALSE;
+
+        model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+        gtk_tree_model_get_iter_first (model, &iter);
+        do {
+                char *iter_part_table_type;
+
+                gtk_tree_model_get (model, &iter, 0, &iter_part_table_type, -1);
+                if (iter_part_table_type != NULL && strcmp (part_table_type, iter_part_table_type) == 0) {
+                        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
+                        ret = TRUE;
+                }
+                g_free (iter_part_table_type);
+        } while (!ret && gtk_tree_model_iter_next (model, &iter));
+
+        return ret;
+}
+
+char *
+gdu_util_part_table_type_combo_box_get_selected (GtkWidget *combo_box)
+{
+        GtkTreeModel *model;
+        GtkTreeIter iter;
+        char *part_table_type;
+
+        model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+        part_table_type = NULL;
+        if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
+                gtk_tree_model_get (model, &iter, 0, &part_table_type, -1);
+
+        return part_table_type;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 GtkWidget *
 gdu_util_secure_erase_combo_box_create (void)
 {

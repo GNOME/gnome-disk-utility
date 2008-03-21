@@ -937,6 +937,34 @@ gdu_device_op_create_partition (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+static void
+op_modify_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_modify_partition_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_modify_partition (GduDevice   *device,
+                                const char  *type,
+                                const char  *label,
+                                char       **flags)
+{
+        org_freedesktop_DeviceKit_Disks_Device_modify_partition_async (device->priv->proxy,
+                                                                       type,
+                                                                       label,
+                                                                       (const char **) flags,
+                                                                       op_modify_partition_cb,
+                                                                       g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
 void
 gdu_device_op_cancel_job (GduDevice *device)
 {

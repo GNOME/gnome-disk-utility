@@ -139,6 +139,12 @@ void gdu_device_op_create_partition (GduDevice   *device,
                                      const char  *fstype,
                                      const char  *fslabel,
                                      const char  *fserase);
+void gdu_device_op_modify_partition (GduDevice   *device,
+                                     const char  *type,
+                                     const char  *label,
+                                     char       **flags);
+
+
 
 void gdu_device_op_cancel_job (GduDevice *device);
 

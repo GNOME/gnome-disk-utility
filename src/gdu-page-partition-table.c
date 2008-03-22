@@ -273,7 +273,7 @@ gdu_page_partition_table_init (GduPagePartitionTable *page)
 
         row = 0;
 
-        /* secure erase */
+        /* partition table type */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
@@ -300,6 +300,15 @@ gdu_page_partition_table_init (GduPagePartitionTable *page)
         page->priv->create_part_table_secure_erase_combo_box = combo_box;
 
         row++;
+
+        /* secure erase desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
 
         /* create button */
         button_box = gtk_hbutton_box_new ();

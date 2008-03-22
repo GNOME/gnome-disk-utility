@@ -691,6 +691,74 @@ gdu_util_part_table_type_combo_box_get_selected (GtkWidget *combo_box)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static char *
+gdu_util_secure_erase_get_description (char *secure_erase_type)
+{
+        const char *desc[] = {
+                N_("Data on the disk won't be erased. This option doesn't add any time to the "
+                   "requested operation but may pose a security threat."),
+
+                N_("All data on the disk will by overwritten by zeroes providing some "
+                   "security against data recovery. "
+                   "This operation may take a long time depending on the size and speed of the disk."),
+
+                N_("Random data is written to the disk three times. This operation may "
+                   "take some time depending on the size and speed of the disk but "
+                   "provides good security against data recovery."),
+
+                N_("Random data is written to the disk seven times. This operation may "
+                   "take a very long time depending on the size and speed of the disk "
+                   "but provides excellent security against data recovery."),
+
+                N_("Random data is written to the disk 35 times before starting the "
+                   "operation. This operation may take extremely long time depending on the "
+                   "size and speed of the disk but provides the most effective "
+                   "security against data recovery."),
+        };
+
+        g_return_val_if_fail (desc != NULL, NULL);
+
+        if (strcmp (secure_erase_type, "none") == 0)
+                return g_strdup (desc[0]);
+        else if (strcmp (secure_erase_type, "full") == 0)
+                return g_strdup (desc[1]);
+        else if (strcmp (secure_erase_type, "full3pass") == 0)
+                return g_strdup (desc[2]);
+        else if (strcmp (secure_erase_type, "full7pass") == 0)
+                return g_strdup (desc[3]);
+        else if (strcmp (secure_erase_type, "full35pass") == 0)
+                return g_strdup (desc[4]);
+        else
+                return NULL;
+}
+
+static void
+gdu_util_secure_erase_combo_box_update_desc_label (GtkWidget *combo_box)
+{
+        GtkWidget *desc_label;
+
+        desc_label = g_object_get_data (G_OBJECT (combo_box), "gdu-desc-label");
+        if (desc_label != NULL) {
+                char *s;
+                char *secure_erase;
+                char *secure_erase_desc;
+
+                secure_erase = gdu_util_secure_erase_combo_box_get_selected (combo_box);
+                secure_erase_desc = gdu_util_secure_erase_get_description (secure_erase);
+                s = g_strdup_printf ("<small><i>%s</i></small>", secure_erase_desc);
+                gtk_label_set_markup (GTK_LABEL (desc_label), s);
+                g_free (s);
+                g_free (secure_erase_desc);
+                g_free (secure_erase);
+        }
+}
+
+static void
+gdu_util_secure_erase_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
+{
+        gdu_util_secure_erase_combo_box_update_desc_label (combo_box);
+}
+
 GtkWidget *
 gdu_util_secure_erase_combo_box_create (void)
 {
@@ -703,6 +771,8 @@ gdu_util_secure_erase_combo_box_create (void)
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data 7 times"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data 35 times"));
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0); /* read default from gconf; use lockdown too */
+
+        g_signal_connect (combo_box, "changed", (GCallback) gdu_util_secure_erase_combo_box_changed, NULL);
         return combo_box;
 }
 
@@ -716,6 +786,18 @@ gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box)
         g_assert (active >= 0 && active < sizeof (result));
         return g_strdup (result[active]);
 }
+
+void
+gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label)
+{
+        g_object_set_data_full (G_OBJECT (combo_box),
+                                "gdu-desc-label",
+                                g_object_ref (desc_label),
+                                g_object_unref);
+
+        gdu_util_secure_erase_combo_box_update_desc_label (combo_box);
+}
+
 
 char *
 gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const char *fstype, guint64 size)

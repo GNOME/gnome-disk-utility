@@ -43,6 +43,8 @@ typedef struct
 GList                  *gdu_util_get_creatable_filesystems (void);
 GduCreatableFilesystem *gdu_util_find_creatable_filesystem_for_fstype (const char *fstype);
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 GtkWidget *gdu_util_fstype_combo_box_create       (const char *include_extended_partitions_for_scheme);
 void       gdu_util_fstype_combo_box_rebuild      (GtkWidget  *combo_box,
                                                    const char *include_extended_partitions_for_scheme);
@@ -50,11 +52,17 @@ gboolean   gdu_util_fstype_combo_box_select       (GtkWidget  *combo_box,
                                                    const char *fstype);
 char      *gdu_util_fstype_combo_box_get_selected (GtkWidget  *combo_box);
 
-GtkWidget *gdu_util_secure_erase_combo_box_create       (void);
-char      *gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box);
+/* ---------------------------------------------------------------------------------------------------- */
+
+GtkWidget *gdu_util_secure_erase_combo_box_create         (void);
+void       gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label);
+char      *gdu_util_secure_erase_combo_box_get_selected   (GtkWidget *combo_box);
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 char      *gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const char *fstype, guint64 size);
 
+/* ---------------------------------------------------------------------------------------------------- */
 
 GtkWidget *gdu_util_part_type_combo_box_create       (const char *part_scheme);
 void       gdu_util_part_type_combo_box_rebuild      (GtkWidget  *combo_box,
@@ -63,12 +71,14 @@ gboolean   gdu_util_part_type_combo_box_select       (GtkWidget  *combo_box,
                                                       const char *part_type);
 char      *gdu_util_part_type_combo_box_get_selected (GtkWidget  *combo_box);
 
+/* ---------------------------------------------------------------------------------------------------- */
 
 GtkWidget *gdu_util_part_table_type_combo_box_create       (void);
 gboolean   gdu_util_part_table_type_combo_box_select       (GtkWidget  *combo_box,
                                                             const char *part_table_type);
 char      *gdu_util_part_table_type_combo_box_get_selected (GtkWidget  *combo_box);
 
+/* ---------------------------------------------------------------------------------------------------- */
 
 GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable);
 

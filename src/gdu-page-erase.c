@@ -320,6 +320,17 @@ gdu_page_erase_init (GduPageErase *page)
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
         page->priv->page_erase_secure_erase_combo_box = combo_box;
 
+        row++;
+
+        /* secure erase desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
+
 
         /* update sensivity and length of fs label + entry */
         g_signal_connect (page->priv->page_erase_type_combo_box, "changed",

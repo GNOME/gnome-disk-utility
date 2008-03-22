@@ -607,7 +607,7 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
 
-        table = gtk_table_new (1, 2, FALSE);
+        table = gtk_table_new (2, 2, FALSE);
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -619,6 +619,17 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
         page->priv->modify_part_secure_erase_combo_box = combo_box;
+
+        row++;
+
+        /* secure erase desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
 
         button_box = gtk_hbutton_box_new ();
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);

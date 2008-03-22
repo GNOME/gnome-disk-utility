@@ -36,6 +36,7 @@ struct _GduPagePartitionCreatePrivate
         GduShell *shell;
 
         GtkWidget *main_vbox;
+        GtkWidget *secondary_vbox;
         GtkWidget *disk_widget;
 
         GtkWidget *create_part_table_vbox;
@@ -45,6 +46,8 @@ struct _GduPagePartitionCreatePrivate
         GtkWidget *create_part_fstype_combo_box;
         GtkWidget *create_part_fslabel_entry;
         GtkWidget *create_part_secure_erase_combo_box;
+        GtkWidget *create_part_warning_hbox;
+        GtkWidget *create_part_warning_label;
 
         GduPresentable *presentable;
 
@@ -312,6 +315,7 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         GtkWidget *combo_box;
         GtkWidget *hscale;
         GtkWidget *button_box;
+        GtkWidget *image;
         int row;
 
         page->priv = g_new0 (GduPagePartitionCreatePrivate, 1);
@@ -336,8 +340,6 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         page->priv->main_vbox = gtk_vbox_new (FALSE, 10);
         gtk_container_set_border_width (GTK_CONTAINER (page->priv->main_vbox), 8);
 
-        hbox = gtk_hbox_new (FALSE, 10);
-
         page->priv->disk_widget = gdu_disk_widget_new (NULL);
         gtk_widget_set_size_request (page->priv->disk_widget, 150, 150);
 
@@ -351,15 +353,33 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
         page->priv->create_part_vbox = vbox3;
 
+        /* Warning used for
+         * - telling the user he won't be able to add more partitions if he adds this one
+         * - telling the user that we can't add any partitions because the four primary ones
+         *   are used already and there is no extended partition
+         */
+        hbox = gtk_hbox_new (FALSE, 5);
+        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox3), hbox, TRUE, TRUE, 10);
+        page->priv->create_part_warning_hbox = hbox;
+        page->priv->create_part_warning_label = label;
+
+        page->priv->secondary_vbox = gtk_vbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox3), page->priv->secondary_vbox, FALSE, TRUE, 0);
+
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (page->priv->secondary_vbox), label, FALSE, FALSE, 0);
         vbox2 = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
-        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (page->priv->secondary_vbox), align, FALSE, TRUE, 0);
 
         /* explanatory text */
         label = gtk_label_new (NULL);
@@ -468,7 +488,7 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
                           G_CALLBACK (create_part_fstype_combo_box_changed), page);
         create_part_fstype_combo_box_changed (page->priv->create_part_fstype_combo_box, page);
 
-
+        hbox = gtk_hbox_new (FALSE, 10);
         gtk_box_pack_start (GTK_BOX (hbox), page->priv->disk_widget, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, TRUE, 0);
         gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), hbox, TRUE, TRUE, 0);
@@ -518,6 +538,80 @@ has_extended_partition (GduPagePartitionCreate *page, GduPresentable *presentabl
         return ret;
 }
 
+/**
+ * update_warning:
+ * @page: A #GduPagePartitionCreate object.
+ *
+ * Update the warning widgets to tell the user how much MBR sucks if
+ * that is what he is using.
+ *
+ * Returns: #TRUE if no more partitions can be created
+ **/
+static gboolean
+update_warning (GduPagePartitionCreate *page)
+{
+        gboolean show_warning;
+        GduPresentable *toplevel_presentable;
+        GduDevice *toplevel_device;
+        char *warning_markup;
+        gboolean at_max_partitions;
+
+        show_warning = FALSE;
+        warning_markup = NULL;
+        at_max_partitions = FALSE;
+
+        toplevel_presentable = gdu_util_find_toplevel_presentable (page->priv->presentable);
+        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+        if (toplevel_device == NULL) {
+                g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
+                goto out;
+        }
+
+        if (gdu_device_is_partition_table (toplevel_device)) {
+                const char *scheme;
+
+                scheme = gdu_device_partition_table_get_scheme (toplevel_device);
+
+                if (scheme != NULL &&
+                    strcmp (scheme, "mbr") == 0 &&
+                    !has_extended_partition (page, toplevel_presentable)) {
+                        int num_partitions;
+
+                        num_partitions = gdu_device_partition_table_get_count (toplevel_device);
+
+                        if (num_partitions == 3) {
+                                show_warning = TRUE;
+                                warning_markup = g_strdup (
+                                        _("<b>This is the last primary partition that can be created. "
+                                          "If you need more partitions, you can create an Extended "
+                                          "Partition.</b>"));
+                        } else if (num_partitions == 4) {
+                                show_warning = TRUE;
+                                at_max_partitions = TRUE;
+                                warning_markup = g_strdup (
+                                        _("<b>No more partitions can be created. You may want to delete "
+                                          "an existing partition and then create an Extended Partition.</b>"));
+                        }
+                }
+        }
+
+        if (show_warning) {
+                gtk_widget_show (page->priv->create_part_warning_hbox);
+                gtk_label_set_markup (GTK_LABEL (page->priv->create_part_warning_label), warning_markup);
+        } else {
+                gtk_widget_hide (page->priv->create_part_warning_hbox);
+        }
+
+out:
+        g_free (warning_markup);
+        if (toplevel_presentable != NULL)
+                g_object_unref (toplevel_presentable);
+        if (toplevel_device != NULL)
+                g_object_unref (toplevel_device);
+
+        return at_max_partitions;
+}
+
 static gboolean
 gdu_page_partition_create_update (GduPage *_page, GduPresentable *presentable)
 {
@@ -528,6 +622,7 @@ gdu_page_partition_create_update (GduPage *_page, GduPresentable *presentable)
         GduDevice *toplevel_device;
         GduPresentable *toplevel_presentable;
         const char *scheme;
+        gboolean at_max_partitions;
 
         show_page = FALSE;
 
@@ -538,7 +633,7 @@ gdu_page_partition_create_update (GduPage *_page, GduPresentable *presentable)
 
         toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
-        if (toplevel_presentable == NULL) {
+        if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
                 goto out;
         }
@@ -550,11 +645,15 @@ gdu_page_partition_create_update (GduPage *_page, GduPresentable *presentable)
         if (!show_page)
                 goto out;
 
-        scheme = gdu_device_partition_table_get_scheme (toplevel_device);
-
         if (page->priv->presentable != NULL)
                 g_object_unref (page->priv->presentable);
         page->priv->presentable = g_object_ref (presentable);
+
+        scheme = gdu_device_partition_table_get_scheme (toplevel_device);
+
+        at_max_partitions = update_warning (page);
+        gtk_widget_set_sensitive (page->priv->secondary_vbox, !at_max_partitions);
+        gtk_widget_set_sensitive (page->priv->disk_widget, !at_max_partitions);
 
         gdu_disk_widget_set_presentable (GDU_DISK_WIDGET (page->priv->disk_widget), presentable);
         gtk_widget_queue_draw_area (page->priv->disk_widget,

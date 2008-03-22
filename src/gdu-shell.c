@@ -189,8 +189,18 @@ gdu_shell_update (GduShell *shell)
                 gboolean show_page;
                 GtkWidget *page_widget;
 
-                show_page = gdu_page_update (page, shell->priv->presentable_now_showing);
                 page_widget = gdu_page_get_widget (page);
+
+                /* Make the page insenstive if there's a job running on the device or the last
+                 * job failed. Do this before calling update() as the page may want to render
+                 * itself insensitive.
+                 */
+                if (job_in_progress || last_job_failed)
+                        gtk_widget_set_sensitive (page_widget, FALSE);
+                else
+                        gtk_widget_set_sensitive (page_widget, TRUE);
+
+                show_page = gdu_page_update (page, shell->priv->presentable_now_showing);
 
                 if (show_page) {
                         gtk_widget_show (page_widget);
@@ -200,11 +210,6 @@ gdu_shell_update (GduShell *shell)
                                 page_widget_currently_showing = NULL;
                 }
 
-                /* make the page insenstive if there's a job running on the device or the last job failed */
-                if (job_in_progress || last_job_failed)
-                        gtk_widget_set_sensitive (page_widget, FALSE);
-                else
-                        gtk_widget_set_sensitive (page_widget, TRUE);
         }
 
         /* the page we were showing was switching away from */

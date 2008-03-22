@@ -84,6 +84,7 @@ gboolean gdu_device_is_media_available (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
+gboolean gdu_device_is_crypto_cleartext (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 
@@ -116,6 +117,8 @@ int         gdu_device_partition_table_get_count (GduDevice *device);
 int         gdu_device_partition_table_get_max_number (GduDevice *device);
 GArray     *gdu_device_partition_table_get_offsets (GduDevice *device);
 GArray     *gdu_device_partition_table_get_sizes (GduDevice *device);
+
+const char *gdu_device_crypto_cleartext_get_slave (GduDevice *device);
 
 const char *gdu_device_drive_get_vendor (GduDevice *device);
 const char *gdu_device_drive_get_model (GduDevice *device);

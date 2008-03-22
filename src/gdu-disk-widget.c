@@ -317,7 +317,7 @@ squeeze_nodes (GList *nodes, double min_size)
                         /* this node is too small; steal from the biggest
                          * node that can afford it
                          *
-                         * TODO: we could steal evenly from wealth nodes
+                         * TODO: we could steal evenly from wealthy nodes
                          */
                         amount_to_steal = min_size - node->size;
 
@@ -379,11 +379,20 @@ generate_nodes (GduDiskWidget *disk_widget,
 
         for (l = enclosed; l != NULL; l = l->next) {
                 GduPresentable *p = GDU_PRESENTABLE (l->data);
+                GduDevice *d;
                 guint64 offset;
                 guint64 size;
                 GList *embedded_nodes;
                 double g_pos;
                 double g_size;
+
+                d = gdu_presentable_get_device (p);
+                if (d != NULL) {
+                        if (!gdu_device_is_partition (d)) {
+                                g_object_unref (d);
+                                continue;
+                        }
+                }
 
                 offset = gdu_presentable_get_offset (p);
                 size = gdu_presentable_get_size (p);
@@ -391,7 +400,9 @@ generate_nodes (GduDiskWidget *disk_widget,
                 g_pos = at_pos + at_size * (offset - part_offset) / part_size;
                 g_size = at_size * size / part_size;
 
-                /* this presentable may have enclosed presentables itself.. use them instead */
+                /* This presentable may have enclosed presentables itself.. use them instead
+                 * if they are partitions or holes.
+                 */
                 embedded_nodes = generate_nodes (disk_widget, p, g_pos, g_size);
                 if (embedded_nodes != NULL) {
                         nodes = g_list_concat (nodes, embedded_nodes);
@@ -402,6 +413,9 @@ generate_nodes (GduDiskWidget *disk_widget,
                         node->presentable = g_object_ref (p);
                         nodes = g_list_append (nodes, node);
                 }
+
+                if (d != NULL)
+                        g_object_unref (d);
         }
 
 out:

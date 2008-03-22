@@ -500,10 +500,28 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                         }
                                 }
                         }
-
                 }
 
-                /* TODO: handle whole disk devices */
+                if (gdu_device_is_crypto_cleartext (device)) {
+                        const char *crypto_cleartext_slave;
+                        GduVolume *enclosing_volume;
+
+                        crypto_cleartext_slave = gdu_device_crypto_cleartext_get_slave (device);
+                        enclosing_volume = g_hash_table_lookup (pool->priv->volumes,
+                                                                crypto_cleartext_slave);
+                        if (enclosing_volume != NULL) {
+                                GduVolume *volume;
+
+                                volume = gdu_volume_new_from_device (device, GDU_PRESENTABLE (enclosing_volume));
+                                g_hash_table_insert (pool->priv->volumes,
+                                                     g_strdup (object_path),
+                                                     g_object_ref (volume));
+                                pool->priv->presentables = g_list_prepend (pool->priv->presentables,
+                                                                           GDU_PRESENTABLE (volume));
+                                g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
+                        }
+                }
+
 
         }
 
@@ -658,7 +676,13 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
 static int
 ptr_array_strcmp (const char **a, const char **b)
 {
-        return strcmp (*a, *b);
+        /* kludge to get dm devices last */
+        if (g_str_has_prefix (*a, "/devices/dm_"))
+                return 1;
+        else if (g_str_has_prefix (*b, "/devices/dm_"))
+                return -1;
+        else
+                return strcmp (*a, *b);
 }
 
 GduPool *

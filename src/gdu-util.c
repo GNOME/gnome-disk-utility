@@ -103,7 +103,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 }
         } else if (strcmp (fstype, "ntfs") == 0) {
                 if (long_string) {
-                        s = g_strdup_printf (_("Microsoft NTFS version %s"), fsversion);
+                        if (strlen (fsversion) > 0)
+                                s = g_strdup_printf (_("Microsoft NTFS version %s"), fsversion);
+                        else
+                                s = g_strdup_printf (_("Microsoft NTFS"));
                 } else {
                         s = g_strdup (_("NTFS"));
                 }
@@ -163,6 +166,12 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         s = g_strdup (_("Universal Disk Format"));
                 } else {
                         s = g_strdup (_("udf"));
+                }
+        } else if (strcmp (fstype, "swap") == 0) {
+                if (long_string) {
+                        s = g_strdup (_("Swap Space"));
+                } else {
+                        s = g_strdup (_("swap"));
                 }
         } else {
                 s = g_strdup (fstype);
@@ -310,6 +319,8 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 static GduCreatableFilesystem creatable_fstypes[] = {
         {"vfat", 11},
         {"ext3", 16},
+        {"swap", 0},
+        {"ntfs", 255},
         {"empty", 0},
 };
 
@@ -325,15 +336,22 @@ gdu_util_fstype_get_description (char *fstype)
                                    "used for file exchange. Maximum file size is limited to 2GB and the file "
                                    "system doesn't support file permissions."));
 
-        else  if (strcmp (fstype, "ext3") == 0)
+        else if (strcmp (fstype, "ext3") == 0)
                 return g_strdup (_("This file system is compatible with Linux systems only and provides classic "
                                    "UNIX file permissions support. Not ideal if you plan to move the disk "
                                    "around between different systems."));
 
-        else  if (strcmp (fstype, "empty") == 0)
+        else if (strcmp (fstype, "swap") == 0)
+                return g_strdup (_("Swap area used by the operating system for virtual memory."));
+
+        else if (strcmp (fstype, "ntfs") == 0)
+                return g_strdup (_("The native Windows file system. Not widely compatible with other "
+                                   "operating systems than Windows."));
+
+        else if (strcmp (fstype, "empty") == 0)
                 return g_strdup (_("No file system will be created."));
 
-        else  if (strcmp (fstype, "msdos_extended_partition") == 0)
+        else if (strcmp (fstype, "msdos_extended_partition") == 0)
                 return g_strdup (_("Create an Extended Partition for housing logical partitions. Typically "
                                    "used to overcome the inherent limitation of four primary partitions when "
                                    "using the Master Boot Record partitioning scheme."));
@@ -704,11 +722,11 @@ gdu_util_part_table_type_get_description (char *part_type)
                                    "device or system but has a number of limitations with respect to to disk "
                                    "size and number of partitions."));
 
-        else  if (strcmp (part_type, "apm") == 0)
+        else if (strcmp (part_type, "apm") == 0)
                 return g_strdup (_("A legacy partitioning scheme with roots in legacy Apple hardware. "
                                    "Compatible with most Linux systems."));
 
-        else  if (strcmp (part_type, "gpt") == 0)
+        else if (strcmp (part_type, "gpt") == 0)
                 return g_strdup (_("The GUID partitioning scheme is compatible with most modern systems but "
                                    "may be incompatible with some devices and legacy systems."));
 
@@ -950,10 +968,15 @@ gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const 
                 if (strcmp (fstype, "vfat") == 0) {
                         /* TODO: maybe consider size */
                         type = "0x0c";
+                } else if (strcmp (fstype, "swap") == 0) {
+                        type = "0x82";
+                } else if (strcmp (fstype, "ntfs") == 0) {
+                        type = "0x07";
                 } else {
                         type = "0x83";
                 }
         } else if (strcmp (scheme, "gpt") == 0) {
+                /* default to Basic Data Partition for now */
                 type = "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7";
         } else if (strcmp (scheme, "apm") == 0) {
                 type = "Windows_FAT_32";

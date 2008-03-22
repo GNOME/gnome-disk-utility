@@ -484,10 +484,10 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
         page->priv->modify_partition_action = polkit_gnome_action_new_default (
                 "modify-partition",
                 page->priv->pk_modify_partition_action,
-                _("A_pply"),
+                _("Appl_y"),
                 _("Apply"));
         g_object_set (page->priv->modify_partition_action,
-                      "auth-label", _("A_pply..."),
+                      "auth-label", _("Appl_y..."),
                       "yes-icon-name", GTK_STOCK_APPLY,
                       "no-icon-name", GTK_STOCK_APPLY,
                       "auth-icon-name", GTK_STOCK_APPLY,
@@ -531,7 +531,7 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
 
-        table = gtk_table_new (4, 2, FALSE);
+        table = gtk_table_new (6, 2, FALSE);
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
 
         row = 0;
@@ -565,16 +565,22 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
         page->priv->modify_part_type_combo_box = combo_box;
 
+        row++;
+
         /* flags */
 
         /* used by mbr, apm */
-        check_button = gtk_check_button_new_with_mnemonic (_("_Boot"));
-        gtk_box_pack_start (GTK_BOX (vbox2), check_button, FALSE, TRUE, 0);
+        check_button = gtk_check_button_new_with_mnemonic (_("_Bootable"));
+        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row +1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         page->priv->modify_part_flag_boot_check_button = check_button;
 
+        row++;
+
         /* used by gpt */
-        check_button = gtk_check_button_new_with_mnemonic (_("R_equired"));
-        gtk_box_pack_start (GTK_BOX (vbox2), check_button, FALSE, TRUE, 0);
+        check_button = gtk_check_button_new_with_mnemonic (_("Required / Firm_ware"));
+        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row +1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         page->priv->modify_part_flag_required_check_button = check_button;
 
         /* revert and apply buttons */
@@ -610,7 +616,7 @@ gdu_page_partition_modify_init (GduPagePartitionModify *page)
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_secure_erase_combo_box_create ();
@@ -720,7 +726,7 @@ gdu_page_partition_modify_get_widget (GduPage *_page)
 static char *
 gdu_page_partition_modify_get_name (GduPage *page)
 {
-        return g_strdup (_("Modify Partition"));
+        return g_strdup (_("_Partitioning"));
 }
 
 static void

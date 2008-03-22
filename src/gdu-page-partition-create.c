@@ -398,7 +398,7 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         /* create size */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("S_ize:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Size:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 
@@ -414,7 +414,7 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         /* secure erase */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_secure_erase_combo_box_create ();
@@ -695,7 +695,7 @@ gdu_page_partition_create_get_widget (GduPage *_page)
 static char *
 gdu_page_partition_create_get_name (GduPage *page)
 {
-        return g_strdup (_("Create Partition"));
+        return g_strdup (_("_Partitioning"));
 }
 
 static void

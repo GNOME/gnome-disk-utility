@@ -508,7 +508,7 @@ add_page (GduShell *shell, GType type)
         name = gdu_page_get_name (page);
 
         shell->priv->pages = g_list_append (shell->priv->pages, page);
-        tab_label = gtk_label_new (name);
+        tab_label = gtk_label_new_with_mnemonic (name);
         gtk_notebook_append_page (GTK_NOTEBOOK (shell->priv->notebook),
                                   gdu_page_get_widget (page),
                                   tab_label);

@@ -237,16 +237,16 @@ gdu_page_erase_init (GduPageErase *page)
         page->priv->pk_erase_action = polkit_action_new ();
         polkit_action_set_action_id (page->priv->pk_erase_action, "org.freedesktop.devicekit.disks.erase");
 
-        page->priv->erase_action = polkit_gnome_action_new_default ("erase",
+        page->priv->erase_action = polkit_gnome_action_new_default ("create",
                                                                     page->priv->pk_erase_action,
-                                                                    _("_Erase"),
-                                                                    _("Erase"));
+                                                                    _("_Create"),
+                                                                    _("Create"));
         g_object_set (page->priv->erase_action,
-                      "auth-label", _("_Erase..."),
-                      "yes-icon-name", GTK_STOCK_CLEAR,
-                      "no-icon-name", GTK_STOCK_CLEAR,
-                      "auth-icon-name", GTK_STOCK_CLEAR,
-                      "self-blocked-icon-name", GTK_STOCK_CLEAR,
+                      "auth-label", _("_Create..."),
+                      "yes-icon-name", GTK_STOCK_ADD,
+                      "no-icon-name", GTK_STOCK_ADD,
+                      "auth-icon-name", GTK_STOCK_ADD,
+                      "self-blocked-icon-name", GTK_STOCK_ADD,
                       NULL);
         g_signal_connect (page->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), page);
 
@@ -259,7 +259,7 @@ gdu_page_erase_init (GduPageErase *page)
 
         /* volume format + label */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Volume</b>"));
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create a new File System</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), label, FALSE, FALSE, 0);
         vbox = gtk_vbox_new (FALSE, 5);
@@ -270,7 +270,9 @@ gdu_page_erase_init (GduPageErase *page)
 
         /* explanatory text */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To erase a volume or disk, select it from the tree and then select the format and label to use."));
+        gtk_label_set_markup (GTK_LABEL (label), _("To create a new file system on the device, select the type "
+                                                   "and label and then press \"Create\". All existing data will "
+                                                   "be lost."));
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
@@ -322,7 +324,7 @@ gdu_page_erase_init (GduPageErase *page)
         /* secure erase */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_secure_erase_combo_box_create ();
@@ -442,7 +444,7 @@ gdu_page_erase_get_widget (GduPage *_page)
 static char *
 gdu_page_erase_get_name (GduPage *page)
 {
-        return g_strdup (_("Erase"));
+        return g_strdup (_("F_ile System"));
 }
 
 static void

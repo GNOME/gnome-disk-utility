@@ -262,8 +262,8 @@ gdu_page_partition_table_init (GduPagePartitionTable *page)
 
         /* explanatory text */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition table, select the type. Note that all "
-                                                   "data on the disk will be lost."));
+        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition table on the device, select the type "
+                                                   "and then press \"Create\". All existing data will be lost."));
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
@@ -301,7 +301,7 @@ gdu_page_partition_table_init (GduPagePartitionTable *page)
         /* secure erase */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_secure_erase_combo_box_create ();
@@ -413,7 +413,7 @@ gdu_page_partition_table_get_widget (GduPage *_page)
 static char *
 gdu_page_partition_table_get_name (GduPage *page)
 {
-        return g_strdup (_("Partition Table"));
+        return g_strdup (_("_Partitioning"));
 }
 
 static void

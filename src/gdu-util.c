@@ -862,7 +862,8 @@ gdu_util_secure_erase_get_description (char *secure_erase_type)
 
         if (strcmp (secure_erase_type, "none") == 0)
                 return g_strdup (_("Data on the disk won't be erased. This option doesn't add any time to the "
-                                   "requested operation but may pose a security threat."));
+                                   "requested operation but can pose a security threat since some data "
+                                   "may be recovered."));
 
         else if (strcmp (secure_erase_type, "full") == 0)
                 return g_strdup (_("All data on the disk will by overwritten by zeroes providing some "

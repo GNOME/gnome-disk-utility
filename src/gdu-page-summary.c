@@ -291,7 +291,6 @@ gdu_page_summary_init (GduPageSummary *page)
                                 value_label = gtk_label_new (NULL);
                                 gtk_label_set_markup (GTK_LABEL (value_label), "Value");
                                 gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
-                                gtk_label_set_selectable (GTK_LABEL (value_label), TRUE);
                                 gtk_label_set_ellipsize (GTK_LABEL (value_label), PANGO_ELLIPSIZE_END);
 
                                 gtk_table_attach (GTK_TABLE (table), key_label,   column + 0, column + 1, row, row + 1,

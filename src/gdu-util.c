@@ -315,6 +315,61 @@ static GduCreatableFilesystem creatable_fstypes[] = {
 
 static int num_creatable_fstypes = sizeof (creatable_fstypes) / sizeof (GduCreatableFilesystem);
 
+static char *
+gdu_util_fstype_get_description (char *fstype)
+{
+        g_return_val_if_fail (fstype != NULL, NULL);
+
+        if (strcmp (fstype, "vfat") == 0)
+                return g_strdup (_("A popular format compatible with almost any device or system, typically "
+                                   "used for file exchange. Maximum file size is limited to 2GB and the file "
+                                   "system doesn't support file permissions."));
+
+        else  if (strcmp (fstype, "ext3") == 0)
+                return g_strdup (_("This file system is compatible with Linux systems only and provides classic "
+                                   "UNIX file permissions support. Not ideal if you plan to move the disk "
+                                   "around between different systems."));
+
+        else  if (strcmp (fstype, "empty") == 0)
+                return g_strdup (_("No file system will be created."));
+
+        else  if (strcmp (fstype, "msdos_extended_partition") == 0)
+                return g_strdup (_("Create an Extended Partition for housing logical partitions. Typically "
+                                   "used to overcome the inherent limitation of four primary partitions when "
+                                   "using the Master Boot Record partitioning scheme."));
+
+        else
+                return NULL;
+}
+
+static void
+gdu_util_fstype_combo_box_update_desc_label (GtkWidget *combo_box)
+{
+        GtkWidget *desc_label;
+
+        desc_label = g_object_get_data (G_OBJECT (combo_box), "gdu-desc-label");
+        if (desc_label != NULL) {
+                char *s;
+                char *fstype;
+                char *desc;
+
+                fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
+                if (fstype != NULL) {
+                        desc = gdu_util_fstype_get_description (fstype);
+                        if (desc != NULL) {
+                                s = g_strdup_printf ("<small><i>%s</i></small>", desc);
+                                gtk_label_set_markup (GTK_LABEL (desc_label), s);
+                                g_free (desc);
+                        } else {
+                                gtk_label_set_markup (GTK_LABEL (desc_label), "");
+                        }
+                } else {
+                        gtk_label_set_markup (GTK_LABEL (desc_label), "");
+                }
+                g_free (fstype);
+        }
+}
+
 GduCreatableFilesystem *
 gdu_util_find_creatable_filesystem_for_fstype (const char *fstype)
 {
@@ -392,6 +447,17 @@ gdu_util_fstype_combo_box_create_store (const char *include_extended_partitions_
 }
 
 void
+gdu_util_fstype_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label)
+{
+        g_object_set_data_full (G_OBJECT (combo_box),
+                                "gdu-desc-label",
+                                g_object_ref (desc_label),
+                                g_object_unref);
+
+        gdu_util_fstype_combo_box_update_desc_label (combo_box);
+}
+
+void
 gdu_util_fstype_combo_box_rebuild (GtkWidget  *combo_box,
                                    const char *include_extended_partitions_for_scheme)
 {
@@ -400,6 +466,12 @@ gdu_util_fstype_combo_box_rebuild (GtkWidget  *combo_box,
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
         g_object_unref (store);
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
+}
+
+static void
+gdu_util_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
+{
+        gdu_util_fstype_combo_box_update_desc_label (combo_box);
 }
 
 /**
@@ -434,6 +506,8 @@ gdu_util_fstype_combo_box_create (const char *include_extended_partitions_for_sc
 					NULL);
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
+
+        g_signal_connect (combo_box, "changed", (GCallback) gdu_util_fstype_combo_box_changed, NULL);
 
         return combo_box;
 }
@@ -517,6 +591,7 @@ gdu_util_part_type_combo_box_rebuild (GtkWidget  *combo_box, const char *part_sc
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
 }
 
+
 /**
  * gdu_util_part_type_combo_box_create:
  * @part_scheme: Partitioning scheme to get partitions types for.
@@ -547,6 +622,7 @@ gdu_util_part_type_combo_box_create (const char *part_scheme)
 
         return combo_box;
 }
+
 
 gboolean
 gdu_util_part_type_combo_box_select (GtkWidget *combo_box, const char *part_type)
@@ -618,6 +694,73 @@ gdu_util_part_table_type_combo_box_create_store (void)
         return store;
 }
 
+static char *
+gdu_util_part_table_type_get_description (char *part_type)
+{
+        g_return_val_if_fail (part_type != NULL, NULL);
+
+        if (strcmp (part_type, "mbr") == 0)
+                return g_strdup (_("The Master Boot Record partitioning scheme is compatible with almost any "
+                                   "device or system but has a number of limitations with respect to to disk "
+                                   "size and number of partitions."));
+
+        else  if (strcmp (part_type, "apm") == 0)
+                return g_strdup (_("A legacy partitioning scheme with roots in legacy Apple hardware. "
+                                   "Compatible with most Linux systems."));
+
+        else  if (strcmp (part_type, "gpt") == 0)
+                return g_strdup (_("The GUID partitioning scheme is compatible with most modern systems but "
+                                   "may be incompatible with some devices and legacy systems."));
+
+        else
+                return NULL;
+}
+
+static void
+gdu_util_part_table_type_combo_box_update_desc_label (GtkWidget *combo_box)
+{
+        GtkWidget *desc_label;
+
+        desc_label = g_object_get_data (G_OBJECT (combo_box), "gdu-desc-label");
+        if (desc_label != NULL) {
+                char *s;
+                char *fstype;
+                char *desc;
+
+                fstype = gdu_util_part_table_type_combo_box_get_selected (combo_box);
+                if (fstype != NULL) {
+                        desc = gdu_util_part_table_type_get_description (fstype);
+                        if (desc != NULL) {
+                                s = g_strdup_printf ("<small><i>%s</i></small>", desc);
+                                gtk_label_set_markup (GTK_LABEL (desc_label), s);
+                                g_free (desc);
+                        } else {
+                                gtk_label_set_markup (GTK_LABEL (desc_label), "");
+                        }
+                } else {
+                        gtk_label_set_markup (GTK_LABEL (desc_label), "");
+                }
+                g_free (fstype);
+        }
+}
+
+static void
+gdu_util_part_table_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
+{
+        gdu_util_part_table_type_combo_box_update_desc_label (combo_box);
+}
+
+void
+gdu_util_part_table_type_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label)
+{
+        g_object_set_data_full (G_OBJECT (combo_box),
+                                "gdu-desc-label",
+                                g_object_ref (desc_label),
+                                g_object_unref);
+
+        gdu_util_part_table_type_combo_box_update_desc_label (combo_box);
+}
+
 /**
  * gdu_util_part_table_type_combo_box_create:
  *
@@ -644,6 +787,8 @@ gdu_util_part_table_type_combo_box_create (void)
 					NULL);
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
+
+        g_signal_connect (combo_box, "changed", (GCallback) gdu_util_part_table_type_combo_box_changed, NULL);
 
         return combo_box;
 }
@@ -694,40 +839,33 @@ gdu_util_part_table_type_combo_box_get_selected (GtkWidget *combo_box)
 static char *
 gdu_util_secure_erase_get_description (char *secure_erase_type)
 {
-        const char *desc[] = {
-                N_("Data on the disk won't be erased. This option doesn't add any time to the "
-                   "requested operation but may pose a security threat."),
-
-                N_("All data on the disk will by overwritten by zeroes providing some "
-                   "security against data recovery. "
-                   "This operation may take a long time depending on the size and speed of the disk."),
-
-                N_("Random data is written to the disk three times. This operation may "
-                   "take some time depending on the size and speed of the disk but "
-                   "provides good security against data recovery."),
-
-                N_("Random data is written to the disk seven times. This operation may "
-                   "take a very long time depending on the size and speed of the disk "
-                   "but provides excellent security against data recovery."),
-
-                N_("Random data is written to the disk 35 times before starting the "
-                   "operation. This operation may take extremely long time depending on the "
-                   "size and speed of the disk but provides the most effective "
-                   "security against data recovery."),
-        };
-
-        g_return_val_if_fail (desc != NULL, NULL);
+        g_return_val_if_fail (secure_erase_type != NULL, NULL);
 
         if (strcmp (secure_erase_type, "none") == 0)
-                return g_strdup (desc[0]);
+                return g_strdup (_("Data on the disk won't be erased. This option doesn't add any time to the "
+                                   "requested operation but may pose a security threat."));
+
         else if (strcmp (secure_erase_type, "full") == 0)
-                return g_strdup (desc[1]);
+                return g_strdup (_("All data on the disk will by overwritten by zeroes providing some "
+                                   "security against data recovery. This operation may take a long time "
+                                   "depending on the size and speed of the disk."));
+
         else if (strcmp (secure_erase_type, "full3pass") == 0)
-                return g_strdup (desc[2]);
+                return g_strdup (_("Random data is written to the disk three times. This operation may "
+                                   "take some time depending on the size and speed of the disk but "
+                                   "provides good security against data recovery."));
+
         else if (strcmp (secure_erase_type, "full7pass") == 0)
-                return g_strdup (desc[3]);
+                return g_strdup (_("Random data is written to the disk seven times. This operation may "
+                                   "take a very long time depending on the size and speed of the disk "
+                                   "but provides excellent security against data recovery."));
+
         else if (strcmp (secure_erase_type, "full35pass") == 0)
-                return g_strdup (desc[4]);
+                return g_strdup (_("Random data is written to the disk 35 times before starting the "
+                                   "operation. This operation may take extremely long time depending on the "
+                                   "size and speed of the disk but provides the most effective "
+                                   "security against data recovery."));
+
         else
                 return NULL;
 }

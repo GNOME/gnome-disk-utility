@@ -78,25 +78,25 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
 
                 if (strcmp (fsversion, "FAT12") == 0) {
                         if (long_string) {
-                                s = g_strdup (_("Microsoft FAT (12-bit version)"));
+                                s = g_strdup (_("FAT (12-bit version)"));
                         } else {
                                 s = g_strdup (_("FAT"));
                         }
                 } else if (strcmp (fsversion, "FAT16") == 0) {
                         if (long_string) {
-                                s = g_strdup (_("Microsoft FAT (16-bit version)"));
+                                s = g_strdup (_("FAT (16-bit version)"));
                         } else {
                                 s = g_strdup (_("FAT"));
                         }
                 } else if (strcmp (fsversion, "FAT32") == 0) {
                         if (long_string) {
-                                s = g_strdup (_("Microsoft FAT (32-bit version)"));
+                                s = g_strdup (_("FAT (32-bit version)"));
                         } else {
                                 s = g_strdup (_("FAT"));
                         }
                 } else {
                         if (long_string) {
-                                s = g_strdup (_("Microsoft FAT"));
+                                s = g_strdup (_("FAT"));
                         } else {
                                 s = g_strdup (_("FAT"));
                         }
@@ -104,21 +104,21 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
         } else if (strcmp (fstype, "ntfs") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
-                                s = g_strdup_printf (_("Microsoft NTFS version %s"), fsversion);
+                                s = g_strdup_printf (_("NTFS version %s"), fsversion);
                         else
-                                s = g_strdup_printf (_("Microsoft NTFS"));
+                                s = g_strdup_printf (_("NTFS"));
                 } else {
                         s = g_strdup (_("NTFS"));
                 }
         } else if (strcmp (fstype, "hfs") == 0) {
                 if (long_string) {
-                        s = g_strdup (_("Apple HFS"));
+                        s = g_strdup (_("HFS"));
                 } else {
                         s = g_strdup (_("HFS"));
                 }
         } else if (strcmp (fstype, "hfsplus") == 0) {
                 if (long_string) {
-                        s = g_strdup (_("Apple HFS+"));
+                        s = g_strdup (_("HFS+"));
                 } else {
                         s = g_strdup (_("HFS+"));
                 }

@@ -257,8 +257,7 @@ modify_part_update_revert_apply_sensitivity (GduPagePartitionModify *page)
                 flags_differ = TRUE;
 
         selected_type = gdu_util_part_type_combo_box_get_selected (page->priv->modify_part_type_combo_box);
-        if (strcmp (gdu_device_partition_get_type (device),
-                    selected_type) != 0) {
+        if (selected_type != NULL && strcmp (gdu_device_partition_get_type (device), selected_type) != 0) {
                 type_differ = TRUE;
         }
         g_free (selected_type);

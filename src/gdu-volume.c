@@ -43,11 +43,19 @@ G_DEFINE_TYPE_WITH_CODE (GduVolume, gdu_volume, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
                                                 gdu_volume_presentable_iface_init))
 
+static void device_removed (GduDevice *device, gpointer user_data);
+static void device_job_changed (GduDevice *device, gpointer user_data);
+static void device_changed (GduDevice *device, gpointer user_data);
+
 static void
 gdu_volume_finalize (GduVolume *volume)
 {
-        if (volume->priv->device != NULL)
+        if (volume->priv->device != NULL) {
+                g_signal_handlers_disconnect_by_func (volume->priv->device, device_changed, volume);
+                g_signal_handlers_disconnect_by_func (volume->priv->device, device_job_changed, volume);
+                g_signal_handlers_disconnect_by_func (volume->priv->device, device_removed, volume);
                 g_object_unref (volume->priv->device);
+        }
 
         if (volume->priv->enclosing_presentable != NULL)
                 g_object_unref (volume->priv->enclosing_presentable);
@@ -106,7 +114,6 @@ gdu_volume_new_from_device (GduDevice *device, GduPresentable *enclosing_present
         g_signal_connect (device, "changed", (GCallback) device_changed, volume);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, volume);
         g_signal_connect (device, "removed", (GCallback) device_removed, volume);
-
         return volume;
 }
 

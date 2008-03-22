@@ -41,11 +41,19 @@ G_DEFINE_TYPE_WITH_CODE (GduDrive, gdu_drive, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
                                                 gdu_drive_presentable_iface_init))
 
+static void device_removed (GduDevice *device, gpointer user_data);
+static void device_job_changed (GduDevice *device, gpointer user_data);
+static void device_changed (GduDevice *device, gpointer user_data);
+
 static void
 gdu_drive_finalize (GduDrive *drive)
 {
-        if (drive->priv->device != NULL)
+        if (drive->priv->device != NULL) {
+                g_signal_handlers_disconnect_by_func (drive->priv->device, device_changed, drive);
+                g_signal_handlers_disconnect_by_func (drive->priv->device, device_job_changed, drive);
+                g_signal_handlers_disconnect_by_func (drive->priv->device, device_removed, drive);
                 g_object_unref (drive->priv->device);
+        }
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (drive));

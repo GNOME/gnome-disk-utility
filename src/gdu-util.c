@@ -652,17 +652,18 @@ gdu_util_part_type_combo_box_select (GtkWidget *combo_box, const char *part_type
         ret = FALSE;
 
         model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
-        gtk_tree_model_get_iter_first (model, &iter);
-        do {
-                char *iter_part_type;
+        if (gtk_tree_model_get_iter_first (model, &iter)) {
+                do {
+                        char *iter_part_type;
 
-                gtk_tree_model_get (model, &iter, 0, &iter_part_type, -1);
-                if (iter_part_type != NULL && strcmp (part_type, iter_part_type) == 0) {
-                        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
-                        ret = TRUE;
-                }
-                g_free (iter_part_type);
-        } while (!ret && gtk_tree_model_iter_next (model, &iter));
+                        gtk_tree_model_get (model, &iter, 0, &iter_part_type, -1);
+                        if (iter_part_type != NULL && strcmp (part_type, iter_part_type) == 0) {
+                                gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
+                                ret = TRUE;
+                        }
+                        g_free (iter_part_type);
+                } while (!ret && gtk_tree_model_iter_next (model, &iter));
+        }
 
         return ret;
 }

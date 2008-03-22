@@ -34,6 +34,8 @@
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-tree.h"
+#include "gdu-volume.h"
+#include "gdu-drive.h"
 
 #include "gdu-page.h"
 #include "gdu-page-erase.h"
@@ -165,7 +167,8 @@ gdu_shell_update (GduShell *shell)
                         last_job_failed = TRUE;
                 }
 
-                if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
+                if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) &&
+                    strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
                         if (gdu_device_is_mounted (device)) {
                                 can_unmount = TRUE;
                         } else {
@@ -173,7 +176,8 @@ gdu_shell_update (GduShell *shell)
                         }
                 }
 
-                if (gdu_device_is_removable (device) &&
+                if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
+                    gdu_device_is_removable (device) &&
                     gdu_device_is_media_available (device)) {
                         can_eject = TRUE;
                 }

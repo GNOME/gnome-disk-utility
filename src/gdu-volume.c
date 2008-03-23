@@ -138,6 +138,7 @@ gdu_volume_get_name (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
         const char *label;
+        const char *usage;
         char *result;
         gboolean is_extended_partition;
         char *strsize;
@@ -156,6 +157,8 @@ gdu_volume_get_name (GduPresentable *presentable)
                         is_extended_partition = TRUE;
         }
 
+        usage = gdu_device_id_get_usage (volume->priv->device);
+
         if (is_extended_partition) {
                 size = gdu_device_partition_get_size (volume->priv->device);
                 strsize = gdu_util_get_size_for_display (size, FALSE);
@@ -163,6 +166,10 @@ gdu_volume_get_name (GduPresentable *presentable)
                 g_free (strsize);
         } else if (label != NULL && strlen (label) > 0) {
                 result = g_strdup (label);
+        } else if (usage != NULL && strcmp (usage, "crypto") == 0) {
+                strsize = gdu_util_get_size_for_display (size, FALSE);
+                result = g_strdup_printf (_("%s Encrypted"), strsize);
+                g_free (strsize);
         } else {
                 strsize = gdu_util_get_size_for_display (size, FALSE);
                 result = g_strdup_printf (_("%s Partition"), strsize);

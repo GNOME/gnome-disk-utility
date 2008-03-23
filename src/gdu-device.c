@@ -1034,6 +1034,60 @@ gdu_device_op_create_partition_table (GduDevice  *device,
 
 /* -------------------------------------------------------------------------------- */
 
+static void
+op_unlock_encrypted_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_unlock_encrypted_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        } else {
+                g_print ("yay cleartext object is at '%s'\n", cleartext_object_path);
+                g_free (cleartext_object_path);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_unlock_encrypted (GduDevice *device, const char *secret)
+{
+        char *options[16];
+        options[0] = NULL;
+        org_freedesktop_DeviceKit_Disks_Device_unlock_encrypted_async (device->priv->proxy,
+                                                                       secret,
+                                                                       (const char **) options,
+                                                                       op_unlock_encrypted_cb,
+                                                                       g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_lock_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_unlock_encrypted_cb failed: %s", error->message);
+                job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_lock_encrypted (GduDevice *device)
+{
+        char *options[16];
+        options[0] = NULL;
+        org_freedesktop_DeviceKit_Disks_Device_lock_encrypted_async (device->priv->proxy,
+                                                                     (const char **) options,
+                                                                     op_lock_encrypted_cb,
+                                                                     g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
 void
 gdu_device_op_cancel_job (GduDevice *device)
 {

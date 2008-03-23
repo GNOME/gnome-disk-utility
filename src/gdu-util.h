@@ -85,4 +85,16 @@ char      *gdu_util_part_table_type_combo_box_get_selected   (GtkWidget  *combo_
 
 GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable);
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+char *gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
+                                      GduPresentable *presentable,
+                                      gboolean *save_in_keyring,
+                                      gboolean *save_in_keyring_session);
+
+char *gdu_util_dialog_ask_for_secret_with_keyring (GtkWidget *parent_window,
+                                                   GduPresentable *presentable);
+
+
+
 #endif /* GDU_UTIL_H */

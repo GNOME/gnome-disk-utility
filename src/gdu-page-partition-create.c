@@ -535,6 +535,8 @@ has_extended_partition (GduPagePartitionCreate *page, GduPresentable *presentabl
                 }
 
         }
+        g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed_presentables);
         return ret;
 }
 

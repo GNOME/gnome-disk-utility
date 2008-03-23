@@ -63,6 +63,9 @@ struct _GduShellPrivate
         PolKitGnomeAction *unmount_action;
         PolKitGnomeAction *eject_action;
 
+        PolKitGnomeAction *unlock_action;
+        PolKitGnomeAction *lock_action;
+
         GduPresentable *presentable_now_showing;
 
         GtkActionGroup *action_group;
@@ -148,6 +151,8 @@ gdu_shell_update (GduShell *shell)
         gboolean can_mount;
         gboolean can_unmount;
         gboolean can_eject;
+        gboolean can_lock;
+        gboolean can_unlock;
         GtkWidget *page_widget_currently_showing;
 
         job_in_progress = FALSE;
@@ -155,6 +160,8 @@ gdu_shell_update (GduShell *shell)
         can_mount = FALSE;
         can_unmount = FALSE;
         can_eject = FALSE;
+        can_unlock = FALSE;
+        can_lock = FALSE;
 
         /* figure out what pages in the notebook to show + update pages */
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
@@ -167,12 +174,28 @@ gdu_shell_update (GduShell *shell)
                         last_job_failed = TRUE;
                 }
 
-                if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) &&
-                    strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                        if (gdu_device_is_mounted (device)) {
-                                can_unmount = TRUE;
-                        } else {
-                                can_mount = TRUE;
+                if (GDU_IS_VOLUME (shell->priv->presentable_now_showing)) {
+
+                        if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
+                                if (gdu_device_is_mounted (device)) {
+                                        can_unmount = TRUE;
+                                } else {
+                                        can_mount = TRUE;
+                                }
+                        } else if (strcmp (gdu_device_id_get_usage (device), "crypto") == 0) {
+                                GList *enclosed_presentables;
+                                enclosed_presentables = gdu_pool_get_enclosed_presentables (
+                                        shell->priv->pool,
+                                        shell->priv->presentable_now_showing);
+                                if (enclosed_presentables != NULL) {
+                                        can_lock = TRUE;
+                                } else {
+                                        can_unlock = TRUE;
+                                }
+                                g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
+                                g_list_free (enclosed_presentables);
+
+
                         }
                 }
 
@@ -237,14 +260,34 @@ gdu_shell_update (GduShell *shell)
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
         polkit_gnome_action_set_sensitive (shell->priv->unmount_action, can_unmount);
         polkit_gnome_action_set_sensitive (shell->priv->eject_action, can_eject);
+        polkit_gnome_action_set_sensitive (shell->priv->lock_action, can_lock);
+        polkit_gnome_action_set_sensitive (shell->priv->unlock_action, can_unlock);
+
+#if 0
+        /* TODO */
+        if (can_lock || can_unlock) {
+                g_warning ("a");
+                polkit_gnome_action_set_visible (shell->priv->mount_action, FALSE);
+                polkit_gnome_action_set_visible (shell->priv->unmount_action, FALSE);
+                polkit_gnome_action_set_visible (shell->priv->eject_action, FALSE);
+                polkit_gnome_action_set_visible (shell->priv->lock_action, TRUE);
+                polkit_gnome_action_set_visible (shell->priv->unlock_action, TRUE);
+        } else {
+                g_warning ("b");
+                polkit_gnome_action_set_visible (shell->priv->mount_action, TRUE);
+                polkit_gnome_action_set_visible (shell->priv->unmount_action, TRUE);
+                polkit_gnome_action_set_visible (shell->priv->eject_action, TRUE);
+                polkit_gnome_action_set_visible (shell->priv->lock_action, FALSE);
+                polkit_gnome_action_set_visible (shell->priv->unlock_action, FALSE);
+        }
+#endif
 }
 
 static void
 presentable_changed (GduPresentable *presentable, gpointer user_data)
 {
         GduShell *shell = user_data;
-        if (presentable == shell->priv->presentable_now_showing)
-                gdu_shell_update (shell);
+        gdu_shell_update (shell);
 }
 
 static void
@@ -288,6 +331,13 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 }
 
 static void
+presentable_added (GduPool *pool, GduPresentable *presentable, gpointer user_data)
+{
+        GduShell *shell = user_data;
+        gdu_shell_update (shell);
+}
+
+static void
 presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
         GduShell *shell = user_data;
@@ -307,6 +357,7 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
                         gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
                 }
         }
+        gdu_shell_update (shell);
 }
 
 
@@ -340,6 +391,42 @@ static void
 eject_action_callback (GtkAction *action, gpointer user_data)
 {
         g_warning ("todo: eject");
+}
+
+static void
+unlock_action_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = user_data;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                char *secret;
+
+                secret = gdu_util_dialog_ask_for_secret_with_keyring (shell->priv->app_window,
+                                                                      shell->priv->presentable_now_showing);
+                if (secret != NULL) {
+                        gdu_device_op_unlock_encrypted (device, secret);
+                        g_object_unref (device);
+
+                        /* scrub the password */
+                        memset (secret, '\0', strlen (secret));
+                        g_free (secret);
+                }
+        }
+}
+
+static void
+lock_action_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = user_data;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                gdu_device_op_lock_encrypted (device);
+                g_object_unref (device);
+        }
 }
 
 
@@ -386,6 +473,9 @@ static const gchar *ui =
         "      <menuitem action='mount'/>"
         "      <menuitem action='unmount'/>"
         "      <menuitem action='eject'/>"
+        "      <separator/>"
+        "      <menuitem action='unlock'/>"
+        "      <menuitem action='lock'/>"
         "    </menu>"
         "    <menu action='help'>"
         "      <menuitem action='contents'/>"
@@ -396,6 +486,9 @@ static const gchar *ui =
         "    <toolitem action='mount'/>"
         "    <toolitem action='unmount'/>"
         "    <toolitem action='eject'/>"
+        "    <separator/>"
+        "    <toolitem action='unlock'/>"
+        "    <toolitem action='lock'/>"
         "  </toolbar>"
         "</ui>";
 
@@ -429,9 +522,9 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->mount_action = polkit_gnome_action_new_default ("mount",
-                                                               shell->priv->pk_mount_action,
-                                                               _("_Mount"),
-                                                               _("Mount"));
+                                                                     shell->priv->pk_mount_action,
+                                                                     _("_Mount"),
+                                                                     _("Make the file system on the device available"));
         g_object_set (shell->priv->mount_action,
                       "auth-label", _("_Mount..."),
                       "yes-icon-name", "gdu-mount",
@@ -445,9 +538,9 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->unmount_action = polkit_gnome_action_new_default ("unmount",
-                                                                 NULL, /* TODO */
-                                                                 _("_Unmount"),
-                                                                 _("Unmount"));
+                                                                       NULL, /* TODO */
+                                                                       _("_Unmount"),
+                                                                       _("Make the file system on the device unavailable"));
         g_object_set (shell->priv->unmount_action,
                       "auth-label", _("_Unmount..."),
                       "yes-icon-name", "gdu-unmount",
@@ -461,9 +554,9 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->eject_action = polkit_gnome_action_new_default ("eject",
-                                                               NULL, /* TODO */
-                                                               _("_Eject"),
-                                                               _("Eject"));
+                                                                     NULL, /* TODO */
+                                                                     _("_Eject"),
+                                                                     _("Eject media from the device"));
         g_object_set (shell->priv->eject_action,
                       "auth-label", _("_Eject..."),
                       "yes-icon-name", "gdu-eject",
@@ -473,6 +566,43 @@ create_ui_manager (GduShell *shell)
                       NULL);
         g_signal_connect (shell->priv->eject_action, "activate", G_CALLBACK (eject_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->eject_action));
+
+        /* -------------------------------------------------------------------------------- */
+
+        shell->priv->unlock_action = polkit_gnome_action_new_default ("unlock",
+                                                                      /* TODO: for now use the mount pk action */
+                                                                      shell->priv->pk_mount_action,
+                                                                      _("_Unlock"),
+                                                                      _("Unlock the encrypted device, making the data available in cleartext"));
+        /* TODO: the lock-secure and lock-insecure icons are from Epiphany.
+         *       Probably need to ship our own copy.
+         */
+
+        g_object_set (shell->priv->unlock_action,
+                      "auth-label", _("_Unlock..."),
+                      "yes-icon-name", "stock_lock-open",
+                      "no-icon-name", "stock_lock-open",
+                      "auth-icon-name", "stock_lock-open",
+                      "self-blocked-icon-name", "stock_lock-open",
+                      NULL);
+        g_signal_connect (shell->priv->unlock_action, "activate", G_CALLBACK (unlock_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->unlock_action));
+
+        /* -------------------------------------------------------------------------------- */
+
+        shell->priv->lock_action = polkit_gnome_action_new_default ("lock",
+                                                                    NULL, /* TODO */
+                                                                    _("_Lock"),
+                                                                    _("Lock the encrypted device, making the cleartext data unavailable"));
+        g_object_set (shell->priv->lock_action,
+                      "auth-label", _("_Lock..."),
+                      "yes-icon-name", "stock_lock",
+                      "no-icon-name", "stock_lock",
+                      "auth-icon-name", "stock_lock",
+                      "self-blocked-icon-name", "stock_lock",
+                      NULL);
+        g_signal_connect (shell->priv->lock_action, "activate", G_CALLBACK (lock_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->lock_action));
 
         /* -------------------------------------------------------------------------------- */
 
@@ -586,6 +716,7 @@ create_window (GduShell *shell)
         /* when starting up, set focus on tree view */
         gtk_widget_grab_focus (shell->priv->treeview);
 
+        g_signal_connect (shell->priv->pool, "presentable-added", (GCallback) presentable_added, shell);
         g_signal_connect (shell->priv->pool, "presentable-removed", (GCallback) presentable_removed, shell);
         g_signal_connect (shell->priv->app_window, "delete-event", gtk_main_quit, NULL);
 

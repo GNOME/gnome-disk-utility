@@ -1019,6 +1019,265 @@ gdu_util_find_toplevel_presentable (GduPresentable *presentable)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef struct
+{
+        GtkWidget *password_entry;
+        GtkWidget *password_entry_new;
+        GtkWidget *password_entry_verify;
+        GtkWidget *warning_hbox;
+        GtkWidget *warning_label;
+        GtkWidget *button;
+} DialogSecretData;
+
+static void
+gdu_util_dialog_secret_update (DialogSecretData *data)
+{
+        if (strcmp (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new)),
+                    gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify))) != 0) {
+                gtk_widget_show (data->warning_hbox);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not match</i>");
+                gtk_widget_set_sensitive (data->button, FALSE);
+        } else if ((strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry))) > 0 ||
+                    strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) > 0) &&
+                   strcmp (gtk_entry_get_text (GTK_ENTRY (data->password_entry)),
+                           gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) == 0) {
+                gtk_widget_show (data->warning_hbox);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not differ</i>");
+                gtk_widget_set_sensitive (data->button, FALSE);
+        } else {
+                gtk_widget_hide (data->warning_hbox);
+                gtk_widget_set_sensitive (data->button, TRUE);
+        }
+}
+
+static void
+gdu_util_dialog_secret_entry_changed (GtkWidget *entry, gpointer user_data)
+{
+        DialogSecretData *data = user_data;
+        gdu_util_dialog_secret_update (data);
+}
+
+static char *
+gdu_util_dialog_secret_internal (GtkWidget *parent_window,
+                                 GduPresentable *presentable,
+                                 gboolean is_change_password,
+                                 const char *old_secret_for_change_password,
+                                 char **old_secret_from_dialog,
+                                 gboolean *save_in_keyring,
+                                 gboolean *save_in_keyring_session)
+{
+        int row;
+        int response;
+        char *secret;
+        GtkWidget *dialog;
+        GtkWidget *image;
+	GtkWidget *hbox;
+        GtkWidget *main_vbox;
+        GtkWidget *vbox;
+        GtkWidget *label;
+        GtkWidget *table_alignment;
+        GtkWidget *table;
+        GtkWidget *never_radio_button;
+        GtkWidget *session_radio_button;
+        GtkWidget *always_radio_button;
+        DialogSecretData *data;
+        const char *title;
+
+        g_return_val_if_fail (parent_window == NULL || GTK_IS_WINDOW (parent_window), NULL);
+        g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+        secret = NULL;
+        data = g_new0 (DialogSecretData, 1);
+
+        if (is_change_password)
+                title = _("Change Passphrase");
+        else
+                title = _("Unlock Encrypted Device");
+        dialog = gtk_dialog_new_with_buttons (title,
+                                              GTK_WINDOW (parent_window),
+                                              GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_STOCK_CANCEL,
+                                              GTK_RESPONSE_CANCEL,
+                                              NULL);
+
+        if (is_change_password) {
+                data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("Change _Passphrase"), 0);
+        } else {
+                data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Unlock"), 0);
+        }
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), 0);
+
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+
+	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+	main_vbox = gtk_vbox_new (FALSE, 10);
+	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
+
+	/* main message */
+	label = gtk_label_new (NULL);
+        if (is_change_password) {
+                gtk_label_set_markup (GTK_LABEL (label),
+                                      "<b><big>To change the passphrase, enter both the current and new passphrase.</big></b>");
+        } else {
+                gtk_label_set_markup (GTK_LABEL (label),
+                                      "<b><big>To unlock the data, enter the passphrase for the device.</big></b>");
+        }
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+	/* secondary message */
+	label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("Data on this device is stored in an encrypted form "
+                                                   "protected by a passphrase."));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+	/* password entry */
+	vbox = gtk_vbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+
+	table_alignment = gtk_alignment_new (0.0, 0.0, 1.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (vbox), table_alignment, FALSE, FALSE, 0);
+	table = gtk_table_new (1, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_container_add (GTK_CONTAINER (table_alignment), table);
+
+        row = 0;
+
+        if (is_change_password) {
+                label = gtk_label_new_with_mnemonic (_("C_urrent Passphrase:"));
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_table_attach (GTK_TABLE (table), label,
+                                  0, 1, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                data->password_entry = gtk_entry_new ();
+                gtk_entry_set_visibility (GTK_ENTRY (data->password_entry), FALSE);
+                gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry, 1, 2, row, row + 1);
+                gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
+
+                row++;
+
+                label = gtk_label_new_with_mnemonic (_("_New Passphrase:"));
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_table_attach (GTK_TABLE (table), label,
+                                  0, 1, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                data->password_entry_new = gtk_entry_new ();
+                gtk_entry_set_visibility (GTK_ENTRY (data->password_entry_new), FALSE);
+                gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry_new, 1, 2, row, row + 1);
+                gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry_new);
+
+                row++;
+
+                label = gtk_label_new_with_mnemonic (_("_Verify Passphrase:"));
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_table_attach (GTK_TABLE (table), label,
+                                  0, 1, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                data->password_entry_verify = gtk_entry_new ();
+                gtk_entry_set_visibility (GTK_ENTRY (data->password_entry_verify), FALSE);
+                gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry_verify, 1, 2, row, row + 1);
+                gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry_verify);
+
+                data->warning_hbox = gtk_hbox_new (FALSE, 12);
+                image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
+                data->warning_label = gtk_label_new (NULL);
+                gtk_box_pack_start (GTK_BOX (data->warning_hbox), image, FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (data->warning_hbox), data->warning_label, FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), data->warning_hbox, FALSE, FALSE, 0);
+
+                g_signal_connect (data->password_entry_new, "changed",
+                                  (GCallback) gdu_util_dialog_secret_entry_changed, data);
+                g_signal_connect (data->password_entry_verify, "changed",
+                                  (GCallback) gdu_util_dialog_secret_entry_changed, data);
+
+                /* only the verify entry activates the default action */
+                gtk_entry_set_activates_default (GTK_ENTRY (data->password_entry_verify), TRUE);
+
+                /* if the old password is supplied (from e.g. the keyring) set it, and focus on the new password */
+                if (old_secret_for_change_password != NULL) {
+                        gtk_entry_set_text (GTK_ENTRY (data->password_entry), old_secret_for_change_password);
+                        gtk_widget_grab_focus (data->password_entry_new);
+                }
+
+        } else {
+                label = gtk_label_new_with_mnemonic (_("_Passphrase:"));
+                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_table_attach (GTK_TABLE (table), label,
+                                  0, 1, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                data->password_entry = gtk_entry_new ();
+                gtk_entry_set_visibility (GTK_ENTRY (data->password_entry), FALSE);
+                gtk_entry_set_activates_default (GTK_ENTRY (data->password_entry), TRUE);
+                gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry, 1, 2, row, row + 1);
+                gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
+        }
+
+	never_radio_button = gtk_radio_button_new_with_mnemonic (
+                NULL,
+                _("_Forget passphrase immediately"));
+	session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                GTK_RADIO_BUTTON (never_radio_button),
+                _("Remember passphrase until you _log out"));
+	always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                GTK_RADIO_BUTTON (never_radio_button),
+                _("_Remember forever"));
+
+        /* preselect Remember Forever if we've retrieved the existing key from the keyring */
+        if (is_change_password && old_secret_for_change_password != NULL) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (always_radio_button), TRUE);
+        }
+
+	gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
+
+        gtk_widget_show_all (dialog);
+        if (is_change_password)
+                gdu_util_dialog_secret_update (data);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response != 0)
+                goto out;
+
+        if (is_change_password) {
+                *old_secret_from_dialog = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry)));
+                secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new)));
+        } else {
+                secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry)));
+        }
+
+        if (save_in_keyring != NULL)
+                *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
+        if (save_in_keyring_session != NULL)
+                *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
+
+out:
+        if (data == NULL)
+                g_free (data);
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+        return secret;
+}
+
 static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
         GNOME_KEYRING_ITEM_GENERIC_SECRET,
         {
@@ -1027,9 +1286,21 @@ static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
         }
 };
 
+/**
+ * gdu_util_dialog_ask_for_secret:
+ * @parent_window: Parent window that dialog will be transient for or #NULL.
+ * @presentable: A #GduPresentable that represents an encrypted device.
+ * @bypass_keyring: Set to #TRUE to bypass the keyring.
+ *
+ * Retrieves a secret from the user or the keyring (unless
+ * @bypass_keyring is set to #TRUE).
+ *
+ * Returns: the secret or #NULL if the user cancelled the dialog.
+ **/
 char *
-gdu_util_dialog_ask_for_secret_with_keyring (GtkWidget *parent_window,
-                                             GduPresentable *presentable)
+gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
+                                GduPresentable *presentable,
+                                gboolean bypass_keyring)
 {
         char *secret;
         char *password;
@@ -1040,6 +1311,8 @@ gdu_util_dialog_ask_for_secret_with_keyring (GtkWidget *parent_window,
         gboolean save_in_keyring_session;
 
         secret = NULL;
+        save_in_keyring = FALSE;
+        save_in_keyring_session = FALSE;
 
         device = gdu_presentable_get_device (presentable);
         if (device == NULL) {
@@ -1060,22 +1333,27 @@ gdu_util_dialog_ask_for_secret_with_keyring (GtkWidget *parent_window,
                 goto out;
         }
 
-        if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
-                                              &password,
-                                              "encrypted-device-uuid", uuid,
-                                              NULL) == GNOME_KEYRING_RESULT_OK) {
-                /* By contract, the caller is responsible for scrubbing the password
-                 * so dupping the string into pageable memory "fine". Or not?
-                 */
-                secret = g_strdup (password);
-                gnome_keyring_free_password (password);
-                goto out;
+        if (!bypass_keyring) {
+                if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
+                                                      &password,
+                                                      "encrypted-device-uuid", uuid,
+                                                      NULL) == GNOME_KEYRING_RESULT_OK) {
+                        /* By contract, the caller is responsible for scrubbing the password
+                         * so dupping the string into pageable memory "fine". Or not?
+                         */
+                        secret = g_strdup (password);
+                        gnome_keyring_free_password (password);
+                        goto out;
+                }
         }
 
-        secret = gdu_util_dialog_ask_for_secret (parent_window,
-                                                 presentable,
-                                                 &save_in_keyring,
-                                                 &save_in_keyring_session);
+        secret = gdu_util_dialog_secret_internal (parent_window,
+                                                  presentable,
+                                                  FALSE,
+                                                  NULL,
+                                                  NULL,
+                                                  &save_in_keyring,
+                                                  &save_in_keyring_session);
 
         if (secret != NULL && (save_in_keyring || save_in_keyring_session)) {
                 const char *keyring;
@@ -1100,127 +1378,247 @@ out:
         return secret;
 }
 
-char *
-gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
-                                GduPresentable *presentable,
-                                gboolean *save_in_keyring,
-                                gboolean *save_in_keyring_session)
+/**
+ * gdu_util_dialog_change_secret:
+ * @parent_window: Parent window that dialog will be transient for or #NULL.
+ * @presentable: A #GduPresentable that represents an encrypted device.
+ * @old_secret: Return location for old secret.
+ * @new_secret: Return location for new secret.
+ * @save_in_keyring: Return location for whether the new secret should be saved in the keyring.
+ * @save_in_keyring_session: Return location for whether the new secret should be saved in the session keyring.
+ * @bypass_keyring: Set to #TRUE to bypass the keyring.
+ *
+ * Asks the user to change his secret. The secret in the keyring is
+ * not updated; that needs to be done manually using the functions
+ * gdu_util_delete_secret() and gdu_util_save_secret().
+ *
+ * Returns: #TRUE if the user agreed to change the secret.
+ **/
+gboolean
+gdu_util_dialog_change_secret (GtkWidget *parent_window,
+                               GduPresentable *presentable,
+                               char **old_secret,
+                               char **new_secret,
+                               gboolean *save_in_keyring,
+                               gboolean *save_in_keyring_session,
+                               gboolean bypass_keyring)
 {
-        int response;
-        char *secret;
-        GtkWidget *dialog;
-        GtkWidget *image;
-	GtkWidget *hbox;
-        GtkWidget *main_vbox;
-        GtkWidget *vbox;
-        GtkWidget *label;
-        GtkWidget *table_alignment;
-        GtkWidget *table;
-        GtkWidget *password_entry;
-        GtkWidget *never_radio_button;
-        GtkWidget *session_radio_button;
-        GtkWidget *always_radio_button;
+        char *password;
+        const char *usage;
+        const char *uuid;
+        GduDevice *device;
+        gboolean ret;
+        char *old_secret_from_keyring;
 
-        g_return_val_if_fail (parent_window == NULL || GTK_IS_WINDOW (parent_window), NULL);
-        g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+        *old_secret = NULL;
+        *new_secret = NULL;
+        old_secret_from_keyring = NULL;
+        ret = FALSE;
 
-        secret = NULL;
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: device is NULL", __FUNCTION__);
+                goto out;
+        }
 
-        dialog = gtk_dialog_new_with_buttons (_("Unlock Encrypted Device"),
-                                              GTK_WINDOW (parent_window),
-                                              GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
-                                              GTK_STOCK_CANCEL,
-                                              GTK_RESPONSE_CANCEL,
-                                              NULL);
+        usage = gdu_device_id_get_usage (device);
+        uuid = gdu_device_id_get_uuid (device);
 
-        gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Unlock"), 0);
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), 0);
+        if (strcmp (usage, "crypto") != 0) {
+                g_warning ("%s: device is not a crypto device", __FUNCTION__);
+                goto out;
+        }
 
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2); /* 2 * 5 + 2 = 12 */
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
-	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
+        if (uuid == NULL || strlen (uuid) == 0) {
+                g_warning ("%s: device has no UUID", __FUNCTION__);
+                goto out;
+        }
 
-	hbox = gtk_hbox_new (FALSE, 12);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+        if (!bypass_keyring) {
+                if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
+                                                      &password,
+                                                      "encrypted-device-uuid", uuid,
+                                                      NULL) == GNOME_KEYRING_RESULT_OK) {
+                        /* By contract, the caller is responsible for scrubbing the password
+                         * so dupping the string into pageable memory "fine". Or not?
+                         */
+                        old_secret_from_keyring = g_strdup (password);
+                        gnome_keyring_free_password (password);
+                }
+        }
 
-	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
-	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+        *new_secret = gdu_util_dialog_secret_internal (parent_window,
+                                                       presentable,
+                                                       TRUE,
+                                                       old_secret_from_keyring,
+                                                       old_secret,
+                                                       save_in_keyring,
+                                                       save_in_keyring_session);
 
-	main_vbox = gtk_vbox_new (FALSE, 10);
-	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
+        if (old_secret_from_keyring != NULL) {
+                memset (old_secret_from_keyring, '\0', strlen (old_secret_from_keyring));
+                g_free (old_secret_from_keyring);
+        }
 
-	/* main message */
-	label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label),
-                              "<b><big>To unlock the data, enter the passphrase for the device.</big></b>");
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
-
-	/* secondary message */
-	label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("Data on this device is stored in an encrypted form "
-                                                   "protected by a passphrase."));
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
-
-	/* password entry */
-	vbox = gtk_vbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-
-	table_alignment = gtk_alignment_new (0.0, 0.0, 1.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), table_alignment, FALSE, FALSE, 0);
-	table = gtk_table_new (1, 2, FALSE);
-	gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-	gtk_container_add (GTK_CONTAINER (table_alignment), table);
-	password_entry = gtk_entry_new ();
-        gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
-        gtk_entry_set_activates_default (GTK_ENTRY (password_entry), TRUE);
-
-	label = gtk_label_new_with_mnemonic (_("_Passphrase:"));
-	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	gtk_table_attach (GTK_TABLE (table), label,
-			  0, 1, 0, 0 + 1,
-			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_table_attach_defaults (GTK_TABLE (table), password_entry, 1, 2, 0, 1 + 1);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), password_entry);
-
-	never_radio_button = gtk_radio_button_new_with_mnemonic (
-                NULL,
-                _("_Forget passphrase immediately"));
-	session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                GTK_RADIO_BUTTON (never_radio_button),
-                _("Remember passphrase until you _log out"));
-	always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                GTK_RADIO_BUTTON (never_radio_button),
-                _("_Remember forever"));
-
-	gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
-
-        gtk_widget_show_all (dialog);
-        response = gtk_dialog_run (GTK_DIALOG (dialog));
-        if (response != 0)
+        if (*new_secret == NULL)
                 goto out;
 
-        secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (password_entry)));
-        if (save_in_keyring != NULL)
-                *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
-        if (save_in_keyring_session != NULL)
-                *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
+        ret = TRUE;
 
 out:
-        if (dialog != NULL)
-                gtk_widget_destroy (dialog);
-        return secret;
+        if (!ret) {
+                if (*old_secret != NULL) {
+                        memset (*old_secret, '\0', strlen (*old_secret));
+                        g_free (*old_secret);
+                        *old_secret = NULL;
+                }
+                if (*new_secret != NULL) {
+                        memset (*new_secret, '\0', strlen (*new_secret));
+                        g_free (*new_secret);
+                        *new_secret = NULL;
+                }
+        }
+
+        if (device != NULL)
+                g_object_unref (device);
+        return ret;
+}
+
+gboolean
+gdu_util_have_secret (GduPresentable *presentable)
+{
+        const char *usage;
+        const char *uuid;
+        GduDevice *device;
+        char *password;
+        gboolean ret;
+
+        ret = FALSE;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: device is NULL", __FUNCTION__);
+                goto out;
+        }
+
+        usage = gdu_device_id_get_usage (device);
+        uuid = gdu_device_id_get_uuid (device);
+
+        if (strcmp (usage, "crypto") != 0) {
+                g_warning ("%s: device is not a crypto device", __FUNCTION__);
+                goto out;
+        }
+
+        if (uuid == NULL || strlen (uuid) == 0) {
+                g_warning ("%s: device has no UUID", __FUNCTION__);
+                goto out;
+        }
+
+        if (!gnome_keyring_find_password_sync (&encrypted_device_password_schema,
+                                               &password,
+                                               "encrypted-device-uuid", uuid,
+                                               NULL) == GNOME_KEYRING_RESULT_OK)
+                goto out;
+
+        ret = TRUE;
+        gnome_keyring_free_password (password);
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
+        return ret;
+}
+
+gboolean
+gdu_util_delete_secret (GduPresentable *presentable)
+{
+        const char *usage;
+        const char *uuid;
+        GduDevice *device;
+        gboolean ret;
+
+        ret = FALSE;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: device is NULL", __FUNCTION__);
+                goto out;
+        }
+
+        usage = gdu_device_id_get_usage (device);
+        uuid = gdu_device_id_get_uuid (device);
+
+        if (strcmp (usage, "crypto") != 0) {
+                g_warning ("%s: device is not a crypto device", __FUNCTION__);
+                goto out;
+        }
+
+        if (uuid == NULL || strlen (uuid) == 0) {
+                g_warning ("%s: device has no UUID", __FUNCTION__);
+                goto out;
+        }
+
+        ret = gnome_keyring_delete_password_sync (&encrypted_device_password_schema,
+                                                  "encrypted-device-uuid", uuid,
+                                                  NULL) == GNOME_KEYRING_RESULT_OK;
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
+        return ret;
+}
+
+gboolean
+gdu_util_save_secret (GduPresentable *presentable,
+                      const char     *secret,
+                      gboolean        save_in_keyring_session)
+{
+        const char *keyring;
+        const char *usage;
+        const char *uuid;
+        GduDevice *device;
+        gboolean ret;
+
+        ret = FALSE;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: device is NULL", __FUNCTION__);
+                goto out;
+        }
+
+        usage = gdu_device_id_get_usage (device);
+        uuid = gdu_device_id_get_uuid (device);
+
+        if (strcmp (usage, "crypto") != 0) {
+                g_warning ("%s: device is not a crypto device", __FUNCTION__);
+                goto out;
+        }
+
+        if (uuid == NULL || strlen (uuid) == 0) {
+                g_warning ("%s: device has no UUID", __FUNCTION__);
+                goto out;
+        }
+
+        keyring = NULL;
+        if (save_in_keyring_session)
+                keyring = GNOME_KEYRING_SESSION;
+
+        if (gnome_keyring_store_password_sync (&encrypted_device_password_schema,
+                                               keyring,
+                                               _("Encrypted Disk Passphrase"),
+                                               secret,
+                                               "encrypted-device-uuid", uuid,
+                                               NULL) != GNOME_KEYRING_RESULT_OK) {
+                g_warning ("%s: couldn't store passphrase in keyring", __FUNCTION__);
+                goto out;
+        }
+
+        ret = TRUE;
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
+        return ret;
 }
 

@@ -28,6 +28,7 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-page-partition-create.h	gdu-page-partition-create.c	\
 	gdu-page-partition-modify.h	gdu-page-partition-modify.c	\
 	gdu-page-partition-table.h	gdu-page-partition-table.c	\
+	gdu-page-encrypted.h		gdu-page-encrypted.c		\
 	gdu-disk-widget.h		gdu-disk-widget.c		\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\

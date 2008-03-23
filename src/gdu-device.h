@@ -150,9 +150,32 @@ void gdu_device_op_modify_partition       (GduDevice   *device,
 void gdu_device_op_create_partition_table (GduDevice   *device,
                                            const char  *scheme,
                                            const char  *secure_erase);
-void gdu_device_op_unlock_encrypted       (GduDevice   *device,
-                                           const char *secret);
+
+
 void gdu_device_op_lock_encrypted         (GduDevice   *device);
+
+/* ops where feedback is essential */
+
+typedef void (*GduDeviceUnlockEncryptedCompletedFunc) (GduDevice  *device,
+                                                       const char *object_path_of_cleartext_device,
+                                                       GError     *error,
+                                                       gpointer    user_data);
+
+void gdu_device_op_unlock_encrypted       (GduDevice   *device,
+                                           const char *secret,
+                                           GduDeviceUnlockEncryptedCompletedFunc callback,
+                                           gpointer user_data);
+
+typedef void (*GduDeviceChangeSecretForEncryptedCompletedFunc) (GduDevice  *device,
+                                                                gboolean    result,
+                                                                GError     *error,
+                                                                gpointer    user_data);
+
+void gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
+                                                const char  *old_secret,
+                                                const char  *new_secret,
+                                                GduDeviceChangeSecretForEncryptedCompletedFunc callback,
+                                                gpointer user_data);
 
 
 

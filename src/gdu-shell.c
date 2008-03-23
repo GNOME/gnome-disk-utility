@@ -39,6 +39,7 @@
 
 #include "gdu-page.h"
 #include "gdu-page-erase.h"
+#include "gdu-page-encrypted.h"
 #include "gdu-page-summary.h"
 #include "gdu-page-partition-create.h"
 #include "gdu-page-partition-modify.h"
@@ -393,6 +394,39 @@ eject_action_callback (GtkAction *action, gpointer user_data)
         g_warning ("todo: eject");
 }
 
+static void unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring);
+
+static void
+unlock_op_cb (GduDevice *device,
+              const char *object_path_of_cleartext_device,
+              GError     *error,
+              gpointer    user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (object_path_of_cleartext_device == NULL) {
+                unlock_action_do (shell, device, TRUE);
+        }
+}
+
+static void
+unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring)
+{
+        char *secret;
+
+        secret = gdu_util_dialog_ask_for_secret (shell->priv->app_window,
+                                                 shell->priv->presentable_now_showing,
+                                                 bypass_keyring);
+        if (secret != NULL) {
+
+                gdu_device_op_unlock_encrypted (device, secret, unlock_op_cb, shell);
+
+                /* scrub the password */
+                memset (secret, '\0', strlen (secret));
+                g_free (secret);
+        }
+}
+
 static void
 unlock_action_callback (GtkAction *action, gpointer user_data)
 {
@@ -401,18 +435,8 @@ unlock_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                char *secret;
-
-                secret = gdu_util_dialog_ask_for_secret_with_keyring (shell->priv->app_window,
-                                                                      shell->priv->presentable_now_showing);
-                if (secret != NULL) {
-                        gdu_device_op_unlock_encrypted (device, secret);
-                        g_object_unref (device);
-
-                        /* scrub the password */
-                        memset (secret, '\0', strlen (secret));
-                        g_free (secret);
-                }
+                unlock_action_do (shell, device, FALSE);
+                g_object_unref (device);
         }
 }
 
@@ -693,6 +717,7 @@ create_window (GduShell *shell)
         add_page (shell, GDU_TYPE_PAGE_PARTITION_MODIFY);
         add_page (shell, GDU_TYPE_PAGE_PARTITION_CREATE);
         add_page (shell, GDU_TYPE_PAGE_ERASE);
+        add_page (shell, GDU_TYPE_PAGE_ENCRYPTED);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->notebook, TRUE, TRUE, 0);

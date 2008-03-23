@@ -1034,31 +1034,95 @@ gdu_device_op_create_partition_table (GduDevice  *device,
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+
+        GduDeviceUnlockEncryptedCompletedFunc callback;
+        gpointer user_data;
+} UnlockData;
+
 static void
 op_unlock_encrypted_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
+        UnlockData *data = user_data;
+
         if (error != NULL) {
                 g_warning ("op_unlock_encrypted_cb failed: %s", error->message);
-                job_set_failed (device, error);
-                g_error_free (error);
+                data->callback (data->device, NULL, error, data->user_data);
         } else {
                 g_print ("yay cleartext object is at '%s'\n", cleartext_object_path);
+                data->callback (data->device, cleartext_object_path, error, data->user_data);
                 g_free (cleartext_object_path);
         }
-        g_object_unref (device);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_unlock_encrypted (GduDevice *device, const char *secret)
+gdu_device_op_unlock_encrypted (GduDevice *device,
+                                const char *secret,
+                                GduDeviceUnlockEncryptedCompletedFunc callback,
+                                gpointer user_data)
 {
+        UnlockData *data;
         char *options[16];
         options[0] = NULL;
+
+        data = g_new0 (UnlockData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
         org_freedesktop_DeviceKit_Disks_Device_unlock_encrypted_async (device->priv->proxy,
                                                                        secret,
                                                                        (const char **) options,
                                                                        op_unlock_encrypted_cb,
-                                                                       g_object_ref (device));
+                                                                       data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+
+        GduDeviceChangeSecretForEncryptedCompletedFunc callback;
+        gpointer user_data;
+} ChangeSecretData;
+
+static void
+op_change_secret_for_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        ChangeSecretData *data = user_data;
+
+        if (error != NULL) {
+                g_warning ("op_change_secret_for_encrypted_cb failed: %s", error->message);
+                data->callback (data->device, FALSE, error, data->user_data);
+        } else {
+                data->callback (data->device, TRUE, error, data->user_data);
+        }
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
+                                           const char  *old_secret,
+                                           const char  *new_secret,
+                                           GduDeviceChangeSecretForEncryptedCompletedFunc callback,
+                                           gpointer user_data)
+{
+        ChangeSecretData *data;
+
+        data = g_new0 (ChangeSecretData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_Device_change_secret_for_encrypted_async (device->priv->proxy,
+                                                                                  old_secret,
+                                                                                  new_secret,
+                                                                                  op_change_secret_for_encrypted_cb,
+                                                                                  data);
 }
 
 /* -------------------------------------------------------------------------------- */

@@ -258,13 +258,9 @@ forget_passphrase_button_clicked (GtkWidget *button, gpointer user_data)
 static void
 gdu_page_encrypted_init (GduPageEncrypted *page)
 {
-        int row;
         GtkWidget *label;
         GtkWidget *align;
         GtkWidget *vbox;
-        GtkWidget *table;
-        GtkWidget *combo_box;
-        GtkWidget *entry;
         GtkWidget *button;
         GtkWidget *button_box;
 

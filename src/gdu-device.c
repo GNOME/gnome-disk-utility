@@ -790,7 +790,11 @@ op_mkfs_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 }
 
 void
-gdu_device_op_mkfs (GduDevice *device, const char *fstype, const char *fslabel, const char *fserase)
+gdu_device_op_mkfs (GduDevice   *device,
+                    const char  *fstype,
+                    const char  *fslabel,
+                    const char  *fserase,
+                    const char  *encrypt_passphrase)
 {
         int n;
         char *options[16];
@@ -799,8 +803,11 @@ gdu_device_op_mkfs (GduDevice *device, const char *fstype, const char *fslabel, 
         if (fslabel != NULL && strlen (fslabel) > 0) {
                 options[n++] = g_strdup_printf ("label=%s", fslabel);
         }
-        if (fslabel != fserase && strlen (fserase) > 0) {
+        if (fserase != NULL && strlen (fserase) > 0) {
                 options[n++] = g_strdup_printf ("erase=%s", fserase);
+        }
+        if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
+                options[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
         }
         options[n] = NULL;
 
@@ -933,7 +940,8 @@ gdu_device_op_create_partition (GduDevice   *device,
                                 char       **flags,
                                 const char  *fstype,
                                 const char  *fslabel,
-                                const char  *fserase)
+                                const char  *fserase,
+                                const char  *encrypt_passphrase)
 {
         int n;
         char *fsoptions[16];
@@ -945,8 +953,11 @@ gdu_device_op_create_partition (GduDevice   *device,
         if (fslabel != NULL && strlen (fslabel) > 0) {
                 fsoptions[n++] = g_strdup_printf ("label=%s", fslabel);
         }
-        if (fslabel != fserase && strlen (fserase) > 0) {
+        if (fserase != NULL && strlen (fserase) > 0) {
                 fsoptions[n++] = g_strdup_printf ("erase=%s", fserase);
+        }
+        if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
+                fsoptions[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
         }
         fsoptions[n] = NULL;
 

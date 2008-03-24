@@ -325,6 +325,13 @@ static GduCreatableFilesystem creatable_fstypes[] = {
         {"empty", 0},
 };
 
+/* TODO: retrieve from daemon */
+gboolean
+gdu_util_can_create_encrypted_device (void)
+{
+        return TRUE;
+}
+
 static int num_creatable_fstypes = sizeof (creatable_fstypes) / sizeof (GduCreatableFilesystem);
 
 static char *
@@ -1021,6 +1028,7 @@ gdu_util_find_toplevel_presentable (GduPresentable *presentable)
 
 typedef struct
 {
+        gboolean is_new_password;
         GtkWidget *password_entry;
         GtkWidget *password_entry_new;
         GtkWidget *password_entry_verify;
@@ -1037,7 +1045,8 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
                 gtk_widget_show (data->warning_hbox);
                 gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not match</i>");
                 gtk_widget_set_sensitive (data->button, FALSE);
-        } else if ((strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry))) > 0 ||
+        } else if (!data->is_new_password &&
+                   (strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry))) > 0 ||
                     strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) > 0) &&
                    strcmp (gtk_entry_get_text (GTK_ENTRY (data->password_entry)),
                            gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) == 0) {
@@ -1059,7 +1068,7 @@ gdu_util_dialog_secret_entry_changed (GtkWidget *entry, gpointer user_data)
 
 static char *
 gdu_util_dialog_secret_internal (GtkWidget *parent_window,
-                                 GduPresentable *presentable,
+                                 gboolean is_new_password,
                                  gboolean is_change_password,
                                  const char *old_secret_for_change_password,
                                  char **old_secret_from_dialog,
@@ -1084,12 +1093,17 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
         const char *title;
 
         g_return_val_if_fail (parent_window == NULL || GTK_IS_WINDOW (parent_window), NULL);
-        g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+        session_radio_button = NULL;
+        always_radio_button = NULL;
 
         secret = NULL;
         data = g_new0 (DialogSecretData, 1);
+        data->is_new_password = is_new_password;
 
-        if (is_change_password)
+        if (is_new_password)
+                title = _("Enter Passphrase");
+        else if (is_change_password)
                 title = _("Change Passphrase");
         else
                 title = _("Unlock Encrypted Device");
@@ -1100,7 +1114,9 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                                               GTK_RESPONSE_CANCEL,
                                               NULL);
 
-        if (is_change_password) {
+        if (is_new_password) {
+                data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("C_reate"), 0);
+        } else if (is_change_password) {
                 data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("Change _Passphrase"), 0);
         } else {
                 data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Unlock"), 0);
@@ -1127,7 +1143,10 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
 
 	/* main message */
 	label = gtk_label_new (NULL);
-        if (is_change_password) {
+        if (is_new_password) {
+                gtk_label_set_markup (GTK_LABEL (label),
+                                      "<b><big>To create an encrypted device, choose a passphrase.</big></b>");
+        } else if (is_change_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
                                       "<b><big>To change the passphrase, enter both the current and new passphrase.</big></b>");
         } else {
@@ -1159,19 +1178,22 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
 
         row = 0;
 
-        if (is_change_password) {
-                label = gtk_label_new_with_mnemonic (_("C_urrent Passphrase:"));
-                gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-                gtk_table_attach (GTK_TABLE (table), label,
-                                  0, 1, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-                data->password_entry = gtk_entry_new ();
-                gtk_entry_set_visibility (GTK_ENTRY (data->password_entry), FALSE);
-                gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry, 1, 2, row, row + 1);
-                gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
+        if (is_change_password || is_new_password) {
 
-                row++;
+                if (is_change_password) {
+                        label = gtk_label_new_with_mnemonic (_("C_urrent Passphrase:"));
+                        gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+                        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                        gtk_table_attach (GTK_TABLE (table), label,
+                                          0, 1, row, row + 1,
+                                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                        data->password_entry = gtk_entry_new ();
+                        gtk_entry_set_visibility (GTK_ENTRY (data->password_entry), FALSE);
+                        gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry, 1, 2, row, row + 1);
+                        gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
+
+                        row++;
+                }
 
                 label = gtk_label_new_with_mnemonic (_("_New Passphrase:"));
                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
@@ -1212,9 +1234,11 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                 /* only the verify entry activates the default action */
                 gtk_entry_set_activates_default (GTK_ENTRY (data->password_entry_verify), TRUE);
 
-                /* if the old password is supplied (from e.g. the keyring) set it, and focus on the new password */
+                /* if the old password is supplied (from e.g. the keyring), set it and focus on the new password */
                 if (old_secret_for_change_password != NULL) {
                         gtk_entry_set_text (GTK_ENTRY (data->password_entry), old_secret_for_change_password);
+                        gtk_widget_grab_focus (data->password_entry_new);
+                } else if (is_new_password) {
                         gtk_widget_grab_focus (data->password_entry_new);
                 }
 
@@ -1232,43 +1256,49 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                 gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
         }
 
-	never_radio_button = gtk_radio_button_new_with_mnemonic (
-                NULL,
-                _("_Forget passphrase immediately"));
-	session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                GTK_RADIO_BUTTON (never_radio_button),
-                _("Remember passphrase until you _log out"));
-	always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                GTK_RADIO_BUTTON (never_radio_button),
-                _("_Remember forever"));
+        if (!is_new_password) {
+                never_radio_button = gtk_radio_button_new_with_mnemonic (
+                        NULL,
+                        _("_Forget passphrase immediately"));
+                session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                        GTK_RADIO_BUTTON (never_radio_button),
+                        _("Remember passphrase until you _log out"));
+                always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                        GTK_RADIO_BUTTON (never_radio_button),
+                        _("_Remember forever"));
 
-        /* preselect Remember Forever if we've retrieved the existing key from the keyring */
-        if (is_change_password && old_secret_for_change_password != NULL) {
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (always_radio_button), TRUE);
+                /* preselect Remember Forever if we've retrieved the existing key from the keyring */
+                if (is_change_password && old_secret_for_change_password != NULL) {
+                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (always_radio_button), TRUE);
+                }
+
+                gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
         }
 
-	gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
-
         gtk_widget_show_all (dialog);
-        if (is_change_password)
+        if (is_change_password || is_new_password)
                 gdu_util_dialog_secret_update (data);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         if (response != 0)
                 goto out;
 
-        if (is_change_password) {
+        if (is_new_password) {
+                secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new)));
+        } else if (is_change_password) {
                 *old_secret_from_dialog = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry)));
                 secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new)));
         } else {
                 secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry)));
         }
 
-        if (save_in_keyring != NULL)
-                *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
-        if (save_in_keyring_session != NULL)
-                *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
+        if (!is_new_password) {
+                if (save_in_keyring != NULL)
+                        *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
+                if (save_in_keyring_session != NULL)
+                        *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
+        }
 
 out:
         if (data == NULL)
@@ -1285,6 +1315,18 @@ static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
                 { NULL, 0 }
         }
 };
+
+char *
+gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window)
+{
+        return gdu_util_dialog_secret_internal (parent_window,
+                                                TRUE,
+                                                FALSE,
+                                                NULL,
+                                                NULL,
+                                                NULL,
+                                                NULL);
+}
 
 /**
  * gdu_util_dialog_ask_for_secret:
@@ -1348,7 +1390,7 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
         }
 
         secret = gdu_util_dialog_secret_internal (parent_window,
-                                                  presentable,
+                                                  FALSE,
                                                   FALSE,
                                                   NULL,
                                                   NULL,
@@ -1448,7 +1490,7 @@ gdu_util_dialog_change_secret (GtkWidget *parent_window,
         }
 
         *new_secret = gdu_util_dialog_secret_internal (parent_window,
-                                                       presentable,
+                                                       FALSE,
                                                        TRUE,
                                                        old_secret_from_keyring,
                                                        old_secret,

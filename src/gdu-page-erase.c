@@ -37,6 +37,7 @@ struct _GduPageErasePrivate
         GtkWidget *page_erase_label_entry;
         GtkWidget *page_erase_type_combo_box;
         GtkWidget *page_erase_secure_erase_combo_box;
+        GtkWidget *page_erase_encrypt_check_button;
 
         PolKitAction *pk_erase_action;
         PolKitGnomeAction *erase_action;
@@ -181,7 +182,10 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         char *fslabel;
         char *fstype;
         const char *fserase;
+        char *encrypt_passphrase;
         GduDevice *device;
+
+        encrypt_passphrase = NULL;
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         g_assert (device != NULL);
@@ -211,12 +215,22 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         if (response != 0)
                 goto out;
 
-        gdu_device_op_mkfs (device, fstype, fslabel, fserase);
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->page_erase_encrypt_check_button))) {
+                encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (gdu_shell_get_toplevel (page->priv->shell));
+                if (encrypt_passphrase == NULL)
+                        goto out;
+        }
+
+        gdu_device_op_mkfs (device, fstype, fslabel, fserase, encrypt_passphrase);
 
 out:
         g_object_unref (device);
         g_free (fstype);
         g_free (fslabel);
+        if (encrypt_passphrase != NULL) {
+                memset (encrypt_passphrase, '\0', strlen (encrypt_passphrase));
+                g_free (encrypt_passphrase);
+        }
 }
 
 static void
@@ -231,6 +245,7 @@ gdu_page_erase_init (GduPageErase *page)
         GtkWidget *entry;
         GtkWidget *button;
         GtkWidget *button_box;
+        GtkWidget *check_button;
 
         page->priv = g_new0 (GduPageErasePrivate, 1);
 
@@ -344,6 +359,22 @@ gdu_page_erase_init (GduPageErase *page)
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
 
+        row++;
+
+        /* whether to encrypt underlying device */
+        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
+        gtk_widget_set_tooltip_text (check_button,
+                                     _("Encryption protects your data, requiring a "
+                                       "passphrase to be enterered before the file system can be "
+                                       "used. May decrease performance and may not be compatible if "
+                                       "you use the media on other operating systems."));
+        if (gdu_util_can_create_encrypted_device ()) {
+                gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        }
+        page->priv->page_erase_encrypt_check_button = check_button;
+
+        row++;
 
         /* update sensivity and length of fs label + entry */
         g_signal_connect (page->priv->page_erase_type_combo_box, "changed",

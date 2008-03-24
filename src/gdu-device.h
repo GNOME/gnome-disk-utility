@@ -129,7 +129,8 @@ const char *gdu_device_drive_get_serial (GduDevice *device);
 void gdu_device_op_mkfs                   (GduDevice   *device,
                                            const char  *fstype,
                                            const char  *fslabel,
-                                           const char  *fserase);
+                                           const char  *fserase,
+                                           const char  *encrypt_passphrase);
 void gdu_device_op_mount                  (GduDevice   *device);
 void gdu_device_op_unmount                (GduDevice   *device);
 void gdu_device_op_delete_partition       (GduDevice   *device,
@@ -142,7 +143,8 @@ void gdu_device_op_create_partition       (GduDevice   *device,
                                            char       **flags,
                                            const char  *fstype,
                                            const char  *fslabel,
-                                           const char  *fserase);
+                                           const char  *fserase,
+                                           const char  *encrypt_passphrase);
 void gdu_device_op_modify_partition       (GduDevice   *device,
                                            const char  *type,
                                            const char  *label,

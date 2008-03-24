@@ -48,6 +48,7 @@ struct _GduPagePartitionCreatePrivate
         GtkWidget *create_part_secure_erase_combo_box;
         GtkWidget *create_part_warning_hbox;
         GtkWidget *create_part_warning_label;
+        GtkWidget *create_part_encrypt_check_button;
 
         GduPresentable *presentable;
 
@@ -165,6 +166,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         char *fstype;
         char *fslabel;
         char *fserase;
+        char *encrypt_passphrase;
         const char *scheme;
 
         type = NULL;
@@ -174,6 +176,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         fstype = NULL;
         fslabel = NULL;
         fserase = NULL;
+        encrypt_passphrase = NULL;
         toplevel_presentable = NULL;
         toplevel_device = NULL;
 
@@ -234,6 +237,12 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 label = g_strdup ("");
         }
 
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->create_part_encrypt_check_button))) {
+                encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (gdu_shell_get_toplevel (page->priv->shell));
+                if (encrypt_passphrase == NULL)
+                        goto out;
+        }
+
         gdu_device_op_create_partition (toplevel_device,
                                         offset,
                                         size,
@@ -242,12 +251,17 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         flags,
                                         fstype,
                                         fslabel,
-                                        fserase);
+                                        fserase,
+                                        encrypt_passphrase);
 
         /* go to toplevel */
         gdu_shell_select_presentable (page->priv->shell, toplevel_presentable);
 
 out:
+        if (encrypt_passphrase != NULL) {
+                memset (encrypt_passphrase, '\0', strlen (encrypt_passphrase));
+                g_free (encrypt_passphrase);
+        }
         g_free (type);
         g_free (label);
         g_strfreev (flags);
@@ -316,6 +330,7 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
         GtkWidget *hscale;
         GtkWidget *button_box;
         GtkWidget *image;
+        GtkWidget *check_button;
         int row;
 
         page->priv = g_new0 (GduPagePartitionCreatePrivate, 1);
@@ -436,6 +451,21 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
 
         row++;
 
+        /* _file system_ label */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        entry = gtk_entry_new ();
+        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+        page->priv->create_part_fslabel_entry = entry;
+
+        row++;
+
         /* _file system_ type */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -462,18 +492,20 @@ gdu_page_partition_create_init (GduPagePartitionCreate *page)
 
         row++;
 
-        /* _file system_ label */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        /* whether to encrypt underlying device */
+        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
+        gtk_widget_set_tooltip_text (check_button,
+                                     _("Encryption protects your data, requiring a "
+                                       "passphrase to be enterered before the file system can be "
+                                       "used. May decrease performance and may not be compatible if "
+                                       "you use the media on other operating systems."));
+        if (gdu_util_can_create_encrypted_device ()) {
+                gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        }
+        page->priv->create_part_encrypt_check_button = check_button;
 
-        entry = gtk_entry_new ();
-        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-        page->priv->create_part_fslabel_entry = entry;
+        row++;
 
         /* create button */
         button_box = gtk_hbutton_box_new ();

@@ -44,6 +44,8 @@ typedef struct
 GList                  *gdu_util_get_creatable_filesystems (void);
 GduCreatableFilesystem *gdu_util_find_creatable_filesystem_for_fstype (const char *fstype);
 
+gboolean                gdu_util_can_create_encrypted_device (void);
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 GtkWidget *gdu_util_fstype_combo_box_create         (const char *include_extended_partitions_for_scheme);
@@ -98,6 +100,8 @@ gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                         gboolean        *save_in_keyring,
                                         gboolean        *save_in_keyring_session,
                                         gboolean         bypass_keyring);
+
+char *gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window);
 
 gboolean gdu_util_save_secret (GduPresentable *presentable,
                                const char     *secret,

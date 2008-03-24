@@ -1406,8 +1406,6 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
         }
 
 out:
-        if (device != NULL)
-                g_object_unref (device);
         return secret;
 }
 
@@ -1505,8 +1503,6 @@ out:
                 }
         }
 
-        if (device != NULL)
-                g_object_unref (device);
         return ret;
 }
 
@@ -1543,8 +1539,6 @@ gdu_util_have_secret (GduDevice *device)
         gnome_keyring_free_password (password);
 
 out:
-        if (device != NULL)
-                g_object_unref (device);
         return ret;
 }
 
@@ -1575,8 +1569,6 @@ gdu_util_delete_secret (GduDevice *device)
                                                   NULL) == GNOME_KEYRING_RESULT_OK;
 
 out:
-        if (device != NULL)
-                g_object_unref (device);
         return ret;
 }
 
@@ -1622,8 +1614,6 @@ gdu_util_save_secret (GduDevice      *device,
         ret = TRUE;
 
 out:
-        if (device != NULL)
-                g_object_unref (device);
         return ret;
 }
 

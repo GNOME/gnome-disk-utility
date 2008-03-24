@@ -173,6 +173,53 @@ page_erase_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
         g_free (fstype);
 }
 
+typedef struct {
+        GduPageErase *page;
+        GduPresentable *presentable;
+        char *encrypt_passphrase;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+} CreateFilesystemData;
+
+static void
+create_filesystem_data_free (CreateFilesystemData *data)
+{
+        if (data->page != NULL)
+                g_object_unref (data->page);
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->encrypt_passphrase != NULL) {
+                memset (data->encrypt_passphrase, '\0', strlen (data->encrypt_passphrase));
+                g_free (data->encrypt_passphrase);
+        }
+        g_free (data);
+}
+
+static void
+erase_action_completed (GduDevice  *device,
+                        GError     *error,
+                        gpointer    user_data)
+{
+        CreateFilesystemData *data = user_data;
+
+        if (error != NULL) {
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        } else if (data != NULL) {
+                /* now set the passphrase if requested */
+                if (data->save_in_keyring || data->save_in_keyring_session) {
+                        gdu_util_save_secret (device,
+                                              data->encrypt_passphrase,
+                                              data->save_in_keyring_session);
+                        /* make sure the tab for the encrypted device is updated (it displays whether
+                         * the passphrase is in the keyring or now)
+                         */
+                        gdu_shell_update (data->page->priv->shell);
+                }
+                create_filesystem_data_free (data);
+        }
+}
+
 static void
 erase_action_callback (GtkAction *action, gpointer user_data)
 {
@@ -182,12 +229,14 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         char *fslabel;
         char *fstype;
         const char *fserase;
-        char *encrypt_passphrase;
         GduDevice *device;
+        CreateFilesystemData *data;
+        GduPresentable *presentable;
 
-        encrypt_passphrase = NULL;
+        data = NULL;
 
-        device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
+        presentable = gdu_shell_get_selected_presentable (page->priv->shell);
+        device = gdu_presentable_get_device (presentable);
         g_assert (device != NULL);
 
         fstype = gdu_page_erase_get_fstype (page);
@@ -216,21 +265,33 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
 
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->page_erase_encrypt_check_button))) {
-                encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (gdu_shell_get_toplevel (page->priv->shell));
-                if (encrypt_passphrase == NULL)
+                data = g_new (CreateFilesystemData, 1);
+                data->page = g_object_ref (page);
+                data->presentable = g_object_ref (presentable);
+
+                data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
+                        gdu_shell_get_toplevel (page->priv->shell),
+                        &data->save_in_keyring,
+                        &data->save_in_keyring_session);
+                if (data->encrypt_passphrase == NULL) {
+                        create_filesystem_data_free (data);
+                        data = NULL;
                         goto out;
+                }
         }
 
-        gdu_device_op_mkfs (device, fstype, fslabel, fserase, encrypt_passphrase);
+        gdu_device_op_mkfs (device,
+                            fstype,
+                            fslabel,
+                            fserase,
+                            data != NULL ? data->encrypt_passphrase : NULL,
+                            erase_action_completed,
+                            data);
 
 out:
         g_object_unref (device);
         g_free (fstype);
         g_free (fslabel);
-        if (encrypt_passphrase != NULL) {
-                memset (encrypt_passphrase, '\0', strlen (encrypt_passphrase));
-                g_free (encrypt_passphrase);
-        }
 }
 
 static void

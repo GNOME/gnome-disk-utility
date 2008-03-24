@@ -89,27 +89,29 @@ GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-char *gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
-                                      GduPresentable *presentable,
-                                      gboolean        bypass_keyring);
+char *gdu_util_dialog_ask_for_secret (GtkWidget       *parent_window,
+                                      GduDevice       *device,
+                                      gboolean         bypass_keyring);
 
 gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
-                                        GduPresentable  *presentable,
+                                        GduDevice       *device,
                                         char           **old_secret,
                                         char           **new_secret,
                                         gboolean        *save_in_keyring,
                                         gboolean        *save_in_keyring_session,
                                         gboolean         bypass_keyring);
 
-char *gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window);
+char *gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
+                                          gboolean       *save_in_keyring,
+                                          gboolean       *save_in_keyring_session);
 
-gboolean gdu_util_save_secret (GduPresentable *presentable,
+gboolean gdu_util_save_secret (GduDevice      *device,
                                const char     *secret,
                                gboolean        save_in_keyring_session);
 
-gboolean gdu_util_delete_secret (GduPresentable *presentable);
+gboolean gdu_util_delete_secret (GduDevice *device);
 
-gboolean gdu_util_have_secret (GduPresentable *presentable);
+gboolean gdu_util_have_secret (GduDevice *device);
 
 
 #endif /* GDU_UTIL_H */

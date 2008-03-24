@@ -161,7 +161,13 @@ static void change_passphrase_do (GduPageEncrypted *page, GduPresentable *presen
 static void
 update_delete_state (GduPageEncrypted *page)
 {
-        if (gdu_util_have_secret (gdu_shell_get_selected_presentable (page->priv->shell))) {
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
+        if (device == NULL)
+                goto out;
+
+        if (gdu_util_have_secret (device)) {
                 gtk_label_set_markup (GTK_LABEL (page->priv->main_label),
                                       _("Data on this device is stored in an encrypted form "
                                         "protected by a passphrase. The passphrase is "
@@ -174,6 +180,9 @@ update_delete_state (GduPageEncrypted *page)
                                         "stored in the keyring."));
                 gtk_widget_set_sensitive (page->priv->delete_password_button, FALSE);
         }
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 static void
@@ -188,9 +197,9 @@ change_passphrase_completed (GduDevice  *device,
                 /* It worked! Now update the keyring */
 
                 if (data->save_in_keyring || data->save_in_keyring_session)
-                        gdu_util_save_secret (data->presentable, data->new_secret, data->save_in_keyring_session);
+                        gdu_util_save_secret (device, data->new_secret, data->save_in_keyring_session);
                 else
-                        gdu_util_delete_secret (data->presentable);
+                        gdu_util_delete_secret (device);
 
                 update_delete_state (data->page);
         } else {
@@ -218,7 +227,7 @@ change_passphrase_do (GduPageEncrypted *page, GduPresentable *presentable, gbool
         data->page = g_object_ref (page);
 
         if (!gdu_util_dialog_change_secret (gdu_shell_get_toplevel (page->priv->shell),
-                                            gdu_shell_get_selected_presentable (page->priv->shell),
+                                            device,
                                             &data->old_secret,
                                             &data->new_secret,
                                             &data->save_in_keyring,
@@ -251,8 +260,17 @@ static void
 forget_passphrase_button_clicked (GtkWidget *button, gpointer user_data)
 {
         GduPageEncrypted *page = GDU_PAGE_ENCRYPTED (user_data);
-        gdu_util_delete_secret (gdu_shell_get_selected_presentable (page->priv->shell));
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
+        if (device == NULL)
+                goto out;
+
+        gdu_util_delete_secret (device);
         update_delete_state (page);
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 static void
@@ -348,7 +366,7 @@ gdu_page_encrypted_get_widget (GduPage *_page)
 static char *
 gdu_page_encrypted_get_name (GduPage *page)
 {
-        return g_strdup (_("En_crypted Device"));
+        return g_strdup (_("Encr_ypted Device"));
 }
 
 static void

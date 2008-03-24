@@ -753,8 +753,8 @@ gdu_device_job_get_cur_task_percentage (GduDevice *device)
 
 /* -------------------------------------------------------------------------------- */
 
-static void
-job_set_failed (GduDevice *device, GError *error)
+void
+gdu_device_job_set_failed (GduDevice *device, GError *error)
 {
         g_free (device->priv->job_last_error_message);
         device->priv->job_last_error_message = g_strdup (error->message);
@@ -776,17 +776,23 @@ gdu_device_job_clear_last_error_message (GduDevice *device)
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceMkfsCompletedFunc callback;
+        gpointer user_data;
+} MkfsData;
+
 static void
 op_mkfs_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
+        MkfsData *data = user_data;
 
         if (error != NULL) {
                 g_warning ("op_mkfs_cb failed: %s", error->message);
-                job_set_failed (device, error);
-                g_error_free (error);
         }
-        g_object_unref (device);
+        data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
@@ -794,10 +800,18 @@ gdu_device_op_mkfs (GduDevice   *device,
                     const char  *fstype,
                     const char  *fslabel,
                     const char  *fserase,
-                    const char  *encrypt_passphrase)
+                    const char  *encrypt_passphrase,
+                    GduDeviceMkfsCompletedFunc  callback,
+                    gpointer                    user_data)
 {
         int n;
+        MkfsData *data;
         char *options[16];
+
+        data = g_new0 (MkfsData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         n = 0;
         if (fslabel != NULL && strlen (fslabel) > 0) {
@@ -815,7 +829,7 @@ gdu_device_op_mkfs (GduDevice   *device,
                                                                         fstype,
                                                                         (const char **) options,
                                                                         op_mkfs_cb,
-                                                                        g_object_ref (device));
+                                                                        data);
         while (n >= 0)
                 g_free (options[n--]);
 }
@@ -828,7 +842,7 @@ op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_d
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_mount_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         } else {
                 g_print ("yay mounted at '%s'\n", mount_path);
@@ -861,7 +875,7 @@ op_unmount_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_unmount_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         }
         g_object_unref (device);
@@ -886,7 +900,7 @@ op_delete_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_delete_partition_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         }
         g_object_unref (device);
@@ -915,20 +929,27 @@ gdu_device_op_delete_partition (GduDevice *device, const char *secure_erase)
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceCreatePartitionCompletedFunc callback;
+        gpointer user_data;
+} CreatePartitionData;
+
 static void
-op_create_partition_cb (DBusGProxy *proxy, char *created_device_objpath, GError *error, gpointer user_data)
+op_create_partition_cb (DBusGProxy *proxy, char *created_device_object_path, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
+        CreatePartitionData *data = user_data;
 
         if (error != NULL) {
                 g_warning ("op_create_partition_cb failed: %s", error->message);
-                job_set_failed (device, error);
-                g_error_free (error);
+                data->callback (data->device, NULL, error, data->user_data);
         } else {
-                g_print ("yay objpath='%s'\n", created_device_objpath);
-                g_free (created_device_objpath);
+                g_print ("yay objpath='%s'\n", created_device_object_path);
+                data->callback (data->device, created_device_object_path, error, data->user_data);
+                g_free (created_device_object_path);
         }
-        g_object_unref (device);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
@@ -941,11 +962,19 @@ gdu_device_op_create_partition (GduDevice   *device,
                                 const char  *fstype,
                                 const char  *fslabel,
                                 const char  *fserase,
-                                const char  *encrypt_passphrase)
+                                const char  *encrypt_passphrase,
+                                GduDeviceCreatePartitionCompletedFunc callback,
+                                gpointer user_data)
 {
         int n;
         char *fsoptions[16];
         char *options[16];
+        CreatePartitionData *data;
+
+        data = g_new0 (CreatePartitionData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         options[0] = NULL;
 
@@ -971,7 +1000,7 @@ gdu_device_op_create_partition (GduDevice   *device,
                                                                        fstype,
                                                                        (const char **) fsoptions,
                                                                        op_create_partition_cb,
-                                                                       g_object_ref (device));
+                                                                       data);
 
         while (n >= 0)
                 g_free (fsoptions[n--]);
@@ -985,7 +1014,7 @@ op_modify_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_modify_partition_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         }
         g_object_unref (device);
@@ -1013,7 +1042,7 @@ op_create_partition_table_cb (DBusGProxy *proxy, GError *error, gpointer user_da
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_create_partition_table_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         }
         g_object_unref (device);
@@ -1144,7 +1173,7 @@ op_lock_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
         GduDevice *device = GDU_DEVICE (user_data);
         if (error != NULL) {
                 g_warning ("op_unlock_encrypted_cb failed: %s", error->message);
-                job_set_failed (device, error);
+                gdu_device_job_set_failed (device, error);
                 g_error_free (error);
         }
         g_object_unref (device);

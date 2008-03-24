@@ -1115,7 +1115,7 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                                               NULL);
 
         if (is_new_password) {
-                data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("C_reate"), 0);
+                data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("Cr_eate"), 0);
         } else if (is_change_password) {
                 data->button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("Change _Passphrase"), 0);
         } else {
@@ -1256,26 +1256,24 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                 gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry);
         }
 
-        if (!is_new_password) {
-                never_radio_button = gtk_radio_button_new_with_mnemonic (
-                        NULL,
-                        _("_Forget passphrase immediately"));
-                session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                        GTK_RADIO_BUTTON (never_radio_button),
-                        _("Remember passphrase until you _log out"));
-                always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
-                        GTK_RADIO_BUTTON (never_radio_button),
-                        _("_Remember forever"));
+        never_radio_button = gtk_radio_button_new_with_mnemonic (
+                NULL,
+                _("_Forget passphrase immediately"));
+        session_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                GTK_RADIO_BUTTON (never_radio_button),
+                _("Remember passphrase until you _log out"));
+        always_radio_button = gtk_radio_button_new_with_mnemonic_from_widget (
+                GTK_RADIO_BUTTON (never_radio_button),
+                _("_Remember forever"));
 
-                /* preselect Remember Forever if we've retrieved the existing key from the keyring */
-                if (is_change_password && old_secret_for_change_password != NULL) {
-                        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (always_radio_button), TRUE);
-                }
-
-                gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
+        /* preselect Remember Forever if we've retrieved the existing key from the keyring */
+        if (is_change_password && old_secret_for_change_password != NULL) {
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (always_radio_button), TRUE);
         }
+
+        gtk_box_pack_start (GTK_BOX (vbox), never_radio_button, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), session_radio_button, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
 
         gtk_widget_show_all (dialog);
         if (is_change_password || is_new_password)
@@ -1293,12 +1291,10 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                 secret = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->password_entry)));
         }
 
-        if (!is_new_password) {
-                if (save_in_keyring != NULL)
-                        *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
-                if (save_in_keyring_session != NULL)
-                        *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
-        }
+        if (save_in_keyring != NULL)
+                *save_in_keyring = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (always_radio_button));
+        if (save_in_keyring_session != NULL)
+                *save_in_keyring_session = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (session_radio_button));
 
 out:
         if (data == NULL)
@@ -1317,21 +1313,23 @@ static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
 };
 
 char *
-gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window)
+gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
+                                    gboolean       *save_in_keyring,
+                                    gboolean       *save_in_keyring_session)
 {
         return gdu_util_dialog_secret_internal (parent_window,
                                                 TRUE,
                                                 FALSE,
                                                 NULL,
                                                 NULL,
-                                                NULL,
-                                                NULL);
+                                                save_in_keyring,
+                                                save_in_keyring_session);
 }
 
 /**
  * gdu_util_dialog_ask_for_secret:
  * @parent_window: Parent window that dialog will be transient for or #NULL.
- * @presentable: A #GduPresentable that represents an encrypted device.
+ * @device: A #GduDevice that is an encrypted device.
  * @bypass_keyring: Set to #TRUE to bypass the keyring.
  *
  * Retrieves a secret from the user or the keyring (unless
@@ -1341,26 +1339,19 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window)
  **/
 char *
 gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
-                                GduPresentable *presentable,
+                                GduDevice *device,
                                 gboolean bypass_keyring)
 {
         char *secret;
         char *password;
         const char *usage;
         const char *uuid;
-        GduDevice *device;
         gboolean save_in_keyring;
         gboolean save_in_keyring_session;
 
         secret = NULL;
         save_in_keyring = FALSE;
         save_in_keyring_session = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                g_warning ("%s: device is NULL", __FUNCTION__);
-                goto out;
-        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1423,7 +1414,7 @@ out:
 /**
  * gdu_util_dialog_change_secret:
  * @parent_window: Parent window that dialog will be transient for or #NULL.
- * @presentable: A #GduPresentable that represents an encrypted device.
+ * @device: A #GduDevice that is an encrypted device.
  * @old_secret: Return location for old secret.
  * @new_secret: Return location for new secret.
  * @save_in_keyring: Return location for whether the new secret should be saved in the keyring.
@@ -1438,7 +1429,7 @@ out:
  **/
 gboolean
 gdu_util_dialog_change_secret (GtkWidget *parent_window,
-                               GduPresentable *presentable,
+                               GduDevice *device,
                                char **old_secret,
                                char **new_secret,
                                gboolean *save_in_keyring,
@@ -1448,7 +1439,6 @@ gdu_util_dialog_change_secret (GtkWidget *parent_window,
         char *password;
         const char *usage;
         const char *uuid;
-        GduDevice *device;
         gboolean ret;
         char *old_secret_from_keyring;
 
@@ -1456,12 +1446,6 @@ gdu_util_dialog_change_secret (GtkWidget *parent_window,
         *new_secret = NULL;
         old_secret_from_keyring = NULL;
         ret = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                g_warning ("%s: device is NULL", __FUNCTION__);
-                goto out;
-        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1527,21 +1511,14 @@ out:
 }
 
 gboolean
-gdu_util_have_secret (GduPresentable *presentable)
+gdu_util_have_secret (GduDevice *device)
 {
         const char *usage;
         const char *uuid;
-        GduDevice *device;
         char *password;
         gboolean ret;
 
         ret = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                g_warning ("%s: device is NULL", __FUNCTION__);
-                goto out;
-        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1572,20 +1549,13 @@ out:
 }
 
 gboolean
-gdu_util_delete_secret (GduPresentable *presentable)
+gdu_util_delete_secret (GduDevice *device)
 {
         const char *usage;
         const char *uuid;
-        GduDevice *device;
         gboolean ret;
 
         ret = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                g_warning ("%s: device is NULL", __FUNCTION__);
-                goto out;
-        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1611,23 +1581,16 @@ out:
 }
 
 gboolean
-gdu_util_save_secret (GduPresentable *presentable,
+gdu_util_save_secret (GduDevice      *device,
                       const char     *secret,
                       gboolean        save_in_keyring_session)
 {
         const char *keyring;
         const char *usage;
         const char *uuid;
-        GduDevice *device;
         gboolean ret;
 
         ret = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                g_warning ("%s: device is NULL", __FUNCTION__);
-                goto out;
-        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);

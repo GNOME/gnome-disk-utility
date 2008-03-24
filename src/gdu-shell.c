@@ -415,7 +415,7 @@ unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring)
         char *secret;
 
         secret = gdu_util_dialog_ask_for_secret (shell->priv->app_window,
-                                                 shell->priv->presentable_now_showing,
+                                                 device,
                                                  bypass_keyring);
         if (secret != NULL) {
 

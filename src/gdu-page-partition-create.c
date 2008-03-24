@@ -150,6 +150,75 @@ gdu_page_partition_create_class_init (GduPagePartitionCreateClass *klass)
                                                               G_PARAM_READABLE));
 }
 
+typedef struct {
+        GduPagePartitionCreate *page;
+        GduPresentable *presentable;
+        char *encrypt_passphrase;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+} CreatePartitionData;
+
+static void
+create_partition_data_free (CreatePartitionData *data)
+{
+        if (data->page != NULL)
+                g_object_unref (data->page);
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->encrypt_passphrase != NULL) {
+                memset (data->encrypt_passphrase, '\0', strlen (data->encrypt_passphrase));
+                g_free (data->encrypt_passphrase);
+        }
+        g_free (data);
+}
+
+static void
+create_partition_completed (GduDevice  *device,
+                            const char *created_device_object_path,
+                            GError     *error,
+                            gpointer    user_data)
+{
+        CreatePartitionData *data = user_data;
+
+        if (error != NULL) {
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        } else if (data != NULL && created_device_object_path != NULL &&
+                   (data->save_in_keyring || data->save_in_keyring_session)) {
+                GduPool *pool;
+                GduDevice *cleartext_device;
+                GduDevice *crypto_device;
+                const char *cleartext_objpath;
+
+                pool = gdu_device_get_pool (device);
+
+                cleartext_device = gdu_pool_get_by_object_path (pool,
+                                                                created_device_object_path);
+                if (cleartext_device != NULL) {
+                        cleartext_objpath = gdu_device_crypto_cleartext_get_slave (cleartext_device);
+                        if (cleartext_objpath != NULL &&
+                            (crypto_device = gdu_pool_get_by_object_path (pool, cleartext_objpath)) != NULL) {
+
+                                gdu_util_save_secret (crypto_device,
+                                                      data->encrypt_passphrase,
+                                                      data->save_in_keyring_session);
+                                /* make sure the tab for the encrypted device is updated (it displays whether
+                                 * the passphrase is in the keyring or now)
+                                 */
+                                gdu_shell_update (data->page->priv->shell);
+
+                                g_object_unref (crypto_device);
+                        }
+                        g_object_unref (cleartext_device);
+                }
+                g_object_unref (pool);
+
+        }
+
+        if (data != NULL)
+                create_partition_data_free (data);
+}
+
 static void
 create_partition_callback (GtkAction *action, gpointer user_data)
 {
@@ -168,6 +237,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         char *fserase;
         char *encrypt_passphrase;
         const char *scheme;
+        CreatePartitionData *data;
 
         type = NULL;
         label = NULL;
@@ -179,6 +249,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         encrypt_passphrase = NULL;
         toplevel_presentable = NULL;
         toplevel_device = NULL;
+        data = NULL;
 
         presentable = gdu_shell_get_selected_presentable (page->priv->shell);
         g_assert (presentable != NULL);
@@ -238,9 +309,20 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         }
 
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->create_part_encrypt_check_button))) {
-                encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (gdu_shell_get_toplevel (page->priv->shell));
-                if (encrypt_passphrase == NULL)
+
+                data = g_new (CreatePartitionData, 1);
+                data->page = g_object_ref (page);
+                data->presentable = g_object_ref (presentable);
+
+                data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
+                        gdu_shell_get_toplevel (page->priv->shell),
+                        &data->save_in_keyring,
+                        &data->save_in_keyring_session);
+                if (data->encrypt_passphrase == NULL) {
+                        create_partition_data_free (data);
+                        data = NULL;
                         goto out;
+                }
         }
 
         gdu_device_op_create_partition (toplevel_device,
@@ -252,7 +334,9 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         fstype,
                                         fslabel,
                                         fserase,
-                                        encrypt_passphrase);
+                                        data != NULL ? data->encrypt_passphrase : NULL,
+                                        create_partition_completed,
+                                        data);
 
         /* go to toplevel */
         gdu_shell_select_presentable (page->priv->shell, toplevel_presentable);

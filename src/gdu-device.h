@@ -86,6 +86,7 @@ gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
 gboolean gdu_device_is_crypto_cleartext (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
+gboolean gdu_device_is_busy (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 
 gboolean    gdu_device_job_in_progress (GduDevice *device);

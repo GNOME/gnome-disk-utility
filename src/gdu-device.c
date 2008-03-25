@@ -50,6 +50,7 @@ typedef struct
         gboolean device_is_drive;
         gboolean device_is_crypto_cleartext;
         gboolean device_is_mounted;
+        gboolean device_is_busy;
         char    *device_mount_path;
         guint64  device_size;
         guint64  device_block_size;
@@ -120,6 +121,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_crypto_cleartext = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-mounted") == 0)
                 props->device_is_mounted = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-busy") == 0)
+                props->device_is_busy = g_value_get_boolean (value);
         else if (strcmp (key, "device-mount-path") == 0)
                 props->device_mount_path = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-size") == 0)
@@ -546,6 +549,12 @@ gboolean
 gdu_device_is_mounted (GduDevice *device)
 {
         return device->priv->props->device_is_mounted;
+}
+
+gboolean
+gdu_device_is_busy (GduDevice *device)
+{
+        return device->priv->props->device_is_busy;
 }
 
 const char *

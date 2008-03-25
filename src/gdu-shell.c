@@ -131,6 +131,7 @@ void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
         gdu_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
+        gtk_widget_grab_focus (shell->priv->treeview);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

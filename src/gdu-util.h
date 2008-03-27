@@ -28,6 +28,10 @@
 char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
 
+char *gdu_util_get_speed_for_display (guint64 size);
+
+char *gdu_util_get_connection_for_display (const char *connection_interface, guint64 connection_speed);
+
 char *gdu_util_get_desc_for_part_type (const char *part_scheme, const char *part_type);
 
 char *gdu_get_job_description (const char *job_id);

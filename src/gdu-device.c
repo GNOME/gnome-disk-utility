@@ -91,6 +91,9 @@ typedef struct
         char    *drive_model;
         char    *drive_revision;
         char    *drive_serial;
+        char    *drive_connection_interface;
+        guint64  drive_connection_speed;
+        char   **drive_media;
 } DeviceProperties;
 
 static void
@@ -204,6 +207,12 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_revision = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "drive-serial") == 0)
                 props->drive_serial = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "drive-connection-interface") == 0)
+                props->drive_connection_interface = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "drive-connection-speed") == 0)
+                props->drive_connection_speed = g_value_get_uint64 (value);
+        else if (strcmp (key, "drive-media") == 0)
+                props->drive_media = g_strdupv (g_value_get_boxed (value));
 
         else
                 handled = FALSE;
@@ -280,6 +289,8 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_vendor);
         g_free (props->drive_revision);
         g_free (props->drive_serial);
+        g_free (props->drive_connection_interface);
+        g_strfreev (props->drive_media);
         g_free (props);
 }
 
@@ -717,6 +728,26 @@ gdu_device_drive_get_serial (GduDevice *device)
 {
         return device->priv->props->drive_serial;
 }
+
+const char *
+gdu_device_drive_get_connection_interface (GduDevice *device)
+{
+        return device->priv->props->drive_connection_interface;
+}
+
+guint64
+gdu_device_drive_get_connection_speed (GduDevice *device)
+{
+        return device->priv->props->drive_connection_speed;
+}
+
+char **
+gdu_device_drive_get_media (GduDevice *device)
+{
+        return device->priv->props->drive_media;
+}
+
+
 
 gboolean
 gdu_device_job_in_progress (GduDevice *device)

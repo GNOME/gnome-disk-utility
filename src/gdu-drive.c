@@ -163,8 +163,81 @@ gdu_drive_get_name (GduPresentable *presentable)
 static char *
 gdu_drive_get_icon_name (GduPresentable *presentable)
 {
-        //GduDrive *drive = GDU_DRIVE (presentable);
-        return g_strdup ("drive-harddisk");
+        int n;
+        GduDrive *drive = GDU_DRIVE (presentable);
+        const char *name;
+        const char *connection_interface;
+        char **drive_media;
+        gboolean is_removable;
+
+        connection_interface = gdu_device_drive_get_connection_interface (drive->priv->device);
+        is_removable = gdu_device_is_removable (drive->priv->device);
+        drive_media = gdu_device_drive_get_media (drive->priv->device);
+
+        name = NULL;
+
+        /* first try the media */
+        if (drive_media != NULL) {
+                for (n = 0; drive_media[n] != NULL && name == NULL; n++) {
+                        const char *media = (const char *) drive_media[n];
+
+                        if (strcmp (media, "flash_cf") == 0) {
+                                name = "drive-removable-media-flash-cf";
+                        } else if (strcmp (media, "flash_ms") == 0) {
+                                name = "drive-removable-media-flash-ms";
+                        } else if (strcmp (media, "flash_sm") == 0) {
+                                name = "drive-removable-media-flash-sm";
+                        } else if (strcmp (media, "flash_sd") == 0) {
+                                name = "drive-removable-media-flash-sd";
+                        } else if (strcmp (media, "flash_sdhc") == 0) {
+                                /* TODO: get icon name for sdhc */
+                                name = "drive-removable-media-flash-sd";
+                        } else if (strcmp (media, "flash_mmc") == 0) {
+                                /* TODO: get icon for mmc */
+                                name = "drive-removable-media-flash-sd";
+                        } else if (g_str_has_prefix (media, "flash")) {
+                                name = "drive-removable-media-flash";
+                        } else if (g_str_has_prefix (media, "optical")) {
+                                /* TODO: handle rest of optical-* */
+                                name = "drive-optical";
+                        }
+                }
+        }
+
+        /* else fall back to connection interface */
+        if (name == NULL && connection_interface != NULL) {
+                if (g_str_has_prefix (connection_interface, "ata")) {
+                        if (is_removable)
+                                name = "drive-removable-media-ata";
+                        else
+                                name = "drive-harddisk-ata";
+                } else if (g_str_has_prefix (connection_interface, "scsi")) {
+                        if (is_removable)
+                                name = "drive-removable-media-scsi";
+                        else
+                                name = "drive-harddisk-scsi";
+                } else if (strcmp (connection_interface, "usb") == 0) {
+                        if (is_removable)
+                                name = "drive-removable-media-usb";
+                        else
+                                name = "drive-harddisk-usb";
+                } else if (strcmp (connection_interface, "firewire") == 0) {
+                        if (is_removable)
+                                name = "drive-removable-media-ieee1394";
+                        else
+                                name = "drive-harddisk-ieee1394";
+                }
+        }
+
+        /* ultimate fallback */
+        if (name == NULL) {
+                if (is_removable)
+                        name = "drive-removable-media";
+                else
+                        name = "drive-harddisk";
+        }
+
+        return g_strdup (name);
 }
 
 static guint64
@@ -186,6 +259,11 @@ gdu_drive_get_info (GduPresentable *presentable)
         GduDrive *drive = GDU_DRIVE (presentable);
         GduDevice *device = drive->priv->device;
         GList *kv_pairs = NULL;
+        char **drive_media;
+        GString *s;
+        int n;
+
+        drive_media = gdu_device_drive_get_media (drive->priv->device);
 
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Vendor")));
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_vendor (device)));
@@ -199,7 +277,9 @@ gdu_drive_get_info (GduPresentable *presentable)
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_device_file (device)));
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Connection")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-"))); /* TODO */
+	kv_pairs = g_list_prepend (kv_pairs, gdu_util_get_connection_for_display (
+                                           gdu_device_drive_get_connection_interface (device),
+                                           gdu_device_drive_get_connection_speed (device)));
 
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Removable Media")));
 	if (gdu_device_is_removable (device)) {
@@ -211,8 +291,42 @@ gdu_drive_get_info (GduPresentable *presentable)
 	} else {
 	        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("No")));
 	}
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Media Type")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Disk"))); /* TODO */
+
+	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Media Compatibility")));
+        s = g_string_new (NULL);
+        if (drive_media != NULL) {
+                for (n = 0; drive_media[n] != NULL; n++) {
+                        const char *media = (const char *) drive_media[n];
+
+                        if (s->len > 0) {
+                                /* Translator: the separator for media types */
+                                g_string_append (s, _(", "));
+                        }
+
+                        if (strcmp (media, "flash_cf") == 0) {
+                                g_string_append (s, _("Compact Flash"));
+                        } else if (strcmp (media, "flash_ms") == 0) {
+                                g_string_append (s, _("Memory Stick"));
+                        } else if (strcmp (media, "flash_sm") == 0) {
+                                g_string_append (s, _("Smart Media"));
+                        } else if (strcmp (media, "flash_sd") == 0) {
+                                g_string_append (s, _("SD Card"));
+                        } else if (strcmp (media, "flash_sdhc") == 0) {
+                                g_string_append (s, _("SDHC Card"));
+                        } else if (strcmp (media, "flash_mmc") == 0) {
+                                g_string_append (s, _("MMC"));
+                        } else if (g_str_has_prefix (media, "flash")) {
+                                g_string_append (s, _("Flash"));
+                        } else if (g_str_has_prefix (media, "optical")) {
+                                /* TODO: handle rest of optical-* */
+                                g_string_append (s, _("CD-ROM"));
+                        }
+                }
+        }
+        if (s->len == 0)
+                g_string_append (s, _("Disk"));
+        kv_pairs = g_list_prepend (kv_pairs, g_string_free (s, FALSE));
+
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Capacity")));
 	if (gdu_device_is_media_available (device)) {
 	        kv_pairs = g_list_prepend (kv_pairs,

@@ -1617,3 +1617,65 @@ out:
         return ret;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+char *
+gdu_util_get_speed_for_display (guint64 speed)
+{
+        char *str;
+        gdouble displayed_speed;
+
+        if (speed < 1000 * 1000) {
+                displayed_speed = (double) speed / 1000.0;
+                str = g_strdup_printf (_("%.1f kbit/s"), displayed_speed);
+        } else if (speed < 1000 * 1000 * 1000) {
+                displayed_speed = (double) speed / 1000.0 / 1000.0;
+                str = g_strdup_printf (_("%.1f Mbit/s"), displayed_speed);
+        } else {
+                displayed_speed = (double) speed / 1000.0 / 1000.0 / 1000.0;
+                str = g_strdup_printf (_("%.1f Gbit/s"), displayed_speed);
+        }
+
+        return str;
+}
+
+char *
+gdu_util_get_connection_for_display (const char *connection_interface, guint64 connection_speed)
+{
+        const char *name;
+        char *result;
+
+        name = NULL;
+        if (connection_interface != NULL) {
+                if (strcmp (connection_interface, "ata_serial") == 0) {
+                        name = _("SATA");
+                } else if (strcmp (connection_interface, "ata_serial_esata") == 0) {
+                        name = _("eSATA");
+                } else if (strcmp (connection_interface, "ata_parallel") == 0) {
+                        name = _("PATA");
+                } else if (g_str_has_prefix (connection_interface, "ata")) {
+                        name = _("ATA");
+                } else if (g_str_has_prefix (connection_interface, "scsi")) {
+                        name = _("SCSI");
+                } else if (strcmp (connection_interface, "usb") == 0) {
+                        name = _("USB");
+                } else if (strcmp (connection_interface, "firewire") == 0) {
+                        name = _("Firewire");
+                }
+        }
+
+        if (name == NULL)
+                name = _("Unknown");
+
+        if (connection_speed > 0) {
+                char *speed;
+
+                speed = gdu_util_get_speed_for_display (connection_speed);
+                result = g_strdup_printf ("%s @ %s", name, speed);
+                g_free (speed);
+        } else {
+                result = g_strdup (name);
+        }
+
+        return result;
+}

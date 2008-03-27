@@ -117,6 +117,7 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
         GtkTreeStore *store;
         GtkTreeIter iter;
         GdkPixbuf *pixbuf;
+        GduDevice *device;
 
         store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
 
@@ -125,13 +126,32 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
 
                 name = gdu_presentable_get_name (presentable);
                 icon_name = gdu_presentable_get_icon_name (presentable);
+                device = gdu_presentable_get_device (presentable);
+
                 pixbuf = NULL;
                 if (icon_name != NULL) {
+                        int icon_width, icon_height;
+
+                        if (!gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &icon_width, &icon_height))
+                                icon_height = 12;
+
                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                            icon_name,
-                                                           24,
-                                                           0,
+                                                           icon_height,
+                                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                            NULL);
+
+                        /* if it's unallocated space, make the icon greyscale */
+                        if (device == NULL) {
+                                GdkPixbuf *pixbuf2;
+                                pixbuf2 = pixbuf;
+                                pixbuf = gdk_pixbuf_copy (pixbuf);
+                                g_object_unref (pixbuf2);
+                                gdk_pixbuf_saturate_and_pixelate (pixbuf,
+                                                                  pixbuf,
+                                                                  0.0,
+                                                                  FALSE);
+                        }
                 }
 
                 gtk_tree_store_set (store,
@@ -144,6 +164,8 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
                 g_free (icon_name);
                 if (pixbuf != NULL)
                         g_object_unref (pixbuf);
+                if (device != NULL)
+                        g_object_unref (device);
         }
 }
 
@@ -184,23 +206,40 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                 g_object_unref (enclosing_presentable);
         }
 
-        /* compute the name */
-        name = gdu_presentable_get_name (presentable);
-        icon_name = gdu_presentable_get_icon_name (presentable);
-        pixbuf = NULL;
-        if (icon_name != NULL) {
-                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                   icon_name,
-                                                   24,
-                                                   0,
-                                                   NULL);
-        }
-
         device = gdu_presentable_get_device (presentable);
         if (device != NULL)
                 object_path = gdu_device_get_object_path (device);
         else
                 object_path = "";
+
+        /* compute the name */
+        name = gdu_presentable_get_name (presentable);
+        icon_name = gdu_presentable_get_icon_name (presentable);
+        pixbuf = NULL;
+        if (icon_name != NULL) {
+                int icon_width, icon_height;
+
+                if (!gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &icon_width, &icon_height))
+                        icon_height = 12;
+
+                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                   icon_name,
+                                                   icon_height,
+                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                                   NULL);
+
+                /* if it's unallocated space, make the icon greyscale */
+                if (device == NULL) {
+                        GdkPixbuf *pixbuf2;
+                        pixbuf2 = pixbuf;
+                        pixbuf = gdk_pixbuf_copy (pixbuf);
+                        g_object_unref (pixbuf2);
+                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
+                                                          pixbuf,
+                                                          0.0,
+                                                          FALSE);
+                }
+        }
 
         /* sort by offset so we get partitions in the right order */
         sortname = g_strdup_printf ("%016lld_%s", gdu_presentable_get_offset (presentable), object_path);
@@ -307,8 +346,11 @@ gdu_tree_new (GduPool *pool)
         }
         g_list_free (presentables);
 
+        gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree_view), FALSE);
+        gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (tree_view), 16);
+
         /* expand all rows after the treeview widget has been realized */
-        g_signal_connect (tree_view, "realize", G_CALLBACK (gtk_tree_view_expand_all), NULL);
+        //g_signal_connect (tree_view, "realize", G_CALLBACK (gtk_tree_view_expand_all), NULL);
 
         /* add / remove rows when hal reports presentable add / remove */
         g_signal_connect (pool, "presentable_added", (GCallback) device_tree_presentable_added, tree_view);

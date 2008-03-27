@@ -120,8 +120,86 @@ gdu_volume_hole_get_name (GduPresentable *presentable)
 static char *
 gdu_volume_hole_get_icon_name (GduPresentable *presentable)
 {
-        //GduVolumeHole *volume_hole = GDU_VOLUME_HOLE (presentable);
-        return g_strdup ("drive-harddisk");
+        GduPresentable *p;
+        GduDevice *d;
+        const char *connection_interface;
+        const char *name;
+        char **drive_media;
+        int n;
+
+        p = NULL;
+        d = NULL;
+        name = NULL;
+
+        p = gdu_util_find_toplevel_presentable (presentable);
+        if (p == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (p);
+        if (d == NULL)
+                goto out;
+
+        if (!gdu_device_is_drive (d))
+                goto out;
+
+        connection_interface = gdu_device_drive_get_connection_interface (d);
+        if (connection_interface == NULL)
+                goto out;
+
+        drive_media = gdu_device_drive_get_media (d);
+
+        /* first try the media */
+        if (drive_media != NULL) {
+                for (n = 0; drive_media[n] != NULL && name == NULL; n++) {
+                        const char *media = (const char *) drive_media[n];
+
+                        if (strcmp (media, "flash_cf") == 0) {
+                                name = "media-flash-cf";
+                        } else if (strcmp (media, "flash_ms") == 0) {
+                                name = "media-flash-ms";
+                        } else if (strcmp (media, "flash_sm") == 0) {
+                                name = "media-flash-sm";
+                        } else if (strcmp (media, "flash_sd") == 0) {
+                                name = "media-flash-sd";
+                        } else if (strcmp (media, "flash_sdhc") == 0) {
+                                /* TODO: get icon name for sdhc */
+                                name = "media-flash-sd";
+                        } else if (strcmp (media, "flash_mmc") == 0) {
+                                /* TODO: get icon for mmc */
+                                name = "media-flash-sd";
+                        } else if (g_str_has_prefix (media, "flash")) {
+                                name = "media-flash";
+                        } else if (g_str_has_prefix (media, "optical")) {
+                                /* TODO: handle rest of optical-* */
+                                name = "media-optical";
+                        }
+                }
+        }
+
+        /* else fall back to connection interface */
+        if (name == NULL && connection_interface != NULL) {
+                if (g_str_has_prefix (connection_interface, "ata")) {
+                        name = "drive-harddisk-ata";
+                } else if (g_str_has_prefix (connection_interface, "scsi")) {
+                        name = "drive-harddisk-scsi";
+                } else if (strcmp (connection_interface, "usb") == 0) {
+                        name = "drive-harddisk-usb";
+                } else if (strcmp (connection_interface, "firewire") == 0) {
+                        name = "drive-harddisk-ieee1394";
+                }
+        }
+
+out:
+        if (p != NULL)
+                g_object_unref (p);
+        if (d != NULL)
+                g_object_unref (d);
+
+        /* ultimate fallback */
+        if (name == NULL)
+                name = "drive-harddisk";
+
+        return g_strdup (name);
 }
 
 static guint64

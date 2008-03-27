@@ -144,8 +144,11 @@ gdu_volume_get_name (GduPresentable *presentable)
         char *strsize;
         guint64 size;
 
+        result = NULL;
+
         label = gdu_device_id_get_label (volume->priv->device);
         size = gdu_device_get_size (volume->priv->device);
+        strsize = gdu_util_get_size_for_display (size, FALSE);
 
         /* see comment in gdu_pool_add_device_by_object_path() for how to avoid hardcoding 0x05 etc. types */
         is_extended_partition = FALSE;
@@ -160,21 +163,41 @@ gdu_volume_get_name (GduPresentable *presentable)
         usage = gdu_device_id_get_usage (volume->priv->device);
 
         if (is_extended_partition) {
-                size = gdu_device_partition_get_size (volume->priv->device);
-                strsize = gdu_util_get_size_for_display (size, FALSE);
                 result = g_strdup_printf (_("%s Extended"), strsize);
-                g_free (strsize);
         } else if (label != NULL && strlen (label) > 0) {
                 result = g_strdup (label);
-        } else if (usage != NULL && strcmp (usage, "crypto") == 0) {
-                strsize = gdu_util_get_size_for_display (size, FALSE);
-                result = g_strdup_printf (_("%s Encrypted"), strsize);
-                g_free (strsize);
+        } else if (usage != NULL) {
+                if (strcmp (usage, "crypto") == 0) {
+                        result = g_strdup_printf (_("%s Encrypted"), strsize);
+                } else if (strcmp (usage, "filesystem") == 0) {
+                        char *fsname;
+                        fsname = gdu_util_get_fstype_for_display (gdu_device_id_get_type (volume->priv->device),
+                                                                  gdu_device_id_get_version (volume->priv->device),
+                                                                  FALSE);
+                        result = g_strdup_printf (_("%s %s"), strsize, fsname);
+                        g_free (fsname);
+                } else if (strcmp (usage, "partitiontable") == 0) {
+                        result = g_strdup_printf (_("%s Partition Table"), strsize);
+                } else if (strcmp (usage, "raid") == 0) {
+                        /* TODO: zero in on whether it's RAID or LVM */
+                        result = g_strdup_printf (_("%s RAID/LVM Component"), strsize);
+                } else if (strcmp (usage, "other") == 0) {
+                        result = g_strdup_printf (_("%s Data"), strsize);
+                } else if (strcmp (usage, "") == 0) {
+                        result = g_strdup_printf (_("%s Unrecognized"), strsize);
+                }
         } else {
-                strsize = gdu_util_get_size_for_display (size, FALSE);
-                result = g_strdup_printf (_("%s Partition"), strsize);
-                g_free (strsize);
+                if (gdu_device_is_partition (volume->priv->device)) {
+                        result = g_strdup_printf (_("%s Partition"), strsize);
+                } else {
+                        result = g_strdup_printf (_("%s Partition"), strsize);
+                }
         }
+
+        if (result == NULL)
+                result = g_strdup_printf (_("%s Unrecognized"), strsize);
+
+        g_free (strsize);
 
         return result;
 }
@@ -339,7 +362,7 @@ gdu_volume_get_info (GduPresentable *presentable)
                 } else if (strcmp (usage, "crypto") == 0) {
                         name = g_strdup (_("Encrypted Block Device"));
                 } else if (strcmp (usage, "raid") == 0) {
-                        name = g_strdup (_("Assembled Block Device"));
+                        name = g_strdup (_("RAID/LVM Component"));
                 } else {
                         if (strlen (usage) > 0)
                                 name = g_strdup_printf (_("Unknown (%s)"), usage);
@@ -370,6 +393,20 @@ gdu_volume_get_pool (GduPresentable *presentable)
         return gdu_device_get_pool (volume->priv->device);
 }
 
+
+static gboolean
+gdu_volume_is_allocated (GduPresentable *presentable)
+{
+        return TRUE;
+}
+
+static gboolean
+gdu_volume_is_recognized (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        return strlen (gdu_device_id_get_usage (volume->priv->device)) > 0;
+}
+
 static void
 gdu_volume_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -381,4 +418,6 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_size = gdu_volume_get_size;
         iface->get_info = gdu_volume_get_info;
         iface->get_pool = gdu_volume_get_pool;
+        iface->is_allocated = gdu_volume_is_allocated;
+        iface->is_recognized = gdu_volume_is_recognized;
 }

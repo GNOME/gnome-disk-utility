@@ -53,7 +53,9 @@ struct _GduPoolPrivate
         GHashTable *devices;     /* object path -> GduDevice* */
         GHashTable *volumes;     /* object path -> GduVolume* */
         GHashTable *drives;      /* object path -> GduDrive* */
-        GHashTable *drive_holes; /* object path -> GList of GduVolumeHole* */
+
+        GHashTable *drive_holes;         /* object path -> GList of GduVolumeHole* */
+        GHashTable *drive_unrecognized;  /* object path -> GduVolume* */
 
         GList *presentables;
 };
@@ -106,6 +108,7 @@ gdu_pool_finalize (GduPool *pool)
         g_hash_table_unref (pool->priv->volumes);
         g_hash_table_unref (pool->priv->drives);
         g_hash_table_unref (pool->priv->drive_holes);
+        g_hash_table_unref (pool->priv->drive_unrecognized);
 
         g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
         g_list_free (pool->priv->presentables);
@@ -365,6 +368,54 @@ update_holes (GduPool *pool, const char *drive_object_path)
                 g_object_unref (drive_device);
 }
 
+static void
+update_whole_disk (GduPool *pool, GduDrive *drive, GduDevice *device, const char *object_path)
+{
+        const char *usage;
+
+        usage = gdu_device_id_get_usage (device);
+
+        /* for whole disk devices we may need to remove volumes if
+         *  - media is unavailable; or
+         *  - if the media is now partitioned
+         */
+        if (!gdu_device_is_media_available (device) ||
+            gdu_device_is_partition_table (device)) {
+                GduVolume *volume;
+
+                /* remove volumes we may have */
+                volume = g_hash_table_lookup (pool->priv->volumes, object_path);
+                if (volume != NULL) {
+                        g_hash_table_remove (pool->priv->volumes, object_path);
+                        pool->priv->presentables = g_list_remove (pool->priv->presentables,
+                                                                  GDU_PRESENTABLE (volume));
+                        g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, GDU_PRESENTABLE (volume));
+                        g_object_unref (GDU_PRESENTABLE (volume));
+                }
+        }
+
+        /* conversely, we need to add a volume (unless it's added already) if
+         *  - media is available; and
+         *  - it's not partitioned; and
+         */
+        if (gdu_device_is_media_available (device) &&
+            !gdu_device_is_partition_table (device)) {
+                GduVolume *volume;
+
+                /* add volume for whole disk device if it's not there already */
+                volume = g_hash_table_lookup (pool->priv->volumes, object_path);
+                if (volume == NULL) {
+                        volume = gdu_volume_new_from_device (device, GDU_PRESENTABLE (drive));
+                        g_hash_table_insert (pool->priv->volumes,
+                                             g_strdup (object_path),
+                                             g_object_ref (volume));
+                        pool->priv->presentables = g_list_prepend (pool->priv->presentables,
+                                                                   GDU_PRESENTABLE (volume));
+                        g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
+                }
+        }
+}
+
 static GduDevice *
 gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
 {
@@ -398,6 +449,10 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                            0,
                                            gdu_device_get_size (device));
                         } else {
+
+                                /* it's a whole disk device */
+                                update_whole_disk (pool, drive, device, object_path);
+#if 0
                                 const char *usage;
                                 GduVolume *volume;
 
@@ -414,6 +469,7 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                                                                    GDU_PRESENTABLE (volume));
                                         g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
                                 }
+#endif
                         }
                 }
 
@@ -581,7 +637,6 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         GduDevice *device;
 
         if ((device = gdu_pool_get_by_object_path (pool, object_path)) != NULL) {
-                const char *usage;
                 GduDrive *drive;
 
                 gdu_device_changed (device);
@@ -590,54 +645,9 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
                 if (drive != NULL)
                         update_holes (pool, object_path);
 
-                usage = gdu_device_id_get_usage (device);
-
-                /* for whole disk devices we may need to remove volumes if
-                 *  - media is unavailable; or
-                 *  - if the media is now partitioned; or
-                 *  - if id_usage is no longer non-empty
-                 */
-                if (drive != NULL && (
-                            !gdu_device_is_media_available (device) ||
-                            gdu_device_is_partition_table (device) ||
-                            (usage == NULL || strlen (usage) == 0))) {
-                        GduVolume *volume;
-
-                        /* remove volumes we may have */
-                        volume = g_hash_table_lookup (pool->priv->volumes, object_path);
-                        if (volume != NULL) {
-                                g_hash_table_remove (pool->priv->volumes, object_path);
-                                pool->priv->presentables = g_list_remove (pool->priv->presentables,
-                                                                          GDU_PRESENTABLE (volume));
-                                g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, GDU_PRESENTABLE (volume));
-                                g_object_unref (GDU_PRESENTABLE (volume));
-                        }
+                if (drive != NULL) {
+                        update_whole_disk (pool, drive, device, object_path);
                 }
-
-                /* conversely, we need to add a volume (unless it's added already) if
-                 *  - media is available; and
-                 *  - it's not partitioned; and
-                 *  - id_usage is non-empty
-                 */
-                if (drive != NULL && (
-                            gdu_device_is_media_available (device) &&
-                            !gdu_device_is_partition_table (device) &&
-                            (usage != NULL && strlen (usage) >= 0))) {
-                        GduVolume *volume;
-
-                        /* add volume for whole disk device if it's not there already */
-                        volume = g_hash_table_lookup (pool->priv->volumes, object_path);
-                        if (volume == NULL) {
-                                        volume = gdu_volume_new_from_device (device, GDU_PRESENTABLE (drive));
-                                        g_hash_table_insert (pool->priv->volumes,
-                                                             g_strdup (object_path),
-                                                             g_object_ref (volume));
-                                        pool->priv->presentables = g_list_prepend (pool->priv->presentables,
-                                                                                   GDU_PRESENTABLE (volume));
-                                        g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
-                        }
-                }
-
 
         } else {
                 g_warning ("unknown device to on change, object_path='%s'", object_path);
@@ -707,6 +717,7 @@ gdu_pool_new (void)
         pool->priv->volumes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->drive_holes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, free_list_of_holes);
+        pool->priv->drive_unrecognized = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 
         dbus_g_object_register_marshaller (
                 gdu_marshal_VOID__STRING_BOOLEAN_STRING_BOOLEAN_INT_INT_STRING_DOUBLE,

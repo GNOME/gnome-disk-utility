@@ -196,3 +196,27 @@ gdu_presentable_get_pool (GduPresentable *presentable)
 
   return (* iface->get_pool) (presentable);
 }
+
+gboolean
+gdu_presentable_is_allocated (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), FALSE);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->is_allocated) (presentable);
+}
+
+gboolean
+gdu_presentable_is_recognized (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), FALSE);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->is_recognized) (presentable);
+}

@@ -237,6 +237,18 @@ gdu_volume_hole_get_pool (GduPresentable *presentable)
         return g_object_ref (volume_hole->priv->pool);
 }
 
+static gboolean
+gdu_volume_hole_is_allocated (GduPresentable *presentable)
+{
+        return FALSE;
+}
+
+static gboolean
+gdu_volume_hole_is_recognized (GduPresentable *presentable)
+{
+        return FALSE;
+}
+
 static void
 gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -248,4 +260,6 @@ gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
         iface->get_size = gdu_volume_hole_get_size;
         iface->get_info = gdu_volume_hole_get_info;
         iface->get_pool = gdu_volume_hole_get_pool;
+        iface->is_allocated = gdu_volume_hole_is_allocated;
+        iface->is_recognized = gdu_volume_hole_is_recognized;
 }

@@ -1661,6 +1661,8 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
                         name = _("USB");
                 } else if (strcmp (connection_interface, "firewire") == 0) {
                         name = _("Firewire");
+                } else if (strcmp (connection_interface, "virtual") == 0) {
+                        name = _("Virtual");
                 }
         }
 

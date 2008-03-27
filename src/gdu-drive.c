@@ -365,6 +365,19 @@ gdu_drive_get_pool (GduPresentable *presentable)
         return gdu_device_get_pool (drive->priv->device);
 }
 
+static gboolean
+gdu_drive_is_allocated (GduPresentable *presentable)
+{
+        return TRUE;
+}
+
+static gboolean
+gdu_drive_is_recognized (GduPresentable *presentable)
+{
+        /* TODO: maybe we need to return FALSE sometimes */
+        return TRUE;
+}
+
 static void
 gdu_drive_presentable_iface_init (GduPresentableIface *iface)
 {
@@ -376,4 +389,6 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_size = gdu_drive_get_size;
         iface->get_info = gdu_drive_get_info;
         iface->get_pool = gdu_drive_get_pool;
+        iface->is_allocated = gdu_drive_is_allocated;
+        iface->is_recognized = gdu_drive_is_recognized;
 }

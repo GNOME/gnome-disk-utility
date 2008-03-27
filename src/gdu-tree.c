@@ -141,8 +141,9 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
                                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                            NULL);
 
-                        /* if it's unallocated space, make the icon greyscale */
-                        if (device == NULL) {
+                        /* if it's unallocated or unrecognized space, make the icon greyscale */
+                        if (!gdu_presentable_is_allocated (presentable) ||
+                            !gdu_presentable_is_recognized (presentable)) {
                                 GdkPixbuf *pixbuf2;
                                 pixbuf2 = pixbuf;
                                 pixbuf = gdk_pixbuf_copy (pixbuf);
@@ -228,8 +229,9 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                                                    GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                    NULL);
 
-                /* if it's unallocated space, make the icon greyscale */
-                if (device == NULL) {
+                /* if it's unallocated or unrecognized space, make the icon greyscale */
+                if (!gdu_presentable_is_allocated (presentable) ||
+                    !gdu_presentable_is_recognized (presentable)) {
                         GdkPixbuf *pixbuf2;
                         pixbuf2 = pixbuf;
                         pixbuf = gdk_pixbuf_copy (pixbuf);

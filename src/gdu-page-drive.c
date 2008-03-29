@@ -371,8 +371,9 @@ gdu_page_drive_update (GduPage *_page, GduPresentable *presentable, gboolean res
 
         gtk_widget_set_sensitive (page->priv->create_part_table_vbox, !gdu_device_is_read_only (device));
 
-        if (reset_page)
+        if (reset_page) {
                 gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->create_part_table_type_combo_box), 0);
+        }
 
 out:
         if (device != NULL) {

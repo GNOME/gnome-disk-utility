@@ -522,25 +522,10 @@ gdu_page_volume_unrecognized_update (GduPage *_page, GduPresentable *presentable
         if (device == NULL)
                 goto out;
 
-        if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                if (!gdu_util_fstype_combo_box_select (page->priv->type_combo_box,
-                                                       gdu_device_id_get_type (device))) {
-                        /* if fstype of device isn't in creatable, clear selection item */
-                        gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->type_combo_box), -1);
-                        gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
-                } else {
-                        /* it was.. choose the same label */
-                        gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry),
-                                            gdu_device_id_get_label (device));
-                }
-        } else if (strlen (gdu_device_id_get_usage (device)) == 0) {
-                /* couldn't identify anything; choose first in creatable fs list */
+        if (reset_page) {
+                gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
                 gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->type_combo_box), 0);
-                gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
-        } else {
-                /* something else, not a file system, clear selection item */
-                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->type_combo_box), -1);
-                gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button), FALSE);
         }
 
         gtk_widget_set_sensitive (page->priv->main_vbox, !gdu_device_is_read_only (device));

@@ -767,14 +767,20 @@ gdu_page_volume_unallocated_update (GduPage *_page, GduPresentable *presentable,
 
         size = gdu_presentable_get_size (presentable);
 
-        gtk_range_set_range (GTK_RANGE (page->priv->size_hscale), 0, size);
-        gtk_range_set_value (GTK_RANGE (page->priv->size_hscale), size);
+        if (reset_page) {
+                gtk_range_set_range (GTK_RANGE (page->priv->size_hscale), 0, size);
+                gtk_range_set_value (GTK_RANGE (page->priv->size_hscale), size);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->secure_erase_combo_box), 0);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->fstype_combo_box), 0);
+                gtk_entry_set_text (GTK_ENTRY (page->priv->fslabel_entry), "");
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button), FALSE);
 
-        /* only allow creation of extended partitions if there currently are none */
-        if (has_extended_partition (page, toplevel_presentable)) {
-                gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, NULL);
-        } else {
-                gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, scheme);
+                /* only allow creation of extended partitions if there currently are none */
+                if (has_extended_partition (page, toplevel_presentable)) {
+                        gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, NULL);
+                } else {
+                        gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, scheme);
+                }
         }
 
 out:

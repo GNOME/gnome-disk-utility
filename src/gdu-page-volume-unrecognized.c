@@ -248,26 +248,79 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         GduDevice *device;
         CreateFilesystemData *data;
         GduPresentable *presentable;
+        GduPresentable *toplevel_presentable;
+        GduDevice *toplevel_device;
         char *secure_erase;
-        const char *primary;
-        const char *secondary;
+        char *primary;
+        char *secondary;
+        char *drive_name;
 
         data = NULL;
+        fstype = NULL;
+        fslabel = NULL;
         secure_erase = NULL;
+        primary = NULL;
+        secondary = NULL;
+        device = NULL;
+        toplevel_presentable = NULL;
+        toplevel_device = NULL;
+        drive_name = NULL;
 
         presentable = gdu_shell_get_selected_presentable (page->priv->shell);
         device = gdu_presentable_get_device (presentable);
-        g_assert (device != NULL);
+        if (device == NULL) {
+                g_warning ("%s: device is not supposed to be NULL",  __FUNCTION__);
+                goto out;
+        }
+
+        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        if (toplevel_presentable == NULL) {
+                g_warning ("%s: no toplevel presentable",  __FUNCTION__);
+        }
+        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+        if (toplevel_device == NULL) {
+                g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
+                goto out;
+        }
+
+        drive_name = gdu_presentable_get_name (toplevel_presentable);
 
         fstype = gdu_page_volume_unrecognized_get_fstype (page);
         fslabel = gdu_page_volume_unrecognized_get_fslabel (page);
         if (fslabel == NULL)
                 fslabel = g_strdup ("");
 
-        primary = _("<b><big>Are you sure you want to delete existing data on the volume?</big></b>");
-        secondary = _("All data on the volume will be irrecovably erased. "
-                      "Make sure important data is backed up. "
-                      "This action cannot be undone.");
+        primary = g_strdup (_("<b><big>Are you sure you want to create a new file system, deleting existing data?</big></b>"));
+
+        if (gdu_device_is_partition (device)) {
+                if (gdu_device_is_removable (toplevel_device)) {
+                        secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" will be "
+                                                       "irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     gdu_device_partition_get_number (device),
+                                                     drive_name);
+                } else {
+                        secondary = g_strdup_printf (_("All data on partition %d of \"%s\" will be "
+                                                       "irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     gdu_device_partition_get_number (device),
+                                                     drive_name);
+                }
+        } else {
+                if (gdu_device_is_removable (toplevel_device)) {
+                        secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     drive_name);
+                } else {
+                        secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     drive_name);
+                }
+        }
 
         secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (page->priv->shell),
                                                             "",
@@ -303,10 +356,18 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                             data);
 
 out:
-        g_object_unref (device);
+        if (device != NULL)
+                g_object_unref (device);
+        if (toplevel_presentable != NULL)
+                g_object_unref (toplevel_presentable);
+        if (toplevel_device != NULL)
+                g_object_unref (toplevel_device);
+        g_free (primary);
+        g_free (secondary);
         g_free (fstype);
         g_free (fslabel);
         g_free (secure_erase);
+        g_free (drive_name);
 }
 
 static void
@@ -482,7 +543,6 @@ gdu_page_volume_unrecognized_update (GduPage *_page, GduPresentable *presentable
                 gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
         }
 
-        g_warning ("foooo %d", gdu_device_is_read_only (device));
         gtk_widget_set_sensitive (page->priv->main_vbox, !gdu_device_is_read_only (device));
 
         ret = TRUE;

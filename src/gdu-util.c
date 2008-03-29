@@ -1741,8 +1741,6 @@ gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
         dialog = gtk_dialog_new_with_buttons (title,
                                               GTK_WINDOW (parent_window),
                                               GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
-                                              GTK_STOCK_CANCEL,
-                                              GTK_RESPONSE_CANCEL,
                                               NULL);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
@@ -1803,6 +1801,7 @@ gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
 
         row++;
 
+        gtk_widget_grab_focus (gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL));
         gtk_dialog_add_button (GTK_DIALOG (dialog), affirmative_action_button_mnemonic, 0);
 
         gtk_widget_show_all (dialog);

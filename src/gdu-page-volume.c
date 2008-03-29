@@ -172,11 +172,19 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
 {
         GduPageVolume *page = GDU_PAGE_VOLUME (user_data);
         GduDevice *device;
-        const char *primary;
-        const char *secondary;
+        char *primary;
+        char *secondary;
         char *secure_erase;
+        GduPresentable *toplevel_presentable;
+        GduDevice *toplevel_device;
+        char *drive_name;
 
         secure_erase = NULL;
+        primary = NULL;
+        secondary = NULL;
+        toplevel_presentable = NULL;
+        toplevel_device = NULL;
+        drive_name = NULL;
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         if (device == NULL) {
@@ -184,10 +192,36 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        primary = _("<b><big>Are you sure you want to delete the partition?</big></b>");
-        secondary = _("All data on the partition will be irrecovably erased. "
-                      "Make sure important data is backed up. "
-                      "This action cannot be undone.");
+        toplevel_presentable = gdu_util_find_toplevel_presentable (
+                gdu_shell_get_selected_presentable (page->priv->shell));
+        if (toplevel_presentable == NULL) {
+                g_warning ("%s: no toplevel presentable",  __FUNCTION__);
+        }
+        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+        if (toplevel_device == NULL) {
+                g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
+                goto out;
+        }
+
+        drive_name = gdu_presentable_get_name (toplevel_presentable);
+
+        primary = g_strdup (_("<b><big>Are you sure you want to remove the partition, deleting existing data?</big></b>"));
+
+        if (gdu_device_is_removable (toplevel_device)) {
+                secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" will be "
+                                               "irrecovably erased. "
+                                               "Make sure important data is backed up. "
+                                               "This action cannot be undone."),
+                                             gdu_device_partition_get_number (device),
+                                             drive_name);
+        } else {
+                secondary = g_strdup_printf (_("All data on partition %d of \"%s\" will be "
+                                               "irrecovably erased. "
+                                               "Make sure important data is backed up. "
+                                               "This action cannot be undone."),
+                                             gdu_device_partition_get_number (device),
+                                             drive_name);
+        }
 
         secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (page->priv->shell),
                                                             "",
@@ -205,8 +239,16 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
          */
 
 out:
+        if (device != NULL)
+                g_object_unref (device);
+        if (toplevel_presentable != NULL)
+                g_object_unref (toplevel_presentable);
+        if (toplevel_device != NULL)
+                g_object_unref (toplevel_device);
+        g_free (primary);
+        g_free (secondary);
         g_free (secure_erase);
-        g_object_unref (device);
+        g_free (drive_name);
 }
 
 static gboolean

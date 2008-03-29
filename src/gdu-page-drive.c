@@ -147,11 +147,15 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
         GduDevice *device;
         char *secure_erase;
         char *scheme;
-        const char *primary;
-        const char *secondary;
+        char *primary;
+        char *secondary;
+        char *drive_name;
 
         scheme = NULL;
         secure_erase = NULL;
+        primary = NULL;
+        secondary = NULL;
+        drive_name = NULL;
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         if (device == NULL) {
@@ -159,10 +163,21 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        primary = _("<b><big>Are you sure you want to delete existing data on the disk?</big></b>");
-        secondary = _("All data on the disk will be irrecovably erased. "
-                      "Make sure important data is backed up. "
-                      "This action cannot be undone.");
+        drive_name = gdu_presentable_get_name (gdu_shell_get_selected_presentable (page->priv->shell));
+
+        primary = g_strdup (_("<b><big>Are you sure you want to format the disk, deleting existing data?</big></b>"));
+
+        if (gdu_device_is_removable (device)) {
+                secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrecovably erased. "
+                                               "Make sure important data is backed up. "
+                                               "This action cannot be undone."),
+                                             drive_name);
+        } else {
+                secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrecovably erased. "
+                                               "Make sure important data is backed up. "
+                                               "This action cannot be undone."),
+                                             drive_name);
+        }
 
         secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (page->priv->shell),
                                                             "",
@@ -180,10 +195,13 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
         gdu_device_op_create_partition_table (device, scheme, secure_erase);
 
 out:
-        g_free (scheme);
-        g_free (secure_erase);
         if (device != NULL)
                 g_object_unref (device);
+        g_free (scheme);
+        g_free (secure_erase);
+        g_free (primary);
+        g_free (secondary);
+        g_free (drive_name);
 }
 
 static void

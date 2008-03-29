@@ -23,12 +23,11 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-util.h			gdu-util.c			\
 	gdu-shell.h			gdu-shell.c			\
 	gdu-page.h			gdu-page.c			\
-	gdu-page-erase.h		gdu-page-erase.c		\
-	gdu-page-summary.h		gdu-page-summary.c		\
-	gdu-page-partition-create.h	gdu-page-partition-create.c	\
-	gdu-page-partition-modify.h	gdu-page-partition-modify.c	\
-	gdu-page-partition-table.h	gdu-page-partition-table.c	\
-	gdu-page-encrypted.h		gdu-page-encrypted.c		\
+	gdu-page-drive.h		gdu-page-drive.c		\
+	gdu-page-volume.h		gdu-page-volume.c		\
+	gdu-page-volume-unallocated.h	gdu-page-volume-unallocated.c	\
+	gdu-page-volume-unrecognized.h	gdu-page-volume-unrecognized.c	\
+	gdu-page-job.h			gdu-page-job.c			\
 	gdu-disk-widget.h		gdu-disk-widget.c		\
 	gdu-tree.h			gdu-tree.c			\
 	gdu-pool.c			gdu-pool.h			\

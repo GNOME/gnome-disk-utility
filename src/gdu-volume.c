@@ -147,7 +147,10 @@ gdu_volume_get_name (GduPresentable *presentable)
         result = NULL;
 
         label = gdu_device_id_get_label (volume->priv->device);
-        size = gdu_device_get_size (volume->priv->device);
+        if (gdu_device_is_partition (volume->priv->device))
+                size = gdu_device_partition_get_size (volume->priv->device);
+        else
+                size = gdu_device_get_size (volume->priv->device);
         strsize = gdu_util_get_size_for_display (size, FALSE);
 
         /* see comment in gdu_pool_add_device_by_object_path() for how to avoid hardcoding 0x05 etc. types */
@@ -174,13 +177,13 @@ gdu_volume_get_name (GduPresentable *presentable)
                         fsname = gdu_util_get_fstype_for_display (gdu_device_id_get_type (volume->priv->device),
                                                                   gdu_device_id_get_version (volume->priv->device),
                                                                   FALSE);
-                        result = g_strdup_printf (_("%s %s"), strsize, fsname);
+                        result = g_strdup_printf (_("%s %s File System"), strsize, fsname);
                         g_free (fsname);
                 } else if (strcmp (usage, "partitiontable") == 0) {
                         result = g_strdup_printf (_("%s Partition Table"), strsize);
                 } else if (strcmp (usage, "raid") == 0) {
                         /* TODO: zero in on whether it's RAID or LVM */
-                        result = g_strdup_printf (_("%s RAID/LVM Component"), strsize);
+                        result = g_strdup_printf (_("%s RAID Component"), strsize);
                 } else if (strcmp (usage, "other") == 0) {
                         result = g_strdup_printf (_("%s Data"), strsize);
                 } else if (strcmp (usage, "") == 0) {
@@ -404,7 +407,21 @@ static gboolean
 gdu_volume_is_recognized (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
-        return strlen (gdu_device_id_get_usage (volume->priv->device)) > 0;
+        gboolean is_extended_partition;
+
+        is_extended_partition = FALSE;
+        if (gdu_device_is_partition (volume->priv->device) &&
+            strcmp (gdu_device_partition_get_scheme (volume->priv->device), "mbr") == 0) {
+                int type;
+                type = strtol (gdu_device_partition_get_type (volume->priv->device), NULL, 0);
+                if (type == 0x05 || type == 0x0f || type == 0x85)
+                        is_extended_partition = TRUE;
+        }
+
+        if (is_extended_partition)
+                return TRUE;
+        else
+                return strlen (gdu_device_id_get_usage (volume->priv->device)) > 0;
 }
 
 static void

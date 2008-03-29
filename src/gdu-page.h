@@ -39,15 +39,18 @@ struct _GduPageIface
         GTypeInterface g_iface;
 
         /* virtual table */
-        GtkWidget *      (*get_widget)   (GduPage *page);
-        char *           (*get_name)     (GduPage *page);
-        gboolean         (*update)       (GduPage *page, GduPresentable *presentable);
+        GtkWidget *      (*get_widget)   (GduPage        *page);
+        gboolean         (*update)       (GduPage        *page,
+                                          GduPresentable *presentable,
+                                          gboolean        reset_page);
 };
 
 GType           gdu_page_get_type      (void) G_GNUC_CONST;
 
-GtkWidget      *gdu_page_get_widget    (GduPage *page);
-char           *gdu_page_get_name      (GduPage *page);
-gboolean        gdu_page_update        (GduPage *page, GduPresentable *presentable);
+GtkWidget      *gdu_page_get_widget    (GduPage        *page);
+gboolean        gdu_page_update        (GduPage        *page,
+                                        GduPresentable *presentable,
+                                        gboolean        reset_page);
+
 
 #endif /* GDU_PAGE_H */

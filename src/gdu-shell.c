@@ -34,16 +34,16 @@
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-tree.h"
-#include "gdu-volume.h"
 #include "gdu-drive.h"
+#include "gdu-volume.h"
+#include "gdu-volume-hole.h"
 
 #include "gdu-page.h"
-#include "gdu-page-erase.h"
-#include "gdu-page-encrypted.h"
-#include "gdu-page-summary.h"
-#include "gdu-page-partition-create.h"
-#include "gdu-page-partition-modify.h"
-#include "gdu-page-partition-table.h"
+#include "gdu-page-drive.h"
+#include "gdu-page-volume.h"
+#include "gdu-page-volume-unallocated.h"
+#include "gdu-page-volume-unrecognized.h"
+#include "gdu-page-job.h"
 
 struct _GduShellPrivate
 {
@@ -51,9 +51,6 @@ struct _GduShellPrivate
         GduPool *pool;
 
         GtkWidget *treeview;
-
-        /* the summary page is special; it's always shown */
-        GduPage *page_summary;
 
         /* an ordered list of GduPage objects (as they will appear in the UI) */
         GList *pages;
@@ -74,13 +71,18 @@ struct _GduShellPrivate
 
         GtkWidget *notebook;
 
-        GList *table_labels;
-
+        GtkWidget *icon_image;
+        GtkWidget *name_label;
+        GtkWidget *details1_label;
+        GtkWidget *details2_label;
+        GtkWidget *details3_label;
 };
 
 static GObjectClass *parent_class = NULL;
 
 G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
+
+static void show_page (GduShell *shell, GType page_type);
 
 static void
 gdu_shell_finalize (GduShell *shell)
@@ -136,6 +138,244 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+details_update (GduShell *shell)
+{
+        GduPresentable *presentable;
+        gboolean ret;
+        char *details1;
+        char *details2;
+        char *details3;
+        char *s;
+        char *s2;
+        char *s3;
+        char *name;
+        char *icon_name;
+        GdkPixbuf *pixbuf;
+        GduDevice *device;
+        const char *usage;
+        const char *device_file;
+        char *strsize;
+        GduPresentable *toplevel_presentable;
+        GduDevice *toplevel_device;
+
+        ret = TRUE;
+
+        presentable = shell->priv->presentable_now_showing;
+
+        device = gdu_presentable_get_device (presentable);
+
+        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        if (toplevel_presentable != NULL)
+                toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+
+        icon_name = gdu_presentable_get_icon_name (presentable);
+        name = gdu_presentable_get_name (presentable);
+
+        pixbuf = NULL;
+        if (icon_name != NULL) {
+
+                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                   icon_name,
+                                                   96,
+                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                                   NULL);
+
+                /* if it's unallocated or unrecognized space, make the icon greyscale */
+                if (!gdu_presentable_is_allocated (presentable) ||
+                    !gdu_presentable_is_recognized (presentable)) {
+                        GdkPixbuf *pixbuf2;
+                        pixbuf2 = pixbuf;
+                        pixbuf = gdk_pixbuf_copy (pixbuf);
+                        g_object_unref (pixbuf2);
+                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
+                                                          pixbuf,
+                                                          0.0,
+                                                          FALSE);
+                }
+
+        }
+        gtk_image_set_from_pixbuf (GTK_IMAGE (shell->priv->icon_image), pixbuf);
+        g_object_unref (pixbuf);
+
+        s = g_strdup_printf (_("<span font_desc='18'><b>%s</b></span>"), name);
+        gtk_label_set_markup (GTK_LABEL (shell->priv->name_label), s);
+        g_free (s);
+
+        usage = NULL;
+        device_file = NULL;
+        if (device != NULL) {
+                usage = gdu_device_id_get_usage (device);
+                device_file = gdu_device_get_device_file (device);
+        }
+
+        strsize = gdu_util_get_size_for_display (gdu_presentable_get_size (presentable), FALSE);
+
+        details1 = NULL;
+        details2 = NULL;
+        details3 = NULL;
+
+        if (GDU_IS_DRIVE (presentable)) {
+                details3 = g_strdup (device_file);
+
+                s = gdu_util_get_connection_for_display (
+                        gdu_device_drive_get_connection_interface (device),
+                        gdu_device_drive_get_connection_speed (device));
+                details1 = g_strdup_printf ("Connected via %s", s);
+                g_free (s);
+
+                if (gdu_device_is_removable (device)) {
+                        if (gdu_device_is_partition_table (device)) {
+                                const char *scheme;
+                                scheme = gdu_device_partition_table_get_scheme (device);
+                                if (strcmp (scheme, "apm") == 0) {
+                                        s = g_strdup (_("Apple Partition Map"));
+                                } else if (strcmp (scheme, "mbr") == 0) {
+                                        s = g_strdup (_("Master Boot Record"));
+                                } else if (strcmp (scheme, "gpt") == 0) {
+                                        s = g_strdup (_("GUID Partition Table"));
+                                } else {
+                                        s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
+                                }
+
+                                details2 = g_strdup_printf (_("%s Partitioned Media (%s)"), strsize, s);
+
+                                g_free (s);
+                        } else if (usage != NULL && strlen (usage) > 0) {
+                                details2 = g_strdup_printf (_("%s Unpartitioned Media"), strsize);
+                        } else if (!gdu_device_is_media_available (device)) {
+                                details2 = g_strdup_printf (_("No Media Detected"));
+                        } else {
+                                details2 = g_strdup_printf (_("Unrecognized"));
+                        }
+                } else {
+                        if (gdu_device_is_partition_table (device)) {
+                                const char *scheme;
+                                scheme = gdu_device_partition_table_get_scheme (device);
+                                if (strcmp (scheme, "apm") == 0) {
+                                        s = g_strdup (_("Apple Partition Map"));
+                                } else if (strcmp (scheme, "mbr") == 0) {
+                                        s = g_strdup (_("Master Boot Record"));
+                                } else if (strcmp (scheme, "gpt") == 0) {
+                                        s = g_strdup (_("GUID Partition Table"));
+                                } else {
+                                        s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
+                                }
+                                details2 = g_strdup_printf (_("Partitioned (%s)"), s);
+                                g_free (s);
+                        } else if (usage != NULL && strlen (usage) > 0) {
+                                details2 = g_strdup_printf (_("Not Partitioned"));
+                        } else if (!gdu_device_is_media_available (device)) {
+                                details2 = g_strdup_printf (_("No Media Detected"));
+                        } else {
+                                details2 = g_strdup_printf (_("Unrecognized"));
+                        }
+                }
+
+                if (gdu_device_is_read_only (device)) {
+                        s = details3;
+                        details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
+                        g_free (s);
+                }
+
+        } else if (GDU_IS_VOLUME (presentable)) {
+                details3 = g_strdup (device_file);
+
+                if (strcmp (usage, "filesystem") == 0) {
+                        char *fsname;
+                        fsname = gdu_util_get_fstype_for_display (
+                                gdu_device_id_get_type (device),
+                                gdu_device_id_get_version (device),
+                                TRUE);
+                        details1 = g_strdup_printf (_("%s %s File System"), strsize, fsname);
+                        g_free (fsname);
+                } else if (strcmp (usage, "raid") == 0) {
+                        char *fsname;
+                        fsname = gdu_util_get_fstype_for_display (
+                                gdu_device_id_get_type (device),
+                                gdu_device_id_get_version (device),
+                                TRUE);
+                        details1 = g_strdup_printf (_("%s %s"), strsize, fsname);
+                        g_free (fsname);
+                } else if (strcmp (usage, "crypto") == 0) {
+                        details1 = g_strdup_printf (_("%s Encrypted Device"), strsize);
+                } else {
+                        details1 = g_strdup_printf (_("%s Unrecognized"), strsize);
+                }
+
+                if (gdu_device_is_crypto_cleartext (device)) {
+                        details2 = g_strdup (_("Unlocked Encrypted Volume"));
+                } else {
+                        if (gdu_device_is_partition (device)) {
+                                char *part_desc;
+                                part_desc = gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (device),
+                                                                             gdu_device_partition_get_type (device));
+                                details2 = g_strdup_printf (_("Partition %d (%s)"),
+                                                    gdu_device_partition_get_number (device), part_desc);
+                                g_free (part_desc);
+                        } else {
+                                details2 = g_strdup (_("Not Partitioned"));
+                        }
+                }
+
+                if (gdu_device_is_read_only (device)) {
+                        s = details3;
+                        details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
+                        g_free (s);
+                }
+
+        } else if (GDU_IS_VOLUME_HOLE (presentable)) {
+
+                details1 = g_strdup_printf (_("%s Unallocated"), strsize);
+
+                if (toplevel_device != NULL) {
+                        details2 = g_strdup (gdu_device_get_device_file (toplevel_device));
+
+                        if (gdu_device_is_read_only (toplevel_device)) {
+                                s = details2;
+                                details2 = g_strconcat (details2, _(" (Read Only)"), NULL);
+                                g_free (s);
+                        }
+                }
+        }
+
+        g_free (icon_name);
+        g_free (name);
+        g_free (strsize);
+
+        s = NULL;
+        s2 = NULL;
+        s3 = NULL;
+        if (details1 != NULL)
+                s = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details1);
+        if (details2 != NULL)
+                s2 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details2);
+        if (details3 != NULL)
+                s3 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details3);
+        gtk_label_set_markup (GTK_LABEL (shell->priv->details1_label), s);
+        gtk_label_set_markup (GTK_LABEL (shell->priv->details2_label), s2);
+        gtk_label_set_markup (GTK_LABEL (shell->priv->details3_label), s3);
+        g_free (s);
+        g_free (s2);
+        g_free (s3);
+        g_free (details1);
+        g_free (details2);
+        g_free (details3);
+
+        if (device != NULL)
+                g_object_unref (device);
+
+        if (toplevel_presentable != NULL)
+                g_object_unref (toplevel_presentable);
+
+        if (toplevel_device != NULL)
+                g_object_unref (toplevel_device);
+
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 /* called when a new presentable is selected
  *  - or a presentable changes
  *  - or the job state of a presentable changes
@@ -145,8 +385,6 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 void
 gdu_shell_update (GduShell *shell)
 {
-        int n;
-        GList *l;
         GduDevice *device;
         gboolean job_in_progress;
         gboolean last_job_failed;
@@ -155,7 +393,6 @@ gdu_shell_update (GduShell *shell)
         gboolean can_eject;
         gboolean can_lock;
         gboolean can_unlock;
-        GtkWidget *page_widget_currently_showing;
 
         job_in_progress = FALSE;
         last_job_failed = FALSE;
@@ -209,54 +446,19 @@ gdu_shell_update (GduShell *shell)
 
         }
 
-        page_widget_currently_showing = gtk_notebook_get_nth_page (
-                GTK_NOTEBOOK (shell->priv->notebook),
-                gtk_notebook_get_current_page (GTK_NOTEBOOK (shell->priv->notebook)));
-
-        for (l = shell->priv->pages; l != NULL; l = l->next) {
-                GduPage *page = GDU_PAGE (l->data);
-                gboolean show_page;
-                GtkWidget *page_widget;
-
-                page_widget = gdu_page_get_widget (page);
-
-                /* Make the page insenstive if there's a job running on the device or the last
-                 * job failed. Do this before calling update() as the page may want to render
-                 * itself insensitive.
-                 */
-                if (job_in_progress || last_job_failed)
-                        gtk_widget_set_sensitive (page_widget, FALSE);
-                else
-                        gtk_widget_set_sensitive (page_widget, TRUE);
-
-                show_page = gdu_page_update (page, shell->priv->presentable_now_showing);
-
-                if (show_page) {
-                        gtk_widget_show (page_widget);
+        if (job_in_progress || last_job_failed) {
+                show_page (shell, GDU_TYPE_PAGE_JOB);
+        } else {
+                if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
+                        show_page (shell, GDU_TYPE_PAGE_DRIVE);
+                } else if (!gdu_presentable_is_allocated (shell->priv->presentable_now_showing)) {
+                        show_page (shell, GDU_TYPE_PAGE_VOLUME_UNALLOCATED);
+                } else if (!gdu_presentable_is_recognized (shell->priv->presentable_now_showing)) {
+                        show_page (shell, GDU_TYPE_PAGE_VOLUME_UNRECOGNIZED);
                 } else {
-                        gtk_widget_hide (page_widget);
-                        if (page_widget == page_widget_currently_showing)
-                                page_widget_currently_showing = NULL;
-                }
-
-        }
-
-        /* the page we were showing was switching away from */
-        if (page_widget_currently_showing == NULL) {
-                /* go to the first visible page */
-                for (n = 0; n < gtk_notebook_get_n_pages (GTK_NOTEBOOK (shell->priv->notebook)); n++) {
-                        GtkWidget *page_widget;
-
-                        page_widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (shell->priv->notebook), n);
-                        if (GTK_WIDGET_VISIBLE (page_widget)) {
-                                gtk_notebook_set_current_page (GTK_NOTEBOOK (shell->priv->notebook), n);
-                                break;
-                        }
+                        show_page (shell, GDU_TYPE_PAGE_VOLUME);
                 }
         }
-
-        /* update summary page */
-        gdu_page_update (shell->priv->page_summary, shell->priv->presentable_now_showing);
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
@@ -283,6 +485,9 @@ gdu_shell_update (GduShell *shell)
                 polkit_gnome_action_set_visible (shell->priv->unlock_action, FALSE);
         }
 #endif
+
+
+        details_update (shell);
 }
 
 static void
@@ -357,6 +562,7 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
                         g_object_unref (enclosing_presentable);
                 } else {
                         gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+                        gtk_widget_grab_focus (shell->priv->treeview);
                 }
         }
         gdu_shell_update (shell);
@@ -656,18 +862,63 @@ static void
 add_page (GduShell *shell, GType type)
 {
         GduPage *page;
-        char *name;
-        GtkWidget *tab_label;
 
         page = g_object_new (type, "shell", shell, NULL);
-        name = gdu_page_get_name (page);
 
         shell->priv->pages = g_list_append (shell->priv->pages, page);
-        tab_label = gtk_label_new_with_mnemonic (name);
         gtk_notebook_append_page (GTK_NOTEBOOK (shell->priv->notebook),
                                   gdu_page_get_widget (page),
-                                  tab_label);
-        g_free (name);
+                                  NULL);
+}
+
+static void
+add_pages (GduShell *shell)
+{
+        add_page (shell, GDU_TYPE_PAGE_DRIVE);
+        add_page (shell, GDU_TYPE_PAGE_VOLUME);
+        add_page (shell, GDU_TYPE_PAGE_VOLUME_UNALLOCATED);
+        add_page (shell, GDU_TYPE_PAGE_VOLUME_UNRECOGNIZED);
+        add_page (shell, GDU_TYPE_PAGE_JOB);
+}
+
+static void
+show_page (GduShell *shell, GType page_type)
+{
+        int page_num;
+        GduPage *page = NULL;
+        gboolean reset_page;
+        static GduPresentable *last_presentable = NULL;
+
+        if (page_type == GDU_TYPE_PAGE_DRIVE) {
+                page_num = 0;
+        } else if (page_type == GDU_TYPE_PAGE_VOLUME) {
+                page_num = 1;
+        } else if (page_type == GDU_TYPE_PAGE_VOLUME_UNALLOCATED) {
+                page_num = 2;
+        } else if (page_type == GDU_TYPE_PAGE_VOLUME_UNRECOGNIZED) {
+                page_num = 3;
+        } else if (page_type == GDU_TYPE_PAGE_JOB) {
+                page_num = 4;
+        } else {
+                g_warning ("Unknown page with type %d", page_type);
+                goto out;
+        }
+
+        reset_page = (gtk_notebook_get_current_page (GTK_NOTEBOOK (shell->priv->notebook)) != page_num);
+
+        reset_page |= (shell->priv->presentable_now_showing != last_presentable);
+        last_presentable = shell->priv->presentable_now_showing;
+
+        gtk_notebook_set_current_page (GTK_NOTEBOOK (shell->priv->notebook), page_num);
+        page = g_list_nth_data (shell->priv->pages, page_num);
+        gdu_page_update (page, shell->priv->presentable_now_showing, reset_page);
+
+        /* if we're switching pages, focus the treeview to avoid accidental activation */
+        if (reset_page)
+                gtk_widget_grab_focus (shell->priv->treeview);
+
+out:
+        ;
 }
 
 static void
@@ -688,7 +939,7 @@ create_window (GduShell *shell)
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);
-        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 900, 550);
+        gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 800, 600);
         gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
 
         vbox = gtk_vbox_new (FALSE, 0);
@@ -714,13 +965,53 @@ create_window (GduShell *shell)
 
         /* add pages in a notebook */
         shell->priv->notebook = gtk_notebook_new ();
-        add_page (shell, GDU_TYPE_PAGE_PARTITION_TABLE);
-        add_page (shell, GDU_TYPE_PAGE_PARTITION_MODIFY);
-        add_page (shell, GDU_TYPE_PAGE_PARTITION_CREATE);
-        add_page (shell, GDU_TYPE_PAGE_ERASE);
-        add_page (shell, GDU_TYPE_PAGE_ENCRYPTED);
+        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (shell->priv->notebook), FALSE);
+        gtk_notebook_set_show_border (GTK_NOTEBOOK (shell->priv->notebook), FALSE);
+        add_pages (shell);
 
         vbox2 = gtk_vbox_new (FALSE, 0);
+
+        /* --- */
+        GtkWidget *label;
+        GtkWidget *align;
+        GtkWidget *vbox3;
+        GtkWidget *hbox;
+        GtkWidget *image;
+
+        hbox = gtk_hbox_new (FALSE, 10);
+        gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, TRUE, 0);
+
+        image = gtk_image_new ();
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+        shell->priv->icon_image = image;
+
+        vbox3 = gtk_vbox_new (FALSE, 0);
+        align = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+        gtk_container_add (GTK_CONTAINER (align), vbox3);
+        gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, TRUE, 0);
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        shell->priv->name_label = label;
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        shell->priv->details1_label = label;
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        shell->priv->details2_label = label;
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        shell->priv->details3_label = label;
+
+        /* --- */
+
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->notebook, TRUE, TRUE, 0);
 
         /* setup and add horizontal pane */
@@ -730,10 +1021,6 @@ create_window (GduShell *shell)
         gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
-
-        /* finally add the summary page */
-        shell->priv->page_summary = g_object_new (GDU_TYPE_PAGE_SUMMARY, "shell", shell, NULL);
-        gtk_box_pack_start (GTK_BOX (vbox), gdu_page_get_widget (shell->priv->page_summary), FALSE, FALSE, 0);
 
         select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->treeview));
         gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);

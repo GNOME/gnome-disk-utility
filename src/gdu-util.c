@@ -105,7 +105,7 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
         } else if (strcmp (fstype, "ntfs") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
-                                s = g_strdup_printf (_("NTFS version %s"), fsversion);
+                                s = g_strdup_printf (_("NTFS (version %s)"), fsversion);
                         else
                                 s = g_strdup_printf (_("NTFS"));
                 } else {
@@ -173,6 +173,15 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         s = g_strdup (_("Swap Space"));
                 } else {
                         s = g_strdup (_("swap"));
+                }
+        } else if (strcmp (fstype, "linux_raid_member") == 0) {
+                if (long_string) {
+                        if (strlen (fsversion) > 0)
+                                s = g_strdup_printf (_("RAID Component (version %s)"), fsversion);
+                        else
+                                s = g_strdup_printf (_("RAID Component"));
+                } else {
+                        s = g_strdup (_("raid"));
                 }
         } else {
                 s = g_strdup (fstype);
@@ -318,11 +327,11 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 
 /* TODO: retrieve this list from DeviceKit-disks */
 static GduCreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11},
-        {"ext3", 16},
-        {"swap", 0},
-        {"ntfs", 255},
-        {"empty", 0},
+        {"vfat", 11, TRUE, FALSE},
+        {"ext3", 16, TRUE, FALSE},
+        {"swap", 0, FALSE, FALSE},
+        {"ntfs", 255, FALSE, FALSE},
+        {"empty", 0, FALSE, FALSE},
 };
 
 /* TODO: retrieve from daemon */
@@ -704,13 +713,18 @@ gdu_util_part_table_type_combo_box_create_store (void)
         /* TODO: get from daemon */
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
+                            0, "gpt",
+                            1, _("GUID Partition Table"),
+                            -1);
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
                             0, "mbr",
                             1, _("Master Boot Record"),
                             -1);
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
-                            0, "gpt",
-                            1, _("GUID Partition Table"),
+                            0, "none",
+                            1, _("Don't partition"),
                             -1);
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
@@ -727,17 +741,23 @@ gdu_util_part_table_type_get_description (char *part_type)
         g_return_val_if_fail (part_type != NULL, NULL);
 
         if (strcmp (part_type, "mbr") == 0)
-                return g_strdup (_("The Master Boot Record partitioning scheme is compatible with almost any "
+                return g_strdup (_("The Master Boot Record scheme is compatible with almost any "
                                    "device or system but has a number of limitations with respect to to disk "
                                    "size and number of partitions."));
 
         else if (strcmp (part_type, "apm") == 0)
-                return g_strdup (_("A legacy partitioning scheme with roots in legacy Apple hardware. "
-                                   "Compatible with most Linux systems."));
+                return g_strdup (_("A legacy scheme that is incomptible with most systems "
+                                   "except Apple systems and most Linux systems. Not recommended for "
+                                   "removable media."));
 
         else if (strcmp (part_type, "gpt") == 0)
-                return g_strdup (_("The GUID partitioning scheme is compatible with most modern systems but "
+                return g_strdup (_("The GUID scheme is compatible with most modern systems but "
                                    "may be incompatible with some devices and legacy systems."));
+
+        else if (strcmp (part_type, "none") == 0)
+                return g_strdup (_("Marks the entire disk as unused. Use this option only if you want "
+                                   "to avoid partitioing the disk for e.g. whole disk use or "
+                                   "floppy / Zip disks."));
 
         else
                 return NULL;
@@ -1109,7 +1129,7 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
                 title = _("Unlock Encrypted Device");
         dialog = gtk_dialog_new_with_buttons (title,
                                               GTK_WINDOW (parent_window),
-                                              GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
                                               GTK_STOCK_CANCEL,
                                               GTK_RESPONSE_CANCEL,
                                               NULL);
@@ -1145,13 +1165,13 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
 	label = gtk_label_new (NULL);
         if (is_new_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      "<b><big>To create an encrypted device, choose a passphrase.</big></b>");
+                                      _("<b><big>To create an encrypted device, choose a passphrase.</big></b>"));
         } else if (is_change_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      "<b><big>To change the passphrase, enter both the current and new passphrase.</big></b>");
+                                      _("<b><big>To change the passphrase, enter both the current and new passphrase.</big></b>"));
         } else {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      "<b><big>To unlock the data, enter the passphrase for the device.</big></b>");
+                                      _("<b><big>To unlock the data, enter the passphrase for the device.</big></b>"));
         }
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -1680,4 +1700,123 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
         }
 
         return result;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * gdu_util_delete_confirmation_dialog:
+ * @parent_window: parent window for transient dialog
+ * @title: the title of the dialog
+ * @primary_text: primary text
+ * @secondary_text: secondary text
+ * @affirmative_action_button_mnemonic: text to use on the affirmative action button
+ *
+ * Utility to show a confirmation dialog for deletion that includes a
+ * combo box for secure erase options.
+ *
+ * Returns: #NULL if the user canceled, otherwise the secure erase
+ * type. Must be freed by the caller.
+ **/
+char *
+gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
+                                     const char *title,
+                                     const char *primary_text,
+                                     const char *secondary_text,
+                                     const char *affirmative_action_button_mnemonic)
+{
+        int response;
+        GtkWidget *dialog;
+        char *secure_erase;
+        GtkWidget *hbox;
+        GtkWidget *image;
+        GtkWidget *main_vbox;
+        GtkWidget *label;
+        int row;
+        GtkWidget *combo_box;
+        GtkWidget *table;
+
+        secure_erase = NULL;
+
+        dialog = gtk_dialog_new_with_buttons (title,
+                                              GTK_WINDOW (parent_window),
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_STOCK_CANCEL,
+                                              GTK_RESPONSE_CANCEL,
+                                              NULL);
+
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+
+	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+	main_vbox = gtk_vbox_new (FALSE, 10);
+	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
+
+	label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), primary_text);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+	label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), secondary_text);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+        row = 0;
+
+        table = gtk_table_new (2, 2, FALSE);
+        gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+
+        /* secure erase */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        combo_box = gdu_util_secure_erase_combo_box_create ();
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
+
+        row++;
+
+        /* secure erase desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
+
+        row++;
+
+        gtk_dialog_add_button (GTK_DIALOG (dialog), affirmative_action_button_mnemonic, 0);
+
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+        secure_erase = gdu_util_secure_erase_combo_box_get_selected (combo_box);
+
+        gtk_widget_destroy (dialog);
+        if (response != 0) {
+                g_free (secure_erase);
+                secure_erase = NULL;
+                goto out;
+        }
+
+out:
+        return secure_erase;
 }

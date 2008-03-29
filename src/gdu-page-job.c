@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-page-summary.c
+/* gdu-page-job.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -26,17 +26,14 @@
 #include <polkit-gnome/polkit-gnome.h>
 
 #include "gdu-page.h"
-#include "gdu-page-summary.h"
+#include "gdu-page-job.h"
 #include "gdu-util.h"
 
-struct _GduPageSummaryPrivate
+struct _GduPageJobPrivate
 {
         GduShell *shell;
 
         GtkWidget *notebook;
-        GList *drive_labels;
-        GList *volume_labels;
-        GList *unallocated_labels;
 
         GtkWidget *job_description_label;
         GtkWidget *job_progress_bar;
@@ -50,10 +47,10 @@ struct _GduPageSummaryPrivate
 
 static GObjectClass *parent_class = NULL;
 
-static void gdu_page_summary_page_iface_init (GduPageIface *iface);
-G_DEFINE_TYPE_WITH_CODE (GduPageSummary, gdu_page_summary, G_TYPE_OBJECT,
+static void gdu_page_job_page_iface_init (GduPageIface *iface);
+G_DEFINE_TYPE_WITH_CODE (GduPageJob, gdu_page_job, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PAGE,
-                                                gdu_page_summary_page_iface_init))
+                                                gdu_page_job_page_iface_init))
 
 enum {
         PROP_0,
@@ -61,26 +58,22 @@ enum {
 };
 
 static void
-gdu_page_summary_finalize (GduPageSummary *page)
+gdu_page_job_finalize (GduPageJob *page)
 {
         if (page->priv->shell != NULL)
                 g_object_unref (page->priv->shell);
-
-        g_list_free (page->priv->drive_labels);
-        g_list_free (page->priv->volume_labels);
-        g_list_free (page->priv->unallocated_labels);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (page));
 }
 
 static void
-gdu_page_summary_set_property (GObject      *object,
+gdu_page_job_set_property (GObject      *object,
                              guint         prop_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-        GduPageSummary *page = GDU_PAGE_SUMMARY (object);
+        GduPageJob *page = GDU_PAGE_JOB (object);
 
         switch (prop_id) {
         case PROP_SHELL:
@@ -96,12 +89,12 @@ gdu_page_summary_set_property (GObject      *object,
 }
 
 static void
-gdu_page_summary_get_property (GObject     *object,
+gdu_page_job_get_property (GObject     *object,
                              guint        prop_id,
                              GValue      *value,
                              GParamSpec  *pspec)
 {
-        GduPageSummary *page = GDU_PAGE_SUMMARY (object);
+        GduPageJob *page = GDU_PAGE_JOB (object);
 
         switch (prop_id) {
         case PROP_SHELL:
@@ -115,18 +108,18 @@ gdu_page_summary_get_property (GObject     *object,
 }
 
 static void
-gdu_page_summary_class_init (GduPageSummaryClass *klass)
+gdu_page_job_class_init (GduPageJobClass *klass)
 {
         GObjectClass *obj_class = (GObjectClass *) klass;
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_summary_finalize;
-        obj_class->set_property = gdu_page_summary_set_property;
-        obj_class->get_property = gdu_page_summary_get_property;
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_job_finalize;
+        obj_class->set_property = gdu_page_job_set_property;
+        obj_class->get_property = gdu_page_job_get_property;
 
         /**
-         * GduPageSummary:shell:
+         * GduPageJob:shell:
          *
          * The #GduShell instance hosting this page.
          */
@@ -144,7 +137,7 @@ gdu_page_summary_class_init (GduPageSummaryClass *klass)
 static gboolean
 job_progress_pulse_timeout_handler (gpointer user_data)
 {
-        GduPageSummary *page = GDU_PAGE_SUMMARY (user_data);
+        GduPageJob *page = GDU_PAGE_JOB (user_data);
 
         gtk_progress_bar_pulse (GTK_PROGRESS_BAR (page->priv->job_progress_bar));
         return TRUE;
@@ -155,7 +148,7 @@ static void
 job_cancel_button_clicked (GtkWidget *button, gpointer user_data)
 {
         GduDevice *device;
-        GduPageSummary *page = GDU_PAGE_SUMMARY (user_data);
+        GduPageJob *page = GDU_PAGE_JOB (user_data);
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         if (device != NULL) {
@@ -168,7 +161,7 @@ static void
 job_failed_dismiss_button_clicked (GtkWidget *button, gpointer user_data)
 {
         GduDevice *device;
-        GduPageSummary *page = GDU_PAGE_SUMMARY (user_data);
+        GduPageJob *page = GDU_PAGE_JOB (user_data);
 
         device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
         if (device != NULL) {
@@ -179,7 +172,7 @@ job_failed_dismiss_button_clicked (GtkWidget *button, gpointer user_data)
 }
 
 static void
-job_update (GduPageSummary *page, GduDevice *device)
+job_update (GduPageJob *page, GduDevice *device)
 {
         char *s;
         char *job_description;
@@ -235,11 +228,8 @@ job_update (GduPageSummary *page, GduDevice *device)
 
 
 static void
-gdu_page_summary_init (GduPageSummary *page)
+gdu_page_job_init (GduPageJob *page)
 {
-        int n;
-        int row, column;
-        GtkWidget *table;
         GtkWidget *align;
         GtkWidget *progress_bar;
         GtkWidget *label;
@@ -247,63 +237,15 @@ gdu_page_summary_init (GduPageSummary *page)
         GtkWidget *button;
         GtkWidget *vbox;
         GtkWidget *vbox2;
+        GtkWidget *image;
+        GtkWidget *hbox;
 
-        page->priv = g_new0 (GduPageSummaryPrivate, 1);
+        page->priv = g_new0 (GduPageJobPrivate, 1);
 
         page->priv->notebook = gtk_notebook_new ();
         gtk_container_set_border_width (GTK_CONTAINER (page->priv->notebook), 8);
         gtk_notebook_set_show_tabs (GTK_NOTEBOOK (page->priv->notebook), FALSE);
         gtk_notebook_set_show_border (GTK_NOTEBOOK (page->priv->notebook), FALSE);
-
-        /* Add 5x2 summary labels for: drive, volume, unallocated space */
-        for (n = 0; n < 3; n++) {
-                GList **labels;
-
-                switch (n) {
-                case 0:
-                        labels = &page->priv->drive_labels;
-                        break;
-                case 1:
-                        labels = &page->priv->volume_labels;
-                        break;
-                case 2:
-                        labels = &page->priv->unallocated_labels;
-                        break;
-                default:
-                        g_assert_not_reached ();
-                        break;
-                }
-
-                *labels = NULL;
-
-                table = gtk_table_new (5, 4, FALSE);
-                gtk_table_set_col_spacings (GTK_TABLE (table), 8);
-                gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-                for (row = 0; row < 5; row++) {
-                        for (column = 0; column < 2; column++) {
-                                GtkWidget *key_label;
-                                GtkWidget *value_label;
-
-                                key_label = gtk_label_new (NULL);
-                                gtk_misc_set_alignment (GTK_MISC (key_label), 1.0, 0.5);
-                                gtk_label_set_markup (GTK_LABEL (key_label), "<b>Key:</b>");
-
-                                value_label = gtk_label_new (NULL);
-                                gtk_label_set_markup (GTK_LABEL (value_label), "Value");
-                                gtk_misc_set_alignment (GTK_MISC (value_label), 0.0, 0.5);
-                                gtk_label_set_ellipsize (GTK_LABEL (value_label), PANGO_ELLIPSIZE_END);
-
-                                gtk_table_attach (GTK_TABLE (table), key_label,   column + 0, column + 1, row, row + 1,
-                                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-                                gtk_table_attach (GTK_TABLE (table), value_label, column + 1, column + 2, row, row + 1,
-                                                  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-                                *labels = g_list_append (*labels, key_label);
-                                *labels = g_list_append (*labels, value_label);
-                        }
-                }
-                gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), table, NULL);
-        }
 
         /* job progress page */
         vbox = gtk_vbox_new (FALSE, 5);
@@ -342,14 +284,13 @@ gdu_page_summary_init (GduPageSummary *page)
         g_signal_connect (page->priv->job_cancel_button, "clicked",
                           G_CALLBACK (job_cancel_button_clicked), page);
 
-        gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), vbox, NULL);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 0.0);
+        gtk_container_add (GTK_CONTAINER (align), vbox);
+
+        gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), align, NULL);
 
 
         /* job failure page */
-
-        GtkWidget *image;
-        GtkWidget *hbox;
-
         vbox = gtk_vbox_new (FALSE, 5);
 
         hbox = gtk_hbox_new (FALSE, 5);
@@ -386,92 +327,49 @@ gdu_page_summary_init (GduPageSummary *page)
         g_signal_connect (page->priv->job_failed_dismiss_button, "clicked",
                           G_CALLBACK (job_failed_dismiss_button_clicked), page);
 
-        gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), vbox, NULL);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 0.0);
+        gtk_container_add (GTK_CONTAINER (align), vbox);
+
+        gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), align, NULL);
 
 }
 
 
-GduPageSummary *
-gdu_page_summary_new (GduShell *shell)
+GduPageJob *
+gdu_page_job_new (GduShell *shell)
 {
-        return GDU_PAGE_SUMMARY (g_object_new (GDU_TYPE_PAGE_SUMMARY, "shell", shell, NULL));
+        return GDU_PAGE_JOB (g_object_new (GDU_TYPE_PAGE_JOB, "shell", shell, NULL));
 }
 
 static gboolean
-gdu_page_summary_update (GduPage *_page, GduPresentable *presentable)
+gdu_page_job_update (GduPage *_page, GduPresentable *presentable, gboolean reset_page)
 {
         int page_to_show;
         GList *labels;
-        GList *i;
-        GList *j;
-        GList *kv_pairs;
         GduDevice *device;
-        GduPageSummary *page = GDU_PAGE_SUMMARY (_page);
+        GduPageJob *page = GDU_PAGE_JOB (_page);
 
         labels = NULL;
         device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
-                page_to_show = 2;
-                labels = page->priv->unallocated_labels;
+        if (device == NULL)
+                goto out;
+
+        if (gdu_device_job_in_progress (device)) {
+                page_to_show = 0;
+        } else if (gdu_device_job_get_last_error_message (device) != NULL) {
+                gtk_label_set_markup (GTK_LABEL (page->priv->job_failed_reason_label),
+                                      gdu_device_job_get_last_error_message (device));
+                page_to_show = 1;
         } else {
-                if (gdu_device_job_in_progress (device)) {
-                        page_to_show = 3;
-                } else if (gdu_device_job_get_last_error_message (device) != NULL) {
-                        gtk_label_set_markup (GTK_LABEL (page->priv->job_failed_reason_label),
-                                              gdu_device_job_get_last_error_message (device));
-                        page_to_show = 4;
-                } else if (gdu_device_is_partition (device)) {
-                        page_to_show = 1;
-                        labels = page->priv->volume_labels;
-                } else {
-                        page_to_show = 0;
-                        labels = page->priv->drive_labels;
-                }
+                g_warning ("showing job but no job is in progress / no job failure");
+                goto out;
         }
 
         job_update (page, device);
 
-        if (labels != NULL) {
-                /* update key/value pairs on summary tabs */
-                kv_pairs = gdu_presentable_get_info (presentable);
-                for (i = kv_pairs, j = labels; i != NULL && j != NULL; i = i->next, j = j->next) {
-                        char *key;
-                        char *key2;
-                        char *value;
-                        char *value2;
-                        GtkWidget *key_label;
-                        GtkWidget *value_label;
-
-                        key = i->data;
-                        key_label = j->data;
-                        i = i->next;
-                        j = j->next;
-                        if (i == NULL || j == NULL) {
-                                g_free (key);
-                                break;
-                        }
-                        value = i->data;
-                        value_label = j->data;
-
-                        key2 = g_strdup_printf ("<small><b>%s:</b></small>", key);
-                        value2 = g_strdup_printf ("<small>%s</small>", value);
-                        gtk_label_set_markup (GTK_LABEL (key_label), key2);
-                        gtk_label_set_markup (GTK_LABEL (value_label), value2);
-                        g_free (key2);
-                        g_free (value2);
-                }
-                g_list_foreach (kv_pairs, (GFunc) g_free, NULL);
-                g_list_free (kv_pairs);
-
-                /* clear remaining labels */
-                for ( ; j != NULL; j = j->next) {
-                        GtkWidget *label = j->data;
-                        gtk_label_set_markup (GTK_LABEL (label), "");
-                }
-        }
-
         gtk_notebook_set_current_page (GTK_NOTEBOOK (page->priv->notebook), page_to_show);
 
+out:
         if (device != NULL) {
                 g_object_unref (device);
         }
@@ -479,22 +377,15 @@ gdu_page_summary_update (GduPage *_page, GduPresentable *presentable)
 }
 
 static GtkWidget *
-gdu_page_summary_get_widget (GduPage *_page)
+gdu_page_job_get_widget (GduPage *_page)
 {
-        GduPageSummary *page = GDU_PAGE_SUMMARY (_page);
+        GduPageJob *page = GDU_PAGE_JOB (_page);
         return page->priv->notebook;
 }
 
-static char *
-gdu_page_summary_get_name (GduPage *page)
-{
-        return g_strdup (_("Summary"));
-}
-
 static void
-gdu_page_summary_page_iface_init (GduPageIface *iface)
+gdu_page_job_page_iface_init (GduPageIface *iface)
 {
-        iface->get_widget = gdu_page_summary_get_widget;
-        iface->get_name = gdu_page_summary_get_name;
-        iface->update = gdu_page_summary_update;
+        iface->get_widget = gdu_page_job_get_widget;
+        iface->update = gdu_page_job_update;
 }

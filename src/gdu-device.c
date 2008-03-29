@@ -47,6 +47,7 @@ typedef struct
         gboolean device_is_partition_table;
         gboolean device_is_removable;
         gboolean device_is_media_available;
+        gboolean device_is_read_only;
         gboolean device_is_drive;
         gboolean device_is_crypto_cleartext;
         gboolean device_is_mounted;
@@ -118,6 +119,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_removable = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-media-available") == 0)
                 props->device_is_media_available = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-read-only") == 0)
+                props->device_is_read_only = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-drive") == 0)
                 props->device_is_drive = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-crypto-cleartext") == 0)
@@ -536,6 +539,12 @@ gboolean
 gdu_device_is_media_available (GduDevice *device)
 {
         return device->priv->props->device_is_media_available;
+}
+
+gboolean
+gdu_device_is_read_only (GduDevice *device)
+{
+        return device->priv->props->device_is_read_only;
 }
 
 gboolean
@@ -1229,6 +1238,30 @@ gdu_device_op_lock_encrypted (GduDevice *device)
                                                                      op_lock_encrypted_cb,
                                                                      g_object_ref (device));
 }
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_change_fs_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_change_fs_label_cb failed: %s", error->message);
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_change_filesystem_label (GduDevice *device, const char *new_label)
+{
+        org_freedesktop_DeviceKit_Disks_Device_change_filesystem_label_async (device->priv->proxy,
+                                                                              new_label,
+                                                                              op_change_fs_label_cb,
+                                                                              g_object_ref (device));
+}
+
 
 /* -------------------------------------------------------------------------------- */
 

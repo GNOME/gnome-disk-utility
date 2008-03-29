@@ -78,7 +78,7 @@ gdu_page_base_init (gpointer g_class)
 }
 
 gboolean
-gdu_page_update (GduPage *page, GduPresentable *presentable)
+gdu_page_update (GduPage *page, GduPresentable *presentable, gboolean reset_page)
 {
   GduPageIface *iface;
 
@@ -86,19 +86,7 @@ gdu_page_update (GduPage *page, GduPresentable *presentable)
 
   iface = GDU_PAGE_GET_IFACE (page);
 
-  return (* iface->update) (page, presentable);
-}
-
-char *
-gdu_page_get_name (GduPage *page)
-{
-  GduPageIface *iface;
-
-  g_return_val_if_fail (GDU_IS_PAGE (page), NULL);
-
-  iface = GDU_PAGE_GET_IFACE (page);
-
-  return (* iface->get_name) (page);
+  return (* iface->update) (page, presentable, reset_page);
 }
 
 GtkWidget *

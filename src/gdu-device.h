@@ -81,6 +81,7 @@ guint64 gdu_device_get_size (GduDevice *device);
 guint64 gdu_device_get_block_size (GduDevice *device);
 gboolean gdu_device_is_removable (GduDevice *device);
 gboolean gdu_device_is_media_available (GduDevice *device);
+gboolean gdu_device_is_read_only (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
@@ -133,20 +134,20 @@ char **gdu_device_drive_get_media (GduDevice *device);
 /* fire and forget ops */
 /* ---------------------------------------------------------------------------------------------------- */
 
-void gdu_device_op_mount                  (GduDevice   *device);
-void gdu_device_op_unmount                (GduDevice   *device);
-void gdu_device_op_delete_partition       (GduDevice   *device,
-                                           const char  *secure_erase);
-void gdu_device_op_modify_partition       (GduDevice   *device,
-                                           const char  *type,
-                                           const char  *label,
-                                           char       **flags);
-void gdu_device_op_create_partition_table (GduDevice   *device,
-                                           const char  *scheme,
-                                           const char  *secure_erase);
-
-
-void gdu_device_op_lock_encrypted         (GduDevice   *device);
+void gdu_device_op_mount                   (GduDevice   *device);
+void gdu_device_op_unmount                 (GduDevice   *device);
+void gdu_device_op_delete_partition        (GduDevice   *device,
+                                            const char  *secure_erase);
+void gdu_device_op_modify_partition        (GduDevice   *device,
+                                            const char  *type,
+                                            const char  *label,
+                                            char       **flags);
+void gdu_device_op_create_partition_table  (GduDevice   *device,
+                                            const char  *scheme,
+                                            const char  *secure_erase);
+void gdu_device_op_lock_encrypted          (GduDevice   *device);
+void gdu_device_op_change_filesystem_label (GduDevice   *device,
+                                            const char  *new_label);
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* ops where feedback is essential */

@@ -40,9 +40,10 @@ char *gdu_get_task_description (const char *task_id);
 
 typedef struct
 {
-        char *id;
-        int   max_label_len;
-        char *desc;
+        char     *id;
+        int       max_label_len;
+        gboolean  supports_label_rename;
+        gboolean  supports_label_rename_while_mounted;
 } GduCreatableFilesystem;
 
 GList                  *gdu_util_get_creatable_filesystems (void);
@@ -65,6 +66,12 @@ char      *gdu_util_fstype_combo_box_get_selected   (GtkWidget  *combo_box);
 GtkWidget *gdu_util_secure_erase_combo_box_create         (void);
 void       gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label);
 char      *gdu_util_secure_erase_combo_box_get_selected   (GtkWidget *combo_box);
+
+char      *gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
+                                                const char *title,
+                                                const char *primary_text,
+                                                const char *secondary_text,
+                                                const char *affirmative_action_button_mnemonic);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

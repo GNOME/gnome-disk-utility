@@ -1,5 +1,8 @@
 icondir = $(datadir)/icons/hicolor/16x16/apps
-icon_DATA =
+icon_DATA =			\
+	gdu-eject.png		\
+	gdu-mount.png		\
+	gdu-unmount.png
 
 EXTRA_DIST = \
 	$(icon_DATA)

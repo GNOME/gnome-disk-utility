@@ -214,8 +214,7 @@ gdu_volume_get_icon_name (GduPresentable *presentable)
         const char *usage;
         const char *connection_interface;
         const char *name;
-        char **drive_media;
-        int n;
+        const char *drive_media;
 
         p = NULL;
         d = NULL;
@@ -251,29 +250,25 @@ gdu_volume_get_icon_name (GduPresentable *presentable)
 
         /* first try the media */
         if (drive_media != NULL) {
-                for (n = 0; drive_media[n] != NULL && name == NULL; n++) {
-                        const char *media = (const char *) drive_media[n];
-
-                        if (strcmp (media, "flash_cf") == 0) {
-                                name = "media-flash-cf";
-                        } else if (strcmp (media, "flash_ms") == 0) {
-                                name = "media-flash-ms";
-                        } else if (strcmp (media, "flash_sm") == 0) {
-                                name = "media-flash-sm";
-                        } else if (strcmp (media, "flash_sd") == 0) {
-                                name = "media-flash-sd";
-                        } else if (strcmp (media, "flash_sdhc") == 0) {
-                                /* TODO: get icon name for sdhc */
-                                name = "media-flash-sd";
-                        } else if (strcmp (media, "flash_mmc") == 0) {
-                                /* TODO: get icon for mmc */
-                                name = "media-flash-sd";
-                        } else if (g_str_has_prefix (media, "flash")) {
-                                name = "media-flash";
-                        } else if (g_str_has_prefix (media, "optical")) {
-                                /* TODO: handle rest of optical-* */
-                                name = "media-optical";
-                        }
+                if (strcmp (drive_media, "flash_cf") == 0) {
+                        name = "media-flash-cf";
+                } else if (strcmp (drive_media, "flash_ms") == 0) {
+                        name = "media-flash-ms";
+                } else if (strcmp (drive_media, "flash_sm") == 0) {
+                        name = "media-flash-sm";
+                } else if (strcmp (drive_media, "flash_sd") == 0) {
+                        name = "media-flash-sd";
+                } else if (strcmp (drive_media, "flash_sdhc") == 0) {
+                        /* TODO: get icon name for sdhc */
+                        name = "media-flash-sd";
+                } else if (strcmp (drive_media, "flash_mmc") == 0) {
+                        /* TODO: get icon for mmc */
+                        name = "media-flash-sd";
+                } else if (g_str_has_prefix (drive_media, "flash")) {
+                        name = "media-flash";
+                } else if (g_str_has_prefix (drive_media, "optical")) {
+                        /* TODO: handle rest of optical-* */
+                        name = "media-optical";
                 }
         }
 

@@ -163,11 +163,10 @@ gdu_drive_get_name (GduPresentable *presentable)
 static char *
 gdu_drive_get_icon_name (GduPresentable *presentable)
 {
-        int n;
         GduDrive *drive = GDU_DRIVE (presentable);
         const char *name;
         const char *connection_interface;
-        char **drive_media;
+        const char *drive_media;
         gboolean is_removable;
 
         connection_interface = gdu_device_drive_get_connection_interface (drive->priv->device);
@@ -178,29 +177,25 @@ gdu_drive_get_icon_name (GduPresentable *presentable)
 
         /* first try the media */
         if (drive_media != NULL) {
-                for (n = 0; drive_media[n] != NULL && name == NULL; n++) {
-                        const char *media = (const char *) drive_media[n];
-
-                        if (strcmp (media, "flash_cf") == 0) {
-                                name = "drive-removable-media-flash-cf";
-                        } else if (strcmp (media, "flash_ms") == 0) {
-                                name = "drive-removable-media-flash-ms";
-                        } else if (strcmp (media, "flash_sm") == 0) {
-                                name = "drive-removable-media-flash-sm";
-                        } else if (strcmp (media, "flash_sd") == 0) {
-                                name = "drive-removable-media-flash-sd";
-                        } else if (strcmp (media, "flash_sdhc") == 0) {
-                                /* TODO: get icon name for sdhc */
-                                name = "drive-removable-media-flash-sd";
-                        } else if (strcmp (media, "flash_mmc") == 0) {
-                                /* TODO: get icon for mmc */
-                                name = "drive-removable-media-flash-sd";
-                        } else if (g_str_has_prefix (media, "flash")) {
-                                name = "drive-removable-media-flash";
-                        } else if (g_str_has_prefix (media, "optical")) {
-                                /* TODO: handle rest of optical-* */
-                                name = "drive-optical";
-                        }
+                if (strcmp (drive_media, "flash_cf") == 0) {
+                        name = "drive-removable-media-flash-cf";
+                } else if (strcmp (drive_media, "flash_ms") == 0) {
+                        name = "drive-removable-media-flash-ms";
+                } else if (strcmp (drive_media, "flash_sm") == 0) {
+                        name = "drive-removable-media-flash-sm";
+                } else if (strcmp (drive_media, "flash_sd") == 0) {
+                        name = "drive-removable-media-flash-sd";
+                } else if (strcmp (drive_media, "flash_sdhc") == 0) {
+                        /* TODO: get icon name for sdhc */
+                        name = "drive-removable-media-flash-sd";
+                } else if (strcmp (drive_media, "flash_mmc") == 0) {
+                        /* TODO: get icon for mmc */
+                        name = "drive-removable-media-flash-sd";
+                } else if (g_str_has_prefix (drive_media, "flash")) {
+                        name = "drive-removable-media-flash";
+                } else if (g_str_has_prefix (drive_media, "optical")) {
+                        /* TODO: handle rest of optical-* */
+                        name = "drive-optical";
                 }
         }
 
@@ -259,11 +254,11 @@ gdu_drive_get_info (GduPresentable *presentable)
         GduDrive *drive = GDU_DRIVE (presentable);
         GduDevice *device = drive->priv->device;
         GList *kv_pairs = NULL;
-        char **drive_media;
+        char **drive_media_compat;
         GString *s;
         int n;
 
-        drive_media = gdu_device_drive_get_media (drive->priv->device);
+        drive_media_compat = gdu_device_drive_get_media_compatibility (drive->priv->device);
 
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Vendor")));
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_vendor (device)));
@@ -294,9 +289,9 @@ gdu_drive_get_info (GduPresentable *presentable)
 
 	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Media Compatibility")));
         s = g_string_new (NULL);
-        if (drive_media != NULL) {
-                for (n = 0; drive_media[n] != NULL; n++) {
-                        const char *media = (const char *) drive_media[n];
+        if (drive_media_compat != NULL) {
+                for (n = 0; drive_media_compat[n] != NULL; n++) {
+                        const char *media = (const char *) drive_media_compat[n];
 
                         if (s->len > 0) {
                                 /* Translator: the separator for media types */

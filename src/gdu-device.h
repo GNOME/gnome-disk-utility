@@ -128,7 +128,8 @@ const char *gdu_device_drive_get_revision (GduDevice *device);
 const char *gdu_device_drive_get_serial (GduDevice *device);
 const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
-char **gdu_device_drive_get_media (GduDevice *device);
+char **gdu_device_drive_get_media_compatibility (GduDevice *device);
+const char *gdu_device_drive_get_media (GduDevice *device);
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* fire and forget ops */

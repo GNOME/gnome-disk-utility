@@ -756,10 +756,10 @@ gdu_page_volume_init (GduPageVolume *page)
         page->priv->modify_partition_action = polkit_gnome_action_new_default (
                 "modify-partition",
                 page->priv->pk_modify_partition_action,
-                _("Appl_y"),
+                _("_Apply"),
                 _("Apply"));
         g_object_set (page->priv->modify_partition_action,
-                      "auth-label", _("Appl_y..."),
+                      "auth-label", _("_Apply..."),
                       "yes-icon-name", GTK_STOCK_APPLY,
                       "no-icon-name", GTK_STOCK_APPLY,
                       "auth-icon-name", GTK_STOCK_APPLY,
@@ -773,10 +773,10 @@ gdu_page_volume_init (GduPageVolume *page)
         page->priv->modify_fslabel_action = polkit_gnome_action_new_default (
                 "modify-fslabel",
                 page->priv->pk_modify_fslabel_action,
-                _("Chang_e"),
+                _("Ch_ange"),
                 _("Change"));
         g_object_set (page->priv->modify_fslabel_action,
-                      "auth-label", _("Chang_e..."),
+                      "auth-label", _("Ch_ange..."),
                       NULL);
         g_signal_connect (page->priv->modify_fslabel_action, "activate",
                           G_CALLBACK (modify_fslabel_callback), page);

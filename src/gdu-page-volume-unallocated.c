@@ -492,7 +492,7 @@ gdu_page_volume_unallocated_init (GduPageVolumeUnallocated *page)
         /* secure erase */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Erase:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Er_ase:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_secure_erase_combo_box_create ();

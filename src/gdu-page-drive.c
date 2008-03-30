@@ -503,6 +503,7 @@ static void
 smart_data_set (GduPageDrive *page, gboolean passed, int power_on_hours, int temperature)
 {
         char *s;
+        int fahrenheit;
 
         gtk_widget_set_sensitive (page->priv->health_refresh_button, TRUE);
         gtk_widget_set_sensitive (page->priv->health_selftest_button, TRUE);
@@ -543,7 +544,8 @@ smart_data_set (GduPageDrive *page, gboolean passed, int power_on_hours, int tem
         gtk_label_set_text (GTK_LABEL (page->priv->health_power_on_hours_label), s);
         g_free (s);
 
-        s = g_strdup_printf (_("%d° Celcius"), temperature);
+        fahrenheit = 9 * temperature / 5 + 32;
+        s = g_strdup_printf (_("%d° C / %d° F"), temperature, fahrenheit);
         gtk_label_set_text (GTK_LABEL (page->priv->health_temperature_label), s);
         g_free (s);
 }

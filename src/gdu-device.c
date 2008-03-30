@@ -23,6 +23,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
+#include <time.h>
 
 #include "gdu-pool.h"
 #include "gdu-device.h"
@@ -314,6 +315,12 @@ struct _GduDevicePrivate
         char *job_last_error_message;
 
         DeviceProperties *props;
+
+        time_t smart_data_cache_timestamp;
+        gboolean smart_data_cache_passed;
+        int smart_data_cache_power_on_hours;
+        int smart_data_cache_temperature;
+        GError *smart_data_cache_error;
 };
 
 enum {
@@ -346,6 +353,9 @@ gdu_device_finalize (GduDevice *device)
         if (device->priv->props != NULL)
                 device_properties_free (device->priv->props);
         g_free (device->priv->job_last_error_message);
+
+        if (device->priv->smart_data_cache_error != NULL)
+                g_error_free (device->priv->smart_data_cache_error);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (device));
@@ -458,7 +468,7 @@ gdu_device_job_changed (GduDevice   *device,
                         const char  *job_cur_task_id,
                         double       job_cur_task_percentage)
 {
-        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
+        g_print ("%s: %s: %s\n", __FUNCTION__, device->priv->props->device_file, job_id);
 
         device->priv->props->job_in_progress = job_in_progress;
         g_free (device->priv->props->job_id);
@@ -1271,7 +1281,140 @@ gdu_device_op_change_filesystem_label (GduDevice *device, const char *new_label)
                                                                               op_change_fs_label_cb,
                                                                               g_object_ref (device));
 }
+/* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+
+        GduDeviceRetrieveSmartDataCompletedFunc callback;
+        gpointer user_data;
+} RetrieveSmartDataData;
+
+static void
+op_retrieve_smart_data_cb (DBusGProxy *proxy,
+                           gboolean passed, int power_on_hours, int temperature,
+                           GError *error, gpointer user_data)
+{
+        RetrieveSmartDataData *data = user_data;
+
+        /* update cache */
+        data->device->priv->smart_data_cache_timestamp = time (NULL);
+        data->device->priv->smart_data_cache_passed = passed;
+        data->device->priv->smart_data_cache_power_on_hours = power_on_hours;
+        data->device->priv->smart_data_cache_temperature = temperature;
+        if (data->device->priv->smart_data_cache_error != NULL)
+                g_error_free (data->device->priv->smart_data_cache_error);
+        data->device->priv->smart_data_cache_error = error != NULL ? g_error_copy (error) : NULL;
+
+        if (error != NULL) {
+                /* g_warning ("op_retrieve_smart_data_cb failed: %s", error->message); */
+                data->callback (data->device, FALSE, 0, 0, error, data->user_data);
+        } else {
+                data->callback (data->device, passed, power_on_hours, temperature, NULL, data->user_data);
+        }
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_retrieve_smart_data (GduDevice                              *device,
+                                GduDeviceRetrieveSmartDataCompletedFunc callback,
+                                gpointer                                user_data)
+{
+        RetrieveSmartDataData *data;
+
+        data = g_new0 (RetrieveSmartDataData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_Device_retrieve_smart_data_async (device->priv->proxy,
+                                                                          op_retrieve_smart_data_cb,
+                                                                          data);
+}
+
+gboolean
+gdu_device_smart_data_is_cached (GduDevice *device, int *age_in_seconds)
+{
+        time_t now;
+        gboolean ret;
+
+        ret = FALSE;
+
+        if (device->priv->smart_data_cache_timestamp == 0)
+                goto out;
+
+        now = time (NULL);
+
+        if (age_in_seconds != NULL)
+                *age_in_seconds = now - device->priv->smart_data_cache_timestamp;
+
+        ret = TRUE;
+
+out:
+        return ret;
+}
+
+void
+gdu_device_smart_data_purge_cache (GduDevice *device)
+{
+        device->priv->smart_data_cache_timestamp = 0;
+        if (device->priv->smart_data_cache_error != NULL)
+                g_error_free (device->priv->smart_data_cache_error);
+        device->priv->smart_data_cache_error = NULL;
+}
+
+gboolean
+gdu_device_retrieve_smart_data_from_cache (GduDevice *device,
+                                           GduDeviceRetrieveSmartDataCompletedFunc callback,
+                                           gpointer                                user_data)
+{
+        gboolean ret;
+
+        ret = FALSE;
+
+        if (device->priv->smart_data_cache_timestamp == 0)
+                goto out;
+
+        callback (device,
+                  device->priv->smart_data_cache_passed,
+                  device->priv->smart_data_cache_power_on_hours,
+                  device->priv->smart_data_cache_temperature,
+                  device->priv->smart_data_cache_error != NULL ?
+                      g_error_copy (device->priv->smart_data_cache_error) : NULL,
+                  user_data);
+
+        ret = TRUE;
+
+out:
+        return ret;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_run_smart_selftest_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_run_smart_selftest_cb failed: %s", error->message);
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_run_smart_selftest (GduDevice   *device,
+                                  const char  *test,
+                                  gboolean     captive)
+{
+        org_freedesktop_DeviceKit_Disks_Device_run_smart_selftest_async (device->priv->proxy,
+                                                                         test,
+                                                                         captive,
+                                                                         op_run_smart_selftest_cb,
+                                                                         g_object_ref (device));
+}
 
 /* -------------------------------------------------------------------------------- */
 

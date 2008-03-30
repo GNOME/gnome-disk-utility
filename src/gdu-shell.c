@@ -406,7 +406,14 @@ gdu_shell_update (GduShell *shell)
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
                 if (gdu_device_job_in_progress (device)) {
-                        job_in_progress = TRUE;
+                        const char *job_id;
+
+                        job_id = gdu_device_job_get_id (device);
+
+                        /* Ignore this jobs as we trigger it when switching pages */
+                        if (strcmp (job_id, "RetrieveSmartData") != 0) {
+                                job_in_progress = TRUE;
+                        }
                 }
 
                 if (gdu_device_job_get_last_error_message (device) != NULL) {

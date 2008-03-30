@@ -150,6 +150,10 @@ void gdu_device_op_lock_encrypted          (GduDevice   *device);
 void gdu_device_op_change_filesystem_label (GduDevice   *device,
                                             const char  *new_label);
 
+void gdu_device_op_run_smart_selftest      (GduDevice   *device,
+                                            const char  *test,
+                                            gboolean     captive);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* ops where feedback is essential */
 /* ---------------------------------------------------------------------------------------------------- */
@@ -210,6 +214,27 @@ void gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
                                                 const char  *new_secret,
                                                 GduDeviceChangeSecretForEncryptedCompletedFunc callback,
                                                 gpointer user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceRetrieveSmartDataCompletedFunc) (GduDevice  *device,
+                                                         gboolean    passed,
+                                                         int         power_on_hours,
+                                                         int         temperature,
+                                                         GError     *error,
+                                                         gpointer    user_data);
+
+void  gdu_device_retrieve_smart_data (GduDevice                              *device,
+                                      GduDeviceRetrieveSmartDataCompletedFunc callback,
+                                      gpointer                                user_data);
+
+gboolean gdu_device_smart_data_is_cached (GduDevice *device, int *age_in_seconds);
+
+void gdu_device_smart_data_purge_cache (GduDevice *device);
+
+gboolean gdu_device_retrieve_smart_data_from_cache (GduDevice *device,
+                                                    GduDeviceRetrieveSmartDataCompletedFunc callback,
+                                                    gpointer                                user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

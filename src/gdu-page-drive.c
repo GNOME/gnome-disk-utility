@@ -30,6 +30,7 @@
 #include "gdu-util.h"
 
 #include "gdu-drive.h"
+#include "gdu-activatable-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
 
@@ -50,9 +51,10 @@ struct _GduPageDrivePrivate
         GtkWidget *create_part_table_vbox;
         GtkWidget *create_part_table_type_combo_box;
 
+        GtkWidget *linux_md_explanatory_label;
+
         PolKitAction *pk_create_part_table_action;
         PolKitGnomeAction *create_part_table_action;
-
 };
 
 static GObjectClass *parent_class = NULL;
@@ -254,6 +256,12 @@ gdu_page_drive_init (GduPageDrive *page)
         gtk_notebook_set_show_tabs (GTK_NOTEBOOK (page->priv->notebook), FALSE);
         gtk_notebook_set_show_border (GTK_NOTEBOOK (page->priv->notebook), FALSE);
 
+        /* -------------------------- */
+        /* -------------------------- */
+        /* Normal drive page (page 0) */
+        /* -------------------------- */
+        /* -------------------------- */
+
         vbox3 = gtk_vbox_new (FALSE, 5);
         gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), vbox3, NULL);
         page->priv->create_part_table_vbox = vbox3;
@@ -425,9 +433,11 @@ gdu_page_drive_init (GduPageDrive *page)
         button = polkit_gnome_action_create_button (page->priv->create_part_table_action);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        /* -------- */
-        /* No media */
-        /* -------- */
+        /* ---------------------- */
+        /* ---------------------- */
+        /* No media page (page 1) */
+        /* ---------------------- */
+        /* ---------------------- */
 
         vbox3 = gtk_vbox_new (FALSE, 5);
         gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), vbox3, NULL);
@@ -461,6 +471,32 @@ gdu_page_drive_init (GduPageDrive *page)
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
         /* TODO: hook up the "Detect Media" button */
+
+        /* ----------------------- */
+        /* ----------------------- */
+        /* Linux MD Drive (page 2) */
+        /* ----------------------- */
+        /* ----------------------- */
+
+        vbox3 = gtk_vbox_new (FALSE, 5);
+        gtk_notebook_append_page (GTK_NOTEBOOK (page->priv->notebook), vbox3, NULL);
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>RAID Drive</b>"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        vbox2 = gtk_vbox_new (FALSE, 5);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_container_add (GTK_CONTAINER (align), vbox2);
+        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
+
+        /* explanatory text */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
+        page->priv->linux_md_explanatory_label = label;
 
 }
 
@@ -686,6 +722,72 @@ out:
                 g_object_unref (device);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+linux_md_section_update (GduPageDrive *page, gboolean reset_page)
+{
+        char *s;
+        GduDevice *device;
+        GduPresentable *presentable;
+        GduActivatableDrive *activatable_drive;
+        GList *slaves;
+        GduDevice *component;
+        const char *uuid;
+        const char *name;
+        int level;
+        int num_raid_devices;
+        int num_slaves;
+
+        s = NULL;
+        slaves = NULL;
+        device = NULL;
+
+        presentable = gdu_shell_get_selected_presentable (page->priv->shell);
+        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        device = gdu_presentable_get_device (presentable);
+
+        slaves = gdu_activatable_drive_get_slaves (activatable_drive);
+        num_slaves = g_list_length (slaves);
+        if (num_slaves == 0) {
+                /* this fine; happens when the last component is yanked
+                 * since remove_slave() emits "changed".
+                 */
+                /*g_warning ("%s: no slaves for activatable drive", __FUNCTION__);*/
+                goto out;
+        }
+        component = GDU_DEVICE (slaves->data);
+
+        if (!gdu_device_is_linux_md_component (component)) {
+                g_warning ("%s: slave of activatable drive is not a linux md component", __FUNCTION__);
+                goto out;
+        }
+
+        uuid = gdu_device_linux_md_component_get_uuid (component);
+        name = gdu_device_linux_md_component_get_name (component);
+        level = gdu_device_linux_md_component_get_level (component);
+        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (component);
+
+        s = g_strdup_printf ("uuid=%s\n"
+                             "name=%s\n"
+                             "level=%d\n"
+                             "num_raid_devices=%d\n"
+                             "num_slaves=%d\n"
+                             "device=%p",
+                             uuid, name, level, num_raid_devices, num_slaves, device);
+
+        gtk_label_set_text (GTK_LABEL (page->priv->linux_md_explanatory_label), s);
+
+out:
+        g_list_foreach (slaves, (GFunc) g_object_unref, NULL);
+        g_list_free (slaves);
+        g_free (s);
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 gdu_page_drive_update (GduPage *_page, GduPresentable *presentable, gboolean reset_page)
 {
@@ -693,21 +795,32 @@ gdu_page_drive_update (GduPage *_page, GduPresentable *presentable, gboolean res
         GduDevice *device;
         int page_to_show;
 
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL)
-                goto out;
+        page_to_show = -1;
 
-        if (gdu_device_is_media_available (device))
-                page_to_show = 0;
-        else
-                page_to_show = 1;
+        device = gdu_presentable_get_device (presentable);
+
+        if (device != NULL) {
+                if (gdu_device_is_media_available (device))
+                        page_to_show = 0;
+                else
+                        page_to_show = 1;
+        }
+
+        if (GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
+                if (gdu_activatable_drive_get_kind (GDU_ACTIVATABLE_DRIVE (presentable)) ==
+                    GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD)
+                        page_to_show = 2;
+        }
+
+        if (page_to_show == -1) {
+                g_warning ("%s: don't know what page to show", __FUNCTION__);
+                goto out;
+        }
 
         gtk_notebook_set_current_page (GTK_NOTEBOOK (page->priv->notebook), page_to_show);
 
-        gtk_widget_set_sensitive (page->priv->create_part_table_vbox, !gdu_device_is_read_only (device));
-
-        if (reset_page) {
-                if (page_to_show == 0) {
+        if (page_to_show == 0) {
+                if (reset_page) {
                         int age;
                         if (gdu_device_smart_data_is_cached (device, &age) && age < 5 * 60) {
                                 gdu_device_retrieve_smart_data_from_cache (device, retrieve_smart_data_cb, page);
@@ -715,9 +828,14 @@ gdu_page_drive_update (GduPage *_page, GduPresentable *presentable, gboolean res
                                 smart_data_set_pending (page);
                                 gdu_device_retrieve_smart_data (device, retrieve_smart_data_cb, page);
                         }
+
+                        gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->create_part_table_type_combo_box), 0);
                 }
 
-                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->create_part_table_type_combo_box), 0);
+                gtk_widget_set_sensitive (page->priv->create_part_table_vbox, !gdu_device_is_read_only (device));
+
+        } else if (page_to_show == 2) {
+                linux_md_section_update (page, reset_page);
         }
 
 out:

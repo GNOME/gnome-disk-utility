@@ -86,6 +86,8 @@ gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
 gboolean gdu_device_is_crypto_cleartext (GduDevice *device);
+gboolean gdu_device_is_linux_md_component (GduDevice *device);
+gboolean gdu_device_is_linux_md (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 gboolean gdu_device_is_busy (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
@@ -130,6 +132,19 @@ const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
+
+int         gdu_device_linux_md_component_get_level (GduDevice *device);
+int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);
+const char *gdu_device_linux_md_component_get_uuid (GduDevice *device);
+const char *gdu_device_linux_md_component_get_name (GduDevice *device);
+const char *gdu_device_linux_md_component_get_version (GduDevice *device);
+
+int         gdu_device_linux_md_get_level (GduDevice *device);
+int         gdu_device_linux_md_get_num_raid_devices (GduDevice *device);
+const char *gdu_device_linux_md_get_uuid (GduDevice *device);
+const char *gdu_device_linux_md_get_name (GduDevice *device);
+const char *gdu_device_linux_md_get_version (GduDevice *device);
+char      **gdu_device_linux_md_get_slaves (GduDevice *device);
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* fire and forget ops */

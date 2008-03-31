@@ -33,6 +33,7 @@ gnome_disk_utility_SOURCES = 						\
 	gdu-pool.c			gdu-pool.h			\
 	gdu-device.c			gdu-device.h			\
 	gdu-drive.c			gdu-drive.h			\
+	gdu-activatable-drive.c		gdu-activatable-drive.h		\
 	gdu-volume.c			gdu-volume.h			\
 	gdu-presentable.c		gdu-presentable.h		\
 	gdu-volume-hole.c		gdu-volume-hole.h		\

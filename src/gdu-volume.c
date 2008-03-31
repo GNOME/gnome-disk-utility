@@ -167,7 +167,8 @@ gdu_volume_get_name (GduPresentable *presentable)
 
         if (is_extended_partition) {
                 result = g_strdup_printf (_("%s Extended"), strsize);
-        } else if (label != NULL && strlen (label) > 0) {
+        } else if ((usage != NULL && strcmp (usage, "filesystem") == 0) &&
+                   (label != NULL && strlen (label) > 0)) {
                 result = g_strdup (label);
         } else if (usage != NULL) {
                 if (strcmp (usage, "crypto") == 0) {
@@ -183,7 +184,12 @@ gdu_volume_get_name (GduPresentable *presentable)
                         result = g_strdup_printf (_("%s Partition Table"), strsize);
                 } else if (strcmp (usage, "raid") == 0) {
                         /* TODO: zero in on whether it's RAID or LVM */
-                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                        if (label != NULL && strlen (label) > 0) {
+                                /* RAID component; the label is the array name */
+                                result = g_strdup_printf (_("%s RAID (%s)"), strsize, label);
+                        } else {
+                                result = g_strdup_printf (_("%s RAID Component"), strsize);
+                        }
                 } else if (strcmp (usage, "other") == 0) {
                         result = g_strdup_printf (_("%s Data"), strsize);
                 } else if (strcmp (usage, "") == 0) {

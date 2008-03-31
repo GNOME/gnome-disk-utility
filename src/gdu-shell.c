@@ -35,6 +35,7 @@
 #include "gdu-pool.h"
 #include "gdu-tree.h"
 #include "gdu-drive.h"
+#include "gdu-activatable-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
 
@@ -63,6 +64,9 @@ struct _GduShellPrivate
 
         PolKitGnomeAction *unlock_action;
         PolKitGnomeAction *lock_action;
+
+        PolKitGnomeAction *start_action;
+        PolKitGnomeAction *stop_action;
 
         GduPresentable *presentable_now_showing;
 
@@ -215,7 +219,12 @@ details_update (GduShell *shell)
         details2 = NULL;
         details3 = NULL;
 
-        if (GDU_IS_DRIVE (presentable)) {
+        if (GDU_IS_ACTIVATABLE_DRIVE (presentable) && device == NULL) {
+                /* not yet activated */
+
+                /* TODO: set details */
+
+        } else if (GDU_IS_DRIVE (presentable)) {
                 details3 = g_strdup (device_file);
 
                 s = gdu_util_get_connection_for_display (
@@ -393,6 +402,8 @@ gdu_shell_update (GduShell *shell)
         gboolean can_eject;
         gboolean can_lock;
         gboolean can_unlock;
+        gboolean can_start;
+        gboolean can_stop;
 
         job_in_progress = FALSE;
         last_job_failed = FALSE;
@@ -401,6 +412,8 @@ gdu_shell_update (GduShell *shell)
         can_eject = FALSE;
         can_unlock = FALSE;
         can_lock = FALSE;
+        can_start = FALSE;
+        can_stop = FALSE;
 
         /* figure out what pages in the notebook to show + update pages */
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
@@ -450,6 +463,31 @@ gdu_shell_update (GduShell *shell)
                     gdu_device_is_media_available (device)) {
                         can_eject = TRUE;
                 }
+        }
+
+        if (GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+                GduActivatableDrive *ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
+
+                if (device != NULL) {
+                        can_stop = TRUE;
+                } else {
+                        if (gdu_activatable_drive_get_kind (ad) == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD) {
+                                device = gdu_activatable_drive_get_first_slave (ad);
+                                if (device != NULL) {
+                                        int num_slaves;
+                                        int num_raid_devices;
+
+                                        num_slaves = gdu_activatable_drive_get_num_slaves (ad);
+                                        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
+
+                                        /* TODO: support starting in degraded mode */
+                                        if (num_slaves == num_raid_devices) {
+                                                can_start = TRUE;
+                                        }
+                                        g_object_unref (device);
+                                }
+                        }
+                }
 
         }
 
@@ -473,6 +511,8 @@ gdu_shell_update (GduShell *shell)
         polkit_gnome_action_set_sensitive (shell->priv->eject_action, can_eject);
         polkit_gnome_action_set_sensitive (shell->priv->lock_action, can_lock);
         polkit_gnome_action_set_sensitive (shell->priv->unlock_action, can_unlock);
+        polkit_gnome_action_set_sensitive (shell->priv->start_action, can_start);
+        polkit_gnome_action_set_sensitive (shell->priv->stop_action, can_stop);
 
 #if 0
         /* TODO */
@@ -667,6 +707,38 @@ lock_action_callback (GtkAction *action, gpointer user_data)
         }
 }
 
+static void
+start_action_callback (GtkAction *action, gpointer user_data)
+{
+        g_warning ("TODO: start");
+#if 0
+        GduShell *shell = user_data;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                unlock_action_do (shell, device, FALSE);
+                g_object_unref (device);
+        }
+#endif
+}
+
+static void
+stop_action_callback (GtkAction *action, gpointer user_data)
+{
+        g_warning ("TODO: stop");
+#if 0
+        GduShell *shell = user_data;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                gdu_device_op_lock_encrypted (device);
+                g_object_unref (device);
+        }
+#endif
+}
+
 
 static void
 help_contents_action_callback (GtkAction *action, gpointer user_data)
@@ -714,6 +786,9 @@ static const gchar *ui =
         "      <separator/>"
         "      <menuitem action='unlock'/>"
         "      <menuitem action='lock'/>"
+        "      <separator/>"
+        "      <menuitem action='start'/>"
+        "      <menuitem action='stop'/>"
         "    </menu>"
         "    <menu action='help'>"
         "      <menuitem action='contents'/>"
@@ -727,6 +802,9 @@ static const gchar *ui =
         "    <separator/>"
         "    <toolitem action='unlock'/>"
         "    <toolitem action='lock'/>"
+        "    <separator/>"
+        "    <toolitem action='start'/>"
+        "    <toolitem action='stop'/>"
         "  </toolbar>"
         "</ui>";
 
@@ -837,6 +915,39 @@ create_ui_manager (GduShell *shell)
                       NULL);
         g_signal_connect (shell->priv->lock_action, "activate", G_CALLBACK (lock_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->lock_action));
+
+        /* -------------------------------------------------------------------------------- */
+
+        shell->priv->start_action = polkit_gnome_action_new_default ("start",
+                                                                     /* TODO */
+                                                                     shell->priv->pk_mount_action,
+                                                                     _("_Start"),
+                                                                     _("Start the array"));
+        g_object_set (shell->priv->start_action,
+                      "auth-label", _("_Start..."),
+                      "yes-icon-name", "gtk-media-play-ltr", /* TODO: get suitable icon */
+                      "no-icon-name", "gtk-media-play-ltr",
+                      "auth-icon-name", "gtk-media-play-ltr",
+                      "self-blocked-icon-name", "gtk-media-play-ltr",
+                      NULL);
+        g_signal_connect (shell->priv->start_action, "activate", G_CALLBACK (start_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->start_action));
+
+        /* -------------------------------------------------------------------------------- */
+
+        shell->priv->stop_action = polkit_gnome_action_new_default ("stop",
+                                                                    NULL, /* TODO */
+                                                                    _("_Stop"),
+                                                                    _("Stop the array"));
+        g_object_set (shell->priv->stop_action,
+                      "auth-label", _("_Stop..."),
+                      "yes-icon-name", "gtk-media-stop", /* TODO: get suitable icon */
+                      "no-icon-name", "gtk-media-stop",
+                      "auth-icon-name", "gtk-media-stop",
+                      "self-blocked-icon-name", "gtk-media-stop",
+                      NULL);
+        g_signal_connect (shell->priv->stop_action, "activate", G_CALLBACK (stop_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->stop_action));
 
         /* -------------------------------------------------------------------------------- */
 

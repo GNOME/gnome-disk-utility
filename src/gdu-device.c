@@ -53,6 +53,8 @@ typedef struct
         gboolean device_is_crypto_cleartext;
         gboolean device_is_mounted;
         gboolean device_is_busy;
+        gboolean device_is_linux_md_component;
+        gboolean device_is_linux_md;
         char    *device_mount_path;
         guint64  device_size;
         guint64  device_block_size;
@@ -97,6 +99,19 @@ typedef struct
         guint64  drive_connection_speed;
         char   **drive_media_compatibility;
         char    *drive_media;
+
+        int      linux_md_component_level;
+        int      linux_md_component_num_raid_devices;
+        char    *linux_md_component_uuid;
+        char    *linux_md_component_name;
+        char    *linux_md_component_version;
+
+        int      linux_md_level;
+        int      linux_md_num_raid_devices;
+        char    *linux_md_uuid;
+        char    *linux_md_name;
+        char    *linux_md_version;
+        char   **linux_md_slaves;
 } DeviceProperties;
 
 static void
@@ -127,6 +142,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_drive = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-crypto-cleartext") == 0)
                 props->device_is_crypto_cleartext = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-linux-md-component") == 0)
+                props->device_is_linux_md_component = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-linux-md") == 0)
+                props->device_is_linux_md = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-mounted") == 0)
                 props->device_is_mounted = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-busy") == 0)
@@ -221,6 +240,39 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "drive-media") == 0)
                 props->drive_media = g_strdup (g_value_get_string (value));
 
+        else if (strcmp (key, "linux-md-component-level") == 0)
+                props->linux_md_component_level = g_value_get_int (value);
+        else if (strcmp (key, "linux-md-component-num-raid-devices") == 0)
+                props->linux_md_component_num_raid_devices = g_value_get_int (value);
+        else if (strcmp (key, "linux-md-component-uuid") == 0)
+                props->linux_md_component_uuid = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-component-name") == 0)
+                props->linux_md_component_name = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-component-version") == 0)
+                props->linux_md_component_version = g_strdup (g_value_get_string (value));
+
+        else if (strcmp (key, "linux-md-level") == 0)
+                props->linux_md_level = g_value_get_int (value);
+        else if (strcmp (key, "linux-md-num-raid-devices") == 0)
+                props->linux_md_num_raid_devices = g_value_get_int (value);
+        else if (strcmp (key, "linux-md-uuid") == 0)
+                props->linux_md_uuid = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-name") == 0)
+                props->linux_md_name = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-version") == 0)
+                props->linux_md_version = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-slaves") == 0) {
+                int n;
+                GPtrArray *object_paths;
+
+                object_paths = g_value_get_boxed (value);
+
+                props->linux_md_slaves = g_new0 (char *, object_paths->len + 1);
+                for (n = 0; n < (int) object_paths->len; n++)
+                        props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
+                props->linux_md_slaves[n] = NULL;
+        }
+
         else
                 handled = FALSE;
 
@@ -299,6 +351,13 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_connection_interface);
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
+        g_free (props->linux_md_component_uuid);
+        g_free (props->linux_md_component_name);
+        g_free (props->linux_md_component_version);
+        g_free (props->linux_md_uuid);
+        g_free (props->linux_md_name);
+        g_free (props->linux_md_version);
+        g_strfreev (props->linux_md_slaves);
         g_free (props);
 }
 
@@ -580,6 +639,18 @@ gdu_device_is_crypto_cleartext (GduDevice *device)
 }
 
 gboolean
+gdu_device_is_linux_md_component (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_md_component;
+}
+
+gboolean
+gdu_device_is_linux_md (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_md;
+}
+
+gboolean
 gdu_device_is_mounted (GduDevice *device)
 {
         return device->priv->props->device_is_mounted;
@@ -776,7 +847,71 @@ gdu_device_drive_get_media (GduDevice *device)
         return device->priv->props->drive_media;
 }
 
+int
+gdu_device_linux_md_component_get_level (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_level;
+}
 
+int
+gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_num_raid_devices;
+}
+
+const char *
+gdu_device_linux_md_component_get_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_uuid;
+}
+
+const char *
+gdu_device_linux_md_component_get_name (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_name;
+}
+
+const char *
+gdu_device_linux_md_component_get_version (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_version;
+}
+
+int
+gdu_device_linux_md_get_level (GduDevice *device)
+{
+        return device->priv->props->linux_md_level;
+}
+
+int
+gdu_device_linux_md_get_num_raid_devices (GduDevice *device)
+{
+        return device->priv->props->linux_md_num_raid_devices;
+}
+
+const char *
+gdu_device_linux_md_get_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_md_uuid;
+}
+
+const char *
+gdu_device_linux_md_get_name (GduDevice *device)
+{
+        return device->priv->props->linux_md_name;
+}
+
+const char *
+gdu_device_linux_md_get_version (GduDevice *device)
+{
+        return device->priv->props->linux_md_version;
+}
+
+char **
+gdu_device_linux_md_get_slaves (GduDevice *device)
+{
+        return device->priv->props->linux_md_slaves;
+}
 
 gboolean
 gdu_device_job_in_progress (GduDevice *device)

@@ -66,6 +66,10 @@ struct _GduPageVolumePrivate
         GtkWidget *encrypted_change_passphrase_button;
         GtkWidget *encrypted_forget_passphrase_button;
 
+        /* raid */
+        GtkWidget *raid_vbox;
+        GtkWidget *raid_explanatory_label;
+
 };
 
 static GObjectClass *parent_class = NULL;
@@ -717,6 +721,64 @@ out:
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+update_raid_section (GduPageVolume *page, gboolean reset_page)
+{
+        char *s;
+        GduDevice *device;
+        int level;
+        int num_raid_devices;
+        const char *name;
+        const char *raid_name;
+
+        s = NULL;
+
+        device = gdu_presentable_get_device (gdu_shell_get_selected_presentable (page->priv->shell));
+        if (device == NULL)
+                goto out;
+
+        level = gdu_device_linux_md_component_get_level (device);
+        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
+        name = gdu_device_linux_md_component_get_name (device);
+
+        switch (level) {
+        case 0:
+                raid_name = _("RAID-0 array");
+                break;
+        case 1:
+                raid_name = _("RAID-1 array");
+                break;
+        case 4:
+                raid_name = _("RAID-4 array");
+                break;
+        case 5:
+                raid_name = _("RAID-5 array");
+                break;
+        default:
+                raid_name = _("RAID array");
+                break;
+        }
+
+        if (name == NULL || strlen (name) == 0) {
+                s = g_strdup_printf ("This volume is part of a %s. "
+                                     "The array needs %d component volumes present to be fully functional.",
+                                     raid_name, num_raid_devices);
+        } else {
+                s = g_strdup_printf ("This volume is part of the \"%s\" %s. "
+                                     "The array needs %d component volumes present to be fully functional.",
+                                     name, raid_name, num_raid_devices);
+        }
+
+        gtk_label_set_text (GTK_LABEL (page->priv->raid_explanatory_label), s);
+
+out:
+        g_free (s);
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_page_volume_init (GduPageVolume *page)
 {
         GtkWidget *vbox;
@@ -992,11 +1054,42 @@ gdu_page_volume_init (GduPageVolume *page)
                           G_CALLBACK (forget_passphrase_button_clicked), page);
         page->priv->encrypted_forget_passphrase_button = button;
 
+        /* ---------------- */
+        /* RAID Component */
+        /* ---------------- */
+
+        vbox3 = gtk_vbox_new (FALSE, 5);
+        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
+        page->priv->raid_vbox = vbox3;
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>RAID Component</b>"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        vbox2 = gtk_vbox_new (FALSE, 5);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_container_add (GTK_CONTAINER (align), vbox2);
+        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
+
+        /* explanatory text */
+        label = gtk_label_new (NULL);
+        gtk_label_set_width_chars (GTK_LABEL (label), 60);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
+        page->priv->raid_explanatory_label = label;
+
 
         /* ----------- */
         /* ----------- */
 
         gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), vbox, TRUE, TRUE, 0);
+
+        gtk_widget_hide (page->priv->modify_part_vbox);
+        gtk_widget_hide (page->priv->modify_fs_vbox);
+        gtk_widget_hide (page->priv->encrypted_vbox);
+        gtk_widget_hide (page->priv->raid_vbox);
 }
 
 
@@ -1019,6 +1112,7 @@ gdu_page_volume_update (GduPage *_page, GduPresentable *presentable, gboolean re
         gboolean show_partition;
         gboolean show_filesystem;
         gboolean show_encrypted;
+        gboolean show_raid;
 
         toplevel_presentable = NULL;
         toplevel_device = NULL;
@@ -1044,6 +1138,7 @@ gdu_page_volume_update (GduPage *_page, GduPresentable *presentable, gboolean re
         show_partition = FALSE;
         show_filesystem = FALSE;
         show_encrypted = FALSE;
+        show_raid = FALSE;
 
         if (gdu_device_is_partition (device))
                 show_partition = TRUE;
@@ -1056,6 +1151,11 @@ gdu_page_volume_update (GduPage *_page, GduPresentable *presentable, gboolean re
         if (usage != NULL && strcmp (usage, "crypto") == 0) {
                 show_filesystem = FALSE;
                 show_encrypted = TRUE;
+        }
+
+        if (gdu_device_is_linux_md_component (device)) {
+                show_filesystem = FALSE;
+                show_raid = TRUE;
         }
 
         if (show_partition) {
@@ -1081,6 +1181,13 @@ gdu_page_volume_update (GduPage *_page, GduPresentable *presentable, gboolean re
                                           !gdu_device_is_read_only (device));
         } else {
                 gtk_widget_hide (page->priv->encrypted_vbox);
+        }
+
+        if (show_raid) {
+                update_raid_section (page, reset_page);
+                gtk_widget_show (page->priv->raid_vbox);
+        } else {
+                gtk_widget_hide (page->priv->raid_vbox);
         }
 
 out:

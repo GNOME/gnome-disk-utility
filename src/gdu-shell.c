@@ -707,36 +707,133 @@ lock_action_callback (GtkAction *action, gpointer user_data)
         }
 }
 
+typedef struct
+{
+        GduActivatableDrive *activatable_drive;
+        GduShell *shell;
+} StartData;
+
+static StartData *
+start_data_new (GduActivatableDrive *activatable_drive,
+                GduShell *shell)
+{
+        StartData *sd;
+        sd = g_new0 (StartData, 1);
+        sd->activatable_drive = g_object_ref (activatable_drive);
+        sd->shell = g_object_ref (shell);
+        return sd;
+}
+
+static void
+start_data_free (StartData *sd)
+{
+        g_object_unref (sd->activatable_drive);
+        g_object_unref (sd->shell);
+        g_free (sd);
+}
+
+static void
+assembly_completed (GduPool    *pool,
+                    const char *assembled_array_object_path,
+                    GError     *error,
+                    gpointer    user_data)
+{
+        StartData *sd = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+
+                dialog = gtk_message_dialog_new_with_markup (
+                        GTK_WINDOW (sd->shell->priv->app_window),
+                        GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                        GTK_MESSAGE_ERROR,
+                        GTK_BUTTONS_CLOSE,
+                        _("<big><b>There was an error starting the array \"%s\".</b></big>"),
+                          gdu_presentable_get_name (GDU_PRESENTABLE (sd->activatable_drive)));
+
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+
+                g_error_free (error);
+                goto out;
+        }
+
+out:
+        start_data_free (sd);
+}
+
 static void
 start_action_callback (GtkAction *action, gpointer user_data)
 {
-        g_warning ("TODO: start");
-#if 0
         GduShell *shell = user_data;
         GduDevice *device;
+        GPtrArray *components;
+        GList *l;
+        GList *slaves;
+        GduActivatableDrive *ad;
+
+        device = NULL;
+
+        if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+                g_warning ("presentable is not an activatable drive");
+                goto out;
+        }
+
+        ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                unlock_action_do (shell, device, FALSE);
-                g_object_unref (device);
+                g_warning ("activatable drive already have a device; refusing to initiate assembly");
+                goto out;
         }
-#endif
+
+        components = g_ptr_array_new ();
+        slaves = gdu_activatable_drive_get_slaves (ad);
+        for (l = slaves; l != NULL; l = l->next) {
+                GduDevice *d = l->data;
+                /* no need to dup; we keep a ref on d for the lifetime of components */
+                g_ptr_array_add (components, (gpointer) gdu_device_get_object_path (d));
+        }
+
+        gdu_pool_op_assemble_linux_md_array (shell->priv->pool,
+                                             components,
+                                             assembly_completed,
+                                             start_data_new (ad, shell));
+
+        g_ptr_array_free (components, TRUE);
+        g_list_foreach (slaves, (GFunc) g_object_unref, NULL);
+        g_list_free (slaves);
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 static void
 stop_action_callback (GtkAction *action, gpointer user_data)
 {
-        g_warning ("TODO: stop");
-#if 0
         GduShell *shell = user_data;
         GduDevice *device;
 
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        if (device != NULL) {
-                gdu_device_op_lock_encrypted (device);
-                g_object_unref (device);
+        device = NULL;
+
+        if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+                g_warning ("presentable is not an activatable drive");
+                goto out;
         }
-#endif
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device == NULL) {
+                g_warning ("no device for activatable drive");
+                goto out;
+        }
+
+        gdu_device_op_stop_linux_md_array (device);
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 

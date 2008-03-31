@@ -65,4 +65,18 @@ GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);
 GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable);
 
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduPoolAssembleLinuxMdArrayCompletedFunc) (GduPool    *pool,
+                                                          const char *assembled_array_object_path,
+                                                          GError     *error,
+                                                          gpointer    user_data);
+
+void gdu_pool_op_assemble_linux_md_array (GduPool *pool,
+                                          GPtrArray *component_objpaths,
+                                          GduPoolAssembleLinuxMdArrayCompletedFunc callback,
+                                          gpointer user_data);
+
+
 #endif /* GDU_POOL_H */

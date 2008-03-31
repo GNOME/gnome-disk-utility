@@ -964,3 +964,50 @@ gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable)
 
         return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolAssembleLinuxMdArrayCompletedFunc callback;
+        gpointer user_data;
+} AssembleLinuxMdArrayData;
+
+static void
+op_assemble_linux_md_array_cb (DBusGProxy *proxy, char *assembled_array_object_path, GError *error, gpointer user_data)
+{
+        AssembleLinuxMdArrayData *data = user_data;
+
+        if (error != NULL) {
+                g_warning ("op_change_secret_for_encrypted_cb failed: %s", error->message);
+                data->callback (data->pool, NULL, error, data->user_data);
+        } else {
+                data->callback (data->pool, assembled_array_object_path, error, data->user_data);
+                g_free (assembled_array_object_path);
+        }
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_assemble_linux_md_array (GduPool *pool,
+                                     GPtrArray *component_objpaths,
+                                     GduPoolAssembleLinuxMdArrayCompletedFunc callback,
+                                     gpointer user_data)
+{
+        AssembleLinuxMdArrayData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (AssembleLinuxMdArrayData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_assemble_linux_md_array_async (pool->priv->proxy,
+                                                                       component_objpaths,
+                                                                       (const char **) options,
+                                                                       op_assemble_linux_md_array_cb,
+                                                                       data);
+}

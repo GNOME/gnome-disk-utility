@@ -1553,6 +1553,33 @@ gdu_device_op_run_smart_selftest (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+static void
+op_stop_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_stop_linux_md_array_cb failed: %s", error->message);
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_stop_linux_md_array (GduDevice *device)
+{
+        char *options[16];
+
+        options[0] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_stop_linux_md_array_async (device->priv->proxy,
+                                                                          (const char **) options,
+                                                                          op_stop_linux_md_array_cb,
+                                                                          g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
 void
 gdu_device_op_cancel_job (GduDevice *device)
 {

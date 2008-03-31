@@ -169,6 +169,8 @@ void gdu_device_op_run_smart_selftest      (GduDevice   *device,
                                             const char  *test,
                                             gboolean     captive);
 
+void gdu_device_op_stop_linux_md_array     (GduDevice   *device);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* ops where feedback is essential */
 /* ---------------------------------------------------------------------------------------------------- */

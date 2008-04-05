@@ -61,5 +61,7 @@ gnome_disk_utility_LDADD = 				\
 
 CLEANFILES = $(BUILT_SOURCES)
 
+EXTRA_DIST = gdu-marshal.list
+
 clean-local :
 	rm -f *~

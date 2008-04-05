@@ -136,7 +136,7 @@ gdu_shell_get_selected_presentable (GduShell *shell)
 void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
-        gdu_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
+        gdu_device_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
         gtk_widget_grab_focus (shell->priv->treeview);
 }
 
@@ -468,27 +468,10 @@ gdu_shell_update (GduShell *shell)
         if (GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
                 GduActivatableDrive *ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
 
-                if (device != NULL) {
-                        can_stop = TRUE;
-                } else {
-                        if (gdu_activatable_drive_get_kind (ad) == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD) {
-                                device = gdu_activatable_drive_get_first_slave (ad);
-                                if (device != NULL) {
-                                        int num_slaves;
-                                        int num_raid_devices;
+                can_stop = gdu_activatable_drive_is_activated (ad);
 
-                                        num_slaves = gdu_activatable_drive_get_num_slaves (ad);
-                                        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
-
-                                        /* TODO: support starting in degraded mode */
-                                        if (num_slaves == num_raid_devices) {
-                                                can_start = TRUE;
-                                        }
-                                        g_object_unref (device);
-                                }
-                        }
-                }
-
+                can_start = (gdu_activatable_drive_can_activate (ad) ||
+                             gdu_activatable_drive_can_activate_degraded (ad));
         }
 
         if (job_in_progress || last_job_failed) {
@@ -560,7 +543,7 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
         GtkTreeView *device_tree_view;
 
         device_tree_view = gtk_tree_selection_get_tree_view (selection);
-        presentable = gdu_tree_get_selected_presentable (device_tree_view);
+        presentable = gdu_device_tree_get_selected_presentable (device_tree_view);
 
         if (presentable != NULL) {
 
@@ -608,7 +591,7 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
                         gdu_shell_select_presentable (shell, enclosing_presentable);
                         g_object_unref (enclosing_presentable);
                 } else {
-                        gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+                        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
                         gtk_widget_grab_focus (shell->priv->treeview);
                 }
         }
@@ -707,49 +690,21 @@ lock_action_callback (GtkAction *action, gpointer user_data)
         }
 }
 
-typedef struct
-{
-        GduActivatableDrive *activatable_drive;
-        GduShell *shell;
-} StartData;
-
-static StartData *
-start_data_new (GduActivatableDrive *activatable_drive,
-                GduShell *shell)
-{
-        StartData *sd;
-        sd = g_new0 (StartData, 1);
-        sd->activatable_drive = g_object_ref (activatable_drive);
-        sd->shell = g_object_ref (shell);
-        return sd;
-}
-
 static void
-start_data_free (StartData *sd)
+start_cb (GduActivatableDrive *ad, gboolean success, GError *error, gpointer user_data)
 {
-        g_object_unref (sd->activatable_drive);
-        g_object_unref (sd->shell);
-        g_free (sd);
-}
-
-static void
-assembly_completed (GduPool    *pool,
-                    const char *assembled_array_object_path,
-                    GError     *error,
-                    gpointer    user_data)
-{
-        StartData *sd = user_data;
+        GduShell *shell = user_data;
 
         if (error != NULL) {
                 GtkWidget *dialog;
 
                 dialog = gtk_message_dialog_new_with_markup (
-                        GTK_WINDOW (sd->shell->priv->app_window),
+                        GTK_WINDOW (shell->priv->app_window),
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_ERROR,
                         GTK_BUTTONS_CLOSE,
                         _("<big><b>There was an error starting the array \"%s\".</b></big>"),
-                          gdu_presentable_get_name (GDU_PRESENTABLE (sd->activatable_drive)));
+                        gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -760,20 +715,14 @@ assembly_completed (GduPool    *pool,
         }
 
 out:
-        start_data_free (sd);
+        g_object_unref (shell);
 }
 
 static void
 start_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = user_data;
-        GduDevice *device;
-        GPtrArray *components;
-        GList *l;
-        GList *slaves;
         GduActivatableDrive *ad;
-
-        device = NULL;
 
         if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
                 g_warning ("presentable is not an activatable drive");
@@ -782,58 +731,67 @@ start_action_callback (GtkAction *action, gpointer user_data)
 
         ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
 
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        if (device != NULL) {
-                g_warning ("activatable drive already have a device; refusing to initiate assembly");
+        if (gdu_activatable_drive_is_activated (ad)) {
+                g_warning ("activatable drive already activated; refusing to activate it");
                 goto out;
         }
 
-        components = g_ptr_array_new ();
-        slaves = gdu_activatable_drive_get_slaves (ad);
-        for (l = slaves; l != NULL; l = l->next) {
-                GduDevice *d = l->data;
-                /* no need to dup; we keep a ref on d for the lifetime of components */
-                g_ptr_array_add (components, (gpointer) gdu_device_get_object_path (d));
+        /* ask for consent before activating in degraded mode */
+        if (!gdu_activatable_drive_can_activate (ad) &&
+            gdu_activatable_drive_can_activate_degraded (ad)) {
+                GtkWidget *dialog;
+                int response;
+
+                dialog = gtk_message_dialog_new_with_markup (
+                        GTK_WINDOW (shell->priv->app_window),
+                        GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                        GTK_MESSAGE_WARNING,
+                        GTK_BUTTONS_CANCEL,
+                        _("<big><b>Are you sure you want to start the array \"%s\" in degraded mode?</b></big>"),
+                        gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
+
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                          _("Starting a RAID array in degraded mode means that "
+                                                            "the RAID volume is no longer tolerant to drive "
+                                                            "failures. Data on the volume may be irrevocably "
+                                                            "lost if a drive fails."));
+
+                gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Start Array"), 0);
+
+                response = gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                if (response != 0)
+                        goto out;
         }
 
-        gdu_pool_op_assemble_linux_md_array (shell->priv->pool,
-                                             components,
-                                             assembly_completed,
-                                             start_data_new (ad, shell));
-
-        g_ptr_array_free (components, TRUE);
-        g_list_foreach (slaves, (GFunc) g_object_unref, NULL);
-        g_list_free (slaves);
-
+        gdu_activatable_drive_activate (ad,
+                                        start_cb,
+                                        g_object_ref (shell));
 out:
-        if (device != NULL)
-                g_object_unref (device);
+        ;
 }
 
 static void
 stop_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = user_data;
-        GduDevice *device;
-
-        device = NULL;
+        GduActivatableDrive *ad;
 
         if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
                 g_warning ("presentable is not an activatable drive");
                 goto out;
         }
 
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        if (device == NULL) {
-                g_warning ("no device for activatable drive");
+        ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
+
+        if (!gdu_activatable_drive_is_activated (ad)) {
+                g_warning ("activatable drive isn't activated; refusing to deactivate it");
                 goto out;
         }
 
-        gdu_device_op_stop_linux_md_array (device);
-
+        gdu_activatable_drive_deactivate (ad);
 out:
-        if (device != NULL)
-                g_object_unref (device);
+        ;
 }
 
 
@@ -983,16 +941,12 @@ create_ui_manager (GduShell *shell)
                                                                       shell->priv->pk_mount_action,
                                                                       _("_Unlock"),
                                                                       _("Unlock the encrypted device, making the data available in cleartext"));
-        /* TODO: the lock-secure and lock-insecure icons are from Epiphany.
-         *       Probably need to ship our own copy.
-         */
-
         g_object_set (shell->priv->unlock_action,
                       "auth-label", _("_Unlock..."),
-                      "yes-icon-name", "stock_lock-open",
-                      "no-icon-name", "stock_lock-open",
-                      "auth-icon-name", "stock_lock-open",
-                      "self-blocked-icon-name", "stock_lock-open",
+                      "yes-icon-name", "gdu-encrypted-unlock",
+                      "no-icon-name", "gdu-encrypted-unlock",
+                      "auth-icon-name", "gdu-encrypted-unlock",
+                      "self-blocked-icon-name", "gdu-encrypted-unlock",
                       NULL);
         g_signal_connect (shell->priv->unlock_action, "activate", G_CALLBACK (unlock_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->unlock_action));
@@ -1005,10 +959,10 @@ create_ui_manager (GduShell *shell)
                                                                     _("Lock the encrypted device, making the cleartext data unavailable"));
         g_object_set (shell->priv->lock_action,
                       "auth-label", _("_Lock..."),
-                      "yes-icon-name", "stock_lock",
-                      "no-icon-name", "stock_lock",
-                      "auth-icon-name", "stock_lock",
-                      "self-blocked-icon-name", "stock_lock",
+                      "yes-icon-name", "gdu-encrypted-lock",
+                      "no-icon-name", "gdu-encrypted-lock",
+                      "auth-icon-name", "gdu-encrypted-lock",
+                      "self-blocked-icon-name", "gdu-encrypted-lock",
                       NULL);
         g_signal_connect (shell->priv->lock_action, "activate", G_CALLBACK (lock_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->lock_action));
@@ -1022,10 +976,10 @@ create_ui_manager (GduShell *shell)
                                                                      _("Start the array"));
         g_object_set (shell->priv->start_action,
                       "auth-label", _("_Start..."),
-                      "yes-icon-name", "gtk-media-play-ltr", /* TODO: get suitable icon */
-                      "no-icon-name", "gtk-media-play-ltr",
-                      "auth-icon-name", "gtk-media-play-ltr",
-                      "self-blocked-icon-name", "gtk-media-play-ltr",
+                      "yes-icon-name", "gdu-raid-array-start",
+                      "no-icon-name", "gdu-raid-array-start",
+                      "auth-icon-name", "gdu-raid-array-start",
+                      "self-blocked-icon-name", "gdu-raid-array-start",
                       NULL);
         g_signal_connect (shell->priv->start_action, "activate", G_CALLBACK (start_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->start_action));
@@ -1038,10 +992,10 @@ create_ui_manager (GduShell *shell)
                                                                     _("Stop the array"));
         g_object_set (shell->priv->stop_action,
                       "auth-label", _("_Stop..."),
-                      "yes-icon-name", "gtk-media-stop", /* TODO: get suitable icon */
-                      "no-icon-name", "gtk-media-stop",
-                      "auth-icon-name", "gtk-media-stop",
-                      "self-blocked-icon-name", "gtk-media-stop",
+                      "yes-icon-name", "gdu-raid-array-stop",
+                      "no-icon-name", "gdu-raid-array-stop",
+                      "auth-icon-name", "gdu-raid-array-stop",
+                      "self-blocked-icon-name", "gdu-raid-array-stop",
                       NULL);
         g_signal_connect (shell->priv->stop_action, "activate", G_CALLBACK (stop_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->stop_action));
@@ -1171,7 +1125,7 @@ create_window (GduShell *shell)
                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
                                              GTK_SHADOW_IN);
-        shell->priv->treeview = GTK_WIDGET (gdu_tree_new (shell->priv->pool));
+        shell->priv->treeview = gdu_device_tree_new (shell->priv->pool);
         gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
 
         /* add pages in a notebook */
@@ -1246,6 +1200,6 @@ create_window (GduShell *shell)
 
         gtk_widget_show_all (vbox);
 
-        gdu_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
 }
 

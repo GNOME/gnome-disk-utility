@@ -725,7 +725,7 @@ update_raid_section (GduPageVolume *page, gboolean reset_page)
 {
         char *s;
         GduDevice *device;
-        int level;
+        const char *level;
         int num_raid_devices;
         const char *name;
         const char *raid_name;
@@ -740,22 +740,19 @@ update_raid_section (GduPageVolume *page, gboolean reset_page)
         num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
         name = gdu_device_linux_md_component_get_name (device);
 
-        switch (level) {
-        case 0:
+
+        if (strcmp (level, "raid0") == 0) {
                 raid_name = _("RAID-0 array");
-                break;
-        case 1:
+        } else if (strcmp (level, "raid1") == 0) {
                 raid_name = _("RAID-1 array");
-                break;
-        case 4:
+        } else if (strcmp (level, "raid4") == 0) {
                 raid_name = _("RAID-4 array");
-                break;
-        case 5:
+        } else if (strcmp (level, "raid5") == 0) {
                 raid_name = _("RAID-5 array");
-                break;
-        default:
+        } else if (strcmp (level, "raid6") == 0) {
+                raid_name = _("RAID-6 array");
+        } else {
                 raid_name = _("RAID array");
-                break;
         }
 
         if (name == NULL || strlen (name) == 0) {

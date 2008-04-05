@@ -133,18 +133,23 @@ guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
 
-int         gdu_device_linux_md_component_get_level (GduDevice *device);
+const char *gdu_device_linux_md_component_get_level (GduDevice *device);
 int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);
 const char *gdu_device_linux_md_component_get_uuid (GduDevice *device);
 const char *gdu_device_linux_md_component_get_name (GduDevice *device);
 const char *gdu_device_linux_md_component_get_version (GduDevice *device);
+guint64     gdu_device_linux_md_component_get_update_time (GduDevice *device);
+guint64     gdu_device_linux_md_component_get_events (GduDevice *device);
 
-int         gdu_device_linux_md_get_level (GduDevice *device);
+const char *gdu_device_linux_md_get_level (GduDevice *device);
 int         gdu_device_linux_md_get_num_raid_devices (GduDevice *device);
-const char *gdu_device_linux_md_get_uuid (GduDevice *device);
-const char *gdu_device_linux_md_get_name (GduDevice *device);
 const char *gdu_device_linux_md_get_version (GduDevice *device);
 char      **gdu_device_linux_md_get_slaves (GduDevice *device);
+char      **gdu_device_linux_md_get_slaves_state (GduDevice *device);
+gboolean    gdu_device_linux_md_is_degraded (GduDevice *device);
+const char *gdu_device_linux_md_get_sync_action (GduDevice *device);
+double      gdu_device_linux_md_get_sync_percentage (GduDevice *device);
+guint64     gdu_device_linux_md_get_sync_speed (GduDevice *device);
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* fire and forget ops */
@@ -170,6 +175,13 @@ void gdu_device_op_run_smart_selftest      (GduDevice   *device,
                                             gboolean     captive);
 
 void gdu_device_op_stop_linux_md_array     (GduDevice   *device);
+
+void gdu_device_op_add_component_to_linux_md_array (GduDevice   *device,
+                                                    const char  *component_objpath);
+
+void gdu_device_op_remove_component_from_linux_md_array (GduDevice   *device,
+                                                         const char  *component_objpath,
+                                                         const char  *secure_erase);
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* ops where feedback is essential */

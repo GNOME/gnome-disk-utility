@@ -33,6 +33,7 @@
 struct _GduVolumePrivate
 {
         GduDevice *device;
+        GduPool *pool;
         GduPresentable *enclosing_presentable;
 };
 
@@ -56,6 +57,9 @@ gdu_volume_finalize (GduVolume *volume)
                 g_signal_handlers_disconnect_by_func (volume->priv->device, device_removed, volume);
                 g_object_unref (volume->priv->device);
         }
+
+        if (volume->priv->pool != NULL)
+                g_object_unref (volume->priv->pool);
 
         if (volume->priv->enclosing_presentable != NULL)
                 g_object_unref (volume->priv->enclosing_presentable);
@@ -85,6 +89,7 @@ device_changed (GduDevice *device, gpointer user_data)
 {
         GduVolume *volume = GDU_VOLUME (user_data);
         g_signal_emit_by_name (volume, "changed");
+        g_signal_emit_by_name (volume->priv->pool, "presentable-changed", volume);
 }
 
 static void
@@ -92,6 +97,7 @@ device_job_changed (GduDevice *device, gpointer user_data)
 {
         GduVolume *volume = GDU_VOLUME (user_data);
         g_signal_emit_by_name (volume, "job-changed");
+        g_signal_emit_by_name (volume->priv->pool, "presentable-job-changed", volume);
 }
 
 static void
@@ -102,12 +108,13 @@ device_removed (GduDevice *device, gpointer user_data)
 }
 
 GduVolume *
-gdu_volume_new_from_device (GduDevice *device, GduPresentable *enclosing_presentable)
+gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *enclosing_presentable)
 {
         GduVolume *volume;
 
         volume = GDU_VOLUME (g_object_new (GDU_TYPE_VOLUME, NULL));
         volume->priv->device = g_object_ref (device);
+        volume->priv->pool = g_object_ref (pool);
         volume->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 

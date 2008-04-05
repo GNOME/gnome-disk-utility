@@ -1819,3 +1819,43 @@ gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
 out:
         return secure_erase;
 }
+
+GdkPixbuf *
+gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size)
+{
+        char *icon_name;
+        GdkPixbuf *pixbuf;
+
+        icon_name = gdu_presentable_get_icon_name (presentable);
+
+        pixbuf = NULL;
+        if (icon_name != NULL) {
+                int icon_width, icon_height;
+
+                if (!gtk_icon_size_lookup (size, &icon_width, &icon_height))
+                        icon_height = 48;
+
+                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                   icon_name,
+                                                   icon_height,
+                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                                   NULL);
+
+                /* if it's unallocated or unrecognized space, make the icon greyscale */
+                if (!gdu_presentable_is_allocated (presentable) ||
+                    !gdu_presentable_is_recognized (presentable)) {
+                        GdkPixbuf *pixbuf2;
+                        pixbuf2 = pixbuf;
+                        pixbuf = gdk_pixbuf_copy (pixbuf);
+                        g_object_unref (pixbuf2);
+                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
+                                                          pixbuf,
+                                                          0.0,
+                                                          FALSE);
+                }
+        }
+
+        g_free (icon_name);
+
+        return pixbuf;
+}

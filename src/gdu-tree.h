@@ -27,9 +27,37 @@
 
 #include "gdu-pool.h"
 
-GtkTreeView      *gdu_tree_new                      (GduPool     *pool);
-GduPresentable   *gdu_tree_get_selected_presentable (GtkTreeView *tree_view);
-void              gdu_tree_select_presentable       (GtkTreeView *tree_view, GduPresentable *presentable);
-void              gdu_tree_select_first_presentable (GtkTreeView *tree_view);
+#define GDU_TYPE_DEVICE_TREE             (gdu_device_tree_get_type ())
+#define GDU_DEVICE_TREE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE_TREE, GduDeviceTree))
+#define GDU_DEVICE_TREE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_DEVICE_TREE,  GduDeviceTreeClass))
+#define GDU_IS_DEVICE_TREE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_DEVICE_TREE))
+#define GDU_IS_DEVICE_TREE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_DEVICE_TREE))
+#define GDU_DEVICE_TREE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_DEVICE_TREE, GduDeviceTreeClass))
+
+typedef struct _GduDeviceTreeClass       GduDeviceTreeClass;
+typedef struct _GduDeviceTree            GduDeviceTree;
+
+struct _GduDeviceTreePrivate;
+typedef struct _GduDeviceTreePrivate     GduDeviceTreePrivate;
+
+struct _GduDeviceTree
+{
+        GtkTreeView parent;
+
+        /* private */
+        GduDeviceTreePrivate *priv;
+};
+
+struct _GduDeviceTreeClass
+{
+        GtkTreeViewClass parent_class;
+};
+
+
+GType             gdu_device_tree_get_type                 (void);
+GtkWidget        *gdu_device_tree_new                      (GduPool     *pool);
+GduPresentable   *gdu_device_tree_get_selected_presentable (GtkTreeView *tree_view);
+void              gdu_device_tree_select_presentable       (GtkTreeView *tree_view, GduPresentable *presentable);
+void              gdu_device_tree_select_first_presentable (GtkTreeView *tree_view);
 
 #endif /* GNOME_DISK_UTILITY_TREE_H */

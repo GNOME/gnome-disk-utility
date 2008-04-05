@@ -36,8 +36,12 @@
 enum {
         DEVICE_ADDED,
         DEVICE_REMOVED,
+        DEVICE_CHANGED,
+        DEVICE_JOB_CHANGED,
         PRESENTABLE_ADDED,
         PRESENTABLE_REMOVED,
+        PRESENTABLE_CHANGED,
+        PRESENTABLE_JOB_CHANGED,
         LAST_SIGNAL,
 };
 
@@ -55,7 +59,7 @@ struct _GduPoolPrivate
         GHashTable *volumes;            /* object path -> GduVolume* */
         GHashTable *drives;             /* object path -> GduDrive* */
 
-        GHashTable *activatable_drives; /* uuid -> GduActivatableDrive* */
+        GList *activatable_drives;
 
         GHashTable *drive_holes;         /* object path -> GList of GduVolumeHole* */
         GHashTable *drive_unrecognized;  /* object path -> GduVolume* */
@@ -111,7 +115,8 @@ gdu_pool_finalize (GduPool *pool)
         g_hash_table_unref (pool->priv->volumes);
         g_hash_table_unref (pool->priv->drives);
 
-        g_hash_table_unref (pool->priv->activatable_drives);
+        g_list_foreach (pool->priv->activatable_drives, (GFunc) g_object_unref, NULL);
+        g_list_free (pool->priv->activatable_drives);
 
         g_hash_table_unref (pool->priv->drive_holes);
         g_hash_table_unref (pool->priv->drive_unrecognized);
@@ -152,6 +157,26 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_DEVICE);
 
+        signals[DEVICE_CHANGED] =
+                g_signal_new ("device_changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, device_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_DEVICE);
+
+        signals[DEVICE_JOB_CHANGED] =
+                g_signal_new ("device_job_changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, device_job_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_DEVICE);
+
         signals[PRESENTABLE_ADDED] =
                 g_signal_new ("presentable_added",
                               G_TYPE_FROM_CLASS (klass),
@@ -167,6 +192,26 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, presentable_removed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_PRESENTABLE);
+
+        signals[PRESENTABLE_CHANGED] =
+                g_signal_new ("presentable_changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, presentable_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_PRESENTABLE);
+
+        signals[PRESENTABLE_CHANGED] =
+                g_signal_new ("presentable_job_changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, presentable_job_changed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__OBJECT,
                               G_TYPE_NONE, 1,
@@ -420,7 +465,7 @@ update_whole_disk (GduPool *pool, GduDrive *drive, GduDevice *device, const char
                 /* add volume for whole disk device if it's not there already */
                 volume = g_hash_table_lookup (pool->priv->volumes, object_path);
                 if (volume == NULL) {
-                        volume = gdu_volume_new_from_device (device, GDU_PRESENTABLE (drive));
+                        volume = gdu_volume_new_from_device (pool, device, GDU_PRESENTABLE (drive));
                         g_hash_table_insert (pool->priv->volumes,
                                              g_strdup (object_path),
                                              g_object_ref (volume));
@@ -429,6 +474,103 @@ update_whole_disk (GduPool *pool, GduDrive *drive, GduDevice *device, const char
                         g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
                 }
         }
+}
+
+
+static GduActivatableDrive *
+find_activatable_drive_for_linux_md_component (GduPool *pool, GduDevice *device)
+{
+        GList *l;
+        GduActivatableDrive *ad;
+        const char *uuid;
+
+        ad = NULL;
+
+        if (!gdu_device_is_linux_md_component (device)) {
+                g_warning ("not linux md component");
+                goto out;
+        }
+
+        uuid = gdu_device_linux_md_component_get_uuid (device);
+
+        for (l = pool->priv->activatable_drives; l != NULL; l = l->next) {
+                ad = l->data;
+
+                if (gdu_activatable_drive_has_uuid (ad, uuid))
+                        goto out;
+
+                if (gdu_activatable_drive_device_references_slave (ad, device))
+                        goto out;
+        }
+
+        ad = NULL;
+
+out:
+        return ad;
+}
+
+static void
+ensure_activatable_drive_for_linux_md_component (GduPool *pool, GduDevice *device)
+{
+        GduActivatableDrive *activatable_drive;
+
+        activatable_drive = find_activatable_drive_for_linux_md_component (pool, device);
+
+        /* create it unless we have it already */
+        if (activatable_drive == NULL) {
+                activatable_drive = gdu_activatable_drive_new (pool,
+                                                               GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD);
+
+                pool->priv->activatable_drives = g_list_prepend (pool->priv->activatable_drives,
+                                                                 g_object_ref (activatable_drive));
+
+                /* and we're part of the gang */
+                pool->priv->presentables = g_list_prepend (pool->priv->presentables,
+                                                           GDU_PRESENTABLE (activatable_drive));
+                g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (activatable_drive));
+        }
+
+        /* add ourselves to the drive if we're not already part of it */
+        if (!gdu_activatable_drive_has_slave (activatable_drive, device))
+                gdu_activatable_drive_add_slave (activatable_drive, device);
+}
+
+static GduActivatableDrive *
+find_activatable_drive_for_linux_md_array (GduPool *pool, GduDevice *device)
+{
+        int n;
+        GList *l;
+        char **slaves;
+        GduActivatableDrive *ad;
+
+        ad = NULL;
+
+        if (!gdu_device_is_linux_md (device)) {
+                g_warning ("not linux md array");
+                goto out;
+        }
+
+        /* TODO: if this is too slow we can optimize by having back-links on GduDevice */
+
+        slaves = gdu_device_linux_md_get_slaves (device);
+        for (n = 0; slaves[n] != NULL; n++) {
+                GduDevice *slave;
+
+                slave = g_hash_table_lookup (pool->priv->devices, slaves[n]);
+                if (slave == NULL)
+                        continue;
+
+                for (l = pool->priv->activatable_drives; l != NULL; l = l->next) {
+                        ad = l->data;
+                        if (gdu_activatable_drive_has_slave (ad, slave))
+                                goto out;
+                }
+        }
+
+        ad = NULL;
+
+out:
+        return ad;
 }
 
 static GduDevice *
@@ -450,26 +592,41 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
 
                         /* we may have a GduActivatableDrive for this sucker already */
                         if (gdu_device_is_linux_md (device)) {
-                                const char *uuid;
                                 GduActivatableDrive *activatable_drive;
 
-                                uuid = gdu_device_linux_md_get_uuid (device);
-                                activatable_drive = g_hash_table_lookup (pool->priv->activatable_drives, uuid);
-                                if (activatable_drive != NULL) {
-                                        /* yup, we do.. and now that GduActivatableDrive got a backing device */
-                                        gdu_activatable_drive_set_device (activatable_drive, device);
+                                activatable_drive = find_activatable_drive_for_linux_md_array (pool, device);
+                                if (activatable_drive == NULL) {
+                                        /* No activatable drive.. this can indeed happen when a new array is
+                                         * created on the command line; then we get an add for the array
+                                         * before the components.
+                                         *
+                                         * (The components will follow shortly though; this is because
+                                         * DeviceKit-disks triggers a change even on all components of
+                                         * an array on 'change', 'add' and 'remove' of said array).
+                                         */
 
-                                        drive = GDU_DRIVE (activatable_drive);
+                                        activatable_drive = gdu_activatable_drive_new (
+                                                pool, GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD);
 
-                                        /* and now that we have a backing device.. we can part of the drives hash */
-                                        g_hash_table_insert (pool->priv->drives, g_strdup (object_path),
-                                                             g_object_ref (drive));
+                                        pool->priv->activatable_drives = g_list_prepend (
+                                                pool->priv->activatable_drives, g_object_ref (activatable_drive));
+
                                 }
+
+                                /* we've got a backing device */
+                                gdu_activatable_drive_set_device (activatable_drive, device);
+
+                                drive = GDU_DRIVE (activatable_drive);
+
+                                /* and now that we have a backing device.. we can part of the drives hash */
+                                g_hash_table_insert (pool->priv->drives, g_strdup (object_path),
+                                                     g_object_ref (drive));
+
                         }
 
                         /* otherwise do create a new GduDrive object */
                         if (drive == NULL) {
-                                drive = gdu_drive_new_from_device (device);
+                                drive = gdu_drive_new_from_device (pool, device);
                                 g_hash_table_insert (pool->priv->drives, g_strdup (object_path), g_object_ref (drive));
                                 pool->priv->presentables = g_list_prepend (pool->priv->presentables, GDU_PRESENTABLE (drive));
                                 g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (drive));
@@ -545,7 +702,7 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                         }
 
                         /* add the partition */
-                        volume = gdu_volume_new_from_device (device, enclosing_presentable);
+                        volume = gdu_volume_new_from_device (pool, device, enclosing_presentable);
                         g_hash_table_insert (pool->priv->volumes, g_strdup (object_path), g_object_ref (volume));
                         pool->priv->presentables = g_list_prepend (pool->priv->presentables, GDU_PRESENTABLE (volume));
                         g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (volume));
@@ -587,7 +744,7 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                         if (enclosing_volume != NULL) {
                                 GduVolume *volume;
 
-                                volume = gdu_volume_new_from_device (device, GDU_PRESENTABLE (enclosing_volume));
+                                volume = gdu_volume_new_from_device (pool, device, GDU_PRESENTABLE (enclosing_volume));
                                 g_hash_table_insert (pool->priv->volumes,
                                                      g_strdup (object_path),
                                                      g_object_ref (volume));
@@ -603,30 +760,7 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
          *  - TODO: LVM Physical Volumes
          */
         if (gdu_device_is_linux_md_component (device)) {
-                const char *uuid;
-                GduActivatableDrive *activatable_drive;
-
-                uuid = gdu_device_linux_md_component_get_uuid (device);
-                activatable_drive = g_hash_table_lookup (pool->priv->activatable_drives, uuid);
-
-                /* creat it unless we have it already */
-                if (activatable_drive == NULL) {
-
-                        activatable_drive = gdu_activatable_drive_new (pool,
-                                                                       GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD,
-                                                                       uuid);
-
-                        g_hash_table_insert (pool->priv->activatable_drives, (gpointer) uuid,
-                                             g_object_ref (activatable_drive));
-
-                        /* and we're part of the gang */
-                        pool->priv->presentables = g_list_prepend (pool->priv->presentables,
-                                                                   GDU_PRESENTABLE (activatable_drive));
-                        g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (activatable_drive));
-                }
-
-                /* add ourselves to the drive */
-                gdu_activatable_drive_add_slave (activatable_drive, device);
+                ensure_activatable_drive_for_linux_md_component (pool, device);
         }
 
         return device;
@@ -638,6 +772,27 @@ device_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointe
         GduPool *pool = GDU_POOL (user_data);
 
         gdu_pool_add_device_by_object_path (pool, object_path);
+}
+
+static void
+remove_activatable_drive_if_empty (GduPool *pool, GduActivatableDrive *activatable_drive)
+{
+        if (!gdu_activatable_drive_is_device_set (activatable_drive) &&
+            gdu_activatable_drive_get_num_slaves (activatable_drive) == 0) {
+                /* no device and no slaves -> remove */
+                pool->priv->activatable_drives= g_list_remove (
+                        pool->priv->activatable_drives, activatable_drive);
+                g_object_unref (activatable_drive);
+
+                pool->priv->presentables = g_list_remove (
+                        pool->priv->presentables,
+                        GDU_PRESENTABLE (activatable_drive));
+
+                g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0,
+                               GDU_PRESENTABLE (activatable_drive));
+
+                g_object_unref (activatable_drive);
+        }
 }
 
 static void
@@ -660,13 +815,12 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
                 /* set device to NULL for activatable drive if we go away */
                 if (gdu_device_is_linux_md (device)) {
-                        const char *uuid;
                         GduActivatableDrive *activatable_drive;
 
-                        uuid = gdu_device_linux_md_get_uuid (device);
-                        activatable_drive = g_hash_table_lookup (pool->priv->activatable_drives, uuid);
+                        activatable_drive = find_activatable_drive_for_linux_md_array (pool, device);
                         if (activatable_drive != NULL) {
                                 gdu_activatable_drive_set_device (activatable_drive, NULL);
+                                remove_activatable_drive_if_empty (pool, activatable_drive);
                         }
                 }
 
@@ -686,38 +840,14 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
                                 g_object_unref (d);
                 }
 
-                /* remove activable drive if the last component goes away */
+                /* remove activatable drive if the last component goes away */
                 if (gdu_device_is_linux_md_component (device)) {
-                        const char *uuid;
                         GduActivatableDrive *activatable_drive;
 
-                        uuid = gdu_device_linux_md_component_get_uuid (device);
-                        activatable_drive = g_hash_table_lookup (pool->priv->activatable_drives, uuid);
+                        activatable_drive = find_activatable_drive_for_linux_md_component (pool, device);
                         if (activatable_drive != NULL) {
-                                GList *slaves;
-
                                 gdu_activatable_drive_remove_slave (activatable_drive, device);
-                                slaves = gdu_activatable_drive_get_slaves (activatable_drive);
-                                if (slaves == NULL) {
-                                        /* we're the last slave and we're toast; tear down
-                                         * the activatable drive
-                                         */
-
-                                        g_hash_table_remove (pool->priv->activatable_drives, uuid);
-
-                                        pool->priv->presentables = g_list_remove (
-                                                pool->priv->presentables,
-                                                GDU_PRESENTABLE (activatable_drive));
-
-                                        g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0,
-                                                       GDU_PRESENTABLE (activatable_drive));
-
-                                        g_object_unref (activatable_drive);
-
-                                } else {
-                                        g_list_foreach (slaves, (GFunc) g_object_unref, NULL);
-                                        g_list_free (slaves);
-                                }
+                                remove_activatable_drive_if_empty (pool, activatable_drive);
                         }
                 }
 
@@ -734,8 +864,32 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         if ((device = gdu_pool_get_by_object_path (pool, object_path)) != NULL) {
                 GduDrive *drive;
+                GduActivatableDrive *ad_before;
+
+                ad_before = NULL;
+                if (gdu_device_is_linux_md_component (device))
+                        ad_before = find_activatable_drive_for_linux_md_component (pool, device);
 
                 gdu_device_changed (device);
+                g_signal_emit_by_name (pool, "device-changed", device);
+
+                if (ad_before != NULL) {
+                        GduActivatableDrive *ad;
+
+                        ad = find_activatable_drive_for_linux_md_component (pool, device);
+                        if (ad != ad_before) {
+                                /* no longer part of ad_before; remove */
+                                gdu_activatable_drive_remove_slave (ad_before, device);
+                                remove_activatable_drive_if_empty (pool, ad_before);
+                        }
+                }
+
+                /* device may have become a linux md component; make sure it's
+                 * added to an Activatable Drive if so
+                 */
+                if (gdu_device_is_linux_md_component (device)) {
+                        ensure_activatable_drive_for_linux_md_component (pool, device);
+                }
 
                 drive = g_hash_table_lookup (pool->priv->drives, object_path);
                 if (drive != NULL)
@@ -748,6 +902,7 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         } else {
                 g_warning ("unknown device to on change, object_path='%s'", object_path);
         }
+
 }
 
 static void
@@ -774,6 +929,7 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
                                         job_cur_task,
                                         job_cur_task_id,
                                         job_cur_task_percentage);
+                g_signal_emit_by_name (pool, "device-job-changed", device);
         } else {
                 g_warning ("unknown device to on job-change, object_path='%s'", object_path);
         }
@@ -812,7 +968,6 @@ gdu_pool_new (void)
         pool->priv->devices = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->volumes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-        pool->priv->activatable_drives = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
         pool->priv->drive_holes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, free_list_of_holes);
         pool->priv->drive_unrecognized = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 
@@ -965,6 +1120,19 @@ gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable)
         return ret;
 }
 
+GduPresentable *
+gdu_pool_get_volume_by_device (GduPool *pool, GduDevice *device)
+{
+        GduVolume *volume;
+
+        volume = g_hash_table_lookup (pool->priv->volumes, gdu_device_get_object_path (device));
+        if (volume != NULL)
+                return g_object_ref (volume);
+        else
+                return NULL;
+}
+
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct {
@@ -979,7 +1147,7 @@ op_assemble_linux_md_array_cb (DBusGProxy *proxy, char *assembled_array_object_p
         AssembleLinuxMdArrayData *data = user_data;
 
         if (error != NULL) {
-                g_warning ("op_change_secret_for_encrypted_cb failed: %s", error->message);
+                g_warning ("op_assemble_linux_md_array_cb failed: %s", error->message);
                 data->callback (data->pool, NULL, error, data->user_data);
         } else {
                 data->callback (data->pool, assembled_array_object_path, error, data->user_data);

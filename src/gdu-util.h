@@ -124,5 +124,6 @@ gboolean gdu_util_delete_secret (GduDevice *device);
 
 gboolean gdu_util_have_secret (GduDevice *device);
 
+GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
 
 #endif /* GDU_UTIL_H */

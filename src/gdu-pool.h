@@ -53,18 +53,23 @@ struct _GduPoolClass
         /* signals */
         void (*device_added) (GduPool *pool, GduDevice *device);
         void (*device_removed) (GduPool *pool, GduDevice *device);
+        void (*device_changed) (GduPool *pool, GduDevice *device);
+        void (*device_job_changed) (GduPool *pool, GduDevice *device);
         void (*presentable_added) (GduPool *pool, GduPresentable *presentable);
         void (*presentable_removed) (GduPool *pool, GduPresentable *presentable);
+        void (*presentable_changed) (GduPool *pool, GduPresentable *presentable);
+        void (*presentable_job_changed) (GduPool *pool, GduPresentable *presentable);
 };
 
 GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
 GduDevice  *gdu_pool_get_by_object_path (GduPool *pool, const char *object_path);
 
+GduPresentable *gdu_pool_get_volume_by_device      (GduPool *pool, GduDevice *device);
+
 GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);
 GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable);
-
 
 /* ---------------------------------------------------------------------------------------------------- */
 

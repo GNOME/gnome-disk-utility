@@ -56,20 +56,72 @@ typedef enum {
         GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD,
 } GduActivableDriveKind;
 
+/**
+ * GduActivableDriveSlaveState:
+ * @GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING: The drive is activated and the
+ * slave is part of it.
+ * @GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_SYNCING: The drive is activated
+ * and the slave is part of the array but is in the process of being synced
+ * into the array (e.g. it was recently added).
+ * @GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE: The drive is activated and
+   the slave is a hot spare ready to kick in if a drive fails.
+ * @GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_READY: The drive is not activated and the
+ * slave, compared to other slaves, is a valid member of the array.
+ * @GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH: Either the drive is not
+ * activated but the slave, compared to other slaves, is not valid since
+ * other slaves have higher event numbers / more recent usage dates / etc.
+ * Otherwise, if the drive is activated, slaves with this type have valid
+ * meta-data (e.g. uuid) but is not part of the array (typically happens
+ * if the wire connecting the slave was temporarily disconnected).
+ *
+ * State for slaves of an activatable drive.
+ **/
+typedef enum {
+        GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING,
+        GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_SYNCING,
+        GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE,
+        GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_READY,
+        GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH,
+} GduActivableDriveSlaveState;
+
 GType                  gdu_activatable_drive_get_type        (void);
 GduActivatableDrive   *gdu_activatable_drive_new             (GduPool              *pool,
-                                                              GduActivableDriveKind kind,
-                                                              const char           *uuid);
+                                                              GduActivableDriveKind kind);
 void                   gdu_activatable_drive_set_device      (GduActivatableDrive  *activatable_drive,
                                                               GduDevice            *device);
+gboolean               gdu_activatable_drive_is_device_set   (GduActivatableDrive  *activatable_drive);
 void                   gdu_activatable_drive_add_slave       (GduActivatableDrive  *activatable_drive,
                                                               GduDevice            *device);
 void                   gdu_activatable_drive_remove_slave    (GduActivatableDrive  *activatable_drive,
                                                               GduDevice            *device);
+gboolean               gdu_activatable_drive_has_uuid        (GduActivatableDrive  *activatable_drive,
+                                                              const char *uuid);
+gboolean               gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
+                                                                      GduDevice *device);
+
+gboolean               gdu_activatable_drive_has_slave    (GduActivatableDrive  *activatable_drive,
+                                                           GduDevice            *device);
 GList                 *gdu_activatable_drive_get_slaves      (GduActivatableDrive  *activatable_drive);
 GduDevice             *gdu_activatable_drive_get_first_slave (GduActivatableDrive  *activatable_drive);
 int                    gdu_activatable_drive_get_num_slaves  (GduActivatableDrive *activatable_drive);
+int                    gdu_activatable_drive_get_num_ready_slaves (GduActivatableDrive *activatable_drive);
 GduActivableDriveKind  gdu_activatable_drive_get_kind        (GduActivatableDrive  *activatable_drive);
 
+typedef void (*GduActivatableDriveActivationFunc) (GduActivatableDrive *activatable_drive,
+                                                   gboolean success,
+                                                   GError *error,
+                                                   gpointer user_data);
+
+
+gboolean               gdu_activatable_drive_is_activated          (GduActivatableDrive  *activatable_drive);
+gboolean               gdu_activatable_drive_can_activate          (GduActivatableDrive  *activatable_drive);
+gboolean               gdu_activatable_drive_can_activate_degraded (GduActivatableDrive  *activatable_drive);
+void                   gdu_activatable_drive_activate              (GduActivatableDrive  *activatable_drive,
+                                                                    GduActivatableDriveActivationFunc callback,
+                                                                    gpointer                          user_data);
+void                   gdu_activatable_drive_deactivate            (GduActivatableDrive  *activatable_drive);
+
+GduActivableDriveSlaveState gdu_activatable_drive_get_slave_state (GduActivatableDrive  *activatable_drive,
+                                                                   GduDevice            *slave);
 
 #endif /* GDU_ACTIVATABLE_DRIVE_H */

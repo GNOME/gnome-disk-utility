@@ -32,6 +32,7 @@
 struct _GduDrivePrivate
 {
         GduDevice *device;
+        GduPool *pool;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -54,6 +55,9 @@ gdu_drive_finalize (GduDrive *drive)
                 g_signal_handlers_disconnect_by_func (drive->priv->device, device_removed, drive);
                 g_object_unref (drive->priv->device);
         }
+
+        if (drive->priv->pool != NULL)
+                g_object_unref (drive->priv->pool);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (drive));
@@ -81,6 +85,7 @@ device_changed (GduDevice *device, gpointer user_data)
 {
         GduDrive *drive = GDU_DRIVE (user_data);
         g_signal_emit_by_name (drive, "changed");
+        g_signal_emit_by_name (drive->priv->pool, "presentable-changed", drive);
 }
 
 static void
@@ -88,6 +93,7 @@ device_job_changed (GduDevice *device, gpointer user_data)
 {
         GduDrive *drive = GDU_DRIVE (user_data);
         g_signal_emit_by_name (drive, "job-changed");
+        g_signal_emit_by_name (drive->priv->pool, "presentable-job-changed", drive);
 }
 
 static void
@@ -98,12 +104,13 @@ device_removed (GduDevice *device, gpointer user_data)
 }
 
 GduDrive *
-gdu_drive_new_from_device (GduDevice *device)
+gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
 {
         GduDrive *drive;
 
         drive = GDU_DRIVE (g_object_new (GDU_TYPE_DRIVE, NULL));
         drive->priv->device = g_object_ref (device);
+        drive->priv->pool = g_object_ref (pool);
         g_signal_connect (device, "changed", (GCallback) device_changed, drive);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, drive);
         g_signal_connect (device, "removed", (GCallback) device_removed, drive);

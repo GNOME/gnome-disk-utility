@@ -100,18 +100,23 @@ typedef struct
         char   **drive_media_compatibility;
         char    *drive_media;
 
-        int      linux_md_component_level;
+        char    *linux_md_component_level;
         int      linux_md_component_num_raid_devices;
         char    *linux_md_component_uuid;
         char    *linux_md_component_name;
         char    *linux_md_component_version;
+        guint64  linux_md_component_update_time;
+        guint64  linux_md_component_events;
 
-        int      linux_md_level;
+        char    *linux_md_level;
         int      linux_md_num_raid_devices;
-        char    *linux_md_uuid;
-        char    *linux_md_name;
         char    *linux_md_version;
         char   **linux_md_slaves;
+        char   **linux_md_slaves_state;
+        gboolean linux_md_is_degraded;
+        char    *linux_md_sync_action;
+        double   linux_md_sync_percentage;
+        guint64  linux_md_sync_speed;
 } DeviceProperties;
 
 static void
@@ -241,7 +246,7 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_media = g_strdup (g_value_get_string (value));
 
         else if (strcmp (key, "linux-md-component-level") == 0)
-                props->linux_md_component_level = g_value_get_int (value);
+                props->linux_md_component_level = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-num-raid-devices") == 0)
                 props->linux_md_component_num_raid_devices = g_value_get_int (value);
         else if (strcmp (key, "linux-md-component-uuid") == 0)
@@ -250,15 +255,15 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->linux_md_component_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-version") == 0)
                 props->linux_md_component_version = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-component-update-time") == 0)
+                props->linux_md_component_update_time = g_value_get_uint64 (value);
+        else if (strcmp (key, "linux-md-component-events") == 0)
+                props->linux_md_component_events = g_value_get_uint64 (value);
 
         else if (strcmp (key, "linux-md-level") == 0)
-                props->linux_md_level = g_value_get_int (value);
+                props->linux_md_level = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-num-raid-devices") == 0)
                 props->linux_md_num_raid_devices = g_value_get_int (value);
-        else if (strcmp (key, "linux-md-uuid") == 0)
-                props->linux_md_uuid = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "linux-md-name") == 0)
-                props->linux_md_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-version") == 0)
                 props->linux_md_version = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-slaves") == 0) {
@@ -272,6 +277,16 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                         props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
                 props->linux_md_slaves[n] = NULL;
         }
+        else if (strcmp (key, "linux-md-slaves-state") == 0)
+                props->linux_md_slaves_state = g_strdupv (g_value_get_boxed (value));
+        else if (strcmp (key, "linux-md-is-degraded") == 0)
+                props->linux_md_is_degraded = g_value_get_boolean (value);
+        else if (strcmp (key, "linux-md-sync-action") == 0)
+                props->linux_md_sync_action = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-sync-percentage") == 0)
+                props->linux_md_sync_percentage = g_value_get_double (value);
+        else if (strcmp (key, "linux-md-sync-speed") == 0)
+                props->linux_md_sync_speed = g_value_get_uint64 (value);
 
         else
                 handled = FALSE;
@@ -351,13 +366,15 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_connection_interface);
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
+        g_free (props->linux_md_component_level);
         g_free (props->linux_md_component_uuid);
         g_free (props->linux_md_component_name);
         g_free (props->linux_md_component_version);
-        g_free (props->linux_md_uuid);
-        g_free (props->linux_md_name);
+        g_free (props->linux_md_level);
         g_free (props->linux_md_version);
         g_strfreev (props->linux_md_slaves);
+        g_strfreev (props->linux_md_slaves_state);
+        g_free (props->linux_md_sync_action);
         g_free (props);
 }
 
@@ -847,7 +864,7 @@ gdu_device_drive_get_media (GduDevice *device)
         return device->priv->props->drive_media;
 }
 
-int
+const char *
 gdu_device_linux_md_component_get_level (GduDevice *device)
 {
         return device->priv->props->linux_md_component_level;
@@ -877,7 +894,19 @@ gdu_device_linux_md_component_get_version (GduDevice *device)
         return device->priv->props->linux_md_component_version;
 }
 
-int
+guint64
+gdu_device_linux_md_component_get_update_time (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_update_time;
+}
+
+guint64
+gdu_device_linux_md_component_get_events (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_events;
+}
+
+const char *
 gdu_device_linux_md_get_level (GduDevice *device)
 {
         return device->priv->props->linux_md_level;
@@ -887,18 +916,6 @@ int
 gdu_device_linux_md_get_num_raid_devices (GduDevice *device)
 {
         return device->priv->props->linux_md_num_raid_devices;
-}
-
-const char *
-gdu_device_linux_md_get_uuid (GduDevice *device)
-{
-        return device->priv->props->linux_md_uuid;
-}
-
-const char *
-gdu_device_linux_md_get_name (GduDevice *device)
-{
-        return device->priv->props->linux_md_name;
 }
 
 const char *
@@ -912,6 +929,38 @@ gdu_device_linux_md_get_slaves (GduDevice *device)
 {
         return device->priv->props->linux_md_slaves;
 }
+
+char **
+gdu_device_linux_md_get_slaves_state (GduDevice *device)
+{
+        return device->priv->props->linux_md_slaves_state;
+}
+
+gboolean
+gdu_device_linux_md_is_degraded (GduDevice *device)
+{
+        return device->priv->props->linux_md_is_degraded;
+}
+
+const char *
+gdu_device_linux_md_get_sync_action (GduDevice *device)
+{
+        return device->priv->props->linux_md_sync_action;
+}
+
+double
+gdu_device_linux_md_get_sync_percentage (GduDevice *device)
+{
+        return device->priv->props->linux_md_sync_percentage;
+}
+
+guint64
+gdu_device_linux_md_get_sync_speed (GduDevice *device)
+{
+        return device->priv->props->linux_md_sync_speed;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 gboolean
 gdu_device_job_in_progress (GduDevice *device)
@@ -1576,6 +1625,74 @@ gdu_device_op_stop_linux_md_array (GduDevice *device)
                                                                           (const char **) options,
                                                                           op_stop_linux_md_array_cb,
                                                                           g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_add_component_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_add_component_to_linux_md_array_cb failed: %s", error->message);
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_add_component_to_linux_md_array (GduDevice *device, const char *component_objpath)
+{
+        char *options[16];
+
+        options[0] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_add_component_to_linux_md_array_async (
+                device->priv->proxy,
+                component_objpath,
+                (const char **) options,
+                op_add_component_to_linux_md_array_cb,
+                g_object_ref (device));
+}
+
+/* -------------------------------------------------------------------------------- */
+
+static void
+op_remove_component_from_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        GduDevice *device = GDU_DEVICE (user_data);
+        if (error != NULL) {
+                g_warning ("op_remove_component_from_linux_md_array_cb failed: %s", error->message);
+                gdu_device_job_set_failed (device, error);
+                g_error_free (error);
+        }
+        g_object_unref (device);
+}
+
+void
+gdu_device_op_remove_component_from_linux_md_array (GduDevice *device,
+                                                    const char *component_objpath,
+                                                    const char *secure_erase)
+{
+        int n;
+        char *options[16];
+
+        n = 0;
+        if (secure_erase != NULL && strlen (secure_erase) > 0) {
+                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
+        }
+        options[n] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_remove_component_from_linux_md_array_async (
+                device->priv->proxy,
+                component_objpath,
+                (const char **) options,
+                op_remove_component_from_linux_md_array_cb,
+                g_object_ref (device));
+
+        while (n >= 0)
+                g_free (options[n--]);
 }
 
 /* -------------------------------------------------------------------------------- */

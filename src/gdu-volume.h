@@ -51,6 +51,6 @@ struct _GduVolumeClass
 };
 
 GType        gdu_volume_get_type              (void);
-GduVolume   *gdu_volume_new_from_device       (GduDevice *volume, GduPresentable *enclosing_presentable);
+GduVolume   *gdu_volume_new_from_device       (GduPool *pool, GduDevice *volume, GduPresentable *enclosing_presentable);
 
 #endif /* GDU_VOLUME_H */

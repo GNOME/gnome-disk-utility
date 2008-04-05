@@ -26,6 +26,29 @@
 #include "gdu-util.h"
 #include "gdu-tree.h"
 
+
+struct _GduDeviceTreePrivate
+{
+        GduPresentable *presentable;
+        GduPool *pool;
+};
+
+static GObjectClass *parent_class = NULL;
+
+G_DEFINE_TYPE (GduDeviceTree, gdu_device_tree, GTK_TYPE_TREE_VIEW)
+
+static void device_tree_presentable_added (GduPool *pool, GduPresentable *presentable, gpointer user_data);
+static void device_tree_presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data);
+static void device_tree_presentable_changed (GduPool *pool, GduPresentable *presentable, gpointer user_data);
+static void add_presentable_to_tree (GduDeviceTree *device_tree, GduPresentable *presentable, GtkTreeIter *iter_out);
+
+static gint sort_iter_compare_func (GtkTreeModel *model, GtkTreeIter  *a, GtkTreeIter  *b, gpointer userdata);
+
+enum {
+        PROP_0,
+        PROP_POOL,
+};
+
 enum
 {
         ICON_COLUMN,
@@ -34,6 +57,157 @@ enum
         SORTNAME_COLUMN,
         N_COLUMNS
 };
+
+static void
+update_pool (GduDeviceTree *device_tree)
+{
+        GList *presentables;
+        GList *l;
+
+        presentables = gdu_pool_get_presentables (device_tree->priv->pool);
+        for (l = presentables; l != NULL; l = l->next) {
+                GduPresentable *presentable = GDU_PRESENTABLE (l->data);
+                add_presentable_to_tree (device_tree, presentable, NULL);
+                g_object_unref (presentable);
+        }
+        g_list_free (presentables);
+
+        /* add/remove/change rows when the pool reports presentable add/remove/change */
+        g_signal_connect (device_tree->priv->pool, "presentable-added",
+                          (GCallback) device_tree_presentable_added, device_tree);
+        g_signal_connect (device_tree->priv->pool, "presentable-removed",
+                          (GCallback) device_tree_presentable_removed, device_tree);
+        g_signal_connect (device_tree->priv->pool, "presentable-changed",
+                          (GCallback) device_tree_presentable_changed, device_tree);
+}
+
+static void
+gdu_device_tree_set_property (GObject      *object,
+                              guint         prop_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+        GduDeviceTree *device_tree = GDU_DEVICE_TREE (object);
+        gpointer obj;
+
+        switch (prop_id) {
+        case PROP_POOL:
+                if (device_tree->priv->pool != NULL)
+                        g_object_unref (device_tree->priv->pool);
+                obj = g_value_get_object (value);
+                device_tree->priv->pool = (obj == NULL ? NULL : g_object_ref (obj));
+                update_pool (device_tree);
+                break;
+
+        default:
+                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+                break;
+        }
+}
+
+static void
+gdu_device_tree_get_property (GObject     *object,
+                                    guint        prop_id,
+                                    GValue      *value,
+                                    GParamSpec  *pspec)
+{
+        GduDeviceTree *device_tree = GDU_DEVICE_TREE (object);
+
+        switch (prop_id) {
+        case PROP_POOL:
+                g_value_set_object (value, device_tree->priv->pool);
+                break;
+
+        default:
+                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+                break;
+    }
+}
+
+static void
+gdu_device_tree_finalize (GduDeviceTree *device_tree)
+{
+        g_signal_handlers_disconnect_by_func (device_tree->priv->pool, device_tree_presentable_added, device_tree);
+        g_signal_handlers_disconnect_by_func (device_tree->priv->pool, device_tree_presentable_removed, device_tree);
+        g_signal_handlers_disconnect_by_func (device_tree->priv->pool, device_tree_presentable_changed, device_tree);
+
+        if (device_tree->priv->pool != NULL)
+                g_object_unref (device_tree->priv->pool);
+
+        if (G_OBJECT_CLASS (parent_class)->finalize)
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (device_tree));
+}
+
+static void
+gdu_device_tree_class_init (GduDeviceTreeClass *klass)
+{
+        GObjectClass *obj_class = (GObjectClass *) klass;
+
+        parent_class = g_type_class_peek_parent (klass);
+
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_device_tree_finalize;
+        obj_class->set_property = gdu_device_tree_set_property;
+        obj_class->get_property = gdu_device_tree_get_property;
+
+        /**
+         * GduDeviceTree:pool:
+         *
+         * The #GduPool instance we are getting information from
+         */
+        g_object_class_install_property (obj_class,
+                                         PROP_POOL,
+                                         g_param_spec_object ("pool",
+                                                              NULL,
+                                                              NULL,
+                                                              GDU_TYPE_POOL,
+                                                              G_PARAM_WRITABLE |
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gdu_device_tree_init (GduDeviceTree *device_tree)
+{
+        GtkCellRenderer *renderer;
+        GtkTreeViewColumn *column;
+        GtkTreeStore *store;
+
+        device_tree->priv = g_new0 (GduDeviceTreePrivate, 1);
+
+        store = gtk_tree_store_new (N_COLUMNS,
+                                    GDK_TYPE_PIXBUF,
+                                    G_TYPE_STRING,
+                                    GDU_TYPE_PRESENTABLE,
+                                    G_TYPE_STRING);
+
+        gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store), SORTNAME_COLUMN, sort_iter_compare_func,
+                                         NULL, NULL);
+        gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), SORTNAME_COLUMN, GTK_SORT_ASCENDING);
+
+        gtk_tree_view_set_model (GTK_TREE_VIEW (device_tree), GTK_TREE_MODEL (store));
+        /* TODO: when GTK 2.12 is available... we can do this */
+        /*gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree), FALSE);*/
+
+        column = gtk_tree_view_column_new ();
+        gtk_tree_view_column_set_title (column, "Title");
+        renderer = gtk_cell_renderer_pixbuf_new ();
+        gtk_tree_view_column_pack_start (column, renderer, FALSE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "pixbuf", ICON_COLUMN,
+                                             NULL);
+        renderer = gtk_cell_renderer_text_new ();
+        gtk_tree_view_column_pack_start (column, renderer, TRUE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "text", TITLE_COLUMN,
+                                             NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (device_tree), column);
+
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (device_tree), FALSE);
+
+        gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (device_tree), FALSE);
+        gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (device_tree), 16);
+
+}
 
 static gint
 sort_iter_compare_func (GtkTreeModel *model,
@@ -66,9 +240,9 @@ typedef struct {
 
 static gboolean
 find_iter_by_presentable_foreach (GtkTreeModel *model,
-                             GtkTreePath *path,
-                             GtkTreeIter *iter,
-                             gpointer data)
+                                  GtkTreePath *path,
+                                  GtkTreeIter *iter,
+                                  gpointer data)
 {
         gboolean ret;
         GduPresentable *presentable = NULL;
@@ -109,11 +283,10 @@ find_iter_by_presentable (GtkTreeStore *store, GduPresentable *presentable, GtkT
 }
 
 static void
-presentable_changed (GduPresentable *presentable, gpointer user_data)
+device_tree_presentable_changed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
         GtkTreeView *tree_view = GTK_TREE_VIEW (user_data);
         char *name;
-        char *icon_name;
         GtkTreeStore *store;
         GtkTreeIter iter;
         GdkPixbuf *pixbuf;
@@ -125,35 +298,9 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
         if (find_iter_by_presentable (store, presentable, &iter)) {
 
                 name = gdu_presentable_get_name (presentable);
-                icon_name = gdu_presentable_get_icon_name (presentable);
                 device = gdu_presentable_get_device (presentable);
 
-                pixbuf = NULL;
-                if (icon_name != NULL) {
-                        int icon_width, icon_height;
-
-                        if (!gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &icon_width, &icon_height))
-                                icon_height = 12;
-
-                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                           icon_name,
-                                                           icon_height,
-                                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                                           NULL);
-
-                        /* if it's unallocated or unrecognized space, make the icon greyscale */
-                        if (!gdu_presentable_is_allocated (presentable) ||
-                            !gdu_presentable_is_recognized (presentable)) {
-                                GdkPixbuf *pixbuf2;
-                                pixbuf2 = pixbuf;
-                                pixbuf = gdk_pixbuf_copy (pixbuf);
-                                g_object_unref (pixbuf2);
-                                gdk_pixbuf_saturate_and_pixelate (pixbuf,
-                                                                  pixbuf,
-                                                                  0.0,
-                                                                  FALSE);
-                        }
-                }
+                pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
 
                 gtk_tree_store_set (store,
                                     &iter,
@@ -162,7 +309,6 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
                                     -1);
 
                 g_free (name);
-                g_free (icon_name);
                 if (pixbuf != NULL)
                         g_object_unref (pixbuf);
                 if (device != NULL)
@@ -171,14 +317,13 @@ presentable_changed (GduPresentable *presentable, gpointer user_data)
 }
 
 static void
-add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, GtkTreeIter *iter_out)
+add_presentable_to_tree (GduDeviceTree *device_tree, GduPresentable *presentable, GtkTreeIter *iter_out)
 {
         GtkTreeIter  iter;
         GtkTreeIter  iter2;
         GtkTreeIter *parent_iter;
         GdkPixbuf   *pixbuf;
         char        *name;
-        char        *icon_name;
         GtkTreeStore *store;
         GduDevice *device;
         GduPresentable *enclosing_presentable;
@@ -187,7 +332,7 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
 
         device = NULL;
 
-        store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+        store = GTK_TREE_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (device_tree)));
 
         /* check to see if presentable is already added */
         if (find_iter_by_presentable (store, presentable, NULL))
@@ -201,7 +346,7 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                         parent_iter = &iter2;
                 } else {
                         /* add parent if it's not already added */
-                        add_presentable_to_tree (tree_view, enclosing_presentable, &iter2);
+                        add_presentable_to_tree (device_tree, enclosing_presentable, &iter2);
                         parent_iter = &iter2;
                 }
                 g_object_unref (enclosing_presentable);
@@ -215,33 +360,7 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
 
         /* compute the name */
         name = gdu_presentable_get_name (presentable);
-        icon_name = gdu_presentable_get_icon_name (presentable);
-        pixbuf = NULL;
-        if (icon_name != NULL) {
-                int icon_width, icon_height;
-
-                if (!gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &icon_width, &icon_height))
-                        icon_height = 12;
-
-                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                   icon_name,
-                                                   icon_height,
-                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                                   NULL);
-
-                /* if it's unallocated or unrecognized space, make the icon greyscale */
-                if (!gdu_presentable_is_allocated (presentable) ||
-                    !gdu_presentable_is_recognized (presentable)) {
-                        GdkPixbuf *pixbuf2;
-                        pixbuf2 = pixbuf;
-                        pixbuf = gdk_pixbuf_copy (pixbuf);
-                        g_object_unref (pixbuf2);
-                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
-                                                          pixbuf,
-                                                          0.0,
-                                                          FALSE);
-                }
-        }
+        pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
 
         /* sort by offset so we get partitions in the right order */
         sortname = g_strdup_printf ("%016lld_%s", gdu_presentable_get_offset (presentable), object_path);
@@ -259,20 +378,17 @@ add_presentable_to_tree (GtkTreeView *tree_view, GduPresentable *presentable, Gt
                 *iter_out = iter;
 
         g_free (name);
-        g_free (icon_name);
         if (pixbuf != NULL)
                 g_object_unref (pixbuf);
 
         if (parent_iter != NULL) {
                 GtkTreePath *path;
                 path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), parent_iter);
-                if (tree_view != NULL && path != NULL) {
-                        gtk_tree_view_expand_row (tree_view, path, TRUE);
+                if (path != NULL) {
+                        gtk_tree_view_expand_row (GTK_TREE_VIEW (device_tree), path, TRUE);
                         gtk_tree_path_free (path);
                 }
         }
-
-        g_signal_connect (presentable, "changed", (GCallback) presentable_changed, tree_view);
 
 out:
         if (device != NULL)
@@ -282,87 +398,31 @@ out:
 static void
 device_tree_presentable_added (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
-        GtkTreeView *tree_view = GTK_TREE_VIEW (user_data);
-        add_presentable_to_tree (tree_view, presentable, NULL);
+        GduDeviceTree *device_tree = GDU_DEVICE_TREE (user_data);
+        add_presentable_to_tree (device_tree, presentable, NULL);
 }
 
 static void
 device_tree_presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
+        GduDeviceTree *device_tree = GDU_DEVICE_TREE (user_data);
         GtkTreeIter iter;
         GtkTreeStore *store;
-        GtkTreeView *tree_view = GTK_TREE_VIEW (user_data);
 
-        store = GTK_TREE_STORE (gtk_tree_view_get_model (tree_view));
+        store = GTK_TREE_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (device_tree)));
         if (find_iter_by_presentable (store, presentable, &iter)) {
                 gtk_tree_store_remove (store, &iter);
-                g_signal_handlers_disconnect_by_func (presentable, (GCallback) presentable_changed, tree_view);
         }
 }
 
-GtkTreeView *
-gdu_tree_new (GduPool *pool)
+GtkWidget *
+gdu_device_tree_new (GduPool *pool)
 {
-        GtkCellRenderer *renderer;
-        GtkTreeViewColumn *column;
-        GtkTreeView *tree_view;
-        GtkTreeStore *store;
-        GList *presentables;
-        GList *l;
-
-        store = gtk_tree_store_new (N_COLUMNS,
-                                    GDK_TYPE_PIXBUF,
-                                    G_TYPE_STRING,
-                                    GDU_TYPE_PRESENTABLE,
-                                    G_TYPE_STRING);
-
-        gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (store), SORTNAME_COLUMN, sort_iter_compare_func,
-                                         NULL, NULL);
-        gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (store), SORTNAME_COLUMN, GTK_SORT_ASCENDING);
-
-        tree_view = GTK_TREE_VIEW (gtk_tree_view_new_with_model (GTK_TREE_MODEL (store)));
-        /* TODO: when GTK 2.12 is available... we can do this */
-        /*gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree), FALSE);*/
-
-        column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, "Title");
-        renderer = gtk_cell_renderer_pixbuf_new ();
-        gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "pixbuf", ICON_COLUMN,
-                                             NULL);
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", TITLE_COLUMN,
-                                             NULL);
-        gtk_tree_view_append_column (tree_view, column);
-
-        gtk_tree_view_set_headers_visible (tree_view, FALSE);
-
-        presentables = gdu_pool_get_presentables (pool);
-        for (l = presentables; l != NULL; l = l->next) {
-                GduPresentable *presentable = GDU_PRESENTABLE (l->data);
-                add_presentable_to_tree (tree_view, presentable, NULL);
-                g_object_unref (presentable);
-        }
-        g_list_free (presentables);
-
-        gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree_view), FALSE);
-        gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (tree_view), 16);
-
-        /* expand all rows after the treeview widget has been realized */
-        //g_signal_connect (tree_view, "realize", G_CALLBACK (gtk_tree_view_expand_all), NULL);
-
-        /* add / remove rows when hal reports presentable add / remove */
-        g_signal_connect (pool, "presentable_added", (GCallback) device_tree_presentable_added, tree_view);
-        g_signal_connect (pool, "presentable_removed", (GCallback) device_tree_presentable_removed, tree_view);
-
-        return tree_view;
+        return GTK_WIDGET (g_object_new (GDU_TYPE_DEVICE_TREE, "pool", pool, NULL));
 }
 
 GduPresentable *
-gdu_tree_get_selected_presentable (GtkTreeView *tree_view)
+gdu_device_tree_get_selected_presentable (GtkTreeView *tree_view)
 {
         GduPresentable *presentable;
         GtkTreePath *path;
@@ -393,7 +453,7 @@ gdu_tree_get_selected_presentable (GtkTreeView *tree_view)
 }
 
 void
-gdu_tree_select_presentable (GtkTreeView *tree_view, GduPresentable *presentable)
+gdu_device_tree_select_presentable (GtkTreeView *tree_view, GduPresentable *presentable)
 {
         GtkTreePath *path;
         GtkTreeModel *tree_model;
@@ -417,7 +477,7 @@ out:
 }
 
 void
-gdu_tree_select_first_presentable (GtkTreeView *tree_view)
+gdu_device_tree_select_first_presentable (GtkTreeView *tree_view)
 {
         GtkTreePath *path;
         GtkTreeModel *tree_model;

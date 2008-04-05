@@ -51,6 +51,6 @@ struct _GduDriveClass
 };
 
 GType       gdu_drive_get_type              (void);
-GduDrive   *gdu_drive_new_from_device       (GduDevice *drive);
+GduDrive   *gdu_drive_new_from_device       (GduPool *pool, GduDevice *drive);
 
 #endif /* GDU_DRIVE_H */

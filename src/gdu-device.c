@@ -1486,13 +1486,14 @@ op_retrieve_smart_data_cb (DBusGProxy *proxy,
         /* update cache */
         data->device->priv->smart_data_cache_timestamp = time (NULL);
         data->device->priv->smart_data_cache_passed = passed;
+        g_free (data->device->priv->smart_data_cache_last_self_test_result);
+        if (data->device->priv->smart_data_cache_error != NULL)
+                data->device->priv->smart_data_cache_error = NULL;
         data->device->priv->smart_data_cache_power_on_hours = power_on_hours;
         data->device->priv->smart_data_cache_temperature = temperature;
-        g_free (data->device->priv->smart_data_cache_last_self_test_result);
-        data->device->priv->smart_data_cache_last_self_test_result = g_strdup (last_self_test_result);
-        if (data->device->priv->smart_data_cache_error != NULL)
-                g_error_free (data->device->priv->smart_data_cache_error);
+        data->device->priv->smart_data_cache_last_self_test_result = error == NULL ? g_strdup (last_self_test_result) : NULL;
         data->device->priv->smart_data_cache_error = error != NULL ? g_error_copy (error) : NULL;
+
 
         if (error != NULL) {
                 /* g_warning ("op_retrieve_smart_data_cb failed: %s", error->message); */
@@ -1500,8 +1501,8 @@ op_retrieve_smart_data_cb (DBusGProxy *proxy,
         } else {
                 data->callback (data->device, passed, power_on_hours, temperature, last_self_test_result,
                                 NULL, data->user_data);
+                g_free (last_self_test_result);
         }
-        g_free (last_self_test_result);
         g_object_unref (data->device);
         g_free (data);
 }

@@ -396,6 +396,7 @@ struct _GduDevicePrivate
         gboolean smart_data_cache_passed;
         int smart_data_cache_power_on_hours;
         int smart_data_cache_temperature;
+        char *smart_data_cache_last_self_test_result;
         GError *smart_data_cache_error;
 };
 
@@ -430,6 +431,7 @@ gdu_device_finalize (GduDevice *device)
                 device_properties_free (device->priv->props);
         g_free (device->priv->job_last_error_message);
 
+        g_free (device->priv->smart_data_cache_last_self_test_result);
         if (device->priv->smart_data_cache_error != NULL)
                 g_error_free (device->priv->smart_data_cache_error);
 
@@ -1476,7 +1478,7 @@ typedef struct {
 
 static void
 op_retrieve_smart_data_cb (DBusGProxy *proxy,
-                           gboolean passed, int power_on_hours, int temperature,
+                           gboolean passed, int power_on_hours, int temperature, char *last_self_test_result,
                            GError *error, gpointer user_data)
 {
         RetrieveSmartDataData *data = user_data;
@@ -1486,16 +1488,20 @@ op_retrieve_smart_data_cb (DBusGProxy *proxy,
         data->device->priv->smart_data_cache_passed = passed;
         data->device->priv->smart_data_cache_power_on_hours = power_on_hours;
         data->device->priv->smart_data_cache_temperature = temperature;
+        g_free (data->device->priv->smart_data_cache_last_self_test_result);
+        data->device->priv->smart_data_cache_last_self_test_result = g_strdup (last_self_test_result);
         if (data->device->priv->smart_data_cache_error != NULL)
                 g_error_free (data->device->priv->smart_data_cache_error);
         data->device->priv->smart_data_cache_error = error != NULL ? g_error_copy (error) : NULL;
 
         if (error != NULL) {
                 /* g_warning ("op_retrieve_smart_data_cb failed: %s", error->message); */
-                data->callback (data->device, FALSE, 0, 0, error, data->user_data);
+                data->callback (data->device, FALSE, 0, 0, NULL, error, data->user_data);
         } else {
-                data->callback (data->device, passed, power_on_hours, temperature, NULL, data->user_data);
+                data->callback (data->device, passed, power_on_hours, temperature, last_self_test_result,
+                                NULL, data->user_data);
         }
+        g_free (last_self_test_result);
         g_object_unref (data->device);
         g_free (data);
 }
@@ -1543,6 +1549,8 @@ void
 gdu_device_smart_data_purge_cache (GduDevice *device)
 {
         device->priv->smart_data_cache_timestamp = 0;
+        g_free (device->priv->smart_data_cache_last_self_test_result);
+        device->priv->smart_data_cache_last_self_test_result = NULL;
         if (device->priv->smart_data_cache_error != NULL)
                 g_error_free (device->priv->smart_data_cache_error);
         device->priv->smart_data_cache_error = NULL;
@@ -1564,6 +1572,7 @@ gdu_device_retrieve_smart_data_from_cache (GduDevice *device,
                   device->priv->smart_data_cache_passed,
                   device->priv->smart_data_cache_power_on_hours,
                   device->priv->smart_data_cache_temperature,
+                  device->priv->smart_data_cache_last_self_test_result,
                   device->priv->smart_data_cache_error != NULL ?
                       g_error_copy (device->priv->smart_data_cache_error) : NULL,
                   user_data);

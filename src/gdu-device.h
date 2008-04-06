@@ -250,6 +250,7 @@ typedef void (*GduDeviceRetrieveSmartDataCompletedFunc) (GduDevice  *device,
                                                          gboolean    passed,
                                                          int         power_on_hours,
                                                          int         temperature,
+                                                         const char *last_self_test_result,
                                                          GError     *error,
                                                          gpointer    user_data);
 

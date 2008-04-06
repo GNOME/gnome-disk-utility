@@ -44,6 +44,7 @@ struct _GduPageDrivePrivate
         GtkWidget *health_status_image;
         GtkWidget *health_status_label;
         GtkWidget *health_status_explanation_label;
+        GtkWidget *health_last_self_test_result_label;
         GtkWidget *health_power_on_hours_label;
         GtkWidget *health_temperature_label;
         GtkWidget *health_refresh_button;
@@ -309,7 +310,7 @@ gdu_page_drive_init (GduPageDrive *page)
 
         /* explanatory text */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("Some hard disks supports S.M.A.R.T., a monitoring system for "
+        gtk_label_set_markup (GTK_LABEL (label), _("Some disks supports S.M.A.R.T., a monitoring system for "
                                                    "disks to detect and report on various indicators of "
                                                    "reliability, in the hope of anticipating failures."));
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -320,6 +321,7 @@ gdu_page_drive_init (GduPageDrive *page)
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
 
         row = 0;
+
 
         /* power on hours */
         label = gtk_label_new (NULL);
@@ -347,6 +349,22 @@ gdu_page_drive_init (GduPageDrive *page)
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         page->priv->health_temperature_label = label;
+
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        row++;
+
+        /* temperature */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Last Test:</b>"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        page->priv->health_last_self_test_result_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -675,6 +693,7 @@ smart_data_set_pending (GduPageDrive *page)
         gtk_label_set_markup (GTK_LABEL (page->priv->health_status_label), _("<i>Retrieving...</i>"));
         gtk_label_set_text (GTK_LABEL (page->priv->health_power_on_hours_label), _("-"));
         gtk_label_set_text (GTK_LABEL (page->priv->health_temperature_label), _("-"));
+        gtk_label_set_markup (GTK_LABEL (page->priv->health_last_self_test_result_label), _("-"));
 
         gtk_widget_set_sensitive (page->priv->health_refresh_button, FALSE);
         gtk_widget_set_sensitive (page->priv->health_selftest_button, FALSE);
@@ -689,6 +708,7 @@ smart_data_set_not_supported (GduPageDrive *page)
         gtk_label_set_markup (GTK_LABEL (page->priv->health_status_label), _("<i>Not Supported</i>"));
         gtk_label_set_text (GTK_LABEL (page->priv->health_power_on_hours_label), _("-"));
         gtk_label_set_text (GTK_LABEL (page->priv->health_temperature_label), _("-"));
+        gtk_label_set_markup (GTK_LABEL (page->priv->health_last_self_test_result_label), _("-"));
 
         gtk_widget_set_sensitive (page->priv->health_refresh_button, FALSE);
         gtk_widget_set_sensitive (page->priv->health_selftest_button, FALSE);
@@ -697,10 +717,15 @@ smart_data_set_not_supported (GduPageDrive *page)
 }
 
 static void
-smart_data_set (GduPageDrive *page, gboolean passed, int power_on_hours, int temperature)
+smart_data_set (GduPageDrive *page,
+                gboolean passed,
+                int power_on_hours,
+                int temperature,
+                const char *last_self_test_result)
 {
         char *s;
         int fahrenheit;
+        const char *last;
 
         gtk_widget_set_sensitive (page->priv->health_refresh_button, TRUE);
         gtk_widget_set_sensitive (page->priv->health_selftest_button, TRUE);
@@ -745,6 +770,27 @@ smart_data_set (GduPageDrive *page, gboolean passed, int power_on_hours, int tem
         s = g_strdup_printf (_("%d° C / %d° F"), temperature, fahrenheit);
         gtk_label_set_text (GTK_LABEL (page->priv->health_temperature_label), s);
         g_free (s);
+
+        if (strcmp (last_self_test_result, "unknown") == 0) {
+                last = _("Unknown");
+        } else if (strcmp (last_self_test_result, "completed_ok") == 0) {
+                last = _("Completed OK");
+        } else if (strcmp (last_self_test_result, "not_completed_aborted") == 0) {
+                last = _("Cancelled");
+        } else if (strcmp (last_self_test_result, "not_completed_aborted_reset") == 0) {
+                last = _("Cancelled (with hard or soft reset)");
+        } else if (strcmp (last_self_test_result, "not_completed_unknown_reason") == 0) {
+                last = _("Not completed (a fatal error might have occured)");
+        } else if (strcmp (last_self_test_result, "completed_failed_electrical") == 0) {
+                last = _("<span foreground='red'><b>FAILED</b></span> (electrical test)");
+        } else if (strcmp (last_self_test_result, "completed_failed_servo") == 0) {
+                last = _("<span foreground='red'><b>FAILED</b></span> (servo/seek test)");
+        } else if (strcmp (last_self_test_result, "completed_failed_read") == 0) {
+                last = _("<span foreground='red'><b>FAILED</b></span> (read test)");
+        } else if (strcmp (last_self_test_result, "completed_failed_damage") == 0) {
+                last = _("<span foreground='red'><b>FAILED</b></span> (device is suspected of having handled damage");
+        }
+        gtk_label_set_markup (GTK_LABEL (page->priv->health_last_self_test_result_label), last);
 }
 
 static void
@@ -752,6 +798,7 @@ retrieve_smart_data_cb (GduDevice  *device,
                         gboolean    passed,
                         int         power_on_hours,
                         int         temperature,
+                        const char *last_self_test_result,
                         GError     *error,
                         gpointer    user_data)
 {
@@ -763,7 +810,7 @@ retrieve_smart_data_cb (GduDevice  *device,
                 goto out;
         }
 
-        smart_data_set (page, passed, power_on_hours, temperature);
+        smart_data_set (page, passed, power_on_hours, temperature, last_self_test_result);
 
 out:
         ;

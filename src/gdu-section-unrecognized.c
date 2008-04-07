@@ -1,43 +1,39 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-page-volume-unrecognized.c
+/* gdu-section-unrecognized.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
 #include <config.h>
-#include <glib-object.h>
 #include <string.h>
 #include <glib/gi18n.h>
+#include <dbus/dbus-glib.h>
+#include <stdlib.h>
+#include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
-#include "gdu-page.h"
-#include "gdu-page-volume-unrecognized.h"
+#include "gdu-pool.h"
 #include "gdu-util.h"
+#include "gdu-section-unrecognized.h"
 
-#include "gdu-drive.h"
-#include "gdu-volume.h"
-#include "gdu-volume-hole.h"
-
-struct _GduPageVolumeUnrecognizedPrivate
+struct _GduSectionUnrecognizedPrivate
 {
-        GduShell *shell;
-
-        GtkWidget *main_vbox;
+        gboolean init_done;
 
         GtkWidget *label_entry;
         GtkWidget *type_combo_box;
@@ -49,29 +45,23 @@ struct _GduPageVolumeUnrecognizedPrivate
 
 static GObjectClass *parent_class = NULL;
 
-static void gdu_page_volume_unrecognized_page_iface_init (GduPageIface *iface);
-G_DEFINE_TYPE_WITH_CODE (GduPageVolumeUnrecognized, gdu_page_volume_unrecognized, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GDU_TYPE_PAGE,
-                                                gdu_page_volume_unrecognized_page_iface_init))
+G_DEFINE_TYPE (GduSectionUnrecognized, gdu_section_unrecognized, GDU_TYPE_SECTION)
 
-enum {
-        PROP_0,
-        PROP_SHELL,
-};
+/* ---------------------------------------------------------------------------------------------------- */
 
 static char *
-gdu_page_volume_unrecognized_get_fstype (GduPageVolumeUnrecognized *page)
+gdu_section_volume_unrecognized_get_fstype (GduSectionUnrecognized *section)
 {
-        return gdu_util_fstype_combo_box_get_selected (page->priv->type_combo_box);
+        return gdu_util_fstype_combo_box_get_selected (section->priv->type_combo_box);
 }
 
 static char *
-gdu_page_volume_unrecognized_get_fslabel (GduPageVolumeUnrecognized *page)
+gdu_section_volume_unrecognized_get_fslabel (GduSectionUnrecognized *section)
 {
         char *ret;
 
-        if (GTK_WIDGET_IS_SENSITIVE (page->priv->label_entry))
-                ret = g_strdup (gtk_entry_get_text (GTK_ENTRY (page->priv->label_entry)));
+        if (GTK_WIDGET_IS_SENSITIVE (section->priv->label_entry))
+                ret = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->label_entry)));
         else
                 ret = NULL;
 
@@ -79,90 +69,9 @@ gdu_page_volume_unrecognized_get_fslabel (GduPageVolumeUnrecognized *page)
 }
 
 static void
-gdu_page_volume_unrecognized_finalize (GduPageVolumeUnrecognized *page)
+section_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 {
-        polkit_action_unref (page->priv->pk_erase_action);
-        g_object_unref (page->priv->erase_action);
-
-        if (page->priv->shell != NULL)
-                g_object_unref (page->priv->shell);
-
-        if (G_OBJECT_CLASS (parent_class)->finalize)
-                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (page));
-}
-
-static void
-gdu_page_volume_unrecognized_set_property (GObject      *object,
-                                           guint         prop_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec)
-{
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (object);
-
-        switch (prop_id) {
-        case PROP_SHELL:
-                if (page->priv->shell != NULL)
-                        g_object_unref (page->priv->shell);
-                page->priv->shell = g_object_ref (g_value_get_object (value));
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-                break;
-        }
-}
-
-static void
-gdu_page_volume_unrecognized_get_property (GObject     *object,
-                                           guint        prop_id,
-                                           GValue      *value,
-                                           GParamSpec  *pspec)
-{
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (object);
-
-        switch (prop_id) {
-        case PROP_SHELL:
-                g_value_set_object (value, page->priv->shell);
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-                break;
-    }
-}
-
-static void
-gdu_page_volume_unrecognized_class_init (GduPageVolumeUnrecognizedClass *klass)
-{
-        GObjectClass *obj_class = (GObjectClass *) klass;
-
-        parent_class = g_type_class_peek_parent (klass);
-
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_volume_unrecognized_finalize;
-        obj_class->set_property = gdu_page_volume_unrecognized_set_property;
-        obj_class->get_property = gdu_page_volume_unrecognized_get_property;
-
-        /**
-         * GduPageVolumeUnrecognized:shell:
-         *
-         * The #GduShell instance hosting this page.
-         */
-        g_object_class_install_property (obj_class,
-                                         PROP_SHELL,
-                                         g_param_spec_object ("shell",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_SHELL,
-                                                              G_PARAM_CONSTRUCT_ONLY |
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_READABLE));
-
-}
-
-static void
-page_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
-{
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (user_data);
+        GduSectionUnrecognized *section = GDU_SECTION_UNRECOGNIZED (user_data);
         char *fstype;
         GduCreatableFilesystem *creatable_fs;
         gboolean label_entry_sensitive;
@@ -185,15 +94,15 @@ page_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpointer 
         if (max_label_len > 0)
                 label_entry_sensitive = TRUE;
 
-        gtk_entry_set_max_length (GTK_ENTRY (page->priv->label_entry), max_label_len);
-        gtk_widget_set_sensitive (page->priv->label_entry, label_entry_sensitive);
-        polkit_gnome_action_set_sensitive (page->priv->erase_action, can_erase);
+        gtk_entry_set_max_length (GTK_ENTRY (section->priv->label_entry), max_label_len);
+        gtk_widget_set_sensitive (section->priv->label_entry, label_entry_sensitive);
+        polkit_gnome_action_set_sensitive (section->priv->erase_action, can_erase);
 
         g_free (fstype);
 }
 
 typedef struct {
-        GduPageVolumeUnrecognized *page;
+        GduSectionUnrecognized *section;
         GduPresentable *presentable;
         char *encrypt_passphrase;
         gboolean save_in_keyring;
@@ -203,8 +112,8 @@ typedef struct {
 static void
 create_filesystem_data_free (CreateFilesystemData *data)
 {
-        if (data->page != NULL)
-                g_object_unref (data->page);
+        if (data->section != NULL)
+                g_object_unref (data->section);
         if (data->presentable != NULL)
                 g_object_unref (data->presentable);
         if (data->encrypt_passphrase != NULL) {
@@ -233,7 +142,7 @@ erase_action_completed (GduDevice  *device,
                         /* make sure the tab for the encrypted device is updated (it displays whether
                          * the passphrase is in the keyring or now)
                          */
-                        gdu_shell_update (data->page->priv->shell);
+                        gdu_shell_update (gdu_section_get_shell (GDU_SECTION (data->section)));
                 }
                 create_filesystem_data_free (data);
         }
@@ -242,7 +151,7 @@ erase_action_completed (GduDevice  *device,
 static void
 erase_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (user_data);
+        GduSectionUnrecognized *section = GDU_SECTION_UNRECOGNIZED (user_data);
         char *fslabel;
         char *fstype;
         GduDevice *device;
@@ -266,7 +175,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         toplevel_device = NULL;
         drive_name = NULL;
 
-        presentable = gdu_shell_get_selected_presentable (page->priv->shell);
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
         device = gdu_presentable_get_device (presentable);
         if (device == NULL) {
                 g_warning ("%s: device is not supposed to be NULL",  __FUNCTION__);
@@ -285,8 +194,8 @@ erase_action_callback (GtkAction *action, gpointer user_data)
 
         drive_name = gdu_presentable_get_name (toplevel_presentable);
 
-        fstype = gdu_page_volume_unrecognized_get_fstype (page);
-        fslabel = gdu_page_volume_unrecognized_get_fslabel (page);
+        fstype = gdu_section_volume_unrecognized_get_fstype (section);
+        fslabel = gdu_section_volume_unrecognized_get_fslabel (section);
         if (fslabel == NULL)
                 fslabel = g_strdup ("");
 
@@ -322,7 +231,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (page->priv->shell),
+        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                                                             "",
                                                             primary,
                                                             secondary,
@@ -331,13 +240,13 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         if (secure_erase == NULL)
                 goto out;
 
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button))) {
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button))) {
                 data = g_new (CreateFilesystemData, 1);
-                data->page = g_object_ref (page);
+                data->section = g_object_ref (section);
                 data->presentable = g_object_ref (presentable);
 
                 data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
-                        gdu_shell_get_toplevel (page->priv->shell),
+                        gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                         &data->save_in_keyring,
                         &data->save_in_keyring_session);
                 if (data->encrypt_passphrase == NULL) {
@@ -371,7 +280,60 @@ out:
 }
 
 static void
-gdu_page_volume_unrecognized_init (GduPageVolumeUnrecognized *page)
+update (GduSectionUnrecognized *section)
+{
+        GduPresentable *presentable;
+        GduDevice *device;
+
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
+        device = gdu_presentable_get_device (presentable);
+
+        if (device == NULL) {
+                g_warning ("%s: device is NULL for presentable",  __FUNCTION__);
+                goto out;
+        }
+
+        if (!section->priv->init_done) {
+                section->priv->init_done = TRUE;
+
+                gtk_entry_set_text (GTK_ENTRY (section->priv->label_entry), "");
+                gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->type_combo_box), 0);
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button), FALSE);
+        }
+
+        gtk_widget_set_sensitive (GTK_WIDGET (section), !gdu_device_is_read_only (device));
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+gdu_section_unrecognized_finalize (GduSectionUnrecognized *section)
+{
+        polkit_action_unref (section->priv->pk_erase_action);
+        g_object_unref (section->priv->erase_action);
+
+        if (G_OBJECT_CLASS (parent_class)->finalize)
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
+}
+
+static void
+gdu_section_unrecognized_class_init (GduSectionUnrecognizedClass *klass)
+{
+        GObjectClass *obj_class = (GObjectClass *) klass;
+        GduSectionClass *section_class = (GduSectionClass *) klass;
+
+        parent_class = g_type_class_peek_parent (klass);
+
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_section_unrecognized_finalize;
+        section_class->update = (gpointer) update;
+}
+
+static void
+gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 {
         int row;
         GtkWidget *label;
@@ -384,41 +346,38 @@ gdu_page_volume_unrecognized_init (GduPageVolumeUnrecognized *page)
         GtkWidget *button_box;
         GtkWidget *check_button;
 
-        page->priv = g_new0 (GduPageVolumeUnrecognizedPrivate, 1);
+        section->priv = g_new0 (GduSectionUnrecognizedPrivate, 1);
 
-        page->priv->pk_erase_action = polkit_action_new ();
-        polkit_action_set_action_id (page->priv->pk_erase_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_erase_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_erase_action, "org.freedesktop.devicekit.disks.erase");
 
-        page->priv->erase_action = polkit_gnome_action_new_default ("create",
-                                                                    page->priv->pk_erase_action,
+        section->priv->erase_action = polkit_gnome_action_new_default ("create",
+                                                                    section->priv->pk_erase_action,
                                                                     _("C_reate"),
                                                                     _("Create"));
-        g_object_set (page->priv->erase_action,
+        g_object_set (section->priv->erase_action,
                       "auth-label", _("C_reate..."),
                       "yes-icon-name", GTK_STOCK_ADD,
                       "no-icon-name", GTK_STOCK_ADD,
                       "auth-icon-name", GTK_STOCK_ADD,
                       "self-blocked-icon-name", GTK_STOCK_ADD,
                       NULL);
-        g_signal_connect (page->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), page);
+        g_signal_connect (section->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), section);
 
         // TODO:
         //gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->erase_action));
 
 
-        page->priv->main_vbox = gtk_vbox_new (FALSE, 5);
-        gtk_container_set_border_width (GTK_CONTAINER (page->priv->main_vbox), 8);
-
         /* volume format + label */
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Create File System</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 0);
         vbox = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox);
-        gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), align, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (section), align, FALSE, TRUE, 0);
 
         /* explanatory text */
         label = gtk_label_new (NULL);
@@ -444,7 +403,7 @@ gdu_page_volume_unrecognized_init (GduPageVolumeUnrecognized *page)
         gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-        page->priv->label_entry = entry;
+        section->priv->label_entry = entry;
 
         row++;
 
@@ -458,7 +417,7 @@ gdu_page_volume_unrecognized_init (GduPageVolumeUnrecognized *page)
         gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        page->priv->type_combo_box = combo_box;
+        section->priv->type_combo_box = combo_box;
 
         row++;
 
@@ -484,71 +443,31 @@ gdu_page_volume_unrecognized_init (GduPageVolumeUnrecognized *page)
                 gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
                                   GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         }
-        page->priv->encrypt_check_button = check_button;
+        section->priv->encrypt_check_button = check_button;
 
         row++;
 
         /* update sensivity and length of fs label + entry */
-        g_signal_connect (page->priv->type_combo_box, "changed",
-                          G_CALLBACK (page_volume_unrecognized_type_combo_box_changed), page);
+        g_signal_connect (section->priv->type_combo_box, "changed",
+                          G_CALLBACK (section_volume_unrecognized_type_combo_box_changed), section);
 
 
         button_box = gtk_hbutton_box_new ();
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
 
-        button = polkit_gnome_action_create_button (page->priv->erase_action);
+        button = polkit_gnome_action_create_button (section->priv->erase_action);
         gtk_container_add (GTK_CONTAINER (button_box), button);
         gtk_box_pack_start (GTK_BOX (vbox), button_box, TRUE, TRUE, 0);
+
 }
 
-
-GduPageVolumeUnrecognized *
-gdu_page_volume_unrecognized_new (GduShell *shell)
+GtkWidget *
+gdu_section_unrecognized_new (GduShell       *shell,
+                                        GduPresentable *presentable)
 {
-        return GDU_PAGE_VOLUME_UNRECOGNIZED (g_object_new (GDU_TYPE_PAGE_VOLUME_UNRECOGNIZED, "shell", shell, NULL));
+        return GTK_WIDGET (g_object_new (GDU_TYPE_SECTION_UNRECOGNIZED,
+                                         "shell", shell,
+                                         "presentable", presentable,
+                                         NULL));
 }
-
-static gboolean
-gdu_page_volume_unrecognized_update (GduPage *_page, GduPresentable *presentable, gboolean reset_page)
-{
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (_page);
-        gboolean ret;
-        GduDevice *device;
-
-        ret = FALSE;
-
-        device = gdu_presentable_get_device (presentable);
-        if (device == NULL)
-                goto out;
-
-        if (reset_page) {
-                gtk_entry_set_text (GTK_ENTRY (page->priv->label_entry), "");
-                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->type_combo_box), 0);
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button), FALSE);
-        }
-
-        gtk_widget_set_sensitive (page->priv->main_vbox, !gdu_device_is_read_only (device));
-
-        ret = TRUE;
-out:
-        if (device != NULL)
-                g_object_unref (device);
-
-        return ret;
-}
-
-static GtkWidget *
-gdu_page_volume_unrecognized_get_widget (GduPage *_page)
-{
-        GduPageVolumeUnrecognized *page = GDU_PAGE_VOLUME_UNRECOGNIZED (_page);
-        return page->priv->main_vbox;
-}
-
-static void
-gdu_page_volume_unrecognized_page_iface_init (GduPageIface *iface)
-{
-        iface->get_widget = gdu_page_volume_unrecognized_get_widget;
-        iface->update = gdu_page_volume_unrecognized_update;
-}
-

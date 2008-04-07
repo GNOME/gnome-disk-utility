@@ -18,25 +18,30 @@ devkit-disks-device-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceK
 
 bin_PROGRAMS = gnome-disk-utility
 
-gnome_disk_utility_SOURCES = 						\
-					gdu-main.c			\
-	gdu-util.h			gdu-util.c			\
-	gdu-shell.h			gdu-shell.c			\
-	gdu-page.h			gdu-page.c			\
-	gdu-page-drive.h		gdu-page-drive.c		\
-	gdu-page-volume.h		gdu-page-volume.c		\
-	gdu-page-volume-unallocated.h	gdu-page-volume-unallocated.c	\
-	gdu-page-volume-unrecognized.h	gdu-page-volume-unrecognized.c	\
-	gdu-page-job.h			gdu-page-job.c			\
-	gdu-disk-widget.h		gdu-disk-widget.c		\
-	gdu-tree.h			gdu-tree.c			\
-	gdu-pool.c			gdu-pool.h			\
-	gdu-device.c			gdu-device.h			\
-	gdu-drive.c			gdu-drive.h			\
-	gdu-activatable-drive.c		gdu-activatable-drive.h		\
-	gdu-volume.c			gdu-volume.h			\
-	gdu-presentable.c		gdu-presentable.h		\
-	gdu-volume-hole.c		gdu-volume-hole.h		\
+gnome_disk_utility_SOURCES = 								\
+						gdu-main.c				\
+	gdu-util.h				gdu-util.c				\
+	gdu-shell.h				gdu-shell.c				\
+	gdu-section.h				gdu-section.c				\
+	gdu-section-health.h			gdu-section-health.c			\
+	gdu-section-create-partition-table.h	gdu-section-create-partition-table.c	\
+	gdu-section-partition.h			gdu-section-partition.c			\
+	gdu-section-unallocated.h		gdu-section-unallocated.c		\
+	gdu-section-unrecognized.h		gdu-section-unrecognized.c		\
+	gdu-section-filesystem.h		gdu-section-filesystem.c		\
+	gdu-section-swapspace.h			gdu-section-swapspace.c			\
+	gdu-section-encrypted.h			gdu-section-encrypted.c			\
+	gdu-section-activatable-drive.h		gdu-section-activatable-drive.c		\
+	gdu-section-no-media.h			gdu-section-no-media.c			\
+	gdu-section-job.h			gdu-section-job.c			\
+	gdu-tree.h				gdu-tree.c				\
+	gdu-pool.c				gdu-pool.h				\
+	gdu-device.c				gdu-device.h				\
+	gdu-drive.c				gdu-drive.h				\
+	gdu-activatable-drive.c			gdu-activatable-drive.h			\
+	gdu-volume.c				gdu-volume.h				\
+	gdu-presentable.c			gdu-presentable.h			\
+	gdu-volume-hole.c			gdu-volume-hole.h			\
 	$(BUILT_SOURCES)
 
 gnome_disk_utility_CPPFLAGS = 				\

@@ -1,44 +1,40 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-page-volume-unallocated.c
+/* gdu-section-unallocated.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  */
 
 #include <config.h>
 #include <string.h>
-#include <stdlib.h>
-#include <glib-object.h>
 #include <glib/gi18n.h>
+#include <dbus/dbus-glib.h>
+#include <stdlib.h>
+#include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
-#include "gdu-page.h"
-#include "gdu-page-volume-unallocated.h"
+#include "gdu-pool.h"
 #include "gdu-util.h"
+#include "gdu-section-unallocated.h"
 
-#include "gdu-drive.h"
-#include "gdu-volume.h"
-#include "gdu-volume-hole.h"
-
-struct _GduPageVolumeUnallocatedPrivate
+struct _GduSectionUnallocatedPrivate
 {
-        GduShell *shell;
+        gboolean init_done;
 
-        GtkWidget *main_vbox;
         GtkWidget *sensitive_vbox;
 
         GtkWidget *size_hscale;
@@ -49,107 +45,19 @@ struct _GduPageVolumeUnallocatedPrivate
         GtkWidget *warning_label;
         GtkWidget *encrypt_check_button;
 
-        GduPresentable *presentable;
-
         PolKitAction *pk_create_partition_action;
         PolKitGnomeAction *create_partition_action;
 };
 
 static GObjectClass *parent_class = NULL;
 
-static void gdu_page_volume_unallocated_page_iface_init (GduPageIface *iface);
-G_DEFINE_TYPE_WITH_CODE (GduPageVolumeUnallocated, gdu_page_volume_unallocated, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GDU_TYPE_PAGE,
-                                                gdu_page_volume_unallocated_page_iface_init))
+G_DEFINE_TYPE (GduSectionUnallocated, gdu_section_unallocated, GDU_TYPE_SECTION)
 
-enum {
-        PROP_0,
-        PROP_SHELL,
-};
+/* ---------------------------------------------------------------------------------------------------- */
 
-static void
-gdu_page_volume_unallocated_finalize (GduPageVolumeUnallocated *page)
-{
-        polkit_action_unref (page->priv->pk_create_partition_action);
-        g_object_unref (page->priv->create_partition_action);
-
-        if (page->priv->shell != NULL)
-                g_object_unref (page->priv->shell);
-
-        if (G_OBJECT_CLASS (parent_class)->finalize)
-                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (page));
-}
-
-static void
-gdu_page_volume_unallocated_set_property (GObject      *object,
-                                          guint         prop_id,
-                                          const GValue *value,
-                                          GParamSpec   *pspec)
-{
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (object);
-
-        switch (prop_id) {
-        case PROP_SHELL:
-                if (page->priv->shell != NULL)
-                        g_object_unref (page->priv->shell);
-                page->priv->shell = g_object_ref (g_value_get_object (value));
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-                break;
-        }
-}
-
-static void
-gdu_page_volume_unallocated_get_property (GObject     *object,
-                                          guint        prop_id,
-                                          GValue      *value,
-                                          GParamSpec  *pspec)
-{
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (object);
-
-        switch (prop_id) {
-        case PROP_SHELL:
-                g_value_set_object (value, page->priv->shell);
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-                break;
-    }
-}
-
-static void
-gdu_page_volume_unallocated_class_init (GduPageVolumeUnallocatedClass *klass)
-{
-        GObjectClass *obj_class = (GObjectClass *) klass;
-
-        parent_class = g_type_class_peek_parent (klass);
-
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_page_volume_unallocated_finalize;
-        obj_class->set_property = gdu_page_volume_unallocated_set_property;
-        obj_class->get_property = gdu_page_volume_unallocated_get_property;
-
-        /**
-         * GduPageVolumeUnallocated:shell:
-         *
-         * The #GduShell instance hosting this page.
-         */
-        g_object_class_install_property (obj_class,
-                                         PROP_SHELL,
-                                         g_param_spec_object ("shell",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_SHELL,
-                                                              G_PARAM_CONSTRUCT_ONLY |
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_READABLE));
-
-}
 
 typedef struct {
-        GduPageVolumeUnallocated *page;
+        GduSectionUnallocated *section;
         GduPresentable *presentable;
         char *encrypt_passphrase;
         gboolean save_in_keyring;
@@ -159,8 +67,8 @@ typedef struct {
 static void
 create_partition_data_free (CreatePartitionData *data)
 {
-        if (data->page != NULL)
-                g_object_unref (data->page);
+        if (data->section != NULL)
+                g_object_unref (data->section);
         if (data->presentable != NULL)
                 g_object_unref (data->presentable);
         if (data->encrypt_passphrase != NULL) {
@@ -203,7 +111,7 @@ create_partition_completed (GduDevice  *device,
                                 /* make sure the tab for the encrypted device is updated (it displays whether
                                  * the passphrase is in the keyring or now)
                                  */
-                                gdu_shell_update (data->page->priv->shell);
+                                gdu_shell_update (gdu_section_get_shell (GDU_SECTION (data->section)));
 
                                 g_object_unref (crypto_device);
                         }
@@ -220,7 +128,7 @@ create_partition_completed (GduDevice  *device,
 static void
 create_partition_callback (GtkAction *action, gpointer user_data)
 {
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (user_data);
+        GduSectionUnallocated *section = GDU_SECTION_UNALLOCATED (user_data);
         GduPresentable *presentable;
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
@@ -249,7 +157,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         toplevel_device = NULL;
         data = NULL;
 
-        presentable = gdu_shell_get_selected_presentable (page->priv->shell);
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
         g_assert (presentable != NULL);
 
         device = gdu_presentable_get_device (presentable);
@@ -270,10 +178,10 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         }
 
         offset = gdu_presentable_get_offset (presentable);
-        size = (guint64) gtk_range_get_value (GTK_RANGE (page->priv->size_hscale));
-        fstype = gdu_util_fstype_combo_box_get_selected (page->priv->fstype_combo_box);
-        fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (page->priv->fslabel_entry)));
-        fserase = gdu_util_secure_erase_combo_box_get_selected (page->priv->secure_erase_combo_box);
+        size = (guint64) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale));
+        fstype = gdu_util_fstype_combo_box_get_selected (section->priv->fstype_combo_box);
+        fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->fslabel_entry)));
+        fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
 
         /* TODO: set flags */
         flags = NULL;
@@ -306,14 +214,14 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 label = g_strdup ("");
         }
 
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button))) {
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button))) {
 
                 data = g_new (CreatePartitionData, 1);
-                data->page = g_object_ref (page);
+                data->section = g_object_ref (section);
                 data->presentable = g_object_ref (presentable);
 
                 data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
-                        gdu_shell_get_toplevel (page->priv->shell),
+                        gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                         &data->save_in_keyring,
                         &data->save_in_keyring_session);
                 if (data->encrypt_passphrase == NULL) {
@@ -337,7 +245,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         data);
 
         /* go to toplevel */
-        gdu_shell_select_presentable (page->priv->shell, toplevel_presentable);
+        gdu_shell_select_presentable (gdu_section_get_shell (GDU_SECTION (section)), toplevel_presentable);
 
 out:
         if (encrypt_passphrase != NULL) {
@@ -361,7 +269,7 @@ out:
 static void
 create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 {
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (user_data);
+        GduSectionUnallocated *section = GDU_SECTION_UNALLOCATED (user_data);
         char *fstype;
         GduCreatableFilesystem *creatable_fs;
         gboolean label_entry_sensitive;
@@ -384,8 +292,8 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
         if (max_label_len > 0)
                 label_entry_sensitive = TRUE;
 
-        gtk_entry_set_max_length (GTK_ENTRY (page->priv->fslabel_entry), max_label_len);
-        gtk_widget_set_sensitive (page->priv->fslabel_entry, label_entry_sensitive);
+        gtk_entry_set_max_length (GTK_ENTRY (section->priv->fslabel_entry), max_label_len);
+        gtk_widget_set_sensitive (section->priv->fslabel_entry, label_entry_sensitive);
 
         g_free (fstype);
 }
@@ -396,220 +304,8 @@ create_part_size_format_value_callback (GtkScale *scale, gdouble value)
         return gdu_util_get_size_for_display ((guint64) value, FALSE);
 }
 
-static void
-gdu_page_volume_unallocated_init (GduPageVolumeUnallocated *page)
-{
-        GtkWidget *hbox;
-        GtkWidget *vbox;
-        GtkWidget *vbox2;
-        GtkWidget *vbox3;
-        GtkWidget *button;
-        GtkWidget *label;
-        GtkWidget *align;
-        GtkWidget *table;
-        GtkWidget *entry;
-        GtkWidget *combo_box;
-        GtkWidget *hscale;
-        GtkWidget *button_box;
-        GtkWidget *image;
-        GtkWidget *check_button;
-        int row;
-
-        page->priv = g_new0 (GduPageVolumeUnallocatedPrivate, 1);
-
-        page->priv->pk_create_partition_action = polkit_action_new ();
-        polkit_action_set_action_id (page->priv->pk_create_partition_action, "org.freedesktop.devicekit.disks.erase");
-        page->priv->create_partition_action = polkit_gnome_action_new_default (
-                "create-partition",
-                page->priv->pk_create_partition_action,
-                _("C_reate"),
-                _("Create"));
-        g_object_set (page->priv->create_partition_action,
-                      "auth-label", _("C_reate..."),
-                      "yes-icon-name", GTK_STOCK_ADD,
-                      "no-icon-name", GTK_STOCK_ADD,
-                      "auth-icon-name", GTK_STOCK_ADD,
-                      "self-blocked-icon-name", GTK_STOCK_ADD,
-                      NULL);
-        g_signal_connect (page->priv->create_partition_action, "activate",
-                          G_CALLBACK (create_partition_callback), page);
-
-        page->priv->main_vbox = gtk_vbox_new (FALSE, 10);
-        gtk_container_set_border_width (GTK_CONTAINER (page->priv->main_vbox), 8);
-
-        vbox = gtk_vbox_new (FALSE, 10);
-
-        /* ---------------- */
-        /* Create partition */
-        /* ---------------- */
-
-        vbox3 = gtk_vbox_new (FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
-
-        page->priv->sensitive_vbox = gtk_vbox_new (FALSE, 5);
-        gtk_box_pack_start (GTK_BOX (vbox3), page->priv->sensitive_vbox, FALSE, TRUE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (page->priv->sensitive_vbox), label, FALSE, FALSE, 0);
-        vbox2 = gtk_vbox_new (FALSE, 5);
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
-        gtk_container_add (GTK_CONTAINER (align), vbox2);
-        gtk_box_pack_start (GTK_BOX (page->priv->sensitive_vbox), align, FALSE, TRUE, 0);
-
-        /* explanatory text */
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition, select the size and whether to create "
-                                                   "a file system. The partition type, label and flags can be changed "
-                                                   "after creation."));
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-
-        table = gtk_table_new (4, 2, FALSE);
-        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-
-        row = 0;
-
-        /* create size */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Size:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        hscale = gtk_hscale_new_with_range (0, 100, 128 * 1024 * 1024);
-        gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        g_signal_connect (hscale, "format-value", (GCallback) create_part_size_format_value_callback, page);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
-        page->priv->size_hscale = hscale;
-
-        row++;
-
-        /* secure erase */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Er_ase:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        combo_box = gdu_util_secure_erase_combo_box_create ();
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        page->priv->secure_erase_combo_box = combo_box;
-
-        row++;
-
-        /* secure erase desc */
-        label = gtk_label_new (NULL);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_width_chars (GTK_LABEL (label), 40);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
-
-        row++;
-
-        /* _file system_ label */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        entry = gtk_entry_new ();
-        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-        page->priv->fslabel_entry = entry;
-
-        row++;
-
-        /* _file system_ type */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        combo_box = gdu_util_fstype_combo_box_create (NULL);
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        page->priv->fstype_combo_box = combo_box;
-
-        row++;
-
-        /* fstype desc */
-        label = gtk_label_new (NULL);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_width_chars (GTK_LABEL (label), 40);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gdu_util_fstype_combo_box_set_desc_label (combo_box, label);
-
-        row++;
-
-        /* whether to encrypt underlying device */
-        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
-        gtk_widget_set_tooltip_text (check_button,
-                                     _("Encryption protects your data, requiring a "
-                                       "passphrase to be enterered before the file system can be "
-                                       "used. May decrease performance and may not be compatible if "
-                                       "you use the media on other operating systems."));
-        if (gdu_util_can_create_encrypted_device ()) {
-                gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        }
-        page->priv->encrypt_check_button = check_button;
-
-        row++;
-
-        /* create button */
-        button_box = gtk_hbutton_box_new ();
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
-        gtk_box_set_spacing (GTK_BOX (button_box), 6);
-        gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
-        button = polkit_gnome_action_create_button (page->priv->create_partition_action);
-        gtk_container_add (GTK_CONTAINER (button_box), button);
-
-        /* update sensivity and length of fs label and ensure it's set initially */
-        g_signal_connect (page->priv->fstype_combo_box, "changed",
-                          G_CALLBACK (create_part_fstype_combo_box_changed), page);
-        create_part_fstype_combo_box_changed (page->priv->fstype_combo_box, page);
-
-        gtk_box_pack_start (GTK_BOX (page->priv->main_vbox), vbox, TRUE, TRUE, 0);
-
-        /* Warning used for
-         * - telling the user he won't be able to add more partitions if he adds this one
-         * - telling the user that we can't add any partitions because the four primary ones
-         *   are used already and there is no extended partition
-         */
-        hbox = gtk_hbox_new (FALSE, 5);
-        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
-        label = gtk_label_new (NULL);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox3), hbox, TRUE, TRUE, 10);
-        page->priv->warning_hbox = hbox;
-        page->priv->warning_label = label;
-}
-
-
-GduPageVolumeUnallocated *
-gdu_page_volume_unallocated_new (GduShell *shell)
-{
-        return GDU_PAGE_VOLUME_UNALLOCATED (g_object_new (GDU_TYPE_PAGE_VOLUME_UNALLOCATED, "shell", shell, NULL));
-}
-
 static gboolean
-has_extended_partition (GduPageVolumeUnallocated *page, GduPresentable *presentable)
+has_extended_partition (GduSectionUnallocated *section, GduPresentable *presentable)
 {
         GList *l;
         GList *enclosed_presentables;
@@ -647,9 +343,10 @@ has_extended_partition (GduPageVolumeUnallocated *page, GduPresentable *presenta
         return ret;
 }
 
+
 /**
  * update_warning:
- * @page: A #GduPageVolumeUnallocated object.
+ * @section: A #GduSectionUnallocated object.
  *
  * Update the warning widgets to tell the user how much MBR sucks if
  * that is what he is using.
@@ -657,8 +354,9 @@ has_extended_partition (GduPageVolumeUnallocated *page, GduPresentable *presenta
  * Returns: #TRUE if no more partitions can be created
  **/
 static gboolean
-update_warning (GduPageVolumeUnallocated *page)
+update_warning (GduSectionUnallocated *section)
 {
+        GduPresentable *presentable;
         gboolean show_warning;
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
@@ -669,7 +367,9 @@ update_warning (GduPageVolumeUnallocated *page)
         warning_markup = NULL;
         at_max_partitions = FALSE;
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (page->priv->presentable);
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
+
+        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
@@ -683,7 +383,7 @@ update_warning (GduPageVolumeUnallocated *page)
 
                 if (scheme != NULL &&
                     strcmp (scheme, "mbr") == 0 &&
-                    !has_extended_partition (page, toplevel_presentable)) {
+                    !has_extended_partition (section, toplevel_presentable)) {
                         int num_partitions;
 
                         num_partitions = gdu_device_partition_table_get_count (toplevel_device);
@@ -705,10 +405,10 @@ update_warning (GduPageVolumeUnallocated *page)
         }
 
         if (show_warning) {
-                gtk_widget_show (page->priv->warning_hbox);
-                gtk_label_set_markup (GTK_LABEL (page->priv->warning_label), warning_markup);
+                gtk_widget_show (section->priv->warning_hbox);
+                gtk_label_set_markup (GTK_LABEL (section->priv->warning_label), warning_markup);
         } else {
-                gtk_widget_hide (page->priv->warning_hbox);
+                gtk_widget_hide (section->priv->warning_hbox);
         }
 
 out:
@@ -721,23 +421,21 @@ out:
         return at_max_partitions;
 }
 
-static gboolean
-gdu_page_volume_unallocated_update (GduPage *_page, GduPresentable *presentable, gboolean reset_page)
+static void
+update (GduSectionUnallocated *section)
 {
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (_page);
+        GduPresentable *presentable;
         GduDevice *device;
-        gboolean show_page;
         guint64 size;
         GduDevice *toplevel_device;
         GduPresentable *toplevel_presentable;
         const char *scheme;
         gboolean at_max_partitions;
 
-        show_page = FALSE;
-
         toplevel_presentable = NULL;
         toplevel_device = NULL;
 
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
         device = gdu_presentable_get_device (presentable);
 
         toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
@@ -747,39 +445,36 @@ gdu_page_volume_unallocated_update (GduPage *_page, GduPresentable *presentable,
                 goto out;
         }
 
-        if (device == NULL) {
-                show_page = TRUE;
+        if (device != NULL) {
+                g_warning ("%s: device is not NULL for presentable",  __FUNCTION__);
+                goto out;
         }
 
-        if (!show_page)
-                goto out;
-
-        if (page->priv->presentable != NULL)
-                g_object_unref (page->priv->presentable);
-        page->priv->presentable = g_object_ref (presentable);
 
         scheme = gdu_device_partition_table_get_scheme (toplevel_device);
 
-        at_max_partitions = update_warning (page);
-        gtk_widget_set_sensitive (page->priv->sensitive_vbox, !at_max_partitions);
+        at_max_partitions = update_warning (section);
+        gtk_widget_set_sensitive (section->priv->sensitive_vbox, !at_max_partitions);
 
-        gtk_widget_set_sensitive (page->priv->main_vbox, !gdu_device_is_read_only (toplevel_device));
+        gtk_widget_set_sensitive (GTK_WIDGET (section), !gdu_device_is_read_only (toplevel_device));
 
         size = gdu_presentable_get_size (presentable);
 
-        if (reset_page) {
-                gtk_range_set_range (GTK_RANGE (page->priv->size_hscale), 0, size);
-                gtk_range_set_value (GTK_RANGE (page->priv->size_hscale), size);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->secure_erase_combo_box), 0);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (page->priv->fstype_combo_box), 0);
-                gtk_entry_set_text (GTK_ENTRY (page->priv->fslabel_entry), "");
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (page->priv->encrypt_check_button), FALSE);
+        if (!section->priv->init_done) {
+                section->priv->init_done = TRUE;
+
+                gtk_range_set_range (GTK_RANGE (section->priv->size_hscale), 0, size);
+                gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), size);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->secure_erase_combo_box), 0);
+                gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->fstype_combo_box), 0);
+                gtk_entry_set_text (GTK_ENTRY (section->priv->fslabel_entry), "");
+                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button), FALSE);
 
                 /* only allow creation of extended partitions if there currently are none */
-                if (has_extended_partition (page, toplevel_presentable)) {
-                        gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, NULL);
+                if (has_extended_partition (section, toplevel_presentable)) {
+                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, NULL);
                 } else {
-                        gdu_util_fstype_combo_box_rebuild (page->priv->fstype_combo_box, scheme);
+                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, scheme);
                 }
         }
 
@@ -790,20 +485,240 @@ out:
                 g_object_unref (toplevel_presentable);
         if (toplevel_device != NULL)
                 g_object_unref (toplevel_device);
-
-        return show_page;
 }
 
-static GtkWidget *
-gdu_page_volume_unallocated_get_widget (GduPage *_page)
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+gdu_section_unallocated_finalize (GduSectionUnallocated *section)
 {
-        GduPageVolumeUnallocated *page = GDU_PAGE_VOLUME_UNALLOCATED (_page);
-        return page->priv->main_vbox;
+        polkit_action_unref (section->priv->pk_create_partition_action);
+        g_object_unref (section->priv->create_partition_action);
+
+        if (G_OBJECT_CLASS (parent_class)->finalize)
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
 
 static void
-gdu_page_volume_unallocated_page_iface_init (GduPageIface *iface)
+gdu_section_unallocated_class_init (GduSectionUnallocatedClass *klass)
 {
-        iface->get_widget = gdu_page_volume_unallocated_get_widget;
-        iface->update = gdu_page_volume_unallocated_update;
+        GObjectClass *obj_class = (GObjectClass *) klass;
+        GduSectionClass *section_class = (GduSectionClass *) klass;
+
+        parent_class = g_type_class_peek_parent (klass);
+
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_section_unallocated_finalize;
+        section_class->update = (gpointer) update;
+}
+
+static void
+gdu_section_unallocated_init (GduSectionUnallocated *section)
+{
+        GtkWidget *hbox;
+        GtkWidget *vbox;
+        GtkWidget *vbox2;
+        GtkWidget *vbox3;
+        GtkWidget *button;
+        GtkWidget *label;
+        GtkWidget *align;
+        GtkWidget *table;
+        GtkWidget *entry;
+        GtkWidget *combo_box;
+        GtkWidget *hscale;
+        GtkWidget *button_box;
+        GtkWidget *image;
+        GtkWidget *check_button;
+        int row;
+
+        section->priv = g_new0 (GduSectionUnallocatedPrivate, 1);
+
+        section->priv->pk_create_partition_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_create_partition_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->create_partition_action = polkit_gnome_action_new_default (
+                "create-partition",
+                section->priv->pk_create_partition_action,
+                _("C_reate"),
+                _("Create"));
+        g_object_set (section->priv->create_partition_action,
+                      "auth-label", _("C_reate..."),
+                      "yes-icon-name", GTK_STOCK_ADD,
+                      "no-icon-name", GTK_STOCK_ADD,
+                      "auth-icon-name", GTK_STOCK_ADD,
+                      "self-blocked-icon-name", GTK_STOCK_ADD,
+                      NULL);
+        g_signal_connect (section->priv->create_partition_action, "activate",
+                          G_CALLBACK (create_partition_callback), section);
+
+        vbox = gtk_vbox_new (FALSE, 10);
+
+        /* ---------------- */
+        /* Create partition */
+        /* ---------------- */
+
+        vbox3 = gtk_vbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
+
+        section->priv->sensitive_vbox = gtk_vbox_new (FALSE, 5);
+        gtk_box_pack_start (GTK_BOX (vbox3), section->priv->sensitive_vbox, FALSE, TRUE, 0);
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), label, FALSE, FALSE, 0);
+        vbox2 = gtk_vbox_new (FALSE, 5);
+        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_container_add (GTK_CONTAINER (align), vbox2);
+        gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), align, FALSE, TRUE, 0);
+
+        /* explanatory text */
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("To create a new partition, select the size and whether to create "
+                                                   "a file system. The partition type, label and flags can be changed "
+                                                   "after creation."));
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
+
+        table = gtk_table_new (4, 2, FALSE);
+        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+
+        row = 0;
+
+        /* create size */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Size:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        hscale = gtk_hscale_new_with_range (0, 100, 128 * 1024 * 1024);
+        gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        g_signal_connect (hscale, "format-value", (GCallback) create_part_size_format_value_callback, section);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
+        section->priv->size_hscale = hscale;
+
+        row++;
+
+        /* secure erase */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Er_ase:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        combo_box = gdu_util_secure_erase_combo_box_create ();
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
+        section->priv->secure_erase_combo_box = combo_box;
+
+        row++;
+
+        /* secure erase desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
+
+        row++;
+
+        /* _file system_ label */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        entry = gtk_entry_new ();
+        gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+        section->priv->fslabel_entry = entry;
+
+        row++;
+
+        /* _file system_ type */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+
+        combo_box = gdu_util_fstype_combo_box_create (NULL);
+        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
+        section->priv->fstype_combo_box = combo_box;
+
+        row++;
+
+        /* fstype desc */
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 40);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gdu_util_fstype_combo_box_set_desc_label (combo_box, label);
+
+        row++;
+
+        /* whether to encrypt underlying device */
+        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
+        gtk_widget_set_tooltip_text (check_button,
+                                     _("Encryption protects your data, requiring a "
+                                       "passphrase to be enterered before the file system can be "
+                                       "used. May decrease performance and may not be compatible if "
+                                       "you use the media on other operating systems."));
+        if (gdu_util_can_create_encrypted_device ()) {
+                gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        }
+        section->priv->encrypt_check_button = check_button;
+
+        row++;
+
+        /* create button */
+        button_box = gtk_hbutton_box_new ();
+        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
+        gtk_box_set_spacing (GTK_BOX (button_box), 6);
+        gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
+        button = polkit_gnome_action_create_button (section->priv->create_partition_action);
+        gtk_container_add (GTK_CONTAINER (button_box), button);
+
+        /* update sensivity and length of fs label and ensure it's set initially */
+        g_signal_connect (section->priv->fstype_combo_box, "changed",
+                          G_CALLBACK (create_part_fstype_combo_box_changed), section);
+        create_part_fstype_combo_box_changed (section->priv->fstype_combo_box, section);
+
+        /* Warning used for
+         * - telling the user he won't be able to add more partitions if he adds this one
+         * - telling the user that we can't add any partitions because the four primary ones
+         *   are used already and there is no extended partition
+         */
+        hbox = gtk_hbox_new (FALSE, 5);
+        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
+        label = gtk_label_new (NULL);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox3), hbox, TRUE, TRUE, 10);
+        section->priv->warning_hbox = hbox;
+        section->priv->warning_label = label;
+
+        gtk_box_pack_start (GTK_BOX (section), vbox, TRUE, TRUE, 0);
+}
+
+GtkWidget *
+gdu_section_unallocated_new (GduShell       *shell,
+                             GduPresentable *presentable)
+{
+        return GTK_WIDGET (g_object_new (GDU_TYPE_SECTION_UNALLOCATED,
+                                         "shell", shell,
+                                         "presentable", presentable,
+                                         NULL));
 }

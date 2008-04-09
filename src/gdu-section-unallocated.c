@@ -38,6 +38,7 @@ struct _GduSectionUnallocatedPrivate
         GtkWidget *sensitive_vbox;
 
         GtkWidget *size_hscale;
+        GtkWidget *size_spin_button;
         GtkWidget *fstype_combo_box;
         GtkWidget *fslabel_entry;
         GtkWidget *secure_erase_combo_box;
@@ -178,7 +179,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         }
 
         offset = gdu_presentable_get_offset (presentable);
-        size = (guint64) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale));
+        size = (guint64) (((double) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale))) * 1024.0 * 1024.0);
         fstype = gdu_util_fstype_combo_box_get_selected (section->priv->fstype_combo_box);
         fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->fslabel_entry)));
         fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
@@ -463,8 +464,12 @@ update (GduSectionUnallocated *section)
         if (!section->priv->init_done) {
                 section->priv->init_done = TRUE;
 
-                gtk_range_set_range (GTK_RANGE (section->priv->size_hscale), 0, size);
-                gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), size);
+                gtk_range_set_range (GTK_RANGE (section->priv->size_hscale), 0, size / 1024.0 / 1024.0);
+                gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), size / 1024.0 / 1024.0);
+
+                gtk_spin_button_set_range (GTK_SPIN_BUTTON (section->priv->size_spin_button), 0, size / 1024.0 / 1024.0);
+                gtk_spin_button_set_value (GTK_SPIN_BUTTON (section->priv->size_spin_button), size / 1024.0 / 1024.0);
+
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->secure_erase_combo_box), 0);
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->fstype_combo_box), 0);
                 gtk_entry_set_text (GTK_ENTRY (section->priv->fslabel_entry), "");
@@ -485,6 +490,28 @@ out:
                 g_object_unref (toplevel_presentable);
         if (toplevel_device != NULL)
                 g_object_unref (toplevel_device);
+}
+
+static gboolean
+size_hscale_change_value_callback (GtkRange     *range,
+                                   GtkScrollType scroll,
+                                   gdouble       value,
+                                   gpointer      user_data)
+{
+        GduSectionUnallocated *section = GDU_SECTION_UNALLOCATED (user_data);
+        gtk_spin_button_set_value (GTK_SPIN_BUTTON (section->priv->size_spin_button), value);
+        return FALSE;
+}
+
+static void
+size_spin_button_value_changed_callback (GtkSpinButton *spin_button,
+                                         gpointer       user_data)
+{
+        GduSectionUnallocated *section = GDU_SECTION_UNALLOCATED (user_data);
+        double value;
+
+        value = gtk_spin_button_get_value (spin_button);
+        gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), value);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -525,6 +552,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         GtkWidget *entry;
         GtkWidget *combo_box;
         GtkWidget *hscale;
+        GtkWidget *spin_button;
         GtkWidget *button_box;
         GtkWidget *image;
         GtkWidget *check_button;
@@ -592,12 +620,28 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 
-        hscale = gtk_hscale_new_with_range (0, 100, 128 * 1024 * 1024);
-        gtk_table_attach (GTK_TABLE (table), hscale, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        g_signal_connect (hscale, "format-value", (GCallback) create_part_size_format_value_callback, section);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), hscale);
+        hbox = gtk_hbox_new (FALSE, 5);
+
+        hscale = gtk_hscale_new_with_range (0, 10000, 1000);
+        gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
+        //g_signal_connect (hscale, "format-value", (GCallback) create_part_size_format_value_callback, section);
+        g_signal_connect (hscale, "change-value", (GCallback) size_hscale_change_value_callback, section);
+        gtk_box_pack_start (GTK_BOX (hbox), hscale, TRUE, TRUE, 0);
         section->priv->size_hscale = hscale;
+
+        spin_button = gtk_spin_button_new_with_range (0, 10000, 1);
+        g_signal_connect (spin_button, "value-changed", (GCallback) size_spin_button_value_changed_callback, section);
+        gtk_box_pack_start (GTK_BOX (hbox), spin_button, FALSE, TRUE, 0);
+        section->priv->size_spin_button = spin_button;
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), spin_button);
+
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_label_set_markup (GTK_LABEL (label), _("MB"));
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+
+        gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 
         row++;
 

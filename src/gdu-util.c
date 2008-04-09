@@ -41,19 +41,19 @@ gdu_util_get_size_for_display (guint64 size, gboolean long_string)
         if (size < MEGABYTE_FACTOR) {
                 displayed_size = (double) size / KILOBYTE_FACTOR;
                 if (long_string)
-                        str = g_strdup_printf (_("%.1f KB (%'lld bytes)"), displayed_size, size);
+                        str = g_strdup_printf (_("%.1f KB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
                 else
                         str = g_strdup_printf (_("%.1f KB"), displayed_size);
         } else if (size < GIGABYTE_FACTOR) {
                 displayed_size = (double) size / MEGABYTE_FACTOR;
                 if (long_string)
-                        str = g_strdup_printf (_("%.1f MB (%'lld bytes)"), displayed_size, size);
+                        str = g_strdup_printf (_("%.1f MB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
                 else
                         str = g_strdup_printf (_("%.1f MB"), displayed_size);
         } else {
                 displayed_size = (double) size / GIGABYTE_FACTOR;
                 if (long_string)
-                        str = g_strdup_printf (_("%.1f GB (%'lld bytes)"), displayed_size, size);
+                        str = g_strdup_printf (_("%.1f GB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
                 else
                         str = g_strdup_printf (_("%.1f GB"), displayed_size);
         }

@@ -363,7 +363,7 @@ add_presentable_to_tree (GduDeviceTree *device_tree, GduPresentable *presentable
         pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
 
         /* sort by offset so we get partitions in the right order */
-        sortname = g_strdup_printf ("%016lld_%s", gdu_presentable_get_offset (presentable), object_path);
+        sortname = g_strdup_printf ("%016" G_GINT64_FORMAT "_%s", gdu_presentable_get_offset (presentable), object_path);
 
         gtk_tree_store_append (store, &iter, parent_iter);
         gtk_tree_store_set (store, &iter,

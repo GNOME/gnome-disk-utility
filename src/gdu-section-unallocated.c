@@ -299,12 +299,6 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
         g_free (fstype);
 }
 
-static char*
-create_part_size_format_value_callback (GtkScale *scale, gdouble value)
-{
-        return gdu_util_get_size_for_display ((guint64) value, FALSE);
-}
-
 static gboolean
 has_extended_partition (GduSectionUnallocated *section, GduPresentable *presentable)
 {

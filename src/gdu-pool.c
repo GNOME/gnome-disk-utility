@@ -1173,9 +1173,9 @@ gdu_pool_op_assemble_linux_md_array (GduPool *pool,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_assemble_linux_md_array_async (pool->priv->proxy,
-                                                                       component_objpaths,
-                                                                       (const char **) options,
-                                                                       op_assemble_linux_md_array_cb,
-                                                                       data);
+        org_freedesktop_DeviceKit_Disks_linux_md_start_async (pool->priv->proxy,
+                                                              component_objpaths,
+                                                              (const char **) options,
+                                                              op_assemble_linux_md_array_cb,
+                                                              data);
 }

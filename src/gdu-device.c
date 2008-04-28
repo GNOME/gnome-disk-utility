@@ -1080,7 +1080,7 @@ gdu_device_op_mkfs (GduDevice   *device,
         }
         options[n] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_create_filesystem_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_create_async (device->priv->proxy,
                                                                         fstype,
                                                                         (const char **) options,
                                                                         op_mkfs_cb,
@@ -1115,11 +1115,11 @@ gdu_device_op_mount (GduDevice *device)
         options[0] = NULL;
         fstype = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_mount_async (device->priv->proxy,
-                                                            fstype,
-                                                            (const char **) options,
-                                                            op_mount_cb,
-                                                            g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_mount_async (device->priv->proxy,
+                                                                       fstype,
+                                                                       (const char **) options,
+                                                                       op_mount_cb,
+                                                                       g_object_ref (device));
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1141,10 +1141,10 @@ gdu_device_op_unmount (GduDevice *device)
 {
         char *options[16];
         options[0] = NULL;
-        org_freedesktop_DeviceKit_Disks_Device_unmount_async (device->priv->proxy,
-                                                              (const char **) options,
-                                                              op_unmount_cb,
-                                                              g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_unmount_async (device->priv->proxy,
+                                                                         (const char **) options,
+                                                                         op_unmount_cb,
+                                                                         g_object_ref (device));
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1173,7 +1173,7 @@ gdu_device_op_delete_partition (GduDevice *device, const char *secure_erase)
         }
         options[n] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_delete_partition_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_partition_delete_async (device->priv->proxy,
                                                                        (const char **) options,
                                                                        op_delete_partition_cb,
                                                                        g_object_ref (device));
@@ -1245,7 +1245,7 @@ gdu_device_op_create_partition (GduDevice   *device,
         }
         fsoptions[n] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_create_partition_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_partition_create_async (device->priv->proxy,
                                                                        offset,
                                                                        size,
                                                                        type,
@@ -1281,7 +1281,7 @@ gdu_device_op_modify_partition (GduDevice   *device,
                                 const char  *label,
                                 char       **flags)
 {
-        org_freedesktop_DeviceKit_Disks_Device_modify_partition_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_partition_modify_async (device->priv->proxy,
                                                                        type,
                                                                        label,
                                                                        (const char **) flags,
@@ -1317,7 +1317,7 @@ gdu_device_op_create_partition_table (GduDevice  *device,
         }
         options[n] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_create_partition_table_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_partition_table_create_async (device->priv->proxy,
                                                                              scheme,
                                                                              (const char **) options,
                                                                              op_create_partition_table_cb,
@@ -1368,7 +1368,7 @@ gdu_device_op_unlock_encrypted (GduDevice *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_unlock_encrypted_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_encrypted_unlock_async (device->priv->proxy,
                                                                        secret,
                                                                        (const char **) options,
                                                                        op_unlock_encrypted_cb,
@@ -1413,7 +1413,7 @@ gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_change_secret_for_encrypted_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_encrypted_change_passphrase_async (device->priv->proxy,
                                                                                   old_secret,
                                                                                   new_secret,
                                                                                   op_change_secret_for_encrypted_cb,
@@ -1439,7 +1439,7 @@ gdu_device_op_lock_encrypted (GduDevice *device)
 {
         char *options[16];
         options[0] = NULL;
-        org_freedesktop_DeviceKit_Disks_Device_lock_encrypted_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_encrypted_lock_async (device->priv->proxy,
                                                                      (const char **) options,
                                                                      op_lock_encrypted_cb,
                                                                      g_object_ref (device));
@@ -1462,10 +1462,10 @@ op_change_fs_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 void
 gdu_device_op_change_filesystem_label (GduDevice *device, const char *new_label)
 {
-        org_freedesktop_DeviceKit_Disks_Device_change_filesystem_label_async (device->priv->proxy,
-                                                                              new_label,
-                                                                              op_change_fs_label_cb,
-                                                                              g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_set_label_async (device->priv->proxy,
+                                                                           new_label,
+                                                                           op_change_fs_label_cb,
+                                                                           g_object_ref (device));
 }
 /* -------------------------------------------------------------------------------- */
 
@@ -1519,7 +1519,7 @@ gdu_device_retrieve_smart_data (GduDevice                              *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_retrieve_smart_data_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_smart_retrieve_data_async (device->priv->proxy,
                                                                           op_retrieve_smart_data_cb,
                                                                           data);
 }
@@ -1603,11 +1603,11 @@ gdu_device_op_run_smart_selftest (GduDevice   *device,
                                   const char  *test,
                                   gboolean     captive)
 {
-        org_freedesktop_DeviceKit_Disks_Device_run_smart_selftest_async (device->priv->proxy,
-                                                                         test,
-                                                                         captive,
-                                                                         op_run_smart_selftest_cb,
-                                                                         g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_smart_initiate_selftest_async (device->priv->proxy,
+                                                                              test,
+                                                                              captive,
+                                                                              op_run_smart_selftest_cb,
+                                                                              g_object_ref (device));
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1631,10 +1631,10 @@ gdu_device_op_stop_linux_md_array (GduDevice *device)
 
         options[0] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_stop_linux_md_array_async (device->priv->proxy,
-                                                                          (const char **) options,
-                                                                          op_stop_linux_md_array_cb,
-                                                                          g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_linux_md_stop_async (device->priv->proxy,
+                                                                    (const char **) options,
+                                                                    op_stop_linux_md_array_cb,
+                                                                    g_object_ref (device));
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1658,7 +1658,7 @@ gdu_device_op_add_component_to_linux_md_array (GduDevice *device, const char *co
 
         options[0] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_add_component_to_linux_md_array_async (
+        org_freedesktop_DeviceKit_Disks_Device_linux_md_add_component_async (
                 device->priv->proxy,
                 component_objpath,
                 (const char **) options,
@@ -1694,7 +1694,7 @@ gdu_device_op_remove_component_from_linux_md_array (GduDevice *device,
         }
         options[n] = NULL;
 
-        org_freedesktop_DeviceKit_Disks_Device_remove_component_from_linux_md_array_async (
+        org_freedesktop_DeviceKit_Disks_Device_linux_md_remove_component_async (
                 device->priv->proxy,
                 component_objpath,
                 (const char **) options,
@@ -1711,7 +1711,7 @@ void
 gdu_device_op_cancel_job (GduDevice *device)
 {
         GError *error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_Device_cancel_job (device->priv->proxy, &error)) {
+        if (!org_freedesktop_DeviceKit_Disks_Device_job_cancel (device->priv->proxy, &error)) {
                 g_warning ("error cancelling op: %s", error->message);
                 g_error_free (error);
         }

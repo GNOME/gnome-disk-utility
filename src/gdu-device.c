@@ -20,6 +20,7 @@
  */
 
 #include <config.h>
+#include <stdlib.h>
 #include <string.h>
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
@@ -36,6 +37,16 @@
  *
  * TODO: keep in sync with code in tools/devkit-disks in DeviceKit-disks.
  */
+
+typedef struct {
+        int id;
+        char *desc;
+        int flags;
+        int value;
+        int worst;
+        int threshold;
+        char *raw;
+} DeviceSmartAttribute;
 
 typedef struct
 {
@@ -100,6 +111,16 @@ typedef struct
         char   **drive_media_compatibility;
         char    *drive_media;
 
+        gboolean               drive_smart_is_capable;
+        gboolean               drive_smart_is_enabled;
+        guint64                drive_smart_time_collected;
+        gboolean               drive_smart_is_failing;
+        double                 drive_smart_temperature;
+        guint64                drive_smart_time_powered_on;
+        char                  *drive_smart_last_self_test_result;
+        int                    num_drive_smart_attributes;
+        DeviceSmartAttribute  *drive_smart_attributes;
+
         char    *linux_md_component_level;
         int      linux_md_component_num_raid_devices;
         char    *linux_md_component_uuid;
@@ -118,6 +139,16 @@ typedef struct
         double   linux_md_sync_percentage;
         guint64  linux_md_sync_speed;
 } DeviceProperties;
+
+#define SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
+                                                        G_TYPE_INT,      \
+                                                        G_TYPE_STRING,   \
+                                                        G_TYPE_INT,      \
+                                                        G_TYPE_INT,      \
+                                                        G_TYPE_INT,      \
+                                                        G_TYPE_INT,      \
+                                                        G_TYPE_STRING,   \
+                                                        G_TYPE_INVALID))
 
 static void
 collect_props (const char *key, const GValue *value, DeviceProperties *props)
@@ -245,6 +276,42 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "drive-media") == 0)
                 props->drive_media = g_strdup (g_value_get_string (value));
 
+        else if (strcmp (key, "drive-smart-is-capable") == 0)
+                props->drive_smart_is_capable = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-smart-is-enabled") == 0)
+                props->drive_smart_is_enabled = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-smart-time-collected") == 0)
+                props->drive_smart_time_collected = g_value_get_uint64 (value);
+        else if (strcmp (key, "drive-smart-is-failing") == 0)
+                props->drive_smart_is_failing = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-smart-temperature") == 0)
+                props->drive_smart_temperature = g_value_get_double (value);
+        else if (strcmp (key, "drive-smart-time-powered-on") == 0)
+                props->drive_smart_time_powered_on = g_value_get_uint64 (value);
+        else if (strcmp (key, "drive-smart-last-self-test-result") == 0)
+                props->drive_smart_last_self_test_result = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "drive-smart-attributes") == 0) {
+                GPtrArray *p = g_value_get_boxed (value);
+                int n;
+                props->num_drive_smart_attributes = (int) p->len;
+                props->drive_smart_attributes = g_new0 (DeviceSmartAttribute, props->num_drive_smart_attributes);
+                for (n = 0; n < (int) p->len; n++) {
+                        DeviceSmartAttribute *a = props->drive_smart_attributes + n;
+                        GValue elem = {0};
+                        g_value_init (&elem, SMART_DATA_STRUCT_TYPE);
+                        g_value_set_static_boxed (&elem, p->pdata[n]);
+                        dbus_g_type_struct_get (&elem,
+                                                0, &(a->id),
+                                                1, &(a->desc),
+                                                2, &(a->flags),
+                                                3, &(a->value),
+                                                4, &(a->worst),
+                                                5, &(a->threshold),
+                                                6, &(a->raw),
+                                                G_MAXUINT);
+                }
+        }
+
         else if (strcmp (key, "linux-md-component-level") == 0)
                 props->linux_md_component_level = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-num-raid-devices") == 0)
@@ -338,6 +405,8 @@ out:
 static void
 device_properties_free (DeviceProperties *props)
 {
+        int n;
+
         g_free (props->native_path);
         g_free (props->device_file);
         g_strfreev (props->device_file_by_id);
@@ -366,6 +435,12 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_connection_interface);
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
+        g_free (props->drive_smart_last_self_test_result);
+        for (n = 0; n < props->num_drive_smart_attributes; n++) {
+                g_free (props->drive_smart_attributes[n].desc);
+                g_free (props->drive_smart_attributes[n].raw);
+        }
+        g_free (props->drive_smart_attributes);
         g_free (props->linux_md_component_level);
         g_free (props->linux_md_component_uuid);
         g_free (props->linux_md_component_name);
@@ -391,13 +466,6 @@ struct _GduDevicePrivate
         char *job_last_error_message;
 
         DeviceProperties *props;
-
-        time_t smart_data_cache_timestamp;
-        gboolean smart_data_cache_passed;
-        int smart_data_cache_power_on_hours;
-        int smart_data_cache_temperature;
-        char *smart_data_cache_last_self_test_result;
-        GError *smart_data_cache_error;
 };
 
 enum {
@@ -430,10 +498,6 @@ gdu_device_finalize (GduDevice *device)
         if (device->priv->props != NULL)
                 device_properties_free (device->priv->props);
         g_free (device->priv->job_last_error_message);
-
-        g_free (device->priv->smart_data_cache_last_self_test_result);
-        if (device->priv->smart_data_cache_error != NULL)
-                g_error_free (device->priv->smart_data_cache_error);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (device));
@@ -865,6 +929,322 @@ gdu_device_drive_get_media (GduDevice *device)
 {
         return device->priv->props->drive_media;
 }
+
+gboolean
+gdu_device_drive_smart_get_is_capable (GduDevice *device)
+{
+        return device->priv->props->drive_smart_is_capable;
+}
+
+gboolean
+gdu_device_drive_smart_get_is_enabled (GduDevice *device)
+{
+        return device->priv->props->drive_smart_is_enabled;
+}
+
+guint64
+gdu_device_drive_smart_get_time_collected (GduDevice *device)
+{
+        return device->priv->props->drive_smart_time_collected;
+}
+
+gboolean
+gdu_device_drive_smart_get_is_failing (GduDevice *device,
+                                       gboolean  *out_attr_warn,
+                                       gboolean  *out_attr_fail)
+{
+        int n;
+        gboolean warn, fail;
+
+        warn = FALSE;
+        fail = FALSE;
+        for (n = 0; n < device->priv->props->num_drive_smart_attributes; n++) {
+                GduDeviceSmartAttribute *attr =
+                        ((GduDeviceSmartAttribute *) device->priv->props->drive_smart_attributes) + n;
+
+                if (attr->value < attr->threshold)
+                        fail = TRUE;
+
+                if (!warn)
+                        gdu_device_smart_attribute_get_details (attr, NULL, NULL, &warn);
+        }
+
+        if (out_attr_warn != NULL)
+                *out_attr_warn = warn;
+        if (out_attr_fail != NULL)
+                *out_attr_fail = fail;
+        return device->priv->props->drive_smart_is_failing;
+}
+
+double
+gdu_device_drive_smart_get_temperature (GduDevice *device)
+{
+        return device->priv->props->drive_smart_temperature;
+}
+
+guint64
+gdu_device_drive_smart_get_time_powered_on (GduDevice *device)
+{
+        return device->priv->props->drive_smart_time_powered_on;
+}
+
+const char *
+gdu_device_drive_smart_get_last_self_test_result (GduDevice *device)
+{
+        return device->priv->props->drive_smart_last_self_test_result;
+}
+
+GduDeviceSmartAttribute *
+gdu_device_drive_smart_get_attributes (GduDevice *device, int *num_attributes)
+{
+        g_return_val_if_fail (num_attributes != NULL, NULL);
+        *num_attributes = device->priv->props->num_drive_smart_attributes;
+        /* Keep GduDeviceSmartAttribute in sync with DeviceSmartAttribute */
+        return (GduDeviceSmartAttribute *) device->priv->props->drive_smart_attributes;
+}
+
+void
+gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
+                                        char                    **out_name,
+                                        char                    **out_description,
+                                        gboolean                 *out_should_warn)
+{
+        const char *n;
+        const char *d;
+        gboolean warn;
+        int raw_int;
+
+        raw_int = atoi (attr->raw);
+
+        /* See http://smartmontools.sourceforge.net/doc.html
+         *     http://en.wikipedia.org/wiki/S.M.A.R.T
+         *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-SMARTAttributesAnnex.pdf
+         */
+
+        n = NULL;
+        d = NULL;
+        warn = FALSE;
+        switch (attr->id) {
+        case 1:
+                n = _("Read Error Rate");
+                d = _("Frequency of errors while reading raw data from the disk."
+                      "\n\n"
+                      "A non-zero value indicates a problem with "
+                      "either the disk surface or read/write heads.");
+                break;
+        case 2:
+                n = _("Throughput Performance");
+                d = _("Average effeciency of the disk.");
+                break;
+        case 3:
+                n = _("Spinup Time");
+                d = _("Time needed to spin up the disk.");
+                break;
+        case 4:
+                n = _("Start/Stop Count");
+                d = _("Number of spindle start/stop cycles.");
+                break;
+        case 5:
+                n = _("Reallocated Sector Count");
+                d = _("Count of remapped sectors."
+                      "\n\n"
+                      "When the hard drive finds a read/write/verification error, it mark the sector "
+                      "as \"reallocated\" and transfers data to a special reserved area (spare area).");
+                break;
+        case 7:
+                n = _("Seek Error Rate");
+                d = _("Frequency of errors while positioning.");
+                break;
+        case 8:
+                n = _("Seek Timer Performance");
+                d = _("Average efficiency of operatings while positioning");
+                break;
+        case 9:
+                n = _("Power-On Hours");
+                d = _("Number of hours elapsed in the power-on state.");
+                break;
+        case 10:
+                n = _("Spinup Retry Count");
+                d = _("Number of retry attempts to spin up.");
+                break;
+        case 11:
+                n = _("Calibration Retry Count");
+                d = _("Number of attempts to calibrate the device.");
+                break;
+        case 12:
+                n = _("Power Cycle Count");
+                d = _("Number of power-on events.");
+                break;
+        case 13:
+                n = _("Soft read error rate");
+                d = _("Frequency of 'program' errors while reading from the disk.");
+                break;
+
+        case 191:
+                n = _("G-sense Error Rate");
+                d = _("Frequency of mistakes as a result of impact loads.");
+                break;
+        case 192:
+                n = _("Power-off Retract Count");
+                d = _("Number of power-off or emergency retract cycles.");
+                break;
+        case 193:
+                n = _("Load/Unload Cycle Count");
+                d = _("Number of cycles into landing zone position.");
+                break;
+        case 194:
+                n = _("Temperature");
+                d = _("Current internal temperature in degrees Celcius.");
+                break;
+        case 195:
+                n = _("Hardware ECC Recovered");
+                d = _("Number of ECC on-the-fly errors.");
+                break;
+        case 196:
+                n = _("Reallocation Count");
+                d = _("Number of remapping operations.\n\n"
+                      "The raw value of this attribute shows the total number of (successful "
+                      "and unsucessful) attempts to transfer data from reallocated sectors "
+                      "to a spare area.");
+                break;
+        case 197:
+                n = _("Current Pending Sector Count");
+                d = _("Number of sectors waiting to be remapped."
+                      "\n\n"
+                      "If the sector waiting to be remapped is subsequently written or read "
+                      "successfully, this value is decreased and the sector is not remapped. Read "
+                      "errors on the sector will not remap the sector, it will only be remapped on "
+                      "a failed write attempt.");
+                if (raw_int > 0)
+                        warn = TRUE;
+                break;
+        case 198:
+                n = _("Uncorrectable Sector Count");
+                d = _("The total number of uncorrectable errors when reading/writing a sector."
+                      "\n\n"
+                      "A rise in the value of this attribute indicates defects of the "
+                      "disk surface and/or problems in the mechanical subsystem.");
+                break;
+        case 199:
+                n = _("UDMA CRC Error Rate");
+                d = _("Number of CRC errors during UDMA mode.");
+                break;
+        case 200:
+                n = _("Write Error Rate");
+                d = _("Number of errors while writing to disk (or) multi-zone error rate (or) flying-height.");
+                break;
+        case 201:
+                n = _("Soft Read Error Rate");
+                d = _("Number of off-track errors.");
+                break;
+        case 202:
+                n = _("Data Address Mark Errors");
+                d = _("Number of Data Address Mark (DAM) errors (or) vendor-specific.");
+                break;
+        case 203:
+                n = _("Run Out Cancel");
+                d = _("Number of ECC errors.");
+                break;
+        case 204:
+                n = _("Soft ECC correction");
+                d = _("Number of errors corrected by software ECC.");
+                break;
+        case 205:
+                n = _("Thermal Asperity Rate");
+                d = _("Number of Thermal Asperity Rate errors.");
+                break;
+        case 206:
+                n = _("Flying Height");
+                d = _("Height of heads above the disk surface.");
+                break;
+        case 207:
+                n = _("Spin High Current");
+                d = _("Amount of high current used to spin up the drive.");
+                break;
+        case 208:
+                n = _("Spin Buzz");
+                d = _("Number of buzz routines to spin up the drive.");
+                break;
+        case 209:
+                n = _("Offline Seek Performance");
+                d = _("Drive's seek performance during offline operations.");
+                break;
+
+        case 220:
+                n = _("Disk Shift");
+                d = _("Shift of disk os possible as a result of strong shock loading in the store, "
+                      "as a result of falling (or) temperature.");
+                break;
+        case 221:
+                n = _("G-sense Error Rate");
+                d = _("Number of errors as a result of impact loads as detected by a shock sensor.");
+                break;
+        case 222:
+                n = _("Loaded Hours");
+                d = _("Number of hours in general operational state.");
+                break;
+        case 223:
+                n = _("Load/Unload Retry Count");
+                d = _("Loading on drive caused by numerous recurrences of operations, like reading, "
+                      "recording, positioning of heads, etc.");
+                break;
+        case 224:
+                n = _("Load Friction");
+                d = _("Load on drive cause by friction in mechanical parts of the store.");
+                break;
+        case 225:
+                n = _("Load/Unload Cycle Count");
+                d = _("Total number of load cycles.");
+                break;
+        case 226:
+                n = _("Load-in Time");
+                d = _("General time for loading in a drive.");
+                break;
+        case 227:
+                n = _("Torque Amplification Count");
+                d = _("Quantity efforts of the rotating moment of a drive.");
+                break;
+        case 228:
+                n = _("Power-off Retract Count");
+                d = _("Number of power-off retract events.");
+                break;
+
+        case 230:
+                n = _("GMR Head Amplitude");
+                d = _("Amplitude of heads trembling (GMR-head) in running mode.");
+                break;
+        case 231:
+                n = _("Temperature");
+                d = _("Temperature of the drive.");
+                break;
+
+        case 240:
+                n = _("Head Flying Hours");
+                d = _("Time while head is positioning.");
+                break;
+        case 250:
+                n = _("Read Error Retry Rate");
+                d = _("Number of errors while reading from a disk.");
+                break;
+        default:
+                break;
+        }
+
+        if (n != NULL && d != NULL) {
+                if (out_name != NULL)
+                        *out_name = g_strdup (n);
+                if (out_description != NULL)
+                        *out_description = g_strdup (d);
+        } else {
+                if (out_name != NULL)
+                        *out_name = g_strdup (attr->desc);
+                if (out_description != NULL)
+                        *out_description = g_strdup_printf (_("No description for attribute %d."), attr->id);
+        }
+        if (out_should_warn != NULL)
+                *out_should_warn = warn;
+}
+
 
 const char *
 gdu_device_linux_md_component_get_level (GduDevice *device)
@@ -1471,117 +1851,44 @@ gdu_device_op_change_filesystem_label (GduDevice *device, const char *new_label)
 
 typedef struct {
         GduDevice *device;
-
-        GduDeviceRetrieveSmartDataCompletedFunc callback;
+        GduDeviceDriveSmartRefreshDataCompletedFunc callback;
         gpointer user_data;
 } RetrieveSmartDataData;
 
 static void
-op_retrieve_smart_data_cb (DBusGProxy *proxy,
-                           gboolean passed, int power_on_hours, int temperature, char *last_self_test_result,
-                           GError *error, gpointer user_data)
+op_retrieve_smart_data_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         RetrieveSmartDataData *data = user_data;
 
-        /* update cache */
-        data->device->priv->smart_data_cache_timestamp = time (NULL);
-        data->device->priv->smart_data_cache_passed = passed;
-        g_free (data->device->priv->smart_data_cache_last_self_test_result);
-        if (data->device->priv->smart_data_cache_error != NULL)
-                data->device->priv->smart_data_cache_error = NULL;
-        data->device->priv->smart_data_cache_power_on_hours = power_on_hours;
-        data->device->priv->smart_data_cache_temperature = temperature;
-        data->device->priv->smart_data_cache_last_self_test_result = error == NULL ? g_strdup (last_self_test_result) : NULL;
-        data->device->priv->smart_data_cache_error = error != NULL ? g_error_copy (error) : NULL;
-
-
         if (error != NULL) {
-                /* g_warning ("op_retrieve_smart_data_cb failed: %s", error->message); */
-                data->callback (data->device, FALSE, 0, 0, NULL, error, data->user_data);
+                /*g_warning ("op_retrieve_smart_data_cb failed: %s", error->message);*/
+                data->callback (data->device, FALSE, error, data->user_data);
         } else {
-                data->callback (data->device, passed, power_on_hours, temperature, last_self_test_result,
-                                NULL, data->user_data);
-                g_free (last_self_test_result);
+                data->callback (data->device, TRUE, NULL, data->user_data);
         }
         g_object_unref (data->device);
         g_free (data);
 }
 
 void
-gdu_device_retrieve_smart_data (GduDevice                              *device,
-                                GduDeviceRetrieveSmartDataCompletedFunc callback,
-                                gpointer                                user_data)
+gdu_device_drive_smart_refresh_data (GduDevice                                  *device,
+                                     GduDeviceDriveSmartRefreshDataCompletedFunc callback,
+                                     gpointer                                    user_data)
 {
         RetrieveSmartDataData *data;
+        char *options[16];
+
+        options[0] = NULL;
 
         data = g_new0 (RetrieveSmartDataData, 1);
         data->device = g_object_ref (device);
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_smart_retrieve_data_async (device->priv->proxy,
-                                                                          op_retrieve_smart_data_cb,
-                                                                          data);
-}
-
-gboolean
-gdu_device_smart_data_is_cached (GduDevice *device, int *age_in_seconds)
-{
-        time_t now;
-        gboolean ret;
-
-        ret = FALSE;
-
-        if (device->priv->smart_data_cache_timestamp == 0)
-                goto out;
-
-        now = time (NULL);
-
-        if (age_in_seconds != NULL)
-                *age_in_seconds = now - device->priv->smart_data_cache_timestamp;
-
-        ret = TRUE;
-
-out:
-        return ret;
-}
-
-void
-gdu_device_smart_data_purge_cache (GduDevice *device)
-{
-        device->priv->smart_data_cache_timestamp = 0;
-        g_free (device->priv->smart_data_cache_last_self_test_result);
-        device->priv->smart_data_cache_last_self_test_result = NULL;
-        if (device->priv->smart_data_cache_error != NULL)
-                g_error_free (device->priv->smart_data_cache_error);
-        device->priv->smart_data_cache_error = NULL;
-}
-
-gboolean
-gdu_device_retrieve_smart_data_from_cache (GduDevice *device,
-                                           GduDeviceRetrieveSmartDataCompletedFunc callback,
-                                           gpointer                                user_data)
-{
-        gboolean ret;
-
-        ret = FALSE;
-
-        if (device->priv->smart_data_cache_timestamp == 0)
-                goto out;
-
-        callback (device,
-                  device->priv->smart_data_cache_passed,
-                  device->priv->smart_data_cache_power_on_hours,
-                  device->priv->smart_data_cache_temperature,
-                  device->priv->smart_data_cache_last_self_test_result,
-                  device->priv->smart_data_cache_error != NULL ?
-                      g_error_copy (device->priv->smart_data_cache_error) : NULL,
-                  user_data);
-
-        ret = TRUE;
-
-out:
-        return ret;
+        org_freedesktop_DeviceKit_Disks_Device_drive_smart_refresh_data_async (device->priv->proxy,
+                                                                               (const char **) options,
+                                                                               op_retrieve_smart_data_cb,
+                                                                               data);
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1603,11 +1910,11 @@ gdu_device_op_run_smart_selftest (GduDevice   *device,
                                   const char  *test,
                                   gboolean     captive)
 {
-        org_freedesktop_DeviceKit_Disks_Device_smart_initiate_selftest_async (device->priv->proxy,
-                                                                              test,
-                                                                              captive,
-                                                                              op_run_smart_selftest_cb,
-                                                                              g_object_ref (device));
+        org_freedesktop_DeviceKit_Disks_Device_drive_smart_initiate_selftest_async (device->priv->proxy,
+                                                                                    test,
+                                                                                    captive,
+                                                                                    op_run_smart_selftest_cb,
+                                                                                    g_object_ref (device));
 }
 
 /* -------------------------------------------------------------------------------- */

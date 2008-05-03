@@ -40,6 +40,21 @@ typedef struct _GduDevicePrivate     GduDevicePrivate;
 struct _GduPool;;
 typedef struct _GduPool GduPool;
 
+typedef struct {
+        int id;
+        char *desc;
+        int flags;
+        int value;
+        int worst;
+        int threshold;
+        char *raw;
+} GduDeviceSmartAttribute;
+
+void gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
+                                             char                    **out_name,
+                                             char                    **out_description,
+                                             gboolean                 *out_should_warn);
+
 struct _GduDevice
 {
         GObject parent;
@@ -132,6 +147,17 @@ const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
+
+gboolean gdu_device_drive_smart_get_is_capable (GduDevice *device);
+gboolean gdu_device_drive_smart_get_is_enabled (GduDevice *device);
+guint64  gdu_device_drive_smart_get_time_collected (GduDevice *device);
+gboolean gdu_device_drive_smart_get_is_failing (GduDevice *device,
+                                                gboolean *out_attr_warn,
+                                                gboolean *out_attr_failing);
+double gdu_device_drive_smart_get_temperature (GduDevice *device);
+guint64 gdu_device_drive_smart_get_time_powered_on (GduDevice *device);
+const char *gdu_device_drive_smart_get_last_self_test_result (GduDevice *device);
+GduDeviceSmartAttribute *gdu_device_drive_smart_get_attributes (GduDevice *device, int *num_attributes);
 
 const char *gdu_device_linux_md_component_get_level (GduDevice *device);
 int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);
@@ -246,25 +272,14 @@ void gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceRetrieveSmartDataCompletedFunc) (GduDevice  *device,
-                                                         gboolean    passed,
-                                                         int         power_on_hours,
-                                                         int         temperature,
-                                                         const char *last_self_test_result,
-                                                         GError     *error,
-                                                         gpointer    user_data);
+typedef void (*GduDeviceDriveSmartRefreshDataCompletedFunc) (GduDevice  *device,
+                                                             gboolean    result,
+                                                             GError     *error,
+                                                             gpointer    user_data);
 
-void  gdu_device_retrieve_smart_data (GduDevice                              *device,
-                                      GduDeviceRetrieveSmartDataCompletedFunc callback,
-                                      gpointer                                user_data);
-
-gboolean gdu_device_smart_data_is_cached (GduDevice *device, int *age_in_seconds);
-
-void gdu_device_smart_data_purge_cache (GduDevice *device);
-
-gboolean gdu_device_retrieve_smart_data_from_cache (GduDevice *device,
-                                                    GduDeviceRetrieveSmartDataCompletedFunc callback,
-                                                    gpointer                                user_data);
+void  gdu_device_drive_smart_refresh_data (GduDevice                                  *device,
+                                           GduDeviceDriveSmartRefreshDataCompletedFunc callback,
+                                           gpointer                                    user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

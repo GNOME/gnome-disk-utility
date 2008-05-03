@@ -8,7 +8,11 @@ icon_DATA = 				\
 	gdu-raid-array-stop.png		\
 	gnome-disk-utility.png		\
 	gdu-encrypted-lock.png		\
-	gdu-encrypted-unlock.png
+	gdu-encrypted-unlock.png	\
+	gdu-smart-failing.png		\
+	gdu-smart-threshold.png		\
+	gdu-smart-healthy.png		\
+	gdu-smart-unknown.png
 
 EXTRA_DIST = \
 	$(icon_DATA)

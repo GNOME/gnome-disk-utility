@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "gdu-time-label.h"
 #include "gdu-pool.h"
 #include "gdu-util.h"
 #include "gdu-section-health.h"
@@ -99,6 +100,7 @@ smart_data_set (GduSectionHealth *section)
         GduDevice *device;
         gboolean attr_warn;
         gboolean attr_fail;
+        GTimeVal updated;
 
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
@@ -182,29 +184,9 @@ smart_data_set (GduSectionHealth *section)
         gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), s);
         g_free (s);
 
-        GTimeVal now;
-        guint64 collect_time;
-        int age;
-        g_get_current_time (&now);
-        collect_time = gdu_device_drive_smart_get_time_collected (device);
-        age = (int) (now.tv_sec - collect_time);
-        if (age < 60) {
-                s = g_strdup_printf (_("A moment ago"));
-        } else if (age < 60 * 60) {
-                if (age / 60 == 1) {
-                        s = g_strdup_printf (_("1 minute ago"));
-                } else {
-                        s = g_strdup_printf (_("%d minutes ago"), age / 60);
-                }
-        } else {
-                if (age / 60 / 60 == 1) {
-                        s = g_strdup_printf (_("1 hour ago"));
-                } else {
-                        s = g_strdup_printf (_("%d hours ago"), age / 60 / 60);
-                }
-        }
-        gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), s);
-        g_free (s);
+        updated.tv_sec = gdu_device_drive_smart_get_time_collected (device);
+        updated.tv_usec = 0;
+        gdu_time_label_set_time (GDU_TIME_LABEL (section->priv->health_updated_label), &updated);
 
         last = _("Unknown");
         if (strcmp (last_self_test_result, "completed_ok") == 0) {
@@ -816,7 +798,7 @@ gdu_section_health_init (GduSectionHealth *section)
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 
-        label = gtk_label_new (NULL);
+        label = gdu_time_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         section->priv->health_updated_label = label;
 

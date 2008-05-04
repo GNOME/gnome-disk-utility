@@ -150,6 +150,15 @@ typedef struct
                                                         G_TYPE_STRING,   \
                                                         G_TYPE_INVALID))
 
+#define HISTORICAL_SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
+                                                                   G_TYPE_UINT64, \
+                                                                   G_TYPE_DOUBLE, \
+                                                                   G_TYPE_UINT64, \
+                                                                   G_TYPE_STRING, \
+                                                                   G_TYPE_BOOLEAN, \
+                                                                   dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE), \
+                                                                   G_TYPE_INVALID))
+
 static void
 collect_props (const char *key, const GValue *value, DeviceProperties *props)
 {
@@ -2022,4 +2031,71 @@ gdu_device_op_cancel_job (GduDevice *device)
                 g_warning ("error cancelling op: %s", error->message);
                 g_error_free (error);
         }
+}
+
+/* -------------------------------------------------------------------------------- */
+
+void
+gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd)
+{
+        int n;
+        g_free (hsd->last_self_test_result);
+        for (n = 0; n < hsd->num_attr; n++) {
+                g_free (hsd->attrs[n].desc);
+                g_free (hsd->attrs[n].raw);
+        }
+        g_free (hsd->attrs);
+        g_free (hsd);
+}
+
+/* TODO: async version */
+
+GList *
+gdu_device_retrieve_historical_smart_data (GduDevice *device)
+{
+        int n;
+        GPtrArray *data;
+        GError *error;
+        GList *ret;
+
+        ret = NULL;
+
+        error = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_Device_drive_smart_get_historical_data (device->priv->proxy,
+                                                                                     0,
+                                                                                     0,
+                                                                                     &data,
+                                                                                     &error)) {
+                g_warning ("smart history failed: %s", error->message);
+                g_error_free (error);
+                goto out;
+        }
+
+        for (n = 0; n < (int) data->len; n++) {
+                GduDeviceHistoricalSmartData *hsd;
+                GValue elem = {0};
+
+                hsd = g_new0 (GduDeviceHistoricalSmartData, 1);
+
+                g_value_init (&elem, HISTORICAL_SMART_DATA_STRUCT_TYPE);
+                g_value_set_static_boxed (&elem, data->pdata[n]);
+                dbus_g_type_struct_get (&elem,
+                                        0, &(hsd->time_collected),
+                                        1, &(hsd->temperature),
+                                        2, &(hsd->time_powered_on),
+                                        3, &(hsd->last_self_test_result),
+                                        4, &(hsd->is_failing),
+                                        G_MAXUINT);
+
+                /* TODO: extract attributes */
+
+                ret = g_list_prepend (ret, hsd);
+
+                g_warning ("booyeah n=%d temp=%g", n, hsd->temperature);
+        }
+
+        ret = g_list_reverse (ret);
+
+out:
+        return ret;
 }

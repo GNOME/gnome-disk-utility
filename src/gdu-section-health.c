@@ -270,6 +270,218 @@ enum
         ATTR_N_COLUMNS,
 };
 
+typedef struct
+{
+        GList *history;
+        GtkWidget *drawing_area;
+        GtkWidget *history_combo_box;
+} HealthGraphData;
+
+static gboolean
+expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
+{
+        HealthGraphData *data = (HealthGraphData *) user_data;
+        cairo_t *cr;
+        double width, height;
+
+        width = widget->allocation.width;
+        height = widget->allocation.height;
+
+        g_warning ("width=%g height=%g", width, height);
+
+        cr = gdk_cairo_create (widget->window);
+        cairo_rectangle (cr,
+                         event->area.x, event->area.y,
+                         event->area.width, event->area.height);
+        cairo_clip (cr);
+
+        double gx, gy, gw, gh;
+        gx = 30;
+        gy = 10;
+        gw = width - gx - 10;
+        gh = height - gy - 30;
+
+        cairo_set_source_rgb (cr, 1, 1, 1);
+        cairo_rectangle (cr, gx, gy, gw, gh);
+        cairo_set_line_width (cr, 0.0);
+	cairo_fill (cr);
+
+        int n;
+        int num_y_markers;
+        double val_y_top;
+        double val_y_bottom;
+
+        /* draw temperature markers on y-axis */
+        num_y_markers = 5;
+        val_y_top = 46.0;
+        val_y_bottom = 30.0;
+        for (n = 0; n < num_y_markers; n++) {
+                double pos;
+                double val;
+
+                pos = ceil (gy + gh / (num_y_markers - 1) * n);
+
+                val = val_y_top - (val_y_top - val_y_bottom) * n / (num_y_markers - 1);
+
+                char *s;
+                s = g_strdup_printf (_("%g°"), ceil (val));
+
+                cairo_text_extents_t te;
+                cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+                cairo_select_font_face (cr, "sans",
+                                        CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+                cairo_set_font_size (cr, 8.0);
+                cairo_text_extents (cr, s, &te);
+                cairo_move_to (cr,
+                               gx / 2 - te.width/2  - te.x_bearing,
+                               pos - te.height/2 - te.y_bearing);
+
+                cairo_show_text (cr, s);
+                g_free (s);
+
+                cairo_set_line_width (cr, 1.0);
+                double dashes[1] = {2.0};
+                cairo_set_dash (cr, dashes, 1, 0.0);
+                cairo_move_to (cr,
+                               gx - 0.5,
+                               pos - 0.5);
+                cairo_line_to (cr,
+                               gx - 0.5 + gw,
+                               pos - 0.5);
+                cairo_stroke (cr);
+
+        }
+
+        int num_x_markers;
+        guint64 t_left;
+        guint64 t_right;
+        GTimeVal now;
+
+        g_get_current_time (&now);
+        switch (gtk_combo_box_get_active (GTK_COMBO_BOX (data->history_combo_box))) {
+        default:
+        case 0:
+                t_left = now.tv_sec - 6 * 60 * 60;
+                break;
+        case 1:
+                t_left = now.tv_sec - 24 * 60 * 60;
+                break;
+        case 2:
+                t_left = now.tv_sec - 3 * 24 * 60 * 60;
+                break;
+        case 3:
+                t_left = now.tv_sec - 12 * 24 * 60 * 60;
+                break;
+        case 4:
+                t_left = now.tv_sec - 36 * 24 * 60 * 60;
+                break;
+        case 5:
+                t_left = now.tv_sec - 96 * 24 * 60 * 60;
+                break;
+        }
+        t_right = now.tv_sec;
+
+        /* draw time markers on x-axis */
+        num_x_markers = 13;
+        for (n = 0; n < num_x_markers; n++) {
+                double pos;
+                guint64 val;
+
+                pos = ceil (gx + gw / (num_x_markers - 1) * n);
+                val = t_left + (t_right - t_left) * n / (num_x_markers - 1);
+
+                int age;
+                age = (int) (now.tv_sec - val);
+
+                char *s;
+                if (age == 0) {
+                        s = g_strdup_printf (_("now"));
+                } else if (age < 3600) {
+                        s = g_strdup_printf ("%dm", age / 60);
+                } else if (age < 24 * 3600) {
+                        int h = age/3600;
+                        int m = (age%3600) / 60;
+                        if (m == 0)
+                                s = g_strdup_printf ("%dh", h);
+                        else
+                                s = g_strdup_printf ("%dh %dm", h, m);
+                } else {
+                        int d = age/(24*3600);
+                        int h = (age%(24*3600)) / 3600;
+                        int m = (age%3600) / 60;
+                        if (h == 0 && m == 0)
+                                s = g_strdup_printf ("%dd", d);
+                        else if (m == 0)
+                                s = g_strdup_printf ("%dd %dh", d, h);
+                        else
+                                s = g_strdup_printf ("%dd %dh %dm", d, h, m);
+                }
+
+                cairo_text_extents_t te;
+                cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+                cairo_select_font_face (cr, "sans",
+                                        CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+                cairo_set_font_size (cr, 8.0);
+                cairo_text_extents (cr, s, &te);
+                cairo_move_to (cr,
+                               pos - te.width/2  - te.x_bearing,
+                               height - 30.0/2  - te.height/2 - te.y_bearing); /* TODO */
+
+                cairo_show_text (cr, s);
+                g_free (s);
+
+                cairo_set_line_width (cr, 1.0);
+                double dashes[1] = {2.0};
+                cairo_set_dash (cr, dashes, 1, 0.0);
+                cairo_move_to (cr,
+                               pos - 0.5,
+                               gy - 0.5);
+                cairo_line_to (cr,
+                               pos - 0.5,
+                               gy - 0.5 + gh);
+                cairo_stroke (cr);
+        }
+
+        /* clip to the graph area */
+        cairo_rectangle (cr, gx, gy, gw, gh);
+        cairo_clip (cr);
+
+        /* draw temperature graph (TODO: draw a smooth curve) */
+        GList *l;
+
+        cairo_new_path (cr);
+        cairo_set_dash (cr, NULL, 0, 0.0);
+        cairo_set_line_width (cr, 2.0);
+        cairo_set_source_rgb (cr, 1, 0.64, 0);
+        for (l = data->history, n = 0; l != NULL; l = l->next, n++) {
+                double x, y;
+                GduDeviceHistoricalSmartData *hsd = (GduDeviceHistoricalSmartData *) l->data;
+
+                x = gx + gw * ((double) hsd->time_collected - (double) t_left) / ((double) t_right - (double) t_left);
+                y = gy + gh - gh * (hsd->temperature - val_y_bottom) / (val_y_top - val_y_bottom);
+
+                //g_warning ("x=%g y=%g tc=%lld", x, y, hsd->time_collected);
+                cairo_line_to (cr, x, y);
+        }
+        cairo_stroke (cr);
+
+
+        cairo_destroy (cr);
+        return TRUE;
+}
+
+static void
+history_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
+{
+        HealthGraphData *data = (HealthGraphData *) user_data;
+        gtk_widget_queue_draw_area (data->drawing_area,
+                                    0,
+                                    0,
+                                    data->drawing_area->allocation.width,
+                                    data->drawing_area->allocation.height);
+}
+
+
 static void
 health_details_button_clicked (GtkWidget *button, gpointer user_data)
 {
@@ -306,10 +518,41 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 	gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
         gtk_window_set_default_size (GTK_WINDOW (dialog), 400, 400);
 
-	vbox = gtk_hbox_new (FALSE, 12);
+	vbox = gtk_vbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
 
+        HealthGraphData *data;
+        data = g_new0 (HealthGraphData, 1);
+        data->history = gdu_device_retrieve_historical_smart_data (device);
+
+        GtkWidget *history_label;
+        history_label = gtk_label_new (_("View:"));
+
+        GtkWidget *history_combo_box;
+        history_combo_box = gtk_combo_box_new_text ();
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("6 hours"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("24 hours"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("3 days"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("12 days"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("36 days"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (history_combo_box), _("96 days"));
+        gtk_combo_box_set_active (GTK_COMBO_BOX (history_combo_box), 0);
+        data->history_combo_box = history_combo_box;
+
+        GtkWidget *drawing_area;
+        drawing_area = gtk_drawing_area_new ();
+        gtk_widget_set_size_request (drawing_area, 100, 100);
+        g_signal_connect (drawing_area, "expose-event", G_CALLBACK (expose_event_callback), data);
+	gtk_box_pack_start (GTK_BOX (vbox), drawing_area, TRUE, TRUE, 0);
+        data->drawing_area = drawing_area;
+
+        GtkWidget *hbox;
+        hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (hbox), history_label, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), history_combo_box, FALSE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+        g_signal_connect (history_combo_box, "changed", G_CALLBACK (history_combo_box_changed), data);
 
         list_store = gtk_list_store_new (ATTR_N_COLUMNS,
                                          G_TYPE_STRING,
@@ -549,6 +792,10 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
         //smart_data_set_pending (section);
         //gdu_device_drive_smart_refresh_data (device, retrieve_smart_data_cb, g_object_ref (section));
+
+        g_list_foreach (data->history, (GFunc) gdu_device_historical_smart_data_free, NULL);
+        g_list_free (data->history);
+        g_free (data);
 
 out:
         if (device != NULL)

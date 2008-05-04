@@ -50,6 +50,19 @@ typedef struct {
         char *raw;
 } GduDeviceSmartAttribute;
 
+typedef struct {
+        guint64 time_collected;
+        double temperature;
+        guint64 time_powered_on;
+        char *last_self_test_result;
+        gboolean is_failing;
+        int num_attr;
+        GduDeviceSmartAttribute *attrs;
+} GduDeviceHistoricalSmartData;
+
+void
+gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd);
+
 void gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
                                              char                    **out_name,
                                              char                    **out_description,
@@ -291,5 +304,11 @@ void gdu_device_op_cancel_job (GduDevice *device);
 /* error reporting */
 const char *gdu_device_job_get_last_error_message (GduDevice *device);
 void        gdu_device_job_clear_last_error_message (GduDevice *device);
+
+
+/* TODO: async version */
+
+GList *gdu_device_retrieve_historical_smart_data (GduDevice *device);
+
 
 #endif /* GDU_DEVICE_H */

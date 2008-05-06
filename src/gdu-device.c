@@ -2053,7 +2053,7 @@ gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd)
 GList *
 gdu_device_retrieve_historical_smart_data (GduDevice *device)
 {
-        int n;
+        int n, m;
         GPtrArray *data;
         GError *error;
         GList *ret;
@@ -2073,25 +2073,43 @@ gdu_device_retrieve_historical_smart_data (GduDevice *device)
 
         for (n = 0; n < (int) data->len; n++) {
                 GduDeviceHistoricalSmartData *hsd;
-                GValue elem = {0};
+                GPtrArray *attrs;
+                GValue elem0 = {0};
 
                 hsd = g_new0 (GduDeviceHistoricalSmartData, 1);
 
-                g_value_init (&elem, HISTORICAL_SMART_DATA_STRUCT_TYPE);
-                g_value_set_static_boxed (&elem, data->pdata[n]);
-                dbus_g_type_struct_get (&elem,
+                g_value_init (&elem0, HISTORICAL_SMART_DATA_STRUCT_TYPE);
+                g_value_set_static_boxed (&elem0, data->pdata[n]);
+                dbus_g_type_struct_get (&elem0,
                                         0, &(hsd->time_collected),
                                         1, &(hsd->temperature),
                                         2, &(hsd->time_powered_on),
                                         3, &(hsd->last_self_test_result),
                                         4, &(hsd->is_failing),
+                                        5, &attrs,
                                         G_MAXUINT);
 
-                /* TODO: extract attributes */
+                hsd->num_attr = (int) attrs->len;
+                hsd->attrs = g_new0 (GduDeviceSmartAttribute, hsd->num_attr);
+
+                for (m = 0; m < (int) attrs->len; m++) {
+                        GValue elem = {0};
+                        GduDeviceSmartAttribute *a = hsd->attrs + m;
+
+                        g_value_init (&elem, SMART_DATA_STRUCT_TYPE);
+                        g_value_set_static_boxed (&elem, attrs->pdata[m]);
+                        dbus_g_type_struct_get (&elem,
+                                                0, &(a->id),
+                                                1, &(a->desc),
+                                                2, &(a->flags),
+                                                3, &(a->value),
+                                                4, &(a->worst),
+                                                5, &(a->threshold),
+                                                6, &(a->raw),
+                                                G_MAXUINT);
+                }
 
                 ret = g_list_prepend (ret, hsd);
-
-                g_warning ("booyeah n=%d temp=%g", n, hsd->temperature);
         }
 
         ret = g_list_reverse (ret);

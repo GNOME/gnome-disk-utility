@@ -255,6 +255,7 @@ out:
 
 enum
 {
+        ATTR_ID_INT_COLUMN,
         ATTR_ID_COLUMN,
         ATTR_DESC_COLUMN,
         ATTR_FLAGS_COLUMN,
@@ -275,7 +276,177 @@ typedef struct
         GList *history;
         GtkWidget *drawing_area;
         GtkWidget *history_combo_box;
+        GtkWidget *tree_view;
 } HealthGraphData;
+
+typedef struct
+{
+        GArray *points;
+} Segment;
+
+static Segment *
+segment_new (void)
+{
+        Segment *s;
+        s = g_new0 (Segment, 1);
+        s->points = g_array_new (FALSE, FALSE, sizeof (double));
+        return s;
+}
+
+static void
+segment_add_point (Segment *s, double x, double y)
+{
+        g_array_append_val (s->points, x);
+        g_array_append_val (s->points, y);
+}
+
+static void
+segment_free (Segment *s)
+{
+        g_array_free (s->points, TRUE);
+        g_free (s);
+}
+
+static void
+segment_draw (Segment *s, cairo_t *cr)
+{
+        double x, y;
+        int num_points;
+        double *p;
+        int n;
+
+        p = (double *) s->points->data;
+
+        num_points = s->points->len / 2;
+        if (num_points == 1) {
+                x = p[0];
+                y = p[1];
+                cairo_arc (cr, x, y, cairo_get_line_width (cr), 0, 2 * M_PI);
+                cairo_fill (cr);
+
+        } else {
+                /* TODO: fit a smooth curve */
+
+                cairo_new_path (cr);
+                for (n = 0; n < num_points; n++) {
+                        x = p[n * 2 + 0];
+                        y = p[n * 2 + 1];
+                        cairo_line_to (cr, x, y);
+                }
+                cairo_stroke (cr);
+        }
+}
+
+static double
+segment_normalize_y (double y, double min_y, double max_y, double ypos, double height)
+{
+        double ny;
+        ny = ypos + (y - min_y) * height / (max_y - min_y);
+        return ny;
+}
+
+static void
+segment_draw_normalized (Segment *s, cairo_t *cr, double min_y, double max_y, double ypos, double height)
+{
+        double x, y, ny;
+        int num_points;
+        double *p;
+        int n;
+
+        p = (double *) s->points->data;
+
+        num_points = s->points->len / 2;
+        if (num_points == 1) {
+                x = p[0];
+                y = p[1];
+                ny = segment_normalize_y (y, min_y, max_y, ypos, height);
+                cairo_arc (cr, x, ny, cairo_get_line_width (cr), 0, 2 * M_PI);
+                cairo_fill (cr);
+
+        } else {
+                /* TODO: fit a smooth curve */
+                cairo_new_path (cr);
+                for (n = 0; n < num_points; n++) {
+                        x = p[n * 2 + 0];
+                        y = p[n * 2 + 1];
+                        ny = segment_normalize_y (y, min_y, max_y, ypos, height);
+                        cairo_line_to (cr, x, ny);
+                }
+                cairo_stroke (cr);
+        }
+}
+
+typedef struct
+{
+        GPtrArray *segments;
+} SegmentSet;
+
+static SegmentSet *
+segment_set_new (void)
+{
+        SegmentSet *ss;
+        ss = g_new0 (SegmentSet, 1);
+        ss->segments = g_ptr_array_new ();
+        return ss;
+}
+
+static void
+segment_set_free (SegmentSet *ss)
+{
+        g_ptr_array_foreach (ss->segments, (GFunc) segment_free, NULL);
+        g_ptr_array_free (ss->segments, TRUE);
+        g_free (ss);
+}
+
+static void
+segment_set_add_point (SegmentSet *ss, double x, double y)
+{
+        if (ss->segments->len == 0) {
+                g_ptr_array_add (ss->segments, segment_new ());
+        }
+        segment_add_point (ss->segments->pdata[ss->segments->len - 1], x, y);
+}
+
+static void
+segment_set_close (SegmentSet *ss)
+{
+        g_ptr_array_add (ss->segments, segment_new ());
+}
+
+static void
+segment_set_draw (SegmentSet *ss, cairo_t *cr)
+{
+        g_ptr_array_foreach (ss->segments, (GFunc) segment_draw, cr);
+}
+
+static void
+segment_set_draw_normalized (SegmentSet *ss, double ypos, double height, cairo_t *cr)
+{
+        unsigned int n, m;
+        double min_y;
+        double max_y;
+
+        max_y = -G_MAXDOUBLE;
+        min_y = G_MAXDOUBLE;
+        for (n = 0; n < ss->segments->len; n++) {
+                Segment *s = ss->segments->pdata[n];
+                for (m = 0; m < s->points->len; m += 2) {
+                        double y;
+                        y = g_array_index (s->points, double, m + 1);
+                        if (y < min_y)
+                                min_y = y;
+                        if (y > max_y)
+                                max_y = y;
+                }
+        }
+
+        for (n = 0; n < ss->segments->len; n++) {
+                Segment *s = ss->segments->pdata[n];
+                segment_draw_normalized (s, cr, min_y, max_y, ypos, height);
+        }
+
+}
+
 
 static gboolean
 expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_data)
@@ -286,8 +457,6 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
 
         width = widget->allocation.width;
         height = widget->allocation.height;
-
-        g_warning ("width=%g height=%g", width, height);
 
         cr = gdk_cairo_create (widget->window);
         cairo_rectangle (cr,
@@ -313,8 +482,8 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
 
         /* draw temperature markers on y-axis */
         num_y_markers = 5;
-        val_y_top = 46.0;
-        val_y_bottom = 30.0;
+        val_y_top = 75.0;
+        val_y_bottom = 15.0;
         for (n = 0; n < num_y_markers; n++) {
                 double pos;
                 double val;
@@ -446,25 +615,143 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
         cairo_rectangle (cr, gx, gy, gw, gh);
         cairo_clip (cr);
 
+        GtkTreeSelection *tree_selection;
+        GtkTreeModel *tree_model;
+        GtkTreeIter iter;
+        int selected_attr_id;
+
+        selected_attr_id = -1;
+
+        tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (data->tree_view));
+        if (gtk_tree_selection_get_selected (tree_selection, &tree_model, &iter)) {
+                gtk_tree_model_get (tree_model, &iter,
+                                    ATTR_ID_INT_COLUMN,
+                                    &selected_attr_id,
+                                    -1);
+        }
+
+        SegmentSet *temperature_segset;
+        SegmentSet *attr_value_segset;
+        SegmentSet *attr_thres_segset;
+        SegmentSet *attr_raw_segset;
+        temperature_segset = segment_set_new ();
+        attr_value_segset = segment_set_new ();
+        attr_thres_segset = segment_set_new ();
+        attr_raw_segset = segment_set_new ();
+
         /* draw temperature graph (TODO: draw a smooth curve) */
         GList *l;
 
         cairo_new_path (cr);
         cairo_set_dash (cr, NULL, 0, 0.0);
-        cairo_set_line_width (cr, 2.0);
-        cairo_set_source_rgb (cr, 1, 0.64, 0);
-        for (l = data->history, n = 0; l != NULL; l = l->next, n++) {
-                double x, y;
+
+        int num_segments;
+        guint64 prev_time_collected;
+        double last_segment_xpos;
+        prev_time_collected = 0;
+        num_segments = 0;
+        last_segment_xpos = 0;
+        for (l = data->history; l != NULL; l = l->next) {
+                double x;
+                double temperature_y;
                 GduDeviceHistoricalSmartData *hsd = (GduDeviceHistoricalSmartData *) l->data;
 
                 x = gx + gw * ((double) hsd->time_collected - (double) t_left) / ((double) t_right - (double) t_left);
-                y = gy + gh - gh * (hsd->temperature - val_y_bottom) / (val_y_top - val_y_bottom);
 
-                //g_warning ("x=%g y=%g tc=%lld", x, y, hsd->time_collected);
-                cairo_line_to (cr, x, y);
+                /* If there's a discontinuity in the samples (more than 30 minutes between consecutive
+                 * samples), draw a grey rectangle to convey this
+                 */
+                if (prev_time_collected != 0 && (hsd->time_collected - prev_time_collected) > 30 * 60) {
+                        cairo_pattern_t *pat;
+                        double stop_size;
+
+                        segment_set_close (temperature_segset);
+                        segment_set_close (attr_value_segset);
+                        segment_set_close (attr_thres_segset);
+                        segment_set_close (attr_raw_segset);
+
+                        /* make sure the gradient looks similar and that it doesn't
+                         * depend on the width of the rectangle
+                         */
+                        if (x - last_segment_xpos <= 60) {
+                                stop_size = 0.2;
+                        } else {
+                                stop_size = 0.2 * 60.0 / (x - last_segment_xpos);
+                        }
+                        pat = cairo_pattern_create_linear (last_segment_xpos, gy,
+                                                           x, gy);
+                        cairo_pattern_add_color_stop_rgba (pat, 0.0, 1.0, 1.0, 1.0, 0.0);
+                        cairo_pattern_add_color_stop_rgba (pat, stop_size, 0.7, 0.7, 0.7, 0.5);
+                        cairo_pattern_add_color_stop_rgba (pat, 1.0 - stop_size, 0.7, 0.7, 0.7, 0.5);
+                        cairo_pattern_add_color_stop_rgba (pat, 1.0, 1.0, 1.0, 1.0, 0.0);
+                        cairo_set_source (cr, pat);
+                        cairo_rectangle (cr,
+                                         last_segment_xpos, gy,
+                                         x - last_segment_xpos, gh);
+                        cairo_fill (cr);
+                        cairo_pattern_destroy (pat);
+                }
+
+                temperature_y = gy + gh - gh * (hsd->temperature - val_y_bottom) / (val_y_top - val_y_bottom);
+                segment_set_add_point (temperature_segset, x, temperature_y);
+
+                if (selected_attr_id != -1) {
+                        int m;
+
+                        /* TODO: if this is slow we can do a hash table */
+                        for (m = 0; m < hsd->num_attr;  m++) {
+                                GduDeviceSmartAttribute *a = hsd->attrs + m;
+                                if (a->id == selected_attr_id) {
+                                        double attr_value_y;
+                                        double attr_thres_y;
+                                        double attr_raw_y;
+                                        int attr_value;
+                                        int attr_thres;
+
+                                        attr_value = a->value;
+                                        attr_thres = a->threshold;
+
+                                        attr_value_y = gy + (256 - attr_value) * gh / 256.0;
+                                        attr_thres_y = gy + (256 - attr_thres) * gh / 256.0;
+
+                                        segment_set_add_point (attr_value_segset, x, attr_value_y);
+                                        segment_set_add_point (attr_thres_segset, x, attr_thres_y);
+
+                                        attr_raw_y = atof (a->raw);
+                                        segment_set_add_point (attr_raw_segset, x, attr_raw_y);
+                                        break;
+                                }
+                        }
+                }
+
+                prev_time_collected = hsd->time_collected;
+                last_segment_xpos = x;
         }
-        cairo_stroke (cr);
 
+        cairo_set_line_width (cr, 1.0);
+        cairo_set_source_rgb (cr, 1.0, 0.64, 0.0);
+        segment_set_draw (temperature_segset, cr);
+
+        if (selected_attr_id != -1) {
+                double dashes[1] = {2.0};
+                cairo_set_line_width (cr, 1.0);
+                cairo_set_dash (cr, dashes, 1, 0.0);
+                cairo_set_source_rgb (cr, 0.5, 0.5, 1.0);
+                segment_set_draw_normalized (attr_raw_segset, gy + gh, -gh, cr);
+
+                cairo_set_line_width (cr, 1.5);
+                cairo_set_dash (cr, NULL, 0, 0.0);
+
+                cairo_set_source_rgb (cr, 0.0, 0.0, 1.0);
+                segment_set_draw (attr_value_segset, cr);
+
+                cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
+                segment_set_draw (attr_thres_segset, cr);
+        }
+
+        segment_set_free (temperature_segset);
+        segment_set_free (attr_value_segset);
+        segment_set_free (attr_thres_segset);
 
         cairo_destroy (cr);
         return TRUE;
@@ -481,6 +768,16 @@ history_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
                                     data->drawing_area->allocation.height);
 }
 
+static void
+smart_attr_tree_selection_changed (GtkTreeSelection *treeselection, gpointer user_data)
+{
+        HealthGraphData *data = (HealthGraphData *) user_data;
+        gtk_widget_queue_draw_area (data->drawing_area,
+                                    0,
+                                    0,
+                                    data->drawing_area->allocation.width,
+                                    data->drawing_area->allocation.height);
+}
 
 static void
 health_details_button_clicked (GtkWidget *button, gpointer user_data)
@@ -555,6 +852,7 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         g_signal_connect (history_combo_box, "changed", G_CALLBACK (history_combo_box_changed), data);
 
         list_store = gtk_list_store_new (ATTR_N_COLUMNS,
+                                         G_TYPE_INT,
                                          G_TYPE_STRING,
                                          G_TYPE_STRING,
                                          G_TYPE_STRING,
@@ -571,6 +869,10 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
         gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree_view), TRUE);
         gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (tree_view), ATTR_TOOLTIP_COLUMN);
+        data->tree_view = tree_view;
+        g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->tree_view)),
+                          "changed",
+                          G_CALLBACK (smart_attr_tree_selection_changed), data);
 
         column = gtk_tree_view_column_new ();
         gtk_tree_view_column_set_title (column, "ID");
@@ -756,6 +1058,7 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
                 gtk_list_store_append (list_store, &iter);
                 gtk_list_store_set (list_store, &iter,
+                                    ATTR_ID_INT_COLUMN, a->id,
                                     ATTR_ID_COLUMN, col_str,
                                     ATTR_DESC_COLUMN, desc_str,
                                     ATTR_FLAGS_COLUMN, flags_str,

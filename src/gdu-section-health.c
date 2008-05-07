@@ -258,12 +258,9 @@ enum
         ATTR_ID_INT_COLUMN,
         ATTR_ID_COLUMN,
         ATTR_DESC_COLUMN,
-        ATTR_FLAGS_COLUMN,
         ATTR_VALUE_COLUMN,
         ATTR_WORST_COLUMN,
         ATTR_THRESHOLD_COLUMN,
-        ATTR_TYPE_COLUMN,
-        ATTR_UPDATED_COLUMN,
         ATTR_RAW_COLUMN,
         ATTR_STATUS_PIXBUF_COLUMN,
         ATTR_STATUS_TEXT_COLUMN,
@@ -420,7 +417,9 @@ segment_set_draw (SegmentSet *ss, cairo_t *cr)
 }
 
 static void
-segment_set_draw_normalized (SegmentSet *ss, double ypos, double height, cairo_t *cr)
+segment_set_draw_normalized (SegmentSet *ss, double ypos, double height,
+                             double *out_min_y, double *out_max_y,
+                             cairo_t *cr)
 {
         unsigned int n, m;
         double min_y;
@@ -445,6 +444,11 @@ segment_set_draw_normalized (SegmentSet *ss, double ypos, double height, cairo_t
                 segment_draw_normalized (s, cr, min_y, max_y, ypos, height);
         }
 
+        if (out_min_y != NULL)
+                *out_min_y = min_y;
+
+        if (out_max_y != NULL)
+                *out_max_y = max_y;
 }
 
 
@@ -656,7 +660,23 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                 double temperature_y;
                 GduDeviceHistoricalSmartData *hsd = (GduDeviceHistoricalSmartData *) l->data;
 
-                x = gx + gw * ((double) hsd->time_collected - (double) t_left) / ((double) t_right - (double) t_left);
+                x = gx + gw * ((double) hsd->time_collected - (double) t_left) /
+                        ((double) t_right - (double) t_left);
+
+                if (x < gx) {
+                        /* point is not in graph.. but do consider it if the *following* point is */
+
+                        if (l->next != NULL) {
+                                GduDeviceHistoricalSmartData *nhsd = (GduDeviceHistoricalSmartData *) l->next->data;
+                                double nx;
+                                nx = gx + gw * ((double) nhsd->time_collected - (double) t_left) /
+                                        ((double) t_right - (double) t_left);
+                                if (nx < gx)
+                                        continue;
+                        } else {
+                                continue;
+                        }
+                }
 
                 /* If there's a discontinuity in the samples (more than 30 minutes between consecutive
                  * samples), draw a grey rectangle to convey this
@@ -674,16 +694,16 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                          * depend on the width of the rectangle
                          */
                         if (x - last_segment_xpos <= 60) {
-                                stop_size = 0.2;
+                                stop_size = 0.3;
                         } else {
-                                stop_size = 0.2 * 60.0 / (x - last_segment_xpos);
+                                stop_size = 0.3 * 60.0 / (x - last_segment_xpos);
                         }
                         pat = cairo_pattern_create_linear (last_segment_xpos, gy,
                                                            x, gy);
-                        cairo_pattern_add_color_stop_rgba (pat, 0.0, 1.0, 1.0, 1.0, 0.0);
-                        cairo_pattern_add_color_stop_rgba (pat, stop_size, 0.7, 0.7, 0.7, 0.5);
-                        cairo_pattern_add_color_stop_rgba (pat, 1.0 - stop_size, 0.7, 0.7, 0.7, 0.5);
-                        cairo_pattern_add_color_stop_rgba (pat, 1.0, 1.0, 1.0, 1.0, 0.0);
+                        cairo_pattern_add_color_stop_rgba (pat, 0.0, 1.0, 1.0, 1.0, 0.5);
+                        cairo_pattern_add_color_stop_rgba (pat, stop_size, 0.9, 0.9, 0.9, 0.5);
+                        cairo_pattern_add_color_stop_rgba (pat, 1.0 - stop_size, 0.9, 0.9, 0.9, 0.5);
+                        cairo_pattern_add_color_stop_rgba (pat, 1.0, 1.0, 1.0, 1.0, 0.5);
                         cairo_set_source (cr, pat);
                         cairo_rectangle (cr,
                                          last_segment_xpos, gy,
@@ -733,19 +753,20 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
         segment_set_draw (temperature_segset, cr);
 
         if (selected_attr_id != -1) {
-                double dashes[1] = {2.0};
-                cairo_set_line_width (cr, 1.0);
+                double min_y, max_y;
+                double dashes[1] = {1.0};
                 cairo_set_dash (cr, dashes, 1, 0.0);
+                cairo_set_line_width (cr, 1.0);
                 cairo_set_source_rgb (cr, 0.5, 0.5, 1.0);
-                segment_set_draw_normalized (attr_raw_segset, gy + gh, -gh, cr);
+                segment_set_draw_normalized (attr_raw_segset, gy + gh, -gh, &min_y, &max_y, cr);
+                //g_warning ("min_y = %g, max_y = %g", min_y, max_y);
 
                 cairo_set_line_width (cr, 1.5);
                 cairo_set_dash (cr, NULL, 0, 0.0);
-
-                cairo_set_source_rgb (cr, 0.0, 0.0, 1.0);
+                cairo_set_source_rgb (cr, 0.0, 0.7, 0.0);
                 segment_set_draw (attr_value_segset, cr);
 
-                cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
+                cairo_set_source_rgb (cr, 1.0, 0.2, 0.2);
                 segment_set_draw (attr_thres_segset, cr);
         }
 
@@ -859,9 +880,6 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                                          G_TYPE_STRING,
                                          G_TYPE_STRING,
                                          G_TYPE_STRING,
-                                         G_TYPE_STRING,
-                                         G_TYPE_STRING,
-                                         G_TYPE_STRING,
                                          GDK_TYPE_PIXBUF,
                                          G_TYPE_STRING,
                                          G_TYPE_STRING);
@@ -893,15 +911,6 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
         column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, "Flags");
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", ATTR_FLAGS_COLUMN,
-                                             NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        column = gtk_tree_view_column_new ();
         gtk_tree_view_column_set_title (column, "Value");
         renderer = gtk_cell_renderer_text_new ();
         g_object_set (renderer, "xalign", 1.0, NULL);
@@ -929,24 +938,6 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         gtk_tree_view_column_pack_start (column, renderer, TRUE);
         gtk_tree_view_column_set_attributes (column, renderer,
                                              "text", ATTR_THRESHOLD_COLUMN,
-                                             NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, "Type");
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", ATTR_TYPE_COLUMN,
-                                             NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, "Updated");
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", ATTR_UPDATED_COLUMN,
                                              NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
@@ -991,12 +982,9 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                 GtkTreeIter iter;
                 char *col_str;
                 char *desc_str;
-                char *flags_str;
                 char *value_str;
                 char *worst_str;
                 char *threshold_str;
-                char *type_str;
-                char *updated_str;
                 char *raw_str;
                 char *status_str;
                 GdkPixbuf *status_pixbuf;
@@ -1008,14 +996,21 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
                 col_str = g_strdup_printf ("%d", a->id);
 
-                gdu_device_smart_attribute_get_details (a, &desc_str, &tooltip_str, &should_warn);
+                char *attr_doc;
+                gdu_device_smart_attribute_get_details (a, &desc_str, &attr_doc, &should_warn);
 
-                flags_str = g_strdup_printf ("0x%04x", a->flags);
+                tooltip_str = g_strdup_printf (_("<b>Flags:</b> 0x%04x\n"
+                                                 "<b>Type:</b> %s\n"
+                                                 "<b>Updated:</b> %s\n"
+                                                 "<b>Description</b>: %s"),
+                                               a->flags,
+                                               (a->flags & 0x0001) ? _("Pre-Fail") : _("Old-Age"),
+                                               (a->flags & 0x0002) ? _("Always") : _("Offline"),
+                                               attr_doc);
+
                 value_str = g_strdup_printf ("%d", a->value);
                 worst_str = g_strdup_printf ("%d", a->worst);
                 threshold_str = g_strdup_printf ("%d", a->threshold);
-                type_str = g_strdup ((a->flags & 0x0001) ? _("Pre-Fail") : _("Old-Age"));
-                updated_str = g_strdup ((a->flags & 0x0002) ? _("Always") : _("Offline"));
                 raw_str = g_strdup (a->raw);
 
                 threshold_exceeded = (a->value < a->threshold);
@@ -1061,12 +1056,9 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                                     ATTR_ID_INT_COLUMN, a->id,
                                     ATTR_ID_COLUMN, col_str,
                                     ATTR_DESC_COLUMN, desc_str,
-                                    ATTR_FLAGS_COLUMN, flags_str,
                                     ATTR_VALUE_COLUMN, value_str,
                                     ATTR_WORST_COLUMN, worst_str,
                                     ATTR_THRESHOLD_COLUMN, threshold_str,
-                                    ATTR_TYPE_COLUMN, type_str,
-                                    ATTR_UPDATED_COLUMN, updated_str,
                                     ATTR_RAW_COLUMN, raw_str,
                                     ATTR_STATUS_PIXBUF_COLUMN, status_pixbuf,
                                     ATTR_STATUS_TEXT_COLUMN, status_str,
@@ -1074,16 +1066,14 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                                     -1);
                 g_free (col_str);
                 g_free (desc_str);
-                g_free (flags_str);
                 g_free (value_str);
                 g_free (worst_str);
                 g_free (threshold_str);
-                g_free (type_str);
-                g_free (updated_str);
                 g_free (raw_str);
                 g_object_unref (status_pixbuf);
                 g_free (status_str);
                 g_free (tooltip_str);
+                g_free (attr_doc);
         }
 
         g_object_unref (list_store);
@@ -1129,7 +1119,7 @@ health_selftest_button_clicked (GtkWidget *button, gpointer user_data)
         }
 
 
-        dialog = gtk_dialog_new_with_buttons (_("S.M.A.R.T. Selftest"),
+        dialog = gtk_dialog_new_with_buttons (_("S.M.A.R.T. Self Test"),
                                               GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
                                               GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
                                               NULL);
@@ -1174,7 +1164,7 @@ health_selftest_button_clicked (GtkWidget *button, gpointer user_data)
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (radio1), FALSE, FALSE, 0);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-        gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Initiate Selftest"), 0);
+        gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Initiate Self Test"), 0);
         gtk_dialog_set_default_response (GTK_DIALOG (dialog), 0);
 
         gtk_widget_show_all (dialog);
@@ -1404,7 +1394,7 @@ gdu_section_health_init (GduSectionHealth *section)
         g_signal_connect (button, "clicked", G_CALLBACK (health_details_button_clicked), section);
         section->priv->health_details_button = button;
 
-        button = gtk_button_new_with_mnemonic (_("Se_lftest..."));
+        button = gtk_button_new_with_mnemonic (_("Se_lf Test..."));
         gtk_button_set_image (GTK_BUTTON (button),
                               gtk_image_new_from_stock (GTK_STOCK_EXECUTE, GTK_ICON_SIZE_BUTTON));
         gtk_container_add (GTK_CONTAINER (button_box), button);

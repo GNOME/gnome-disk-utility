@@ -1036,8 +1036,7 @@ gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
         switch (attr->id) {
         case 1:
                 n = _("Read Error Rate");
-                d = _("Frequency of errors while reading raw data from the disk."
-                      "\n\n"
+                d = _("Frequency of errors while reading raw data from the disk. "
                       "A non-zero value indicates a problem with "
                       "either the disk surface or read/write heads.");
                 break;
@@ -1055,8 +1054,7 @@ gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
                 break;
         case 5:
                 n = _("Reallocated Sector Count");
-                d = _("Count of remapped sectors."
-                      "\n\n"
+                d = _("Count of remapped sectors. "
                       "When the hard drive finds a read/write/verification error, it mark the sector "
                       "as \"reallocated\" and transfers data to a special reserved area (spare area).");
                 break;
@@ -1111,15 +1109,14 @@ gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
                 break;
         case 196:
                 n = _("Reallocation Count");
-                d = _("Number of remapping operations.\n\n"
+                d = _("Number of remapping operations. "
                       "The raw value of this attribute shows the total number of (successful "
                       "and unsucessful) attempts to transfer data from reallocated sectors "
                       "to a spare area.");
                 break;
         case 197:
                 n = _("Current Pending Sector Count");
-                d = _("Number of sectors waiting to be remapped."
-                      "\n\n"
+                d = _("Number of sectors waiting to be remapped. "
                       "If the sector waiting to be remapped is subsequently written or read "
                       "successfully, this value is decreased and the sector is not remapped. Read "
                       "errors on the sector will not remap the sector, it will only be remapped on "
@@ -1129,8 +1126,7 @@ gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
                 break;
         case 198:
                 n = _("Uncorrectable Sector Count");
-                d = _("The total number of uncorrectable errors when reading/writing a sector."
-                      "\n\n"
+                d = _("The total number of uncorrectable errors when reading/writing a sector. "
                       "A rise in the value of this attribute indicates defects of the "
                       "disk surface and/or problems in the mechanical subsystem.");
                 break;

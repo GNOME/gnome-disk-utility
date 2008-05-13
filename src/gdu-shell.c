@@ -29,6 +29,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <polkit-gnome/polkit-gnome.h>
+#include <libsexy/sexy.h>
 
 #include "gdu-shell.h"
 #include "gdu-util.h"
@@ -346,6 +347,19 @@ details_update (GduShell *shell)
                         g_free (s);
                 }
 
+                if (gdu_device_is_mounted (device)) {
+                        s = details3;
+                        details3 = g_strconcat (details3,
+                                                _(" mounted at "),
+                                                "<a href=\"file://",
+                                                gdu_device_get_mount_path (device),
+                                                "\">",
+                                                gdu_device_get_mount_path (device),
+                                                "</a>",
+                                                NULL);
+                        g_free (s);
+                }
+
         } else if (GDU_IS_VOLUME_HOLE (presentable)) {
 
                 details1 = g_strdup_printf (_("%s Unallocated"), strsize);
@@ -374,9 +388,9 @@ details_update (GduShell *shell)
                 s2 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details2);
         if (details3 != NULL)
                 s3 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details3);
-        gtk_label_set_markup (GTK_LABEL (shell->priv->details1_label), s);
-        gtk_label_set_markup (GTK_LABEL (shell->priv->details2_label), s2);
-        gtk_label_set_markup (GTK_LABEL (shell->priv->details3_label), s3);
+        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details1_label), s);
+        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details2_label), s2);
+        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details3_label), s3);
         g_free (s);
         g_free (s2);
         g_free (s3);
@@ -1178,6 +1192,18 @@ create_polkit_actions (GduShell *shell)
 }
 
 static void
+url_activated (SexyUrlLabel *url_label,
+               const char   *url,
+               gpointer      user_data)
+{
+        char *s;
+        /* TODO: startup notification etc. */
+        s = g_strdup_printf ("nautilus %s", url);
+        g_spawn_command_line_async (s, NULL);
+        g_free (s);
+}
+
+static void
 create_window (GduShell *shell)
 {
         GtkWidget *vbox;
@@ -1245,20 +1271,24 @@ create_window (GduShell *shell)
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->name_label = label;
 
-        label = gtk_label_new (NULL);
+        label = sexy_url_label_new ();
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details1_label = label;
 
-        label = gtk_label_new (NULL);
+        label = sexy_url_label_new ();
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details2_label = label;
 
-        label = gtk_label_new (NULL);
+        label = sexy_url_label_new ();
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details3_label = label;
+
+        g_signal_connect (shell->priv->details1_label, "url-activated", (GCallback) url_activated, shell);
+        g_signal_connect (shell->priv->details2_label, "url-activated", (GCallback) url_activated, shell);
+        g_signal_connect (shell->priv->details3_label, "url-activated", (GCallback) url_activated, shell);
 
         /* --- */
 

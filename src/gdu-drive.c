@@ -255,111 +255,6 @@ gdu_drive_get_size (GduPresentable *presentable)
         return gdu_device_get_size (drive->priv->device);
 }
 
-static GList *
-gdu_drive_get_info (GduPresentable *presentable)
-{
-        GduDrive *drive = GDU_DRIVE (presentable);
-        GduDevice *device = drive->priv->device;
-        GList *kv_pairs = NULL;
-        char **drive_media_compat;
-        GString *s;
-        int n;
-
-        drive_media_compat = gdu_device_drive_get_media_compatibility (drive->priv->device);
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Vendor")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_vendor (device)));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Model")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_model (device)));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Revision")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_revision (device)));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Serial Number")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_drive_get_serial (device)));
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_device_file (device)));
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Connection")));
-	kv_pairs = g_list_prepend (kv_pairs, gdu_util_get_connection_for_display (
-                                           gdu_device_drive_get_connection_interface (device),
-                                           gdu_device_drive_get_connection_speed (device)));
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Removable Media")));
-	if (gdu_device_is_removable (device)) {
-	        if (gdu_device_is_media_available (device)) {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Yes")));
-	        } else {
-                        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Yes (No media inserted)")));
-	        }
-	} else {
-	        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("No")));
-	}
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Media Compatibility")));
-        s = g_string_new (NULL);
-        if (drive_media_compat != NULL) {
-                for (n = 0; drive_media_compat[n] != NULL; n++) {
-                        const char *media = (const char *) drive_media_compat[n];
-
-                        if (s->len > 0) {
-                                /* Translator: the separator for media types */
-                                g_string_append (s, _(", "));
-                        }
-
-                        if (strcmp (media, "flash_cf") == 0) {
-                                g_string_append (s, _("Compact Flash"));
-                        } else if (strcmp (media, "flash_ms") == 0) {
-                                g_string_append (s, _("Memory Stick"));
-                        } else if (strcmp (media, "flash_sm") == 0) {
-                                g_string_append (s, _("Smart Media"));
-                        } else if (strcmp (media, "flash_sd") == 0) {
-                                g_string_append (s, _("SD Card"));
-                        } else if (strcmp (media, "flash_sdhc") == 0) {
-                                g_string_append (s, _("SDHC Card"));
-                        } else if (strcmp (media, "flash_mmc") == 0) {
-                                g_string_append (s, _("MMC"));
-                        } else if (g_str_has_prefix (media, "flash")) {
-                                g_string_append (s, _("Flash"));
-                        } else if (g_str_has_prefix (media, "optical")) {
-                                /* TODO: handle rest of optical-* */
-                                g_string_append (s, _("CD-ROM"));
-                        }
-                }
-        }
-        if (s->len == 0)
-                g_string_append (s, _("Disk"));
-        kv_pairs = g_list_prepend (kv_pairs, g_string_free (s, FALSE));
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Capacity")));
-	if (gdu_device_is_media_available (device)) {
-	        kv_pairs = g_list_prepend (kv_pairs,
-                                           gdu_util_get_size_for_display (gdu_device_get_size (device), TRUE));
-	} else {
-	        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-	}
-
-	kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partitioning")));
-	if (gdu_device_is_partition_table (device)) {
-	        const char *scheme;
-	        char *name;
-	        scheme = gdu_device_partition_table_get_scheme (device);
-	        if (strcmp (scheme, "apm") == 0) {
-                        name = g_strdup (_("Apple Partition Map"));
-	        } else if (strcmp (scheme, "mbr") == 0) {
-                        name = g_strdup (_("Master Boot Record"));
-	        } else if (strcmp (scheme, "gpt") == 0) {
-                        name = g_strdup (_("GUID Partition Table"));
-	        } else {
-                        name = g_strdup_printf (_("Unknown (%s)"), scheme);
-	        }
-	        kv_pairs = g_list_prepend (kv_pairs, name);
-	} else {
-	        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-	}
-
-        kv_pairs = g_list_reverse (kv_pairs);
-        return kv_pairs;
-}
-
 static GduPool *
 gdu_drive_get_pool (GduPresentable *presentable)
 {
@@ -389,7 +284,6 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_icon_name = gdu_drive_get_icon_name;
         iface->get_offset = gdu_drive_get_offset;
         iface->get_size = gdu_drive_get_size;
-        iface->get_info = gdu_drive_get_info;
         iface->get_pool = gdu_drive_get_pool;
         iface->is_allocated = gdu_drive_is_allocated;
         iface->is_recognized = gdu_drive_is_recognized;

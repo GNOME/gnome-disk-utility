@@ -329,74 +329,6 @@ gdu_volume_get_size (GduPresentable *presentable)
         return gdu_device_get_size (volume->priv->device);
 }
 
-static GList *
-gdu_volume_get_info (GduPresentable *presentable)
-{
-        GduVolume *volume = GDU_VOLUME (presentable);
-        GduDevice *device = volume->priv->device;
-        GList *kv_pairs = NULL;
-
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Mount Point")));
-        if (gdu_device_is_mounted (device))
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_mount_path (device)));
-        else
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Label")));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_id_get_label (device)));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Device File")));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_get_device_file (device)));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("UUID")));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (gdu_device_id_get_uuid (device)));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partition Number")));
-        if (gdu_device_is_partition (device)) {
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup_printf (
-                                                   "%d",
-                                                   gdu_device_partition_get_number (device)));
-        } else {
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-        }
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Partition Type")));
-        if (gdu_device_is_partition (device)) {
-                kv_pairs = g_list_prepend (kv_pairs,
-                                           gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (device),
-                                                                            gdu_device_partition_get_type (device)));
-        } else {
-                kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-")));
-        }
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Usage")));
-        {
-                const char *usage;
-                char *name;
-                usage = gdu_device_id_get_usage (device);
-                if (strcmp (usage, "filesystem") == 0) {
-                        name = g_strdup (_("File system"));
-                } else if (strcmp (usage, "crypto") == 0) {
-                        name = g_strdup (_("Encrypted Block Device"));
-                } else if (strcmp (usage, "raid") == 0) {
-                        name = g_strdup (_("RAID/LVM Component"));
-                } else {
-                        if (strlen (usage) > 0)
-                                name = g_strdup_printf (_("Unknown (%s)"), usage);
-                        else
-                                name = g_strdup (_("-"));
-                }
-                kv_pairs = g_list_prepend (kv_pairs, name);
-        }
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Capacity")));
-        kv_pairs = g_list_prepend (kv_pairs,
-                                   gdu_util_get_size_for_display (gdu_device_get_size (device), TRUE));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Type")));
-        kv_pairs = g_list_prepend (kv_pairs,
-                                   gdu_util_get_fstype_for_display (gdu_device_id_get_type (device),
-                                                                    gdu_device_id_get_version (device),
-                                                                    TRUE));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("Available")));
-        kv_pairs = g_list_prepend (kv_pairs, g_strdup (_("-"))); /* TODO */
-
-        kv_pairs = g_list_reverse (kv_pairs);
-        return kv_pairs;
-}
-
 static GduPool *
 gdu_volume_get_pool (GduPresentable *presentable)
 {
@@ -441,7 +373,6 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_icon_name = gdu_volume_get_icon_name;
         iface->get_offset = gdu_volume_get_offset;
         iface->get_size = gdu_volume_get_size;
-        iface->get_info = gdu_volume_get_info;
         iface->get_pool = gdu_volume_get_pool;
         iface->is_allocated = gdu_volume_is_allocated;
         iface->is_recognized = gdu_volume_is_recognized;

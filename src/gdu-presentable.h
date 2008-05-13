@@ -49,7 +49,6 @@ struct _GduPresentableIface
         char *           (*get_icon_name)             (GduPresentable *presentable);
         guint64          (*get_offset)                (GduPresentable *presentable);
         guint64          (*get_size)                  (GduPresentable *presentable);
-        GList *          (*get_info)                  (GduPresentable *presentable);
         GduPool *        (*get_pool)                  (GduPresentable *presentable);
         gboolean         (*is_allocated)            (GduPresentable *presentable);
         gboolean         (*is_recognized)           (GduPresentable *presentable);
@@ -62,7 +61,6 @@ char           *gdu_presentable_get_name                  (GduPresentable *prese
 char           *gdu_presentable_get_icon_name             (GduPresentable *presentable);
 guint64         gdu_presentable_get_offset                (GduPresentable *presentable);
 guint64         gdu_presentable_get_size                  (GduPresentable *presentable);
-GList          *gdu_presentable_get_info                  (GduPresentable *presentable);
 GduPool        *gdu_presentable_get_pool                  (GduPresentable *presentable);
 gboolean        gdu_presentable_is_allocated            (GduPresentable *presentable);
 gboolean        gdu_presentable_is_recognized           (GduPresentable *presentable);

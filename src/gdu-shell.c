@@ -227,19 +227,25 @@ details_update (GduShell *shell)
         details2 = NULL;
         details3 = NULL;
 
-        if (GDU_IS_ACTIVATABLE_DRIVE (presentable) && device == NULL) {
-                /* not yet activated */
-
-                /* TODO: set details */
-
-        } else if (GDU_IS_DRIVE (presentable)) {
+        if (GDU_IS_DRIVE (presentable)) {
                 details3 = g_strdup (device_file);
 
-                s = gdu_util_get_connection_for_display (
-                        gdu_device_drive_get_connection_interface (device),
-                        gdu_device_drive_get_connection_speed (device));
-                details1 = g_strdup_printf ("Connected via %s", s);
-                g_free (s);
+                if (GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
+                        switch (gdu_activatable_drive_get_kind (GDU_ACTIVATABLE_DRIVE (presentable))) {
+                        case GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD:
+                                details1 = g_strdup (_("Linux Software RAID"));
+                                break;
+                        default:
+                                details1 = g_strdup (_("Activatable Drive"));
+                                break;
+                        }
+                } else {
+                        s = gdu_util_get_connection_for_display (
+                                gdu_device_drive_get_connection_interface (device),
+                                gdu_device_drive_get_connection_speed (device));
+                        details1 = g_strdup_printf (_("Connected via %s"), s);
+                        g_free (s);
+                }
 
                 if (gdu_device_is_removable (device)) {
                         if (gdu_device_is_partition_table (device)) {

@@ -162,6 +162,7 @@ details_update (GduShell *shell)
         GdkPixbuf *pixbuf;
         GduDevice *device;
         const char *usage;
+        const char *type;
         const char *device_file;
         char *strsize;
         GduPresentable *toplevel_presentable;
@@ -211,9 +212,11 @@ details_update (GduShell *shell)
         g_free (s);
 
         usage = NULL;
+        type = NULL;
         device_file = NULL;
         if (device != NULL) {
                 usage = gdu_device_id_get_usage (device);
+                type = gdu_device_id_get_type (device);
                 device_file = gdu_device_get_device_file (device);
         }
 
@@ -312,6 +315,12 @@ details_update (GduShell *shell)
                         g_free (fsname);
                 } else if (strcmp (usage, "crypto") == 0) {
                         details1 = g_strdup_printf (_("%s Encrypted Device"), strsize);
+                } else if (strcmp (usage, "other") == 0) {
+                        if (strcmp (type, "swap") == 0) {
+                                details1 = g_strdup_printf (_("%s Swap Space"), strsize);
+                        } else {
+                                details1 = g_strdup_printf (_("%s Data"), strsize);
+                        }
                 } else {
                         details1 = g_strdup_printf (_("%s Unrecognized"), strsize);
                 }

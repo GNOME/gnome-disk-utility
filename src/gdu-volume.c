@@ -146,6 +146,7 @@ gdu_volume_get_name (GduPresentable *presentable)
         GduVolume *volume = GDU_VOLUME (presentable);
         const char *label;
         const char *usage;
+        const char *type;
         char *result;
         gboolean is_extended_partition;
         char *strsize;
@@ -171,6 +172,7 @@ gdu_volume_get_name (GduPresentable *presentable)
         }
 
         usage = gdu_device_id_get_usage (volume->priv->device);
+        type = gdu_device_id_get_type (volume->priv->device);
 
         if (is_extended_partition) {
                 result = g_strdup_printf (_("%s Extended"), strsize);
@@ -198,7 +200,11 @@ gdu_volume_get_name (GduPresentable *presentable)
                                 result = g_strdup_printf (_("%s RAID Component"), strsize);
                         }
                 } else if (strcmp (usage, "other") == 0) {
-                        result = g_strdup_printf (_("%s Data"), strsize);
+                        if (strcmp (type, "swap") == 0) {
+                                result = g_strdup_printf (_("%s Swap Space"), strsize);
+                        } else {
+                                result = g_strdup_printf (_("%s Data"), strsize);
+                        }
                 } else if (strcmp (usage, "") == 0) {
                         result = g_strdup_printf (_("%s Unrecognized"), strsize);
                 }

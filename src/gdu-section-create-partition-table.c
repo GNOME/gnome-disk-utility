@@ -46,6 +46,20 @@ G_DEFINE_TYPE (GduSectionCreatePartitionTable, gdu_section_create_partition_tabl
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+create_partition_table_callback (GduDevice *device,
+                                 GError *error,
+                                 gpointer user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        if (error != NULL) {
+                gdu_shell_raise_error (gdu_section_get_shell (section),
+                                       gdu_section_get_presentable (section),
+                                       error);
+        }
+        g_object_unref (section);
+}
+
+static void
 create_part_table_callback (GtkAction *action, gpointer user_data)
 {
         GduSectionCreatePartitionTable *section = GDU_SECTION_CREATE_PARTITION_TABLE (user_data);
@@ -97,7 +111,11 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
         scheme = gdu_util_part_table_type_combo_box_get_selected (
                 section->priv->create_part_table_type_combo_box);
 
-        gdu_device_op_create_partition_table (device, scheme, secure_erase);
+        gdu_device_op_create_partition_table (device,
+                                              scheme,
+                                              secure_erase,
+                                              create_partition_table_callback,
+                                              g_object_ref (section));
 
 out:
         if (device != NULL)

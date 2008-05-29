@@ -215,7 +215,6 @@ out:
 
 static void
 retrieve_smart_data_cb (GduDevice  *device,
-                        gboolean    result,
                         GError     *error,
                         gpointer    user_data)
 {
@@ -1096,6 +1095,20 @@ out:
 }
 
 static void
+run_smart_selftest_callback (GduDevice *device,
+                             GError *error,
+                             gpointer user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        if (error != NULL) {
+                gdu_shell_raise_error (gdu_section_get_shell (section),
+                                       gdu_section_get_presentable (section),
+                                       error);
+        }
+        g_object_unref (section);
+}
+
+static void
 health_selftest_button_clicked (GtkWidget *button, gpointer user_data)
 {
         int response;
@@ -1181,7 +1194,11 @@ health_selftest_button_clicked (GtkWidget *button, gpointer user_data)
                 goto out;
 
         /* TODO: option for captive */
-        gdu_device_op_run_smart_selftest (device, test, FALSE);
+        gdu_device_op_run_smart_selftest (device,
+                                          test,
+                                          FALSE,
+                                          run_smart_selftest_callback,
+                                          g_object_ref (section));
 out:
         if (device != NULL)
                 g_object_unref (device);

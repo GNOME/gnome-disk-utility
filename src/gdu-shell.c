@@ -247,60 +247,63 @@ details_update (GduShell *shell)
                         g_free (s);
                 }
 
-                if (gdu_device_is_removable (device)) {
-                        if (gdu_device_is_partition_table (device)) {
-                                const char *scheme;
-                                scheme = gdu_device_partition_table_get_scheme (device);
-                                if (strcmp (scheme, "apm") == 0) {
-                                        s = g_strdup (_("Apple Partition Map"));
-                                } else if (strcmp (scheme, "mbr") == 0) {
-                                        s = g_strdup (_("Master Boot Record"));
-                                } else if (strcmp (scheme, "gpt") == 0) {
-                                        s = g_strdup (_("GUID Partition Table"));
-                                } else {
-                                        s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
-                                }
-
-                                details2 = g_strdup_printf (_("%s Partitioned Media (%s)"), strsize, s);
-
-                                g_free (s);
-                        } else if (usage != NULL && strlen (usage) > 0) {
-                                details2 = g_strdup_printf (_("%s Unpartitioned Media"), strsize);
-                        } else if (!gdu_device_is_media_available (device)) {
-                                details2 = g_strdup_printf (_("No Media Detected"));
-                        } else {
-                                details2 = g_strdup_printf (_("Unrecognized"));
-                        }
+                if (device == NULL) {
+                        /* TODO */
                 } else {
-                        if (gdu_device_is_partition_table (device)) {
-                                const char *scheme;
-                                scheme = gdu_device_partition_table_get_scheme (device);
-                                if (strcmp (scheme, "apm") == 0) {
-                                        s = g_strdup (_("Apple Partition Map"));
-                                } else if (strcmp (scheme, "mbr") == 0) {
-                                        s = g_strdup (_("Master Boot Record"));
-                                } else if (strcmp (scheme, "gpt") == 0) {
-                                        s = g_strdup (_("GUID Partition Table"));
+                        if (gdu_device_is_removable (device)) {
+                                if (gdu_device_is_partition_table (device)) {
+                                        const char *scheme;
+                                        scheme = gdu_device_partition_table_get_scheme (device);
+                                        if (strcmp (scheme, "apm") == 0) {
+                                                s = g_strdup (_("Apple Partition Map"));
+                                        } else if (strcmp (scheme, "mbr") == 0) {
+                                                s = g_strdup (_("Master Boot Record"));
+                                        } else if (strcmp (scheme, "gpt") == 0) {
+                                                s = g_strdup (_("GUID Partition Table"));
+                                        } else {
+                                                s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
+                                        }
+
+                                        details2 = g_strdup_printf (_("%s Partitioned Media (%s)"), strsize, s);
+
+                                        g_free (s);
+                                } else if (usage != NULL && strlen (usage) > 0) {
+                                        details2 = g_strdup_printf (_("%s Unpartitioned Media"), strsize);
+                                } else if (!gdu_device_is_media_available (device)) {
+                                        details2 = g_strdup_printf (_("No Media Detected"));
                                 } else {
-                                        s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
+                                        details2 = g_strdup_printf (_("Unrecognized"));
                                 }
-                                details2 = g_strdup_printf (_("Partitioned (%s)"), s);
-                                g_free (s);
-                        } else if (usage != NULL && strlen (usage) > 0) {
-                                details2 = g_strdup_printf (_("Not Partitioned"));
-                        } else if (!gdu_device_is_media_available (device)) {
-                                details2 = g_strdup_printf (_("No Media Detected"));
                         } else {
-                                details2 = g_strdup_printf (_("Unrecognized"));
+                                if (gdu_device_is_partition_table (device)) {
+                                        const char *scheme;
+                                        scheme = gdu_device_partition_table_get_scheme (device);
+                                        if (strcmp (scheme, "apm") == 0) {
+                                                s = g_strdup (_("Apple Partition Map"));
+                                        } else if (strcmp (scheme, "mbr") == 0) {
+                                                s = g_strdup (_("Master Boot Record"));
+                                        } else if (strcmp (scheme, "gpt") == 0) {
+                                                s = g_strdup (_("GUID Partition Table"));
+                                        } else {
+                                                s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
+                                        }
+                                        details2 = g_strdup_printf (_("Partitioned (%s)"), s);
+                                        g_free (s);
+                                } else if (usage != NULL && strlen (usage) > 0) {
+                                        details2 = g_strdup_printf (_("Not Partitioned"));
+                                } else if (!gdu_device_is_media_available (device)) {
+                                        details2 = g_strdup_printf (_("No Media Detected"));
+                                } else {
+                                        details2 = g_strdup_printf (_("Unrecognized"));
+                                }
+                        }
+
+                        if (gdu_device_is_read_only (device)) {
+                                s = details3;
+                                details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
+                                g_free (s);
                         }
                 }
-
-                if (gdu_device_is_read_only (device)) {
-                        s = details3;
-                        details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
-                        g_free (s);
-                }
-
         } else if (GDU_IS_VOLUME (presentable)) {
                 details3 = g_strdup (device_file);
 
@@ -520,7 +523,6 @@ gdu_shell_update (GduShell *shell)
 {
         GduDevice *device;
         gboolean job_in_progress;
-        gboolean last_job_failed;
         gboolean can_mount;
         gboolean can_unmount;
         gboolean can_eject;
@@ -535,7 +537,6 @@ gdu_shell_update (GduShell *shell)
         GList *sections_to_show;
 
         job_in_progress = FALSE;
-        last_job_failed = FALSE;
         can_mount = FALSE;
         can_unmount = FALSE;
         can_eject = FALSE;
@@ -548,10 +549,6 @@ gdu_shell_update (GduShell *shell)
         if (device != NULL) {
                 if (gdu_device_job_in_progress (device)) {
                         job_in_progress = TRUE;
-                }
-
-                if (gdu_device_job_get_last_error_message (device) != NULL) {
-                        last_job_failed = TRUE;
                 }
 
                 if (GDU_IS_VOLUME (shell->priv->presentable_now_showing)) {
@@ -595,7 +592,7 @@ gdu_shell_update (GduShell *shell)
                              gdu_activatable_drive_can_activate_degraded (ad));
         }
 
-        showing_job = job_in_progress || last_job_failed;
+        showing_job = job_in_progress;
 
         reset_sections =
                 (shell->priv->presentable_now_showing != last_presentable) ||
@@ -697,14 +694,14 @@ gdu_shell_update (GduShell *shell)
 static void
 presentable_changed (GduPresentable *presentable, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         gdu_shell_update (shell);
 }
 
 static void
 presentable_job_changed (GduPresentable *presentable, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         if (presentable == shell->priv->presentable_now_showing)
                 gdu_shell_update (shell);
 }
@@ -712,7 +709,7 @@ presentable_job_changed (GduPresentable *presentable, gpointer user_data)
 static void
 device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduPresentable *presentable;
         GtkTreeView *device_tree_view;
 
@@ -744,14 +741,14 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 static void
 presentable_added (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         gdu_shell_update (shell);
 }
 
 static void
 presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduPresentable *enclosing_presentable;
 
         if (presentable == shell->priv->presentable_now_showing) {
@@ -772,29 +769,83 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
         gdu_shell_update (shell);
 }
 
+typedef struct {
+        GduShell *shell;
+        GduPresentable *presentable;
+} ShellPresentableData;
+
+static ShellPresentableData *
+shell_presentable_new (GduShell *shell, GduPresentable *presentable)
+{
+        ShellPresentableData *data;
+        data = g_new0 (ShellPresentableData, 1);
+        data->shell = g_object_ref (shell);
+        data->presentable = g_object_ref (presentable);
+        return data;
+}
+
+static void
+shell_presentable_free (ShellPresentableData *data)
+{
+        g_object_unref (data->shell);
+        g_object_unref (data->presentable);
+        g_free (data);
+}
+
+static void
+mount_op_callback (GduDevice *device,
+                   char      *mount_point,
+                   GError    *error,
+                   gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell, data->presentable, error);
+                g_error_free (error);
+        }
+        g_free (mount_point);
+        shell_presentable_free (data);
+}
 
 static void
 mount_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduDevice *device;
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_mount (device);
+                gdu_device_op_mount (device,
+                                     mount_op_callback,
+                                     shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
 
 static void
+unmount_op_callback (GduDevice *device,
+                     GError    *error,
+                     gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell, data->presentable, error);
+                g_error_free (error);
+        }
+        shell_presentable_free (data);
+}
+
+static void
 unmount_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduDevice *device;
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_unmount (device);
+                gdu_device_op_unmount (device,
+                                       unmount_op_callback,
+                                       shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
@@ -805,23 +856,25 @@ eject_action_callback (GtkAction *action, gpointer user_data)
         g_warning ("todo: eject");
 }
 
-static void unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring);
+static void unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *device, gboolean bypass_keyring);
 
 static void
 unlock_op_cb (GduDevice *device,
-              const char *object_path_of_cleartext_device,
-              GError     *error,
-              gpointer    user_data)
+              char      *object_path_of_cleartext_device,
+              GError    *error,
+              gpointer   user_data)
 {
-        GduShell *shell = GDU_SHELL (user_data);
-
+        ShellPresentableData *data = user_data;
         if (object_path_of_cleartext_device == NULL) {
-                unlock_action_do (shell, device, TRUE);
+                /* TODO: raise error on bad password? */
+                unlock_action_do (data->shell, data->presentable, device, TRUE);
         }
+        shell_presentable_free (data);
+        g_free (object_path_of_cleartext_device);
 }
 
 static void
-unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring)
+unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *device, gboolean bypass_keyring)
 {
         char *secret;
 
@@ -829,8 +882,10 @@ unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring)
                                                  device,
                                                  bypass_keyring);
         if (secret != NULL) {
-
-                gdu_device_op_unlock_encrypted (device, secret, unlock_op_cb, shell);
+                gdu_device_op_unlock_encrypted (device,
+                                                secret,
+                                                unlock_op_cb,
+                                                shell_presentable_new (shell, shell->priv->presentable_now_showing));
 
                 /* scrub the password */
                 memset (secret, '\0', strlen (secret));
@@ -841,25 +896,40 @@ unlock_action_do (GduShell *shell, GduDevice *device, gboolean bypass_keyring)
 static void
 unlock_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduDevice *device;
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                unlock_action_do (shell, device, FALSE);
+                unlock_action_do (shell, shell->priv->presentable_now_showing, device, FALSE);
                 g_object_unref (device);
         }
 }
 
 static void
+lock_op_callback (GduDevice *device,
+                  GError    *error,
+                  gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell, data->presentable, error);
+                g_error_free (error);
+        }
+        shell_presentable_free (data);
+}
+
+static void
 lock_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduDevice *device;
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_lock_encrypted (device);
+                gdu_device_op_lock_encrypted (device,
+                                              lock_op_callback,
+                                              shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
@@ -867,7 +937,7 @@ lock_action_callback (GtkAction *action, gpointer user_data)
 static void
 start_cb (GduActivatableDrive *ad, gboolean success, GError *error, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
 
         if (error != NULL) {
                 GtkWidget *dialog;
@@ -895,7 +965,7 @@ out:
 static void
 start_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduActivatableDrive *ad;
 
         if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
@@ -948,7 +1018,7 @@ out:
 static void
 stop_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
         GduActivatableDrive *ad;
 
         if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
@@ -986,7 +1056,7 @@ quit_action_callback (GtkAction *action, gpointer user_data)
 static void
 about_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduShell *shell = user_data;
+        GduShell *shell = GDU_SHELL (user_data);
 
         const gchar *authors[] = {
                 "David Zeuthen <davidz@redhat.com>",
@@ -1203,10 +1273,40 @@ url_activated (SexyUrlLabel *url_label,
                gpointer      user_data)
 {
         char *s;
-        /* TODO: startup notification etc. */
+        /* TODO: startup notification, determine what file manager to use etc. */
         s = g_strdup_printf ("nautilus %s", url);
         g_spawn_command_line_async (s, NULL);
         g_free (s);
+}
+
+void
+gdu_shell_raise_error (GduShell       *shell,
+                       GduPresentable *presentable,
+                       GError         *error)
+{
+        GtkWidget *dialog;
+
+        g_return_if_fail (shell != NULL);
+        g_return_if_fail (presentable != NULL);
+        g_return_if_fail (error != NULL);
+
+        /* TODO: be more specific about what error occured */
+
+        dialog = gtk_message_dialog_new_with_markup (
+                GTK_WINDOW (shell->priv->app_window),
+                GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                GTK_MESSAGE_ERROR,
+                GTK_BUTTONS_CLOSE,
+                _("<big><b>An error occured while doing an operation on \"%s\"</b></big>"),
+                gdu_presentable_get_name (presentable));
+        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+        g_signal_connect_swapped (dialog,
+                                  "response",
+                                  G_CALLBACK (gtk_widget_destroy),
+                                  dialog);
+        gtk_window_present (GTK_WINDOW (dialog));
+
+        //g_warning ("raising error '%s'", error->message);
 }
 
 static void

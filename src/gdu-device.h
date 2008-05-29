@@ -191,39 +191,129 @@ double      gdu_device_linux_md_get_sync_percentage (GduDevice *device);
 guint64     gdu_device_linux_md_get_sync_speed (GduDevice *device);
 
 /* ---------------------------------------------------------------------------------------------------- */
-/* fire and forget ops */
-/* ---------------------------------------------------------------------------------------------------- */
 
-void gdu_device_op_mount                   (GduDevice   *device);
-void gdu_device_op_unmount                 (GduDevice   *device);
-void gdu_device_op_delete_partition        (GduDevice   *device,
-                                            const char  *secure_erase);
-void gdu_device_op_modify_partition        (GduDevice   *device,
-                                            const char  *type,
-                                            const char  *label,
-                                            char       **flags);
-void gdu_device_op_create_partition_table  (GduDevice   *device,
-                                            const char  *scheme,
-                                            const char  *secure_erase);
-void gdu_device_op_lock_encrypted          (GduDevice   *device);
-void gdu_device_op_change_filesystem_label (GduDevice   *device,
-                                            const char  *new_label);
+typedef void (*GduDeviceMountCompletedFunc) (GduDevice    *device,
+                                             char         *mount_point,
+                                             GError       *error,
+                                             gpointer      user_data);
 
-void gdu_device_op_run_smart_selftest      (GduDevice   *device,
-                                            const char  *test,
-                                            gboolean     captive);
-
-void gdu_device_op_stop_linux_md_array     (GduDevice   *device);
-
-void gdu_device_op_add_component_to_linux_md_array (GduDevice   *device,
-                                                    const char  *component_objpath);
-
-void gdu_device_op_remove_component_from_linux_md_array (GduDevice   *device,
-                                                         const char  *component_objpath,
-                                                         const char  *secure_erase);
+void gdu_device_op_mount                   (GduDevice                   *device,
+                                            GduDeviceMountCompletedFunc  callback,
+                                            gpointer                     user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-/* ops where feedback is essential */
+
+typedef void (*GduDeviceUnmountCompletedFunc) (GduDevice    *device,
+                                               GError       *error,
+                                               gpointer      user_data);
+
+void gdu_device_op_unmount                 (GduDevice                     *device,
+                                            GduDeviceUnmountCompletedFunc  callback,
+                                            gpointer                       user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceDeletePartitionCompletedFunc) (GduDevice    *device,
+                                                       GError       *error,
+                                                       gpointer      user_data);
+
+void gdu_device_op_delete_partition        (GduDevice                             *device,
+                                            const char                            *secure_erase,
+                                            GduDeviceDeletePartitionCompletedFunc  callback,
+                                            gpointer                               user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceModifyPartitionCompletedFunc) (GduDevice    *device,
+                                                       GError       *error,
+                                                       gpointer      user_data);
+
+void gdu_device_op_modify_partition        (GduDevice                             *device,
+                                            const char                            *type,
+                                            const char                            *label,
+                                            char                                 **flags,
+                                            GduDeviceModifyPartitionCompletedFunc  callback,
+                                            gpointer                               user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceCreatePartitionTableCompletedFunc) (GduDevice    *device,
+                                                            GError       *error,
+                                                            gpointer      user_data);
+
+void gdu_device_op_create_partition_table  (GduDevice                                  *device,
+                                            const char                                 *scheme,
+                                            const char                                 *secure_erase,
+                                            GduDeviceCreatePartitionTableCompletedFunc  callback,
+                                            gpointer                                    user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceLockEncryptedCompletedFunc) (GduDevice    *device,
+                                                     GError       *error,
+                                                     gpointer      user_data);
+
+void gdu_device_op_lock_encrypted          (GduDevice                           *device,
+                                            GduDeviceLockEncryptedCompletedFunc  callback,
+                                            gpointer                             user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceChangeFilesystemLabelCompletedFunc) (GduDevice    *device,
+                                                             GError       *error,
+                                                             gpointer      user_data);
+
+void gdu_device_op_change_filesystem_label (GduDevice                                   *device,
+                                            const char                                  *new_label,
+                                            GduDeviceChangeFilesystemLabelCompletedFunc  callback,
+                                            gpointer                                     user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceRunSmartSelftestCompletedFunc) (GduDevice    *device,
+                                                        GError       *error,
+                                                        gpointer      user_data);
+
+void gdu_device_op_run_smart_selftest      (GduDevice                              *device,
+                                            const char                             *test,
+                                            gboolean                                captive,
+                                            GduDeviceRunSmartSelftestCompletedFunc  callback,
+                                            gpointer                                user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceStopLinuxMdArrayCompletedFunc) (GduDevice    *device,
+                                                        GError       *error,
+                                                        gpointer      user_data);
+
+void gdu_device_op_stop_linux_md_array     (GduDevice                              *device,
+                                            GduDeviceStopLinuxMdArrayCompletedFunc  callback,
+                                            gpointer                                user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceAddComponentToLinuxMdArrayCompletedFunc) (GduDevice    *device,
+                                                                  GError       *error,
+                                                                  gpointer      user_data);
+
+void gdu_device_op_add_component_to_linux_md_array (GduDevice                                        *device,
+                                                    const char                                       *component_objpath,
+                                                    GduDeviceAddComponentToLinuxMdArrayCompletedFunc  callback,
+                                                    gpointer                                          user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceRemoveComponentFromLinuxMdArrayCompletedFunc) (GduDevice    *device,
+                                                                       GError       *error,
+                                                                       gpointer      user_data);
+
+void gdu_device_op_remove_component_from_linux_md_array (
+        GduDevice                                             *device,
+        const char                                            *component_objpath,
+        const char                                            *secure_erase,
+        GduDeviceRemoveComponentFromLinuxMdArrayCompletedFunc  callback,
+        gpointer                                               user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef void (*GduDeviceMkfsCompletedFunc) (GduDevice  *device,
@@ -241,7 +331,7 @@ void gdu_device_op_mkfs (GduDevice                  *device,
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef void (*GduDeviceCreatePartitionCompletedFunc) (GduDevice  *device,
-                                                       const char *created_device_object_path,
+                                                       char       *created_device_object_path,
                                                        GError     *error,
                                                        gpointer    user_data);
 
@@ -261,7 +351,7 @@ void gdu_device_op_create_partition       (GduDevice   *device,
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef void (*GduDeviceUnlockEncryptedCompletedFunc) (GduDevice  *device,
-                                                       const char *object_path_of_cleartext_device,
+                                                       char       *object_path_of_cleartext_device,
                                                        GError     *error,
                                                        gpointer    user_data);
 
@@ -273,7 +363,6 @@ void gdu_device_op_unlock_encrypted       (GduDevice   *device,
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef void (*GduDeviceChangeSecretForEncryptedCompletedFunc) (GduDevice  *device,
-                                                                gboolean    result,
                                                                 GError     *error,
                                                                 gpointer    user_data);
 
@@ -286,7 +375,6 @@ void gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef void (*GduDeviceDriveSmartRefreshDataCompletedFunc) (GduDevice  *device,
-                                                             gboolean    result,
                                                              GError     *error,
                                                              gpointer    user_data);
 
@@ -296,18 +384,9 @@ void  gdu_device_drive_smart_refresh_data (GduDevice                            
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* typically used for non-fire-and-forget ops */
-void gdu_device_job_set_failed (GduDevice *device, GError *error);
-
 void gdu_device_op_cancel_job (GduDevice *device);
 
-/* error reporting */
-const char *gdu_device_job_get_last_error_message (GduDevice *device);
-void        gdu_device_job_clear_last_error_message (GduDevice *device);
-
-
 /* TODO: async version */
-
 GList *gdu_device_retrieve_historical_smart_data (GduDevice *device);
 
 

@@ -96,13 +96,12 @@ out:
 
 static void
 change_passphrase_completed (GduDevice  *device,
-                             gboolean    result,
                              GError     *error,
                              gpointer    user_data)
 {
         ChangePassphraseData *data = user_data;
 
-        if (result) {
+        if (error == NULL) {
                 /* It worked! Now update the keyring */
 
                 if (data->save_in_keyring || data->save_in_keyring_session)

@@ -763,7 +763,7 @@ gdu_activatable_drive_deactivate (GduActivatableDrive *activatable_drive)
         g_return_if_fail (activatable_drive->priv->kind == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD);
         g_return_if_fail (activatable_drive->priv->device != NULL);
 
-        gdu_device_op_stop_linux_md_array (activatable_drive->priv->device);
+        gdu_device_op_stop_linux_md_array (activatable_drive->priv->device, NULL, NULL);
 }
 
 GduActivableDriveSlaveState

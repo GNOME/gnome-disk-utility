@@ -472,8 +472,6 @@ struct _GduDevicePrivate
 
         char *object_path;
 
-        char *job_last_error_message;
-
         DeviceProperties *props;
 };
 
@@ -506,7 +504,6 @@ gdu_device_finalize (GduDevice *device)
                 g_object_unref (device->priv->pool);
         if (device->priv->props != NULL)
                 device_properties_free (device->priv->props);
-        g_free (device->priv->job_last_error_message);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (device));
@@ -1393,29 +1390,6 @@ gdu_device_job_get_cur_task_percentage (GduDevice *device)
 
 /* -------------------------------------------------------------------------------- */
 
-void
-gdu_device_job_set_failed (GduDevice *device, GError *error)
-{
-        g_free (device->priv->job_last_error_message);
-        device->priv->job_last_error_message = g_strdup (error->message);
-        g_signal_emit (device, signals[JOB_CHANGED], 0);
-}
-
-const char *
-gdu_device_job_get_last_error_message (GduDevice *device)
-{
-        return device->priv->job_last_error_message;
-}
-
-void
-gdu_device_job_clear_last_error_message (GduDevice *device)
-{
-        g_free (device->priv->job_last_error_message);
-        device->priv->job_last_error_message = NULL;
-}
-
-/* -------------------------------------------------------------------------------- */
-
 typedef struct {
         GduDevice *device;
         GduDeviceMkfsCompletedFunc callback;
@@ -1476,26 +1450,36 @@ gdu_device_op_mkfs (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceMountCompletedFunc callback;
+        gpointer user_data;
+} MountData;
+
 static void
 op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_mount_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        } else {
-                g_print ("yay mounted at '%s'\n", mount_path);
-                g_free (mount_path);
-        }
-        g_object_unref (device);
+        MountData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, g_strdup (mount_path), error, data->user_data);
+        g_free (mount_path);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_mount (GduDevice *device)
+gdu_device_op_mount (GduDevice                   *device,
+                     GduDeviceMountCompletedFunc  callback,
+                     gpointer                     user_data)
 {
         const char *fstype;
         char *options[16];
+        MountData *data;
+
+        data = g_new0 (MountData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         options[0] = NULL;
         fstype = NULL;
@@ -1504,53 +1488,79 @@ gdu_device_op_mount (GduDevice *device)
                                                                        fstype,
                                                                        (const char **) options,
                                                                        op_mount_cb,
-                                                                       g_object_ref (device));
+                                                                       data);
 }
 
 /* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceUnmountCompletedFunc callback;
+        gpointer user_data;
+} UnmountData;
 
 static void
 op_unmount_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_unmount_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        UnmountData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_unmount (GduDevice *device)
+gdu_device_op_unmount (GduDevice                     *device,
+                       GduDeviceUnmountCompletedFunc  callback,
+                       gpointer                       user_data)
 {
         char *options[16];
+        UnmountData *data;
+
+        data = g_new0 (UnmountData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
         options[0] = NULL;
+
         org_freedesktop_DeviceKit_Disks_Device_filesystem_unmount_async (device->priv->proxy,
                                                                          (const char **) options,
                                                                          op_unmount_cb,
-                                                                         g_object_ref (device));
+                                                                         data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceDeletePartitionCompletedFunc callback;
+        gpointer user_data;
+} DeletePartitionData;
+
 static void
 op_delete_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_delete_partition_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        DeletePartitionData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_delete_partition (GduDevice *device, const char *secure_erase)
+gdu_device_op_delete_partition (GduDevice                             *device,
+                                const char                            *secure_erase,
+                                GduDeviceDeletePartitionCompletedFunc  callback,
+                                gpointer                               user_data)
 {
         int n;
         char *options[16];
+        DeletePartitionData *data;
+
+        data = g_new0 (DeletePartitionData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         n = 0;
         if (secure_erase != NULL && strlen (secure_erase) > 0) {
@@ -1561,7 +1571,7 @@ gdu_device_op_delete_partition (GduDevice *device, const char *secure_erase)
         org_freedesktop_DeviceKit_Disks_Device_partition_delete_async (device->priv->proxy,
                                                                        (const char **) options,
                                                                        op_delete_partition_cb,
-                                                                       g_object_ref (device));
+                                                                       data);
 
         while (n >= 0)
                 g_free (options[n--]);
@@ -1586,7 +1596,6 @@ op_create_partition_cb (DBusGProxy *proxy, char *created_device_object_path, GEr
         } else {
                 g_print ("yay objpath='%s'\n", created_device_object_path);
                 data->callback (data->device, created_device_object_path, error, data->user_data);
-                g_free (created_device_object_path);
         }
         g_object_unref (data->device);
         g_free (data);
@@ -1648,53 +1657,78 @@ gdu_device_op_create_partition (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceModifyPartitionCompletedFunc callback;
+        gpointer user_data;
+} ModifyPartitionData;
+
 static void
 op_modify_partition_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_modify_partition_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        ModifyPartitionData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_modify_partition (GduDevice   *device,
-                                const char  *type,
-                                const char  *label,
-                                char       **flags)
+gdu_device_op_modify_partition (GduDevice                             *device,
+                                const char                            *type,
+                                const char                            *label,
+                                char                                 **flags,
+                                GduDeviceModifyPartitionCompletedFunc  callback,
+                                gpointer                               user_data)
 {
+        ModifyPartitionData *data;
+
+        data = g_new0 (ModifyPartitionData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
         org_freedesktop_DeviceKit_Disks_Device_partition_modify_async (device->priv->proxy,
                                                                        type,
                                                                        label,
                                                                        (const char **) flags,
                                                                        op_modify_partition_cb,
-                                                                       g_object_ref (device));
+                                                                       data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceCreatePartitionTableCompletedFunc callback;
+        gpointer user_data;
+} CreatePartitionTableData;
+
 static void
 op_create_partition_table_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_create_partition_table_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        CreatePartitionTableData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_create_partition_table (GduDevice  *device,
-                                      const char *scheme,
-                                      const char *secure_erase)
+gdu_device_op_create_partition_table (GduDevice                                  *device,
+                                      const char                                 *scheme,
+                                      const char                                 *secure_erase,
+                                      GduDeviceCreatePartitionTableCompletedFunc  callback,
+                                      gpointer                                    user_data)
 {
         int n;
         char *options[16];
+        CreatePartitionTableData *data;
+
+        data = g_new0 (CreatePartitionTableData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         n = 0;
         if (secure_erase != NULL && strlen (secure_erase) > 0) {
@@ -1706,7 +1740,7 @@ gdu_device_op_create_partition_table (GduDevice  *device,
                                                                              scheme,
                                                                              (const char **) options,
                                                                              op_create_partition_table_cb,
-                                                                             g_object_ref (device));
+                                                                             data);
 
         while (n >= 0)
                 g_free (options[n--]);
@@ -1716,7 +1750,6 @@ gdu_device_op_create_partition_table (GduDevice  *device,
 
 typedef struct {
         GduDevice *device;
-
         GduDeviceUnlockEncryptedCompletedFunc callback;
         gpointer user_data;
 } UnlockData;
@@ -1732,7 +1765,6 @@ op_unlock_encrypted_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *
         } else {
                 g_print ("yay cleartext object is at '%s'\n", cleartext_object_path);
                 data->callback (data->device, cleartext_object_path, error, data->user_data);
-                g_free (cleartext_object_path);
         }
         g_object_unref (data->device);
         g_free (data);
@@ -1776,9 +1808,9 @@ op_change_secret_for_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer us
 
         if (error != NULL) {
                 g_warning ("op_change_secret_for_encrypted_cb failed: %s", error->message);
-                data->callback (data->device, FALSE, error, data->user_data);
+                data->callback (data->device, error, data->user_data);
         } else {
-                data->callback (data->device, TRUE, error, data->user_data);
+                data->callback (data->device, error, data->user_data);
         }
         g_object_unref (data->device);
         g_free (data);
@@ -1807,50 +1839,77 @@ gdu_device_op_change_secret_for_encrypted (GduDevice   *device,
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceLockEncryptedCompletedFunc callback;
+        gpointer user_data;
+} LockEncryptedData;
+
 static void
 op_lock_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_unlock_encrypted_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        LockEncryptedData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_lock_encrypted (GduDevice *device)
+gdu_device_op_lock_encrypted (GduDevice                           *device,
+                              GduDeviceLockEncryptedCompletedFunc  callback,
+                              gpointer                             user_data)
 {
         char *options[16];
+        LockEncryptedData *data;
+
+        data = g_new0 (LockEncryptedData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
         options[0] = NULL;
         org_freedesktop_DeviceKit_Disks_Device_encrypted_lock_async (device->priv->proxy,
                                                                      (const char **) options,
                                                                      op_lock_encrypted_cb,
-                                                                     g_object_ref (device));
+                                                                     data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceChangeFilesystemLabelCompletedFunc callback;
+        gpointer user_data;
+} ChangeFilesystemLabelData;
+
 static void
-op_change_fs_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+op_change_filesystem_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_change_fs_label_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        ChangeFilesystemLabelData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_change_filesystem_label (GduDevice *device, const char *new_label)
+gdu_device_op_change_filesystem_label (GduDevice                                   *device,
+                                       const char                                  *new_label,
+                                       GduDeviceChangeFilesystemLabelCompletedFunc  callback,
+                                       gpointer                                     user_data)
 {
+        ChangeFilesystemLabelData *data;
+
+        data = g_new0 (ChangeFilesystemLabelData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
         org_freedesktop_DeviceKit_Disks_Device_filesystem_set_label_async (device->priv->proxy,
                                                                            new_label,
-                                                                           op_change_fs_label_cb,
-                                                                           g_object_ref (device));
+                                                                           op_change_filesystem_label_cb,
+                                                                           data);
 }
 /* -------------------------------------------------------------------------------- */
 
@@ -1867,9 +1926,9 @@ op_retrieve_smart_data_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 
         if (error != NULL) {
                 /*g_warning ("op_retrieve_smart_data_cb failed: %s", error->message);*/
-                data->callback (data->device, FALSE, error, data->user_data);
+                data->callback (data->device, error, data->user_data);
         } else {
-                data->callback (data->device, TRUE, NULL, data->user_data);
+                data->callback (data->device, NULL, data->user_data);
         }
         g_object_unref (data->device);
         g_free (data);
@@ -1898,75 +1957,113 @@ gdu_device_drive_smart_refresh_data (GduDevice                                  
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceRunSmartSelftestCompletedFunc callback;
+        gpointer user_data;
+} RunSmartSelftestData;
+
 static void
 op_run_smart_selftest_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_run_smart_selftest_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        RunSmartSelftestData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_run_smart_selftest (GduDevice   *device,
-                                  const char  *test,
-                                  gboolean     captive)
+gdu_device_op_run_smart_selftest (GduDevice                              *device,
+                                  const char                             *test,
+                                  gboolean                                captive,
+                                  GduDeviceRunSmartSelftestCompletedFunc  callback,
+                                  gpointer                                user_data)
 {
+        RunSmartSelftestData *data;
+
+        data = g_new0 (RunSmartSelftestData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
         org_freedesktop_DeviceKit_Disks_Device_drive_smart_initiate_selftest_async (device->priv->proxy,
                                                                                     test,
                                                                                     captive,
                                                                                     op_run_smart_selftest_cb,
-                                                                                    g_object_ref (device));
+                                                                                    data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceStopLinuxMdArrayCompletedFunc callback;
+        gpointer user_data;
+} StopLinuxMdArrayData;
+
 static void
 op_stop_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_stop_linux_md_array_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        StopLinuxMdArrayData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_stop_linux_md_array (GduDevice *device)
+gdu_device_op_stop_linux_md_array (GduDevice                              *device,
+                                   GduDeviceStopLinuxMdArrayCompletedFunc  callback,
+                                   gpointer                                user_data)
 {
         char *options[16];
+        StopLinuxMdArrayData *data;
+
+        data = g_new0 (StopLinuxMdArrayData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         options[0] = NULL;
 
         org_freedesktop_DeviceKit_Disks_Device_linux_md_stop_async (device->priv->proxy,
                                                                     (const char **) options,
                                                                     op_stop_linux_md_array_cb,
-                                                                    g_object_ref (device));
+                                                                    data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceAddComponentToLinuxMdArrayCompletedFunc callback;
+        gpointer user_data;
+} AddComponentToLinuxMdArrayData;
+
 static void
 op_add_component_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_add_component_to_linux_md_array_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        AddComponentToLinuxMdArrayData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_add_component_to_linux_md_array (GduDevice *device, const char *component_objpath)
+gdu_device_op_add_component_to_linux_md_array (GduDevice                                        *device,
+                                               const char                                       *component_objpath,
+                                               GduDeviceAddComponentToLinuxMdArrayCompletedFunc  callback,
+                                               gpointer                                          user_data)
 {
         char *options[16];
+        AddComponentToLinuxMdArrayData *data;
+
+        data = g_new0 (AddComponentToLinuxMdArrayData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         options[0] = NULL;
 
@@ -1975,30 +2072,42 @@ gdu_device_op_add_component_to_linux_md_array (GduDevice *device, const char *co
                 component_objpath,
                 (const char **) options,
                 op_add_component_to_linux_md_array_cb,
-                g_object_ref (device));
+                data);
 }
 
 /* -------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduDevice *device;
+        GduDeviceRemoveComponentFromLinuxMdArrayCompletedFunc callback;
+        gpointer user_data;
+} RemoveComponentFromLinuxMdArrayData;
+
 static void
 op_remove_component_from_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        GduDevice *device = GDU_DEVICE (user_data);
-        if (error != NULL) {
-                g_warning ("op_remove_component_from_linux_md_array_cb failed: %s", error->message);
-                gdu_device_job_set_failed (device, error);
-                g_error_free (error);
-        }
-        g_object_unref (device);
+        RemoveComponentFromLinuxMdArrayData *data = user_data;
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
 }
 
 void
-gdu_device_op_remove_component_from_linux_md_array (GduDevice *device,
-                                                    const char *component_objpath,
-                                                    const char *secure_erase)
+gdu_device_op_remove_component_from_linux_md_array (GduDevice                                             *device,
+                                                    const char                                            *component_objpath,
+                                                    const char                                            *secure_erase,
+                                                    GduDeviceRemoveComponentFromLinuxMdArrayCompletedFunc  callback,
+                                                    gpointer                                               user_data)
 {
         int n;
         char *options[16];
+        RemoveComponentFromLinuxMdArrayData *data;
+
+        data = g_new0 (RemoveComponentFromLinuxMdArrayData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
 
         n = 0;
         if (secure_erase != NULL && strlen (secure_erase) > 0) {

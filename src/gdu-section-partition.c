@@ -52,6 +52,19 @@ G_DEFINE_TYPE (GduSectionPartition, gdu_section_partition, GDU_TYPE_SECTION)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+op_delete_partition_callback (GduDevice *device,
+                              GError *error,
+                              gpointer user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        if (error != NULL) {
+                gdu_shell_raise_error (gdu_section_get_shell (section),
+                                       gdu_section_get_presentable (section),
+                                       error);
+        }
+        g_object_unref (section);
+}
 
 static void
 delete_partition_callback (GtkAction *action, gpointer user_data)
@@ -118,7 +131,10 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         if (secure_erase == NULL)
                 goto out;
 
-        gdu_device_op_delete_partition (device, secure_erase);
+        gdu_device_op_delete_partition (device,
+                                        secure_erase,
+                                        op_delete_partition_callback,
+                                        g_object_ref (section));
 
         /* Note that we'll automatically go to toplevel once we get a notification
          * that the partition is removed.
@@ -310,6 +326,20 @@ modify_part_revert_button_clicked (GtkWidget *button, gpointer user_data)
 }
 
 static void
+op_modify_partition_callback (GduDevice *device,
+                              GError *error,
+                              gpointer user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        if (error != NULL) {
+                gdu_shell_raise_error (gdu_section_get_shell (section),
+                                       gdu_section_get_presentable (section),
+                                       error);
+        }
+        g_object_unref (section);
+}
+
+static void
 modify_partition_callback (GtkAction *action, gpointer user_data)
 {
         GduSectionPartition *section = GDU_SECTION_PARTITION (user_data);
@@ -366,7 +396,9 @@ modify_partition_callback (GtkAction *action, gpointer user_data)
         gdu_device_op_modify_partition (device,
                                         type,
                                         label,
-                                        flags_strv);
+                                        flags_strv,
+                                        op_modify_partition_callback,
+                                        g_object_ref (section));
         g_free (type);
         g_strfreev (flags_strv);
 

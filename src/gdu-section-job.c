@@ -32,16 +32,11 @@
 
 struct _GduSectionJobPrivate
 {
-        GtkWidget *notebook;
-
         GtkWidget *job_description_label;
         GtkWidget *job_progress_bar;
         GtkWidget *job_task_label;
         GtkWidget *job_cancel_button;
         guint job_progress_pulse_timer_id;
-
-        GtkWidget *job_failed_reason_label;
-        GtkWidget *job_failed_dismiss_button;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -70,20 +65,6 @@ job_cancel_button_clicked (GtkWidget *button, gpointer user_data)
         if (device != NULL) {
                 gdu_device_op_cancel_job (device);
                 g_object_unref (device);
-        }
-}
-
-static void
-job_failed_dismiss_button_clicked (GtkWidget *button, gpointer user_data)
-{
-        GduDevice *device;
-        GduSectionJob *section = GDU_SECTION_JOB (user_data);
-
-        device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
-        if (device != NULL) {
-                gdu_device_job_clear_last_error_message (device);
-                gtk_label_set_markup (GTK_LABEL (section->priv->job_failed_reason_label), "");
-                gdu_shell_update (gdu_section_get_shell (GDU_SECTION (section)));
         }
 }
 
@@ -145,7 +126,6 @@ job_update (GduSectionJob *section, GduDevice *device)
 static void
 update (GduSectionJob *section)
 {
-        int section_to_show;
         GList *labels;
         GduPresentable *presentable;
         GduDevice *device;
@@ -156,20 +136,12 @@ update (GduSectionJob *section)
         if (device == NULL)
                 goto out;
 
-        if (gdu_device_job_in_progress (device)) {
-                section_to_show = 0;
-        } else if (gdu_device_job_get_last_error_message (device) != NULL) {
-                gtk_label_set_markup (GTK_LABEL (section->priv->job_failed_reason_label),
-                                      gdu_device_job_get_last_error_message (device));
-                section_to_show = 1;
-        } else {
-                g_warning ("showing job but no job is in progress / no job failure");
+        if (!gdu_device_job_in_progress (device)) {
+                g_warning ("showing job but no job is in progress");
                 goto out;
         }
 
         job_update (section, device);
-
-        gtk_notebook_set_current_page (GTK_NOTEBOOK (section->priv->notebook), section_to_show);
 
 out:
         if (device != NULL) {
@@ -212,16 +184,8 @@ gdu_section_job_init (GduSectionJob *section)
         GtkWidget *button;
         GtkWidget *vbox;
         GtkWidget *vbox2;
-        GtkWidget *image;
-        GtkWidget *hbox;
 
         section->priv = g_new0 (GduSectionJobPrivate, 1);
-
-        section->priv->notebook = gtk_notebook_new ();
-        gtk_box_pack_start (GTK_BOX (section), section->priv->notebook, TRUE, TRUE, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (section->priv->notebook), 8);
-        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (section->priv->notebook), FALSE);
-        gtk_notebook_set_show_border (GTK_NOTEBOOK (section->priv->notebook), FALSE);
 
         /* job progress section */
         vbox = gtk_vbox_new (FALSE, 5);
@@ -263,49 +227,7 @@ gdu_section_job_init (GduSectionJob *section)
         align = gtk_alignment_new (0.5, 0.5, 1.0, 0.0);
         gtk_container_add (GTK_CONTAINER (align), vbox);
 
-        gtk_notebook_append_page (GTK_NOTEBOOK (section->priv->notebook), align, NULL);
-
-        /* job failure section */
-        vbox = gtk_vbox_new (FALSE, 5);
-
-        hbox = gtk_hbox_new (FALSE, 5);
-        vbox2 = gtk_vbox_new (FALSE, 5);
-        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_BUTTON);
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
-        gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, TRUE, 0);
-
-        align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-        gtk_container_add (GTK_CONTAINER (align), hbox);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Job Failed</b>"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), "Reason the job failed");
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-        section->priv->job_failed_reason_label = label;
-
-        button_box = gtk_hbutton_box_new ();
-        gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_END);
-        gtk_box_set_spacing (GTK_BOX (button_box), 6);
-        button = gtk_button_new_with_mnemonic (_("_Dismiss"));
-        section->priv->job_failed_dismiss_button = button;
-        gtk_container_add (GTK_CONTAINER (button_box), button);
-
-        gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 0);
-
-        g_signal_connect (section->priv->job_failed_dismiss_button, "clicked",
-                          G_CALLBACK (job_failed_dismiss_button_clicked), section);
-
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 0.0);
-        gtk_container_add (GTK_CONTAINER (align), vbox);
-
-        gtk_notebook_append_page (GTK_NOTEBOOK (section->priv->notebook), align, NULL);
+        gtk_box_pack_start (GTK_BOX (section), align, TRUE, TRUE, 0);
 }
 
 GtkWidget *

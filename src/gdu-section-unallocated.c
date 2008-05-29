@@ -81,16 +81,18 @@ create_partition_data_free (CreatePartitionData *data)
 
 static void
 create_partition_completed (GduDevice  *device,
-                            const char *created_device_object_path,
+                            char       *created_device_object_path,
                             GError     *error,
                             gpointer    user_data)
 {
         CreatePartitionData *data = user_data;
 
         if (error != NULL) {
-                gdu_device_job_set_failed (device, error);
+                gdu_shell_raise_error (gdu_section_get_shell (GDU_SECTION (data->section)),
+                                       data->presentable,
+                                       error);
                 g_error_free (error);
-        } else if (data != NULL && created_device_object_path != NULL &&
+        } else if (data->encrypt_passphrase != NULL && created_device_object_path != NULL &&
                    (data->save_in_keyring || data->save_in_keyring_session)) {
                 GduPool *pool;
                 GduDevice *cleartext_device;
@@ -124,6 +126,7 @@ create_partition_completed (GduDevice  *device,
 
         if (data != NULL)
                 create_partition_data_free (data);
+        g_free (created_device_object_path);
 }
 
 static void
@@ -215,12 +218,11 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 label = g_strdup ("");
         }
 
+        data = g_new0 (CreatePartitionData, 1);
+        data->section = g_object_ref (section);
+        data->presentable = g_object_ref (presentable);
+
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button))) {
-
-                data = g_new (CreatePartitionData, 1);
-                data->section = g_object_ref (section);
-                data->presentable = g_object_ref (presentable);
-
                 data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
                         gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                         &data->save_in_keyring,
@@ -241,7 +243,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         fstype,
                                         fslabel,
                                         fserase,
-                                        data != NULL ? data->encrypt_passphrase : NULL,
+                                        data->encrypt_passphrase,
                                         create_partition_completed,
                                         data);
 

@@ -131,9 +131,11 @@ erase_action_completed (GduDevice  *device,
         CreateFilesystemData *data = user_data;
 
         if (error != NULL) {
-                gdu_device_job_set_failed (device, error);
+                gdu_shell_raise_error (gdu_section_get_shell (GDU_SECTION (data->section)),
+                                       data->presentable,
+                                       error);
                 g_error_free (error);
-        } else if (data != NULL) {
+        } else if (data->encrypt_passphrase != NULL) {
                 /* now set the passphrase if requested */
                 if (data->save_in_keyring || data->save_in_keyring_session) {
                         gdu_util_save_secret (device,
@@ -144,8 +146,9 @@ erase_action_completed (GduDevice  *device,
                          */
                         gdu_shell_update (gdu_section_get_shell (GDU_SECTION (data->section)));
                 }
-                create_filesystem_data_free (data);
         }
+        if (data != NULL)
+                create_filesystem_data_free (data);
 }
 
 static void
@@ -240,11 +243,11 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         if (secure_erase == NULL)
                 goto out;
 
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button))) {
-                data = g_new (CreateFilesystemData, 1);
-                data->section = g_object_ref (section);
-                data->presentable = g_object_ref (presentable);
+        data = g_new0 (CreateFilesystemData, 1);
+        data->section = g_object_ref (section);
+        data->presentable = g_object_ref (presentable);
 
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button))) {
                 data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
                         gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                         &data->save_in_keyring,
@@ -260,7 +263,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                             fstype,
                             fslabel,
                             secure_erase,
-                            data != NULL ? data->encrypt_passphrase : NULL,
+                            data->encrypt_passphrase,
                             erase_action_completed,
                             data);
 

@@ -121,6 +121,20 @@ modify_fs_label_entry_changed (GtkWidget *combo_box, gpointer user_data)
 }
 
 static void
+change_filesystem_label_callback (GduDevice *device,
+                                  GError *error,
+                                  gpointer user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        if (error != NULL) {
+                gdu_shell_raise_error (gdu_section_get_shell (section),
+                                       gdu_section_get_presentable (section),
+                                       error);
+        }
+        g_object_unref (section);
+}
+
+static void
 modify_fslabel_callback (GtkAction *action, gpointer user_data)
 {
         GduSectionFilesystem *section = GDU_SECTION_FILESYSTEM (user_data);
@@ -132,7 +146,9 @@ modify_fslabel_callback (GtkAction *action, gpointer user_data)
 
         gdu_device_op_change_filesystem_label (
                 device,
-                gtk_entry_get_text (GTK_ENTRY (section->priv->modify_fs_label_entry)));
+                gtk_entry_get_text (GTK_ENTRY (section->priv->modify_fs_label_entry)),
+                change_filesystem_label_callback,
+                g_object_ref (section));
 
 out:
 

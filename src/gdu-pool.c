@@ -1112,38 +1112,32 @@ gdu_pool_get_volume_by_device (GduPool *pool, GduDevice *device)
 
 typedef struct {
         GduPool *pool;
-        GduPoolAssembleLinuxMdArrayCompletedFunc callback;
+        GduPoolLinuxMdStartCompletedFunc callback;
         gpointer user_data;
-} AssembleLinuxMdArrayData;
+} LinuxMdStartData;
 
 static void
-op_assemble_linux_md_array_cb (DBusGProxy *proxy, char *assembled_array_object_path, GError *error, gpointer user_data)
+op_linux_md_start_cb (DBusGProxy *proxy, char *assembled_array_object_path, GError *error, gpointer user_data)
 {
-        AssembleLinuxMdArrayData *data = user_data;
-
-        if (error != NULL) {
-                g_warning ("op_assemble_linux_md_array_cb failed: %s", error->message);
-                data->callback (data->pool, NULL, error, data->user_data);
-        } else {
+        LinuxMdStartData *data = user_data;
+        if (data->callback != NULL)
                 data->callback (data->pool, assembled_array_object_path, error, data->user_data);
-                g_free (assembled_array_object_path);
-        }
         g_object_unref (data->pool);
         g_free (data);
 }
 
 void
-gdu_pool_op_assemble_linux_md_array (GduPool *pool,
-                                     GPtrArray *component_objpaths,
-                                     GduPoolAssembleLinuxMdArrayCompletedFunc callback,
-                                     gpointer user_data)
+gdu_pool_op_linux_md_start (GduPool *pool,
+                            GPtrArray *component_objpaths,
+                            GduPoolLinuxMdStartCompletedFunc callback,
+                            gpointer user_data)
 {
-        AssembleLinuxMdArrayData *data;
+        LinuxMdStartData *data;
         char *options[16];
 
         options[0] = NULL;
 
-        data = g_new0 (AssembleLinuxMdArrayData, 1);
+        data = g_new0 (LinuxMdStartData, 1);
         data->pool = g_object_ref (pool);
         data->callback = callback;
         data->user_data = user_data;
@@ -1151,6 +1145,6 @@ gdu_pool_op_assemble_linux_md_array (GduPool *pool,
         org_freedesktop_DeviceKit_Disks_linux_md_start_async (pool->priv->proxy,
                                                               component_objpaths,
                                                               (const char **) options,
-                                                              op_assemble_linux_md_array_cb,
+                                                              op_linux_md_start_cb,
                                                               data);
 }

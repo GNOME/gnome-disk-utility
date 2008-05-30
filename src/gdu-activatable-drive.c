@@ -717,13 +717,14 @@ activation_data_free (ActivationData *ad)
 }
 
 static void
-activation_completed (GduPool    *pool,
-                      const char *assembled_array_object_path,
-                      GError     *error,
-                      gpointer    user_data)
+activation_completed (GduPool  *pool,
+                      char     *assembled_array_object_path,
+                      GError   *error,
+                      gpointer  user_data)
 {
         ActivationData *ad = user_data;
         ad->callback (ad->activatable_drive, assembled_array_object_path != NULL, error, ad->user_data);
+        g_free (assembled_array_object_path);
         activation_data_free (ad);
 }
 
@@ -747,10 +748,10 @@ gdu_activatable_drive_activate (GduActivatableDrive  *activatable_drive,
                 g_ptr_array_add (components, (gpointer) gdu_device_get_object_path (d));
         }
 
-        gdu_pool_op_assemble_linux_md_array (activatable_drive->priv->pool,
-                                             components,
-                                             activation_completed,
-                                             activation_data_new (activatable_drive, callback, user_data));
+        gdu_pool_op_linux_md_start (activatable_drive->priv->pool,
+                                    components,
+                                    activation_completed,
+                                    activation_data_new (activatable_drive, callback, user_data));
 
         g_ptr_array_free (components, TRUE);
         g_list_foreach (slaves, (GFunc) g_object_unref, NULL);

@@ -73,15 +73,15 @@ GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *p
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduPoolAssembleLinuxMdArrayCompletedFunc) (GduPool    *pool,
-                                                          const char *assembled_array_object_path,
-                                                          GError     *error,
-                                                          gpointer    user_data);
+typedef void (*GduPoolLinuxMdStartCompletedFunc) (GduPool    *pool,
+                                                  char       *assembled_array_object_path,
+                                                  GError     *error,
+                                                  gpointer    user_data);
 
-void gdu_pool_op_assemble_linux_md_array (GduPool *pool,
-                                          GPtrArray *component_objpaths,
-                                          GduPoolAssembleLinuxMdArrayCompletedFunc callback,
-                                          gpointer user_data);
+void gdu_pool_op_linux_md_start (GduPool *pool,
+                                 GPtrArray *component_objpaths,
+                                 GduPoolLinuxMdStartCompletedFunc callback,
+                                 gpointer user_data);
 
 
 #endif /* GDU_POOL_H */

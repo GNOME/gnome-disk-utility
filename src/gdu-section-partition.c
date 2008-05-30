@@ -131,7 +131,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         if (secure_erase == NULL)
                 goto out;
 
-        gdu_device_op_delete_partition (device,
+        gdu_device_op_partition_delete (device,
                                         secure_erase,
                                         op_delete_partition_callback,
                                         g_object_ref (section));
@@ -393,7 +393,7 @@ modify_partition_callback (GtkAction *action, gpointer user_data)
         type = gdu_util_part_type_combo_box_get_selected (section->priv->modify_part_type_combo_box);
         label = gtk_entry_get_text (GTK_ENTRY (section->priv->modify_part_label_entry));
 
-        gdu_device_op_modify_partition (device,
+        gdu_device_op_partition_modify (device,
                                         type,
                                         label,
                                         flags_strv,

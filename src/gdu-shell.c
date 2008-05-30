@@ -815,9 +815,9 @@ mount_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_mount (device,
-                                     mount_op_callback,
-                                     shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                gdu_device_op_filesystem_mount (device,
+                                                mount_op_callback,
+                                                shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
@@ -843,9 +843,9 @@ unmount_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_unmount (device,
-                                       unmount_op_callback,
-                                       shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                gdu_device_op_filesystem_unmount (device,
+                                                  unmount_op_callback,
+                                                  shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
@@ -882,7 +882,7 @@ unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *devic
                                                  device,
                                                  bypass_keyring);
         if (secret != NULL) {
-                gdu_device_op_unlock_encrypted (device,
+                gdu_device_op_encrypted_unlock (device,
                                                 secret,
                                                 unlock_op_cb,
                                                 shell_presentable_new (shell, shell->priv->presentable_now_showing));
@@ -927,7 +927,7 @@ lock_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_lock_encrypted (device,
+                gdu_device_op_encrypted_lock (device,
                                               lock_op_callback,
                                               shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);

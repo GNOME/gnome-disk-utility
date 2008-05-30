@@ -192,10 +192,10 @@ add_new_to_array_button_clicked (GtkWidget *button, gpointer user_data)
         g_warning ("got it: %s", gdu_device_get_object_path (selected_device));
 
         /* got it! */
-        gdu_device_op_add_component_to_linux_md_array (device,
-                                                       gdu_device_get_object_path (selected_device),
-                                                       add_component_callback,
-                                                       g_object_ref (section));
+        gdu_device_op_linux_md_add_component (device,
+                                              gdu_device_get_object_path (selected_device),
+                                              add_component_callback,
+                                              g_object_ref (section));
 
 
 out:
@@ -272,10 +272,10 @@ add_to_array_button_clicked (GtkWidget *button, gpointer user_data)
         slave_state = gdu_activatable_drive_get_slave_state (activatable_drive, slave_device);
         if (slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH) {
                 /* yay, add this to the array */
-                gdu_device_op_add_component_to_linux_md_array (device,
-                                                               component_objpath,
-                                                               add_component_callback,
-                                                               g_object_ref (section));
+                gdu_device_op_linux_md_add_component (device,
+                                                      component_objpath,
+                                                      add_component_callback,
+                                                      g_object_ref (section));
         }
 
 
@@ -400,11 +400,11 @@ remove_from_array_button_clicked (GtkWidget *button, gpointer user_data)
                                                                     _("_Remove Component"));
                 if (secure_erase != NULL) {
                         /* yay, remove this component from the array */
-                        gdu_device_op_remove_component_from_linux_md_array (device,
-                                                                            component_objpath,
-                                                                            secure_erase,
-                                                                            remove_component_callback,
-                                                                            g_object_ref (section));
+                        gdu_device_op_linux_md_remove_component (device,
+                                                                 component_objpath,
+                                                                 secure_erase,
+                                                                 remove_component_callback,
+                                                                 g_object_ref (section));
                 }
 
                 g_free (primary);

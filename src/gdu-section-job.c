@@ -63,7 +63,7 @@ job_cancel_button_clicked (GtkWidget *button, gpointer user_data)
 
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device != NULL) {
-                gdu_device_op_cancel_job (device);
+                gdu_device_op_cancel_job (device, NULL, NULL);
                 g_object_unref (device);
         }
 }

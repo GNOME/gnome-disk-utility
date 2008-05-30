@@ -145,7 +145,7 @@ change_passphrase_do (GduSectionEncrypted *section, GduPresentable *presentable,
                 goto out;
         }
 
-        gdu_device_op_change_secret_for_encrypted (device,
+        gdu_device_op_encrypted_change_passphrase (device,
                                                    data->old_secret,
                                                    data->new_secret,
                                                    change_passphrase_completed,

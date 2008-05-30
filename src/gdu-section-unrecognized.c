@@ -259,13 +259,13 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        gdu_device_op_mkfs (device,
-                            fstype,
-                            fslabel,
-                            secure_erase,
-                            data->encrypt_passphrase,
-                            erase_action_completed,
-                            data);
+        gdu_device_op_filesystem_create (device,
+                                         fstype,
+                                         fslabel,
+                                         secure_erase,
+                                         data->encrypt_passphrase,
+                                         erase_action_completed,
+                                         data);
 
 out:
         if (device != NULL)

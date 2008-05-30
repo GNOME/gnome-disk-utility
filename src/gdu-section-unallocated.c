@@ -234,7 +234,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        gdu_device_op_create_partition (toplevel_device,
+        gdu_device_op_partition_create (toplevel_device,
                                         offset,
                                         size,
                                         type,

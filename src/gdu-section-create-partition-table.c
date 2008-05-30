@@ -111,7 +111,7 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
         scheme = gdu_util_part_table_type_combo_box_get_selected (
                 section->priv->create_part_table_type_combo_box);
 
-        gdu_device_op_create_partition_table (device,
+        gdu_device_op_partition_table_create (device,
                                               scheme,
                                               secure_erase,
                                               create_partition_table_callback,

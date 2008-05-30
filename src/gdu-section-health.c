@@ -1194,11 +1194,11 @@ health_selftest_button_clicked (GtkWidget *button, gpointer user_data)
                 goto out;
 
         /* TODO: option for captive */
-        gdu_device_op_run_smart_selftest (device,
-                                          test,
-                                          FALSE,
-                                          run_smart_selftest_callback,
-                                          g_object_ref (section));
+        gdu_device_op_drive_smart_initiate_selftest (device,
+                                                     test,
+                                                     FALSE,
+                                                     run_smart_selftest_callback,
+                                                     g_object_ref (section));
 out:
         if (device != NULL)
                 g_object_unref (device);

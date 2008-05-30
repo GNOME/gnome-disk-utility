@@ -1121,8 +1121,7 @@ op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_d
 {
         FilesystemMountData *data = user_data;
         if (data->callback != NULL)
-                data->callback (data->device, g_strdup (mount_path), error, data->user_data);
-        g_free (mount_path);
+                data->callback (data->device, mount_path, error, data->user_data);
         g_object_unref (data->device);
         g_free (data);
 }

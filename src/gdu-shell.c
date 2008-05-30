@@ -802,8 +802,9 @@ mount_op_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (data->shell, data->presentable, error);
                 g_error_free (error);
+        } else {
+                g_free (mount_point);
         }
-        g_free (mount_point);
         shell_presentable_free (data);
 }
 

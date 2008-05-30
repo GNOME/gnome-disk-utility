@@ -122,11 +122,11 @@ create_partition_completed (GduDevice  *device,
                 }
                 g_object_unref (pool);
 
+                g_free (created_device_object_path);
         }
 
         if (data != NULL)
                 create_partition_data_free (data);
-        g_free (created_device_object_path);
 }
 
 static void

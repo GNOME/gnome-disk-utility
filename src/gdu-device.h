@@ -60,8 +60,7 @@ typedef struct {
         GduDeviceSmartAttribute *attrs;
 } GduDeviceHistoricalSmartData;
 
-void
-gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd);
+void gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd);
 
 void gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
                                              char                    **out_name,
@@ -391,8 +390,18 @@ void gdu_device_op_cancel_job (GduDevice *device,
                                GduDeviceCancelJobCompletedFunc callback,
                                gpointer user_data);
 
-/* TODO: async version */
-GList *gdu_device_retrieve_historical_smart_data (GduDevice *device);
+/* ---------------------------------------------------------------------------------------------------- */
 
+typedef void (*GduDeviceDriveSmartGetHistoricalDataCompletedFunc) (GduDevice *device,
+                                                                   GList     *smart_data,
+                                                                   GError    *error,
+                                                                   gpointer   user_data);
+
+void gdu_device_drive_smart_get_historical_data (GduDevice                                         *device,
+                                                 GduDeviceDriveSmartGetHistoricalDataCompletedFunc  callback,
+                                                 gpointer                                           user_data);
+
+GList *gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
+                                                        GError    **error);
 
 #endif /* GDU_DEVICE_H */

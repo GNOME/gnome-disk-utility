@@ -2174,30 +2174,20 @@ gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd)
         g_free (hsd);
 }
 
-/* TODO: async version */
+typedef struct {
+        GduDevice *device;
+        GduDeviceDriveSmartGetHistoricalDataCompletedFunc callback;
+        gpointer user_data;
+} DriveSmartGetHistoricalDataData;
 
-GList *
-gdu_device_retrieve_historical_smart_data (GduDevice *device)
+static GList *
+op_smart_historical_data_compute_ret (GPtrArray *historical_data)
 {
-        int n, m;
-        GPtrArray *data;
-        GError *error;
         GList *ret;
+        int n, m;
 
         ret = NULL;
-
-        error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_Device_drive_smart_get_historical_data (device->priv->proxy,
-                                                                                     0,
-                                                                                     0,
-                                                                                     &data,
-                                                                                     &error)) {
-                g_warning ("smart history failed: %s", error->message);
-                g_error_free (error);
-                goto out;
-        }
-
-        for (n = 0; n < (int) data->len; n++) {
+        for (n = 0; n < (int) historical_data->len; n++) {
                 GduDeviceHistoricalSmartData *hsd;
                 GPtrArray *attrs;
                 GValue elem0 = {0};
@@ -2205,7 +2195,7 @@ gdu_device_retrieve_historical_smart_data (GduDevice *device)
                 hsd = g_new0 (GduDeviceHistoricalSmartData, 1);
 
                 g_value_init (&elem0, HISTORICAL_SMART_DATA_STRUCT_TYPE);
-                g_value_set_static_boxed (&elem0, data->pdata[n]);
+                g_value_set_static_boxed (&elem0, historical_data->pdata[n]);
                 dbus_g_type_struct_get (&elem0,
                                         0, &(hsd->time_collected),
                                         1, &(hsd->temperature),
@@ -2239,7 +2229,63 @@ gdu_device_retrieve_historical_smart_data (GduDevice *device)
         }
 
         ret = g_list_reverse (ret);
+        return ret;
+}
 
+static void
+op_smart_historical_data_cb (DBusGProxy *proxy, GPtrArray *historical_data, GError *error, gpointer user_data)
+{
+        DriveSmartGetHistoricalDataData *data = user_data;
+        GList *ret;
+
+        ret = NULL;
+        if (historical_data != NULL && error == NULL)
+                ret = op_smart_historical_data_compute_ret (historical_data);
+
+        if (data->callback == NULL)
+                data->callback (data->device, ret, error, data->user_data);
+
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_drive_smart_get_historical_data (GduDevice                                         *device,
+                                            GduDeviceDriveSmartGetHistoricalDataCompletedFunc  callback,
+                                            gpointer                                           user_data)
+{
+        DriveSmartGetHistoricalDataData *data;
+
+        data = g_new0 (DriveSmartGetHistoricalDataData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        /* TODO: since, until */
+        org_freedesktop_DeviceKit_Disks_Device_drive_smart_get_historical_data_async (device->priv->proxy,
+                                                                                      0,
+                                                                                      0,
+                                                                                      op_smart_historical_data_cb,
+                                                                                      data);
+}
+
+GList *
+gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
+                                                 GError    **error)
+{
+        GList *ret;
+        GPtrArray *historical_data;
+
+        ret = NULL;
+        /* TODO: since, until */
+        if (!org_freedesktop_DeviceKit_Disks_Device_drive_smart_get_historical_data (device->priv->proxy,
+                                                                                     0,
+                                                                                     0,
+                                                                                     &historical_data,
+                                                                                     error))
+                goto out;
+
+        ret = op_smart_historical_data_compute_ret (historical_data);
 out:
         return ret;
 }

@@ -841,7 +841,7 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
         HealthGraphData *data;
         data = g_new0 (HealthGraphData, 1);
-        data->history = gdu_device_retrieve_historical_smart_data (device);
+        data->history = gdu_device_drive_smart_get_historical_data_sync (device, NULL);
 
         GtkWidget *history_label;
         history_label = gtk_label_new (_("View:"));

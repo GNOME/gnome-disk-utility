@@ -12,6 +12,81 @@ AC_ISC_POSIX
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
+#### gcc warning flags
+
+AC_ARG_ENABLE(ansi,             [  --enable-ansi           enable -ansi -pedantic gcc flags],enable_ansi=$enableval,enable_ansi=no)
+
+if test "x$GCC" = "xyes"; then
+  changequote(,)dnl
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wchar-subscripts[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wchar-subscripts" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wmissing-declarations[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wmissing-declarations" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wnested-externs[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wnested-externs" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wpointer-arith[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wpointer-arith" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wcast-align[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wcast-align" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wsign-compare[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wsign-compare" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wformat[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wformat" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wformat-security[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wformat-security" ;;
+  esac
+
+  if test "x$enable_ansi" = "xyes"; then
+    case " $CFLAGS " in
+    *[\ \	]-ansi[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -ansi" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-D_POSIX_C_SOURCE*) ;;
+    *) CFLAGS="$CFLAGS -D_POSIX_C_SOURCE=199309L" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-D_BSD_SOURCE[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -D_BSD_SOURCE" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-pedantic[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -pedantic" ;;
+    esac
+  fi
+  changequote([,])dnl
+fi
+
 # *****
 # GNOME
 # *****

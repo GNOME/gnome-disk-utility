@@ -950,7 +950,7 @@ start_cb (GduActivatableDrive *ad, gboolean success, GError *error, gpointer use
                         _("<big><b>There was an error starting the array \"%s\".</b></big>"),
                         gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
 
-                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
                 gtk_dialog_run (GTK_DIALOG (dialog));
                 gtk_widget_destroy (dialog);
 
@@ -1299,7 +1299,7 @@ gdu_shell_raise_error (GduShell       *shell,
                 GTK_BUTTONS_CLOSE,
                 _("<big><b>An error occured while doing an operation on \"%s\"</b></big>"),
                 gdu_presentable_get_name (presentable));
-        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), error->message);
+        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
         g_signal_connect_swapped (dialog,
                                   "response",
                                   G_CALLBACK (gtk_widget_destroy),

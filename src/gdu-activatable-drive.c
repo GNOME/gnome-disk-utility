@@ -343,7 +343,7 @@ gdu_activatable_drive_get_size (GduPresentable *presentable)
                 if (strcmp (level, "raid0") == 0) {
                         /* stripes in linux can have different sizes */
 
-                        if (g_list_length (activatable_drive->priv->slaves) == num_raid_devices) {
+                        if ((int) g_list_length (activatable_drive->priv->slaves) == num_raid_devices) {
                                 n = 0;
                                 for (l = activatable_drive->priv->slaves; l != NULL; l = l->next) {
                                         GduDevice *sd = GDU_DEVICE (l->data);
@@ -372,7 +372,7 @@ gdu_activatable_drive_get_size (GduPresentable *presentable)
                         /* TODO: need to figure out out to compute this */
                 } else if (strcmp (level, "linear") == 0) {
 
-                        if (g_list_length (activatable_drive->priv->slaves) == num_raid_devices) {
+                        if ((int) g_list_length (activatable_drive->priv->slaves) == num_raid_devices) {
                                 n = 0;
                                 for (l = activatable_drive->priv->slaves; l != NULL; l = l->next) {
                                         GduDevice *sd = GDU_DEVICE (l->data);

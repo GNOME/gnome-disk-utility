@@ -1008,7 +1008,7 @@ gdu_pool_new (void)
         /* TODO: enumerate should return the tree order.. for now we just sort the list */
         g_ptr_array_sort (devices, (GCompareFunc) ptr_array_strcmp);
 
-        for (n = 0; n < devices->len; n++) {
+        for (n = 0; n < (int) devices->len; n++) {
                 const char *object_path;
                 GduDevice *device;
 

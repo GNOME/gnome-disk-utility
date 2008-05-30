@@ -969,7 +969,7 @@ gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box)
         int active;
 
         active = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_box));
-        g_assert (active >= 0 && active < sizeof (result));
+        g_assert (active >= 0 && active < (int) sizeof (result));
         return g_strdup (result[active]);
 }
 

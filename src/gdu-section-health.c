@@ -101,17 +101,27 @@ smart_data_set (GduSectionHealth *section)
         gboolean attr_warn;
         gboolean attr_fail;
         GTimeVal updated;
+        GduSmartData *sd;
 
+        sd = NULL;
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
                 goto out;
         }
 
-        passed = ! gdu_device_drive_smart_get_is_failing (device, &attr_warn, &attr_fail);
-        power_on_hours = gdu_device_drive_smart_get_time_powered_on (device) / 3600;
-        temperature = gdu_device_drive_smart_get_temperature (device);
-        last_self_test_result = gdu_device_drive_smart_get_last_self_test_result (device);
+        sd = gdu_device_get_smart_data (device);
+        if (sd == NULL) {
+                g_warning ("%s: no smart data for device", __FUNCTION__);
+                goto out;
+        }
+
+        passed = ! gdu_smart_data_get_is_failing (sd);
+        attr_warn = gdu_smart_data_get_attribute_warning (sd);
+        attr_fail = gdu_smart_data_get_attribute_failing (sd);
+        power_on_hours = gdu_smart_data_get_time_powered_on (sd) / 3600;
+        temperature = gdu_smart_data_get_temperature (sd);
+        last_self_test_result = gdu_smart_data_get_last_self_test_result (sd);
 
         gtk_widget_set_sensitive (section->priv->health_refresh_button, TRUE);
         gtk_widget_set_sensitive (section->priv->health_details_button, TRUE);
@@ -184,7 +194,7 @@ smart_data_set (GduSectionHealth *section)
         gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), s);
         g_free (s);
 
-        updated.tv_sec = gdu_device_drive_smart_get_time_collected (device);
+        updated.tv_sec = gdu_smart_data_get_time_collected (sd);
         updated.tv_usec = 0;
         gdu_time_label_set_time (GDU_TIME_LABEL (section->priv->health_updated_label), &updated);
 
@@ -211,6 +221,8 @@ smart_data_set (GduSectionHealth *section)
 out:
         if (device != NULL)
                 g_object_unref (device);
+        if (sd != NULL)
+                g_object_unref (sd);
 }
 
 static void
@@ -657,18 +669,18 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
         for (l = data->history; l != NULL; l = l->next) {
                 double x;
                 double temperature_y;
-                GduDeviceHistoricalSmartData *hsd = (GduDeviceHistoricalSmartData *) l->data;
+                GduSmartData *sd = GDU_SMART_DATA (l->data);
 
-                x = gx + gw * ((double) hsd->time_collected - (double) t_left) /
+                x = gx + gw * ((double) gdu_smart_data_get_time_collected (sd) - (double) t_left) /
                         ((double) t_right - (double) t_left);
 
                 if (x < gx) {
                         /* point is not in graph.. but do consider it if the *following* point is */
 
                         if (l->next != NULL) {
-                                GduDeviceHistoricalSmartData *nhsd = (GduDeviceHistoricalSmartData *) l->next->data;
+                                GduSmartData *nsd = GDU_SMART_DATA (l->next->data);
                                 double nx;
-                                nx = gx + gw * ((double) nhsd->time_collected - (double) t_left) /
+                                nx = gx + gw * ((double) gdu_smart_data_get_time_collected (nsd) - (double) t_left) /
                                         ((double) t_right - (double) t_left);
                                 if (nx < gx)
                                         continue;
@@ -680,7 +692,8 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                 /* If there's a discontinuity in the samples (more than 30 minutes between consecutive
                  * samples), draw a grey rectangle to convey this
                  */
-                if (prev_time_collected != 0 && (hsd->time_collected - prev_time_collected) > 30 * 60) {
+                if (prev_time_collected != 0 && (gdu_smart_data_get_time_collected (sd) -
+                                                 prev_time_collected) > 30 * 60) {
                         cairo_pattern_t *pat;
                         double stop_size;
 
@@ -711,39 +724,38 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                         cairo_pattern_destroy (pat);
                 }
 
-                temperature_y = gy + gh - gh * (hsd->temperature - val_y_bottom) / (val_y_top - val_y_bottom);
+                temperature_y = gy + gh - gh * (gdu_smart_data_get_temperature (sd) - val_y_bottom) /
+                        (val_y_top - val_y_bottom);
                 segment_set_add_point (temperature_segset, x, temperature_y);
 
                 if (selected_attr_id != -1) {
-                        int m;
+                        GduSmartDataAttribute *a;
 
-                        /* TODO: if this is slow we can do a hash table */
-                        for (m = 0; m < hsd->num_attr;  m++) {
-                                GduDeviceSmartAttribute *a = hsd->attrs + m;
-                                if (a->id == selected_attr_id) {
-                                        double attr_value_y;
-                                        double attr_thres_y;
-                                        double attr_raw_y;
-                                        int attr_value;
-                                        int attr_thres;
+                        a = gdu_smart_data_get_attribute (sd, selected_attr_id);
+                        if (a != NULL) {
+                                double attr_value_y;
+                                double attr_thres_y;
+                                double attr_raw_y;
+                                int attr_value;
+                                int attr_thres;
 
-                                        attr_value = a->value;
-                                        attr_thres = a->threshold;
+                                attr_value = gdu_smart_data_attribute_get_value (a);
+                                attr_thres = gdu_smart_data_attribute_get_threshold (a);
 
-                                        attr_value_y = gy + (256 - attr_value) * gh / 256.0;
-                                        attr_thres_y = gy + (256 - attr_thres) * gh / 256.0;
+                                attr_value_y = gy + (256 - attr_value) * gh / 256.0;
+                                attr_thres_y = gy + (256 - attr_thres) * gh / 256.0;
 
-                                        segment_set_add_point (attr_value_segset, x, attr_value_y);
-                                        segment_set_add_point (attr_thres_segset, x, attr_thres_y);
+                                segment_set_add_point (attr_value_segset, x, attr_value_y);
+                                segment_set_add_point (attr_thres_segset, x, attr_thres_y);
 
-                                        attr_raw_y = atof (a->raw);
-                                        segment_set_add_point (attr_raw_segset, x, attr_raw_y);
-                                        break;
-                                }
+                                attr_raw_y = atof (gdu_smart_data_attribute_get_raw (a));
+                                segment_set_add_point (attr_raw_segset, x, attr_raw_y);
+
+                                g_object_unref (a);
                         }
                 }
 
-                prev_time_collected = hsd->time_collected;
+                prev_time_collected = gdu_smart_data_get_time_collected (sd);
                 last_segment_xpos = x;
         }
 
@@ -811,9 +823,12 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         GtkListStore *list_store;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
-        GduDeviceSmartAttribute *attrs;
-        int num_attrs;
-        int n;
+        GduSmartData *sd;
+        GList *attrs;
+        GList *l;
+
+        sd = NULL;
+        attrs = NULL;
 
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
@@ -974,13 +989,14 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
 
-
-        attrs = gdu_device_drive_smart_get_attributes (device, &num_attrs);
-        for (n = 0; n < num_attrs; n++) {
-                GduDeviceSmartAttribute *a = attrs + n;
+        sd = gdu_device_get_smart_data (device);
+        if (sd != NULL)
+                attrs = gdu_smart_data_get_attributes (sd);
+        for (l = attrs; l != NULL; l = l->next) {
+                GduSmartDataAttribute *a = l->data;
                 GtkTreeIter iter;
                 char *col_str;
-                char *desc_str;
+                char *name_str;
                 char *value_str;
                 char *worst_str;
                 char *threshold_str;
@@ -992,28 +1008,35 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                 gboolean threshold_exceeded;
                 gboolean threshold_exceeded_in_the_past;
                 gboolean should_warn;
+                char *desc_str;
 
-                col_str = g_strdup_printf ("%d", a->id);
+                col_str = g_strdup_printf ("%d", gdu_smart_data_attribute_get_id (a));
 
-                char *attr_doc;
-                gdu_device_smart_attribute_get_details (a, &desc_str, &attr_doc, &should_warn);
+                name_str = gdu_smart_data_attribute_get_name (a);
+                desc_str = gdu_smart_data_attribute_get_description (a);
+                should_warn = gdu_smart_data_attribute_is_warning (a);
+
+                if (desc_str == NULL) {
+                        desc_str = g_strdup_printf (_("No description for attribute %d."),
+                                                    gdu_smart_data_attribute_get_id (a));
+                }
 
                 tooltip_str = g_strdup_printf (_("<b>Flags:</b> 0x%04x\n"
                                                  "<b>Type:</b> %s\n"
                                                  "<b>Updated:</b> %s\n"
                                                  "<b>Description</b>: %s"),
-                                               a->flags,
-                                               (a->flags & 0x0001) ? _("Pre-Fail") : _("Old-Age"),
-                                               (a->flags & 0x0002) ? _("Always") : _("Offline"),
-                                               attr_doc);
+                                               gdu_smart_data_attribute_get_flags (a),
+                                               (gdu_smart_data_attribute_get_flags (a) & 0x0001) ? _("Pre-Fail") : _("Old-Age"),
+                                               (gdu_smart_data_attribute_get_flags (a) & 0x0002) ? _("Always") : _("Offline"),
+                                               desc_str);
 
-                value_str = g_strdup_printf ("%d", a->value);
-                worst_str = g_strdup_printf ("%d", a->worst);
-                threshold_str = g_strdup_printf ("%d", a->threshold);
-                raw_str = g_strdup (a->raw);
+                value_str = g_strdup_printf ("%d", gdu_smart_data_attribute_get_value (a));
+                worst_str = g_strdup_printf ("%d", gdu_smart_data_attribute_get_worst (a));
+                threshold_str = g_strdup_printf ("%d", gdu_smart_data_attribute_get_threshold (a));
+                raw_str = gdu_smart_data_attribute_get_raw (a);
 
-                threshold_exceeded = (a->value < a->threshold);
-                threshold_exceeded_in_the_past = (a->worst < a->threshold);
+                threshold_exceeded = (gdu_smart_data_attribute_get_value (a) < gdu_smart_data_attribute_get_threshold (a));
+                threshold_exceeded_in_the_past = (gdu_smart_data_attribute_get_worst (a) < gdu_smart_data_attribute_get_threshold (a));
 
                 if (!gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &icon_width, &icon_height))
                         icon_height = 48;
@@ -1052,9 +1075,9 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
 
                 gtk_list_store_append (list_store, &iter);
                 gtk_list_store_set (list_store, &iter,
-                                    ATTR_ID_INT_COLUMN, a->id,
+                                    ATTR_ID_INT_COLUMN, gdu_smart_data_attribute_get_id (a),
                                     ATTR_ID_COLUMN, col_str,
-                                    ATTR_DESC_COLUMN, desc_str,
+                                    ATTR_DESC_COLUMN, name_str,
                                     ATTR_VALUE_COLUMN, value_str,
                                     ATTR_WORST_COLUMN, worst_str,
                                     ATTR_THRESHOLD_COLUMN, threshold_str,
@@ -1064,7 +1087,7 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                                     ATTR_TOOLTIP_COLUMN, tooltip_str,
                                     -1);
                 g_free (col_str);
-                g_free (desc_str);
+                g_free (name_str);
                 g_free (value_str);
                 g_free (worst_str);
                 g_free (threshold_str);
@@ -1072,7 +1095,7 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
                 g_object_unref (status_pixbuf);
                 g_free (status_str);
                 g_free (tooltip_str);
-                g_free (attr_doc);
+                g_free (desc_str);
         }
 
         g_object_unref (list_store);
@@ -1085,13 +1108,19 @@ health_details_button_clicked (GtkWidget *button, gpointer user_data)
         //smart_data_set_pending (section);
         //gdu_device_drive_smart_refresh_data (device, retrieve_smart_data_cb, g_object_ref (section));
 
-        g_list_foreach (data->history, (GFunc) gdu_device_historical_smart_data_free, NULL);
+        g_list_foreach (data->history, (GFunc) g_object_unref, NULL);
         g_list_free (data->history);
         g_free (data);
 
 out:
         if (device != NULL)
                 g_object_unref (device);
+        if (attrs != NULL) {
+                g_list_foreach (attrs, (GFunc) g_object_unref, NULL);
+                g_list_free (attrs);
+        }
+        if (sd != NULL)
+                g_object_unref (sd);
 }
 
 static void
@@ -1212,7 +1241,9 @@ update (GduSectionHealth *section)
         GduDevice *device;
         guint64 collect_time;
         GTimeVal now;
+        GduSmartData *sd;
 
+        sd = NULL;
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
@@ -1226,8 +1257,10 @@ update (GduSectionHealth *section)
 
         /* refresh if data is more than an hour old */
         g_get_current_time (&now);
-        collect_time = gdu_device_drive_smart_get_time_collected (device);
-        if (collect_time == 0 || (now.tv_sec - collect_time) > 60 * 60) {
+        sd = gdu_device_get_smart_data (device);
+        if (sd != NULL)
+                collect_time = gdu_smart_data_get_time_collected (sd);
+        if (sd == NULL || collect_time == 0 || (now.tv_sec - collect_time) > 60 * 60) {
                 smart_data_set_pending (section);
                 gdu_device_drive_smart_refresh_data (device, retrieve_smart_data_cb, g_object_ref (section));
         } else {
@@ -1237,6 +1270,8 @@ update (GduSectionHealth *section)
 out:
         if (device != NULL)
                 g_object_unref (device);
+        if (sd != NULL)
+                g_object_unref (sd);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

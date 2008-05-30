@@ -26,6 +26,7 @@
 #include <dbus/dbus-glib.h>
 #include <time.h>
 
+#include "gdu-private.h"
 #include "gdu-pool.h"
 #include "gdu-device.h"
 #include "devkit-disks-device-glue.h"
@@ -37,16 +38,6 @@
  *
  * TODO: keep in sync with code in tools/devkit-disks in DeviceKit-disks.
  */
-
-typedef struct {
-        int id;
-        char *desc;
-        int flags;
-        int value;
-        int worst;
-        int threshold;
-        char *raw;
-} DeviceSmartAttribute;
 
 typedef struct
 {
@@ -118,8 +109,7 @@ typedef struct
         double                 drive_smart_temperature;
         guint64                drive_smart_time_powered_on;
         char                  *drive_smart_last_self_test_result;
-        int                    num_drive_smart_attributes;
-        DeviceSmartAttribute  *drive_smart_attributes;
+        GValue                 drive_smart_attributes;
 
         char    *linux_md_component_level;
         int      linux_md_component_num_raid_devices;
@@ -139,25 +129,6 @@ typedef struct
         double   linux_md_sync_percentage;
         guint64  linux_md_sync_speed;
 } DeviceProperties;
-
-#define SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
-                                                        G_TYPE_INT,      \
-                                                        G_TYPE_STRING,   \
-                                                        G_TYPE_INT,      \
-                                                        G_TYPE_INT,      \
-                                                        G_TYPE_INT,      \
-                                                        G_TYPE_INT,      \
-                                                        G_TYPE_STRING,   \
-                                                        G_TYPE_INVALID))
-
-#define HISTORICAL_SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
-                                                                   G_TYPE_UINT64, \
-                                                                   G_TYPE_DOUBLE, \
-                                                                   G_TYPE_UINT64, \
-                                                                   G_TYPE_STRING, \
-                                                                   G_TYPE_BOOLEAN, \
-                                                                   dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE), \
-                                                                   G_TYPE_INVALID))
 
 static void
 collect_props (const char *key, const GValue *value, DeviceProperties *props)
@@ -300,25 +271,9 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "drive-smart-last-self-test-result") == 0)
                 props->drive_smart_last_self_test_result = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "drive-smart-attributes") == 0) {
-                GPtrArray *p = g_value_get_boxed (value);
-                int n;
-                props->num_drive_smart_attributes = (int) p->len;
-                props->drive_smart_attributes = g_new0 (DeviceSmartAttribute, props->num_drive_smart_attributes);
-                for (n = 0; n < (int) p->len; n++) {
-                        DeviceSmartAttribute *a = props->drive_smart_attributes + n;
-                        GValue elem = {0};
-                        g_value_init (&elem, SMART_DATA_STRUCT_TYPE);
-                        g_value_set_static_boxed (&elem, p->pdata[n]);
-                        dbus_g_type_struct_get (&elem,
-                                                0, &(a->id),
-                                                1, &(a->desc),
-                                                2, &(a->flags),
-                                                3, &(a->value),
-                                                4, &(a->worst),
-                                                5, &(a->threshold),
-                                                6, &(a->raw),
-                                                G_MAXUINT);
-                }
+                g_value_init (&(props->drive_smart_attributes),
+                              dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE));
+                g_value_copy (value, &(props->drive_smart_attributes));
         }
 
         else if (strcmp (key, "linux-md-component-level") == 0)
@@ -414,8 +369,6 @@ out:
 static void
 device_properties_free (DeviceProperties *props)
 {
-        int n;
-
         g_free (props->native_path);
         g_free (props->device_file);
         g_strfreev (props->device_file_by_id);
@@ -445,11 +398,7 @@ device_properties_free (DeviceProperties *props)
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
         g_free (props->drive_smart_last_self_test_result);
-        for (n = 0; n < props->num_drive_smart_attributes; n++) {
-                g_free (props->drive_smart_attributes[n].desc);
-                g_free (props->drive_smart_attributes[n].raw);
-        }
-        g_free (props->drive_smart_attributes);
+        g_value_unset (&(props->drive_smart_attributes));
         g_free (props->linux_md_component_level);
         g_free (props->linux_md_component_uuid);
         g_free (props->linux_md_component_name);
@@ -948,305 +897,16 @@ gdu_device_drive_smart_get_is_enabled (GduDevice *device)
         return device->priv->props->drive_smart_is_enabled;
 }
 
-guint64
-gdu_device_drive_smart_get_time_collected (GduDevice *device)
+GduSmartData *
+gdu_device_get_smart_data (GduDevice *device)
 {
-        return device->priv->props->drive_smart_time_collected;
+        return _gdu_smart_data_new_from_values (device->priv->props->drive_smart_time_collected,
+                                                device->priv->props->drive_smart_temperature,
+                                                device->priv->props->drive_smart_time_powered_on,
+                                                device->priv->props->drive_smart_last_self_test_result,
+                                                device->priv->props->drive_smart_is_failing,
+                                                g_value_get_boxed (&(device->priv->props->drive_smart_attributes)));
 }
-
-gboolean
-gdu_device_drive_smart_get_is_failing (GduDevice *device,
-                                       gboolean  *out_attr_warn,
-                                       gboolean  *out_attr_fail)
-{
-        int n;
-        gboolean warn, fail;
-
-        warn = FALSE;
-        fail = FALSE;
-        for (n = 0; n < device->priv->props->num_drive_smart_attributes; n++) {
-                GduDeviceSmartAttribute *attr =
-                        ((GduDeviceSmartAttribute *) device->priv->props->drive_smart_attributes) + n;
-
-                if (attr->value < attr->threshold)
-                        fail = TRUE;
-
-                if (!warn)
-                        gdu_device_smart_attribute_get_details (attr, NULL, NULL, &warn);
-        }
-
-        if (out_attr_warn != NULL)
-                *out_attr_warn = warn;
-        if (out_attr_fail != NULL)
-                *out_attr_fail = fail;
-        return device->priv->props->drive_smart_is_failing;
-}
-
-double
-gdu_device_drive_smart_get_temperature (GduDevice *device)
-{
-        return device->priv->props->drive_smart_temperature;
-}
-
-guint64
-gdu_device_drive_smart_get_time_powered_on (GduDevice *device)
-{
-        return device->priv->props->drive_smart_time_powered_on;
-}
-
-const char *
-gdu_device_drive_smart_get_last_self_test_result (GduDevice *device)
-{
-        return device->priv->props->drive_smart_last_self_test_result;
-}
-
-GduDeviceSmartAttribute *
-gdu_device_drive_smart_get_attributes (GduDevice *device, int *num_attributes)
-{
-        g_return_val_if_fail (num_attributes != NULL, NULL);
-        *num_attributes = device->priv->props->num_drive_smart_attributes;
-        /* Keep GduDeviceSmartAttribute in sync with DeviceSmartAttribute */
-        return (GduDeviceSmartAttribute *) device->priv->props->drive_smart_attributes;
-}
-
-void
-gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
-                                        char                    **out_name,
-                                        char                    **out_description,
-                                        gboolean                 *out_should_warn)
-{
-        const char *n;
-        const char *d;
-        gboolean warn;
-        int raw_int;
-
-        raw_int = atoi (attr->raw);
-
-        /* See http://smartmontools.sourceforge.net/doc.html
-         *     http://en.wikipedia.org/wiki/S.M.A.R.T
-         *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-SMARTAttributesAnnex.pdf
-         */
-
-        n = NULL;
-        d = NULL;
-        warn = FALSE;
-        switch (attr->id) {
-        case 1:
-                n = _("Read Error Rate");
-                d = _("Frequency of errors while reading raw data from the disk. "
-                      "A non-zero value indicates a problem with "
-                      "either the disk surface or read/write heads.");
-                break;
-        case 2:
-                n = _("Throughput Performance");
-                d = _("Average effeciency of the disk.");
-                break;
-        case 3:
-                n = _("Spinup Time");
-                d = _("Time needed to spin up the disk.");
-                break;
-        case 4:
-                n = _("Start/Stop Count");
-                d = _("Number of spindle start/stop cycles.");
-                break;
-        case 5:
-                n = _("Reallocated Sector Count");
-                d = _("Count of remapped sectors. "
-                      "When the hard drive finds a read/write/verification error, it mark the sector "
-                      "as \"reallocated\" and transfers data to a special reserved area (spare area).");
-                break;
-        case 7:
-                n = _("Seek Error Rate");
-                d = _("Frequency of errors while positioning.");
-                break;
-        case 8:
-                n = _("Seek Timer Performance");
-                d = _("Average efficiency of operatings while positioning");
-                break;
-        case 9:
-                n = _("Power-On Hours");
-                d = _("Number of hours elapsed in the power-on state.");
-                break;
-        case 10:
-                n = _("Spinup Retry Count");
-                d = _("Number of retry attempts to spin up.");
-                break;
-        case 11:
-                n = _("Calibration Retry Count");
-                d = _("Number of attempts to calibrate the device.");
-                break;
-        case 12:
-                n = _("Power Cycle Count");
-                d = _("Number of power-on events.");
-                break;
-        case 13:
-                n = _("Soft read error rate");
-                d = _("Frequency of 'program' errors while reading from the disk.");
-                break;
-
-        case 191:
-                n = _("G-sense Error Rate");
-                d = _("Frequency of mistakes as a result of impact loads.");
-                break;
-        case 192:
-                n = _("Power-off Retract Count");
-                d = _("Number of power-off or emergency retract cycles.");
-                break;
-        case 193:
-                n = _("Load/Unload Cycle Count");
-                d = _("Number of cycles into landing zone position.");
-                break;
-        case 194:
-                n = _("Temperature");
-                d = _("Current internal temperature in degrees Celcius.");
-                break;
-        case 195:
-                n = _("Hardware ECC Recovered");
-                d = _("Number of ECC on-the-fly errors.");
-                break;
-        case 196:
-                n = _("Reallocation Count");
-                d = _("Number of remapping operations. "
-                      "The raw value of this attribute shows the total number of (successful "
-                      "and unsucessful) attempts to transfer data from reallocated sectors "
-                      "to a spare area.");
-                break;
-        case 197:
-                n = _("Current Pending Sector Count");
-                d = _("Number of sectors waiting to be remapped. "
-                      "If the sector waiting to be remapped is subsequently written or read "
-                      "successfully, this value is decreased and the sector is not remapped. Read "
-                      "errors on the sector will not remap the sector, it will only be remapped on "
-                      "a failed write attempt.");
-                if (raw_int > 0)
-                        warn = TRUE;
-                break;
-        case 198:
-                n = _("Uncorrectable Sector Count");
-                d = _("The total number of uncorrectable errors when reading/writing a sector. "
-                      "A rise in the value of this attribute indicates defects of the "
-                      "disk surface and/or problems in the mechanical subsystem.");
-                break;
-        case 199:
-                n = _("UDMA CRC Error Rate");
-                d = _("Number of CRC errors during UDMA mode.");
-                break;
-        case 200:
-                n = _("Write Error Rate");
-                d = _("Number of errors while writing to disk (or) multi-zone error rate (or) flying-height.");
-                break;
-        case 201:
-                n = _("Soft Read Error Rate");
-                d = _("Number of off-track errors.");
-                break;
-        case 202:
-                n = _("Data Address Mark Errors");
-                d = _("Number of Data Address Mark (DAM) errors (or) vendor-specific.");
-                break;
-        case 203:
-                n = _("Run Out Cancel");
-                d = _("Number of ECC errors.");
-                break;
-        case 204:
-                n = _("Soft ECC correction");
-                d = _("Number of errors corrected by software ECC.");
-                break;
-        case 205:
-                n = _("Thermal Asperity Rate");
-                d = _("Number of Thermal Asperity Rate errors.");
-                break;
-        case 206:
-                n = _("Flying Height");
-                d = _("Height of heads above the disk surface.");
-                break;
-        case 207:
-                n = _("Spin High Current");
-                d = _("Amount of high current used to spin up the drive.");
-                break;
-        case 208:
-                n = _("Spin Buzz");
-                d = _("Number of buzz routines to spin up the drive.");
-                break;
-        case 209:
-                n = _("Offline Seek Performance");
-                d = _("Drive's seek performance during offline operations.");
-                break;
-
-        case 220:
-                n = _("Disk Shift");
-                d = _("Shift of disk os possible as a result of strong shock loading in the store, "
-                      "as a result of falling (or) temperature.");
-                break;
-        case 221:
-                n = _("G-sense Error Rate");
-                d = _("Number of errors as a result of impact loads as detected by a shock sensor.");
-                break;
-        case 222:
-                n = _("Loaded Hours");
-                d = _("Number of hours in general operational state.");
-                break;
-        case 223:
-                n = _("Load/Unload Retry Count");
-                d = _("Loading on drive caused by numerous recurrences of operations, like reading, "
-                      "recording, positioning of heads, etc.");
-                break;
-        case 224:
-                n = _("Load Friction");
-                d = _("Load on drive cause by friction in mechanical parts of the store.");
-                break;
-        case 225:
-                n = _("Load/Unload Cycle Count");
-                d = _("Total number of load cycles.");
-                break;
-        case 226:
-                n = _("Load-in Time");
-                d = _("General time for loading in a drive.");
-                break;
-        case 227:
-                n = _("Torque Amplification Count");
-                d = _("Quantity efforts of the rotating moment of a drive.");
-                break;
-        case 228:
-                n = _("Power-off Retract Count");
-                d = _("Number of power-off retract events.");
-                break;
-
-        case 230:
-                n = _("GMR Head Amplitude");
-                d = _("Amplitude of heads trembling (GMR-head) in running mode.");
-                break;
-        case 231:
-                n = _("Temperature");
-                d = _("Temperature of the drive.");
-                break;
-
-        case 240:
-                n = _("Head Flying Hours");
-                d = _("Time while head is positioning.");
-                break;
-        case 250:
-                n = _("Read Error Retry Rate");
-                d = _("Number of errors while reading from a disk.");
-                break;
-        default:
-                break;
-        }
-
-        if (n != NULL && d != NULL) {
-                if (out_name != NULL)
-                        *out_name = g_strdup (n);
-                if (out_description != NULL)
-                        *out_description = g_strdup (d);
-        } else {
-                if (out_name != NULL)
-                        *out_name = g_strdup (attr->desc);
-                if (out_description != NULL)
-                        *out_description = g_strdup_printf (_("No description for attribute %d."), attr->id);
-        }
-        if (out_should_warn != NULL)
-                *out_should_warn = warn;
-}
-
 
 const char *
 gdu_device_linux_md_component_get_level (GduDevice *device)
@@ -2161,19 +1821,6 @@ gdu_device_op_cancel_job (GduDevice *device, GduDeviceCancelJobCompletedFunc cal
 
 /* -------------------------------------------------------------------------------- */
 
-void
-gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd)
-{
-        int n;
-        g_free (hsd->last_self_test_result);
-        for (n = 0; n < hsd->num_attr; n++) {
-                g_free (hsd->attrs[n].desc);
-                g_free (hsd->attrs[n].raw);
-        }
-        g_free (hsd->attrs);
-        g_free (hsd);
-}
-
 typedef struct {
         GduDevice *device;
         GduDeviceDriveSmartGetHistoricalDataCompletedFunc callback;
@@ -2184,50 +1831,12 @@ static GList *
 op_smart_historical_data_compute_ret (GPtrArray *historical_data)
 {
         GList *ret;
-        int n, m;
+        int n;
 
         ret = NULL;
         for (n = 0; n < (int) historical_data->len; n++) {
-                GduDeviceHistoricalSmartData *hsd;
-                GPtrArray *attrs;
-                GValue elem0 = {0};
-
-                hsd = g_new0 (GduDeviceHistoricalSmartData, 1);
-
-                g_value_init (&elem0, HISTORICAL_SMART_DATA_STRUCT_TYPE);
-                g_value_set_static_boxed (&elem0, historical_data->pdata[n]);
-                dbus_g_type_struct_get (&elem0,
-                                        0, &(hsd->time_collected),
-                                        1, &(hsd->temperature),
-                                        2, &(hsd->time_powered_on),
-                                        3, &(hsd->last_self_test_result),
-                                        4, &(hsd->is_failing),
-                                        5, &attrs,
-                                        G_MAXUINT);
-
-                hsd->num_attr = (int) attrs->len;
-                hsd->attrs = g_new0 (GduDeviceSmartAttribute, hsd->num_attr);
-
-                for (m = 0; m < (int) attrs->len; m++) {
-                        GValue elem = {0};
-                        GduDeviceSmartAttribute *a = hsd->attrs + m;
-
-                        g_value_init (&elem, SMART_DATA_STRUCT_TYPE);
-                        g_value_set_static_boxed (&elem, attrs->pdata[m]);
-                        dbus_g_type_struct_get (&elem,
-                                                0, &(a->id),
-                                                1, &(a->desc),
-                                                2, &(a->flags),
-                                                3, &(a->value),
-                                                4, &(a->worst),
-                                                5, &(a->threshold),
-                                                6, &(a->raw),
-                                                G_MAXUINT);
-                }
-
-                ret = g_list_prepend (ret, hsd);
+                ret = g_list_prepend (ret, _gdu_smart_data_new (historical_data->pdata[n]));
         }
-
         ret = g_list_reverse (ret);
         return ret;
 }

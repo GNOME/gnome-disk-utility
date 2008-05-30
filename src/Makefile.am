@@ -37,12 +37,15 @@ gnome_disk_utility_SOURCES = 								\
 	gdu-section-job.h			gdu-section-job.c			\
 	gdu-tree.h				gdu-tree.c				\
 	gdu-pool.c				gdu-pool.h				\
+	gdu-smart-data.c			gdu-smart-data.h			\
+	gdu-smart-data-attribute.c		gdu-smart-data-attribute.h		\
 	gdu-device.c				gdu-device.h				\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-activatable-drive.c			gdu-activatable-drive.h			\
 	gdu-volume.c				gdu-volume.h				\
 	gdu-presentable.c			gdu-presentable.h			\
 	gdu-volume-hole.c			gdu-volume-hole.h			\
+						gdu-private.h				\
 	$(BUILT_SOURCES)
 
 gnome_disk_utility_CPPFLAGS = 				\

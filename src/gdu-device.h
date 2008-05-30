@@ -23,6 +23,7 @@
 #define GDU_DEVICE_H
 
 #include <glib-object.h>
+#include "gdu-smart-data.h"
 
 #define GDU_TYPE_DEVICE             (gdu_device_get_type ())
 #define GDU_DEVICE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE, GduDevice))
@@ -37,35 +38,8 @@ typedef struct _GduDevice            GduDevice;
 struct _GduDevicePrivate;
 typedef struct _GduDevicePrivate     GduDevicePrivate;
 
-struct _GduPool;;
+struct _GduPool;
 typedef struct _GduPool GduPool;
-
-typedef struct {
-        int id;
-        char *desc;
-        int flags;
-        int value;
-        int worst;
-        int threshold;
-        char *raw;
-} GduDeviceSmartAttribute;
-
-typedef struct {
-        guint64 time_collected;
-        double temperature;
-        guint64 time_powered_on;
-        char *last_self_test_result;
-        gboolean is_failing;
-        int num_attr;
-        GduDeviceSmartAttribute *attrs;
-} GduDeviceHistoricalSmartData;
-
-void gdu_device_historical_smart_data_free (GduDeviceHistoricalSmartData *hsd);
-
-void gdu_device_smart_attribute_get_details (GduDeviceSmartAttribute  *attr,
-                                             char                    **out_name,
-                                             char                    **out_description,
-                                             gboolean                 *out_should_warn);
 
 struct _GduDevice
 {
@@ -162,14 +136,7 @@ const char *gdu_device_drive_get_media (GduDevice *device);
 
 gboolean gdu_device_drive_smart_get_is_capable (GduDevice *device);
 gboolean gdu_device_drive_smart_get_is_enabled (GduDevice *device);
-guint64  gdu_device_drive_smart_get_time_collected (GduDevice *device);
-gboolean gdu_device_drive_smart_get_is_failing (GduDevice *device,
-                                                gboolean *out_attr_warn,
-                                                gboolean *out_attr_failing);
-double gdu_device_drive_smart_get_temperature (GduDevice *device);
-guint64 gdu_device_drive_smart_get_time_powered_on (GduDevice *device);
-const char *gdu_device_drive_smart_get_last_self_test_result (GduDevice *device);
-GduDeviceSmartAttribute *gdu_device_drive_smart_get_attributes (GduDevice *device, int *num_attributes);
+GduSmartData *gdu_device_get_smart_data (GduDevice *device);
 
 const char *gdu_device_linux_md_component_get_level (GduDevice *device);
 int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);

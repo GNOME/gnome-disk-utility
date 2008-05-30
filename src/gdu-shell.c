@@ -1274,7 +1274,7 @@ url_activated (SexyUrlLabel *url_label,
 {
         char *s;
         /* TODO: startup notification, determine what file manager to use etc. */
-        s = g_strdup_printf ("nautilus %s", url);
+        s = g_strdup_printf ("nautilus \"%s\"", url);
         g_spawn_command_line_async (s, NULL);
         g_free (s);
 }

@@ -194,14 +194,36 @@ char *
 gdu_get_job_description (const char *job_id)
 {
         char *s;
-        if (strcmp (job_id, "Erase") == 0) {
-                s = g_strdup (_("Erasing"));
-        } else if (strcmp (job_id, "CreateFilesystem") == 0) {
+        if (strcmp (job_id, "FilesystemCreate") == 0) {
                 s = g_strdup (_("Creating File System"));
-        } else if (strcmp (job_id, "Mount") == 0) {
-                s = g_strdup (_("Mounting"));
-        } else if (strcmp (job_id, "Unmount") == 0) {
-                s = g_strdup (_("Unmounting"));
+        } else if (strcmp (job_id, "FilesystemMount") == 0) {
+                s = g_strdup (_("Mounting File System"));
+        } else if (strcmp (job_id, "FilesystemUnmount") == 0) {
+                s = g_strdup (_("Unmounting File System"));
+        } else if (strcmp (job_id, "EncryptedUnlock") == 0) {
+                s = g_strdup (_("Unlocking Encrypted Device"));
+        } else if (strcmp (job_id, "EncryptedLock") == 0) {
+                s = g_strdup (_("Locking Encrypted Device"));
+        } else if (strcmp (job_id, "PartitionTableCreate") == 0) {
+                s = g_strdup (_("Creating Partition Table"));
+        } else if (strcmp (job_id, "PartitionDelete") == 0) {
+                s = g_strdup (_("Deleting Partition"));
+        } else if (strcmp (job_id, "PartitionCreate") == 0) {
+                s = g_strdup (_("Creating Partition"));
+        } else if (strcmp (job_id, "PartitionModify") == 0) {
+                s = g_strdup (_("Modifying Partition"));
+        } else if (strcmp (job_id, "FilesystemSetLabel") == 0) {
+                s = g_strdup (_("Setting Label for Device"));
+        } else if (strcmp (job_id, "EncryptedChangePassphrase") == 0) {
+                s = g_strdup (_("Changing Passphrase for Encrypted Device"));
+        } else if (strcmp (job_id, "LinuxMdAddComponent") == 0) {
+                s = g_strdup (_("Adding Component to RAID Array"));
+        } else if (strcmp (job_id, "LinuxMdRemoveComponent") == 0) {
+                s = g_strdup (_("Removing Component from RAID Array"));
+        } else if (strcmp (job_id, "LinuxMdStop") == 0) {
+                s = g_strdup (_("Stopping RAID Array"));
+        } else if (strcmp (job_id, "DriveSmartInitiateSelftest") == 0) {
+                s = g_strdup (_("Running S.M.A.R.T. Self Test"));
         } else {
                 s = g_strdup_printf ("%s", job_id);
         }

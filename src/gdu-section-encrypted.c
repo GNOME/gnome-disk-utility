@@ -70,7 +70,10 @@ change_passphrase_data_free (ChangePassphraseData *data)
         g_free (data);
 }
 
-static void change_passphrase_do (GduSectionEncrypted *section, GduPresentable *presentable, gboolean bypass_keyring);
+static void change_passphrase_do (GduSectionEncrypted *section,
+                                  GduPresentable      *presentable,
+                                  gboolean             bypass_keyring,
+                                  gboolean             indicate_wrong_passphrase);
 
 static void
 update (GduSectionEncrypted *section)
@@ -93,6 +96,19 @@ out:
                 g_object_unref (device);
 }
 
+static gboolean
+change_passphrase_retry (gpointer user_data)
+{
+        ChangePassphraseData *data = user_data;
+
+        /* It didn't work. Because the given passphrase was wrong. Try again,
+         * this time forcibly bypassing the keyring and telling the user
+         * the given passphrase was wrong.
+         */
+        change_passphrase_do (data->section, data->presentable, TRUE, TRUE);
+        change_passphrase_data_free (data);
+        return FALSE;
+}
 
 static void
 change_passphrase_completed (GduDevice  *device,
@@ -110,17 +126,18 @@ change_passphrase_completed (GduDevice  *device,
                         gdu_util_delete_secret (device);
 
                 update (data->section);
+                change_passphrase_data_free (data);
         } else {
-                /* It didn't work. Likely because the given password was wrong. Try again,
-                 * this time forcibly bypassing the keyring.
-                 */
-                change_passphrase_do (data->section, data->presentable, TRUE);
+                /* retry in idle so the job-spinner can be hidden */
+                g_idle_add (change_passphrase_retry, data);
         }
-        change_passphrase_data_free (data);
 }
 
 static void
-change_passphrase_do (GduSectionEncrypted *section, GduPresentable *presentable, gboolean bypass_keyring)
+change_passphrase_do (GduSectionEncrypted *section,
+                      GduPresentable      *presentable,
+                      gboolean             bypass_keyring,
+                      gboolean             indicate_wrong_passphrase)
 {
         GduDevice *device;
         ChangePassphraseData *data;
@@ -140,7 +157,8 @@ change_passphrase_do (GduSectionEncrypted *section, GduPresentable *presentable,
                                             &data->new_secret,
                                             &data->save_in_keyring,
                                             &data->save_in_keyring_session,
-                                            bypass_keyring)) {
+                                            bypass_keyring,
+                                            indicate_wrong_passphrase)) {
                 change_passphrase_data_free (data);
                 goto out;
         }
@@ -161,7 +179,7 @@ static void
 change_passphrase_button_clicked (GtkWidget *button, gpointer user_data)
 {
         GduSectionEncrypted *section = GDU_SECTION_ENCRYPTED (user_data);
-        change_passphrase_do (section, gdu_section_get_presentable (GDU_SECTION (section)), FALSE);
+        change_passphrase_do (section, gdu_section_get_presentable (GDU_SECTION (section)), FALSE, FALSE);
 }
 
 static void

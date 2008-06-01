@@ -102,7 +102,9 @@ GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable)
 
 char *gdu_util_dialog_ask_for_secret (GtkWidget       *parent_window,
                                       GduDevice       *device,
-                                      gboolean         bypass_keyring);
+                                      gboolean         bypass_keyring,
+                                      gboolean         indicate_wrong_passphrase,
+                                      gboolean        *asked_user);
 
 gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                         GduDevice       *device,
@@ -110,7 +112,8 @@ gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                         char           **new_secret,
                                         gboolean        *save_in_keyring,
                                         gboolean        *save_in_keyring_session,
-                                        gboolean         bypass_keyring);
+                                        gboolean         bypass_keyring,
+                                        gboolean         indicate_wrong_passphrase);
 
 char *gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
                                           gboolean       *save_in_keyring,

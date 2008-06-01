@@ -857,21 +857,67 @@ eject_action_callback (GtkAction *action, gpointer user_data)
         g_warning ("todo: eject");
 }
 
-static void unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *device, gboolean bypass_keyring);
+static void unlock_action_do (GduShell *shell,
+                              GduPresentable *presentable,
+                              GduDevice *device,
+                              gboolean bypass_keyring,
+                              gboolean indicate_wrong_passphrase);
+
+typedef struct {
+        GduShell *shell;
+        GduPresentable *presentable;
+        gboolean asked_user;
+} UnlockData;
+
+static UnlockData *
+unlock_data_new (GduShell *shell, GduPresentable *presentable, gboolean asked_user)
+{
+        UnlockData *data;
+        data = g_new0 (UnlockData, 1);
+        data->shell = g_object_ref (shell);
+        data->presentable = g_object_ref (presentable);
+        data->asked_user = asked_user;
+        return data;
+}
+
+static void
+unlock_data_free (UnlockData *data)
+{
+        g_object_unref (data->shell);
+        g_object_unref (data->presentable);
+        g_free (data);
+}
 
 static gboolean
 unlock_retry (gpointer user_data)
 {
-        ShellPresentableData *data = user_data;
+        UnlockData *data = user_data;
         GduDevice *device;
+        gboolean indicate_wrong_passphrase;
 
         device = gdu_presentable_get_device (data->presentable);
         if (device != NULL) {
-                /* TODO: raise error on bad password? */
-                unlock_action_do (data->shell, data->presentable, device, TRUE);
+                indicate_wrong_passphrase = FALSE;
+
+                if (!data->asked_user) {
+                        /* if we attempted to unlock the device without asking the user
+                         * then the password must have come from the keyring.. hence,
+                         * since we failed, the password in the keyring is bad. Remove
+                         * it.
+                         */
+                        g_warning ("removing bad password from keyring");
+                        gdu_util_delete_secret (device);
+                } else {
+                        /* we did ask the user on the last try and that passphrase
+                         * didn't work.. make sure the new dialog tells him that
+                         */
+                        indicate_wrong_passphrase = TRUE;
+                }
+
+                unlock_action_do (data->shell, data->presentable, device, TRUE, indicate_wrong_passphrase);
                 g_object_unref (device);
         }
-        shell_presentable_free (data);
+        unlock_data_free (data);
         return FALSE;
 }
 
@@ -881,29 +927,38 @@ unlock_op_cb (GduDevice *device,
               GError    *error,
               gpointer   user_data)
 {
-        ShellPresentableData *data = user_data;
+        UnlockData *data = user_data;
         if (object_path_of_cleartext_device == NULL) {
                 /* retry in idle so the job-spinner can be hidden */
                 g_idle_add (unlock_retry, data);
         } else {
-                shell_presentable_free (data);
+                unlock_data_free (data);
         }
         g_free (object_path_of_cleartext_device);
 }
 
 static void
-unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *device, gboolean bypass_keyring)
+unlock_action_do (GduShell *shell,
+                  GduPresentable *presentable,
+                  GduDevice *device,
+                  gboolean bypass_keyring,
+                  gboolean indicate_wrong_passphrase)
 {
         char *secret;
+        gboolean asked_user;
 
         secret = gdu_util_dialog_ask_for_secret (shell->priv->app_window,
                                                  device,
-                                                 bypass_keyring);
+                                                 bypass_keyring,
+                                                 indicate_wrong_passphrase,
+                                                 &asked_user);
         if (secret != NULL) {
                 gdu_device_op_encrypted_unlock (device,
                                                 secret,
                                                 unlock_op_cb,
-                                                shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                                                unlock_data_new (shell,
+                                                                 shell->priv->presentable_now_showing,
+                                                                 asked_user));
 
                 /* scrub the password */
                 memset (secret, '\0', strlen (secret));
@@ -919,7 +974,7 @@ unlock_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                unlock_action_do (shell, shell->priv->presentable_now_showing, device, FALSE);
+                unlock_action_do (shell, shell->priv->presentable_now_showing, device, FALSE, FALSE);
                 g_object_unref (device);
         }
 }

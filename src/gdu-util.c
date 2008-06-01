@@ -1109,13 +1109,14 @@ gdu_util_dialog_secret_entry_changed (GtkWidget *entry, gpointer user_data)
 }
 
 static char *
-gdu_util_dialog_secret_internal (GtkWidget *parent_window,
-                                 gboolean is_new_password,
-                                 gboolean is_change_password,
-                                 const char *old_secret_for_change_password,
-                                 char **old_secret_from_dialog,
-                                 gboolean *save_in_keyring,
-                                 gboolean *save_in_keyring_session)
+gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
+                                 gboolean     is_new_password,
+                                 gboolean     is_change_password,
+                                 const char  *old_secret_for_change_password,
+                                 char       **old_secret_from_dialog,
+                                 gboolean     *save_in_keyring,
+                                 gboolean     *save_in_keyring_session,
+                                 gboolean      indicate_wrong_passphrase)
 {
         int row;
         int response;
@@ -1187,13 +1188,13 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
 	label = gtk_label_new (NULL);
         if (is_new_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To create an encrypted device, choose a passphrase.</big></b>"));
+                                      _("<b><big>To create an encrypted device, choose a passphrase</big></b>"));
         } else if (is_change_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To change the passphrase, enter both the current and new passphrase.</big></b>"));
+                                      _("<b><big>To change the passphrase, enter both the current and new passphrase</big></b>"));
         } else {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To unlock the data, enter the passphrase for the device.</big></b>"));
+                                      _("<b><big>To unlock the data, enter the passphrase for the device</big></b>"));
         }
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -1206,6 +1207,14 @@ gdu_util_dialog_secret_internal (GtkWidget *parent_window,
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+        if (indicate_wrong_passphrase) {
+                label = gtk_label_new (NULL);
+                gtk_label_set_markup (GTK_LABEL (label), _("<b>Incorrect Passphrase. Try again.</b>"));
+                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+                gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+                gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+        }
 
 	/* password entry */
 	vbox = gtk_vbox_new (FALSE, 6);
@@ -1365,7 +1374,8 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
                                                 NULL,
                                                 NULL,
                                                 save_in_keyring,
-                                                save_in_keyring_session);
+                                                save_in_keyring_session,
+                                                FALSE);
 }
 
 /**
@@ -1373,6 +1383,9 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
  * @parent_window: Parent window that dialog will be transient for or #NULL.
  * @device: A #GduDevice that is an encrypted device.
  * @bypass_keyring: Set to #TRUE to bypass the keyring.
+ * @indicate_wrong_passphrase: Set to #TRUE to display a message that the last
+ * entered passphrase was wrong
+ * @asked_user: Whether the user was asked for the passphrase
  *
  * Retrieves a secret from the user or the keyring (unless
  * @bypass_keyring is set to #TRUE).
@@ -1382,7 +1395,9 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
 char *
 gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
                                 GduDevice *device,
-                                gboolean bypass_keyring)
+                                gboolean   bypass_keyring,
+                                gboolean   indicate_wrong_passphrase,
+                                gboolean  *asked_user)
 {
         char *secret;
         char *password;
@@ -1394,6 +1409,8 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
         secret = NULL;
         save_in_keyring = FALSE;
         save_in_keyring_session = FALSE;
+        if (asked_user != NULL)
+                *asked_user = FALSE;
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1414,7 +1431,7 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
                                                       "encrypted-device-uuid", uuid,
                                                       NULL) == GNOME_KEYRING_RESULT_OK) {
                         /* By contract, the caller is responsible for scrubbing the password
-                         * so dupping the string into pageable memory "fine". Or not?
+                         * so dupping the string into pageable memory is "fine". Or not?
                          */
                         secret = g_strdup (password);
                         gnome_keyring_free_password (password);
@@ -1428,7 +1445,11 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
                                                   NULL,
                                                   NULL,
                                                   &save_in_keyring,
-                                                  &save_in_keyring_session);
+                                                  &save_in_keyring_session,
+                                                  indicate_wrong_passphrase);
+
+        if (asked_user != NULL)
+                *asked_user = TRUE;
 
         if (secret != NULL && (save_in_keyring || save_in_keyring_session)) {
                 const char *keyring;
@@ -1468,13 +1489,14 @@ out:
  * Returns: #TRUE if the user agreed to change the secret.
  **/
 gboolean
-gdu_util_dialog_change_secret (GtkWidget *parent_window,
-                               GduDevice *device,
-                               char **old_secret,
-                               char **new_secret,
-                               gboolean *save_in_keyring,
-                               gboolean *save_in_keyring_session,
-                               gboolean bypass_keyring)
+gdu_util_dialog_change_secret (GtkWidget  *parent_window,
+                               GduDevice  *device,
+                               char      **old_secret,
+                               char      **new_secret,
+                               gboolean   *save_in_keyring,
+                               gboolean   *save_in_keyring_session,
+                               gboolean   bypass_keyring,
+                               gboolean   indicate_wrong_passphrase)
 {
         char *password;
         const char *usage;
@@ -1519,7 +1541,8 @@ gdu_util_dialog_change_secret (GtkWidget *parent_window,
                                                        old_secret_from_keyring,
                                                        old_secret,
                                                        save_in_keyring,
-                                                       save_in_keyring_session);
+                                                       save_in_keyring_session,
+                                                       indicate_wrong_passphrase);
 
         if (old_secret_from_keyring != NULL) {
                 memset (old_secret_from_keyring, '\0', strlen (old_secret_from_keyring));

@@ -83,6 +83,7 @@ guint64 gdu_device_get_block_size (GduDevice *device);
 gboolean gdu_device_is_removable (GduDevice *device);
 gboolean gdu_device_is_media_available (GduDevice *device);
 gboolean gdu_device_is_read_only (GduDevice *device);
+gboolean gdu_device_is_system_internal (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);

@@ -48,6 +48,7 @@ typedef struct
         char    *device_file;
         char   **device_file_by_id;
         char   **device_file_by_path;
+        gboolean device_is_system_internal;
         gboolean device_is_partition;
         gboolean device_is_partition_table;
         gboolean device_is_removable;
@@ -146,6 +147,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_file_by_id = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "device-file-by-path") == 0)
                 props->device_file_by_path = g_strdupv (g_value_get_boxed (value));
+        else if (strcmp (key, "device-is-system-internal") == 0)
+                props->device_is_system_internal = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-partition") == 0)
                 props->device_is_partition = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-partition-table") == 0)
@@ -658,6 +661,12 @@ gboolean
 gdu_device_is_read_only (GduDevice *device)
 {
         return device->priv->props->device_is_read_only;
+}
+
+gboolean
+gdu_device_is_system_internal (GduDevice *device)
+{
+        return device->priv->props->device_is_system_internal;
 }
 
 gboolean

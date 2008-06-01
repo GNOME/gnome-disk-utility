@@ -42,6 +42,7 @@ typedef struct
 {
         char     *id;
         int       max_label_len;
+        gboolean  have_owners;
         gboolean  supports_label_rename;
         gboolean  supports_label_rename_while_mounted;
 } GduCreatableFilesystem;

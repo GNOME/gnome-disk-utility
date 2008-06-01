@@ -324,6 +324,7 @@ void gdu_device_op_filesystem_create (GduDevice                              *de
                                       const char                             *fslabel,
                                       const char                             *fserase,
                                       const char                             *encrypt_passphrase,
+                                      gboolean                                fs_take_ownership,
                                       GduDeviceFilesystemCreateCompletedFunc  callback,
                                       gpointer                                user_data);
 
@@ -344,6 +345,7 @@ void gdu_device_op_partition_create       (GduDevice   *device,
                                            const char  *fslabel,
                                            const char  *fserase,
                                            const char  *encrypt_passphrase,
+                                           gboolean     fs_take_ownership,
                                            GduDevicePartitionCreateCompletedFunc callback,
                                            gpointer user_data);
 

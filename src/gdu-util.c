@@ -349,10 +349,10 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 
 /* TODO: retrieve this list from DeviceKit-disks */
 static GduCreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11, TRUE, FALSE},
-        {"ext3", 16, TRUE, TRUE},
-        {"swap", 0, FALSE, FALSE},
-        {"ntfs", 255, FALSE, FALSE},
+        {"vfat", 11, FALSE, TRUE, FALSE},
+        {"ext3", 16, TRUE, TRUE, TRUE},
+        {"swap", 0, FALSE, FALSE, FALSE},
+        {"ntfs", 255, FALSE, FALSE, FALSE},
         {"empty", 0, FALSE, FALSE},
 };
 

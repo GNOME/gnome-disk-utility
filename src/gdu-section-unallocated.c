@@ -45,6 +45,7 @@ struct _GduSectionUnallocatedPrivate
         GtkWidget *warning_hbox;
         GtkWidget *warning_label;
         GtkWidget *encrypt_check_button;
+        GtkWidget *take_ownership_of_fs_check_button;
 
         PolKitAction *pk_create_partition_action;
         PolKitGnomeAction *create_partition_action;
@@ -148,6 +149,8 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         char *encrypt_passphrase;
         const char *scheme;
         CreatePartitionData *data;
+        gboolean take_ownership;
+        GduCreatableFilesystem *creatable_fs;
 
         type = NULL;
         label = NULL;
@@ -186,6 +189,14 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         fstype = gdu_util_fstype_combo_box_get_selected (section->priv->fstype_combo_box);
         fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->fslabel_entry)));
         fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
+
+        take_ownership = FALSE;
+        creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
+        if (creatable_fs != NULL) {
+                if (creatable_fs->have_owners && gtk_toggle_button_get_active (
+                            GTK_TOGGLE_BUTTON (section->priv->take_ownership_of_fs_check_button)))
+                        take_ownership = TRUE;
+        }
 
         /* TODO: set flags */
         flags = NULL;
@@ -244,6 +255,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         fslabel,
                                         fserase,
                                         data->encrypt_passphrase,
+                                        take_ownership,
                                         create_partition_completed,
                                         data);
 
@@ -277,9 +289,11 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
         GduCreatableFilesystem *creatable_fs;
         gboolean label_entry_sensitive;
         int max_label_len;
+        gboolean have_owners;
 
         label_entry_sensitive = FALSE;
         max_label_len = 0;
+        have_owners = FALSE;
 
         fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
         if (fstype != NULL) {
@@ -289,6 +303,7 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
                  */
                 if (creatable_fs != NULL) {
                         max_label_len = creatable_fs->max_label_len;
+                        have_owners = creatable_fs->have_owners;
                 }
         }
 
@@ -297,6 +312,11 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 
         gtk_entry_set_max_length (GTK_ENTRY (section->priv->fslabel_entry), max_label_len);
         gtk_widget_set_sensitive (section->priv->fslabel_entry, label_entry_sensitive);
+
+        if (have_owners)
+                gtk_widget_show (section->priv->take_ownership_of_fs_check_button);
+        else
+                gtk_widget_hide (section->priv->take_ownership_of_fs_check_button);
 
         g_free (fstype);
 }
@@ -477,6 +497,9 @@ update (GduSectionUnallocated *section)
                 } else {
                         gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, scheme);
                 }
+
+                /* initial probe to get things right */
+                create_part_fstype_combo_box_changed (section->priv->fstype_combo_box, section);
         }
 
 out:
@@ -704,6 +727,19 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gdu_util_fstype_combo_box_set_desc_label (combo_box, label);
+
+        row++;
+
+        /* whether to chown fs root for user */
+        check_button = gtk_check_button_new_with_mnemonic (_("T_ake ownership of file system"));
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), TRUE);
+        gtk_widget_set_tooltip_text (check_button,
+                                     _("The selected file system has a concept of file ownership. "
+                                       "If checked, the created file system be will be owned by you. "
+                                       "If not checked, only the super user can access the file system."));
+        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        section->priv->take_ownership_of_fs_check_button = check_button;
 
         row++;
 

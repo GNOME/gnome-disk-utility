@@ -25,6 +25,8 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 #include <time.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 #include "gdu-private.h"
 #include "gdu-pool.h"
@@ -1075,6 +1077,7 @@ gdu_device_op_filesystem_create (GduDevice                              *device,
                                  const char                             *fslabel,
                                  const char                             *fserase,
                                  const char                             *encrypt_passphrase,
+                                 gboolean                                fs_take_ownership,
                                  GduDeviceFilesystemCreateCompletedFunc  callback,
                                  gpointer                                user_data)
 {
@@ -1096,6 +1099,10 @@ gdu_device_op_filesystem_create (GduDevice                              *device,
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
                 options[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
+        }
+        if (fs_take_ownership) {
+                options[n++] = g_strdup_printf ("take_ownership_uid=%d", getuid ());
+                options[n++] = g_strdup_printf ("take_ownership_gid=%d", getgid ());
         }
         options[n] = NULL;
 
@@ -1271,6 +1278,7 @@ gdu_device_op_partition_create (GduDevice   *device,
                                 const char  *fslabel,
                                 const char  *fserase,
                                 const char  *encrypt_passphrase,
+                                gboolean     fs_take_ownership,
                                 GduDevicePartitionCreateCompletedFunc callback,
                                 gpointer user_data)
 {
@@ -1295,6 +1303,10 @@ gdu_device_op_partition_create (GduDevice   *device,
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
                 fsoptions[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
+        }
+        if (fs_take_ownership) {
+                fsoptions[n++] = g_strdup_printf ("take_ownership_uid=%d", getuid ());
+                fsoptions[n++] = g_strdup_printf ("take_ownership_gid=%d", getgid ());
         }
         fsoptions[n] = NULL;
 

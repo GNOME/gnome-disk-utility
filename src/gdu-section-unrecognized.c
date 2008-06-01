@@ -38,6 +38,7 @@ struct _GduSectionUnrecognizedPrivate
         GtkWidget *label_entry;
         GtkWidget *type_combo_box;
         GtkWidget *encrypt_check_button;
+        GtkWidget *take_ownership_of_fs_check_button;
 
         PolKitAction *pk_erase_action;
         PolKitGnomeAction *erase_action;
@@ -76,17 +77,20 @@ section_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpoint
         GduCreatableFilesystem *creatable_fs;
         gboolean label_entry_sensitive;
         gboolean can_erase;
+        gboolean have_owners;
         int max_label_len;
 
         label_entry_sensitive = FALSE;
         can_erase = FALSE;
         max_label_len = 0;
+        have_owners = FALSE;
 
         fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
         if (fstype != NULL) {
                 creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
                 if (creatable_fs != NULL) {
                         max_label_len = creatable_fs->max_label_len;
+                        have_owners = creatable_fs->have_owners;
                 }
                 can_erase = TRUE;
         }
@@ -97,6 +101,11 @@ section_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpoint
         gtk_entry_set_max_length (GTK_ENTRY (section->priv->label_entry), max_label_len);
         gtk_widget_set_sensitive (section->priv->label_entry, label_entry_sensitive);
         polkit_gnome_action_set_sensitive (section->priv->erase_action, can_erase);
+
+        if (have_owners)
+                gtk_widget_show (section->priv->take_ownership_of_fs_check_button);
+        else
+                gtk_widget_hide (section->priv->take_ownership_of_fs_check_button);
 
         g_free (fstype);
 }
@@ -166,6 +175,8 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         char *primary;
         char *secondary;
         char *drive_name;
+        gboolean take_ownership;
+        GduCreatableFilesystem *creatable_fs;
 
         data = NULL;
         fstype = NULL;
@@ -201,6 +212,14 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         fslabel = gdu_section_volume_unrecognized_get_fslabel (section);
         if (fslabel == NULL)
                 fslabel = g_strdup ("");
+
+        take_ownership = FALSE;
+        creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
+        if (creatable_fs != NULL) {
+                if (creatable_fs->have_owners && gtk_toggle_button_get_active (
+                            GTK_TOGGLE_BUTTON (section->priv->take_ownership_of_fs_check_button)))
+                        take_ownership = TRUE;
+        }
 
         primary = g_strdup (_("<b><big>Are you sure you want to create a new file system, deleting existing data?</big></b>"));
 
@@ -264,6 +283,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                                          fslabel,
                                          secure_erase,
                                          data->encrypt_passphrase,
+                                         take_ownership,
                                          erase_action_completed,
                                          data);
 
@@ -302,6 +322,9 @@ update (GduSectionUnrecognized *section)
                 gtk_entry_set_text (GTK_ENTRY (section->priv->label_entry), "");
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->type_combo_box), 0);
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button), FALSE);
+
+                /* initial probe to get things right */
+                section_volume_unrecognized_type_combo_box_changed (section->priv->type_combo_box, section);
         }
 
         gtk_widget_set_sensitive (GTK_WIDGET (section), !gdu_device_is_read_only (device));
@@ -435,6 +458,19 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 
         row++;
 
+        /* whether to chown fs root for user */
+        check_button = gtk_check_button_new_with_mnemonic (_("T_ake ownership of file system"));
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), TRUE);
+        gtk_widget_set_tooltip_text (check_button,
+                                     _("The selected file system has a concept of file ownership. "
+                                       "If checked, the created file system be will be owned by you. "
+                                       "If not checked, only the super user can access the file system."));
+        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        section->priv->take_ownership_of_fs_check_button = check_button;
+
+        row++;
+
         /* whether to encrypt underlying device */
         check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
         gtk_widget_set_tooltip_text (check_button,
@@ -454,7 +490,6 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         g_signal_connect (section->priv->type_combo_box, "changed",
                           G_CALLBACK (section_volume_unrecognized_type_combo_box_changed), section);
 
-
         button_box = gtk_hbutton_box_new ();
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
@@ -462,7 +497,6 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         button = polkit_gnome_action_create_button (section->priv->erase_action);
         gtk_container_add (GTK_CONTAINER (button_box), button);
         gtk_box_pack_start (GTK_BOX (vbox), button_box, TRUE, TRUE, 0);
-
 }
 
 GtkWidget *

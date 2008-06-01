@@ -1108,6 +1108,13 @@ gdu_util_dialog_secret_entry_changed (GtkWidget *entry, gpointer user_data)
         gdu_util_dialog_secret_update (data);
 }
 
+static void
+secret_dialog_device_removed (GduDevice *device, gpointer user_data)
+{
+        GtkDialog *dialog = GTK_DIALOG (user_data);
+        gtk_dialog_response (dialog, GTK_RESPONSE_NONE);
+}
+
 static char *
 gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                                  const char  *window_title,
@@ -1118,7 +1125,8 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                                  char       **old_secret_from_dialog,
                                  gboolean     *save_in_keyring,
                                  gboolean     *save_in_keyring_session,
-                                 gboolean      indicate_wrong_passphrase)
+                                 gboolean      indicate_wrong_passphrase,
+                                 GduDevice    *device)
 {
         int row;
         int response;
@@ -1338,7 +1346,15 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         gtk_widget_show_all (dialog);
         if (is_change_password || is_new_password)
                 gdu_util_dialog_secret_update (data);
+
+        if (device != NULL)
+                g_signal_connect (device, "removed", (GCallback) secret_dialog_device_removed, dialog);
+
         response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+        if (device != NULL)
+                g_signal_handlers_disconnect_by_func (device, secret_dialog_device_removed, dialog);
+
         if (response != 0)
                 goto out;
 
@@ -1386,7 +1402,8 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
                                                 NULL,
                                                 save_in_keyring,
                                                 save_in_keyring_session,
-                                                FALSE);
+                                                FALSE,
+                                                NULL);
 }
 
 /**
@@ -1488,7 +1505,8 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
                                                   NULL,
                                                   &save_in_keyring,
                                                   &save_in_keyring_session,
-                                                  indicate_wrong_passphrase);
+                                                  indicate_wrong_passphrase,
+                                                  device);
 
         if (asked_user != NULL)
                 *asked_user = TRUE;
@@ -1619,7 +1637,8 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                                        old_secret,
                                                        save_in_keyring,
                                                        save_in_keyring_session,
-                                                       indicate_wrong_passphrase);
+                                                       indicate_wrong_passphrase,
+                                                       device);
 
         if (old_secret_from_keyring != NULL) {
                 memset (old_secret_from_keyring, '\0', strlen (old_secret_from_keyring));

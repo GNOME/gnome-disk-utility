@@ -152,7 +152,7 @@ change_passphrase_do (GduSectionEncrypted *section,
         data->section = g_object_ref (section);
 
         if (!gdu_util_dialog_change_secret (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
-                                            device,
+                                            presentable,
                                             &data->old_secret,
                                             &data->new_secret,
                                             &data->save_in_keyring,

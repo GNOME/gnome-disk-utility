@@ -948,7 +948,7 @@ unlock_action_do (GduShell *shell,
         gboolean asked_user;
 
         secret = gdu_util_dialog_ask_for_secret (shell->priv->app_window,
-                                                 device,
+                                                 presentable,
                                                  bypass_keyring,
                                                  indicate_wrong_passphrase,
                                                  &asked_user);

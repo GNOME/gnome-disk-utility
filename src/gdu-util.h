@@ -101,13 +101,13 @@ GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable)
 /* ---------------------------------------------------------------------------------------------------- */
 
 char *gdu_util_dialog_ask_for_secret (GtkWidget       *parent_window,
-                                      GduDevice       *device,
+                                      GduPresentable  *presentable,
                                       gboolean         bypass_keyring,
                                       gboolean         indicate_wrong_passphrase,
                                       gboolean        *asked_user);
 
 gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
-                                        GduDevice       *device,
+                                        GduPresentable  *presentable,
                                         char           **old_secret,
                                         char           **new_secret,
                                         gboolean        *save_in_keyring,

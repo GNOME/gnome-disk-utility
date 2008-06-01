@@ -1110,6 +1110,8 @@ gdu_util_dialog_secret_entry_changed (GtkWidget *entry, gpointer user_data)
 
 static char *
 gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
+                                 const char  *window_title,
+                                 const char  *window_icon_name,
                                  gboolean     is_new_password,
                                  gboolean     is_change_password,
                                  const char  *old_secret_for_change_password,
@@ -1133,7 +1135,6 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         GtkWidget *session_radio_button;
         GtkWidget *always_radio_button;
         DialogSecretData *data;
-        const char *title;
 
         g_return_val_if_fail (parent_window == NULL || GTK_IS_WINDOW (parent_window), NULL);
 
@@ -1144,13 +1145,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         data = g_new0 (DialogSecretData, 1);
         data->is_new_password = is_new_password;
 
-        if (is_new_password)
-                title = _("Enter Passphrase");
-        else if (is_change_password)
-                title = _("Change Passphrase");
-        else
-                title = _("Unlock Encrypted Device");
-        dialog = gtk_dialog_new_with_buttons (title,
+        dialog = gtk_dialog_new_with_buttons (window_title,
                                               GTK_WINDOW (parent_window),
                                               GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
                                               GTK_STOCK_CANCEL,
@@ -1171,7 +1166,10 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
+        if (window_icon_name != NULL)
+                gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+        else
+                gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -1188,13 +1186,16 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 	label = gtk_label_new (NULL);
         if (is_new_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To create an encrypted device, choose a passphrase</big></b>"));
+                                      _("<b><big>To create an encrypted device, choose a passphrase "
+                                        "to protect it</big></b>"));
         } else if (is_change_password) {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To change the passphrase, enter both the current and new passphrase</big></b>"));
+                                      _("<b><big>To change the passphrase, enter both the current and "
+                                        "new passphrase</big></b>"));
         } else {
                 gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To unlock the data, enter the passphrase for the device</big></b>"));
+                                      _("<b><big>Data on this device is stored in an encrypted form "
+                                        "protected by a passphrase</big></b>"));
         }
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -1202,8 +1203,16 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
 	/* secondary message */
 	label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("Data on this device is stored in an encrypted form "
-                                                   "protected by a passphrase."));
+        if (is_new_password) {
+                gtk_label_set_markup (GTK_LABEL (label), _("Data on this device will be stored in an encrypted form "
+                                                           "protected by a passphrase."));
+        } else if (is_change_password) {
+                gtk_label_set_markup (GTK_LABEL (label), _("Data on this device is stored in an encrypted form "
+                                                           "protected by a passphrase."));
+        } else {
+                gtk_label_set_markup (GTK_LABEL (label), _("To make the data available for use, enter the "
+                                                           "passphrase for the device."));
+        }
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
@@ -1369,6 +1378,8 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
                                     gboolean       *save_in_keyring_session)
 {
         return gdu_util_dialog_secret_internal (parent_window,
+                                                _("Enter Passphrase"),
+                                                NULL,
                                                 TRUE,
                                                 FALSE,
                                                 NULL,
@@ -1381,7 +1392,7 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
 /**
  * gdu_util_dialog_ask_for_secret:
  * @parent_window: Parent window that dialog will be transient for or #NULL.
- * @device: A #GduDevice that is an encrypted device.
+ * @presentable: A #GduPresentable with a #GduDevice that is encrypted.
  * @bypass_keyring: Set to #TRUE to bypass the keyring.
  * @indicate_wrong_passphrase: Set to #TRUE to display a message that the last
  * entered passphrase was wrong
@@ -1393,11 +1404,11 @@ gdu_util_dialog_ask_for_new_secret (GtkWidget      *parent_window,
  * Returns: the secret or #NULL if the user cancelled the dialog.
  **/
 char *
-gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
-                                GduDevice *device,
-                                gboolean   bypass_keyring,
-                                gboolean   indicate_wrong_passphrase,
-                                gboolean  *asked_user)
+gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
+                                GduPresentable *presentable,
+                                gboolean        bypass_keyring,
+                                gboolean        indicate_wrong_passphrase,
+                                gboolean       *asked_user)
 {
         char *secret;
         char *password;
@@ -1405,12 +1416,24 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
         const char *uuid;
         gboolean save_in_keyring;
         gboolean save_in_keyring_session;
+        GduDevice *device;
+        char *window_title;
+        char *window_icon_name;
 
+        window_title = NULL;
+        window_icon_name = NULL;
+        device = NULL;
         secret = NULL;
         save_in_keyring = FALSE;
         save_in_keyring_session = FALSE;
         if (asked_user != NULL)
                 *asked_user = FALSE;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: presentable has no device", __FUNCTION__);
+                goto out;
+        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1439,7 +1462,26 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
                 }
         }
 
+        if (gdu_device_is_partition (device)) {
+                char *s;
+                GduPresentable *enclosing_drive;
+                enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
+                s = gdu_presentable_get_name (enclosing_drive);
+                /* todo: icon list */
+                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                g_object_unref (enclosing_drive);
+                window_title = g_strdup_printf (_("Partition %d on %s"),
+                                                gdu_device_partition_get_number (device),
+                                                s);
+                g_free (s);
+        } else {
+                window_title = gdu_presentable_get_name (presentable);
+                window_icon_name = gdu_presentable_get_icon_name (presentable);
+        }
+
         secret = gdu_util_dialog_secret_internal (parent_window,
+                                                  window_title,
+                                                  window_icon_name,
                                                   FALSE,
                                                   FALSE,
                                                   NULL,
@@ -1469,13 +1511,17 @@ gdu_util_dialog_ask_for_secret (GtkWidget *parent_window,
         }
 
 out:
+        if (device != NULL)
+                g_object_unref (device);
+        g_free (window_title);
+        g_free (window_icon_name);
         return secret;
 }
 
 /**
  * gdu_util_dialog_change_secret:
  * @parent_window: Parent window that dialog will be transient for or #NULL.
- * @device: A #GduDevice that is an encrypted device.
+ * @presentable: A #GduPresentable with a #GduDevice that is encrypted.
  * @old_secret: Return location for old secret.
  * @new_secret: Return location for new secret.
  * @save_in_keyring: Return location for whether the new secret should be saved in the keyring.
@@ -1489,25 +1535,37 @@ out:
  * Returns: #TRUE if the user agreed to change the secret.
  **/
 gboolean
-gdu_util_dialog_change_secret (GtkWidget  *parent_window,
-                               GduDevice  *device,
-                               char      **old_secret,
-                               char      **new_secret,
-                               gboolean   *save_in_keyring,
-                               gboolean   *save_in_keyring_session,
-                               gboolean   bypass_keyring,
-                               gboolean   indicate_wrong_passphrase)
+gdu_util_dialog_change_secret (GtkWidget       *parent_window,
+                               GduPresentable  *presentable,
+                               char           **old_secret,
+                               char           **new_secret,
+                               gboolean        *save_in_keyring,
+                               gboolean        *save_in_keyring_session,
+                               gboolean         bypass_keyring,
+                               gboolean         indicate_wrong_passphrase)
 {
         char *password;
         const char *usage;
         const char *uuid;
         gboolean ret;
         char *old_secret_from_keyring;
+        char *window_title;
+        char *window_icon_name;
+        GduDevice *device;
 
+        window_title = NULL;
+        window_icon_name = NULL;
+        device = NULL;
         *old_secret = NULL;
         *new_secret = NULL;
         old_secret_from_keyring = NULL;
         ret = FALSE;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: presentable has no device", __FUNCTION__);
+                goto out;
+        }
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -1535,7 +1593,26 @@ gdu_util_dialog_change_secret (GtkWidget  *parent_window,
                 }
         }
 
+        if (gdu_device_is_partition (device)) {
+                char *s;
+                GduPresentable *enclosing_drive;
+                enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
+                s = gdu_presentable_get_name (enclosing_drive);
+                /* todo: icon list */
+                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                g_object_unref (enclosing_drive);
+                window_title = g_strdup_printf (_("Partition %d on %s"),
+                                                gdu_device_partition_get_number (device),
+                                                s);
+                g_free (s);
+        } else {
+                window_title = gdu_presentable_get_name (presentable);
+                window_icon_name = gdu_presentable_get_icon_name (presentable);
+        }
+
         *new_secret = gdu_util_dialog_secret_internal (parent_window,
+                                                       window_title,
+                                                       window_icon_name,
                                                        FALSE,
                                                        TRUE,
                                                        old_secret_from_keyring,
@@ -1568,6 +1645,10 @@ out:
                 }
         }
 
+        g_free (window_title);
+        g_free (window_icon_name);
+        if (device != NULL)
+                g_object_unref (device);
         return ret;
 }
 

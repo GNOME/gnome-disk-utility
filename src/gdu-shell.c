@@ -859,6 +859,22 @@ eject_action_callback (GtkAction *action, gpointer user_data)
 
 static void unlock_action_do (GduShell *shell, GduPresentable *presentable, GduDevice *device, gboolean bypass_keyring);
 
+static gboolean
+unlock_retry (gpointer user_data)
+{
+        ShellPresentableData *data = user_data;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (data->presentable);
+        if (device != NULL) {
+                /* TODO: raise error on bad password? */
+                unlock_action_do (data->shell, data->presentable, device, TRUE);
+                g_object_unref (device);
+        }
+        shell_presentable_free (data);
+        return FALSE;
+}
+
 static void
 unlock_op_cb (GduDevice *device,
               char      *object_path_of_cleartext_device,
@@ -867,10 +883,11 @@ unlock_op_cb (GduDevice *device,
 {
         ShellPresentableData *data = user_data;
         if (object_path_of_cleartext_device == NULL) {
-                /* TODO: raise error on bad password? */
-                unlock_action_do (data->shell, data->presentable, device, TRUE);
+                /* retry in idle so the job-spinner can be hidden */
+                g_idle_add (unlock_retry, data);
+        } else {
+                shell_presentable_free (data);
         }
-        shell_presentable_free (data);
         g_free (object_path_of_cleartext_device);
 }
 

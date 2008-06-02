@@ -72,6 +72,13 @@ struct _GduShellPrivate
         /* -------------------------------------------------------------------------------- */
 
         PolKitAction *pk_mount_action;
+        PolKitAction *pk_mount_system_internal_action;
+        PolKitAction *pk_unmount_others_action;
+        PolKitAction *pk_unmount_others_system_internal_action;
+        PolKitAction *pk_unlock_encrypted_action;
+        PolKitAction *pk_lock_encrypted_others_action;
+        PolKitAction *pk_lock_encrypted_others_system_internal_action;
+        PolKitAction *pk_linux_md_action;
 
         PolKitGnomeAction *mount_action;
         PolKitGnomeAction *unmount_action;
@@ -96,6 +103,14 @@ G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 static void
 gdu_shell_finalize (GduShell *shell)
 {
+        polkit_action_unref (shell->priv->pk_mount_action);
+        polkit_action_unref (shell->priv->pk_mount_system_internal_action);
+        polkit_action_unref (shell->priv->pk_unmount_others_action);
+        polkit_action_unref (shell->priv->pk_unmount_others_system_internal_action);
+        polkit_action_unref (shell->priv->pk_unlock_encrypted_action);
+        polkit_action_unref (shell->priv->pk_lock_encrypted_others_action);
+        polkit_action_unref (shell->priv->pk_lock_encrypted_others_system_internal_action);
+        polkit_action_unref (shell->priv->pk_linux_md_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (shell));
@@ -535,6 +550,7 @@ gdu_shell_update (GduShell *shell)
         gboolean showing_job;
         gboolean reset_sections;
         GList *sections_to_show;
+        uid_t unlocked_by_uid;
 
         job_in_progress = FALSE;
         can_mount = FALSE;
@@ -542,6 +558,7 @@ gdu_shell_update (GduShell *shell)
         can_eject = FALSE;
         can_unlock = FALSE;
         can_lock = FALSE;
+        unlocked_by_uid = 0;
         can_start = FALSE;
         can_stop = FALSE;
 
@@ -564,8 +581,16 @@ gdu_shell_update (GduShell *shell)
                                 enclosed_presentables = gdu_pool_get_enclosed_presentables (
                                         shell->priv->pool,
                                         shell->priv->presentable_now_showing);
-                                if (enclosed_presentables != NULL) {
+                                if (enclosed_presentables != NULL && g_list_length (enclosed_presentables) == 1) {
+                                        GduPresentable *enclosed_presentable;
+                                        GduDevice *enclosed_device;
+
                                         can_lock = TRUE;
+
+                                        enclosed_presentable = GDU_PRESENTABLE (enclosed_presentables->data);
+                                        enclosed_device = gdu_presentable_get_device (enclosed_presentable);
+                                        unlocked_by_uid = gdu_device_crypto_cleartext_unlocked_by_uid (enclosed_device);
+                                        g_object_unref (enclosed_device);
                                 } else {
                                         can_unlock = TRUE;
                                 }
@@ -657,7 +682,49 @@ gdu_shell_update (GduShell *shell)
                                update_section,
                                shell);
 
+        if (can_mount) {
+                if (device != NULL) {
+                        g_object_set (shell->priv->mount_action,
+                                      "polkit-action",
+                                      gdu_device_is_system_internal (device) ?
+                                      shell->priv->pk_mount_system_internal_action :
+                                      shell->priv->pk_mount_action,
+                                      NULL);
+                }
+        }
 
+        if (can_unmount) {
+                if (device != NULL) {
+                        PolKitAction *action;
+                        if (gdu_device_get_mounted_by_uid (device) == getuid ()) {
+                                action = NULL;
+                        } else {
+                                if (gdu_device_is_system_internal (device))
+                                        action = shell->priv->pk_unmount_others_system_internal_action;
+                                else
+                                        action = shell->priv->pk_unmount_others_action;
+                        }
+                        g_object_set (shell->priv->unmount_action,
+                                      "polkit-action",
+                                      action,
+                                      NULL);
+                }
+        }
+
+        if (can_lock) {
+                PolKitAction *action;
+                action = NULL;
+                if (unlocked_by_uid != getuid () && device != NULL) {
+                        if (gdu_device_is_system_internal (device))
+                                action = shell->priv->pk_lock_encrypted_others_system_internal_action;
+                        else
+                                action = shell->priv->pk_lock_encrypted_others_action;
+                }
+                g_object_set (shell->priv->lock_action,
+                              "polkit-action",
+                              action,
+                              NULL);
+        }
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
@@ -689,6 +756,9 @@ gdu_shell_update (GduShell *shell)
 
 
         details_update (shell);
+
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 static void
@@ -985,6 +1055,7 @@ lock_op_callback (GduDevice *device,
                   gpointer   user_data)
 {
         ShellPresentableData *data = user_data;
+
         if (error != NULL) {
                 gdu_shell_raise_error (data->shell, data->presentable, error);
                 g_error_free (error);
@@ -1008,7 +1079,10 @@ lock_action_callback (GtkAction *action, gpointer user_data)
 }
 
 static void
-start_cb (GduActivatableDrive *ad, gboolean success, GError *error, gpointer user_data)
+start_cb (GduActivatableDrive *ad,
+          char *assembled_array_object_path,
+          GError *error,
+          gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
 
@@ -1029,6 +1103,8 @@ start_cb (GduActivatableDrive *ad, gboolean success, GError *error, gpointer use
 
                 g_error_free (error);
                 goto out;
+        } else {
+                g_free (assembled_array_object_path);
         }
 
 out:
@@ -1089,6 +1165,34 @@ out:
 }
 
 static void
+stop_cb (GduActivatableDrive *ad, GError *error, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+
+                dialog = gtk_message_dialog_new_with_markup (
+                        GTK_WINDOW (shell->priv->app_window),
+                        GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                        GTK_MESSAGE_ERROR,
+                        GTK_BUTTONS_CLOSE,
+                        _("<big><b>There was an error stopping the array \"%s\".</b></big>"),
+                        gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
+
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+
+                g_error_free (error);
+                goto out;
+        }
+
+out:
+        g_object_unref (shell);
+}
+
+static void
 stop_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
@@ -1106,7 +1210,9 @@ stop_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        gdu_activatable_drive_deactivate (ad);
+        gdu_activatable_drive_deactivate (ad,
+                                          stop_cb,
+                                          g_object_ref (shell));
 out:
         ;
 }
@@ -1222,7 +1328,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->unmount_action = polkit_gnome_action_new_default ("unmount",
-                                                                       NULL, /* TODO */
+                                                                       NULL,
                                                                        _("_Unmount"),
                                                                        _("Make the file system on the device unavailable"));
         g_object_set (shell->priv->unmount_action,
@@ -1254,8 +1360,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->unlock_action = polkit_gnome_action_new_default ("unlock",
-                                                                      /* TODO: for now use the mount pk action */
-                                                                      shell->priv->pk_mount_action,
+                                                                      shell->priv->pk_unlock_encrypted_action,
                                                                       _("_Unlock"),
                                                                       _("Unlock the encrypted device, making the data available in cleartext"));
         g_object_set (shell->priv->unlock_action,
@@ -1271,7 +1376,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->lock_action = polkit_gnome_action_new_default ("lock",
-                                                                    NULL, /* TODO */
+                                                                    NULL,
                                                                     _("_Lock"),
                                                                     _("Lock the encrypted device, making the cleartext data unavailable"));
         g_object_set (shell->priv->lock_action,
@@ -1287,8 +1392,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->start_action = polkit_gnome_action_new_default ("start",
-                                                                     /* TODO */
-                                                                     shell->priv->pk_mount_action,
+                                                                     shell->priv->pk_linux_md_action,
                                                                      _("_Start"),
                                                                      _("Start the array"));
         g_object_set (shell->priv->start_action,
@@ -1304,7 +1408,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->stop_action = polkit_gnome_action_new_default ("stop",
-                                                                    NULL, /* TODO */
+                                                                    shell->priv->pk_linux_md_action,
                                                                     _("_Stop"),
                                                                     _("Stop the array"));
         g_object_set (shell->priv->stop_action,
@@ -1337,7 +1441,36 @@ static void
 create_polkit_actions (GduShell *shell)
 {
         shell->priv->pk_mount_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_mount_action, "org.freedesktop.devicekit.disks.mount");
+        polkit_action_set_action_id (shell->priv->pk_mount_action,
+                                     "org.freedesktop.devicekit.disks.mount");
+
+        shell->priv->pk_mount_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_mount_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.mount-system-internal");
+
+        shell->priv->pk_unmount_others_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_unmount_others_action,
+                                     "org.freedesktop.devicekit.disks.unmount-others");
+
+        shell->priv->pk_unmount_others_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_unmount_others_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.unmount-others-system-internal");
+
+        shell->priv->pk_unlock_encrypted_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_unlock_encrypted_action,
+                                     "org.freedesktop.devicekit.disks.unlock-encrypted");
+
+        shell->priv->pk_lock_encrypted_others_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_lock_encrypted_others_action,
+                                     "org.freedesktop.devicekit.disks.lock-encrypted-others");
+
+        shell->priv->pk_lock_encrypted_others_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_lock_encrypted_others_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.lock-encrypted-others-system-internal");
+
+        shell->priv->pk_linux_md_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_linux_md_action,
+                                     "org.freedesktop.devicekit.disks.linux-md");
 }
 
 static void

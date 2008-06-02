@@ -40,7 +40,8 @@ struct _GduSectionUnrecognizedPrivate
         GtkWidget *encrypt_check_button;
         GtkWidget *take_ownership_of_fs_check_button;
 
-        PolKitAction *pk_erase_action;
+        PolKitAction *pk_change_action;
+        PolKitAction *pk_change_system_internal_action;
         PolKitGnomeAction *erase_action;
 };
 
@@ -316,6 +317,13 @@ update (GduSectionUnrecognized *section)
                 goto out;
         }
 
+        g_object_set (section->priv->erase_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
+
         if (!section->priv->init_done) {
                 section->priv->init_done = TRUE;
 
@@ -339,7 +347,8 @@ out:
 static void
 gdu_section_unrecognized_finalize (GduSectionUnrecognized *section)
 {
-        polkit_action_unref (section->priv->pk_erase_action);
+        polkit_action_unref (section->priv->pk_change_action);
+        polkit_action_unref (section->priv->pk_change_system_internal_action);
         g_object_unref (section->priv->erase_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -374,11 +383,15 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 
         section->priv = g_new0 (GduSectionUnrecognizedPrivate, 1);
 
-        section->priv->pk_erase_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_erase_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_change_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_action,
+                                     "org.freedesktop.devicekit.disks.change");
+        section->priv->pk_change_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
 
         section->priv->erase_action = polkit_gnome_action_new_default ("create",
-                                                                    section->priv->pk_erase_action,
+                                                                    section->priv->pk_change_action,
                                                                     _("C_reate"),
                                                                     _("Create"));
         g_object_set (section->priv->erase_action,

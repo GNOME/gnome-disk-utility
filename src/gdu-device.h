@@ -22,6 +22,8 @@
 #ifndef GDU_DEVICE_H
 #define GDU_DEVICE_H
 
+#include <unistd.h>
+#include <sys/types.h>
 #include <glib-object.h>
 #include "gdu-smart-data.h"
 
@@ -67,13 +69,14 @@ GduPool    *gdu_device_get_pool              (GduDevice   *device);
 
 void        gdu_device_changed               (GduDevice   *device);
 void        gdu_device_job_changed           (GduDevice   *device,
-                                              gboolean    job_in_progress,
-                                              const char *job_id,
-                                              gboolean    job_is_cancellable,
-                                              int         job_num_tasks,
-                                              int         job_cur_task,
-                                              const char *job_cur_task_id,
-                                              double      job_cur_task_percentage);
+                                              gboolean     job_in_progress,
+                                              const char  *job_id,
+                                              uid_t        job_initiated_by_uid,
+                                              gboolean     job_is_cancellable,
+                                              int          job_num_tasks,
+                                              int          job_cur_task,
+                                              const char  *job_cur_task_id,
+                                              double       job_cur_task_percentage);
 
 void        gdu_device_removed               (GduDevice   *device);
 
@@ -93,9 +96,11 @@ gboolean gdu_device_is_linux_md (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 gboolean gdu_device_is_busy (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
+uid_t gdu_device_get_mounted_by_uid (GduDevice *device);
 
 gboolean    gdu_device_job_in_progress (GduDevice *device);
 const char *gdu_device_job_get_id (GduDevice *device);
+uid_t       gdu_device_job_get_initiated_by_uid (GduDevice *device);
 gboolean    gdu_device_job_is_cancellable (GduDevice *device);
 int         gdu_device_job_get_num_tasks (GduDevice *device);
 int         gdu_device_job_get_cur_task (GduDevice *device);
@@ -125,6 +130,7 @@ GArray     *gdu_device_partition_table_get_offsets (GduDevice *device);
 GArray     *gdu_device_partition_table_get_sizes (GduDevice *device);
 
 const char *gdu_device_crypto_cleartext_get_slave (GduDevice *device);
+uid_t gdu_device_crypto_cleartext_unlocked_by_uid (GduDevice *device);
 
 const char *gdu_device_drive_get_vendor (GduDevice *device);
 const char *gdu_device_drive_get_model (GduDevice *device);

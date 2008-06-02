@@ -35,7 +35,8 @@ struct _GduSectionCreatePartitionTablePrivate
 {
         GtkWidget *create_part_table_vbox;
         GtkWidget *create_part_table_type_combo_box;
-        PolKitAction *pk_create_part_table_action;
+        PolKitAction *pk_change_action;
+        PolKitAction *pk_change_system_internal_action;
         PolKitGnomeAction *create_part_table_action;
 };
 
@@ -130,6 +131,24 @@ out:
 static void
 update (GduSectionCreatePartitionTable *section)
 {
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        if (device == NULL) {
+                g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
+                goto out;
+        }
+
+        g_object_set (section->priv->create_part_table_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -137,7 +156,8 @@ update (GduSectionCreatePartitionTable *section)
 static void
 gdu_section_create_partition_table_finalize (GduSectionCreatePartitionTable *section)
 {
-        polkit_action_unref (section->priv->pk_create_part_table_action);
+        polkit_action_unref (section->priv->pk_change_action);
+        polkit_action_unref (section->priv->pk_change_system_internal_action);
         g_object_unref (section->priv->create_part_table_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -171,11 +191,15 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
 
         section->priv = g_new0 (GduSectionCreatePartitionTablePrivate, 1);
 
-        section->priv->pk_create_part_table_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_create_part_table_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_change_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_action,
+                                     "org.freedesktop.devicekit.disks.change");
+        section->priv->pk_change_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
         section->priv->create_part_table_action = polkit_gnome_action_new_default (
                 "create-part-table",
-                section->priv->pk_create_part_table_action,
+                section->priv->pk_change_action,
                 _("C_reate"),
                 _("Create"));
         g_object_set (section->priv->create_part_table_action,

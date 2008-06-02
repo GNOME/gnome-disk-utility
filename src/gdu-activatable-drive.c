@@ -723,8 +723,7 @@ activation_completed (GduPool  *pool,
                       gpointer  user_data)
 {
         ActivationData *ad = user_data;
-        ad->callback (ad->activatable_drive, assembled_array_object_path != NULL, error, ad->user_data);
-        g_free (assembled_array_object_path);
+        ad->callback (ad->activatable_drive, assembled_array_object_path, error, ad->user_data);
         activation_data_free (ad);
 }
 
@@ -758,13 +757,54 @@ gdu_activatable_drive_activate (GduActivatableDrive  *activatable_drive,
         g_list_free (slaves);
 }
 
+typedef struct
+{
+        GduActivatableDrive *activatable_drive;
+        GduActivatableDriveDeactivationFunc callback;
+        gpointer user_data;
+} DeactivationData;
+
+static DeactivationData *
+deactivation_data_new (GduActivatableDrive *activatable_drive,
+                       GduActivatableDriveDeactivationFunc callback,
+                       gpointer user_data)
+{
+        DeactivationData *dad;
+        dad = g_new0 (DeactivationData, 1);
+        dad->activatable_drive = g_object_ref (activatable_drive);
+        dad->callback = callback;
+        dad->user_data = user_data;
+        return dad;
+}
+
+static void
+deactivation_data_free (DeactivationData *dad)
+{
+        g_object_unref (dad->activatable_drive);
+        g_free (dad);
+}
+
+static void
+deactivation_completed (GduDevice *device,
+                        GError    *error,
+                        gpointer   user_data)
+{
+        DeactivationData *dad = user_data;
+        dad->callback (dad->activatable_drive, error, dad->user_data);
+        deactivation_data_free (dad);
+}
+
 void
-gdu_activatable_drive_deactivate (GduActivatableDrive *activatable_drive)
+gdu_activatable_drive_deactivate (GduActivatableDrive *activatable_drive,
+                                  GduActivatableDriveDeactivationFunc callback,
+                                  gpointer                            user_data)
 {
         g_return_if_fail (activatable_drive->priv->kind == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD);
         g_return_if_fail (activatable_drive->priv->device != NULL);
 
-        gdu_device_op_linux_md_stop (activatable_drive->priv->device, NULL, NULL);
+        gdu_device_op_linux_md_stop (activatable_drive->priv->device,
+                                     deactivation_completed,
+                                     deactivation_data_new (activatable_drive, callback, user_data));
 }
 
 GduActivableDriveSlaveState

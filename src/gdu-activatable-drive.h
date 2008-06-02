@@ -108,9 +108,13 @@ int                    gdu_activatable_drive_get_num_ready_slaves (GduActivatabl
 GduActivableDriveKind  gdu_activatable_drive_get_kind        (GduActivatableDrive  *activatable_drive);
 
 typedef void (*GduActivatableDriveActivationFunc) (GduActivatableDrive *activatable_drive,
-                                                   gboolean success,
-                                                   GError *error,
-                                                   gpointer user_data);
+                                                   char                *assembled_array_object_path,
+                                                   GError              *error,
+                                                   gpointer             user_data);
+
+typedef void (*GduActivatableDriveDeactivationFunc) (GduActivatableDrive *activatable_drive,
+                                                     GError              *error,
+                                                     gpointer             user_data);
 
 
 gboolean               gdu_activatable_drive_is_activated          (GduActivatableDrive  *activatable_drive);
@@ -119,7 +123,9 @@ gboolean               gdu_activatable_drive_can_activate_degraded (GduActivatab
 void                   gdu_activatable_drive_activate              (GduActivatableDrive  *activatable_drive,
                                                                     GduActivatableDriveActivationFunc callback,
                                                                     gpointer                          user_data);
-void                   gdu_activatable_drive_deactivate            (GduActivatableDrive  *activatable_drive);
+void                   gdu_activatable_drive_deactivate            (GduActivatableDrive    *activatable_drive,
+                                                                    GduActivatableDriveDeactivationFunc callback,
+                                                                    gpointer                            user_data);
 
 GduActivableDriveSlaveState gdu_activatable_drive_get_slave_state (GduActivatableDrive  *activatable_drive,
                                                                    GduDevice            *slave);

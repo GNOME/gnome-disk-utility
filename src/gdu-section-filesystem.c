@@ -38,7 +38,8 @@ struct _GduSectionFilesystemPrivate
         GtkWidget *modify_fs_vbox;
         GtkWidget *modify_fs_label_entry;
 
-        PolKitAction *pk_modify_fslabel_action;
+        PolKitAction *pk_change_action;
+        PolKitAction *pk_change_system_internal_action;
         PolKitGnomeAction *modify_fslabel_action;
 };
 
@@ -66,6 +67,13 @@ update (GduSectionFilesystem *section)
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
                 goto error;
         }
+
+        g_object_set (section->priv->modify_fslabel_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
 
         fstype = gdu_device_id_get_type (device);
         if (fstype == NULL)
@@ -162,7 +170,8 @@ out:
 static void
 gdu_section_filesystem_finalize (GduSectionFilesystem *section)
 {
-        polkit_action_unref (section->priv->pk_modify_fslabel_action);
+        polkit_action_unref (section->priv->pk_change_action);
+        polkit_action_unref (section->priv->pk_change_system_internal_action);
         g_object_unref (section->priv->modify_fslabel_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -195,11 +204,15 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
 
         section->priv = g_new0 (GduSectionFilesystemPrivate, 1);
 
-        section->priv->pk_modify_fslabel_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_modify_fslabel_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_change_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_action,
+                                     "org.freedesktop.devicekit.disks.change");
+        section->priv->pk_change_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
         section->priv->modify_fslabel_action = polkit_gnome_action_new_default (
                 "modify-fslabel",
-                section->priv->pk_modify_fslabel_action,
+                section->priv->pk_change_action,
                 _("Ch_ange"),
                 _("Change"));
         g_object_set (section->priv->modify_fslabel_action,

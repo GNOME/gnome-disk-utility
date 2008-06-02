@@ -61,11 +61,13 @@ typedef struct
         gboolean device_is_linux_md_component;
         gboolean device_is_linux_md;
         char    *device_mount_path;
+        uid_t    device_mounted_by_uid;
         guint64  device_size;
         guint64  device_block_size;
 
         gboolean job_in_progress;
         char    *job_id;
+        uid_t    job_initiated_by_uid;
         gboolean job_is_cancellable;
         int      job_num_tasks;
         int      job_cur_task;
@@ -95,6 +97,7 @@ typedef struct
         GArray  *partition_table_sizes;
 
         char    *crypto_cleartext_slave;
+        uid_t    crypto_cleartext_unlocked_by_uid;
 
         char    *drive_vendor;
         char    *drive_model;
@@ -173,6 +176,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_busy = g_value_get_boolean (value);
         else if (strcmp (key, "device-mount-path") == 0)
                 props->device_mount_path = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "device-mounted-by-uid") == 0)
+                props->device_mounted_by_uid = g_value_get_uint (value);
         else if (strcmp (key, "device-size") == 0)
                 props->device_size = g_value_get_uint64 (value);
         else if (strcmp (key, "device-block-size") == 0)
@@ -182,6 +187,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->job_in_progress = g_value_get_boolean (value);
         else if (strcmp (key, "job-id") == 0)
                 props->job_id = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "job-initiated-by-uid") == 0)
+                props->job_initiated_by_uid = g_value_get_uint (value);
         else if (strcmp (key, "job-is-cancellable") == 0)
                 props->job_is_cancellable = g_value_get_boolean (value);
         else if (strcmp (key, "job-num-tasks") == 0)
@@ -243,6 +250,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
 
         else if (strcmp (key, "crypto-cleartext-slave") == 0)
                 props->crypto_cleartext_slave = g_strdup (g_value_get_boxed (value));
+        else if (strcmp (key, "crypto-cleartext-unlocked-by-uid") == 0)
+                props->crypto_cleartext_unlocked_by_uid = g_value_get_uint (value);
 
         else if (strcmp (key, "drive-vendor") == 0)
                 props->drive_vendor = g_strdup (g_value_get_string (value));
@@ -564,6 +573,7 @@ void
 gdu_device_job_changed (GduDevice   *device,
                         gboolean     job_in_progress,
                         const char  *job_id,
+                        uid_t        job_initiated_by_uid,
                         gboolean     job_is_cancellable,
                         int          job_num_tasks,
                         int          job_cur_task,
@@ -575,6 +585,7 @@ gdu_device_job_changed (GduDevice   *device,
         device->priv->props->job_in_progress = job_in_progress;
         g_free (device->priv->props->job_id);
         device->priv->props->job_id = g_strdup (job_id);
+        device->priv->props->job_initiated_by_uid = job_initiated_by_uid;
         device->priv->props->job_is_cancellable = job_is_cancellable;
         device->priv->props->job_num_tasks = job_num_tasks;
         device->priv->props->job_cur_task = job_cur_task;
@@ -717,6 +728,12 @@ gdu_device_get_mount_path (GduDevice *device)
         return device->priv->props->device_mount_path;
 }
 
+uid_t
+gdu_device_get_mounted_by_uid (GduDevice *device)
+{
+        return device->priv->props->device_mounted_by_uid;
+}
+
 
 const char *
 gdu_device_id_get_usage (GduDevice *device)
@@ -841,6 +858,13 @@ gdu_device_crypto_cleartext_get_slave (GduDevice *device)
 {
         return device->priv->props->crypto_cleartext_slave;
 }
+
+uid_t
+gdu_device_crypto_cleartext_unlocked_by_uid (GduDevice *device)
+{
+        return device->priv->props->crypto_cleartext_unlocked_by_uid;
+}
+
 
 gboolean
 gdu_device_is_drive (GduDevice *device)
@@ -1027,6 +1051,12 @@ const char *
 gdu_device_job_get_id (GduDevice *device)
 {
         return device->priv->props->job_id;
+}
+
+uid_t
+gdu_device_job_get_initiated_by_uid (GduDevice *device)
+{
+        return device->priv->props->job_initiated_by_uid;
 }
 
 gboolean
@@ -1800,7 +1830,7 @@ gdu_device_op_linux_md_remove_component (GduDevice                              
                 component_objpath,
                 (const char **) options,
                 op_remove_component_from_linux_md_array_cb,
-                g_object_ref (device));
+                data);
 
         while (n >= 0)
                 g_free (options[n--]);

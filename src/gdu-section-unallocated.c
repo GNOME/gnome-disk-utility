@@ -47,7 +47,8 @@ struct _GduSectionUnallocatedPrivate
         GtkWidget *encrypt_check_button;
         GtkWidget *take_ownership_of_fs_check_button;
 
-        PolKitAction *pk_create_partition_action;
+        PolKitAction *pk_change_action;
+        PolKitAction *pk_change_system_internal_action;
         PolKitGnomeAction *create_partition_action;
 };
 
@@ -467,6 +468,12 @@ update (GduSectionUnallocated *section)
                 goto out;
         }
 
+        g_object_set (section->priv->create_partition_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (toplevel_device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
 
         scheme = gdu_device_partition_table_get_scheme (toplevel_device);
 
@@ -538,7 +545,8 @@ size_spin_button_value_changed_callback (GtkSpinButton *spin_button,
 static void
 gdu_section_unallocated_finalize (GduSectionUnallocated *section)
 {
-        polkit_action_unref (section->priv->pk_create_partition_action);
+        polkit_action_unref (section->priv->pk_change_action);
+        polkit_action_unref (section->priv->pk_change_system_internal_action);
         g_object_unref (section->priv->create_partition_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -579,11 +587,15 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
 
         section->priv = g_new0 (GduSectionUnallocatedPrivate, 1);
 
-        section->priv->pk_create_partition_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_create_partition_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_change_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_action,
+                                     "org.freedesktop.devicekit.disks.change");
+        section->priv->pk_change_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
         section->priv->create_partition_action = polkit_gnome_action_new_default (
                 "create-partition",
-                section->priv->pk_create_partition_action,
+                section->priv->pk_change_action,
                 _("C_reate"),
                 _("Create"));
         g_object_set (section->priv->create_partition_action,

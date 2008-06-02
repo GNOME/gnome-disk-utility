@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <polkit-gnome/polkit-gnome.h>
 #include <gnome-keyring.h>
+#include <dbus/dbus-glib.h>
 
 #include "gdu-util.h"
 
@@ -2005,4 +2006,27 @@ gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize si
         g_free (icon_name);
 
         return pixbuf;
+}
+
+gboolean
+gdu_error_is_not_authorized (GError *error,
+                             PolKitAction **pk_action,
+                             PolKitResult *pk_result)
+{
+        gboolean ret;
+
+        g_return_val_if_fail (error != NULL && pk_action != NULL && pk_result != NULL, FALSE);
+
+        ret = FALSE;
+
+        if (error->domain != DBUS_GERROR ||
+            error->code != DBUS_GERROR_REMOTE_EXCEPTION)
+                goto out;
+
+        ret = polkit_dbus_error_parse_from_strings (dbus_g_error_get_name (error),
+                                                    error->message,
+                                                    pk_action,
+                                                    pk_result);
+out:
+        return ret;
 }

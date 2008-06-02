@@ -40,9 +40,9 @@ struct _GduSectionPartitionPrivate
         GtkWidget *modify_part_flag_required_check_button;
         GtkWidget *modify_part_revert_button;
 
-        PolKitAction *pk_modify_partition_action;
+        PolKitAction *pk_change_action;
+        PolKitAction *pk_change_system_internal_action;
         PolKitGnomeAction *modify_partition_action;
-        PolKitAction *pk_delete_partition_action;
         PolKitGnomeAction *delete_partition_action;
 };
 
@@ -240,6 +240,20 @@ update_partition_section (GduSectionPartition *section)
                 goto out;
         }
 
+        g_object_set (section->priv->modify_partition_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
+
+        g_object_set (section->priv->delete_partition_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                        section->priv->pk_change_system_internal_action :
+                        section->priv->pk_change_action,
+                      NULL);
+
         size = gdu_device_partition_get_size (device);
         scheme = gdu_device_partition_get_scheme (device);
 
@@ -418,10 +432,9 @@ update (GduSectionPartition *section)
 static void
 gdu_section_partition_finalize (GduSectionPartition *section)
 {
-        polkit_action_unref (section->priv->pk_delete_partition_action);
+        polkit_action_unref (section->priv->pk_change_action);
+        polkit_action_unref (section->priv->pk_change_system_internal_action);
         g_object_unref (section->priv->delete_partition_action);
-
-        polkit_action_unref (section->priv->pk_modify_partition_action);
         g_object_unref (section->priv->modify_partition_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -457,11 +470,16 @@ gdu_section_partition_init (GduSectionPartition *section)
 
         section->priv = g_new0 (GduSectionPartitionPrivate, 1);
 
-        section->priv->pk_delete_partition_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_delete_partition_action, "org.freedesktop.devicekit.disks.erase");
+        section->priv->pk_change_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_action,
+                                     "org.freedesktop.devicekit.disks.change");
+        section->priv->pk_change_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
+
         section->priv->delete_partition_action = polkit_gnome_action_new_default (
                 "delete-partition",
-                section->priv->pk_delete_partition_action,
+                section->priv->pk_change_action,
                 _("_Delete"),
                 _("Delete"));
         g_object_set (section->priv->delete_partition_action,
@@ -474,11 +492,9 @@ gdu_section_partition_init (GduSectionPartition *section)
         g_signal_connect (section->priv->delete_partition_action, "activate",
                           G_CALLBACK (delete_partition_callback), section);
 
-        section->priv->pk_modify_partition_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_modify_partition_action, "org.freedesktop.devicekit.disks.erase");
         section->priv->modify_partition_action = polkit_gnome_action_new_default (
                 "modify-partition",
-                section->priv->pk_modify_partition_action,
+                section->priv->pk_change_action,
                 _("_Apply"),
                 _("Apply"));
         g_object_set (section->priv->modify_partition_action,

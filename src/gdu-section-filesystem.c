@@ -137,7 +137,8 @@ change_filesystem_label_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (section),
                                        gdu_section_get_presentable (section),
-                                       error);
+                                       error,
+                                       _("Error setting file system label"));
         }
         g_object_unref (section);
 }

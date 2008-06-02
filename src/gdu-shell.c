@@ -870,7 +870,10 @@ mount_op_callback (GduDevice *device,
 {
         ShellPresentableData *data = user_data;
         if (error != NULL) {
-                gdu_shell_raise_error (data->shell, data->presentable, error);
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error mounting device"));
                 g_error_free (error);
         } else {
                 g_free (mount_point);
@@ -900,7 +903,10 @@ unmount_op_callback (GduDevice *device,
 {
         ShellPresentableData *data = user_data;
         if (error != NULL) {
-                gdu_shell_raise_error (data->shell, data->presentable, error);
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error unmounting device"));
                 g_error_free (error);
         }
         shell_presentable_free (data);
@@ -1057,7 +1063,10 @@ lock_op_callback (GduDevice *device,
         ShellPresentableData *data = user_data;
 
         if (error != NULL) {
-                gdu_shell_raise_error (data->shell, data->presentable, error);
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error locking encrypted device"));
                 g_error_free (error);
         }
         shell_presentable_free (data);
@@ -1485,34 +1494,63 @@ url_activated (SexyUrlLabel *url_label,
         g_free (s);
 }
 
+/**
+ * gdu_shell_raise_error:
+ * @shell: An object implementing the #GduShell interface
+ * @presentable: The #GduPresentable for which the error was rasied
+ * @error: The #GError obtained from the operation
+ * @primary_markup_format: Format string for the primary markup text of the dialog
+ * @...: Arguments for markup string
+ *
+ * Show the user (through a dialog or other means (e.g. cluebar)) that an error occured.
+ **/
 void
 gdu_shell_raise_error (GduShell       *shell,
                        GduPresentable *presentable,
-                       GError         *error)
+                       GError         *error,
+                       const char     *primary_markup_format,
+                       ...)
 {
         GtkWidget *dialog;
+        char *error_text;
+        char *window_title;
+        char *window_icon_name;
+        va_list args;
 
         g_return_if_fail (shell != NULL);
         g_return_if_fail (presentable != NULL);
         g_return_if_fail (error != NULL);
 
-        /* TODO: be more specific about what error occured */
+        /* TODO: this still needs work */
+
+        window_title = gdu_presentable_get_name (presentable);
+        window_icon_name = gdu_presentable_get_icon_name (presentable);
+
+        va_start (args, primary_markup_format);
+        error_text = g_strdup_vprintf (primary_markup_format, args);
+        va_end (args);
 
         dialog = gtk_message_dialog_new_with_markup (
                 GTK_WINDOW (shell->priv->app_window),
                 GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                 GTK_MESSAGE_ERROR,
                 GTK_BUTTONS_CLOSE,
-                _("<big><b>An error occured while doing an operation on \"%s\"</b></big>"),
-                gdu_presentable_get_name (presentable));
+                "<big><b>%s</b></big>",
+                error_text);
         gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
+
+        gtk_window_set_title (GTK_WINDOW (dialog), window_title);
+        gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+
         g_signal_connect_swapped (dialog,
                                   "response",
                                   G_CALLBACK (gtk_widget_destroy),
                                   dialog);
         gtk_window_present (GTK_WINDOW (dialog));
 
-        //g_warning ("raising error '%s'", error->message);
+        g_free (window_title);
+        g_free (window_icon_name);
+        g_free (error_text);
 }
 
 static void

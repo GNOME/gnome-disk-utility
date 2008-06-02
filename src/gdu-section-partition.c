@@ -61,7 +61,8 @@ op_delete_partition_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (section),
                                        gdu_section_get_presentable (section),
-                                       error);
+                                       error,
+                                       _("Error deleting partition"));
         }
         g_object_unref (section);
 }
@@ -348,7 +349,8 @@ op_modify_partition_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (section),
                                        gdu_section_get_presentable (section),
-                                       error);
+                                       error,
+                                       _("Error modifying partition"));
         }
         g_object_unref (section);
 }

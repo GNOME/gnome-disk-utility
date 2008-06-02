@@ -63,6 +63,8 @@ void            gdu_shell_select_presentable       (GduShell       *shell,
                                                     GduPresentable *presentable);
 void            gdu_shell_raise_error              (GduShell       *shell,
                                                     GduPresentable *presentable,
-                                                    GError         *error);
+                                                    GError         *error,
+                                                    const char     *primary_markup_format,
+                                                    ...);
 
 #endif /* GDU_SHELL_H */

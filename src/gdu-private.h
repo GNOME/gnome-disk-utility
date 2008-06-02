@@ -53,5 +53,7 @@ GduSmartData          *_gdu_smart_data_new_from_values (guint64     time_collect
                                                         GPtrArray  *attrs);
 GduSmartData          * _gdu_smart_data_new            (gpointer data);
 
+void _gdu_device_fixup_error (GError *error);
+
 
 #endif /* GDU_PRIVATE_H */

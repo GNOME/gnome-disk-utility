@@ -55,7 +55,8 @@ create_partition_table_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (section),
                                        gdu_section_get_presentable (section),
-                                       error);
+                                       error,
+                                       _("Error creating partition table"));
         }
         g_object_unref (section);
 }

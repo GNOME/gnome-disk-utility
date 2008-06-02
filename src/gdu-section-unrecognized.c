@@ -143,7 +143,8 @@ erase_action_completed (GduDevice  *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (GDU_SECTION (data->section)),
                                        data->presentable,
-                                       error);
+                                       error,
+                                       _("Error creating partition"));
                 g_error_free (error);
         } else if (data->encrypt_passphrase != NULL) {
                 /* now set the passphrase if requested */

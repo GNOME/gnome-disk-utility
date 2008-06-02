@@ -1137,7 +1137,8 @@ run_smart_selftest_callback (GduDevice *device,
         if (error != NULL) {
                 gdu_shell_raise_error (gdu_section_get_shell (section),
                                        gdu_section_get_presentable (section),
-                                       error);
+                                       error,
+                                       _("Error initiating S.M.A.R.T. Self Test"));
         }
         g_object_unref (section);
 }

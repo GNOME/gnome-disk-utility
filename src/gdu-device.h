@@ -219,6 +219,17 @@ void gdu_device_op_filesystem_unmount                 (GduDevice                
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef void (*GduDeviceFilesystemCheckCompletedFunc) (GduDevice    *device,
+                                                       gboolean      is_clean,
+                                                       GError       *error,
+                                                       gpointer      user_data);
+
+void gdu_device_op_filesystem_check                 (GduDevice                             *device,
+                                                     GduDeviceFilesystemCheckCompletedFunc  callback,
+                                                     gpointer                               user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 typedef void (*GduDevicePartitionDeleteCompletedFunc) (GduDevice    *device,
                                                        GError       *error,
                                                        gpointer      user_data);

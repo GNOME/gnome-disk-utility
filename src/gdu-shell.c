@@ -71,6 +71,8 @@ struct _GduShellPrivate
 
         /* -------------------------------------------------------------------------------- */
 
+        PolKitAction *pk_fsck_action;
+        PolKitAction *pk_fsck_system_internal_action;
         PolKitAction *pk_mount_action;
         PolKitAction *pk_mount_system_internal_action;
         PolKitAction *pk_unmount_others_action;
@@ -80,6 +82,7 @@ struct _GduShellPrivate
         PolKitAction *pk_lock_encrypted_others_system_internal_action;
         PolKitAction *pk_linux_md_action;
 
+        PolKitGnomeAction *fsck_action;
         PolKitGnomeAction *mount_action;
         PolKitGnomeAction *unmount_action;
         PolKitGnomeAction *eject_action;
@@ -103,6 +106,8 @@ G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 static void
 gdu_shell_finalize (GduShell *shell)
 {
+        polkit_action_unref (shell->priv->pk_fsck_action);
+        polkit_action_unref (shell->priv->pk_fsck_system_internal_action);
         polkit_action_unref (shell->priv->pk_mount_action);
         polkit_action_unref (shell->priv->pk_mount_system_internal_action);
         polkit_action_unref (shell->priv->pk_unmount_others_action);
@@ -545,6 +550,7 @@ gdu_shell_update (GduShell *shell)
         gboolean can_unlock;
         gboolean can_start;
         gboolean can_stop;
+        gboolean can_fsck;
         static GduPresentable *last_presentable = NULL;
         static gboolean last_showing_job = FALSE;
         gboolean showing_job;
@@ -554,6 +560,7 @@ gdu_shell_update (GduShell *shell)
 
         job_in_progress = FALSE;
         can_mount = FALSE;
+        can_fsck = FALSE;
         can_unmount = FALSE;
         can_eject = FALSE;
         can_unlock = FALSE;
@@ -571,10 +578,18 @@ gdu_shell_update (GduShell *shell)
                 if (GDU_IS_VOLUME (shell->priv->presentable_now_showing)) {
 
                         if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
+                                GduCreatableFilesystem *cfs;
+
+                                cfs = gdu_util_find_creatable_filesystem_for_fstype (gdu_device_id_get_type (device));
+
                                 if (gdu_device_is_mounted (device)) {
                                         can_unmount = TRUE;
+                                        if (cfs != NULL && cfs->supports_online_fsck)
+                                                can_fsck = TRUE;
                                 } else {
                                         can_mount = TRUE;
+                                        if (cfs != NULL && cfs->supports_fsck)
+                                                can_fsck = TRUE;
                                 }
                         } else if (strcmp (gdu_device_id_get_usage (device), "crypto") == 0) {
                                 GList *enclosed_presentables;
@@ -693,6 +708,17 @@ gdu_shell_update (GduShell *shell)
                 }
         }
 
+        if (can_fsck) {
+                if (device != NULL) {
+                        g_object_set (shell->priv->fsck_action,
+                                      "polkit-action",
+                                      gdu_device_is_system_internal (device) ?
+                                      shell->priv->pk_fsck_system_internal_action :
+                                      shell->priv->pk_fsck_action,
+                                      NULL);
+                }
+        }
+
         if (can_unmount) {
                 if (device != NULL) {
                         PolKitAction *action;
@@ -728,6 +754,7 @@ gdu_shell_update (GduShell *shell)
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
+        polkit_gnome_action_set_sensitive (shell->priv->fsck_action, can_fsck);
         polkit_gnome_action_set_sensitive (shell->priv->unmount_action, can_unmount);
         polkit_gnome_action_set_sensitive (shell->priv->eject_action, can_eject);
         polkit_gnome_action_set_sensitive (shell->priv->lock_action, can_lock);
@@ -860,6 +887,71 @@ shell_presentable_free (ShellPresentableData *data)
         g_object_unref (data->shell);
         g_object_unref (data->presentable);
         g_free (data);
+}
+
+static void
+fsck_op_callback (GduDevice *device,
+                  gboolean   is_clean,
+                  GError    *error,
+                  gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error checking file system on device"));
+                g_error_free (error);
+        } else {
+                GtkWidget *dialog;
+                char *name;
+                char *icon_name;
+
+                name = gdu_presentable_get_name (data->presentable);
+                icon_name = gdu_presentable_get_icon_name (data->presentable);
+
+                dialog = gtk_message_dialog_new_with_markup (
+                        GTK_WINDOW (data->shell->priv->app_window),
+                        GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                        is_clean ? GTK_MESSAGE_INFO : GTK_MESSAGE_WARNING,
+                        GTK_BUTTONS_CLOSE,
+                        _("<big><b>File system check on \"%s\" completed</b></big>"),
+                        name);
+                if (is_clean)
+                        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                                  _("File system is clean."));
+                else
+                        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                                  _("File system is <b>NOT</b> clean."));
+
+                gtk_window_set_title (GTK_WINDOW (dialog), name);
+                gtk_window_set_icon_name (GTK_WINDOW (dialog), icon_name);
+
+                g_signal_connect_swapped (dialog,
+                                          "response",
+                                          G_CALLBACK (gtk_widget_destroy),
+                                          dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+
+                g_free (name);
+                g_free (icon_name);
+        }
+        shell_presentable_free (data);
+}
+
+static void
+fsck_action_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                gdu_device_op_filesystem_check (device,
+                                                fsck_op_callback,
+                                                shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                g_object_unref (device);
+        }
 }
 
 static void
@@ -1271,6 +1363,8 @@ static const gchar *ui =
         "      <menuitem action='unmount'/>"
         "      <menuitem action='eject'/>"
         "      <separator/>"
+        "      <menuitem action='fsck'/>"
+        "      <separator/>"
         "      <menuitem action='unlock'/>"
         "      <menuitem action='lock'/>"
         "      <separator/>"
@@ -1286,6 +1380,8 @@ static const gchar *ui =
         "    <toolitem action='mount'/>"
         "    <toolitem action='unmount'/>"
         "    <toolitem action='eject'/>"
+        "    <separator/>"
+        "    <toolitem action='fsck'/>"
         "    <separator/>"
         "    <toolitem action='unlock'/>"
         "    <toolitem action='lock'/>"
@@ -1320,10 +1416,26 @@ create_ui_manager (GduShell *shell)
 
         /* -------------------------------------------------------------------------------- */
 
+        shell->priv->fsck_action = polkit_gnome_action_new_default ("fsck",
+                                                                    shell->priv->pk_fsck_action,
+                                                                    _("_Check File System"),
+                                                                    _("Check the file system"));
+        g_object_set (shell->priv->fsck_action,
+                      "auth-label", _("_Check File System..."),
+                      "yes-icon-name", GTK_STOCK_FIND, /* TODO: better icon */
+                      "no-icon-name", GTK_STOCK_FIND,
+                      "auth-icon-name", GTK_STOCK_FIND,
+                      "self-blocked-icon-name", GTK_STOCK_FIND,
+                      NULL);
+        g_signal_connect (shell->priv->fsck_action, "activate", G_CALLBACK (fsck_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->fsck_action));
+
+        /* -------------------------------------------------------------------------------- */
+
         shell->priv->mount_action = polkit_gnome_action_new_default ("mount",
                                                                      shell->priv->pk_mount_action,
                                                                      _("_Mount"),
-                                                                     _("Make the file system on the device available"));
+                                                                     _("Mount the device"));
         g_object_set (shell->priv->mount_action,
                       "auth-label", _("_Mount..."),
                       "yes-icon-name", "gdu-mount",
@@ -1339,7 +1451,7 @@ create_ui_manager (GduShell *shell)
         shell->priv->unmount_action = polkit_gnome_action_new_default ("unmount",
                                                                        NULL,
                                                                        _("_Unmount"),
-                                                                       _("Make the file system on the device unavailable"));
+                                                                       _("Unmount the device"));
         g_object_set (shell->priv->unmount_action,
                       "auth-label", _("_Unmount..."),
                       "yes-icon-name", "gdu-unmount",
@@ -1449,6 +1561,14 @@ create_ui_manager (GduShell *shell)
 static void
 create_polkit_actions (GduShell *shell)
 {
+        shell->priv->pk_fsck_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_fsck_action,
+                                     "org.freedesktop.devicekit.disks.filesystem-check");
+
+        shell->priv->pk_fsck_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_fsck_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.filesystem-check-system-internal");
+
         shell->priv->pk_mount_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_mount_action,
                                      "org.freedesktop.devicekit.disks.mount");

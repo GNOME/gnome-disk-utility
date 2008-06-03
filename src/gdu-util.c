@@ -201,6 +201,8 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Mounting File System"));
         } else if (strcmp (job_id, "FilesystemUnmount") == 0) {
                 s = g_strdup (_("Unmounting File System"));
+        } else if (strcmp (job_id, "FilesystemCheck") == 0) {
+                s = g_strdup (_("Checking File System"));
         } else if (strcmp (job_id, "EncryptedUnlock") == 0) {
                 s = g_strdup (_("Unlocking Encrypted Device"));
         } else if (strcmp (job_id, "EncryptedLock") == 0) {
@@ -350,11 +352,11 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 
 /* TODO: retrieve this list from DeviceKit-disks */
 static GduCreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11, FALSE, TRUE, FALSE},
-        {"ext3", 16, TRUE, TRUE, TRUE},
-        {"swap", 0, FALSE, FALSE, FALSE},
-        {"ntfs", 255, FALSE, FALSE, FALSE},
-        {"empty", 0, FALSE, FALSE},
+        {"vfat", 11, FALSE, TRUE, FALSE, TRUE, FALSE},
+        {"ext3", 16, TRUE, TRUE, TRUE, TRUE, FALSE},
+        {"swap", 0, FALSE, FALSE, FALSE, FALSE, FALSE},
+        {"ntfs", 255, FALSE, FALSE, FALSE, FALSE, FALSE},
+        {"empty", 0, FALSE, FALSE, FALSE, FALSE, FALSE},
 };
 
 /* TODO: retrieve from daemon */

@@ -46,6 +46,8 @@ typedef struct
         gboolean  have_owners;
         gboolean  supports_label_rename;
         gboolean  supports_label_rename_while_mounted;
+        gboolean  supports_fsck;
+        gboolean  supports_online_fsck;
 } GduCreatableFilesystem;
 
 GList                  *gdu_util_get_creatable_filesystems (void);

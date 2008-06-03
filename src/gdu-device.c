@@ -1328,6 +1328,45 @@ gdu_device_op_filesystem_unmount (GduDevice                     *device,
 
 typedef struct {
         GduDevice *device;
+        GduDeviceFilesystemCheckCompletedFunc callback;
+        gpointer user_data;
+} FilesystemCheckData;
+
+static void
+op_check_cb (DBusGProxy *proxy, gboolean is_clean, GError *error, gpointer user_data)
+{
+        FilesystemCheckData *data = user_data;
+        _gdu_device_fixup_error (error);
+        if (data->callback != NULL)
+                data->callback (data->device, is_clean, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_filesystem_check (GduDevice                             *device,
+                                GduDeviceFilesystemCheckCompletedFunc  callback,
+                                gpointer                               user_data)
+{
+        char *options[16];
+        FilesystemCheckData *data;
+
+        data = g_new0 (FilesystemCheckData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+        options[0] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_check_async (device->priv->proxy,
+                                                                       (const char **) options,
+                                                                       op_check_cb,
+                                                                       data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
         GduDevicePartitionDeleteCompletedFunc callback;
         gpointer user_data;
 } PartitionDeleteData;

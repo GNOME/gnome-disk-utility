@@ -93,12 +93,13 @@ _gdu_known_filesystem_new (gpointer data)
                                 4, &(known_filesystem->priv->can_create),
                                 5, &(known_filesystem->priv->max_label_len),
                                 6, &(known_filesystem->priv->supports_label_rename),
-                                7, &(known_filesystem->priv->supports_fsck),
-                                8, &(known_filesystem->priv->supports_online_fsck),
-                                9, &(known_filesystem->priv->supports_resize_enlarge),
-                                10, &(known_filesystem->priv->supports_online_resize_enlarge),
-                                11, &(known_filesystem->priv->supports_resize_shrink),
-                                12, &(known_filesystem->priv->supports_online_resize_shrink),
+                                7, &(known_filesystem->priv->supports_online_label_rename),
+                                8, &(known_filesystem->priv->supports_fsck),
+                                9, &(known_filesystem->priv->supports_online_fsck),
+                                10, &(known_filesystem->priv->supports_resize_enlarge),
+                                11, &(known_filesystem->priv->supports_online_resize_enlarge),
+                                12, &(known_filesystem->priv->supports_resize_shrink),
+                                13, &(known_filesystem->priv->supports_online_resize_shrink),
                                 G_MAXUINT);
 
         return known_filesystem;

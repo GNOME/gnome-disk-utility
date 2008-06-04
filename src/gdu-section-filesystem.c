@@ -53,7 +53,8 @@ static void
 update (GduSectionFilesystem *section)
 {
         GduDevice *device;
-        GduCreatableFilesystem *creatable_fs;
+        GduPool *pool;
+        GduKnownFilesystem *kfs;
         const char *fstype;
         int max_label_len;
         gboolean changed;
@@ -61,12 +62,16 @@ update (GduSectionFilesystem *section)
         const char *new_fslabel;
 
         max_label_len = 0;
+        device = NULL;
+        kfs = NULL;
 
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
                 goto error;
         }
+
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
         g_object_set (section->priv->modify_fslabel_action,
                       "polkit-action",
@@ -79,21 +84,21 @@ update (GduSectionFilesystem *section)
         if (fstype == NULL)
                 goto out;
 
-        creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-        if (creatable_fs == NULL)
+        kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
+        if (kfs == NULL)
                 goto out;
 
-        if (!creatable_fs->supports_label_rename)
+        if (!gdu_known_filesystem_get_supports_label_rename (kfs))
                 goto out;
 
-        if (!creatable_fs->supports_label_rename_while_mounted && gdu_device_is_mounted (device)) {
+        if (!gdu_known_filesystem_get_supports_online_label_rename (kfs) && gdu_device_is_mounted (device)) {
                 /* TODO: we could show a helpful warning explaining
                  *       why the user can't change the name
                  */
                 goto out;
         }
 
-        max_label_len = creatable_fs->max_label_len;
+        max_label_len = gdu_known_filesystem_get_max_label_len (kfs);
 
 out:
         gtk_widget_set_sensitive (section->priv->modify_fs_vbox, !gdu_device_is_read_only (device));
@@ -117,6 +122,8 @@ out:
                                            (max_label_len > 0) && changed);
 
 error:
+        if (kfs != NULL)
+                g_object_unref (kfs);
         if (device != NULL)
                 g_object_unref (device);
 }

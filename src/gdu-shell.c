@@ -152,6 +152,13 @@ gdu_shell_get_toplevel (GduShell *shell)
         return shell->priv->app_window;
 }
 
+GduPool *
+gdu_shell_get_pool (GduShell *shell)
+{
+        return shell->priv->pool;
+}
+
+
 GduPresentable *
 gdu_shell_get_selected_presentable (GduShell *shell)
 {
@@ -578,17 +585,18 @@ gdu_shell_update (GduShell *shell)
                 if (GDU_IS_VOLUME (shell->priv->presentable_now_showing)) {
 
                         if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                                GduCreatableFilesystem *cfs;
+                                GduKnownFilesystem *kfs;
 
-                                cfs = gdu_util_find_creatable_filesystem_for_fstype (gdu_device_id_get_type (device));
+                                kfs = gdu_pool_get_known_filesystem_by_id (shell->priv->pool,
+                                                                           gdu_device_id_get_type (device));
 
                                 if (gdu_device_is_mounted (device)) {
                                         can_unmount = TRUE;
-                                        if (cfs != NULL && cfs->supports_online_fsck)
+                                        if (kfs != NULL && gdu_known_filesystem_get_supports_online_fsck (kfs))
                                                 can_fsck = TRUE;
                                 } else {
                                         can_mount = TRUE;
-                                        if (cfs != NULL && cfs->supports_fsck)
+                                        if (kfs != NULL && gdu_known_filesystem_get_supports_fsck (kfs))
                                                 can_fsck = TRUE;
                                 }
                         } else if (strcmp (gdu_device_id_get_usage (device), "crypto") == 0) {
@@ -751,6 +759,12 @@ gdu_shell_update (GduShell *shell)
                               action,
                               NULL);
         }
+
+        if (!gdu_pool_supports_encrypted_devices (shell->priv->pool)) {
+                polkit_gnome_action_set_visible (shell->priv->lock_action, FALSE);
+                polkit_gnome_action_set_visible (shell->priv->unlock_action, FALSE);
+        }
+
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);

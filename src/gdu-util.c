@@ -28,6 +28,7 @@
 #include <dbus/dbus-glib.h>
 
 #include "gdu-util.h"
+#include "gdu-pool.h"
 
 #define KILOBYTE_FACTOR 1024.0
 #define MEGABYTE_FACTOR (1024.0 * 1024.0)
@@ -349,25 +350,6 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 }
 
 
-
-/* TODO: retrieve this list from DeviceKit-disks */
-static GduCreatableFilesystem creatable_fstypes[] = {
-        {"vfat", 11, FALSE, TRUE, FALSE, TRUE, FALSE},
-        {"ext3", 16, TRUE, TRUE, TRUE, TRUE, FALSE},
-        {"swap", 0, FALSE, FALSE, FALSE, FALSE, FALSE},
-        {"ntfs", 255, FALSE, FALSE, FALSE, FALSE, FALSE},
-        {"empty", 0, FALSE, FALSE, FALSE, FALSE, FALSE},
-};
-
-/* TODO: retrieve from daemon */
-gboolean
-gdu_util_can_create_encrypted_device (void)
-{
-        return TRUE;
-}
-
-static int num_creatable_fstypes = sizeof (creatable_fstypes) / sizeof (GduCreatableFilesystem);
-
 static char *
 gdu_util_fstype_get_description (char *fstype)
 {
@@ -430,58 +412,32 @@ gdu_util_fstype_combo_box_update_desc_label (GtkWidget *combo_box)
         }
 }
 
-GduCreatableFilesystem *
-gdu_util_find_creatable_filesystem_for_fstype (const char *fstype)
-{
-        int n;
-        GduCreatableFilesystem *ret;
-
-        ret = NULL;
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                if (strcmp (fstype, creatable_fstypes[n].id) == 0) {
-                        ret = &(creatable_fstypes[n]);
-                        break;
-                }
-        }
-
-        return ret;
-}
-
-GList *
-gdu_util_get_creatable_filesystems (void)
-{
-        int n;
-        GList *ret;
-
-        ret = NULL;
-        for (n = 0; n < num_creatable_fstypes; n++) {
-                ret = g_list_append (ret, &creatable_fstypes[n]);
-        }
-        return ret;
-}
-
 static GtkListStore *
-gdu_util_fstype_combo_box_create_store (const char *include_extended_partitions_for_scheme)
+gdu_util_fstype_combo_box_create_store (GduPool *pool, const char *include_extended_partitions_for_scheme)
 {
         GList *l;
         GtkListStore *store;
-        GList *creatable_filesystems;
+        GList *known_filesystems;
         GtkTreeIter iter;
 
         store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
 
-        creatable_filesystems = gdu_util_get_creatable_filesystems ();
-        for (l = creatable_filesystems; l != NULL; l = l->next) {
-                GduCreatableFilesystem *f = l->data;
+        if (pool != NULL)
+                known_filesystems = gdu_pool_get_known_filesystems (pool);
+        else
+                known_filesystems = NULL;
+        for (l = known_filesystems; l != NULL; l = l->next) {
+                GduKnownFilesystem *kfs = l->data;
                 const char *fstype;
                 char *fstype_name;
 
-                fstype = f->id;
+                fstype = gdu_known_filesystem_get_id (kfs);
 
                 if (strcmp (fstype, "empty") == 0) {
                         fstype_name = g_strdup (_("Empty (don't create a file system)"));
                 } else {
                         fstype_name = gdu_util_get_fstype_for_display (fstype, NULL, TRUE);
+                        /* TODO */
                 }
 
                 gtk_list_store_append (store, &iter);
@@ -492,7 +448,14 @@ gdu_util_fstype_combo_box_create_store (const char *include_extended_partitions_
 
                 g_free (fstype_name);
         }
-        g_list_free (creatable_filesystems);
+        g_list_foreach (known_filesystems, (GFunc) g_object_unref, NULL);
+        g_list_free (known_filesystems);
+
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter,
+                            0, "empty",
+                            1, _("Empty"),
+                            -1);
 
         if (include_extended_partitions_for_scheme != NULL &&
             strcmp  (include_extended_partitions_for_scheme, "mbr") == 0) {
@@ -519,10 +482,11 @@ gdu_util_fstype_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_
 
 void
 gdu_util_fstype_combo_box_rebuild (GtkWidget  *combo_box,
+                                   GduPool *pool,
                                    const char *include_extended_partitions_for_scheme)
 {
         GtkListStore *store;
-        store = gdu_util_fstype_combo_box_create_store (include_extended_partitions_for_scheme);
+        store = gdu_util_fstype_combo_box_create_store (pool, include_extended_partitions_for_scheme);
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
         g_object_unref (store);
         gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
@@ -536,6 +500,7 @@ gdu_util_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 
 /**
  * gdu_util_fstype_combo_box_create:
+ * @pool: A #GduPool object
  * @include_extended_partitions_for_scheme: if not #NULL, includes
  * extended partition types. This is currently only relevant for
  * Master Boot Record ("mbr") where a single item "Extended Partition"
@@ -547,7 +512,7 @@ gdu_util_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
  * Returns: A #GtkComboBox widget
  **/
 GtkWidget *
-gdu_util_fstype_combo_box_create (const char *include_extended_partitions_for_scheme)
+gdu_util_fstype_combo_box_create (GduPool *pool, const char *include_extended_partitions_for_scheme)
 {
         GtkListStore *store;
 	GtkCellRenderer *renderer;
@@ -555,7 +520,7 @@ gdu_util_fstype_combo_box_create (const char *include_extended_partitions_for_sc
 
 
         combo_box = gtk_combo_box_new ();
-        store = gdu_util_fstype_combo_box_create_store (include_extended_partitions_for_scheme);
+        store = gdu_util_fstype_combo_box_create_store (pool, include_extended_partitions_for_scheme);
 	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
         g_object_unref (store);
 

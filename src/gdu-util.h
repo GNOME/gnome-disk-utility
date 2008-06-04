@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 #include <polkit-gnome/polkit-gnome.h>
 #include "gdu-presentable.h"
+#include "gdu-pool.h"
 
 #ifndef GDU_UTIL_H
 #define GDU_UTIL_H
@@ -38,27 +39,12 @@ char *gdu_util_get_desc_for_part_type (const char *part_scheme, const char *part
 char *gdu_get_job_description (const char *job_id);
 char *gdu_get_task_description (const char *task_id);
 
-
-typedef struct
-{
-        char     *id;
-        int       max_label_len;
-        gboolean  have_owners;
-        gboolean  supports_label_rename;
-        gboolean  supports_label_rename_while_mounted;
-        gboolean  supports_fsck;
-        gboolean  supports_online_fsck;
-} GduCreatableFilesystem;
-
-GList                  *gdu_util_get_creatable_filesystems (void);
-GduCreatableFilesystem *gdu_util_find_creatable_filesystem_for_fstype (const char *fstype);
-
-gboolean                gdu_util_can_create_encrypted_device (void);
-
 /* ---------------------------------------------------------------------------------------------------- */
 
-GtkWidget *gdu_util_fstype_combo_box_create         (const char *include_extended_partitions_for_scheme);
+GtkWidget *gdu_util_fstype_combo_box_create         (GduPool *pool,
+                                                     const char *include_extended_partitions_for_scheme);
 void       gdu_util_fstype_combo_box_rebuild        (GtkWidget  *combo_box,
+                                                     GduPool *pool,
                                                      const char *include_extended_partitions_for_scheme);
 void       gdu_util_fstype_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label);
 gboolean   gdu_util_fstype_combo_box_select         (GtkWidget  *combo_box,

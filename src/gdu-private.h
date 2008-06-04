@@ -24,6 +24,7 @@
 
 #include <glib-object.h>
 #include "gdu-smart-data.h"
+#include "gdu-known-filesystem.h"
 
 #define SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
                                                         G_TYPE_INT,      \
@@ -44,6 +45,23 @@
                                                                    dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE), \
                                                                    G_TYPE_INVALID))
 
+#define KNOWN_FILESYSTEMS_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
+                                                               G_TYPE_STRING, \
+                                                               G_TYPE_STRING, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_UINT, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_BOOLEAN, \
+                                                               G_TYPE_INVALID))
+
 GduSmartDataAttribute *_gdu_smart_data_attribute_new   (gpointer data);
 GduSmartData          *_gdu_smart_data_new_from_values (guint64     time_collected,
                                                         double      temperature,
@@ -52,6 +70,8 @@ GduSmartData          *_gdu_smart_data_new_from_values (guint64     time_collect
                                                         gboolean    is_failing,
                                                         GPtrArray  *attrs);
 GduSmartData          * _gdu_smart_data_new            (gpointer data);
+
+GduKnownFilesystem    *_gdu_known_filesystem_new       (gpointer data);
 
 void _gdu_device_fixup_error (GError *error);
 

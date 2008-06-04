@@ -102,7 +102,7 @@ create_partition_completed (GduDevice  *device,
                 GduDevice *crypto_device;
                 const char *cleartext_objpath;
 
-                pool = gdu_device_get_pool (device);
+                pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (data->section)));
 
                 cleartext_device = gdu_pool_get_by_object_path (pool,
                                                                 created_device_object_path);
@@ -123,7 +123,6 @@ create_partition_completed (GduDevice  *device,
                         }
                         g_object_unref (cleartext_device);
                 }
-                g_object_unref (pool);
 
                 g_free (created_device_object_path);
         }
@@ -140,6 +139,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
         GduDevice *device;
+        GduPool *pool;
         guint64 offset;
         guint64 size;
         char *type;
@@ -152,7 +152,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         const char *scheme;
         CreatePartitionData *data;
         gboolean take_ownership;
-        GduCreatableFilesystem *creatable_fs;
+        GduKnownFilesystem *kfs;
 
         type = NULL;
         label = NULL;
@@ -175,6 +175,8 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
+
         toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
@@ -193,11 +195,12 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
 
         take_ownership = FALSE;
-        creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-        if (creatable_fs != NULL) {
-                if (creatable_fs->have_owners && gtk_toggle_button_get_active (
+        kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
+        if (kfs != NULL) {
+                if (gdu_known_filesystem_get_supports_unix_owners (kfs) && gtk_toggle_button_get_active (
                             GTK_TOGGLE_BUTTON (section->priv->take_ownership_of_fs_check_button)))
                         take_ownership = TRUE;
+                g_object_unref (kfs);
         }
 
         /* TODO: set flags */
@@ -288,10 +291,13 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 {
         GduSectionUnallocated *section = GDU_SECTION_UNALLOCATED (user_data);
         char *fstype;
-        GduCreatableFilesystem *creatable_fs;
+        GduKnownFilesystem *kfs;
         gboolean label_entry_sensitive;
         int max_label_len;
         gboolean have_owners;
+        GduPool *pool;
+
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
         label_entry_sensitive = FALSE;
         max_label_len = 0;
@@ -299,13 +305,14 @@ create_part_fstype_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
 
         fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
         if (fstype != NULL) {
-                creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-                /* Note: there may not have a creatable file system... e.g. the user could
+                kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
+                /* Note: there may not have a known file system... e.g. the user could
                  *       select "Extended" on mbr partition tables.
                  */
-                if (creatable_fs != NULL) {
-                        max_label_len = creatable_fs->max_label_len;
-                        have_owners = creatable_fs->have_owners;
+                if (kfs != NULL) {
+                        max_label_len = gdu_known_filesystem_get_max_label_len (kfs);
+                        have_owners = gdu_known_filesystem_get_supports_unix_owners (kfs);
+                        g_object_unref (kfs);
                 }
         }
 
@@ -445,6 +452,7 @@ update (GduSectionUnallocated *section)
 {
         GduPresentable *presentable;
         GduDevice *device;
+        GduPool *pool;
         guint64 size;
         GduDevice *toplevel_device;
         GduPresentable *toplevel_presentable;
@@ -468,6 +476,8 @@ update (GduSectionUnallocated *section)
                 g_warning ("%s: device is not NULL for presentable",  __FUNCTION__);
                 goto out;
         }
+
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
         g_object_set (section->priv->create_partition_action,
                       "polkit-action",
@@ -501,9 +511,13 @@ update (GduSectionUnallocated *section)
 
                 /* only allow creation of extended partitions if there currently are none */
                 if (has_extended_partition (section, toplevel_presentable)) {
-                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, NULL);
+                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, pool, NULL);
                 } else {
-                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, scheme);
+                        gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, pool, scheme);
+                }
+
+                if (!gdu_pool_supports_encrypted_devices (pool)) {
+                        gtk_widget_hide (section->priv->encrypt_check_button);
                 }
 
                 /* initial probe to get things right */
@@ -724,7 +738,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 
-        combo_box = gdu_util_fstype_combo_box_create (NULL);
+        combo_box = gdu_util_fstype_combo_box_create (NULL, NULL);
         gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
@@ -763,10 +777,8 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
                                        "passphrase to be enterered before the file system can be "
                                        "used. May decrease performance and may not be compatible if "
                                        "you use the media on other operating systems."));
-        if (gdu_util_can_create_encrypted_device ()) {
                 gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
                                   GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        }
         section->priv->encrypt_check_button = check_button;
 
         row++;
@@ -782,7 +794,6 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         /* update sensivity and length of fs label and ensure it's set initially */
         g_signal_connect (section->priv->fstype_combo_box, "changed",
                           G_CALLBACK (create_part_fstype_combo_box_changed), section);
-        create_part_fstype_combo_box_changed (section->priv->fstype_combo_box, section);
 
         /* Warning used for
          * - telling the user he won't be able to add more partitions if he adds this one

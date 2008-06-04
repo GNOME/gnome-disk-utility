@@ -54,6 +54,10 @@ struct _GduPoolPrivate
         DBusGConnection *bus;
         DBusGProxy *proxy;
 
+        char *daemon_version;
+        gboolean supports_encrypted_devices;
+        GList *known_filesystems;
+
         GHashTable *devices;            /* object path -> GduDevice* */
         GHashTable *volumes;            /* object path -> GduVolume* */
         GHashTable *drives;             /* object path -> GduDrive* */
@@ -109,6 +113,11 @@ gdu_pool_finalize (GduPool *pool)
 
         g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
         g_list_free (pool->priv->presentables);
+
+        g_free (pool->priv->daemon_version);
+
+        g_list_foreach (pool->priv->known_filesystems, (GFunc) g_object_unref, NULL);
+        g_list_free (pool->priv->known_filesystems);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (pool));
@@ -935,6 +944,74 @@ ptr_array_strcmp (const char **a, const char **b)
                 return strcmp (*a, *b);
 }
 
+static gboolean
+get_properties (GduPool *pool)
+{
+        gboolean ret;
+        GError *error;
+        GHashTable *hash_table;
+        DBusGProxy *prop_proxy;
+        GValue *value;
+        GPtrArray *known_filesystems_array;
+        int n;
+
+        ret = FALSE;
+
+	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
+                                                "org.freedesktop.DeviceKit.Disks",
+                                                "/",
+                                                "org.freedesktop.DBus.Properties");
+        error = NULL;
+        if (!dbus_g_proxy_call (prop_proxy,
+                                "GetAll",
+                                &error,
+                                G_TYPE_STRING,
+                                "org.freedesktop.DeviceKit.Disks",
+                                G_TYPE_INVALID,
+                                dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+                                &hash_table,
+                                G_TYPE_INVALID)) {
+                g_warning ("Couldn't call GetAll() to get properties for /: %s", error->message);
+                g_error_free (error);
+                goto out;
+        }
+
+        value = g_hash_table_lookup (hash_table, "daemon-version");
+        if (value == NULL) {
+                g_warning ("No property 'daemon-version'");
+                goto out;
+        }
+        pool->priv->daemon_version = g_strdup (g_value_get_string (value));
+
+        value = g_hash_table_lookup (hash_table, "supports-encrypted-devices");
+        if (value == NULL) {
+                g_warning ("No property 'supports-encrypted-devices'");
+                goto out;
+        }
+        pool->priv->supports_encrypted_devices = g_value_get_boolean (value);
+
+        value = g_hash_table_lookup (hash_table, "known-filesystems");
+        if (value == NULL) {
+                g_warning ("No property 'known-filesystems'");
+                goto out;
+        }
+        known_filesystems_array = g_value_get_boxed (value);
+        pool->priv->known_filesystems = NULL;
+        for (n = 0; n < (int) known_filesystems_array->len; n++) {
+                pool->priv->known_filesystems = g_list_prepend (
+                        pool->priv->known_filesystems,
+                        _gdu_known_filesystem_new (known_filesystems_array->pdata[n]));
+        }
+        pool->priv->known_filesystems = g_list_reverse (pool->priv->known_filesystems);
+
+        g_hash_table_unref (hash_table);
+
+        ret = TRUE;
+out:
+        g_object_unref (prop_proxy);
+        return ret;
+}
+
 GduPool *
 gdu_pool_new (void)
 {
@@ -1001,6 +1078,12 @@ gdu_pool_new (void)
                                      G_CALLBACK (device_changed_signal_handler), pool, NULL);
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceJobChanged",
                                      G_CALLBACK (device_job_changed_signal_handler), pool, NULL);
+
+        /* get the properties on the daemon object at / */
+        if (!get_properties (pool)) {
+                g_warning ("Couldn't get daemon properties");
+                goto error;
+        }
 
         /* prime the list of devices */
         error = NULL;
@@ -1154,3 +1237,43 @@ gdu_pool_op_linux_md_start (GduPool *pool,
                                                               op_linux_md_start_cb,
                                                               data);
 }
+
+char *
+gdu_pool_get_daemon_version (GduPool *pool)
+{
+        return g_strdup (pool->priv->daemon_version);
+}
+
+GList *
+gdu_pool_get_known_filesystems (GduPool *pool)
+{
+        GList *ret;
+        ret = g_list_copy (pool->priv->known_filesystems);
+        g_list_foreach (ret, (GFunc) g_object_ref, NULL);
+        return ret;
+}
+
+GduKnownFilesystem *
+gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id)
+{
+        GList *l;
+        GduKnownFilesystem *ret;
+
+        ret = NULL;
+        for (l = pool->priv->known_filesystems; l != NULL; l = l->next) {
+                GduKnownFilesystem *kfs = GDU_KNOWN_FILESYSTEM (l->data);
+                if (strcmp (gdu_known_filesystem_get_id (kfs), id) == 0) {
+                        ret = g_object_ref (kfs);
+                        goto out;
+                }
+        }
+out:
+        return ret;
+}
+
+gboolean
+gdu_pool_supports_encrypted_devices (GduPool *pool)
+{
+        return pool->priv->supports_encrypted_devices;
+}
+

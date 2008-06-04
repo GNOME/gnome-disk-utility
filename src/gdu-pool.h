@@ -24,6 +24,7 @@
 
 #include "gdu-device.h"
 #include "gdu-presentable.h"
+#include "gdu-known-filesystem.h"
 
 #define GDU_TYPE_POOL             (gdu_pool_get_type ())
 #define GDU_POOL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_POOL, GduPool))
@@ -63,8 +64,13 @@ struct _GduPoolClass
 
 GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
-GduDevice  *gdu_pool_get_by_object_path (GduPool *pool, const char *object_path);
 
+char       *gdu_pool_get_daemon_version (GduPool *pool);
+gboolean    gdu_pool_supports_encrypted_devices (GduPool *pool);
+GList      *gdu_pool_get_known_filesystems (GduPool *pool);
+GduKnownFilesystem *gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id);
+
+GduDevice  *gdu_pool_get_by_object_path (GduPool *pool, const char *object_path);
 GduPresentable *gdu_pool_get_volume_by_device      (GduPool *pool, GduDevice *device);
 
 GList      *gdu_pool_get_devices               (GduPool *pool);

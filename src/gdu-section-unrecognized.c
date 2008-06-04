@@ -75,23 +75,29 @@ section_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpoint
 {
         GduSectionUnrecognized *section = GDU_SECTION_UNRECOGNIZED (user_data);
         char *fstype;
-        GduCreatableFilesystem *creatable_fs;
+        GduKnownFilesystem *kfs;
         gboolean label_entry_sensitive;
         gboolean can_erase;
         gboolean have_owners;
         int max_label_len;
+        GduPool *pool;
+
+        fstype = NULL;
 
         label_entry_sensitive = FALSE;
         can_erase = FALSE;
         max_label_len = 0;
         have_owners = FALSE;
 
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
+
         fstype = gdu_util_fstype_combo_box_get_selected (combo_box);
         if (fstype != NULL) {
-                creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-                if (creatable_fs != NULL) {
-                        max_label_len = creatable_fs->max_label_len;
-                        have_owners = creatable_fs->have_owners;
+                kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
+                if (kfs != NULL) {
+                        max_label_len = gdu_known_filesystem_get_max_label_len (kfs);
+                        have_owners = gdu_known_filesystem_get_supports_unix_owners (kfs);
+                        g_object_unref (kfs);
                 }
                 can_erase = TRUE;
         }
@@ -169,6 +175,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         char *fslabel;
         char *fstype;
         GduDevice *device;
+        GduPool *pool;
         CreateFilesystemData *data;
         GduPresentable *presentable;
         GduPresentable *toplevel_presentable;
@@ -178,7 +185,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         char *secondary;
         char *drive_name;
         gboolean take_ownership;
-        GduCreatableFilesystem *creatable_fs;
+        GduKnownFilesystem *kfs;
 
         data = NULL;
         fstype = NULL;
@@ -198,6 +205,8 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
+
         toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
         if (toplevel_presentable == NULL) {
                 g_warning ("%s: no toplevel presentable",  __FUNCTION__);
@@ -216,11 +225,12 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 fslabel = g_strdup ("");
 
         take_ownership = FALSE;
-        creatable_fs = gdu_util_find_creatable_filesystem_for_fstype (fstype);
-        if (creatable_fs != NULL) {
-                if (creatable_fs->have_owners && gtk_toggle_button_get_active (
+        kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
+        if (kfs != NULL) {
+                if (gdu_known_filesystem_get_supports_unix_owners (kfs) && gtk_toggle_button_get_active (
                             GTK_TOGGLE_BUTTON (section->priv->take_ownership_of_fs_check_button)))
                         take_ownership = TRUE;
+                g_object_unref (kfs);
         }
 
         primary = g_strdup (_("<b><big>Are you sure you want to create a new file system, deleting existing data?</big></b>"));
@@ -309,6 +319,7 @@ update (GduSectionUnrecognized *section)
 {
         GduPresentable *presentable;
         GduDevice *device;
+        GduPool *pool;
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
         device = gdu_presentable_get_device (presentable);
@@ -317,6 +328,8 @@ update (GduSectionUnrecognized *section)
                 g_warning ("%s: device is NULL for presentable",  __FUNCTION__);
                 goto out;
         }
+
+        pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
         g_object_set (section->priv->erase_action,
                       "polkit-action",
@@ -331,6 +344,12 @@ update (GduSectionUnrecognized *section)
                 gtk_entry_set_text (GTK_ENTRY (section->priv->label_entry), "");
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->type_combo_box), 0);
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button), FALSE);
+
+                gdu_util_fstype_combo_box_rebuild (section->priv->type_combo_box, pool, NULL);
+
+                if (!gdu_pool_supports_encrypted_devices (pool)) {
+                        gtk_widget_hide (section->priv->encrypt_check_button);
+                }
 
                 /* initial probe to get things right */
                 section_volume_unrecognized_type_combo_box_changed (section->priv->type_combo_box, section);
@@ -453,7 +472,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        combo_box = gdu_util_fstype_combo_box_create (NULL);
+        combo_box = gdu_util_fstype_combo_box_create (NULL, NULL);
         gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
@@ -492,10 +511,8 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
                                        "passphrase to be enterered before the file system can be "
                                        "used. May decrease performance and may not be compatible if "
                                        "you use the media on other operating systems."));
-        if (gdu_util_can_create_encrypted_device ()) {
-                gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        }
+        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->encrypt_check_button = check_button;
 
         row++;

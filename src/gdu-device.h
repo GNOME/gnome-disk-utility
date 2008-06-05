@@ -267,14 +267,14 @@ void gdu_device_op_luks_change_passphrase (GduDevice   *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceFilesystemSetLabelCompletedFunc) (GduDevice    *device,
-                                                          GError       *error,
-                                                          gpointer      user_data);
+typedef void (*GduDeviceSetLabelCompletedFunc) (GduDevice    *device,
+                                                GError       *error,
+                                                gpointer      user_data);
 
-void gdu_device_op_filesystem_set_label (GduDevice                                *device,
-                                         const char                               *new_label,
-                                         GduDeviceFilesystemSetLabelCompletedFunc  callback,
-                                         gpointer                                  user_data);
+void gdu_device_op_set_label (GduDevice                      *device,
+                              const char                     *new_label,
+                              GduDeviceSetLabelCompletedFunc  callback,
+                              gpointer                        user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

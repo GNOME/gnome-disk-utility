@@ -160,7 +160,7 @@ modify_fslabel_callback (GtkAction *action, gpointer user_data)
         if (device == NULL)
                 goto out;
 
-        gdu_device_op_filesystem_set_label (
+        gdu_device_op_set_label (
                 device,
                 gtk_entry_get_text (GTK_ENTRY (section->priv->modify_fs_label_entry)),
                 change_filesystem_label_callback,

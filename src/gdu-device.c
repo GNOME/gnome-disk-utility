@@ -1627,14 +1627,14 @@ gdu_device_op_luks_lock (GduDevice                           *device,
 
 typedef struct {
         GduDevice *device;
-        GduDeviceFilesystemSetLabelCompletedFunc callback;
+        GduDeviceSetLabelCompletedFunc callback;
         gpointer user_data;
-} FilesystemSetLabelData;
+} SetLabelData;
 
 static void
 op_change_filesystem_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        FilesystemSetLabelData *data = user_data;
+        SetLabelData *data = user_data;
         _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
@@ -1643,22 +1643,22 @@ op_change_filesystem_label_cb (DBusGProxy *proxy, GError *error, gpointer user_d
 }
 
 void
-gdu_device_op_filesystem_set_label (GduDevice                                *device,
-                                    const char                               *new_label,
-                                    GduDeviceFilesystemSetLabelCompletedFunc  callback,
-                                    gpointer                                  user_data)
+gdu_device_op_set_label (GduDevice                      *device,
+                         const char                     *new_label,
+                         GduDeviceSetLabelCompletedFunc  callback,
+                         gpointer                        user_data)
 {
-        FilesystemSetLabelData *data;
+        SetLabelData *data;
 
-        data = g_new0 (FilesystemSetLabelData, 1);
+        data = g_new0 (SetLabelData, 1);
         data->device = g_object_ref (device);
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_filesystem_set_label_async (device->priv->proxy,
-                                                                           new_label,
-                                                                           op_change_filesystem_label_cb,
-                                                                           data);
+        org_freedesktop_DeviceKit_Disks_Device_set_label_async (device->priv->proxy,
+                                                                new_label,
+                                                                op_change_filesystem_label_cb,
+                                                                data);
 }
 /* -------------------------------------------------------------------------------- */
 

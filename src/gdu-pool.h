@@ -66,7 +66,7 @@ GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
 
 char       *gdu_pool_get_daemon_version (GduPool *pool);
-gboolean    gdu_pool_supports_encrypted_devices (GduPool *pool);
+gboolean    gdu_pool_supports_luks_devices (GduPool *pool);
 GList      *gdu_pool_get_known_filesystems (GduPool *pool);
 GduKnownFilesystem *gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id);
 

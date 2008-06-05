@@ -244,7 +244,7 @@ gdu_volume_get_icon_name (GduPresentable *presentable)
                 name = "media-encrypted";
                 goto out;
         }
-        if (gdu_device_is_crypto_cleartext (volume->priv->device)) {
+        if (gdu_device_is_luks_cleartext (volume->priv->device)) {
                 /* TODO: use icon with open padlock */
                 name = "media-encrypted";
                 goto out;

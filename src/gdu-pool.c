@@ -55,7 +55,7 @@ struct _GduPoolPrivate
         DBusGProxy *proxy;
 
         char *daemon_version;
-        gboolean supports_encrypted_devices;
+        gboolean supports_luks_devices;
         GList *known_filesystems;
 
         GHashTable *devices;            /* object path -> GduDevice* */
@@ -729,13 +729,13 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                         }
                 }
 
-                if (gdu_device_is_crypto_cleartext (device)) {
-                        const char *crypto_cleartext_slave;
+                if (gdu_device_is_luks_cleartext (device)) {
+                        const char *luks_cleartext_slave;
                         GduVolume *enclosing_volume;
 
-                        crypto_cleartext_slave = gdu_device_crypto_cleartext_get_slave (device);
+                        luks_cleartext_slave = gdu_device_luks_cleartext_get_slave (device);
                         enclosing_volume = g_hash_table_lookup (pool->priv->volumes,
-                                                                crypto_cleartext_slave);
+                                                                luks_cleartext_slave);
                         if (enclosing_volume != NULL) {
                                 GduVolume *volume;
 
@@ -983,12 +983,12 @@ get_properties (GduPool *pool)
         }
         pool->priv->daemon_version = g_strdup (g_value_get_string (value));
 
-        value = g_hash_table_lookup (hash_table, "supports-encrypted-devices");
+        value = g_hash_table_lookup (hash_table, "supports-luks-devices");
         if (value == NULL) {
-                g_warning ("No property 'supports-encrypted-devices'");
+                g_warning ("No property 'supports-luks-devices'");
                 goto out;
         }
-        pool->priv->supports_encrypted_devices = g_value_get_boolean (value);
+        pool->priv->supports_luks_devices = g_value_get_boolean (value);
 
         value = g_hash_table_lookup (hash_table, "known-filesystems");
         if (value == NULL) {
@@ -1272,8 +1272,8 @@ out:
 }
 
 gboolean
-gdu_pool_supports_encrypted_devices (GduPool *pool)
+gdu_pool_supports_luks_devices (GduPool *pool)
 {
-        return pool->priv->supports_encrypted_devices;
+        return pool->priv->supports_luks_devices;
 }
 

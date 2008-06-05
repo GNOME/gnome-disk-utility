@@ -123,7 +123,7 @@ gboolean gdu_device_is_system_internal (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
-gboolean gdu_device_is_crypto_cleartext (GduDevice *device);
+gboolean gdu_device_is_luks_cleartext (GduDevice *device);
 gboolean gdu_device_is_linux_md_component (GduDevice *device);
 gboolean gdu_device_is_linux_md (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
@@ -162,8 +162,8 @@ int         gdu_device_partition_table_get_max_number (GduDevice *device);
 GArray     *gdu_device_partition_table_get_offsets (GduDevice *device);
 GArray     *gdu_device_partition_table_get_sizes (GduDevice *device);
 
-const char *gdu_device_crypto_cleartext_get_slave (GduDevice *device);
-uid_t gdu_device_crypto_cleartext_unlocked_by_uid (GduDevice *device);
+const char *gdu_device_luks_cleartext_get_slave (GduDevice *device);
+uid_t gdu_device_luks_cleartext_unlocked_by_uid (GduDevice *device);
 
 const char *gdu_device_drive_get_vendor (GduDevice *device);
 const char *gdu_device_drive_get_model (GduDevice *device);
@@ -266,37 +266,37 @@ void gdu_device_op_partition_table_create  (GduDevice                           
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceEncryptedUnlockCompletedFunc) (GduDevice  *device,
-                                                       char       *object_path_of_cleartext_device,
-                                                       GError     *error,
-                                                       gpointer    user_data);
+typedef void (*GduDeviceLuksUnlockCompletedFunc) (GduDevice  *device,
+                                                  char       *object_path_of_cleartext_device,
+                                                  GError     *error,
+                                                  gpointer    user_data);
 
-void gdu_device_op_encrypted_unlock       (GduDevice   *device,
-                                           const char *secret,
-                                           GduDeviceEncryptedUnlockCompletedFunc callback,
+void gdu_device_op_luks_unlock       (GduDevice   *device,
+                                      const char *secret,
+                                      GduDeviceLuksUnlockCompletedFunc callback,
+                                      gpointer user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceLuksLockCompletedFunc) (GduDevice    *device,
+                                                GError       *error,
+                                                gpointer      user_data);
+
+void gdu_device_op_luks_lock          (GduDevice                           *device,
+                                       GduDeviceLuksLockCompletedFunc  callback,
+                                       gpointer                             user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceLuksChangePassphraseCompletedFunc) (GduDevice  *device,
+                                                            GError     *error,
+                                                            gpointer    user_data);
+
+void gdu_device_op_luks_change_passphrase (GduDevice   *device,
+                                           const char  *old_secret,
+                                           const char  *new_secret,
+                                           GduDeviceLuksChangePassphraseCompletedFunc callback,
                                            gpointer user_data);
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceEncryptedLockCompletedFunc) (GduDevice    *device,
-                                                     GError       *error,
-                                                     gpointer      user_data);
-
-void gdu_device_op_encrypted_lock          (GduDevice                           *device,
-                                            GduDeviceEncryptedLockCompletedFunc  callback,
-                                            gpointer                             user_data);
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceEncryptedChangePassphraseCompletedFunc) (GduDevice  *device,
-                                                                GError     *error,
-                                                                gpointer    user_data);
-
-void gdu_device_op_encrypted_change_passphrase (GduDevice   *device,
-                                                const char  *old_secret,
-                                                const char  *new_secret,
-                                                GduDeviceEncryptedChangePassphraseCompletedFunc callback,
-                                                gpointer user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

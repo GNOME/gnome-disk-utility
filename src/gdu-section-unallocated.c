@@ -99,7 +99,7 @@ create_partition_completed (GduDevice  *device,
                    (data->save_in_keyring || data->save_in_keyring_session)) {
                 GduPool *pool;
                 GduDevice *cleartext_device;
-                GduDevice *crypto_device;
+                GduDevice *luks_device;
                 const char *cleartext_objpath;
 
                 pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (data->section)));
@@ -107,11 +107,11 @@ create_partition_completed (GduDevice  *device,
                 cleartext_device = gdu_pool_get_by_object_path (pool,
                                                                 created_device_object_path);
                 if (cleartext_device != NULL) {
-                        cleartext_objpath = gdu_device_crypto_cleartext_get_slave (cleartext_device);
+                        cleartext_objpath = gdu_device_luks_cleartext_get_slave (cleartext_device);
                         if (cleartext_objpath != NULL &&
-                            (crypto_device = gdu_pool_get_by_object_path (pool, cleartext_objpath)) != NULL) {
+                            (luks_device = gdu_pool_get_by_object_path (pool, cleartext_objpath)) != NULL) {
 
-                                gdu_util_save_secret (crypto_device,
+                                gdu_util_save_secret (luks_device,
                                                       data->encrypt_passphrase,
                                                       data->save_in_keyring_session);
                                 /* make sure the tab for the encrypted device is updated (it displays whether
@@ -119,7 +119,7 @@ create_partition_completed (GduDevice  *device,
                                  */
                                 gdu_shell_update (gdu_section_get_shell (GDU_SECTION (data->section)));
 
-                                g_object_unref (crypto_device);
+                                g_object_unref (luks_device);
                         }
                         g_object_unref (cleartext_device);
                 }
@@ -516,7 +516,7 @@ update (GduSectionUnallocated *section)
                         gdu_util_fstype_combo_box_rebuild (section->priv->fstype_combo_box, pool, scheme);
                 }
 
-                if (!gdu_pool_supports_encrypted_devices (pool)) {
+                if (!gdu_pool_supports_luks_devices (pool)) {
                         gtk_widget_hide (section->priv->encrypt_check_button);
                 }
 

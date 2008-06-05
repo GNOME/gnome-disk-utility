@@ -347,7 +347,7 @@ update (GduSectionUnrecognized *section)
 
                 gdu_util_fstype_combo_box_rebuild (section->priv->type_combo_box, pool, NULL);
 
-                if (!gdu_pool_supports_encrypted_devices (pool)) {
+                if (!gdu_pool_supports_luks_devices (pool)) {
                         gtk_widget_hide (section->priv->encrypt_check_button);
                 }
 

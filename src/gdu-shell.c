@@ -77,9 +77,9 @@ struct _GduShellPrivate
         PolKitAction *pk_mount_system_internal_action;
         PolKitAction *pk_unmount_others_action;
         PolKitAction *pk_unmount_others_system_internal_action;
-        PolKitAction *pk_unlock_encrypted_action;
-        PolKitAction *pk_lock_encrypted_others_action;
-        PolKitAction *pk_lock_encrypted_others_system_internal_action;
+        PolKitAction *pk_unlock_luks_action;
+        PolKitAction *pk_lock_luks_others_action;
+        PolKitAction *pk_lock_luks_others_system_internal_action;
         PolKitAction *pk_linux_md_action;
 
         PolKitGnomeAction *fsck_action;
@@ -112,9 +112,9 @@ gdu_shell_finalize (GduShell *shell)
         polkit_action_unref (shell->priv->pk_mount_system_internal_action);
         polkit_action_unref (shell->priv->pk_unmount_others_action);
         polkit_action_unref (shell->priv->pk_unmount_others_system_internal_action);
-        polkit_action_unref (shell->priv->pk_unlock_encrypted_action);
-        polkit_action_unref (shell->priv->pk_lock_encrypted_others_action);
-        polkit_action_unref (shell->priv->pk_lock_encrypted_others_system_internal_action);
+        polkit_action_unref (shell->priv->pk_unlock_luks_action);
+        polkit_action_unref (shell->priv->pk_lock_luks_others_action);
+        polkit_action_unref (shell->priv->pk_lock_luks_others_system_internal_action);
         polkit_action_unref (shell->priv->pk_linux_md_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -351,7 +351,7 @@ details_update (GduShell *shell)
                         details1 = g_strdup_printf (_("%s %s"), strsize, fsname);
                         g_free (fsname);
                 } else if (strcmp (usage, "crypto") == 0) {
-                        details1 = g_strdup_printf (_("%s Encrypted Device"), strsize);
+                        details1 = g_strdup_printf (_("%s Encrypted LUKS Device"), strsize);
                 } else if (strcmp (usage, "other") == 0) {
                         if (strcmp (type, "swap") == 0) {
                                 details1 = g_strdup_printf (_("%s Swap Space"), strsize);
@@ -362,8 +362,8 @@ details_update (GduShell *shell)
                         details1 = g_strdup_printf (_("%s Unrecognized"), strsize);
                 }
 
-                if (gdu_device_is_crypto_cleartext (device)) {
-                        details2 = g_strdup (_("Unlocked Encrypted Volume"));
+                if (gdu_device_is_luks_cleartext (device)) {
+                        details2 = g_strdup (_("Unlocked Encrypted LUKS Volume"));
                 } else {
                         if (gdu_device_is_partition (device)) {
                                 char *part_desc;
@@ -612,7 +612,7 @@ gdu_shell_update (GduShell *shell)
 
                                         enclosed_presentable = GDU_PRESENTABLE (enclosed_presentables->data);
                                         enclosed_device = gdu_presentable_get_device (enclosed_presentable);
-                                        unlocked_by_uid = gdu_device_crypto_cleartext_unlocked_by_uid (enclosed_device);
+                                        unlocked_by_uid = gdu_device_luks_cleartext_unlocked_by_uid (enclosed_device);
                                         g_object_unref (enclosed_device);
                                 } else {
                                         can_unlock = TRUE;
@@ -750,9 +750,9 @@ gdu_shell_update (GduShell *shell)
                 action = NULL;
                 if (unlocked_by_uid != getuid () && device != NULL) {
                         if (gdu_device_is_system_internal (device))
-                                action = shell->priv->pk_lock_encrypted_others_system_internal_action;
+                                action = shell->priv->pk_lock_luks_others_system_internal_action;
                         else
-                                action = shell->priv->pk_lock_encrypted_others_action;
+                                action = shell->priv->pk_lock_luks_others_action;
                 }
                 g_object_set (shell->priv->lock_action,
                               "polkit-action",
@@ -760,7 +760,7 @@ gdu_shell_update (GduShell *shell)
                               NULL);
         }
 
-        if (!gdu_pool_supports_encrypted_devices (shell->priv->pool)) {
+        if (!gdu_pool_supports_luks_devices (shell->priv->pool)) {
                 polkit_gnome_action_set_visible (shell->priv->lock_action, FALSE);
                 polkit_gnome_action_set_visible (shell->priv->unlock_action, FALSE);
         }
@@ -1135,7 +1135,7 @@ unlock_action_do (GduShell *shell,
                                                  indicate_wrong_passphrase,
                                                  &asked_user);
         if (secret != NULL) {
-                gdu_device_op_encrypted_unlock (device,
+                gdu_device_op_luks_unlock (device,
                                                 secret,
                                                 unlock_op_cb,
                                                 unlock_data_new (shell,
@@ -1172,7 +1172,7 @@ lock_op_callback (GduDevice *device,
                 gdu_shell_raise_error (data->shell,
                                        data->presentable,
                                        error,
-                                       _("Error locking encrypted device"));
+                                       _("Error locking luks device"));
                 g_error_free (error);
         }
         shell_presentable_free (data);
@@ -1186,7 +1186,7 @@ lock_action_callback (GtkAction *action, gpointer user_data)
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
-                gdu_device_op_encrypted_lock (device,
+                gdu_device_op_luks_lock (device,
                                               lock_op_callback,
                                               shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
@@ -1495,9 +1495,9 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->unlock_action = polkit_gnome_action_new_default ("unlock",
-                                                                      shell->priv->pk_unlock_encrypted_action,
+                                                                      shell->priv->pk_unlock_luks_action,
                                                                       _("_Unlock"),
-                                                                      _("Unlock the encrypted device, making the data available in cleartext"));
+                                                                      _("Unlock the encrypted LUKS device, making the data available in cleartext"));
         g_object_set (shell->priv->unlock_action,
                       "auth-label", _("_Unlock..."),
                       "yes-icon-name", "gdu-encrypted-unlock",
@@ -1513,7 +1513,7 @@ create_ui_manager (GduShell *shell)
         shell->priv->lock_action = polkit_gnome_action_new_default ("lock",
                                                                     NULL,
                                                                     _("_Lock"),
-                                                                    _("Lock the encrypted device, making the cleartext data unavailable"));
+                                                                    _("Lock the encrypted LUKS device, making the cleartext data unavailable"));
         g_object_set (shell->priv->lock_action,
                       "auth-label", _("_Lock..."),
                       "yes-icon-name", "gdu-encrypted-lock",
@@ -1599,16 +1599,16 @@ create_polkit_actions (GduShell *shell)
         polkit_action_set_action_id (shell->priv->pk_unmount_others_system_internal_action,
                                      "org.freedesktop.devicekit.disks.unmount-others-system-internal");
 
-        shell->priv->pk_unlock_encrypted_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_unlock_encrypted_action,
+        shell->priv->pk_unlock_luks_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_unlock_luks_action,
                                      "org.freedesktop.devicekit.disks.unlock-encrypted");
 
-        shell->priv->pk_lock_encrypted_others_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_lock_encrypted_others_action,
+        shell->priv->pk_lock_luks_others_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_lock_luks_others_action,
                                      "org.freedesktop.devicekit.disks.lock-encrypted-others");
 
-        shell->priv->pk_lock_encrypted_others_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_lock_encrypted_others_system_internal_action,
+        shell->priv->pk_lock_luks_others_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_lock_luks_others_system_internal_action,
                                      "org.freedesktop.devicekit.disks.lock-encrypted-others-system-internal");
 
         shell->priv->pk_linux_md_action = polkit_action_new ();

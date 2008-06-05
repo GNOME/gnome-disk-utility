@@ -204,10 +204,12 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Unmounting File System"));
         } else if (strcmp (job_id, "FilesystemCheck") == 0) {
                 s = g_strdup (_("Checking File System"));
-        } else if (strcmp (job_id, "EncryptedUnlock") == 0) {
-                s = g_strdup (_("Unlocking Encrypted Device"));
-        } else if (strcmp (job_id, "EncryptedLock") == 0) {
-                s = g_strdup (_("Locking Encrypted Device"));
+        } else if (strcmp (job_id, "LuksFormat") == 0) {
+                s = g_strdup (_("Creating Encrypted LUKS Device"));
+        } else if (strcmp (job_id, "LuksUnlock") == 0) {
+                s = g_strdup (_("Unlocking Encrypted LUKS Device"));
+        } else if (strcmp (job_id, "LuksLock") == 0) {
+                s = g_strdup (_("Locking Encrypted LUKS Device"));
         } else if (strcmp (job_id, "PartitionTableCreate") == 0) {
                 s = g_strdup (_("Creating Partition Table"));
         } else if (strcmp (job_id, "PartitionDelete") == 0) {
@@ -218,8 +220,8 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Modifying Partition"));
         } else if (strcmp (job_id, "FilesystemSetLabel") == 0) {
                 s = g_strdup (_("Setting Label for Device"));
-        } else if (strcmp (job_id, "EncryptedChangePassphrase") == 0) {
-                s = g_strdup (_("Changing Passphrase for Encrypted Device"));
+        } else if (strcmp (job_id, "LuksChangePassphrase") == 0) {
+                s = g_strdup (_("Changing Passphrase for Encrypted LUKS Device"));
         } else if (strcmp (job_id, "LinuxMdAddComponent") == 0) {
                 s = g_strdup (_("Adding Component to RAID Array"));
         } else if (strcmp (job_id, "LinuxMdRemoveComponent") == 0) {
@@ -1351,7 +1353,7 @@ out:
 static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
         GNOME_KEYRING_ITEM_GENERIC_SECRET,
         {
-                { "encrypted-device-uuid", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
+                { "luks-device-uuid", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
                 { NULL, 0 }
         }
 };
@@ -1436,7 +1438,7 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
         if (!bypass_keyring) {
                 if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
                                                       &password,
-                                                      "encrypted-device-uuid", uuid,
+                                                      "luks-device-uuid", uuid,
                                                       NULL) == GNOME_KEYRING_RESULT_OK) {
                         /* By contract, the caller is responsible for scrubbing the password
                          * so dupping the string into pageable memory is "fine". Or not?
@@ -1490,7 +1492,7 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
                                                        keyring,
                                                        _("Encrypted Disk Passphrase"),
                                                        secret,
-                                                       "encrypted-device-uuid", uuid,
+                                                       "luks-device-uuid", uuid,
                                                        NULL) != GNOME_KEYRING_RESULT_OK) {
                         g_warning ("%s: couldn't store passphrase in keyring", __FUNCTION__);
                 }
@@ -1569,7 +1571,7 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
         if (!bypass_keyring) {
                 if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
                                                       &password,
-                                                      "encrypted-device-uuid", uuid,
+                                                      "luks-device-uuid", uuid,
                                                       NULL) == GNOME_KEYRING_RESULT_OK) {
                         /* By contract, the caller is responsible for scrubbing the password
                          * so dupping the string into pageable memory "fine". Or not?
@@ -1664,7 +1666,7 @@ gdu_util_have_secret (GduDevice *device)
 
         if (!gnome_keyring_find_password_sync (&encrypted_device_password_schema,
                                                &password,
-                                               "encrypted-device-uuid", uuid,
+                                               "luks-device-uuid", uuid,
                                                NULL) == GNOME_KEYRING_RESULT_OK)
                 goto out;
 
@@ -1698,7 +1700,7 @@ gdu_util_delete_secret (GduDevice *device)
         }
 
         ret = gnome_keyring_delete_password_sync (&encrypted_device_password_schema,
-                                                  "encrypted-device-uuid", uuid,
+                                                  "luks-device-uuid", uuid,
                                                   NULL) == GNOME_KEYRING_RESULT_OK;
 
 out:
@@ -1738,7 +1740,7 @@ gdu_util_save_secret (GduDevice      *device,
                                                keyring,
                                                _("Encrypted Disk Passphrase"),
                                                secret,
-                                               "encrypted-device-uuid", uuid,
+                                               "luks-device-uuid", uuid,
                                                NULL) != GNOME_KEYRING_RESULT_OK) {
                 g_warning ("%s: couldn't store passphrase in keyring", __FUNCTION__);
                 goto out;

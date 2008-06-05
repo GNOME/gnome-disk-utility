@@ -163,11 +163,11 @@ change_passphrase_do (GduSectionEncrypted *section,
                 goto out;
         }
 
-        gdu_device_op_encrypted_change_passphrase (device,
-                                                   data->old_secret,
-                                                   data->new_secret,
-                                                   change_passphrase_completed,
-                                                   data);
+        gdu_device_op_luks_change_passphrase (device,
+                                              data->old_secret,
+                                              data->new_secret,
+                                              change_passphrase_completed,
+                                              data);
 
 out:
         if (device != NULL) {

@@ -55,7 +55,7 @@ typedef struct
         gboolean device_is_media_available;
         gboolean device_is_read_only;
         gboolean device_is_drive;
-        gboolean device_is_crypto_cleartext;
+        gboolean device_is_luks_cleartext;
         gboolean device_is_mounted;
         gboolean device_is_busy;
         gboolean device_is_linux_md_component;
@@ -96,8 +96,8 @@ typedef struct
         GArray  *partition_table_offsets;
         GArray  *partition_table_sizes;
 
-        char    *crypto_cleartext_slave;
-        uid_t    crypto_cleartext_unlocked_by_uid;
+        char    *luks_cleartext_slave;
+        uid_t    luks_cleartext_unlocked_by_uid;
 
         char    *drive_vendor;
         char    *drive_model;
@@ -164,8 +164,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_read_only = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-drive") == 0)
                 props->device_is_drive = g_value_get_boolean (value);
-        else if (strcmp (key, "device-is-crypto-cleartext") == 0)
-                props->device_is_crypto_cleartext = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-luks-cleartext") == 0)
+                props->device_is_luks_cleartext = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-linux-md-component") == 0)
                 props->device_is_linux_md_component = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-linux-md") == 0)
@@ -248,10 +248,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->partition_table_sizes = g_value_get_boxed (&dest_value);
         }
 
-        else if (strcmp (key, "crypto-cleartext-slave") == 0)
-                props->crypto_cleartext_slave = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "crypto-cleartext-unlocked-by-uid") == 0)
-                props->crypto_cleartext_unlocked_by_uid = g_value_get_uint (value);
+        else if (strcmp (key, "luks-cleartext-slave") == 0)
+                props->luks_cleartext_slave = g_strdup (g_value_get_boxed (value));
+        else if (strcmp (key, "luks-cleartext-unlocked-by-uid") == 0)
+                props->luks_cleartext_unlocked_by_uid = g_value_get_uint (value);
 
         else if (strcmp (key, "drive-vendor") == 0)
                 props->drive_vendor = g_strdup (g_value_get_string (value));
@@ -403,7 +403,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->partition_table_scheme);
         g_array_free (props->partition_table_offsets, TRUE);
         g_array_free (props->partition_table_sizes, TRUE);
-        g_free (props->crypto_cleartext_slave);
+        g_free (props->luks_cleartext_slave);
         g_free (props->drive_model);
         g_free (props->drive_vendor);
         g_free (props->drive_revision);
@@ -784,9 +784,9 @@ gdu_device_is_partition_table (GduDevice *device)
 }
 
 gboolean
-gdu_device_is_crypto_cleartext (GduDevice *device)
+gdu_device_is_luks_cleartext (GduDevice *device)
 {
-        return device->priv->props->device_is_crypto_cleartext;
+        return device->priv->props->device_is_luks_cleartext;
 }
 
 gboolean
@@ -945,15 +945,15 @@ gdu_device_partition_table_get_sizes (GduDevice *device)
 }
 
 const char *
-gdu_device_crypto_cleartext_get_slave (GduDevice *device)
+gdu_device_luks_cleartext_get_slave (GduDevice *device)
 {
-        return device->priv->props->crypto_cleartext_slave;
+        return device->priv->props->luks_cleartext_slave;
 }
 
 uid_t
-gdu_device_crypto_cleartext_unlocked_by_uid (GduDevice *device)
+gdu_device_luks_cleartext_unlocked_by_uid (GduDevice *device)
 {
-        return device->priv->props->crypto_cleartext_unlocked_by_uid;
+        return device->priv->props->luks_cleartext_unlocked_by_uid;
 }
 
 
@@ -1225,7 +1225,7 @@ gdu_device_op_filesystem_create (GduDevice                              *device,
                 options[n++] = g_strdup_printf ("erase=%s", fserase);
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
-                options[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
+                options[n++] = g_strdup_printf ("luks_encrypt=%s", encrypt_passphrase);
         }
         if (fs_take_ownership) {
                 options[n++] = g_strdup_printf ("take_ownership_uid=%d", getuid ());
@@ -1466,7 +1466,7 @@ gdu_device_op_partition_create (GduDevice   *device,
                 fsoptions[n++] = g_strdup_printf ("erase=%s", fserase);
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
-                fsoptions[n++] = g_strdup_printf ("encrypt=%s", encrypt_passphrase);
+                fsoptions[n++] = g_strdup_printf ("luks_encrypt=%s", encrypt_passphrase);
         }
         if (fs_take_ownership) {
                 fsoptions[n++] = g_strdup_printf ("take_ownership_uid=%d", getuid ());
@@ -1587,12 +1587,12 @@ gdu_device_op_partition_table_create (GduDevice                                 
 
 typedef struct {
         GduDevice *device;
-        GduDeviceEncryptedUnlockCompletedFunc callback;
+        GduDeviceLuksUnlockCompletedFunc callback;
         gpointer user_data;
 } UnlockData;
 
 static void
-op_unlock_encrypted_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *error, gpointer user_data)
+op_unlock_luks_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *error, gpointer user_data)
 {
         UnlockData *data = user_data;
         _gdu_device_fixup_error (error);
@@ -1603,9 +1603,9 @@ op_unlock_encrypted_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *
 }
 
 void
-gdu_device_op_encrypted_unlock (GduDevice *device,
+gdu_device_op_luks_unlock (GduDevice *device,
                                 const char *secret,
-                                GduDeviceEncryptedUnlockCompletedFunc callback,
+                                GduDeviceLuksUnlockCompletedFunc callback,
                                 gpointer user_data)
 {
         UnlockData *data;
@@ -1617,10 +1617,10 @@ gdu_device_op_encrypted_unlock (GduDevice *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_encrypted_unlock_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_luks_unlock_async (device->priv->proxy,
                                                                        secret,
                                                                        (const char **) options,
-                                                                       op_unlock_encrypted_cb,
+                                                                       op_unlock_luks_cb,
                                                                        data);
 }
 
@@ -1629,12 +1629,12 @@ gdu_device_op_encrypted_unlock (GduDevice *device,
 typedef struct {
         GduDevice *device;
 
-        GduDeviceEncryptedChangePassphraseCompletedFunc callback;
+        GduDeviceLuksChangePassphraseCompletedFunc callback;
         gpointer user_data;
 } ChangeSecretData;
 
 static void
-op_change_secret_for_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+op_change_secret_for_luks_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         ChangeSecretData *data = user_data;
         _gdu_device_fixup_error (error);
@@ -1645,10 +1645,10 @@ op_change_secret_for_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer us
 }
 
 void
-gdu_device_op_encrypted_change_passphrase (GduDevice   *device,
+gdu_device_op_luks_change_passphrase (GduDevice   *device,
                                            const char  *old_secret,
                                            const char  *new_secret,
-                                           GduDeviceEncryptedChangePassphraseCompletedFunc callback,
+                                           GduDeviceLuksChangePassphraseCompletedFunc callback,
                                            gpointer user_data)
 {
         ChangeSecretData *data;
@@ -1658,10 +1658,10 @@ gdu_device_op_encrypted_change_passphrase (GduDevice   *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_Device_encrypted_change_passphrase_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_luks_change_passphrase_async (device->priv->proxy,
                                                                                   old_secret,
                                                                                   new_secret,
-                                                                                  op_change_secret_for_encrypted_cb,
+                                                                                  op_change_secret_for_luks_cb,
                                                                                   data);
 }
 
@@ -1669,14 +1669,14 @@ gdu_device_op_encrypted_change_passphrase (GduDevice   *device,
 
 typedef struct {
         GduDevice *device;
-        GduDeviceEncryptedLockCompletedFunc callback;
+        GduDeviceLuksLockCompletedFunc callback;
         gpointer user_data;
-} LockEncryptedData;
+} LockLuksData;
 
 static void
-op_lock_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+op_lock_luks_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        LockEncryptedData *data = user_data;
+        LockLuksData *data = user_data;
         _gdu_device_fixup_error (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
@@ -1685,22 +1685,22 @@ op_lock_encrypted_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 }
 
 void
-gdu_device_op_encrypted_lock (GduDevice                           *device,
-                              GduDeviceEncryptedLockCompletedFunc  callback,
+gdu_device_op_luks_lock (GduDevice                           *device,
+                              GduDeviceLuksLockCompletedFunc  callback,
                               gpointer                             user_data)
 {
         char *options[16];
-        LockEncryptedData *data;
+        LockLuksData *data;
 
-        data = g_new0 (LockEncryptedData, 1);
+        data = g_new0 (LockLuksData, 1);
         data->device = g_object_ref (device);
         data->callback = callback;
         data->user_data = user_data;
 
         options[0] = NULL;
-        org_freedesktop_DeviceKit_Disks_Device_encrypted_lock_async (device->priv->proxy,
+        org_freedesktop_DeviceKit_Disks_Device_luks_lock_async (device->priv->proxy,
                                                                      (const char **) options,
-                                                                     op_lock_encrypted_cb,
+                                                                     op_lock_luks_cb,
                                                                      data);
 }
 

@@ -460,87 +460,6 @@ gdu_device_error_quark (void)
         return ret;
 }
 
-void
-_gdu_device_fixup_error (GError *error)
-{
-        char *s;
-        const char *name;
-        gboolean matched;
-
-        if (error == NULL)
-                return;
-
-        if (error->domain != DBUS_GERROR ||
-            error->code != DBUS_GERROR_REMOTE_EXCEPTION)
-                return;
-
-        name = dbus_g_error_get_name (error);
-        if (name == NULL)
-                return;
-
-        matched = TRUE;
-        if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.GeneralError") == 0)
-                error->code = GDU_DEVICE_ERROR_GENERAL;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotSupported") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_SUPPORTED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotMountable") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_MOUNTABLE;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.Mounted") == 0)
-                error->code = GDU_DEVICE_ERROR_MOUNTED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotMounted") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_MOUNTED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotMountedByDeviceKit") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_MOUNTED_BY_DK;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.FstabEntry") == 0)
-                error->code = GDU_DEVICE_ERROR_FSTAB_ENTRY;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.MountOptionNotAllowed") == 0)
-                error->code = GDU_DEVICE_ERROR_MOUNT_OPTION_NOT_ALLOWED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.FilesystemBusy") == 0)
-                error->code = GDU_DEVICE_ERROR_FILESYSTEM_BUSY;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.CannotRemount") == 0)
-                error->code = GDU_DEVICE_ERROR_CANNOT_REMOUNT;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.UnmountOptionNotAllowed") == 0)
-                error->code = GDU_DEVICE_ERROR_UNMOUNT_OPTION_NOT_ALLOWED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NoJobInProgress") == 0)
-                error->code = GDU_DEVICE_ERROR_NO_JOB_IN_PROGRESS;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.JobAlreadyInProgress") == 0)
-                error->code = GDU_DEVICE_ERROR_JOB_ALREADY_IN_PROGRESS;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.JobCannotBeCancelled") == 0)
-                error->code = GDU_DEVICE_ERROR_JOB_CANNOT_BE_CANCELLED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.JobWasCancelled") == 0)
-                error->code = GDU_DEVICE_ERROR_JOB_WAS_CANCELLED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotPartition") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_PARTITION;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotPartitioned") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_PARTITIONED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotCrypto") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_CRYPTO;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.CryptoAlreadyUnlocked") == 0)
-                error->code = GDU_DEVICE_ERROR_CRYPTO_ALREADY_UNLOCKED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.IsBusy") == 0)
-                error->code = GDU_DEVICE_ERROR_IS_BUSY;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotDrive") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_DRIVE;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotSmartCapable") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_SMART_CAPABLE;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotLinuxMd") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_LINUX_MD;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NotLinuxMdComponent") == 0)
-                error->code = GDU_DEVICE_ERROR_NOT_LINUX_MD_COMPONENT;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Device.NoSuchDevice") == 0)
-                error->code = GDU_DEVICE_ERROR_NO_SUCH_DEVICE;
-        else
-                matched = FALSE;
-
-        if (matched)
-                error->domain = GDU_DEVICE_ERROR;
-
-        /* either way, prepend the D-Bus exception name to the message */
-        s = g_strdup_printf ("%s: %s", name, error->message);
-        g_free (error->message);
-        error->message = s;
-}
-
 GduPool *
 gdu_device_get_pool (GduDevice *device)
 {
@@ -1192,7 +1111,7 @@ static void
 op_mkfs_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         FilesystemCreateData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
         g_free (data);
@@ -1254,7 +1173,7 @@ static void
 op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_data)
 {
         FilesystemMountData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, mount_path, error, data->user_data);
         g_object_unref (data->device);
@@ -1297,7 +1216,7 @@ static void
 op_unmount_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         FilesystemUnmountData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1336,7 +1255,7 @@ static void
 op_check_cb (DBusGProxy *proxy, gboolean is_clean, GError *error, gpointer user_data)
 {
         FilesystemCheckData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, is_clean, error, data->user_data);
         g_object_unref (data->device);
@@ -1375,7 +1294,7 @@ static void
 op_partition_delete_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         PartitionDeleteData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1424,7 +1343,7 @@ static void
 op_create_partition_cb (DBusGProxy *proxy, char *created_device_object_path, GError *error, gpointer user_data)
 {
         PartitionCreateData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, created_device_object_path, error, data->user_data);
         g_object_unref (data->device);
@@ -1502,7 +1421,7 @@ static void
 op_partition_modify_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         PartitionModifyData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1544,7 +1463,7 @@ static void
 op_create_partition_table_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         CreatePartitionTableData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1595,7 +1514,7 @@ static void
 op_unlock_luks_cb (DBusGProxy *proxy, char *cleartext_object_path, GError *error, gpointer user_data)
 {
         UnlockData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, cleartext_object_path, error, data->user_data);
         g_object_unref (data->device);
@@ -1637,7 +1556,7 @@ static void
 op_change_secret_for_luks_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         ChangeSecretData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1677,7 +1596,7 @@ static void
 op_lock_luks_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         LockLuksData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1716,7 +1635,7 @@ static void
 op_change_filesystem_label_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         FilesystemSetLabelData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1753,7 +1672,7 @@ static void
 op_retrieve_smart_data_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         RetrieveSmartDataData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1793,7 +1712,7 @@ static void
 op_run_smart_selftest_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         DriveSmartInitiateSelftestData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1833,7 +1752,7 @@ static void
 op_stop_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         LinuxMdStopData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1873,7 +1792,7 @@ static void
 op_add_component_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         LinuxMdAddComponentData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1916,7 +1835,7 @@ static void
 op_remove_component_from_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         LinuxMdRemoveComponentData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -1968,7 +1887,7 @@ static void
 op_cancel_job_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
         CancelJobData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
         g_object_unref (data->device);
@@ -2018,7 +1937,7 @@ op_smart_historical_data_cb (DBusGProxy *proxy, GPtrArray *historical_data, GErr
         DriveSmartGetHistoricalDataData *data = user_data;
         GList *ret;
 
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
 
         ret = NULL;
         if (historical_data != NULL && error == NULL)

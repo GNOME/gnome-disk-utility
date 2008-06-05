@@ -61,39 +61,6 @@ struct _GduDeviceClass
         void (*removed)     (GduDevice *device);
 };
 
-typedef enum
-{
-        GDU_DEVICE_ERROR_GENERAL,
-        GDU_DEVICE_ERROR_NOT_SUPPORTED,
-        GDU_DEVICE_ERROR_NOT_MOUNTABLE,
-        GDU_DEVICE_ERROR_MOUNTED,
-        GDU_DEVICE_ERROR_NOT_MOUNTED,
-        GDU_DEVICE_ERROR_NOT_MOUNTED_BY_DK,
-        GDU_DEVICE_ERROR_FSTAB_ENTRY,
-        GDU_DEVICE_ERROR_MOUNT_OPTION_NOT_ALLOWED,
-        GDU_DEVICE_ERROR_FILESYSTEM_BUSY,
-        GDU_DEVICE_ERROR_CANNOT_REMOUNT,
-        GDU_DEVICE_ERROR_UNMOUNT_OPTION_NOT_ALLOWED,
-        GDU_DEVICE_ERROR_NO_JOB_IN_PROGRESS,
-        GDU_DEVICE_ERROR_JOB_ALREADY_IN_PROGRESS,
-        GDU_DEVICE_ERROR_JOB_CANNOT_BE_CANCELLED,
-        GDU_DEVICE_ERROR_JOB_WAS_CANCELLED,
-        GDU_DEVICE_ERROR_NOT_PARTITION,
-        GDU_DEVICE_ERROR_NOT_PARTITIONED,
-        GDU_DEVICE_ERROR_NOT_CRYPTO,
-        GDU_DEVICE_ERROR_CRYPTO_ALREADY_UNLOCKED,
-        GDU_DEVICE_ERROR_CRYPTO_NOT_UNLOCKED,
-        GDU_DEVICE_ERROR_IS_BUSY,
-        GDU_DEVICE_ERROR_NOT_DRIVE,
-        GDU_DEVICE_ERROR_NOT_SMART_CAPABLE,
-        GDU_DEVICE_ERROR_NOT_LINUX_MD,
-        GDU_DEVICE_ERROR_NOT_LINUX_MD_COMPONENT,
-        GDU_DEVICE_ERROR_NO_SUCH_DEVICE,
-} GduDeviceError;
-
-#define GDU_DEVICE_ERROR gdu_device_error_quark ()
-GQuark      gdu_device_error_quark           (void);
-
 GType       gdu_device_get_type              (void);
 GduDevice  *gdu_device_new_from_object_path  (GduPool     *pool, const char  *object_path);
 const char *gdu_device_get_object_path       (GduDevice   *device);

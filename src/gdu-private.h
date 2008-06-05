@@ -73,7 +73,7 @@ GduSmartData          * _gdu_smart_data_new            (gpointer data);
 
 GduKnownFilesystem    *_gdu_known_filesystem_new       (gpointer data);
 
-void _gdu_device_fixup_error (GError *error);
+void _gdu_error_fixup (GError *error);
 
 
 #endif /* GDU_PRIVATE_H */

@@ -46,6 +46,7 @@ gnome_disk_utility_SOURCES = 								\
 	gdu-presentable.c			gdu-presentable.h			\
 	gdu-volume-hole.c			gdu-volume-hole.h			\
 	gdu-known-filesystem.c			gdu-known-filesystem.h			\
+	gdu-error.c				gdu-error.h				\
 						gdu-private.h				\
 	$(BUILT_SOURCES)
 

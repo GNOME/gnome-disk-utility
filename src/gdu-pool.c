@@ -1208,7 +1208,7 @@ static void
 op_linux_md_start_cb (DBusGProxy *proxy, char *assembled_array_object_path, GError *error, gpointer user_data)
 {
         LinuxMdStartData *data = user_data;
-        _gdu_device_fixup_error (error);
+        _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->pool, assembled_array_object_path, error, data->user_data);
         g_object_unref (data->pool);

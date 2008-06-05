@@ -1110,13 +1110,14 @@ unlock_op_cb (GduDevice *device,
               gpointer   user_data)
 {
         UnlockData *data = user_data;
-        if (object_path_of_cleartext_device == NULL) {
+        if (error != NULL) {
                 /* retry in idle so the job-spinner can be hidden */
                 g_idle_add (unlock_retry, data);
+                g_error_free (error);
         } else {
                 unlock_data_free (data);
+                g_free (object_path_of_cleartext_device);
         }
-        g_free (object_path_of_cleartext_device);
 }
 
 static void
@@ -1172,7 +1173,7 @@ lock_op_callback (GduDevice *device,
                 gdu_shell_raise_error (data->shell,
                                        data->presentable,
                                        error,
-                                       _("Error locking luks device"));
+                                       _("Error locking encrypted device"));
                 g_error_free (error);
         }
         shell_presentable_free (data);
@@ -1497,7 +1498,7 @@ create_ui_manager (GduShell *shell)
         shell->priv->unlock_action = polkit_gnome_action_new_default ("unlock",
                                                                       shell->priv->pk_unlock_luks_action,
                                                                       _("_Unlock"),
-                                                                      _("Unlock the encrypted LUKS device, making the data available in cleartext"));
+                                                                      _("Unlock the encrypted device, making the data available in cleartext"));
         g_object_set (shell->priv->unlock_action,
                       "auth-label", _("_Unlock..."),
                       "yes-icon-name", "gdu-encrypted-unlock",
@@ -1513,7 +1514,7 @@ create_ui_manager (GduShell *shell)
         shell->priv->lock_action = polkit_gnome_action_new_default ("lock",
                                                                     NULL,
                                                                     _("_Lock"),
-                                                                    _("Lock the encrypted LUKS device, making the cleartext data unavailable"));
+                                                                    _("Lock the encrypted device, making the cleartext data unavailable"));
         g_object_set (shell->priv->lock_action,
                       "auth-label", _("_Lock..."),
                       "yes-icon-name", "gdu-encrypted-lock",

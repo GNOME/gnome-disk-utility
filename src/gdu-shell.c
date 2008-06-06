@@ -1586,31 +1586,31 @@ create_polkit_actions (GduShell *shell)
 
         shell->priv->pk_mount_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_mount_action,
-                                     "org.freedesktop.devicekit.disks.mount");
+                                     "org.freedesktop.devicekit.disks.filesystem-mount");
 
         shell->priv->pk_mount_system_internal_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_mount_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.mount-system-internal");
+                                     "org.freedesktop.devicekit.disks.filesystem-mount-system-internal");
 
         shell->priv->pk_unmount_others_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_unmount_others_action,
-                                     "org.freedesktop.devicekit.disks.unmount-others");
+                                     "org.freedesktop.devicekit.disks.filesystem-unmount-others");
 
         shell->priv->pk_unmount_others_system_internal_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_unmount_others_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.unmount-others-system-internal");
+                                     "org.freedesktop.devicekit.disks.filesystem-unmount-others-system-internal");
 
         shell->priv->pk_unlock_luks_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_unlock_luks_action,
-                                     "org.freedesktop.devicekit.disks.unlock-encrypted");
+                                     "org.freedesktop.devicekit.disks.luks-unlock");
 
         shell->priv->pk_lock_luks_others_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_lock_luks_others_action,
-                                     "org.freedesktop.devicekit.disks.lock-encrypted-others");
+                                     "org.freedesktop.devicekit.disks.luks-lock-others");
 
         shell->priv->pk_lock_luks_others_system_internal_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_lock_luks_others_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.lock-encrypted-others-system-internal");
+                                     "org.freedesktop.devicekit.disks.luks-lock-others-system-internal");
 
         shell->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_linux_md_action,

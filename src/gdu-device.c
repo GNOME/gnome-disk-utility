@@ -450,16 +450,6 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (GduDevice, gdu_device, G_TYPE_OBJECT);
 
-GQuark
-gdu_device_error_quark (void)
-{
-        static GQuark ret = 0;
-        if (ret == 0) {
-                ret = g_quark_from_static_string ("gdu-device-error-quark");
-        }
-        return ret;
-}
-
 GduPool *
 gdu_device_get_pool (GduDevice *device)
 {

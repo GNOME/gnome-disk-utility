@@ -49,6 +49,7 @@ struct _GduSectionActivatableDrivePrivate
 #endif
 
         PolKitAction *pk_linux_md_action;
+        PolKitAction *pk_linux_md_system_internal_action;
 
         PolKitGnomeAction *attach_action;
         PolKitGnomeAction *detach_action;
@@ -517,15 +518,32 @@ linux_md_buttons_update (GduSectionActivatableDrive *section)
                 }
         }
 
+        g_object_set (section->priv->attach_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                      section->priv->pk_linux_md_system_internal_action :
+                      section->priv->pk_linux_md_action,
+                      NULL);
+
+        g_object_set (section->priv->detach_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                      section->priv->pk_linux_md_system_internal_action :
+                      section->priv->pk_linux_md_action,
+                      NULL);
+
+        g_object_set (section->priv->add_action,
+                      "polkit-action",
+                      gdu_device_is_system_internal (device) ?
+                      section->priv->pk_linux_md_system_internal_action :
+                      section->priv->pk_linux_md_action,
+                      NULL);
+
+
 out:
         polkit_gnome_action_set_sensitive (section->priv->attach_action, show_add_to_array_button);
         polkit_gnome_action_set_sensitive (section->priv->detach_action, show_remove_from_array_button);
         polkit_gnome_action_set_sensitive (section->priv->add_action, show_add_new_to_array_button);
-#if 0
-        gtk_widget_set_sensitive (section->priv->linux_md_add_to_array_button, show_add_to_array_button);
-        gtk_widget_set_sensitive (section->priv->linux_md_add_new_to_array_button, show_add_new_to_array_button);
-        gtk_widget_set_sensitive (section->priv->linux_md_remove_from_array_button, show_remove_from_array_button);
-#endif
 
         g_free (component_objpath);
         if (device != NULL)
@@ -806,6 +824,7 @@ static void
 gdu_section_activatable_drive_finalize (GduSectionActivatableDrive *section)
 {
         polkit_action_unref (section->priv->pk_linux_md_action);
+        polkit_action_unref (section->priv->pk_linux_md_system_internal_action);
         g_object_unref (section->priv->attach_action);
         g_object_unref (section->priv->detach_action);
         g_object_unref (section->priv->add_action);
@@ -843,6 +862,10 @@ gdu_section_activatable_drive_init (GduSectionActivatableDrive *section)
         section->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_linux_md_action,
                                      "org.freedesktop.devicekit.disks.linux-md");
+
+        section->priv->pk_linux_md_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (section->priv->pk_linux_md_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.linux-md-system-internal");
 
         gtk_box_set_spacing (GTK_BOX (section), 8);
 

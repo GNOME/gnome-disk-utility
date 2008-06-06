@@ -1324,15 +1324,15 @@ gdu_section_health_init (GduSectionHealth *section)
 
         section->priv->pk_smart_refresh_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_smart_refresh_action,
-                                     "org.freedesktop.devicekit.disks.smart-refresh");
+                                     "org.freedesktop.devicekit.disks.drive-smart-refresh");
 
         section->priv->pk_smart_retrieve_historical_data_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_smart_retrieve_historical_data_action,
-                                     "org.freedesktop.devicekit.disks.smart-retrieve-historical-data");
+                                     "org.freedesktop.devicekit.disks.drive-smart-retrieve-historical-data");
 
         section->priv->pk_smart_selftest_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_smart_selftest_action,
-                                     "org.freedesktop.devicekit.disks.smart-selftest");
+                                     "org.freedesktop.devicekit.disks.drive-smart-selftest");
 
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Health</b>"));

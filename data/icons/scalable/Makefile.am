@@ -11,7 +11,11 @@ icon_DATA =				\
 	gdu-smart-failing.svg		\
 	gdu-smart-threshold.svg		\
 	gdu-smart-healthy.svg		\
-	gdu-smart-unknown.svg
+	gdu-smart-unknown.svg		\
+	gdu-check-disk.svg		\
+	gdu-info.svg			\
+	gdu-error.svg			\
+	gdu-warning.svg
 
 EXTRA_DIST = \
 	$(icon_DATA)

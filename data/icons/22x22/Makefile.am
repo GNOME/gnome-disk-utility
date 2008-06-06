@@ -11,7 +11,11 @@ icon_DATA =				\
 	gdu-smart-failing.png		\
 	gdu-smart-threshold.png		\
 	gdu-smart-healthy.png		\
-	gdu-smart-unknown.png
+	gdu-smart-unknown.png		\
+	gdu-check-disk.png		\
+	gdu-info.png			\
+	gdu-error.png			\
+	gdu-warning.png
 
 EXTRA_DIST = \
 	$(icon_DATA)

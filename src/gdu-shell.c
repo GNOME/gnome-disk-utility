@@ -1437,10 +1437,10 @@ create_ui_manager (GduShell *shell)
                                                                     _("Check the file system"));
         g_object_set (shell->priv->fsck_action,
                       "auth-label", _("_Check File System..."),
-                      "yes-icon-name", GTK_STOCK_FIND, /* TODO: better icon */
-                      "no-icon-name", GTK_STOCK_FIND,
-                      "auth-icon-name", GTK_STOCK_FIND,
-                      "self-blocked-icon-name", GTK_STOCK_FIND,
+                      "yes-icon-name", "gdu-check-disk",
+                      "no-icon-name", "gdu-check-disk",
+                      "auth-icon-name", "gdu-check-disk",
+                      "self-blocked-icon-name", "gdu-check-disk",
                       NULL);
         g_signal_connect (shell->priv->fsck_action, "activate", G_CALLBACK (fsck_action_callback), shell);
         gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->fsck_action));

@@ -192,12 +192,15 @@ gdu_volume_get_name (GduPresentable *presentable)
                 } else if (strcmp (usage, "partitiontable") == 0) {
                         result = g_strdup_printf (_("%s Partition Table"), strsize);
                 } else if (strcmp (usage, "raid") == 0) {
-                        /* TODO: zero in on whether it's RAID or LVM */
-                        if (label != NULL && strlen (label) > 0) {
-                                /* RAID component; the label is the array name */
-                                result = g_strdup_printf (_("%s RAID (%s)"), strsize, label);
+                        if (strcmp (type, "LVM2_member") == 0) {
+                                result = g_strdup_printf (_("%s LVM2 Physical Volume"), strsize);
                         } else {
-                                result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                if (label != NULL && strlen (label) > 0) {
+                                        /* RAID component; the label is the array name */
+                                        result = g_strdup_printf (_("%s RAID (%s)"), strsize, label);
+                                } else {
+                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                }
                         }
                 } else if (strcmp (usage, "other") == 0) {
                         if (strcmp (type, "swap") == 0) {

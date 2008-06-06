@@ -176,6 +176,16 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 } else {
                         s = g_strdup (_("swap"));
                 }
+        } else if (strcmp (fstype, "LVM2_member") == 0) {
+                if (long_string) {
+                        if (strlen (fsversion) > 0)
+                                s = g_strdup_printf (_("LVM2 Physical Volume (version %s)"), fsversion);
+                        else
+                                s = g_strdup_printf (_("LVM2 Physical Volume"));
+                } else {
+                        s = g_strdup (_("lvm2_pv"));
+                }
+
         } else if (strcmp (fstype, "linux_raid_member") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)

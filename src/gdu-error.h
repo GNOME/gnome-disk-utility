@@ -23,6 +23,7 @@
 #define GDU_ERROR_H
 
 #include <glib-object.h>
+#include <polkit/polkit.h>
 
 typedef enum
 {
@@ -35,7 +36,6 @@ typedef enum
         GDU_ERROR_NOT_CANCELLABLE,
         GDU_ERROR_NOT_PARTITION,
         GDU_ERROR_NOT_PARTITION_TABLE,
-        GDU_ERROR_NOT_LABELED,
         GDU_ERROR_NOT_FILESYSTEM,
         GDU_ERROR_NOT_LUKS,
         GDU_ERROR_NOT_LOCKED,
@@ -50,5 +50,9 @@ typedef enum
 
 #define GDU_ERROR gdu_error_quark ()
 GQuark      gdu_error_quark           (void);
+
+gboolean gdu_error_check_polkit_not_authorized (GError        *error,
+                                                PolKitAction **pk_action,
+                                                PolKitResult  *pk_result);
 
 #endif /* GDU_ERROR_H */

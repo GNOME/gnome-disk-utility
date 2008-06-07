@@ -240,6 +240,8 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Stopping RAID Array"));
         } else if (strcmp (job_id, "DriveSmartInitiateSelftest") == 0) {
                 s = g_strdup (_("Running S.M.A.R.T. Self Test"));
+        } else if (strcmp (job_id, "DriveEject") == 0) {
+                s = g_strdup (_("Ejecting Media"));
         } else {
                 s = g_strdup_printf ("%s", job_id);
         }
@@ -1016,34 +1018,6 @@ gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const 
         }
 
         return g_strdup (type);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-/**
- * gdu_util_find_toplevel_presentable:
- * @presentable: a #GduPresentable.
- *
- * Finds the top-level presentable for a given presentable.
- *
- * Returns: The presentable; caller must unref when done with it
- **/
-GduPresentable *
-gdu_util_find_toplevel_presentable (GduPresentable *presentable)
-{
-        GduPresentable *parent;
-        GduPresentable *maybe_parent;
-
-        parent = presentable;
-        do {
-                maybe_parent = gdu_presentable_get_enclosing_presentable (parent);
-                if (maybe_parent != NULL) {
-                        g_object_unref (maybe_parent);
-                        parent = maybe_parent;
-                }
-        } while (maybe_parent != NULL);
-
-        return g_object_ref (parent);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1985,27 +1959,4 @@ gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize si
         g_free (icon_name);
 
         return pixbuf;
-}
-
-gboolean
-gdu_error_is_not_authorized (GError *error,
-                             PolKitAction **pk_action,
-                             PolKitResult *pk_result)
-{
-        gboolean ret;
-
-        g_return_val_if_fail (error != NULL && pk_action != NULL && pk_result != NULL, FALSE);
-
-        ret = FALSE;
-
-        if (error->domain != DBUS_GERROR ||
-            error->code != DBUS_GERROR_REMOTE_EXCEPTION)
-                goto out;
-
-        ret = polkit_dbus_error_parse_from_strings (dbus_g_error_get_name (error),
-                                                    error->message,
-                                                    pk_action,
-                                                    pk_result);
-out:
-        return ret;
 }

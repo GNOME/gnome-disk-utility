@@ -130,7 +130,7 @@ gdu_volume_hole_get_icon_name (GduPresentable *presentable)
         d = NULL;
         name = NULL;
 
-        p = gdu_util_find_toplevel_presentable (presentable);
+        p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)
                 goto out;
 

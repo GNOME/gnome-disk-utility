@@ -77,6 +77,8 @@ struct _GduShellPrivate
         PolKitAction *pk_mount_system_internal_action;
         PolKitAction *pk_unmount_others_action;
         PolKitAction *pk_unmount_others_system_internal_action;
+        PolKitAction *pk_eject_action;
+        PolKitAction *pk_eject_system_internal_action;
         PolKitAction *pk_unlock_luks_action;
         PolKitAction *pk_lock_luks_others_action;
         PolKitAction *pk_lock_luks_others_system_internal_action;
@@ -202,7 +204,7 @@ details_update (GduShell *shell)
 
         device = gdu_presentable_get_device (presentable);
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
         if (toplevel_presentable != NULL)
                 toplevel_device = gdu_presentable_get_device (toplevel_presentable);
 
@@ -211,7 +213,6 @@ details_update (GduShell *shell)
 
         pixbuf = NULL;
         if (icon_name != NULL) {
-
                 pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                    icon_name,
                                                    96,
@@ -626,7 +627,9 @@ gdu_shell_update (GduShell *shell)
 
                 if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
                     gdu_device_is_removable (device) &&
-                    gdu_device_is_media_available (device)) {
+                    gdu_device_is_media_available (device) &&
+                    (gdu_device_drive_get_is_media_ejectable (device) ||
+                     gdu_device_drive_get_requires_eject (device))) {
                         can_eject = TRUE;
                 }
         }
@@ -741,6 +744,17 @@ gdu_shell_update (GduShell *shell)
                         g_object_set (shell->priv->unmount_action,
                                       "polkit-action",
                                       action,
+                                      NULL);
+                }
+        }
+
+        if (can_eject) {
+                if (device != NULL) {
+                        g_object_set (shell->priv->eject_action,
+                                      "polkit-action",
+                                      gdu_device_is_system_internal (device) ?
+                                      shell->priv->pk_eject_system_internal_action :
+                                      shell->priv->pk_eject_action,
                                       NULL);
                 }
         }
@@ -1033,11 +1047,38 @@ unmount_action_callback (GtkAction *action, gpointer user_data)
         }
 }
 
+
+static void
+eject_op_callback (GduDevice *device,
+                   GError    *error,
+                   gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error ejecting device"));
+                g_error_free (error);
+        }
+        shell_presentable_free (data);
+}
+
 static void
 eject_action_callback (GtkAction *action, gpointer user_data)
 {
-        g_warning ("todo: eject");
+        GduShell *shell = GDU_SHELL (user_data);
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                gdu_device_op_drive_eject (device,
+                                           eject_op_callback,
+                                           shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                g_object_unref (device);
+        }
 }
+
 
 static void unlock_action_do (GduShell *shell,
                               GduPresentable *presentable,
@@ -1480,7 +1521,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->eject_action = polkit_gnome_action_new_default ("eject",
-                                                                     NULL, /* TODO */
+                                                                     NULL,
                                                                      _("_Eject"),
                                                                      _("Eject media from the device"));
         g_object_set (shell->priv->eject_action,

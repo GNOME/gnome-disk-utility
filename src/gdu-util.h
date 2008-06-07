@@ -20,7 +20,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <polkit-gnome/polkit-gnome.h>
 #include "gdu-presentable.h"
 #include "gdu-pool.h"
 
@@ -86,10 +85,6 @@ char      *gdu_util_part_table_type_combo_box_get_selected   (GtkWidget  *combo_
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-GduPresentable *gdu_util_find_toplevel_presentable (GduPresentable *presentable);
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 char *gdu_util_dialog_ask_for_secret (GtkWidget       *parent_window,
                                       GduPresentable  *presentable,
                                       gboolean         bypass_keyring,
@@ -118,10 +113,5 @@ gboolean gdu_util_delete_secret (GduDevice *device);
 gboolean gdu_util_have_secret (GduDevice *device);
 
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
-
-gboolean
-gdu_error_is_not_authorized (GError *error,
-                             PolKitAction **pk_action,
-                             PolKitResult *pk_result);
 
 #endif /* GDU_UTIL_H */

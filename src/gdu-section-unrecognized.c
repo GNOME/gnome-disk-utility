@@ -207,7 +207,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
 
         pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
         if (toplevel_presentable == NULL) {
                 g_warning ("%s: no toplevel presentable",  __FUNCTION__);
         }

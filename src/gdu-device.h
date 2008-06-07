@@ -141,6 +141,8 @@ const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
+gboolean gdu_device_drive_get_is_media_ejectable (GduDevice *device);
+gboolean gdu_device_drive_get_requires_eject (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_recordable (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_rewritable (GduDevice *device);
@@ -400,5 +402,15 @@ void gdu_device_drive_smart_get_historical_data (GduDevice                      
 
 GList *gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
                                                         GError    **error);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceDriveEjectCompletedFunc) (GduDevice    *device,
+                                                  GError       *error,
+                                                  gpointer      user_data);
+
+void gdu_device_op_drive_eject                 (GduDevice                        *device,
+                                                GduDeviceDriveEjectCompletedFunc  callback,
+                                                gpointer                          user_data);
 
 #endif /* GDU_DEVICE_H */

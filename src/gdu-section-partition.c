@@ -92,7 +92,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (
+        toplevel_presentable = gdu_presentable_get_toplevel (
                 gdu_section_get_presentable (GDU_SECTION (section)));
         if (toplevel_presentable == NULL) {
                 g_warning ("%s: no toplevel presentable",  __FUNCTION__);

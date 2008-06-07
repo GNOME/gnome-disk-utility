@@ -108,6 +108,8 @@ typedef struct
         guint64  drive_connection_speed;
         char   **drive_media_compatibility;
         char    *drive_media;
+        gboolean drive_is_media_ejectable;
+        gboolean drive_requires_eject;
 
         gboolean optical_disc_is_recordable;
         gboolean optical_disc_is_rewritable;
@@ -281,6 +283,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_media_compatibility = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "drive-media") == 0)
                 props->drive_media = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "drive-is-media-ejectable") == 0)
+                props->drive_is_media_ejectable = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-requires-eject") == 0)
+                props->drive_requires_eject = g_value_get_boolean (value);
 
         else if (strcmp (key, "optical-disc-is-recordable") == 0)
                 props->optical_disc_is_recordable = g_value_get_boolean (value);
@@ -953,6 +959,18 @@ const char *
 gdu_device_drive_get_media (GduDevice *device)
 {
         return device->priv->props->drive_media;
+}
+
+gboolean
+gdu_device_drive_get_is_media_ejectable (GduDevice *device)
+{
+        return device->priv->props->drive_is_media_ejectable;
+}
+
+gboolean
+gdu_device_drive_get_requires_eject (GduDevice *device)
+{
+        return device->priv->props->drive_requires_eject;
 }
 
 gboolean
@@ -2063,4 +2081,43 @@ gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
         ret = op_smart_historical_data_compute_ret (historical_data);
 out:
         return ret;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceDriveEjectCompletedFunc callback;
+        gpointer user_data;
+} DriveEjectData;
+
+static void
+op_eject_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        DriveEjectData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_drive_eject (GduDevice                        *device,
+                           GduDeviceDriveEjectCompletedFunc  callback,
+                           gpointer                          user_data)
+{
+        char *options[16];
+        DriveEjectData *data;
+
+        data = g_new0 (DriveEjectData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+        options[0] = NULL;
+
+        org_freedesktop_DeviceKit_Disks_Device_drive_eject_async (device->priv->proxy,
+                                                                  (const char **) options,
+                                                                  op_eject_cb,
+                                                                  data);
 }

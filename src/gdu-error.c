@@ -72,8 +72,6 @@ _gdu_error_fixup (GError *error)
                 error->code = GDU_ERROR_NOT_PARTITION;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotPartitionTable") == 0)
                 error->code = GDU_ERROR_NOT_PARTITION_TABLE;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotLabeled") == 0)
-                error->code = GDU_ERROR_NOT_LABELED;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotFilesystem") == 0)
                 error->code = GDU_ERROR_NOT_FILESYSTEM;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotLuks") == 0)
@@ -104,4 +102,27 @@ _gdu_error_fixup (GError *error)
         s = g_strdup_printf ("%s: %s", name, error->message);
         g_free (error->message);
         error->message = s;
+}
+
+gboolean
+gdu_error_check_polkit_not_authorized (GError *error,
+                                       PolKitAction **pk_action,
+                                       PolKitResult *pk_result)
+{
+        gboolean ret;
+
+        g_return_val_if_fail (error != NULL && pk_action != NULL && pk_result != NULL, FALSE);
+
+        ret = FALSE;
+
+        if (error->domain != DBUS_GERROR ||
+            error->code != DBUS_GERROR_REMOTE_EXCEPTION)
+                goto out;
+
+        ret = polkit_dbus_error_parse_from_strings (dbus_g_error_get_name (error),
+                                                    error->message,
+                                                    pk_action,
+                                                    pk_result);
+out:
+        return ret;
 }

@@ -177,7 +177,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
 
         pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
@@ -395,7 +395,7 @@ update_warning (GduSectionUnallocated *section)
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
@@ -465,7 +465,7 @@ update (GduSectionUnallocated *section)
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
         device = gdu_presentable_get_device (presentable);
 
-        toplevel_presentable = gdu_util_find_toplevel_presentable (presentable);
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
         toplevel_device = gdu_presentable_get_device (toplevel_presentable);
         if (toplevel_device == NULL) {
                 g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);

@@ -208,3 +208,31 @@ gdu_presentable_is_recognized (GduPresentable *presentable)
 
   return (* iface->is_recognized) (presentable);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * gdu_presentable_find_toplevel:
+ * @presentable: a #GduPresentable.
+ *
+ * Gets the top-level presentable for a given presentable.
+ *
+ * Returns: a #GduPresentable; caller must unref the object when done with it
+ **/
+GduPresentable *
+gdu_presentable_get_toplevel (GduPresentable *presentable)
+{
+        GduPresentable *parent;
+        GduPresentable *maybe_parent;
+
+        parent = presentable;
+        do {
+                maybe_parent = gdu_presentable_get_enclosing_presentable (parent);
+                if (maybe_parent != NULL) {
+                        g_object_unref (maybe_parent);
+                        parent = maybe_parent;
+                }
+        } while (maybe_parent != NULL);
+
+        return g_object_ref (parent);
+}

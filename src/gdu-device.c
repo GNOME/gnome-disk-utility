@@ -55,6 +55,7 @@ typedef struct
         gboolean device_is_media_available;
         gboolean device_is_read_only;
         gboolean device_is_drive;
+        gboolean device_is_optical_disc;
         gboolean device_is_luks_cleartext;
         gboolean device_is_mounted;
         gboolean device_is_busy;
@@ -107,6 +108,15 @@ typedef struct
         guint64  drive_connection_speed;
         char   **drive_media_compatibility;
         char    *drive_media;
+
+        gboolean optical_disc_is_recordable;
+        gboolean optical_disc_is_rewritable;
+        gboolean optical_disc_is_blank;
+        gboolean optical_disc_is_appendable;
+        gboolean optical_disc_is_closed;
+        gboolean optical_disc_has_audio;
+        guint optical_disc_num_tracks;
+        guint optical_disc_num_sessions;
 
         gboolean               drive_smart_is_capable;
         gboolean               drive_smart_is_enabled;
@@ -164,6 +174,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_read_only = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-drive") == 0)
                 props->device_is_drive = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-optical-disc") == 0)
+                props->device_is_optical_disc = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-luks-cleartext") == 0)
                 props->device_is_luks_cleartext = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-linux-md-component") == 0)
@@ -269,6 +281,23 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_media_compatibility = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "drive-media") == 0)
                 props->drive_media = g_strdup (g_value_get_string (value));
+
+        else if (strcmp (key, "optical-disc-is-recordable") == 0)
+                props->optical_disc_is_recordable = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-is-rewritable") == 0)
+                props->optical_disc_is_rewritable = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-is-blank") == 0)
+                props->optical_disc_is_blank = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-is-appendable") == 0)
+                props->optical_disc_is_appendable = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-is-closed") == 0)
+                props->optical_disc_is_closed = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-has-audio") == 0)
+                props->optical_disc_has_audio = g_value_get_boolean (value);
+        else if (strcmp (key, "optical-disc-num-tracks") == 0)
+                props->optical_disc_num_tracks = g_value_get_uint (value);
+        else if (strcmp (key, "optical-disc-num-sessions") == 0)
+                props->optical_disc_num_sessions = g_value_get_uint (value);
 
         else if (strcmp (key, "drive-smart-is-capable") == 0)
                 props->drive_smart_is_capable = g_value_get_boolean (value);
@@ -872,6 +901,12 @@ gdu_device_is_drive (GduDevice *device)
         return device->priv->props->device_is_drive;
 }
 
+gboolean
+gdu_device_is_optical_disc (GduDevice *device)
+{
+        return device->priv->props->device_is_optical_disc;
+}
+
 const char *
 gdu_device_drive_get_vendor (GduDevice *device)
 {
@@ -919,6 +954,55 @@ gdu_device_drive_get_media (GduDevice *device)
 {
         return device->priv->props->drive_media;
 }
+
+gboolean
+gdu_device_optical_disc_get_is_recordable (GduDevice *device)
+{
+        return device->priv->props->optical_disc_is_recordable;
+}
+
+gboolean
+gdu_device_optical_disc_get_is_rewritable (GduDevice *device)
+{
+        return device->priv->props->optical_disc_is_rewritable;
+}
+
+gboolean
+gdu_device_optical_disc_get_is_blank (GduDevice *device)
+{
+        return device->priv->props->optical_disc_is_blank;
+}
+
+gboolean
+gdu_device_optical_disc_get_is_appendable (GduDevice *device)
+{
+        return device->priv->props->optical_disc_is_appendable;
+}
+
+gboolean
+gdu_device_optical_disc_get_is_closed (GduDevice *device)
+{
+        return device->priv->props->optical_disc_is_closed;
+}
+
+gboolean
+gdu_device_optical_disc_get_has_audio (GduDevice *device)
+{
+        return device->priv->props->optical_disc_has_audio;
+}
+
+guint
+gdu_device_optical_disc_get_num_tracks (GduDevice *device)
+{
+        return device->priv->props->optical_disc_num_tracks;
+}
+
+guint
+gdu_device_optical_disc_get_num_sessions (GduDevice *device)
+{
+        return device->priv->props->optical_disc_num_sessions;
+}
+
 
 gboolean
 gdu_device_drive_smart_get_is_capable (GduDevice *device)

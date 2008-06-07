@@ -90,6 +90,7 @@ gboolean gdu_device_is_system_internal (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
 gboolean gdu_device_is_partition_table (GduDevice *device);
 gboolean gdu_device_is_drive (GduDevice *device);
+gboolean gdu_device_is_optical_disc (GduDevice *device);
 gboolean gdu_device_is_luks_cleartext (GduDevice *device);
 gboolean gdu_device_is_linux_md_component (GduDevice *device);
 gboolean gdu_device_is_linux_md (GduDevice *device);
@@ -140,6 +141,15 @@ const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
+
+gboolean gdu_device_optical_disc_get_is_recordable (GduDevice *device);
+gboolean gdu_device_optical_disc_get_is_rewritable (GduDevice *device);
+gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
+gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);
+gboolean gdu_device_optical_disc_get_is_closed (GduDevice *device);
+gboolean gdu_device_optical_disc_get_has_audio (GduDevice *device);
+guint gdu_device_optical_disc_get_num_tracks (GduDevice *device);
+guint gdu_device_optical_disc_get_num_sessions (GduDevice *device);
 
 gboolean gdu_device_drive_smart_get_is_capable (GduDevice *device);
 gboolean gdu_device_drive_smart_get_is_enabled (GduDevice *device);

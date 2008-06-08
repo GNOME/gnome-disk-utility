@@ -28,7 +28,7 @@
 #include <polkit-gnome/polkit-gnome.h>
 
 #include "gdu-pool.h"
-#include "gdu-util.h"
+#include "gdu-ui-util.h"
 #include "gdu-section-unrecognized.h"
 
 struct _GduSectionUnrecognizedPrivate

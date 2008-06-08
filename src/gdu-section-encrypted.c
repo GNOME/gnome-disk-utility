@@ -27,7 +27,7 @@
 #include <math.h>
 
 #include "gdu-pool.h"
-#include "gdu-util.h"
+#include "gdu-ui-util.h"
 #include "gdu-section-encrypted.h"
 
 struct _GduSectionEncryptedPrivate

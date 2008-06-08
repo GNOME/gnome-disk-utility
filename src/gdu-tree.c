@@ -23,7 +23,7 @@
 #include <glib/gi18n.h>
 #include <string.h>
 
-#include "gdu-util.h"
+#include "gdu-ui-util.h"
 #include "gdu-tree.h"
 
 

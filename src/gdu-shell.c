@@ -32,7 +32,7 @@
 #include <libsexy/sexy.h>
 
 #include "gdu-shell.h"
-#include "gdu-util.h"
+#include "gdu-ui-util.h"
 #include "gdu-pool.h"
 #include "gdu-tree.h"
 #include "gdu-drive.h"

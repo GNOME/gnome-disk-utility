@@ -26,7 +26,7 @@
 #if !defined(GDU_POOL_H)
 #define GDU_POOL_H
 
-#include <gdu/gdu-device.h>
+#include <gdu/gdu-shared.h>
 #include <gdu/gdu-presentable.h>
 #include <gdu/gdu-known-filesystem.h>
 
@@ -36,7 +36,6 @@
 #define GDU_IS_POOL(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_POOL))
 #define GDU_IS_POOL_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_POOL))
 #define GDU_POOL_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_POOL, GduPoolClass))
-
 
 typedef struct _GduPoolClass       GduPoolClass;
 

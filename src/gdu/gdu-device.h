@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <glib-object.h>
+#include <gdu/gdu-shared.h>
 #include <gdu/gdu-error.h>
 #include <gdu/gdu-smart-data.h>
 #include <gdu/gdu-process.h>
@@ -41,13 +42,9 @@
 #define GDU_DEVICE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_DEVICE, GduDeviceClass))
 
 typedef struct _GduDeviceClass       GduDeviceClass;
-typedef struct _GduDevice            GduDevice;
 
 struct _GduDevicePrivate;
 typedef struct _GduDevicePrivate     GduDevicePrivate;
-
-struct _GduPool;
-typedef struct _GduPool GduPool;
 
 struct _GduDevice
 {

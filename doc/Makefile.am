@@ -11,7 +11,7 @@ DOC_MODULE=gnome-disk-utility
 DOC_MAIN_SGML_FILE=gnome-disk-utility-docs.xml
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS=--ignore-headers="config.h devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h"
+SCAN_OPTIONS=--ignore-headers="config.h devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h gdu-shared.h"
 # The directory containing the source code. Relative to $(srcdir)
 DOC_SOURCE_DIR=../src/gdu
 
@@ -46,7 +46,7 @@ GTKDOC_LIBS = \
 
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS=--sgml-mode --output-format=xml \
-	     --ignore-files="devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h"
+	     --ignore-files="devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h gdu-shared.h"
 
 # Extra options to supply to gtkdoc-mktmpl
 MKTMPL_OPTIONS=

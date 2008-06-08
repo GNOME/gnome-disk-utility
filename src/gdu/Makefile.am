@@ -22,6 +22,7 @@ libgduincludedir=$(includedir)/gnome-disk-utility/gdu
 
 libgduinclude_HEADERS =              			\
 	gdu.h						\
+	gdu-shared.h					\
 	gdu-activatable-drive.h				\
 	gdu-device.h					\
 	gdu-drive.h					\
@@ -37,6 +38,8 @@ libgduinclude_HEADERS =              			\
 	gdu-volume-hole.h
 
 libgdu_la_SOURCES =                                					\
+						gdu.h					\
+						gdu-shared.h				\
 	gdu-util.h				gdu-util.c				\
 	gdu-pool.c				gdu-pool.h				\
 	gdu-smart-data.c			gdu-smart-data.h			\

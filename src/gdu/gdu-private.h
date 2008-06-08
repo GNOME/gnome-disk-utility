@@ -19,6 +19,10 @@
  * 02111-1307, USA.
  */
 
+#if defined (GNOME_DISK_UTILITY_INSIDE_GDU_H)
+#error "Can't include a private header in the public header file."
+#endif
+
 #ifndef GDU_PRIVATE_H
 #define GDU_PRIVATE_H
 

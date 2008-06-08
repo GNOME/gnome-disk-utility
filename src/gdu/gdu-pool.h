@@ -23,7 +23,7 @@
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#if !defined(GDU_POOL_H)
+#ifndef GDU_POOL_H
 #define GDU_POOL_H
 
 #include <gdu/gdu-shared.h>

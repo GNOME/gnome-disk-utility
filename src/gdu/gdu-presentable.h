@@ -35,6 +35,25 @@
 
 typedef struct _GduPresentable GduPresentable;
 
+
+/**
+ * GduPresentableIface:
+ * @g_iface: The parent interface.
+ * @changed: Signal emitted when the presentable is changed.
+ * @removed: Signal emitted when the presentable is removed. Recipients should release all references to the object.
+ * @job_changed: Signal emitted when the job state on the underlying #GduDevice changes.
+ * @get_device: Returns the underlying #GduDevice.
+ * @get_enclosing_presentable: Returns the #GduPresentable that is the parent or #NULL if there is no parent.
+ * @get_name: Returns a name for the presentable suitable for presentation in an user interface.
+ * @get_icon_name: Returns a name for the icon suitable for display in an user interface.
+ * @get_offset: Returns where the data represented by the presentable starts on the underlying main block device.
+ * @get_size: Returns the size of the presentable or zero if not allocated.
+ * @get_pool: Returns the #GduPool object that the presentable was obtained from.
+ * @is_allocated: Returns whether the presentable is allocated or whether it represents free space.
+ * @is_recognized: Returns whether the contents of the presentable are recognized (e.g. well-known file system type).
+ *
+ * Interface for #GduPresentable implementations.
+ */
 typedef struct _GduPresentableIface    GduPresentableIface;
 
 struct _GduPresentableIface

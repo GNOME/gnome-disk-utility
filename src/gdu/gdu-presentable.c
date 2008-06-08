@@ -26,6 +26,33 @@
 
 #include "gdu-presentable.h"
 
+/**
+ * SECTION:gdu-presentable
+ * @title: GduPresentable
+ * @short_description: Interface for devices presentable to the end user.
+ *
+ * All storage devices in <literal>UNIX</literal> and <literal>UNIX</literal>-like
+ * operating systems are mostly represented by so-called <literal>block</literal>
+ * devices at the kernel-level. This is abstracted mostly 1-1 in the #GduDevice
+ * class.
+ *
+ * However, from an user-interface point of view, it's useful to make
+ * a finer-grained distinction; for example it's useful to make a
+ * distinction between drives (e.g. a phyiscal hard disk, optical
+ * drives) and volumes (e.g. a mountable file system or other contents
+ * of which several may reside on the same drive if it's partitioned)
+ * or just plain unallocated space on a partition disk.
+ *
+ * As such, classes encapsulating aspects of a UNIX block device (such
+ * as it being drive, volume, empty space) that are interesting to
+ * present in the user interface all implement the #GduPresentable
+ * interface. This interface provides lowest-common denominator
+ * functionality assisting in the creation of user interfaces; name
+ * and icons are easily available as well as hierarchical grouping
+ * in terms of parent/child relationships.
+ **/
+
+
 static void gdu_presentable_base_init (gpointer g_class);
 static void gdu_presentable_class_init (gpointer g_class,
                                         gpointer class_data);
@@ -101,6 +128,15 @@ gdu_presentable_base_init (gpointer g_class)
     }
 }
 
+/**
+ * gdu_presentable_get_device:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets the underlying device for @presentable if one is available.
+ *
+ * Returns: A #GduDevice or #NULL if there are no underlying device of
+ * @presentable. Caller must unref the object when done with it.
+ **/
 GduDevice *
 gdu_presentable_get_device (GduPresentable *presentable)
 {
@@ -113,6 +149,17 @@ gdu_presentable_get_device (GduPresentable *presentable)
   return (* iface->get_device) (presentable);
 }
 
+/**
+ * gdu_presentable_get_enclosing_presentable:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets the #GduPresentable that is the parent of @presentable or
+ * #NULL if there is no parent.
+ *
+ * Returns: The #GduPresentable that is a parent of @presentable or
+ * #NULL if @presentable is the top-most presentable already. Caller
+ * must unref the object.
+ **/
 GduPresentable *
 gdu_presentable_get_enclosing_presentable (GduPresentable *presentable)
 {
@@ -125,6 +172,15 @@ gdu_presentable_get_enclosing_presentable (GduPresentable *presentable)
   return (* iface->get_enclosing_presentable) (presentable);
 }
 
+/**
+ * gdu_presentable_get_name:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a name for @presentable suitable for presentation in an user
+ * interface.
+ *
+ * Returns: The name. Caller must free the string with g_free().
+ **/
 char *
 gdu_presentable_get_name (GduPresentable *presentable)
 {
@@ -137,6 +193,14 @@ gdu_presentable_get_name (GduPresentable *presentable)
   return (* iface->get_name) (presentable);
 }
 
+/**
+ * gdu_presentable_get_icon_name:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a name for the icon suitable for display in an user interface.
+ *
+ * Returns: The icon name. Caller must free the string with g_free().
+ **/
 char *
 gdu_presentable_get_icon_name (GduPresentable *presentable)
 {
@@ -149,6 +213,15 @@ gdu_presentable_get_icon_name (GduPresentable *presentable)
   return (* iface->get_icon_name) (presentable);
 }
 
+/**
+ * gdu_presentable_get_offset:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets where the data represented by the presentable starts on the
+ * underlying main block device
+ *
+ * Returns: Offset of @presentable or 0 if @presentable has no underlying device.
+ **/
 guint64
 gdu_presentable_get_offset (GduPresentable *presentable)
 {
@@ -161,6 +234,14 @@ gdu_presentable_get_offset (GduPresentable *presentable)
   return (* iface->get_offset) (presentable);
 }
 
+/**
+ * gdu_presentable_get_size:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets the size of @presentable.
+ *
+ * Returns: The size of @presentable or 0 if @presentable has no underlying device.
+ **/
 guint64
 gdu_presentable_get_size (GduPresentable *presentable)
 {
@@ -173,6 +254,14 @@ gdu_presentable_get_size (GduPresentable *presentable)
   return (* iface->get_size) (presentable);
 }
 
+/**
+ * gdu_presentable_get_pool:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets the #GduPool that @presentable stems from.
+ *
+ * Returns: A #GduPool. Caller must unref object when done with it.
+ **/
 GduPool *
 gdu_presentable_get_pool (GduPresentable *presentable)
 {
@@ -185,6 +274,14 @@ gdu_presentable_get_pool (GduPresentable *presentable)
   return (* iface->get_pool) (presentable);
 }
 
+/**
+ * gdu_presentable_is_allocated:
+ * @presentable: A #GduPresentable.
+ *
+ * Determines if @presentable represents an underlying block device with data.
+ *
+ * Returns: Whether @presentable is allocated.
+ **/
 gboolean
 gdu_presentable_is_allocated (GduPresentable *presentable)
 {
@@ -197,6 +294,15 @@ gdu_presentable_is_allocated (GduPresentable *presentable)
   return (* iface->is_allocated) (presentable);
 }
 
+/**
+ * gdu_presentable_is_recognized:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets whether the contents of @presentable are recognized; e.g. if
+ * it's a file system, encrypted data or swap space.
+ *
+ * Returns: Whether @presentable is recognized.
+ **/
 gboolean
 gdu_presentable_is_recognized (GduPresentable *presentable)
 {
@@ -212,12 +318,13 @@ gdu_presentable_is_recognized (GduPresentable *presentable)
 /* ---------------------------------------------------------------------------------------------------- */
 
 /**
- * gdu_presentable_find_toplevel:
- * @presentable: a #GduPresentable.
+ * gdu_presentable_get_toplevel:
+ * @presentable: A #GduPresentable.
  *
  * Gets the top-level presentable for a given presentable.
  *
- * Returns: a #GduPresentable; caller must unref the object when done with it
+ * Returns: A #GduPresentable or #NULL if @presentable is the top-most presentable. Caller must
+ * unref the object when done with it
  **/
 GduPresentable *
 gdu_presentable_get_toplevel (GduPresentable *presentable)

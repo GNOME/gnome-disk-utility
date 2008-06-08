@@ -7,6 +7,17 @@ AC_CONFIG_HEADERS([config.h])
 
 AM_MAINTAINER_MODE
 
+# libtool versioning - this applies to all libraries in this package
+#
+# See http://sources.redhat.com/autobook/autobook/autobook_91.html#SEC91 for details
+#
+LT_CURRENT=0
+LT_REVISION=0
+LT_AGE=0
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
 AC_PROG_CC
 AC_ISC_POSIX
 AC_HEADER_STDC
@@ -102,6 +113,7 @@ GNOME_MAINTAINER_MODE_DEFINES
 # ***************************
 
 GLIB2_REQUIRED=2.16
+GOBJECT2_REQUIRED=2.16
 GIO2_REQUIRED=2.16
 DBUS_GLIB_REQUIRED=0.74
 POLKIT_DBUS_REQUIRED=0.7
@@ -114,6 +126,7 @@ SCROLLKEEPER_REQUIRED=0.3.14
 INTLTOOL_REQUIRED=0.35.0
 
 PKG_CHECK_MODULES(GLIB2, glib-2.0 >= $GLIB2_REQUIRED)
+PKG_CHECK_MODULES(GOBJECT2, gobject-2.0 >= $GOBJECT2_REQUIRED)
 PKG_CHECK_MODULES(GIO2, gio-2.0 >= $GIO2_REQUIRED)
 PKG_CHECK_MODULES(GIO_UNIX2, gio-unix-2.0 >= $GIO2_REQUIRED)
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
@@ -154,6 +167,8 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
+src/gdu/Makefile
+src/gdu/gdu.pc
 po/Makefile.in
 data/Makefile
 data/icons/Makefile

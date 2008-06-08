@@ -27,10 +27,9 @@
 #include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
-#include "gdu-pool.h"
+#include <gdu/gdu.h>
 #include "gdu-ui-util.h"
 #include "gdu-tree.h"
-#include "gdu-activatable-drive.h"
 #include "gdu-section-activatable-drive.h"
 
 struct _GduSectionActivatableDrivePrivate

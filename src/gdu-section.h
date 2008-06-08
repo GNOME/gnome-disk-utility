@@ -20,8 +20,8 @@
  */
 
 #include <gtk/gtk.h>
+#include <gdu/gdu.h>
 #include "gdu-shell.h"
-#include "gdu-presentable.h"
 
 #ifndef GDU_SECTION_H
 #define GDU_SECTION_H

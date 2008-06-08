@@ -20,9 +20,7 @@
  */
 
 #include <gtk/gtk.h>
-#include "gdu-presentable.h"
-#include "gdu-pool.h"
-#include "gdu-util.h"
+#include <gdu/gdu.h>
 
 #ifndef GDU_UI_UTIL_H
 #define GDU_UI_UTIL_H

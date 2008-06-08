@@ -27,7 +27,7 @@
 #include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
-#include "gdu-pool.h"
+#include <gdu/gdu.h>
 #include "gdu-ui-util.h"
 #include "gdu-section-unallocated.h"
 

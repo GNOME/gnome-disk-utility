@@ -19,6 +19,10 @@
  * 02111-1307, USA.
  */
 
+#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
+
 #ifndef GDU_PROCESS_H
 #define GDU_PROCESS_H
 

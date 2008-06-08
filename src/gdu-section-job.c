@@ -27,8 +27,7 @@
 #include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
-#include "gdu-pool.h"
-#include "gdu-util.h"
+#include <gdu/gdu.h>
 #include "gdu-section-job.h"
 
 struct _GduSectionJobPrivate

@@ -26,8 +26,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "gdu-pool.h"
-#include "gdu-util.h"
+#include <gdu/gdu.h>
 #include "gdu-section.h"
 
 struct _GduSectionPrivate

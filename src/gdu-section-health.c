@@ -27,9 +27,8 @@
 #include <math.h>
 #include <polkit-gnome/polkit-gnome.h>
 
+#include <gdu/gdu.h>
 #include "gdu-time-label.h"
-#include "gdu-pool.h"
-#include "gdu-util.h"
 #include "gdu-section-health.h"
 
 struct _GduSectionHealthPrivate

@@ -19,10 +19,14 @@
  * 02111-1307, USA.
  */
 
+#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
+
 #ifndef GDU_VOLUME_HOLE_H
 #define GDU_VOLUME_HOLE_H
 
-#include "gdu-device.h"
+#include <gdu/gdu-device.h>
 
 #define GDU_TYPE_VOLUME_HOLE             (gdu_volume_hole_get_type ())
 #define GDU_VOLUME_HOLE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_VOLUME_HOLE, GduVolumeHole))

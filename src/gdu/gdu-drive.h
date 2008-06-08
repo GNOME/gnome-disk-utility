@@ -19,10 +19,14 @@
  * 02111-1307, USA.
  */
 
+#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
+
 #ifndef GDU_DRIVE_H
 #define GDU_DRIVE_H
 
-#include "gdu-device.h"
+#include <gdu/gdu-device.h>
 
 #define GDU_TYPE_DRIVE             (gdu_drive_get_type ())
 #define GDU_DRIVE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DRIVE, GduDrive))

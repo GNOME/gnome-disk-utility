@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gdu-pool.h"
+#include <gdu/gdu.h>
 
 #define GDU_TYPE_DEVICE_TREE             (gdu_device_tree_get_type ())
 #define GDU_DEVICE_TREE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE_TREE, GduDeviceTree))

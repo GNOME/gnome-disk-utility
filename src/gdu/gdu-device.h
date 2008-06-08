@@ -19,15 +19,19 @@
  * 02111-1307, USA.
  */
 
+#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
+
 #ifndef GDU_DEVICE_H
 #define GDU_DEVICE_H
 
 #include <unistd.h>
 #include <sys/types.h>
 #include <glib-object.h>
-#include "gdu-error.h"
-#include "gdu-smart-data.h"
-#include "gdu-process.h"
+#include <gdu/gdu-error.h>
+#include <gdu/gdu-smart-data.h>
+#include <gdu/gdu-process.h>
 
 #define GDU_TYPE_DEVICE             (gdu_device_get_type ())
 #define GDU_DEVICE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE, GduDevice))

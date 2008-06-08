@@ -23,7 +23,7 @@
 #define GDU_SMART_DATA_H
 
 #include <glib-object.h>
-#include "gdu-smart-data-attribute.h"
+#include <gdu/gdu-smart-data-attribute.h>
 
 #define GDU_TYPE_SMART_DATA             (gdu_smart_data_get_type ())
 #define GDU_SMART_DATA(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SMART_DATA, GduSmartData))

@@ -31,14 +31,10 @@
 #include <polkit-gnome/polkit-gnome.h>
 #include <libsexy/sexy.h>
 
+#include <gdu/gdu.h>
 #include "gdu-shell.h"
 #include "gdu-ui-util.h"
-#include "gdu-pool.h"
 #include "gdu-tree.h"
-#include "gdu-drive.h"
-#include "gdu-activatable-drive.h"
-#include "gdu-volume.h"
-#include "gdu-volume-hole.h"
 
 #include "gdu-section-health.h"
 #include "gdu-section-partition.h"

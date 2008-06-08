@@ -23,7 +23,6 @@
 #include <glib-object.h>
 #include <string.h>
 #include <glib/gi18n.h>
-#include <polkit-gnome/polkit-gnome.h>
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 

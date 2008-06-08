@@ -25,8 +25,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "gdu-presentable.h"
-#include "gdu-pool.h"
+#include <gdu/gdu.h>
 
 #define GDU_TYPE_SHELL             (gdu_shell_get_type ())
 #define GDU_SHELL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SHELL, GduShell))

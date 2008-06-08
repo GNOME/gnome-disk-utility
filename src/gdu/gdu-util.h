@@ -19,11 +19,15 @@
  * USA
  */
 
-#include "gdu-presentable.h"
-#include "gdu-pool.h"
+#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
 
 #ifndef GDU_UTIL_H
 #define GDU_UTIL_H
+
+#include <gdu/gdu-presentable.h>
+#include <gdu/gdu-pool.h>
 
 char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);

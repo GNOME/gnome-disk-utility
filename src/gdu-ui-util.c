@@ -27,7 +27,7 @@
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 
-#include "gdu-util.h"
+#include <gdu/gdu.h>
 #include "gdu-ui-util.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

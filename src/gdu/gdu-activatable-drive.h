@@ -29,6 +29,7 @@
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-drive.h>
 #include <gdu/gdu-presentable.h>
+#include <gdu/gdu-callbacks.h>
 
 #define GDU_TYPE_ACTIVATABLE_DRIVE             (gdu_activatable_drive_get_type ())
 #define GDU_ACTIVATABLE_DRIVE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_ACTIVATABLE_DRIVE, GduActivatableDrive))
@@ -38,7 +39,6 @@
 #define GDU_ACTIVATABLE_DRIVE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_ACTIVATABLE_DRIVE, GduActivatableDriveClass))
 
 typedef struct _GduActivatableDriveClass       GduActivatableDriveClass;
-typedef struct _GduActivatableDrive            GduActivatableDrive;
 
 struct _GduActivatableDrive
 {
@@ -94,16 +94,6 @@ GduDevice             *gdu_activatable_drive_get_first_slave (GduActivatableDriv
 int                    gdu_activatable_drive_get_num_slaves  (GduActivatableDrive *activatable_drive);
 int                    gdu_activatable_drive_get_num_ready_slaves (GduActivatableDrive *activatable_drive);
 GduActivableDriveKind  gdu_activatable_drive_get_kind        (GduActivatableDrive  *activatable_drive);
-
-typedef void (*GduActivatableDriveActivationFunc) (GduActivatableDrive *activatable_drive,
-                                                   char                *assembled_array_object_path,
-                                                   GError              *error,
-                                                   gpointer             user_data);
-
-typedef void (*GduActivatableDriveDeactivationFunc) (GduActivatableDrive *activatable_drive,
-                                                     GError              *error,
-                                                     gpointer             user_data);
-
 
 gboolean               gdu_activatable_drive_is_activated          (GduActivatableDrive  *activatable_drive);
 gboolean               gdu_activatable_drive_can_activate          (GduActivatableDrive  *activatable_drive);

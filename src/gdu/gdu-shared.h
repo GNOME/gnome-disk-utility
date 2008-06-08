@@ -30,6 +30,8 @@
 
 typedef struct _GduDevice            GduDevice;
 typedef struct _GduPool              GduPool;
+typedef struct _GduActivatableDrive  GduActivatableDrive;
+
 
 typedef struct _GduPoolPrivate     GduPoolPrivate;
 typedef struct _GduDevicePrivate     GduDevicePrivate;

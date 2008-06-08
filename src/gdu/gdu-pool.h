@@ -29,6 +29,7 @@
 #include <gdu/gdu-shared.h>
 #include <gdu/gdu-presentable.h>
 #include <gdu/gdu-known-filesystem.h>
+#include <gdu/gdu-callbacks.h>
 
 #define GDU_TYPE_POOL             (gdu_pool_get_type ())
 #define GDU_POOL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_POOL, GduPool))
@@ -78,11 +79,6 @@ GList      *gdu_pool_get_presentables          (GduPool *pool);
 GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduPoolLinuxMdStartCompletedFunc) (GduPool    *pool,
-                                                  char       *assembled_array_object_path,
-                                                  GError     *error,
-                                                  gpointer    user_data);
 
 void gdu_pool_op_linux_md_start (GduPool *pool,
                                  GPtrArray *component_objpaths,

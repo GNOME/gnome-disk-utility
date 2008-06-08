@@ -33,6 +33,7 @@
 #include <gdu/gdu-error.h>
 #include <gdu/gdu-smart-data.h>
 #include <gdu/gdu-process.h>
+#include <gdu/gdu-callbacks.h>
 
 #define GDU_TYPE_DEVICE             (gdu_device_get_type ())
 #define GDU_DEVICE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE, GduDevice))
@@ -176,20 +177,11 @@ guint64     gdu_device_linux_md_get_sync_speed (GduDevice *device);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceFilesystemMountCompletedFunc) (GduDevice    *device,
-                                                       char         *mount_point,
-                                                       GError       *error,
-                                                       gpointer      user_data);
-
 void gdu_device_op_filesystem_mount                   (GduDevice                             *device,
                                                        GduDeviceFilesystemMountCompletedFunc  callback,
                                                        gpointer                               user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceFilesystemUnmountCompletedFunc) (GduDevice    *device,
-                                                         GError       *error,
-                                                         gpointer      user_data);
 
 void gdu_device_op_filesystem_unmount                 (GduDevice                               *device,
                                                        GduDeviceFilesystemUnmountCompletedFunc  callback,
@@ -197,20 +189,11 @@ void gdu_device_op_filesystem_unmount                 (GduDevice                
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceFilesystemCheckCompletedFunc) (GduDevice    *device,
-                                                       gboolean      is_clean,
-                                                       GError       *error,
-                                                       gpointer      user_data);
-
 void gdu_device_op_filesystem_check                 (GduDevice                             *device,
                                                      GduDeviceFilesystemCheckCompletedFunc  callback,
                                                      gpointer                               user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDevicePartitionDeleteCompletedFunc) (GduDevice    *device,
-                                                       GError       *error,
-                                                       gpointer      user_data);
 
 void gdu_device_op_partition_delete        (GduDevice                             *device,
                                             const char                            *secure_erase,
@@ -218,10 +201,6 @@ void gdu_device_op_partition_delete        (GduDevice                           
                                             gpointer                               user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDevicePartitionModifyCompletedFunc) (GduDevice    *device,
-                                                       GError       *error,
-                                                       gpointer      user_data);
 
 void gdu_device_op_partition_modify        (GduDevice                             *device,
                                             const char                            *type,
@@ -232,10 +211,6 @@ void gdu_device_op_partition_modify        (GduDevice                           
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDevicePartitionTableCreateCompletedFunc) (GduDevice    *device,
-                                                            GError       *error,
-                                                            gpointer      user_data);
-
 void gdu_device_op_partition_table_create  (GduDevice                                  *device,
                                             const char                                 *scheme,
                                             const char                                 *secure_erase,
@@ -244,11 +219,6 @@ void gdu_device_op_partition_table_create  (GduDevice                           
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceLuksUnlockCompletedFunc) (GduDevice  *device,
-                                                  char       *object_path_of_cleartext_device,
-                                                  GError     *error,
-                                                  gpointer    user_data);
-
 void gdu_device_op_luks_unlock       (GduDevice   *device,
                                       const char *secret,
                                       GduDeviceLuksUnlockCompletedFunc callback,
@@ -256,19 +226,11 @@ void gdu_device_op_luks_unlock       (GduDevice   *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceLuksLockCompletedFunc) (GduDevice    *device,
-                                                GError       *error,
-                                                gpointer      user_data);
-
 void gdu_device_op_luks_lock          (GduDevice                           *device,
                                        GduDeviceLuksLockCompletedFunc  callback,
                                        gpointer                             user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceLuksChangePassphraseCompletedFunc) (GduDevice  *device,
-                                                            GError     *error,
-                                                            gpointer    user_data);
 
 void gdu_device_op_luks_change_passphrase (GduDevice   *device,
                                            const char  *old_secret,
@@ -278,20 +240,12 @@ void gdu_device_op_luks_change_passphrase (GduDevice   *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceFilesystemSetLabelCompletedFunc) (GduDevice    *device,
-                                                          GError       *error,
-                                                          gpointer      user_data);
-
 void gdu_device_op_filesystem_set_label (GduDevice                                *device,
                                          const char                               *new_label,
                                          GduDeviceFilesystemSetLabelCompletedFunc  callback,
                                          gpointer                                  user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceDriveSmartInitiateSelftestCompletedFunc) (GduDevice    *device,
-                                                                  GError       *error,
-                                                                  gpointer      user_data);
 
 void gdu_device_op_drive_smart_initiate_selftest      (GduDevice                                        *device,
                                                        const char                                       *test,
@@ -301,29 +255,17 @@ void gdu_device_op_drive_smart_initiate_selftest      (GduDevice                
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceDriveSmartRefreshDataCompletedFunc) (GduDevice  *device,
-                                                             GError     *error,
-                                                             gpointer    user_data);
-
 void  gdu_device_drive_smart_refresh_data (GduDevice                                  *device,
                                            GduDeviceDriveSmartRefreshDataCompletedFunc callback,
                                            gpointer                                    user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceLinuxMdStopCompletedFunc) (GduDevice    *device,
-                                                   GError       *error,
-                                                   gpointer      user_data);
-
 void gdu_device_op_linux_md_stop     (GduDevice                         *device,
                                       GduDeviceLinuxMdStopCompletedFunc  callback,
                                       gpointer                           user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceLinuxMdAddComponentCompletedFunc) (GduDevice    *device,
-                                                           GError       *error,
-                                                           gpointer      user_data);
 
 void gdu_device_op_linux_md_add_component (GduDevice                                 *device,
                                            const char                                *component_objpath,
@@ -332,10 +274,6 @@ void gdu_device_op_linux_md_add_component (GduDevice                            
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceLinuxMdRemoveComponentCompletedFunc) (GduDevice    *device,
-                                                              GError       *error,
-                                                              gpointer      user_data);
-
 void gdu_device_op_linux_md_remove_component (GduDevice                                    *device,
                                               const char                                   *component_objpath,
                                               const char                                   *secure_erase,
@@ -343,10 +281,6 @@ void gdu_device_op_linux_md_remove_component (GduDevice                         
                                               gpointer                                      user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceFilesystemCreateCompletedFunc) (GduDevice  *device,
-                                                        GError     *error,
-                                                        gpointer    user_data);
 
 void gdu_device_op_filesystem_create (GduDevice                              *device,
                                       const char                             *fstype,
@@ -358,11 +292,6 @@ void gdu_device_op_filesystem_create (GduDevice                              *de
                                       gpointer                                user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDevicePartitionCreateCompletedFunc) (GduDevice  *device,
-                                                       char       *created_device_object_path,
-                                                       GError     *error,
-                                                       gpointer    user_data);
 
 void gdu_device_op_partition_create       (GduDevice   *device,
                                            guint64      offset,
@@ -380,34 +309,16 @@ void gdu_device_op_partition_create       (GduDevice   *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceCancelJobCompletedFunc) (GduDevice  *device,
-                                                 GError     *error,
-                                                 gpointer    user_data);
-
 void gdu_device_op_cancel_job (GduDevice *device,
                                GduDeviceCancelJobCompletedFunc callback,
                                gpointer user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef void (*GduDeviceDriveSmartGetHistoricalDataCompletedFunc) (GduDevice *device,
-                                                                   GList     *smart_data,
-                                                                   GError    *error,
-                                                                   gpointer   user_data);
-
-void gdu_device_drive_smart_get_historical_data (GduDevice                                         *device,
-                                                 GduDeviceDriveSmartGetHistoricalDataCompletedFunc  callback,
-                                                 gpointer                                           user_data);
-
 GList *gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
                                                         GError    **error);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceFilesystemListOpenFilesCompletedFunc) (GduDevice    *device,
-                                                               GList        *processes,
-                                                               GError       *error,
-                                                               gpointer      user_data);
 
 void gdu_device_filesystem_list_open_files (GduDevice                                     *device,
                                             GduDeviceFilesystemListOpenFilesCompletedFunc  callback,
@@ -417,10 +328,6 @@ GList *gdu_device_filesystem_list_open_files_sync (GduDevice  *device,
                                                    GError    **error);
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-typedef void (*GduDeviceDriveEjectCompletedFunc) (GduDevice    *device,
-                                                  GError       *error,
-                                                  gpointer      user_data);
 
 void gdu_device_op_drive_eject                 (GduDevice                        *device,
                                                 GduDeviceDriveEjectCompletedFunc  callback,

@@ -28,6 +28,21 @@
 #include "gdu-error.h"
 #include "gdu-private.h"
 
+/**
+ * SECTION:gdu-error
+ * @title: GduError
+ * @short_description: Error helper functions
+ *
+ * Contains helper functions for reporting errors to the user.
+ **/
+
+/**
+ * gdu_error_quark:
+ *
+ * Gets the #GduError Quark.
+ *
+ * Returns: a #GQuark
+ **/
 GQuark
 gdu_error_quark (void)
 {
@@ -106,6 +121,20 @@ _gdu_error_fixup (GError *error)
         error->message = s;
 }
 
+/**
+ * gdu_error_check_polkit_not_authorized:
+ * @error: A #GError.
+ * @pk_action: Return location for a #PolKitAction object.
+ * @pk_result: Return location for #PolKitResult value.
+ *
+ * Checks if an error from a remote method call is of
+ * type <literal>org.freedesktop.PolicyKit.Error.NotAuthorized</literal>
+ * and if so, extracts the PolicyKit action and result.
+ *
+ * Returns: #TRUE only if the error is a PolicyKit exception and
+ * @pk_action (caller must free this object with polkit_action_unref())
+ * and @pk_result are set.
+ **/
 gboolean
 gdu_error_check_polkit_not_authorized (GError *error,
                                        PolKitAction **pk_action,

@@ -29,6 +29,30 @@
 #include <glib-object.h>
 #include <polkit/polkit.h>
 
+/**
+ * GduError:
+ * @GDU_ERROR_FAILED: The operation failed.
+ * @GDU_ERROR_BUSY: The device is busy
+ * @GDU_ERROR_CANCELLED: The operation was cancelled
+ * @GDU_ERROR_INVALID_OPTION: An invalid option was passed
+ * @GDU_ERROR_ALREADY_MOUNTED: Device is already mounted.
+ * @GDU_ERROR_NOT_MOUNTED: Device is not mounted.
+ * @GDU_ERROR_NOT_CANCELLABLE: Operation is not cancellable.
+ * @GDU_ERROR_NOT_PARTITION: Device is not a partition.
+ * @GDU_ERROR_NOT_PARTITION_TABLE: Device is not a partition table.
+ * @GDU_ERROR_NOT_FILESYSTEM: Device is not a file system.
+ * @GDU_ERROR_NOT_LUKS: Device is not a LUKS encrypted device.
+ * @GDU_ERROR_NOT_LOCKED: Device is not locked.
+ * @GDU_ERROR_NOT_UNLOCKED: Device is not unlocked.
+ * @GDU_ERROR_NOT_LINUX_MD: Device is not a Linux md Software RAID device.
+ * @GDU_ERROR_NOT_LINUX_MD_COMPONENT: Device is not a Linux md Software RAID component.
+ * @GDU_ERROR_NOT_DRIVE: Device is not a drive.
+ * @GDU_ERROR_NOT_SMART_CAPABLE: Device is not S.M.A.R.T. capable.
+ * @GDU_ERROR_NOT_SUPPORTED: Operation not supported.
+ * @GDU_ERROR_NOT_FOUND: Given device does not exist.
+ *
+ * Error codes in the #GDU_ERROR domain.
+ */
 typedef enum
 {
         GDU_ERROR_FAILED,
@@ -52,7 +76,16 @@ typedef enum
         GDU_ERROR_NOT_FOUND,
 } GduError;
 
+/**
+ * GDU_ERROR:
+ *
+ * Error domain used for errors reported from DeviceKit-disks daemon
+ * via D-Bus. Note that not all remote errors are mapped to this
+ * domain. Errors in this domain will come from the #GduError
+ * enumeration. See #GError for more information on error domains.
+ */
 #define GDU_ERROR gdu_error_quark ()
+
 GQuark      gdu_error_quark           (void);
 
 gboolean gdu_error_check_polkit_not_authorized (GError        *error,

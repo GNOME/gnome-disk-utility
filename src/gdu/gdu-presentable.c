@@ -51,7 +51,7 @@ gdu_presentable_get_type (void)
       };
 
       presentable_type =
-	g_type_register_static (G_TYPE_INTERFACE, "GduPresentableType",
+	g_type_register_static (G_TYPE_INTERFACE, "GduPresentable",
 				&presentable_info, 0);
 
       g_type_interface_add_prerequisite (presentable_type, G_TYPE_OBJECT);

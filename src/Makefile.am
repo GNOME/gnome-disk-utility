@@ -61,15 +61,31 @@ gnome_disk_utility_CPPFLAGS = 				\
 	$(AM_CPPFLAGS)
 
 gnome_disk_utility_CFLAGS = 				\
-	   $(GNOME_DISK_UTILITY_CFLAGS)			\
-	   $(WARN_CFLAGS)				\
-	   $(AM_CFLAGS)
+	$(GLIB2_CFLAGS)					\
+	$(GIO2_CFLAGS)					\
+	$(GIO_UNIX2_CFLAGS)				\
+	$(DBUS_GLIB_CFLAGS)				\
+	$(POLKIT_DBUS_CFLAGS)				\
+	$(POLKIT_GNOME_CFLAGS)				\
+	$(GNOME_KEYRING_CFLAGS)				\
+	$(GTK2_CFLAGS)					\
+	$(LIBSEXY_CFLAGS)				\
+	$(WARN_CFLAGS)					\
+	$(AM_CFLAGS)
 
 gnome_disk_utility_LDFLAGS = 				\
 	$(AM_LDFLAGS)
 
 gnome_disk_utility_LDADD = 				\
-	$(GNOME_DISK_UTILITY_LIBS)			\
+	$(GLIB2_LIBS)					\
+	$(GIO2_LIBS)					\
+	$(GIO_UNIX2_LIBS)				\
+	$(DBUS_GLIB_LIBS)				\
+	$(POLKIT_DBUS_LIBS)				\
+	$(POLKIT_GNOME_LIBS)				\
+	$(GNOME_KEYRING_LIBS)				\
+	$(GTK2_LIBS)					\
+	$(LIBSEXY_LIBS)					\
 	$(INTLLIBS)
 
 CLEANFILES = $(BUILT_SOURCES)

@@ -38,9 +38,6 @@
 typedef struct _GduSmartDataAttributeClass       GduSmartDataAttributeClass;
 typedef struct _GduSmartDataAttribute            GduSmartDataAttribute;
 
-struct _GduSmartDataAttributePrivate;
-typedef struct _GduSmartDataAttributePrivate     GduSmartDataAttributePrivate;
-
 struct _GduSmartDataAttribute
 {
         GObject parent;

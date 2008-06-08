@@ -39,9 +39,6 @@
 
 typedef struct _GduPoolClass       GduPoolClass;
 
-struct _GduPoolPrivate;
-typedef struct _GduPoolPrivate     GduPoolPrivate;
-
 struct _GduPool
 {
         GObject parent;

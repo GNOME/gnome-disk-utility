@@ -40,9 +40,6 @@
 typedef struct _GduActivatableDriveClass       GduActivatableDriveClass;
 typedef struct _GduActivatableDrive            GduActivatableDrive;
 
-struct _GduActivatableDrivePrivate;
-typedef struct _GduActivatableDrivePrivate     GduActivatableDrivePrivate;
-
 struct _GduActivatableDrive
 {
         GduDrive parent;

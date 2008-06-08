@@ -38,9 +38,6 @@
 typedef struct _GduVolumeClass       GduVolumeClass;
 typedef struct _GduVolume            GduVolume;
 
-struct _GduVolumePrivate;
-typedef struct _GduVolumePrivate     GduVolumePrivate;
-
 struct _GduVolume
 {
         GObject parent;

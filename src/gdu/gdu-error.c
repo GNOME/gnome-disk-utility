@@ -25,6 +25,7 @@
 #include <string.h>
 #include <polkit-dbus/polkit-dbus.h>
 
+#include "gdu-shared.h"
 #include "gdu-error.h"
 #include "gdu-private.h"
 

@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 
+#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-pool.h"
 #include "gdu-device.h"

@@ -43,9 +43,6 @@
 
 typedef struct _GduDeviceClass       GduDeviceClass;
 
-struct _GduDevicePrivate;
-typedef struct _GduDevicePrivate     GduDevicePrivate;
-
 struct _GduDevice
 {
         GObject parent;

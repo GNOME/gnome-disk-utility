@@ -38,9 +38,6 @@
 typedef struct _GduKnownFilesystemClass       GduKnownFilesystemClass;
 typedef struct _GduKnownFilesystem            GduKnownFilesystem;
 
-struct _GduKnownFilesystemPrivate;
-typedef struct _GduKnownFilesystemPrivate     GduKnownFilesystemPrivate;
-
 struct _GduKnownFilesystem
 {
         GObject parent;

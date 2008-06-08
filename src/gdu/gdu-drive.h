@@ -38,9 +38,6 @@
 typedef struct _GduDriveClass       GduDriveClass;
 typedef struct _GduDrive            GduDrive;
 
-struct _GduDrivePrivate;
-typedef struct _GduDrivePrivate     GduDrivePrivate;
-
 struct _GduDrive
 {
         GObject parent;

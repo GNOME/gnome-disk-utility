@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-smart-data.h
+/* gdu-process.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -40,9 +40,6 @@
 
 typedef struct _GduProcessClass       GduProcessClass;
 typedef struct _GduProcess            GduProcess;
-
-struct _GduProcessPrivate;
-typedef struct _GduProcessPrivate     GduProcessPrivate;
 
 struct _GduProcess
 {

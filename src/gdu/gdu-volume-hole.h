@@ -38,9 +38,6 @@
 typedef struct _GduVolumeHoleClass       GduVolumeHoleClass;
 typedef struct _GduVolumeHole            GduVolumeHole;
 
-struct _GduVolumeHolePrivate;
-typedef struct _GduVolumeHolePrivate     GduVolumeHolePrivate;
-
 struct _GduVolumeHole
 {
         GObject parent;

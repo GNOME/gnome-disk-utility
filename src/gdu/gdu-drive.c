@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 
+#include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-drive.h"
@@ -104,7 +105,7 @@ device_removed (GduDevice *device, gpointer user_data)
 }
 
 GduDrive *
-gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
+_gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
 {
         GduDrive *drive;
 

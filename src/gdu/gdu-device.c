@@ -559,7 +559,7 @@ update_info (GduDevice *device)
 
 
 GduDevice *
-gdu_device_new_from_object_path (GduPool *pool, const char *object_path)
+_gdu_device_new_from_object_path (GduPool *pool, const char *object_path)
 {
         GError *error;
         GduDevice *device;

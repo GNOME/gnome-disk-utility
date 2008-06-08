@@ -25,6 +25,7 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
+#include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-volume-hole.h"
@@ -74,7 +75,7 @@ gdu_volume_hole_init (GduVolumeHole *volume_hole)
 }
 
 GduVolumeHole *
-gdu_volume_hole_new (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable)
+_gdu_volume_hole_new (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable)
 {
         GduVolumeHole *volume_hole;
 

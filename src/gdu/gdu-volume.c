@@ -25,6 +25,7 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
+#include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-volume.h"
@@ -108,7 +109,7 @@ device_removed (GduDevice *device, gpointer user_data)
 }
 
 GduVolume *
-gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *enclosing_presentable)
+_gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *enclosing_presentable)
 {
         GduVolume *volume;
 

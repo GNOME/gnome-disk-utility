@@ -30,6 +30,11 @@
 #include "gdu-smart-data.h"
 #include "gdu-known-filesystem.h"
 #include "gdu-process.h"
+#include "gdu-device.h"
+#include "gdu-drive.h"
+#include "gdu-activatable-drive.h"
+#include "gdu-volume.h"
+#include "gdu-volume-hole.h"
 
 #define SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
                                                         G_TYPE_INT,      \
@@ -89,5 +94,24 @@ GduProcess            * _gdu_process_new               (gpointer data);
 
 void _gdu_error_fixup (GError *error);
 
+GduDevice  *_gdu_device_new_from_object_path  (GduPool     *pool, const char  *object_path);
+
+GduVolume   *_gdu_volume_new_from_device      (GduPool *pool, GduDevice *volume, GduPresentable *enclosing_presentable);
+GduDrive    *_gdu_drive_new_from_device       (GduPool *pool, GduDevice *drive);
+GduVolumeHole   *_gdu_volume_hole_new       (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable);
+GduActivatableDrive   *_gdu_activatable_drive_new             (GduPool              *pool,
+                                                               GduActivableDriveKind kind);
+
+void                   _gdu_activatable_drive_set_device      (GduActivatableDrive  *activatable_drive,
+                                                               GduDevice            *device);
+gboolean               _gdu_activatable_drive_is_device_set   (GduActivatableDrive  *activatable_drive);
+void                   _gdu_activatable_drive_add_slave       (GduActivatableDrive  *activatable_drive,
+                                                               GduDevice            *device);
+void                   _gdu_activatable_drive_remove_slave    (GduActivatableDrive  *activatable_drive,
+                                                               GduDevice            *device);
+gboolean               _gdu_activatable_drive_has_uuid        (GduActivatableDrive  *activatable_drive,
+                                                               const char *uuid);
+gboolean               _gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
+                                                                       GduDevice *device);
 
 #endif /* GDU_PRIVATE_H */

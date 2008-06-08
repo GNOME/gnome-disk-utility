@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 
+#include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-activatable-drive.h"
@@ -124,8 +125,8 @@ device_removed (GduDevice *device, gpointer user_data)
 }
 
 GduActivatableDrive *
-gdu_activatable_drive_new (GduPool               *pool,
-                           GduActivableDriveKind  kind)
+_gdu_activatable_drive_new (GduPool               *pool,
+                            GduActivableDriveKind  kind)
 {
         GduActivatableDrive *activatable_drive;
 
@@ -137,8 +138,8 @@ gdu_activatable_drive_new (GduPool               *pool,
 }
 
 gboolean
-gdu_activatable_drive_has_uuid (GduActivatableDrive  *activatable_drive,
-                                const char *uuid)
+_gdu_activatable_drive_has_uuid (GduActivatableDrive  *activatable_drive,
+                                 const char *uuid)
 {
         gboolean ret;
         GduDevice *first_slave;
@@ -157,8 +158,8 @@ out:
 }
 
 gboolean
-gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
-                                               GduDevice *device)
+_gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
+                                                GduDevice *device)
 {
         int n;
         gboolean ret;
@@ -419,13 +420,13 @@ gdu_activatable_drive_is_recognized (GduPresentable *presentable)
 }
 
 gboolean
-gdu_activatable_drive_is_device_set (GduActivatableDrive  *activatable_drive)
+_gdu_activatable_drive_is_device_set (GduActivatableDrive  *activatable_drive)
 {
         return activatable_drive->priv->device != NULL;
 }
 
 void
-gdu_activatable_drive_set_device (GduActivatableDrive *activatable_drive, GduDevice *device)
+_gdu_activatable_drive_set_device (GduActivatableDrive *activatable_drive, GduDevice *device)
 {
         if (activatable_drive->priv->device != NULL) {
                 g_signal_handlers_disconnect_by_func (activatable_drive->priv->device, device_changed,
@@ -456,8 +457,8 @@ gdu_activatable_drive_has_slave    (GduActivatableDrive  *activatable_drive,
 }
 
 void
-gdu_activatable_drive_add_slave (GduActivatableDrive *activatable_drive,
-                                 GduDevice           *device)
+_gdu_activatable_drive_add_slave (GduActivatableDrive *activatable_drive,
+                                  GduDevice           *device)
 {
         activatable_drive->priv->slaves = g_list_append (activatable_drive->priv->slaves, device);
         g_signal_emit_by_name (activatable_drive, "changed");
@@ -474,8 +475,8 @@ gdu_activatable_drive_add_slave (GduActivatableDrive *activatable_drive,
 }
 
 void
-gdu_activatable_drive_remove_slave (GduActivatableDrive *activatable_drive,
-                                    GduDevice           *device)
+_gdu_activatable_drive_remove_slave (GduActivatableDrive *activatable_drive,
+                                     GduDevice           *device)
 {
         activatable_drive->priv->slaves = g_list_remove (activatable_drive->priv->slaves, device);
         g_signal_emit_by_name (activatable_drive, "changed");

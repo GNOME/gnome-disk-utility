@@ -89,19 +89,6 @@ typedef enum {
 } GduActivableDriveSlaveState;
 
 GType                  gdu_activatable_drive_get_type        (void);
-GduActivatableDrive   *gdu_activatable_drive_new             (GduPool              *pool,
-                                                              GduActivableDriveKind kind);
-void                   gdu_activatable_drive_set_device      (GduActivatableDrive  *activatable_drive,
-                                                              GduDevice            *device);
-gboolean               gdu_activatable_drive_is_device_set   (GduActivatableDrive  *activatable_drive);
-void                   gdu_activatable_drive_add_slave       (GduActivatableDrive  *activatable_drive,
-                                                              GduDevice            *device);
-void                   gdu_activatable_drive_remove_slave    (GduActivatableDrive  *activatable_drive,
-                                                              GduDevice            *device);
-gboolean               gdu_activatable_drive_has_uuid        (GduActivatableDrive  *activatable_drive,
-                                                              const char *uuid);
-gboolean               gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
-                                                                      GduDevice *device);
 
 gboolean               gdu_activatable_drive_has_slave    (GduActivatableDrive  *activatable_drive,
                                                            GduDevice            *device);

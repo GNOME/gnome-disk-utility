@@ -108,6 +108,11 @@ GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
 
+AC_ARG_ENABLE(gtk-doc, AC_HELP_STRING([--enable-gtk-doc],
+  [use gtk-doc to build documentation [default=yes]]),,
+  enable_gtk_doc=yes)
+GTK_DOC_CHECK([1.3])
+
 # ***************************
 # Check for required packages
 # ***************************
@@ -177,6 +182,29 @@ data/icons/22x22/Makefile
 data/icons/48x48/Makefile
 data/icons/scalable/Makefile
 help/Makefile
+doc/Makefile
+doc/version.xml
 ])
 
 AC_OUTPUT
+
+echo "
+                  gnome-disk-utility $VERSION
+                ==========================
+
+        prefix:                     ${prefix}
+        libdir:                     ${libdir}
+        libexecdir:                 ${libexecdir}
+        bindir:                     ${bindir}
+        sbindir:                    ${sbindir}
+        datadir:                    ${datadir}
+        sysconfdir:                 ${sysconfdir}
+        localstatedir:              ${localstatedir}
+
+        compiler:                   ${CC}
+        cflags:                     ${CFLAGS}
+        cppflags:                   ${CPPFLAGS}
+
+        Maintainer mode:            ${USE_MAINTAINER_MODE}
+        Building api docs:          ${enable_gtk_doc}
+"

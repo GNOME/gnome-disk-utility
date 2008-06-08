@@ -1,4 +1,4 @@
-SUBDIRS = src data help po
+SUBDIRS = src data doc help po
 
 EXTRA_DIST = \
 	autogen.sh		\

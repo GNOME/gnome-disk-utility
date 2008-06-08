@@ -1921,6 +1921,8 @@ out:
         return secure_erase;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 GdkPixbuf *
 gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size)
 {
@@ -1959,4 +1961,422 @@ gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize si
         g_free (icon_name);
 
         return pixbuf;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static int
+_get_icon_size_for_stock_size (GtkIconSize size)
+{
+        int w, h;
+        if (gtk_icon_size_lookup (size, &w, &h)) {
+                return MAX (w, h);
+        } else {
+                return 24;
+        }
+}
+
+static GdkPixbuf *
+get_pixbuf_for_icon (GIcon *icon)
+{
+	GdkPixbuf *pixbuf;
+
+	pixbuf = NULL;
+
+	if (G_IS_FILE_ICON (icon)) {
+                char *filename;
+		filename = g_file_get_path (g_file_icon_get_file (G_FILE_ICON (icon)));
+		if (filename != NULL) {
+			pixbuf = gdk_pixbuf_new_from_file_at_size (filename, 24, 24, NULL);
+                        g_free (filename);
+		}
+
+	} else if (G_IS_THEMED_ICON (icon)) {
+		const char * const *names;
+		char *icon_no_extension;
+		char *p;
+
+		names = g_themed_icon_get_names (G_THEMED_ICON (icon));
+
+		if (names != NULL && names[0] != NULL) {
+			icon_no_extension = g_strdup (names[0]);
+			p = strrchr (icon_no_extension, '.');
+			if (p != NULL)
+				*p = '\0';
+			pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+							   icon_no_extension, 24, 0, NULL);
+			g_free (icon_no_extension);
+		}
+	}
+
+	return pixbuf;
+}
+
+typedef struct {
+        GduDevice *device;
+
+        GtkWidget *tree_view;
+        GtkWidget *dialog;
+} ShowBusyData;
+
+static ShowBusyData *
+show_busy_data_new (GduDevice *device)
+{
+        ShowBusyData *data;
+        data = g_new0 (ShowBusyData, 1);
+        data->device = g_object_ref (device);
+        return data;
+}
+
+static void
+show_busy_data_free (ShowBusyData *data)
+{
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+static int
+process_compare (GduProcess *a, GduProcess *b)
+{
+        return gdu_process_get_id (a) - gdu_process_get_id (b);
+}
+
+static GtkListStore *
+show_busy_get_list_store (ShowBusyData *data, int *num_rows)
+{
+        GtkListStore *store;
+        GtkTreeIter iter;
+        GList *processes;
+        GError *error;
+        GList *l;
+
+        if (num_rows != NULL)
+                *num_rows = 0;
+
+        store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, GDU_TYPE_PROCESS);
+        error = NULL;
+        processes = gdu_device_filesystem_list_open_files_sync (data->device, &error);
+        if (error != NULL) {
+                g_warning ("error retrieving list of open files: %s", error->message);
+                g_error_free (error);
+        }
+        processes = g_list_sort (processes, (GCompareFunc) process_compare);
+        for (l = processes; l != NULL; l = l->next) {
+                GduProcess *process = GDU_PROCESS (l->data);
+                char *name;
+                char *markup;
+                GAppInfo *app_info;
+                GdkPixbuf *pixbuf;
+
+                name = NULL;
+
+                app_info = gdu_process_get_app_info (process);
+                pixbuf = NULL;
+                if (app_info != NULL) {
+                        GIcon *icon;
+
+                        name = g_strdup (g_app_info_get_name (app_info));
+                        icon = g_app_info_get_icon (app_info);
+                        if (icon != NULL) {
+                                pixbuf = get_pixbuf_for_icon (icon);
+                        }
+                } else {
+                        const char *command_line;
+
+                        command_line = gdu_process_get_command_line (process);
+
+                        if (command_line != NULL) {
+                                char *basename;
+                                char *s;
+                                int n;
+
+                                for (n = 0; command_line[n] != '\0'; n++) {
+                                        if (command_line[n] == ' ')
+                                                break;
+                                }
+                                s = g_strndup (command_line, n);
+                                basename = g_path_get_basename (s);
+                                g_free (s);
+
+                                /* special handling for common programs without desktop files */
+                                if (strcmp (basename, "bash") == 0   ||
+                                    strcmp (basename, "-bash") == 0) {
+                                        name = g_strdup (_("Bourne Again Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "sh") == 0   ||
+                                           strcmp (basename, "-sh") == 0) {
+                                        name = g_strdup (_("Bourne Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "csh") == 0   ||
+                                           strcmp (basename, "-csh") == 0) {
+                                        name = g_strdup (_("C Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "tcsh") == 0   ||
+                                           strcmp (basename, "-tcsh") == 0) {
+                                        name = g_strdup (_("TENEX C Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "zsh") == 0   ||
+                                           strcmp (basename, "-zsh") == 0) {
+                                        name = g_strdup (_("Z Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "ksh") == 0   ||
+                                           strcmp (basename, "-ksh") == 0) {
+                                        name = g_strdup (_("Korn Shell"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           "terminal", 24, 0, NULL);
+                                } else if (strcmp (basename, "top") == 0) {
+                                        name = g_strdup (_("Process Viewer (top)"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           GTK_STOCK_GOTO_TOP, 24, 0, NULL);
+                                } else if (strcmp (basename, "less") == 0) {
+                                        name = g_strdup (_("Terminal Pager (less)"));
+                                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                           GTK_STOCK_FILE, 24, 0, NULL);
+                                }
+
+                                if (name != NULL) {
+                                } else {
+                                        name = g_strdup (basename);
+                                }
+
+                                g_free (basename);
+                        } else {
+                                name = g_strdup (_("Unknown"));
+                        }
+                }
+
+                /* fall back to generic icon */
+                if (pixbuf == NULL) {
+                        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                           "application-x-executable", 24, 0, NULL);
+                }
+
+                if (gdu_process_get_owner (process) != getuid ()) {
+                        markup = g_strdup_printf (_("<b>%s</b>\n"
+                                                    "<small>uid %d, pid %d: %s</small>"),
+                                                  name,
+                                                  gdu_process_get_owner (process),
+                                                  gdu_process_get_id (process),
+                                                  gdu_process_get_command_line (process));
+                } else {
+                        markup = g_strdup_printf (_("<b>%s</b>\n"
+                                                    "<small>pid %d: %s</small>"),
+                                                  name,
+                                                  gdu_process_get_id (process),
+                                                  gdu_process_get_command_line (process));
+                }
+
+                gtk_list_store_append (store, &iter);
+                gtk_list_store_set (store, &iter,
+                                    0, pixbuf,
+                                    1, markup,
+                                    2, process,
+                                    -1);
+
+                if (num_rows != NULL)
+                        *num_rows = (*num_rows) + 1;
+
+                g_free (markup);
+                g_free (name);
+                if (app_info != NULL)
+                        g_object_unref (app_info);
+                if (pixbuf != NULL)
+                        g_object_unref (pixbuf);
+        }
+        g_list_foreach (processes, (GFunc) g_object_unref, NULL);
+        g_list_free (processes);
+
+        return store;
+}
+
+static gboolean
+show_busy_timeout (gpointer user_data)
+{
+        ShowBusyData *data = user_data;
+        GtkListStore *store;
+        int num_rows;
+
+        store = show_busy_get_list_store (data, &num_rows);
+        gtk_tree_view_set_model (GTK_TREE_VIEW (data->tree_view), GTK_TREE_MODEL (store));
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), 1, num_rows == 0);
+        g_object_unref (store);
+
+        return TRUE;
+}
+
+gboolean
+gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
+                                      GduPresentable *presentable)
+{
+        gboolean ret;
+        GduDevice *device;
+        char *window_title;
+        char *window_icon_name;
+        GtkWidget *dialog;
+        GtkWidget *hbox;
+        GtkWidget *main_vbox;
+        GtkWidget *label;
+        GtkWidget *image;
+        int response;
+        GtkListStore *store;
+        GtkWidget *tree_view;
+        GtkCellRenderer *renderer;
+        GtkTreeViewColumn *column;
+        GtkWidget *scrolled_window;
+        GtkWidget *unmount_button;
+        GtkWidget *unmount_image;
+        GdkPixbuf *pixbuf;
+        ShowBusyData *data;
+        guint refresh_timer_id;
+
+        ret = FALSE;
+        window_title = NULL;
+        window_icon_name = NULL;
+        device = NULL;
+        dialog = NULL;
+        data = NULL;
+        refresh_timer_id = 0;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: presentable has no device", __FUNCTION__);
+                goto out;
+        }
+
+        data = show_busy_data_new (device);
+
+        if (gdu_device_is_partition (device)) {
+                char *s;
+                GduPresentable *enclosing_drive;
+                enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
+                s = gdu_presentable_get_name (enclosing_drive);
+                /* todo: icon list */
+                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                g_object_unref (enclosing_drive);
+                window_title = g_strdup_printf (_("Partition %d on %s"),
+                                                gdu_device_partition_get_number (device),
+                                                s);
+                g_free (s);
+        } else {
+                window_title = gdu_presentable_get_name (presentable);
+                window_icon_name = gdu_presentable_get_icon_name (presentable);
+        }
+
+        dialog = gtk_dialog_new_with_buttons (window_title,
+                                              GTK_WINDOW (parent_window),
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              NULL);
+
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+        gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+
+	hbox = gtk_hbox_new (FALSE, 12);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+
+	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
+	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+	main_vbox = gtk_vbox_new (FALSE, 10);
+	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
+
+        /* main message */
+	label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label),
+                              _("<b><big>Cannot unmount volume</big></b>"));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+        /* secondary message */
+	label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label), _("One or more applications are using the volume. "
+                                                   "Quit the applications, and then try unmounting again."));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
+
+
+        store = show_busy_get_list_store (data, NULL);
+        tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+        gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view)),
+                                     GTK_SELECTION_NONE);
+        data->dialog = dialog;
+        data->tree_view = tree_view;
+        g_object_unref (store);
+
+        column = gtk_tree_view_column_new ();
+        renderer = gtk_cell_renderer_pixbuf_new ();
+        gtk_tree_view_column_pack_start (column, renderer, FALSE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "pixbuf", 0,
+                                             NULL);
+        renderer = gtk_cell_renderer_text_new ();
+        gtk_tree_view_column_pack_start (column, renderer, TRUE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "markup", 1,
+                                             NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_view), FALSE);
+
+        scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                        GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_IN);
+
+        gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
+	gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
+
+        GtkWidget *cancel_button;
+        cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+        gtk_widget_grab_focus (cancel_button);
+
+        unmount_button = gtk_button_new_with_mnemonic (_("_Unmount"));
+        pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                           "gdu-unmount",
+                                           _get_icon_size_for_stock_size (GTK_ICON_SIZE_BUTTON),
+                                           0,
+                                           NULL);
+        unmount_image = gtk_image_new_from_pixbuf (pixbuf);
+        g_object_unref (pixbuf);
+        gtk_button_set_image (GTK_BUTTON (unmount_button), unmount_image);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog),
+                                      unmount_button,
+                                      1);
+
+        /* refresh list of open files every one second... */
+        refresh_timer_id = g_timeout_add_seconds (1, show_busy_timeout, data);
+
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), 1, FALSE);
+
+        gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
+        gtk_window_set_default_size (GTK_WINDOW (dialog), -1, 280);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == 1)
+                ret = TRUE;
+
+out:
+        if (refresh_timer_id > 0)
+                g_source_remove (refresh_timer_id);
+
+        g_free (window_title);
+        g_free (window_icon_name);
+        if (device != NULL)
+                g_object_unref (device);
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+        if (data != NULL)
+                show_busy_data_free (data);
+        return ret;
 }

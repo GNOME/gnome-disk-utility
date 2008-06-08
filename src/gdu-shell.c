@@ -1016,6 +1016,8 @@ mount_action_callback (GtkAction *action, gpointer user_data)
         }
 }
 
+static gboolean unmount_show_busy (gpointer user_data);
+
 static void
 unmount_op_callback (GduDevice *device,
                      GError    *error,
@@ -1023,13 +1025,40 @@ unmount_op_callback (GduDevice *device,
 {
         ShellPresentableData *data = user_data;
         if (error != NULL) {
-                gdu_shell_raise_error (data->shell,
-                                       data->presentable,
-                                       error,
-                                       _("Error unmounting device"));
-                g_error_free (error);
+                if (error->domain == GDU_ERROR && error->code == GDU_ERROR_BUSY) {
+                        /* show dialog in idle so the job-spinner can be hidden */
+                        g_idle_add (unmount_show_busy, data);
+                        g_error_free (error);
+                } else {
+                        gdu_shell_raise_error (data->shell,
+                                               data->presentable,
+                                               error,
+                                               _("Error unmounting device"));
+                        g_error_free (error);
+                        shell_presentable_free (data);
+                }
+        } else {
+                shell_presentable_free (data);
+        }
+}
+
+static gboolean
+unmount_show_busy (gpointer user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (gdu_util_dialog_show_filesystem_busy (gdu_shell_get_toplevel (data->shell), data->presentable)) {
+                /* user managed to kill all applications; try again */
+                GduDevice *device;
+                device = gdu_presentable_get_device (data->presentable);
+                if (device != NULL) {
+                        gdu_device_op_filesystem_unmount (device,
+                                                          unmount_op_callback,
+                                                          shell_presentable_new (data->shell, data->presentable));
+                        g_object_unref (device);
+                }
         }
         shell_presentable_free (data);
+        return FALSE;
 }
 
 static void

@@ -1752,6 +1752,83 @@ gdu_device_op_filesystem_set_label (GduDevice                                *de
                                                                            op_change_filesystem_label_cb,
                                                                            data);
 }
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceFilesystemListOpenFilesCompletedFunc callback;
+        gpointer user_data;
+} FilesystemListOpenFilesData;
+
+static GList *
+op_filesystem_list_open_files_compute_ret (GPtrArray *processes)
+{
+        GList *ret;
+        int n;
+
+        ret = NULL;
+        for (n = 0; n < (int) processes->len; n++) {
+                ret = g_list_prepend (ret, _gdu_process_new (processes->pdata[n]));
+        }
+        ret = g_list_reverse (ret);
+        return ret;
+}
+
+static void
+op_filesystem_list_open_files_cb (DBusGProxy *proxy, GPtrArray *processes, GError *error, gpointer user_data)
+{
+        FilesystemListOpenFilesData *data = user_data;
+        GList *ret;
+
+        _gdu_error_fixup (error);
+
+        ret = NULL;
+        if (processes != NULL && error == NULL)
+                ret = op_filesystem_list_open_files_compute_ret (processes);
+
+        if (data->callback == NULL)
+                data->callback (data->device, ret, error, data->user_data);
+
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_filesystem_list_open_files (GduDevice                                     *device,
+                                       GduDeviceFilesystemListOpenFilesCompletedFunc  callback,
+                                       gpointer                                       user_data)
+{
+        FilesystemListOpenFilesData *data;
+
+        data = g_new0 (FilesystemListOpenFilesData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_Device_filesystem_list_open_files_async (device->priv->proxy,
+                                                                                 op_filesystem_list_open_files_cb,
+                                                                                 data);
+}
+
+GList *
+gdu_device_filesystem_list_open_files_sync (GduDevice  *device,
+                                            GError    **error)
+{
+        GList *ret;
+        GPtrArray *processes;
+
+        ret = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_Device_filesystem_list_open_files (device->priv->proxy,
+                                                                                &processes,
+                                                                                error))
+                goto out;
+
+        ret = op_filesystem_list_open_files_compute_ret (processes);
+out:
+        return ret;
+}
+
 /* -------------------------------------------------------------------------------- */
 
 typedef struct {

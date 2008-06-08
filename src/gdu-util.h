@@ -114,4 +114,6 @@ gboolean gdu_util_have_secret (GduDevice *device);
 
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
 
+gboolean gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window, GduPresentable *presentable);
+
 #endif /* GDU_UTIL_H */

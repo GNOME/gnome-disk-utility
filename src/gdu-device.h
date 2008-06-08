@@ -25,7 +25,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <glib-object.h>
+#include "gdu-error.h"
 #include "gdu-smart-data.h"
+#include "gdu-process.h"
 
 #define GDU_TYPE_DEVICE             (gdu_device_get_type ())
 #define GDU_DEVICE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE, GduDevice))
@@ -402,6 +404,20 @@ void gdu_device_drive_smart_get_historical_data (GduDevice                      
 
 GList *gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
                                                         GError    **error);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef void (*GduDeviceFilesystemListOpenFilesCompletedFunc) (GduDevice    *device,
+                                                               GList        *processes,
+                                                               GError       *error,
+                                                               gpointer      user_data);
+
+void gdu_device_filesystem_list_open_files (GduDevice                                     *device,
+                                            GduDeviceFilesystemListOpenFilesCompletedFunc  callback,
+                                            gpointer                                       user_data);
+
+GList *gdu_device_filesystem_list_open_files_sync (GduDevice  *device,
+                                                   GError    **error);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

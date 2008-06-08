@@ -23,6 +23,8 @@
 
 #include <dbus/dbus-glib.h>
 #include <string.h>
+#include <polkit-dbus/polkit-dbus.h>
+
 #include "gdu-error.h"
 #include "gdu-private.h"
 

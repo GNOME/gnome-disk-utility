@@ -32,6 +32,17 @@
 #include "gdu-volume-hole.h"
 #include "gdu-presentable.h"
 
+/**
+ * SECTION:gdu-volume-hole
+ * @title: GduVolumeHole
+ * @short_description: Unallocated regions of partitioned devices
+ *
+ * Instances of the #GduVolumeHole class is used to represent the
+ * unallocated bits on a partitioned device.
+ *
+ * See the documentation for #GduPresentable for the big picture.
+ */
+
 struct _GduVolumeHolePrivate
 {
         guint64 offset;

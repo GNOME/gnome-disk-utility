@@ -32,6 +32,18 @@
 #include "gdu-volume.h"
 #include "gdu-presentable.h"
 
+/**
+ * SECTION:gdu-volume
+ * @title: GduVolume
+ * @short_description: Volumes
+ *
+ * The #GduVolume class is used to represent regions of a drive;
+ * typically it represents partitions (for partitioned devices) or
+ * the whole file system (for e.g. optical discs and floppy disks).
+ *
+ * See the documentation for #GduPresentable for the big picture.
+ */
+
 struct _GduVolumePrivate
 {
         GduDevice *device;

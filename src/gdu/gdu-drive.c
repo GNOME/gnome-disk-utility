@@ -31,6 +31,20 @@
 #include "gdu-drive.h"
 #include "gdu-presentable.h"
 
+/**
+ * SECTION:gdu-drive
+ * @title: GduDrive
+ * @short_description: Drives
+ *
+ * The #GduDrive class represents drives attached to the
+ * system. Normally, objects of this class corresponds 1:1 to physical
+ * drives (hard disks, optical drives, card readers etc.) attached to
+ * the system. However, it can also relate to software abstractions
+ * such as a Linux md Software RAID array and similar things.
+ *
+ * See the documentation for #GduPresentable for the big picture.
+ */
+
 struct _GduDrivePrivate
 {
         GduDevice *device;

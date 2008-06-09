@@ -31,17 +31,16 @@
  * @title: GduPresentable
  * @short_description: Interface for devices presentable to the end user
  *
- * All storage devices in <literal>UNIX</literal> and <literal>UNIX</literal>-like
- * operating systems are mostly represented by so-called <literal>block</literal>
- * devices at the kernel-level. This is abstracted mostly 1-1 in the #GduDevice
- * class.
+ * All storage devices in <literal>UNIX</literal> and
+ * <literal>UNIX</literal>-like operating systems are mostly
+ * represented by so-called <literal>block</literal> devices at the
+ * kernel/user-land interface. UNIX block devices, including
+ * information and operations are represented by the #GduDevice class.
  *
  * However, from an user-interface point of view, it's useful to make
  * a finer-grained distinction; for example it's useful to make a
  * distinction between drives (e.g. a phyiscal hard disk, optical
- * drives) and volumes (e.g. a mountable file system or other contents
- * of which several may reside on the same drive if it's partitioned)
- * or just plain unallocated space on a partition disk.
+ * drives) and volumes (e.g. a mountable file system).
  *
  * As such, classes encapsulating aspects of a UNIX block device (such
  * as it being drive, volume, empty space) that are interesting to
@@ -49,7 +48,107 @@
  * interface. This interface provides lowest-common denominator
  * functionality assisting in the creation of user interfaces; name
  * and icons are easily available as well as hierarchical grouping
- * in terms of parent/child relationships.
+ * in terms of parent/child relationships. Thus, several classes
+ * such as #GduVolume, #GduDrive and others implement the
+ * #GduPresentable interface
+ *
+ * For example, if a device (<literal>/dev/sda</literal>) is
+ * partitioned into two partitions (<literal>/dev/sda1</literal> and
+ * <literal>/dev/sda2</literal>), the parent/child relation look looks
+ * like this
+ *
+ * <programlisting>
+ * GduDrive     (/dev/sda)
+ *   GduVolume  (/dev/sda1)
+ *   GduVolume  (/dev/sda2)
+ * </programlisting>
+ *
+ * Some partitioning schemes (notably Master Boot Record) have a
+ * concept of nested partition tables. Supposed
+ * <literal>/dev/sda2</literal> is an extended partition and
+ * <literal>/dev/sda5</literal> and <literal>/dev/sda6</literal> are
+ * logical partitions:
+ *
+ * <programlisting>
+ * GduDrive       (/dev/sda)
+ *   GduVolume    (/dev/sda1)
+ *   GduVolume    (/dev/sda2)
+ *     GduVolume  (/dev/sda5)
+ *     GduVolume  (/dev/sda6)
+ * </programlisting>
+ *
+ * The gdu_presentable_get_offset() function can be used to
+ * determine the ordering; this function will return the offset
+ * of a #GduPresentable relative to the topmost enclosing device.
+ *
+ * Now, consider the case where there are "holes", e.g. where
+ * there exists one or more regions on the partitioned device
+ * not occupied by any partitions. In that case, the #GduPool
+ * object will create #GduVolumeHole objects to patch the holes:
+ *
+ * <programlisting>
+ * GduDrive           (/dev/sda)
+ *   GduVolume        (/dev/sda1)
+ *   GduVolume        (/dev/sda2)
+ *     GduVolume      (/dev/sda5)
+ *     GduVolumeHole  (no device)
+ *     GduVolume      (/dev/sda6)
+ *   GduVolumeHole    (no device)
+ * </programlisting>
+ *
+ * Also, some devices are not partitioned. For example, the UNIX
+ * block device <literal>/dev/sr0</literal> refers to both the
+ * optical drive and (if any medium is present) the contents of
+ * the optical disc inserted into the disc. In that case, the
+ * following structure will be created:
+ *
+ * <programlisting>
+ * GduDrive     (/dev/sr0)
+ *   GduVolume  (/dev/sr0)
+ * </programlisting>
+ *
+ * If no media is available, only a single #GduDrive object will
+ * exist:
+ *
+ * <programlisting>
+ * GduDrive     (/dev/sr0)
+ * </programlisting>
+ *
+ * Finally, unlocked LUKS Encrypted devices are represented as
+ * children of their encrypted counter parts, for example:
+ *
+ * <programlisting>
+ * GduDrive       (/dev/sda)
+ *   GduVolume    (/dev/sda1)
+ *   GduVolume    (/dev/sda2)
+ *     GduVolume  (/dev/dm-0)
+ * </programlisting>
+ *
+ * Some devices, like RAID and LVM devices, needs to be assembled from
+ * components (e.g. "activated" or "started". This is encapsulated in
+ * the #GduActivatableDrive class; this is not much different from
+ * #GduDrive except that there only is a #GduDevice assoicated with
+ * the object when the device itself is started. For example:
+ *
+ * <programlisting>
+ * GduActivatableDrive     (no device)
+ * </programlisting>
+ *
+ * will be created (e.g. synthesized) as soon as the first component
+ * of the activatable drive is available. When activated, the
+ * #GduActivatableDrive will gain a #GduDevice and the hierarchy looks
+ * somewhat like this
+ *
+ * <programlisting>
+ * GduActivatableDrive     (/dev/md0)
+ *   GduVolume             (/dev/md0)
+ * </programlisting>
+ *
+ * To sum up, the #GduPresentable interface (and classes implementing
+ * it such as #GduDrive and #GduVolume) describe how a drive / medium
+ * is organized such that it's easy to compose an user interface. To
+ * perform operations on devices, use gdu_presentable_get_device() and
+ * the functions on #GduDevice.
  **/
 
 

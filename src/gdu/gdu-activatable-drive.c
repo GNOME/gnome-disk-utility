@@ -31,6 +31,24 @@
 #include "gdu-activatable-drive.h"
 #include "gdu-presentable.h"
 
+/**
+ * SECTION:gdu-activatable-drive
+ * @title: GduActivatableDrive
+ * @short_description: Activable Drives (RAID, LVM, etc.)
+ *
+ * The #GduActivatableDrive class represents drives that are built
+ * from one or more underlying block devices. This includes things
+ * like RAID arrays and LVM devices.
+ *
+ * An activatable drive is typically added to #GduPool as soon as a
+ * component device that is part of the abstraction is available.  The
+ * drive can be started (gdu_activatable_drive_activate()) and stopped
+ * (gdu_activatable_drive_deactivate()) and one can query the state
+ * of the underlying components (gdu_activatable_drive_get_slave_state()).
+ *
+ * See the documentation for #GduPresentable for the big picture.
+ */
+
 struct _GduActivatableDrivePrivate
 {
         /* device may be NULL */
@@ -184,6 +202,14 @@ out:
 }
 
 
+/**
+ * gdu_activatable_drive_get_kind:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Gets the type of activatable drive.
+ *
+ * Returns: A value from the #GduActivatableKind enumeration.
+ **/
 GduActivableDriveKind
 gdu_activatable_drive_get_kind (GduActivatableDrive *activatable_drive)
 {
@@ -450,6 +476,15 @@ _gdu_activatable_drive_set_device (GduActivatableDrive *activatable_drive, GduDe
         g_signal_emit_by_name (activatable_drive, "changed");
 }
 
+/**
+ * gdu_activatable_drive_has_slave:
+ * @activatable_drive: A #GduActivatableDrive.
+ * @device: A #GduDevice.
+ *
+ * Checks if @device is a component of @activatable_drive.
+ *
+ * Returns: #TRUE only if @slave is a component of @activatable_drive.
+ **/
 gboolean
 gdu_activatable_drive_has_slave    (GduActivatableDrive  *activatable_drive,
                                     GduDevice            *device)
@@ -487,6 +522,14 @@ _gdu_activatable_drive_remove_slave (GduActivatableDrive *activatable_drive,
         g_signal_handlers_disconnect_by_func (device, device_job_changed, activatable_drive);
 }
 
+/**
+ * gdu_activatable_drive_get_slaves:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Gets all slaves of @activatable_drive.
+ *
+ * Returns: A #GList of #GduDevice objects. Caller must free this list (and call g_object_unref() on all elements).
+ **/
 GList *
 gdu_activatable_drive_get_slaves (GduActivatableDrive *activatable_drive)
 {
@@ -496,6 +539,14 @@ gdu_activatable_drive_get_slaves (GduActivatableDrive *activatable_drive)
         return ret;
 }
 
+/**
+ * gdu_activatable_drive_get_first_slave:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Gets the first slave of @activatable_drive.
+ * 
+ * Returns: A #GduDevice or #NULL if there are no slaves. Caller must free this object with g_object_unref().
+ **/
 GduDevice *
 gdu_activatable_drive_get_first_slave (GduActivatableDrive *activatable_drive)
 {
@@ -505,12 +556,30 @@ gdu_activatable_drive_get_first_slave (GduActivatableDrive *activatable_drive)
                 return g_object_ref (G_OBJECT (activatable_drive->priv->slaves->data));
 }
 
+/**
+ * gdu_activatable_drive_get_num_slaves:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Gets the total number of slaves of @activatable_drive.
+ *
+ * Returns: The number of slaves of @activatable_drive.
+ **/
 int
 gdu_activatable_drive_get_num_slaves (GduActivatableDrive *activatable_drive)
 {
         return g_list_length (activatable_drive->priv->slaves);
 }
 
+/**
+ * gdu_activatable_drive_get_num_ready_slaves:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Gets the number of fresh/ready (See
+ * #GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_READY) slaves of
+ * @activatable_drive.
+ *
+ * Returns: The number of fresh/ready slaves of @activatable_drive.
+ **/
 int
 gdu_activatable_drive_get_num_ready_slaves (GduActivatableDrive *activatable_drive)
 {
@@ -545,6 +614,14 @@ gdu_activatable_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->is_recognized = gdu_activatable_drive_is_recognized;
 }
 
+/**
+ * gdu_activatable_drive_is_activated:
+ * @activatable_drive: A #GduActivatableDrive.
+ *
+ * Checks if @activatable_drive is already activated.
+ *
+ * Returns: #TRUE only if @activatable_drive is activated.
+ **/
 gboolean
 gdu_activatable_drive_is_activated (GduActivatableDrive  *activatable_drive)
 {
@@ -729,6 +806,14 @@ activation_completed (GduPool  *pool,
         activation_data_free (ad);
 }
 
+/**
+ * gdu_activatable_drive_activate:
+ * @activatable_drive: A #GduActivatableDrive.
+ * @callback: Callback function.
+ * @user_data: User data.
+ *
+ * Activates @activatable_drive.
+ **/
 void
 gdu_activatable_drive_activate (GduActivatableDrive  *activatable_drive,
                                 GduActivatableDriveActivationFunc callback,
@@ -796,6 +881,14 @@ deactivation_completed (GduDevice *device,
         deactivation_data_free (dad);
 }
 
+/**
+ * gdu_activatable_drive_deactivate:
+ * @activatable_drive: A #GduActivatableDrive.
+ * @callback: Callback function.
+ * @user_data: User data.
+ *
+ * Deactivates @activatable_drive.
+ **/
 void
 gdu_activatable_drive_deactivate (GduActivatableDrive *activatable_drive,
                                   GduActivatableDriveDeactivationFunc callback,
@@ -809,6 +902,15 @@ gdu_activatable_drive_deactivate (GduActivatableDrive *activatable_drive,
                                      deactivation_data_new (activatable_drive, callback, user_data));
 }
 
+/**
+ * gdu_activatable_drive_get_slave_state:
+ * @activatable_drive: A #GduActivatableDrive.
+ * @slave: A #GduDevice.
+ *
+ * Gets the state of @slave of @activatable_drive.
+ *
+ * Returns: A value from #GduActivatableDriveSlaveState for @slave.
+ **/
 GduActivableDriveSlaveState
 gdu_activatable_drive_get_slave_state (GduActivatableDrive  *activatable_drive,
                                        GduDevice            *slave)

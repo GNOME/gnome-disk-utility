@@ -53,6 +53,12 @@ struct _GduActivatableDriveClass
         GduDriveClass parent_class;
 };
 
+/**
+ * GduActivableDriveKind:
+ * @GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD: Linux md Software RAID
+ *
+ * The type of activatable drive.
+ */
 typedef enum {
         GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD,
 } GduActivableDriveKind;

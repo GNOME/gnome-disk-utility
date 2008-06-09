@@ -96,36 +96,55 @@ gdu_presentable_class_init (gpointer g_class,
 static void
 gdu_presentable_base_init (gpointer g_class)
 {
-  static gboolean initialized = FALSE;
+        static gboolean initialized = FALSE;
 
-  if (! initialized)
-    {
-      g_signal_new ("changed",
-                    GDU_TYPE_PRESENTABLE,
-                    G_SIGNAL_RUN_LAST,
-                    G_STRUCT_OFFSET (GduPresentableIface, changed),
-                    NULL, NULL,
-                    g_cclosure_marshal_VOID__VOID,
-                    G_TYPE_NONE, 0);
+        if (! initialized)
+        {
+                /**
+                 * GduPresentable::changed
+                 * @presentable: A #GduPresentable.
+                 *
+                 * Emitted when @presentable changes.
+                 **/
+                g_signal_new ("changed",
+                              GDU_TYPE_PRESENTABLE,
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPresentableIface, changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
 
-      g_signal_new ("job-changed",
-                    GDU_TYPE_PRESENTABLE,
-                    G_SIGNAL_RUN_LAST,
-                    G_STRUCT_OFFSET (GduPresentableIface, job_changed),
-                    NULL, NULL,
-                    g_cclosure_marshal_VOID__VOID,
-                    G_TYPE_NONE, 0);
+                /**
+                 * GduPresentable::job-changed
+                 * @presentable: A #GduPresentable.
+                 *
+                 * Emitted when job status on @presentable changes.
+                 **/
+                g_signal_new ("job-changed",
+                              GDU_TYPE_PRESENTABLE,
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPresentableIface, job_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
 
-      g_signal_new ("removed",
-                    GDU_TYPE_PRESENTABLE,
-                    G_SIGNAL_RUN_LAST,
-                    G_STRUCT_OFFSET (GduPresentableIface, removed),
-                    NULL, NULL,
-                    g_cclosure_marshal_VOID__VOID,
-                    G_TYPE_NONE, 0);
+                /**
+                 * GduPresentable::removed
+                 * @presentable: The #GduPresentable that was removed.
+                 *
+                 * Emitted when @presentable is removed. Recipients
+                 * should release references to @presentable.
+                 **/
+                g_signal_new ("removed",
+                              GDU_TYPE_PRESENTABLE,
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPresentableIface, removed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE, 0);
 
-      initialized = TRUE;
-    }
+                initialized = TRUE;
+        }
 }
 
 /**

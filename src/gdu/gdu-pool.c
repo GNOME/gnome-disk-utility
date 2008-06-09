@@ -866,7 +866,7 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
                 GList *l;
                 GList *ll;
 
-                gdu_device_removed (device);
+                _gdu_device_removed (device);
 
                 g_signal_emit (pool, signals[DEVICE_REMOVED], 0, device);
                 g_hash_table_remove (pool->priv->devices, object_path);
@@ -931,7 +931,7 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
                 if (gdu_device_is_linux_md_component (device))
                         ad_before = find_activatable_drive_for_linux_md_component (pool, device);
 
-                gdu_device_changed (device);
+                _gdu_device_changed (device);
                 g_signal_emit_by_name (pool, "device-changed", device);
 
                 if (ad_before != NULL) {
@@ -983,15 +983,15 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
         GduDevice *device;
 
         if ((device = gdu_pool_get_by_object_path (pool, object_path)) != NULL) {
-                gdu_device_job_changed (device,
-                                        job_in_progress,
-                                        job_id,
-                                        job_initiated_by_uid,
-                                        job_is_cancellable,
-                                        job_num_tasks,
-                                        job_cur_task,
-                                        job_cur_task_id,
-                                        job_cur_task_percentage);
+                _gdu_device_job_changed (device,
+                                         job_in_progress,
+                                         job_id,
+                                         job_initiated_by_uid,
+                                         job_is_cancellable,
+                                         job_num_tasks,
+                                         job_cur_task,
+                                         job_cur_task_id,
+                                         job_cur_task_percentage);
                 g_signal_emit_by_name (pool, "device-job-changed", device);
         } else {
                 g_warning ("unknown device to on job-change, object_path='%s'", object_path);

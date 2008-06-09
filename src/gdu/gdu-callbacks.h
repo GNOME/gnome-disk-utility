@@ -26,7 +26,7 @@
 #ifndef GDU_CALLBACKS_H
 #define GDU_CALLBACKS_H
 
-#include <gdu-shared.h>
+#include <gdu/gdu-shared.h>
 
 /**
  * SECTION:gdu-callbacks

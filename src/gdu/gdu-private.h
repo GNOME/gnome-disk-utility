@@ -114,4 +114,17 @@ gboolean               _gdu_activatable_drive_has_uuid        (GduActivatableDri
 gboolean               _gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
                                                                        GduDevice *device);
 
+void        _gdu_device_changed               (GduDevice   *device);
+void        _gdu_device_job_changed           (GduDevice   *device,
+                                               gboolean     job_in_progress,
+                                               const char  *job_id,
+                                               uid_t        job_initiated_by_uid,
+                                               gboolean     job_is_cancellable,
+                                               int          job_num_tasks,
+                                               int          job_cur_task,
+                                               const char  *job_cur_task_id,
+                                               double       job_cur_task_percentage);
+
+void        _gdu_device_removed               (GduDevice   *device);
+
 #endif /* GDU_PRIVATE_H */

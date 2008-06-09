@@ -598,7 +598,7 @@ error:
 }
 
 void
-gdu_device_changed (GduDevice *device)
+_gdu_device_changed (GduDevice *device)
 {
         g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
         update_info (device);
@@ -606,15 +606,15 @@ gdu_device_changed (GduDevice *device)
 }
 
 void
-gdu_device_job_changed (GduDevice   *device,
-                        gboolean     job_in_progress,
-                        const char  *job_id,
-                        uid_t        job_initiated_by_uid,
-                        gboolean     job_is_cancellable,
-                        int          job_num_tasks,
-                        int          job_cur_task,
-                        const char  *job_cur_task_id,
-                        double       job_cur_task_percentage)
+_gdu_device_job_changed (GduDevice   *device,
+                         gboolean     job_in_progress,
+                         const char  *job_id,
+                         uid_t        job_initiated_by_uid,
+                         gboolean     job_is_cancellable,
+                         int          job_num_tasks,
+                         int          job_cur_task,
+                         const char  *job_cur_task_id,
+                         double       job_cur_task_percentage)
 {
         g_print ("%s: %s: %s\n", __FUNCTION__, device->priv->props->device_file, job_id);
 
@@ -633,7 +633,7 @@ gdu_device_job_changed (GduDevice   *device,
 }
 
 void
-gdu_device_removed (GduDevice *device)
+_gdu_device_removed (GduDevice *device)
 {
         g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
         g_signal_emit (device, signals[REMOVED], 0);

@@ -34,6 +34,14 @@
 #include "devkit-disks-daemon-glue.h"
 #include "gdu-marshal.h"
 
+/**
+ * SECTION:gdu-pool
+ * @title: GduPool
+ * @short_description: Enumerate and monitor storage devices
+ *
+ * The #GduPool object represents a connection to the DeviceKit-disks daemon.
+ */
+
 enum {
         DEVICE_ADDED,
         DEVICE_REMOVED,
@@ -132,8 +140,15 @@ gdu_pool_class_init (GduPoolClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_pool_finalize;
 
+        /**
+         * GduPool::device-added
+         * @pool: The #GduPool emitting the signal.
+         * @device: The #GduDevice that was added.
+         *
+         * Emitted when @device is added to @pool.
+         **/
         signals[DEVICE_ADDED] =
-                g_signal_new ("device_added",
+                g_signal_new ("device-added",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, device_added),
@@ -142,8 +157,16 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_DEVICE);
 
+        /**
+         * GduPool::device-removed
+         * @pool: The #GduPool emitting the signal.
+         * @device: The #GduDevice that was removed.
+         *
+         * Emitted when @device is removed from @pool. Recipients
+         * should release references to @device.
+         **/
         signals[DEVICE_REMOVED] =
-                g_signal_new ("device_removed",
+                g_signal_new ("device-removed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, device_removed),
@@ -152,8 +175,15 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_DEVICE);
 
+        /**
+         * GduPool::device-changed
+         * @pool: The #GduPool emitting the signal.
+         * @device: A #GduDevice.
+         *
+         * Emitted when @device is changed.
+         **/
         signals[DEVICE_CHANGED] =
-                g_signal_new ("device_changed",
+                g_signal_new ("device-changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, device_changed),
@@ -162,8 +192,15 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_DEVICE);
 
+        /**
+         * GduPool::device-job-changed
+         * @pool: The #GduPool emitting the signal.
+         * @device: A #GduDevice.
+         *
+         * Emitted when job status on @device changes.
+         **/
         signals[DEVICE_JOB_CHANGED] =
-                g_signal_new ("device_job_changed",
+                g_signal_new ("device-job-changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, device_job_changed),
@@ -172,8 +209,15 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_DEVICE);
 
+        /**
+         * GduPool::presentable-added
+         * @pool: The #GduPool emitting the signal.
+         * @presentable: The #GduPresentable that was added.
+         *
+         * Emitted when @presentable is added to @pool.
+         **/
         signals[PRESENTABLE_ADDED] =
-                g_signal_new ("presentable_added",
+                g_signal_new ("presentable-added",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, presentable_added),
@@ -182,8 +226,16 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_PRESENTABLE);
 
+        /**
+         * GduPool::presentable-removed
+         * @pool: The #GduPool emitting the signal.
+         * @presentable: The #GduPresentable that was removed.
+         *
+         * Emitted when @presentable is removed from @pool. Recipients
+         * should release references to @presentable.
+         **/
         signals[PRESENTABLE_REMOVED] =
-                g_signal_new ("presentable_removed",
+                g_signal_new ("presentable-removed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, presentable_removed),
@@ -192,8 +244,15 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_PRESENTABLE);
 
+        /**
+         * GduPool::presentable-changed
+         * @pool: The #GduPool emitting the signal.
+         * @presentable: A #GduPresentable.
+         *
+         * Emitted when @presentable changes.
+         **/
         signals[PRESENTABLE_CHANGED] =
-                g_signal_new ("presentable_changed",
+                g_signal_new ("presentable-changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, presentable_changed),
@@ -202,8 +261,15 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_PRESENTABLE);
 
+        /**
+         * GduPool::presentable-job-changed
+         * @pool: The #GduPool emitting the signal.
+         * @presentable: A #GduPresentable.
+         *
+         * Emitted when job status on @presentable changes.
+         **/
         signals[PRESENTABLE_CHANGED] =
-                g_signal_new ("presentable_job_changed",
+                g_signal_new ("presentable-job-changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
                               G_STRUCT_OFFSET (GduPoolClass, presentable_job_changed),
@@ -1012,6 +1078,13 @@ out:
         return ret;
 }
 
+/**
+ * gdu_pool_new:
+ *
+ * Create a new #GduPool object.
+ *
+ * Returns: A #GduPool object. Caller must free this object using g_object_unref().
+ **/
 GduPool *
 gdu_pool_new (void)
 {
@@ -1142,6 +1215,15 @@ get_devices_cb (gpointer key, gpointer value, gpointer user_data)
         *l = g_list_prepend (*l, g_object_ref (GDU_DEVICE (value)));
 }
 
+/**
+ * gdu_pool_get_devices:
+ * @pool: A #GduPool.
+ *
+ * Get a list of all devices.
+ *
+ * Returns: A #GList of #GduDevice objects. Caller must free this
+ * (unref all objects, then use g_list_free()).
+ **/
 GList *
 gdu_pool_get_devices (GduPool *pool)
 {
@@ -1151,6 +1233,16 @@ gdu_pool_get_devices (GduPool *pool)
         return ret;
 }
 
+/**
+ * gdu_pool_get_presentables:
+ * @pool: A #GduPool
+ *
+ * Get a list of all presentables.
+ *
+ * Returns: A #GList of objects implementing the #GduPresentable
+ * interface. Caller must free this (unref all objects, then use
+ * g_list_free()).
+ **/
 GList *
 gdu_pool_get_presentables (GduPool *pool)
 {
@@ -1183,6 +1275,16 @@ gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable)
         return ret;
 }
 
+/**
+ * gdu_pool_get_volume_by_device:
+ * @pool: A #GduPool.
+ * @device: A #GduDevice.
+ *
+ * Given @device, find the #GduVolume object for it.
+ *
+ * Returns: A #GduVolume object or #NULL if no @device isn't a
+ * volume. Caller must free this object with g_object_unref().
+ **/
 GduPresentable *
 gdu_pool_get_volume_by_device (GduPool *pool, GduDevice *device)
 {
@@ -1215,6 +1317,15 @@ op_linux_md_start_cb (DBusGProxy *proxy, char *assembled_array_object_path, GErr
         g_free (data);
 }
 
+/**
+ * gdu_pool_op_linux_md_start:
+ * @pool: A #GduPool.
+ * @component_objpaths: A #GPtrArray of object paths.
+ * @callback: Callback function.
+ * @user_data: User data to pass to @callback.
+ *
+ * Starts a Linux md Software Array.
+ **/
 void
 gdu_pool_op_linux_md_start (GduPool *pool,
                             GPtrArray *component_objpaths,
@@ -1238,12 +1349,30 @@ gdu_pool_op_linux_md_start (GduPool *pool,
                                                               data);
 }
 
+/**
+ * gdu_pool_get_daemon_version:
+ * @pool: A #GduPool.
+ *
+ * Get the version of the DeviceKit-daemon on the system.
+ *
+ * Returns: The version of DeviceKit-disks daemon. Caller must free
+ * this string using g_free().
+ **/
 char *
 gdu_pool_get_daemon_version (GduPool *pool)
 {
         return g_strdup (pool->priv->daemon_version);
 }
 
+/**
+ * gdu_pool_get_known_filesystems:
+ * @pool: A #GduPool.
+ *
+ * Get a list of file systems known to the DeviceKit-disks daemon.
+ *
+ * Returns: A #GList of #GduKnownFilesystem objects. Caller must free
+ * this (unref all objects, then use g_list_free()).
+ **/
 GList *
 gdu_pool_get_known_filesystems (GduPool *pool)
 {
@@ -1253,6 +1382,17 @@ gdu_pool_get_known_filesystems (GduPool *pool)
         return ret;
 }
 
+/**
+ * gdu_pool_get_known_filesystem_by_id:
+ * @pool: A #GduPool.
+ * @id: Identifier for the file system, e.g. <literal>ext3</literal> or <literal>vfat</literal>.
+ *
+ * Looks up a known file system by id.
+ *
+ * Returns: A #GduKnownFilesystem object or #NULL if file system
+ * corresponding to @id exists. Caller must free this object using
+ * g_object_unref().
+ **/
 GduKnownFilesystem *
 gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id)
 {
@@ -1271,6 +1411,15 @@ out:
         return ret;
 }
 
+/**
+ * gdu_pool_supports_luks_devices:
+ * @pool: A #GduPool.
+ *
+ * Determine if the DeviceKit-disks daemon supports LUKS encrypted
+ * devices.
+ *
+ * Returns: #TRUE only if the daemon supports LUKS encrypted devices.
+ **/
 gboolean
 gdu_pool_supports_luks_devices (GduPool *pool)
 {

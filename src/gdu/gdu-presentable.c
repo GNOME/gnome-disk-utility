@@ -29,7 +29,7 @@
 /**
  * SECTION:gdu-presentable
  * @title: GduPresentable
- * @short_description: Interface for devices presentable to the end user.
+ * @short_description: Interface for devices presentable to the end user
  *
  * All storage devices in <literal>UNIX</literal> and <literal>UNIX</literal>-like
  * operating systems are mostly represented by so-called <literal>block</literal>

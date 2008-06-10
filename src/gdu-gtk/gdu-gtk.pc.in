@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: gdu
-Description: GObject based Disk Utility Library
+Name: gdu-gtk
+Description: GTK+ library for libgdu
 Version: @VERSION@
-Requires: gobject-2.0 gio-2.0 polkit
-Libs: -L${libdir} -lgdu
+Requires: gdu polkit-gnome gtk+-2.0
+Libs: -L${libdir} -lgdu-gtk
 Cflags: -I${includedir}/gnome-disk-utility

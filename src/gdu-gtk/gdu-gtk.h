@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-ui-util.h
+/* gdu-gtk.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -22,8 +22,8 @@
 #include <gtk/gtk.h>
 #include <gdu/gdu.h>
 
-#ifndef GDU_UI_UTIL_H
-#define GDU_UI_UTIL_H
+#ifndef GDU_GTK_H
+#define GDU_GTK_H
 
 gboolean gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window, GduPresentable *presentable);
 
@@ -93,4 +93,4 @@ char      *gdu_util_part_table_type_combo_box_get_selected   (GtkWidget  *combo_
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
 
 
-#endif /* GDU_UI_UTIL_H */
+#endif /* GDU_GTK_H */

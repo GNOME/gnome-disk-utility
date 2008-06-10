@@ -174,6 +174,8 @@ Makefile
 src/Makefile
 src/gdu/Makefile
 src/gdu/gdu.pc
+src/gdu-gtk/Makefile
+src/gdu-gtk/gdu-gtk.pc
 po/Makefile.in
 data/Makefile
 data/icons/Makefile

@@ -32,8 +32,9 @@
 #include <libsexy/sexy.h>
 
 #include <gdu/gdu.h>
+#include <gdu-gtk/gdu-gtk.h>
+
 #include "gdu-shell.h"
-#include "gdu-ui-util.h"
 #include "gdu-tree.h"
 
 #include "gdu-section-health.h"

@@ -28,7 +28,8 @@
 #include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
-#include "gdu-ui-util.h"
+#include <gdu-gtk/gdu-gtk.h>
+
 #include "gdu-section-partition.h"
 
 struct _GduSectionPartitionPrivate

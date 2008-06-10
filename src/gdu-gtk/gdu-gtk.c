@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-ui-util.c
+/* gdu-gtk.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -28,7 +28,7 @@
 #include <dbus/dbus-glib.h>
 
 #include <gdu/gdu.h>
-#include "gdu-ui-util.h"
+#include "gdu-gtk.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

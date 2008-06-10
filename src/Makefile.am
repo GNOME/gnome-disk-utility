@@ -1,11 +1,10 @@
 
-SUBDIRS = gdu
+SUBDIRS = gdu gdu-gtk
 
 bin_PROGRAMS = gnome-disk-utility
 
 gnome_disk_utility_SOURCES = 								\
 						gdu-main.c				\
-	gdu-ui-util.h				gdu-ui-util.c				\
 	gdu-time-label.h			gdu-time-label.c			\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
@@ -58,7 +57,8 @@ gnome_disk_utility_LDADD = 				\
 	$(GTK2_LIBS)					\
 	$(LIBSEXY_LIBS)					\
 	$(INTLLIBS)					\
-	$(top_builddir)/src/gdu/libgdu.la
+	$(top_builddir)/src/gdu/libgdu.la		\
+	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la
 
 clean-local :
 	rm -f *~

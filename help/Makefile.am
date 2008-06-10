@@ -1,10 +1,10 @@
 include $(top_srcdir)/gnome-doc-utils.make
 dist-hook: doc-dist-hook
 
-DOC_MODULE = gnome-disk-utility
+DOC_MODULE = palimpsest
 DOC_ENTITIES = legal.xml
 DOC_INCLUDES = 
-DOC_FIGURES = figures/gnome-disk-utility.png
+DOC_FIGURES = figures/main-app.png
 
 clean-local :
 	rm -f *~

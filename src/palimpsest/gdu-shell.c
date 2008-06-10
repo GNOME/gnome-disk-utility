@@ -1419,19 +1419,33 @@ static void
 about_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
-
-        const gchar *authors[] = {
+        GdkPixbuf *logo;
+        const char *artists[] = {
+                "Mike Langlie <mlanglie@redhat.com>",
+                NULL
+        };
+        const char *authors[] = {
                 "David Zeuthen <davidz@redhat.com>",
                 NULL
         };
 
+        logo = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                         "palimpsest",
+                                         96,
+                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                         NULL);
+
         gtk_show_about_dialog (GTK_WINDOW (shell->priv->app_window),
-                               "program-name", _("Disk Utility"),
+                               "program-name", _("Palimpsest Disk Utility"),
                                "version", VERSION,
-                               "copyright", "\xc2\xa9 2008 David Zeuthen",
+                               "copyright", "\xc2\xa9 2008 Red Hat, Inc.",
                                "authors", authors,
+                               "artists", artists,
                                "translator-credits", _("translator-credits"),
-                               "logo-icon-name", "gnome-disk-utility", NULL);
+                               "logo", logo,
+                               NULL);
+        if (logo != NULL)
+                g_object_unref (logo);
 }
 
 static const gchar *ui =
@@ -1480,7 +1494,7 @@ static GtkActionEntry entries[] = {
 
         {"quit", GTK_STOCK_QUIT, N_("_Quit"), "<Ctrl>Q", N_("Quit"),
          G_CALLBACK (quit_action_callback)},
-        {"contents", GTK_STOCK_HELP, N_("_Help"), "F1", N_("Get Help on Disk Utility"),
+        {"contents", GTK_STOCK_HELP, N_("_Help"), "F1", N_("Get Help on Palimpsest Disk Utility"),
          G_CALLBACK (help_contents_action_callback)},
         {"about", GTK_STOCK_ABOUT, N_("_About"), NULL, NULL,
          G_CALLBACK (about_action_callback)}
@@ -1774,7 +1788,7 @@ create_window (GduShell *shell)
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);
         gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 800, 600);
-        gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
+        gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Palimpsest Disk Utility"));
 
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (shell->priv->app_window), vbox);

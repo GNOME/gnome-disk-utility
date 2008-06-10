@@ -34,7 +34,7 @@ main (int argc, char **argv)
 
         gtk_init (&argc, &argv);
 
-        gtk_window_set_default_icon_name ("gnome-disk-utility");
+        gtk_window_set_default_icon_name ("palimpsest");
 
         shell = gdu_shell_new ();
         gtk_widget_show_all (gdu_shell_get_toplevel (shell));

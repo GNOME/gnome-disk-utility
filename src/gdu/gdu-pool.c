@@ -1127,12 +1127,12 @@ gdu_pool_new (void)
                                                        "org.freedesktop.DeviceKit.Disks",
                                                        "/",
                                                        "org.freedesktop.DeviceKit.Disks");
-        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceAdded", G_TYPE_STRING, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceRemoved", G_TYPE_STRING, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceChanged", G_TYPE_STRING, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy,
                                  "DeviceJobChanged",
-                                 G_TYPE_STRING,
+                                 DBUS_TYPE_G_OBJECT_PATH,
                                  G_TYPE_BOOLEAN,
                                  G_TYPE_STRING,
                                  G_TYPE_UINT,

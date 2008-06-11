@@ -1112,7 +1112,7 @@ gdu_pool_new (void)
         dbus_g_object_register_marshaller (
                 gdu_marshal_VOID__STRING_BOOLEAN_STRING_UINT_BOOLEAN_INT_INT_STRING_DOUBLE,
                 G_TYPE_NONE,
-                G_TYPE_STRING,
+                DBUS_TYPE_G_OBJECT_PATH,
                 G_TYPE_BOOLEAN,
                 G_TYPE_STRING,
                 G_TYPE_UINT,

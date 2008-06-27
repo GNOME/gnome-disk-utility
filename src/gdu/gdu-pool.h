@@ -72,7 +72,9 @@ GList      *gdu_pool_get_known_filesystems (GduPool *pool);
 GduKnownFilesystem *gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id);
 
 GduDevice  *gdu_pool_get_by_object_path (GduPool *pool, const char *object_path);
+GduDevice  *gdu_pool_get_by_device_file (GduPool *pool, const char *device_file);
 GduPresentable *gdu_pool_get_volume_by_device      (GduPool *pool, GduDevice *device);
+GduPresentable *gdu_pool_get_drive_by_device       (GduPool *pool, GduDevice *device);
 
 GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);

@@ -66,9 +66,9 @@ struct _GduPoolPrivate
         gboolean supports_luks_devices;
         GList *known_filesystems;
 
-        GHashTable *devices;            /* object path -> GduDevice* */
-        GHashTable *volumes;            /* object path -> GduVolume* */
-        GHashTable *drives;             /* object path -> GduDrive* */
+        GHashTable *devices;                /* object path -> GduDevice* */
+        GHashTable *volumes;                /* object path -> GduVolume* */
+        GHashTable *drives;                 /* object path -> GduDrive* */
 
         GList *activatable_drives;
 
@@ -1208,6 +1208,40 @@ gdu_pool_get_by_object_path (GduPool *pool, const char *object_path)
                 return NULL;
 }
 
+/**
+ * gdu_pool_get_by_device_file:
+ * @pool: the device pool
+ * @device_file: the UNIX block special device file, e.g. /dev/sda1.
+ *
+ * Looks up #GduDevice object for @device_file.
+ *
+ * Returns: A #GduDevice object for @object_path, otherwise
+ * #NULL. Caller must unref this object using g_object_unref().
+ **/
+GduDevice *
+gdu_pool_get_by_device_file (GduPool *pool, const char *device_file)
+{
+        GduDevice *d;
+        GduDevice *device;
+        GHashTableIter iter;
+
+        device = NULL;
+        g_hash_table_iter_init (&iter, pool->priv->devices);
+        while (g_hash_table_iter_next (&iter, NULL, (gpointer) &d)) {
+                const char *d_device_file;
+                d_device_file = gdu_device_get_device_file (d);
+                if (d_device_file == NULL)
+                        continue;
+                if (strcmp (device_file, d_device_file) == 0) {
+                        device = g_object_ref (d);
+                        break;
+                }
+                /* TODO: also check symlinks */
+        }
+
+        return device;
+}
+
 static void
 get_devices_cb (gpointer key, gpointer value, gpointer user_data)
 {
@@ -1295,6 +1329,29 @@ gdu_pool_get_volume_by_device (GduPool *pool, GduDevice *device)
                 return g_object_ref (volume);
         else
                 return NULL;
+}
+
+/**
+ * gdu_pool_get_drive_by_device:
+ * @pool: A #GduPool.
+ * @device: A #GduDevice.
+ *
+ * Given @device, find the #GduDrive object for it.
+ *
+ * Returns: A #GduDrive object or #NULL if no @device isn't a
+ * drive. Caller must free this object with g_object_unref().
+ **/
+GduPresentable *
+gdu_pool_get_drive_by_device (GduPool *pool, GduDevice *device)
+{
+        GduDrive *drive;
+
+        drive = g_hash_table_lookup (pool->priv->drives, gdu_device_get_object_path (device));
+        if (drive != NULL)
+                return g_object_ref (drive);
+        else
+                return NULL;
+        /* TODO: look up activatable drives too? */
 }
 
 
@@ -1425,4 +1482,5 @@ gdu_pool_supports_luks_devices (GduPool *pool)
 {
         return pool->priv->supports_luks_devices;
 }
+
 

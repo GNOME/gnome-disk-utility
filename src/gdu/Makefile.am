@@ -65,6 +65,7 @@ libgdu_la_CPPFLAGS = 					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED)				\
 	$(AM_CPPFLAGS)					\
+	-DGDU_API_IS_SUBJECT_TO_CHANGE			\
 	-DGDU_COMPILATION
 
 libgdu_la_CFLAGS = 					\

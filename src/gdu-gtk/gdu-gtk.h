@@ -19,11 +19,17 @@
  * USA
  */
 
+#ifndef GDU_GTK_H
+#define GDU_GTK_H
+
+#ifndef GDU_GTK_API_IS_SUBJECT_TO_CHANGE
+#error  libgdu-gtk is unstable API. You must define GDU_GTK_API_IS_SUBJECT_TO_CHANGE before including gdu-gtk/gdu-gtk.h
+#endif
+
 #include <gtk/gtk.h>
 #include <gdu/gdu.h>
 
-#ifndef GDU_GTK_H
-#define GDU_GTK_H
+G_BEGIN_DECLS
 
 gboolean gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window, GduPresentable *presentable);
 
@@ -92,5 +98,6 @@ char      *gdu_util_part_table_type_combo_box_get_selected   (GtkWidget  *combo_
 
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
 
+G_END_DECLS
 
 #endif /* GDU_GTK_H */

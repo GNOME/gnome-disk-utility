@@ -22,6 +22,10 @@
 #ifndef GDU_H
 #define GDU_H
 
+#ifndef GDU_API_IS_SUBJECT_TO_CHANGE
+#error  libgdu is unstable API. You must define GDU_API_IS_SUBJECT_TO_CHANGE before including gdu/gdu.h
+#endif
+
 G_BEGIN_DECLS
 
 #define GNOME_DISK_UTILITY_INSIDE_GDU_H 1

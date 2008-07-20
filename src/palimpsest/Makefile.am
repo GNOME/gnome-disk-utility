@@ -25,6 +25,8 @@ palimpsest_CPPFLAGS = 					\
 	-DG_LOG_DOMAIN=\"Palimpsest\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED)				\
+	-DGDU_API_IS_SUBJECT_TO_CHANGE			\
+	-DGDU_GTK_API_IS_SUBJECT_TO_CHANGE		\
 	$(AM_CPPFLAGS)
 
 palimpsest_CFLAGS = 					\

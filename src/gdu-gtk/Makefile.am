@@ -3,19 +3,21 @@ lib_LTLIBRARIES=libgdu-gtk.la
 
 libgdu_gtkincludedir=$(includedir)/gnome-disk-utility/gdu-gtk
 
-libgdu_gtkinclude_HEADERS =              				\
+libgdu_gtkinclude_HEADERS =              		\
 	gdu-gtk.h
 
-libgdu_gtk_la_SOURCES =                                			\
-	gdu-gtk.h				gdu-gtk.c
+libgdu_gtk_la_SOURCES =                                	\
+	gdu-gtk.h		gdu-gtk.c
 
-libgdu_gtk_la_CPPFLAGS = 						\
-	-I$(top_srcdir)/src						\
-	-I$(top_builddir)/src						\
-	-DG_LOG_DOMAIN=\"libgdu-gtk\"					\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"			\
-	$(DISABLE_DEPRECATED)						\
-	$(AM_CPPFLAGS)							\
+libgdu_gtk_la_CPPFLAGS = 				\
+	-I$(top_srcdir)/src				\
+	-I$(top_builddir)/src				\
+	-DG_LOG_DOMAIN=\"libgdu-gtk\"			\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
+	$(DISABLE_DEPRECATED)				\
+	$(AM_CPPFLAGS)					\
+	-DGDU_API_IS_SUBJECT_TO_CHANGE			\
+	-DGDU_GTK_API_IS_SUBJECT_TO_CHANGE		\
 	-DGDU_GTK_COMPILATION
 
 libgdu_gtk_la_CFLAGS = 					\

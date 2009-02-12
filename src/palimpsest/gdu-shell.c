@@ -185,7 +185,7 @@ details_update (GduShell *shell)
         char *s2;
         char *s3;
         char *name;
-        char *icon_name;
+        GIcon *icon;
         GdkPixbuf *pixbuf;
         GduDevice *device;
         const char *usage;
@@ -205,31 +205,10 @@ details_update (GduShell *shell)
         if (toplevel_presentable != NULL)
                 toplevel_device = gdu_presentable_get_device (toplevel_presentable);
 
-        icon_name = gdu_presentable_get_icon_name (presentable);
+        icon = gdu_presentable_get_icon (presentable);
         name = gdu_presentable_get_name (presentable);
 
-        pixbuf = NULL;
-        if (icon_name != NULL) {
-                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                   icon_name,
-                                                   96,
-                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                                   NULL);
-
-                /* if it's unallocated or unrecognized space, make the icon greyscale */
-                if (!gdu_presentable_is_allocated (presentable) ||
-                    !gdu_presentable_is_recognized (presentable)) {
-                        GdkPixbuf *pixbuf2;
-                        pixbuf2 = pixbuf;
-                        pixbuf = gdk_pixbuf_copy (pixbuf);
-                        g_object_unref (pixbuf2);
-                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
-                                                          pixbuf,
-                                                          0.0,
-                                                          FALSE);
-                }
-
-        }
+        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (presentable, 96);
         gtk_image_set_from_pixbuf (GTK_IMAGE (shell->priv->icon_image), pixbuf);
         g_object_unref (pixbuf);
 
@@ -409,7 +388,8 @@ details_update (GduShell *shell)
                 }
         }
 
-        g_free (icon_name);
+        if (icon != NULL)
+                g_object_unref (icon);
         g_free (name);
         g_free (strsize);
 
@@ -930,10 +910,10 @@ fsck_op_callback (GduDevice *device,
         } else {
                 GtkWidget *dialog;
                 char *name;
-                char *icon_name;
+                GIcon *icon;
 
                 name = gdu_presentable_get_name (data->presentable);
-                icon_name = gdu_presentable_get_icon_name (data->presentable);
+                icon = gdu_presentable_get_icon (data->presentable);
 
                 dialog = gtk_message_dialog_new_with_markup (
                         GTK_WINDOW (data->shell->priv->app_window),
@@ -950,7 +930,8 @@ fsck_op_callback (GduDevice *device,
                                                                   _("File system is <b>NOT</b> clean."));
 
                 gtk_window_set_title (GTK_WINDOW (dialog), name);
-                gtk_window_set_icon_name (GTK_WINDOW (dialog), icon_name);
+                // TODO: no support for GIcon in GtkWindow
+                //gtk_window_set_icon_name (GTK_WINDOW (dialog), icon_name);
 
                 g_signal_connect_swapped (dialog,
                                           "response",
@@ -959,7 +940,8 @@ fsck_op_callback (GduDevice *device,
                 gtk_window_present (GTK_WINDOW (dialog));
 
                 g_free (name);
-                g_free (icon_name);
+                if (icon != NULL)
+                        g_object_unref (icon);
         }
         shell_presentable_free (data);
 }
@@ -1730,7 +1712,7 @@ gdu_shell_raise_error (GduShell       *shell,
         GtkWidget *dialog;
         char *error_text;
         char *window_title;
-        char *window_icon_name;
+        GIcon *window_icon;
         va_list args;
 
         g_return_if_fail (shell != NULL);
@@ -1740,7 +1722,7 @@ gdu_shell_raise_error (GduShell       *shell,
         /* TODO: this still needs work */
 
         window_title = gdu_presentable_get_name (presentable);
-        window_icon_name = gdu_presentable_get_icon_name (presentable);
+        window_icon = gdu_presentable_get_icon (presentable);
 
         va_start (args, primary_markup_format);
         error_text = g_strdup_vprintf (primary_markup_format, args);
@@ -1756,7 +1738,8 @@ gdu_shell_raise_error (GduShell       *shell,
         gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
 
         gtk_window_set_title (GTK_WINDOW (dialog), window_title);
-        gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+        // TODO: no support for GIcon in GtkWindow
+        //gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
 
         g_signal_connect_swapped (dialog,
                                   "response",
@@ -1765,7 +1748,8 @@ gdu_shell_raise_error (GduShell       *shell,
         gtk_window_present (GTK_WINDOW (dialog));
 
         g_free (window_title);
-        g_free (window_icon_name);
+        if (window_icon != NULL)
+                g_object_unref (window_icon);
         g_free (error_text);
 }
 

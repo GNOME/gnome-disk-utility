@@ -241,8 +241,8 @@ gdu_volume_get_name (GduPresentable *presentable)
         return result;
 }
 
-static char *
-gdu_volume_get_icon_name (GduPresentable *presentable)
+static GIcon *
+gdu_volume_get_icon (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
         GduPresentable *p;
@@ -251,21 +251,11 @@ gdu_volume_get_icon_name (GduPresentable *presentable)
         const char *connection_interface;
         const char *name;
         const char *drive_media;
+        GIcon *icon;
 
         p = NULL;
         d = NULL;
         name = NULL;
-
-        usage = gdu_device_id_get_usage (volume->priv->device);
-        if (usage != NULL && strcmp (usage, "crypto") == 0) {
-                name = "media-encrypted";
-                goto out;
-        }
-        if (gdu_device_is_luks_cleartext (volume->priv->device)) {
-                /* TODO: use icon with open padlock */
-                name = "media-encrypted";
-                goto out;
-        }
 
         p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)
@@ -331,7 +321,41 @@ out:
         if (name == NULL)
                 name = "drive-harddisk";
 
-        return g_strdup (name);
+        icon = g_themed_icon_new_with_default_fallbacks (name);
+
+        usage = gdu_device_id_get_usage (volume->priv->device);
+        if (usage != NULL && strcmp (usage, "crypto") == 0) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-encrypted-lock");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+
+        } else if (gdu_device_is_luks_cleartext (volume->priv->device)) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-encrypted-unlock");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+        }
+
+        return icon;
 }
 
 static guint64
@@ -393,7 +417,7 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_volume_get_device;
         iface->get_enclosing_presentable = gdu_volume_get_enclosing_presentable;
         iface->get_name = gdu_volume_get_name;
-        iface->get_icon_name = gdu_volume_get_icon_name;
+        iface->get_icon = gdu_volume_get_icon;
         iface->get_offset = gdu_volume_get_offset;
         iface->get_size = gdu_volume_get_size;
         iface->get_pool = gdu_volume_get_pool;

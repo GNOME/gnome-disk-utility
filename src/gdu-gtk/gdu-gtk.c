@@ -283,7 +283,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
         gboolean ret;
         GduDevice *device;
         char *window_title;
-        char *window_icon_name;
+        GIcon *window_icon;
         GtkWidget *dialog;
         GtkWidget *hbox;
         GtkWidget *main_vbox;
@@ -303,7 +303,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
 
         ret = FALSE;
         window_title = NULL;
-        window_icon_name = NULL;
+        window_icon = NULL;
         device = NULL;
         dialog = NULL;
         data = NULL;
@@ -323,7 +323,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
                 enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
                 s = gdu_presentable_get_name (enclosing_drive);
                 /* todo: icon list */
-                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                window_icon = gdu_presentable_get_icon (enclosing_drive);
                 g_object_unref (enclosing_drive);
                 window_title = g_strdup_printf (_("Partition %d on %s"),
                                                 gdu_device_partition_get_number (device),
@@ -331,7 +331,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
                 g_free (s);
         } else {
                 window_title = gdu_presentable_get_name (presentable);
-                window_icon_name = gdu_presentable_get_icon_name (presentable);
+                window_icon = gdu_presentable_get_icon (presentable);
         }
 
         dialog = gtk_dialog_new_with_buttons (window_title,
@@ -344,7 +344,8 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
 	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-        gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+        // TODO: no support for GIcon in GtkWindow
+        //gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -438,7 +439,8 @@ out:
                 g_source_remove (refresh_timer_id);
 
         g_free (window_title);
-        g_free (window_icon_name);
+        if (window_icon != NULL)
+                g_object_unref (window_icon);
         if (device != NULL)
                 g_object_unref (device);
         if (dialog != NULL)
@@ -500,7 +502,7 @@ secret_dialog_device_removed (GduDevice *device, gpointer user_data)
 static char *
 gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                                  const char  *window_title,
-                                 const char  *window_icon_name,
+                                 GIcon       *window_icon,
                                  gboolean     is_new_password,
                                  gboolean     is_change_password,
                                  const char  *old_secret_for_change_password,
@@ -556,10 +558,11 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
 	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-        if (window_icon_name != NULL)
-                gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
-        else
-                gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
+        // TODO: no support for GIcon in GtkWindow
+        //if (window_icon != NULL)
+        //        gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
+        //else
+        gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -817,10 +820,10 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
         gboolean save_in_keyring_session;
         GduDevice *device;
         char *window_title;
-        char *window_icon_name;
+        GIcon *window_icon;
 
         window_title = NULL;
-        window_icon_name = NULL;
+        window_icon = NULL;
         device = NULL;
         secret = NULL;
         save_in_keyring = FALSE;
@@ -867,7 +870,7 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
                 enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
                 s = gdu_presentable_get_name (enclosing_drive);
                 /* todo: icon list */
-                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                window_icon = gdu_presentable_get_icon (enclosing_drive);
                 g_object_unref (enclosing_drive);
                 window_title = g_strdup_printf (_("Partition %d on %s"),
                                                 gdu_device_partition_get_number (device),
@@ -875,12 +878,12 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
                 g_free (s);
         } else {
                 window_title = gdu_presentable_get_name (presentable);
-                window_icon_name = gdu_presentable_get_icon_name (presentable);
+                window_icon = gdu_presentable_get_icon (presentable);
         }
 
         secret = gdu_util_dialog_secret_internal (parent_window,
                                                   window_title,
-                                                  window_icon_name,
+                                                  window_icon,
                                                   FALSE,
                                                   FALSE,
                                                   NULL,
@@ -914,7 +917,8 @@ out:
         if (device != NULL)
                 g_object_unref (device);
         g_free (window_title);
-        g_free (window_icon_name);
+        if (window_icon != NULL)
+                g_object_unref (window_icon);
         return secret;
 }
 
@@ -950,11 +954,11 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
         gboolean ret;
         char *old_secret_from_keyring;
         char *window_title;
-        char *window_icon_name;
+        GIcon *window_icon;
         GduDevice *device;
 
         window_title = NULL;
-        window_icon_name = NULL;
+        window_icon = NULL;
         device = NULL;
         *old_secret = NULL;
         *new_secret = NULL;
@@ -999,7 +1003,7 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                 enclosing_drive = gdu_presentable_get_enclosing_presentable (presentable);
                 s = gdu_presentable_get_name (enclosing_drive);
                 /* todo: icon list */
-                window_icon_name = gdu_presentable_get_icon_name (enclosing_drive);
+                window_icon = gdu_presentable_get_icon (enclosing_drive);
                 g_object_unref (enclosing_drive);
                 window_title = g_strdup_printf (_("Partition %d on %s"),
                                                 gdu_device_partition_get_number (device),
@@ -1007,12 +1011,12 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                 g_free (s);
         } else {
                 window_title = gdu_presentable_get_name (presentable);
-                window_icon_name = gdu_presentable_get_icon_name (presentable);
+                window_icon = gdu_presentable_get_icon (presentable);
         }
 
         *new_secret = gdu_util_dialog_secret_internal (parent_window,
                                                        window_title,
-                                                       window_icon_name,
+                                                       window_icon,
                                                        FALSE,
                                                        TRUE,
                                                        old_secret_from_keyring,
@@ -1047,7 +1051,8 @@ out:
         }
 
         g_free (window_title);
-        g_free (window_icon_name);
+        if (window_icon != NULL)
+                g_free (window_icon);
         if (device != NULL)
                 g_object_unref (device);
         return ret;
@@ -1723,23 +1728,38 @@ gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget 
 GdkPixbuf *
 gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size)
 {
-        char *icon_name;
+        gint icon_width, icon_height;
+
+        if (!gtk_icon_size_lookup (size, &icon_width, &icon_height))
+                icon_height = 48;
+
+        return gdu_util_get_pixbuf_for_presentable_at_pixel_size (presentable, icon_height);
+}
+
+GdkPixbuf *
+gdu_util_get_pixbuf_for_presentable_at_pixel_size (GduPresentable *presentable, gint pixel_size)
+{
+        GIcon *icon;
         GdkPixbuf *pixbuf;
 
-        icon_name = gdu_presentable_get_icon_name (presentable);
+        icon = gdu_presentable_get_icon (presentable);
 
         pixbuf = NULL;
-        if (icon_name != NULL) {
-                int icon_width, icon_height;
+        if (icon != NULL) {
+                GtkIconInfo *icon_info;
 
-                if (!gtk_icon_size_lookup (size, &icon_width, &icon_height))
-                        icon_height = 48;
+                icon_info = gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (),
+                                                            icon,
+                                                            pixel_size,
+                                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+                if (icon_info == NULL)
+                        goto out;
 
-                pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                   icon_name,
-                                                   icon_height,
-                                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                                   NULL);
+                pixbuf = gtk_icon_info_load_icon (icon_info, NULL);
+                gtk_icon_info_free (icon_info);
+
+                if (pixbuf == NULL)
+                        goto out;
 
                 /* if it's unallocated or unrecognized space, make the icon greyscale */
                 if (!gdu_presentable_is_allocated (presentable) ||
@@ -1755,7 +1775,9 @@ gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize si
                 }
         }
 
-        g_free (icon_name);
+ out:
+        if (icon != NULL)
+                g_object_unref (icon);
 
         return pixbuf;
 }

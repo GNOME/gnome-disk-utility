@@ -98,6 +98,9 @@ char      *gdu_util_part_table_type_combo_box_get_selected   (GtkWidget  *combo_
 
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, GtkIconSize size);
 
+GdkPixbuf *gdu_util_get_pixbuf_for_presentable_at_pixel_size (GduPresentable *presentable, gint pixel_size);
+
+
 G_END_DECLS
 
 #endif /* GDU_GTK_H */

@@ -183,8 +183,8 @@ gdu_drive_get_name (GduPresentable *presentable)
         return result;
 }
 
-static char *
-gdu_drive_get_icon_name (GduPresentable *presentable)
+static GIcon *
+gdu_drive_get_icon (GduPresentable *presentable)
 {
         GduDrive *drive = GDU_DRIVE (presentable);
         const char *name;
@@ -255,7 +255,7 @@ gdu_drive_get_icon_name (GduPresentable *presentable)
                         name = "drive-harddisk";
         }
 
-        return g_strdup (name);
+        return g_themed_icon_new_with_default_fallbacks (name);
 }
 
 static guint64
@@ -297,7 +297,7 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_drive_get_device;
         iface->get_enclosing_presentable = gdu_drive_get_enclosing_presentable;
         iface->get_name = gdu_drive_get_name;
-        iface->get_icon_name = gdu_drive_get_icon_name;
+        iface->get_icon = gdu_drive_get_icon;
         iface->get_offset = gdu_drive_get_offset;
         iface->get_size = gdu_drive_get_size;
         iface->get_pool = gdu_drive_get_pool;

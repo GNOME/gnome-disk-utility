@@ -45,7 +45,7 @@ typedef struct _GduPresentable GduPresentable;
  * @get_device: Returns the underlying #GduDevice.
  * @get_enclosing_presentable: Returns the #GduPresentable that is the parent or #NULL if there is no parent.
  * @get_name: Returns a name for the presentable suitable for presentation in an user interface.
- * @get_icon_name: Returns a name for the icon suitable for display in an user interface.
+ * @get_icon: Returns an icon suitable for display in an user interface.
  * @get_offset: Returns where the data represented by the presentable starts on the underlying main block device.
  * @get_size: Returns the size of the presentable or zero if not allocated.
  * @get_pool: Returns the #GduPool object that the presentable was obtained from.
@@ -69,7 +69,7 @@ struct _GduPresentableIface
         GduDevice *      (*get_device)                (GduPresentable *presentable);
         GduPresentable * (*get_enclosing_presentable) (GduPresentable *presentable);
         char *           (*get_name)                  (GduPresentable *presentable);
-        char *           (*get_icon_name)             (GduPresentable *presentable);
+        GIcon *          (*get_icon)                  (GduPresentable *presentable);
         guint64          (*get_offset)                (GduPresentable *presentable);
         guint64          (*get_size)                  (GduPresentable *presentable);
         GduPool *        (*get_pool)                  (GduPresentable *presentable);
@@ -81,7 +81,7 @@ GType           gdu_presentable_get_type                  (void) G_GNUC_CONST;
 GduDevice      *gdu_presentable_get_device                (GduPresentable *presentable);
 GduPresentable *gdu_presentable_get_enclosing_presentable (GduPresentable *presentable);
 char           *gdu_presentable_get_name                  (GduPresentable *presentable);
-char           *gdu_presentable_get_icon_name             (GduPresentable *presentable);
+GIcon          *gdu_presentable_get_icon                  (GduPresentable *presentable);
 guint64         gdu_presentable_get_offset                (GduPresentable *presentable);
 guint64         gdu_presentable_get_size                  (GduPresentable *presentable);
 GduPool        *gdu_presentable_get_pool                  (GduPresentable *presentable);

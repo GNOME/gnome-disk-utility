@@ -313,25 +313,27 @@ out:
         return ret;
 }
 
-static char *
-gdu_activatable_drive_get_icon_name (GduPresentable *presentable)
+static GIcon *
+gdu_activatable_drive_get_icon (GduPresentable *presentable)
 {
         GduActivatableDrive *activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
-        char *ret;
+        gchar *name;
 
-        ret = NULL;
+        name = NULL;
 
         switch (activatable_drive->priv->kind) {
         default:
                 g_warning ("no icon for kind=%d", activatable_drive->priv->kind);
+                name = "drive";
                 /* explicit fallthrough */
 
         case GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD:
                 /* TODO: get this into the naming spec */
-                ret = g_strdup ("gdu-raid-array");
+                name = "gdu-raid-array";
                 break;
         }
-        return ret;
+
+        return g_themed_icon_new_with_default_fallbacks (name);
 }
 
 static guint64
@@ -606,7 +608,7 @@ gdu_activatable_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_activatable_drive_get_device;
         iface->get_enclosing_presentable = gdu_activatable_drive_get_enclosing_presentable;
         iface->get_name = gdu_activatable_drive_get_name;
-        iface->get_icon_name = gdu_activatable_drive_get_icon_name;
+        iface->get_icon = gdu_activatable_drive_get_icon;
         iface->get_offset = gdu_activatable_drive_get_offset;
         iface->get_size = gdu_activatable_drive_get_size;
         iface->get_pool = gdu_activatable_drive_get_pool;

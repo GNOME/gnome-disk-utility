@@ -312,15 +312,15 @@ gdu_presentable_get_name (GduPresentable *presentable)
 }
 
 /**
- * gdu_presentable_get_icon_name:
+ * gdu_presentable_get_icon:
  * @presentable: A #GduPresentable.
  *
- * Gets a name for the icon suitable for display in an user interface.
+ * Gets a #GIcon suitable for display in an user interface.
  *
- * Returns: The icon name. Caller must free the string with g_free().
+ * Returns: The icon. Caller must free this with g_object_unref().
  **/
-char *
-gdu_presentable_get_icon_name (GduPresentable *presentable)
+GIcon *
+gdu_presentable_get_icon (GduPresentable *presentable)
 {
   GduPresentableIface *iface;
 
@@ -328,7 +328,7 @@ gdu_presentable_get_icon_name (GduPresentable *presentable)
 
   iface = GDU_PRESENTABLE_GET_IFACE (presentable);
 
-  return (* iface->get_icon_name) (presentable);
+  return (* iface->get_icon) (presentable);
 }
 
 /**

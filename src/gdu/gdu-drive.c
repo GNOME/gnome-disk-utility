@@ -134,6 +134,13 @@ _gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
         return drive;
 }
 
+static const gchar *
+gdu_drive_get_id (GduPresentable *presentable)
+{
+        GduDrive *drive = GDU_DRIVE (presentable);
+        return gdu_device_get_device_file (drive->priv->device);
+}
+
 static GduDevice *
 gdu_drive_get_device (GduPresentable *presentable)
 {
@@ -294,6 +301,7 @@ gdu_drive_is_recognized (GduPresentable *presentable)
 static void
 gdu_drive_presentable_iface_init (GduPresentableIface *iface)
 {
+        iface->get_id = gdu_drive_get_id;
         iface->get_device = gdu_drive_get_device;
         iface->get_enclosing_presentable = gdu_drive_get_enclosing_presentable;
         iface->get_name = gdu_drive_get_name;

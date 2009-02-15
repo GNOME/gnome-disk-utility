@@ -42,6 +42,7 @@ typedef struct _GduPresentable GduPresentable;
  * @changed: Signal emitted when the presentable is changed.
  * @removed: Signal emitted when the presentable is removed. Recipients should release all references to the object.
  * @job_changed: Signal emitted when the job state on the underlying #GduDevice changes.
+ * @get_id: Returns a unique id for the presentable.
  * @get_device: Returns the underlying #GduDevice.
  * @get_enclosing_presentable: Returns the #GduPresentable that is the parent or #NULL if there is no parent.
  * @get_name: Returns a name for the presentable suitable for presentation in an user interface.
@@ -66,6 +67,7 @@ struct _GduPresentableIface
         void (*job_changed) (GduPresentable *presentable);
 
         /* virtual table */
+        const gchar *    (*get_id)                    (GduPresentable *presentable);
         GduDevice *      (*get_device)                (GduPresentable *presentable);
         GduPresentable * (*get_enclosing_presentable) (GduPresentable *presentable);
         char *           (*get_name)                  (GduPresentable *presentable);
@@ -78,6 +80,7 @@ struct _GduPresentableIface
 };
 
 GType           gdu_presentable_get_type                  (void) G_GNUC_CONST;
+const gchar    *gdu_presentable_get_id                    (GduPresentable *presentable);
 GduDevice      *gdu_presentable_get_device                (GduPresentable *presentable);
 GduPresentable *gdu_presentable_get_enclosing_presentable (GduPresentable *presentable);
 char           *gdu_presentable_get_name                  (GduPresentable *presentable);

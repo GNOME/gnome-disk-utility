@@ -574,8 +574,11 @@ static void
 ensure_activatable_drive_for_linux_md_component (GduPool *pool, GduDevice *device)
 {
         GduActivatableDrive *activatable_drive;
+        gboolean emit_added;
 
         activatable_drive = find_activatable_drive_for_linux_md_component (pool, device);
+
+        emit_added = FALSE;
 
         /* create it unless we have it already */
         if (activatable_drive == NULL) {
@@ -588,12 +591,17 @@ ensure_activatable_drive_for_linux_md_component (GduPool *pool, GduDevice *devic
                 /* and we're part of the gang */
                 pool->priv->presentables = g_list_prepend (pool->priv->presentables,
                                                            GDU_PRESENTABLE (activatable_drive));
-                g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (activatable_drive));
+
+                /* don't emit the added signal until we are sure there are slaves for it */
+                emit_added = TRUE;
         }
 
         /* add ourselves to the drive if we're not already part of it */
         if (!gdu_activatable_drive_has_slave (activatable_drive, device))
                 _gdu_activatable_drive_add_slave (activatable_drive, device);
+
+        if (emit_added)
+                g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (activatable_drive));
 }
 
 static GduActivatableDrive *
@@ -683,6 +691,7 @@ gdu_pool_add_device_by_object_path (GduPool *pool, const char *object_path)
                                 g_hash_table_insert (pool->priv->drives, g_strdup (object_path),
                                                      g_object_ref (drive));
 
+                                g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, GDU_PRESENTABLE (drive));
                         }
 
                         /* otherwise do create a new GduDrive object */

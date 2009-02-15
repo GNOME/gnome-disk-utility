@@ -59,6 +59,8 @@ struct _GduActivatableDrivePrivate
         GduPool *pool;
 
         GList   *slaves;
+
+        gchar *id;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -98,6 +100,8 @@ gdu_activatable_drive_finalize (GduActivatableDrive *activatable_drive)
                 g_object_unref (device);
         }
         g_list_free (activatable_drive->priv->slaves);
+
+        g_free (activatable_drive->priv->id);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (activatable_drive));
@@ -165,8 +169,16 @@ _gdu_activatable_drive_has_uuid (GduActivatableDrive  *activatable_drive,
 
         ret = FALSE;
 
-        if (activatable_drive->priv->slaves == NULL)
+        if (activatable_drive->priv->slaves == NULL) {
+                if (activatable_drive->priv->device != NULL) {
+                        if (strcmp (uuid, gdu_device_linux_md_get_uuid (activatable_drive->priv->device)) == 0) {
+                                ret = TRUE;
+                        }
+                } else {
+                        g_warning ("No slave for activatable drive and no device");
+                }
                 goto out;
+        }
 
         first_slave = GDU_DEVICE (activatable_drive->priv->slaves->data);
         if (strcmp (gdu_device_linux_md_component_get_uuid (first_slave), uuid) == 0)
@@ -214,6 +226,50 @@ GduActivableDriveKind
 gdu_activatable_drive_get_kind (GduActivatableDrive *activatable_drive)
 {
         return activatable_drive->priv->kind;
+}
+
+static const gchar *
+gdu_activatable_drive_get_id (GduPresentable *presentable)
+{
+        GduActivatableDrive *activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        GduDevice *first_slave;
+        const gchar *ret;
+
+        if (activatable_drive->priv->id != NULL) {
+                ret = activatable_drive->priv->id;
+                goto out;
+        }
+
+        ret = "(notset)";
+
+        if (activatable_drive->priv->slaves == NULL) {
+                if (activatable_drive->priv->device == NULL) {
+                        g_warning ("No slave for activatable drive and no device");
+                        goto out;
+                }
+
+                activatable_drive->priv->id = g_strdup_printf ("linux_md_uuid_%s",
+                                                               gdu_device_linux_md_get_uuid (activatable_drive->priv->device));
+                ret = activatable_drive->priv->id;
+                goto out;
+        }
+
+        first_slave = GDU_DEVICE (activatable_drive->priv->slaves->data);
+
+        switch (activatable_drive->priv->kind) {
+        default:
+                g_warning ("Cannot get id for unknown kind %d", activatable_drive->priv->kind);
+                break;
+
+        case GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD:
+                activatable_drive->priv->id = g_strdup_printf ("linux_md_uuid_%s",
+                                                               gdu_device_linux_md_component_get_uuid (first_slave));
+                ret = activatable_drive->priv->id;
+                break;
+        }
+
+ out:
+        return ret;
 }
 
 static GduDevice *
@@ -605,6 +661,7 @@ gdu_activatable_drive_get_num_ready_slaves (GduActivatableDrive *activatable_dri
 static void
 gdu_activatable_drive_presentable_iface_init (GduPresentableIface *iface)
 {
+        iface->get_id = gdu_activatable_drive_get_id;
         iface->get_device = gdu_activatable_drive_get_device;
         iface->get_enclosing_presentable = gdu_activatable_drive_get_enclosing_presentable;
         iface->get_name = gdu_activatable_drive_get_name;

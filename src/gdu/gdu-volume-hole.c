@@ -49,6 +49,7 @@ struct _GduVolumeHolePrivate
         guint64 size;
         GduPresentable *enclosing_presentable;
         GduPool *pool;
+        gchar *id;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -65,6 +66,8 @@ gdu_volume_hole_finalize (GduVolumeHole *volume_hole)
 
         if (volume_hole->priv->enclosing_presentable != NULL)
                 g_object_unref (volume_hole->priv->enclosing_presentable);
+
+        g_free (volume_hole->priv->id);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (volume_hole));
@@ -98,7 +101,19 @@ _gdu_volume_hole_new (GduPool *pool, guint64 offset, guint64 size, GduPresentabl
         volume_hole->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 
+        volume_hole->priv->id = g_strdup_printf ("hole_%s_%" G_GUINT64_FORMAT "_%" G_GUINT64_FORMAT,
+                                                 enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)",
+                                                 offset,
+                                                 size);
+
         return volume_hole;
+}
+
+static const gchar *
+gdu_volume_hole_get_id (GduPresentable *presentable)
+{
+        GduVolumeHole *volume_hole = GDU_VOLUME_HOLE (presentable);
+        return volume_hole->priv->id;
 }
 
 static GduDevice *
@@ -246,6 +261,7 @@ gdu_volume_hole_is_recognized (GduPresentable *presentable)
 static void
 gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
 {
+        iface->get_id = gdu_volume_hole_get_id;
         iface->get_device = gdu_volume_hole_get_device;
         iface->get_enclosing_presentable = gdu_volume_hole_get_enclosing_presentable;
         iface->get_name = gdu_volume_hole_get_name;

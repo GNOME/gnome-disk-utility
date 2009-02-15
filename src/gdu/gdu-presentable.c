@@ -247,6 +247,27 @@ gdu_presentable_base_init (gpointer g_class)
 }
 
 /**
+ * gdu_presentable_get_id:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a stable identifier for @presentable.
+ *
+ * Returns: An stable identifier for @presentable. Do not free, the string is
+ * owned by @presentable.
+ **/
+const gchar *
+gdu_presentable_get_id (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_id) (presentable);
+}
+
+/**
  * gdu_presentable_get_device:
  * @presentable: A #GduPresentable.
  *

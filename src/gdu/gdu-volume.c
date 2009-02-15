@@ -31,6 +31,7 @@
 #include "gdu-pool.h"
 #include "gdu-volume.h"
 #include "gdu-presentable.h"
+#include "gdu-activatable-drive.h"
 
 /**
  * SECTION:gdu-volume
@@ -136,6 +137,13 @@ _gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *e
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, volume);
         g_signal_connect (device, "removed", (GCallback) device_removed, volume);
         return volume;
+}
+
+static const gchar *
+gdu_volume_get_id (GduPresentable *presentable)
+{
+        GduVolume *volume = GDU_VOLUME (presentable);
+        return gdu_device_get_device_file (volume->priv->device);
 }
 
 static GduDevice *
@@ -260,6 +268,17 @@ gdu_volume_get_icon (GduPresentable *presentable)
         p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)
                 goto out;
+
+        if (GDU_IS_ACTIVATABLE_DRIVE (p)) {
+                GduActivableDriveKind kind;
+
+                kind = gdu_activatable_drive_get_kind (GDU_ACTIVATABLE_DRIVE (p));
+
+                if (kind == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD)
+                        name = "gdu-raid-array";
+
+                goto out;
+        }
 
         d = gdu_presentable_get_device (p);
         if (d == NULL)
@@ -414,6 +433,7 @@ gdu_volume_is_recognized (GduPresentable *presentable)
 static void
 gdu_volume_presentable_iface_init (GduPresentableIface *iface)
 {
+        iface->get_id = gdu_volume_get_id;
         iface->get_device = gdu_volume_get_device;
         iface->get_enclosing_presentable = gdu_volume_get_enclosing_presentable;
         iface->get_name = gdu_volume_get_name;

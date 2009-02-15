@@ -57,6 +57,7 @@ typedef struct
         gboolean device_is_read_only;
         gboolean device_is_drive;
         gboolean device_is_optical_disc;
+        gboolean device_is_luks;
         gboolean device_is_luks_cleartext;
         gboolean device_is_mounted;
         gboolean device_is_busy;
@@ -97,6 +98,8 @@ typedef struct
         int      partition_table_max_number;
         GArray  *partition_table_offsets;
         GArray  *partition_table_sizes;
+
+        char    *luks_holder;
 
         char    *luks_cleartext_slave;
         uid_t    luks_cleartext_unlocked_by_uid;
@@ -179,6 +182,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_drive = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-optical-disc") == 0)
                 props->device_is_optical_disc = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-luks") == 0)
+                props->device_is_luks = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-luks-cleartext") == 0)
                 props->device_is_luks_cleartext = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-linux-md-component") == 0)
@@ -262,6 +267,9 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 g_value_copy (value, &dest_value);
                 props->partition_table_sizes = g_value_get_boxed (&dest_value);
         }
+
+        else if (strcmp (key, "luks-holder") == 0)
+                props->luks_holder = g_strdup (g_value_get_boxed (value));
 
         else if (strcmp (key, "luks-cleartext-slave") == 0)
                 props->luks_cleartext_slave = g_strdup (g_value_get_boxed (value));
@@ -376,6 +384,52 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 g_warning ("unhandled property '%s'", key);
 }
 
+static void
+device_properties_free (DeviceProperties *props)
+{
+        g_free (props->native_path);
+        g_free (props->device_file);
+        g_strfreev (props->device_file_by_id);
+        g_strfreev (props->device_file_by_path);
+        g_free (props->device_mount_path);
+        g_free (props->job_id);
+        g_free (props->job_cur_task_id);
+        g_free (props->id_usage);
+        g_free (props->id_type);
+        g_free (props->id_version);
+        g_free (props->id_uuid);
+        g_free (props->id_label);
+        g_free (props->partition_slave);
+        g_free (props->partition_type);
+        g_free (props->partition_label);
+        g_free (props->partition_uuid);
+        g_strfreev (props->partition_flags);
+        g_free (props->partition_table_scheme);
+        g_array_free (props->partition_table_offsets, TRUE);
+        g_array_free (props->partition_table_sizes, TRUE);
+        g_free (props->luks_holder);
+        g_free (props->luks_cleartext_slave);
+        g_free (props->drive_model);
+        g_free (props->drive_vendor);
+        g_free (props->drive_revision);
+        g_free (props->drive_serial);
+        g_free (props->drive_connection_interface);
+        g_strfreev (props->drive_media_compatibility);
+        g_free (props->drive_media);
+        g_free (props->drive_smart_last_self_test_result);
+        g_value_unset (&(props->drive_smart_attributes));
+        g_free (props->linux_md_component_level);
+        g_free (props->linux_md_component_uuid);
+        g_free (props->linux_md_component_name);
+        g_free (props->linux_md_component_version);
+        g_free (props->linux_md_level);
+        g_free (props->linux_md_version);
+        g_strfreev (props->linux_md_slaves);
+        g_strfreev (props->linux_md_slaves_state);
+        g_free (props->linux_md_sync_action);
+        g_free (props);
+}
+
 static DeviceProperties *
 device_properties_get (DBusGConnection *bus,
                        const char *object_path)
@@ -404,6 +458,9 @@ device_properties_get (DBusGConnection *bus,
                                 G_TYPE_INVALID)) {
                 g_warning ("Couldn't call GetAll() to get properties for %s: %s", object_path, error->message);
                 g_error_free (error);
+
+                device_properties_free (props);
+                props = NULL;
                 goto out;
         }
 
@@ -414,51 +471,6 @@ device_properties_get (DBusGConnection *bus,
 out:
         g_object_unref (prop_proxy);
         return props;
-}
-
-static void
-device_properties_free (DeviceProperties *props)
-{
-        g_free (props->native_path);
-        g_free (props->device_file);
-        g_strfreev (props->device_file_by_id);
-        g_strfreev (props->device_file_by_path);
-        g_free (props->device_mount_path);
-        g_free (props->job_id);
-        g_free (props->job_cur_task_id);
-        g_free (props->id_usage);
-        g_free (props->id_type);
-        g_free (props->id_version);
-        g_free (props->id_uuid);
-        g_free (props->id_label);
-        g_free (props->partition_slave);
-        g_free (props->partition_type);
-        g_free (props->partition_label);
-        g_free (props->partition_uuid);
-        g_strfreev (props->partition_flags);
-        g_free (props->partition_table_scheme);
-        g_array_free (props->partition_table_offsets, TRUE);
-        g_array_free (props->partition_table_sizes, TRUE);
-        g_free (props->luks_cleartext_slave);
-        g_free (props->drive_model);
-        g_free (props->drive_vendor);
-        g_free (props->drive_revision);
-        g_free (props->drive_serial);
-        g_free (props->drive_connection_interface);
-        g_strfreev (props->drive_media_compatibility);
-        g_free (props->drive_media);
-        g_free (props->drive_smart_last_self_test_result);
-        g_value_unset (&(props->drive_smart_attributes));
-        g_free (props->linux_md_component_level);
-        g_free (props->linux_md_component_uuid);
-        g_free (props->linux_md_component_name);
-        g_free (props->linux_md_component_version);
-        g_free (props->linux_md_level);
-        g_free (props->linux_md_version);
-        g_strfreev (props->linux_md_slaves);
-        g_strfreev (props->linux_md_slaves_state);
-        g_free (props->linux_md_sync_action);
-        g_free (props);
 }
 
 /* --- SUCKY CODE END --- */
@@ -729,6 +741,12 @@ gdu_device_is_partition_table (GduDevice *device)
 }
 
 gboolean
+gdu_device_is_luks (GduDevice *device)
+{
+        return device->priv->props->device_is_luks;
+}
+
+gboolean
 gdu_device_is_luks_cleartext (GduDevice *device)
 {
         return device->priv->props->device_is_luks_cleartext;
@@ -887,6 +905,12 @@ GArray *
 gdu_device_partition_table_get_sizes (GduDevice *device)
 {
         return device->priv->props->partition_table_sizes;
+}
+
+const char *
+gdu_device_luks_get_holder (GduDevice *device)
+{
+        return device->priv->props->luks_holder;
 }
 
 const char *

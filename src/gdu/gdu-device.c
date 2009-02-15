@@ -143,6 +143,8 @@ typedef struct
 
         char    *linux_md_level;
         int      linux_md_num_raid_devices;
+        char    *linux_md_uuid;
+        char    *linux_md_name;
         char    *linux_md_version;
         char   **linux_md_slaves;
         char   **linux_md_slaves_state;
@@ -353,6 +355,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->linux_md_level = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-num-raid-devices") == 0)
                 props->linux_md_num_raid_devices = g_value_get_int (value);
+        else if (strcmp (key, "linux-md-uuid") == 0)
+                props->linux_md_uuid = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-name") == 0)
+                props->linux_md_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-version") == 0)
                 props->linux_md_version = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-slaves") == 0) {
@@ -423,6 +429,8 @@ device_properties_free (DeviceProperties *props)
         g_free (props->linux_md_component_name);
         g_free (props->linux_md_component_version);
         g_free (props->linux_md_level);
+        g_free (props->linux_md_uuid);
+        g_free (props->linux_md_name);
         g_free (props->linux_md_version);
         g_strfreev (props->linux_md_slaves);
         g_strfreev (props->linux_md_slaves_state);
@@ -1122,6 +1130,18 @@ int
 gdu_device_linux_md_get_num_raid_devices (GduDevice *device)
 {
         return device->priv->props->linux_md_num_raid_devices;
+}
+
+const char *
+gdu_device_linux_md_get_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_md_uuid;
+}
+
+const char *
+gdu_device_linux_md_get_name (GduDevice *device)
+{
+        return device->priv->props->linux_md_name;
 }
 
 const char *

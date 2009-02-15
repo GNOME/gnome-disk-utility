@@ -514,6 +514,42 @@ static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
         }
 };
 
+gchar *
+gdu_util_get_secret (GduDevice *device)
+{
+        const char *usage;
+        const char *uuid;
+        char *password;
+        gchar *ret;
+
+        ret = NULL;
+
+        usage = gdu_device_id_get_usage (device);
+        uuid = gdu_device_id_get_uuid (device);
+
+        if (strcmp (usage, "crypto") != 0) {
+                g_warning ("%s: device is not a crypto device", __FUNCTION__);
+                goto out;
+        }
+
+        if (uuid == NULL || strlen (uuid) == 0) {
+                g_warning ("%s: device has no UUID", __FUNCTION__);
+                goto out;
+        }
+
+        if (!gnome_keyring_find_password_sync (&encrypted_device_password_schema,
+                                               &password,
+                                               "luks-device-uuid", uuid,
+                                               NULL) == GNOME_KEYRING_RESULT_OK)
+                goto out;
+
+        ret = g_strdup (password);
+        gnome_keyring_free_password (password);
+
+out:
+        return ret;
+}
+
 gboolean
 gdu_util_have_secret (GduDevice *device)
 {
@@ -588,9 +624,11 @@ gdu_util_save_secret (GduDevice      *device,
         const char *keyring;
         const char *usage;
         const char *uuid;
+        gchar *name;
         gboolean ret;
 
         ret = FALSE;
+        name = NULL;
 
         usage = gdu_device_id_get_usage (device);
         uuid = gdu_device_id_get_uuid (device);
@@ -609,9 +647,11 @@ gdu_util_save_secret (GduDevice      *device,
         if (save_in_keyring_session)
                 keyring = GNOME_KEYRING_SESSION;
 
+        name = g_strdup_printf (_("LUKS Passphrase for UUID %s"), uuid);
+
         if (gnome_keyring_store_password_sync (&encrypted_device_password_schema,
                                                keyring,
-                                               _("Encrypted Disk Passphrase"),
+                                               name,
                                                secret,
                                                "luks-device-uuid", uuid,
                                                NULL) != GNOME_KEYRING_RESULT_OK) {
@@ -622,6 +662,7 @@ gdu_util_save_secret (GduDevice      *device,
         ret = TRUE;
 
 out:
+        g_free (name);
         return ret;
 }
 

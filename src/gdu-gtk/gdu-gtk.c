@@ -898,19 +898,24 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
 
         if (secret != NULL && (save_in_keyring || save_in_keyring_session)) {
                 const char *keyring;
+                gchar *name;
 
                 keyring = NULL;
                 if (save_in_keyring_session)
                         keyring = GNOME_KEYRING_SESSION;
 
+                name = g_strdup_printf (_("LUKS Passphrase for UUID %s"), uuid);
+
                 if (gnome_keyring_store_password_sync (&encrypted_device_password_schema,
                                                        keyring,
-                                                       _("Encrypted Disk Passphrase"),
+                                                       name,
                                                        secret,
                                                        "luks-device-uuid", uuid,
                                                        NULL) != GNOME_KEYRING_RESULT_OK) {
                         g_warning ("%s: couldn't store passphrase in keyring", __FUNCTION__);
                 }
+
+                g_free (name);
         }
 
 out:

@@ -68,4 +68,6 @@ gboolean gdu_util_delete_secret (GduDevice *device);
 
 gboolean gdu_util_have_secret (GduDevice *device);
 
+gchar *gdu_util_get_secret (GduDevice *device);
+
 #endif /* GDU_UTIL_H */

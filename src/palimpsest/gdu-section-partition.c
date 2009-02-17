@@ -454,6 +454,8 @@ gdu_section_partition_class_init (GduSectionPartitionClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_partition_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionPartitionPrivate));
 }
 
 static void
@@ -471,7 +473,7 @@ gdu_section_partition_init (GduSectionPartition *section)
         GtkWidget *button_box;
         int row;
 
-        section->priv = g_new0 (GduSectionPartitionPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_PARTITION, GduSectionPartitionPrivate);
 
         section->priv->pk_change_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_change_action,

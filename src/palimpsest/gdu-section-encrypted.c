@@ -220,6 +220,8 @@ gdu_section_encrypted_class_init (GduSectionEncryptedClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_encrypted_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionEncryptedPrivate));
 }
 
 static void
@@ -232,7 +234,7 @@ gdu_section_encrypted_init (GduSectionEncrypted *section)
         GtkWidget *align;
         GtkWidget *button_box;
 
-        section->priv = g_new0 (GduSectionEncryptedPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_ENCRYPTED, GduSectionEncryptedPrivate);
 
         vbox3 = gtk_vbox_new (FALSE, 5);
         gtk_box_pack_start (GTK_BOX (section), vbox3, FALSE, TRUE, 0);

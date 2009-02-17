@@ -63,6 +63,8 @@ gdu_section_no_media_class_init (GduSectionNoMediaClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_no_media_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionNoMediaPrivate));
 }
 
 static void
@@ -74,7 +76,7 @@ gdu_section_no_media_init (GduSectionNoMedia *section)
         GtkWidget *button;
         GtkWidget *button_box;
 
-        section->priv = g_new0 (GduSectionNoMediaPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_NO_MEDIA, GduSectionNoMediaPrivate);
 
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>No Media Detected</b>"));

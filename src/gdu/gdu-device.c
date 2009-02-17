@@ -537,6 +537,8 @@ gdu_device_class_init (GduDeviceClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_device_finalize;
 
+        g_type_class_add_private (klass, sizeof (GduDevicePrivate));
+
         signals[CHANGED] =
                 g_signal_new ("changed",
                               G_TYPE_FROM_CLASS (klass),
@@ -566,7 +568,7 @@ gdu_device_class_init (GduDeviceClass *klass)
 static void
 gdu_device_init (GduDevice *device)
 {
-        device->priv = g_new0 (GduDevicePrivate, 1);
+        device->priv = G_TYPE_INSTANCE_GET_PRIVATE (device, GDU_TYPE_DEVICE, GduDevicePrivate);
 }
 
 static gboolean

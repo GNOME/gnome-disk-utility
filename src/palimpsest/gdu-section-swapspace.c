@@ -64,6 +64,8 @@ gdu_section_swapspace_class_init (GduSectionSwapspaceClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_swapspace_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionSwapspacePrivate));
 }
 
 static void
@@ -74,7 +76,7 @@ gdu_section_swapspace_init (GduSectionSwapspace *section)
         GtkWidget *label;
         GtkWidget *align;
 
-        section->priv = g_new0 (GduSectionSwapspacePrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_SWAPSPACE, GduSectionSwapspacePrivate);
 
         vbox3 = gtk_vbox_new (FALSE, 5);
         gtk_box_pack_start (GTK_BOX (section), vbox3, FALSE, TRUE, 0);

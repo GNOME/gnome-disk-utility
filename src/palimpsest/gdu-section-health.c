@@ -1304,6 +1304,8 @@ gdu_section_health_class_init (GduSectionHealthClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_health_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionHealthPrivate));
 }
 
 static void
@@ -1319,7 +1321,7 @@ gdu_section_health_init (GduSectionHealth *section)
         GtkWidget *button_box;
         GtkWidget *image;
 
-        section->priv = g_new0 (GduSectionHealthPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_HEALTH, GduSectionHealthPrivate);
 
         section->priv->pk_smart_refresh_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_smart_refresh_action,

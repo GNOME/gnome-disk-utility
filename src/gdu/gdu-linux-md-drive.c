@@ -119,6 +119,8 @@ gdu_linux_md_drive_class_init (GduLinuxMdDriveClass *klass)
 
         gobject_class->finalize = gdu_linux_md_drive_finalize;
 
+        g_type_class_add_private (klass, sizeof (GduLinuxMdDrivePrivate));
+
         drive_class->is_running         = gdu_linux_md_drive_is_running;
         drive_class->can_start_stop     = gdu_linux_md_drive_can_start_stop;
         drive_class->can_start          = gdu_linux_md_drive_can_start;
@@ -130,7 +132,7 @@ gdu_linux_md_drive_class_init (GduLinuxMdDriveClass *klass)
 static void
 gdu_linux_md_drive_init (GduLinuxMdDrive *drive)
 {
-        drive->priv = g_new0 (GduLinuxMdDrivePrivate, 1);
+        drive->priv = G_TYPE_INSTANCE_GET_PRIVATE (drive, GDU_TYPE_LINUX_MD_DRIVE, GduLinuxMdDrivePrivate);
 }
 
 static void

@@ -121,6 +121,8 @@ gdu_section_class_init (GduSectionClass *klass)
 
         klass->update = NULL; /* pure virtual */
 
+        g_type_class_add_private (klass, sizeof (GduSectionPrivate));
+
         /**
          * GduSection:shell:
          *
@@ -153,7 +155,7 @@ gdu_section_class_init (GduSectionClass *klass)
 static void
 gdu_section_init (GduSection *section)
 {
-        section->priv = g_new0 (GduSectionPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION, GduSectionPrivate);
 }
 
 void

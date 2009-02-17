@@ -842,6 +842,8 @@ gdu_section_linux_md_drive_class_init (GduSectionLinuxMdDriveClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_linux_md_drive_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionLinuxMdDrivePrivate));
 }
 
 static void
@@ -857,7 +859,7 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
 
-        section->priv = g_new0 (GduSectionLinuxMdDrivePrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_LINUX_MD_DRIVE, GduSectionLinuxMdDrivePrivate);
 
         section->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_linux_md_action,

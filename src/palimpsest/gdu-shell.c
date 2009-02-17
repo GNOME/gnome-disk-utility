@@ -128,6 +128,8 @@ gdu_shell_class_init (GduShellClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_shell_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduShellPrivate));
 }
 
 static void create_window (GduShell *shell);
@@ -135,7 +137,7 @@ static void create_window (GduShell *shell);
 static void
 gdu_shell_init (GduShell *shell)
 {
-        shell->priv = g_new0 (GduShellPrivate, 1);
+        shell->priv = G_TYPE_INSTANCE_GET_PRIVATE (shell, GDU_TYPE_SHELL, GduShellPrivate);
         create_window (shell);
 }
 

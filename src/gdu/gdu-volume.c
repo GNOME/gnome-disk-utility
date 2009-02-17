@@ -94,12 +94,14 @@ gdu_volume_class_init (GduVolumeClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_volume_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduVolumePrivate));
 }
 
 static void
 gdu_volume_init (GduVolume *volume)
 {
-        volume->priv = g_new0 (GduVolumePrivate, 1);
+        volume->priv = G_TYPE_INSTANCE_GET_PRIVATE (volume, GDU_TYPE_VOLUME, GduVolumePrivate);
 }
 
 static void

@@ -62,12 +62,14 @@ gdu_smart_data_attribute_class_init (GduSmartDataAttributeClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_smart_data_attribute_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduSmartDataAttributePrivate));
 }
 
 static void
 gdu_smart_data_attribute_init (GduSmartDataAttribute *smart_data_attribute)
 {
-        smart_data_attribute->priv = g_new0 (GduSmartDataAttributePrivate, 1);
+        smart_data_attribute->priv = G_TYPE_INSTANCE_GET_PRIVATE (smart_data_attribute, GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttributePrivate);
 }
 
 int

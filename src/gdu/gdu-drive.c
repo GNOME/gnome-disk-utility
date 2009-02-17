@@ -91,6 +91,7 @@ gdu_drive_class_init (GduDriveClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_drive_finalize;
 
+        g_type_class_add_private (klass, sizeof (GduDrivePrivate));
 }
 
 gboolean
@@ -172,7 +173,7 @@ gdu_drive_stop (GduDrive            *drive,
 static void
 gdu_drive_init (GduDrive *drive)
 {
-        drive->priv = g_new0 (GduDrivePrivate, 1);
+        drive->priv = G_TYPE_INSTANCE_GET_PRIVATE (drive, GDU_TYPE_DRIVE, GduDrivePrivate);
 }
 
 static void

@@ -68,12 +68,14 @@ gdu_known_filesystem_class_init (GduKnownFilesystemClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_known_filesystem_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduKnownFilesystemPrivate));
 }
 
 static void
 gdu_known_filesystem_init (GduKnownFilesystem *known_filesystem)
 {
-        known_filesystem->priv = g_new0 (GduKnownFilesystemPrivate, 1);
+        known_filesystem->priv = G_TYPE_INSTANCE_GET_PRIVATE (known_filesystem, GDU_TYPE_KNOWN_FILESYSTEM, GduKnownFilesystemPrivate);
 }
 
 GduKnownFilesystem *

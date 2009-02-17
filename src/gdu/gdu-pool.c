@@ -104,6 +104,8 @@ gdu_pool_class_init (GduPoolClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_pool_finalize;
 
+        g_type_class_add_private (klass, sizeof (GduPoolPrivate));
+
         /**
          * GduPool::device-added
          * @pool: The #GduPool emitting the signal.
@@ -246,7 +248,7 @@ gdu_pool_class_init (GduPoolClass *klass)
 static void
 gdu_pool_init (GduPool *pool)
 {
-        pool->priv = g_new0 (GduPoolPrivate, 1);
+        pool->priv = G_TYPE_INSTANCE_GET_PRIVATE (pool, GDU_TYPE_POOL, GduPoolPrivate);
 
         pool->priv->object_path_to_device = g_hash_table_new_full (g_str_hash,
                                                                    g_str_equal,

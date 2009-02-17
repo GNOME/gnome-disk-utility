@@ -579,6 +579,8 @@ gdu_section_unallocated_class_init (GduSectionUnallocatedClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_unallocated_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionUnallocatedPrivate));
 }
 
 static void
@@ -601,7 +603,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         GtkWidget *check_button;
         int row;
 
-        section->priv = g_new0 (GduSectionUnallocatedPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_UNALLOCATED, GduSectionUnallocatedPrivate);
 
         section->priv->pk_change_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_change_action,

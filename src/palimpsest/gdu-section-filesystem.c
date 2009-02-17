@@ -195,6 +195,8 @@ gdu_section_filesystem_class_init (GduSectionFilesystemClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_filesystem_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionFilesystemPrivate));
 }
 
 static void
@@ -209,7 +211,7 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
         GtkWidget *entry;
         int row;
 
-        section->priv = g_new0 (GduSectionFilesystemPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_FILESYSTEM, GduSectionFilesystemPrivate);
 
         section->priv->pk_change_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_change_action,

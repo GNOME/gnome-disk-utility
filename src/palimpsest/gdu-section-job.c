@@ -197,6 +197,8 @@ gdu_section_job_class_init (GduSectionJobClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_section_job_finalize;
         section_class->update = (gpointer) update;
+
+        g_type_class_add_private (klass, sizeof (GduSectionJobPrivate));
 }
 
 static void
@@ -210,7 +212,7 @@ gdu_section_job_init (GduSectionJob *section)
         GtkWidget *vbox;
         GtkWidget *vbox2;
 
-        section->priv = g_new0 (GduSectionJobPrivate, 1);
+        section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_JOB, GduSectionJobPrivate);
 
         section->priv->pk_cancel_job_others_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_cancel_job_others_action,

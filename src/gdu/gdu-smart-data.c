@@ -61,12 +61,14 @@ gdu_smart_data_class_init (GduSmartDataClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_smart_data_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduSmartDataPrivate));
 }
 
 static void
 gdu_smart_data_init (GduSmartData *smart_data)
 {
-        smart_data->priv = g_new0 (GduSmartDataPrivate, 1);
+        smart_data->priv = G_TYPE_INSTANCE_GET_PRIVATE (smart_data, GDU_TYPE_SMART_DATA, GduSmartDataPrivate);
 }
 
 guint64

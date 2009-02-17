@@ -57,12 +57,14 @@ gdu_process_class_init (GduProcessClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_process_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduProcessPrivate));
 }
 
 static void
 gdu_process_init (GduProcess *process)
 {
-        process->priv = g_new0 (GduProcessPrivate, 1);
+        process->priv = G_TYPE_INSTANCE_GET_PRIVATE (process, GDU_TYPE_PROCESS, GduProcessPrivate);
 }
 
 pid_t

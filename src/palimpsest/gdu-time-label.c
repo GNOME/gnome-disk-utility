@@ -184,6 +184,8 @@ gdu_time_label_class_init (GduTimeLabelClass *klass)
         obj_class->set_property = gdu_time_label_set_property;
         obj_class->get_property = gdu_time_label_get_property;
 
+        g_type_class_add_private (klass, sizeof (GduTimeLabelPrivate));
+
         boxed_type = g_boxed_type_register_static ("GduTimeLabelBoxedGTimeVal",
                                                    (GBoxedCopyFunc) time_val_copy,
                                                    (GBoxedFreeFunc) time_val_free);
@@ -206,7 +208,7 @@ gdu_time_label_class_init (GduTimeLabelClass *klass)
 static void
 gdu_time_label_init (GduTimeLabel *time_label)
 {
-        time_label->priv = g_new0 (GduTimeLabelPrivate, 1);
+        time_label->priv = G_TYPE_INSTANCE_GET_PRIVATE (time_label, GDU_TYPE_TIME_LABEL, GduTimeLabelPrivate);
 }
 
 GtkWidget *

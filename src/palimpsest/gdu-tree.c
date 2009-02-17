@@ -150,6 +150,8 @@ gdu_device_tree_class_init (GduDeviceTreeClass *klass)
         obj_class->set_property = gdu_device_tree_set_property;
         obj_class->get_property = gdu_device_tree_get_property;
 
+        g_type_class_add_private (klass, sizeof (GduDeviceTreePrivate));
+
         /**
          * GduDeviceTree:pool:
          *
@@ -173,7 +175,7 @@ gdu_device_tree_init (GduDeviceTree *device_tree)
         GtkTreeViewColumn *column;
         GtkTreeStore *store;
 
-        device_tree->priv = g_new0 (GduDeviceTreePrivate, 1);
+        device_tree->priv = G_TYPE_INSTANCE_GET_PRIVATE (device_tree, GDU_TYPE_DEVICE_TREE, GduDeviceTreePrivate);
 
         store = gtk_tree_store_new (N_COLUMNS,
                                     GDK_TYPE_PIXBUF,

@@ -92,5 +92,10 @@ gboolean        gdu_presentable_is_allocated              (GduPresentable *prese
 gboolean        gdu_presentable_is_recognized             (GduPresentable *presentable);
 
 GduPresentable *gdu_presentable_get_toplevel              (GduPresentable *presentable);
+guint           gdu_presentable_hash                      (GduPresentable *presentable);
+gboolean        gdu_presentable_equals                    (GduPresentable *a,
+                                                           GduPresentable *b);
+gint            gdu_presentable_compare                   (GduPresentable *a,
+                                                           GduPresentable *b);
 
 #endif /* GDU_PRESENTABLE_H */

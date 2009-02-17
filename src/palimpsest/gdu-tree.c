@@ -347,6 +347,7 @@ add_presentable_to_tree (GduDeviceTree *device_tree, GduPresentable *presentable
                         parent_iter = &iter2;
                 } else {
                         /* add parent if it's not already added */
+                        /*g_debug ("we have no parent for %s (%p)", gdu_presentable_get_id (enclosing_presentable), enclosing_presentable);*/
                         add_presentable_to_tree (device_tree, enclosing_presentable, &iter2);
                         parent_iter = &iter2;
                 }
@@ -365,6 +366,8 @@ add_presentable_to_tree (GduDeviceTree *device_tree, GduPresentable *presentable
 
         /* sort by offset so we get partitions in the right order */
         sortname = g_strdup_printf ("%016" G_GINT64_FORMAT "_%s", gdu_presentable_get_offset (presentable), object_path);
+
+        /*g_debug ("adding %s (%p)", gdu_presentable_get_id (presentable), presentable);*/
 
         gtk_tree_store_append (store, &iter, parent_iter);
         gtk_tree_store_set (store, &iter,

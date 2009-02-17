@@ -24,9 +24,9 @@ libgduinclude_HEADERS =              			\
 	gdu.h						\
 	gdu-shared.h					\
 	gdu-callbacks.h					\
-	gdu-activatable-drive.h				\
 	gdu-device.h					\
 	gdu-drive.h					\
+	gdu-linux-md-drive.h				\
 	gdu-error.h					\
 	gdu-known-filesystem.h				\
 	gdu-pool.h					\
@@ -48,7 +48,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-smart-data-attribute.c		gdu-smart-data-attribute.h		\
 	gdu-device.c				gdu-device.h				\
 	gdu-drive.c				gdu-drive.h				\
-	gdu-activatable-drive.c			gdu-activatable-drive.h			\
+	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\
 	gdu-volume.c				gdu-volume.h				\
 	gdu-presentable.c			gdu-presentable.h			\
 	gdu-volume-hole.c			gdu-volume-hole.h			\

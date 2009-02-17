@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-section-activatable-drive.c
+/* gdu-section-linux-md-drive.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -31,9 +31,9 @@
 #include <gdu-gtk/gdu-gtk.h>
 
 #include "gdu-tree.h"
-#include "gdu-section-activatable-drive.h"
+#include "gdu-section-linux-md-drive.h"
 
-struct _GduSectionActivatableDrivePrivate
+struct _GduSectionLinuxMdDrivePrivate
 {
         GtkWidget *linux_md_name_label;
         GtkWidget *linux_md_type_label;
@@ -58,7 +58,7 @@ struct _GduSectionActivatableDrivePrivate
 
 static GObjectClass *parent_class = NULL;
 
-G_DEFINE_TYPE (GduSectionActivatableDrive, gdu_section_activatable_drive, GDU_TYPE_SECTION)
+G_DEFINE_TYPE (GduSectionLinuxMdDrive, gdu_section_linux_md_drive, GDU_TYPE_SECTION)
 
 enum {
         MD_LINUX_ICON_COLUMN,
@@ -89,12 +89,12 @@ add_component_callback (GduDevice *device,
 static void
 add_action_callback (GtkAction *action, gpointer user_data)
 {
-        GduSectionActivatableDrive *section = GDU_SECTION_ACTIVATABLE_DRIVE (user_data);
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
         GduPresentable *presentable;
         GduPresentable *selected_presentable;
         GduDevice *device;
         GduDevice *selected_device;
-        GduActivatableDrive *activatable_drive;
+        GduLinuxMdDrive *linux_md_drive;
         GduPool *pool;
         GtkWidget *dialog;
         GtkWidget *vbox;
@@ -110,18 +110,18 @@ add_action_callback (GtkAction *action, gpointer user_data)
         selected_presentable = NULL;
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
-        if (!GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
-                g_warning ("%s: is not an activatable drive", __FUNCTION__);
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
                 goto out;
         }
 
         device = gdu_presentable_get_device (presentable);
         if (device == NULL) {
-                g_warning ("%s: activatable drive not active", __FUNCTION__);
+                g_warning ("%s: linux_md drive not active", __FUNCTION__);
                 goto out;
         }
 
-        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
 
         pool = gdu_device_get_pool (device);
 
@@ -225,13 +225,13 @@ static void
 attach_action_callback (GtkAction *action, gpointer user_data)
 {
         GtkTreePath *path;
-        GduSectionActivatableDrive *section = GDU_SECTION_ACTIVATABLE_DRIVE (user_data);
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
         GduDevice *device;
         GduPresentable *presentable;
-        GduActivatableDrive *activatable_drive;
+        GduLinuxMdDrive *linux_md_drive;
         GduDevice *slave_device;
         GduPool *pool;
-        GduActivableDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveState slave_state;
         char *component_objpath;
 
         device = NULL;
@@ -240,18 +240,18 @@ attach_action_callback (GtkAction *action, gpointer user_data)
         component_objpath = NULL;
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
-        if (!GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
-                g_warning ("%s: is not an activatable drive", __FUNCTION__);
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
                 goto out;
         }
 
         device = gdu_presentable_get_device (presentable);
         if (device == NULL) {
-                g_warning ("%s: activatable drive not active", __FUNCTION__);
+                g_warning ("%s: linux_md drive not active", __FUNCTION__);
                 goto out;
         }
 
-        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
 
         gtk_tree_view_get_cursor (GTK_TREE_VIEW (section->priv->linux_md_tree_view), &path, NULL);
         if (path != NULL) {
@@ -280,8 +280,8 @@ attach_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        slave_state = gdu_activatable_drive_get_slave_state (activatable_drive, slave_device);
-        if (slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH) {
+        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
+        if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH) {
                 /* yay, add this to the array */
                 gdu_device_op_linux_md_add_component (device,
                                                       component_objpath,
@@ -319,13 +319,13 @@ static void
 detach_action_callback (GtkAction *action, gpointer user_data)
 {
         GtkTreePath *path;
-        GduSectionActivatableDrive *section = GDU_SECTION_ACTIVATABLE_DRIVE (user_data);
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
         GduDevice *device;
         GduPresentable *presentable;
-        GduActivatableDrive *activatable_drive;
+        GduLinuxMdDrive *linux_md_drive;
         GduDevice *slave_device;
         GduPool *pool;
-        GduActivableDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveState slave_state;
         char *component_objpath;
         GduPresentable *slave_presentable;
 
@@ -336,18 +336,18 @@ detach_action_callback (GtkAction *action, gpointer user_data)
         slave_presentable = NULL;
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
-        if (!GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
-                g_warning ("%s: is not an activatable drive", __FUNCTION__);
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
                 goto out;
         }
 
         device = gdu_presentable_get_device (presentable);
         if (device == NULL) {
-                g_warning ("%s: activatable drive not active", __FUNCTION__);
+                g_warning ("%s: linux_md drive not active", __FUNCTION__);
                 goto out;
         }
 
-        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
 
         gtk_tree_view_get_cursor (GTK_TREE_VIEW (section->priv->linux_md_tree_view), &path, NULL);
         if (path != NULL) {
@@ -382,10 +382,10 @@ detach_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        slave_state = gdu_activatable_drive_get_slave_state (activatable_drive, slave_device);
-        if (slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING ||
-            slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
-            slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
+        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
+        if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING ||
+            slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
+            slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
                 char *primary;
                 char *secondary;
                 char *secure_erase;
@@ -440,7 +440,7 @@ out:
 }
 
 static void
-linux_md_buttons_update (GduSectionActivatableDrive *section)
+linux_md_buttons_update (GduSectionLinuxMdDrive *section)
 {
         GtkTreePath *path;
         char *component_objpath;
@@ -448,11 +448,11 @@ linux_md_buttons_update (GduSectionActivatableDrive *section)
         gboolean show_add_new_to_array_button;
         gboolean show_remove_from_array_button;
         GduPresentable *presentable;
-        GduActivatableDrive *activatable_drive;
+        GduLinuxMdDrive *linux_md_drive;
         GduDevice *device;
         GduDevice *slave_device;
         GduPool *pool;
-        GduActivableDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveState slave_state;
 
         component_objpath = NULL;
         device = NULL;
@@ -477,12 +477,12 @@ linux_md_buttons_update (GduSectionActivatableDrive *section)
         }
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
-        if (!GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
-                g_warning ("%s: is not an activatable drive", __FUNCTION__);
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
                 goto out;
         }
 
-        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
 
         /* can only add/remove components on a running drive */
         device = gdu_presentable_get_device (presentable);
@@ -503,16 +503,16 @@ linux_md_buttons_update (GduSectionActivatableDrive *section)
                         goto out;
                 }
 
-                slave_state = gdu_activatable_drive_get_slave_state (activatable_drive, slave_device);
+                slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
 
-                if (slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH) {
+                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH) {
                         /* yay, we can add this to the array */
                         show_add_to_array_button = TRUE;
                 }
 
-                if (slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING ||
-                    slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
-                    slave_state == GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
+                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING ||
+                    slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
+                    slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
                         /* yay, we can remove this to the array */
                         show_remove_from_array_button = TRUE;
                 }
@@ -557,17 +557,17 @@ out:
 static void
 linux_md_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
-        GduSectionActivatableDrive *section = GDU_SECTION_ACTIVATABLE_DRIVE (user_data);
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
         linux_md_buttons_update (section);
 }
 
 static void
-update (GduSectionActivatableDrive *section)
+update (GduSectionLinuxMdDrive *section)
 {
         char *s;
         GduDevice *device;
         GduPresentable *presentable;
-        GduActivatableDrive *activatable_drive;
+        GduLinuxMdDrive *linux_md_drive;
         GList *l;
         GList *slaves;
         GduDevice *component;
@@ -591,22 +591,22 @@ update (GduSectionActivatableDrive *section)
         state_str = NULL;
 
         presentable = gdu_section_get_presentable (GDU_SECTION (section));
-        activatable_drive = GDU_ACTIVATABLE_DRIVE (presentable);
+        linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
         device = gdu_presentable_get_device (presentable);
 
-        slaves = gdu_activatable_drive_get_slaves (activatable_drive);
+        slaves = gdu_linux_md_drive_get_slaves (linux_md_drive);
         num_slaves = g_list_length (slaves);
         if (num_slaves == 0) {
                 /* this fine; happens when the last component is yanked
                  * since remove_slave() emits "changed".
                  */
-                /*g_warning ("%s: no slaves for activatable drive", __FUNCTION__);*/
+                /*g_warning ("%s: no slaves for linux_md drive", __FUNCTION__);*/
                 goto out;
         }
         component = GDU_DEVICE (slaves->data);
 
         if (!gdu_device_is_linux_md_component (component)) {
-                g_warning ("%s: slave of activatable drive is not a linux md component", __FUNCTION__);
+                g_warning ("%s: slave of linux_md drive is not a linux md component", __FUNCTION__);
                 goto out;
         }
 
@@ -619,7 +619,7 @@ update (GduSectionActivatableDrive *section)
         num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (component);
         component_size = gdu_device_get_size (component);
 
-        /*g_warning ("activatable drive:\n"
+        /*g_warning ("linux_md drive:\n"
                    "uuid=%s\n"
                    "name=%s\n"
                    "level=%s\n"
@@ -661,9 +661,9 @@ update (GduSectionActivatableDrive *section)
         }
 
         if (device == NULL) {
-                if (gdu_activatable_drive_can_activate (activatable_drive)) {
+                if (gdu_drive_can_start (GDU_DRIVE (linux_md_drive))) {
                         state_str = g_strdup (_("Not running"));
-                } else if (gdu_activatable_drive_can_activate_degraded (activatable_drive)) {
+                } else if (gdu_drive_can_start_degraded (GDU_DRIVE (linux_md_drive))) {
                         state_str = g_strdup (_("Not running, can only start degraded"));
                 } else {
                         state_str = g_strdup (_("Not running, not enough components to start"));
@@ -739,7 +739,7 @@ update (GduSectionActivatableDrive *section)
                         GtkTreeIter iter;
                         GduPool *pool;
                         GduPresentable *p;
-                        GduActivableDriveSlaveState slave_state;
+                        GduLinuxMdDriveSlaveState slave_state;
                         const char *slave_state_str;
 
                         pool = gdu_device_get_pool (sd);
@@ -756,23 +756,23 @@ update (GduSectionActivatableDrive *section)
                         g_free (s);
                         pixbuf = gdu_util_get_pixbuf_for_presentable (p, GTK_ICON_SIZE_LARGE_TOOLBAR);
 
-                        slave_state = gdu_activatable_drive_get_slave_state (activatable_drive, sd);
+                        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, sd);
 
                         slave_state_str = _("Unknown");
                         switch (slave_state) {
-                        case GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING:
+                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING:
                                 slave_state_str = _("Running");
                                 break;
-                        case GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_SYNCING:
+                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING:
                                 slave_state_str = _("Running, Syncing to array");
                                 break;
-                        case GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE:
+                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE:
                                 slave_state_str = _("Running, Hot Spare");
                                 break;
-                        case GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_READY:
+                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY:
                                 slave_state_str = _("Ready");
                                 break;
-                        case GDU_ACTIVATABLE_DRIVE_SLAVE_STATE_NOT_FRESH:
+                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH:
                                 if (device != NULL) {
                                         slave_state_str = _("Not Running, Stale");
                                 } else {
@@ -821,7 +821,7 @@ out:
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-gdu_section_activatable_drive_finalize (GduSectionActivatableDrive *section)
+gdu_section_linux_md_drive_finalize (GduSectionLinuxMdDrive *section)
 {
         polkit_action_unref (section->priv->pk_linux_md_action);
         polkit_action_unref (section->priv->pk_linux_md_system_internal_action);
@@ -833,19 +833,19 @@ gdu_section_activatable_drive_finalize (GduSectionActivatableDrive *section)
 }
 
 static void
-gdu_section_activatable_drive_class_init (GduSectionActivatableDriveClass *klass)
+gdu_section_linux_md_drive_class_init (GduSectionLinuxMdDriveClass *klass)
 {
         GObjectClass *obj_class = (GObjectClass *) klass;
         GduSectionClass *section_class = (GduSectionClass *) klass;
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_section_activatable_drive_finalize;
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_section_linux_md_drive_finalize;
         section_class->update = (gpointer) update;
 }
 
 static void
-gdu_section_activatable_drive_init (GduSectionActivatableDrive *section)
+gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
 {
         int row;
         GtkWidget *label;
@@ -857,7 +857,7 @@ gdu_section_activatable_drive_init (GduSectionActivatableDrive *section)
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
 
-        section->priv = g_new0 (GduSectionActivatableDrivePrivate, 1);
+        section->priv = g_new0 (GduSectionLinuxMdDrivePrivate, 1);
 
         section->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_linux_md_action,
@@ -1075,10 +1075,10 @@ gdu_section_activatable_drive_init (GduSectionActivatableDrive *section)
 }
 
 GtkWidget *
-gdu_section_activatable_drive_new (GduShell       *shell,
-                                   GduPresentable *presentable)
+gdu_section_linux_md_drive_new (GduShell       *shell,
+                                GduPresentable *presentable)
 {
-        return GTK_WIDGET (g_object_new (GDU_TYPE_SECTION_ACTIVATABLE_DRIVE,
+        return GTK_WIDGET (g_object_new (GDU_TYPE_SECTION_LINUX_MD_DRIVE,
                                          "shell", shell,
                                          "presentable", presentable,
                                          NULL));

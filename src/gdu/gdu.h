@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 #define GNOME_DISK_UTILITY_INSIDE_GDU_H 1
 
 #include <gdu/gdu-shared.h>
-#include <gdu/gdu-activatable-drive.h>
+#include <gdu/gdu-linux-md-drive.h>
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-drive.h>
 #include <gdu/gdu-error.h>

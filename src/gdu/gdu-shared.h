@@ -30,7 +30,8 @@
 
 typedef struct _GduDevice            GduDevice;
 typedef struct _GduPool              GduPool;
-typedef struct _GduActivatableDrive  GduActivatableDrive;
+typedef struct _GduDrive             GduDrive;
+typedef struct _GduLinuxMdDrive      GduLinuxMdDrive;
 
 
 typedef struct _GduPoolPrivate     GduPoolPrivate;
@@ -38,7 +39,7 @@ typedef struct _GduDevicePrivate     GduDevicePrivate;
 typedef struct _GduVolumePrivate     GduVolumePrivate;
 typedef struct _GduVolumeHolePrivate     GduVolumeHolePrivate;
 typedef struct _GduDrivePrivate     GduDrivePrivate;
-typedef struct _GduActivatableDrivePrivate     GduActivatableDrivePrivate;
+typedef struct _GduLinuxMdDrivePrivate     GduLinuxMdDrivePrivate;
 typedef struct _GduKnownFilesystemPrivate     GduKnownFilesystemPrivate;
 typedef struct _GduProcessPrivate     GduProcessPrivate;
 typedef struct _GduSmartDataAttributePrivate     GduSmartDataAttributePrivate;

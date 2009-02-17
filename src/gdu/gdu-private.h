@@ -31,8 +31,8 @@
 #include "gdu-known-filesystem.h"
 #include "gdu-process.h"
 #include "gdu-device.h"
+#include "gdu-presentable.h"
 #include "gdu-drive.h"
-#include "gdu-activatable-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
 
@@ -99,20 +99,14 @@ GduDevice  *_gdu_device_new_from_object_path  (GduPool     *pool, const char  *o
 GduVolume   *_gdu_volume_new_from_device      (GduPool *pool, GduDevice *volume, GduPresentable *enclosing_presentable);
 GduDrive    *_gdu_drive_new_from_device       (GduPool *pool, GduDevice *drive);
 GduVolumeHole   *_gdu_volume_hole_new       (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable);
-GduActivatableDrive   *_gdu_activatable_drive_new             (GduPool              *pool,
-                                                               GduActivableDriveKind kind);
 
-void                   _gdu_activatable_drive_set_device      (GduActivatableDrive  *activatable_drive,
-                                                               GduDevice            *device);
-gboolean               _gdu_activatable_drive_is_device_set   (GduActivatableDrive  *activatable_drive);
-void                   _gdu_activatable_drive_add_slave       (GduActivatableDrive  *activatable_drive,
-                                                               GduDevice            *device);
-void                   _gdu_activatable_drive_remove_slave    (GduActivatableDrive  *activatable_drive,
-                                                               GduDevice            *device);
-gboolean               _gdu_activatable_drive_has_uuid        (GduActivatableDrive  *activatable_drive,
-                                                               const char *uuid);
-gboolean               _gdu_activatable_drive_device_references_slave (GduActivatableDrive  *activatable_drive,
-                                                                       GduDevice *device);
+
+GduLinuxMdDrive   *_gdu_linux_md_drive_new             (GduPool              *pool,
+                                                        const gchar          *uuid);
+
+gboolean _gdu_linux_md_drive_has_uuid (GduLinuxMdDrive  *drive,
+                                       const gchar      *uuid);
+
 
 void        _gdu_device_changed               (GduDevice   *device);
 void        _gdu_device_job_changed           (GduDevice   *device,
@@ -126,5 +120,8 @@ void        _gdu_device_job_changed           (GduDevice   *device,
                                                double       job_cur_task_percentage);
 
 void        _gdu_device_removed               (GduDevice   *device);
+
+void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
+void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 
 #endif /* GDU_PRIVATE_H */

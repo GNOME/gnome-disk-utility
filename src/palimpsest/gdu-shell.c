@@ -45,7 +45,7 @@
 #include "gdu-section-filesystem.h"
 #include "gdu-section-swapspace.h"
 #include "gdu-section-encrypted.h"
-#include "gdu-section-activatable-drive.h"
+#include "gdu-section-linux-md-drive.h"
 #include "gdu-section-no-media.h"
 #include "gdu-section-job.h"
 
@@ -234,15 +234,8 @@ details_update (GduShell *shell)
         if (GDU_IS_DRIVE (presentable)) {
                 details3 = g_strdup (device_file);
 
-                if (GDU_IS_ACTIVATABLE_DRIVE (presentable)) {
-                        switch (gdu_activatable_drive_get_kind (GDU_ACTIVATABLE_DRIVE (presentable))) {
-                        case GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD:
-                                details1 = g_strdup (_("Linux Software RAID"));
-                                break;
-                        default:
-                                details1 = g_strdup (_("Activatable Drive"));
-                                break;
-                        }
+                if (GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                        details1 = g_strdup (_("Linux Software RAID"));
                 } else {
                         s = gdu_util_get_connection_for_display (
                                 gdu_device_drive_get_connection_interface (device),
@@ -454,10 +447,10 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
                                                   (gpointer) GDU_TYPE_SECTION_JOB);
 
         } else {
-                if (GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+                if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
                         sections_to_show = g_list_append (sections_to_show,
-                                                          (gpointer) GDU_TYPE_SECTION_ACTIVATABLE_DRIVE);
+                                                          (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
 
 
                 } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
@@ -611,13 +604,13 @@ gdu_shell_update (GduShell *shell)
                 }
         }
 
-        if (GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
-                GduActivatableDrive *ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
+        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
+            gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
+                GduDrive *drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-                can_stop = gdu_activatable_drive_is_activated (ad);
+                can_stop = gdu_drive_is_running (drive);
 
-                can_start = (gdu_activatable_drive_can_activate (ad) ||
-                             gdu_activatable_drive_can_activate_degraded (ad));
+                can_start = (gdu_drive_can_start (drive) || gdu_drive_can_start_degraded (drive));
         }
 
         showing_job = job_in_progress;
@@ -1244,7 +1237,7 @@ lock_action_callback (GtkAction *action, gpointer user_data)
 }
 
 static void
-start_cb (GduActivatableDrive *ad,
+start_cb (GduDrive *ad,
           char *assembled_array_object_path,
           GError *error,
           gpointer user_data)
@@ -1259,7 +1252,7 @@ start_cb (GduActivatableDrive *ad,
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_ERROR,
                         GTK_BUTTONS_CLOSE,
-                        _("<big><b>There was an error starting the array \"%s\".</b></big>"),
+                        _("<big><b>There was an error starting the drive \"%s\".</b></big>"),
                         gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
@@ -1280,23 +1273,23 @@ static void
 start_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
-        GduActivatableDrive *ad;
+        GduDrive *drive;
 
-        if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+        if (!GDU_IS_DRIVE (shell->priv->presentable_now_showing) ||
+            !gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
                 g_warning ("presentable is not an activatable drive");
                 goto out;
         }
 
-        ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
+        drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-        if (gdu_activatable_drive_is_activated (ad)) {
-                g_warning ("activatable drive already activated; refusing to activate it");
+        if (gdu_drive_is_running (drive)) {
+                g_warning ("drive already running; refusing to activate it");
                 goto out;
         }
 
         /* ask for consent before activating in degraded mode */
-        if (!gdu_activatable_drive_can_activate (ad) &&
-            gdu_activatable_drive_can_activate_degraded (ad)) {
+        if (!gdu_drive_can_start (drive) && gdu_drive_can_start_degraded (drive)) {
                 GtkWidget *dialog;
                 int response;
 
@@ -1305,8 +1298,8 @@ start_action_callback (GtkAction *action, gpointer user_data)
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_WARNING,
                         GTK_BUTTONS_CANCEL,
-                        _("<big><b>Are you sure you want to start the array \"%s\" in degraded mode?</b></big>"),
-                        gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
+                        _("<big><b>Are you sure you want to start the drive \"%s\" in degraded mode?</b></big>"),
+                        gdu_presentable_get_name (GDU_PRESENTABLE (drive)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                                           _("Starting a RAID array in degraded mode means that "
@@ -1322,15 +1315,15 @@ start_action_callback (GtkAction *action, gpointer user_data)
                         goto out;
         }
 
-        gdu_activatable_drive_activate (ad,
-                                        start_cb,
-                                        g_object_ref (shell));
+        gdu_drive_start (drive,
+                         start_cb,
+                         g_object_ref (shell));
 out:
         ;
 }
 
 static void
-stop_cb (GduActivatableDrive *ad, GError *error, gpointer user_data)
+stop_cb (GduDrive *drive, GError *error, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
 
@@ -1342,8 +1335,8 @@ stop_cb (GduActivatableDrive *ad, GError *error, gpointer user_data)
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_ERROR,
                         GTK_BUTTONS_CLOSE,
-                        _("<big><b>There was an error stopping the array \"%s\".</b></big>"),
-                        gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
+                        _("<big><b>There was an error stopping the drive \"%s\".</b></big>"),
+                        gdu_presentable_get_name (GDU_PRESENTABLE (drive)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -1361,23 +1354,24 @@ static void
 stop_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
-        GduActivatableDrive *ad;
+        GduDrive *drive;
 
-        if (!GDU_IS_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing)) {
+        if (!GDU_IS_DRIVE (shell->priv->presentable_now_showing) ||
+            !gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
                 g_warning ("presentable is not an activatable drive");
                 goto out;
         }
 
-        ad = GDU_ACTIVATABLE_DRIVE (shell->priv->presentable_now_showing);
+        drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-        if (!gdu_activatable_drive_is_activated (ad)) {
-                g_warning ("activatable drive isn't activated; refusing to deactivate it");
+        if (!gdu_drive_is_running (drive)) {
+                g_warning ("activatable drive isn't running; refusing to deactivate it");
                 goto out;
         }
 
-        gdu_activatable_drive_deactivate (ad,
-                                          stop_cb,
-                                          g_object_ref (shell));
+        gdu_drive_stop (drive,
+                        stop_cb,
+                        g_object_ref (shell));
 out:
         ;
 }

@@ -101,7 +101,7 @@ _gdu_volume_hole_new (GduPool *pool, guint64 offset, guint64 size, GduPresentabl
         volume_hole->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 
-        volume_hole->priv->id = g_strdup_printf ("hole_%s_%" G_GUINT64_FORMAT "_%" G_GUINT64_FORMAT,
+        volume_hole->priv->id = g_strdup_printf ("volume_hole_%s_%" G_GUINT64_FORMAT "_%" G_GUINT64_FORMAT,
                                                  enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)",
                                                  offset,
                                                  size);
@@ -271,4 +271,30 @@ gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
         iface->get_pool = gdu_volume_hole_get_pool;
         iface->is_allocated = gdu_volume_hole_is_allocated;
         iface->is_recognized = gdu_volume_hole_is_recognized;
+}
+
+void
+_gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole)
+{
+        if (volume_hole->priv->enclosing_presentable != NULL) {
+                const gchar *enclosing_presentable_id;
+                GduPresentable *new_enclosing_presentable;
+
+                enclosing_presentable_id = gdu_presentable_get_id (volume_hole->priv->enclosing_presentable);
+
+                new_enclosing_presentable = gdu_pool_get_presentable_by_id (volume_hole->priv->pool,
+                                                                            enclosing_presentable_id);
+                if (new_enclosing_presentable == NULL) {
+                        g_warning ("Error rewriting enclosing_presentable for %s, no such id %s",
+                                   volume_hole->priv->id,
+                                   enclosing_presentable_id);
+                        goto out;
+                }
+
+                g_object_unref (volume_hole->priv->enclosing_presentable);
+                volume_hole->priv->enclosing_presentable = new_enclosing_presentable;
+        }
+
+ out:
+        ;
 }

@@ -76,6 +76,8 @@ GduDevice  *gdu_pool_get_by_device_file (GduPool *pool, const char *device_file)
 GduPresentable *gdu_pool_get_volume_by_device      (GduPool *pool, GduDevice *device);
 GduPresentable *gdu_pool_get_drive_by_device       (GduPool *pool, GduDevice *device);
 
+GduPresentable *gdu_pool_get_presentable_by_id     (GduPool *pool, const gchar *id);
+
 GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);
 GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable);

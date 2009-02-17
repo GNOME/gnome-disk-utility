@@ -14,7 +14,7 @@ palimpsest_SOURCES = 									\
 	gdu-section-filesystem.h		gdu-section-filesystem.c		\
 	gdu-section-swapspace.h			gdu-section-swapspace.c			\
 	gdu-section-encrypted.h			gdu-section-encrypted.c			\
-	gdu-section-activatable-drive.h		gdu-section-activatable-drive.c		\
+	gdu-section-linux-md-drive.h		gdu-section-linux-md-drive.c		\
 	gdu-section-no-media.h			gdu-section-no-media.c			\
 	gdu-section-job.h			gdu-section-job.c			\
 	gdu-tree.h				gdu-tree.c

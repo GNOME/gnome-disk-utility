@@ -143,16 +143,16 @@ typedef void (*GduPoolLinuxMdStartCompletedFunc) (GduPool    *pool,
                                                   gpointer    user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
-/* GduActivatableDrive */
+/* GduDrive */
 
-typedef void (*GduActivatableDriveActivationFunc) (GduActivatableDrive *activatable_drive,
-                                                   char                *assembled_array_object_path,
-                                                   GError              *error,
-                                                   gpointer             user_data);
+typedef void (*GduDriveStartFunc) (GduDrive  *drive,
+                                   char      *assembled_drive_object_path,
+                                   GError    *error,
+                                   gpointer   user_data);
 
-typedef void (*GduActivatableDriveDeactivationFunc) (GduActivatableDrive *activatable_drive,
-                                                     GError              *error,
-                                                     gpointer             user_data);
+typedef void (*GduDriveStopFunc) (GduDrive  *drive,
+                                  GError    *error,
+                                  gpointer   user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

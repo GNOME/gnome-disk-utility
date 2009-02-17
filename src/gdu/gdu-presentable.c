@@ -482,3 +482,89 @@ gdu_presentable_get_toplevel (GduPresentable *presentable)
 
         return g_object_ref (parent);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+guint
+gdu_presentable_hash (GduPresentable *presentable)
+{
+        return g_str_hash (gdu_presentable_get_id (presentable));
+}
+
+gboolean
+gdu_presentable_equals (GduPresentable *a,
+                        GduPresentable *b)
+{
+        return g_strcmp0 (gdu_presentable_get_id (a), gdu_presentable_get_id (b)) == 0;
+}
+
+/**
+ * gdu_presentable_is_enclosed_by:
+ * @a: A #GduPresentable.
+ * @b: A #GduPresentable.
+ *
+ * Checks if @b is enclosed by @a.
+ *
+ * Returns: %TRUE only if @b is enclosed by @a.
+ */
+static gboolean
+gdu_presentable_is_enclosed_by (GduPresentable *a,
+                                GduPresentable *b)
+{
+        GduPresentable *parent;
+        GduPresentable *maybe_parent;
+        gboolean ret;
+
+        ret = FALSE;
+
+        parent = b;
+        do {
+                maybe_parent = gdu_presentable_get_enclosing_presentable (parent);
+                if (maybe_parent != NULL) {
+                        if (gdu_presentable_equals (maybe_parent, a)) {
+                                g_object_unref (maybe_parent);
+                                ret = TRUE;
+                                goto out;
+                        }
+
+                        g_object_unref (maybe_parent);
+                        parent = maybe_parent;
+                }
+        } while (maybe_parent != NULL);
+
+ out:
+        return ret;
+}
+
+static void
+compute_sort_path (GduPresentable *presentable,
+                   GString        *s)
+{
+        GduPresentable *enclosing_presentable;
+
+        enclosing_presentable = gdu_presentable_get_enclosing_presentable (presentable);
+        if (enclosing_presentable != NULL) {
+                compute_sort_path (enclosing_presentable, s);
+                g_object_unref (enclosing_presentable);
+        }
+
+        g_string_append_printf (s, "_%s", gdu_presentable_get_id (presentable));
+}
+
+gint
+gdu_presentable_compare (GduPresentable *a,
+                         GduPresentable *b)
+{
+        GString *sort_a;
+        GString *sort_b;
+        gint ret;
+
+        sort_a = g_string_new (NULL);
+        sort_b = g_string_new (NULL);
+        compute_sort_path (a, sort_a);
+        compute_sort_path (b, sort_b);
+        ret = strcmp (sort_a->str, sort_b->str);
+        g_string_free (sort_a, TRUE);
+        g_string_free (sort_b, TRUE);
+
+        return ret;
+}

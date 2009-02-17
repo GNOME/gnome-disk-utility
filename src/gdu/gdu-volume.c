@@ -31,7 +31,7 @@
 #include "gdu-pool.h"
 #include "gdu-volume.h"
 #include "gdu-presentable.h"
-#include "gdu-activatable-drive.h"
+#include "gdu-linux-md-drive.h"
 
 /**
  * SECTION:gdu-volume
@@ -50,6 +50,7 @@ struct _GduVolumePrivate
         GduDevice *device;
         GduPool *pool;
         GduPresentable *enclosing_presentable;
+        gchar *id;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -78,6 +79,8 @@ gdu_volume_finalize (GduVolume *volume)
 
         if (volume->priv->enclosing_presentable != NULL)
                 g_object_unref (volume->priv->enclosing_presentable);
+
+        g_free (volume->priv->id);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (volume));
@@ -132,6 +135,9 @@ _gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *e
         volume->priv->pool = g_object_ref (pool);
         volume->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
+        volume->priv->id = g_strdup_printf ("volume_%s_enclosed_by_%s",
+                                            gdu_device_get_device_file (volume->priv->device),
+                                            enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
 
         g_signal_connect (device, "changed", (GCallback) device_changed, volume);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, volume);
@@ -143,7 +149,7 @@ static const gchar *
 gdu_volume_get_id (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
-        return gdu_device_get_device_file (volume->priv->device);
+        return volume->priv->id;
 }
 
 static GduDevice *
@@ -269,14 +275,8 @@ gdu_volume_get_icon (GduPresentable *presentable)
         if (p == NULL)
                 goto out;
 
-        if (GDU_IS_ACTIVATABLE_DRIVE (p)) {
-                GduActivableDriveKind kind;
-
-                kind = gdu_activatable_drive_get_kind (GDU_ACTIVATABLE_DRIVE (p));
-
-                if (kind == GDU_ACTIVATABLE_DRIVE_KIND_LINUX_MD)
-                        name = "gdu-raid-array";
-
+        if (GDU_IS_LINUX_MD_DRIVE (p)) {
+                name = "gdu-raid-array";
                 goto out;
         }
 
@@ -358,7 +358,9 @@ out:
                 g_object_unref (padlock);
                 g_object_unref (emblem);
 
-        } else if (gdu_device_is_luks_cleartext (volume->priv->device)) {
+        }
+
+        if (gdu_device_is_luks_cleartext (volume->priv->device)) {
                 GEmblem *emblem;
                 GIcon *padlock;
                 GIcon *emblemed_icon;
@@ -443,4 +445,30 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_pool = gdu_volume_get_pool;
         iface->is_allocated = gdu_volume_is_allocated;
         iface->is_recognized = gdu_volume_is_recognized;
+}
+
+void
+_gdu_volume_rewrite_enclosing_presentable (GduVolume *volume)
+{
+        if (volume->priv->enclosing_presentable != NULL) {
+                const gchar *enclosing_presentable_id;
+                GduPresentable *new_enclosing_presentable;
+
+                enclosing_presentable_id = gdu_presentable_get_id (volume->priv->enclosing_presentable);
+
+                new_enclosing_presentable = gdu_pool_get_presentable_by_id (volume->priv->pool,
+                                                                            enclosing_presentable_id);
+                if (new_enclosing_presentable == NULL) {
+                        g_warning ("Error rewriting enclosing_presentable for %s, no such id %s",
+                                   volume->priv->id,
+                                   enclosing_presentable_id);
+                        goto out;
+                }
+
+                g_object_unref (volume->priv->enclosing_presentable);
+                volume->priv->enclosing_presentable = new_enclosing_presentable;
+        }
+
+ out:
+        ;
 }

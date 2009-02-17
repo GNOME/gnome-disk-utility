@@ -49,6 +49,7 @@ struct _GduDrivePrivate
 {
         GduDevice *device;
         GduPool *pool;
+        gchar *id;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -75,6 +76,8 @@ gdu_drive_finalize (GduDrive *drive)
         if (drive->priv->pool != NULL)
                 g_object_unref (drive->priv->pool);
 
+        g_free (drive->priv->id);
+
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (drive));
 }
@@ -89,6 +92,82 @@ gdu_drive_class_init (GduDriveClass *klass)
         obj_class->finalize = (GObjectFinalizeFunc) gdu_drive_finalize;
 
 }
+
+gboolean
+gdu_drive_is_running (GduDrive *drive)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->is_running != NULL)
+                return klass->is_running (drive);
+        else
+                return TRUE;
+}
+
+gboolean
+gdu_drive_can_start_stop (GduDrive *drive)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->can_start_stop != NULL)
+                return klass->can_start_stop (drive);
+        else
+                return FALSE;
+}
+
+gboolean
+gdu_drive_can_start (GduDrive *drive)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->can_start != NULL)
+                return klass->can_start (drive);
+        else
+                return FALSE;
+}
+
+gboolean
+gdu_drive_can_start_degraded (GduDrive *drive)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->can_start_degraded != NULL)
+                return klass->can_start_degraded (drive);
+        else
+                return FALSE;
+}
+
+void
+gdu_drive_start (GduDrive            *drive,
+                 GduDriveStartFunc    callback,
+                 gpointer             user_data)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->start != NULL)
+                return klass->start (drive, callback, user_data);
+        else {
+                callback (drive,
+                          NULL,
+                          g_error_new_literal (GDU_ERROR,
+                                               GDU_ERROR_NOT_SUPPORTED,
+                                               "Drive does not support start()"),
+                          user_data);
+        }
+}
+
+void
+gdu_drive_stop (GduDrive            *drive,
+                GduDriveStopFunc     callback,
+                gpointer             user_data)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->stop != NULL)
+                return klass->stop (drive, callback, user_data);
+        else {
+                callback (drive,
+                          g_error_new_literal (GDU_ERROR,
+                                               GDU_ERROR_NOT_SUPPORTED,
+                                               "Drive does not support stop()"),
+                          user_data);
+        }
+}
+
 
 static void
 gdu_drive_init (GduDrive *drive)
@@ -127,6 +206,8 @@ _gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
         drive = GDU_DRIVE (g_object_new (GDU_TYPE_DRIVE, NULL));
         drive->priv->device = g_object_ref (device);
         drive->priv->pool = g_object_ref (pool);
+        drive->priv->id = g_strdup_printf ("drive_%s", gdu_device_get_device_file (drive->priv->device));
+
         g_signal_connect (device, "changed", (GCallback) device_changed, drive);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, drive);
         g_signal_connect (device, "removed", (GCallback) device_removed, drive);
@@ -138,7 +219,7 @@ static const gchar *
 gdu_drive_get_id (GduPresentable *presentable)
 {
         GduDrive *drive = GDU_DRIVE (presentable);
-        return gdu_device_get_device_file (drive->priv->device);
+        return drive->priv->id;
 }
 
 static GduDevice *

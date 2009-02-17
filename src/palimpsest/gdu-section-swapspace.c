@@ -32,6 +32,7 @@
 
 struct _GduSectionSwapspacePrivate
 {
+        gint foo;
 };
 
 static GObjectClass *parent_class = NULL;

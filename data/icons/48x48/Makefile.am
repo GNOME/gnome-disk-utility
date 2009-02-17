@@ -16,7 +16,8 @@ icon_DATA = 				\
 	gdu-check-disk.png		\
 	gdu-info.png			\
 	gdu-error.png			\
-	gdu-warning.png
+	gdu-warning.png			\
+	gdu-unmountable.png
 
 EXTRA_DIST = \
 	$(icon_DATA)

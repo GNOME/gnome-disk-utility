@@ -16,7 +16,8 @@ icon_DATA =				\
 	gdu-check-disk.svg		\
 	gdu-info.svg			\
 	gdu-error.svg			\
-	gdu-warning.svg
+	gdu-warning.svg			\
+	gdu-unmountable.svg
 
 EXTRA_DIST = \
 	$(icon_DATA)

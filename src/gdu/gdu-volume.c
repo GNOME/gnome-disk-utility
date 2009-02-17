@@ -287,6 +287,8 @@ gdu_volume_get_icon (GduPresentable *presentable)
         d = NULL;
         name = NULL;
 
+        usage = gdu_device_id_get_usage (volume->priv->device);
+
         p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)
                 goto out;
@@ -295,6 +297,14 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 name = "gdu-raid-array";
                 goto out;
         }
+
+#if 0
+        /* unless it's a file system or LUKS encrypted volume, use the gdu-unmountable icon */
+        if (g_strcmp0 (usage, "filesystem") != 0 && g_strcmp0 (usage, "crypto") != 0) {
+                name = "gdu-unmountable";
+                goto out;
+        }
+#endif
 
         d = gdu_presentable_get_device (p);
         if (d == NULL)
@@ -358,7 +368,6 @@ out:
 
         icon = g_themed_icon_new_with_default_fallbacks (name);
 
-        usage = gdu_device_id_get_usage (volume->priv->device);
         if (usage != NULL && strcmp (usage, "crypto") == 0) {
                 GEmblem *emblem;
                 GIcon *padlock;

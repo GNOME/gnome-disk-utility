@@ -155,10 +155,12 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
         const char *connection_interface;
         const char *name;
         const char *drive_media;
+        gboolean is_removable;
 
         p = NULL;
         d = NULL;
         name = NULL;
+        is_removable = FALSE;
 
         p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)
@@ -174,6 +176,8 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
         connection_interface = gdu_device_drive_get_connection_interface (d);
         if (connection_interface == NULL)
                 goto out;
+
+        is_removable = gdu_device_is_removable (d);
 
         drive_media = gdu_device_drive_get_media (d);
 
@@ -204,13 +208,25 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
         /* else fall back to connection interface */
         if (name == NULL && connection_interface != NULL) {
                 if (g_str_has_prefix (connection_interface, "ata")) {
-                        name = "drive-harddisk-ata";
+                        if (is_removable)
+                                name = "drive-removable-media-ata";
+                        else
+                                name = "drive-harddisk-ata";
                 } else if (g_str_has_prefix (connection_interface, "scsi")) {
-                        name = "drive-harddisk-scsi";
+                        if (is_removable)
+                                name = "drive-removable-media-scsi";
+                        else
+                                name = "drive-harddisk-scsi";
                 } else if (strcmp (connection_interface, "usb") == 0) {
-                        name = "drive-harddisk-usb";
+                        if (is_removable)
+                                name = "drive-removable-media-usb";
+                        else
+                                name = "drive-harddisk-usb";
                 } else if (strcmp (connection_interface, "firewire") == 0) {
-                        name = "drive-harddisk-ieee1394";
+                        if (is_removable)
+                                name = "drive-removable-media-ieee1394";
+                        else
+                                name = "drive-harddisk-ieee1394";
                 }
         }
 
@@ -221,8 +237,12 @@ out:
                 g_object_unref (d);
 
         /* ultimate fallback */
-        if (name == NULL)
-                name = "drive-harddisk";
+        if (name == NULL) {
+                if (is_removable)
+                        name = "drive-removable-media";
+                else
+                        name = "drive-harddisk";
+        }
 
         return g_themed_icon_new_with_default_fallbacks (name);
 }

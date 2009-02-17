@@ -36,6 +36,7 @@
 struct _GduSectionLinuxMdDrivePrivate
 {
         GtkWidget *linux_md_name_label;
+        GtkWidget *linux_md_home_host_label;
         GtkWidget *linux_md_type_label;
         GtkWidget *linux_md_size_label;
         GtkWidget *linux_md_components_label;
@@ -573,6 +574,7 @@ update (GduSectionLinuxMdDrive *section)
         GduDevice *component;
         const char *uuid;
         const char *name;
+        const gchar *home_host;
         const char *level;
         int num_raid_devices;
         int num_slaves;
@@ -614,6 +616,10 @@ update (GduSectionLinuxMdDrive *section)
         name = gdu_device_linux_md_component_get_name (component);
         if (name == NULL || strlen (name) == 0) {
                 name = _("-");
+        }
+        home_host = gdu_device_linux_md_component_get_home_host (component);
+        if (home_host == NULL || strlen (home_host) == 0) {
+                home_host = _("-");
         }
         level = gdu_device_linux_md_component_get_level (component);
         num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (component);
@@ -706,6 +712,7 @@ update (GduSectionLinuxMdDrive *section)
         }
 
         gtk_label_set_text (GTK_LABEL (section->priv->linux_md_name_label), name);
+        gtk_label_set_text (GTK_LABEL (section->priv->linux_md_home_host_label), home_host);
         gtk_label_set_text (GTK_LABEL (section->priv->linux_md_type_label), level_str);
         gtk_label_set_text (GTK_LABEL (section->priv->linux_md_size_label), raid_size_str);
         gtk_label_set_text (GTK_LABEL (section->priv->linux_md_components_label), components_str);
@@ -887,6 +894,20 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->linux_md_name_label = label;
+
+        row++;
+
+        /* home host */
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Home Host:</b>"));
+        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
+                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        section->priv->linux_md_home_host_label = label;
 
         row++;
 

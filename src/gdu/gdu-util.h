@@ -47,6 +47,8 @@ char *gdu_util_get_desc_for_part_type (const char *part_scheme, const char *part
 char *gdu_get_job_description (const char *job_id);
 char *gdu_get_task_description (const char *task_id);
 
+char *gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level);
+
 typedef void (*GduUtilPartTypeForeachFunc) (const char *scheme,
                                             const char *type,
                                             const char *name,

@@ -734,3 +734,32 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+gchar *
+gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level)
+{
+        gchar *ret;
+
+        if (strcmp (linux_md_raid_level, "raid0") == 0) {
+                ret = g_strdup (_("RAID-0"));
+        } else if (strcmp (linux_md_raid_level, "raid1") == 0) {
+                ret = g_strdup (_("RAID-1"));
+        } else if (strcmp (linux_md_raid_level, "raid4") == 0) {
+                ret = g_strdup (_("RAID-4"));
+        } else if (strcmp (linux_md_raid_level, "raid5") == 0) {
+                ret = g_strdup (_("RAID-5"));
+        } else if (strcmp (linux_md_raid_level, "raid6") == 0) {
+                ret = g_strdup (_("RAID-6"));
+        } else if (strcmp (linux_md_raid_level, "raid10") == 0) {
+                ret = g_strdup (_("RAID-10"));
+        } else if (strcmp (linux_md_raid_level, "linear") == 0) {
+                ret = g_strdup (_("JBOD"));
+        } else {
+                ret = g_strdup (linux_md_raid_level);
+        }
+
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+

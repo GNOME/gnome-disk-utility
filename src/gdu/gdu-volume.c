@@ -225,12 +225,26 @@ gdu_volume_get_name (GduPresentable *presentable)
                         if (strcmp (type, "LVM2_member") == 0) {
                                 result = g_strdup_printf (_("%s LVM2 Physical Volume"), strsize);
                         } else {
-                                if (label != NULL && strlen (label) > 0) {
+                                const gchar *array_name;
+                                const gchar *level;
+                                gchar *level_str;
+
+                                array_name = gdu_device_linux_md_component_get_name (volume->priv->device);
+                                level = gdu_device_linux_md_component_get_level (volume->priv->device);
+
+                                if (level != NULL && strlen (level) > 0)
+                                        level_str = gdu_linux_md_get_raid_level_for_display (level);
+                                else
+                                        level_str = g_strdup (_("RAID"));
+
+                                if (array_name != NULL && strlen (array_name) > 0) {
                                         /* RAID component; the label is the array name */
-                                        result = g_strdup_printf (_("%s RAID (%s)"), strsize, label);
+                                        result = g_strdup_printf (_("%s %s (%s)"), strsize, level_str, array_name);
                                 } else {
-                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                        result = g_strdup_printf (_("%s %s"), strsize, level_str);
                                 }
+
+                                g_free (level_str);
                         }
                 } else if (strcmp (usage, "other") == 0) {
                         if (strcmp (type, "swap") == 0) {

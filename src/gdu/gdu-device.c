@@ -136,6 +136,7 @@ typedef struct
         char    *linux_md_component_level;
         int      linux_md_component_num_raid_devices;
         char    *linux_md_component_uuid;
+        char    *linux_md_component_home_host;
         char    *linux_md_component_name;
         char    *linux_md_component_version;
         guint64  linux_md_component_update_time;
@@ -144,6 +145,7 @@ typedef struct
         char    *linux_md_level;
         int      linux_md_num_raid_devices;
         char    *linux_md_uuid;
+        char    *linux_md_home_host;
         char    *linux_md_name;
         char    *linux_md_version;
         char   **linux_md_slaves;
@@ -342,6 +344,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->linux_md_component_num_raid_devices = g_value_get_int (value);
         else if (strcmp (key, "linux-md-component-uuid") == 0)
                 props->linux_md_component_uuid = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-component-home-host") == 0)
+                props->linux_md_component_home_host = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-name") == 0)
                 props->linux_md_component_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-version") == 0)
@@ -357,6 +361,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->linux_md_num_raid_devices = g_value_get_int (value);
         else if (strcmp (key, "linux-md-uuid") == 0)
                 props->linux_md_uuid = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "linux-md-home-host") == 0)
+                props->linux_md_home_host = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-name") == 0)
                 props->linux_md_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-version") == 0)
@@ -426,10 +432,12 @@ device_properties_free (DeviceProperties *props)
         g_value_unset (&(props->drive_smart_attributes));
         g_free (props->linux_md_component_level);
         g_free (props->linux_md_component_uuid);
+        g_free (props->linux_md_component_home_host);
         g_free (props->linux_md_component_name);
         g_free (props->linux_md_component_version);
         g_free (props->linux_md_level);
         g_free (props->linux_md_uuid);
+        g_free (props->linux_md_home_host);
         g_free (props->linux_md_name);
         g_free (props->linux_md_version);
         g_strfreev (props->linux_md_slaves);
@@ -1099,6 +1107,12 @@ gdu_device_linux_md_component_get_uuid (GduDevice *device)
 }
 
 const char *
+gdu_device_linux_md_component_get_home_host (GduDevice *device)
+{
+        return device->priv->props->linux_md_component_home_host;
+}
+
+const char *
 gdu_device_linux_md_component_get_name (GduDevice *device)
 {
         return device->priv->props->linux_md_component_name;
@@ -1138,6 +1152,12 @@ const char *
 gdu_device_linux_md_get_uuid (GduDevice *device)
 {
         return device->priv->props->linux_md_uuid;
+}
+
+const char *
+gdu_device_linux_md_get_home_host (GduDevice *device)
+{
+        return device->priv->props->linux_md_home_host;
 }
 
 const char *

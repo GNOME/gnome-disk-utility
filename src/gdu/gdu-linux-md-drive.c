@@ -507,23 +507,7 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
 
         raid_size = gdu_presentable_get_size (GDU_PRESENTABLE (drive));
 
-        if (strcmp (level, "raid0") == 0) {
-                level_str = g_strdup (_("RAID-0"));
-        } else if (strcmp (level, "raid1") == 0) {
-                level_str = g_strdup (_("RAID-1"));
-        } else if (strcmp (level, "raid4") == 0) {
-                level_str = g_strdup (_("RAID-4"));
-        } else if (strcmp (level, "raid5") == 0) {
-                level_str = g_strdup (_("RAID-5"));
-        } else if (strcmp (level, "raid6") == 0) {
-                level_str = g_strdup (_("RAID-6"));
-        } else if (strcmp (level, "raid10") == 0) {
-                level_str = g_strdup (_("RAID-10"));
-        } else if (strcmp (level, "linear") == 0) {
-                level_str = g_strdup (_("Linear"));
-        } else {
-                level_str = g_strdup (level);
-        }
+        level_str = gdu_linux_md_get_raid_level_for_display (level);
 
         if (raid_size == 0)
                 size_str = NULL;

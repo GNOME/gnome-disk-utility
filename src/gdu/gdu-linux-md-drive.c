@@ -484,9 +484,7 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
         GduDevice *device;
         char *ret;
         char *level_str;
-        char *size_str;
         guint64 component_size;
-        guint64 raid_size;
         int num_slaves;
         int num_raid_devices;
         const char *level;
@@ -505,29 +503,15 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
         num_slaves = g_list_length (drive->priv->slaves);
         component_size = gdu_device_get_size (device);
 
-        raid_size = gdu_presentable_get_size (GDU_PRESENTABLE (drive));
-
         level_str = gdu_linux_md_get_raid_level_for_display (level);
 
-        if (raid_size == 0)
-                size_str = NULL;
-        else
-                size_str = gdu_util_get_size_for_display (raid_size, FALSE);
-
         if (name == NULL || strlen (name) == 0) {
-                if (size_str != NULL)
-                        ret = g_strdup_printf (_("%s %s Drive"), size_str, level_str);
-                else
-                        ret = g_strdup_printf (_("%s Drive"), level_str);
+                ret = g_strdup_printf (_("%s Drive"), level_str);
         } else {
-                if (size_str != NULL)
-                        ret = g_strdup_printf (_("%s %s (%s)"), size_str, name, level_str);
-                else
-                        ret = g_strdup_printf (_("%s (%s)"), name, level_str);
+                ret = g_strdup_printf (_("%s (%s)"), name, level_str);
         }
 
         g_free (level_str);
-        g_free (size_str);
 
 out:
         return ret;

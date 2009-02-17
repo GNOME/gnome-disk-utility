@@ -761,7 +761,7 @@ update (GduSectionLinuxMdDrive *section)
                         s = gdu_presentable_get_name (p);
                         name = g_strdup_printf ("%s (%s)", s, gdu_device_get_device_file (sd));
                         g_free (s);
-                        pixbuf = gdu_util_get_pixbuf_for_presentable (p, GTK_ICON_SIZE_LARGE_TOOLBAR);
+                        pixbuf = gdu_util_get_pixbuf_for_presentable (p, GTK_ICON_SIZE_MENU);
 
                         slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, sd);
 

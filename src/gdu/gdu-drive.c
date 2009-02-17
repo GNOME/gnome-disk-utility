@@ -252,20 +252,28 @@ gdu_drive_get_name (GduPresentable *presentable)
         size = gdu_device_get_size (drive->priv->device);
         is_removable = gdu_device_is_removable (drive->priv->device);
 
+        if (vendor != NULL && strlen (vendor) == 0)
+                vendor = NULL;
+
+        if (model != NULL && strlen (model) == 0)
+                model = NULL;
+
         strsize = NULL;
         if (!is_removable && size > 0) {
                 strsize = gdu_util_get_size_for_display (size, FALSE);
         }
 
         if (strsize != NULL) {
-                result = g_strdup_printf ("%s %s %s",
+                result = g_strdup_printf ("%s %s%s%s",
                                         strsize,
                                         vendor != NULL ? vendor : "",
+                                        vendor != NULL ? " " : "",
                                         model != NULL ? model : "");
         } else {
-                result = g_strdup_printf ("%s %s",
-                                        vendor != NULL ? vendor : "",
-                                        model != NULL ? model : "");
+                result = g_strdup_printf ("%s%s%s",
+                                          vendor != NULL ? vendor : "",
+                                          vendor != NULL ? " " : "",
+                                          model != NULL ? model : "");
         }
         g_free (strsize);
 

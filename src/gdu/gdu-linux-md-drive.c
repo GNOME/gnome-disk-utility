@@ -231,10 +231,35 @@ static void
 device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (user_data);
+        gboolean has_device;
+        gboolean emit_signal;
 
         //g_debug ("MD: in device_changed %s", gdu_device_get_object_path (device));
 
-        if (device == drive->priv->device || g_list_find (drive->priv->slaves, device) != NULL) {
+        emit_signal = TRUE;
+
+        has_device = g_list_find (drive->priv->slaves, device) != NULL;
+
+        if (has_device) {
+                /* handle when device is removed from the array */
+                emit_signal = TRUE;
+                if (!gdu_device_is_linux_md_component (device) ||
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) != 0) {
+                        drive->priv->slaves = g_list_remove (drive->priv->slaves, device);
+                        g_object_unref (device);
+                }
+        } else {
+                /* handle when device is joining the array */
+                if (gdu_device_is_linux_md_component (device) &&
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+                        emit_signal = TRUE;
+                        drive->priv->slaves = g_list_prepend (drive->priv->slaves, g_object_ref (device));
+                }
+        }
+
+
+
+        if (device == drive->priv->device || emit_signal) {
                 emit_changed (drive);
         }
 }

@@ -62,6 +62,8 @@ G_DEFINE_TYPE_WITH_CODE (GduVolumeHole, gdu_volume_hole, G_TYPE_OBJECT,
 static void
 gdu_volume_hole_finalize (GduVolumeHole *volume_hole)
 {
+        //g_debug ("finalized volume_hole '%s' %p", volume_hole->priv->id, volume_hole);
+
         g_object_unref (volume_hole->priv->pool);
 
         if (volume_hole->priv->enclosing_presentable != NULL)

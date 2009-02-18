@@ -67,6 +67,8 @@ static void device_changed (GduDevice *device, gpointer user_data);
 static void
 gdu_volume_finalize (GduVolume *volume)
 {
+        //g_debug ("finalized volume '%s' %p", volume->priv->id, volume);
+
         if (volume->priv->device != NULL) {
                 g_signal_handlers_disconnect_by_func (volume->priv->device, device_changed, volume);
                 g_signal_handlers_disconnect_by_func (volume->priv->device, device_job_changed, volume);

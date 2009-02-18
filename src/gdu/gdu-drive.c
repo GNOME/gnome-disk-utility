@@ -66,6 +66,8 @@ static void device_changed (GduDevice *device, gpointer user_data);
 static void
 gdu_drive_finalize (GduDrive *drive)
 {
+        //g_debug ("finalized drive '%s' %p", drive->priv->id, drive);
+
         if (drive->priv->device != NULL) {
                 g_signal_handlers_disconnect_by_func (drive->priv->device, device_changed, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->device, device_job_changed, drive);

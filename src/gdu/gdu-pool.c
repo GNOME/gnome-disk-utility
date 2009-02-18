@@ -582,7 +582,7 @@ recompute_presentables (GduPool *pool)
 
                 device = GDU_DEVICE (l->data);
 
-                g_debug ("Handling device %s", gdu_device_get_device_file (device));
+                //g_debug ("Handling device %s", gdu_device_get_device_file (device));
 
                 /* drives */
                 if (gdu_device_is_drive (device)) {
@@ -750,7 +750,7 @@ recompute_presentables (GduPool *pool)
         for (l = removed_presentables; l != NULL; l = l->next) {
                 GduPresentable *p = GDU_PRESENTABLE (l->data);
 
-                g_debug ("Removed presentable %s", gdu_presentable_get_id (p));
+                g_debug ("Removed presentable %s %p", gdu_presentable_get_id (p), p);
 
                 pool->priv->presentables = g_list_remove (pool->priv->presentables, p);
                 g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, p);
@@ -770,9 +770,9 @@ recompute_presentables (GduPool *pool)
                 else if (GDU_IS_VOLUME_HOLE (p))
                         _gdu_volume_hole_rewrite_enclosing_presentable (GDU_VOLUME_HOLE (p));
 
-                g_debug ("Added presentable %s", gdu_presentable_get_id (p));
+                g_debug ("Added presentable %s %p", gdu_presentable_get_id (p), p);
 
-                pool->priv->presentables = g_list_prepend (pool->priv->presentables, p);
+                pool->priv->presentables = g_list_prepend (pool->priv->presentables, g_object_ref (p));
                 g_signal_emit (pool, signals[PRESENTABLE_ADDED], 0, p);
         }
 
@@ -781,6 +781,8 @@ recompute_presentables (GduPool *pool)
 
         g_list_free (removed_presentables);
         g_list_free (added_presentables);
+        g_list_foreach (new_presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (new_presentables);
         g_list_foreach (devices, (GFunc) g_object_unref, NULL);
         g_list_free (devices);
 }
@@ -812,7 +814,7 @@ device_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointe
                              (gpointer) gdu_device_get_object_path (device),
                              device);
         g_signal_emit (pool, signals[DEVICE_ADDED], 0, device);
-        g_debug ("Added device %s", object_path);
+        //g_debug ("Added device %s", object_path);
 
         recompute_presentables (pool);
 
@@ -837,7 +839,7 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         g_hash_table_remove (pool->priv->object_path_to_device,
                              gdu_device_get_object_path (device));
         g_signal_emit (pool, signals[DEVICE_REMOVED], 0, device);
-        g_debug ("Removed device %s", object_path);
+        //g_debug ("Removed device %s", object_path);
 
         recompute_presentables (pool);
 
@@ -863,7 +865,7 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         _gdu_device_changed (device);
         g_signal_emit (pool, signals[DEVICE_CHANGED], 0, device);
         g_object_unref (device);
-        g_debug ("Changed device %s", object_path);
+        //g_debug ("Changed device %s", object_path);
 
         recompute_presentables (pool);
 
@@ -1235,9 +1237,6 @@ device_recurse (GduPool *pool, GduDevice *device, GList **ret, guint depth)
                 else
                         *ret = g_list_prepend (*ret, device);
         }
-
- out:
-        ;
 }
 
 /**

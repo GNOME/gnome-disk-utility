@@ -89,6 +89,8 @@ gdu_linux_md_drive_finalize (GObject *object)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (object);
 
+        //g_debug ("finalized linux-md drive '%s' %p", drive->priv->id, drive);
+
         if (drive->priv->pool != NULL) {
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_added, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_removed, drive);

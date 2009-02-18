@@ -63,14 +63,31 @@ HTML_IMAGES = 						\
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS=
 
-MAINTAINERCLEANFILES =		\
-	*~			\
-	Makefile.in		\
+MAINTAINERCLEANFILES =			\
+	*~				\
+	Makefile.in			\
 	gnome-disk-utility.types	\
 	gnome-disk-utility-*.txt	\
 	$(NULL)
 
 include $(top_srcdir)/gtk-doc.make
+
+CLEANFILES +=   *~						\
+		gnome-disk-utility-scan.*			\
+		gnome-disk-utility.args				\
+		gnome-disk-utility.hierarchy			\
+		gnome-disk-utility.interfaces			\
+		gnome-disk-utility.prerequisites		\
+		gnome-disk-utility.signals			\
+		*.bak						\
+		gnome-disk-utility-decl-list.txt		\
+		gnome-disk-utility-decl.txt			\
+		gnome-disk-utility-overrides.txt		\
+		gnome-disk-utility-undeclared.txt		\
+		gnome-disk-utility-undocumented.txt		\
+		*.stamp						\
+		-rf html xml					\
+		$(NULL)
 
 # Version information for marking the documentation
 EXTRA_DIST += version.xml.in

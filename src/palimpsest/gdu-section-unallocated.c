@@ -190,7 +190,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         }
 
         offset = gdu_presentable_get_offset (presentable);
-        size = (guint64) (((double) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale))) * 1024.0 * 1024.0);
+        size = (guint64) (((double) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale))) * 1000.0 * 1000.0);
         fstype = gdu_util_fstype_combo_box_get_selected (section->priv->fstype_combo_box);
         fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->fslabel_entry)));
         fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
@@ -499,11 +499,11 @@ update (GduSectionUnallocated *section)
         if (!section->priv->init_done) {
                 section->priv->init_done = TRUE;
 
-                gtk_range_set_range (GTK_RANGE (section->priv->size_hscale), 0, size / 1024.0 / 1024.0);
-                gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), size / 1024.0 / 1024.0);
+                gtk_range_set_range (GTK_RANGE (section->priv->size_hscale), 0, size / 1000.0 / 1000.0);
+                gtk_range_set_value (GTK_RANGE (section->priv->size_hscale), size / 1000.0 / 1000.0);
 
-                gtk_spin_button_set_range (GTK_SPIN_BUTTON (section->priv->size_spin_button), 0, size / 1024.0 / 1024.0);
-                gtk_spin_button_set_value (GTK_SPIN_BUTTON (section->priv->size_spin_button), size / 1024.0 / 1024.0);
+                gtk_spin_button_set_range (GTK_SPIN_BUTTON (section->priv->size_spin_button), 0, size / 1000.0 / 1000.0);
+                gtk_spin_button_set_value (GTK_SPIN_BUTTON (section->priv->size_spin_button), size / 1000.0 / 1000.0);
 
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->secure_erase_combo_box), 0);
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->fstype_combo_box), 0);

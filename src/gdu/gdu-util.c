@@ -29,9 +29,9 @@
 #include "gdu-util.h"
 #include "gdu-pool.h"
 
-#define KILOBYTE_FACTOR 1024.0
-#define MEGABYTE_FACTOR (1024.0 * 1024.0)
-#define GIGABYTE_FACTOR (1024.0 * 1024.0 * 1024.0)
+#define KILOBYTE_FACTOR 1000.0
+#define MEGABYTE_FACTOR (1000.0 * 1000.0)
+#define GIGABYTE_FACTOR (1000.0 * 1000.0 * 1000.0)
 
 char *
 gdu_util_get_size_for_display (guint64 size, gboolean long_string)

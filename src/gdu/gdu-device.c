@@ -333,8 +333,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "drive-smart-last-self-test-result") == 0)
                 props->drive_smart_last_self_test_result = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "drive-smart-attributes") == 0) {
-                g_value_init (&(props->drive_smart_attributes),
-                              dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE));
                 g_value_copy (value, &(props->drive_smart_attributes));
         }
 
@@ -417,8 +415,10 @@ device_properties_free (DeviceProperties *props)
         g_free (props->partition_uuid);
         g_strfreev (props->partition_flags);
         g_free (props->partition_table_scheme);
-        g_array_free (props->partition_table_offsets, TRUE);
-        g_array_free (props->partition_table_sizes, TRUE);
+        if (props->partition_table_offsets != NULL)
+                g_array_free (props->partition_table_offsets, TRUE);
+        if (props->partition_table_sizes != NULL)
+                g_array_free (props->partition_table_sizes, TRUE);
         g_free (props->luks_holder);
         g_free (props->luks_cleartext_slave);
         g_free (props->drive_model);
@@ -457,6 +457,8 @@ device_properties_get (DBusGConnection *bus,
         const char *ifname = "org.freedesktop.DeviceKit.Disks.Device";
 
         props = g_new0 (DeviceProperties, 1);
+        g_value_init (&(props->drive_smart_attributes),
+                      dbus_g_type_get_collection ("GPtrArray", SMART_DATA_STRUCT_TYPE));
 
 	prop_proxy = dbus_g_proxy_new_for_name (bus,
                                                 "org.freedesktop.DeviceKit.Disks",

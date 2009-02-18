@@ -25,10 +25,13 @@
 #include <stdlib.h>
 
 #include "gdu-pool.h"
+#include "gdu-presentable.h"
+#include "gdu-device.h"
 #include "gdu-drive.h"
 #include "gdu-linux-md-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
+#include "gdu-known-filesystem.h"
 #include "gdu-private.h"
 
 #include "devkit-disks-daemon-glue.h"

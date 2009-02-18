@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-shared.h
+/* gdu-types.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -19,30 +19,33 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_SHARED_H
-#define GDU_SHARED_H
+#ifndef __GDU_TYPES_H
+#define __GDU_TYPES_H
+
+#include <glib-object.h>
+#include <gio/gio.h>
+
+G_BEGIN_DECLS
 
 /* forward type definitions */
 
-typedef struct _GduDevice            GduDevice;
-typedef struct _GduPool              GduPool;
-typedef struct _GduDrive             GduDrive;
-typedef struct _GduLinuxMdDrive      GduLinuxMdDrive;
+typedef struct _GduPool                GduPool;
+typedef struct _GduDevice              GduDevice;
+typedef struct _GduPresentable         GduPresentable; /* Dummy typedef */
+typedef struct _GduDrive               GduDrive;
+typedef struct _GduLinuxMdDrive        GduLinuxMdDrive;
+typedef struct _GduVolume              GduVolume;
+typedef struct _GduVolumeHole          GduVolumeHole;
 
+typedef struct _GduKnownFilesystem     GduKnownFilesystem;
+typedef struct _GduProcess             GduProcess;
+typedef struct _GduSmartData           GduSmartData;
+typedef struct _GduSmartDataAttribute  GduSmartDataAttribute;
 
-typedef struct _GduPoolPrivate     GduPoolPrivate;
-typedef struct _GduDevicePrivate     GduDevicePrivate;
-typedef struct _GduVolumePrivate     GduVolumePrivate;
-typedef struct _GduVolumeHolePrivate     GduVolumeHolePrivate;
-typedef struct _GduDrivePrivate     GduDrivePrivate;
-typedef struct _GduLinuxMdDrivePrivate     GduLinuxMdDrivePrivate;
-typedef struct _GduKnownFilesystemPrivate     GduKnownFilesystemPrivate;
-typedef struct _GduProcessPrivate     GduProcessPrivate;
-typedef struct _GduSmartDataAttributePrivate     GduSmartDataAttributePrivate;
-typedef struct _GduSmartDataPrivate     GduSmartDataPrivate;
+G_END_DECLS
 
-#endif /* GDU_SHARED_H */
+#endif /* __GDU_TYPES_H */

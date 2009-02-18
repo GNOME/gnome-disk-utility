@@ -19,24 +19,26 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_VOLUME_HOLE_H
-#define GDU_VOLUME_HOLE_H
+#ifndef __GDU_VOLUME_HOLE_H
+#define __GDU_VOLUME_HOLE_H
 
-#include <gdu/gdu-device.h>
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_VOLUME_HOLE             (gdu_volume_hole_get_type ())
-#define GDU_VOLUME_HOLE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_VOLUME_HOLE, GduVolumeHole))
-#define GDU_VOLUME_HOLE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_VOLUME_HOLE,  GduVolumeHoleClass))
-#define GDU_IS_VOLUME_HOLE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_VOLUME_HOLE))
-#define GDU_IS_VOLUME_HOLE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_VOLUME_HOLE))
-#define GDU_VOLUME_HOLE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_VOLUME_HOLE, GduVolumeHoleClass))
+G_BEGIN_DECLS
+
+#define GDU_TYPE_VOLUME_HOLE           (gdu_volume_hole_get_type ())
+#define GDU_VOLUME_HOLE(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_VOLUME_HOLE, GduVolumeHole))
+#define GDU_VOLUME_HOLE_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_VOLUME_HOLE,  GduVolumeHoleClass))
+#define GDU_IS_VOLUME_HOLE(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_VOLUME_HOLE))
+#define GDU_IS_VOLUME_HOLE_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_VOLUME_HOLE))
+#define GDU_VOLUME_HOLE_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_VOLUME_HOLE, GduVolumeHoleClass))
 
 typedef struct _GduVolumeHoleClass       GduVolumeHoleClass;
-typedef struct _GduVolumeHole            GduVolumeHole;
+typedef struct _GduVolumeHolePrivate     GduVolumeHolePrivate;
 
 struct _GduVolumeHole
 {
@@ -53,4 +55,6 @@ struct _GduVolumeHoleClass
 
 GType            gdu_volume_hole_get_type  (void);
 
-#endif /* GDU_VOLUME_HOLE_H */
+G_END_DECLS
+
+#endif /* __GDU_VOLUME_HOLE_H */

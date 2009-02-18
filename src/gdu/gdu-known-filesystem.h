@@ -19,24 +19,26 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_KNOWN_FILESYSTEM_H
-#define GDU_KNOWN_FILESYSTEM_H
+#ifndef __GDU_KNOWN_FILESYSTEM_H
+#define __GDU_KNOWN_FILESYSTEM_H
 
-#include <glib-object.h>
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_KNOWN_FILESYSTEM             (gdu_known_filesystem_get_type ())
-#define GDU_KNOWN_FILESYSTEM(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_KNOWN_FILESYSTEM, GduKnownFilesystem))
-#define GDU_KNOWN_FILESYSTEM_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_KNOWN_FILESYSTEM,  GduKnownFilesystemClass))
-#define GDU_IS_KNOWN_FILESYSTEM(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_KNOWN_FILESYSTEM))
-#define GDU_IS_KNOWN_FILESYSTEM_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_KNOWN_FILESYSTEM))
-#define GDU_KNOWN_FILESYSTEM_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_KNOWN_FILESYSTEM, GduKnownFilesystemClass))
+G_BEGIN_DECLS
+
+#define GDU_TYPE_KNOWN_FILESYSTEM         (gdu_known_filesystem_get_type ())
+#define GDU_KNOWN_FILESYSTEM(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_KNOWN_FILESYSTEM, GduKnownFilesystem))
+#define GDU_KNOWN_FILESYSTEM_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_KNOWN_FILESYSTEM,  GduKnownFilesystemClass))
+#define GDU_IS_KNOWN_FILESYSTEM(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_KNOWN_FILESYSTEM))
+#define GDU_IS_KNOWN_FILESYSTEM_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_KNOWN_FILESYSTEM))
+#define GDU_KNOWN_FILESYSTEM_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_KNOWN_FILESYSTEM, GduKnownFilesystemClass))
 
 typedef struct _GduKnownFilesystemClass       GduKnownFilesystemClass;
-typedef struct _GduKnownFilesystem            GduKnownFilesystem;
+typedef struct _GduKnownFilesystemPrivate     GduKnownFilesystemPrivate;
 
 struct _GduKnownFilesystem
 {
@@ -67,4 +69,6 @@ gboolean    gdu_known_filesystem_get_supports_online_resize_enlarge (GduKnownFil
 gboolean    gdu_known_filesystem_get_supports_resize_shrink         (GduKnownFilesystem *known_filesystem);
 gboolean    gdu_known_filesystem_get_supports_online_resize_shrink  (GduKnownFilesystem *known_filesystem);
 
-#endif /* GDU_KNOWN_FILESYSTEM_H */
+G_END_DECLS
+
+#endif /* __GDU_KNOWN_FILESYSTEM_H */

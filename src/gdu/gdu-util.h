@@ -19,15 +19,16 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_UTIL_H
-#define GDU_UTIL_H
+#ifndef __GDU_UTIL_H
+#define __GDU_UTIL_H
 
-#include <gdu/gdu-presentable.h>
-#include <gdu/gdu-pool.h>
+#include <gdu/gdu-types.h>
+
+G_BEGIN_DECLS
 
 char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
@@ -72,4 +73,6 @@ gboolean gdu_util_have_secret (GduDevice *device);
 
 gchar *gdu_util_get_secret (GduDevice *device);
 
-#endif /* GDU_UTIL_H */
+G_END_DECLS
+
+#endif /* __GDU_UTIL_H */

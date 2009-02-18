@@ -497,44 +497,6 @@ gdu_presentable_equals (GduPresentable *a,
         return g_strcmp0 (gdu_presentable_get_id (a), gdu_presentable_get_id (b)) == 0;
 }
 
-/**
- * gdu_presentable_is_enclosed_by:
- * @a: A #GduPresentable.
- * @b: A #GduPresentable.
- *
- * Checks if @b is enclosed by @a.
- *
- * Returns: %TRUE only if @b is enclosed by @a.
- */
-static gboolean
-gdu_presentable_is_enclosed_by (GduPresentable *a,
-                                GduPresentable *b)
-{
-        GduPresentable *parent;
-        GduPresentable *maybe_parent;
-        gboolean ret;
-
-        ret = FALSE;
-
-        parent = b;
-        do {
-                maybe_parent = gdu_presentable_get_enclosing_presentable (parent);
-                if (maybe_parent != NULL) {
-                        if (gdu_presentable_equals (maybe_parent, a)) {
-                                g_object_unref (maybe_parent);
-                                ret = TRUE;
-                                goto out;
-                        }
-
-                        g_object_unref (maybe_parent);
-                        parent = maybe_parent;
-                }
-        } while (maybe_parent != NULL);
-
- out:
-        return ret;
-}
-
 static void
 compute_sort_path (GduPresentable *presentable,
                    GString        *s)

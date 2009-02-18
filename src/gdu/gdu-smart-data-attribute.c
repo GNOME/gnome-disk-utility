@@ -26,7 +26,6 @@
 #include <dbus/dbus-glib.h>
 #include <time.h>
 
-#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-smart-data-attribute.h"
 

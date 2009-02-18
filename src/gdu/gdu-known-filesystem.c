@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
-#include "gdu-shared.h"
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
 

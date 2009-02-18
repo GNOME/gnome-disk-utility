@@ -19,21 +19,27 @@
  * 02111-1307, USA.
  */
 
-#ifndef GDU_SMART_DATA_H
-#define GDU_SMART_DATA_H
 
-#include <glib-object.h>
-#include <gdu/gdu-smart-data-attribute.h>
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
+#endif
 
-#define GDU_TYPE_SMART_DATA             (gdu_smart_data_get_type ())
-#define GDU_SMART_DATA(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SMART_DATA, GduSmartData))
-#define GDU_SMART_DATA_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_SMART_DATA,  GduSmartDataClass))
-#define GDU_IS_SMART_DATA(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_SMART_DATA))
-#define GDU_IS_SMART_DATA_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_SMART_DATA))
-#define GDU_SMART_DATA_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_SMART_DATA, GduSmartDataClass))
+#ifndef __GDU_SMART_DATA_H
+#define __GDU_SMART_DATA_H
+
+#include <gdu/gdu-types.h>
+
+G_BEGIN_DECLS
+
+#define GDU_TYPE_SMART_DATA           (gdu_smart_data_get_type ())
+#define GDU_SMART_DATA(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_SMART_DATA, GduSmartData))
+#define GDU_SMART_DATA_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_SMART_DATA,  GduSmartDataClass))
+#define GDU_IS_SMART_DATA(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_SMART_DATA))
+#define GDU_IS_SMART_DATA_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_SMART_DATA))
+#define GDU_SMART_DATA_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_SMART_DATA, GduSmartDataClass))
 
 typedef struct _GduSmartDataClass       GduSmartDataClass;
-typedef struct _GduSmartData            GduSmartData;
+typedef struct _GduSmartDataPrivate     GduSmartDataPrivate;
 
 struct _GduSmartData
 {
@@ -61,4 +67,6 @@ gboolean               gdu_smart_data_get_attribute_failing     (GduSmartData *s
 GduSmartDataAttribute *gdu_smart_data_get_attribute             (GduSmartData *smart_data,
                                                                  int id);
 
-#endif /* GDU_SMART_DATA_H */
+G_END_DECLS
+
+#endif /* __GDU_SMART_DATA_H */

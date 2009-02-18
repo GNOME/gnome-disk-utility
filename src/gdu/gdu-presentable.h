@@ -19,22 +19,23 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#include <gdu/gdu-device.h>
+#ifndef __GDU_PRESENTABLE_H
+#define __GDU_PRESENTABLE_H
 
-#ifndef GDU_PRESENTABLE_H
-#define GDU_PRESENTABLE_H
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_PRESENTABLE            (gdu_presentable_get_type ())
-#define GDU_PRESENTABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_PRESENTABLE, GduPresentable))
-#define GDU_IS_PRESENTABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_PRESENTABLE))
-#define GDU_PRESENTABLE_GET_IFACE(obj)  (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GDU_TYPE_PRESENTABLE, GduPresentableIface))
+G_BEGIN_DECLS
 
-typedef struct _GduPresentable GduPresentable;
+#define GDU_TYPE_PRESENTABLE         (gdu_presentable_get_type ())
+#define GDU_PRESENTABLE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_PRESENTABLE, GduPresentable))
+#define GDU_IS_PRESENTABLE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_PRESENTABLE))
+#define GDU_PRESENTABLE_GET_IFACE(o) (G_TYPE_INSTANCE_GET_INTERFACE ((o), GDU_TYPE_PRESENTABLE, GduPresentableIface))
 
+typedef struct _GduPresentableIface    GduPresentableIface;
 
 /**
  * GduPresentableIface:
@@ -55,8 +56,6 @@ typedef struct _GduPresentable GduPresentable;
  *
  * Interface for #GduPresentable implementations.
  */
-typedef struct _GduPresentableIface    GduPresentableIface;
-
 struct _GduPresentableIface
 {
         GTypeInterface g_iface;
@@ -98,4 +97,6 @@ gboolean        gdu_presentable_equals                    (GduPresentable *a,
 gint            gdu_presentable_compare                   (GduPresentable *a,
                                                            GduPresentable *b);
 
-#endif /* GDU_PRESENTABLE_H */
+G_END_DECLS
+
+#endif /* __GDU_PRESENTABLE_H */

@@ -24,12 +24,13 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 
-#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-drive.h"
 #include "gdu-presentable.h"
+#include "gdu-device.h"
+#include "gdu-error.h"
 
 /**
  * SECTION:gdu-drive

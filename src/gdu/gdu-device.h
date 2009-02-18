@@ -19,30 +19,30 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_DEVICE_H
-#define GDU_DEVICE_H
+#ifndef __GDU_DEVICE_H
+#define __GDU_DEVICE_H
 
 #include <unistd.h>
 #include <sys/types.h>
-#include <glib-object.h>
-#include <gdu/gdu-shared.h>
-#include <gdu/gdu-error.h>
-#include <gdu/gdu-smart-data.h>
-#include <gdu/gdu-process.h>
+
+#include <gdu/gdu-types.h>
 #include <gdu/gdu-callbacks.h>
 
-#define GDU_TYPE_DEVICE             (gdu_device_get_type ())
-#define GDU_DEVICE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DEVICE, GduDevice))
-#define GDU_DEVICE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_DEVICE,  GduDeviceClass))
-#define GDU_IS_DEVICE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_DEVICE))
-#define GDU_IS_DEVICE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_DEVICE))
-#define GDU_DEVICE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_DEVICE, GduDeviceClass))
+G_BEGIN_DECLS
 
-typedef struct _GduDeviceClass       GduDeviceClass;
+#define GDU_TYPE_DEVICE           (gdu_device_get_type ())
+#define GDU_DEVICE(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_DEVICE, GduDevice))
+#define GDU_DEVICE_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_DEVICE,  GduDeviceClass))
+#define GDU_IS_DEVICE(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_DEVICE))
+#define GDU_IS_DEVICE_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_DEVICE))
+#define GDU_DEVICE_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_DEVICE, GduDeviceClass))
+
+typedef struct _GduDeviceClass    GduDeviceClass;
+typedef struct _GduDevicePrivate  GduDevicePrivate;
 
 struct _GduDevice
 {
@@ -327,4 +327,6 @@ void gdu_device_op_drive_eject                 (GduDevice                       
                                                 GduDeviceDriveEjectCompletedFunc  callback,
                                                 gpointer                          user_data);
 
-#endif /* GDU_DEVICE_H */
+G_END_DECLS
+
+#endif /* __GDU_DEVICE_H */

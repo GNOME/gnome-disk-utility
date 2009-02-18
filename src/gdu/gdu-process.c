@@ -27,7 +27,6 @@
 #include <time.h>
 #include <gio/gdesktopappinfo.h>
 
-#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-process.h"
 

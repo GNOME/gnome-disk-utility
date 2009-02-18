@@ -28,6 +28,7 @@
 
 #include "gdu-util.h"
 #include "gdu-pool.h"
+#include "gdu-device.h"
 
 #define KILOBYTE_FACTOR 1000.0
 #define MEGABYTE_FACTOR (1000.0 * 1000.0)

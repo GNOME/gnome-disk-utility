@@ -25,10 +25,10 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 
-#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
+#include "gdu-device.h"
 #include "gdu-volume-hole.h"
 #include "gdu-presentable.h"
 

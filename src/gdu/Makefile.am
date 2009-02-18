@@ -22,7 +22,7 @@ libgduincludedir=$(includedir)/gnome-disk-utility/gdu
 
 libgduinclude_HEADERS =              			\
 	gdu.h						\
-	gdu-shared.h					\
+	gdu-types.h					\
 	gdu-callbacks.h					\
 	gdu-device.h					\
 	gdu-drive.h					\
@@ -40,7 +40,7 @@ libgduinclude_HEADERS =              			\
 
 libgdu_la_SOURCES =                                					\
 						gdu.h					\
-						gdu-shared.h				\
+						gdu-types.h				\
 						gdu-callbacks.h				\
 	gdu-util.h				gdu-util.c				\
 	gdu-pool.c				gdu-pool.h				\

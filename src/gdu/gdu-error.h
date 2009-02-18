@@ -19,15 +19,17 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_ERROR_H
-#define GDU_ERROR_H
+#ifndef __GDU_ERROR_H
+#define __GDU_ERROR_H
 
-#include <glib-object.h>
+#include <gdu/gdu-types.h>
 #include <polkit/polkit.h>
+
+G_BEGIN_DECLS
 
 /**
  * GduError:
@@ -92,4 +94,6 @@ gboolean gdu_error_check_polkit_not_authorized (GError        *error,
                                                 PolKitAction **pk_action,
                                                 PolKitResult  *pk_result);
 
-#endif /* GDU_ERROR_H */
+G_END_DECLS
+
+#endif /* __GDU_ERROR_H */

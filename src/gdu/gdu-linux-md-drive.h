@@ -19,26 +19,28 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_LINUX_MD_DRIVE_H
-#define GDU_LINUX_MD_DRIVE_H
+#ifndef __GDU_LINUX_MD_DRIVE_H
+#define __GDU_LINUX_MD_DRIVE_H
 
-#include <gdu/gdu-device.h>
-#include <gdu/gdu-drive.h>
-#include <gdu/gdu-presentable.h>
+#include <gdu/gdu-types.h>
 #include <gdu/gdu-callbacks.h>
+#include <gdu/gdu-drive.h>
 
-#define GDU_TYPE_LINUX_MD_DRIVE             (gdu_linux_md_drive_get_type ())
-#define GDU_LINUX_MD_DRIVE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_LINUX_MD_DRIVE, GduLinuxMdDrive))
-#define GDU_LINUX_MD_DRIVE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_LINUX_MD_DRIVE,  GduLinuxMdDriveClass))
-#define GDU_IS_LINUX_MD_DRIVE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_LINUX_MD_DRIVE))
-#define GDU_IS_LINUX_MD_DRIVE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_LINUX_MD_DRIVE))
-#define GDU_LINUX_MD_DRIVE_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_LINUX_MD_DRIVE, GduLinuxMdDriveClass))
+G_BEGIN_DECLS
 
-typedef struct _GduLinuxMdDriveClass       GduLinuxMdDriveClass;
+#define GDU_TYPE_LINUX_MD_DRIVE         (gdu_linux_md_drive_get_type ())
+#define GDU_LINUX_MD_DRIVE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_LINUX_MD_DRIVE, GduLinuxMdDrive))
+#define GDU_LINUX_MD_DRIVE_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_LINUX_MD_DRIVE,  GduLinuxMdDriveClass))
+#define GDU_IS_LINUX_MD_DRIVE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_LINUX_MD_DRIVE))
+#define GDU_IS_LINUX_MD_DRIVE_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_LINUX_MD_DRIVE))
+#define GDU_LINUX_MD_DRIVE_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_LINUX_MD_DRIVE, GduLinuxMdDriveClass))
+
+typedef struct _GduLinuxMdDriveClass    GduLinuxMdDriveClass;
+typedef struct _GduLinuxMdDrivePrivate  GduLinuxMdDrivePrivate;
 
 struct _GduLinuxMdDrive
 {
@@ -91,5 +93,6 @@ int                        gdu_linux_md_drive_get_num_slaves       (GduLinuxMdDr
 int                        gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive  *drive);
 GduLinuxMdDriveSlaveState  gdu_linux_md_drive_get_slave_state      (GduLinuxMdDrive  *drive,
                                                                     GduDevice        *slave);
+G_END_DECLS
 
-#endif /* GDU_LINUX_MD_DRIVE_H */
+#endif /* __GDU_LINUX_MD_DRIVE_H */

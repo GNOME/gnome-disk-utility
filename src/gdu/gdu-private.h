@@ -19,22 +19,14 @@
  * 02111-1307, USA.
  */
 
-#if defined (GNOME_DISK_UTILITY_INSIDE_GDU_H)
+#if defined (__GDU_INSIDE_GDU_H)
 #error "Can't include a private header in the public header file."
 #endif
 
-#ifndef GDU_PRIVATE_H
-#define GDU_PRIVATE_H
+#ifndef __GDU_PRIVATE_H
+#define __GDU_PRIVATE_H
 
-#include <glib-object.h>
-#include "gdu-smart-data.h"
-#include "gdu-known-filesystem.h"
-#include "gdu-process.h"
-#include "gdu-device.h"
-#include "gdu-presentable.h"
-#include "gdu-drive.h"
-#include "gdu-volume.h"
-#include "gdu-volume-hole.h"
+#include "gdu-types.h"
 
 #define SMART_DATA_STRUCT_TYPE (dbus_g_type_get_struct ("GValueArray",   \
                                                         G_TYPE_INT,      \
@@ -124,4 +116,4 @@ void        _gdu_device_removed               (GduDevice   *device);
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 
-#endif /* GDU_PRIVATE_H */
+#endif /* __GDU_PRIVATE_H */

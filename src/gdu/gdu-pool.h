@@ -19,26 +19,27 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_POOL_H
-#define GDU_POOL_H
+#ifndef __GDU_POOL_H
+#define __GDU_POOL_H
 
-#include <gdu/gdu-shared.h>
-#include <gdu/gdu-presentable.h>
-#include <gdu/gdu-known-filesystem.h>
+#include <gdu/gdu-types.h>
 #include <gdu/gdu-callbacks.h>
 
-#define GDU_TYPE_POOL             (gdu_pool_get_type ())
-#define GDU_POOL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_POOL, GduPool))
-#define GDU_POOL_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_POOL,  GduPoolClass))
-#define GDU_IS_POOL(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_POOL))
-#define GDU_IS_POOL_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_POOL))
-#define GDU_POOL_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_POOL, GduPoolClass))
+G_BEGIN_DECLS
+
+#define GDU_TYPE_POOL         (gdu_pool_get_type ())
+#define GDU_POOL(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_POOL, GduPool))
+#define GDU_POOL_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_POOL,  GduPoolClass))
+#define GDU_IS_POOL(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_POOL))
+#define GDU_IS_POOL_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_POOL))
+#define GDU_POOL_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_POOL, GduPoolClass))
 
 typedef struct _GduPoolClass       GduPoolClass;
+typedef struct _GduPoolPrivate     GduPoolPrivate;
 
 struct _GduPool
 {
@@ -89,5 +90,6 @@ void gdu_pool_op_linux_md_start (GduPool *pool,
                                  GduPoolLinuxMdStartCompletedFunc callback,
                                  gpointer user_data);
 
+G_END_DECLS
 
-#endif /* GDU_POOL_H */
+#endif /* __GDU_POOL_H */

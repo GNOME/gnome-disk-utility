@@ -24,10 +24,10 @@
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
 
-#include "gdu-shared.h"
 #include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
+#include "gdu-device.h"
 #include "gdu-linux-md-drive.h"
 #include "gdu-presentable.h"
 

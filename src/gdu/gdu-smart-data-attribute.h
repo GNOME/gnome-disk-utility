@@ -19,24 +19,26 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_SMART_DATA_ATTRIBUTE_H
-#define GDU_SMART_DATA_ATTRIBUTE_H
+#ifndef __GDU_SMART_DATA_ATTRIBUTE_H
+#define __GDU_SMART_DATA_ATTRIBUTE_H
 
-#include <glib-object.h>
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_SMART_DATA_ATTRIBUTE             (gdu_smart_data_attribute_get_type ())
-#define GDU_SMART_DATA_ATTRIBUTE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttribute))
-#define GDU_SMART_DATA_ATTRIBUTE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_SMART_DATA_ATTRIBUTE,  GduSmartDataAttributeClass))
-#define GDU_IS_SMART_DATA_ATTRIBUTE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_SMART_DATA_ATTRIBUTE))
-#define GDU_IS_SMART_DATA_ATTRIBUTE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_SMART_DATA_ATTRIBUTE))
-#define GDU_SMART_DATA_ATTRIBUTE_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttributeClass))
+G_BEGIN_DECLS
+
+#define GDU_TYPE_SMART_DATA_ATTRIBUTE         (gdu_smart_data_attribute_get_type ())
+#define GDU_SMART_DATA_ATTRIBUTE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttribute))
+#define GDU_SMART_DATA_ATTRIBUTE_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_SMART_DATA_ATTRIBUTE,  GduSmartDataAttributeClass))
+#define GDU_IS_SMART_DATA_ATTRIBUTE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_SMART_DATA_ATTRIBUTE))
+#define GDU_IS_SMART_DATA_ATTRIBUTE_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_SMART_DATA_ATTRIBUTE))
+#define GDU_SMART_DATA_ATTRIBUTE_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttributeClass))
 
 typedef struct _GduSmartDataAttributeClass       GduSmartDataAttributeClass;
-typedef struct _GduSmartDataAttribute            GduSmartDataAttribute;
+typedef struct _GduSmartDataAttributePrivate     GduSmartDataAttributePrivate;
 
 struct _GduSmartDataAttribute
 {
@@ -64,4 +66,6 @@ char    *gdu_smart_data_attribute_get_description (GduSmartDataAttribute *smart_
 gboolean gdu_smart_data_attribute_is_warning      (GduSmartDataAttribute *smart_data_attribute);
 gboolean gdu_smart_data_attribute_is_failing      (GduSmartDataAttribute *smart_data_attribute);
 
-#endif /* GDU_SMART_DATA_ATTRIBUTE_H */
+G_END_DECLS
+
+#endif /* __GDU_SMART_DATA_ATTRIBUTE_H */

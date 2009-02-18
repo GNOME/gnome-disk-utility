@@ -19,18 +19,16 @@
  * 02111-1307, USA.
  */
 
-#ifndef GDU_H
-#define GDU_H
+#ifndef __GDU_H
+#define __GDU_H
 
 #ifndef GDU_API_IS_SUBJECT_TO_CHANGE
 #error  libgdu is unstable API. You must define GDU_API_IS_SUBJECT_TO_CHANGE before including gdu/gdu.h
 #endif
 
-G_BEGIN_DECLS
+#define __GDU_INSIDE_GDU_H 1
 
-#define GNOME_DISK_UTILITY_INSIDE_GDU_H 1
-
-#include <gdu/gdu-shared.h>
+#include <gdu/gdu-types.h>
 #include <gdu/gdu-linux-md-drive.h>
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-drive.h>
@@ -39,15 +37,15 @@ G_BEGIN_DECLS
 #include <gdu/gdu-pool.h>
 #include <gdu/gdu-presentable.h>
 #include <gdu/gdu-process.h>
-#include <gdu/gdu-smart-data-attribute.h>
 #include <gdu/gdu-smart-data.h>
+#include <gdu/gdu-smart-data-attribute.h>
 #include <gdu/gdu-util.h>
 #include <gdu/gdu-volume.h>
 #include <gdu/gdu-volume-hole.h>
 #include <gdu/gdu-callbacks.h>
 
-#undef GNOME_DISK_UTILITY_INSIDE_GDU_H
+#undef __GDU_INSIDE_GDU_H
 
 G_END_DECLS
 
-#endif /* GDU_H */
+#endif /* __GDU_H */

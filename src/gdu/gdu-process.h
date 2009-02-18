@@ -19,27 +19,28 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_PROCESS_H
-#define GDU_PROCESS_H
+#ifndef __GDU_PROCESS_H
+#define __GDU_PROCESS_H
 
 #include <unistd.h>
 #include <sys/types.h>
-#include <glib-object.h>
-#include <gio/gio.h>
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_PROCESS             (gdu_process_get_type ())
-#define GDU_PROCESS(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_PROCESS, GduProcess))
-#define GDU_PROCESS_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_PROCESS,  GduProcessClass))
-#define GDU_IS_PROCESS(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_PROCESS))
-#define GDU_IS_PROCESS_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_PROCESS))
-#define GDU_PROCESS_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_PROCESS, GduProcessClass))
+G_BEGIN_DECLS
+
+#define GDU_TYPE_PROCESS           (gdu_process_get_type ())
+#define GDU_PROCESS(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_PROCESS, GduProcess))
+#define GDU_PROCESS_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_PROCESS,  GduProcessClass))
+#define GDU_IS_PROCESS(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_PROCESS))
+#define GDU_IS_PROCESS_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_PROCESS))
+#define GDU_PROCESS_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_PROCESS, GduProcessClass))
 
 typedef struct _GduProcessClass       GduProcessClass;
-typedef struct _GduProcess            GduProcess;
+typedef struct _GduProcessPrivate     GduProcessPrivate;
 
 struct _GduProcess
 {
@@ -61,4 +62,6 @@ uid_t       gdu_process_get_owner        (GduProcess *process);
 const char *gdu_process_get_command_line (GduProcess *process);
 GAppInfo   *gdu_process_get_app_info     (GduProcess *process);
 
-#endif /* GDU_PROCESS_H */
+G_END_DECLS
+
+#endif /* __GDU_PROCESS_H */

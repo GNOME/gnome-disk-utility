@@ -19,27 +19,26 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_DRIVE_H
-#define GDU_DRIVE_H
+#ifndef __GDU_DRIVE_H
+#define __GDU_DRIVE_H
 
-#include <gdu/gdu-shared.h>
-#include <gdu/gdu-device.h>
+#include <gdu/gdu-types.h>
 
-#define GDU_TYPE_DRIVE             (gdu_drive_get_type ())
-#define GDU_DRIVE(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_DRIVE, GduDrive))
-#define GDU_DRIVE_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_DRIVE,  GduDriveClass))
-#define GDU_IS_DRIVE(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_DRIVE))
-#define GDU_IS_DRIVE_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_DRIVE))
-#define GDU_DRIVE_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_DRIVE, GduDriveClass))
+G_BEGIN_DECLS
 
-typedef struct _GduDriveClass       GduDriveClass;
-#if 0
-typedef struct _GduDrive            GduDrive;
-#endif
+#define GDU_TYPE_DRIVE         (gdu_drive_get_type ())
+#define GDU_DRIVE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_DRIVE, GduDrive))
+#define GDU_DRIVE_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_DRIVE,  GduDriveClass))
+#define GDU_IS_DRIVE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_DRIVE))
+#define GDU_IS_DRIVE_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_DRIVE))
+#define GDU_DRIVE_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_DRIVE, GduDriveClass))
+
+typedef struct _GduDriveClass    GduDriveClass;
+typedef struct _GduDrivePrivate  GduDrivePrivate;
 
 struct _GduDrive
 {
@@ -81,4 +80,6 @@ void        gdu_drive_stop               (GduDrive            *drive,
                                           GduDriveStopFunc     callback,
                                           gpointer             user_data);
 
-#endif /* GDU_DRIVE_H */
+G_END_DECLS
+
+#endif /* __GDU_DRIVE_H */

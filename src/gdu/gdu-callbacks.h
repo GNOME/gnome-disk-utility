@@ -19,14 +19,16 @@
  * 02111-1307, USA.
  */
 
-#if !defined (GNOME_DISK_UTILITY_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
+#if !defined (__GDU_INSIDE_GDU_H) && !defined (GDU_COMPILATION)
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef GDU_CALLBACKS_H
-#define GDU_CALLBACKS_H
+#ifndef __GDU_CALLBACKS_H
+#define __GDU_CALLBACKS_H
 
-#include <gdu/gdu-shared.h>
+#include <gdu/gdu-types.h>
+
+G_BEGIN_DECLS
 
 /**
  * SECTION:gdu-callbacks
@@ -156,5 +158,6 @@ typedef void (*GduDriveStopFunc) (GduDrive  *drive,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+G_END_DECLS
 
-#endif /* GDU_CALLBACKS_H */
+#endif /* __GDU_CALLBACKS_H */

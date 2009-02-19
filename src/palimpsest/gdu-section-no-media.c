@@ -31,6 +31,7 @@
 
 struct _GduSectionNoMediaPrivate
 {
+        guint foo;
 };
 
 static GObjectClass *parent_class = NULL;

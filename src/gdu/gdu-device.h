@@ -72,6 +72,9 @@ guint64 gdu_device_get_size (GduDevice *device);
 guint64 gdu_device_get_block_size (GduDevice *device);
 gboolean gdu_device_is_removable (GduDevice *device);
 gboolean gdu_device_is_media_available (GduDevice *device);
+gboolean gdu_device_is_media_change_detected (GduDevice *device);
+gboolean gdu_device_is_media_change_detection_inhibitable (GduDevice *device);
+gboolean gdu_device_is_media_change_detection_inhibited (GduDevice *device);
 gboolean gdu_device_is_read_only (GduDevice *device);
 gboolean gdu_device_is_system_internal (GduDevice *device);
 gboolean gdu_device_is_partition (GduDevice *device);
@@ -326,6 +329,12 @@ GList *gdu_device_filesystem_list_open_files_sync (GduDevice  *device,
 void gdu_device_op_drive_eject                 (GduDevice                        *device,
                                                 GduDeviceDriveEjectCompletedFunc  callback,
                                                 gpointer                          user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void gdu_device_op_drive_poll_media                 (GduDevice                        *device,
+                                                     GduDeviceDrivePollMediaCompletedFunc   callback,
+                                                     gpointer                          user_data);
 
 G_END_DECLS
 

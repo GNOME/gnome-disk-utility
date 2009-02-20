@@ -53,6 +53,9 @@ typedef struct
         gboolean device_is_partition_table;
         gboolean device_is_removable;
         gboolean device_is_media_available;
+        gboolean device_is_media_change_detected;
+        gboolean device_is_media_change_detection_inhibitable;
+        gboolean device_is_media_change_detection_inhibited;
         gboolean device_is_read_only;
         gboolean device_is_drive;
         gboolean device_is_optical_disc;
@@ -179,6 +182,12 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_removable = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-media-available") == 0)
                 props->device_is_media_available = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-media-change-detected") == 0)
+                props->device_is_media_change_detected = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-media-change-detection-inhibitable") == 0)
+                props->device_is_media_change_detection_inhibitable = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-media-change-detection-inhibited") == 0)
+                props->device_is_media_change_detection_inhibited = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-read-only") == 0)
                 props->device_is_read_only = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-drive") == 0)
@@ -733,6 +742,24 @@ gboolean
 gdu_device_is_media_available (GduDevice *device)
 {
         return device->priv->props->device_is_media_available;
+}
+
+gboolean
+gdu_device_is_media_change_detected (GduDevice *device)
+{
+        return device->priv->props->device_is_media_change_detected;
+}
+
+gboolean
+gdu_device_is_media_change_detection_inhibitable (GduDevice *device)
+{
+        return device->priv->props->device_is_media_change_detection_inhibitable;
+}
+
+gboolean
+gdu_device_is_media_change_detection_inhibited (GduDevice *device)
+{
+        return device->priv->props->device_is_media_change_detection_inhibited;
 }
 
 gboolean
@@ -2265,4 +2292,40 @@ gdu_device_op_drive_eject (GduDevice                        *device,
                                                                   (const char **) options,
                                                                   op_eject_cb,
                                                                   data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceDrivePollMediaCompletedFunc callback;
+        gpointer user_data;
+} DrivePollMediaData;
+
+static void
+op_poll_media_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        DrivePollMediaData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_drive_poll_media (GduDevice                        *device,
+                                GduDeviceDrivePollMediaCompletedFunc  callback,
+                                gpointer                          user_data)
+{
+        DrivePollMediaData *data;
+
+        data = g_new0 (DrivePollMediaData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_Device_drive_poll_media_async (device->priv->proxy,
+                                                                       op_poll_media_cb,
+                                                                       data);
 }

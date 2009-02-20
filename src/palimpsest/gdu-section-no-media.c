@@ -69,6 +69,35 @@ gdu_section_no_media_class_init (GduSectionNoMediaClass *klass)
 }
 
 static void
+op_poll_media_cb (GduDevice *device,
+                  GError    *error,
+                  gpointer   user_data)
+{
+        if (error != NULL)
+                g_error_free (error);
+}
+
+static void
+detect_media_button_clicked (GtkWidget *button, gpointer user_data)
+{
+        GduSectionNoMedia *section = GDU_SECTION_NO_MEDIA (user_data);
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        if (device == NULL)
+                goto out;
+
+        gdu_device_op_drive_poll_media (device, op_poll_media_cb, NULL);
+
+        update (section);
+
+out:
+        if (device != NULL)
+                g_object_unref (device);
+
+}
+
+static void
 gdu_section_no_media_init (GduSectionNoMedia *section)
 {
         GtkWidget *vbox2;
@@ -106,8 +135,8 @@ gdu_section_no_media_init (GduSectionNoMedia *section)
         gtk_button_set_image (GTK_BUTTON (button),
                               gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON));
         gtk_container_add (GTK_CONTAINER (button_box), button);
-
-        /* TODO: hook up the "Detect Media" button */
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (detect_media_button_clicked), section);
 
 }
 

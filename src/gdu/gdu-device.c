@@ -122,8 +122,8 @@ typedef struct
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
         gboolean optical_disc_is_closed;
-        gboolean optical_disc_has_audio;
         guint optical_disc_num_tracks;
+        guint optical_disc_num_audio_tracks;
         guint optical_disc_num_sessions;
 
         gboolean               drive_smart_is_capable;
@@ -319,10 +319,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->optical_disc_is_appendable = g_value_get_boolean (value);
         else if (strcmp (key, "optical-disc-is-closed") == 0)
                 props->optical_disc_is_closed = g_value_get_boolean (value);
-        else if (strcmp (key, "optical-disc-has-audio") == 0)
-                props->optical_disc_has_audio = g_value_get_boolean (value);
         else if (strcmp (key, "optical-disc-num-tracks") == 0)
                 props->optical_disc_num_tracks = g_value_get_uint (value);
+        else if (strcmp (key, "optical-disc-num-audio-tracks") == 0)
+                props->optical_disc_num_audio_tracks = g_value_get_uint (value);
         else if (strcmp (key, "optical-disc-num-sessions") == 0)
                 props->optical_disc_num_sessions = g_value_get_uint (value);
 
@@ -1074,16 +1074,16 @@ gdu_device_optical_disc_get_is_closed (GduDevice *device)
         return device->priv->props->optical_disc_is_closed;
 }
 
-gboolean
-gdu_device_optical_disc_get_has_audio (GduDevice *device)
-{
-        return device->priv->props->optical_disc_has_audio;
-}
-
 guint
 gdu_device_optical_disc_get_num_tracks (GduDevice *device)
 {
         return device->priv->props->optical_disc_num_tracks;
+}
+
+guint
+gdu_device_optical_disc_get_num_audio_tracks (GduDevice *device)
+{
+        return device->priv->props->optical_disc_num_audio_tracks;
 }
 
 guint

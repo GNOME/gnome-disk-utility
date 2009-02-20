@@ -142,8 +142,8 @@ gboolean gdu_device_optical_disc_get_is_rewritable (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_closed (GduDevice *device);
-gboolean gdu_device_optical_disc_get_has_audio (GduDevice *device);
 guint gdu_device_optical_disc_get_num_tracks (GduDevice *device);
+guint gdu_device_optical_disc_get_num_audio_tracks (GduDevice *device);
 guint gdu_device_optical_disc_get_num_sessions (GduDevice *device);
 
 gboolean gdu_device_drive_smart_get_is_capable (GduDevice *device);

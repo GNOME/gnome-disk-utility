@@ -58,6 +58,7 @@ struct _GduShellPrivate
 
         GtkWidget *icon_image;
         GtkWidget *name_label;
+        GtkWidget *details0_label;
         GtkWidget *details1_label;
         GtkWidget *details2_label;
         GtkWidget *details3_label;
@@ -180,12 +181,9 @@ details_update (GduShell *shell)
 {
         GduPresentable *presentable;
         gboolean ret;
-        char *details1;
-        char *details2;
-        char *details3;
         char *s;
-        char *s2;
-        char *s3;
+        char *p;
+        char *detail_color;
         char *name;
         GIcon *icon;
         GdkPixbuf *pixbuf;
@@ -193,11 +191,16 @@ details_update (GduShell *shell)
         const char *usage;
         const char *type;
         const char *device_file;
-        char *strsize;
+        guint64 presentable_size;
+        char *strsize_long;
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
+        GPtrArray *details;
+        guint n;
 
         ret = TRUE;
+
+        details = g_ptr_array_new ();
 
         presentable = shell->priv->presentable_now_showing;
 
@@ -210,7 +213,7 @@ details_update (GduShell *shell)
         icon = gdu_presentable_get_icon (presentable);
         name = gdu_presentable_get_name (presentable);
 
-        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (presentable, 96);
+        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (presentable, 112);
         gtk_image_set_from_pixbuf (GTK_IMAGE (shell->priv->icon_image), pixbuf);
         g_object_unref (pixbuf);
 
@@ -227,24 +230,17 @@ details_update (GduShell *shell)
                 device_file = gdu_device_get_device_file (device);
         }
 
-        strsize = gdu_util_get_size_for_display (gdu_presentable_get_size (presentable), FALSE);
-
-        details1 = NULL;
-        details2 = NULL;
-        details3 = NULL;
+        presentable_size = gdu_presentable_get_size (presentable);
+        if (presentable_size > 0) {
+                strsize_long = gdu_util_get_size_for_display (presentable_size, TRUE);
+        } else {
+                strsize_long = g_strdup ("Unknown Size");
+        }
 
         if (GDU_IS_DRIVE (presentable)) {
-                details3 = g_strdup (device_file);
 
-                if (GDU_IS_LINUX_MD_DRIVE (presentable)) {
-                        details1 = g_strdup (_("Linux Software RAID"));
-                } else {
-                        s = gdu_util_get_connection_for_display (
-                                gdu_device_drive_get_connection_interface (device),
-                                gdu_device_drive_get_connection_speed (device));
-                        details1 = g_strdup_printf (_("Connected via %s"), s);
-                        g_free (s);
-                }
+                g_ptr_array_add (details,
+                                 g_strdup (strsize_long));
 
                 if (device == NULL) {
                         /* TODO */
@@ -263,15 +259,19 @@ details_update (GduShell *shell)
                                                 s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
                                         }
 
-                                        details2 = g_strdup_printf (_("%s Partitioned Media (%s)"), strsize, s);
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("Partitioned Media (%s)"), s));
 
                                         g_free (s);
                                 } else if (usage != NULL && strlen (usage) > 0) {
-                                        details2 = g_strdup_printf (_("%s Unpartitioned Media"), strsize);
+                                        g_ptr_array_add (details,
+                                                         g_strdup (_("Unpartitioned Media")));
                                 } else if (!gdu_device_is_media_available (device)) {
-                                        details2 = g_strdup_printf (_("No Media Detected"));
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("No Media Detected")));
                                 } else {
-                                        details2 = g_strdup_printf (_("Unrecognized"));
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("Unrecognized")));
                                 }
                         } else {
                                 if (gdu_device_is_partition_table (device)) {
@@ -286,25 +286,49 @@ details_update (GduShell *shell)
                                         } else {
                                                 s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
                                         }
-                                        details2 = g_strdup_printf (_("Partitioned (%s)"), s);
-                                        g_free (s);
+                                        g_ptr_array_add (details, s);
                                 } else if (usage != NULL && strlen (usage) > 0) {
-                                        details2 = g_strdup_printf (_("Not Partitioned"));
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("Not Partitioned")));
                                 } else if (!gdu_device_is_media_available (device)) {
-                                        details2 = g_strdup_printf (_("No Media Detected"));
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("No Media Detected")));
                                 } else {
-                                        details2 = g_strdup_printf (_("Unrecognized"));
+                                        g_ptr_array_add (details,
+                                                         g_strdup_printf (_("Unrecognized")));
                                 }
                         }
-
-                        if (gdu_device_is_read_only (device)) {
-                                s = details3;
-                                details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
-                                g_free (s);
-                        }
                 }
+
+                if (GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                        g_ptr_array_add (details,
+                                         g_strdup (_("Linux Software RAID")));
+                } else {
+                        s = gdu_util_get_connection_for_display (
+                                gdu_device_drive_get_connection_interface (device),
+                                gdu_device_drive_get_connection_speed (device));
+                        g_ptr_array_add (details,
+                                         g_strdup_printf (_("Connected via %s"), s));
+                        g_free (s);
+                }
+
+                if (device_file != NULL) {
+                        if (gdu_device_is_read_only (device)) {
+                        g_ptr_array_add (details,
+                                         g_strdup_printf (_("%s (Read Only)"), device_file));
+                        } else {
+                        g_ptr_array_add (details,
+                                         g_strdup (device_file));
+                        }
+                } else {
+                        g_ptr_array_add (details,
+                                         g_strdup (_("Not running")));
+                }
+
         } else if (GDU_IS_VOLUME (presentable)) {
-                details3 = g_strdup (device_file);
+
+                g_ptr_array_add (details,
+                                 g_strdup (strsize_long));
 
                 if (strcmp (usage, "filesystem") == 0) {
                         char *fsname;
@@ -312,7 +336,8 @@ details_update (GduShell *shell)
                                 gdu_device_id_get_type (device),
                                 gdu_device_id_get_version (device),
                                 TRUE);
-                        details1 = g_strdup_printf (_("%s %s File System"), strsize, fsname);
+                        g_ptr_array_add (details,
+                                         g_strdup_printf (_("%s File System"), fsname));
                         g_free (fsname);
                 } else if (strcmp (usage, "raid") == 0) {
                         char *fsname;
@@ -320,92 +345,119 @@ details_update (GduShell *shell)
                                 gdu_device_id_get_type (device),
                                 gdu_device_id_get_version (device),
                                 TRUE);
-                        details1 = g_strdup_printf (_("%s %s"), strsize, fsname);
-                        g_free (fsname);
+                        g_ptr_array_add (details, fsname);
                 } else if (strcmp (usage, "crypto") == 0) {
-                        details1 = g_strdup_printf (_("%s Encrypted LUKS Device"), strsize);
+                        g_ptr_array_add (details,
+                                         g_strdup (_("Encrypted LUKS Device")));
                 } else if (strcmp (usage, "other") == 0) {
                         if (strcmp (type, "swap") == 0) {
-                                details1 = g_strdup_printf (_("%s Swap Space"), strsize);
+                                g_ptr_array_add (details,
+                                                 g_strdup (_("Swap Space")));
                         } else {
-                                details1 = g_strdup_printf (_("%s Data"), strsize);
+                                g_ptr_array_add (details,
+                                                 g_strdup (_("Data")));
                         }
                 } else {
-                        details1 = g_strdup_printf (_("%s Unrecognized"), strsize);
+                        g_ptr_array_add (details,
+                                         g_strdup (_("Unrecognized")));
                 }
 
                 if (gdu_device_is_luks_cleartext (device)) {
-                        details2 = g_strdup (_("Unlocked Encrypted LUKS Volume"));
+                        g_ptr_array_add (details,
+                                         g_strdup (_("Unlocked Encrypted LUKS Volume")));
                 } else {
                         if (gdu_device_is_partition (device)) {
                                 char *part_desc;
                                 part_desc = gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (device),
                                                                              gdu_device_partition_get_type (device));
-                                details2 = g_strdup_printf (_("Partition %d (%s)"),
-                                                    gdu_device_partition_get_number (device), part_desc);
+                                g_ptr_array_add (details,
+                                                 g_strdup_printf (_("Partition %d (%s)"),
+                                                                  gdu_device_partition_get_number (device), part_desc));
                                 g_free (part_desc);
                         } else {
-                                details2 = g_strdup (_("Not Partitioned"));
+                                g_ptr_array_add (details,
+                                                 g_strdup (_("Not Partitioned")));
                         }
                 }
 
+                s = g_strdup (device_file);
                 if (gdu_device_is_read_only (device)) {
-                        s = details3;
-                        details3 = g_strconcat (details3, _(" (Read Only)"), NULL);
-                        g_free (s);
+                        p = s;
+                        s = g_strconcat (s, _(" (Read Only)"), NULL);
+                        g_free (p);
                 }
 
                 if (gdu_device_is_mounted (device)) {
-                        s = details3;
-                        details3 = g_strconcat (details3,
-                                                _(" mounted at "),
-                                                "<a href=\"file://",
-                                                gdu_device_get_mount_path (device),
-                                                "\">",
-                                                gdu_device_get_mount_path (device),
-                                                "</a>",
-                                                NULL);
-                        g_free (s);
+                        p = s;
+                        s = g_strconcat (s,
+                                         _(" mounted at "),
+                                         "<a href=\"file://",
+                                         gdu_device_get_mount_path (device),
+                                         "\">",
+                                         gdu_device_get_mount_path (device),
+                                         "</a>",
+                                         NULL);
+                        g_free (p);
                 }
+                g_ptr_array_add (details, s);
+
 
         } else if (GDU_IS_VOLUME_HOLE (presentable)) {
 
-                details1 = g_strdup_printf (_("%s Unallocated"), strsize);
+                g_ptr_array_add (details,
+                                 g_strdup (strsize_long));
+
+                g_ptr_array_add (details,
+                                 g_strdup (_("Unallocated Space")));
 
                 if (toplevel_device != NULL) {
-                        details2 = g_strdup (gdu_device_get_device_file (toplevel_device));
-
-                        if (gdu_device_is_read_only (toplevel_device)) {
-                                s = details2;
-                                details2 = g_strconcat (details2, _(" (Read Only)"), NULL);
-                                g_free (s);
-                        }
+                        if (gdu_device_is_read_only (toplevel_device))
+                                g_ptr_array_add (details, g_strdup_printf (_("%s (Read Only)"), gdu_device_get_device_file (toplevel_device)));
+                        else
+                                g_ptr_array_add (details, g_strdup (gdu_device_get_device_file (toplevel_device)));
                 }
+        }
+
+        /* TODO: use symbolic colors (how?) or infer from current theme */
+        detail_color = g_strdup ("#808080");
+
+        for (n = 0; n < 4; n++) {
+                GtkWidget *label;
+                const gchar *detail_str;
+
+                switch (n) {
+                case 0:
+                        label = shell->priv->details0_label;
+                        break;
+                case 1:
+                        label = shell->priv->details1_label;
+                        break;
+                case 2:
+                        label = shell->priv->details2_label;
+                        break;
+                case 3:
+                        label = shell->priv->details3_label;
+                        break;
+                }
+
+                if (n < details->len)
+                        detail_str = details->pdata[n];
+                else
+                        detail_str = "";
+
+                s = g_strdup_printf ("<span foreground='%s'>%s</span>", detail_color, detail_str);
+                sexy_url_label_set_markup (SEXY_URL_LABEL (label), s);
+                g_free (s);
         }
 
         if (icon != NULL)
                 g_object_unref (icon);
         g_free (name);
-        g_free (strsize);
+        g_free (strsize_long);
 
-        s = NULL;
-        s2 = NULL;
-        s3 = NULL;
-        if (details1 != NULL)
-                s = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details1);
-        if (details2 != NULL)
-                s2 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details2);
-        if (details3 != NULL)
-                s3 = g_strdup_printf ("<span foreground='darkgrey'>%s</span>", details3);
-        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details1_label), s);
-        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details2_label), s2);
-        sexy_url_label_set_markup (SEXY_URL_LABEL (shell->priv->details3_label), s3);
-        g_free (s);
-        g_free (s2);
-        g_free (s3);
-        g_free (details1);
-        g_free (details2);
-        g_free (details3);
+        g_ptr_array_foreach (details, (GFunc) g_free, NULL);
+        g_ptr_array_free (details, TRUE);
+        g_free (detail_color);
 
         if (device != NULL)
                 g_object_unref (device);
@@ -1816,6 +1868,11 @@ create_window (GduShell *shell)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->name_label = label;
+
+        label = sexy_url_label_new ();
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        shell->priv->details0_label = label;
 
         label = sexy_url_label_new ();
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

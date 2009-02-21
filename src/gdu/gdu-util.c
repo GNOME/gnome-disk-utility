@@ -34,30 +34,87 @@
 #define MEGABYTE_FACTOR (1000.0 * 1000.0)
 #define GIGABYTE_FACTOR (1000.0 * 1000.0 * 1000.0)
 
+#define KIBIBYTE_FACTOR 1024.0
+#define MEBIBYTE_FACTOR (1024.0 * 1024.0)
+#define GIBIBYTE_FACTOR (1024.0 * 1024.0 * 1024.0)
+
+static char *
+get_pow2_size (guint64 size)
+{
+        gchar *str;
+        gdouble displayed_size;
+        const gchar *unit;
+        guint digits;
+
+        if (size < MEBIBYTE_FACTOR) {
+                displayed_size = (double) size / KIBIBYTE_FACTOR;
+                unit = "KiB";
+        } else if (size < GIBIBYTE_FACTOR) {
+                displayed_size = (double) size / MEBIBYTE_FACTOR;
+                unit = "MiB";
+        } else {
+                displayed_size = (double) size / GIBIBYTE_FACTOR;
+                unit = "GiB";
+        }
+
+        if (displayed_size < 10.0)
+                digits = 1;
+        else
+                digits = 0;
+
+        str = g_strdup_printf (_("%.*f %s"), digits, displayed_size, unit);
+
+        return str;
+}
+
+static char *
+get_pow10_size (guint64 size)
+{
+        gchar *str;
+        gdouble displayed_size;
+        const gchar *unit;
+        guint digits;
+
+        if (size < MEGABYTE_FACTOR) {
+                displayed_size = (double) size / KILOBYTE_FACTOR;
+                unit = "KB";
+        } else if (size < GIGABYTE_FACTOR) {
+                displayed_size = (double) size / MEGABYTE_FACTOR;
+                unit = "MB";
+        } else {
+                displayed_size = (double) size / GIGABYTE_FACTOR;
+                unit = "GB";
+        }
+
+        if (displayed_size < 10.0)
+                digits = 1;
+        else
+                digits = 0;
+
+        str = g_strdup_printf (_("%.*f %s"), digits, displayed_size, unit);
+
+        return str;
+}
+
+
 char *
 gdu_util_get_size_for_display (guint64 size, gboolean long_string)
 {
         char *str;
-        gdouble displayed_size;
 
-        if (size < MEGABYTE_FACTOR) {
-                displayed_size = (double) size / KILOBYTE_FACTOR;
-                if (long_string)
-                        str = g_strdup_printf (_("%.1f KB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
-                else
-                        str = g_strdup_printf (_("%.1f KB"), displayed_size);
-        } else if (size < GIGABYTE_FACTOR) {
-                displayed_size = (double) size / MEGABYTE_FACTOR;
-                if (long_string)
-                        str = g_strdup_printf (_("%.1f MB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
-                else
-                        str = g_strdup_printf (_("%.1f MB"), displayed_size);
+        if (long_string) {
+                char *pow2_str;
+                char *pow10_str;
+
+                pow2_str = get_pow2_size (size);
+                pow10_str = get_pow10_size (size);
+
+                str = g_strdup_printf (_("%s / %s / %'" G_GINT64_FORMAT " bytes"), pow10_str, pow2_str, size);
+
+                g_free (pow10_str);
+                g_free (pow2_str);
         } else {
-                displayed_size = (double) size / GIGABYTE_FACTOR;
-                if (long_string)
-                        str = g_strdup_printf (_("%.1f GB (%'" G_GINT64_FORMAT " bytes)"), displayed_size, size);
-                else
-                        str = g_strdup_printf (_("%.1f GB"), displayed_size);
+                str = get_pow10_size (size);
         }
 
         return str;
@@ -725,7 +782,7 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
                 char *speed;
 
                 speed = gdu_util_get_speed_for_display (connection_speed);
-                result = g_strdup_printf ("%s @ %s", name, speed);
+                result = g_strdup_printf ("%s at %s", name, speed);
                 g_free (speed);
         } else {
                 result = g_strdup (name);

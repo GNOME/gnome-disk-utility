@@ -53,11 +53,12 @@ gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                         gboolean         bypass_keyring,
                                         gboolean         indicate_wrong_passphrase);
 
-char *gdu_util_delete_confirmation_dialog (GtkWidget *parent_window,
-                                           const char *title,
-                                           const char *primary_text,
-                                           const char *secondary_text,
-                                           const char *affirmative_action_button_mnemonic);
+char *gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
+                                           const char  *title,
+                                           gboolean     show_secure_erase_combo_box,
+                                           const char  *primary_text,
+                                           const char  *secondary_text,
+                                           const char  *affirmative_action_button_mnemonic);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

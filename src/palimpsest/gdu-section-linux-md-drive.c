@@ -408,6 +408,7 @@ detach_action_callback (GtkAction *action, gpointer user_data)
 
                 secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                                                                     "",
+                                                                    FALSE,
                                                                     primary,
                                                                     secondary,
                                                                     _("_Remove Component"));

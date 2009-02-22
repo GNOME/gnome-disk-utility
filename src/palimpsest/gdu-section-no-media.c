@@ -111,10 +111,10 @@ gdu_section_no_media_init (GduSectionNoMedia *section)
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>No Media Detected</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
         gtk_box_pack_start (GTK_BOX (section), align, FALSE, TRUE, 0);
 

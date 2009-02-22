@@ -42,7 +42,6 @@ struct _GduSectionUnallocatedPrivate
         GtkWidget *size_spin_button;
         GtkWidget *fstype_combo_box;
         GtkWidget *fslabel_entry;
-        GtkWidget *secure_erase_combo_box;
         GtkWidget *warning_hbox;
         GtkWidget *warning_label;
         GtkWidget *encrypt_check_button;
@@ -148,7 +147,6 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         char **flags;
         char *fstype;
         char *fslabel;
-        char *fserase;
         char *encrypt_passphrase;
         const char *scheme;
         CreatePartitionData *data;
@@ -161,7 +159,6 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         device = NULL;
         fstype = NULL;
         fslabel = NULL;
-        fserase = NULL;
         encrypt_passphrase = NULL;
         toplevel_presentable = NULL;
         toplevel_device = NULL;
@@ -193,7 +190,6 @@ create_partition_callback (GtkAction *action, gpointer user_data)
         size = (guint64) (((double) gtk_range_get_value (GTK_RANGE (section->priv->size_hscale))) * 1000.0 * 1000.0);
         fstype = gdu_util_fstype_combo_box_get_selected (section->priv->fstype_combo_box);
         fslabel = g_strdup (gtk_entry_get_text (GTK_ENTRY (section->priv->fslabel_entry)));
-        fserase = gdu_util_secure_erase_combo_box_get_selected (section->priv->secure_erase_combo_box);
 
         take_ownership = FALSE;
         kfs = gdu_pool_get_known_filesystem_by_id (pool, fstype);
@@ -215,10 +211,8 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 type = g_strdup ("0x05");
                 g_free (fstype);
                 g_free (fslabel);
-                g_free (fserase);
                 fstype = g_strdup ("");
                 fslabel = g_strdup ("");
-                fserase = g_strdup ("");
         } else {
                 type = gdu_util_get_default_part_type_for_scheme_and_fstype (scheme, fstype, size);
                 if (type == NULL) {
@@ -259,7 +253,7 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         flags,
                                         fstype,
                                         fslabel,
-                                        fserase,
+                                        "",
                                         data->encrypt_passphrase,
                                         take_ownership,
                                         create_partition_completed,
@@ -278,7 +272,6 @@ out:
         g_strfreev (flags);
         g_free (fstype);
         g_free (fslabel);
-        g_free (fserase);
         if (device != NULL)
                 g_object_unref (device);
         if (toplevel_presentable != NULL)
@@ -505,7 +498,6 @@ update (GduSectionUnallocated *section)
                 gtk_spin_button_set_range (GTK_SPIN_BUTTON (section->priv->size_spin_button), 0, size / 1000.0 / 1000.0);
                 gtk_spin_button_set_value (GTK_SPIN_BUTTON (section->priv->size_spin_button), size / 1000.0 / 1000.0);
 
-                gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->secure_erase_combo_box), 0);
                 gtk_combo_box_set_active (GTK_COMBO_BOX (section->priv->fstype_combo_box), 0);
                 gtk_entry_set_text (GTK_ENTRY (section->priv->fslabel_entry), "");
                 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (section->priv->encrypt_check_button), FALSE);
@@ -635,16 +627,16 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         vbox3 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox), vbox3, FALSE, TRUE, 0);
 
-        section->priv->sensitive_vbox = gtk_vbox_new (FALSE, 5);
+        section->priv->sensitive_vbox = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (vbox3), section->priv->sensitive_vbox, FALSE, TRUE, 0);
 
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
         gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), align, FALSE, TRUE, 0);
 
@@ -691,31 +683,6 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
 
         gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-
-        row++;
-
-        /* secure erase */
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Er_ase:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        combo_box = gdu_util_secure_erase_combo_box_create ();
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        section->priv->secure_erase_combo_box = combo_box;
-
-        row++;
-
-        /* secure erase desc */
-        label = gtk_label_new (NULL);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_width_chars (GTK_LABEL (label), 40);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
 
         row++;
 

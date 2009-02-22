@@ -231,23 +231,23 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
                           G_CALLBACK (modify_fslabel_callback), section);
 
 
-        vbox3 = gtk_vbox_new (FALSE, 5);
+        vbox3 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (section), vbox3, FALSE, TRUE, 0);
         section->priv->modify_fs_vbox = vbox3;
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>File System</b>"));
+        gtk_label_set_markup (GTK_LABEL (label), _("<b>Mountable Filesystem</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
         gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
 
         /* explanatory text */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("The volume contains a file system."));
+        gtk_label_set_markup (GTK_LABEL (label), _("The volume contains a mountable filesystem."));
         gtk_label_set_width_chars (GTK_LABEL (label), 60);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

@@ -34,7 +34,6 @@
 
 struct _GduSectionPartitionPrivate
 {
-        GtkWidget *modify_part_vbox;
         GtkWidget *modify_part_label_entry;
         GtkWidget *modify_part_type_combo_box;
         GtkWidget *modify_part_flag_boot_check_button;
@@ -126,6 +125,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
 
         secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                                                             "",
+                                                            FALSE,
                                                             primary,
                                                             secondary,
                                                             _("_Delete Partition"));
@@ -462,7 +462,6 @@ static void
 gdu_section_partition_init (GduSectionPartition *section)
 {
         GtkWidget *vbox2;
-        GtkWidget *vbox3;
         GtkWidget *button;
         GtkWidget *label;
         GtkWidget *align;
@@ -513,19 +512,15 @@ gdu_section_partition_init (GduSectionPartition *section)
                           G_CALLBACK (modify_partition_callback), section);
 
 
-        vbox3 = gtk_vbox_new (FALSE, 5);
-        gtk_box_pack_start (GTK_BOX (section), vbox3, FALSE, TRUE, 0);
-        section->priv->modify_part_vbox = vbox3;
-
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Partition</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
-        gtk_box_pack_start (GTK_BOX (vbox3), align, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (section), align, FALSE, TRUE, 0);
 
         /* explanatory text */
         label = gtk_label_new (NULL);
@@ -561,7 +556,7 @@ gdu_section_partition_init (GduSectionPartition *section)
         /* partition type */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Ty_pe:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_part_type_combo_box_create (NULL);

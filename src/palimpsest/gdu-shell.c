@@ -69,6 +69,8 @@ struct _GduShellPrivate
 
         /* -------------------------------------------------------------------------------- */
 
+        PolKitAction *pk_modify_action;
+        PolKitAction *pk_modify_system_internal_action;
         PolKitAction *pk_fsck_action;
         PolKitAction *pk_fsck_system_internal_action;
         PolKitAction *pk_mount_action;
@@ -93,6 +95,8 @@ struct _GduShellPrivate
         PolKitGnomeAction *start_action;
         PolKitGnomeAction *stop_action;
 
+        PolKitGnomeAction *erase_action;
+
         GduPresentable *presentable_now_showing;
 
         GtkActionGroup *action_group;
@@ -106,6 +110,8 @@ G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 static void
 gdu_shell_finalize (GduShell *shell)
 {
+        polkit_action_unref (shell->priv->pk_modify_action);
+        polkit_action_unref (shell->priv->pk_modify_system_internal_action);
         polkit_action_unref (shell->priv->pk_fsck_action);
         polkit_action_unref (shell->priv->pk_fsck_system_internal_action);
         polkit_action_unref (shell->priv->pk_mount_action);
@@ -516,8 +522,11 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
 
                         } else {
 
-                                sections_to_show = g_list_append (sections_to_show,
-                                                                  (gpointer) GDU_TYPE_SECTION_HEALTH);
+                                if (gdu_device_drive_smart_get_is_enabled (device)) {
+                                                sections_to_show = g_list_append (sections_to_show,
+                                                                                  (gpointer) GDU_TYPE_SECTION_HEALTH);
+                                }
+
                                 sections_to_show = g_list_append (sections_to_show,
                                                                   (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
 
@@ -525,13 +534,12 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
 
                 } else if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) && device != NULL) {
 
+                        if (gdu_device_is_partition (device))
+                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_PARTITION);
+
                         if (gdu_presentable_is_recognized (shell->priv->presentable_now_showing)) {
                                 const char *usage;
                                 const char *type;
-
-                                if (gdu_device_is_partition (device))
-                                        sections_to_show = g_list_append (
-                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_PARTITION);
 
                                 usage = gdu_device_id_get_usage (device);
                                 type = gdu_device_id_get_type (device);
@@ -583,6 +591,7 @@ gdu_shell_update (GduShell *shell)
         gboolean can_start;
         gboolean can_stop;
         gboolean can_fsck;
+        gboolean can_erase;
         static GduPresentable *last_presentable = NULL;
         static gboolean last_showing_job = FALSE;
         gboolean showing_job;
@@ -600,6 +609,7 @@ gdu_shell_update (GduShell *shell)
         unlocked_by_uid = 0;
         can_start = FALSE;
         can_stop = FALSE;
+        can_erase = FALSE;
 
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
@@ -621,6 +631,7 @@ gdu_shell_update (GduShell *shell)
                                                 can_fsck = TRUE;
                                 } else {
                                         can_mount = TRUE;
+                                        can_erase = TRUE;
                                         if (kfs != NULL && gdu_known_filesystem_get_supports_fsck (kfs))
                                                 can_fsck = TRUE;
                                 }
@@ -641,20 +652,27 @@ gdu_shell_update (GduShell *shell)
                                         g_object_unref (enclosed_device);
                                 } else {
                                         can_unlock = TRUE;
+                                        can_erase = TRUE;
                                 }
                                 g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
                                 g_list_free (enclosed_presentables);
-
-
+                        } else {
+                                can_erase = TRUE;
                         }
                 }
 
-                if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
-                    gdu_device_is_removable (device) &&
-                    gdu_device_is_media_available (device) &&
-                    (gdu_device_drive_get_is_media_ejectable (device) ||
-                     gdu_device_drive_get_requires_eject (device))) {
-                        can_eject = TRUE;
+                if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
+                        if (gdu_device_is_removable (device) &&
+                            gdu_device_is_media_available (device) &&
+                            (gdu_device_drive_get_is_media_ejectable (device) ||
+                             gdu_device_drive_get_requires_eject (device))) {
+                                can_eject = TRUE;
+                        }
+
+                        can_erase = TRUE;
+                        if (gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing)) &&
+                            !gdu_drive_is_running (GDU_DRIVE (shell->priv->presentable_now_showing)))
+                                can_erase = FALSE;
                 }
         }
 
@@ -803,6 +821,17 @@ gdu_shell_update (GduShell *shell)
                 polkit_gnome_action_set_visible (shell->priv->unlock_action, FALSE);
         }
 
+        if (can_erase) {
+                if (device != NULL) {
+                        g_object_set (shell->priv->erase_action,
+                                      "polkit-action",
+                                      gdu_device_is_system_internal (device) ?
+                                      shell->priv->pk_modify_system_internal_action :
+                                      shell->priv->pk_modify_action,
+                                      NULL);
+                }
+        }
+
 
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
@@ -813,6 +842,7 @@ gdu_shell_update (GduShell *shell)
         polkit_gnome_action_set_sensitive (shell->priv->unlock_action, can_unlock);
         polkit_gnome_action_set_sensitive (shell->priv->start_action, can_start);
         polkit_gnome_action_set_sensitive (shell->priv->stop_action, can_stop);
+        polkit_gnome_action_set_sensitive (shell->priv->erase_action, can_erase);
 
 #if 0
         /* TODO */
@@ -1430,6 +1460,132 @@ out:
         ;
 }
 
+static void
+op_erase_callback (GduDevice *device,
+                   GError *error,
+                   gpointer user_data)
+{
+        ShellPresentableData *data = user_data;
+
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error erasing data"));
+                g_error_free (error);
+        }
+
+        shell_presentable_free (data);
+}
+
+static void
+erase_action_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GduPresentable *presentable;
+        GduDevice *device;
+        GduPresentable *toplevel_presentable;
+        GduDevice *toplevel_device;
+        gchar *drive_name;
+        gchar *primary;
+        gchar *secondary;
+        gchar *secure_erase;
+
+        device = NULL;
+        drive_name = NULL;
+        primary = NULL;
+        secondary = NULL;
+        secure_erase = NULL;
+        toplevel_presentable = NULL;
+        toplevel_device = NULL;
+
+        presentable = shell->priv->presentable_now_showing;
+        if (presentable == NULL) {
+                g_warning ("%s: no presentable", __FUNCTION__);
+                goto out;
+        }
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device == NULL) {
+                g_warning ("%s: no device", __FUNCTION__);
+                goto out;
+        }
+
+        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
+        if (toplevel_presentable == NULL) {
+                g_warning ("%s: no toplevel presentable",  __FUNCTION__);
+                goto out;
+        }
+        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+        if (toplevel_device == NULL) {
+                g_warning ("%s: no device for toplevel presentable",  __FUNCTION__);
+                goto out;
+        }
+
+        drive_name = gdu_presentable_get_name (toplevel_presentable);
+
+        primary = g_strdup (_("<b><big>Are you sure you want to erase the device?</big></b>"));
+
+        if (gdu_device_is_partition (device)) {
+                if (gdu_device_is_removable (toplevel_device)) {
+                        secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" will be "
+                                                       "irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     gdu_device_partition_get_number (device),
+                                                     drive_name);
+                } else {
+                        secondary = g_strdup_printf (_("All data on partition %d of \"%s\" will be "
+                                                       "irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     gdu_device_partition_get_number (device),
+                                                     drive_name);
+                }
+        } else {
+                if (gdu_device_is_removable (toplevel_device)) {
+                        secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     drive_name);
+                } else {
+                        secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrecovably erased. "
+                                                       "Make sure important data is backed up. "
+                                                       "This action cannot be undone."),
+                                                     drive_name);
+                }
+        }
+
+        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (shell),
+                                                            "",
+                                                            TRUE,
+                                                            primary,
+                                                            secondary,
+                                                            _("_Erase"));
+        if (secure_erase != NULL) {
+                gdu_device_op_filesystem_create (device,
+                                                 "empty",
+                                                 "",
+                                                 secure_erase,
+                                                 NULL,
+                                                 FALSE,
+                                                 op_erase_callback,
+                                                 shell_presentable_new (shell, presentable));
+        }
+
+out:
+        g_free (secondary);
+        g_free (primary);
+        g_free (secure_erase);
+        g_free (drive_name);
+        if (toplevel_presentable != NULL)
+                g_object_unref (toplevel_presentable);
+        if (toplevel_device != NULL)
+                g_object_unref (toplevel_device);
+        if (device != NULL)
+                g_object_unref (device);
+}
+
 
 static void
 help_contents_action_callback (GtkAction *action, gpointer user_data)
@@ -1496,6 +1652,8 @@ static const gchar *ui =
         "      <separator/>"
         "      <menuitem action='start'/>"
         "      <menuitem action='stop'/>"
+        "      <separator/>"
+        "      <menuitem action='erase'/>"
         "    </menu>"
         "    <menu action='help'>"
         "      <menuitem action='contents'/>"
@@ -1514,6 +1672,8 @@ static const gchar *ui =
         "    <separator/>"
         "    <toolitem action='start'/>"
         "    <toolitem action='stop'/>"
+        "    <separator/>"
+        "    <toolitem action='erase'/>"
         "  </toolbar>"
         "</ui>";
 
@@ -1670,6 +1830,22 @@ create_ui_manager (GduShell *shell)
 
         /* -------------------------------------------------------------------------------- */
 
+        shell->priv->erase_action = polkit_gnome_action_new_default ("erase",
+                                                                     shell->priv->pk_linux_md_action,
+                                                                     _("_Erase..."),
+                                                                     _("Erase the contents of the selected device"));
+        g_object_set (shell->priv->erase_action,
+                      "auth-label", _("_Erase..."),
+                      "yes-icon-name", GTK_STOCK_CLEAR,
+                      "no-icon-name", GTK_STOCK_CLEAR,
+                      "auth-icon-name", GTK_STOCK_CLEAR,
+                      "self-blocked-icon-name", GTK_STOCK_CLEAR,
+                      NULL);
+        g_signal_connect (shell->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), shell);
+        gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->erase_action));
+
+        /* -------------------------------------------------------------------------------- */
+
         ui_manager = gtk_ui_manager_new ();
         gtk_ui_manager_insert_action_group (ui_manager, shell->priv->action_group, 0);
 
@@ -1687,6 +1863,14 @@ create_ui_manager (GduShell *shell)
 static void
 create_polkit_actions (GduShell *shell)
 {
+        shell->priv->pk_modify_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_modify_action,
+                                     "org.freedesktop.devicekit.disks.change");
+
+        shell->priv->pk_modify_system_internal_action = polkit_action_new ();
+        polkit_action_set_action_id (shell->priv->pk_modify_system_internal_action,
+                                     "org.freedesktop.devicekit.disks.change-system-internal");
+
         shell->priv->pk_fsck_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_fsck_action,
                                      "org.freedesktop.devicekit.disks.filesystem-check");

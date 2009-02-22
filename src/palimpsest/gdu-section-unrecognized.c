@@ -268,6 +268,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
 
         secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
                                                             "",
+                                                            FALSE,
                                                             primary,
                                                             secondary,
                                                             _("C_reate"));
@@ -415,10 +416,10 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 
         section->priv->erase_action = polkit_gnome_action_new_default ("create",
                                                                     section->priv->pk_change_action,
-                                                                    _("C_reate"),
+                                                                    _("_Create"),
                                                                     _("Create"));
         g_object_set (section->priv->erase_action,
-                      "auth-label", _("C_reate..."),
+                      "auth-label", _("_Create..."),
                       "yes-icon-name", GTK_STOCK_ADD,
                       "no-icon-name", GTK_STOCK_ADD,
                       "auth-icon-name", GTK_STOCK_ADD,
@@ -434,10 +435,10 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         label = gtk_label_new (NULL);
         gtk_label_set_markup (GTK_LABEL (label), _("<b>Create File System</b>"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox = gtk_vbox_new (FALSE, 5);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 24, 0);
+        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox);
         gtk_box_pack_start (GTK_BOX (section), align, FALSE, TRUE, 0);
 
@@ -458,7 +459,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         /* file system label */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Name:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         entry = gtk_entry_new ();
@@ -508,7 +509,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         row++;
 
         /* whether to encrypt underlying device */
-        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
+        check_button = gtk_check_button_new_with_mnemonic (_("Encr_ypt underlying device"));
         gtk_widget_set_tooltip_text (check_button,
                                      _("Encryption protects your data, requiring a "
                                        "passphrase to be enterered before the file system can be "

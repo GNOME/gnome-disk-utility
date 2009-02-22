@@ -741,7 +741,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         row++;
 
         /* whether to encrypt underlying device */
-        check_button = gtk_check_button_new_with_mnemonic (_("E_ncrypt underlying device"));
+        check_button = gtk_check_button_new_with_mnemonic (_("Encr_ypt underlying device"));
         gtk_widget_set_tooltip_text (check_button,
                                      _("Encryption protects your data, requiring a "
                                        "passphrase to be enterered before the file system can be "

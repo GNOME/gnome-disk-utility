@@ -205,10 +205,10 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
         section->priv->create_part_table_action = polkit_gnome_action_new_default (
                 "create-part-table",
                 section->priv->pk_change_action,
-                _("C_reate"),
+                _("_Create"),
                 _("Create"));
         g_object_set (section->priv->create_part_table_action,
-                      "auth-label", _("C_reate..."),
+                      "auth-label", _("_Create..."),
                       "yes-icon-name", GTK_STOCK_ADD,
                       "no-icon-name", GTK_STOCK_ADD,
                       "auth-icon-name", GTK_STOCK_ADD,

@@ -1528,13 +1528,13 @@ gdu_util_part_table_type_combo_box_create_store (void)
         /* TODO: get from daemon */
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
-                            0, "gpt",
-                            1, _("GUID Partition Table"),
+                            0, "mbr",
+                            1, _("Master Boot Record"),
                             -1);
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
-                            0, "mbr",
-                            1, _("Master Boot Record"),
+                            0, "gpt",
+                            1, _("GUID Partition Table"),
                             -1);
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,

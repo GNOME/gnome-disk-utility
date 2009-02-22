@@ -1766,18 +1766,6 @@ gdu_util_get_pixbuf_for_presentable_at_pixel_size (GduPresentable *presentable, 
                 if (pixbuf == NULL)
                         goto out;
 
-                /* if it's unallocated or unrecognized space, make the icon greyscale */
-                if (!gdu_presentable_is_allocated (presentable) ||
-                    !gdu_presentable_is_recognized (presentable)) {
-                        GdkPixbuf *pixbuf2;
-                        pixbuf2 = pixbuf;
-                        pixbuf = gdk_pixbuf_copy (pixbuf);
-                        g_object_unref (pixbuf2);
-                        gdk_pixbuf_saturate_and_pixelate (pixbuf,
-                                                          pixbuf,
-                                                          0.0,
-                                                          FALSE);
-                }
         }
 
  out:

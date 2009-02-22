@@ -200,9 +200,9 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
         } else if (strcmp (fstype, "ext3") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
-                                s = g_strdup_printf (_("Linux Third Ext. FS (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Linux Ext3 (version %s)"), fsversion);
                         else
-                                s = g_strdup_printf (_("Linux Third Ext. FS"));
+                                s = g_strdup_printf (_("Linux Ext3"));
                 } else {
                         s = g_strdup (_("ext3"));
                 }
@@ -214,6 +214,24 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                                 s = g_strdup_printf (_("Journal for Linux ext3"));
                 } else {
                         s = g_strdup (_("jbd"));
+                }
+        } else if (strcmp (fstype, "ext4") == 0) {
+                if (long_string) {
+                        if (strlen (fsversion) > 0)
+                                s = g_strdup_printf (_("Linux Ext4 (version %s)"), fsversion);
+                        else
+                                s = g_strdup_printf (_("Linux Ext4"));
+                } else {
+                        s = g_strdup (_("ext4"));
+                }
+        } else if (strcmp (fstype, "xfs") == 0) {
+                if (long_string) {
+                        if (strlen (fsversion) > 0)
+                                s = g_strdup_printf (_("Linux XFS (version %s)"), fsversion);
+                        else
+                                s = g_strdup_printf (_("Linux XFS"));
+                } else {
+                        s = g_strdup (_("xfs"));
                 }
         } else if (strcmp (fstype, "iso9660") == 0) {
                 if (long_string) {
@@ -437,13 +455,13 @@ gdu_util_fstype_get_description (char *fstype)
 
         if (strcmp (fstype, "vfat") == 0)
                 return g_strdup (_("A popular format compatible with almost any device or system, typically "
-                                   "used for file exchange. Maximum file size is limited to 2GB and the file "
-                                   "system doesn't support file permissions."));
+                                   "used for file exchange."));
 
-        else if (strcmp (fstype, "ext3") == 0)
+        else if (strcmp (fstype, "ext3") == 0 ||
+                 strcmp (fstype, "ext4") == 0 ||
+                 strcmp (fstype, "xfs") == 0)
                 return g_strdup (_("This file system is compatible with Linux systems only and provides classic "
-                                   "UNIX file permissions support. Not ideal if you plan to move the disk "
-                                   "around between different systems."));
+                                   "UNIX file permissions support."));
 
         else if (strcmp (fstype, "swap") == 0)
                 return g_strdup (_("Swap area used by the operating system for virtual memory."));
@@ -456,9 +474,7 @@ gdu_util_fstype_get_description (char *fstype)
                 return g_strdup (_("No file system will be created."));
 
         else if (strcmp (fstype, "msdos_extended_partition") == 0)
-                return g_strdup (_("Create an Extended Partition for housing logical partitions. Typically "
-                                   "used to overcome the inherent limitation of four primary partitions when "
-                                   "using the Master Boot Record partitioning scheme."));
+                return g_strdup (_("Create an Extended Partition for logical partitions."));
 
         else
                 return NULL;

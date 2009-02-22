@@ -283,6 +283,25 @@ gdu_drive_get_name (GduPresentable *presentable)
         return result;
 }
 
+static gboolean
+strv_has0 (char **strv, const gchar *str)
+{
+        gboolean ret;
+        guint n;
+
+        ret = FALSE;
+
+        for (n = 0; strv != NULL && strv[n] != NULL; n++) {
+                if (g_strcmp0 (strv[n], str) == 0) {
+                        ret = TRUE;
+                        goto out;
+                }
+        }
+
+ out:
+        return ret;
+}
+
 static GIcon *
 gdu_drive_get_icon (GduPresentable *presentable)
 {
@@ -290,16 +309,27 @@ gdu_drive_get_icon (GduPresentable *presentable)
         const char *name;
         const char *connection_interface;
         const char *drive_media;
+        gchar **drive_media_compat;
         gboolean is_removable;
 
         connection_interface = gdu_device_drive_get_connection_interface (drive->priv->device);
         is_removable = gdu_device_is_removable (drive->priv->device);
         drive_media = gdu_device_drive_get_media (drive->priv->device);
+        drive_media_compat = gdu_device_drive_get_media_compatibility (drive->priv->device);
 
         name = NULL;
 
-        /* first try the media */
-        if (drive_media != NULL) {
+        /* optical drives are special */
+        if (strv_has0 (drive_media_compat, "optical_cd")) {
+                /* TODO: it would probably be nice to export a property whether this device can
+                 *       burn discs etc. so we can use the 'drive-optical-recorder' icon when
+                 *       applicable.
+                 */
+                name = "drive-optical";
+        }
+
+        /* try the media */
+        if (name == NULL && drive_media != NULL) {
                 if (strcmp (drive_media, "flash_cf") == 0) {
                         name = "drive-removable-media-flash-cf";
                 } else if (strcmp (drive_media, "flash_ms") == 0) {

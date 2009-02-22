@@ -64,6 +64,36 @@ static void device_removed (GduDevice *device, gpointer user_data);
 static void device_job_changed (GduDevice *device, gpointer user_data);
 static void device_changed (GduDevice *device, gpointer user_data);
 
+static const struct
+{
+        const char *disc_type;
+        const char *icon_name;
+        const char *ui_name;
+        const char *ui_name_blank;
+} disc_data[] = {
+  {"optical_cd",             "media-optical-cd-rom",        N_("CD-ROM Disc"),     N_("Blank CD-ROM Disc")},
+  {"optical_cd_r",           "media-optical-cd-r",          N_("CD-R Disc"),       N_("Blank CD-R Disc")},
+  {"optical_cd_rw",          "media-optical-cd-rw",         N_("CD-RW Disc"),      N_("Blank CD-RW Disc")},
+  {"optical_dvd",            "media-optical-dvd-rom",       N_("DVD-ROM Disc"),    N_("Blank DVD-ROM Disc")},
+  {"optical_dvd_r",          "media-optical-dvd-r",         N_("DVD-ROM Disc"),    N_("Blank DVD-ROM Disc")},
+  {"optical_dvd_rw",         "media-optical-dvd-rw",        N_("DVD-RW Disc"),     N_("Blank DVD-RW Disc")},
+  {"optical_dvd_ram",        "media-optical-dvd-ram",       N_("DVD-RAM Disc"),    N_("Blank DVD-RAM Disc")},
+  {"optical_dvd_plus_r",     "media-optical-dvd-r-plus",    N_("DVD+R Disc"),      N_("Blank DVD+R Disc")},
+  {"optical_dvd_plus_rw",    "media-optical-dvd-rw-plus",   N_("DVD+RW Disc"),     N_("Blank DVD+RW Disc")},
+  {"optical_dvd_plus_r_dl",  "media-optical-dvd-dl-r-plus", N_("DVD+R DL Disc"),   N_("Blank DVD+R DL Disc")},
+  {"optical_dvd_plus_rw_dl", "media-optical-dvd-dl-r-plus", N_("DVD+RW DL Disc"),  N_("Blank DVD+RW DL Disc")},
+  {"optical_bd",             "media-optical-bd-rom",        N_("Blu-Ray Disc"),    N_("Blank Blu-Ray Disc")},
+  {"optical_bd_r",           "media-optical-bd-r",          N_("Blu-Ray R Disc"),  N_("Blank Blu-Ray R Disc")},
+  {"optical_bd_re",          "media-optical-bd-re",         N_("Blu-Ray RW Disc"), N_("Blank Blu-Ray RW Disc")},
+  {"optical_hddvd",          "media-optical-hddvd-rom",     N_("HD DVD Disc"),     N_("Blank HD DVD Disc")},
+  {"optical_hddvd_r",        "media-optical-hddvd-r",       N_("HD DVD-R Disc"),   N_("Blank HD DVD-R Disc")},
+  {"optical_hddvd_rw",       "media-optical-hddvd-rw",      N_("HD DVD-RW Disc"),  N_("Blank HD DVD-RW Disc")},
+  {"optical_mo",             "media-optical-mo",            N_("MO Disc"),         N_("Blank MO Disc")},
+  {"optical_mrw",            "media-optical-mrw",           N_("MRW Disc"),        N_("Blank MRW Disc")},
+  {"optical_mrw_w",          "media-optical-mrw-w",         N_("MRW/W Disc"),      N_("Blank MRW/W Disc")},
+  {NULL, NULL, NULL, NULL}
+};
+
 static void
 gdu_volume_finalize (GduVolume *volume)
 {
@@ -176,15 +206,29 @@ static char *
 gdu_volume_get_name (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
+        GduPresentable *drive_presentable;
+        GduDevice *drive_device;
         const char *label;
         const char *usage;
         const char *type;
+        const char *drive_media;
         char *result;
         gboolean is_extended_partition;
         char *strsize;
         guint64 size;
+        guint n;
 
         result = NULL;
+
+        drive_presentable = NULL;
+        drive_device = NULL;
+        drive_media = NULL;
+
+        drive_presentable = gdu_presentable_get_toplevel (presentable);
+        if (drive_presentable != NULL) {
+                drive_device = gdu_presentable_get_device (drive_presentable);
+                drive_media = gdu_device_drive_get_media (drive_device);
+        }
 
         label = gdu_device_id_get_label (volume->priv->device);
         if (gdu_device_is_partition (volume->priv->device))
@@ -206,6 +250,24 @@ gdu_volume_get_name (GduPresentable *presentable)
         usage = gdu_device_id_get_usage (volume->priv->device);
         type = gdu_device_id_get_type (volume->priv->device);
 
+        /* handle optical discs */
+        if (gdu_device_is_optical_disc (volume->priv->device) &&
+            gdu_device_optical_disc_get_is_blank (volume->priv->device)) {
+                for (n = 0; disc_data[n].disc_type != NULL; n++) {
+                        if (g_strcmp0 (disc_data[n].disc_type, drive_media) == 0) {
+                                result = g_strdup (gettext (disc_data[n].ui_name_blank));
+                                break;
+                        }
+                }
+
+                if (result == NULL) {
+                        g_warning ("Unknown drive-media value '%s'", drive_media);
+                        result = g_strdup (_("Blank Optical Disc"));
+                }
+
+                goto out;
+        }
+
         if (is_extended_partition) {
                 result = g_strdup_printf (_("%s Extended"), strsize);
         } else if ((usage != NULL && strcmp (usage, "filesystem") == 0) &&
@@ -214,13 +276,19 @@ gdu_volume_get_name (GduPresentable *presentable)
         } else if (usage != NULL) {
                 if (strcmp (usage, "crypto") == 0) {
                         result = g_strdup_printf (_("%s Encrypted"), strsize);
+                } else if (gdu_device_is_optical_disc (volume->priv->device)) {
+                        for (n = 0; disc_data[n].disc_type != NULL; n++) {
+                                if (g_strcmp0 (disc_data[n].disc_type, drive_media) == 0) {
+                                        result = g_strdup (gettext (disc_data[n].ui_name));
+                                        break;
+                                }
+                        }
+                        if (result == NULL) {
+                                g_warning ("Unknown drive-media value '%s'", drive_media);
+                                result = g_strdup (_("Optical Disc"));
+                        }
                 } else if (strcmp (usage, "filesystem") == 0) {
-                        char *fsname;
-                        fsname = gdu_util_get_fstype_for_display (gdu_device_id_get_type (volume->priv->device),
-                                                                  gdu_device_id_get_version (volume->priv->device),
-                                                                  FALSE);
-                        result = g_strdup_printf (_("%s %s File System"), strsize, fsname);
-                        g_free (fsname);
+                        result = g_strdup_printf (_("%s Filesystem"), strsize);
                 } else if (strcmp (usage, "partitiontable") == 0) {
                         result = g_strdup_printf (_("%s Partition Table"), strsize);
                 } else if (strcmp (usage, "raid") == 0) {
@@ -268,7 +336,13 @@ gdu_volume_get_name (GduPresentable *presentable)
         if (result == NULL)
                 result = g_strdup_printf (_("%s Unrecognized"), strsize);
 
+ out:
         g_free (strsize);
+
+        if (drive_device != NULL)
+                g_object_unref (drive_device);
+        if (drive_presentable != NULL)
+                g_object_unref (drive_presentable);
 
         return result;
 }
@@ -285,6 +359,7 @@ gdu_volume_get_icon (GduPresentable *presentable)
         const char *drive_media;
         gboolean is_removable;
         GIcon *icon;
+        guint n;
 
         p = NULL;
         d = NULL;
@@ -344,8 +419,14 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 } else if (g_str_has_prefix (drive_media, "flash")) {
                         name = "media-flash";
                 } else if (g_str_has_prefix (drive_media, "optical")) {
-                        /* TODO: handle rest of optical-* */
-                        name = "media-optical";
+                        for (n = 0; disc_data[n].disc_type != NULL; n++) {
+                                if (strcmp (disc_data[n].disc_type, drive_media) == 0) {
+                                        name = disc_data[n].icon_name;
+                                        break;
+                                }
+                        }
+                        if (name == NULL)
+                                name = "media-optical";
                 }
         }
 

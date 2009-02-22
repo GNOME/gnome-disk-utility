@@ -284,7 +284,7 @@ gdu_drive_get_name (GduPresentable *presentable)
 }
 
 static gboolean
-strv_has0 (char **strv, const gchar *str)
+strv_has (char **strv, const gchar *str)
 {
         gboolean ret;
         guint n;
@@ -293,6 +293,25 @@ strv_has0 (char **strv, const gchar *str)
 
         for (n = 0; strv != NULL && strv[n] != NULL; n++) {
                 if (g_strcmp0 (strv[n], str) == 0) {
+                        ret = TRUE;
+                        goto out;
+                }
+        }
+
+ out:
+        return ret;
+}
+
+static gboolean
+strv_has_prefix (char **strv, const gchar *str)
+{
+        gboolean ret;
+        guint n;
+
+        ret = FALSE;
+
+        for (n = 0; strv != NULL && strv[n] != NULL; n++) {
+                if (g_str_has_prefix (strv[n], str)) {
                         ret = TRUE;
                         goto out;
                 }
@@ -319,37 +338,31 @@ gdu_drive_get_icon (GduPresentable *presentable)
 
         name = NULL;
 
-        /* optical drives are special */
-        if (strv_has0 (drive_media_compat, "optical_cd")) {
+        /* media type */
+        if (strv_has (drive_media_compat, "optical_cd")) {
                 /* TODO: it would probably be nice to export a property whether this device can
                  *       burn discs etc. so we can use the 'drive-optical-recorder' icon when
                  *       applicable.
                  */
                 name = "drive-optical";
-        }
-
-        /* try the media */
-        if (name == NULL && drive_media != NULL) {
-                if (strcmp (drive_media, "flash_cf") == 0) {
-                        name = "drive-removable-media-flash-cf";
-                } else if (strcmp (drive_media, "flash_ms") == 0) {
-                        name = "drive-removable-media-flash-ms";
-                } else if (strcmp (drive_media, "flash_sm") == 0) {
-                        name = "drive-removable-media-flash-sm";
-                } else if (strcmp (drive_media, "flash_sd") == 0) {
-                        name = "drive-removable-media-flash-sd";
-                } else if (strcmp (drive_media, "flash_sdhc") == 0) {
-                        /* TODO: get icon name for sdhc */
-                        name = "drive-removable-media-flash-sd";
-                } else if (strcmp (drive_media, "flash_mmc") == 0) {
-                        /* TODO: get icon for mmc */
-                        name = "drive-removable-media-flash-sd";
-                } else if (g_str_has_prefix (drive_media, "flash")) {
-                        name = "drive-removable-media-flash";
-                } else if (g_str_has_prefix (drive_media, "optical")) {
-                        /* TODO: handle rest of optical-* */
-                        name = "drive-optical";
-                }
+        } else if (strv_has (drive_media_compat, "floppy")) {
+                name = "drive-removable-media-floppy";
+        } else if (strv_has (drive_media_compat, "flash_cf")) {
+                name = "drive-removable-media-flash-cf";
+        } else if (strv_has (drive_media_compat, "flash_ms")) {
+                name = "drive-removable-media-flash-ms";
+        } else if (strv_has (drive_media_compat, "flash_sm")) {
+                name = "drive-removable-media-flash-sm";
+        } else if (strv_has (drive_media_compat, "flash_sd")) {
+                name = "drive-removable-media-flash-sd";
+        } else if (strv_has (drive_media_compat, "flash_sdhc")) {
+                /* TODO: get icon name for sdhc */
+                name = "drive-removable-media-flash-sd";
+        } else if (strv_has (drive_media_compat, "flash_mmc")) {
+                /* TODO: get icon for mmc */
+                name = "drive-removable-media-flash-sd";
+        } else if (strv_has_prefix (drive_media_compat, "flash")) {
+                name = "drive-removable-media-flash";
         }
 
         /* else fall back to connection interface */

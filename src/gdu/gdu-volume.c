@@ -416,6 +416,8 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 } else if (strcmp (drive_media, "flash_mmc") == 0) {
                         /* TODO: get icon for mmc */
                         name = "media-flash-sd";
+                } else if (strcmp (drive_media, "floppy") == 0) {
+                        name = "media-floppy";
                 } else if (g_str_has_prefix (drive_media, "flash")) {
                         name = "media-flash";
                 } else if (g_str_has_prefix (drive_media, "optical")) {

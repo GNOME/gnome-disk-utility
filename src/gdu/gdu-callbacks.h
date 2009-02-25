@@ -151,14 +151,14 @@ typedef void (*GduPoolLinuxMdStartCompletedFunc) (GduPool    *pool,
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduDrive */
 
-typedef void (*GduDriveStartFunc) (GduDrive  *drive,
-                                   char      *assembled_drive_object_path,
-                                   GError    *error,
-                                   gpointer   user_data);
+typedef void (*GduDriveActivateFunc) (GduDrive  *drive,
+                                      char      *assembled_drive_object_path,
+                                      GError    *error,
+                                      gpointer   user_data);
 
-typedef void (*GduDriveStopFunc) (GduDrive  *drive,
-                                  GError    *error,
-                                  gpointer   user_data);
+typedef void (*GduDriveDeactivateFunc) (GduDrive  *drive,
+                                        GError    *error,
+                                        gpointer   user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

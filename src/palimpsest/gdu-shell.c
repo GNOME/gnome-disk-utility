@@ -670,19 +670,19 @@ gdu_shell_update (GduShell *shell)
                         }
 
                         can_erase = TRUE;
-                        if (gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing)) &&
-                            !gdu_drive_is_running (GDU_DRIVE (shell->priv->presentable_now_showing)))
+                        if (gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing)) &&
+                            !gdu_drive_is_active (GDU_DRIVE (shell->priv->presentable_now_showing)))
                                 can_erase = FALSE;
                 }
         }
 
         if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
-            gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
+            gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing))) {
                 GduDrive *drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-                can_stop = gdu_drive_is_running (drive);
+                can_stop = gdu_drive_can_deactivate (drive);
 
-                can_start = (gdu_drive_can_start (drive) || gdu_drive_can_start_degraded (drive));
+                can_start = (gdu_drive_can_activate (drive) || gdu_drive_can_activate_degraded (drive));
         }
 
         showing_job = job_in_progress;
@@ -1360,20 +1360,20 @@ start_action_callback (GtkAction *action, gpointer user_data)
         GduDrive *drive;
 
         if (!GDU_IS_DRIVE (shell->priv->presentable_now_showing) ||
-            !gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
+            !gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing))) {
                 g_warning ("presentable is not an activatable drive");
                 goto out;
         }
 
         drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-        if (gdu_drive_is_running (drive)) {
+        if (gdu_drive_is_active (drive)) {
                 g_warning ("drive already running; refusing to activate it");
                 goto out;
         }
 
         /* ask for consent before activating in degraded mode */
-        if (!gdu_drive_can_start (drive) && gdu_drive_can_start_degraded (drive)) {
+        if (!gdu_drive_can_activate (drive) && gdu_drive_can_activate_degraded (drive)) {
                 GtkWidget *dialog;
                 int response;
 
@@ -1399,9 +1399,9 @@ start_action_callback (GtkAction *action, gpointer user_data)
                         goto out;
         }
 
-        gdu_drive_start (drive,
-                         start_cb,
-                         g_object_ref (shell));
+        gdu_drive_activate (drive,
+                            start_cb,
+                            g_object_ref (shell));
 out:
         ;
 }
@@ -1441,21 +1441,21 @@ stop_action_callback (GtkAction *action, gpointer user_data)
         GduDrive *drive;
 
         if (!GDU_IS_DRIVE (shell->priv->presentable_now_showing) ||
-            !gdu_drive_can_start_stop (GDU_DRIVE (shell->priv->presentable_now_showing))) {
+            !gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing))) {
                 g_warning ("presentable is not an activatable drive");
                 goto out;
         }
 
         drive = GDU_DRIVE (shell->priv->presentable_now_showing);
 
-        if (!gdu_drive_is_running (drive)) {
+        if (!gdu_drive_can_deactivate (drive)) {
                 g_warning ("activatable drive isn't running; refusing to deactivate it");
                 goto out;
         }
 
-        gdu_drive_stop (drive,
-                        stop_cb,
-                        g_object_ref (shell));
+        gdu_drive_deactivate (drive,
+                              stop_cb,
+                              g_object_ref (shell));
 out:
         ;
 }

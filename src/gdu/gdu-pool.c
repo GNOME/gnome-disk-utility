@@ -614,8 +614,10 @@ recompute_presentables (GduPool *pool)
                         if (gdu_device_is_partition_table (device)) {
                                 new_partitioned_drives = g_list_prepend (new_partitioned_drives, drive);
                         } else {
-                                /* add volume for non-partitioned (e.g. whole-disk) devices if media is available */
-                                if (gdu_device_is_media_available (device)) {
+                                /* add volume for non-partitioned (e.g. whole-disk) devices if media
+                                 * is available and the drive is active
+                                 */
+                                if (gdu_device_is_media_available (device) && gdu_drive_is_active (drive)) {
                                         GduVolume *volume;
                                         volume = _gdu_volume_new_from_device (pool, device, GDU_PRESENTABLE (drive));
                                         new_presentables = g_list_prepend (new_presentables, volume);
@@ -812,6 +814,8 @@ device_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointe
         }
 
         device = _gdu_device_new_from_object_path (pool, object_path);
+        if (device == NULL)
+                goto out;
 
         g_hash_table_insert (pool->priv->object_path_to_device,
                              (gpointer) gdu_device_get_object_path (device),
@@ -860,15 +864,14 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         device = gdu_pool_get_by_object_path (pool, object_path);
         if (device == NULL) {
-                g_debug ("Treating change event on non-existant device %s as add", object_path);
+                g_debug ("Treating change event as add on non-existant device %s", object_path);
                 device_added_signal_handler (proxy, object_path, user_data);
                 goto out;
         }
 
-        _gdu_device_changed (device);
-        g_signal_emit (pool, signals[DEVICE_CHANGED], 0, device);
+        if (_gdu_device_changed (device))
+                g_signal_emit (pool, signals[DEVICE_CHANGED], 0, device);
         g_object_unref (device);
-        //g_debug ("Changed device %s", object_path);
 
         recompute_presentables (pool);
 

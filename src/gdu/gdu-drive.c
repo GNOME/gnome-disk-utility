@@ -98,76 +98,86 @@ gdu_drive_class_init (GduDriveClass *klass)
 }
 
 gboolean
-gdu_drive_is_running (GduDrive *drive)
+gdu_drive_is_active (GduDrive *drive)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->is_running != NULL)
-                return klass->is_running (drive);
+        if (klass->is_active != NULL)
+                return klass->is_active (drive);
         else
                 return TRUE;
 }
 
 gboolean
-gdu_drive_can_start_stop (GduDrive *drive)
+gdu_drive_is_activatable (GduDrive *drive)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->can_start_stop != NULL)
-                return klass->can_start_stop (drive);
+        if (klass->is_activatable != NULL)
+                return klass->is_activatable (drive);
         else
                 return FALSE;
 }
 
 gboolean
-gdu_drive_can_start (GduDrive *drive)
+gdu_drive_can_activate (GduDrive *drive)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->can_start != NULL)
-                return klass->can_start (drive);
+        if (klass->can_activate != NULL)
+                return klass->can_activate (drive);
         else
                 return FALSE;
 }
 
 gboolean
-gdu_drive_can_start_degraded (GduDrive *drive)
+gdu_drive_can_deactivate (GduDrive *drive)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->can_start_degraded != NULL)
-                return klass->can_start_degraded (drive);
+        if (klass->can_deactivate != NULL)
+                return klass->can_deactivate (drive);
+        else
+                return FALSE;
+}
+
+gboolean
+gdu_drive_can_activate_degraded (GduDrive *drive)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        if (klass->can_activate_degraded != NULL)
+                return klass->can_activate_degraded (drive);
         else
                 return FALSE;
 }
 
 void
-gdu_drive_start (GduDrive            *drive,
-                 GduDriveStartFunc    callback,
-                 gpointer             user_data)
+gdu_drive_activate (GduDrive            *drive,
+                    GduDriveActivateFunc    callback,
+                    gpointer             user_data)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->start != NULL)
-                return klass->start (drive, callback, user_data);
+        if (klass->activate != NULL)
+                return klass->activate (drive, callback, user_data);
         else {
                 callback (drive,
                           NULL,
                           g_error_new_literal (GDU_ERROR,
                                                GDU_ERROR_NOT_SUPPORTED,
-                                               "Drive does not support start()"),
+                                               "Drive does not support activate()"),
                           user_data);
         }
 }
 
 void
-gdu_drive_stop (GduDrive            *drive,
-                GduDriveStopFunc     callback,
-                gpointer             user_data)
+gdu_drive_deactivate (GduDrive                *drive,
+                      GduDriveDeactivateFunc   callback,
+                      gpointer                 user_data)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->stop != NULL)
-                return klass->stop (drive, callback, user_data);
+        if (klass->deactivate != NULL)
+                return klass->deactivate (drive, callback, user_data);
         else {
                 callback (drive,
                           g_error_new_literal (GDU_ERROR,
                                                GDU_ERROR_NOT_SUPPORTED,
-                                               "Drive does not support stop()"),
+                                               "Drive does not support deactivate()"),
                           user_data);
         }
 }

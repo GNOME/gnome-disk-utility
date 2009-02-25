@@ -54,31 +54,33 @@ struct _GduDriveClass
 
         /*< public >*/
         /* VTable */
-        gboolean    (*is_running)          (GduDrive            *drive);
-        gboolean    (*can_start_stop)      (GduDrive            *drive);
-        gboolean    (*can_start)           (GduDrive            *drive);
-        gboolean    (*can_start_degraded)  (GduDrive            *drive);
-        void        (*start)               (GduDrive            *drive,
-                                            GduDriveStartFunc    callback,
-                                            gpointer             user_data);
-        void        (*stop)                (GduDrive            *drive,
-                                            GduDriveStopFunc     callback,
-                                            gpointer             user_data);
+        gboolean    (*is_active)             (GduDrive              *drive);
+        gboolean    (*is_activatable)        (GduDrive              *drive);
+        gboolean    (*can_deactivate)        (GduDrive              *drive);
+        gboolean    (*can_activate)          (GduDrive              *drive);
+        gboolean    (*can_activate_degraded) (GduDrive              *drive);
+        void        (*activate)              (GduDrive              *drive,
+                                              GduDriveActivateFunc   callback,
+                                              gpointer               user_data);
+        void        (*deactivate)            (GduDrive              *drive,
+                                              GduDriveDeactivateFunc callback,
+                                              gpointer               user_data);
 
 };
 
 GType       gdu_drive_get_type           (void);
 
-gboolean    gdu_drive_is_running         (GduDrive            *drive);
-gboolean    gdu_drive_can_start_stop     (GduDrive            *drive);
-gboolean    gdu_drive_can_start          (GduDrive            *drive);
-gboolean    gdu_drive_can_start_degraded (GduDrive            *drive);
-void        gdu_drive_start              (GduDrive            *drive,
-                                          GduDriveStartFunc    callback,
-                                          gpointer             user_data);
-void        gdu_drive_stop               (GduDrive            *drive,
-                                          GduDriveStopFunc     callback,
-                                          gpointer             user_data);
+gboolean    gdu_drive_is_active             (GduDrive              *drive);
+gboolean    gdu_drive_is_activatable        (GduDrive              *drive);
+gboolean    gdu_drive_can_deactivate        (GduDrive              *drive);
+gboolean    gdu_drive_can_activate          (GduDrive              *drive);
+gboolean    gdu_drive_can_activate_degraded (GduDrive              *drive);
+void        gdu_drive_activate              (GduDrive              *drive,
+                                             GduDriveActivateFunc   callback,
+                                             gpointer               user_data);
+void        gdu_drive_deactivate            (GduDrive              *drive,
+                                             GduDriveDeactivateFunc callback,
+                                             gpointer               user_data);
 
 G_END_DECLS
 

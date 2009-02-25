@@ -232,7 +232,7 @@ attach_action_callback (GtkAction *action, gpointer user_data)
         GduLinuxMdDrive *linux_md_drive;
         GduDevice *slave_device;
         GduPool *pool;
-        GduLinuxMdDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveFlags slave_flags;
         char *component_objpath;
 
         device = NULL;
@@ -281,8 +281,8 @@ attach_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
-        if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH) {
+        slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, slave_device);
+        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED) {
                 /* yay, add this to the array */
                 gdu_device_op_linux_md_add_component (device,
                                                       component_objpath,
@@ -326,7 +326,7 @@ detach_action_callback (GtkAction *action, gpointer user_data)
         GduLinuxMdDrive *linux_md_drive;
         GduDevice *slave_device;
         GduPool *pool;
-        GduLinuxMdDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveFlags slave_flags;
         char *component_objpath;
         GduPresentable *slave_presentable;
 
@@ -383,10 +383,8 @@ detach_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
-        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
-        if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING ||
-            slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
-            slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
+        slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, slave_device);
+        if (!(slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED)) {
                 char *primary;
                 char *secondary;
                 char *secure_erase;
@@ -446,23 +444,23 @@ linux_md_buttons_update (GduSectionLinuxMdDrive *section)
 {
         GtkTreePath *path;
         char *component_objpath;
-        gboolean show_add_to_array_button;
         gboolean show_add_new_to_array_button;
-        gboolean show_remove_from_array_button;
+        gboolean show_attach_to_array_button;
+        gboolean show_detach_from_array_button;
         GduPresentable *presentable;
         GduLinuxMdDrive *linux_md_drive;
         GduDevice *device;
         GduDevice *slave_device;
         GduPool *pool;
-        GduLinuxMdDriveSlaveState slave_state;
+        GduLinuxMdDriveSlaveFlags slave_flags;
 
         component_objpath = NULL;
         device = NULL;
         slave_device = NULL;
         pool = NULL;
-        show_add_to_array_button = FALSE;
         show_add_new_to_array_button = FALSE;
-        show_remove_from_array_button = FALSE;
+        show_attach_to_array_button = FALSE;
+        show_detach_from_array_button = FALSE;
 
         gtk_tree_view_get_cursor (GTK_TREE_VIEW (section->priv->linux_md_tree_view), &path, NULL);
         if (path != NULL) {
@@ -486,9 +484,10 @@ linux_md_buttons_update (GduSectionLinuxMdDrive *section)
 
         linux_md_drive = GDU_LINUX_MD_DRIVE (presentable);
 
-        /* can only add/remove components on a running drive */
+        /* can only add/remove components on an active drive */
         device = gdu_presentable_get_device (presentable);
-        if (device == NULL) {
+
+        if (!gdu_drive_is_active (GDU_DRIVE (presentable))) {
                 goto out;
         }
 
@@ -505,18 +504,14 @@ linux_md_buttons_update (GduSectionLinuxMdDrive *section)
                         goto out;
                 }
 
-                slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, slave_device);
+                slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, slave_device);
 
-                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH) {
-                        /* yay, we can add this to the array */
-                        show_add_to_array_button = TRUE;
-                }
-
-                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING ||
-                    slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING ||
-                    slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE) {
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED) {
+                        /* yay, we can attach this slave to the array */
+                        show_attach_to_array_button = TRUE;
+                } else {
                         /* yay, we can remove this to the array */
-                        show_remove_from_array_button = TRUE;
+                        show_detach_from_array_button = TRUE;
                 }
         }
 
@@ -543,8 +538,8 @@ linux_md_buttons_update (GduSectionLinuxMdDrive *section)
 
 
 out:
-        polkit_gnome_action_set_sensitive (section->priv->attach_action, show_add_to_array_button);
-        polkit_gnome_action_set_sensitive (section->priv->detach_action, show_remove_from_array_button);
+        polkit_gnome_action_set_sensitive (section->priv->attach_action, show_attach_to_array_button);
+        polkit_gnome_action_set_sensitive (section->priv->detach_action, show_detach_from_array_button);
         polkit_gnome_action_set_sensitive (section->priv->add_action, show_add_new_to_array_button);
 
         g_free (component_objpath);
@@ -667,13 +662,17 @@ update (GduSectionLinuxMdDrive *section)
                 raid_size_str = gdu_util_get_size_for_display (raid_size, TRUE);
         }
 
-        if (device == NULL) {
-                if (gdu_drive_can_start (GDU_DRIVE (linux_md_drive))) {
-                        state_str = g_strdup (_("Not running"));
-                } else if (gdu_drive_can_start_degraded (GDU_DRIVE (linux_md_drive))) {
-                        state_str = g_strdup (_("Not running, can only start degraded"));
+        if (!gdu_drive_is_active (GDU_DRIVE (linux_md_drive))) {
+                if (device != NULL) {
+                        state_str = g_strdup (_("Not running, partially assembled"));
                 } else {
-                        state_str = g_strdup (_("Not running, not enough components to start"));
+                        if (gdu_drive_can_activate (GDU_DRIVE (linux_md_drive))) {
+                                state_str = g_strdup (_("Not running"));
+                        } else if (gdu_drive_can_activate_degraded (GDU_DRIVE (linux_md_drive))) {
+                                state_str = g_strdup (_("Not running, can only start degraded"));
+                        } else {
+                                state_str = g_strdup (_("Not running, not enough components to start"));
+                        }
                 }
         } else {
                 gboolean is_degraded;
@@ -747,8 +746,9 @@ update (GduSectionLinuxMdDrive *section)
                         GtkTreeIter iter;
                         GduPool *pool;
                         GduPresentable *p;
-                        GduLinuxMdDriveSlaveState slave_state;
-                        const char *slave_state_str;
+                        GduLinuxMdDriveSlaveFlags slave_flags;
+                        GPtrArray *slave_state;
+                        char *slave_state_str;
 
                         pool = gdu_device_get_pool (sd);
                         p = gdu_pool_get_volume_by_device (pool, sd);
@@ -764,32 +764,23 @@ update (GduSectionLinuxMdDrive *section)
                         g_free (s);
                         pixbuf = gdu_util_get_pixbuf_for_presentable (p, GTK_ICON_SIZE_MENU);
 
-                        slave_state = gdu_linux_md_drive_get_slave_state (linux_md_drive, sd);
-
-                        slave_state_str = _("Unknown");
-                        switch (slave_state) {
-                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING:
-                                slave_state_str = _("Running");
-                                break;
-                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING:
-                                slave_state_str = _("Running, Syncing to array");
-                                break;
-                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE:
-                                slave_state_str = _("Running, Hot Spare");
-                                break;
-                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY:
-                                slave_state_str = _("Ready");
-                                break;
-                        case GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH:
-                                if (device != NULL) {
-                                        slave_state_str = _("Not Running, Stale");
-                                } else {
-                                        slave_state_str = _("Stale");
-                                }
-                                break;
-                        default:
-                                break;
-                        }
+                        slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, sd);
+                        slave_state = g_ptr_array_new ();
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED)
+                                g_ptr_array_add (slave_state, _("-"));
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY)
+                                g_ptr_array_add (slave_state, _("<span foreground='red'><b>Faulty</b></span>"));
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC)
+                                g_ptr_array_add (slave_state, _("In Sync"));
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY)
+                                g_ptr_array_add (slave_state, _("Writemostly"));
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED)
+                                g_ptr_array_add (slave_state, _("Blocked"));
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE)
+                                g_ptr_array_add (slave_state, _("Spare"));
+                        g_ptr_array_add (slave_state, NULL);
+                        slave_state_str = g_strjoinv (", ", (gchar **) slave_state->pdata);
+                        g_ptr_array_free (slave_state, TRUE);
 
                         gtk_tree_store_append (store, &iter, NULL);
                         gtk_tree_store_set (store,
@@ -802,6 +793,7 @@ update (GduSectionLinuxMdDrive *section)
                                             -1);
 
                         g_free (name);
+                        g_free (slave_state_str);
                         if (pixbuf != NULL)
                                 g_object_unref (pixbuf);
 
@@ -1090,7 +1082,7 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         renderer = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
         gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", MD_LINUX_STATE_STRING_COLUMN,
+                                             "markup", MD_LINUX_STATE_STRING_COLUMN,
                                              NULL);
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 

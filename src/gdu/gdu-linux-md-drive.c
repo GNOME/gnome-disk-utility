@@ -42,7 +42,7 @@
  * component device that is part of the abstraction is available.  The
  * drive can be started (gdu_drive_start()) and stopped
  * (gdu_drive_stop()) and the state of the underlying components can
- * be queried through gdu_linux_md_drive_get_slave_state()).
+ * be queried through gdu_linux_md_drive_get_slave_flags()).
  *
  * See the documentation for #GduPresentable for the big picture.
  */
@@ -73,16 +73,23 @@ static void device_added (GduPool *pool, GduDevice *device, gpointer user_data);
 static void device_removed (GduPool *pool, GduDevice *device, gpointer user_data);
 static void device_changed (GduPool *pool, GduDevice *device, gpointer user_data);
 
-static gboolean    gdu_linux_md_drive_is_running         (GduDrive            *drive);
-static gboolean    gdu_linux_md_drive_can_start_stop     (GduDrive            *drive);
-static gboolean    gdu_linux_md_drive_can_start          (GduDrive            *drive);
-static gboolean    gdu_linux_md_drive_can_start_degraded (GduDrive            *drive);
-static void        gdu_linux_md_drive_start              (GduDrive            *drive,
-                                                          GduDriveStartFunc    callback,
-                                                          gpointer             user_data);
-static void        gdu_linux_md_drive_stop               (GduDrive            *drive,
-                                                          GduDriveStopFunc     callback,
-                                                          gpointer             user_data);
+static gboolean    gdu_linux_md_drive_is_active             (GduDrive               *drive);
+static gboolean    gdu_linux_md_drive_is_activatable        (GduDrive               *drive);
+static gboolean    gdu_linux_md_drive_can_deactivate        (GduDrive               *drive);
+static gboolean    gdu_linux_md_drive_can_activate          (GduDrive               *drive);
+static gboolean    gdu_linux_md_drive_can_activate_degraded (GduDrive               *drive);
+static void        gdu_linux_md_drive_activate              (GduDrive               *drive,
+                                                             GduDriveActivateFunc    callback,
+                                                             gpointer                user_data);
+static void        gdu_linux_md_drive_deactivate            (GduDrive               *drive,
+                                                             GduDriveDeactivateFunc  callback,
+                                                             gpointer                user_data);
+
+
+static GduDevice *gdu_linux_md_drive_get_first_slave (GduLinuxMdDrive *drive);
+static int gdu_linux_md_drive_get_num_slaves (GduLinuxMdDrive *drive);
+
+static int gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive);
 
 static void
 gdu_linux_md_drive_finalize (GObject *object)
@@ -123,12 +130,13 @@ gdu_linux_md_drive_class_init (GduLinuxMdDriveClass *klass)
 
         g_type_class_add_private (klass, sizeof (GduLinuxMdDrivePrivate));
 
-        drive_class->is_running         = gdu_linux_md_drive_is_running;
-        drive_class->can_start_stop     = gdu_linux_md_drive_can_start_stop;
-        drive_class->can_start          = gdu_linux_md_drive_can_start;
-        drive_class->can_start_degraded = gdu_linux_md_drive_can_start_degraded;
-        drive_class->start              = gdu_linux_md_drive_start;
-        drive_class->stop               = gdu_linux_md_drive_stop;
+        drive_class->is_active             = gdu_linux_md_drive_is_active;
+        drive_class->is_activatable        = gdu_linux_md_drive_is_activatable;
+        drive_class->can_deactivate        = gdu_linux_md_drive_can_deactivate;
+        drive_class->can_activate          = gdu_linux_md_drive_can_activate;
+        drive_class->can_activate_degraded = gdu_linux_md_drive_can_activate_degraded;
+        drive_class->activate              = gdu_linux_md_drive_activate;
+        drive_class->deactivate            = gdu_linux_md_drive_deactivate;
 }
 
 static void
@@ -324,15 +332,7 @@ gdu_linux_md_drive_get_slaves (GduLinuxMdDrive *drive)
         return ret;
 }
 
-/**
- * gdu_linux_md_drive_get_first_slave:
- * @drive: A #GduLinuxMdDrive.
- *
- * Gets the first slave of @drive.
- *
- * Returns: A #GduDevice or #NULL if there are no slaves. Caller must free this object with g_object_unref().
- **/
-GduDevice *
+static GduDevice *
 gdu_linux_md_drive_get_first_slave (GduLinuxMdDrive *drive)
 {
         if (drive->priv->slaves == NULL)
@@ -341,15 +341,7 @@ gdu_linux_md_drive_get_first_slave (GduLinuxMdDrive *drive)
                 return g_object_ref (G_OBJECT (drive->priv->slaves->data));
 }
 
-/**
- * gdu_linux_md_drive_get_num_slaves:
- * @drive: A #GduLinuxMdDrive.
- *
- * Gets the total number of slaves of @drive.
- *
- * Returns: The number of slaves of @drive.
- **/
-int
+static int
 gdu_linux_md_drive_get_num_slaves (GduLinuxMdDrive *drive)
 {
         return g_list_length (drive->priv->slaves);
@@ -365,9 +357,12 @@ gdu_linux_md_drive_get_num_slaves (GduLinuxMdDrive *drive)
  *
  * Returns: The number of fresh/ready slaves of @drive.
  **/
-int
+static int
 gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive)
 {
+        /* TODO */
+        return 0;
+#if 0
         GList *l;
         GduDevice *slave;
         int num_ready_slaves;
@@ -383,11 +378,12 @@ gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive)
         }
 
         return num_ready_slaves;
+#endif
 }
 
 
 /**
- * gdu_linux_md_drive_get_slave_state:
+ * gdu_linux_md_drive_get_slave_flags:
  * @drive: A #GduLinuxMdDrive.
  * @slave: A #GduDevice.
  *
@@ -395,10 +391,40 @@ gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive)
  *
  * Returns: A value from #GduLinuxMdDriveSlaveState for @slave.
  **/
-GduLinuxMdDriveSlaveState
-gdu_linux_md_drive_get_slave_state (GduLinuxMdDrive  *drive,
+GduLinuxMdDriveSlaveFlags
+gdu_linux_md_drive_get_slave_flags (GduLinuxMdDrive  *drive,
                                     GduDevice        *slave)
 {
+        gchar **state;
+        const gchar *holder;
+        GduLinuxMdDriveSlaveFlags flags;
+        guint n;
+
+        flags = 0;
+
+        holder = gdu_device_linux_md_component_get_holder (slave);
+        if (holder == NULL || g_strcmp0 (holder, "/") == 0)
+                flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED;
+
+        state = gdu_device_linux_md_component_get_state (slave);
+        for (n = 0; state != NULL && state[n] != NULL; n++) {
+                if (g_strcmp0 (state[n], "faulty") == 0)
+                        flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY;
+                else if (g_strcmp0 (state[n], "in_sync") == 0)
+                        flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC;
+                else if (g_strcmp0 (state[n], "writemostly") == 0)
+                        flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY;
+                else if (g_strcmp0 (state[n], "blocked") == 0)
+                        flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED;
+                else if (g_strcmp0 (state[n], "spare") == 0)
+                        flags |= GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE;
+                else
+                        g_debug ("unknown linux md component state %s, please add support", state[n]);
+        }
+
+        return flags;
+
+#if 0
         GList *l;
         guint64 max_event_number;
         gboolean one_of_us;
@@ -474,6 +500,7 @@ gdu_linux_md_drive_get_slave_state (GduLinuxMdDrive  *drive,
 
 out:
         return ret;
+#endif
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -593,6 +620,7 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
                         n = 0;
                         for (l = drive->priv->slaves; l != NULL; l = l->next) {
                                 GduDevice *sd = GDU_DEVICE (l->data);
+#if 0
                                 GduLinuxMdDriveSlaveState slave_state;
 
                                 slave_state = gdu_linux_md_drive_get_slave_state (drive, sd);
@@ -600,6 +628,7 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
                                         ret += gdu_device_get_size (sd);;
                                         n++;
                                 }
+#endif
                         }
                         if (n != num_raid_devices) {
                                 ret = 0;
@@ -622,6 +651,7 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
                         n = 0;
                         for (l = drive->priv->slaves; l != NULL; l = l->next) {
                                 GduDevice *sd = GDU_DEVICE (l->data);
+#if 0
                                 GduLinuxMdDriveSlaveState slave_state;
 
                                 slave_state = gdu_linux_md_drive_get_slave_state (drive, sd);
@@ -629,6 +659,7 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
                                         ret += gdu_device_get_size (sd);;
                                         n++;
                                 }
+#endif
                         }
                         if (n != num_raid_devices) {
                                 ret = 0;
@@ -683,66 +714,75 @@ gdu_linux_md_drive_presentable_iface_init (GduPresentableIface *iface)
 /* GduDrive virtual method overrides */
 
 static gboolean
-gdu_linux_md_drive_is_running (GduDrive *_drive)
+array_is_active (const gchar *state)
 {
-        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
-        //g_debug ("is running %p", drive->priv->device);
-        return drive->priv->device != NULL;
+        gboolean ret;
+
+        ret = TRUE;
+
+        if (g_strcmp0 (state, "clear") == 0 ||
+            g_strcmp0 (state, "inactive") == 0 ||
+            g_strcmp0 (state, "suspended") == 0)
+                ret = FALSE;
+
+        return ret;
 }
 
 static gboolean
-gdu_linux_md_drive_can_start_stop (GduDrive *_drive)
+gdu_linux_md_drive_is_active (GduDrive *_drive)
+{
+        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
+        //g_debug ("is running %p", drive->priv->device);
+        return drive->priv->device != NULL && array_is_active (gdu_device_linux_md_get_state (drive->priv->device));
+}
+
+static gboolean
+gdu_linux_md_drive_is_activatable (GduDrive *_drive)
 {
         return TRUE;
 }
 
 static gboolean
-gdu_linux_md_drive_can_start (GduDrive *_drive)
+gdu_linux_md_drive_can_deactivate (GduDrive *_drive)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
-        int num_slaves;
-        int num_ready_slaves;
-        int num_raid_devices;
-        GduDevice *slave;
-        GduLinuxMdDriveSlaveState slave_state;
-        gboolean can_activate;
-        GList *l;
-
-        can_activate = FALSE;
-
-        /* can't activated what's already activated */
-        if (drive->priv->device != NULL)
-                goto out;
-
-        num_raid_devices = -1;
-        num_slaves = 0;
-        num_ready_slaves = 0;
-
-        /* count the number of slaves in the READY state */
-        for (l = drive->priv->slaves; l != NULL; l = l->next) {
-                slave = GDU_DEVICE (l->data);
-
-                num_slaves++;
-
-                slave_state = gdu_linux_md_drive_get_slave_state (drive, slave);
-                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY) {
-                        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (slave);
-                        num_ready_slaves++;
-                }
-        }
-
-        /* we can activate only if all slaves are in the READY */
-        if (num_ready_slaves == num_raid_devices) {
-                can_activate = TRUE;
-        }
-
-out:
-        return can_activate;
+        /* if we have a underlying md device, we can always deactivate */
+        return drive->priv->device != NULL;
 }
 
 static gboolean
-gdu_linux_md_drive_can_start_degraded (GduDrive *_drive)
+gdu_linux_md_drive_can_activate (GduDrive *_drive)
 {
+        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
+        gboolean ret;
+
+        ret = FALSE;
+
+        /* can't activated what's already activated */
+        if (gdu_linux_md_drive_is_active (_drive))
+                goto out;
+
+        /* For now, refuse to activate if state is 'inactive' since this represents a partially
+         * assembled drive (may be caused by broken auto-assembly rules).
+         *
+         * Note that can_deactivate() will return TRUE which allows the user to stop the partially
+         * assembled array and then start it again.
+         */
+        if (drive->priv->device != NULL &&
+            g_strcmp0 (gdu_device_linux_md_get_state (drive->priv->device), "inactive") == 0)
+                goto out;
+
+        /* TODO: count number of slaves to determine if we have enough in non-degraded mode */
+        ret = TRUE;
+
+out:
+        return ret;
+}
+
+static gboolean
+gdu_linux_md_drive_can_activate_degraded (GduDrive *_drive)
+{
+#if 0
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
         GduDevice *device;
         gboolean can_activate_degraded;
@@ -759,7 +799,7 @@ gdu_linux_md_drive_can_start_degraded (GduDrive *_drive)
                 goto out;
 
         /* we might even be able to activate in non-degraded mode */
-        if (gdu_linux_md_drive_can_start (_drive))
+        if (gdu_linux_md_drive_can_activate (_drive))
                 goto out;
 
         device = gdu_linux_md_drive_get_first_slave (drive);
@@ -803,18 +843,20 @@ out:
         if (device != NULL)
                 g_object_unref (device);
         return can_activate_degraded;
+#endif
+        return FALSE;
 }
 
 typedef struct
 {
         GduLinuxMdDrive *drive;
-        GduDriveStartFunc callback;
+        GduDriveActivateFunc callback;
         gpointer user_data;
 } ActivationData;
 
 static ActivationData *
 activation_data_new (GduLinuxMdDrive *drive,
-                     GduDriveStartFunc callback,
+                     GduDriveActivateFunc callback,
                      gpointer user_data)
 {
         ActivationData *ad;
@@ -844,9 +886,9 @@ activation_completed (GduPool  *pool,
 }
 
 static void
-gdu_linux_md_drive_start (GduDrive            *_drive,
-                          GduDriveStartFunc    callback,
-                          gpointer             user_data)
+gdu_linux_md_drive_activate (GduDrive             *_drive,
+                             GduDriveActivateFunc  callback,
+                             gpointer              user_data)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
         GPtrArray *components;
@@ -876,14 +918,14 @@ gdu_linux_md_drive_start (GduDrive            *_drive,
 typedef struct
 {
         GduLinuxMdDrive *drive;
-        GduDriveStopFunc callback;
+        GduDriveDeactivateFunc callback;
         gpointer user_data;
 } DeactivationData;
 
 
 static DeactivationData *
 deactivation_data_new (GduLinuxMdDrive *drive,
-                       GduDriveStopFunc callback,
+                       GduDriveDeactivateFunc callback,
                        gpointer user_data)
 {
         DeactivationData *dad;
@@ -913,9 +955,9 @@ deactivation_completed (GduDevice *device,
 
 
 static void
-gdu_linux_md_drive_stop (GduDrive            *_drive,
-                         GduDriveStopFunc     callback,
-                         gpointer             user_data)
+gdu_linux_md_drive_deactivate (GduDrive               *_drive,
+                               GduDriveDeactivateFunc  callback,
+                               gpointer                user_data)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
 

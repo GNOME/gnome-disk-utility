@@ -100,7 +100,7 @@ gboolean _gdu_linux_md_drive_has_uuid (GduLinuxMdDrive  *drive,
                                        const gchar      *uuid);
 
 
-void        _gdu_device_changed               (GduDevice   *device);
+gboolean    _gdu_device_changed               (GduDevice   *device);
 void        _gdu_device_job_changed           (GduDevice   *device,
                                                gboolean     job_in_progress,
                                                const char  *job_id,

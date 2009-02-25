@@ -56,42 +56,48 @@ struct _GduLinuxMdDriveClass
 };
 
 /**
- * GduLinuxMdDriveSlaveState:
- * @GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING: The drive is activated and the
- * slave is part of it.
- * @GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING: The drive is activated
- * and the slave is part of the array but is in the process of being synced
- * into the array (e.g. it was recently added).
- * @GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE: The drive is activated and
-   the slave is a hot spare ready to kick in if a drive fails.
- * @GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY: The drive is not activated and the
- * slave, compared to other slaves, is a valid member of the array.
- * @GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH: Either the drive is not
- * activated but the slave, compared to other slaves, is not valid since
- * other slaves have higher event numbers / more recent usage dates / etc.
- * Otherwise, if the drive is activated, slaves with this type have valid
- * meta-data (e.g. uuid) but is not part of the array (typically happens
- * if the wire connecting the slave was temporarily disconnected).
+ * GduLinuxMdDriveSlaveFlags:
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NONE: No flags are set.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED: If set, the slave is
+ * not part of the array but appears as a child only because the UUID
+ * on the device matches that of the array. Is also set if the array
+ * does not exist.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY: Device has been kick from
+ * active use due to a detected fault.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC: Device is a fully in-sync
+ * member of the array.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY: Device will only be
+ * subject to read requests if there are no other options. This
+ * applies only to RAID1 arrays.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED: Device has failed,
+ * metadata is "external", and the failure hasn't been acknowledged
+ * yet. Writes that would write to this device if it were not faulty
+ * are blocked.
+ * @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE: Device is working, but not a
+ * full member. This includes spares that in the process of being
+ * recovered to.
  *
- * State for slaves of an Linux MD software raid drive.
+ * State for slaves of an Linux MD software raid drive. Everything but @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NONE
+ * and @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED corresponds to the comma-separated strings in
+ * <literal>/sys/block/mdXXX/md/dev-YYY/state<literal> in sysfs. See Documentation/md.txt in the Linux
+ * kernel for more information.
  **/
 typedef enum {
-        GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING,
-        GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING,
-        GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE,
-        GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY,
-        GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH,
-} GduLinuxMdDriveSlaveState;
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NONE          = 0,
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED  = (1<<0),
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY        = (1<<1),
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC       = (1<<2),
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY   = (1<<3),
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED       = (1<<4),
+        GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE         = (1<<5),
+} GduLinuxMdDriveSlaveFlags;
 
 GType                      gdu_linux_md_drive_get_type             (void);
 const gchar               *gdu_linux_md_drive_get_uuid             (GduLinuxMdDrive  *drive);
 gboolean                   gdu_linux_md_drive_has_slave            (GduLinuxMdDrive  *drive,
                                                                     GduDevice        *device);
 GList                     *gdu_linux_md_drive_get_slaves           (GduLinuxMdDrive  *drive);
-GduDevice                 *gdu_linux_md_drive_get_first_slave      (GduLinuxMdDrive  *drive);
-int                        gdu_linux_md_drive_get_num_slaves       (GduLinuxMdDrive  *drive);
-int                        gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive  *drive);
-GduLinuxMdDriveSlaveState  gdu_linux_md_drive_get_slave_state      (GduLinuxMdDrive  *drive,
+GduLinuxMdDriveSlaveFlags  gdu_linux_md_drive_get_slave_flags      (GduLinuxMdDrive  *drive,
                                                                     GduDevice        *slave);
 G_END_DECLS
 

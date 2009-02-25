@@ -117,8 +117,6 @@ typedef struct
         gboolean drive_is_media_ejectable;
         gboolean drive_requires_eject;
 
-        gboolean optical_disc_is_recordable;
-        gboolean optical_disc_is_rewritable;
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
         gboolean optical_disc_is_closed;
@@ -141,9 +139,10 @@ typedef struct
         char    *linux_md_component_home_host;
         char    *linux_md_component_name;
         char    *linux_md_component_version;
-        guint64  linux_md_component_update_time;
-        guint64  linux_md_component_events;
+        char    *linux_md_component_holder;
+        char   **linux_md_component_state;
 
+        char    *linux_md_state;
         char    *linux_md_level;
         int      linux_md_num_raid_devices;
         char    *linux_md_uuid;
@@ -151,7 +150,6 @@ typedef struct
         char    *linux_md_name;
         char    *linux_md_version;
         char   **linux_md_slaves;
-        char   **linux_md_slaves_state;
         gboolean linux_md_is_degraded;
         char    *linux_md_sync_action;
         double   linux_md_sync_percentage;
@@ -309,10 +307,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "drive-requires-eject") == 0)
                 props->drive_requires_eject = g_value_get_boolean (value);
 
-        else if (strcmp (key, "optical-disc-is-recordable") == 0)
-                props->optical_disc_is_recordable = g_value_get_boolean (value);
-        else if (strcmp (key, "optical-disc-is-rewritable") == 0)
-                props->optical_disc_is_rewritable = g_value_get_boolean (value);
         else if (strcmp (key, "optical-disc-is-blank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
         else if (strcmp (key, "optical-disc-is-appendable") == 0)
@@ -356,11 +350,13 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->linux_md_component_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-component-version") == 0)
                 props->linux_md_component_version = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "linux-md-component-update-time") == 0)
-                props->linux_md_component_update_time = g_value_get_uint64 (value);
-        else if (strcmp (key, "linux-md-component-events") == 0)
-                props->linux_md_component_events = g_value_get_uint64 (value);
+        else if (strcmp (key, "linux-md-component-holder") == 0)
+                props->linux_md_component_holder = g_strdup (g_value_get_boxed (value));
+        else if (strcmp (key, "linux-md-component-state") == 0)
+                props->linux_md_component_state = g_strdupv (g_value_get_boxed (value));
 
+        else if (strcmp (key, "linux-md-state") == 0)
+                props->linux_md_state = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-level") == 0)
                 props->linux_md_level = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "linux-md-num-raid-devices") == 0)
@@ -384,8 +380,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                         props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
                 props->linux_md_slaves[n] = NULL;
         }
-        else if (strcmp (key, "linux-md-slaves-state") == 0)
-                props->linux_md_slaves_state = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "linux-md-is-degraded") == 0)
                 props->linux_md_is_degraded = g_value_get_boolean (value);
         else if (strcmp (key, "linux-md-sync-action") == 0)
@@ -443,13 +437,16 @@ device_properties_free (DeviceProperties *props)
         g_free (props->linux_md_component_home_host);
         g_free (props->linux_md_component_name);
         g_free (props->linux_md_component_version);
+        g_free (props->linux_md_component_holder);
+        g_strfreev (props->linux_md_component_state);
+
+        g_free (props->linux_md_state);
         g_free (props->linux_md_level);
         g_free (props->linux_md_uuid);
         g_free (props->linux_md_home_host);
         g_free (props->linux_md_name);
         g_free (props->linux_md_version);
         g_strfreev (props->linux_md_slaves);
-        g_strfreev (props->linux_md_slaves_state);
         g_free (props->linux_md_sync_action);
         g_free (props);
 }
@@ -592,10 +589,17 @@ gdu_device_init (GduDevice *device)
 static gboolean
 update_info (GduDevice *device)
 {
-        if (device->priv->props != NULL)
-                device_properties_free (device->priv->props);
-        device->priv->props = device_properties_get (device->priv->bus, device->priv->object_path);
-        return TRUE;
+        DeviceProperties *new_properties;
+
+        new_properties = device_properties_get (device->priv->bus, device->priv->object_path);
+        if (new_properties != NULL) {
+                if (device->priv->props != NULL)
+                        device_properties_free (device->priv->props);
+                device->priv->props = new_properties;
+                return TRUE;
+        } else {
+                return FALSE;
+        }
 }
 
 
@@ -637,12 +641,16 @@ error:
         return NULL;
 }
 
-void
+gboolean
 _gdu_device_changed (GduDevice *device)
 {
         g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
-        update_info (device);
-        g_signal_emit (device, signals[CHANGED], 0);
+        if (update_info (device)) {
+                g_signal_emit (device, signals[CHANGED], 0);
+                return TRUE;
+        } else {
+                return FALSE;
+        }
 }
 
 void
@@ -1045,18 +1053,6 @@ gdu_device_drive_get_requires_eject (GduDevice *device)
 }
 
 gboolean
-gdu_device_optical_disc_get_is_recordable (GduDevice *device)
-{
-        return device->priv->props->optical_disc_is_recordable;
-}
-
-gboolean
-gdu_device_optical_disc_get_is_rewritable (GduDevice *device)
-{
-        return device->priv->props->optical_disc_is_rewritable;
-}
-
-gboolean
 gdu_device_optical_disc_get_is_blank (GduDevice *device)
 {
         return device->priv->props->optical_disc_is_blank;
@@ -1152,16 +1148,22 @@ gdu_device_linux_md_component_get_version (GduDevice *device)
         return device->priv->props->linux_md_component_version;
 }
 
-guint64
-gdu_device_linux_md_component_get_update_time (GduDevice *device)
+const char *
+gdu_device_linux_md_component_get_holder (GduDevice *device)
 {
-        return device->priv->props->linux_md_component_update_time;
+        return device->priv->props->linux_md_component_holder;
 }
 
-guint64
-gdu_device_linux_md_component_get_events (GduDevice *device)
+char **
+gdu_device_linux_md_component_get_state (GduDevice *device)
 {
-        return device->priv->props->linux_md_component_events;
+        return device->priv->props->linux_md_component_state;
+}
+
+const char *
+gdu_device_linux_md_get_state (GduDevice *device)
+{
+        return device->priv->props->linux_md_state;
 }
 
 const char *
@@ -1204,12 +1206,6 @@ char **
 gdu_device_linux_md_get_slaves (GduDevice *device)
 {
         return device->priv->props->linux_md_slaves;
-}
-
-char **
-gdu_device_linux_md_get_slaves_state (GduDevice *device)
-{
-        return device->priv->props->linux_md_slaves_state;
 }
 
 gboolean

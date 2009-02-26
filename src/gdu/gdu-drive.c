@@ -255,10 +255,19 @@ gdu_drive_get_name (GduPresentable *presentable)
         GduDrive *drive = GDU_DRIVE (presentable);
         const char *vendor;
         const char *model;
+        const char *presentation_name;
         guint64 size;
         gboolean is_removable;
         char *strsize;
         char *result;
+
+        strsize = NULL;
+
+        presentation_name = gdu_device_get_presentation_name (drive->priv->device);
+        if (presentation_name != NULL && strlen (presentation_name) > 0) {
+                result = g_strdup (presentation_name);
+                goto out;
+        }
 
         vendor = gdu_device_drive_get_vendor (drive->priv->device);
         model = gdu_device_drive_get_model (drive->priv->device);
@@ -271,7 +280,6 @@ gdu_drive_get_name (GduPresentable *presentable)
         if (model != NULL && strlen (model) == 0)
                 model = NULL;
 
-        strsize = NULL;
         if (!is_removable && size > 0) {
                 strsize = gdu_util_get_size_for_display (size, FALSE);
         }
@@ -288,8 +296,9 @@ gdu_drive_get_name (GduPresentable *presentable)
                                           vendor != NULL ? " " : "",
                                           model != NULL ? model : "");
         }
-        g_free (strsize);
 
+ out:
+        g_free (strsize);
         return result;
 }
 
@@ -338,6 +347,7 @@ gdu_drive_get_icon (GduPresentable *presentable)
         const char *name;
         const char *connection_interface;
         const char *drive_media;
+        const char *presentation_icon_name;
         gchar **drive_media_compat;
         gboolean is_removable;
 
@@ -347,6 +357,12 @@ gdu_drive_get_icon (GduPresentable *presentable)
         drive_media_compat = gdu_device_drive_get_media_compatibility (drive->priv->device);
 
         name = NULL;
+
+        presentation_icon_name = gdu_device_get_presentation_icon_name (drive->priv->device);
+        if (presentation_icon_name != NULL && strlen (presentation_icon_name) > 0) {
+                name = presentation_icon_name;
+                goto out;
+        }
 
         /* media type */
         if (strv_has (drive_media_compat, "optical_cd")) {
@@ -400,6 +416,7 @@ gdu_drive_get_icon (GduPresentable *presentable)
                 }
         }
 
+ out:
         /* ultimate fallback */
         if (name == NULL) {
                 if (is_removable)

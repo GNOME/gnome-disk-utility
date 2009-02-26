@@ -212,6 +212,7 @@ gdu_volume_get_name (GduPresentable *presentable)
         const char *usage;
         const char *type;
         const char *drive_media;
+        const char *presentation_name;
         char *result;
         gboolean is_extended_partition;
         char *strsize;
@@ -223,6 +224,13 @@ gdu_volume_get_name (GduPresentable *presentable)
         drive_presentable = NULL;
         drive_device = NULL;
         drive_media = NULL;
+        strsize = NULL;
+
+        presentation_name = gdu_device_get_presentation_name (volume->priv->device);
+        if (presentation_name != NULL && strlen (presentation_name) > 0) {
+                result = g_strdup (presentation_name);
+                goto out;
+        }
 
         drive_presentable = gdu_presentable_get_toplevel (presentable);
         if (drive_presentable != NULL) {
@@ -357,6 +365,7 @@ gdu_volume_get_icon (GduPresentable *presentable)
         const char *connection_interface;
         const char *name;
         const char *drive_media;
+        const char *presentation_icon_name;
         gboolean is_removable;
         GIcon *icon;
         guint n;
@@ -367,6 +376,12 @@ gdu_volume_get_icon (GduPresentable *presentable)
         is_removable = FALSE;
 
         usage = gdu_device_id_get_usage (volume->priv->device);
+
+        presentation_icon_name = gdu_device_get_presentation_icon_name (volume->priv->device);
+        if (presentation_icon_name != NULL && strlen (presentation_icon_name) > 0) {
+                name = presentation_icon_name;
+                goto out;
+        }
 
         p = gdu_presentable_get_toplevel (presentable);
         if (p == NULL)

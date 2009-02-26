@@ -67,6 +67,8 @@ typedef struct
         gboolean device_is_linux_md;
         char    *device_mount_path;
         uid_t    device_mounted_by_uid;
+        char    *device_presentation_name;
+        char    *device_presentation_icon_name;
         guint64  device_size;
         guint64  device_block_size;
 
@@ -208,6 +210,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_mount_path = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-mounted-by-uid") == 0)
                 props->device_mounted_by_uid = g_value_get_uint (value);
+        else if (strcmp (key, "device-presentation-name") == 0)
+                props->device_presentation_name = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "device-presentation-icon-name") == 0)
+                props->device_presentation_icon_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-size") == 0)
                 props->device_size = g_value_get_uint64 (value);
         else if (strcmp (key, "device-block-size") == 0)
@@ -404,6 +410,8 @@ device_properties_free (DeviceProperties *props)
         g_strfreev (props->device_file_by_id);
         g_strfreev (props->device_file_by_path);
         g_free (props->device_mount_path);
+        g_free (props->device_presentation_name);
+        g_free (props->device_presentation_icon_name);
         g_free (props->job_id);
         g_free (props->job_cur_task_id);
         g_free (props->id_usage);
@@ -834,6 +842,18 @@ const char *
 gdu_device_get_mount_path (GduDevice *device)
 {
         return device->priv->props->device_mount_path;
+}
+
+const char *
+gdu_device_get_presentation_name (GduDevice *device)
+{
+        return device->priv->props->device_presentation_name;
+}
+
+const char *
+gdu_device_get_presentation_icon_name (GduDevice *device)
+{
+        return device->priv->props->device_presentation_icon_name;
 }
 
 uid_t

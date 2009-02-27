@@ -759,6 +759,7 @@ recompute_presentables (GduPool *pool)
 
                 pool->priv->presentables = g_list_remove (pool->priv->presentables, p);
                 g_signal_emit (pool, signals[PRESENTABLE_REMOVED], 0, p);
+                g_signal_emit_by_name (p, "removed");
                 g_object_unref (p);
         }
 
@@ -808,7 +809,7 @@ device_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointe
         device = gdu_pool_get_by_object_path (pool, object_path);
         if (device != NULL) {
                 g_object_unref (device);
-                g_debug ("Treating add for previously added device %s as change", object_path);
+                g_warning ("Treating add for previously added device %s as change", object_path);
                 device_changed_signal_handler (proxy, object_path, user_data);
                 goto out;
         }
@@ -839,13 +840,15 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         device = gdu_pool_get_by_object_path (pool, object_path);
         if (device == NULL) {
-                g_debug ("No device to remove for remove %s", object_path);
+                g_warning ("No device to remove for remove %s", object_path);
                 goto out;
         }
 
         g_hash_table_remove (pool->priv->object_path_to_device,
                              gdu_device_get_object_path (device));
         g_signal_emit (pool, signals[DEVICE_REMOVED], 0, device);
+        g_signal_emit_by_name (device, "removed");
+        g_object_unref (device);
         //g_debug ("Removed device %s", object_path);
 
         recompute_presentables (pool);
@@ -864,13 +867,14 @@ device_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         device = gdu_pool_get_by_object_path (pool, object_path);
         if (device == NULL) {
-                g_debug ("Treating change event as add on non-existant device %s", object_path);
-                device_added_signal_handler (proxy, object_path, user_data);
+                g_warning ("Ignoring change event on non-existant device %s", object_path);
                 goto out;
         }
 
-        if (_gdu_device_changed (device))
+        if (_gdu_device_changed (device)) {
                 g_signal_emit (pool, signals[DEVICE_CHANGED], 0, device);
+                g_signal_emit_by_name (device, "changed");
+        }
         g_object_unref (device);
 
         recompute_presentables (pool);

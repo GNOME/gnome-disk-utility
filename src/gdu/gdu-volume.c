@@ -60,7 +60,6 @@ G_DEFINE_TYPE_WITH_CODE (GduVolume, gdu_volume, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
                                                 gdu_volume_presentable_iface_init))
 
-static void device_removed (GduDevice *device, gpointer user_data);
 static void device_job_changed (GduDevice *device, gpointer user_data);
 static void device_changed (GduDevice *device, gpointer user_data);
 
@@ -97,12 +96,11 @@ static const struct
 static void
 gdu_volume_finalize (GduVolume *volume)
 {
-        //g_debug ("finalized volume '%s' %p", volume->priv->id, volume);
+        //g_debug ("##### finalized volume '%s' %p", volume->priv->id, volume);
 
         if (volume->priv->device != NULL) {
                 g_signal_handlers_disconnect_by_func (volume->priv->device, device_changed, volume);
                 g_signal_handlers_disconnect_by_func (volume->priv->device, device_job_changed, volume);
-                g_signal_handlers_disconnect_by_func (volume->priv->device, device_removed, volume);
                 g_object_unref (volume->priv->device);
         }
 
@@ -152,13 +150,6 @@ device_job_changed (GduDevice *device, gpointer user_data)
         g_signal_emit_by_name (volume->priv->pool, "presentable-job-changed", volume);
 }
 
-static void
-device_removed (GduDevice *device, gpointer user_data)
-{
-        GduVolume *volume = GDU_VOLUME (user_data);
-        g_signal_emit_by_name (volume, "removed");
-}
-
 GduVolume *
 _gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *enclosing_presentable)
 {
@@ -175,7 +166,6 @@ _gdu_volume_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *e
 
         g_signal_connect (device, "changed", (GCallback) device_changed, volume);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, volume);
-        g_signal_connect (device, "removed", (GCallback) device_removed, volume);
         return volume;
 }
 

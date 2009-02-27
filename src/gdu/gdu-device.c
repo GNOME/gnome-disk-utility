@@ -538,6 +538,8 @@ gdu_device_get_pool (GduDevice *device)
 static void
 gdu_device_finalize (GduDevice *device)
 {
+        //g_debug ("##### finalized device %s", device->priv->props->device_file);
+
         dbus_g_connection_unref (device->priv->bus);
         g_free (device->priv->object_path);
         if (device->priv->proxy != NULL)
@@ -686,13 +688,6 @@ _gdu_device_job_changed (GduDevice   *device,
         device->priv->props->job_cur_task_percentage = job_cur_task_percentage;
 
         g_signal_emit (device, signals[JOB_CHANGED], 0);
-}
-
-void
-_gdu_device_removed (GduDevice *device)
-{
-        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
-        g_signal_emit (device, signals[REMOVED], 0);
 }
 
 const char *

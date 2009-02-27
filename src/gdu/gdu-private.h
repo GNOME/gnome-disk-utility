@@ -111,8 +111,6 @@ void        _gdu_device_job_changed           (GduDevice   *device,
                                                const char  *job_cur_task_id,
                                                double       job_cur_task_percentage);
 
-void        _gdu_device_removed               (GduDevice   *device);
-
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 

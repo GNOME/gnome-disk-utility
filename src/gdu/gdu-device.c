@@ -420,6 +420,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->id_uuid);
         g_free (props->id_label);
         g_free (props->partition_slave);
+        g_free (props->partition_scheme);
         g_free (props->partition_type);
         g_free (props->partition_label);
         g_free (props->partition_uuid);
@@ -538,7 +539,8 @@ gdu_device_get_pool (GduDevice *device)
 static void
 gdu_device_finalize (GduDevice *device)
 {
-        //g_debug ("##### finalized device %s", device->priv->props->device_file);
+        g_debug ("##### finalized device %s",
+                 device->priv->props != NULL ? device->priv->props->device_file : device->priv->object_path);
 
         dbus_g_connection_unref (device->priv->bus);
         g_free (device->priv->object_path);

@@ -1209,6 +1209,7 @@ gdu_util_fstype_combo_box_update_desc_label (GtkWidget *combo_box)
                         if (desc != NULL) {
                                 s = g_strdup_printf ("<small><i>%s</i></small>", desc);
                                 gtk_label_set_markup (GTK_LABEL (desc_label), s);
+                                g_free (s);
                                 g_free (desc);
                         } else {
                                 gtk_label_set_markup (GTK_LABEL (desc_label), "");
@@ -1569,6 +1570,7 @@ gdu_util_part_table_type_combo_box_update_desc_label (GtkWidget *combo_box)
                         if (desc != NULL) {
                                 s = g_strdup_printf ("<small><i>%s</i></small>", desc);
                                 gtk_label_set_markup (GTK_LABEL (desc_label), s);
+                                g_free (s);
                                 g_free (desc);
                         } else {
                                 gtk_label_set_markup (GTK_LABEL (desc_label), "");

@@ -94,8 +94,10 @@ static const struct
 };
 
 static void
-gdu_volume_finalize (GduVolume *volume)
+gdu_volume_finalize (GObject *object)
 {
+        GduVolume *volume = GDU_VOLUME (object);
+
         //g_debug ("##### finalized volume '%s' %p", volume->priv->id, volume);
 
         if (volume->priv->device != NULL) {
@@ -112,8 +114,8 @@ gdu_volume_finalize (GduVolume *volume)
 
         g_free (volume->priv->id);
 
-        if (G_OBJECT_CLASS (parent_class)->finalize)
-                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (volume));
+        if (G_OBJECT_CLASS (parent_class)->finalize != NULL)
+                (* G_OBJECT_CLASS (parent_class)->finalize) (object);
 }
 
 static void
@@ -123,7 +125,7 @@ gdu_volume_class_init (GduVolumeClass *klass)
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_volume_finalize;
+        obj_class->finalize = gdu_volume_finalize;
 
         g_type_class_add_private (klass, sizeof (GduVolumePrivate));
 }

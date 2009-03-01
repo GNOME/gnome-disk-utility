@@ -396,7 +396,6 @@ get_holes (GduPool        *pool,
         guint64 gap_size;
         guint64 gap_position;
         const char *scheme;
-        ;
 
         ret = NULL;
 
@@ -787,6 +786,7 @@ recompute_presentables (GduPool *pool)
 
         g_list_free (removed_presentables);
         g_list_free (added_presentables);
+
         g_list_foreach (new_presentables, (GFunc) g_object_unref, NULL);
         g_list_free (new_presentables);
         g_list_foreach (devices, (GFunc) g_object_unref, NULL);
@@ -849,7 +849,7 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
         g_signal_emit (pool, signals[DEVICE_REMOVED], 0, device);
         g_signal_emit_by_name (device, "removed");
         g_object_unref (device);
-        //g_debug ("Removed device %s", object_path);
+        g_debug ("Removed device %s", object_path);
 
         recompute_presentables (pool);
 
@@ -910,6 +910,7 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
                                          job_cur_task_id,
                                          job_cur_task_percentage);
                 g_signal_emit_by_name (pool, "device-job-changed", device);
+                g_object_unref (device);
         } else {
                 g_warning ("Unknown device %s on job-change", object_path);
         }
@@ -1209,6 +1210,9 @@ device_recurse (GduPool *pool, GduDevice *device, GList **ret, guint depth)
                                 device_recurse (pool, extended_partition, ret, depth + 1);
                         }
                 }
+
+                if (partition_table != NULL)
+                        g_object_unref (partition_table);
         }
 
         if (gdu_device_is_luks_cleartext (device)) {
@@ -1219,8 +1223,10 @@ device_recurse (GduPool *pool, GduDevice *device, GList **ret, guint depth)
                 luks_device = gdu_pool_get_by_object_path (pool, luks_device_object_path);
 
                 /* the LUKS device must be before the cleartext device */
-                if (luks_device != NULL)
+                if (luks_device != NULL) {
                         device_recurse (pool, luks_device, ret, depth + 1);
+                        g_object_unref (luks_device);
+                }
         }
 
         if (gdu_device_is_linux_md (device)) {
@@ -1235,8 +1241,10 @@ device_recurse (GduPool *pool, GduDevice *device, GList **ret, guint depth)
                         GduDevice *slave;
 
                         slave = gdu_pool_get_by_object_path (pool, slaves[n]);
-                        if (slave != NULL)
+                        if (slave != NULL) {
                                 device_recurse (pool, slave, ret, depth + 1);
+                                g_object_unref (slave);
+                        }
                 }
 
         }

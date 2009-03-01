@@ -100,7 +100,7 @@ smart_data_set (GduSectionHealth *section)
         gboolean passed;
         int power_on_hours;
         double temperature;
-        const char *last_self_test_result;
+        char *last_self_test_result;
         GduDevice *device;
         gboolean attr_warn;
         gboolean attr_fail;
@@ -108,6 +108,8 @@ smart_data_set (GduSectionHealth *section)
         GduSmartData *sd;
 
         sd = NULL;
+        last_self_test_result = NULL;
+
         device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
         if (device == NULL) {
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
@@ -223,6 +225,7 @@ smart_data_set (GduSectionHealth *section)
         gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), last);
 
 out:
+        g_free (last_self_test_result);
         if (device != NULL)
                 g_object_unref (device);
         if (sd != NULL)
@@ -1263,6 +1266,7 @@ update (GduSectionHealth *section)
         /* refresh if data is more than an hour old */
         g_get_current_time (&now);
         sd = gdu_device_get_smart_data (device);
+        collect_time = 0;
         if (sd != NULL)
                 collect_time = gdu_smart_data_get_time_collected (sd);
         if (sd == NULL || collect_time == 0 || (now.tv_sec - collect_time) > 60 * 60) {

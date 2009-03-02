@@ -170,14 +170,11 @@ GDU_KNOWN_FILESYSTEM_GET_CLASS
 GduLinuxMdDrivePrivate
 <TITLE>GduLinuxMdDrive</TITLE>
 GduLinuxMdDrive
-GduLinuxMdDriveSlaveState
+GduLinuxMdDriveSlaveFlags
 gdu_linux_md_drive_get_uuid
 gdu_linux_md_drive_has_slave
 gdu_linux_md_drive_get_slaves
-gdu_linux_md_drive_get_first_slave
-gdu_linux_md_drive_get_num_slaves
-gdu_linux_md_drive_get_num_ready_slaves
-gdu_linux_md_drive_get_slave_state
+gdu_linux_md_drive_get_slave_flags
 <SUBSECTION Standard>
 GDU_LINUX_MD_DRIVE
 GDU_IS_LINUX_MD_DRIVE
@@ -193,12 +190,10 @@ GDU_LINUX_MD_DRIVE_GET_CLASS
 GduDrivePrivate
 <TITLE>GduDrive</TITLE>
 GduDrive
-gdu_drive_is_running
-gdu_drive_can_start_stop
-gdu_drive_can_start
-gdu_drive_can_start_degraded
-gdu_drive_start
-gdu_drive_stop
+gdu_drive_is_active
+gdu_drive_is_activatable
+gdu_drive_can_activate
+gdu_drive_can_deactivate
 <SUBSECTION Standard>
 GDU_DRIVE
 GDU_IS_DRIVE

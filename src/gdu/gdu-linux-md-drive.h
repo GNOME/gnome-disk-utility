@@ -79,7 +79,7 @@ struct _GduLinuxMdDriveClass
  *
  * State for slaves of an Linux MD software raid drive. Everything but @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NONE
  * and @GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED corresponds to the comma-separated strings in
- * <literal>/sys/block/mdXXX/md/dev-YYY/state<literal> in sysfs. See Documentation/md.txt in the Linux
+ * <literal>/sys/block/mdXXX/md/dev-YYY/state</literal> in sysfs. See Documentation/md.txt in the Linux
  * kernel for more information.
  **/
 typedef enum {

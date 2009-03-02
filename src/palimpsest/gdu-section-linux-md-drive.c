@@ -666,9 +666,14 @@ update (GduSectionLinuxMdDrive *section)
                 if (device != NULL) {
                         state_str = g_strdup (_("Not running, partially assembled"));
                 } else {
-                        if (gdu_drive_can_activate (GDU_DRIVE (linux_md_drive))) {
+                        gboolean can_activate;
+                        gboolean degraded;
+
+                        can_activate = gdu_drive_can_activate (GDU_DRIVE (linux_md_drive), &degraded);
+
+                        if (can_activate && !degraded) {
                                 state_str = g_strdup (_("Not running"));
-                        } else if (gdu_drive_can_activate_degraded (GDU_DRIVE (linux_md_drive))) {
+                        } else if (can_activate && degraded) {
                                 state_str = g_strdup (_("Not running, can only start degraded"));
                         } else {
                                 state_str = g_strdup (_("Not running, not enough components to start"));

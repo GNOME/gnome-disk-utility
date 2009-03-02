@@ -37,7 +37,6 @@ struct _GduSectionJobPrivate
         GtkWidget *job_task_label;
 
         PolKitAction *pk_cancel_job_others_action;
-        PolKitAction *pk_cancel_job_others_system_internal_action;
         PolKitGnomeAction *cancel_action;
 
         guint job_progress_pulse_timer_id;
@@ -87,12 +86,8 @@ job_update (GduSectionJob *section, GduDevice *device)
                 job_initiator = gdu_device_job_get_initiated_by_uid (device);
 
                 pk_action = NULL;
-                if (job_initiator != getuid ()) {
-                        if (gdu_device_is_system_internal (device))
-                                pk_action = section->priv->pk_cancel_job_others_system_internal_action;
-                        else
-                                pk_action = section->priv->pk_cancel_job_others_action;
-                }
+                if (job_initiator != getuid ())
+                        pk_action = section->priv->pk_cancel_job_others_action;
                 g_object_set (section->priv->cancel_action,
                               "polkit-action",
                               pk_action,
@@ -177,7 +172,6 @@ static void
 gdu_section_job_finalize (GduSectionJob *section)
 {
         polkit_action_unref (section->priv->pk_cancel_job_others_action);
-        polkit_action_unref (section->priv->pk_cancel_job_others_system_internal_action);
 
         if (section->priv->job_progress_pulse_timer_id > 0) {
                 g_source_remove (section->priv->job_progress_pulse_timer_id);
@@ -217,9 +211,6 @@ gdu_section_job_init (GduSectionJob *section)
         section->priv->pk_cancel_job_others_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_cancel_job_others_action,
                                      "org.freedesktop.devicekit.disks.cancel-job-others");
-        section->priv->pk_cancel_job_others_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_cancel_job_others_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.cancel-job-others-system-internal");
 
         /* job progress section */
         vbox = gtk_vbox_new (FALSE, 5);

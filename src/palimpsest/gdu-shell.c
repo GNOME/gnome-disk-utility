@@ -76,12 +76,9 @@ struct _GduShellPrivate
         PolKitAction *pk_mount_action;
         PolKitAction *pk_mount_system_internal_action;
         PolKitAction *pk_unmount_others_action;
-        PolKitAction *pk_unmount_others_system_internal_action;
         PolKitAction *pk_eject_action;
-        PolKitAction *pk_eject_system_internal_action;
         PolKitAction *pk_unlock_luks_action;
         PolKitAction *pk_lock_luks_others_action;
-        PolKitAction *pk_lock_luks_others_system_internal_action;
         PolKitAction *pk_linux_md_action;
 
         PolKitGnomeAction *fsck_action;
@@ -117,10 +114,8 @@ gdu_shell_finalize (GduShell *shell)
         polkit_action_unref (shell->priv->pk_mount_action);
         polkit_action_unref (shell->priv->pk_mount_system_internal_action);
         polkit_action_unref (shell->priv->pk_unmount_others_action);
-        polkit_action_unref (shell->priv->pk_unmount_others_system_internal_action);
         polkit_action_unref (shell->priv->pk_unlock_luks_action);
         polkit_action_unref (shell->priv->pk_lock_luks_others_action);
-        polkit_action_unref (shell->priv->pk_lock_luks_others_system_internal_action);
         polkit_action_unref (shell->priv->pk_linux_md_action);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
@@ -682,7 +677,7 @@ gdu_shell_update (GduShell *shell)
 
                 can_stop = gdu_drive_can_deactivate (drive);
 
-                can_start = (gdu_drive_can_activate (drive) || gdu_drive_can_activate_degraded (drive));
+                can_start = gdu_drive_can_activate (drive, NULL);
         }
 
         showing_job = job_in_progress;
@@ -778,10 +773,7 @@ gdu_shell_update (GduShell *shell)
                         if (gdu_device_get_mounted_by_uid (device) == getuid ()) {
                                 action = NULL;
                         } else {
-                                if (gdu_device_is_system_internal (device))
-                                        action = shell->priv->pk_unmount_others_system_internal_action;
-                                else
-                                        action = shell->priv->pk_unmount_others_action;
+                                action = shell->priv->pk_unmount_others_action;
                         }
                         g_object_set (shell->priv->unmount_action,
                                       "polkit-action",
@@ -794,8 +786,6 @@ gdu_shell_update (GduShell *shell)
                 if (device != NULL) {
                         g_object_set (shell->priv->eject_action,
                                       "polkit-action",
-                                      gdu_device_is_system_internal (device) ?
-                                      shell->priv->pk_eject_system_internal_action :
                                       shell->priv->pk_eject_action,
                                       NULL);
                 }
@@ -805,10 +795,7 @@ gdu_shell_update (GduShell *shell)
                 PolKitAction *action;
                 action = NULL;
                 if (unlocked_by_uid != getuid () && device != NULL) {
-                        if (gdu_device_is_system_internal (device))
-                                action = shell->priv->pk_lock_luks_others_system_internal_action;
-                        else
-                                action = shell->priv->pk_lock_luks_others_action;
+                        action = shell->priv->pk_lock_luks_others_action;
                 }
                 g_object_set (shell->priv->lock_action,
                               "polkit-action",
@@ -1358,6 +1345,8 @@ start_action_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
         GduDrive *drive;
+        gboolean can_activate;
+        gboolean degraded;
 
         if (!GDU_IS_DRIVE (shell->priv->presentable_now_showing) ||
             !gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing))) {
@@ -1372,8 +1361,14 @@ start_action_callback (GtkAction *action, gpointer user_data)
                 goto out;
         }
 
+        can_activate = gdu_drive_can_activate (drive, &degraded);
+        if (!can_activate) {
+                g_warning ("cannot activate drive");
+                goto out;
+        }
+
         /* ask for consent before activating in degraded mode */
-        if (!gdu_drive_can_activate (drive) && gdu_drive_can_activate_degraded (drive)) {
+        if (degraded) {
                 GtkWidget *dialog;
                 int response;
 
@@ -1831,7 +1826,7 @@ create_ui_manager (GduShell *shell)
         /* -------------------------------------------------------------------------------- */
 
         shell->priv->erase_action = polkit_gnome_action_new_default ("erase",
-                                                                     shell->priv->pk_linux_md_action,
+                                                                     shell->priv->pk_modify_action,
                                                                      _("_Erase..."),
                                                                      _("Erase the contents of the selected device"));
         g_object_set (shell->priv->erase_action,
@@ -1891,9 +1886,6 @@ create_polkit_actions (GduShell *shell)
         polkit_action_set_action_id (shell->priv->pk_unmount_others_action,
                                      "org.freedesktop.devicekit.disks.filesystem-unmount-others");
 
-        shell->priv->pk_unmount_others_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_unmount_others_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.filesystem-unmount-others-system-internal");
 
         shell->priv->pk_unlock_luks_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_unlock_luks_action,
@@ -1902,10 +1894,6 @@ create_polkit_actions (GduShell *shell)
         shell->priv->pk_lock_luks_others_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_lock_luks_others_action,
                                      "org.freedesktop.devicekit.disks.luks-lock-others");
-
-        shell->priv->pk_lock_luks_others_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (shell->priv->pk_lock_luks_others_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.luks-lock-others-system-internal");
 
         shell->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (shell->priv->pk_linux_md_action,

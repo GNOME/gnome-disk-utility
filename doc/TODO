@@ -3,17 +3,16 @@
 - Current dependencies
 ------------------------------------------------------------------------
 
- - DeviceKit-disks from git
-   - http://gitweb.freedesktop.org/?p=users/david/DeviceKit-disks.git
-   - http://people.freedesktop.org/~david/DK/F9/src/DeviceKit-disks-002-0.git20080506.fc9.src.rpm
-
- - GNOME
+ - DeviceKit-disks 003
+ - GNOME keyring
+ - libsexy
+ - PolicyKit-gnome 0.9
+ - dbus-glib
+ - gio
 
 ------------------------------------------------------------------------
 - TODO List
 ------------------------------------------------------------------------
-
-Before (next) release:
 
  - SMART
    - Need to fixup graphing
@@ -21,29 +20,11 @@ Before (next) release:
 
  - Expose UI for polling devices
 
- - Make Eject actually work
-
  - General UI cleanup
 
+ - Port to EggDBus
+
+ - Port to PolicyKit 1.0
+
  - General code cleanup
-
- - Rename application
-   - Probably going for "Palimpsest" (jrb's idea!)
-   - http://en.wikipedia.org/wiki/Palimpsest
-
- - Split into multiple projects
-   - libgdu-gobject
-     - GduDevice, GduPool, GduDrive + friends; basically all non-UI bits
-     - also to be used in the gvfs volume monitor
-     - this GObject based library could be moved to DeviceKit-disks
-   - libgdu
-     - all the useful UI bits; e.g. GduSection subclasses, gdu-util.[ch] etc.
-     - can be used in e.g. Nautilus and dumbed-down utils for e.g. formatting
-   - gnome-disk-utility
-     - The actual Disk Utility program; should be a very small program
-   - gdu-applet
-     - small notification area thing that annoyingly pops up and warns you
-       if the disk is failing or a RAID array gets degraded
-       - or detects if a disk witout known signatures is plugged in
-     - (not actually written yet)
 

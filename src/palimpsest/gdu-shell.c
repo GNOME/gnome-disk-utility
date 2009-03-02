@@ -1223,7 +1223,13 @@ unlock_op_cb (GduDevice *device,
               gpointer   user_data)
 {
         UnlockData *data = user_data;
-        if (error != NULL) {
+        if (error != NULL && error->code == GDU_ERROR_INHIBITED) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error unlocking device"));
+                g_error_free (error);
+        } else if (error != NULL) {
                 /* retry in idle so the job-spinner can be hidden */
                 g_idle_add (unlock_retry, data);
                 g_error_free (error);

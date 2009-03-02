@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 /**
  * GduError:
  * @GDU_ERROR_FAILED: The operation failed.
+ * @GDU_ERROR_INHIBITED: The daemon is being inhibited.
  * @GDU_ERROR_BUSY: The device is busy
  * @GDU_ERROR_CANCELLED: The operation was cancelled
  * @GDU_ERROR_INVALID_OPTION: An invalid option was passed
@@ -58,6 +59,7 @@ G_BEGIN_DECLS
 typedef enum
 {
         GDU_ERROR_FAILED,
+        GDU_ERROR_INHIBITED,
         GDU_ERROR_BUSY,
         GDU_ERROR_CANCELLED,
         GDU_ERROR_INVALID_OPTION,

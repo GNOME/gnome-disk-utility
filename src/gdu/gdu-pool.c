@@ -1519,6 +1519,56 @@ gdu_pool_get_daemon_version (GduPool *pool)
 }
 
 /**
+ * gdu_pool_is_daemon_inhibited:
+ * @pool: A #GduPool.
+ *
+ * Checks if the daemon is currently inhibited.
+ *
+ * Returns: %TRUE if the daemon is inhibited.
+ **/
+gboolean
+gdu_pool_is_daemon_inhibited (GduPool *pool)
+{
+        DBusGProxy *prop_proxy;
+        gboolean ret;
+        GError *error;
+        GValue value = {0};
+
+        /* TODO: this is a currently a synchronous call; when we port to EggDBus this will be fixed */
+
+        ret = TRUE;
+
+	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
+                                                "org.freedesktop.DeviceKit.Disks",
+                                                "/",
+                                                "org.freedesktop.DBus.Properties");
+        error = NULL;
+        if (!dbus_g_proxy_call (prop_proxy,
+                                "Get",
+                                &error,
+                                G_TYPE_STRING,
+                                "org.freedesktop.DeviceKit.Disks",
+                                G_TYPE_STRING,
+                                "daemon-is-inhibited",
+                                G_TYPE_INVALID,
+                                G_TYPE_VALUE,
+                                &value,
+                                G_TYPE_INVALID)) {
+                g_warning ("Couldn't call Get() to determine if daemon is inhibited  for /: %s", error->message);
+                g_error_free (error);
+                ret = TRUE;
+                goto out;
+        }
+
+        ret = g_value_get_boolean (&value);
+
+ out:
+        g_object_unref (prop_proxy);
+        return ret;
+}
+
+
+/**
  * gdu_pool_get_known_filesystems:
  * @pool: A #GduPool.
  *

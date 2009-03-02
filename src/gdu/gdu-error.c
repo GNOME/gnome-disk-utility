@@ -150,10 +150,14 @@ gdu_error_check_polkit_not_authorized (GError *error,
             error->code != DBUS_GERROR_REMOTE_EXCEPTION)
                 goto out;
 
-        ret = polkit_dbus_error_parse_from_strings (dbus_g_error_get_name (error),
-                                                    error->message,
+        if (!g_str_has_prefix (error->message, "org.freedesktop.PolicyKit.Error.NotAuthorized: "))
+                goto out;
+
+        ret = polkit_dbus_error_parse_from_strings ("org.freedesktop.PolicyKit.Error.NotAuthorized",
+                                                    error->message + sizeof "org.freedesktop.PolicyKit.Error.NotAuthorized: " - 1,
                                                     pk_action,
                                                     pk_result);
+
 out:
         return ret;
 }

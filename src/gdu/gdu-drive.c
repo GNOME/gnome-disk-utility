@@ -115,32 +115,35 @@ gdu_drive_is_activatable (GduDrive *drive)
                 return FALSE;
 }
 
+/**
+ * gdu_drive_can_activate:
+ * @drive: A #GduDrive.
+ * @out_degraded: %NULL or return location for whether the drive will be degraded if activated.
+ *
+ * Checks if @drive can be activated. If this function returns %TRUE,
+ * @out_degraded will be set to whether the drive will be started in
+ * degraded mode (e.g. starting a mirror RAID array with only one
+ * component available).
+ *
+ * Returns: %TRUE if @drive can be activated (and @out_degraded will be set), %FALSE otherwise.
+ **/
 gboolean
-gdu_drive_can_activate (GduDrive *drive)
+gdu_drive_can_activate (GduDrive *drive,
+                        gboolean  *out_degraded)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
         if (klass->can_activate != NULL)
-                return klass->can_activate (drive);
+                return klass->can_activate (drive, out_degraded);
         else
                 return FALSE;
 }
 
 gboolean
-gdu_drive_can_deactivate (GduDrive *drive)
+gdu_drive_can_deactivate (GduDrive  *drive)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
         if (klass->can_deactivate != NULL)
                 return klass->can_deactivate (drive);
-        else
-                return FALSE;
-}
-
-gboolean
-gdu_drive_can_activate_degraded (GduDrive *drive)
-{
-        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-        if (klass->can_activate_degraded != NULL)
-                return klass->can_activate_degraded (drive);
         else
                 return FALSE;
 }

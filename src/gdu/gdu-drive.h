@@ -57,8 +57,8 @@ struct _GduDriveClass
         gboolean    (*is_active)             (GduDrive              *drive);
         gboolean    (*is_activatable)        (GduDrive              *drive);
         gboolean    (*can_deactivate)        (GduDrive              *drive);
-        gboolean    (*can_activate)          (GduDrive              *drive);
-        gboolean    (*can_activate_degraded) (GduDrive              *drive);
+        gboolean    (*can_activate)          (GduDrive              *drive,
+                                              gboolean              *out_degraded);
         void        (*activate)              (GduDrive              *drive,
                                               GduDriveActivateFunc   callback,
                                               gpointer               user_data);
@@ -73,8 +73,8 @@ GType       gdu_drive_get_type           (void);
 gboolean    gdu_drive_is_active             (GduDrive              *drive);
 gboolean    gdu_drive_is_activatable        (GduDrive              *drive);
 gboolean    gdu_drive_can_deactivate        (GduDrive              *drive);
-gboolean    gdu_drive_can_activate          (GduDrive              *drive);
-gboolean    gdu_drive_can_activate_degraded (GduDrive              *drive);
+gboolean    gdu_drive_can_activate          (GduDrive              *drive,
+                                             gboolean              *out_degraded);
 void        gdu_drive_activate              (GduDrive              *drive,
                                              GduDriveActivateFunc   callback,
                                              gpointer               user_data);

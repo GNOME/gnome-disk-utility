@@ -76,8 +76,8 @@ static void device_changed (GduPool *pool, GduDevice *device, gpointer user_data
 static gboolean    gdu_linux_md_drive_is_active             (GduDrive               *drive);
 static gboolean    gdu_linux_md_drive_is_activatable        (GduDrive               *drive);
 static gboolean    gdu_linux_md_drive_can_deactivate        (GduDrive               *drive);
-static gboolean    gdu_linux_md_drive_can_activate          (GduDrive               *drive);
-static gboolean    gdu_linux_md_drive_can_activate_degraded (GduDrive               *drive);
+static gboolean    gdu_linux_md_drive_can_activate          (GduDrive               *drive,
+                                                             gboolean               *out_degraded);
 static void        gdu_linux_md_drive_activate              (GduDrive               *drive,
                                                              GduDriveActivateFunc    callback,
                                                              gpointer                user_data);
@@ -85,11 +85,6 @@ static void        gdu_linux_md_drive_deactivate            (GduDrive           
                                                              GduDriveDeactivateFunc  callback,
                                                              gpointer                user_data);
 
-
-static GduDevice *gdu_linux_md_drive_get_first_slave (GduLinuxMdDrive *drive);
-static int gdu_linux_md_drive_get_num_slaves (GduLinuxMdDrive *drive);
-
-static int gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive);
 
 static void
 gdu_linux_md_drive_finalize (GObject *object)
@@ -134,7 +129,6 @@ gdu_linux_md_drive_class_init (GduLinuxMdDriveClass *klass)
         drive_class->is_activatable        = gdu_linux_md_drive_is_activatable;
         drive_class->can_deactivate        = gdu_linux_md_drive_can_deactivate;
         drive_class->can_activate          = gdu_linux_md_drive_can_activate;
-        drive_class->can_activate_degraded = gdu_linux_md_drive_can_activate_degraded;
         drive_class->activate              = gdu_linux_md_drive_activate;
         drive_class->deactivate            = gdu_linux_md_drive_deactivate;
 }
@@ -332,56 +326,6 @@ gdu_linux_md_drive_get_slaves (GduLinuxMdDrive *drive)
         return ret;
 }
 
-static GduDevice *
-gdu_linux_md_drive_get_first_slave (GduLinuxMdDrive *drive)
-{
-        if (drive->priv->slaves == NULL)
-                return NULL;
-        else
-                return g_object_ref (G_OBJECT (drive->priv->slaves->data));
-}
-
-static int
-gdu_linux_md_drive_get_num_slaves (GduLinuxMdDrive *drive)
-{
-        return g_list_length (drive->priv->slaves);
-}
-
-/**
- * gdu_linux_md_drive_get_num_ready_slaves:
- * @drive: A #GduLinuxMdDrive.
- *
- * Gets the number of fresh/ready (See
- * #GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY) slaves of
- * @drive.
- *
- * Returns: The number of fresh/ready slaves of @drive.
- **/
-static int
-gdu_linux_md_drive_get_num_ready_slaves (GduLinuxMdDrive *drive)
-{
-        /* TODO */
-        return 0;
-#if 0
-        GList *l;
-        GduDevice *slave;
-        int num_ready_slaves;
-        GduLinuxMdDriveSlaveState slave_state;
-
-        num_ready_slaves = 0;
-        for (l = drive->priv->slaves; l != NULL; l = l->next) {
-                slave = GDU_DEVICE (l->data);
-                slave_state = gdu_linux_md_drive_get_slave_state (drive, slave);
-                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY) {
-                        num_ready_slaves++;
-                }
-        }
-
-        return num_ready_slaves;
-#endif
-}
-
-
 /**
  * gdu_linux_md_drive_get_slave_flags:
  * @drive: A #GduLinuxMdDrive.
@@ -423,84 +367,6 @@ gdu_linux_md_drive_get_slave_flags (GduLinuxMdDrive  *drive,
         }
 
         return flags;
-
-#if 0
-        GList *l;
-        guint64 max_event_number;
-        gboolean one_of_us;
-        GduLinuxMdDriveSlaveState ret;
-
-        ret = -1;
-
-        /* array is running */
-        if (drive->priv->device != NULL) {
-                int n;
-                char **array_slaves;
-                char **slaves_state;
-
-                array_slaves = gdu_device_linux_md_get_slaves (drive->priv->device);
-                slaves_state = gdu_device_linux_md_get_slaves_state (drive->priv->device);
-                for (n = 0; array_slaves[n] != NULL; n++) {
-                        if (strcmp (gdu_device_get_object_path (slave), array_slaves[n]) == 0) {
-                                const char *state = slaves_state[n];
-
-                                if (strcmp (state, "in_sync") == 0) {
-                                        ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING;
-                                } else if (strcmp (state, "sync_in_progress") == 0) {
-                                        ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_SYNCING;
-                                } else if (strcmp (state, "spare") == 0) {
-                                        ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING_HOT_SPARE;
-                                } else {
-                                        g_warning ("unknown state '%s' for '%s", state, array_slaves[n]);
-                                        ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_RUNNING;
-                                }
-                                goto out;
-                        }
-                }
-
-                ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH;
-                goto out;
-        }
-
-        /* array is not running */
-
-        one_of_us = FALSE;
-
-        /* first find the biggest event number */
-        max_event_number = 0;
-        for (l = drive->priv->slaves; l != NULL; l = l->next) {
-                GduDevice *d = GDU_DEVICE (l->data);
-                guint64 event_number;
-
-                if (!gdu_device_is_linux_md_component (d)) {
-                        g_warning ("slave is not linux md component!");
-                        break;
-                }
-
-                event_number = gdu_device_linux_md_component_get_events (d);
-                if (event_number > max_event_number)
-                        max_event_number = event_number;
-
-                if (d == slave)
-                        one_of_us = TRUE;
-        }
-
-        if (!one_of_us) {
-                g_warning ("given device is not a slave of the activatable drive");
-                goto out;
-        }
-
-        /* if our event number equals the max then it's all good */
-        if (max_event_number == gdu_device_linux_md_component_get_events (slave)) {
-                ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY;
-        } else {
-                /* otherwise we're stale */
-                ret = GDU_LINUX_MD_DRIVE_SLAVE_STATE_NOT_FRESH;
-        }
-
-out:
-        return ret;
-#endif
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -591,9 +457,7 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
         guint64 ret;
         const char *level;
         int num_raid_devices;
-        int n;
         guint component_size;
-        GList *l;
 
         ret = 0;
 
@@ -614,27 +478,10 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
         component_size = gdu_device_get_size (device);
 
         if (strcmp (level, "raid0") == 0) {
-                /* stripes in linux can have different sizes */
-
-                if ((int) g_list_length (drive->priv->slaves) == num_raid_devices) {
-                        n = 0;
-                        for (l = drive->priv->slaves; l != NULL; l = l->next) {
-                                GduDevice *sd = GDU_DEVICE (l->data);
-#if 0
-                                GduLinuxMdDriveSlaveState slave_state;
-
-                                slave_state = gdu_linux_md_drive_get_slave_state (drive, sd);
-                                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY) {
-                                        ret += gdu_device_get_size (sd);;
-                                        n++;
-                                }
-#endif
-                        }
-                        if (n != num_raid_devices) {
-                                ret = 0;
-                        }
-                }
-
+                /* stripes in linux can have different sizes so we don't really know
+                 * until the drive is activated
+                 */
+                ret = 0;
         } else if (strcmp (level, "raid1") == 0) {
                 ret = component_size;
         } else if (strcmp (level, "raid4") == 0) {
@@ -644,28 +491,11 @@ gdu_linux_md_drive_get_size (GduPresentable *presentable)
         } else if (strcmp (level, "raid6") == 0) {
                 ret = component_size * (num_raid_devices - 2) / num_raid_devices;
         } else if (strcmp (level, "raid10") == 0) {
-                /* TODO: need to figure out out to compute this */
+                /* don't really know until the drive is activated */
+                ret = 0;
         } else if (strcmp (level, "linear") == 0) {
-
-                if ((int) g_list_length (drive->priv->slaves) == num_raid_devices) {
-                        n = 0;
-                        for (l = drive->priv->slaves; l != NULL; l = l->next) {
-                                GduDevice *sd = GDU_DEVICE (l->data);
-#if 0
-                                GduLinuxMdDriveSlaveState slave_state;
-
-                                slave_state = gdu_linux_md_drive_get_slave_state (drive, sd);
-                                if (slave_state == GDU_LINUX_MD_DRIVE_SLAVE_STATE_READY) {
-                                        ret += gdu_device_get_size (sd);;
-                                        n++;
-                                }
-#endif
-                        }
-                        if (n != num_raid_devices) {
-                                ret = 0;
-                        }
-                }
-
+                /* don't really know until the drive is activated */
+                ret = 0;
         } else {
                 g_warning ("%s: unknown level '%s'", __FUNCTION__, level);
         }
@@ -751,14 +581,84 @@ gdu_linux_md_drive_can_deactivate (GduDrive *_drive)
 }
 
 static gboolean
-gdu_linux_md_drive_can_activate (GduDrive *_drive)
+check_can_activate (GduLinuxMdDrive *drive,
+                    gboolean        *out_degraded)
+{
+        gboolean can_activate;
+        gboolean degraded;
+        guint num_slaves;
+        guint num_devices;
+        const gchar *raid_level;
+        GduDevice *first_slave_device;
+
+        can_activate = FALSE;
+        degraded = FALSE;
+
+        num_slaves = g_list_length (drive->priv->slaves);
+        if (num_slaves == 0)
+                goto out;
+
+        first_slave_device = GDU_DEVICE (drive->priv->slaves->data);
+
+        num_devices = gdu_device_linux_md_component_get_num_raid_devices (first_slave_device);
+        raid_level = gdu_device_linux_md_component_get_level (first_slave_device);
+
+        if (strcmp (raid_level, "raid0") == 0) {
+                can_activate = (num_slaves == num_devices);
+                degraded = FALSE;
+
+        } else if (strcmp (raid_level, "linear") == 0) {
+                can_activate = (num_slaves == num_devices);
+                degraded = FALSE;
+
+        } else if (strcmp (raid_level, "raid1") == 0) {
+                can_activate = (num_slaves >= 1);
+                degraded = (num_slaves < num_devices);
+
+        } else if (strcmp (raid_level, "raid4") == 0) {
+                can_activate = (num_slaves >= num_devices - 1);
+                degraded = (num_slaves < num_devices);
+
+        } else if (strcmp (raid_level, "raid5") == 0) {
+                can_activate = (num_slaves >= num_devices - 1);
+                degraded = (num_slaves < num_devices);
+
+        } else if (strcmp (raid_level, "raid6") == 0) {
+                can_activate = (num_slaves >= num_devices - 2);
+                degraded = (num_slaves < num_devices);
+
+        } else if (strcmp (raid_level, "raid10") == 0) {
+
+                /* TODO: This is not necessarily correct; whether we can activate
+                 *       really depends on what slaves are available and not just
+                 *       the number of slaves... To check this we'd have to look
+                 *       at the metadata of each slave.
+                 *
+                 *       So we just claim to be able to start the array if at least
+                 *       half of the devices are available.
+                 *
+                 */
+                can_activate = (num_slaves >= num_devices / 2);
+                degraded = (num_slaves < num_devices);
+        }
+
+ out:
+        if (out_degraded != NULL)
+                *out_degraded = degraded;
+
+        return can_activate;
+}
+
+static gboolean
+gdu_linux_md_drive_can_activate (GduDrive *_drive,
+                                 gboolean *out_degraded)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
         gboolean ret;
 
         ret = FALSE;
 
-        /* can't activated what's already activated */
+        /* if already activated, we can't activate it again */
         if (gdu_linux_md_drive_is_active (_drive))
                 goto out;
 
@@ -772,17 +672,15 @@ gdu_linux_md_drive_can_activate (GduDrive *_drive)
             g_strcmp0 (gdu_device_linux_md_get_state (drive->priv->device), "inactive") == 0)
                 goto out;
 
-        /* TODO: count number of slaves to determine if we have enough in non-degraded mode */
-        ret = TRUE;
-
+        ret = check_can_activate (drive, out_degraded);
 out:
         return ret;
 }
 
+#if 0
 static gboolean
 gdu_linux_md_drive_can_activate_degraded (GduDrive *_drive)
 {
-#if 0
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
         GduDevice *device;
         gboolean can_activate_degraded;
@@ -843,9 +741,9 @@ out:
         if (device != NULL)
                 g_object_unref (device);
         return can_activate_degraded;
-#endif
         return FALSE;
 }
+#endif
 
 typedef struct
 {

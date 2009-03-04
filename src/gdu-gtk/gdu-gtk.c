@@ -1057,7 +1057,7 @@ out:
 
         g_free (window_title);
         if (window_icon != NULL)
-                g_free (window_icon);
+                g_object_unref (window_icon);
         if (device != NULL)
                 g_object_unref (device);
         return ret;

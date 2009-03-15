@@ -58,6 +58,8 @@ struct _GduLinuxMdDrivePrivate
 
         gchar *uuid;
 
+        gchar *device_file;
+
         gchar *id;
 };
 
@@ -93,12 +95,14 @@ gdu_linux_md_drive_finalize (GObject *object)
 
         //g_debug ("##### finalized linux-md drive '%s' %p", drive->priv->id, drive);
 
-        if (drive->priv->pool != NULL) {
+        if (drive->priv->uuid != NULL) {
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_added, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_removed, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_changed, drive);
-                g_object_unref (drive->priv->pool);
         }
+
+        if (drive->priv->pool != NULL)
+                g_object_unref (drive->priv->pool);
 
         if (drive->priv->device != NULL) {
                 g_object_unref (drive->priv->device);
@@ -108,6 +112,9 @@ gdu_linux_md_drive_finalize (GObject *object)
         g_list_free (drive->priv->slaves);
 
         g_free (drive->priv->id);
+
+        g_free (drive->priv->uuid);
+        g_free (drive->priv->device_file);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (drive));
@@ -266,22 +273,37 @@ device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
         }
 }
 
+/**
+ * _gdu_linux_md_drive_new:
+ * @pool: A #GduPool.
+ * @uuid: The UUID for the array.
+ * @device_file: The device file for the array.
+ *
+ * Creates a new #GduLinuxMdDrive. Note that only one of @uuid and
+ * @device_file may be %NULL.
+ */
 GduLinuxMdDrive *
 _gdu_linux_md_drive_new (GduPool      *pool,
-                         const gchar  *uuid)
+                         const gchar  *uuid,
+                         const gchar  *device_file)
 {
         GduLinuxMdDrive *drive;
 
         drive = GDU_LINUX_MD_DRIVE (g_object_new (GDU_TYPE_LINUX_MD_DRIVE, NULL));
         drive->priv->pool = g_object_ref (pool);
         drive->priv->uuid = g_strdup (uuid);
-        drive->priv->id = g_strdup_printf ("linux_md_%s", uuid);
+        drive->priv->device_file = g_strdup (device_file);
 
-        g_signal_connect (drive->priv->pool, "device-added", G_CALLBACK (device_added), drive);
-        g_signal_connect (drive->priv->pool, "device-removed", G_CALLBACK (device_removed), drive);
-        g_signal_connect (drive->priv->pool, "device-changed", G_CALLBACK (device_changed), drive);
-
-        prime_devices (drive);
+        if (uuid != NULL) {
+                drive->priv->id = g_strdup_printf ("linux_md_%s", uuid);
+                g_signal_connect (drive->priv->pool, "device-added", G_CALLBACK (device_added), drive);
+                g_signal_connect (drive->priv->pool, "device-removed", G_CALLBACK (device_removed), drive);
+                g_signal_connect (drive->priv->pool, "device-changed", G_CALLBACK (device_changed), drive);
+                prime_devices (drive);
+        } else {
+                drive->priv->id = g_strdup_printf ("linux_md_%s", device_file);
+                drive->priv->device = gdu_pool_get_by_device_file (pool, device_file);
+        }
 
         return drive;
 }
@@ -412,28 +434,36 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
 
         ret = NULL;
 
-        if (drive->priv->slaves == NULL)
-                goto out;
+        if (drive->priv->slaves != NULL) {
+                device = GDU_DEVICE (drive->priv->slaves->data);
 
-        device = GDU_DEVICE (drive->priv->slaves->data);
+                level = gdu_device_linux_md_component_get_level (device);
+                name = gdu_device_linux_md_component_get_name (device);
+                num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
+                num_slaves = g_list_length (drive->priv->slaves);
+                component_size = gdu_device_get_size (device);
 
-        level = gdu_device_linux_md_component_get_level (device);
-        name = gdu_device_linux_md_component_get_name (device);
-        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
-        num_slaves = g_list_length (drive->priv->slaves);
-        component_size = gdu_device_get_size (device);
+                level_str = gdu_linux_md_get_raid_level_for_display (level);
 
-        level_str = gdu_linux_md_get_raid_level_for_display (level);
+                if (name == NULL || strlen (name) == 0) {
+                        ret = g_strdup_printf (_("%s Drive"), level_str);
+                } else {
+                        ret = g_strdup_printf (_("%s (%s)"), name, level_str);
+                }
 
-        if (name == NULL || strlen (name) == 0) {
-                ret = g_strdup_printf (_("%s Drive"), level_str);
+                g_free (level_str);
+
+        } else if (drive->priv->device != NULL) {
+                ret = g_strdup_printf (_("RAID device %s (%s)"),
+                                       gdu_device_get_device_file (drive->priv->device),
+                                       gdu_device_linux_md_get_state (drive->priv->device));
+
         } else {
-                ret = g_strdup_printf (_("%s (%s)"), name, level_str);
+                g_warn_if_fail (drive->priv->device_file != NULL);
+
+                ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
         }
 
-        g_free (level_str);
-
-out:
         return ret;
 }
 
@@ -676,74 +706,6 @@ gdu_linux_md_drive_can_activate (GduDrive *_drive,
 out:
         return ret;
 }
-
-#if 0
-static gboolean
-gdu_linux_md_drive_can_activate_degraded (GduDrive *_drive)
-{
-        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (_drive);
-        GduDevice *device;
-        gboolean can_activate_degraded;
-        int num_ready_slaves;
-        int num_raid_devices;
-        const char *raid_level;
-
-        device = NULL;
-
-        can_activate_degraded = FALSE;
-
-        /* can't activated what's already activated */
-        if (drive->priv->device != NULL)
-                goto out;
-
-        /* we might even be able to activate in non-degraded mode */
-        if (gdu_linux_md_drive_can_activate (_drive))
-                goto out;
-
-        device = gdu_linux_md_drive_get_first_slave (drive);
-        if (device == NULL)
-                goto out;
-
-        num_ready_slaves = gdu_linux_md_drive_get_num_ready_slaves (drive);
-        num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
-        raid_level = gdu_device_linux_md_component_get_level (device);
-
-        /* this depends on the raid level... */
-        if (strcmp (raid_level, "raid1") == 0) {
-                if (num_ready_slaves >= 1) {
-                        can_activate_degraded = TRUE;
-                }
-        } else if (strcmp (raid_level, "raid4") == 0) {
-                if (num_ready_slaves >= num_raid_devices - 1) {
-                        can_activate_degraded = TRUE;
-                }
-        } else if (strcmp (raid_level, "raid5") == 0) {
-                if (num_ready_slaves >= num_raid_devices - 1) {
-                        can_activate_degraded = TRUE;
-                }
-        } else if (strcmp (raid_level, "raid6") == 0) {
-                if (num_ready_slaves >= num_raid_devices - 2) {
-                        can_activate_degraded = TRUE;
-                }
-        } else if (strcmp (raid_level, "raid10") == 0) {
-                /* TODO: This is not necessarily correct; it depends on which
-                 *       slaves have failed... Right now we err on the side
-                 *       of saying the array can be activated even when sometimes
-                 *       it can't
-                 */
-                if (num_ready_slaves >= num_raid_devices / 2) {
-                        can_activate_degraded = TRUE;
-                }
-        }
-
-
-out:
-        if (device != NULL)
-                g_object_unref (device);
-        return can_activate_degraded;
-        return FALSE;
-}
-#endif
 
 typedef struct
 {

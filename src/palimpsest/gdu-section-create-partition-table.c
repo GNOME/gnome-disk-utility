@@ -205,7 +205,7 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
         section->priv->create_part_table_action = polkit_gnome_action_new_default (
                 "create-part-table",
                 section->priv->pk_change_action,
-                _("_Create"),
+                _("C_reate"),
                 _("Create"));
         g_object_set (section->priv->create_part_table_action,
                       "auth-label", _("_Create..."),
@@ -244,7 +244,7 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
         /* partition table type */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Ty_pe:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         combo_box = gdu_util_part_table_type_combo_box_create ();

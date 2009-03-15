@@ -31,6 +31,7 @@
 #include "gdu-device.h"
 #include "gdu-volume-hole.h"
 #include "gdu-presentable.h"
+#include "gdu-linux-md-drive.h"
 
 /**
  * SECTION:gdu-volume-hole
@@ -183,8 +184,13 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
 
         drive_media = gdu_device_drive_get_media (d);
 
+        /* Linux MD devices can be partitioned */
+        if (GDU_IS_LINUX_MD_DRIVE (p)) {
+                name = "gdu-raid-array";
+        }
+
         /* first try the media */
-        if (drive_media != NULL) {
+        if (name == NULL && drive_media != NULL) {
                 if (strcmp (drive_media, "flash_cf") == 0) {
                         name = "media-flash-cf";
                 } else if (strcmp (drive_media, "flash_ms") == 0) {

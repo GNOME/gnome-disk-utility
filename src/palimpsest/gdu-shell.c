@@ -522,9 +522,6 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
                                                                                   (gpointer) GDU_TYPE_SECTION_HEALTH);
                                 }
 
-                                sections_to_show = g_list_append (sections_to_show,
-                                                                  (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
-
                         }
 
                 } else if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) && device != NULL) {
@@ -551,11 +548,30 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
                                                 sections_to_show, (gpointer) GDU_TYPE_SECTION_SWAPSPACE);
                                 }
                         } else {
+                                GduPresentable *toplevel_presentable;
+                                GduDevice *toplevel_device;
+
                                 sections_to_show = g_list_append (
                                         sections_to_show, (gpointer) GDU_TYPE_SECTION_UNRECOGNIZED);
+
+                                /* Also show a "Create partition table" section for a volume if the drive isn't partitioned */
+                                toplevel_presentable = gdu_presentable_get_toplevel (shell->priv->presentable_now_showing);
+                                if (toplevel_presentable != NULL) {
+                                        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+
+                                        if (toplevel_device != NULL) {
+                                                if (!gdu_device_is_partition_table (toplevel_device)) {
+                                                        sections_to_show = g_list_append (
+                                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
+                                                }
+                                                g_object_unref (toplevel_device);
+                                        }
+                                        g_object_unref (toplevel_presentable);
+                                }
                         }
 
                 } else if (GDU_IS_VOLUME_HOLE (shell->priv->presentable_now_showing)) {
+
                         sections_to_show = g_list_append (sections_to_show,
                                                           (gpointer) GDU_TYPE_SECTION_UNALLOCATED);
                 }

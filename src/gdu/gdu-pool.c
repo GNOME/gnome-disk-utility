@@ -554,7 +554,7 @@ recompute_presentables (GduPool *pool)
          *
          * The reason for this brute-force approach is that the GduPresentable entities are
          * somewhat complicated since the whole process involves synthesizing GduVolumeHole and
-         * GduActivatableDrive objects.
+         * GduLinuxMdDrive objects.
          */
 
         new_presentables = NULL;
@@ -595,16 +595,29 @@ recompute_presentables (GduPool *pool)
                                 const gchar *uuid;
 
                                 uuid = gdu_device_linux_md_get_uuid (device);
-                                drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid));
 
-                                /* Due to the topological sorting of devices, we are guaranteed that
-                                 * that running Linux MD arrays come before the slaves.
-                                 */
-                                g_warn_if_fail (g_hash_table_lookup (hash_map_from_linux_md_uuid_to_drive, uuid) == NULL);
+                                /* 'clear' and 'inactive' devices may not have an uuid */
+                                if (uuid != NULL && strlen (uuid) == 0)
+                                        uuid = NULL;
 
-                                g_hash_table_insert (hash_map_from_linux_md_uuid_to_drive,
-                                                     (gpointer) uuid,
-                                                     drive);
+                                if (uuid != NULL) {
+                                        drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL));
+
+                                        /* Due to the topological sorting of devices, we are guaranteed that
+                                         * that running Linux MD arrays come before the slaves.
+                                         */
+                                        g_warn_if_fail (g_hash_table_lookup (hash_map_from_linux_md_uuid_to_drive, uuid) == NULL);
+
+                                        g_hash_table_insert (hash_map_from_linux_md_uuid_to_drive,
+                                                             (gpointer) uuid,
+                                                             drive);
+                                } else {
+                                        drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool,
+                                                                                    NULL,
+                                                                                    gdu_device_get_device_file (device)));
+                                }
+
+
                         } else {
                                 drive = _gdu_drive_new_from_device (pool, device);
                         }
@@ -709,7 +722,7 @@ recompute_presentables (GduPool *pool)
                         if (g_hash_table_lookup (hash_map_from_linux_md_uuid_to_drive, uuid) == NULL) {
                                 GduDrive *drive;
 
-                                drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid));
+                                drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL));
                                 new_presentables = g_list_prepend (new_presentables, drive);
 
                                 g_hash_table_insert (hash_map_from_linux_md_uuid_to_drive,

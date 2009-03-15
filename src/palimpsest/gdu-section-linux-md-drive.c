@@ -571,13 +571,33 @@ update (GduSectionLinuxMdDrive *section)
 
         slaves = gdu_linux_md_drive_get_slaves (linux_md_drive);
         num_slaves = g_list_length (slaves);
+
         if (num_slaves == 0) {
-                /* this fine; happens when the last component is yanked
-                 * since remove_slave() emits "changed".
+                /* This happens for 'clear' arrays or for arrays with stale symlinks
+                 * to devices that has been yanked.
+                 *
+                 * - Ideally Linux MD / mdadm wouldn't have stale symlinks in sysfs but
+                 *   that is not how things currently work (2.6.29).
+                 *
+                 * - Also sometimes when stopping an array the md device is still around
+                 *
+                 * So we only offer to stop such arrays since the software beneath us
+                 * is unstable. In an ideal world we wouldn't show them.
                  */
-                /*g_warning ("%s: no slaves for linux_md drive", __FUNCTION__);*/
+
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_name_label), _("-"));
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_home_host_label), _("-"));
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_type_label), _("-"));
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_size_label), _("-"));
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_components_label), _("-"));
+                gtk_label_set_markup (GTK_LABEL (section->priv->linux_md_state_label), _("-"));
+
+                gtk_widget_set_sensitive (GTK_WIDGET (section), FALSE);
                 goto out;
         }
+
+        gtk_widget_set_sensitive (GTK_WIDGET (section), TRUE);
+
         component = GDU_DEVICE (slaves->data);
 
         if (!gdu_device_is_linux_md_component (component)) {

@@ -94,7 +94,8 @@ GduVolumeHole   *_gdu_volume_hole_new       (GduPool *pool, guint64 offset, guin
 
 
 GduLinuxMdDrive   *_gdu_linux_md_drive_new             (GduPool              *pool,
-                                                        const gchar          *uuid);
+                                                        const gchar          *uuid,
+                                                        const gchar          *device_file);
 
 gboolean _gdu_linux_md_drive_has_uuid (GduLinuxMdDrive  *drive,
                                        const gchar      *uuid);

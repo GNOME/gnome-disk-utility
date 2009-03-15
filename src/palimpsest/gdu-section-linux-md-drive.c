@@ -50,7 +50,6 @@ struct _GduSectionLinuxMdDrivePrivate
 #endif
 
         PolKitAction *pk_linux_md_action;
-        PolKitAction *pk_linux_md_system_internal_action;
 
         PolKitGnomeAction *attach_action;
         PolKitGnomeAction *detach_action;
@@ -515,28 +514,6 @@ linux_md_buttons_update (GduSectionLinuxMdDrive *section)
                 }
         }
 
-        g_object_set (section->priv->attach_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                      section->priv->pk_linux_md_system_internal_action :
-                      section->priv->pk_linux_md_action,
-                      NULL);
-
-        g_object_set (section->priv->detach_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                      section->priv->pk_linux_md_system_internal_action :
-                      section->priv->pk_linux_md_action,
-                      NULL);
-
-        g_object_set (section->priv->add_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                      section->priv->pk_linux_md_system_internal_action :
-                      section->priv->pk_linux_md_action,
-                      NULL);
-
-
 out:
         polkit_gnome_action_set_sensitive (section->priv->attach_action, show_attach_to_array_button);
         polkit_gnome_action_set_sensitive (section->priv->detach_action, show_detach_from_array_button);
@@ -829,7 +806,6 @@ static void
 gdu_section_linux_md_drive_finalize (GduSectionLinuxMdDrive *section)
 {
         polkit_action_unref (section->priv->pk_linux_md_action);
-        polkit_action_unref (section->priv->pk_linux_md_system_internal_action);
         g_object_unref (section->priv->attach_action);
         g_object_unref (section->priv->detach_action);
         g_object_unref (section->priv->add_action);
@@ -869,10 +845,6 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         section->priv->pk_linux_md_action = polkit_action_new ();
         polkit_action_set_action_id (section->priv->pk_linux_md_action,
                                      "org.freedesktop.devicekit.disks.linux-md");
-
-        section->priv->pk_linux_md_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_linux_md_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.linux-md-system-internal");
 
         gtk_box_set_spacing (GTK_BOX (section), 8);
 

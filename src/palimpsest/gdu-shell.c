@@ -819,7 +819,6 @@ gdu_shell_update (GduShell *shell)
                 }
         }
 
-
         /* update all GtkActions */
         polkit_gnome_action_set_sensitive (shell->priv->mount_action, can_mount);
         polkit_gnome_action_set_sensitive (shell->priv->fsck_action, can_fsck);

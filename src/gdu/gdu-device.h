@@ -73,6 +73,7 @@ guint64 gdu_device_get_block_size (GduDevice *device);
 gboolean gdu_device_is_removable (GduDevice *device);
 gboolean gdu_device_is_media_available (GduDevice *device);
 gboolean gdu_device_is_media_change_detected (GduDevice *device);
+gboolean gdu_device_is_media_change_detection_polling (GduDevice *device);
 gboolean gdu_device_is_media_change_detection_inhibitable (GduDevice *device);
 gboolean gdu_device_is_media_change_detection_inhibited (GduDevice *device);
 gboolean gdu_device_is_read_only (GduDevice *device);

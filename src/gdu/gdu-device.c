@@ -54,6 +54,7 @@ typedef struct
         gboolean device_is_removable;
         gboolean device_is_media_available;
         gboolean device_is_media_change_detected;
+        gboolean device_is_media_change_detection_polling;
         gboolean device_is_media_change_detection_inhibitable;
         gboolean device_is_media_change_detection_inhibited;
         gboolean device_is_read_only;
@@ -184,6 +185,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_media_available = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-media-change-detected") == 0)
                 props->device_is_media_change_detected = g_value_get_boolean (value);
+        else if (strcmp (key, "device-is-media-change-detection-polling") == 0)
+                props->device_is_media_change_detection_polling = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-media-change-detection-inhibitable") == 0)
                 props->device_is_media_change_detection_inhibitable = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-media-change-detection-inhibited") == 0)
@@ -420,7 +423,6 @@ device_properties_free (DeviceProperties *props)
         g_free (props->id_uuid);
         g_free (props->id_label);
         g_free (props->partition_slave);
-        g_free (props->partition_scheme);
         g_free (props->partition_type);
         g_free (props->partition_label);
         g_free (props->partition_uuid);
@@ -761,6 +763,12 @@ gboolean
 gdu_device_is_media_change_detected (GduDevice *device)
 {
         return device->priv->props->device_is_media_change_detected;
+}
+
+gboolean
+gdu_device_is_media_change_detection_polling (GduDevice *device)
+{
+        return device->priv->props->device_is_media_change_detection_polling;
 }
 
 gboolean

@@ -517,7 +517,7 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
 
                         } else {
 
-                                if (gdu_device_drive_smart_get_is_enabled (device)) {
+                                if (gdu_device_drive_ata_smart_get_is_available (device)) {
                                                 sections_to_show = g_list_append (sections_to_show,
                                                                                   (gpointer) GDU_TYPE_SECTION_HEALTH);
                                 }

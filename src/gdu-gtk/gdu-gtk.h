@@ -26,8 +26,10 @@
 #error  libgdu-gtk is unstable API. You must define GDU_GTK_API_IS_SUBJECT_TO_CHANGE before including gdu-gtk/gdu-gtk.h
 #endif
 
-#include <gtk/gtk.h>
-#include <gdu/gdu.h>
+#define __GDU_GTK_INSIDE_GDU_GTK_H
+#include <gdu-gtk/gdu-gtk-types.h>
+#include <gdu-gtk/gdu-time-label.h>
+#undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS
 

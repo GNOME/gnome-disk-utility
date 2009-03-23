@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-smart-data-attribute.c
+/* gdu-ata-smart-attribute.c
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -27,102 +27,151 @@
 #include <time.h>
 
 #include "gdu-private.h"
-#include "gdu-smart-data-attribute.h"
+#include "gdu-ata-smart-attribute.h"
 
-struct _GduSmartDataAttributePrivate {
-        /* TODO: use guint8 */
-        int id;
-        int value;
-        int worst;
-        int threshold;
-        int flags;
-        char *raw;
-        char *name;
+struct _GduAtaSmartAttributePrivate {
+        guint id;
+        gchar *name;
+        guint flags;
+        gboolean online, prefailure;
+        guchar current;
+        gboolean current_valid;
+        guchar worst;
+        gboolean worst_valid;
+        guchar threshold;
+        gboolean threshold_valid;
+        gboolean good, good_valid;
+        guint pretty_unit;
+        guint64 pretty_value;
 };
 
 static GObjectClass *parent_class = NULL;
 
-G_DEFINE_TYPE (GduSmartDataAttribute, gdu_smart_data_attribute, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GduAtaSmartAttribute, gdu_ata_smart_attribute, G_TYPE_OBJECT);
 
 static void
-gdu_smart_data_attribute_finalize (GduSmartDataAttribute *smart_data_attribute)
+gdu_ata_smart_attribute_finalize (GduAtaSmartAttribute *attribute)
 {
-        g_free (smart_data_attribute->priv->raw);
-        g_free (smart_data_attribute->priv->name);
+        g_free (attribute->priv->name);
         if (G_OBJECT_CLASS (parent_class)->finalize)
-                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (smart_data_attribute));
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (attribute));
 }
 
 static void
-gdu_smart_data_attribute_class_init (GduSmartDataAttributeClass *klass)
+gdu_ata_smart_attribute_class_init (GduAtaSmartAttributeClass *klass)
 {
         GObjectClass *obj_class = (GObjectClass *) klass;
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_smart_data_attribute_finalize;
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_ata_smart_attribute_finalize;
 
-        g_type_class_add_private (klass, sizeof (GduSmartDataAttributePrivate));
+        g_type_class_add_private (klass, sizeof (GduAtaSmartAttributePrivate));
 }
 
 static void
-gdu_smart_data_attribute_init (GduSmartDataAttribute *smart_data_attribute)
+gdu_ata_smart_attribute_init (GduAtaSmartAttribute *attribute)
 {
-        smart_data_attribute->priv = G_TYPE_INSTANCE_GET_PRIVATE (smart_data_attribute, GDU_TYPE_SMART_DATA_ATTRIBUTE, GduSmartDataAttributePrivate);
+        attribute->priv = G_TYPE_INSTANCE_GET_PRIVATE (attribute, GDU_TYPE_ATA_SMART_ATTRIBUTE, GduAtaSmartAttributePrivate);
 }
 
-int
-gdu_smart_data_attribute_get_id (GduSmartDataAttribute *smart_data_attribute)
+guint
+gdu_ata_smart_attribute_get_id (GduAtaSmartAttribute *attribute)
 {
-        return smart_data_attribute->priv->id;
+        return attribute->priv->id;
 }
 
-int
-gdu_smart_data_attribute_get_flags (GduSmartDataAttribute *smart_data_attribute)
+guint
+gdu_ata_smart_attribute_get_flags (GduAtaSmartAttribute *attribute)
 {
-        return smart_data_attribute->priv->flags;
+        return attribute->priv->flags;
 }
 
-int
-gdu_smart_data_attribute_get_value (GduSmartDataAttribute *smart_data_attribute)
+gboolean
+gdu_ata_smart_attribute_get_online (GduAtaSmartAttribute *attribute)
 {
-        return smart_data_attribute->priv->value;
+        return attribute->priv->online;
 }
 
-int
-gdu_smart_data_attribute_get_worst (GduSmartDataAttribute *smart_data_attribute)
+gboolean
+gdu_ata_smart_attribute_get_prefailure (GduAtaSmartAttribute *attribute)
 {
-        return smart_data_attribute->priv->worst;
+        return attribute->priv->prefailure;
 }
 
-int
-gdu_smart_data_attribute_get_threshold (GduSmartDataAttribute *smart_data_attribute)
+guint
+gdu_ata_smart_attribute_get_current (GduAtaSmartAttribute *attribute)
 {
-        return smart_data_attribute->priv->threshold;
+        return attribute->priv->current;
 }
 
-char *
-gdu_smart_data_attribute_get_raw (GduSmartDataAttribute *smart_data_attribute)
+gboolean
+gdu_ata_smart_attribute_get_current_valid (GduAtaSmartAttribute *attribute)
 {
-        return g_strdup (smart_data_attribute->priv->raw);
+        return attribute->priv->current_valid;
+}
+
+guint
+gdu_ata_smart_attribute_get_worst (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->worst;
+}
+
+gboolean
+gdu_ata_smart_attribute_get_worst_valid (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->worst_valid;
+}
+
+guint
+gdu_ata_smart_attribute_get_threshold (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->threshold;
+}
+
+gboolean
+gdu_ata_smart_attribute_get_threshold_valid (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->threshold_valid;
+}
+
+gboolean
+gdu_ata_smart_attribute_get_good (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->good;
+}
+
+gboolean
+gdu_ata_smart_attribute_get_good_valid (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->good_valid;
+}
+
+guint64
+gdu_ata_smart_attribute_get_pretty_value (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->pretty_value;
+}
+
+GduAtaSmartAttributeUnit
+gdu_ata_smart_attribute_get_pretty_unit (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->pretty_unit;
 }
 
 static void
-attribute_get_details (GduSmartDataAttribute  *attr,
-                       char                  **out_name,
-                       char                  **out_description,
-                       gboolean               *out_should_warn)
+attribute_get_details (GduAtaSmartAttribute  *attr,
+                       gchar                    **out_name,
+                       gchar                    **out_description,
+                       gboolean                  *out_warn)
 {
         const char *n;
         const char *d;
         gboolean warn;
-        int raw_int;
 
-        raw_int = atoi (attr->priv->raw);
-
-        /* See http://smartmontools.sourceforge.net/doc.html
+        /* See http://ata_smartmontools.sourceforge.net/doc.html
          *     http://en.wikipedia.org/wiki/S.M.A.R.T
-         *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-SMARTAttributesAnnex.pdf
+         *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-ATA_SMARTAttributesAnnex.pdf
          */
 
         n = NULL;
@@ -216,7 +265,7 @@ attribute_get_details (GduSmartDataAttribute  *attr,
                       "successfully, this value is decreased and the sector is not remapped. Read "
                       "errors on the sector will not remap the sector, it will only be remapped on "
                       "a failed write attempt.");
-                if (raw_int > 0)
+                if (attr->priv->pretty_value > 0)
                         warn = TRUE;
                 break;
         case 198:
@@ -334,62 +383,64 @@ attribute_get_details (GduSmartDataAttribute  *attr,
                 *out_name = g_strdup (n);
         if (out_description != NULL)
                 *out_description = g_strdup (d);
-        if (out_should_warn != NULL)
-                *out_should_warn = warn;
+        if (out_warn != NULL)
+                *out_warn = warn;
 }
 
 
-char *
-gdu_smart_data_attribute_get_name (GduSmartDataAttribute *smart_data_attribute)
+const gchar *
+gdu_ata_smart_attribute_get_name (GduAtaSmartAttribute *attribute)
+{
+        return attribute->priv->name;
+}
+
+gchar *
+gdu_ata_smart_attribute_get_localized_name (GduAtaSmartAttribute *attribute)
 {
         char *s;
-        attribute_get_details (smart_data_attribute, &s, NULL, NULL);
+        attribute_get_details (attribute, &s, NULL, NULL);
         if (s == NULL)
-                s = g_strdup (smart_data_attribute->priv->name);
+                s = g_strdup (attribute->priv->name);
         return s;
 }
 
-char *
-gdu_smart_data_attribute_get_description (GduSmartDataAttribute *smart_data_attribute)
+gchar *
+gdu_ata_smart_attribute_get_localized_description (GduAtaSmartAttribute *attribute)
 {
         char *s;
-        attribute_get_details (smart_data_attribute, NULL, &s, NULL);
+        attribute_get_details (attribute, NULL, &s, NULL);
         return s;
 }
 
-gboolean
-gdu_smart_data_attribute_is_warning (GduSmartDataAttribute *smart_data_attribute)
-{
-        gboolean should_warn;
-        attribute_get_details (smart_data_attribute, NULL, NULL, &should_warn);
-        return should_warn;
-}
-
-gboolean
-gdu_smart_data_attribute_is_failing (GduSmartDataAttribute *smart_data_attribute)
-{
-        return smart_data_attribute->priv->value < smart_data_attribute->priv->threshold;
-}
-
-GduSmartDataAttribute *
-_gdu_smart_data_attribute_new (gpointer data)
+GduAtaSmartAttribute *
+_gdu_ata_smart_attribute_new (gpointer data)
 {
         GValue elem = {0};
-        GduSmartDataAttribute *smart_data_attribute;
+        GduAtaSmartAttribute *attribute;
 
-        smart_data_attribute = GDU_SMART_DATA_ATTRIBUTE (g_object_new (GDU_TYPE_SMART_DATA_ATTRIBUTE, NULL));
+        attribute = GDU_ATA_SMART_ATTRIBUTE (g_object_new (GDU_TYPE_ATA_SMART_ATTRIBUTE, NULL));
 
-        g_value_init (&elem, SMART_DATA_STRUCT_TYPE);
+        g_value_init (&elem, ATA_SMART_ATTRIBUTE_STRUCT_TYPE);
         g_value_set_static_boxed (&elem, data);
+
         dbus_g_type_struct_get (&elem,
-                                0, &(smart_data_attribute->priv->id),
-                                1, &(smart_data_attribute->priv->name),
-                                2, &(smart_data_attribute->priv->flags),
-                                3, &(smart_data_attribute->priv->value),
-                                4, &(smart_data_attribute->priv->worst),
-                                5, &(smart_data_attribute->priv->threshold),
-                                6, &(smart_data_attribute->priv->raw),
+                                0, &attribute->priv->id,
+                                1, &attribute->priv->name,
+                                2, &attribute->priv->flags,
+                                3, &attribute->priv->online,
+                                4, &attribute->priv->prefailure,
+                                5, &attribute->priv->current,
+                                6, &attribute->priv->current_valid,
+                                7, &attribute->priv->worst,
+                                8, &attribute->priv->worst_valid,
+                                9, &attribute->priv->threshold,
+                                10, &attribute->priv->threshold_valid,
+                                11, &attribute->priv->good,
+                                12, &attribute->priv->good_valid,
+                                13, &attribute->priv->pretty_unit,
+                                14, &attribute->priv->pretty_value,
+                                //15, &raw_data,
                                 G_MAXUINT);
 
-        return smart_data_attribute;
+        return attribute;
 }

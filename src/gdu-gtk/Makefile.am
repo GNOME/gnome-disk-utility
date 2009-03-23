@@ -1,13 +1,21 @@
 
+NULL =
+
 lib_LTLIBRARIES=libgdu-gtk.la
 
 libgdu_gtkincludedir=$(includedir)/gnome-disk-utility/gdu-gtk
 
-libgdu_gtkinclude_HEADERS =              		\
-	gdu-gtk.h
+libgdu_gtkinclude_HEADERS =              				\
+	gdu-gtk.h							\
+	gdu-gtk-types.h							\
+	gdu-time-label.h						\
+	$(NULL)
 
-libgdu_gtk_la_SOURCES =                                	\
-	gdu-gtk.h		gdu-gtk.c
+libgdu_gtk_la_SOURCES =                 	               		\
+	gdu-gtk.h			gdu-gtk.c			\
+	gdu-gtk-types.h							\
+	gdu-time-label.h		gdu-time-label.c		\
+	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\
 	-I$(top_srcdir)/src				\

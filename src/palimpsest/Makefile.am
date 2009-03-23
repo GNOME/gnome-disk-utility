@@ -3,7 +3,6 @@ bin_PROGRAMS = palimpsest
 
 palimpsest_SOURCES = 									\
 						gdu-main.c				\
-	gdu-time-label.h			gdu-time-label.c			\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
 	gdu-section-health.h			gdu-section-health.c			\

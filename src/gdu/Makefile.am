@@ -32,8 +32,8 @@ libgduinclude_HEADERS =              			\
 	gdu-pool.h					\
 	gdu-presentable.h				\
 	gdu-process.h					\
-	gdu-smart-data-attribute.h			\
-	gdu-smart-data.h				\
+	gdu-ata-smart-attribute.h			\
+	gdu-ata-smart-historical-data.h			\
 	gdu-util.h					\
 	gdu-volume.h					\
 	gdu-volume-hole.h
@@ -44,8 +44,8 @@ libgdu_la_SOURCES =                                					\
 						gdu-callbacks.h				\
 	gdu-util.h				gdu-util.c				\
 	gdu-pool.c				gdu-pool.h				\
-	gdu-smart-data.c			gdu-smart-data.h			\
-	gdu-smart-data-attribute.c		gdu-smart-data-attribute.h		\
+	gdu-ata-smart-historical-data.c		gdu-ata-smart-historical-data.h		\
+	gdu-ata-smart-attribute.c		gdu-ata-smart-attribute.h		\
 	gdu-device.c				gdu-device.h				\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\

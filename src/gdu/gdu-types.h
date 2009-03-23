@@ -33,18 +33,18 @@ G_BEGIN_DECLS
 
 /* forward type definitions */
 
-typedef struct _GduPool                GduPool;
-typedef struct _GduDevice              GduDevice;
-typedef struct _GduPresentable         GduPresentable; /* Dummy typedef */
-typedef struct _GduDrive               GduDrive;
-typedef struct _GduLinuxMdDrive        GduLinuxMdDrive;
-typedef struct _GduVolume              GduVolume;
-typedef struct _GduVolumeHole          GduVolumeHole;
+typedef struct _GduPool                   GduPool;
+typedef struct _GduDevice                 GduDevice;
+typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
+typedef struct _GduDrive                  GduDrive;
+typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
+typedef struct _GduVolume                 GduVolume;
+typedef struct _GduVolumeHole             GduVolumeHole;
 
-typedef struct _GduKnownFilesystem     GduKnownFilesystem;
-typedef struct _GduProcess             GduProcess;
-typedef struct _GduSmartData           GduSmartData;
-typedef struct _GduSmartDataAttribute  GduSmartDataAttribute;
+typedef struct _GduKnownFilesystem        GduKnownFilesystem;
+typedef struct _GduProcess                GduProcess;
+typedef struct _GduAtaSmartHistoricalData GduAtaSmartHistoricalData;
+typedef struct _GduAtaSmartAttribute      GduAtaSmartAttribute;
 
 G_END_DECLS
 

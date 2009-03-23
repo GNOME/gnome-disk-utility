@@ -19,26 +19,26 @@
  * 02111-1307, USA.
  */
 
-
-#include <gtk/gtk.h>
+#if !defined (__GDU_GTK_INSIDE_GDU_GTK_H) && !defined (GDU_GTK_COMPILATION)
+#error "Only <gdu-gtk/gdu-gtk.h> can be included directly, this file may disappear or change contents."
+#endif
 
 #ifndef GDU_TIME_LABEL_H
 #define GDU_TIME_LABEL_H
+
+#include <gdu-gtk/gdu-gtk-types.h>
 
 #define GDU_TYPE_TIME_LABEL             (gdu_time_label_get_type ())
 #define GDU_TIME_LABEL(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_TIME_LABEL, GduTimeLabel))
 #define GDU_TIME_LABEL_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_TIME_LABEL,  GduTimeLabelClass))
 #define GDU_IS_TIME_LABEL(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_TIME_LABEL))
 #define GDU_IS_TIME_LABEL_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_TIME_LABEL))
-#define GDU_TIME_LABEL_GET_CLASS        (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_TIME_LABEL, GduTimeLabelClass))
+#define GDU_TIME_LABEL_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_TIME_LABEL, GduTimeLabelClass))
 
-typedef struct _GduTimeLabelClass       GduTimeLabelClass;
-typedef struct _GduTimeLabel            GduTimeLabel;
+typedef struct GduTimeLabelClass       GduTimeLabelClass;
+typedef struct GduTimeLabelPrivate     GduTimeLabelPrivate;
 
-struct _GduTimeLabelPrivate;
-typedef struct _GduTimeLabelPrivate     GduTimeLabelPrivate;
-
-struct _GduTimeLabel
+struct GduTimeLabel
 {
         GtkLabel parent;
 
@@ -46,7 +46,7 @@ struct _GduTimeLabel
         GduTimeLabelPrivate *priv;
 };
 
-struct _GduTimeLabelClass
+struct GduTimeLabelClass
 {
         GtkLabelClass parent_class;
 };

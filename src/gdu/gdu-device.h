@@ -147,10 +147,6 @@ guint gdu_device_optical_disc_get_num_tracks (GduDevice *device);
 guint gdu_device_optical_disc_get_num_audio_tracks (GduDevice *device);
 guint gdu_device_optical_disc_get_num_sessions (GduDevice *device);
 
-gboolean gdu_device_drive_smart_get_is_capable (GduDevice *device);
-gboolean gdu_device_drive_smart_get_is_enabled (GduDevice *device);
-GduSmartData *gdu_device_get_smart_data (GduDevice *device);
-
 const char *gdu_device_linux_md_component_get_level (GduDevice *device);
 int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);
 const char *gdu_device_linux_md_component_get_uuid (GduDevice *device);
@@ -172,6 +168,51 @@ gboolean    gdu_device_linux_md_is_degraded (GduDevice *device);
 const char *gdu_device_linux_md_get_sync_action (GduDevice *device);
 double      gdu_device_linux_md_get_sync_percentage (GduDevice *device);
 guint64     gdu_device_linux_md_get_sync_speed (GduDevice *device);
+
+typedef enum {
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_NEVER,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_SUCCESS,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_INPROGRESS,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_SUSPENDED,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_ABORTED,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_FATAL,
+        GDU_ATA_SMART_OFFLINE_DATA_COLLECTION_STATUS_UNKNOWN,
+} GduAtaSmartOfflineDataCollectionStatus;
+
+typedef enum {
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_SUCCESS_OR_NEVER = 0,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ABORTED = 1,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_INTERRUPTED = 2,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_FATAL = 3,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_UNKNOWN = 4,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_ELECTRICAL = 5,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_SERVO = 6,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_READ = 7,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_HANDLING = 8,
+        GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_INPROGRESS = 15,
+} GduAtaSmartSelfTestExecutionStatus;
+
+gboolean    gdu_device_drive_ata_smart_get_is_available (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_is_failing (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_is_failing_valid (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_has_bad_sectors (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_has_bad_attributes (GduDevice *device);
+gdouble     gdu_device_drive_ata_smart_get_temperature_kelvin (GduDevice *device);
+guint64     gdu_device_drive_ata_smart_get_power_on_seconds (GduDevice *device);
+guint64     gdu_device_drive_ata_smart_get_time_collected (GduDevice *device);
+GduAtaSmartOfflineDataCollectionStatus gdu_device_drive_ata_smart_get_offline_data_collection_status (GduDevice *device);
+guint       gdu_device_drive_ata_smart_get_offline_data_collection_seconds (GduDevice *device);
+GduAtaSmartSelfTestExecutionStatus gdu_device_drive_ata_smart_get_self_test_execution_status (GduDevice *device);
+guint       gdu_device_drive_ata_smart_get_self_test_execution_percent_remaining (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_short_and_extended_self_test_available (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_conveyance_self_test_available (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_start_self_test_available (GduDevice *device);
+gboolean    gdu_device_drive_ata_smart_get_abort_self_test_available (GduDevice *device);
+guint       gdu_device_drive_ata_smart_get_short_self_test_polling_minutes (GduDevice *device);
+guint       gdu_device_drive_ata_smart_get_extended_self_test_polling_minutes (GduDevice *device);
+guint       gdu_device_drive_ata_smart_get_conveyance_self_test_polling_minutes (GduDevice *device);
+GList      *gdu_device_drive_ata_smart_get_attributes (GduDevice *device);
+GduAtaSmartAttribute *gdu_device_drive_ata_smart_get_attribute (GduDevice *device, const gchar *attr_name);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -245,17 +286,16 @@ void gdu_device_op_filesystem_set_label (GduDevice                              
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-void gdu_device_op_drive_smart_initiate_selftest      (GduDevice                                        *device,
-                                                       const char                                       *test,
-                                                       gboolean                                          captive,
-                                                       GduDeviceDriveSmartInitiateSelftestCompletedFunc  callback,
-                                                       gpointer                                          user_data);
+void gdu_device_op_drive_ata_smart_initiate_selftest      (GduDevice                                        *device,
+                                                           const char                                       *test,
+                                                           GduDeviceDriveAtaSmartInitiateSelftestCompletedFunc  callback,
+                                                           gpointer                                          user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-void  gdu_device_drive_smart_refresh_data (GduDevice                                  *device,
-                                           GduDeviceDriveSmartRefreshDataCompletedFunc callback,
-                                           gpointer                                    user_data);
+void  gdu_device_drive_ata_smart_refresh_data (GduDevice                                  *device,
+                                               GduDeviceDriveAtaSmartRefreshDataCompletedFunc callback,
+                                               gpointer                                    user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -313,7 +353,11 @@ void gdu_device_op_cancel_job (GduDevice *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-GList *gdu_device_drive_smart_get_historical_data_sync (GduDevice  *device,
+void gdu_device_drive_ata_smart_get_historical_data (GduDevice                                         *device,
+                                                     GduDeviceDriveAtaSmartGetHistoricalDataCompletedFunc  callback,
+                                                     gpointer                                           user_data);
+
+GList *gdu_device_drive_ata_smart_get_historical_data_sync (GduDevice  *device,
                                                         GError    **error);
 
 /* ---------------------------------------------------------------------------------------------------- */

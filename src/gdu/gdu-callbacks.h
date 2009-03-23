@@ -84,13 +84,13 @@ typedef void (*GduDeviceFilesystemSetLabelCompletedFunc) (GduDevice    *device,
                                                           GError       *error,
                                                           gpointer      user_data);
 
-typedef void (*GduDeviceDriveSmartInitiateSelftestCompletedFunc) (GduDevice    *device,
-                                                                  GError       *error,
-                                                                  gpointer      user_data);
+typedef void (*GduDeviceDriveAtaSmartInitiateSelftestCompletedFunc) (GduDevice    *device,
+                                                                     GError       *error,
+                                                                     gpointer      user_data);
 
-typedef void (*GduDeviceDriveSmartRefreshDataCompletedFunc) (GduDevice  *device,
-                                                             GError     *error,
-                                                             gpointer    user_data);
+typedef void (*GduDeviceDriveAtaSmartRefreshDataCompletedFunc) (GduDevice  *device,
+                                                                GError     *error,
+                                                                gpointer    user_data);
 
 typedef void (*GduDeviceLinuxMdStopCompletedFunc) (GduDevice    *device,
                                                    GError       *error,
@@ -117,14 +117,10 @@ typedef void (*GduDeviceCancelJobCompletedFunc) (GduDevice  *device,
                                                  GError     *error,
                                                  gpointer    user_data);
 
-typedef void (*GduDeviceDriveSmartGetHistoricalDataCompletedFunc) (GduDevice *device,
-                                                                   GList     *smart_data,
-                                                                   GError    *error,
-                                                                   gpointer   user_data);
-
-void gdu_device_drive_smart_get_historical_data (GduDevice                                         *device,
-                                                 GduDeviceDriveSmartGetHistoricalDataCompletedFunc  callback,
-                                                 gpointer                                           user_data);
+typedef void (*GduDeviceDriveAtaSmartGetHistoricalDataCompletedFunc) (GduDevice *device,
+                                                                      GList     *smart_data,
+                                                                      GError    *error,
+                                                                      gpointer   user_data);
 
 typedef void (*GduDeviceFilesystemListOpenFilesCompletedFunc) (GduDevice    *device,
                                                                GList        *processes,

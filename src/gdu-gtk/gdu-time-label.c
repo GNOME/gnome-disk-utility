@@ -25,7 +25,7 @@
 
 #include "gdu-time-label.h"
 
-struct _GduTimeLabelPrivate
+struct GduTimeLabelPrivate
 {
         GTimeVal time;
         guint update_timer_id;
@@ -112,6 +112,11 @@ gdu_time_label_set_property (GObject      *object,
                 if (time_val != NULL) {
                         time_label->priv->time = * time_val;
                         do_update (time_label);
+                } else {
+                        if (time_label->priv->update_timer_id > 0) {
+                                g_source_remove (time_label->priv->update_timer_id);
+                                time_label->priv->update_timer_id = 0;
+                        }
                 }
                 break;
 

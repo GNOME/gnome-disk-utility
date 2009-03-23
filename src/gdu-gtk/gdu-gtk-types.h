@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu.h
+/* gdu-drive.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -19,33 +19,21 @@
  * 02111-1307, USA.
  */
 
-#ifndef __GDU_H
-#define __GDU_H
-
-#ifndef GDU_API_IS_SUBJECT_TO_CHANGE
-#error  libgdu is unstable API. You must define GDU_API_IS_SUBJECT_TO_CHANGE before including gdu/gdu.h
+#if !defined (__GDU_GTK_INSIDE_GDU_GTK_H) && !defined (GDU_GTK_COMPILATION)
+#error "Only <gdu-gtk/gdu-gtk.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#define __GDU_INSIDE_GDU_H 1
+#ifndef __GDU_GTK_TYPES_H
+#define __GDU_GTK_TYPES_H
 
-#include <gdu/gdu-types.h>
-#include <gdu/gdu-linux-md-drive.h>
-#include <gdu/gdu-device.h>
-#include <gdu/gdu-drive.h>
-#include <gdu/gdu-error.h>
-#include <gdu/gdu-known-filesystem.h>
-#include <gdu/gdu-pool.h>
-#include <gdu/gdu-presentable.h>
-#include <gdu/gdu-process.h>
-#include <gdu/gdu-ata-smart-historical-data.h>
-#include <gdu/gdu-ata-smart-attribute.h>
-#include <gdu/gdu-util.h>
-#include <gdu/gdu-volume.h>
-#include <gdu/gdu-volume-hole.h>
-#include <gdu/gdu-callbacks.h>
+#include <glib-object.h>
+#include <gdu/gdu.h>
+#include <gtk/gtk.h>
 
-#undef __GDU_INSIDE_GDU_H
+G_BEGIN_DECLS
+
+typedef struct GduTimeLabel             GduTimeLabel;
 
 G_END_DECLS
 
-#endif /* __GDU_H */
+#endif /* __GDU_GTK_TYPES_H */

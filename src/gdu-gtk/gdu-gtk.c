@@ -116,6 +116,7 @@ show_busy_get_list_store (ShowBusyData *data, int *num_rows)
         GList *processes;
         GError *error;
         GList *l;
+        gchar *s;
 
         if (num_rows != NULL)
                 *num_rows = 0;
@@ -224,19 +225,20 @@ show_busy_get_list_store (ShowBusyData *data, int *num_rows)
                 }
 
                 if (gdu_process_get_owner (process) != getuid ()) {
-                        markup = g_strdup_printf (_("<b>%s</b>\n"
-                                                    "<small>uid %d, pid %d: %s</small>"),
-                                                  name,
-                                                  gdu_process_get_owner (process),
-                                                  gdu_process_get_id (process),
-                                                  gdu_process_get_command_line (process));
+                        s = g_strdup_printf (_("uid: %d  pid: %d  program: %s"),
+                                             gdu_process_get_owner (process),
+                                             gdu_process_get_id (process),
+                                             gdu_process_get_command_line (process));
                 } else {
-                        markup = g_strdup_printf (_("<b>%s</b>\n"
-                                                    "<small>pid %d: %s</small>"),
-                                                  name,
-                                                  gdu_process_get_id (process),
-                                                  gdu_process_get_command_line (process));
+                        s = g_strdup_printf (_("pid: %d  program: %s"),
+                                             gdu_process_get_id (process),
+                                             gdu_process_get_command_line (process));
                 }
+                markup = g_strdup_printf ("<b>%s</b>\n"
+                                          "<small>%s</small>",
+                                          name,
+                                          s);
+                g_free (s);
 
                 gtk_list_store_append (store, &iter);
                 gtk_list_store_set (store, &iter,
@@ -300,6 +302,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
         GdkPixbuf *pixbuf;
         ShowBusyData *data;
         guint refresh_timer_id;
+        char *text;
 
         ret = FALSE;
         window_title = NULL;
@@ -360,8 +363,11 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
 
         /* main message */
 	label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label),
-                              _("<b><big>Cannot unmount volume</big></b>"));
+
+        text = g_strconcat ("<b><big>", _("Cannot unmount volume"), "</big></b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), text);
+        g_free (text);
+
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
@@ -466,7 +472,8 @@ typedef struct
 static void
 gdu_util_dialog_secret_update (DialogSecretData *data)
 {
-        const char *current, *new, *verify;
+        const gchar *current, *new, *verify;
+        gchar *s;
 
         if (data->password_entry != NULL)
                 current = gtk_entry_get_text (GTK_ENTRY (data->password_entry));
@@ -477,16 +484,22 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
 
         if (g_strcmp0 (new, verify) != 0) {
                 gtk_widget_show (data->warning_hbox);
-                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not match</i>");
+                s = g_strconcat ("<i>", _("Passphrases do not match"), "</i>", NULL);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), s);
+                g_free (s);
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else if (!data->is_new_password &&
                    (g_strcmp0 (current, "") != 0 || g_strcmp0 (new, "") != 0) && g_strcmp0 (current, new) == 0) {
                 gtk_widget_show (data->warning_hbox);
-                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not differ</i>");
+                s = g_strconcat ("<i>", _("Passphrases do not differ"), "</i>", NULL);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), s);
+                g_free (s);
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else if (g_strcmp0 (new, "") == 0) {
                 gtk_widget_show (data->warning_hbox);
-                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrase can't be empty</i>");
+                s = g_strconcat ("<i>", _("Passphrase can't be empty"), "</i>", NULL);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), s);
+                g_free (s);
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else {
                 gtk_widget_hide (data->warning_hbox);
@@ -536,6 +549,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         GtkWidget *session_radio_button;
         GtkWidget *always_radio_button;
         DialogSecretData *data;
+        char *text;
 
         g_return_val_if_fail (parent_window == NULL || GTK_IS_WINDOW (parent_window), NULL);
 
@@ -587,18 +601,18 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 	/* main message */
 	label = gtk_label_new (NULL);
         if (is_new_password) {
-                gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To create an encrypted device, choose a passphrase "
-                                        "to protect it</big></b>"));
+                text = _("To create an encrypted device, choose a passphrase "
+                         "to protect it");
         } else if (is_change_password) {
-                gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>To change the passphrase, enter both the current and "
-                                        "new passphrase</big></b>"));
+                text = _("To change the passphrase, enter both the current and "
+                         "new passphrase");
         } else {
-                gtk_label_set_markup (GTK_LABEL (label),
-                                      _("<b><big>Data on this device is stored in an encrypted form "
-                                        "protected by a passphrase</big></b>"));
+                text = _("Data on this device is stored in an encrypted form "
+                         "protected by a passphrase");
         }
+        text = g_strconcat ("<b><big>", text, "</big></b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), text);
+        g_free (text);
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
@@ -621,7 +635,9 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
         if (indicate_wrong_passphrase) {
                 label = gtk_label_new (NULL);
-                gtk_label_set_markup (GTK_LABEL (label), _("<b>Incorrect Passphrase. Try again.</b>"));
+                text = g_strconcat ("<b>", _("Incorrect Passphrase. Try again."), "</b>", NULL);
+                gtk_label_set_markup (GTK_LABEL (label), text);
+                g_free (text);
                 gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
                 gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
                 gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
@@ -1285,7 +1301,7 @@ gdu_util_fstype_combo_box_create_store (GduPool *pool, const char *include_exten
                 gtk_list_store_append (store, &iter);
                 gtk_list_store_set (store, &iter,
                                     0, "msdos_extended_partition",
-                                    1, "Extended Partition",
+                                    1, _("Extended Partition"),
                                     -1);
         }
 

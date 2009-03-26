@@ -102,6 +102,7 @@ add_action_callback (GtkAction *action, gpointer user_data)
         GtkWidget *tree_view;
         char *array_name;
         char *s;
+        char *s2;
 
         device = NULL;
         selected_device = NULL;
@@ -155,10 +156,15 @@ add_action_callback (GtkAction *action, gpointer user_data)
 
         GtkWidget *label;
         label = gtk_label_new (NULL);
-        s = g_strdup_printf ( _("<big><b>Select a volume to use as component in the array \"%s\"</b></big>\n\n"
-                                "Only volumes of acceptable sizes can be selected. You may "
-                                "need to manually create new volumes of acceptable sizes."),
+        s2 = g_strdup_printf (_("Select a volume to use as component in the array \"%s\""),
                               array_name);
+        s = g_strconcat ("<big><b>",
+                         s2,
+                         "%s</b></big>\n\n",
+                         _("Only volumes of acceptable sizes can be selected. You may "
+                           "need to manually create new volumes of acceptable sizes."),
+                         NULL),
+        g_free (s2);
         gtk_label_set_markup (GTK_LABEL (label), s);
         g_free (s);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -394,7 +400,7 @@ detach_action_callback (GtkAction *action, gpointer user_data)
                 component_name = gdu_presentable_get_name (slave_presentable);
 
                 /* confirmation dialog */
-                primary = g_strdup (_("<b><big>Are you sure you want to remove the component from the array?</big></b>"));
+                primary = g_strconcat ("<b><big>", _("Are you sure you want to remove the component from the array ?"), "</big></b>", NULL);
 
                 secondary = g_strdup_printf (_("The data on component \"%s\" of the RAID Array \"%s\" will be "
                                                "irrecovably erased and the RAID Array might be degraded. "
@@ -608,11 +614,11 @@ update (GduSectionLinuxMdDrive *section)
         uuid = gdu_device_linux_md_component_get_uuid (component);
         name = gdu_device_linux_md_component_get_name (component);
         if (name == NULL || strlen (name) == 0) {
-                name = _("-");
+                name = "-";
         }
         home_host = gdu_device_linux_md_component_get_home_host (component);
         if (home_host == NULL || strlen (home_host) == 0) {
-                home_host = _("-");
+                home_host = "-";
         }
         level = gdu_device_linux_md_component_get_level (component);
         num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (component);
@@ -652,16 +658,16 @@ update (GduSectionLinuxMdDrive *section)
                 components_str = g_strdup_printf (_("%d Components (%s each)"), num_raid_devices, s);
         }
         g_free (s);
-
+ 
         if (raid_size == 0) {
-                raid_size_str = g_strdup_printf (_("-"));
+                raid_size_str = g_strdup_printf ("-");
         } else {
                 raid_size_str = gdu_util_get_size_for_display (raid_size, TRUE);
         }
 
         if (!gdu_drive_is_active (GDU_DRIVE (linux_md_drive))) {
                 if (device != NULL) {
-                        state_str = g_strdup (_("Not running, partially assembled"));
+                        state_str = g_strdup (C_("RAID status", "Not running, partially assembled"));
                 } else {
                         gboolean can_activate;
                         gboolean degraded;
@@ -669,11 +675,11 @@ update (GduSectionLinuxMdDrive *section)
                         can_activate = gdu_drive_can_activate (GDU_DRIVE (linux_md_drive), &degraded);
 
                         if (can_activate && !degraded) {
-                                state_str = g_strdup (_("Not running"));
+                                state_str = g_strdup (C_("RAID status", "Not running"));
                         } else if (can_activate && degraded) {
-                                state_str = g_strdup (_("Not running, can only start degraded"));
+                                state_str = g_strdup (C_("RAID status", "Not running, can only start degraded"));
                         } else {
-                                state_str = g_strdup (_("Not running, not enough components to start"));
+                                state_str = g_strdup (C_("RAID status", "Not running, not enough components to start"));
                         }
                 }
         } else {
@@ -690,23 +696,38 @@ update (GduSectionLinuxMdDrive *section)
                 sync_speed = gdu_device_linux_md_get_sync_speed (device);
 
                 str = g_string_new (NULL);
-                if (is_degraded)
-                        g_string_append (str, _("<span foreground='red'><b>Degraded</b></span>"));
+                if (is_degraded) {
+                        g_string_append (str, "<span foreground='red'><b>");
+                        g_string_append (str, C_("RAID status", "Degraded"));
+                        g_string_append (str, "</b></span>");
+                }
                 else
-                        g_string_append (str, _("Running"));
+                        g_string_append (str, C_("RAID status", "Running"));
 
                 if (strcmp (sync_action, "idle") != 0) {
-                        if (strcmp (sync_action, "reshape") == 0)
-                                g_string_append (str, _(", Reshaping"));
-                        else if (strcmp (sync_action, "resync") == 0)
-                                g_string_append (str, _(", Resyncing"));
-                        else if (strcmp (sync_action, "repair") == 0)
-                                g_string_append (str, _(", Repairing"));
-                        else if (strcmp (sync_action, "recover") == 0)
-                                g_string_append (str, _(", Recovering"));
+                        if (strcmp (sync_action, "reshape") == 0) {
+                                g_string_append (str, ", ");
+                                g_string_append (str, C_("RAID status", "Reshaping"));
+                        }
+                        else if (strcmp (sync_action, "resync") == 0) {
+                                g_string_append (str, ", ");
+                                g_string_append (str, C_("RAID status", "Resyncing"));
+                        }
+                        else if (strcmp (sync_action, "repair") == 0) {
+                                g_string_append (str, ", ");
+                                g_string_append (str, C_("RAID status", "Repairing"));
+                        }
+                        else if (strcmp (sync_action, "recover") == 0) {
+                                g_string_append (str, ", ");
+                                g_string_append (str, C_("RAID status", "Recovering"));
+                        }
 
                         sync_speed_str = gdu_util_get_speed_for_display (sync_speed);
-                        g_string_append_printf (str, _(" @ %3.01f%% (%s)"), sync_percentage, sync_speed_str);
+                        /* Translators: this string tells about an ongoing synchronization.
+                         * %3.01f is replaced by the percentage of completion
+                         * %s is replaced by the speed of the operation
+                         */
+                        g_string_append_printf (str, C_("RAID status", " @ %3.01f%% (%s)"), sync_percentage, sync_speed_str);
                         g_free (sync_speed_str);
                 }
 
@@ -751,6 +772,7 @@ update (GduSectionLinuxMdDrive *section)
                         GduLinuxMdDriveSlaveFlags slave_flags;
                         GPtrArray *slave_state;
                         char *slave_state_str;
+                        char *s;
 
                         pool = gdu_device_get_pool (sd);
                         p = gdu_pool_get_volume_by_device (pool, sd);
@@ -769,17 +791,20 @@ update (GduSectionLinuxMdDrive *section)
                         slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, sd);
                         slave_state = g_ptr_array_new ();
                         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED)
-                                g_ptr_array_add (slave_state, _("-"));
-                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY)
-                                g_ptr_array_add (slave_state, _("<span foreground='red'><b>Faulty</b></span>"));
+                                g_ptr_array_add (slave_state, "-");
+                        if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY) {
+                                s = g_strconcat ("<span foreground='red'><b>", C_("Linux MD slave state", "Faulty"), "</b></span>", NULL);
+                                g_ptr_array_add (slave_state, s);
+                                g_free (s);
+                        }
                         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC)
-                                g_ptr_array_add (slave_state, _("In Sync"));
+                                g_ptr_array_add (slave_state, (gpointer) C_("Linux MD slave state", "In Sync"));
                         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY)
-                                g_ptr_array_add (slave_state, _("Writemostly"));
+                                g_ptr_array_add (slave_state, (gpointer) C_("Linux MD slave state", "Writemostly"));
                         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED)
-                                g_ptr_array_add (slave_state, _("Blocked"));
+                                g_ptr_array_add (slave_state, (gpointer) C_("Linux MD slave state", "Blocked"));
                         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE)
-                                g_ptr_array_add (slave_state, _("Spare"));
+                                g_ptr_array_add (slave_state, (gpointer) C_("Linux MD slave state", "Spare"));
                         g_ptr_array_add (slave_state, NULL);
                         slave_state_str = g_strjoinv (", ", (gchar **) slave_state->pdata);
                         g_ptr_array_free (slave_state, TRUE);
@@ -859,6 +884,7 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         GtkTreeSelection *selection;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
+        char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_LINUX_MD_DRIVE, GduSectionLinuxMdDrivePrivate);
 
@@ -876,7 +902,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* name */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Array Name:</b>"));
+        s = g_strconcat ("<b>", _("Array Name:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);
@@ -890,7 +918,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* home host */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Home Host:</b>"));
+        s = g_strconcat ("<b>", _("Home Host:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);
@@ -904,7 +934,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* size */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Array Size:</b>"));
+        s = g_strconcat ("<b>", _("Array Size:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);
@@ -918,7 +950,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* type (level) */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>RAID Type:</b>"));
+        s = g_strconcat ("<b>", _("RAID Type:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);
@@ -932,7 +966,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* components */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Components:</b>"));
+        s = g_strconcat ("<b>", _("Components:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);
@@ -946,7 +982,9 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         /* components */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>State:</b>"));
+        s = g_strconcat ("<b>", _("State:"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         label = gtk_label_new (NULL);

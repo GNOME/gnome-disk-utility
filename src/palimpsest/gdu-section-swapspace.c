@@ -75,11 +75,14 @@ gdu_section_swapspace_init (GduSectionSwapspace *section)
         GtkWidget *vbox2;
         GtkWidget *label;
         GtkWidget *align;
+        gchar *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_SWAPSPACE, GduSectionSwapspacePrivate);
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Swap Space</b>"));
+        s = g_strconcat ("<b>", _("Swap Space"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);

@@ -184,6 +184,7 @@ details_update (GduShell *shell)
         gboolean ret;
         char *s;
         char *p;
+        char *url;
         char *detail_color;
         char *name;
         GIcon *icon;
@@ -218,7 +219,7 @@ details_update (GduShell *shell)
         gtk_image_set_from_pixbuf (GTK_IMAGE (shell->priv->icon_image), pixbuf);
         g_object_unref (pixbuf);
 
-        s = g_strdup_printf (_("<span font_desc='18'><b>%s</b></span>"), name);
+        s = g_strdup_printf ("<span font_desc='18'><b>%s</b></span>", name);
         gtk_label_set_markup (GTK_LABEL (shell->priv->name_label), s);
         g_free (s);
 
@@ -384,21 +385,21 @@ details_update (GduShell *shell)
                 s = g_strdup (device_file);
                 if (gdu_device_is_read_only (device)) {
                         p = s;
-                        s = g_strconcat (s, _(" (Read Only)"), NULL);
+                        s = g_strdup_printf (_("%s (Read Only)"), s);
                         g_free (p);
                 }
 
                 if (gdu_device_is_mounted (device)) {
                         p = s;
-                        s = g_strconcat (s,
-                                         _(" mounted at "),
-                                         "<a href=\"file://",
-                                         gdu_device_get_mount_path (device),
-                                         "\">",
-                                         gdu_device_get_mount_path (device),
-                                         "</a>",
-                                         NULL);
+			url = g_strconcat ("<a href=\"file://",
+                                           gdu_device_get_mount_path (device),
+                                           "\">",
+                                           gdu_device_get_mount_path (device),
+                                           "</a>",
+                                           NULL);
+                        s = g_strdup_printf (_("%s mounted at %s"), s, url);
                         g_free (p);
+                        g_free (url);
                 }
                 g_ptr_array_add (details, s);
 
@@ -994,12 +995,12 @@ fsck_op_callback (GduDevice *device,
                 name = gdu_presentable_get_name (data->presentable);
                 icon = gdu_presentable_get_icon (data->presentable);
 
-                dialog = gtk_message_dialog_new_with_markup (
+                dialog = gtk_message_dialog_new (
                         GTK_WINDOW (data->shell->priv->app_window),
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         is_clean ? GTK_MESSAGE_INFO : GTK_MESSAGE_WARNING,
                         GTK_BUTTONS_CLOSE,
-                        _("<big><b>File system check on \"%s\" completed</b></big>"),
+                        _("File system check on \"%s\" completed"),
                         name);
                 if (is_clean)
                         gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -1339,12 +1340,12 @@ start_cb (GduDrive *ad,
         if (error != NULL) {
                 GtkWidget *dialog;
 
-                dialog = gtk_message_dialog_new_with_markup (
+                dialog = gtk_message_dialog_new (
                         GTK_WINDOW (shell->priv->app_window),
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_ERROR,
                         GTK_BUTTONS_CLOSE,
-                        _("<big><b>There was an error starting the drive \"%s\".</b></big>"),
+                        _("There was an error starting the drive \"%s\"."),
                         gdu_presentable_get_name (GDU_PRESENTABLE (ad)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
@@ -1393,12 +1394,12 @@ start_action_callback (GtkAction *action, gpointer user_data)
                 GtkWidget *dialog;
                 int response;
 
-                dialog = gtk_message_dialog_new_with_markup (
+                dialog = gtk_message_dialog_new (
                         GTK_WINDOW (shell->priv->app_window),
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_WARNING,
                         GTK_BUTTONS_CANCEL,
-                        _("<big><b>Are you sure you want to start the drive \"%s\" in degraded mode?</b></big>"),
+                        _("Are you sure you want to start the drive \"%s\" in degraded mode ?"),
                         gdu_presentable_get_name (GDU_PRESENTABLE (drive)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -1430,12 +1431,12 @@ stop_cb (GduDrive *drive, GError *error, gpointer user_data)
         if (error != NULL) {
                 GtkWidget *dialog;
 
-                dialog = gtk_message_dialog_new_with_markup (
+                dialog = gtk_message_dialog_new (
                         GTK_WINDOW (shell->priv->app_window),
                         GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_MESSAGE_ERROR,
                         GTK_BUTTONS_CLOSE,
-                        _("<big><b>There was an error stopping the drive \"%s\".</b></big>"),
+                        _("There was an error stopping the drive \"%s\"."),
                         gdu_presentable_get_name (GDU_PRESENTABLE (drive)));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
@@ -1540,7 +1541,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
 
         drive_name = gdu_presentable_get_name (toplevel_presentable);
 
-        primary = g_strdup (_("<b><big>Are you sure you want to erase the device?</big></b>"));
+        primary = g_strconcat ("<b><big>", _("Are you sure you want to erase the device ?"), "</big></b>", NULL);
 
         if (gdu_device_is_partition (device)) {
                 if (gdu_device_is_removable (toplevel_device)) {

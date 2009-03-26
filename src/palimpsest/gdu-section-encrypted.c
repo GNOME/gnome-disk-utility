@@ -232,11 +232,14 @@ gdu_section_encrypted_init (GduSectionEncrypted *section)
         GtkWidget *label;
         GtkWidget *align;
         GtkWidget *button_box;
+        char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_ENCRYPTED, GduSectionEncryptedPrivate);
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Encryption</b>"));
+        s = g_strconcat ("<b>", _("Encryption"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);

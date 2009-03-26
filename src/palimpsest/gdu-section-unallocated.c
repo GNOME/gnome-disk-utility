@@ -410,16 +410,21 @@ update_warning (GduSectionUnallocated *section)
 
                         if (num_partitions == 3) {
                                 show_warning = TRUE;
-                                warning_markup = g_strdup (
-                                        _("<small><b>This is the last primary partition that can be created. "
-                                          "If you need more partitions, you can create an Extended "
-                                          "Partition.</b></small>"));
+                                warning_markup = g_strconcat ("<small><b>",
+                                                              _("This is the last primary partition that can be "
+                                                                "created. If you need more partitions, you can "
+                                                                "create an Extended Partition."),
+                                                              "</b></small>",
+                                                              NULL);
                         } else if (num_partitions == 4) {
                                 show_warning = TRUE;
                                 at_max_partitions = TRUE;
-                                warning_markup = g_strdup (
-                                        _("<small><b>No more partitions can be created. You may want to delete "
-                                          "an existing partition and then create an Extended Partition.</b></small>"));
+                                warning_markup = g_strconcat ("<small><b>",
+                                                              _("No more partitions can be created. You may want to "
+                                                                "delete  an existing partition and then create an "
+                                                                "Extended Partition."),
+                                                              "</b></small>",
+                                                              NULL);
                         }
                 }
         }
@@ -594,6 +599,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         GtkWidget *image;
         GtkWidget *check_button;
         int row;
+        gchar *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_UNALLOCATED, GduSectionUnallocatedPrivate);
 
@@ -631,7 +637,9 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         gtk_box_pack_start (GTK_BOX (vbox3), section->priv->sensitive_vbox, FALSE, TRUE, 0);
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create Partition</b>"));
+        s = g_strconcat ("<b>", _("Create Partition"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (section->priv->sensitive_vbox), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);

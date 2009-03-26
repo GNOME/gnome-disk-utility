@@ -105,7 +105,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
 
         drive_name = gdu_presentable_get_name (toplevel_presentable);
 
-        primary = g_strdup (_("<b><big>Are you sure you want to remove the partition, deleting existing data?</big></b>"));
+        primary = g_strconcat ("<b><big>", _("Are you sure you want to remove the partition, deleting existing data ?"), "</big></b>", NULL);
 
         if (gdu_device_is_removable (toplevel_device)) {
                 secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" will be "
@@ -471,6 +471,7 @@ gdu_section_partition_init (GduSectionPartition *section)
         GtkWidget *check_button;
         GtkWidget *button_box;
         int row;
+        gchar *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_PARTITION, GduSectionPartitionPrivate);
 
@@ -513,7 +514,9 @@ gdu_section_partition_init (GduSectionPartition *section)
 
 
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Partition</b>"));
+        s = g_strconcat ("<b>", _("Partition"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox2 = gtk_vbox_new (FALSE, 5);

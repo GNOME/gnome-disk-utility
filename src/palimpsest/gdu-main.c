@@ -36,11 +36,11 @@ show_nag_dialog (GtkWidget *toplevel)
 
         ret = TRUE;
 
-        dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (toplevel),
-                                                     GTK_DIALOG_MODAL,
-                                                     GTK_MESSAGE_WARNING,
-                                                     GTK_BUTTONS_OK,
-                                                     _("<b><big>WARNING WARNING WARNING</big></b>"));
+        dialog = gtk_message_dialog_new (GTK_WINDOW (toplevel),
+                                         GTK_DIALOG_MODAL,
+                                         GTK_MESSAGE_WARNING,
+                                         GTK_BUTTONS_OK,
+                                         _("WARNING WARNING WARNING"));
         gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
                                                     _("The Palimpsest Disk Utility is still under development and "
                                                       "may still have bugs that can lead to data loss.\n"

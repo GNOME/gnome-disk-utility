@@ -234,7 +234,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 g_object_unref (kfs);
         }
 
-        primary = g_strdup (_("<b><big>Are you sure you want to create a new file system, deleting existing data?</big></b>"));
+        primary = g_strconcat ("<b><big>", _("Are you sure you want to create a new file system, deleting existing data ?"), "</big></b>", NULL);
 
         if (gdu_device_is_partition (device)) {
                 if (gdu_device_is_removable (toplevel_device)) {
@@ -404,6 +404,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         GtkWidget *button;
         GtkWidget *button_box;
         GtkWidget *check_button;
+        char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_UNRECOGNIZED, GduSectionUnrecognizedPrivate);
 
@@ -433,7 +434,9 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 
         /* volume format + label */
         label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), _("<b>Create File System</b>"));
+        s = g_strconcat ("<b>", _("Create File System"), "</b>", NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 6);
         vbox = gtk_vbox_new (FALSE, 5);

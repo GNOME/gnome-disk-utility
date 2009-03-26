@@ -85,6 +85,7 @@ CLEANFILES +=   *~						\
 		gnome-disk-utility-overrides.txt		\
 		gnome-disk-utility-undeclared.txt		\
 		gnome-disk-utility-undocumented.txt		\
+		gnome-disk-utility-sections.txt			\ # remove when API is baked
 		*.stamp						\
 		-rf html xml					\
 		$(NULL)

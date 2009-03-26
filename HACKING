@@ -37,6 +37,78 @@ tracker reference if applicable) and so forth. Be concise but not too brief.
  - When committing code on behalf of others use the --author option, e.g.
    git commit -a --author "Joe Coder <joe@coder.org>" and --signoff.
 
+TERMINOLOGY
+===========
+
+Dealing with and managing storage devices often involves a lot of
+techno-babble that only advanced computer-litterate users are familiar
+with. The goal of the gnome-disk-utility project is two-fold
+
+ 1. To provide plug-ins and programs that enhance the core GNOME desktop
+    experience for dealing with and managing storage devices
+    - Simple formatting tool
+    - GIO/GVfs volume monitor
+    - Notification icon displayed when a device is failing
+
+ 2. To provide a simple yet powerful disk utility app (Palimpsest)
+    suitable for both every-day use (formatting/configuring a USB stick),
+    intermediate use (setting up RAID, checking disk health) and also
+    capable enough to be useful for things like configuring storage when
+    installing the OS.
+
+In a nutshell, the audience is different for 1. and 2. The audience
+for the former includes all GNOME users while the audience for the
+latter mostly includes system administrators and enthusiasts. As such
+different terminology is used.
+
+In Palimpsest the following terminology is used
+
+ - Partition/Partition Table
+
+ - File system/Label/UUID
+
+ - Disk: Only to be used when referring to the entirety of a
+         device; e.g. avoid using it for individual things
+         like a partition.
+
+ - Media: Only to be used on disks with removable media and
+          preferably only when media is missing. Media in
+          optical drives should be referred to as "Disc".
+
+ - Array/Component: Use these terms when dealing with RAID.
+
+ - Device: A generic catch all word that simply is short for "Block
+           Device". It should only be used when any of the above
+           terms are not suitable.
+
+ - In particular avoid words like "Drive" and "Volume".
+
+ - Power-of-ten ("1 MB" = 1,000,000 bytes), power-of-two ("1 MiB" = 1,048,576
+   bytes) and the raw size, e.g. "1,048,576 bytes" should be used to classify
+   sizes. If space it tight, use MB, not MiB or the full size.
+
+In the plug-ins/programs a simpler terminology is to be used
+
+ - Volume: Something that contains data
+
+ - Drive: A drive is a container of volumes
+
+ - Media: Only to be used on disks with removable media and
+          preferably only when media is missing. Media in
+          optical drives should be referred to as "Disc".
+
+ - In general terms like "mounting" and "unmounting" should be
+   avoided. The word (and icon) "Eject" should be used in scenarios
+   where the user wants to remove the device. Mounting a device
+   should happen on insertion and/or when the user tries to access
+   the device.
+
+ - Only power-of-ten ("1 MB" = 1,000,000 bytes) should be used to classify
+   sizes of devices.
+
+ - Avoid words like: Device, File system, Partition, Partition Table, Array,
+                     Component, Label, UUID
+
 CODING STYLE
 ============
 

@@ -483,7 +483,7 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else {
                 gtk_widget_hide (data->warning_hbox);
-                gtk_widget_set_sensitive (data->button, TRUE);
+                gtk_widget_set_sensitive (data->button, new[0] != 0);
         }
 }
 

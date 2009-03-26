@@ -120,11 +120,6 @@ _gdu_error_fixup (GError *error)
 
         if (matched)
                 error->domain = GDU_ERROR;
-
-        /* either way, prepend the D-Bus exception name to the message */
-        s = g_strdup_printf ("%s: %s", name, error->message);
-        g_free (error->message);
-        error->message = s;
 }
 
 /**

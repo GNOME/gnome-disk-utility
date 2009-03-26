@@ -636,7 +636,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                 if (is_change_password) {
                         label = gtk_label_new_with_mnemonic (_("C_urrent Passphrase:"));
                         gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
                         gtk_table_attach (GTK_TABLE (table), label,
                                           0, 1, row, row + 1,
                                           GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -650,7 +650,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
                 label = gtk_label_new_with_mnemonic (_("_New Passphrase:"));
                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
                 gtk_table_attach (GTK_TABLE (table), label,
                                   0, 1, row, row + 1,
                                   GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -663,7 +663,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
                 label = gtk_label_new_with_mnemonic (_("_Verify Passphrase:"));
                 gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
                 gtk_table_attach (GTK_TABLE (table), label,
                                   0, 1, row, row + 1,
                                   GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

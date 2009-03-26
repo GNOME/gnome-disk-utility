@@ -73,7 +73,7 @@ _gdu_error_fixup (GError *error)
         matched = TRUE;
         if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Failed") == 0)
                 error->code = GDU_ERROR_FAILED;
-        if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Inhibited") == 0)
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Inhibited") == 0)
                 error->code = GDU_ERROR_INHIBITED;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Busy") == 0)
                 error->code = GDU_ERROR_BUSY;

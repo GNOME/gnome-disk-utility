@@ -468,22 +468,29 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
 {
         const char *current, *new, *verify;
 
-        current = gtk_entry_get_text (GTK_ENTRY (data->password_entry));
+        if (data->password_entry != NULL)
+                current = gtk_entry_get_text (GTK_ENTRY (data->password_entry));
+        else
+                current = NULL;
         new = gtk_entry_get_text (GTK_ENTRY (data->password_entry_new));
         verify = gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify));
 
-        if (strcmp (new, verify) != 0) {
+        if (g_strcmp0 (new, verify) != 0) {
                 gtk_widget_show (data->warning_hbox);
                 gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not match</i>");
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else if (!data->is_new_password &&
-                   (current[0] != 0 || new[0] != 0) && strcmp (current, new) == 0) {
+                   (g_strcmp0 (current, "") != 0 || g_strcmp0 (new, "") != 0) && g_strcmp0 (current, new) == 0) {
                 gtk_widget_show (data->warning_hbox);
                 gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not differ</i>");
                 gtk_widget_set_sensitive (data->button, FALSE);
+        } else if (g_strcmp0 (new, "") == 0) {
+                gtk_widget_show (data->warning_hbox);
+                gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrase can't be empty</i>");
+                gtk_widget_set_sensitive (data->button, FALSE);
         } else {
                 gtk_widget_hide (data->warning_hbox);
-                gtk_widget_set_sensitive (data->button, new[0] != 0);
+                gtk_widget_set_sensitive (data->button, g_strcmp0 (new, "") != 0);
         }
 }
 
@@ -685,6 +692,8 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                 gtk_box_pack_start (GTK_BOX (hbox), gtk_label_new (" "), FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
+                g_signal_connect (data->password_entry, "changed",
+                                  (GCallback) gdu_util_dialog_secret_entry_changed, data);
                 g_signal_connect (data->password_entry_new, "changed",
                                   (GCallback) gdu_util_dialog_secret_entry_changed, data);
                 g_signal_connect (data->password_entry_verify, "changed",
@@ -735,8 +744,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         gtk_box_pack_start (GTK_BOX (vbox), always_radio_button, FALSE, FALSE, 0);
 
         gtk_widget_show_all (dialog);
-        if (is_change_password || is_new_password)
-                gdu_util_dialog_secret_update (data);
+        gdu_util_dialog_secret_update (data);
 
         if (device != NULL)
                 g_signal_connect (device, "removed", (GCallback) secret_dialog_device_removed, dialog);

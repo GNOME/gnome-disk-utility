@@ -532,16 +532,15 @@ gdu_section_partition_init (GduSectionPartition *section)
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
 
         table = gtk_table_new (6, 2, FALSE);
+        gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
 
         row = 0;
 
-        table = gtk_table_new (2, 2, FALSE);
-        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-
         /* partition label */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -555,7 +554,7 @@ gdu_section_partition_init (GduSectionPartition *section)
 
         /* partition type */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Ty_pe:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -571,7 +570,7 @@ gdu_section_partition_init (GduSectionPartition *section)
 
         /* used by mbr, apm */
         check_button = gtk_check_button_new_with_mnemonic (_("_Bootable"));
-        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row +1,
+        gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row +1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->modify_part_flag_boot_check_button = check_button;
 
@@ -579,7 +578,7 @@ gdu_section_partition_init (GduSectionPartition *section)
 
         /* used by gpt */
         check_button = gtk_check_button_new_with_mnemonic (_("Required / Firm_ware"));
-        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row +1,
+        gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row +1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->modify_part_flag_required_check_button = check_button;
 

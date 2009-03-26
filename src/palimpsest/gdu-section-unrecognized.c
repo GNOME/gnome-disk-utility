@@ -452,13 +452,15 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
         table = gtk_table_new (2, 2, FALSE);
+        gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
         row = 0;
 
         /* file system label */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Name:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -472,7 +474,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
 
         /* type */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -502,7 +504,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
                                      _("The selected file system has a concept of file ownership. "
                                        "If checked, the created file system be will be owned by you. "
                                        "If not checked, only the super user can access the file system."));
-        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+        gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->take_ownership_of_fs_check_button = check_button;
 
@@ -515,7 +517,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
                                        "passphrase to be enterered before the file system can be "
                                        "used. May decrease performance and may not be compatible if "
                                        "you use the media on other operating systems."));
-        gtk_table_attach (GTK_TABLE (table), check_button, 1, 2, row, row + 1,
+        gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         section->priv->encrypt_check_button = check_button;
 

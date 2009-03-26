@@ -254,6 +254,8 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
         gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
 
         table = gtk_table_new (1, 3, FALSE);
+        gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
 
         row = 0;

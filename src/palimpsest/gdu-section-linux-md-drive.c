@@ -591,12 +591,12 @@ update (GduSectionLinuxMdDrive *section)
                  * is unstable. In an ideal world we wouldn't show them.
                  */
 
-                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_name_label), _("-"));
-                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_home_host_label), _("-"));
-                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_type_label), _("-"));
-                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_size_label), _("-"));
-                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_components_label), _("-"));
-                gtk_label_set_markup (GTK_LABEL (section->priv->linux_md_state_label), _("-"));
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_name_label), "-");
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_home_host_label), "-");
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_type_label), "-");
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_size_label), "-");
+                gtk_label_set_text (GTK_LABEL (section->priv->linux_md_components_label), "-");
+                gtk_label_set_markup (GTK_LABEL (section->priv->linux_md_state_label), "-");
 
                 gtk_widget_set_sensitive (GTK_WIDGET (section), FALSE);
                 goto out;

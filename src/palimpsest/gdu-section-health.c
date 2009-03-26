@@ -112,8 +112,8 @@ smart_data_set_pending (GduSectionHealth *section)
         s = g_strconcat ("<i>", _("Retrieving..."), "</i>", NULL);
         gtk_label_set_markup (GTK_LABEL (section->priv->health_status_label), s);
         g_free (s);
-        gtk_label_set_text (GTK_LABEL (section->priv->health_power_on_hours_label), _("-"));
-        gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), _("-"));
+        gtk_label_set_text (GTK_LABEL (section->priv->health_power_on_hours_label), "-");
+        gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), "-");
         gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), "-");
         gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), "-");
 
@@ -134,10 +134,10 @@ smart_data_set_not_supported (GduSectionHealth *section)
         s = g_strconcat ("<i>", _("ATA SMART not Supported"), "</i>", NULL);
         gtk_label_set_markup (GTK_LABEL (section->priv->health_status_label), s);
         g_free (s);
-        gtk_label_set_text (GTK_LABEL (section->priv->health_power_on_hours_label), _("-"));
-        gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), _("-"));
-        gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), _("-"));
-        gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), _("-"));
+        gtk_label_set_text (GTK_LABEL (section->priv->health_power_on_hours_label), "-");
+        gtk_label_set_text (GTK_LABEL (section->priv->health_temperature_label), "-");
+        gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), "-");
+        gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), "-");
 
         polkit_gnome_action_set_sensitive (section->priv->health_refresh_action, FALSE);
         polkit_gnome_action_set_sensitive (section->priv->health_details_action, FALSE);

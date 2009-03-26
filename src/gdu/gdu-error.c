@@ -91,6 +91,8 @@ _gdu_error_fixup (GError *error)
                 error->code = GDU_ERROR_NOT_PARTITION;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotPartitionTable") == 0)
                 error->code = GDU_ERROR_NOT_PARTITION_TABLE;
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotLabeled") == 0)
+                error->code = GDU_ERROR_NOT_LABELED;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotFilesystem") == 0)
                 error->code = GDU_ERROR_NOT_FILESYSTEM;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotLuks") == 0)
@@ -105,12 +107,14 @@ _gdu_error_fixup (GError *error)
                 error->code = GDU_ERROR_NOT_LINUX_MD_COMPONENT;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotDrive") == 0)
                 error->code = GDU_ERROR_NOT_DRIVE;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotSmartCapable") == 0)
-                error->code = GDU_ERROR_NOT_SMART_CAPABLE;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotSupported") == 0)
                 error->code = GDU_ERROR_NOT_SUPPORTED;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotFound") == 0)
                 error->code = GDU_ERROR_NOT_FOUND;
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.AtaSmartNotAvailable") == 0)
+                error->code = GDU_ERROR_ATA_SMART_NOT_AVAILABLE;
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.AtaSmartWouldWakeup") == 0)
+                error->code = GDU_ERROR_ATA_SMART_WOULD_WAKEUP;
         else
                 matched = FALSE;
 

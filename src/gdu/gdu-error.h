@@ -43,6 +43,7 @@ G_BEGIN_DECLS
  * @GDU_ERROR_NOT_CANCELLABLE: Operation is not cancellable.
  * @GDU_ERROR_NOT_PARTITION: Device is not a partition.
  * @GDU_ERROR_NOT_PARTITION_TABLE: Device is not a partition table.
+ * @GDU_ERROR_NOT_LABELED: Device is not labeled.
  * @GDU_ERROR_NOT_FILESYSTEM: Device is not a file system.
  * @GDU_ERROR_NOT_LUKS: Device is not a LUKS encrypted device.
  * @GDU_ERROR_NOT_LOCKED: Device is not locked.
@@ -50,9 +51,10 @@ G_BEGIN_DECLS
  * @GDU_ERROR_NOT_LINUX_MD: Device is not a Linux md Software RAID device.
  * @GDU_ERROR_NOT_LINUX_MD_COMPONENT: Device is not a Linux md Software RAID component.
  * @GDU_ERROR_NOT_DRIVE: Device is not a drive.
- * @GDU_ERROR_NOT_SMART_CAPABLE: Device is not S.M.A.R.T. capable.
  * @GDU_ERROR_NOT_SUPPORTED: Operation not supported.
  * @GDU_ERROR_NOT_FOUND: Given device does not exist.
+ * @GDU_ERROR_ATA_SMART_NOT_AVAILABLE: Device does not support S.M.A.R.T.
+ * @GDU_ERROR_ATA_SMART_WOULD_WAKEUP: Getting S.M.A.R.T. data for the device would require to spin it up.
  *
  * Error codes in the #GDU_ERROR domain.
  */
@@ -68,6 +70,7 @@ typedef enum
         GDU_ERROR_NOT_CANCELLABLE,
         GDU_ERROR_NOT_PARTITION,
         GDU_ERROR_NOT_PARTITION_TABLE,
+        GDU_ERROR_NOT_LABELED,
         GDU_ERROR_NOT_FILESYSTEM,
         GDU_ERROR_NOT_LUKS,
         GDU_ERROR_NOT_LOCKED,
@@ -75,9 +78,10 @@ typedef enum
         GDU_ERROR_NOT_LINUX_MD,
         GDU_ERROR_NOT_LINUX_MD_COMPONENT,
         GDU_ERROR_NOT_DRIVE,
-        GDU_ERROR_NOT_SMART_CAPABLE,
         GDU_ERROR_NOT_SUPPORTED,
         GDU_ERROR_NOT_FOUND,
+        GDU_ERROR_ATA_SMART_NOT_AVAILABLE,
+        GDU_ERROR_ATA_SMART_WOULD_WAKEUP
 } GduError;
 
 /**

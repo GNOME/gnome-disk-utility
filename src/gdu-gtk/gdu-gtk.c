@@ -677,9 +677,13 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                 data->warning_hbox = gtk_hbox_new (FALSE, 12);
                 image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
                 data->warning_label = gtk_label_new (NULL);
+
                 gtk_box_pack_start (GTK_BOX (data->warning_hbox), image, FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (data->warning_hbox), data->warning_label, FALSE, FALSE, 0);
-                gtk_box_pack_start (GTK_BOX (vbox), data->warning_hbox, FALSE, FALSE, 0);
+                hbox = gtk_hbox_new (FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (hbox), data->warning_hbox, FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (hbox), gtk_label_new (" "), FALSE, FALSE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
                 g_signal_connect (data->password_entry_new, "changed",
                                   (GCallback) gdu_util_dialog_secret_entry_changed, data);

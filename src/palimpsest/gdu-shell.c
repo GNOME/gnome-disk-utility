@@ -2031,7 +2031,8 @@ create_window (GduShell *shell)
         /* tree view */
         treeview_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
-                                        GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+                                        GTK_POLICY_NEVER,
+                                        GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
                                              GTK_SHADOW_IN);
         shell->priv->treeview = gdu_device_tree_new (shell->priv->pool);
@@ -2099,7 +2100,7 @@ create_window (GduShell *shell)
         hpane = gtk_hpaned_new ();
         gtk_paned_add1 (GTK_PANED (hpane), treeview_scrolled_window);
         gtk_paned_add2 (GTK_PANED (hpane), vbox2);
-        gtk_paned_set_position (GTK_PANED (hpane), 260);
+        //gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
 

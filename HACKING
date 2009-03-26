@@ -1,7 +1,43 @@
 
-gnome-disk-utility development happens at
+gnome-disk-utility development happens at in the GNOME git repository
 
  http://git.gnome.org/cgit/gnome-disk-utility/
 
-Send feedback to devkit-devel@lists.freedesktop.org.
+Send feedback to devkit-devel@lists.freedesktop.org and/or file bugs
+in the GNOME Bugzilla at
 
+ http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility
+
+COMMIT MESSAGES
+===============
+
+ - Commit messages should be of the form (the five lines between the
+   lines starting with ===)
+
+=== begin example commit ===
+short explanation of the commit
+
+Longer explanation explaining exactly what's changed, whether any
+external or private interfaces changed, what bugs were fixed (with bug
+tracker reference if applicable) and so forth. Be concise but not too brief.
+=== end example commit ===
+
+ - Always add a brief description of the commit to the _first_ line of
+   the commit and terminate by two newlines (it will work without the
+   second newline, but that is not nice for the interfaces).
+
+ - First line (the brief description) must only be one sentence and
+   must not start with a capital letter. Don't use a trailing period
+   either. Don't exceed 76 characters.
+
+ - The main description (the body) is normal prose and should use normal
+   punctuation and capital letters where appropriate. Normally, for patches
+   sent to a mailing list it's copied from there.
+
+ - When committing code on behalf of others use the --author option, e.g.
+   git commit -a --author "Joe Coder <joe@coder.org>" and --signoff.
+
+CODING STYLE
+============
+
+TODO: write me

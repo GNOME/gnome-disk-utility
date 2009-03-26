@@ -466,16 +466,18 @@ typedef struct
 static void
 gdu_util_dialog_secret_update (DialogSecretData *data)
 {
-        if (strcmp (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new)),
-                    gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify))) != 0) {
+        const char *current, *new, *verify;
+
+        current = gtk_entry_get_text (GTK_ENTRY (data->password_entry));
+        new = gtk_entry_get_text (GTK_ENTRY (data->password_entry_new));
+        verify = gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify));
+
+        if (strcmp (new, verify) != 0) {
                 gtk_widget_show (data->warning_hbox);
                 gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not match</i>");
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else if (!data->is_new_password &&
-                   (strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry))) > 0 ||
-                    strlen (gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) > 0) &&
-                   strcmp (gtk_entry_get_text (GTK_ENTRY (data->password_entry)),
-                           gtk_entry_get_text (GTK_ENTRY (data->password_entry_new))) == 0) {
+                   (current[0] != 0 || new[0] != 0) && strcmp (current, new) == 0) {
                 gtk_widget_show (data->warning_hbox);
                 gtk_label_set_markup (GTK_LABEL (data->warning_label), "<i>Passphrases do not differ</i>");
                 gtk_widget_set_sensitive (data->button, FALSE);

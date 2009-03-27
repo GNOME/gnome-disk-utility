@@ -697,7 +697,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         /* _file system_ label */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Name:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 

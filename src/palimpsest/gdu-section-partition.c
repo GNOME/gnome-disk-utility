@@ -544,7 +544,7 @@ gdu_section_partition_init (GduSectionPartition *section)
         /* partition label */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Part_ition Label:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         entry = gtk_entry_new ();

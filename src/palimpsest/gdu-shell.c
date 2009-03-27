@@ -1934,6 +1934,21 @@ url_activated (SexyUrlLabel *url_label,
         g_free (s);
 }
 
+static void
+fix_focus_cb (GtkDialog *dialog, gpointer data)
+{
+        GtkWidget *button;
+
+        button = gtk_window_get_default_widget (GTK_WINDOW (dialog));
+        gtk_widget_grab_focus (button);
+}
+
+static void
+expander_cb (GtkExpander *expander, GParamSpec *pspec, GtkWindow *dialog)
+{
+        gtk_window_set_resizable (dialog, gtk_expander_get_expanded (expander));
+}
+
 /**
  * gdu_shell_raise_error:
  * @shell: An object implementing the #GduShell interface
@@ -1956,12 +1971,14 @@ gdu_shell_raise_error (GduShell       *shell,
         char *window_title;
         GIcon *window_icon;
         va_list args;
+        char *error_msg;
+        GtkWidget *box, *hbox, *expander, *sw, *tv;
+        GList *children;
+        GtkTextBuffer *buffer;
 
         g_return_if_fail (shell != NULL);
         g_return_if_fail (presentable != NULL);
         g_return_if_fail (error != NULL);
-
-        /* TODO: this still needs work */
 
         window_title = gdu_presentable_get_name (presentable);
         window_icon = gdu_presentable_get_icon (presentable);
@@ -1970,6 +1987,78 @@ gdu_shell_raise_error (GduShell       *shell,
         error_text = g_strdup_vprintf (primary_markup_format, args);
         va_end (args);
 
+        switch (error->code) {
+        case GDU_ERROR_FAILED:
+                error_msg = _("The operation failed.");
+                break;
+        case GDU_ERROR_INHIBITED:
+                error_msg = _("The daemon is being inhibited.");
+                break;
+        case GDU_ERROR_BUSY:
+                error_msg = _("The device is busy.");
+                break;
+        case GDU_ERROR_CANCELLED:
+                error_msg = _("The operation was cancelled.");
+                break;
+        case GDU_ERROR_INVALID_OPTION:
+                error_msg = _("An invalid option was passed.");
+                break;
+        case GDU_ERROR_ALREADY_MOUNTED:
+                error_msg = _("The device is already mounted.");
+                break;
+        case GDU_ERROR_NOT_MOUNTED:
+                error_msg = _("The device is not mounted.");
+                break;
+        case GDU_ERROR_NOT_CANCELLABLE:
+                error_msg = _("The operation can not be cancelled.");
+                break;
+        case GDU_ERROR_NOT_PARTITION:
+                error_msg = _("The device is not a partition.");
+                break;
+        case GDU_ERROR_NOT_PARTITION_TABLE:
+                error_msg = _("The device is not a partition table.");
+                break;
+        case GDU_ERROR_NOT_LABELED:
+                error_msg = _("The device is not labeled.");
+                break;
+        case GDU_ERROR_NOT_FILESYSTEM:
+                error_msg = _("The device is not a file system.");
+                break;
+        case GDU_ERROR_NOT_LUKS:
+                error_msg = _("The device is not a LUKS encrypted device.");
+                break;
+        case GDU_ERROR_NOT_LOCKED:
+                error_msg = _("The device is not locked.");
+                break;
+        case GDU_ERROR_NOT_UNLOCKED:
+                error_msg = _("The device is not unlocked.");
+                break;
+        case GDU_ERROR_NOT_LINUX_MD:
+                error_msg = _("The device is not a Linux md Software RAID device.");
+                break;
+        case GDU_ERROR_NOT_LINUX_MD_COMPONENT:
+                error_msg = _("The device is not a Linux md Software RAID component.");
+                break;
+        case GDU_ERROR_NOT_DRIVE:
+                error_msg = _("The device is not a drive.");
+                break;
+        case GDU_ERROR_NOT_SUPPORTED:
+                error_msg = _("The operation is not supported.");
+                break;
+        case GDU_ERROR_NOT_FOUND:
+                error_msg = _("The device does not exist.");
+                break;
+        case GDU_ERROR_ATA_SMART_NOT_AVAILABLE:
+                error_msg = _("The device does not support S.M.A.R.T.");
+                break;
+        case GDU_ERROR_ATA_SMART_WOULD_WAKEUP:
+                error_msg = _("Getting S.M.A.R.T. data would require to wake up the device.");
+                break;
+        default:
+                error_msg = _("Unknown error");
+                break;
+        }
+
         dialog = gtk_message_dialog_new_with_markup (
                 GTK_WINDOW (shell->priv->app_window),
                 GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1977,7 +2066,60 @@ gdu_shell_raise_error (GduShell       *shell,
                 GTK_BUTTONS_CLOSE,
                 "<big><b>%s</b></big>",
                 error_text);
-        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
+        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error_msg);
+
+	/* Here we cheat a little by poking in the messagedialog internals
+         * to add the details expander to the inner vbox and arrange things
+         * so that resizing the dialog works as expected.
+         */
+	box = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+	children = gtk_container_get_children (GTK_CONTAINER (box));
+	hbox = GTK_WIDGET (children->data);
+	gtk_container_child_set (GTK_CONTAINER (box), hbox,
+                                 "expand", TRUE,
+                                 "fill", TRUE,
+                                 NULL);
+	g_list_free (children);
+	children = gtk_container_get_children (GTK_CONTAINER (hbox));
+	box = GTK_WIDGET (children->next->data);
+	g_list_free (children);
+	children = gtk_container_get_children (GTK_CONTAINER (box));
+	gtk_container_child_set (GTK_CONTAINER (box), GTK_WIDGET (children->next->data),
+                                 "expand", FALSE,
+                                 "fill", FALSE,
+                                 NULL);
+	g_list_free (children);
+
+	expander = g_object_new (GTK_TYPE_EXPANDER,
+                                 "label", _("_Details:"),
+                                 "use-underline", TRUE,
+                                 "use-markup", TRUE,
+                                 NULL);
+        sw = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                           "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                           "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                           "shadow-type", GTK_SHADOW_IN,
+                           NULL);
+        buffer = gtk_text_buffer_new (NULL);
+        gtk_text_buffer_set_text (buffer, error->message, -1);
+	tv = gtk_text_view_new_with_buffer (buffer);
+        gtk_text_view_set_editable (GTK_TEXT_VIEW (tv), FALSE);
+
+        gtk_container_add (GTK_CONTAINER (sw), tv);
+        gtk_container_add (GTK_CONTAINER (expander), sw);
+	gtk_box_pack_end (GTK_BOX (box), expander, TRUE, TRUE, 0);
+        gtk_widget_show_all (expander);
+
+        /* Make the window resizable when the details are visible
+         */
+	g_signal_connect (expander, "notify::expanded", G_CALLBACK (expander_cb), dialog);
+
+        /* We don't want the initial focus to end up on the expander,
+         * so grab it to the close button on map.
+         */
+        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+        g_signal_connect (dialog, "map", G_CALLBACK (fix_focus_cb), NULL);
+
 
         gtk_window_set_title (GTK_WINDOW (dialog), window_title);
         // TODO: no support for GIcon in GtkWindow

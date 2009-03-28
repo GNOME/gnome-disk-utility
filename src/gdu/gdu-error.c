@@ -55,7 +55,6 @@ gdu_error_quark (void)
 void
 _gdu_error_fixup (GError *error)
 {
-        char *s;
         const char *name;
         gboolean matched;
 

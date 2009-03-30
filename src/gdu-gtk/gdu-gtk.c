@@ -479,8 +479,16 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
                 current = gtk_entry_get_text (GTK_ENTRY (data->password_entry));
         else
                 current = NULL;
-        new = gtk_entry_get_text (GTK_ENTRY (data->password_entry_new));
-        verify = gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify));
+
+        if (data->password_entry_new != NULL)
+                new = gtk_entry_get_text (GTK_ENTRY (data->password_entry_new));
+        else
+                new = NULL;
+
+        if (data->password_entry_verify != NULL)
+                verify = gtk_entry_get_text (GTK_ENTRY (data->password_entry_verify));
+        else
+                verify = NULL;
 
         if (g_strcmp0 (new, verify) != 0) {
                 gtk_widget_show (data->warning_hbox);
@@ -502,7 +510,8 @@ gdu_util_dialog_secret_update (DialogSecretData *data)
                 g_free (s);
                 gtk_widget_set_sensitive (data->button, FALSE);
         } else {
-                gtk_widget_hide (data->warning_hbox);
+                if (data->warning_hbox != NULL)
+                        gtk_widget_hide (data->warning_hbox);
                 gtk_widget_set_sensitive (data->button, g_strcmp0 (new, "") != 0);
         }
 }

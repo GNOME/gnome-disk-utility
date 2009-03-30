@@ -100,12 +100,16 @@ job_update (GduSectionJob *section, GduDevice *device)
                 gtk_label_set_markup (GTK_LABEL (section->priv->job_description_label), s);
                 g_free (s);
 
-                s = g_strdup_printf (_("%s (task %d of %d)"),
-                                     task_description,
-                                     gdu_device_job_get_cur_task (device) + 1,
-                                     gdu_device_job_get_num_tasks (device));
-                gtk_label_set_markup (GTK_LABEL (section->priv->job_task_label), s);
-                g_free (s);
+		if (gdu_device_job_get_num_tasks (device) < 2)
+                        gtk_label_set_markup (GTK_LABEL (section->priv->job_task_label), task_description);
+                else {
+                        s = g_strdup_printf (_("%s (task %d of %d)"),
+                                             task_description,
+                                             gdu_device_job_get_cur_task (device) + 1,
+                                             gdu_device_job_get_num_tasks (device));
+                        gtk_label_set_markup (GTK_LABEL (section->priv->job_task_label), s);
+                        g_free (s);
+                }
 
                 percentage = gdu_device_job_get_cur_task_percentage (device);
                 if (percentage < 0) {

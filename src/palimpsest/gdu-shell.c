@@ -1725,6 +1725,9 @@ create_ui_manager (GduShell *shell)
                                                                     _("Check the file system"));
         g_object_set (shell->priv->fsck_action,
                       "auth-label", _("_Check File System..."),
+                      "auth-short-label", _("_Check"),
+                      "yes-short-label", _("_Check"),
+                      "no-short-label", _("_Check"),
                       "yes-icon-name", "gdu-check-disk",
                       "no-icon-name", "gdu-check-disk",
                       "auth-icon-name", "gdu-check-disk",
@@ -1852,7 +1855,9 @@ create_ui_manager (GduShell *shell)
                                                                      _("_Erase..."),
                                                                      _("Erase the contents of the selected device"));
         g_object_set (shell->priv->erase_action,
-                      "auth-label", _("_Erase..."),
+                      "auth-short-label", _("_Erase"),
+                      "no-short-label", _("_Erase"),
+                      "yes-short-label", _("_Erase"),
                       "yes-icon-name", GTK_STOCK_CLEAR,
                       "no-icon-name", GTK_STOCK_CLEAR,
                       "auth-icon-name", GTK_STOCK_CLEAR,

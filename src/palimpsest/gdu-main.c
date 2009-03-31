@@ -30,35 +30,6 @@
 #include "gdu-shell.h"
 
 static gboolean
-show_nag_dialog (GtkWidget *toplevel)
-{
-        GtkWidget *dialog;
-        gint response;
-        gboolean ret;
-
-        ret = TRUE;
-
-        dialog = gtk_message_dialog_new (GTK_WINDOW (toplevel),
-                                         GTK_DIALOG_MODAL,
-                                         GTK_MESSAGE_WARNING,
-                                         GTK_BUTTONS_OK,
-                                         _("WARNING WARNING WARNING"));
-        gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                                    _("The Palimpsest Disk Utility is still under development and "
-                                                      "may still have bugs that can lead to data loss.\n"
-                                                      "\n"
-                                                      "Use at your own risk."));
-        response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-        if (response != GTK_RESPONSE_OK)
-                ret = FALSE;
-
-        gtk_widget_destroy (dialog);
-
-        return ret;
-}
-
-static gboolean
 show_volume (GduShell   *shell,
              const char *device_file)
 {
@@ -204,9 +175,6 @@ main (int argc, char **argv)
 
         gtk_widget_show_all (gdu_shell_get_toplevel (shell));
         gdu_shell_update (shell);
-
-        if (!show_nag_dialog (gdu_shell_get_toplevel (shell)))
-                goto out;
 
         if (volume_to_show)
                 show_volume (shell, volume_to_show);

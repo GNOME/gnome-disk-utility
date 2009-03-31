@@ -120,9 +120,6 @@ guint64 gdu_device_partition_get_size (GduDevice *device);
 
 const char *gdu_device_partition_table_get_scheme (GduDevice *device);
 int         gdu_device_partition_table_get_count (GduDevice *device);
-int         gdu_device_partition_table_get_max_number (GduDevice *device);
-GArray     *gdu_device_partition_table_get_offsets (GduDevice *device);
-GArray     *gdu_device_partition_table_get_sizes (GduDevice *device);
 
 const char *gdu_device_luks_get_holder (GduDevice *device);
 

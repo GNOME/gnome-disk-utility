@@ -378,6 +378,7 @@ part_entry_compare (PartEntry *pa, PartEntry *pb, gpointer user_data)
 
 static GList *
 get_holes (GduPool        *pool,
+           GList          *devices,
            GduDrive       *drive,
            GduDevice      *drive_device,
            GduPresentable *enclosed_in,
@@ -388,16 +389,15 @@ get_holes (GduPool        *pool,
         GList *ret;
         gint n;
         gint num_entries;
-        gint max_number;
-        guint64 *offsets;
-        guint64 *sizes;
         PartEntry *entries;
         guint64 cursor;
         guint64 gap_size;
         guint64 gap_position;
         const char *scheme;
+        GList *l;
 
         ret = NULL;
+        entries = NULL;
 
         /* no point if adding holes if there's no media */
         if (!gdu_device_is_media_available (drive_device))
@@ -414,36 +414,49 @@ get_holes (GduPool        *pool,
                  start + size,
                  ignore_logical);*/
 
-        offsets = (guint64*) ((gdu_device_partition_table_get_offsets (drive_device))->data);
-        sizes = (guint64*) ((gdu_device_partition_table_get_sizes (drive_device))->data);
-        max_number = gdu_device_partition_table_get_max_number (drive_device);
         scheme = gdu_device_partition_table_get_scheme (drive_device);
 
-        entries = g_new0 (PartEntry, max_number);
-        for (n = 0, num_entries = 0; n < max_number; n++) {
-                /* ignore unused partition table entries */
-                if (offsets[n] == 0)
+        /* find the offsets and sizes of existing partitions of the partition table */
+        GArray *entries_array;
+        entries_array = g_array_new (FALSE, FALSE, sizeof (PartEntry));
+        num_entries = 0;
+        for (l = devices; l != NULL; l = l->next) {
+                GduDevice *partition_device = GDU_DEVICE (l->data);
+                guint64 partition_offset;
+                guint64 partition_size;
+                guint partition_number;
+
+                if (!gdu_device_is_partition (partition_device))
+                        continue;
+                if (g_strcmp0 (gdu_device_get_object_path (drive_device),
+                               gdu_device_partition_get_slave (partition_device)) != 0)
                         continue;
 
+                partition_offset = gdu_device_partition_get_offset (partition_device);
+                partition_size = gdu_device_partition_get_size (partition_device);
+                partition_number = gdu_device_partition_get_number (partition_device);
+
                 /* only consider partitions in the given space */
-                if (offsets[n] <= start)
+                if (partition_offset < start)
                         continue;
-                if (offsets[n] >= start + size)
+                if (partition_offset >= start + size)
                         continue;
 
                 /* ignore logical partitions if requested */
                 if (ignore_logical) {
-                        if (strcmp (scheme, "mbr") == 0 && n >= 4)
+                        if (strcmp (scheme, "mbr") == 0 && partition_number >= 4)
                                 continue;
                 }
 
-                entries[num_entries].number = n + 1;
-                entries[num_entries].offset = offsets[n];
-                entries[num_entries].size = sizes[n];
+                g_array_set_size (entries_array, num_entries + 1);
+
+                g_array_index (entries_array, PartEntry, num_entries).number = partition_number;
+                g_array_index (entries_array, PartEntry, num_entries).offset = partition_offset;
+                g_array_index (entries_array, PartEntry, num_entries).size = partition_size;
+
                 num_entries++;
-                //g_print ("%d: offset=%lld size=%lld\n", entries[n].number, entries[n].offset, entries[n].size);
         }
-        entries = g_realloc (entries, num_entries * sizeof (PartEntry));
+        entries = (PartEntry *) g_array_free (entries_array, FALSE);
 
         g_qsort_with_data (entries, num_entries, sizeof (PartEntry), (GCompareDataFunc) part_entry_compare, NULL);
 
@@ -474,13 +487,14 @@ get_holes (GduPool        *pool,
 
         }
 
-        g_free (entries);
 out:
+        g_free (entries);
         return ret;
 }
 
 static GList *
 get_holes_for_drive (GduPool   *pool,
+                     GList     *devices,
                      GduDrive  *drive,
                      GduVolume *extended_partition)
 {
@@ -497,6 +511,7 @@ get_holes_for_drive (GduPool   *pool,
 
         /* first add holes between primary partitions */
         ret = get_holes (pool,
+                         devices,
                          drive,
                          drive_device,
                          GDU_PRESENTABLE (drive),
@@ -517,6 +532,7 @@ get_holes_for_drive (GduPool   *pool,
                 }
 
                 holes_in_extended_partition = get_holes (pool,
+                                                         devices,
                                                          drive,
                                                          drive_device,
                                                          GDU_PRESENTABLE (extended_partition),
@@ -742,7 +758,7 @@ recompute_presentables (GduPool *pool)
                 drive = GDU_DRIVE (l->data);
                 extended_partition = g_hash_table_lookup (hash_map_from_drive_to_extended_partition, drive);
 
-                holes = get_holes_for_drive (pool, drive, extended_partition);
+                holes = get_holes_for_drive (pool, devices, drive, extended_partition);
 
                 new_presentables = g_list_concat (new_presentables, holes);
         }

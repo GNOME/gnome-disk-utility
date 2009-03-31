@@ -215,11 +215,9 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                 fslabel = g_strdup ("");
         } else {
                 type = gdu_util_get_default_part_type_for_scheme_and_fstype (scheme, fstype, size);
-                if (type == NULL) {
-                        g_warning ("Cannot determine default part type for scheme '%s' and fstype '%s'",
-                                   scheme, fstype);
-                        goto out;
-                }
+                /* it's not a bug if type is NULL here.. it may happen if Palimpsest does not
+                 * know the scheme
+                 */
         }
 
         /* set partition label to the file system label (TODO: handle max len) */

@@ -101,9 +101,6 @@ typedef struct
 
         char    *partition_table_scheme;
         int      partition_table_count;
-        int      partition_table_max_number;
-        GArray  *partition_table_offsets;
-        GArray  *partition_table_sizes;
 
         char    *luks_holder;
 
@@ -286,19 +283,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->partition_table_scheme = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "partition-table-count") == 0)
                 props->partition_table_count = g_value_get_int (value);
-        else if (strcmp (key, "partition-table-max-number") == 0)
-                props->partition_table_max_number = g_value_get_int (value);
-        else if (strcmp (key, "partition-table-offsets") == 0) {
-                GValue dest_value = {0,};
-                g_value_init (&dest_value, dbus_g_type_get_collection ("GArray", G_TYPE_UINT64));
-                g_value_copy (value, &dest_value);
-                props->partition_table_offsets = g_value_get_boxed (&dest_value);
-        } else if (strcmp (key, "partition-table-sizes") == 0) {
-                GValue dest_value = {0,};
-                g_value_init (&dest_value, dbus_g_type_get_collection ("GArray", G_TYPE_UINT64));
-                g_value_copy (value, &dest_value);
-                props->partition_table_sizes = g_value_get_boxed (&dest_value);
-        }
 
         else if (strcmp (key, "luks-holder") == 0)
                 props->luks_holder = g_strdup (g_value_get_boxed (value));
@@ -465,10 +449,6 @@ device_properties_free (DeviceProperties *props)
         g_free (props->partition_uuid);
         g_strfreev (props->partition_flags);
         g_free (props->partition_table_scheme);
-        if (props->partition_table_offsets != NULL)
-                g_array_free (props->partition_table_offsets, TRUE);
-        if (props->partition_table_sizes != NULL)
-                g_array_free (props->partition_table_sizes, TRUE);
         g_free (props->luks_holder);
         g_free (props->luks_cleartext_slave);
         g_free (props->drive_model);
@@ -1004,24 +984,6 @@ int
 gdu_device_partition_table_get_count (GduDevice *device)
 {
         return device->priv->props->partition_table_count;
-}
-
-int
-gdu_device_partition_table_get_max_number (GduDevice *device)
-{
-        return device->priv->props->partition_table_max_number;
-}
-
-GArray *
-gdu_device_partition_table_get_offsets (GduDevice *device)
-{
-        return device->priv->props->partition_table_offsets;
-}
-
-GArray *
-gdu_device_partition_table_get_sizes (GduDevice *device)
-{
-        return device->priv->props->partition_table_sizes;
 }
 
 const char *

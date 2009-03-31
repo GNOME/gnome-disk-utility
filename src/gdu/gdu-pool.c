@@ -437,7 +437,7 @@ get_holes (GduPool        *pool,
                 partition_number = gdu_device_partition_get_number (partition_device);
 
                 /* only consider partitions in the given space */
-                if (partition_offset < start)
+                if (partition_offset <= start)
                         continue;
                 if (partition_offset >= start + size)
                         continue;
@@ -460,18 +460,26 @@ get_holes (GduPool        *pool,
 
         g_qsort_with_data (entries, num_entries, sizeof (PartEntry), (GCompareDataFunc) part_entry_compare, NULL);
 
+        //g_print (" %s: start=%lldMB size=%lldMB num_entries=%d\n",
+        //         gdu_device_get_device_file (drive_device),
+        //         start / (1000 * 1000),
+        //         size / (1000 * 1000),
+        //         num_entries);
         for (n = 0, cursor = start; n <= num_entries; n++) {
                 if (n < num_entries) {
-
-                        /*g_print (" %d: offset=%lldMB size=%lldMB\n",
-                                 entries[n].number,
-                                 entries[n].offset / (1000 * 1000),
-                                 entries[n].size / (1000 * 1000));*/
+                        //g_print ("  %d: %d: offset=%lldMB size=%lldMB\n",
+                        //         n,
+                        //         entries[n].number,
+                        //         entries[n].offset / (1000 * 1000),
+                        //         entries[n].size / (1000 * 1000));
 
                         gap_size = entries[n].offset - cursor;
                         gap_position = entries[n].offset - gap_size;
                         cursor = entries[n].offset + entries[n].size;
                 } else {
+                        //g_print ("  trailing: cursor=%lldMB\n",
+                        //         cursor / (1000 * 1000));
+
                         /* trailing free space */
                         gap_size = start + size - cursor;
                         gap_position = start + size - gap_size;
@@ -480,6 +488,9 @@ get_holes (GduPool        *pool,
                 /* ignore unallocated space that is less than 1% of the drive */
                 if (gap_size >= gdu_device_get_size (drive_device) / 100) {
                         GduVolumeHole *hole;
+                        //g_print ("  adding %lldMB gap at %lldMB\n",
+                        //         gap_size / (1000 * 1000),
+                        //         gap_position / (1000 * 1000));
 
                         hole = _gdu_volume_hole_new (pool, gap_position, gap_size, enclosed_in);
                         ret = g_list_prepend (ret, hole);

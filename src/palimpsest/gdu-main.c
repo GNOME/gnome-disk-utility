@@ -22,6 +22,7 @@
 #include <config.h>
 #include <glib-object.h>
 #include <string.h>
+#include <stdlib.h>
 #include <glib/gi18n.h>
 #include <polkit-gnome/polkit-gnome.h>
 #include <unique/unique.h>
@@ -57,8 +58,58 @@ show_nag_dialog (GtkWidget *toplevel)
         return ret;
 }
 
+static gboolean
+show_volume (GduShell   *shell,
+             const char *device_file)
+{
+        GduPool *pool;
+        GduDevice *device;
+        GduPresentable *presentable;
+
+        presentable = NULL;
+        pool = gdu_shell_get_pool (shell);
+        device = gdu_pool_get_by_device_file (pool, device_file);
+        if (device) {
+                presentable = gdu_pool_get_volume_by_device (pool, device);
+                g_object_unref (device);
+        }
+        if (presentable) {
+                gdu_shell_select_presentable (shell, presentable);
+                g_object_unref (presentable);
+                return TRUE;
+        }
+
+        return FALSE;
+}
+
+static gboolean
+show_drive (GduShell   *shell,
+            const char *device_file)
+{
+        GduPool *pool;
+        GduDevice *device;
+        GduPresentable *presentable;
+
+        presentable = NULL;
+        pool = gdu_shell_get_pool (shell);
+        device = gdu_pool_get_by_device_file (pool, device_file);
+        if (device) {
+                presentable = gdu_pool_get_drive_by_device (pool, device);
+                g_object_unref (device);
+        }
+        if (presentable) {
+                gdu_shell_select_presentable (shell, presentable);
+                g_object_unref (presentable);
+                return TRUE;
+        }
+
+        return FALSE;
+}
+
 enum {
-        CMD_PRESENT_WINDOW = 1
+        CMD_PRESENT_WINDOW = 1,
+        CMD_SHOW_VOLUME,
+        CMD_SHOW_DRIVE
 };
 
 static UniqueResponse
@@ -68,32 +119,82 @@ message_received (UniqueApp         *app,
                   guint              timestamp,
                   GduShell          *shell)
 {
+        gchar *data;
+
         switch (command) {
         case CMD_PRESENT_WINDOW:
                 gtk_window_present (GTK_WINDOW (gdu_shell_get_toplevel (shell)));
                 return UNIQUE_RESPONSE_OK;
+        case CMD_SHOW_VOLUME:
+                gtk_window_present (GTK_WINDOW (gdu_shell_get_toplevel (shell)));
+                data = unique_message_data_get_text (message_data);
+                if (show_volume (shell, data))
+                        return UNIQUE_RESPONSE_OK;
+                else
+                        return UNIQUE_RESPONSE_FAIL;
+        case CMD_SHOW_DRIVE:
+                gtk_window_present (GTK_WINDOW (gdu_shell_get_toplevel (shell)));
+                data = unique_message_data_get_text (message_data);
+                if (show_drive (shell, data))
+                        return UNIQUE_RESPONSE_OK;
+                else
+                        return UNIQUE_RESPONSE_FAIL;
         default:
                 return UNIQUE_RESPONSE_PASSTHROUGH;
         }
 }
+
+const char *volume_to_show = NULL;
+const char *drive_to_show = NULL;
+
+static GOptionEntry entries[] = {
+        { "show-volume", 0, 0, G_OPTION_ARG_FILENAME, &volume_to_show, N_("Volume to show"), N_("DEVICE") },
+        { "show-drive", 0, 0, G_OPTION_ARG_FILENAME, &drive_to_show, N_("Drive to show"), N_("DEVICE") },
+        { NULL }
+};
 
 int
 main (int argc, char **argv)
 {
         GduShell *shell;
         UniqueApp *unique_app;
+        UniqueMessageData *msg_data;
+        UniqueResponse response;
+        GError *error;
 
-        gtk_init (&argc, &argv);
+        error = NULL;
+        if (!gtk_init_with_args (&argc, &argv, "", entries, GETTEXT_PACKAGE, &error)) {
+                g_error ("%s", error->message);
+                exit (1);
+        }
 
         gtk_window_set_default_icon_name ("palimpsest");
 
         unique_app = unique_app_new_with_commands ("org.gnome.Palimpsest",
                                                    NULL,
                                                    "present_window", CMD_PRESENT_WINDOW,
+                                                   "show_volume", CMD_SHOW_VOLUME,
+                                                   "show_drive", CMD_SHOW_DRIVE,
                                                    NULL);
+
         if (unique_app_is_running (unique_app)) {
-                unique_app_send_message (unique_app, CMD_PRESENT_WINDOW, NULL);
-                return 0;
+                msg_data = unique_message_data_new ();
+                if (volume_to_show) {
+                        unique_message_data_set_text (msg_data, volume_to_show, -1);
+                        response = unique_app_send_message (unique_app, CMD_SHOW_VOLUME, msg_data);
+                }
+                else if (drive_to_show) {
+                        unique_message_data_set_text (msg_data, drive_to_show, -1);
+                        response = unique_app_send_message (unique_app, CMD_SHOW_DRIVE, msg_data);
+                }
+                else {
+                        response = unique_app_send_message (unique_app, CMD_PRESENT_WINDOW, NULL);
+                }
+                unique_message_data_free (msg_data);
+                if (response == UNIQUE_RESPONSE_OK)
+                        return 0;
+                else
+                        return 1;
         }
 
         shell = gdu_shell_new ();
@@ -106,6 +207,11 @@ main (int argc, char **argv)
 
         if (!show_nag_dialog (gdu_shell_get_toplevel (shell)))
                 goto out;
+
+        if (volume_to_show)
+                show_volume (shell, volume_to_show);
+        else if (drive_to_show)
+                show_drive (shell, drive_to_show);
 
         gtk_main ();
 

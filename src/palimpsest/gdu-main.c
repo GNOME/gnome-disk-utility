@@ -127,11 +127,14 @@ static GOptionEntry entries[] = {
 int
 main (int argc, char **argv)
 {
+        gint ret;
         GduShell *shell;
         UniqueApp *unique_app;
         UniqueMessageData *msg_data;
         UniqueResponse response;
         GError *error;
+
+        ret = 1;
 
         error = NULL;
         if (!gtk_init_with_args (&argc, &argv, "", entries, GETTEXT_PACKAGE, &error)) {
@@ -176,14 +179,19 @@ main (int argc, char **argv)
         gtk_widget_show_all (gdu_shell_get_toplevel (shell));
         gdu_shell_update (shell);
 
-        if (volume_to_show)
-                show_volume (shell, volume_to_show);
-        else if (drive_to_show)
-                show_drive (shell, drive_to_show);
+        if (volume_to_show) {
+                if (!show_volume (shell, volume_to_show))
+                        goto out;
+        }  else if (drive_to_show) {
+                if (!show_drive (shell, drive_to_show))
+                        goto out;
+        }
 
         gtk_main ();
 
+        ret = 0;
+
  out:
         g_object_unref (shell);
-        return 0;
+        return ret;
 }

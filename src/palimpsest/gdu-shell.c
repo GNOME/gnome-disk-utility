@@ -366,7 +366,7 @@ details_update (GduShell *shell)
 
                 if (gdu_device_is_luks_cleartext (device)) {
                         g_ptr_array_add (details,
-                                         g_strdup (_("Unlocked Encrypted LUKS Volume")));
+                                         g_strdup (_("Cleartext LUKS Device")));
                 } else {
                         if (gdu_device_is_partition (device)) {
                                 char *part_desc;

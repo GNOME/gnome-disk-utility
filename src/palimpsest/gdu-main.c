@@ -24,6 +24,7 @@
 #include <string.h>
 #include <glib/gi18n.h>
 #include <polkit-gnome/polkit-gnome.h>
+#include <unique/unique.h>
 
 #include "gdu-shell.h"
 
@@ -56,16 +57,50 @@ show_nag_dialog (GtkWidget *toplevel)
         return ret;
 }
 
+enum {
+        CMD_PRESENT_WINDOW = 1
+};
+
+static UniqueResponse
+message_received (UniqueApp         *app,
+                  gint               command,
+                  UniqueMessageData *message_data,
+                  guint              timestamp,
+                  GduShell          *shell)
+{
+        switch (command) {
+        case CMD_PRESENT_WINDOW:
+                gtk_window_present (GTK_WINDOW (gdu_shell_get_toplevel (shell)));
+                return UNIQUE_RESPONSE_OK;
+        default:
+                return UNIQUE_RESPONSE_PASSTHROUGH;
+        }
+}
+
 int
 main (int argc, char **argv)
 {
         GduShell *shell;
+        UniqueApp *unique_app;
 
         gtk_init (&argc, &argv);
 
         gtk_window_set_default_icon_name ("palimpsest");
 
+        unique_app = unique_app_new_with_commands ("org.gnome.Palimpsest",
+                                                   NULL,
+                                                   "present_window", CMD_PRESENT_WINDOW,
+                                                   NULL);
+        if (unique_app_is_running (unique_app)) {
+                unique_app_send_message (unique_app, CMD_PRESENT_WINDOW, NULL);
+                return 0;
+        }
+
         shell = gdu_shell_new ();
+
+        g_signal_connect (unique_app, "message-received",
+                          G_CALLBACK (message_received), shell);
+
         gtk_widget_show_all (gdu_shell_get_toplevel (shell));
         gdu_shell_update (shell);
 

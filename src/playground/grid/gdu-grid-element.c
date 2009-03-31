@@ -6,7 +6,6 @@
 #include <gdk/gdkx.h>
 #include <X11/XKBlib.h>
 
-#define GDU_GTK_API_IS_SUBJECT_TO_CHANGE
 #include <gdu-gtk/gdu-gtk.h>
 
 #include "gdu-grid-view.h"

@@ -21,6 +21,14 @@ enum
         PROP_POOL,
 };
 
+enum
+{
+        SELECTION_CHANGED_SIGNAL,
+        LAST_SIGNAL,
+};
+
+static guint signals[LAST_SIGNAL] = {0};
+
 static void on_presentable_added   (GduPool        *pool,
                                     GduPresentable *presentable,
                                     GduGridView    *view);
@@ -291,6 +299,26 @@ gdu_grid_view_class_init (GduGridViewClass *klass)
         object_class->constructed  = gdu_grid_view_constructed;
         object_class->finalize     = gdu_grid_view_finalize;
 
+        /**
+         * GduGridView::selection-changed:
+         * @view: The view emitting the signal.
+         *
+         * Emitted when the selection in @view chanes.
+         **/
+        signals[SELECTION_CHANGED_SIGNAL] = g_signal_new ("selection-changed",
+                                                          GDU_TYPE_GRID_VIEW,
+                                                          G_SIGNAL_RUN_LAST,
+                                                          G_STRUCT_OFFSET (GduGridViewClass, selection_changed),
+                                                          NULL,
+                                                          NULL,
+                                                          g_cclosure_marshal_VOID__VOID,
+                                                          G_TYPE_NONE,
+                                                          0);
+        /**
+         * GduGridView:pool:
+         *
+         * The pool of devices to show.
+         */
         g_object_class_install_property (object_class,
                                          PROP_POOL,
                                          g_param_spec_object ("pool",
@@ -395,6 +423,7 @@ gdu_grid_view_selection_add (GduGridView    *view,
         if (e != NULL) {
                 gtk_widget_queue_draw (GTK_WIDGET (e));
         }
+        g_signal_emit (view, signals[SELECTION_CHANGED_SIGNAL], 0);
 }
 
 void
@@ -411,6 +440,7 @@ gdu_grid_view_selection_remove (GduGridView    *view,
                         }
                         view->priv->selected = g_list_remove (view->priv->selected, presentable);
                         g_object_unref (presentable);
+                        g_signal_emit (view, signals[SELECTION_CHANGED_SIGNAL], 0);
                         break;
                 }
         }
@@ -439,6 +469,8 @@ void
 gdu_grid_view_selection_clear (GduGridView *view)
 {
         GList *l;
+        gboolean changed;
+
         for (l = view->priv->selected; l != NULL; l = l->next) {
                 GduGridElement *e;
                 e = get_element_for_presentable (view, l->data);
@@ -447,9 +479,14 @@ gdu_grid_view_selection_clear (GduGridView *view)
                 }
         }
 
+        changed = (view->priv->selected != NULL);
+
         g_list_foreach (view->priv->selected, (GFunc) g_object_unref, NULL);
         g_list_free (view->priv->selected);
         view->priv->selected = NULL;
+
+        if (changed)
+                g_signal_emit (view, signals[SELECTION_CHANGED_SIGNAL], 0);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

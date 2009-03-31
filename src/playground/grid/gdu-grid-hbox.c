@@ -85,7 +85,7 @@ gdu_grid_hbox_size_allocate (GtkWidget      *widget,
          * then assign extra space based on the percentage
          */
         desired_width = get_desired_width (GDU_GRID_HBOX (widget));
-        if (desired_width < allocation->width)
+        if (desired_width < (guint) allocation->width)
                 extra_space = allocation->width - desired_width;
         else
                 extra_space = 0;

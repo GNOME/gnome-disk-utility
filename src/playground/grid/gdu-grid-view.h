@@ -28,6 +28,10 @@ struct GduGridView
 struct GduGridViewClass
 {
         GtkVBoxClass parent_class;
+
+        /*< public >*/
+        /* signals */
+        void (*selection_changed) (GduGridView *view);
 };
 
 GType           gdu_grid_view_get_type         (void) G_GNUC_CONST;

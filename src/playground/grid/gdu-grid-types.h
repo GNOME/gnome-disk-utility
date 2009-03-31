@@ -11,6 +11,7 @@ G_BEGIN_DECLS
 typedef struct GduGridView        GduGridView;
 typedef struct GduGridHBox        GduGridHBox;
 typedef struct GduGridElement     GduGridElement;
+typedef struct GduGridDetails     GduGridDetails;
 
 G_END_DECLS
 

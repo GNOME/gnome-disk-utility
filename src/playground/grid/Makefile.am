@@ -9,6 +9,7 @@ grid_SOURCES = 										\
 	gdu-grid-element.h			gdu-grid-element.c			\
 	gdu-grid-hbox.h				gdu-grid-hbox.c				\
 	gdu-grid-view.h				gdu-grid-view.c				\
+	gdu-grid-details.h			gdu-grid-details.c			\
 	$(NULL)
 
 grid_CPPFLAGS = 					\

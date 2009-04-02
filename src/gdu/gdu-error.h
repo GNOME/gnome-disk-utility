@@ -34,26 +34,11 @@ G_BEGIN_DECLS
 /**
  * GduError:
  * @GDU_ERROR_FAILED: The operation failed.
- * @GDU_ERROR_INHIBITED: The daemon is being inhibited.
  * @GDU_ERROR_BUSY: The device is busy
  * @GDU_ERROR_CANCELLED: The operation was cancelled
+ * @GDU_ERROR_INHIBITED: The daemon is being inhibited.
  * @GDU_ERROR_INVALID_OPTION: An invalid option was passed
- * @GDU_ERROR_ALREADY_MOUNTED: Device is already mounted.
- * @GDU_ERROR_NOT_MOUNTED: Device is not mounted.
- * @GDU_ERROR_NOT_CANCELLABLE: Operation is not cancellable.
- * @GDU_ERROR_NOT_PARTITION: Device is not a partition.
- * @GDU_ERROR_NOT_PARTITION_TABLE: Device is not a partition table.
- * @GDU_ERROR_NOT_LABELED: Device is not labeled.
- * @GDU_ERROR_NOT_FILESYSTEM: Device is not a file system.
- * @GDU_ERROR_NOT_LUKS: Device is not a LUKS encrypted device.
- * @GDU_ERROR_NOT_LOCKED: Device is not locked.
- * @GDU_ERROR_NOT_UNLOCKED: Device is not unlocked.
- * @GDU_ERROR_NOT_LINUX_MD: Device is not a Linux md Software RAID device.
- * @GDU_ERROR_NOT_LINUX_MD_COMPONENT: Device is not a Linux md Software RAID component.
- * @GDU_ERROR_NOT_DRIVE: Device is not a drive.
  * @GDU_ERROR_NOT_SUPPORTED: Operation not supported.
- * @GDU_ERROR_NOT_FOUND: Given device does not exist.
- * @GDU_ERROR_ATA_SMART_NOT_AVAILABLE: Device does not support S.M.A.R.T.
  * @GDU_ERROR_ATA_SMART_WOULD_WAKEUP: Getting S.M.A.R.T. data for the device would require to spin it up.
  *
  * Error codes in the #GDU_ERROR domain.
@@ -61,26 +46,11 @@ G_BEGIN_DECLS
 typedef enum
 {
         GDU_ERROR_FAILED,
-        GDU_ERROR_INHIBITED,
         GDU_ERROR_BUSY,
         GDU_ERROR_CANCELLED,
+        GDU_ERROR_INHIBITED,
         GDU_ERROR_INVALID_OPTION,
-        GDU_ERROR_ALREADY_MOUNTED,
-        GDU_ERROR_NOT_MOUNTED,
-        GDU_ERROR_NOT_CANCELLABLE,
-        GDU_ERROR_NOT_PARTITION,
-        GDU_ERROR_NOT_PARTITION_TABLE,
-        GDU_ERROR_NOT_LABELED,
-        GDU_ERROR_NOT_FILESYSTEM,
-        GDU_ERROR_NOT_LUKS,
-        GDU_ERROR_NOT_LOCKED,
-        GDU_ERROR_NOT_UNLOCKED,
-        GDU_ERROR_NOT_LINUX_MD,
-        GDU_ERROR_NOT_LINUX_MD_COMPONENT,
-        GDU_ERROR_NOT_DRIVE,
         GDU_ERROR_NOT_SUPPORTED,
-        GDU_ERROR_NOT_FOUND,
-        GDU_ERROR_ATA_SMART_NOT_AVAILABLE,
         GDU_ERROR_ATA_SMART_WOULD_WAKEUP
 } GduError;
 

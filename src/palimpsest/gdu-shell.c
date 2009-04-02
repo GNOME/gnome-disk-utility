@@ -2001,68 +2001,23 @@ gdu_shell_raise_error (GduShell       *shell,
         case GDU_ERROR_FAILED:
                 error_msg = _("The operation failed.");
                 break;
-        case GDU_ERROR_INHIBITED:
-                error_msg = _("The daemon is being inhibited.");
-                break;
         case GDU_ERROR_BUSY:
                 error_msg = _("The device is busy.");
                 break;
         case GDU_ERROR_CANCELLED:
                 error_msg = _("The operation was cancelled.");
                 break;
+        case GDU_ERROR_INHIBITED:
+                error_msg = _("The daemon is being inhibited.");
+                break;
         case GDU_ERROR_INVALID_OPTION:
                 error_msg = _("An invalid option was passed.");
-                break;
-        case GDU_ERROR_ALREADY_MOUNTED:
-                error_msg = _("The device is already mounted.");
-                break;
-        case GDU_ERROR_NOT_MOUNTED:
-                error_msg = _("The device is not mounted.");
-                break;
-        case GDU_ERROR_NOT_CANCELLABLE:
-                error_msg = _("The operation can not be cancelled.");
-                break;
-        case GDU_ERROR_NOT_PARTITION:
-                error_msg = _("The device is not a partition.");
-                break;
-        case GDU_ERROR_NOT_PARTITION_TABLE:
-                error_msg = _("The device is not a partition table.");
-                break;
-        case GDU_ERROR_NOT_LABELED:
-                error_msg = _("The device is not labeled.");
-                break;
-        case GDU_ERROR_NOT_FILESYSTEM:
-                error_msg = _("The device is not a file system.");
-                break;
-        case GDU_ERROR_NOT_LUKS:
-                error_msg = _("The device is not a LUKS encrypted device.");
-                break;
-        case GDU_ERROR_NOT_LOCKED:
-                error_msg = _("The device is not locked.");
-                break;
-        case GDU_ERROR_NOT_UNLOCKED:
-                error_msg = _("The device is not unlocked.");
-                break;
-        case GDU_ERROR_NOT_LINUX_MD:
-                error_msg = _("The device is not a Linux md Software RAID device.");
-                break;
-        case GDU_ERROR_NOT_LINUX_MD_COMPONENT:
-                error_msg = _("The device is not a Linux md Software RAID component.");
-                break;
-        case GDU_ERROR_NOT_DRIVE:
-                error_msg = _("The device is not a drive.");
                 break;
         case GDU_ERROR_NOT_SUPPORTED:
                 error_msg = _("The operation is not supported.");
                 break;
-        case GDU_ERROR_NOT_FOUND:
-                error_msg = _("The device does not exist.");
-                break;
-        case GDU_ERROR_ATA_SMART_NOT_AVAILABLE:
-                error_msg = _("The device does not support S.M.A.R.T.");
-                break;
         case GDU_ERROR_ATA_SMART_WOULD_WAKEUP:
-                error_msg = _("Getting S.M.A.R.T. data would require to wake up the device.");
+                error_msg = _("Getting ATA SMART data would wake up the device.");
                 break;
         default:
                 error_msg = _("Unknown error");

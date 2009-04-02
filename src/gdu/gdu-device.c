@@ -46,6 +46,8 @@ typedef struct
 {
         char *native_path;
 
+        gint64   device_major;
+        gint64   device_minor;
         char    *device_file;
         char   **device_file_by_id;
         char   **device_file_by_path;
@@ -177,6 +179,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         if (strcmp (key, "native-path") == 0)
                 props->native_path = g_strdup (g_value_get_string (value));
 
+        else if (strcmp (key, "device-major") == 0)
+                props->device_major = g_value_get_int64 (value);
+        else if (strcmp (key, "device-minor") == 0)
+                props->device_minor = g_value_get_int64 (value);
         else if (strcmp (key, "device-file") == 0)
                 props->device_file = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-file-by-id") == 0)
@@ -745,6 +751,12 @@ gdu_device_find_parent (GduDevice *device)
         }
 
         return parent;
+}
+
+dev_t
+gdu_device_get_dev (GduDevice *device)
+{
+        return makedev (device->priv->props->device_major, device->priv->props->device_minor);
 }
 
 const char *

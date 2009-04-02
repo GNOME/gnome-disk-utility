@@ -67,7 +67,7 @@ typedef struct
         gboolean device_is_busy;
         gboolean device_is_linux_md_component;
         gboolean device_is_linux_md;
-        char    *device_mount_path;
+        char   **device_mount_paths;
         uid_t    device_mounted_by_uid;
         char    *device_presentation_name;
         char    *device_presentation_icon_name;
@@ -219,8 +219,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_mounted = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-busy") == 0)
                 props->device_is_busy = g_value_get_boolean (value);
-        else if (strcmp (key, "device-mount-path") == 0)
-                props->device_mount_path = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "device-mount-paths") == 0)
+                props->device_mount_paths = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "device-mounted-by-uid") == 0)
                 props->device_mounted_by_uid = g_value_get_uint (value);
         else if (strcmp (key, "device-presentation-name") == 0)
@@ -433,7 +433,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->device_file);
         g_strfreev (props->device_file_by_id);
         g_strfreev (props->device_file_by_path);
-        g_free (props->device_mount_path);
+        g_strfreev (props->device_mount_paths);
         g_free (props->device_presentation_name);
         g_free (props->device_presentation_icon_name);
         g_free (props->job_id);
@@ -861,10 +861,19 @@ gdu_device_is_busy (GduDevice *device)
         return device->priv->props->device_is_busy;
 }
 
+/* keep this around for a while to avoid breaking ABI */
 const char *
 gdu_device_get_mount_path (GduDevice *device)
 {
-        return device->priv->props->device_mount_path;
+        if (device->priv->props->device_mount_paths == NULL || device->priv->props->device_mount_paths[0] == NULL)
+                return NULL;
+        return (const char *) device->priv->props->device_mount_paths[0];
+}
+
+char **
+gdu_device_get_mount_paths (GduDevice *device)
+{
+        return device->priv->props->device_mount_paths;
 }
 
 const char *

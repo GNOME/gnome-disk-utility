@@ -184,7 +184,6 @@ details_update (GduShell *shell)
         gboolean ret;
         char *s;
         char *p;
-        char *url;
         char *detail_color;
         char *name;
         GIcon *icon;
@@ -390,16 +389,22 @@ details_update (GduShell *shell)
                 }
 
                 if (gdu_device_is_mounted (device)) {
-                        p = s;
-			url = g_strconcat ("<a href=\"file://",
-                                           gdu_device_get_mount_path (device),
-                                           "\">",
-                                           gdu_device_get_mount_path (device),
-                                           "</a>",
-                                           NULL);
-                        s = g_strdup_printf (_("%s mounted at %s"), s, url);
-                        g_free (p);
-                        g_free (url);
+                        gchar **mount_paths;
+                        GString *str;
+
+                        mount_paths = gdu_device_get_mount_paths (device);
+
+                        str = g_string_new (s);
+                        g_free (s);
+                        g_string_append (str, " mounted at ");
+                        for (n = 0; mount_paths[n] != NULL; n++) {
+                                if (n > 0)
+                                        g_string_append (str, ", ");
+                                g_string_append_printf (str, "<a href=\"file://%s\">%s</a>",
+                                                        mount_paths[n],
+                                                        mount_paths[n]);
+                        }
+                        s = g_string_free (str, FALSE);
                 }
                 g_ptr_array_add (details, s);
 

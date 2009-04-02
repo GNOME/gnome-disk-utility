@@ -67,14 +67,13 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
 {
         GduSectionCreatePartitionTable *section = GDU_SECTION_CREATE_PARTITION_TABLE (user_data);
         GduDevice *device;
-        char *secure_erase;
+        gboolean do_erase;
         char *scheme;
         char *primary;
         char *secondary;
         char *drive_name;
 
         scheme = NULL;
-        secure_erase = NULL;
         primary = NULL;
         secondary = NULL;
         drive_name = NULL;
@@ -101,15 +100,14 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
                                              drive_name);
         }
 
-        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
-                                                            "",
-                                                            FALSE,
-                                                            primary,
-                                                            secondary,
-                                                            _("C_reate"));
+        do_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                                        "",
+                                                        primary,
+                                                        secondary,
+                                                        _("C_reate"));
 
 
-        if (secure_erase == NULL)
+        if (!do_erase)
                 goto out;
 
         scheme = gdu_util_part_table_type_combo_box_get_selected (
@@ -117,7 +115,6 @@ create_part_table_callback (GtkAction *action, gpointer user_data)
 
         gdu_device_op_partition_table_create (device,
                                               scheme,
-                                              secure_erase,
                                               create_partition_table_callback,
                                               g_object_ref (section));
 
@@ -125,7 +122,6 @@ out:
         if (device != NULL)
                 g_object_unref (device);
         g_free (scheme);
-        g_free (secure_erase);
         g_free (primary);
         g_free (secondary);
         g_free (drive_name);

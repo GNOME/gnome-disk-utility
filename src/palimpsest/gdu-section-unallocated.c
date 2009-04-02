@@ -251,7 +251,6 @@ create_partition_callback (GtkAction *action, gpointer user_data)
                                         flags,
                                         fstype,
                                         fslabel,
-                                        "",
                                         data->encrypt_passphrase,
                                         take_ownership,
                                         create_partition_completed,

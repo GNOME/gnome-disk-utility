@@ -37,8 +37,6 @@ char *gdu_util_fstype_get_description (char *fstype);
 
 char *gdu_util_part_table_type_get_description (char *part_type);
 
-char *gdu_util_secure_erase_get_description (char *secure_erase_type);
-
 char *gdu_util_get_speed_for_display (guint64 size);
 
 char *gdu_util_get_connection_for_display (const char *connection_interface, guint64 connection_speed);
@@ -46,7 +44,6 @@ char *gdu_util_get_connection_for_display (const char *connection_interface, gui
 char *gdu_util_get_desc_for_part_type (const char *part_scheme, const char *part_type);
 
 char *gdu_get_job_description (const char *job_id);
-char *gdu_get_task_description (const char *task_id);
 
 char *gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level);
 

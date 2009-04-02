@@ -34,7 +34,6 @@ struct _GduSectionJobPrivate
 {
         GtkWidget *job_description_label;
         GtkWidget *job_progress_bar;
-        GtkWidget *job_task_label;
 
         PolKitAction *pk_cancel_job_others_action;
         PolKitGnomeAction *cancel_action;
@@ -77,7 +76,6 @@ job_update (GduSectionJob *section, GduDevice *device)
         char *s;
         uid_t job_initiator;
         char *job_description;
-        char *task_description;
         double percentage;
 
         if (device != NULL && gdu_device_job_in_progress (device)) {
@@ -94,24 +92,12 @@ job_update (GduSectionJob *section, GduDevice *device)
                               NULL);
 
                 job_description = gdu_get_job_description (gdu_device_job_get_id (device));
-                task_description = gdu_get_task_description (gdu_device_job_get_cur_task_id (device));
 
                 s = g_strdup_printf ("<b>%s</b>", job_description);
                 gtk_label_set_markup (GTK_LABEL (section->priv->job_description_label), s);
                 g_free (s);
 
-		if (gdu_device_job_get_num_tasks (device) < 2)
-                        gtk_label_set_markup (GTK_LABEL (section->priv->job_task_label), task_description);
-                else {
-                        s = g_strdup_printf (_("%s (task %d of %d)"),
-                                             task_description,
-                                             gdu_device_job_get_cur_task (device) + 1,
-                                             gdu_device_job_get_num_tasks (device));
-                        gtk_label_set_markup (GTK_LABEL (section->priv->job_task_label), s);
-                        g_free (s);
-                }
-
-                percentage = gdu_device_job_get_cur_task_percentage (device);
+                percentage = gdu_device_job_get_percentage (device);
                 if (percentage < 0) {
                         gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR (section->priv->job_progress_bar), 2.0 / 50);
                         gtk_progress_bar_pulse (GTK_PROGRESS_BAR (section->priv->job_progress_bar));
@@ -131,7 +117,6 @@ job_update (GduSectionJob *section, GduDevice *device)
                 }
 
                 g_free (job_description);
-                g_free (task_description);
 
                 polkit_gnome_action_set_sensitive (section->priv->cancel_action,
                                                    gdu_device_job_is_cancellable (device));
@@ -232,13 +217,6 @@ gdu_section_job_init (GduSectionJob *section)
         progress_bar = gtk_progress_bar_new ();
         gtk_box_pack_start (GTK_BOX (vbox2), progress_bar, TRUE, TRUE, 0);
         section->priv->job_progress_bar = progress_bar;
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), "Task Name (task 1 of 3)");
-        gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
-        section->priv->job_task_label = label;
-
 
         button_box = gtk_hbutton_box_new ();
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_END);

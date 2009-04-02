@@ -930,10 +930,7 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
                                    const char *job_id,
                                    guint32     job_initiated_by_uid,
                                    gboolean    job_is_cancellable,
-                                   int         job_num_tasks,
-                                   int         job_cur_task,
-                                   const char *job_cur_task_id,
-                                   double      job_cur_task_percentage,
+                                   double      job_percentage,
                                    gpointer user_data)
 {
         GduPool *pool = GDU_POOL (user_data);
@@ -945,10 +942,7 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
                                          job_id,
                                          job_initiated_by_uid,
                                          job_is_cancellable,
-                                         job_num_tasks,
-                                         job_cur_task,
-                                         job_cur_task_id,
-                                         job_cur_task_percentage);
+                                         job_percentage);
                 g_signal_emit_by_name (pool, "device-job-changed", device);
                 g_object_unref (device);
         } else {
@@ -1050,16 +1044,13 @@ gdu_pool_new (void)
         }
 
         dbus_g_object_register_marshaller (
-                gdu_marshal_VOID__STRING_BOOLEAN_STRING_UINT_BOOLEAN_INT_INT_STRING_DOUBLE,
+                gdu_marshal_VOID__STRING_BOOLEAN_STRING_UINT_BOOLEAN_DOUBLE,
                 G_TYPE_NONE,
                 DBUS_TYPE_G_OBJECT_PATH,
                 G_TYPE_BOOLEAN,
                 G_TYPE_STRING,
                 G_TYPE_UINT,
                 G_TYPE_BOOLEAN,
-                G_TYPE_INT,
-                G_TYPE_INT,
-                G_TYPE_STRING,
                 G_TYPE_DOUBLE,
                 G_TYPE_INVALID);
 
@@ -1077,9 +1068,6 @@ gdu_pool_new (void)
                                  G_TYPE_STRING,
                                  G_TYPE_UINT,
                                  G_TYPE_BOOLEAN,
-                                 G_TYPE_INT,
-                                 G_TYPE_INT,
-                                 G_TYPE_STRING,
                                  G_TYPE_DOUBLE,
                                  G_TYPE_INVALID);
 

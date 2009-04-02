@@ -392,7 +392,7 @@ detach_action_callback (GtkAction *action, gpointer user_data)
         if (!(slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED)) {
                 char *primary;
                 char *secondary;
-                char *secure_erase;
+                gboolean do_erase;
                 char *array_name;
                 char *component_name;
 
@@ -409,24 +409,21 @@ detach_action_callback (GtkAction *action, gpointer user_data)
                                              component_name,
                                              array_name);
 
-                secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
-                                                                    "",
-                                                                    FALSE,
-                                                                    primary,
-                                                                    secondary,
-                                                                    _("_Remove Component"));
-                if (secure_erase != NULL) {
+                do_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                                                "",
+                                                                primary,
+                                                                secondary,
+                                                                _("_Remove Component"));
+                if (do_erase) {
                         /* yay, remove this component from the array */
                         gdu_device_op_linux_md_remove_component (device,
                                                                  component_objpath,
-                                                                 secure_erase,
                                                                  remove_component_callback,
                                                                  g_object_ref (section));
                 }
 
                 g_free (primary);
                 g_free (secondary);
-                g_free (secure_erase);
                 g_free (array_name);
                 g_free (component_name);
         }

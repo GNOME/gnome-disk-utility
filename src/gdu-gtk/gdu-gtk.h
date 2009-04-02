@@ -55,12 +55,11 @@ gboolean gdu_util_dialog_change_secret (GtkWidget       *parent_window,
                                         gboolean         bypass_keyring,
                                         gboolean         indicate_wrong_passphrase);
 
-char *gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
-                                           const char  *title,
-                                           gboolean     show_secure_erase_combo_box,
-                                           const char  *primary_text,
-                                           const char  *secondary_text,
-                                           const char  *affirmative_action_button_mnemonic);
+gboolean gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
+                                              const char  *title,
+                                              const char  *primary_text,
+                                              const char  *secondary_text,
+                                              const char  *affirmative_action_button_mnemonic);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -73,12 +72,6 @@ void       gdu_util_fstype_combo_box_set_desc_label (GtkWidget *combo_box, GtkWi
 gboolean   gdu_util_fstype_combo_box_select         (GtkWidget  *combo_box,
                                                      const char *fstype);
 char      *gdu_util_fstype_combo_box_get_selected   (GtkWidget  *combo_box);
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-GtkWidget *gdu_util_secure_erase_combo_box_create         (void);
-void       gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label);
-char      *gdu_util_secure_erase_combo_box_get_selected   (GtkWidget *combo_box);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

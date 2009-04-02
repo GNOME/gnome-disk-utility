@@ -75,7 +75,7 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         GduPresentable *presentable;
         char *primary;
         char *secondary;
-        char *secure_erase;
+        gboolean do_erase;
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
         char *drive_name;
@@ -83,7 +83,6 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
         const gchar *type;
         gint msdos_type;
 
-        secure_erase = NULL;
         primary = NULL;
         secondary = NULL;
         toplevel_presentable = NULL;
@@ -198,18 +197,16 @@ delete_partition_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
-                                                            "",
-                                                            FALSE,
-                                                            primary,
-                                                            secondary,
-                                                            _("_Delete Partition"));
+        do_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                                        "",
+                                                        primary,
+                                                        secondary,
+                                                        _("_Delete Partition"));
 
-        if (secure_erase == NULL)
+        if (!do_erase)
                 goto out;
 
         gdu_device_op_partition_delete (device,
-                                        secure_erase,
                                         op_delete_partition_callback,
                                         g_object_ref (section));
 
@@ -226,7 +223,6 @@ out:
                 g_object_unref (toplevel_device);
         g_free (primary);
         g_free (secondary);
-        g_free (secure_erase);
         g_free (drive_name);
 }
 

@@ -98,10 +98,7 @@ gboolean    gdu_device_job_in_progress (GduDevice *device);
 const char *gdu_device_job_get_id (GduDevice *device);
 uid_t       gdu_device_job_get_initiated_by_uid (GduDevice *device);
 gboolean    gdu_device_job_is_cancellable (GduDevice *device);
-int         gdu_device_job_get_num_tasks (GduDevice *device);
-int         gdu_device_job_get_cur_task (GduDevice *device);
-const char *gdu_device_job_get_cur_task_id (GduDevice *device);
-double      gdu_device_job_get_cur_task_percentage (GduDevice *device);
+double      gdu_device_job_get_percentage (GduDevice *device);
 
 const char *gdu_device_id_get_usage (GduDevice *device);
 const char *gdu_device_id_get_type (GduDevice *device);
@@ -233,7 +230,6 @@ void gdu_device_op_filesystem_check                 (GduDevice                  
 /* ---------------------------------------------------------------------------------------------------- */
 
 void gdu_device_op_partition_delete        (GduDevice                             *device,
-                                            const char                            *secure_erase,
                                             GduDevicePartitionDeleteCompletedFunc  callback,
                                             gpointer                               user_data);
 
@@ -250,7 +246,6 @@ void gdu_device_op_partition_modify        (GduDevice                           
 
 void gdu_device_op_partition_table_create  (GduDevice                                  *device,
                                             const char                                 *scheme,
-                                            const char                                 *secure_erase,
                                             GduDevicePartitionTableCreateCompletedFunc  callback,
                                             gpointer                                    user_data);
 
@@ -312,7 +307,6 @@ void gdu_device_op_linux_md_add_component (GduDevice                            
 
 void gdu_device_op_linux_md_remove_component (GduDevice                                    *device,
                                               const char                                   *component_objpath,
-                                              const char                                   *secure_erase,
                                               GduDeviceLinuxMdRemoveComponentCompletedFunc  callback,
                                               gpointer                                      user_data);
 
@@ -321,7 +315,6 @@ void gdu_device_op_linux_md_remove_component (GduDevice                         
 void gdu_device_op_filesystem_create (GduDevice                              *device,
                                       const char                             *fstype,
                                       const char                             *fslabel,
-                                      const char                             *fserase,
                                       const char                             *encrypt_passphrase,
                                       gboolean                                fs_take_ownership,
                                       GduDeviceFilesystemCreateCompletedFunc  callback,
@@ -337,7 +330,6 @@ void gdu_device_op_partition_create       (GduDevice   *device,
                                            char       **flags,
                                            const char  *fstype,
                                            const char  *fslabel,
-                                           const char  *fserase,
                                            const char  *encrypt_passphrase,
                                            gboolean     fs_take_ownership,
                                            GduDevicePartitionCreateCompletedFunc callback,

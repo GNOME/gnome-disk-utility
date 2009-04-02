@@ -181,7 +181,7 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         GduPresentable *presentable;
         GduPresentable *toplevel_presentable;
         GduDevice *toplevel_device;
-        char *secure_erase;
+        gboolean do_erase;
         char *primary;
         char *secondary;
         char *drive_name;
@@ -191,7 +191,6 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         data = NULL;
         fstype = NULL;
         fslabel = NULL;
-        secure_erase = NULL;
         primary = NULL;
         secondary = NULL;
         device = NULL;
@@ -266,14 +265,13 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
-                                                            "",
-                                                            FALSE,
+        do_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                                        "",
                                                             primary,
                                                             secondary,
                                                             _("C_reate"));
 
-        if (secure_erase == NULL)
+        if (!do_erase)
                 goto out;
 
         data = g_new0 (CreateFilesystemData, 1);
@@ -295,7 +293,6 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         gdu_device_op_filesystem_create (device,
                                          fstype,
                                          fslabel,
-                                         secure_erase,
                                          data->encrypt_passphrase,
                                          take_ownership,
                                          erase_action_completed,
@@ -312,7 +309,6 @@ out:
         g_free (secondary);
         g_free (fstype);
         g_free (fslabel);
-        g_free (secure_erase);
         g_free (drive_name);
 }
 

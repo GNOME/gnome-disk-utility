@@ -79,10 +79,7 @@ typedef struct
         char    *job_id;
         uid_t    job_initiated_by_uid;
         gboolean job_is_cancellable;
-        int      job_num_tasks;
-        int      job_cur_task;
-        char    *job_cur_task_id;
-        double   job_cur_task_percentage;
+        double   job_percentage;
 
         char    *id_usage;
         char    *id_type;
@@ -243,14 +240,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->job_initiated_by_uid = g_value_get_uint (value);
         else if (strcmp (key, "job-is-cancellable") == 0)
                 props->job_is_cancellable = g_value_get_boolean (value);
-        else if (strcmp (key, "job-num-tasks") == 0)
-                props->job_num_tasks = g_value_get_int (value);
-        else if (strcmp (key, "job-cur-task") == 0)
-                props->job_cur_task = g_value_get_int (value);
-        else if (strcmp (key, "job-cur-task-id") == 0)
-                props->job_cur_task_id = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "job-cur-task-percentage") == 0)
-                props->job_cur_task_percentage = g_value_get_double (value);
+        else if (strcmp (key, "job-percentage") == 0)
+                props->job_percentage = g_value_get_double (value);
 
         else if (strcmp (key, "id-usage") == 0)
                 props->id_usage = g_strdup (g_value_get_string (value));
@@ -440,7 +431,6 @@ device_properties_free (DeviceProperties *props)
         g_free (props->device_presentation_name);
         g_free (props->device_presentation_icon_name);
         g_free (props->job_id);
-        g_free (props->job_cur_task_id);
         g_free (props->id_usage);
         g_free (props->id_type);
         g_free (props->id_version);
@@ -694,10 +684,7 @@ _gdu_device_job_changed (GduDevice   *device,
                          const char  *job_id,
                          uid_t        job_initiated_by_uid,
                          gboolean     job_is_cancellable,
-                         int          job_num_tasks,
-                         int          job_cur_task,
-                         const char  *job_cur_task_id,
-                         double       job_cur_task_percentage)
+                         double       job_percentage)
 {
         g_print ("%s: %s: %s\n", __FUNCTION__, device->priv->props->device_file, job_id);
 
@@ -706,11 +693,7 @@ _gdu_device_job_changed (GduDevice   *device,
         device->priv->props->job_id = g_strdup (job_id);
         device->priv->props->job_initiated_by_uid = job_initiated_by_uid;
         device->priv->props->job_is_cancellable = job_is_cancellable;
-        device->priv->props->job_num_tasks = job_num_tasks;
-        device->priv->props->job_cur_task = job_cur_task;
-        g_free (device->priv->props->job_cur_task_id);
-        device->priv->props->job_cur_task_id = g_strdup (job_cur_task_id);
-        device->priv->props->job_cur_task_percentage = job_cur_task_percentage;
+        device->priv->props->job_percentage = job_percentage;
 
         g_signal_emit (device, signals[JOB_CHANGED], 0);
 }
@@ -1426,28 +1409,10 @@ gdu_device_job_is_cancellable (GduDevice *device)
         return device->priv->props->job_is_cancellable;
 }
 
-int
-gdu_device_job_get_num_tasks (GduDevice *device)
-{
-        return device->priv->props->job_num_tasks;
-}
-
-int
-gdu_device_job_get_cur_task (GduDevice *device)
-{
-        return device->priv->props->job_cur_task;
-}
-
-const char *
-gdu_device_job_get_cur_task_id (GduDevice *device)
-{
-        return device->priv->props->job_cur_task_id;
-}
-
 double
-gdu_device_job_get_cur_task_percentage (GduDevice *device)
+gdu_device_job_get_percentage (GduDevice *device)
 {
-        return device->priv->props->job_cur_task_percentage;
+        return device->priv->props->job_percentage;
 }
 
 /* -------------------------------------------------------------------------------- */
@@ -1472,7 +1437,6 @@ void
 gdu_device_op_filesystem_create (GduDevice                              *device,
                                  const char                             *fstype,
                                  const char                             *fslabel,
-                                 const char                             *fserase,
                                  const char                             *encrypt_passphrase,
                                  gboolean                                fs_take_ownership,
                                  GduDeviceFilesystemCreateCompletedFunc  callback,
@@ -1490,9 +1454,6 @@ gdu_device_op_filesystem_create (GduDevice                              *device,
         n = 0;
         if (fslabel != NULL && strlen (fslabel) > 0) {
                 options[n++] = g_strdup_printf ("label=%s", fslabel);
-        }
-        if (fserase != NULL && strlen (fserase) > 0) {
-                options[n++] = g_strdup_printf ("erase=%s", fserase);
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
                 options[n++] = g_strdup_printf ("luks_encrypt=%s", encrypt_passphrase);
@@ -1654,7 +1615,6 @@ op_partition_delete_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 
 void
 gdu_device_op_partition_delete (GduDevice                             *device,
-                                const char                            *secure_erase,
                                 GduDevicePartitionDeleteCompletedFunc  callback,
                                 gpointer                               user_data)
 {
@@ -1668,9 +1628,6 @@ gdu_device_op_partition_delete (GduDevice                             *device,
         data->user_data = user_data;
 
         n = 0;
-        if (secure_erase != NULL && strlen (secure_erase) > 0) {
-                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
-        }
         options[n] = NULL;
 
         org_freedesktop_DeviceKit_Disks_Device_partition_delete_async (device->priv->proxy,
@@ -1710,7 +1667,6 @@ gdu_device_op_partition_create (GduDevice   *device,
                                 char       **flags,
                                 const char  *fstype,
                                 const char  *fslabel,
-                                const char  *fserase,
                                 const char  *encrypt_passphrase,
                                 gboolean     fs_take_ownership,
                                 GduDevicePartitionCreateCompletedFunc callback,
@@ -1731,9 +1687,6 @@ gdu_device_op_partition_create (GduDevice   *device,
         n = 0;
         if (fslabel != NULL && strlen (fslabel) > 0) {
                 fsoptions[n++] = g_strdup_printf ("label=%s", fslabel);
-        }
-        if (fserase != NULL && strlen (fserase) > 0) {
-                fsoptions[n++] = g_strdup_printf ("erase=%s", fserase);
         }
         if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
                 fsoptions[n++] = g_strdup_printf ("luks_encrypt=%s", encrypt_passphrase);
@@ -1824,7 +1777,6 @@ op_create_partition_table_cb (DBusGProxy *proxy, GError *error, gpointer user_da
 void
 gdu_device_op_partition_table_create (GduDevice                                  *device,
                                       const char                                 *scheme,
-                                      const char                                 *secure_erase,
                                       GduDevicePartitionTableCreateCompletedFunc  callback,
                                       gpointer                                    user_data)
 {
@@ -1838,9 +1790,6 @@ gdu_device_op_partition_table_create (GduDevice                                 
         data->user_data = user_data;
 
         n = 0;
-        if (secure_erase != NULL && strlen (secure_erase) > 0) {
-                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
-        }
         options[n] = NULL;
 
         org_freedesktop_DeviceKit_Disks_Device_partition_table_create_async (device->priv->proxy,
@@ -2273,7 +2222,6 @@ op_remove_component_from_linux_md_array_cb (DBusGProxy *proxy, GError *error, gp
 void
 gdu_device_op_linux_md_remove_component (GduDevice                                    *device,
                                          const char                                   *component_objpath,
-                                         const char                                   *secure_erase,
                                          GduDeviceLinuxMdRemoveComponentCompletedFunc  callback,
                                          gpointer                                      user_data)
 {
@@ -2287,9 +2235,6 @@ gdu_device_op_linux_md_remove_component (GduDevice                              
         data->user_data = user_data;
 
         n = 0;
-        if (secure_erase != NULL && strlen (secure_erase) > 0) {
-                options[n++] = g_strdup_printf ("erase=%s", secure_erase);
-        }
         options[n] = NULL;
 
         org_freedesktop_DeviceKit_Disks_Device_linux_md_remove_component_async (

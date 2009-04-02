@@ -290,11 +290,11 @@ gdu_get_job_description (const char *job_id)
         } else if (strcmp (job_id, "FilesystemCheck") == 0) {
                 s = g_strdup (_("Checking File System"));
         } else if (strcmp (job_id, "LuksFormat") == 0) {
-                s = g_strdup (_("Creating Encrypted LUKS Device"));
+                s = g_strdup (_("Creating LUKS Device"));
         } else if (strcmp (job_id, "LuksUnlock") == 0) {
-                s = g_strdup (_("Unlocking Encrypted LUKS Device"));
+                s = g_strdup (_("Unlocking LUKS Device"));
         } else if (strcmp (job_id, "LuksLock") == 0) {
-                s = g_strdup (_("Locking Encrypted LUKS Device"));
+                s = g_strdup (_("Locking LUKS Device"));
         } else if (strcmp (job_id, "PartitionTableCreate") == 0) {
                 s = g_strdup (_("Creating Partition Table"));
         } else if (strcmp (job_id, "PartitionDelete") == 0) {
@@ -313,30 +313,19 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Removing Component from RAID Array"));
         } else if (strcmp (job_id, "LinuxMdStop") == 0) {
                 s = g_strdup (_("Stopping RAID Array"));
-        } else if (strcmp (job_id, "DriveSmartInitiateSelftest") == 0) {
+        } else if (strcmp (job_id, "LinuxMdStart") == 0) {
+                s = g_strdup (_("Starting RAID Array"));
+        } else if (strcmp (job_id, "DriveAtaSmartInitiateSelftest") == 0) {
                 s = g_strdup (_("Running S.M.A.R.T. Self Test"));
         } else if (strcmp (job_id, "DriveEject") == 0) {
                 s = g_strdup (_("Ejecting Media"));
+        } else if (strcmp (job_id, "ForceUnmount") == 0) {
+                s = g_strdup (_("Forcibly Unmounting Filesystem"));
+        } else if (strcmp (job_id, "ForceLuksTeardown") == 0) {
+                s = g_strdup (_("Forcibly Locking LUKS device"));
         } else {
                 s = g_strdup_printf ("%s", job_id);
-        }
-        return s;
-}
-
-char *
-gdu_get_task_description (const char *task_id)
-{
-        char *s;
-        if (strcmp (task_id, "zeroing") == 0) {
-                s = g_strdup (_("Zeroing data"));
-        } else if (strcmp (task_id, "sync") == 0) {
-                s = g_strdup (_("Flushing data to disk"));
-        } else if (strcmp (task_id, "mkfs") == 0) {
-                s = g_strdup (_("Creating File System"));
-        } else if (strlen (task_id) == 0) {
-                s = g_strdup ("");
-        } else {
-                s = g_strdup_printf ("%s", task_id);
+                g_warning ("No friendly string for job with id '%s'", job_id);
         }
         return s;
 }
@@ -504,43 +493,6 @@ gdu_util_part_table_type_get_description (char *part_type)
                 return g_strdup (_("Marks the entire disk as unused. Use this option only if you want "
                                    "to avoid partitioing the disk for e.g. whole disk use or "
                                    "floppy / Zip disks."));
-
-        else
-                return NULL;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-char *
-gdu_util_secure_erase_get_description (char *secure_erase_type)
-{
-        g_return_val_if_fail (secure_erase_type != NULL, NULL);
-
-        if (strcmp (secure_erase_type, "none") == 0)
-                return g_strdup (_("Data on the disk won't be erased. This option doesn't add any time to the "
-                                   "requested operation but can pose a security threat since some data "
-                                   "may be recovered."));
-
-        else if (strcmp (secure_erase_type, "full") == 0)
-                return g_strdup (_("All data on the disk will by overwritten by zeroes providing some "
-                                   "security against data recovery. This operation may take a long time "
-                                   "depending on the size and speed of the disk."));
-
-        else if (strcmp (secure_erase_type, "full3pass") == 0)
-                return g_strdup (_("Random data is written to the disk three times. This operation may "
-                                   "take some time depending on the size and speed of the disk but "
-                                   "provides good security against data recovery."));
-
-        else if (strcmp (secure_erase_type, "full7pass") == 0)
-                return g_strdup (_("Random data is written to the disk seven times. This operation may "
-                                   "take a very long time depending on the size and speed of the disk "
-                                   "but provides excellent security against data recovery."));
-
-        else if (strcmp (secure_erase_type, "full35pass") == 0)
-                return g_strdup (_("Random data is written to the disk 35 times before starting the "
-                                   "operation. This operation may take extremely long time depending on the "
-                                   "size and speed of the disk but provides the most effective "
-                                   "security against data recovery."));
 
         else
                 return NULL;

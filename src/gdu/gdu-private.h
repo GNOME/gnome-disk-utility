@@ -106,10 +106,7 @@ void        _gdu_device_job_changed           (GduDevice   *device,
                                                const char  *job_id,
                                                uid_t        job_initiated_by_uid,
                                                gboolean     job_is_cancellable,
-                                               int          job_num_tasks,
-                                               int          job_cur_task,
-                                               const char  *job_cur_task_id,
-                                               double       job_cur_task_percentage);
+                                               double       job_percentage);
 
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);

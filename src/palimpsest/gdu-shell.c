@@ -1511,13 +1511,12 @@ erase_action_callback (GtkAction *action, gpointer user_data)
         gchar *drive_name;
         gchar *primary;
         gchar *secondary;
-        gchar *secure_erase;
+        gboolean do_erase;
 
         device = NULL;
         drive_name = NULL;
         primary = NULL;
         secondary = NULL;
-        secure_erase = NULL;
         toplevel_presentable = NULL;
         toplevel_device = NULL;
 
@@ -1578,17 +1577,15 @@ erase_action_callback (GtkAction *action, gpointer user_data)
                 }
         }
 
-        secure_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (shell),
-                                                            "",
-                                                            TRUE,
-                                                            primary,
-                                                            secondary,
-                                                            _("_Erase"));
-        if (secure_erase != NULL) {
+        do_erase = gdu_util_delete_confirmation_dialog (gdu_shell_get_toplevel (shell),
+                                                        "",
+                                                        primary,
+                                                        secondary,
+                                                        _("_Erase"));
+        if (do_erase) {
                 gdu_device_op_filesystem_create (device,
                                                  "empty",
                                                  "",
-                                                 secure_erase,
                                                  NULL,
                                                  FALSE,
                                                  op_erase_callback,
@@ -1598,7 +1595,6 @@ erase_action_callback (GtkAction *action, gpointer user_data)
 out:
         g_free (secondary);
         g_free (primary);
-        g_free (secure_erase);
         g_free (drive_name);
         if (toplevel_presentable != NULL)
                 g_object_unref (toplevel_presentable);

@@ -1108,38 +1108,30 @@ out:
  * gdu_util_delete_confirmation_dialog:
  * @parent_window: parent window for transient dialog
  * @title: the title of the dialog
- * @show_secure_erase_combo_box: %TRUE to include secure erase combo box
  * @primary_text: primary text
  * @secondary_text: secondary text
  * @affirmative_action_button_mnemonic: text to use on the affirmative action button
  *
- * Utility to show a confirmation dialog for deletion. If @show_secure_erase_combo_box is %TRUE
- * a combo box allowing the user to choose the secure erase option will be shown, otherwise
- * "none" will be returned (unless the user cancelled the dialog).
+ * Utility to show a confirmation dialog for deletion.
  *
- * Returns: %NULL if the user canceled, otherwise the secure erase
- * type. Must be freed by the caller.
+ * Returns: %FALSE if the user canceled, otherwise %TRUE.
  **/
-char *
+gboolean
 gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
                                      const char  *title,
-                                     gboolean     show_secure_erase_combo_box,
                                      const char  *primary_text,
                                      const char  *secondary_text,
                                      const char  *affirmative_action_button_mnemonic)
 {
-        int response;
+        gboolean ret;
+        gint response;
         GtkWidget *dialog;
-        char *secure_erase;
         GtkWidget *hbox;
         GtkWidget *image;
         GtkWidget *main_vbox;
         GtkWidget *label;
-        int row;
-        GtkWidget *combo_box;
-        GtkWidget *table;
 
-        secure_erase = NULL;
+        ret = FALSE;
 
         dialog = gtk_dialog_new_with_buttons (title,
                                               GTK_WINDOW (parent_window),
@@ -1175,58 +1167,21 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 	gtk_box_pack_start (GTK_BOX (main_vbox), GTK_WIDGET (label), FALSE, FALSE, 0);
 
-        if (show_secure_erase_combo_box) {
-                row = 0;
-
-                table = gtk_table_new (2, 2, FALSE);
-                gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-
-                /* secure erase */
-                label = gtk_label_new (NULL);
-                gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-                gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Secure Erase:"));
-                gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-                combo_box = gdu_util_secure_erase_combo_box_create ();
-                gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-                gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-
-                row++;
-
-                /* secure erase desc */
-                label = gtk_label_new (NULL);
-                gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-                gtk_label_set_width_chars (GTK_LABEL (label), 40);
-                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-                gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                                  GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-                gdu_util_secure_erase_combo_box_set_desc_label (combo_box, label);
-
-                row++;
-        }
-
         gtk_widget_grab_focus (gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL));
         gtk_dialog_add_button (GTK_DIALOG (dialog), affirmative_action_button_mnemonic, 0);
 
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
 
-        if (show_secure_erase_combo_box) {
-                secure_erase = gdu_util_secure_erase_combo_box_get_selected (combo_box);
-        } else {
-                secure_erase = g_strdup ("none");
-        }
-
         gtk_widget_destroy (dialog);
         if (response != 0) {
-                g_free (secure_erase);
-                secure_erase = NULL;
                 goto out;
         }
 
+        ret = TRUE;
+
 out:
-        return secure_erase;
+        return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1708,74 +1663,6 @@ gdu_util_part_table_type_combo_box_get_selected (GtkWidget *combo_box)
                 gtk_tree_model_get (model, &iter, 0, &part_table_type, -1);
 
         return part_table_type;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-gdu_util_secure_erase_combo_box_update_desc_label (GtkWidget *combo_box)
-{
-        GtkWidget *desc_label;
-
-        desc_label = g_object_get_data (G_OBJECT (combo_box), "gdu-desc-label");
-        if (desc_label != NULL) {
-                char *s;
-                char *secure_erase;
-                char *secure_erase_desc;
-
-                secure_erase = gdu_util_secure_erase_combo_box_get_selected (combo_box);
-                secure_erase_desc = gdu_util_secure_erase_get_description (secure_erase);
-                s = g_strdup_printf ("<small><i>%s</i></small>", secure_erase_desc);
-                gtk_label_set_markup (GTK_LABEL (desc_label), s);
-                g_free (s);
-                g_free (secure_erase_desc);
-                g_free (secure_erase);
-        }
-}
-
-static void
-gdu_util_secure_erase_combo_box_changed (GtkWidget *combo_box, gpointer user_data)
-{
-        gdu_util_secure_erase_combo_box_update_desc_label (combo_box);
-}
-
-GtkWidget *
-gdu_util_secure_erase_combo_box_create (void)
-{
-        GtkWidget *combo_box;
-
-        combo_box = gtk_combo_box_new_text ();
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Don't overwrite data"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data 3 times"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data 7 times"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), _("Overwrite data 35 times"));
-        gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0); /* read default from gconf; use lockdown too */
-
-        g_signal_connect (combo_box, "changed", (GCallback) gdu_util_secure_erase_combo_box_changed, NULL);
-        return combo_box;
-}
-
-char *
-gdu_util_secure_erase_combo_box_get_selected (GtkWidget *combo_box)
-{
-        const char *result[] = {"none", "full", "full3pass", "full7pass", "full35pass"};
-        int active;
-
-        active = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_box));
-        g_assert (active >= 0 && active < (int) sizeof (result));
-        return g_strdup (result[active]);
-}
-
-void
-gdu_util_secure_erase_combo_box_set_desc_label (GtkWidget *combo_box, GtkWidget *desc_label)
-{
-        g_object_set_data_full (G_OBJECT (combo_box),
-                                "gdu-desc-label",
-                                g_object_ref (desc_label),
-                                g_object_unref);
-
-        gdu_util_secure_erase_combo_box_update_desc_label (combo_box);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

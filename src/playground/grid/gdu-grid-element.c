@@ -15,9 +15,13 @@ struct GduGridElementPrivate
 {
         GduGridView *view;
         GduPresentable *presentable;
+        GduDevice *device;
         guint minimum_size;
         gdouble percent_size;
         GduGridElementFlags flags;
+
+        guint job_spinner_timeout_id;
+        gdouble job_spinner_animation_step;
 };
 
 enum
@@ -30,6 +34,11 @@ enum
         PROP_FLAGS,
 };
 
+static void gdu_grid_element_presentable_changed (GduPresentable *presentable,
+                                                  gpointer        user_data);
+static void gdu_grid_element_presentable_job_changed (GduPresentable *presentable,
+                                                      gpointer        user_data);
+
 G_DEFINE_TYPE (GduGridElement, gdu_grid_element, GTK_TYPE_DRAWING_AREA)
 
 static void
@@ -37,8 +46,19 @@ gdu_grid_element_finalize (GObject *object)
 {
         GduGridElement *element = GDU_GRID_ELEMENT (object);
 
-        if (element->priv->presentable != NULL)
+        if (element->priv->job_spinner_timeout_id > 0) {
+                g_source_remove (element->priv->job_spinner_timeout_id);
+        }
+
+        if (element->priv->presentable != NULL) {
+                g_signal_handlers_disconnect_by_func (element->priv->presentable,
+                                                      gdu_grid_element_presentable_changed,
+                                                      element);
+                g_signal_handlers_disconnect_by_func (element->priv->presentable,
+                                                      gdu_grid_element_presentable_job_changed,
+                                                      element);
                 g_object_unref (element->priv->presentable);
+        }
 
         if (G_OBJECT_CLASS (gdu_grid_element_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_grid_element_parent_class)->finalize (object);
@@ -195,6 +215,48 @@ render_pixbuf (cairo_t   *cr,
         cairo_fill (cr);
 }
 
+static void
+render_spinner (cairo_t *cr,
+                gdouble  x,
+                gdouble  y,
+                gdouble  radius,
+                gdouble  anim_step)
+{
+        guint n;
+        gdouble angle;
+        gdouble inner_radius;
+        guint num_circles;
+
+        num_circles = 8;
+        inner_radius = radius / 4.0;
+
+        for (n = 0, angle = 0; n < num_circles; n++, angle += 2 * M_PI / num_circles) {
+                gdouble color;
+                gdouble this_anim_step;
+
+                this_anim_step = anim_step + ((gdouble) n) / num_circles;
+                if (this_anim_step > 1.0)
+                        this_anim_step -= 1.0;
+                if (this_anim_step < 0.5)
+                        this_anim_step = 2.0 * (0.5 - this_anim_step);
+                else
+                        this_anim_step = 2.0 * (this_anim_step - 0.5);
+                color = 0.7 + this_anim_step * 0.3;
+
+                cairo_set_source_rgba (cr, 0, 0, 0, 1 - color);
+
+                cairo_set_dash (cr, NULL, 0, 0.0);
+                cairo_set_line_width (cr, 1.0);
+                cairo_arc (cr,
+                           x + (radius - inner_radius) * cos (angle),
+                           y + (radius - inner_radius) * sin (angle),
+                           inner_radius,
+                           0,
+                           2 * M_PI);
+                cairo_fill (cr);
+        }
+}
+
 static gboolean
 gdu_grid_element_expose_event (GtkWidget           *widget,
                                GdkEventExpose      *event)
@@ -231,8 +293,11 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
         gdouble text_selected_green;
         gdouble text_selected_blue;
         gdouble border_width;
+        GduDevice *d;
 
         f = element->priv->flags;
+
+        d = gdu_presentable_get_device (element->priv->presentable);
 
         width = widget->allocation.width;
         height = widget->allocation.height;
@@ -336,6 +401,18 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
         cairo_set_line_width (cr, 1);
         cairo_stroke (cr);
 
+        /* draw a spinner if one or more jobs are pending on the device */
+        if (element->priv->job_spinner_timeout_id > 0) {
+                render_spinner (cr,
+                                ceil (rect_x + rect_width - 6 - 4),
+                                ceil (rect_y + rect_height - 6 - 4),
+                                6,
+                                element->priv->job_spinner_animation_step);
+                element->priv->job_spinner_animation_step += 0.1;
+                if (element->priv->job_spinner_animation_step > 1.0)
+                        element->priv->job_spinner_animation_step -= 1.0;
+        }
+
         /* draw focus indicator */
         if (has_focus) {
                 gdouble dashes[] = {2.0};
@@ -405,9 +482,6 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                 line_height = te.height + 4;
                 y += line_height;
 
-
-                GduDevice *d;
-                d = gdu_presentable_get_device (element->priv->presentable);
                 if (d != NULL) {
                         s = g_strdup (gdu_device_get_device_file (d));
                 } else {
@@ -431,9 +505,6 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                 //cairo_show_text (cr, s);
                 //g_free (s);
                 //y += line_height;
-
-                if (d != NULL)
-                        g_object_unref (d);
 
         } else {
                 gchar *s;
@@ -508,6 +579,8 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                         g_object_unref (d);
         }
 
+        if (d != NULL)
+                g_object_unref (d);
 
         cairo_destroy (cr);
 
@@ -678,6 +751,85 @@ gdu_grid_element_unrealize (GtkWidget *widget)
 }
 #endif
 
+static gboolean
+job_spinner_timeout_cb (gpointer user_data)
+{
+        GduGridElement *element = GDU_GRID_ELEMENT (user_data);
+        gtk_widget_queue_draw (GTK_WIDGET (element));
+        return TRUE;
+}
+
+static void
+update_job_spinner (GduGridElement *element)
+{
+        GduDevice *d;
+
+        d = NULL;
+        if (element->priv->presentable == NULL)
+                goto out;
+        d = gdu_presentable_get_device (element->priv->presentable);
+        if (d == NULL)
+                goto out;
+
+        if (gdu_device_job_in_progress (d)) {
+                if (element->priv->job_spinner_timeout_id == 0) {
+                        element->priv->job_spinner_timeout_id = g_timeout_add (100, job_spinner_timeout_cb, element);
+                        element->priv->job_spinner_animation_step = 0.0;
+                        gtk_widget_queue_draw (GTK_WIDGET (element));
+                }
+        } else {
+                if (element->priv->job_spinner_timeout_id > 0) {
+                        g_source_remove (element->priv->job_spinner_timeout_id);
+                        element->priv->job_spinner_timeout_id = 0;
+                        gtk_widget_queue_draw (GTK_WIDGET (element));
+                }
+        }
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+}
+
+static void
+gdu_grid_element_presentable_changed (GduPresentable *presentable,
+                                      gpointer        user_data)
+{
+        GduGridElement *element = GDU_GRID_ELEMENT (user_data);
+        g_debug ("changed for %s", gdu_presentable_get_name (presentable));
+        update_job_spinner (element);
+}
+
+static void
+gdu_grid_element_presentable_job_changed (GduPresentable *presentable,
+                                          gpointer        user_data)
+{
+        GduGridElement *element = GDU_GRID_ELEMENT (user_data);
+        g_debug ("job changed for %s", gdu_presentable_get_name (presentable));
+        update_job_spinner (element);
+}
+
+static void
+gdu_grid_element_constructed (GObject *object)
+{
+        GduGridElement *element = GDU_GRID_ELEMENT (object);
+
+        if (element->priv->presentable != NULL) {
+                g_signal_connect (element->priv->presentable,
+                                  "changed",
+                                  G_CALLBACK (gdu_grid_element_presentable_changed),
+                                  element);
+                g_signal_connect (element->priv->presentable,
+                                  "job-changed",
+                                  G_CALLBACK (gdu_grid_element_presentable_job_changed),
+                                  element);
+        }
+
+        update_job_spinner (element);
+
+        if (G_OBJECT_CLASS (gdu_grid_element_parent_class)->constructed != NULL)
+                G_OBJECT_CLASS (gdu_grid_element_parent_class)->constructed (object);
+}
+
 static void
 gdu_grid_element_class_init (GduGridElementClass *klass)
 {
@@ -688,6 +840,7 @@ gdu_grid_element_class_init (GduGridElementClass *klass)
 
         object_class->get_property = gdu_grid_element_get_property;
         object_class->set_property = gdu_grid_element_set_property;
+        object_class->constructed  = gdu_grid_element_constructed;
         object_class->finalize     = gdu_grid_element_finalize;
 
         widget_class->realize            = gdu_grid_element_realize;

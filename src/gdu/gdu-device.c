@@ -66,7 +66,6 @@ typedef struct
         gboolean device_is_luks;
         gboolean device_is_luks_cleartext;
         gboolean device_is_mounted;
-        gboolean device_is_busy;
         gboolean device_is_linux_md_component;
         gboolean device_is_linux_md;
         char   **device_mount_paths;
@@ -223,8 +222,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_is_linux_md = g_value_get_boolean (value);
         else if (strcmp (key, "device-is-mounted") == 0)
                 props->device_is_mounted = g_value_get_boolean (value);
-        else if (strcmp (key, "device-is-busy") == 0)
-                props->device_is_busy = g_value_get_boolean (value);
         else if (strcmp (key, "device-mount-paths") == 0)
                 props->device_mount_paths = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "device-mounted-by-uid") == 0)
@@ -865,12 +862,6 @@ gboolean
 gdu_device_is_mounted (GduDevice *device)
 {
         return device->priv->props->device_is_mounted;
-}
-
-gboolean
-gdu_device_is_busy (GduDevice *device)
-{
-        return device->priv->props->device_is_busy;
 }
 
 /* keep this around for a while to avoid breaking ABI */

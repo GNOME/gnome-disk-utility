@@ -88,7 +88,6 @@ gboolean gdu_device_is_luks_cleartext (GduDevice *device);
 gboolean gdu_device_is_linux_md_component (GduDevice *device);
 gboolean gdu_device_is_linux_md (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
-gboolean gdu_device_is_busy (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 char **gdu_device_get_mount_paths (GduDevice *device);
 uid_t gdu_device_get_mounted_by_uid (GduDevice *device);

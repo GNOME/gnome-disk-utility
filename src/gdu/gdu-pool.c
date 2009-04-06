@@ -436,6 +436,11 @@ get_holes (GduPool        *pool,
                 partition_size = gdu_device_partition_get_size (partition_device);
                 partition_number = gdu_device_partition_get_number (partition_device);
 
+                //g_print ("  considering partition number %d at offset=%lldMB size=%lldMB\n",
+                //         partition_number,
+                //         partition_offset / (1000 * 1000),
+                //         partition_size / (1000 * 1000));
+
                 /* only consider partitions in the given space */
                 if (partition_offset <= start)
                         continue;
@@ -444,7 +449,7 @@ get_holes (GduPool        *pool,
 
                 /* ignore logical partitions if requested */
                 if (ignore_logical) {
-                        if (strcmp (scheme, "mbr") == 0 && partition_number >= 4)
+                        if (strcmp (scheme, "mbr") == 0 && partition_number > 4)
                                 continue;
                 }
 

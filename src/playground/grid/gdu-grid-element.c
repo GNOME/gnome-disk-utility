@@ -297,7 +297,8 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
 
         f = element->priv->flags;
 
-        d = gdu_presentable_get_device (element->priv->presentable);
+        if (element->priv->presentable != NULL)
+                d = gdu_presentable_get_device (element->priv->presentable);
 
         width = widget->allocation.width;
         height = widget->allocation.height;
@@ -382,7 +383,27 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                 cairo_set_source (cr, gradient);
                 cairo_pattern_destroy (gradient);
         } else {
-                cairo_set_source_rgb (cr, fill_red, fill_green, fill_blue);
+                if (d != NULL && gdu_device_is_drive (d)) {
+                        cairo_set_source_rgb (cr,
+                                              fill_red,
+                                              fill_green,
+                                              fill_blue);
+                } else {
+                        if (element->priv->presentable != NULL &&
+                            (gdu_presentable_is_allocated (element->priv->presentable) &&
+                             gdu_presentable_is_recognized (element->priv->presentable))) {
+                                cairo_set_source_rgb (cr,
+                                                      fill_red,
+                                                      fill_green,
+                                                      fill_blue);
+                        } else {
+                                cairo_set_source_rgb (cr,
+                                                      0.975 * fill_red,
+                                                      0.975 * fill_green,
+                                                      0.975 * fill_blue);
+                        }
+                }
+
         }
         f = element->priv->flags;
         round_rect (cr,
@@ -440,7 +461,7 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
         cairo_clip (cr);
 
         /* draw icons/text */
-        if (GDU_IS_DRIVE (element->priv->presentable)) {
+        if (element->priv->presentable != NULL && GDU_IS_DRIVE (element->priv->presentable)) {
                 GdkPixbuf *pixbuf;
                 gint icon_width;
                 cairo_text_extents_t te;
@@ -506,7 +527,7 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                 //g_free (s);
                 //y += line_height;
 
-        } else {
+        } else if (element->priv->presentable != NULL) {
                 gchar *s;
                 gchar *s1;
                 cairo_text_extents_t te;

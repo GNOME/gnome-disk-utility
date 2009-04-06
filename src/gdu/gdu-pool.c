@@ -965,7 +965,7 @@ get_properties (GduPool *pool)
 
 	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
                                                 "org.freedesktop.DeviceKit.Disks",
-                                                "/",
+                                                "/org/freedesktop/DeviceKit/Disks",
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
         if (!dbus_g_proxy_call (prop_proxy,
@@ -1056,7 +1056,7 @@ gdu_pool_new (void)
 
 	pool->priv->proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
                                                        "org.freedesktop.DeviceKit.Disks",
-                                                       "/",
+                                                       "/org/freedesktop/DeviceKit/Disks",
                                                        "org.freedesktop.DeviceKit.Disks");
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
@@ -1568,7 +1568,7 @@ gdu_pool_is_daemon_inhibited (GduPool *pool)
 
 	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
                                                 "org.freedesktop.DeviceKit.Disks",
-                                                "/",
+                                                "/org/freedesktop/DeviceKit/Disks",
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
         if (!dbus_g_proxy_call (prop_proxy,

@@ -344,11 +344,17 @@ void gdu_device_op_cancel_job (GduDevice *device,
 /* ---------------------------------------------------------------------------------------------------- */
 
 void gdu_device_drive_ata_smart_get_historical_data (GduDevice                                         *device,
+                                                     guint64                                            since,
+                                                     guint64                                            until,
+                                                     guint64                                            spacing,
                                                      GduDeviceDriveAtaSmartGetHistoricalDataCompletedFunc  callback,
                                                      gpointer                                           user_data);
 
 GList *gdu_device_drive_ata_smart_get_historical_data_sync (GduDevice  *device,
-                                                        GError    **error);
+                                                            guint64     since,
+                                                            guint64     until,
+                                                            guint64     spacing,
+                                                            GError    **error);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

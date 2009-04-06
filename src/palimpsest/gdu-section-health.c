@@ -961,7 +961,7 @@ health_details_action_callback (GtkAction *action, gpointer user_data)
         HealthGraphData *data;
         data = g_new0 (HealthGraphData, 1);
         /* TODO: do this async */
-        data->history = gdu_device_drive_ata_smart_get_historical_data_sync (device, NULL);
+        data->history = gdu_device_drive_ata_smart_get_historical_data_sync (device, 0, 0, 0, NULL);
 
         GtkWidget *history_label;
         history_label = gtk_label_new (_("View:"));

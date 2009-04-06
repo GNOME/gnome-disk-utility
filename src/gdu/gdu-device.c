@@ -2325,6 +2325,9 @@ op_ata_smart_historical_data_cb (DBusGProxy *proxy, GPtrArray *historical_data, 
 
 void
 gdu_device_drive_ata_smart_get_historical_data (GduDevice                                         *device,
+                                                guint64                                            since,
+                                                guint64                                            until,
+                                                guint64                                            spacing,
                                                 GduDeviceDriveAtaSmartGetHistoricalDataCompletedFunc  callback,
                                                 gpointer                                           user_data)
 {
@@ -2335,28 +2338,31 @@ gdu_device_drive_ata_smart_get_historical_data (GduDevice                       
         data->callback = callback;
         data->user_data = user_data;
 
-        /* TODO: since, until */
         org_freedesktop_DeviceKit_Disks_Device_drive_ata_smart_get_historical_data_async (device->priv->proxy,
-                                                                                      0,
-                                                                                      0,
-                                                                                      op_ata_smart_historical_data_cb,
-                                                                                      data);
+                                                                                          since,
+                                                                                          until,
+                                                                                          spacing,
+                                                                                          op_ata_smart_historical_data_cb,
+                                                                                          data);
 }
 
 GList *
 gdu_device_drive_ata_smart_get_historical_data_sync (GduDevice  *device,
+                                                     guint64     since,
+                                                     guint64     until,
+                                                     guint64     spacing,
                                                      GError    **error)
 {
         GList *ret;
         GPtrArray *historical_data;
 
         ret = NULL;
-        /* TODO: since, until */
         if (!org_freedesktop_DeviceKit_Disks_Device_drive_ata_smart_get_historical_data (device->priv->proxy,
-                                                                                     0,
-                                                                                     0,
-                                                                                     &historical_data,
-                                                                                     error))
+                                                                                         since,
+                                                                                         until,
+                                                                                         spacing,
+                                                                                         &historical_data,
+                                                                                         error))
                 goto out;
 
         ret = op_ata_smart_historical_data_compute_ret (historical_data);

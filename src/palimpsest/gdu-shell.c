@@ -2196,7 +2196,7 @@ create_window (GduShell *shell)
 
         shell->priv->sections_vbox = gtk_vbox_new (FALSE, 18);
         gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 8);
-        gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, FALSE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, TRUE, TRUE, 0);
 
 
         /* setup and add horizontal pane */

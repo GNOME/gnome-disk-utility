@@ -57,6 +57,7 @@ _gdu_error_fixup (GError *error)
 {
         const char *name;
         gboolean matched;
+        gchar *s;
 
         if (error == NULL)
                 return;
@@ -89,6 +90,14 @@ _gdu_error_fixup (GError *error)
 
         if (matched)
                 error->domain = GDU_ERROR;
+
+        /* Always prepend the D-Bus exception name to the message; we need this in
+         * gdu_error_check_polkit_not_authorized() to determine if it's a PolicyKit
+         * exception... when we port to polkit 1.0 this can go away.
+         */
+        s = g_strdup_printf ("%s: %s", name, error->message);
+        g_free (error->message);
+        error->message = s;
 }
 
 /**

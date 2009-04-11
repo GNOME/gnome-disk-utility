@@ -179,10 +179,12 @@ src/gdu/gdu.pc
 src/gdu-gtk/Makefile
 src/gdu-gtk/gdu-gtk.pc
 src/palimpsest/Makefile
+src/notification/Makefile
 src/playground/Makefile
 src/playground/grid/Makefile
 po/Makefile.in
 data/Makefile
+data/gdu-notification-daemon.desktop.in.in
 data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile

@@ -37,14 +37,12 @@ main (int argc, char *argv[])
                             TRUE,
                             0);
 
-#if 0
         details = gdu_grid_details_new (GDU_GRID_VIEW (view));
         gtk_box_pack_start (GTK_BOX (vbox),
                             details,
                             TRUE,
                             TRUE,
                             0);
-#endif
 
         gtk_window_set_default_size (GTK_WINDOW (window), 600, 400);
         gtk_widget_show_all (window);

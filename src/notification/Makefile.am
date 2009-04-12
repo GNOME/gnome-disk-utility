@@ -11,7 +11,7 @@ gdu_notification_daemon_SOURCES = 							\
 gdu_notification_daemon_CPPFLAGS = 			\
 	-I$(top_srcdir)/src/				\
 	-I$(top_builddir)/src/				\
-	-DG_LOG_DOMAIN=\"Palimpsest\"			\
+	-DG_LOG_DOMAIN=\"GduNotification\"		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(DISABLE_DEPRECATED)				\
 	-DGDU_API_IS_SUBJECT_TO_CHANGE			\

@@ -1074,6 +1074,7 @@ mount_action_callback (GtkAction *action, gpointer user_data)
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
         if (device != NULL) {
                 gdu_device_op_filesystem_mount (device,
+                                                NULL,
                                                 mount_op_callback,
                                                 shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);

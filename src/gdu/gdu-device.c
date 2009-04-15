@@ -1512,11 +1512,12 @@ op_mount_cb (DBusGProxy *proxy, char *mount_path, GError *error, gpointer user_d
 
 void
 gdu_device_op_filesystem_mount (GduDevice                   *device,
+                                gchar                      **options,
                                 GduDeviceFilesystemMountCompletedFunc  callback,
                                 gpointer                     user_data)
 {
         const char *fstype;
-        char *options[16];
+        gchar *null_options[16];
         FilesystemMountData *data;
 
         data = g_new0 (FilesystemMountData, 1);
@@ -1524,8 +1525,11 @@ gdu_device_op_filesystem_mount (GduDevice                   *device,
         data->callback = callback;
         data->user_data = user_data;
 
-        options[0] = NULL;
         fstype = NULL;
+
+        null_options[0] = NULL;
+        if (options == NULL)
+                options = null_options;
 
         org_freedesktop_DeviceKit_Disks_Device_filesystem_mount_async (device->priv->proxy,
                                                                        fstype,

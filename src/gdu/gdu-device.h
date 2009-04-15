@@ -214,6 +214,7 @@ GduAtaSmartAttribute *gdu_device_drive_ata_smart_get_attribute (GduDevice *devic
 /* ---------------------------------------------------------------------------------------------------- */
 
 void gdu_device_op_filesystem_mount                   (GduDevice                             *device,
+                                                       gchar                                **options,
                                                        GduDeviceFilesystemMountCompletedFunc  callback,
                                                        gpointer                               user_data);
 

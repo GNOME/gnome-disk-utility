@@ -126,6 +126,17 @@ on_pulse_timeout (gpointer user_data)
         return TRUE;
 }
 
+static gboolean
+nuke_dialog_cb (gpointer user_data)
+{
+        GduSlowUnmountDialog *dialog = GDU_SLOW_UNMOUNT_DIALOG (user_data);
+
+        gtk_widget_destroy (GTK_WIDGET (dialog));
+        g_object_unref (dialog);
+
+        return FALSE;
+}
+
 static void
 check_still_unmounting (GduSlowUnmountDialog *dialog)
 {
@@ -151,6 +162,11 @@ check_still_unmounting (GduSlowUnmountDialog *dialog)
         s = g_strdup_printf (_("It's now safe to remove \"%s\"."),
                              dialog->priv->device_name);
         gtk_label_set_markup (GTK_LABEL (dialog->priv->label), s);
+
+        /* nuke this dialog after four seconds */
+        g_timeout_add (4 * 1000,
+                       nuke_dialog_cb,
+                       g_object_ref (dialog));
 
  out:
         ;

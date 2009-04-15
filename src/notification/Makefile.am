@@ -27,6 +27,7 @@ gdu_notification_daemon_CFLAGS = 			\
 	$(WARN_CFLAGS)					\
 	$(POLKIT_DBUS_CFLAGS)				\
 	$(POLKIT_GNOME_CFLAGS)				\
+	$(LIBNOTIFY_CFLAGS)				\
 	$(AM_CFLAGS)
 
 gdu_notification_daemon_LDFLAGS = 			\
@@ -37,6 +38,7 @@ gdu_notification_daemon_LDADD = 			\
 	$(GOBJECT2_LIBS)				\
 	$(GIO2_LIBS)					\
 	$(GTK2_LIBS)					\
+	$(LIBNOTIFY_LIBS)				\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la
 

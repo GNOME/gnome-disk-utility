@@ -26,6 +26,7 @@
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
+#include <libnotify/notify.h>
 
 #include "gdu-slow-unmount-dialog.h"
 
@@ -42,6 +43,11 @@ typedef struct
 
         /* List of GduDevice objects with ATA SMART failures */
         GList *ata_smart_failures;
+
+        gboolean show_icon_for_ata_smart_failures;
+
+        NotifyNotification *ata_smart_notification;
+
 } NotificationData;
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -382,17 +388,44 @@ static void
 update_status_icon (NotificationData *data)
 {
         gboolean show_icon;
+        gboolean old_show_icon_for_ata_smart_failures;
 
-        show_icon = FALSE;
+        old_show_icon_for_ata_smart_failures = data->show_icon_for_ata_smart_failures;
+
+        data->show_icon_for_ata_smart_failures = FALSE;
         if (g_list_length (data->ata_smart_failures) > 0)
-                show_icon = TRUE;
+                data->show_icon_for_ata_smart_failures = TRUE;
+
+        show_icon = data->show_icon_for_ata_smart_failures;
 
         if (!show_icon) {
+                if (data->ata_smart_notification != NULL) {
+                        notify_notification_close (data->ata_smart_notification, NULL);
+                        g_object_unref (data->ata_smart_notification);
+                        data->ata_smart_notification = NULL;
+                }
+
                 gtk_status_icon_set_visible (data->status_icon, FALSE);
                 goto out;
         }
 
         gtk_status_icon_set_visible (data->status_icon, TRUE);
+
+        /* we've started showing the icon for ATA RAID failures; pop up a libnotify notification */
+        if (old_show_icon_for_ata_smart_failures != data->show_icon_for_ata_smart_failures) {
+
+		data->ata_smart_notification = notify_notification_new
+                        (_("A hard disk is failing"),
+                         _("One or more hard disks report health problems. Click the icon to get more information."),
+                         "gtk-dialog-warning",
+                         NULL);
+                notify_notification_attach_to_status_icon (data->ata_smart_notification,
+                                                           data->status_icon);
+                notify_notification_set_urgency (data->ata_smart_notification, NOTIFY_URGENCY_CRITICAL);
+                notify_notification_set_timeout (data->ata_smart_notification, NOTIFY_EXPIRES_NEVER);
+                notify_notification_show (data->ata_smart_notification, NULL);
+        }
+
  out:
         ;
 }
@@ -422,6 +455,13 @@ show_menu_for_status_icon (NotificationData *data)
         GtkWidget *menu;
         GList *l;
 
+        /* remove notifications when the user clicks the icon */
+        if (data->ata_smart_notification != NULL) {
+                notify_notification_close (data->ata_smart_notification, NULL);
+                g_object_unref (data->ata_smart_notification);
+                data->ata_smart_notification = NULL;
+        }
+
         /* TODO: it would be nice to display something like
          *
          *              Select a disk to get more information...
@@ -434,6 +474,10 @@ show_menu_for_status_icon (NotificationData *data)
          * it; see e.g. line 951 of
          *
          * http://svn.gnome.org/viewvc/gnome-settings-daemon/trunk/plugins/xrandr/gsd-xrandr-manager.c?revision=810&view=markup
+         */
+
+        /* TODO: Perhaps it would also be nice to have a "Preferences..." menu item such
+         *       that the user can turn off notifications on a per-device basis.
          */
 
         menu = gtk_menu_new ();
@@ -486,6 +530,7 @@ main (int argc, char **argv)
         NotificationData *data;
 
         gtk_init (&argc, &argv);
+        notify_init ("gdu-notification-daemon");
 
         bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
         bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");

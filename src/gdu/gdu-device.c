@@ -669,7 +669,7 @@ error:
 gboolean
 _gdu_device_changed (GduDevice *device)
 {
-        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
+        g_debug ("_gdu_device_changed: %s", device->priv->props->device_file);
         if (update_info (device)) {
                 g_signal_emit (device, signals[CHANGED], 0);
                 return TRUE;
@@ -686,7 +686,7 @@ _gdu_device_job_changed (GduDevice   *device,
                          gboolean     job_is_cancellable,
                          double       job_percentage)
 {
-        g_print ("%s: %s: %s\n", __FUNCTION__, device->priv->props->device_file, job_id);
+        g_debug ("_gdu_device_job_changed: %s: %s", device->priv->props->device_file, job_id);
 
         device->priv->props->job_in_progress = job_in_progress;
         g_free (device->priv->props->job_id);

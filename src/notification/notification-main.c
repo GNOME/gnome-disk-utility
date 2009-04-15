@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <stdlib.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -527,16 +528,35 @@ show_menu_for_status_icon (NotificationData *data)
 int
 main (int argc, char **argv)
 {
+        GError *error;
         NotificationData *data;
+        gboolean opt_delay;
+        GOptionEntry opt_entries[] = {
+                { "delay", 0, 0, G_OPTION_ARG_NONE, &opt_delay, "Delay startup for five seconds", NULL },
+                { NULL }
+        };
 
-        gtk_init (&argc, &argv);
-        notify_init ("gdu-notification-daemon");
+        error = NULL;
+        if (!gtk_init_with_args (&argc, &argv,
+                                 "gnome-disk-utility notification daemon",
+                                 opt_entries,
+                                 GETTEXT_PACKAGE,
+                                 &error)) {
+                g_error ("%s", error->message);
+                g_error_free (error);
+                exit (1);
+        }
 
         bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
         bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
         textdomain (GETTEXT_PACKAGE);
 
+        notify_init ("gdu-notification-daemon");
+
         gtk_window_set_default_icon_name ("palimpsest");
+
+        if (opt_delay)
+                sleep (5);
 
         data = notification_data_new ();
         update_all (data);

@@ -70,6 +70,7 @@ typedef struct
         gboolean device_is_linux_md;
         char   **device_mount_paths;
         uid_t    device_mounted_by_uid;
+        gboolean device_presentation_hide;
         char    *device_presentation_name;
         char    *device_presentation_icon_name;
         guint64  device_size;
@@ -223,6 +224,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_mount_paths = g_strdupv (g_value_get_boxed (value));
         else if (strcmp (key, "device-mounted-by-uid") == 0)
                 props->device_mounted_by_uid = g_value_get_uint (value);
+        else if (strcmp (key, "device-presentation-hide") == 0)
+                props->device_presentation_hide = g_value_get_boolean (value);
         else if (strcmp (key, "device-presentation-name") == 0)
                 props->device_presentation_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-presentation-icon-name") == 0)
@@ -860,6 +863,12 @@ char **
 gdu_device_get_mount_paths (GduDevice *device)
 {
         return device->priv->props->device_mount_paths;
+}
+
+gboolean
+gdu_device_get_presentation_hide (GduDevice *device)
+{
+        return device->priv->props->device_presentation_hide;
 }
 
 const char *

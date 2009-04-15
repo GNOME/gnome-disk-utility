@@ -658,7 +658,7 @@ _gdu_device_new_from_object_path (GduPool *pool, const char *object_path)
         if (!update_info (device))
                 goto error;
 
-        g_print ("%s: %s\n", __FUNCTION__, device->priv->props->device_file);
+        g_debug ("_gdu_device_new_from_object_path: %s", device->priv->props->device_file);
 
         return device;
 error:

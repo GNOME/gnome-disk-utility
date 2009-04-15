@@ -249,8 +249,40 @@ gdu_pool_class_init (GduPoolClass *klass)
 }
 
 static void
+gdu_log_func (const gchar   *log_domain,
+              GLogLevelFlags log_level,
+              const gchar   *message,
+              gpointer       user_data)
+{
+        gboolean show_debug;
+        const gchar *gdu_debug_var;
+
+        gdu_debug_var = g_getenv ("GDU_DEBUG");
+        show_debug = (g_strcmp0 (gdu_debug_var, "1") == 0);
+
+        if (G_LIKELY (!show_debug))
+                goto out;
+
+        g_print ("%s: %s\n",
+                 G_LOG_DOMAIN,
+                 message);
+ out:
+        ;
+}
+
+static void
 gdu_pool_init (GduPool *pool)
 {
+        static gboolean log_handler_initialized = FALSE;
+
+        if (!log_handler_initialized) {
+                g_log_set_handler (G_LOG_DOMAIN,
+                                   G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG,
+                                   gdu_log_func,
+                                   NULL);
+                log_handler_initialized = TRUE;
+        }
+
         pool->priv = G_TYPE_INSTANCE_GET_PRIVATE (pool, GDU_TYPE_POOL, GduPoolPrivate);
 
         pool->priv->object_path_to_device = g_hash_table_new_full (g_str_hash,

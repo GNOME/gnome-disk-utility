@@ -9,4 +9,4 @@ DOC_FIGURES = figures/main-app.png
 clean-local :
 	rm -f *~
 
-DOC_LINGUAS = 
+DOC_LINGUAS = sv

@@ -385,6 +385,23 @@ update_ata_smart_failures (NotificationData *data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+show_notification (NotificationData *data)
+{
+        static int count = 0;
+
+        /* wait for the panel to be settled before showing a bubble */
+        if (gtk_status_icon_is_embedded (data->status_icon)) {
+                notify_notification_show (data->ata_smart_notification, NULL);
+        } else if (count < 20) {
+                count++;
+                g_timeout_add_seconds (1, (GSourceFunc) show_notification, data);
+        } else {
+                g_warning ("No notification area. Notification bubbles will not be displayed.");
+        }
+        return FALSE;
+}
+
 static void
 update_status_icon (NotificationData *data)
 {
@@ -424,7 +441,7 @@ update_status_icon (NotificationData *data)
                                                            data->status_icon);
                 notify_notification_set_urgency (data->ata_smart_notification, NOTIFY_URGENCY_CRITICAL);
                 notify_notification_set_timeout (data->ata_smart_notification, NOTIFY_EXPIRES_NEVER);
-                notify_notification_show (data->ata_smart_notification, NULL);
+                show_notification (data);
         }
 
  out:
@@ -530,9 +547,7 @@ main (int argc, char **argv)
 {
         GError *error;
         NotificationData *data;
-        gboolean opt_delay;
         GOptionEntry opt_entries[] = {
-                { "delay", 0, 0, G_OPTION_ARG_NONE, &opt_delay, "Delay startup for five seconds", NULL },
                 { NULL }
         };
 
@@ -554,9 +569,6 @@ main (int argc, char **argv)
         notify_init ("gdu-notification-daemon");
 
         gtk_window_set_default_icon_name ("palimpsest");
-
-        if (opt_delay)
-                sleep (5);
 
         data = notification_data_new ();
         update_all (data);

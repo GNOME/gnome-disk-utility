@@ -191,9 +191,9 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
         } else if (strcmp (fstype, "ext2") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
-                                s = g_strdup_printf (_("Linux Second Ext. FS (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Linux Ext2 (version %s)"), fsversion);
                         else
-                                s = g_strdup_printf (_("Linux Second Ext. FS"));
+                                s = g_strdup_printf (_("Linux Ext2"));
                 } else {
                         s = g_strdup (_("ext2"));
                 }
@@ -445,6 +445,10 @@ gdu_util_fstype_get_description (char *fstype)
         if (strcmp (fstype, "vfat") == 0)
                 return g_strdup (_("A popular format compatible with almost any device or system, typically "
                                    "used for file exchange."));
+
+        else if (strcmp (fstype, "ext2") == 0)
+                return g_strdup (_("This file system is compatible with Linux systems only and provides classic "
+                                   "UNIX file permissions support. This file system does not use a journal."));
 
         else if (strcmp (fstype, "ext3") == 0 ||
                  strcmp (fstype, "ext4") == 0 ||

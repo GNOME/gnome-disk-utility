@@ -51,3 +51,5 @@ gdu_format_tool_SOURCES =		\
 gdu_format_tool_CPPFLAGS = $(CORE_CFLAGS) -DG_LOG_DOMAIN=\"GDU-Format-Tool\"
 gdu_format_tool_LDFLAGS = $(AM_LDFLAGS)
 gdu_format_tool_LDADD = $(CORE_LIBADD)
+
+EXTRA_DIST = TODO

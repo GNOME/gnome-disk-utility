@@ -123,15 +123,16 @@ get_device_from_nautilus_file (NautilusFileInfo *nautilus_file)
 static void
 open_format_utility (NautilusMenuItem *item)
 {
-        const gchar *format_argv[3];
+        const gchar *format_argv[4];
         GduDevice *device;
         GError *error;
 
         device = GDU_DEVICE (g_object_get_data (G_OBJECT (item), "gdu-device"));
 
         format_argv[0] = LIBEXECDIR "/gdu-format-tool";
-        format_argv[1] = gdu_device_get_device_file (device);
-        format_argv[2] = NULL;
+        format_argv[1] = "--device-file";
+        format_argv[2] = gdu_device_get_device_file (device);
+        format_argv[3] = NULL;
 
         error = NULL;
         g_spawn_async (NULL,        /* working_directory */

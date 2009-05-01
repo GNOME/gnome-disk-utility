@@ -38,14 +38,10 @@ CORE_LIBADD = 						\
 
 libexec_PROGRAMS = gdu-format-tool
 
-gdu_format_tool_SOURCES =		\
-	format-window.c			\
-	format-window.h			\
-	format-window-operation.c	\
-	format-window-operation.h	\
-	gdu-utils.c			\
-	gdu-utils.h			\
-	gdu-format-tool.c		\
+gdu_format_tool_SOURCES =						\
+					gdu-format-tool.c		\
+	gdu-format-dialog.h		gdu-format-dialog.c		\
+	gdu-format-progress-dialog.h	gdu-format-progress-dialog.c	\
 	$(NULL)
 
 gdu_format_tool_CPPFLAGS = $(CORE_CFLAGS) -DG_LOG_DOMAIN=\"GDU-Format-Tool\"

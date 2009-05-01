@@ -717,8 +717,9 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                 gtk_box_pack_start (GTK_BOX (hbox), gtk_label_new (" "), FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-                g_signal_connect (data->password_entry, "changed",
-                                  (GCallback) gdu_util_dialog_secret_entry_changed, data);
+                if (data->password_entry != NULL)
+                        g_signal_connect (data->password_entry, "changed",
+                                          (GCallback) gdu_util_dialog_secret_entry_changed, data);
                 g_signal_connect (data->password_entry_new, "changed",
                                   (GCallback) gdu_util_dialog_secret_entry_changed, data);
                 g_signal_connect (data->password_entry_verify, "changed",

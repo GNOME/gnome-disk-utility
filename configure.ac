@@ -181,9 +181,6 @@ if test "x$enable_nautilus" != "xno"; then
 	if test "x$have_nautilus" = xno -a "x$enable_nautilus" = xyes; then
 		AC_MSG_ERROR([nautilus support requested but libraries not found])
 	fi
-
-	dnl Get nautilus extensions directory
-	NAUTILUS_EXTENSION_DIR=`$PKG_CONFIG --variable=extensiondir libnautilus-extension`
 fi
 
 AC_SUBST(NAUTILUS_LIBS)

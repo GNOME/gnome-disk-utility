@@ -69,6 +69,7 @@ GduPool    *gdu_device_get_pool              (GduDevice   *device);
 
 dev_t gdu_device_get_dev (GduDevice *device);
 guint64 gdu_device_get_detection_time (GduDevice *device);
+guint64 gdu_device_get_media_detection_time (GduDevice *device);
 const char *gdu_device_get_device_file (GduDevice *device);
 guint64 gdu_device_get_size (GduDevice *device);
 guint64 gdu_device_get_block_size (GduDevice *device);

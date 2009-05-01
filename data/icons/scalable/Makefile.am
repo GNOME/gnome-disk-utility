@@ -17,7 +17,8 @@ icon_DATA =				\
 	gdu-info.svg			\
 	gdu-error.svg			\
 	gdu-warning.svg			\
-	gdu-unmountable.svg
+	gdu-unmountable.svg		\
+	nautilus-gdu.svg
 
 EXTRA_DIST = \
 	$(icon_DATA)

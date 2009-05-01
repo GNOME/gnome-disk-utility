@@ -29,50 +29,37 @@
 #include <gio/gio.h>
 #include "gdu/gdu.h"
 
-
-
 static void nautilus_gdu_instance_init (NautilusGdu      *gdu);
 static void nautilus_gdu_class_init    (NautilusGduClass *klass);
 
-
 static GType nautilus_gdu_type = 0;
-
-
-#define DISK_FORMAT_UTILITY  "gdu-format-tool"
 
 /*  TODO: push upstream  */
 #define G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE   "mountable::unix-device-file"
 
-
-/*  test if we're able to correctly find presentable from a device file  */
-static gboolean
-test_proper_device (gchar *device_file)
+static GduDevice *
+get_device_for_device_file (const gchar *device_file)
 {
         GduPool *pool;
         GduDevice *device;
-        GduPresentable *presentable = NULL;
-        gboolean res = FALSE;
+
+        pool = NULL;
+        device = NULL;
 
         if (device_file == NULL || strlen (device_file) <= 1)
-                return FALSE;
+                goto out;
 
         pool = gdu_pool_new ();
         device = gdu_pool_get_by_device_file (pool, device_file);
-        if (device) {
-                presentable = gdu_pool_get_volume_by_device (pool, device);
-                if (presentable) {
-                        res = TRUE;
-                        g_object_unref (presentable);
-                }
-                g_object_unref (device);
-        }
-        g_object_unref (pool);
 
-        return res;
+ out:
+        if (pool != NULL)
+                g_object_unref (pool);
+        return device;
 }
 
-static gchar *
-find_device_from_nautilus_file (NautilusFileInfo *nautilus_file)
+static GduDevice *
+get_device_from_nautilus_file (NautilusFileInfo *nautilus_file)
 {
         GFile *file;
         GFileInfo *info;
@@ -80,21 +67,27 @@ find_device_from_nautilus_file (NautilusFileInfo *nautilus_file)
         GFileType file_type;
         GMount *mount;
         GVolume *volume;
-        gchar *device_file = NULL;
+        GduDevice *device;
+        gchar *device_file;
 
         g_return_val_if_fail (nautilus_file != NULL, NULL);
+
+        device = NULL;
+        device_file = NULL;
+
         file = nautilus_file_info_get_location (nautilus_file);
-        g_return_val_if_fail (file != NULL, NULL);
+        if (file == NULL)
+                goto out;
+
         file_type = nautilus_file_info_get_file_type (nautilus_file);
 
         /* first try to find mount target from a mountable  */
-        if (file_type == G_FILE_TYPE_MOUNTABLE ||
-            file_type == G_FILE_TYPE_SHORTCUT) {
+        if (file_type == G_FILE_TYPE_MOUNTABLE || file_type == G_FILE_TYPE_SHORTCUT) {
                 /* get a mount if exists and extract device file from it  */
                 mount = nautilus_file_info_get_mount (nautilus_file);
-                if (mount) {
+                if (mount != NULL) {
                         volume = g_mount_get_volume (mount);
-                        if (volume) {
+                        if (volume != NULL) {
                                 device_file = g_volume_get_identifier (volume,
                                                                        G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE);
                                 g_object_unref (volume);
@@ -104,48 +97,56 @@ find_device_from_nautilus_file (NautilusFileInfo *nautilus_file)
 
                 /* not mounted, assuming we've been spawned from computer://  */
                 if (device_file == NULL) {
-                        error = NULL;
                         /* retrieve DeviceKit device ID for non-mounted devices  */
+                        error = NULL;
                         info = g_file_query_info (file, G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE, G_FILE_QUERY_INFO_NONE, NULL, &error);
-                        if (info) {
+                        if (info != NULL) {
                                 device_file = g_file_info_get_attribute_as_string (info, G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE);
                                 g_object_unref (info);
                         }
-                        if (error) {
+                        if (error != NULL) {
                                 g_warning ("unable to query info: %s\n", error->message);
                                 g_error_free (error);
                         }
                  }
         }
 
-        if (! test_proper_device (device_file)) {
+ out:
+        if (device_file != NULL) {
+                device = get_device_for_device_file (device_file);
                 g_free (device_file);
-                device_file = NULL;
         }
 
-        return device_file;
+        return device;
 }
 
 static void
 open_format_utility (NautilusMenuItem *item)
 {
-  gchar *argv[] = { NULL, NULL, NULL };
-  gchar *device_file;
-  GError *error = NULL;
+        const gchar *format_argv[3];
+        GduDevice *device;
+        GError *error;
 
-  device_file = g_object_get_data (G_OBJECT (item), "device_file");
+        device = GDU_DEVICE (g_object_get_data (G_OBJECT (item), "gdu-device"));
 
-  argv[0] = g_build_filename (LIBEXECDIR, DISK_FORMAT_UTILITY, NULL);
-  argv[1] = g_strdup (device_file);
+        format_argv[0] = LIBEXECDIR "/gdu-format-tool";
+        format_argv[1] = gdu_device_get_device_file (device);
+        format_argv[2] = NULL;
 
-  g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &error);
-  if (error) {
-    g_warning ("%s", error->message);
-    g_error_free (error);
-  }
-
-  g_free (argv[0]);
-  g_free (argv[1]);
+        error = NULL;
+        g_spawn_async (NULL,        /* working_directory */
+                       (gchar **) format_argv,
+                       NULL,        /* envp */
+                       0,           /* flags */
+                       NULL,        /* child_setup */
+                       NULL,        /* user_data */
+                       NULL,        /* child_pid */
+                       &error);
+        if (error != NULL) {
+                /* TODO: would be nice with a GtkMessageDialog here */
+                g_warning ("Error launching " LIBEXECDIR "/gdu-format-tool: %s", error->message);
+                g_error_free (error);
+        }
 }
 
 static void
@@ -153,57 +154,63 @@ unmount_done (GObject      *object,
               GAsyncResult *res,
               gpointer      user_data)
 {
-  NautilusMenuItem *item = user_data;
-  GError *error = NULL;
+        NautilusMenuItem *item = NAUTILUS_MENU_ITEM (user_data);
+        GError *error;
 
-  if (g_mount_unmount_finish (G_MOUNT (object), res, &error))
-    open_format_utility (item);
-  else
-    {
-      GtkWidget *dialog;
-      gchar *name, *p, *text;
+        error = NULL;
+        if (g_mount_unmount_finish (G_MOUNT (object), res, &error)) {
+                open_format_utility (item);
+        } else if (error->code == G_IO_ERROR_FAILED_HANDLED) {
+                /* do nothing, error has already been presented to the user */
+                g_error_free (error);
+        } else {
+                GtkWidget *dialog;
+                gchar *name;
+                gchar *p;
+                gchar *text;
 
-      name = g_mount_get_name (G_MOUNT (object));
-      dialog = gtk_message_dialog_new (NULL, 0,
-                                       GTK_MESSAGE_ERROR,
-                                       GTK_BUTTONS_OK,
-                                       _("Could not unmount '%s'"), name);
-      if (g_str_has_prefix (error->message, "org.freedesktop.DeviceKit"))
-        {
-          p = strchr (error->message, ':');
-          if (p)
-            text = p + 1;
-          else
-            text = error->message;
+                name = g_mount_get_name (G_MOUNT (object));
+                dialog = gtk_message_dialog_new (NULL, 0,
+                                                 GTK_MESSAGE_ERROR,
+                                                 GTK_BUTTONS_OK,
+                                                 _("Could not unmount '%s'"), name);
+                if (g_str_has_prefix (error->message, "org.freedesktop.DeviceKit")) {
+                        p = strchr (error->message, ':');
+                        if (p != NULL)
+                                text = p + 1;
+                        else
+                                text = error->message;
+                } else {
+                        text = error->message;
+                }
+
+                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                          "%s", text);
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+                g_free (name);
         }
-      else
-        text = error->message;
 
-      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                "%s", text);
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
-      g_error_free (error);
-      g_free (name);
-    }
+        g_object_unref (item);
 }
 
 static void
 format_callback (NautilusMenuItem *item,
                  gpointer user_data)
 {
-  NautilusFileInfo *nautilus_file;
-  GMount *mount;
+        NautilusFileInfo *nautilus_file;
+        GMount *mount;
 
-  nautilus_file = g_object_get_data (G_OBJECT (item), "nautilus_file");
-  mount = nautilus_file_info_get_mount (nautilus_file);
-  if (mount)
-    {
-      g_mount_unmount (mount, G_MOUNT_UNMOUNT_NONE, NULL, unmount_done, item);
-      g_object_unref (mount);
-    }
-  else
-    open_format_utility (item);
+        /* Unmount the device if it's mounted */
+        nautilus_file = g_object_get_data (G_OBJECT (item), "nautilus-file");
+        mount = nautilus_file_info_get_mount (nautilus_file);
+        if (mount != NULL) {
+                g_mount_unmount (mount, G_MOUNT_UNMOUNT_NONE, NULL, unmount_done, g_object_ref (item));
+                g_object_unref (mount);
+        } else {
+                open_format_utility (g_object_ref (item));
+        }
 }
 
 static GList *
@@ -211,44 +218,96 @@ nautilus_gdu_get_file_items (NautilusMenuProvider *provider,
 			     GtkWidget            *window,
 			     GList                *files)
 {
-  NautilusMenuItem *item;
-  NautilusFileInfo *nautilus_file;
-  gchar *device_file;
-  GList *items = NULL;
+        NautilusMenuItem *item;
+        NautilusFileInfo *nautilus_file;
+        GduDevice *device;
+        GList *items;
+        GduPresentable *volume;
+        GduPool *pool;
 
-  if (g_list_length (files) != 1) {
-    goto out;
-  }
+        items = NULL;
+        pool = NULL;
+        device = NULL;
+        volume = NULL;
 
-  nautilus_file = (NautilusFileInfo*)files->data;
-  device_file = find_device_from_nautilus_file (nautilus_file);
-  if (! device_file)
-    goto out;
+        if (g_list_length (files) != 1)
+                goto out;
 
-  item = nautilus_menu_item_new ("NautilusGdu::format",
-                                 _("_Format..."),
-                                 _("Create new filesystem on the selected device"),
-                                 "nautilus-gdu");
-  g_object_set_data_full (G_OBJECT (item), "device_file",
-                          device_file,
-                          (GDestroyNotify) g_free);
-  g_object_set_data_full (G_OBJECT (item), "nautilus_file",
-                          g_object_ref (nautilus_file),
-                          (GDestroyNotify) g_object_unref);
-  g_signal_connect (item, "activate",
-                    G_CALLBACK (format_callback),
-                    NULL);
+        nautilus_file = (NautilusFileInfo*) files->data;
+        device = get_device_from_nautilus_file (nautilus_file);
+        if (device == NULL)
+                goto out;
 
-  items = g_list_append (NULL, item);
+        pool = gdu_device_get_pool (device);
+
+        /* If the device is a cleartext LUKS device, don't attempt
+         * to format the cleartext device as that's gonna end with
+         * strange loops such as
+         *
+         *      - USB Thumbdrive (/dev/sdb)
+         *       - Encrypted Data (/dev/sdb1, LUKS)
+         *        - Encrypted Data (/dev/dm-0, LUKS)
+         *         - My File System (/dev/dm-1, ext3 fs)
+         *
+         * and we specifically refuse to handle that in the GVfs gdu
+         * volume monitor. So find the cryptotext device instead.
+         */
+        if (gdu_device_is_luks_cleartext (device)) {
+                GduDevice *cleartext_device;
+                const gchar *cryptotext_objpath;
+
+                cleartext_device = device;
+                device = NULL;
+                cryptotext_objpath = gdu_device_luks_cleartext_get_slave (cleartext_device);
+                device = gdu_pool_get_by_object_path (pool, cryptotext_objpath);
+                g_object_unref (cleartext_device);
+        }
+
+        /* only allow to format devices that are actual volumes - e.g. not empty
+         * drives
+         */
+        volume = gdu_pool_get_volume_by_device (pool, device);
+        if (volume == NULL)
+                goto out;
+
+        /* never allow to format optical discs - brasero / nautilus-cd-burner handles
+         * that kind of media
+         */
+        if (gdu_device_is_optical_disc (device))
+                goto out;
+
+        item = nautilus_menu_item_new ("NautilusGdu::format",
+                                       _("_Format..."),
+                                       _("Create new filesystem on the selected device"),
+                                       "nautilus-gdu");
+        g_object_set_data_full (G_OBJECT (item),
+                                "gdu-device",
+                                device,
+                                (GDestroyNotify) g_object_ref);
+        g_object_set_data_full (G_OBJECT (item),
+                                "nautilus-file",
+                                g_object_ref (nautilus_file),
+                                (GDestroyNotify) g_object_unref);
+        g_signal_connect (item, "activate",
+                          G_CALLBACK (format_callback),
+                          NULL);
+
+        items = g_list_append (NULL, item);
 
 out:
-  return items;
+        if (volume != NULL)
+                g_object_unref (volume);
+        if (device != NULL)
+                g_object_unref (device);
+        if (pool != NULL)
+                g_object_unref (pool);
+        return items;
 }
 
 static void
 nautilus_gdu_menu_provider_iface_init (NautilusMenuProviderIface *iface)
 {
-  iface->get_file_items = nautilus_gdu_get_file_items;
+        iface->get_file_items = nautilus_gdu_get_file_items;
 }
 
 static void
@@ -271,21 +330,21 @@ void
 nautilus_gdu_register_type (GTypeModule *module)
 {
   const GTypeInfo info = {
-    sizeof (NautilusGduClass),
-    (GBaseInitFunc) NULL,
-    (GBaseFinalizeFunc) NULL,
-    (GClassInitFunc) nautilus_gdu_class_init,
-    NULL,
-    NULL,
-    sizeof (NautilusGdu),
-    0,
-    (GInstanceInitFunc) nautilus_gdu_instance_init,
+          sizeof (NautilusGduClass),
+          (GBaseInitFunc) NULL,
+          (GBaseFinalizeFunc) NULL,
+          (GClassInitFunc) nautilus_gdu_class_init,
+          NULL,
+          NULL,
+          sizeof (NautilusGdu),
+          0,
+          (GInstanceInitFunc) nautilus_gdu_instance_init,
   };
 
   const GInterfaceInfo menu_provider_iface_info = {
-    (GInterfaceInitFunc) nautilus_gdu_menu_provider_iface_init,
-    NULL,
-    NULL
+          (GInterfaceInitFunc) nautilus_gdu_menu_provider_iface_init,
+          NULL,
+          NULL
   };
 
   nautilus_gdu_type = g_type_module_register_type (module,
@@ -298,4 +357,3 @@ nautilus_gdu_register_type (GTypeModule *module)
                                NAUTILUS_TYPE_MENU_PROVIDER,
                                &menu_provider_iface_info);
 }
-

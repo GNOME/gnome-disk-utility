@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -36,9 +35,6 @@ struct _GduSectionCreatePartitionTablePrivate
 {
         GtkWidget *create_part_table_vbox;
         GtkWidget *create_part_table_type_combo_box;
-        PolKitAction *pk_change_action;
-        PolKitAction *pk_change_system_internal_action;
-        PolKitGnomeAction *create_part_table_action;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -63,7 +59,7 @@ create_partition_table_callback (GduDevice *device,
 }
 
 static void
-create_part_table_callback (GtkAction *action, gpointer user_data)
+on_create_part_table_clicked (GtkButton *button, gpointer user_data)
 {
         GduSectionCreatePartitionTable *section = GDU_SECTION_CREATE_PARTITION_TABLE (user_data);
         GduDevice *device;
@@ -138,13 +134,6 @@ update (GduSectionCreatePartitionTable *section)
                 goto out;
         }
 
-        g_object_set (section->priv->create_part_table_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                        section->priv->pk_change_system_internal_action :
-                        section->priv->pk_change_action,
-                      NULL);
-
 out:
         if (device != NULL)
                 g_object_unref (device);
@@ -155,10 +144,6 @@ out:
 static void
 gdu_section_create_partition_table_finalize (GduSectionCreatePartitionTable *section)
 {
-        polkit_action_unref (section->priv->pk_change_action);
-        polkit_action_unref (section->priv->pk_change_system_internal_action);
-        g_object_unref (section->priv->create_part_table_action);
-
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
@@ -191,28 +176,6 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
         char *text;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_CREATE_PARTITION_TABLE, GduSectionCreatePartitionTablePrivate);
-
-        section->priv->pk_change_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_action,
-                                     "org.freedesktop.devicekit.disks.change");
-        section->priv->pk_change_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.change-system-internal");
-        section->priv->create_part_table_action = polkit_gnome_action_new_default (
-                "create-part-table",
-                section->priv->pk_change_action,
-                _("C_reate"),
-                _("Create"));
-        g_object_set (section->priv->create_part_table_action,
-                      "auth-label", _("_Create..."),
-                      "yes-icon-name", GTK_STOCK_ADD,
-                      "no-icon-name", GTK_STOCK_ADD,
-                      "auth-icon-name", GTK_STOCK_ADD,
-                      "self-blocked-icon-name", GTK_STOCK_ADD,
-                      NULL);
-        g_signal_connect (section->priv->create_part_table_action, "activate",
-                          G_CALLBACK (create_part_table_callback), section);
-
 
         label = gtk_label_new (NULL);
         text = g_strdup_printf ("<b>%s</b>", _("Create Partition Table"));
@@ -271,7 +234,9 @@ gdu_section_create_partition_table_init (GduSectionCreatePartitionTable *section
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
-        button = polkit_gnome_action_create_button (section->priv->create_part_table_action);
+        button = gtk_button_new_with_mnemonic ("C_reate");
+        gtk_widget_set_tooltip_text (button, _("Create"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_create_part_table_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 }
 

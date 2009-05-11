@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include "gdu-section-swapspace.h"

@@ -25,8 +25,6 @@ gdu_notification_daemon_CFLAGS = 			\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(GTK2_CFLAGS)					\
 	$(WARN_CFLAGS)					\
-	$(POLKIT_DBUS_CFLAGS)				\
-	$(POLKIT_GNOME_CFLAGS)				\
 	$(LIBNOTIFY_CFLAGS)				\
 	$(AM_CFLAGS)
 

@@ -27,7 +27,6 @@
 #define __GDU_ERROR_H
 
 #include <gdu/gdu-types.h>
-#include <polkit/polkit.h>
 
 G_BEGIN_DECLS
 
@@ -40,6 +39,7 @@ G_BEGIN_DECLS
  * @GDU_ERROR_INVALID_OPTION: An invalid option was passed
  * @GDU_ERROR_NOT_SUPPORTED: Operation not supported.
  * @GDU_ERROR_ATA_SMART_WOULD_WAKEUP: Getting S.M.A.R.T. data for the device would require to spin it up.
+ * @GDU_ERROR_PERMISSION_DENIED: Permission denied.
  *
  * Error codes in the #GDU_ERROR domain.
  */
@@ -51,7 +51,8 @@ typedef enum
         GDU_ERROR_INHIBITED,
         GDU_ERROR_INVALID_OPTION,
         GDU_ERROR_NOT_SUPPORTED,
-        GDU_ERROR_ATA_SMART_WOULD_WAKEUP
+        GDU_ERROR_ATA_SMART_WOULD_WAKEUP,
+        GDU_ERROR_PERMISSION_DENIED,
 } GduError;
 
 /**
@@ -65,10 +66,6 @@ typedef enum
 #define GDU_ERROR gdu_error_quark ()
 
 GQuark      gdu_error_quark           (void);
-
-gboolean gdu_error_check_polkit_not_authorized (GError        *error,
-                                                PolKitAction **pk_action,
-                                                PolKitResult  *pk_result);
 
 G_END_DECLS
 

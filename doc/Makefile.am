@@ -28,8 +28,6 @@ IGNORE_HFILES= 		\
 INCLUDES = 				\
 	$(GTK_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)		\
-	$(POLKIT_DBUS_CFLAGS)		\
-	$(POLKIT_GRANT_CFLAGS)		\
 	-I$(top_srcdir) 		\
 	-I$(top_builddir)		\
 	$(NULL)
@@ -39,7 +37,6 @@ GTKDOC_LIBS = \
 	$(GIO2_LIBS)					\
 	$(GIO_UNIX2_LIBS)				\
 	$(DBUS_GLIB_LIBS)				\
-	$(POLKIT_DBUS_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(NULL)

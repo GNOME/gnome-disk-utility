@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -40,13 +39,6 @@ struct _GduSectionHealthPrivate
         GtkWidget *health_power_on_hours_label;
         GtkWidget *health_temperature_label;
         GtkWidget *health_updated_label;
-
-        PolKitAction *pk_smart_refresh_action;
-        PolKitAction *pk_smart_retrieve_historical_data_action;
-        PolKitAction *pk_smart_selftest_action;
-        PolKitGnomeAction *health_refresh_action;
-        PolKitGnomeAction *health_details_action;
-        PolKitGnomeAction *health_selftest_action;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -117,9 +109,6 @@ smart_data_set_pending (GduSectionHealth *section)
         gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), "-");
         gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), "-");
 
-        polkit_gnome_action_set_sensitive (section->priv->health_refresh_action, FALSE);
-        polkit_gnome_action_set_sensitive (section->priv->health_details_action, FALSE);
-        polkit_gnome_action_set_sensitive (section->priv->health_selftest_action, FALSE);
         gtk_widget_hide (section->priv->health_status_explanation_label);
 }
 
@@ -139,9 +128,6 @@ smart_data_set_not_supported (GduSectionHealth *section)
         gtk_label_set_text (GTK_LABEL (section->priv->health_updated_label), "-");
         gtk_label_set_markup (GTK_LABEL (section->priv->health_last_self_test_result_label), "-");
 
-        polkit_gnome_action_set_sensitive (section->priv->health_refresh_action, FALSE);
-        polkit_gnome_action_set_sensitive (section->priv->health_details_action, FALSE);
-        polkit_gnome_action_set_sensitive (section->priv->health_selftest_action, FALSE);
         gtk_widget_hide (section->priv->health_status_explanation_label);
 }
 
@@ -205,9 +191,6 @@ smart_data_set (GduSectionHealth *section)
         has_bad_sectors = gdu_device_drive_ata_smart_get_has_bad_sectors (device);
         has_bad_attributes = gdu_device_drive_ata_smart_get_has_bad_attributes (device);
 
-        polkit_gnome_action_set_sensitive (section->priv->health_refresh_action, TRUE);
-        polkit_gnome_action_set_sensitive (section->priv->health_details_action, TRUE);
-        polkit_gnome_action_set_sensitive (section->priv->health_selftest_action, TRUE);
         gtk_widget_show (section->priv->health_status_image);
 
         explanation = NULL;
@@ -374,7 +357,7 @@ out:
 }
 
 static void
-health_refresh_action_callback (GtkAction *action, gpointer user_data)
+on_refresh_clicked (GtkButton *button, gpointer user_data)
 {
         GduSectionHealth *section = GDU_SECTION_HEALTH (user_data);
         GduDevice *device;
@@ -916,7 +899,8 @@ smart_attr_tree_selection_changed (GtkTreeSelection *treeselection, gpointer use
 }
 
 static void
-health_details_action_callback (GtkAction *action, gpointer user_data)
+on_details_clicked (GtkButton *button,
+                    gpointer   user_data)
 {
         GduSectionHealth *section = GDU_SECTION_HEALTH (user_data);
         GduDevice *device;
@@ -1291,7 +1275,8 @@ run_ata_smart_selftest_callback (GduDevice *device,
 }
 
 static void
-health_selftest_action_callback (GtkAction *action, gpointer user_data)
+on_selftest_clicked (GtkButton *button,
+                     gpointer   user_data)
 {
         int response;
         GtkWidget *dialog;
@@ -1436,12 +1421,6 @@ out:
 static void
 gdu_section_health_finalize (GduSectionHealth *section)
 {
-        polkit_action_unref (section->priv->pk_smart_refresh_action);
-        polkit_action_unref (section->priv->pk_smart_retrieve_historical_data_action);
-        polkit_action_unref (section->priv->pk_smart_selftest_action);
-        g_object_unref (section->priv->health_refresh_action);
-        g_object_unref (section->priv->health_details_action);
-        g_object_unref (section->priv->health_selftest_action);
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
@@ -1475,18 +1454,6 @@ gdu_section_health_init (GduSectionHealth *section)
         char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_HEALTH, GduSectionHealthPrivate);
-
-        section->priv->pk_smart_refresh_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_smart_refresh_action,
-                                     "org.freedesktop.devicekit.disks.drive-ata-smart-refresh");
-
-        section->priv->pk_smart_retrieve_historical_data_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_smart_retrieve_historical_data_action,
-                                     "org.freedesktop.devicekit.disks.drive-ata-smart-retrieve-historical-data");
-
-        section->priv->pk_smart_selftest_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_smart_selftest_action,
-                                     "org.freedesktop.devicekit.disks.drive-ata-smart-selftest");
 
         label = gtk_label_new (NULL);
         s = g_strconcat ("<b>", _("Health"), "</b>", NULL);
@@ -1624,55 +1591,19 @@ gdu_section_health_init (GduSectionHealth *section)
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
 
-        section->priv->health_refresh_action = polkit_gnome_action_new_default (
-                "refresh",
-                section->priv->pk_smart_refresh_action,
-                _("Refre_sh"),
-                _("Refresh ATA SMART data from the device"));
-        g_object_set (section->priv->health_refresh_action,
-                      "auth-label", _("Refre_sh..."),
-                      "yes-icon-name", GTK_STOCK_REFRESH,
-                      "no-icon-name", GTK_STOCK_REFRESH,
-                      "auth-icon-name", GTK_STOCK_REFRESH,
-                      "self-blocked-icon-name", GTK_STOCK_REFRESH,
-                      NULL);
-        g_signal_connect (section->priv->health_refresh_action,
-                          "activate", G_CALLBACK (health_refresh_action_callback), section);
-        button = polkit_gnome_action_create_button (section->priv->health_refresh_action);
+        button = gtk_button_new_with_mnemonic ("Refre_sh");
+        gtk_widget_set_tooltip_text (button, _("Refresh ATA SMART data from the device"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_refresh_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        section->priv->health_details_action = polkit_gnome_action_new_default (
-                "details",
-                section->priv->pk_smart_retrieve_historical_data_action,
-                _("_Details..."),
-                _("Show ATA SMART Historical Data"));
-        g_object_set (section->priv->health_details_action,
-                      "auth-label", _("_Details..."),
-                      "yes-icon-name", GTK_STOCK_DIALOG_INFO,
-                      "no-icon-name", GTK_STOCK_DIALOG_INFO,
-                      "auth-icon-name", GTK_STOCK_DIALOG_INFO,
-                      "self-blocked-icon-name", GTK_STOCK_DIALOG_INFO,
-                      NULL);
-        g_signal_connect (section->priv->health_details_action,
-                          "activate", G_CALLBACK (health_details_action_callback), section);
-        button = polkit_gnome_action_create_button (section->priv->health_details_action);
+        button = gtk_button_new_with_mnemonic ("_Details");
+        gtk_widget_set_tooltip_text (button, _("Show ATA SMART Historical Data"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_details_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        section->priv->health_selftest_action = polkit_gnome_action_new_default (
-                "selftest",
-                section->priv->pk_smart_selftest_action,
-                _("Se_lf Test..."),
-                _("Run an ATA SMART Self Test"));
-        g_object_set (section->priv->health_selftest_action,
-                      "auth-label", _("Se_lf Test..."),
-                      "yes-icon-name", GTK_STOCK_EXECUTE,
-                      "no-icon-name", GTK_STOCK_EXECUTE,
-                      "auth-icon-name", GTK_STOCK_EXECUTE,
-                      "self-blocked-icon-name", GTK_STOCK_EXECUTE,
-                      NULL);
-        g_signal_connect (section->priv->health_selftest_action,
-                          "activate", G_CALLBACK (health_selftest_action_callback), section);
-        button = polkit_gnome_action_create_button (section->priv->health_selftest_action);
+        button = gtk_button_new_with_mnemonic ("Se_lftest");
+        gtk_widget_set_tooltip_text (button, _("Run an ATA SMART self test on the disk"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_selftest_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 }
 

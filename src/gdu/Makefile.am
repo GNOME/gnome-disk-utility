@@ -74,7 +74,6 @@ libgdu_la_CFLAGS = 					\
 	$(GIO2_CFLAGS)					\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(DBUS_GLIB_CFLAGS)				\
-	$(POLKIT_DBUS_CFLAGS)				\
 	$(GNOME_KEYRING_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	$(AM_CFLAGS)
@@ -84,7 +83,6 @@ libgdu_la_LIBADD = 					\
 	$(GIO2_LIBS)					\
 	$(GIO_UNIX2_LIBS)				\
 	$(DBUS_GLIB_LIBS)				\
-	$(POLKIT_DBUS_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
 	$(INTLLIBS)
 

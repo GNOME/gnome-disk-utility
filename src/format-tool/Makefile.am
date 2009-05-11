@@ -17,9 +17,7 @@ CORE_CFLAGS = 						\
 	$(GIO2_CFLAGS)					\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(GTHREAD2_CFLAGS)				\
-	$(POLKIT_DBUS_CFLAGS)				\
 	$(GTK2_CFLAGS)					\
-	$(POLKIT_GNOME_CFLAGS)				\
 	$(NULL)
 
 CORE_LIBADD = 						\
@@ -28,9 +26,7 @@ CORE_LIBADD = 						\
 	$(GIO2_LIBS)					\
 	$(GIO_UNIX2_LIBS)				\
 	$(GTHREAD2_LIBS)				\
-	$(POLKIT_DBUS_LIBS)				\
 	$(GTK2_LIBS)					\
-	$(POLKIT_GNOME_LIBS)				\
 	$(INTLLIBS)					\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la	\

@@ -28,7 +28,6 @@
 
 #include <gtk/gtk.h>
 #include <gdu/gdu.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 G_BEGIN_DECLS
 

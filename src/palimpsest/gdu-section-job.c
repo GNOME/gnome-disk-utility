@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include "gdu-section-job.h"
@@ -34,9 +33,7 @@ struct _GduSectionJobPrivate
 {
         GtkWidget *job_description_label;
         GtkWidget *job_progress_bar;
-
-        PolKitAction *pk_cancel_job_others_action;
-        PolKitGnomeAction *cancel_action;
+        GtkWidget *cancel_button;
 
         guint job_progress_pulse_timer_id;
 };
@@ -58,7 +55,8 @@ job_progress_pulse_timeout_handler (gpointer user_data)
 
 
 static void
-cancel_action_callback (GtkAction *action, gpointer user_data)
+on_cancel_clicked (GtkButton *button,
+                   gpointer   user_data)
 {
         GduDevice *device;
         GduSectionJob *section = GDU_SECTION_JOB (user_data);
@@ -79,17 +77,7 @@ job_update (GduSectionJob *section, GduDevice *device)
         double percentage;
 
         if (device != NULL && gdu_device_job_in_progress (device)) {
-                PolKitAction *pk_action;
-
                 job_initiator = gdu_device_job_get_initiated_by_uid (device);
-
-                pk_action = NULL;
-                if (job_initiator != getuid ())
-                        pk_action = section->priv->pk_cancel_job_others_action;
-                g_object_set (section->priv->cancel_action,
-                              "polkit-action",
-                              pk_action,
-                              NULL);
 
                 job_description = gdu_get_job_description (gdu_device_job_get_id (device));
 
@@ -118,8 +106,8 @@ job_update (GduSectionJob *section, GduDevice *device)
 
                 g_free (job_description);
 
-                polkit_gnome_action_set_sensitive (section->priv->cancel_action,
-                                                   gdu_device_job_is_cancellable (device));
+                gtk_widget_set_sensitive (section->priv->cancel_button,
+                                          gdu_device_job_is_cancellable (device));
         } else {
                 if (section->priv->job_progress_pulse_timer_id > 0) {
                         g_source_remove (section->priv->job_progress_pulse_timer_id);
@@ -160,8 +148,6 @@ out:
 static void
 gdu_section_job_finalize (GduSectionJob *section)
 {
-        polkit_action_unref (section->priv->pk_cancel_job_others_action);
-
         if (section->priv->job_progress_pulse_timer_id > 0) {
                 g_source_remove (section->priv->job_progress_pulse_timer_id);
         }
@@ -197,10 +183,6 @@ gdu_section_job_init (GduSectionJob *section)
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_JOB, GduSectionJobPrivate);
 
-        section->priv->pk_cancel_job_others_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_cancel_job_others_action,
-                                     "org.freedesktop.devicekit.disks.cancel-job-others");
-
         /* job progress section */
         vbox = gtk_vbox_new (FALSE, 5);
 
@@ -222,21 +204,10 @@ gdu_section_job_init (GduSectionJob *section)
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_END);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
 
-        section->priv->cancel_action = polkit_gnome_action_new_default (
-                "cancel",
-                NULL,
-                _("_Cancel"),
-                _("Cancel Job"));
-        g_object_set (section->priv->cancel_action,
-                      "auth-label", _("_Cancel..."),
-                      "yes-icon-name", GTK_STOCK_CANCEL,
-                      "no-icon-name", GTK_STOCK_CANCEL,
-                      "auth-icon-name", GTK_STOCK_CANCEL,
-                      "self-blocked-icon-name", GTK_STOCK_CANCEL,
-                      NULL);
-        g_signal_connect (section->priv->cancel_action, "activate", G_CALLBACK (cancel_action_callback), section);
-
-        button = polkit_gnome_action_create_button (section->priv->cancel_action);
+        button = gtk_button_new_with_mnemonic (_("_Cancel"));
+        gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_BUTTON));
+        section->priv->cancel_button = button;
+        g_signal_connect (button, "clicked", G_CALLBACK (on_cancel_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);

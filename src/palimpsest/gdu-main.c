@@ -24,7 +24,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
-#include <polkit-gnome/polkit-gnome.h>
 #include <unique/unique.h>
 
 #include "gdu-shell.h"

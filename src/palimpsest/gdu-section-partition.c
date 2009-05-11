@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -39,11 +38,7 @@ struct _GduSectionPartitionPrivate
         GtkWidget *modify_part_flag_boot_check_button;
         GtkWidget *modify_part_flag_required_check_button;
         GtkWidget *modify_part_revert_button;
-
-        PolKitAction *pk_change_action;
-        PolKitAction *pk_change_system_internal_action;
-        PolKitGnomeAction *modify_partition_action;
-        PolKitGnomeAction *delete_partition_action;
+        GtkWidget *modify_part_apply_button;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -68,7 +63,8 @@ op_delete_partition_callback (GduDevice *device,
 }
 
 static void
-delete_partition_callback (GtkAction *action, gpointer user_data)
+on_delete_partition_clicked (GtkButton *button,
+                             gpointer   user_data)
 {
         GduSectionPartition *section = GDU_SECTION_PARTITION (user_data);
         GduDevice *device;
@@ -284,10 +280,10 @@ modify_part_update_revert_apply_sensitivity (GduSectionPartition *section)
 
         if (label_differ || type_differ || flags_differ) {
                 gtk_widget_set_sensitive (section->priv->modify_part_revert_button, TRUE);
-                polkit_gnome_action_set_sensitive (section->priv->modify_partition_action, TRUE);
+                gtk_widget_set_sensitive (section->priv->modify_part_apply_button, TRUE);
         } else {
                 gtk_widget_set_sensitive (section->priv->modify_part_revert_button, FALSE);
-                polkit_gnome_action_set_sensitive (section->priv->modify_partition_action, FALSE);
+                gtk_widget_set_sensitive (section->priv->modify_part_apply_button, FALSE);
         }
 
 
@@ -312,20 +308,6 @@ update_partition_section (GduSectionPartition *section)
                 g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
                 goto out;
         }
-
-        g_object_set (section->priv->modify_partition_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                        section->priv->pk_change_system_internal_action :
-                        section->priv->pk_change_action,
-                      NULL);
-
-        g_object_set (section->priv->delete_partition_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                        section->priv->pk_change_system_internal_action :
-                        section->priv->pk_change_action,
-                      NULL);
 
         size = gdu_device_partition_get_size (device);
         scheme = gdu_device_partition_get_scheme (device);
@@ -428,7 +410,8 @@ op_modify_partition_callback (GduDevice *device,
 }
 
 static void
-modify_partition_callback (GtkAction *action, gpointer user_data)
+on_modify_partition_apply_clicked (GtkButton *button,
+                                   gpointer   user_data)
 {
         GduSectionPartition *section = GDU_SECTION_PARTITION (user_data);
         GduDevice *device;
@@ -506,11 +489,6 @@ update (GduSectionPartition *section)
 static void
 gdu_section_partition_finalize (GduSectionPartition *section)
 {
-        polkit_action_unref (section->priv->pk_change_action);
-        polkit_action_unref (section->priv->pk_change_system_internal_action);
-        g_object_unref (section->priv->delete_partition_action);
-        g_object_unref (section->priv->modify_partition_action);
-
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
@@ -545,44 +523,6 @@ gdu_section_partition_init (GduSectionPartition *section)
         gchar *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_PARTITION, GduSectionPartitionPrivate);
-
-        section->priv->pk_change_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_action,
-                                     "org.freedesktop.devicekit.disks.change");
-        section->priv->pk_change_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.change-system-internal");
-
-        section->priv->delete_partition_action = polkit_gnome_action_new_default (
-                "delete-partition",
-                section->priv->pk_change_action,
-                _("_Delete"),
-                _("Delete"));
-        g_object_set (section->priv->delete_partition_action,
-                      "auth-label", _("_Delete..."),
-                      "yes-icon-name", GTK_STOCK_DELETE,
-                      "no-icon-name", GTK_STOCK_DELETE,
-                      "auth-icon-name", GTK_STOCK_DELETE,
-                      "self-blocked-icon-name", GTK_STOCK_DELETE,
-                      NULL);
-        g_signal_connect (section->priv->delete_partition_action, "activate",
-                          G_CALLBACK (delete_partition_callback), section);
-
-        section->priv->modify_partition_action = polkit_gnome_action_new_default (
-                "modify-partition",
-                section->priv->pk_change_action,
-                _("_Apply"),
-                _("Apply"));
-        g_object_set (section->priv->modify_partition_action,
-                      "auth-label", _("_Apply..."),
-                      "yes-icon-name", GTK_STOCK_APPLY,
-                      "no-icon-name", GTK_STOCK_APPLY,
-                      "auth-icon-name", GTK_STOCK_APPLY,
-                      "self-blocked-icon-name", GTK_STOCK_APPLY,
-                      NULL);
-        g_signal_connect (section->priv->modify_partition_action, "activate",
-                          G_CALLBACK (modify_partition_callback), section);
-
 
         label = gtk_label_new (NULL);
         s = g_strconcat ("<b>", _("Partition"), "</b>", NULL);
@@ -662,14 +602,19 @@ gdu_section_partition_init (GduSectionPartition *section)
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
 
-        button = polkit_gnome_action_create_button (section->priv->delete_partition_action);
+        button = gtk_button_new_with_mnemonic ("_Delete");
+        gtk_widget_set_tooltip_text (button, _("Delete the partition"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_delete_partition_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
         button = gtk_button_new_with_mnemonic (_("_Revert"));
         section->priv->modify_part_revert_button = button;
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        button = polkit_gnome_action_create_button (section->priv->modify_partition_action);
+        button = gtk_button_new_with_mnemonic ("_Apply");
+        gtk_widget_set_tooltip_text (button, _("Apply the changes made"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_modify_partition_apply_clicked), section);
+        section->priv->modify_part_apply_button = button;
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
         g_signal_connect (section->priv->modify_part_type_combo_box, "changed",

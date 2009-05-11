@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include "gdu-section-filesystem.h"
@@ -36,10 +35,7 @@ struct _GduSectionFilesystemPrivate
 
         GtkWidget *modify_fs_vbox;
         GtkWidget *modify_fs_label_entry;
-
-        PolKitAction *pk_change_action;
-        PolKitAction *pk_change_system_internal_action;
-        PolKitGnomeAction *modify_fslabel_action;
+        GtkWidget *modify_button;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -71,13 +67,6 @@ update (GduSectionFilesystem *section)
         }
 
         pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
-
-        g_object_set (section->priv->modify_fslabel_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                        section->priv->pk_change_system_internal_action :
-                        section->priv->pk_change_action,
-                      NULL);
 
         fstype = gdu_device_id_get_type (device);
         if (fstype == NULL)
@@ -117,8 +106,7 @@ out:
 
         gtk_entry_set_max_length (GTK_ENTRY (section->priv->modify_fs_label_entry), max_label_len);
         gtk_widget_set_sensitive (section->priv->modify_fs_label_entry, max_label_len > 0);
-        polkit_gnome_action_set_sensitive (section->priv->modify_fslabel_action,
-                                           (max_label_len > 0) && changed);
+        gtk_widget_set_sensitive (section->priv->modify_button, max_label_len > 0 && changed);
 
 error:
         if (kfs != NULL)
@@ -150,7 +138,8 @@ change_filesystem_label_callback (GduDevice *device,
 }
 
 static void
-modify_fslabel_callback (GtkAction *action, gpointer user_data)
+on_change_clicked (GtkButton *button,
+                   gpointer   user_data)
 {
         GduSectionFilesystem *section = GDU_SECTION_FILESYSTEM (user_data);
         GduDevice *device;
@@ -177,10 +166,6 @@ out:
 static void
 gdu_section_filesystem_finalize (GduSectionFilesystem *section)
 {
-        polkit_action_unref (section->priv->pk_change_action);
-        polkit_action_unref (section->priv->pk_change_system_internal_action);
-        g_object_unref (section->priv->modify_fslabel_action);
-
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
@@ -213,24 +198,6 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
         char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_FILESYSTEM, GduSectionFilesystemPrivate);
-
-        section->priv->pk_change_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_action,
-                                     "org.freedesktop.devicekit.disks.change");
-        section->priv->pk_change_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.change-system-internal");
-        section->priv->modify_fslabel_action = polkit_gnome_action_new_default (
-                "modify-fslabel",
-                section->priv->pk_change_action,
-                _("Ch_ange"),
-                _("Change"));
-        g_object_set (section->priv->modify_fslabel_action,
-                      "auth-label", _("Ch_ange..."),
-                      NULL);
-        g_signal_connect (section->priv->modify_fslabel_action, "activate",
-                          G_CALLBACK (modify_fslabel_callback), section);
-
 
         vbox3 = gtk_vbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (section), vbox3, FALSE, TRUE, 0);
@@ -275,7 +242,10 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         section->priv->modify_fs_label_entry = entry;
 
-        button = polkit_gnome_action_create_button (section->priv->modify_fslabel_action);
+        button = gtk_button_new_with_mnemonic ("_Change");
+        gtk_widget_set_tooltip_text (button, _("Change"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_change_clicked), section);
+        section->priv->modify_button = button;
         gtk_table_attach (GTK_TABLE (table), button, 2, 3, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
 

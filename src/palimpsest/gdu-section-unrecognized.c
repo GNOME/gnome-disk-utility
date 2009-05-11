@@ -25,7 +25,6 @@
 #include <dbus/dbus-glib.h>
 #include <stdlib.h>
 #include <math.h>
-#include <polkit-gnome/polkit-gnome.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -40,10 +39,6 @@ struct _GduSectionUnrecognizedPrivate
         GtkWidget *type_combo_box;
         GtkWidget *encrypt_check_button;
         GtkWidget *take_ownership_of_fs_check_button;
-
-        PolKitAction *pk_change_action;
-        PolKitAction *pk_change_system_internal_action;
-        PolKitGnomeAction *erase_action;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -108,7 +103,6 @@ section_volume_unrecognized_type_combo_box_changed (GtkWidget *combo_box, gpoint
 
         gtk_entry_set_max_length (GTK_ENTRY (section->priv->label_entry), max_label_len);
         gtk_widget_set_sensitive (section->priv->label_entry, label_entry_sensitive);
-        polkit_gnome_action_set_sensitive (section->priv->erase_action, can_erase);
 
         if (have_owners)
                 gtk_widget_show (section->priv->take_ownership_of_fs_check_button);
@@ -170,7 +164,8 @@ erase_action_completed (GduDevice  *device,
 }
 
 static void
-erase_action_callback (GtkAction *action, gpointer user_data)
+on_erase_clicked (GtkButton *button,
+                  gpointer   user_data)
 {
         GduSectionUnrecognized *section = GDU_SECTION_UNRECOGNIZED (user_data);
         char *fslabel;
@@ -329,13 +324,6 @@ update (GduSectionUnrecognized *section)
 
         pool = gdu_shell_get_pool (gdu_section_get_shell (GDU_SECTION (section)));
 
-        g_object_set (section->priv->erase_action,
-                      "polkit-action",
-                      gdu_device_is_system_internal (device) ?
-                        section->priv->pk_change_system_internal_action :
-                        section->priv->pk_change_action,
-                      NULL);
-
         if (!section->priv->init_done) {
                 section->priv->init_done = TRUE;
 
@@ -365,10 +353,6 @@ out:
 static void
 gdu_section_unrecognized_finalize (GduSectionUnrecognized *section)
 {
-        polkit_action_unref (section->priv->pk_change_action);
-        polkit_action_unref (section->priv->pk_change_system_internal_action);
-        g_object_unref (section->priv->erase_action);
-
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (section));
 }
@@ -403,26 +387,6 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         char *s;
 
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_UNRECOGNIZED, GduSectionUnrecognizedPrivate);
-
-        section->priv->pk_change_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_action,
-                                     "org.freedesktop.devicekit.disks.change");
-        section->priv->pk_change_system_internal_action = polkit_action_new ();
-        polkit_action_set_action_id (section->priv->pk_change_system_internal_action,
-                                     "org.freedesktop.devicekit.disks.change-system-internal");
-
-        section->priv->erase_action = polkit_gnome_action_new_default ("create",
-                                                                    section->priv->pk_change_action,
-                                                                    _("_Create"),
-                                                                    _("Create"));
-        g_object_set (section->priv->erase_action,
-                      "auth-label", _("_Create..."),
-                      "yes-icon-name", GTK_STOCK_ADD,
-                      "no-icon-name", GTK_STOCK_ADD,
-                      "auth-icon-name", GTK_STOCK_ADD,
-                      "self-blocked-icon-name", GTK_STOCK_ADD,
-                      NULL);
-        g_signal_connect (section->priv->erase_action, "activate", G_CALLBACK (erase_action_callback), section);
 
         // TODO:
         //gtk_action_group_add_action (shell->priv->action_group, GTK_ACTION (shell->priv->erase_action));
@@ -530,7 +494,9 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         gtk_button_box_set_layout (GTK_BUTTON_BOX (button_box), GTK_BUTTONBOX_START);
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
 
-        button = polkit_gnome_action_create_button (section->priv->erase_action);
+        button = gtk_button_new_with_mnemonic ("_Create");
+        gtk_widget_set_tooltip_text (button, _("Create"));
+        g_signal_connect (button, "clicked", G_CALLBACK (on_erase_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
         gtk_box_pack_start (GTK_BOX (vbox), button_box, TRUE, TRUE, 0);
 }

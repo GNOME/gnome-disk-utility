@@ -246,7 +246,6 @@ main (int argc, char *argv[])
 
         take_ownership = (g_strcmp0 (fs_type, "vfat") != 0);
 
- try_again:
         data.loop = loop;
         data.error = NULL;
         dialog = gdu_format_progress_dialog_new (NULL,
@@ -262,52 +261,17 @@ main (int argc, char *argv[])
                                          &data);
         g_main_loop_run (loop);
         if (data.error != NULL) {
-                PolKitAction *pk_action;
-                PolKitResult pk_result;
-                if (gdu_error_check_polkit_not_authorized (data.error,
-                                                           &pk_action,
-                                                           &pk_result)) {
-                        gtk_widget_destroy (dialog);
-                        dialog = NULL;
+                gtk_widget_destroy (dialog);
+                dialog = NULL;
 
-                        if (pk_result == POLKIT_RESULT_UNKNOWN ||
-                            pk_result == POLKIT_RESULT_NO) {
-                                show_error_dialog (NULL,
-                                                   _("You are not authorized to format the volume"),
-                                                   _("Contact your system administrator to obtain "
-                                                     "the necessary authorization."));
-                                g_error_free (data.error);
-                                polkit_action_unref (pk_action);
-                                goto out;
-                        } else {
-                                char *action_id;
-                                DBusError dbus_error;
-                                polkit_action_get_action_id (pk_action, &action_id);
-                                dbus_error_init (&dbus_error);
-                                if (!polkit_auth_obtain (action_id, 0, getpid (), &dbus_error)) {
-                                        polkit_action_unref (pk_action);
-                                        dbus_error_free (&dbus_error);
-                                        goto out;
-                                } else {
-                                        g_error_free (data.error);
-                                        /* try again */
-                                        goto try_again;
-                                }
-                        }
-
-                } else {
-                        gtk_widget_destroy (dialog);
-                        dialog = NULL;
-
-                        /* TODO: we could handle things like GDU_ERROR_BUSY here, e.g. unmount
-                         *       and/or tear down LUKS mapping
-                         */
-                        show_error_dialog (NULL,
-                                           _("Error creating filesystem"),
-                                           data.error->message);
-                        g_error_free (data.error);
-                        goto out;
-                }
+                /* TODO: we could handle things like GDU_ERROR_BUSY here, e.g. unmount
+                 *       and/or tear down LUKS mapping
+                 */
+                show_error_dialog (NULL,
+                                   _("Error creating filesystem"),
+                                   data.error->message);
+                g_error_free (data.error);
+                goto out;
         }
 
         /* ugh, DeviceKit-disks bug - spin around in the mainloop for some time to ensure we

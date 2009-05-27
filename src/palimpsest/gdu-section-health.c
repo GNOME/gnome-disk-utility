@@ -246,7 +246,7 @@ smart_data_set (GduSectionHealth *section)
                 }
         }
 
-        gtk_label_set_text (GTK_LABEL (section->priv->health_status_label), text);
+        gtk_label_set_markup (GTK_LABEL (section->priv->health_status_label), text);
         if (explanation == NULL) {
                         gtk_widget_hide (section->priv->health_status_explanation_label);
         } else {

@@ -132,6 +132,10 @@ typedef void (*GduDeviceDriveEjectCompletedFunc) (GduDevice    *device,
                                                   GError       *error,
                                                   gpointer      user_data);
 
+typedef void (*GduDeviceDriveDetachCompletedFunc) (GduDevice    *device,
+                                                   GError       *error,
+                                                   gpointer      user_data);
+
 typedef void (*GduDeviceDrivePollMediaCompletedFunc) (GduDevice    *device,
                                                       GError       *error,
                                                       gpointer      user_data);

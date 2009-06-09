@@ -137,6 +137,7 @@ char **gdu_device_drive_get_media_compatibility (GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
 gboolean gdu_device_drive_get_is_media_ejectable (GduDevice *device);
 gboolean gdu_device_drive_get_requires_eject (GduDevice *device);
+gboolean gdu_device_drive_get_can_detach (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);
@@ -373,6 +374,12 @@ GList *gdu_device_filesystem_list_open_files_sync (GduDevice  *device,
 
 void gdu_device_op_drive_eject                 (GduDevice                        *device,
                                                 GduDeviceDriveEjectCompletedFunc  callback,
+                                                gpointer                          user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void gdu_device_op_drive_detach                (GduDevice                        *device,
+                                                GduDeviceDriveDetachCompletedFunc callback,
                                                 gpointer                          user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */

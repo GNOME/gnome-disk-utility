@@ -319,6 +319,8 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Running S.M.A.R.T. Self Test"));
         } else if (strcmp (job_id, "DriveEject") == 0) {
                 s = g_strdup (_("Ejecting Media"));
+        } else if (strcmp (job_id, "DriveDetach") == 0) {
+                s = g_strdup (_("Detaching Device"));
         } else if (strcmp (job_id, "ForceUnmount") == 0) {
                 s = g_strdup (_("Forcibly Unmounting Filesystem"));
         } else if (strcmp (job_id, "ForceLuksTeardown") == 0) {

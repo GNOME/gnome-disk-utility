@@ -2,6 +2,7 @@ icondir = $(datadir)/icons/hicolor/scalable/apps
 icon_DATA =				\
 	palimpsest.svg			\
 	gdu-eject.svg			\
+	gdu-detach.svg			\
 	gdu-mount.svg			\
 	gdu-unmount.svg			\
 	gdu-raid-array.svg		\

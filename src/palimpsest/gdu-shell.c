@@ -566,6 +566,7 @@ gdu_shell_update (GduShell *shell)
         gboolean can_mount;
         gboolean can_unmount;
         gboolean can_eject;
+        gboolean can_detach;
         gboolean can_lock;
         gboolean can_unlock;
         gboolean can_start;
@@ -584,6 +585,7 @@ gdu_shell_update (GduShell *shell)
         can_fsck = FALSE;
         can_unmount = FALSE;
         can_eject = FALSE;
+        can_detach = FALSE;
         can_unlock = FALSE;
         can_lock = FALSE;
         unlocked_by_uid = 0;
@@ -643,11 +645,11 @@ gdu_shell_update (GduShell *shell)
 
                 if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
                         if (gdu_device_is_removable (device) &&
-                            gdu_device_is_media_available (device) &&
-                            (gdu_device_drive_get_is_media_ejectable (device) ||
-                             gdu_device_drive_get_requires_eject (device))) {
+                            gdu_device_is_media_available (device))
                                 can_eject = TRUE;
-                        }
+
+                        if (gdu_device_drive_get_can_detach (device))
+                                can_detach = TRUE;
 
                         can_erase = TRUE;
                         if (gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing)) &&
@@ -668,6 +670,7 @@ gdu_shell_update (GduShell *shell)
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "mount"), can_mount);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "unmount"), can_unmount);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "eject"), can_eject);
+        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "detach"), can_detach);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "fsck"), can_fsck);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "lock"), can_lock);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "unlock"), can_unlock);
@@ -1037,6 +1040,37 @@ eject_action_callback (GtkAction *action, gpointer user_data)
                 gdu_device_op_drive_eject (device,
                                            eject_op_callback,
                                            shell_presentable_new (shell, shell->priv->presentable_now_showing));
+                g_object_unref (device);
+        }
+}
+
+static void
+detach_op_callback (GduDevice *device,
+                    GError    *error,
+                    gpointer   user_data)
+{
+        ShellPresentableData *data = user_data;
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error detaching device"));
+                g_error_free (error);
+        }
+        shell_presentable_free (data);
+}
+
+static void
+detach_action_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (device != NULL) {
+                gdu_device_op_drive_detach (device,
+                                            detach_op_callback,
+                                            shell_presentable_new (shell, shell->priv->presentable_now_showing));
                 g_object_unref (device);
         }
 }
@@ -1531,6 +1565,7 @@ static const gchar *ui =
         "      <menuitem action='mount'/>"
         "      <menuitem action='unmount'/>"
         "      <menuitem action='eject'/>"
+        "      <menuitem action='detach'/>"
         "      <separator/>"
         "      <menuitem action='fsck'/>"
         "      <separator/>"
@@ -1551,6 +1586,7 @@ static const gchar *ui =
         "    <toolitem action='mount'/>"
         "    <toolitem action='unmount'/>"
         "    <toolitem action='eject'/>"
+        "    <toolitem action='detach'/>"
         "    <separator/>"
         "    <toolitem action='fsck'/>"
         "    <separator/>"
@@ -1573,6 +1609,7 @@ static GtkActionEntry entries[] = {
         {"mount", "gdu-mount", N_("_Mount"), NULL, N_("Mount the filesystem on device"), G_CALLBACK (mount_action_callback)},
         {"unmount", "gdu-unmount", N_("_Unmount"), NULL, N_("Unmount the filesystem"), G_CALLBACK (unmount_action_callback)},
         {"eject", "gdu-eject", N_("_Eject"), NULL, N_("Eject media from the device"), G_CALLBACK (eject_action_callback)},
+        {"detach", "gdu-detach", N_("_Detach"), NULL, N_("Detach the device from the system, powering it off"), G_CALLBACK (detach_action_callback)},
         {"unlock", "gdu-encrypted-unlock", N_("_Unlock"), NULL, N_("Unlock the encrypted device, making the data available in cleartext"), G_CALLBACK (unlock_action_callback)},
         {"lock", "gdu-encrypted-lock", N_("_Lock"), NULL, N_("Lock the encrypted device, making the cleartext data unavailable"), G_CALLBACK (lock_action_callback)},
         {"start", "gdu-raid-array-start", N_("_Start"), NULL, N_("Start the array"), G_CALLBACK (start_action_callback)},

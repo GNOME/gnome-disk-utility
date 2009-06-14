@@ -2,6 +2,7 @@ icondir = $(datadir)/icons/hicolor/16x16/apps
 icon_DATA =				\
 	palimpsest.png			\
 	gdu-eject.png			\
+	gdu-detach.png			\
 	gdu-mount.png			\
 	gdu-unmount.png			\
 	gdu-raid-array.png		\

@@ -117,7 +117,6 @@ typedef struct
         char   **drive_media_compatibility;
         char    *drive_media;
         gboolean drive_is_media_ejectable;
-        gboolean drive_requires_eject;
         gboolean drive_can_detach;
 
         gboolean optical_disc_is_blank;
@@ -314,8 +313,6 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_media = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "drive-is-media-ejectable") == 0)
                 props->drive_is_media_ejectable = g_value_get_boolean (value);
-        else if (strcmp (key, "drive-requires-eject") == 0)
-                props->drive_requires_eject = g_value_get_boolean (value);
         else if (strcmp (key, "drive-can-detach") == 0)
                 props->drive_can_detach = g_value_get_boolean (value);
 
@@ -1099,7 +1096,8 @@ gdu_device_drive_get_is_media_ejectable (GduDevice *device)
 gboolean
 gdu_device_drive_get_requires_eject (GduDevice *device)
 {
-        return device->priv->props->drive_requires_eject;
+        /* TODO: remove once GVfs isn't using this anymore */
+        return FALSE;
 }
 
 gboolean

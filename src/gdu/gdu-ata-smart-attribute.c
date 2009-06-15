@@ -186,7 +186,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 2:
                 n = _("Throughput Performance");
-                d = _("Average effeciency of the disk.");
+                d = _("Average efficiency of the disk.");
                 break;
         case 3:
                 n = _("Spinup Time");

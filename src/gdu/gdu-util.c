@@ -483,7 +483,7 @@ gdu_util_part_table_type_get_description (char *part_type)
 
         if (strcmp (part_type, "mbr") == 0)
                 return g_strdup (_("The Master Boot Record scheme is compatible with almost any "
-                                   "device or system but has a number of limitations with respect to to disk "
+                                   "device or system but has a number of limitations with respect to disk "
                                    "size and number of partitions."));
 
         else if (strcmp (part_type, "apm") == 0)
@@ -497,7 +497,7 @@ gdu_util_part_table_type_get_description (char *part_type)
 
         else if (strcmp (part_type, "none") == 0)
                 return g_strdup (_("Marks the entire disk as unused. Use this option only if you want "
-                                   "to avoid partitioing the disk for e.g. whole disk use or "
+                                   "to avoid partitioning the disk for e.g. whole disk use or "
                                    "floppy / Zip disks."));
 
         else

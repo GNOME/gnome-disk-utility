@@ -477,7 +477,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         check_button = gtk_check_button_new_with_mnemonic (_("Encr_ypt underlying device"));
         gtk_widget_set_tooltip_text (check_button,
                                      _("Encryption protects your data, requiring a "
-                                       "passphrase to be enterered before the file system can be "
+                                       "passphrase to be entered before the file system can be "
                                        "used. May decrease performance and may not be compatible if "
                                        "you use the media on other operating systems."));
         gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row + 1,

@@ -245,7 +245,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 194:
                 n = _("Temperature");
-                d = _("Current internal temperature in degrees Celcius.");
+                d = _("Current internal temperature in degrees Celsius.");
                 break;
         case 195:
                 n = _("Hardware ECC Recovered");
@@ -255,7 +255,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 n = _("Reallocation Count");
                 d = _("Number of remapping operations. "
                       "The raw value of this attribute shows the total number of (successful "
-                      "and unsucessful) attempts to transfer data from reallocated sectors "
+                      "and unsuccessful) attempts to transfer data from reallocated sectors "
                       "to a spare area.");
                 break;
         case 197:
@@ -321,7 +321,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
 
         case 220:
                 n = _("Disk Shift");
-                d = _("Shift of disk os possible as a result of strong shock loading in the store, "
+                d = _("Shift of disk is possible as a result of strong shock loading in the store, "
                       "as a result of falling (or) temperature.");
                 break;
         case 221:

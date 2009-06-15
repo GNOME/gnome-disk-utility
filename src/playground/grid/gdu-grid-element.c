@@ -895,7 +895,7 @@ gdu_grid_element_class_init (GduGridElementClass *klass)
                                          PROP_MINIMUM_SIZE,
                                          g_param_spec_uint ("minimum-size",
                                                             _("Minimum Size"),
-                                                            _("The mininum size of the element"),
+                                                            _("The minimum size of the element"),
                                                             0,
                                                             G_MAXUINT,
                                                             40,

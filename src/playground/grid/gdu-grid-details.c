@@ -102,7 +102,7 @@ gdu_grid_details_constructed (GObject *object)
                 details->priv->table_value_label[row] = label;
         }
 
-        label = gtk_label_new (_("Operations should go here"));
+        label = gtk_label_new ("Operations should go here");
         gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 
         gtk_container_add (GTK_CONTAINER (details), hbox);

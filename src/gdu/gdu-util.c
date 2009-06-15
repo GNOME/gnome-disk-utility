@@ -487,7 +487,7 @@ gdu_util_part_table_type_get_description (char *part_type)
                                    "size and number of partitions."));
 
         else if (strcmp (part_type, "apm") == 0)
-                return g_strdup (_("A legacy scheme that is incomptible with most systems "
+                return g_strdup (_("A legacy scheme that is incompatible with most systems "
                                    "except Apple systems and most Linux systems. Not recommended for "
                                    "removable media."));
 

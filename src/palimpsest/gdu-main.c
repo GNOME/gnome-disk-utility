@@ -134,11 +134,13 @@ main (int argc, char **argv)
         GError *error;
 
         ret = 1;
+        shell = NULL;
 
         error = NULL;
         if (!gtk_init_with_args (&argc, &argv, "", entries, GETTEXT_PACKAGE, &error)) {
-                g_error ("%s", error->message);
-                exit (1);
+                g_printerr ("%s\n", error->message);
+                g_error_free (error);
+                goto out;
         }
 
         bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
@@ -195,6 +197,7 @@ main (int argc, char **argv)
         ret = 0;
 
  out:
-        g_object_unref (shell);
+        if (shell != NULL)
+                g_object_unref (shell);
         return ret;
 }

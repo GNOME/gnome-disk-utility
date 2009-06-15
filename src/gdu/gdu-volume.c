@@ -70,6 +70,7 @@ static const struct
         const char *ui_name;
         const char *ui_name_blank;
 } disc_data[] = {
+  /* Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank */
   {"optical_cd",             "media-optical-cd-rom",        N_("CD-ROM Disc"),     N_("Blank CD-ROM Disc")},
   {"optical_cd_r",           "media-optical-cd-r",          N_("CD-R Disc"),       N_("Blank CD-R Disc")},
   {"optical_cd_rw",          "media-optical-cd-rw",         N_("CD-RW Disc"),      N_("Blank CD-RW Disc")},

@@ -366,6 +366,10 @@ gdu_drive_get_icon (GduPresentable *presentable)
                 name = "drive-optical";
         } else if (strv_has (drive_media_compat, "floppy")) {
                 name = "drive-removable-media-floppy";
+        } else if (strv_has (drive_media_compat, "floppy_zip")) {
+                name = "drive-removable-media-floppy-zip";
+        } else if (strv_has (drive_media_compat, "floppy_jaz")) {
+                name = "drive-removable-media-floppy-jaz";
         } else if (strv_has (drive_media_compat, "flash_cf")) {
                 name = "drive-removable-media-flash-cf";
         } else if (strv_has (drive_media_compat, "flash_ms")) {

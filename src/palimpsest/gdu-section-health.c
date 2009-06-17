@@ -899,6 +899,33 @@ smart_attr_tree_selection_changed (GtkTreeSelection *treeselection, gpointer use
 }
 
 static void
+on_foo_clicked (GtkButton *button,
+                gpointer   user_data)
+{
+        GduSectionHealth *section = GDU_SECTION_HEALTH (user_data);
+        GtkWidget *dialog;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        if (device == NULL) {
+                g_warning ("%s: device is not supposed to be NULL", __FUNCTION__);
+                goto out;
+        }
+
+        dialog = gdu_ata_smart_dialog_new (NULL, //GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
+                                           device);
+
+        gtk_widget_show_all (dialog);
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+
+        g_object_unref (device);
+
+ out:
+        ;
+}
+
+static void
 on_details_clicked (GtkButton *button,
                     gpointer   user_data)
 {
@@ -1604,6 +1631,10 @@ gdu_section_health_init (GduSectionHealth *section)
         button = gtk_button_new_with_mnemonic ("Se_lftest");
         gtk_widget_set_tooltip_text (button, _("Run an ATA SMART self test on the disk"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_selftest_clicked), section);
+        gtk_container_add (GTK_CONTAINER (button_box), button);
+
+        button = gtk_button_new_with_mnemonic ("F_oo");
+        g_signal_connect (button, "clicked", G_CALLBACK (on_foo_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 }
 

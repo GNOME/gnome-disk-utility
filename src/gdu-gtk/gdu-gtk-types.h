@@ -32,7 +32,9 @@
 
 G_BEGIN_DECLS
 
-typedef struct GduTimeLabel             GduTimeLabel;
+typedef struct GduTimeLabel                GduTimeLabel;
+typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
+typedef struct GduAtaSmartAttributeDialog  GduAtaSmartAttributeDialog;
 
 G_END_DECLS
 

@@ -5,16 +5,20 @@ lib_LTLIBRARIES=libgdu-gtk.la
 
 libgdu_gtkincludedir=$(includedir)/gnome-disk-utility/gdu-gtk
 
-libgdu_gtkinclude_HEADERS =              				\
-	gdu-gtk.h							\
-	gdu-gtk-types.h							\
-	gdu-time-label.h						\
+libgdu_gtkinclude_HEADERS =              						\
+	gdu-gtk.h									\
+	gdu-gtk-types.h									\
+	gdu-time-label.h								\
+	gdu-ata-smart-dialog.h								\
+	gdu-ata-smart-attribute-dialog.h						\
 	$(NULL)
 
-libgdu_gtk_la_SOURCES =                 	               		\
-	gdu-gtk.h			gdu-gtk.c			\
-	gdu-gtk-types.h							\
-	gdu-time-label.h		gdu-time-label.c		\
+libgdu_gtk_la_SOURCES =                 	        	       			\
+	gdu-gtk.h				gdu-gtk.c				\
+	gdu-gtk-types.h									\
+	gdu-time-label.h			gdu-time-label.c			\
+	gdu-ata-smart-dialog.h			gdu-ata-smart-dialog.c			\
+	gdu-ata-smart-attribute-dialog.h	gdu-ata-smart-attribute-dialog.c	\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

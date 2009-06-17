@@ -258,6 +258,15 @@ on_combo_box_changed (GtkWidget *combo_box,
         gtk_entry_set_max_length (GTK_ENTRY (dialog->priv->fs_label_entry), max_label_len);
 }
 
+static void
+on_fs_label_entry_activated (GtkWidget *combo_box,
+                             gpointer   user_data)
+{
+        GduFormatDialog *dialog = GDU_FORMAT_DIALOG (user_data);
+
+        gtk_dialog_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -289,46 +298,16 @@ gdu_format_dialog_constructed (GObject *object)
         gint row;
         GduPool *pool;
         GduDevice *device;
-        GduPresentable *toplevel;
-        gchar *drive_name;
-        gchar *name;
-        gchar *primary;
-        gchar *secondary;
         gboolean ret;
         GtkWidget *align;
+        gchar *s;
 
-        toplevel = NULL;
-        name = NULL;
-        drive_name = NULL;
-        primary = NULL;
-        secondary = NULL;
         ret = FALSE;
 
         pool = gdu_presentable_get_pool (GDU_PRESENTABLE (dialog->priv->volume));
         device = gdu_presentable_get_device (GDU_PRESENTABLE (dialog->priv->volume));
-        name = gdu_presentable_get_name (GDU_PRESENTABLE (dialog->priv->volume));
-        toplevel = gdu_presentable_get_toplevel (GDU_PRESENTABLE (dialog->priv->volume));
-        if (toplevel != NULL && GDU_IS_DRIVE (toplevel)) {
-                drive_name = gdu_presentable_get_name (toplevel);
-        }
 
         pixbuf = gdu_util_get_pixbuf_for_presentable (GDU_PRESENTABLE (dialog->priv->volume), GTK_ICON_SIZE_DIALOG);
-
-        primary = g_strconcat ("<big><big><b>",
-                               _("Are you sure you want to format the volume?"),
-                               "</b></big></big>", NULL);
-        if (drive_name != NULL) {
-                secondary = g_strdup_printf (_("You are about to format the volume \"%s\" on the drive \"%s\" (%s). "
-                                               "All existing data will be irrevocably erased."),
-                                             name,
-                                             drive_name,
-                                             gdu_device_get_device_file (device));
-        } else {
-                secondary = g_strdup_printf (_("You are about to format the volume \"%s\" (%s). "
-                                               "All existing data will be irrevocably erased."),
-                                             name,
-                                             gdu_device_get_device_file (device));
-        }
 
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
@@ -342,23 +321,22 @@ gdu_format_dialog_constructed (GObject *object)
 
         gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
         button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                        /* Translators: Format is used as a verb here */
                                         _("_Format"),
                                         GTK_RESPONSE_OK);
-        icon = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON);
-        gtk_button_set_image (GTK_BUTTON (button), icon);
         button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("Disk _Utility"), GTK_RESPONSE_ACCEPT);
         icon = gtk_image_new_from_icon_name ("palimpsest", GTK_ICON_SIZE_BUTTON);
         gtk_button_set_image (GTK_BUTTON (button), icon);
         gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))),
                                             button,
                                             TRUE);
-        gtk_widget_set_tooltip_text (button, _("Open volume in Palimpsest Disk Utility"));
-        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+        gtk_widget_set_tooltip_text (button, _("Use Disk Utility to format volume"));
+        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
-        /*  icon and primary+secondary labels  */
+        /*  icon and text labels  */
         hbox = gtk_hbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, TRUE, 0);
 
@@ -373,18 +351,6 @@ gdu_format_dialog_constructed (GObject *object)
         vbox2 = gtk_vbox_new (FALSE, 12);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
 
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), primary);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup (GTK_LABEL (label), secondary);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, TRUE, 0);
-
         row = 0;
 
         table = gtk_table_new (2, 2, FALSE);
@@ -394,7 +360,7 @@ gdu_format_dialog_constructed (GObject *object)
 
         /*  filesystem type  */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -412,13 +378,13 @@ gdu_format_dialog_constructed (GObject *object)
         dialog->priv->fs_type = g_strdup ("vfat");
         dialog->priv->encrypt = FALSE;
         gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row +1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+                          GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
         row++;
 
         /*  filesystem label  */
         label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Name:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -426,14 +392,37 @@ gdu_format_dialog_constructed (GObject *object)
         /* Translators: Keep length of translation of "New Volume" to less than 16 characters */
         gtk_entry_set_text (GTK_ENTRY (entry), _("New Volume"));
         gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+                          GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         dialog->priv->fs_label_entry = entry;
         row++;
 
+        hbox = gtk_hbox_new (FALSE, 6);
+        gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
+        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_MENU);
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+	label = gtk_label_new (NULL);
+        s = g_strconcat ("<i>",
+                         _("Warning: All data on the volume will be irrevocably lost."),
+                         "</i>",
+                         NULL);
+        gtk_label_set_markup (GTK_LABEL (label), s);
+        g_free (s);
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+
         g_signal_connect (combo_box,
                           "changed",
                           G_CALLBACK (on_combo_box_changed),
+                          dialog);
+
+        g_signal_connect (dialog->priv->fs_label_entry,
+                          "activate",
+                          G_CALLBACK (on_fs_label_entry_activated),
                           dialog);
 
         /* nuke dialog if device is yanked */
@@ -442,8 +431,8 @@ gdu_format_dialog_constructed (GObject *object)
                           G_CALLBACK (on_presentable_removed),
                           dialog);
 
-        gtk_widget_grab_focus (entry);
-        gtk_editable_select_region (GTK_EDITABLE (entry), 0, 1000);
+        gtk_widget_grab_focus (dialog->priv->fs_label_entry);
+        gtk_editable_select_region (GTK_EDITABLE (dialog->priv->fs_label_entry), 0, 1000);
 
         if (G_OBJECT_CLASS (gdu_format_dialog_parent_class)->constructed != NULL)
                 G_OBJECT_CLASS (gdu_format_dialog_parent_class)->constructed (object);

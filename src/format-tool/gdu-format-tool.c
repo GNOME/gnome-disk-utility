@@ -42,6 +42,7 @@ typedef struct
         GMainLoop *loop;
         GError    *error;
         gchar     *mount_point;
+        gboolean   format_in_progress;
 } FormatData;
 
 static gboolean
@@ -131,6 +132,44 @@ static GOptionEntry entries[] = {
         { NULL }
 };
 
+typedef struct
+{
+        GMainLoop *loop;
+        GError    *error;
+} UnmountData;
+
+static void
+unmount_cb (GObject      *source_object,
+            GAsyncResult *res,
+            gpointer      user_data)
+{
+        GMount *mount = G_MOUNT (source_object);
+        UnmountData *data = user_data;
+
+        g_mount_unmount_finish (mount, res, &data->error);
+
+        g_main_loop_quit (data->loop);
+}
+
+static void
+on_progress_dialog_response (GtkDialog *dialog,
+                             gint       response_id,
+                             gpointer   user_data)
+{
+        FormatData *data = user_data;
+
+        data->error = g_error_new (G_IO_ERROR, G_IO_ERROR_CANCELLED, _("Operation was cancelled"));
+        g_main_loop_quit (data->loop);
+}
+
+static gboolean
+on_grace_timeout (gpointer user_data)
+{
+        FormatData *data = user_data;
+        g_main_loop_quit (data->loop);
+        return FALSE;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -138,8 +177,11 @@ main (int argc, char *argv[])
         GError *error;
         GduPool *pool;
         GduDevice *device;
+        GduDevice *device_to_unmount;
         GduDevice *device_to_mount;
         GduPresentable *volume;
+        gchar *volume_name;
+        gchar *confirmation_secondary;
         GtkWidget *dialog;
         gint response;
         gchar *fs_type;
@@ -149,17 +191,45 @@ main (int argc, char *argv[])
         gboolean save_passphrase_in_keyring;
         gboolean save_passphrase_in_keyring_session;
         GMainLoop *loop;
+        GVolumeMonitor *gvolume_monitor;
+        GList *l;
+        GList *gvolumes;
+        GVolume *gvolume;
+        GMount *gmount;
+        gboolean take_ownership;
+        FormatData *format_data;
+        GduPresentable *toplevel;
+        gchar *drive_name;
+        gchar *format_desc;
+        gchar *formatting_desc;
+        gchar *size_str;
+        gint grace_timeout_id;
 
         ret = 1;
         pool = NULL;
         device = NULL;
+        device_to_unmount = NULL;
         device_to_mount = NULL;
         volume = NULL;
+        volume_name = NULL;
+        confirmation_secondary = NULL;
         dialog = NULL;
         fs_type = NULL;
         fs_label = NULL;
         passphrase = NULL;
         loop = NULL;
+        volume = NULL;
+        gmount = NULL;
+        gvolume_monitor = NULL;
+        gvolumes = NULL;
+        gvolume = NULL;
+        gmount = NULL;
+        format_data = NULL;
+        toplevel = NULL;
+        drive_name = NULL;
+        format_desc = NULL;
+        formatting_desc = NULL;
+        size_str = NULL;
 
         g_thread_init (NULL);
 
@@ -198,13 +268,68 @@ main (int argc, char *argv[])
                 goto out;
         }
 
+        /* if the user specified a luks device, find the slave backing device */
+        if (gdu_device_is_luks_cleartext (device)) {
+                const gchar *slave;
+                slave = gdu_device_luks_cleartext_get_slave (device);
+                g_object_ref (device);
+                device = gdu_pool_get_by_object_path (pool, slave);
+                /* don't support LUKS in LUKS... */
+                g_assert (!gdu_device_is_luks_cleartext (device));
+        }
+
         volume = gdu_pool_get_volume_by_device (pool, device);
         if (volume == NULL) {
                 g_printerr ("%s is not a volume\n", device_file);
                 goto out;
         }
+        volume_name = gdu_presentable_get_name (volume);
+
+        toplevel = gdu_presentable_get_toplevel (GDU_PRESENTABLE (volume));
+        if (toplevel != NULL && GDU_IS_DRIVE (toplevel)) {
+                drive_name = gdu_presentable_get_name (toplevel);
+        }
+        size_str = gdu_util_get_size_for_display (gdu_device_get_size (device), FALSE);
+
+        if (drive_name != NULL) {
+                if (gdu_device_is_partition (device)) {
+                        /* Translators: First argument is the partition number, second argument is the drive name,
+                         * third argument is the size (e.g. 10 GB)
+                         */
+                        format_desc = g_strdup_printf (_("Format partition %d of %s (%s)"),
+                                                       gdu_device_partition_get_number (device),
+                                                       drive_name,
+                                                       size_str);
+                        /* Translators: First argument is the partition number, second argument is the drive name,
+                         * third argument is the size (e.g. 10 GB)
+                         */
+                        formatting_desc = g_strdup_printf (_("Formatting partition %d of %s (%s)"),
+                                                           gdu_device_partition_get_number (device),
+                                                           drive_name,
+                                                           size_str);
+                } else {
+                        /* Translators: First argument is the drive name, second argument is the size (e.g. 10 GB) */
+                        format_desc = g_strdup_printf (_("Format %s (%s)"),
+                                                       drive_name,
+                                                       size_str);
+                        /* Translators: First argument is the drive name, second argument is the size (e.g. 10 GB) */
+                        formatting_desc = g_strdup_printf (_("Formatting %s (%s)"),
+                                                           drive_name,
+                                                           size_str);
+                }
+        } else {
+                /* Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0) */
+                format_desc = g_strdup_printf (_("Format %s Volume (%s)"),
+                                               size_str,
+                                               gdu_device_get_device_file (device));
+                /* Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0) */
+                formatting_desc = g_strdup_printf (_("Formatting %s Volume (%s)"),
+                                                   size_str,
+                                                   gdu_device_get_device_file (device));
+        }
 
         dialog = gdu_format_dialog_new (NULL, GDU_VOLUME (volume));
+        gtk_window_set_title (GTK_WINDOW (dialog), format_desc);
         gtk_widget_show_all (dialog);
 
         response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -230,6 +355,7 @@ main (int argc, char *argv[])
         gtk_widget_destroy (dialog);
         dialog = NULL;
 
+        /* Ask for passphrase if needed */
         passphrase = NULL;
         save_passphrase_in_keyring = FALSE;
         save_passphrase_in_keyring_session = FALSE;
@@ -241,36 +367,113 @@ main (int argc, char *argv[])
                         goto out;
         }
 
-        gboolean take_ownership;
-        FormatData data;
-
         take_ownership = (g_strcmp0 (fs_type, "vfat") != 0);
 
-        data.loop = loop;
-        data.error = NULL;
+
+        format_data = g_new0 (FormatData, 1);
+        format_data->loop = loop;
+        format_data->error = NULL;
+
         dialog = gdu_format_progress_dialog_new (NULL,
                                                  device,
-                                                 _("Formatting volume..."));
+                                                 _("Preparing..."));
+        gtk_window_set_title (GTK_WINDOW (dialog), formatting_desc);
         gtk_widget_show_all (dialog);
+        g_signal_connect (dialog, "response", G_CALLBACK (on_progress_dialog_response), format_data);
+
+        /* first a small 2.5 sec window to allow the user to cancel before initiating */
+        grace_timeout_id = g_timeout_add (2500, on_grace_timeout, format_data);
+        g_main_loop_run (loop);
+        g_source_remove (grace_timeout_id);
+        if (format_data->error != NULL &&
+            format_data->error->domain == G_IO_ERROR &&
+            format_data->error->code == G_IO_ERROR_CANCELLED) {
+                /* cancelled already, we are done */
+                goto out;
+        }
+
+        /* then unmount the mount if needed; we use GIO for this to handle tearing
+         * down LUKS; first determine the device to unmount
+         */
+        if (gdu_device_is_luks (device)) {
+                const gchar *holder;
+                holder = gdu_device_luks_get_holder (device);
+                device_to_unmount = gdu_pool_get_by_object_path (pool, holder);
+        } else {
+                device_to_unmount = g_object_ref (device);
+        }
+        g_assert (device_to_unmount != NULL);
+        gvolume_monitor = g_volume_monitor_get ();
+        gvolumes = g_volume_monitor_get_volumes (gvolume_monitor);
+        for (l = gvolumes; l != NULL; l = l->next) {
+                GVolume *v = G_VOLUME (l->data);
+                if (g_strcmp0 (g_volume_get_identifier (v, G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE),
+                               gdu_device_get_device_file (device_to_unmount)) == 0) {
+                        gvolume = g_object_ref (v);
+                        break;
+                }
+        }
+        if (gvolume != NULL) {
+                gmount = g_volume_get_mount (gvolume);
+                if (gmount != NULL) {
+                        gdu_format_progress_dialog_set_text (GDU_FORMAT_PROGRESS_DIALOG (dialog),
+                                                             _("Unmounting..."));
+
+                        g_mount_unmount (gmount,
+                                         G_MOUNT_UNMOUNT_NONE,
+                                         NULL,
+                                         unmount_cb,
+                                         format_data);
+                        g_main_loop_run (format_data->loop);
+
+                        if (format_data->error != NULL) {
+                                gchar *primary;
+
+                                primary = g_strdup_printf (_("Unable to format '%s'"), volume_name);
+                                show_error_dialog (NULL,
+                                                   primary,
+                                                   format_data->error->message);
+
+                                g_error_free (format_data->error);
+                                g_free (primary);
+                                goto out;
+                        }
+                }
+        }
+
+        /* and now, kick off the operation */
+        gdu_format_progress_dialog_set_text (GDU_FORMAT_PROGRESS_DIALOG (dialog),
+                                             _("Formatting..."));
         gdu_device_op_filesystem_create (device,
                                          fs_type,
                                          fs_label,
                                          passphrase,
                                          take_ownership,
                                          fs_create_cb,
-                                         &data);
+                                         format_data);
+ again:
         g_main_loop_run (loop);
-        if (data.error != NULL) {
+        if (format_data->error != NULL) {
                 gtk_widget_destroy (dialog);
                 dialog = NULL;
 
-                /* TODO: we could handle things like GDU_ERROR_BUSY here, e.g. unmount
-                 *       and/or tear down LUKS mapping
-                 */
-                show_error_dialog (NULL,
-                                   _("Error creating filesystem"),
-                                   data.error->message);
-                g_error_free (data.error);
+                if (format_data->error->domain == G_IO_ERROR &&
+                    format_data->error->code == G_IO_ERROR_CANCELLED) {
+                        gdu_format_progress_dialog_set_text (GDU_FORMAT_PROGRESS_DIALOG (dialog),
+                                                             _("Cancelling..."));
+
+                        /* cancel the job; no callback since op_filesystem_create will return an error */
+                        gdu_device_op_cancel_job (device,
+                                                  NULL,
+                                                  NULL);
+                        goto again;
+
+                } else {
+                        show_error_dialog (NULL,
+                                           _("Error formatting volume"),
+                                           format_data->error->message);
+                        g_error_free (format_data->error);
+                }
                 goto out;
         }
 
@@ -296,22 +499,22 @@ main (int argc, char *argv[])
         gdu_device_op_filesystem_mount (device_to_mount,
                                         NULL,
                                         fs_mount_cb,
-                                        &data);
+                                        format_data);
         g_main_loop_run (loop);
         gtk_widget_destroy (dialog);
         dialog = NULL;
-        if (data.error != NULL) {
+        if (format_data->error != NULL) {
                 show_error_dialog (NULL,
                                    _("Error mounting device"),
-                                   data.error->message);
-                g_error_free (data.error);
+                                   format_data->error->message);
+                g_error_free (format_data->error);
                 goto out;
         }
 
         /* open file manager */
-        launch_file_manager (data.mount_point);
+        launch_file_manager (format_data->mount_point);
 
-        g_free (data.mount_point);
+        g_free (format_data->mount_point);
 
         /* save passphrase in keyring if requested */
         if (passphrase != NULL && (save_passphrase_in_keyring || save_passphrase_in_keyring_session)) {
@@ -328,6 +531,21 @@ main (int argc, char *argv[])
         ret = 0;
 
  out:
+        if (toplevel != NULL)
+                g_object_unref (toplevel);
+        g_free (drive_name);
+        g_free (size_str);
+        g_free (format_desc);
+        g_free (formatting_desc);
+        if (gmount != NULL)
+                g_object_unref (gmount);
+        if (gvolume != NULL)
+                g_object_unref (gvolume);
+        g_list_foreach (gvolumes, (GFunc) g_object_unref, NULL);
+        if (gvolume_monitor != NULL)
+                g_object_unref (gvolume_monitor);
+        g_free (confirmation_secondary);
+        g_free (volume_name);
         g_free (passphrase);
         g_free (fs_type);
         g_free (fs_label);
@@ -340,9 +558,13 @@ main (int argc, char *argv[])
                 g_object_unref (volume);
         if (device != NULL)
                 g_object_unref (device);
+        if (device_to_unmount != NULL)
+                g_object_unref (device_to_unmount);
         if (device_to_mount != NULL)
                 g_object_unref (device_to_mount);
         if (pool != NULL)
                 g_object_unref (pool);
+        if (format_data != NULL)
+                g_free (format_data);
         return ret;
 }

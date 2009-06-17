@@ -150,6 +150,9 @@ gdu_format_progress_dialog_constructed (GObject *object)
 
 
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+        gtk_dialog_add_button (GTK_DIALOG (dialog),
+                               GTK_STOCK_CANCEL,
+                               GTK_RESPONSE_CANCEL);
 
         gtk_window_set_title (GTK_WINDOW (dialog), "");
         gtk_window_set_icon_name (GTK_WINDOW (dialog), "nautilus-gdu");

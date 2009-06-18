@@ -437,6 +437,70 @@ out:
 }
 
 static void
+on_check_clicked (GtkButton *button,
+                  gpointer   user_data)
+{
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        GduPresentable *presentable;
+        GduDevice *device;
+
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
+                goto out;
+        }
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: linux_md drive not active", __FUNCTION__);
+                goto out;
+        }
+
+        gdu_device_op_linux_md_check (device,
+                                      NULL,
+                                      NULL,
+                                      NULL); /* TODO: report result back? */
+
+ out:
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+static void
+on_repair_clicked (GtkButton *button,
+                   gpointer   user_data)
+{
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        GduPresentable *presentable;
+        GduDevice *device;
+        gchar *options[2];
+
+        options[0] = "repair";
+        options[1] = NULL;
+
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
+        if (!GDU_IS_LINUX_MD_DRIVE (presentable)) {
+                g_warning ("%s: is not an linux_md drive", __FUNCTION__);
+                goto out;
+        }
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                g_warning ("%s: linux_md drive not active", __FUNCTION__);
+                goto out;
+        }
+
+        gdu_device_op_linux_md_check (device,
+                                      options,
+                                      NULL,
+                                      NULL); /* TODO: report result back? */
+
+ out:
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+static void
 linux_md_buttons_update (GduSectionLinuxMdDrive *section)
 {
         GtkTreePath *path;
@@ -700,18 +764,18 @@ update (GduSectionLinuxMdDrive *section)
                         if (strcmp (sync_action, "reshape") == 0) {
                                 g_string_append (str, ", ");
                                 g_string_append (str, C_("RAID status", "Reshaping"));
-                        }
-                        else if (strcmp (sync_action, "resync") == 0) {
+                        } else if (strcmp (sync_action, "resync") == 0) {
                                 g_string_append (str, ", ");
                                 g_string_append (str, C_("RAID status", "Resyncing"));
-                        }
-                        else if (strcmp (sync_action, "repair") == 0) {
+                        } else if (strcmp (sync_action, "repair") == 0) {
                                 g_string_append (str, ", ");
                                 g_string_append (str, C_("RAID status", "Repairing"));
-                        }
-                        else if (strcmp (sync_action, "recover") == 0) {
+                        } else if (strcmp (sync_action, "recover") == 0) {
                                 g_string_append (str, ", ");
                                 g_string_append (str, C_("RAID status", "Recovering"));
+                        } else if (strcmp (sync_action, "check") == 0) {
+                                g_string_append (str, ", ");
+                                g_string_append (str, C_("RAID status", "Checking"));
                         }
 
                         sync_speed_str = gdu_util_get_speed_for_display (sync_speed);
@@ -1026,6 +1090,18 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         g_signal_connect (button, "clicked", G_CALLBACK (on_add_clicked), section);
         gtk_widget_set_tooltip_text (button, _("Adds a new component to the running RAID array. Use this "
                                                "when replacing a failed component or adding a hot spare."));
+
+        button = gtk_button_new_with_mnemonic (_("_Check"));
+        gtk_container_add (GTK_CONTAINER (button_box), button);
+        section->priv->add_button = button;
+        g_signal_connect (button, "clicked", G_CALLBACK (on_check_clicked), section);
+        gtk_widget_set_tooltip_text (button, _("Starts checking the RAID array for redundancy"));
+
+        button = gtk_button_new_with_mnemonic (_("_Repair"));
+        gtk_container_add (GTK_CONTAINER (button_box), button);
+        section->priv->add_button = button;
+        g_signal_connect (button, "clicked", G_CALLBACK (on_repair_clicked), section);
+        gtk_widget_set_tooltip_text (button, _("Starts repairing the RAID array"));
 
         /* add renderers for tree view */
         column = gtk_tree_view_column_new ();

@@ -96,6 +96,11 @@ typedef void (*GduDeviceLinuxMdStopCompletedFunc) (GduDevice    *device,
                                                    GError       *error,
                                                    gpointer      user_data);
 
+typedef void (*GduDeviceLinuxMdCheckCompletedFunc) (GduDevice    *device,
+                                                    guint         num_errors,
+                                                    GError       *error,
+                                                    gpointer      user_data);
+
 typedef void (*GduDeviceLinuxMdAddComponentCompletedFunc) (GduDevice    *device,
                                                            GError       *error,
                                                            gpointer      user_data);

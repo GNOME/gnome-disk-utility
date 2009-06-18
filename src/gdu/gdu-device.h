@@ -303,6 +303,13 @@ void gdu_device_op_linux_md_stop     (GduDevice                         *device,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+void gdu_device_op_linux_md_check    (GduDevice                           *device,
+                                      gchar                              **options,
+                                      GduDeviceLinuxMdCheckCompletedFunc   callback,
+                                      gpointer                             user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 void gdu_device_op_linux_md_add_component (GduDevice                                 *device,
                                            const char                                *component_objpath,
                                            GduDeviceLinuxMdAddComponentCompletedFunc  callback,

@@ -2199,6 +2199,49 @@ gdu_device_op_linux_md_stop (GduDevice                         *device,
 
 typedef struct {
         GduDevice *device;
+        GduDeviceLinuxMdCheckCompletedFunc callback;
+        gpointer user_data;
+} LinuxMdCheckData;
+
+static void
+op_check_linux_md_array_cb (DBusGProxy *proxy, guint64 num_errors, GError *error, gpointer user_data)
+{
+        LinuxMdCheckData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, num_errors, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_linux_md_check (GduDevice                           *device,
+                              gchar                              **options,
+                              GduDeviceLinuxMdCheckCompletedFunc   callback,
+                              gpointer                             user_data)
+{
+        gchar *null_options[16];
+        LinuxMdCheckData *data;
+
+        data = g_new0 (LinuxMdCheckData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        null_options[0] = NULL;
+        if (options == NULL)
+                options = null_options;
+
+        org_freedesktop_DeviceKit_Disks_Device_linux_md_check_async (device->priv->proxy,
+                                                                     (const char **) options,
+                                                                     op_check_linux_md_array_cb,
+                                                                     data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
         GduDeviceLinuxMdAddComponentCompletedFunc callback;
         gpointer user_data;
 } LinuxMdAddComponentData;

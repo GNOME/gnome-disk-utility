@@ -46,7 +46,7 @@
 #include "gdu-section-encrypted.h"
 #include "gdu-section-linux-md-drive.h"
 #include "gdu-section-no-media.h"
-#include "gdu-section-job.h"
+#include "bling-spinner.h"
 
 struct _GduShellPrivate
 {
@@ -63,6 +63,11 @@ struct _GduShellPrivate
         GtkWidget *details3_label;
 
         /* -------------------------------------------------------------------------------- */
+
+        GtkWidget *job_bar;
+        GtkWidget *job_description_label;
+        GtkWidget *job_progress_bar;
+        GtkWidget *job_spinner;
 
         GtkWidget *sections_vbox;
 
@@ -456,7 +461,7 @@ update_section (GtkWidget *section, gpointer callback_data)
 }
 
 static GList *
-compute_sections_to_show (GduShell *shell, gboolean showing_job)
+compute_sections_to_show (GduShell *shell)
 {
         GduDevice *device;
         GList *sections_to_show;
@@ -464,92 +469,100 @@ compute_sections_to_show (GduShell *shell, gboolean showing_job)
         sections_to_show = NULL;
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
 
-        /* compute sections we want to show */
-        if (showing_job) {
+        if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
                 sections_to_show = g_list_append (sections_to_show,
-                                                  (gpointer) GDU_TYPE_SECTION_JOB);
-
-        } else {
-                if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
-
-                        sections_to_show = g_list_append (sections_to_show,
-                                                          (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
+                                                  (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
 
 
-                } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
+        } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
 
-                        if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device)) {
+                if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device)) {
 
-                                sections_to_show = g_list_append (
-                                        sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
 
-                        } else {
+                } else {
 
-                                if (gdu_device_drive_ata_smart_get_is_available (device)) {
-                                                sections_to_show = g_list_append (sections_to_show,
-                                                                                  (gpointer) GDU_TYPE_SECTION_HEALTH);
-                                }
-
+                        if (gdu_device_drive_ata_smart_get_is_available (device)) {
+                                sections_to_show = g_list_append (sections_to_show,
+                                                                  (gpointer) GDU_TYPE_SECTION_HEALTH);
                         }
 
-                } else if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) && device != NULL) {
-
-                        if (gdu_device_is_partition (device))
-                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_PARTITION);
-
-                        if (gdu_presentable_is_recognized (shell->priv->presentable_now_showing)) {
-                                const char *usage;
-                                const char *type;
-
-                                usage = gdu_device_id_get_usage (device);
-                                type = gdu_device_id_get_type (device);
-
-                                if (usage != NULL && strcmp (usage, "filesystem") == 0) {
-                                        sections_to_show = g_list_append (
-                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_FILESYSTEM);
-                                } else if (usage != NULL && strcmp (usage, "crypto") == 0) {
-                                        sections_to_show = g_list_append (
-                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_ENCRYPTED);
-                                } else if (usage != NULL && strcmp (usage, "other") == 0 &&
-                                           type != NULL && strcmp (type, "swap") == 0) {
-                                        sections_to_show = g_list_append (
-                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_SWAPSPACE);
-                                }
-                        } else {
-                                GduPresentable *toplevel_presentable;
-                                GduDevice *toplevel_device;
-
-                                sections_to_show = g_list_append (
-                                        sections_to_show, (gpointer) GDU_TYPE_SECTION_UNRECOGNIZED);
-
-                                /* Also show a "Create partition table" section for a volume if the drive isn't partitioned */
-                                toplevel_presentable = gdu_presentable_get_toplevel (shell->priv->presentable_now_showing);
-                                if (toplevel_presentable != NULL) {
-                                        toplevel_device = gdu_presentable_get_device (toplevel_presentable);
-
-                                        if (toplevel_device != NULL) {
-                                                if (!gdu_device_is_partition_table (toplevel_device)) {
-                                                        sections_to_show = g_list_append (
-                                                                sections_to_show, (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
-                                                }
-                                                g_object_unref (toplevel_device);
-                                        }
-                                        g_object_unref (toplevel_presentable);
-                                }
-                        }
-
-                } else if (GDU_IS_VOLUME_HOLE (shell->priv->presentable_now_showing)) {
-
-                        sections_to_show = g_list_append (sections_to_show,
-                                                          (gpointer) GDU_TYPE_SECTION_UNALLOCATED);
                 }
+
+        } else if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) && device != NULL) {
+
+                if (gdu_device_is_partition (device))
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_PARTITION);
+
+                if (gdu_presentable_is_recognized (shell->priv->presentable_now_showing)) {
+                        const char *usage;
+                        const char *type;
+
+                        usage = gdu_device_id_get_usage (device);
+                        type = gdu_device_id_get_type (device);
+
+                        if (usage != NULL && strcmp (usage, "filesystem") == 0) {
+                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_FILESYSTEM);
+                        } else if (usage != NULL && strcmp (usage, "crypto") == 0) {
+                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_ENCRYPTED);
+                        } else if (usage != NULL && strcmp (usage, "other") == 0 &&
+                                   type != NULL && strcmp (type, "swap") == 0) {
+                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_SWAPSPACE);
+                        }
+                } else {
+                        GduPresentable *toplevel_presentable;
+                        GduDevice *toplevel_device;
+
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_UNRECOGNIZED);
+
+                        /* Also show a "Create partition table" section for a volume if the drive isn't partitioned */
+                        toplevel_presentable = gdu_presentable_get_toplevel (shell->priv->presentable_now_showing);
+                        if (toplevel_presentable != NULL) {
+                                toplevel_device = gdu_presentable_get_device (toplevel_presentable);
+
+                                if (toplevel_device != NULL) {
+                                        if (!gdu_device_is_partition_table (toplevel_device)) {
+                                                sections_to_show = g_list_append (
+                                                                                  sections_to_show, (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
+                                        }
+                                        g_object_unref (toplevel_device);
+                                }
+                                g_object_unref (toplevel_presentable);
+                        }
+                }
+
+        } else if (GDU_IS_VOLUME_HOLE (shell->priv->presentable_now_showing)) {
+
+                sections_to_show = g_list_append (sections_to_show,
+                                                  (gpointer) GDU_TYPE_SECTION_UNALLOCATED);
         }
+
 
         if (device != NULL)
                 g_object_unref (device);
 
         return sections_to_show;
+}
+
+static void
+on_job_bar_response (GtkInfoBar *info_bar,
+                     gint        response_id,
+                     gpointer    user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (response_id == GTK_RESPONSE_CANCEL) {
+                if (shell->priv->presentable_now_showing != NULL) {
+                        GduDevice *device;
+
+                        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+                        if (device != NULL) {
+                                gdu_device_op_cancel_job (device, NULL, NULL);
+                                g_object_unref (device);
+                        }
+                }
+        }
 }
 
 /* called when a new presentable is selected
@@ -574,8 +587,6 @@ gdu_shell_update (GduShell *shell)
         gboolean can_fsck;
         gboolean can_erase;
         static GduPresentable *last_presentable = NULL;
-        static gboolean last_showing_job = FALSE;
-        gboolean showing_job;
         gboolean reset_sections;
         GList *sections_to_show;
         uid_t unlocked_by_uid;
@@ -678,17 +689,45 @@ gdu_shell_update (GduShell *shell)
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "stop"), can_stop);
         gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "erase"), can_erase);
 
-        showing_job = job_in_progress;
-
-        reset_sections =
-                (shell->priv->presentable_now_showing != last_presentable) ||
-                (showing_job != last_showing_job);
+        reset_sections = (shell->priv->presentable_now_showing != last_presentable);
 
         last_presentable = shell->priv->presentable_now_showing;
-        last_showing_job = showing_job;
 
+        sections_to_show = compute_sections_to_show (shell);
 
-        sections_to_show = compute_sections_to_show (shell, showing_job);
+        if (job_in_progress) {
+                gchar *desc;
+                gchar *s;
+                gdouble percentage;
+
+                desc = gdu_get_job_description (gdu_device_job_get_id (device));
+
+                s = g_strdup_printf ("<small><b>%s</b></small>", desc);
+                gtk_label_set_markup (GTK_LABEL (shell->priv->job_description_label), s);
+                g_free (s);
+                g_free (desc);
+
+                gtk_widget_set_no_show_all (shell->priv->job_bar, FALSE);
+                gtk_widget_show_all (shell->priv->job_bar);
+
+                gtk_info_bar_set_response_sensitive (GTK_INFO_BAR (shell->priv->job_bar),
+                                                     GTK_RESPONSE_CANCEL,
+                                                     gdu_device_job_is_cancellable (device));
+
+                percentage = gdu_device_job_get_percentage (device);
+                if (percentage >= 0) {
+                        gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (shell->priv->job_progress_bar),
+                                                       percentage / 100.0);
+                        gtk_widget_hide (shell->priv->job_spinner);
+                } else {
+                        bling_spinner_start (BLING_SPINNER (shell->priv->job_spinner));
+                        gtk_widget_hide (shell->priv->job_progress_bar);
+                }
+
+        } else {
+                bling_spinner_stop (BLING_SPINNER (shell->priv->job_spinner));
+                gtk_widget_hide_all (shell->priv->job_bar);
+        }
 
         /* if this differs from what we currently show, prompt a reset */
         if (!reset_sections) {
@@ -1825,6 +1864,7 @@ static void
 create_window (GduShell *shell)
 {
         GtkWidget *vbox;
+        GtkWidget *vbox1;
         GtkWidget *vbox2;
         GtkWidget *menubar;
         GtkWidget *toolbar;
@@ -1832,6 +1872,13 @@ create_window (GduShell *shell)
         GtkWidget *hpane;
         GtkWidget *treeview_scrolled_window;
         GtkTreeSelection *select;
+        GtkWidget *content_area;
+        GtkWidget *button;
+        GtkWidget *label;
+        GtkWidget *align;
+        GtkWidget *vbox3;
+        GtkWidget *hbox;
+        GtkWidget *image;
 
         shell->priv->pool = gdu_pool_new ();
 
@@ -1862,15 +1909,48 @@ create_window (GduShell *shell)
         shell->priv->treeview = gdu_device_tree_new (shell->priv->pool);
         gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
 
-        vbox2 = gtk_vbox_new (FALSE, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
+        /* --- */
+
+        vbox1 = gtk_vbox_new (FALSE, 0);
 
         /* --- */
-        GtkWidget *label;
-        GtkWidget *align;
-        GtkWidget *vbox3;
-        GtkWidget *hbox;
-        GtkWidget *image;
+
+        shell->priv->job_bar = gtk_info_bar_new ();
+        button = gtk_button_new ();
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label),
+                                            _("<small>_Cancel</small>"));
+        gtk_container_add (GTK_CONTAINER (button), label);
+        gtk_info_bar_add_action_widget (GTK_INFO_BAR (shell->priv->job_bar),
+                                        button,
+                                        GTK_RESPONSE_CANCEL);
+        g_signal_connect (shell->priv->job_bar,
+                          "response",
+                          G_CALLBACK (on_job_bar_response),
+                          shell);
+        gtk_widget_set_no_show_all (shell->priv->job_bar, TRUE);
+        gtk_info_bar_set_message_type (GTK_INFO_BAR (shell->priv->job_bar),
+                                       GTK_MESSAGE_INFO);
+        gtk_box_pack_start (GTK_BOX (vbox1), shell->priv->job_bar, FALSE, FALSE, 0);
+
+        content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (shell->priv->job_bar));
+        shell->priv->job_description_label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (shell->priv->job_description_label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_description_label, FALSE, FALSE, 0);
+        shell->priv->job_progress_bar = gtk_progress_bar_new ();
+        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_progress_bar, FALSE, FALSE, 0);
+
+        shell->priv->job_spinner = bling_spinner_new ();
+        gtk_widget_set_size_request (shell->priv->job_spinner, 16, 16);
+        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_spinner, FALSE, FALSE, 0);
+
+        /* --- */
+
+        vbox2 = gtk_vbox_new (FALSE, 0);
+        gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
+        gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
+
+        /* --- */
 
         hbox = gtk_hbox_new (FALSE, 12);
         gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, TRUE, 0);
@@ -1919,11 +1999,10 @@ create_window (GduShell *shell)
         gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 8);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, TRUE, TRUE, 0);
 
-
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();
         gtk_paned_add1 (GTK_PANED (hpane), treeview_scrolled_window);
-        gtk_paned_add2 (GTK_PANED (hpane), vbox2);
+        gtk_paned_add2 (GTK_PANED (hpane), vbox1);
         //gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);

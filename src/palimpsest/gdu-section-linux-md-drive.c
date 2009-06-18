@@ -1091,7 +1091,7 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         gtk_widget_set_tooltip_text (button, _("Adds a new component to the running RAID array. Use this "
                                                "when replacing a failed component or adding a hot spare."));
 
-        button = gtk_button_new_with_mnemonic (_("_Check"));
+        button = gtk_button_new_with_mnemonic (_("Chec_k"));
         gtk_container_add (GTK_CONTAINER (button_box), button);
         section->priv->add_button = button;
         g_signal_connect (button, "clicked", G_CALLBACK (on_check_clicked), section);

@@ -28,7 +28,6 @@
 #include <glib-object.h>
 #include <string.h>
 #include <glib/gi18n.h>
-#include <libsexy/sexy.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -421,7 +420,7 @@ details_update (GduShell *shell)
                         detail_str = "";
 
                 s = g_strdup_printf ("<span foreground='%s'>%s</span>", detail_color, detail_str);
-                sexy_url_label_set_markup (SEXY_URL_LABEL (label), s);
+                gtk_label_set_markup (GTK_LABEL (label), s);
                 g_free (s);
         }
 
@@ -1688,18 +1687,6 @@ create_ui_manager (GduShell *shell)
 }
 
 static void
-url_activated (SexyUrlLabel *url_label,
-               const char   *url,
-               gpointer      user_data)
-{
-        char *s;
-        /* TODO: startup notification, determine what file manager to use etc. */
-        s = g_strdup_printf ("nautilus \"%s\"", url);
-        g_spawn_command_line_async (s, NULL);
-        g_free (s);
-}
-
-static void
 fix_focus_cb (GtkDialog *dialog, gpointer data)
 {
         GtkWidget *button;
@@ -1969,29 +1956,25 @@ create_window (GduShell *shell)
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->name_label = label;
 
-        label = sexy_url_label_new ();
+        label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details0_label = label;
 
-        label = sexy_url_label_new ();
+        label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details1_label = label;
 
-        label = sexy_url_label_new ();
+        label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details2_label = label;
 
-        label = sexy_url_label_new ();
+        label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
         shell->priv->details3_label = label;
-
-        g_signal_connect (shell->priv->details1_label, "url-activated", (GCallback) url_activated, shell);
-        g_signal_connect (shell->priv->details2_label, "url-activated", (GCallback) url_activated, shell);
-        g_signal_connect (shell->priv->details3_label, "url-activated", (GCallback) url_activated, shell);
 
         /* --- */
 

@@ -798,8 +798,7 @@ static void
 presentable_job_changed (GduPresentable *presentable, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
-        if (presentable == shell->priv->presentable_now_showing)
-                gdu_shell_update (shell);
+        gdu_shell_update (shell);
 }
 
 static void

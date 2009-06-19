@@ -1,4 +1,210 @@
 ----------------------
+gnome-disk-utility 0.4
+----------------------
+
+gnome-disk-utility provides libraries and applications for dealing
+with storage devices.
+
+NOTE NOTE NOTE: This is an unstable release of gnome-disk-utility, all
+                API is subject to change.
+
+David Zeuthen (22):
+      Rip out PolicyKit support and bump version after release
+      Check for DeviceKit-disks pkg-config file so the build can fail earlier
+      Add support for new DriveDetach() method and :drive-can-detach property
+      Expose a way to detach devices
+      Catch up with latest DeviceKit-disks API where :drive-requires-eject is go
+      Bug 584962 – palimpsest SIGTRAPs on unknown flag
+      Bug 581179 – Don't expose branding to the user
+      Bug 582881 – Typos in original strings
+      Bug 585332 – Wrong spelling "The mininum size of the element" in original 
+      Bug 585384 – "Blank" - adjective or verb
+      Bug 585388 – Translation comment needed "Operations should go here"
+      Bug 585392 – Spelling error "incomptible"
+      Bug 581841 – String typos
+      Use themed icons for Zip and Jaz drives
+      Rework formatting tool so it's simpler and easier to use
+      Use new API to add UI for checking/repairing Linux MD RAID arrays
+      Use GtkInfoBar to show job progress
+      Port from SexyUrlLabel to GtkLabel
+      Fix a bug where GduLinuxMdDrive didn't emit ::job-changed signals
+      Remove gdu-section-job.[ch] from POTFILES.in since they no longer exist
+      Use AM_SILENT_RULES if available
+      Update NEWS for release
+
+Matthias Clasen (1):
+      Don't show markup in the UI
+
+Translations:
+
+A S Alam (1):
+      Adding Punjabi Translation for Satluj Team
+
+António Lima (1):
+      Updated Portuguese translation
+
+Aron Xu (1):
+      Added zh_CN to LINGUAS
+
+Gabor Kelemen (1):
+      Hungarian translation added
+
+Jorge Gonzalez (4):
+      Updated Spanish translation by Benjamin Valero
+      Updated Spanish translation
+      Added es to DOC_LINGUAS
+      Added Spanish translation
+
+Kjartan Maraas (2):
+      Updated Norwegian bokmål translation.
+      Add Norwegian bokmål
+
+Leonid Kanter (2):
+      Updated Russian translation
+      Updated Russian translation
+
+Mario Blättermann (2):
+      Updated German translation
+      Updated German translation
+
+Mark Krapivner (2):
+      Add Hebrew translation
+      Updated Hebrew translation
+
+Maxim V. Dziumanenko (2):
+      Added Ukrainian translation
+      Updated Ukrainian translation
+
+Piotr Drąg (2):
+      Added Polish translation
+      Added Polish translation
+
+Simos Xenitellis (1):
+      Added el to LINGUAS
+
+Tomasz Dominikowski (2):
+      Added pl
+      Added pl
+
+Wei Mingzhi (1):
+      Updated Simplified Chinese translation.
+
+Βασίλης Κοντογιάνης (1):
+      Added Greek translation for UI
+
+David Zeuthen
+June 19, 2009
+
+----------------------
+gnome-disk-utility 0.3
+----------------------
+
+gnome-disk-utility provides libraries and applications for dealing
+with storage devices.
+
+NOTE NOTE NOTE: This is an unstable release of gnome-disk-utility, all
+                API is subject to change.
+
+Claude Paroz (1):
+      Removed non-existent files from POTFILES.in
+
+Daniel Nylander (2):
+      Added sv translation
+      Added sv translation
+
+David Zeuthen (58):
+      don't use g_free on a GIcon, use g_object_unref instead
+      update to DeviceKit-disks HEAD that only exports a single Linux MD action
+      handle inactive and partitioned md devices
+      add support for device-is-media-change-detection-polling property
+      update MAINTAINERS file
+      port to new DeviceKit-disks that uses libatasmart
+      fix up docs
+      show "Passphrase can't be empty" hint if the passphrase is empty
+      update HACKING file
+      more i18n fixups
+      add some notes about terminology
+      use the term "Name" instead of "Label" when creating a partition
+      rework terminology for filesystem labels / partition labels
+      fix compiler warnings introduced by the last set of patches
+      add some experimental code for grid-based layout
+      fix some criticals where we tried to access non-existant widgets
+      rework partition table handling
+      start working on a details view for the grid playground
+      nuke nagging dialog
+      return non-zero exit code if volume/drive to show does not exist
+      fix volume hole detection
+      forgot to add gdu-grid-details.[ch]
+      bug 576435 – confusing luks labeling
+      grid: add a spinner
+      update for daemon ABI changes for device-mount-path -> device-mount-paths
+      add gdu_device_get_dev() to get the dev_t for a device
+      remove gdu_device_is_busy() since device-is-busy was removed from the daem
+      update to trimmed set of errors returned by the daemon
+      update to latest DKD API where erase= and tasks within jobs has been remov
+      grid: draw free/unrecognized space in a slightly darker color
+      update to latest daemon API for some ATA SMART changes
+      all D-Bus object paths are now prefixed with /org/freedesktop/DeviceKit/Di
+      fix volume hole detection, logical partitions start at five, not four
+      mark grid stuff for translation to pass 'make distcheck'
+      post-release version bump
+      for now, prepend the D-Bus error name to the error string from the daemon
+      allow sections to expand, otherwise the treeview for RAID is never shown
+      setup textdomain so translations work
+      grid: misc changes
+      add notification daemon
+      Merge branch 'master' of ssh://git.gnome.org/git/gnome-disk-utility
+      show an icon in the notification area if one or more disks are failing
+      only spew debug if GDU_DEBUG is set to 1
+      clean up some more debug spew
+      export :device-presentation-hide property in the API
+      export new property device-detection-time
+      use libnotify to show a notification when a disk is failing
+      work around notification-daemon brokenness
+      nuke the "It's now safe to remove" dialog after four seconds
+      allow passing options to gdu_device_op_filesystem_mount()
+      Bug 579997 – don't show notifications before the panel is there
+      add support for ext2
+      Fix up Nautilus extension
+      Rework/refactor formatting tool
+      Fix up POTFILES.in
+      Update commit message guidelines to use a capital letter
+      Fix distcheck
+      Export :device-media-detection-time property in the API
+
+Jorge Gonzalez (2):
+      Added es to LINGUAS
+      Added initial Spanish translation by Benjamin Valero
+
+Mario Blättermann (2):
+      Added German doc translation
+      Added German translation
+
+Matthias Clasen (19):
+      HIG fixes
+      trivial coding style fix
+      avoid dialog resizing
+      don't allow empty passphrases
+      improved spacing for sections
+      string/i18n fixups
+      fix the initial window size
+      sync GduError to DevkitDisksError
+      don't show dbus error names
+      add a missing 'else'
+      improve the error dialog
+      toolbar label improvements
+      don't show tasks if the number of tasks is undefined or less than 2
+      unique application support
+      add cmdline options to specify a device
+      bug 576431 – better warning
+      Add a nautilus extension and a formatting tool
+      Add a forgotten file
+      dist TODO
+
+David Zeuthen
+May 1, 2009
+
+----------------------
 gnome-disk-utility 0.2
 ----------------------
 

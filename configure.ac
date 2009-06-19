@@ -23,6 +23,8 @@ AC_ISC_POSIX
 AC_HEADER_STDC
 AC_PROG_LIBTOOL
 
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
 #### gcc warning flags
 
 AC_ARG_ENABLE(ansi,             [  --enable-ansi           enable -ansi -pedantic gcc flags],enable_ansi=$enableval,enable_ansi=no)

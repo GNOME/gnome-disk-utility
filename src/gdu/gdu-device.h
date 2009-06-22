@@ -138,6 +138,7 @@ const char *gdu_device_drive_get_media (GduDevice *device);
 gboolean gdu_device_drive_get_is_media_ejectable (GduDevice *device);
 gboolean gdu_device_drive_get_requires_eject (GduDevice *device);
 gboolean gdu_device_drive_get_can_detach (GduDevice *device);
+gboolean gdu_device_drive_get_can_spindown (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);

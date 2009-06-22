@@ -151,67 +151,10 @@ open_format_utility (NautilusMenuItem *item)
 }
 
 static void
-unmount_done (GObject      *object,
-              GAsyncResult *res,
-              gpointer      user_data)
-{
-        NautilusMenuItem *item = NAUTILUS_MENU_ITEM (user_data);
-        GError *error;
-
-        error = NULL;
-        if (g_mount_unmount_finish (G_MOUNT (object), res, &error)) {
-                open_format_utility (item);
-        } else if (error->code == G_IO_ERROR_FAILED_HANDLED) {
-                /* do nothing, error has already been presented to the user */
-                g_error_free (error);
-        } else {
-                GtkWidget *dialog;
-                gchar *name;
-                gchar *p;
-                gchar *text;
-
-                name = g_mount_get_name (G_MOUNT (object));
-                dialog = gtk_message_dialog_new (NULL, 0,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_OK,
-                                                 _("Could not unmount '%s'"), name);
-                if (g_str_has_prefix (error->message, "org.freedesktop.DeviceKit")) {
-                        p = strchr (error->message, ':');
-                        if (p != NULL)
-                                text = p + 1;
-                        else
-                                text = error->message;
-                } else {
-                        text = error->message;
-                }
-
-                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                          "%s", text);
-                gtk_dialog_run (GTK_DIALOG (dialog));
-                gtk_widget_destroy (dialog);
-                g_error_free (error);
-                g_free (name);
-        }
-
-        g_object_unref (item);
-}
-
-static void
 format_callback (NautilusMenuItem *item,
                  gpointer user_data)
 {
-        NautilusFileInfo *nautilus_file;
-        GMount *mount;
-
-        /* Unmount the device if it's mounted */
-        nautilus_file = g_object_get_data (G_OBJECT (item), "nautilus-file");
-        mount = nautilus_file_info_get_mount (nautilus_file);
-        if (mount != NULL) {
-                g_mount_unmount (mount, G_MOUNT_UNMOUNT_NONE, NULL, unmount_done, g_object_ref (item));
-                g_object_unref (mount);
-        } else {
-                open_format_utility (g_object_ref (item));
-        }
+        open_format_utility (g_object_ref (item));
 }
 
 static GList *

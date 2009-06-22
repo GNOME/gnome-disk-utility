@@ -74,6 +74,7 @@ G_DEFINE_TYPE_WITH_CODE (GduLinuxMdDrive, gdu_linux_md_drive, GDU_TYPE_DRIVE,
 static void device_added (GduPool *pool, GduDevice *device, gpointer user_data);
 static void device_removed (GduPool *pool, GduDevice *device, gpointer user_data);
 static void device_changed (GduPool *pool, GduDevice *device, gpointer user_data);
+static void device_job_changed (GduPool *pool, GduDevice *device, gpointer user_data);
 
 static gboolean    gdu_linux_md_drive_is_active             (GduDrive               *drive);
 static gboolean    gdu_linux_md_drive_is_activatable        (GduDrive               *drive);
@@ -99,6 +100,7 @@ gdu_linux_md_drive_finalize (GObject *object)
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_added, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_removed, drive);
                 g_signal_handlers_disconnect_by_func (drive->priv->pool, device_changed, drive);
+                g_signal_handlers_disconnect_by_func (drive->priv->pool, device_job_changed, drive);
         }
 
         if (drive->priv->pool != NULL)
@@ -179,6 +181,14 @@ emit_changed (GduLinuxMdDrive *drive)
         //g_debug ("emitting changed for uuid '%s'", drive->priv->uuid);
         g_signal_emit_by_name (drive, "changed");
         g_signal_emit_by_name (drive->priv->pool, "presentable-changed", drive);
+}
+
+static void
+emit_job_changed (GduLinuxMdDrive *drive)
+{
+        //g_debug ("emitting job-changed for uuid '%s'", drive->priv->uuid);
+        g_signal_emit_by_name (drive, "job-changed");
+        g_signal_emit_by_name (drive->priv->pool, "presentable-job-changed", drive);
 }
 
 static void
@@ -273,6 +283,43 @@ device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
         }
 }
 
+static void
+device_job_changed (GduPool *pool, GduDevice *device, gpointer user_data)
+{
+        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (user_data);
+        gboolean has_device;
+        gboolean emit_signal;
+
+        //g_debug ("MD: in device_job_changed %s", gdu_device_get_object_path (device));
+
+        emit_signal = TRUE;
+
+        has_device = g_list_find (drive->priv->slaves, device) != NULL;
+
+        if (has_device) {
+                /* handle when device is removed from the array */
+                emit_signal = TRUE;
+                if (!gdu_device_is_linux_md_component (device) ||
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) != 0) {
+                        drive->priv->slaves = g_list_remove (drive->priv->slaves, device);
+                        g_object_unref (device);
+                }
+        } else {
+                /* handle when device is joining the array */
+                if (gdu_device_is_linux_md_component (device) &&
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+                        emit_signal = TRUE;
+                        drive->priv->slaves = g_list_prepend (drive->priv->slaves, g_object_ref (device));
+                }
+        }
+
+
+
+        if (device == drive->priv->device || emit_signal) {
+                emit_job_changed (drive);
+        }
+}
+
 /**
  * _gdu_linux_md_drive_new:
  * @pool: A #GduPool.
@@ -299,6 +346,7 @@ _gdu_linux_md_drive_new (GduPool      *pool,
                 g_signal_connect (drive->priv->pool, "device-added", G_CALLBACK (device_added), drive);
                 g_signal_connect (drive->priv->pool, "device-removed", G_CALLBACK (device_removed), drive);
                 g_signal_connect (drive->priv->pool, "device-changed", G_CALLBACK (device_changed), drive);
+                g_signal_connect (drive->priv->pool, "device-job-changed", G_CALLBACK (device_job_changed), drive);
                 prime_devices (drive);
         } else {
                 drive->priv->id = g_strdup_printf ("linux_md_%s", device_file);

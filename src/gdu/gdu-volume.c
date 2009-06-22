@@ -426,6 +426,10 @@ gdu_volume_get_icon (GduPresentable *presentable)
                         name = "media-flash-sd";
                 } else if (strcmp (drive_media, "floppy") == 0) {
                         name = "media-floppy";
+                } else if (strcmp (drive_media, "floppy_zip") == 0) {
+                        name = "media-floppy-zip";
+                } else if (strcmp (drive_media, "floppy_jaz") == 0) {
+                        name = "media-floppy-jaz";
                 } else if (g_str_has_prefix (drive_media, "flash")) {
                         name = "media-flash";
                 } else if (g_str_has_prefix (drive_media, "optical")) {

@@ -315,6 +315,10 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Stopping RAID Array"));
         } else if (strcmp (job_id, "LinuxMdStart") == 0) {
                 s = g_strdup (_("Starting RAID Array"));
+        } else if (strcmp (job_id, "LinuxMdCheck") == 0) {
+                s = g_strdup (_("Checking RAID Array"));
+        } else if (strcmp (job_id, "LinuxMdRepair") == 0) {
+                s = g_strdup (_("Repairing RAID Array"));
         } else if (strcmp (job_id, "DriveAtaSmartInitiateSelftest") == 0) {
                 s = g_strdup (_("Running S.M.A.R.T. Self Test"));
         } else if (strcmp (job_id, "DriveEject") == 0) {

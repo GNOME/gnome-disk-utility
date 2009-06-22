@@ -1,7 +1,11 @@
 
+NULL =
+
 bin_PROGRAMS = palimpsest
 
 palimpsest_SOURCES = 									\
+	bling-color.h				bling-color.c				\
+	bling-spinner.h				bling-spinner.c				\
 						gdu-main.c				\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
@@ -15,8 +19,8 @@ palimpsest_SOURCES = 									\
 	gdu-section-encrypted.h			gdu-section-encrypted.c			\
 	gdu-section-linux-md-drive.h		gdu-section-linux-md-drive.c		\
 	gdu-section-no-media.h			gdu-section-no-media.c			\
-	gdu-section-job.h			gdu-section-job.c			\
-	gdu-tree.h				gdu-tree.c
+	gdu-tree.h				gdu-tree.c				\
+	$(NULL)
 
 palimpsest_CPPFLAGS = 					\
 	-I$(top_srcdir)/src/				\
@@ -36,7 +40,6 @@ palimpsest_CFLAGS = 					\
 	$(DBUS_GLIB_CFLAGS)				\
 	$(GNOME_KEYRING_CFLAGS)				\
 	$(GTK2_CFLAGS)					\
-	$(LIBSEXY_CFLAGS)				\
 	$(UNIQUE_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	$(AM_CFLAGS)
@@ -51,7 +54,6 @@ palimpsest_LDADD = 					\
 	$(DBUS_GLIB_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
 	$(GTK2_LIBS)					\
-	$(LIBSEXY_LIBS)					\
 	$(UNIQUE_LIBS)					\
 	$(INTLLIBS)					\
 	$(top_builddir)/src/gdu/libgdu.la		\

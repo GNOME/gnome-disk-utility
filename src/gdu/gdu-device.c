@@ -118,6 +118,7 @@ typedef struct
         char    *drive_media;
         gboolean drive_is_media_ejectable;
         gboolean drive_can_detach;
+        gboolean drive_can_spindown;
 
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
@@ -315,6 +316,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_is_media_ejectable = g_value_get_boolean (value);
         else if (strcmp (key, "drive-can-detach") == 0)
                 props->drive_can_detach = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-can-spindown") == 0)
+                props->drive_can_spindown = g_value_get_boolean (value);
 
         else if (strcmp (key, "optical-disc-is-blank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -1104,6 +1107,12 @@ gboolean
 gdu_device_drive_get_can_detach (GduDevice *device)
 {
         return device->priv->props->drive_can_detach;
+}
+
+gboolean
+gdu_device_drive_get_can_spindown (GduDevice *device)
+{
+        return device->priv->props->drive_can_spindown;
 }
 
 gboolean
@@ -2193,6 +2202,49 @@ gdu_device_op_linux_md_stop (GduDevice                         *device,
                                                                     (const char **) options,
                                                                     op_stop_linux_md_array_cb,
                                                                     data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceLinuxMdCheckCompletedFunc callback;
+        gpointer user_data;
+} LinuxMdCheckData;
+
+static void
+op_check_linux_md_array_cb (DBusGProxy *proxy, guint64 num_errors, GError *error, gpointer user_data)
+{
+        LinuxMdCheckData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, num_errors, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_linux_md_check (GduDevice                           *device,
+                              gchar                              **options,
+                              GduDeviceLinuxMdCheckCompletedFunc   callback,
+                              gpointer                             user_data)
+{
+        gchar *null_options[16];
+        LinuxMdCheckData *data;
+
+        data = g_new0 (LinuxMdCheckData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        null_options[0] = NULL;
+        if (options == NULL)
+                options = null_options;
+
+        org_freedesktop_DeviceKit_Disks_Device_linux_md_check_async (device->priv->proxy,
+                                                                     (const char **) options,
+                                                                     op_check_linux_md_array_cb,
+                                                                     data);
 }
 
 /* -------------------------------------------------------------------------------- */

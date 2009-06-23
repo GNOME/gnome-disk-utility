@@ -32,6 +32,7 @@
 
 G_BEGIN_DECLS
 
+typedef struct GduGraph                    GduGraph;
 typedef struct GduTimeLabel                GduTimeLabel;
 typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
 typedef struct GduAtaSmartAttributeDialog  GduAtaSmartAttributeDialog;

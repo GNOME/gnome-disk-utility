@@ -23,6 +23,7 @@
 #include <glib/gi18n.h>
 
 #include "gdu-time-label.h"
+#include "gdu-graph.h"
 #include "gdu-ata-smart-dialog.h"
 #include "gdu-ata-smart-attribute-dialog.h"
 
@@ -43,6 +44,10 @@ struct GduAtaSmartDialogPrivate
 
         GtkWidget *tree_view;
         GtkListStore *attr_list_store;
+
+        GtkWidget *graph;
+
+        GList *historical_data;
 };
 
 enum
@@ -75,6 +80,10 @@ G_DEFINE_TYPE (GduAtaSmartDialog, gdu_ata_smart_dialog, GTK_TYPE_DIALOG)
 static void update_dialog (GduAtaSmartDialog *dialog);
 static void device_changed (GduDevice *device, gpointer user_data);
 
+static gchar *pretty_to_string (guint64                  pretty_value,
+                                GduAtaSmartAttributeUnit pretty_unit,
+                                gboolean                 long_string);
+
 static void
 gdu_ata_smart_dialog_finalize (GObject *object)
 {
@@ -83,6 +92,11 @@ gdu_ata_smart_dialog_finalize (GObject *object)
         g_signal_handler_disconnect (dialog->priv->device, dialog->priv->device_changed_signal_handler_id);
         g_object_unref (dialog->priv->device);
         g_object_unref (dialog->priv->attr_list_store);
+
+        if (dialog->priv->historical_data != NULL) {
+                g_list_foreach (dialog->priv->historical_data, (GFunc) g_object_unref, NULL);
+                g_list_free (dialog->priv->historical_data);
+        }
 
         if (G_OBJECT_CLASS (gdu_ata_smart_dialog_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_ata_smart_dialog_parent_class)->finalize (object);
@@ -125,43 +139,223 @@ gdu_ata_smart_dialog_set_property (GObject      *object,
 }
 
 static void
-on_bar_clicked (GtkButton *button,
-                gpointer   user_data)
+selection_changed (GtkTreeSelection *tree_selection,
+                   gpointer          user_data)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
-        GtkWidget *attr_dialog;
-        GtkTreeSelection *tree_selection;
-        GtkTreeModel *tree_model;
         GtkTreeIter iter;
-        gchar *selected_attr_name;
+        gchar *attr_name;
+        guint n;
 
-        selected_attr_name = NULL;
-        tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->tree_view));
-        if (gtk_tree_selection_get_selected (tree_selection, &tree_model, &iter)) {
-                gtk_tree_model_get (tree_model, &iter,
-                                    ATTR_NAME_COLUMN,
-                                    &selected_attr_name,
-                                    -1);
-        }
+        attr_name = NULL;
 
-        if (selected_attr_name == NULL) {
-                g_warning ("No attribute selected");
+        if (dialog->priv->historical_data == NULL)
                 goto out;
+
+        if (!gtk_tree_selection_get_selected (tree_selection,
+                                              NULL,
+                                              &iter))
+                goto out;
+
+        gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->attr_list_store),
+                            &iter,
+                            ATTR_NAME_COLUMN,
+                            &attr_name,
+                            -1);
+
+        g_debug ("selected %s", attr_name);
+
+        GArray *cur_points;
+        GArray *raw_points;
+        GArray *band_points;
+        GList *l;
+        guint64 now;
+        cur_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
+        raw_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
+        band_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
+
+        guint64 raw_min;
+        guint64 raw_max;
+        GduAtaSmartAttributeUnit raw_unit;
+        raw_min = G_MAXUINT64;
+        raw_max = 0;
+        for (l = dialog->priv->historical_data; l != NULL; l = l->next) {
+                GduAtaSmartHistoricalData *data = GDU_ATA_SMART_HISTORICAL_DATA (l->data);
+                GduAtaSmartAttribute *attr;
+
+                attr = gdu_ata_smart_historical_data_get_attribute (data, attr_name);
+                if (attr != NULL) {
+                        guint64 raw;
+
+                        raw = gdu_ata_smart_attribute_get_pretty_value (attr);
+                        raw_unit = gdu_ata_smart_attribute_get_pretty_unit (attr);
+                        if (raw < raw_min)
+                                raw_min = raw;
+                        if (raw > raw_max)
+                                raw_max = raw;
+                        g_object_unref (attr);
+                }
         }
 
-        /* Make the attributes dialog transient for the same window as
-         * this dialog - we do this so the user can open several attr
-         * windows and keep them visible while allowing to close this
-         * window (this is useful when monitoring a system)
-         */
-        attr_dialog = gdu_ata_smart_attribute_dialog_new (GTK_WINDOW (dialog), //NULL,//TODO:gtk_window_get_transient_for (GTK_WINDOW (dialog)),
-                                                          dialog->priv->device,
-                                                          selected_attr_name);
+        guint64 time_factor;
+        switch (raw_unit) {
+        case GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS:
+                if (raw_min > 1000 * 60 * 60 * 24) {
+                        time_factor = 1000 * 60 * 60 * 24;
+                } else if (raw_min > 1000 * 60 * 60) {
+                        time_factor = 1000 * 60 * 60;
+                } else if (raw_min > 1000 * 60) {
+                        time_factor = 1000 * 60;
+                } else if (raw_min > 1000) {
+                        time_factor = 1000;
+                } else {
+                        time_factor = 1;
+                }
 
-        gtk_widget_show_all (attr_dialog);
+                if (raw_max - raw_min < 5 * time_factor) {
+                        raw_min -= (raw_min % time_factor);
+                        raw_max = raw_min + 5 * time_factor;
+                }
+                break;
+        case GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN:
+                if (raw_max - raw_min < 5000) {
+                        raw_min -= (raw_min % 1000);
+                        raw_max = raw_min + 5000;
+                }
+                break;
+        case GDU_ATA_SMART_ATTRIBUTE_UNIT_SECTORS:
+        case GDU_ATA_SMART_ATTRIBUTE_UNIT_NONE:
+        case GDU_ATA_SMART_ATTRIBUTE_UNIT_UNKNOWN:
+                if (raw_min - raw_max < 5) {
+                        raw_max = raw_min + 5;
+                }
+                break;
+        }
+
+
+        gchar **y_axis_left;
+        y_axis_left = g_new0 (gchar *, 6);
+        for (n = 0; n < 5; n++) {
+                guint64 raw_marker_value;
+                gchar *s;
+
+                raw_marker_value = raw_min + n * ((gdouble) (raw_max - raw_min)) / (5 - 1);
+
+                s = pretty_to_string (raw_marker_value, raw_unit, FALSE);
+                y_axis_left[n] = s;
+        }
+        y_axis_left[n] = NULL;
+        gdu_graph_set_y_markers_left (GDU_GRAPH (dialog->priv->graph), (const gchar* const *) y_axis_left);
+        g_strfreev (y_axis_left);
+
+        guint64 tolerance;
+        guint64 timespan;
+
+        timespan = 5 * 24 * 60 * 60;
+        tolerance = 2 * 60 * 60;
+
+        guint64 last_age;
+        now = (guint64) time (NULL);
+        last_age = timespan;
+
+        /* oldest points first */
+        for (l = dialog->priv->historical_data; l != NULL; l = l->next) {
+                GduAtaSmartHistoricalData *data = GDU_ATA_SMART_HISTORICAL_DATA (l->data);
+                GduAtaSmartAttribute *attr;
+                guint64 time_collected;
+                GduGraphPoint point;
+                guint64 age;
+                gboolean use_point;
+
+                memset (&point, '\0', sizeof (GduGraphPoint));
+
+                time_collected = gdu_ata_smart_historical_data_get_time_collected (data);
+                age = now - time_collected;
+
+                g_debug ("age = %d", (gint) age);
+
+                /* skip old points, except if the following point is not too old */
+                use_point = FALSE;
+                if (age < timespan) {
+                        use_point = TRUE;
+                } else {
+                        if (l->next != NULL) {
+                                GduAtaSmartHistoricalData *next_data = GDU_ATA_SMART_HISTORICAL_DATA (l->next->data);
+                                guint64 next_age;
+                                next_age = now - gdu_ata_smart_historical_data_get_time_collected (next_data);
+                                if (next_age < timespan) {
+                                        use_point = TRUE;
+                                }
+                        }
+                }
+
+                if (use_point) {
+
+                        point.x = 1.0f - ((gfloat) age) / ((gfloat) timespan);
+
+                        attr = gdu_ata_smart_historical_data_get_attribute (data, attr_name);
+                        if (attr != NULL) {
+                                guint current;
+                                guint64 raw;
+
+                                current = gdu_ata_smart_attribute_get_current (attr);
+                                raw = gdu_ata_smart_attribute_get_pretty_value (attr);
+
+                                point.y = current / 255.0f;
+                                g_array_append_val (cur_points, point);
+
+                                point.y = ((gfloat) (raw - raw_min)) / ((gfloat) (raw_max - raw_min));
+                                g_array_append_val (raw_points, point);
+
+                                g_object_unref (attr);
+                        }
+
+                        /* draw a band if there's a discontinuity; e.g. no samples for an hour or more */
+                        if (last_age - age >= tolerance) {
+                                guint64 band_start;
+                                guint64 band_end;
+
+                                band_start = last_age - tolerance;
+                                band_end = age + tolerance;
+
+                                point.x = 1.0f - band_start / ((gfloat) timespan);
+                                point.y = 0;
+                                g_array_append_val (band_points, point);
+
+                                point.x = 1.0f - band_end / ((gfloat) timespan);
+                                point.y = 0;
+                                g_array_append_val (band_points, point);
+                        }
+                }
+
+                last_age = age;
+        }
+
+        GdkColor cur_color = { 0, 0x8c00, 0xb000, 0xd700};
+        GdkColor raw_color = { 0, 0xfc00, 0xaf00, 0x3e00};
+        GdkColor band_color = { 0, 0x4000, 0x4000, 0x4000};
+
+        gdu_graph_set_curve (GDU_GRAPH (dialog->priv->graph),
+                             "current",
+                             &cur_color,
+                             cur_points);
+
+        gdu_graph_set_curve (GDU_GRAPH (dialog->priv->graph),
+                             "raw",
+                             &raw_color,
+                             raw_points);
+
+        gdu_graph_set_band (GDU_GRAPH (dialog->priv->graph),
+                            "discontinuity",
+                            &band_color,
+                            band_points);
+
+        g_array_unref (cur_points);
+        g_array_unref (raw_points);
+        g_array_unref (band_points);
 
  out:
-        ;
+        g_free (attr_name);
 }
 
 static void
@@ -171,20 +365,38 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         GtkWidget *content_area;
         GtkWidget *align;
         GtkWidget *vbox;
+        GtkWidget *hbox;
         GtkWidget *table;
         GtkWidget *label;
         GtkWidget *tree_view;
         GtkWidget *scrolled_window;
+        GtkWidget *graph;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
         gint row;
+        GduPresentable *drive;
+        GduPool *pool;
+        gchar *title;
+        gchar *drive_name;
+        GtkTreeSelection *selection;
 
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
+        pool = gdu_device_get_pool (dialog->priv->device);
+        drive = gdu_pool_get_drive_by_device (pool, dialog->priv->device);
+        drive_name = gdu_presentable_get_name (drive);
+        /* Translators: %s is the drive name */
+        title = g_strdup_printf (_("ATA SMART data for %s"), drive_name);
+        gtk_window_set_title (GTK_WINDOW (dialog), title);
+        g_object_unref (pool);
+        g_object_unref (drive);
+        g_free (title);
+        g_free (drive_name);
+
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-        gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_CLOSE,
-                               GTK_RESPONSE_CLOSE);
+        //gtk_dialog_add_button (GTK_DIALOG (dialog),
+        //                       GTK_STOCK_CLOSE,
+        //                       GTK_RESPONSE_CLOSE);
 
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 12, 12, 12, 12);
@@ -193,10 +405,37 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         vbox = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox);
 
+        hbox = gtk_hbox_new (FALSE, 6);
+        gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
         table = gtk_table_new (4, 2, FALSE);
         gtk_table_set_col_spacings (GTK_TABLE (table), 12);
         gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-        gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+
+        graph = gdu_graph_new ();
+        dialog->priv->graph = graph;
+        gtk_widget_set_size_request (graph, 480, 180);
+        gtk_box_pack_start (GTK_BOX (hbox), graph, TRUE, TRUE, 0);
+
+        const gchar *time_axis[7];
+        time_axis[0] = C_("ATA SMART graph label", "five days ago");
+        time_axis[1] = C_("ATA SMART graph label", "four days ago");
+        time_axis[2] = C_("ATA SMART graph label", "three days ago");
+        time_axis[3] = C_("ATA SMART graph label", "two days ago");
+        time_axis[4] = C_("ATA SMART graph label", "one day ago");
+        time_axis[5] = C_("ATA SMART graph label", "now");
+        time_axis[6] = NULL;
+        gdu_graph_set_x_markers (GDU_GRAPH (graph), time_axis);
+
+        const gchar *y_axis_right[6];
+        y_axis_right[0] = C_("ATA SMART graph label", "0");
+        y_axis_right[1] = C_("ATA SMART graph label", "64");
+        y_axis_right[2] = C_("ATA SMART graph label", "128");
+        y_axis_right[3] = C_("ATA SMART graph label", "192");
+        y_axis_right[4] = C_("ATA SMART graph label", "255");
+        y_axis_right[5] = NULL;
+        gdu_graph_set_y_markers_right (GDU_GRAPH (graph), y_axis_right);
 
         row = 0;
 
@@ -205,14 +444,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Powered On:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->power_on_hours_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -221,14 +460,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Temperature:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->temperature_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -237,14 +476,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Last Test:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->last_self_test_result_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -253,14 +492,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Updated:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gdu_time_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->updated_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -269,14 +508,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Sectors:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->sectors_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -285,14 +524,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Attributes:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->attributes_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -301,14 +540,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("<b>Assessment:</b>"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         dialog->priv->assessment_label = label;
 
         gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                          GTK_FILL, GTK_FILL, 0, 0);
 
         row++;
 
@@ -337,6 +576,12 @@ gdu_ata_smart_dialog_constructed (GObject *object)
                                               ATTR_ID_INT_COLUMN,
                                               GTK_SORT_ASCENDING);
         dialog->priv->tree_view = tree_view;
+
+        selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
+        g_signal_connect (selection,
+                          "changed",
+                          G_CALLBACK (selection_changed),
+                          dialog);
 
         column = gtk_tree_view_column_new ();
         gtk_tree_view_column_set_title (column, "ID");
@@ -441,11 +686,6 @@ gdu_ata_smart_dialog_constructed (GObject *object)
 
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
 
-        GtkWidget *button;
-        button = gtk_button_new_with_mnemonic ("_Bar");
-        g_signal_connect (button, "clicked", G_CALLBACK (on_bar_clicked), dialog);
-	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
         gtk_window_set_default_size (GTK_WINDOW (dialog), 500, 500);
 
         update_dialog (dialog);
@@ -501,7 +741,9 @@ gdu_ata_smart_dialog_new (GtkWindow *parent,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
-pretty_to_string (guint64 pretty_value, GduAtaSmartAttributeUnit pretty_unit)
+pretty_to_string (guint64                  pretty_value,
+                  GduAtaSmartAttributeUnit pretty_unit,
+                  gboolean                 long_string)
 {
         gchar *ret;
         gdouble celcius;
@@ -510,30 +752,56 @@ pretty_to_string (guint64 pretty_value, GduAtaSmartAttributeUnit pretty_unit)
         switch (pretty_unit) {
 
         case GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS:
-                if (pretty_value > 1000 * 60 * 60 * 24) {
-                        ret = g_strdup_printf (_("%.3g days"), pretty_value / 1000.0 / 60.0 / 60.0 / 24.0);
-                } else if (pretty_value > 1000 * 60 * 60) {
-                        ret = g_strdup_printf (_("%.3g hours"), pretty_value / 1000.0 / 60.0 / 60.0);
-                } else if (pretty_value > 1000 * 60) {
-                        ret = g_strdup_printf (_("%.3g mins"), pretty_value / 1000.0 / 60.0);
-                } else if (pretty_value > 1000) {
-                        ret = g_strdup_printf (_("%.3g secs"), pretty_value / 1000.0);
+                if (long_string) {
+                        if (pretty_value > 1000 * 60 * 60 * 24) {
+                                ret = g_strdup_printf (_("%.3f days"), pretty_value / 1000.0 / 60.0 / 60.0 / 24.0);
+                        } else if (pretty_value > 1000 * 60 * 60) {
+                                ret = g_strdup_printf (_("%.3f hours"), pretty_value / 1000.0 / 60.0 / 60.0);
+                        } else if (pretty_value > 1000 * 60) {
+                                ret = g_strdup_printf (_("%.3f minutes"), pretty_value / 1000.0 / 60.0);
+                        } else if (pretty_value > 1000) {
+                                ret = g_strdup_printf (_("%.3f seconds"), pretty_value / 1000.0);
+                        } else {
+                                ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        }
                 } else {
-                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        if (pretty_value > 1000 * 60 * 60 * 24) {
+                                ret = g_strdup_printf (_("%.0f d"), pretty_value / 1000.0 / 60.0 / 60.0 / 24.0);
+                        } else if (pretty_value > 1000 * 60 * 60) {
+                                ret = g_strdup_printf (_("%.0f h"), pretty_value / 1000.0 / 60.0 / 60.0);
+                        } else if (pretty_value > 1000 * 60) {
+                                ret = g_strdup_printf (_("%.0f m"), pretty_value / 1000.0 / 60.0);
+                        } else if (pretty_value > 1000) {
+                                ret = g_strdup_printf (_("%.0f s"), pretty_value / 1000.0);
+                        } else {
+                                ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        }
                 }
                 break;
 
         case GDU_ATA_SMART_ATTRIBUTE_UNIT_SECTORS:
-                if (pretty_value == 1)
-                        ret = g_strdup (_("1 Sector"));
-                else
-                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " Sectors"), pretty_value);
+                if (long_string) {
+                        if (pretty_value == 1)
+                                ret = g_strdup (_("1 Sector"));
+                        else
+                                ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " Sectors"), pretty_value);
+                } else {
+                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT), pretty_value);
+                }
                 break;
 
         case GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN:
-                celcius = pretty_value / 1000.0 - 273.15;
-                fahrenheit = 9.0 * celcius / 5.0 + 32.0;
-                ret = g_strdup_printf (_("%.3g\302\260 C / %.3g\302\260 F"), celcius, fahrenheit);
+                if (long_string) {
+                        celcius = pretty_value / 1000.0 - 273.15;
+                        fahrenheit = 9.0 * celcius / 5.0 + 32.0;
+                        ret = g_strdup_printf (_("%.3f\302\260 C / %.3f\302\260 F"), celcius, fahrenheit);
+                } else {
+                        /* We could choose kelvin here to treat C and F camps equally. But
+                         * that would be lame.
+                         */
+                        celcius = pretty_value / 1000.0 - 273.15;
+                        ret = g_strdup_printf (_("%.0f\302\260 C"), celcius);
+                }
                 break;
 
         default:
@@ -547,6 +815,33 @@ pretty_to_string (guint64 pretty_value, GduAtaSmartAttributeUnit pretty_unit)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void
+get_historical_data_cb (GduDevice *device,
+                        GList     *smart_data,
+                        GError    *error,
+                        gpointer   user_data)
+{
+        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
+
+        if (error != NULL) {
+                g_warning ("Error getting historical data: %s", error->message);
+                g_error_free (error);
+        } else {
+                if (dialog->priv->historical_data != NULL) {
+                        g_list_foreach (dialog->priv->historical_data, (GFunc) g_object_unref, NULL);
+                        g_list_free (dialog->priv->historical_data);
+                }
+                dialog->priv->historical_data = smart_data;
+
+                g_debug ("got historical data (%d elems)", g_list_length (smart_data));
+
+                update_dialog (dialog);
+        }
+
+        g_object_unref (dialog);
+}
+
 
 static void
 update_dialog (GduAtaSmartDialog *dialog)
@@ -627,13 +922,13 @@ update_dialog (GduAtaSmartDialog *dialog)
         if (power_on_msec == 0) {
                 powered_on_text = g_strdup (_("Unknown"));
         } else {
-                powered_on_text = pretty_to_string (power_on_msec, GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS);
+                powered_on_text = pretty_to_string (power_on_msec, GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS, TRUE);
         }
 
         if (temperature_mkelvin == 0) {
                 temperature_text = g_strdup (_("Unknown"));
         } else {
-                temperature_text = pretty_to_string (temperature_mkelvin, GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN);
+                temperature_text = pretty_to_string (temperature_mkelvin, GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN, TRUE);
         }
 
         dialog->priv->last_updated = updated.tv_sec = gdu_device_drive_ata_smart_get_time_collected (dialog->priv->device);
@@ -757,7 +1052,7 @@ update_dialog (GduAtaSmartDialog *dialog)
 
                 pretty_value = gdu_ata_smart_attribute_get_pretty_value (a);
                 pretty_unit = gdu_ata_smart_attribute_get_pretty_unit (a);
-                pretty_str = pretty_to_string (pretty_value, pretty_unit);
+                pretty_str = pretty_to_string (pretty_value, pretty_unit, TRUE);
 
                 is_good = gdu_ata_smart_attribute_get_good (a);
                 is_good_valid = gdu_ata_smart_attribute_get_good_valid (a);
@@ -823,6 +1118,16 @@ update_dialog (GduAtaSmartDialog *dialog)
         g_free (powered_on_text);
         g_free (temperature_text);
         g_free (selftest_text);
+
+        /* TODO: also fetch new data if current data is out of date */
+        if (dialog->priv->historical_data == NULL) {
+                gdu_device_drive_ata_smart_get_historical_data (dialog->priv->device,
+                                                                0, /* since */
+                                                                0, /* until */
+                                                                0, /* spacing */
+                                                                get_historical_data_cb,
+                                                                g_object_ref (dialog));
+        }
 }
 
 static void

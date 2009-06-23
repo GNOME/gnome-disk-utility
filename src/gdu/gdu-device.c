@@ -2406,7 +2406,7 @@ op_ata_smart_historical_data_cb (DBusGProxy *proxy, GPtrArray *historical_data, 
         if (historical_data != NULL && error == NULL)
                 ret = op_ata_smart_historical_data_compute_ret (historical_data);
 
-        if (data->callback == NULL)
+        if (data->callback != NULL)
                 data->callback (data->device, ret, error, data->user_data);
 
         g_object_unref (data->device);

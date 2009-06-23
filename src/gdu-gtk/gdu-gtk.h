@@ -28,6 +28,7 @@
 
 #define __GDU_GTK_INSIDE_GDU_GTK_H
 #include <gdu-gtk/gdu-gtk-types.h>
+#include <gdu-gtk/gdu-graph.h>
 #include <gdu-gtk/gdu-time-label.h>
 #include <gdu-gtk/gdu-ata-smart-dialog.h>
 #include <gdu-gtk/gdu-ata-smart-attribute-dialog.h>

@@ -10,6 +10,7 @@ libgdu_gtkinclude_HEADERS =              						\
 	gdu-gtk-types.h									\
 	gdu-time-label.h								\
 	gdu-ata-smart-dialog.h								\
+	gdu-graph.h									\
 	gdu-ata-smart-attribute-dialog.h						\
 	$(NULL)
 
@@ -18,6 +19,7 @@ libgdu_gtk_la_SOURCES =                 	        	       			\
 	gdu-gtk-types.h									\
 	gdu-time-label.h			gdu-time-label.c			\
 	gdu-ata-smart-dialog.h			gdu-ata-smart-dialog.c			\
+	gdu-graph.h				gdu-graph.c				\
 	gdu-ata-smart-attribute-dialog.h	gdu-ata-smart-attribute-dialog.c	\
 	$(NULL)
 

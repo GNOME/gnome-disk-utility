@@ -24,40 +24,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "gdu-curve.h"
 #include "gdu-graph.h"
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef struct
-{
-        gchar    *id;
-        GdkColor *color;
-        GArray   *points;
-} Curve;
-
-static Curve *
-curve_new (const gchar *curve_id,
-           GdkColor    *color,
-           GArray      *points)
-{
-        Curve *c;
-
-        c = g_new0 (Curve, 1);
-        c->id = g_strdup (curve_id);
-        c->color = gdk_color_copy (color);
-        c->points = g_array_ref (points);
-
-        return c;
-}
-
-static void
-curve_free (Curve *c)
-{
-        g_free (c->id);
-        gdk_color_free (c->color);
-        g_array_unref (c->points);
-        g_free (c);
-}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -69,8 +37,7 @@ struct GduGraphPrivate
         gchar **y_markers_left;
         gchar **y_markers_right;
 
-        GPtrArray *curves;
-        GPtrArray *bands;
+        GHashTable *curves;
 };
 
 G_DEFINE_TYPE (GduGraph, gdu_graph, GTK_TYPE_DRAWING_AREA)
@@ -149,8 +116,7 @@ gdu_graph_finalize (GObject *object)
         g_strfreev (graph->priv->y_markers_left);
         g_strfreev (graph->priv->y_markers_right);
 
-        g_ptr_array_unref (graph->priv->curves);
-        g_ptr_array_unref (graph->priv->bands);
+        g_hash_table_unref (graph->priv->curves);
 
         if (G_OBJECT_CLASS (gdu_graph_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_graph_parent_class)->finalize (object);
@@ -205,8 +171,7 @@ static void
 gdu_graph_init (GduGraph *graph)
 {
         graph->priv = G_TYPE_INSTANCE_GET_PRIVATE (graph, GDU_TYPE_GRAPH, GduGraphPrivate);
-        graph->priv->curves = g_ptr_array_new_with_free_func ((GDestroyNotify) curve_free);
-        graph->priv->bands  = g_ptr_array_new_with_free_func ((GDestroyNotify) curve_free);
+        graph->priv->curves = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
 }
 
 GtkWidget *
@@ -283,6 +248,91 @@ measure_width (cairo_t     *cr,
         return te.width;
 }
 
+static gdouble
+measure_height (cairo_t     *cr,
+                const gchar *s)
+{
+        cairo_text_extents_t te;
+        cairo_select_font_face (cr,
+                                "sans",
+                                CAIRO_FONT_SLANT_NORMAL,
+                                CAIRO_FONT_WEIGHT_NORMAL);
+        cairo_set_font_size (cr, 8.0);
+        cairo_text_extents (cr, s, &te);
+        return te.height;
+}
+
+static void
+set_fade_edges_pattern (cairo_t   *cr,
+                        gdouble    x0,
+                        gdouble    x1,
+                        GduColor  *color)
+{
+        cairo_pattern_t *pattern;
+
+        pattern = cairo_pattern_create_linear (x0, 0,
+                                               x1, 0);
+        cairo_pattern_add_color_stop_rgba (pattern, 0.00,
+                                           1.00,
+                                           1.00,
+                                           1.00,
+                                           0.00);
+        cairo_pattern_add_color_stop_rgba (pattern, 0.35,
+                                           color->red,
+                                           color->green,
+                                           color->blue,
+                                           color->alpha);
+        cairo_pattern_add_color_stop_rgba (pattern, 0.65,
+                                           color->red,
+                                           color->green,
+                                           color->blue,
+                                           color->alpha);
+        cairo_pattern_add_color_stop_rgba (pattern, 1.00,
+                                           1.00,
+                                           1.00,
+                                           1.00,
+                                           0.00);
+        cairo_set_source (cr, pattern);
+        cairo_pattern_destroy (pattern);
+}
+
+static gint
+compute_all_legends_width (cairo_t *cr,
+                           gdouble  lb_width,
+                           GList   *curve_list)
+{
+        GList *l;
+        gint width;
+
+        width = 0;
+        for (l = curve_list; l != NULL; l = l->next) {
+                GduCurve *c = GDU_CURVE (l->data);
+                cairo_text_extents_t te;
+                const gchar *text;
+
+                text = gdu_curve_get_legend (c);
+
+                if (text == NULL)
+                        continue;
+
+                cairo_select_font_face (cr, "sans",
+                                        CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+                cairo_set_font_size (cr, 8.0);
+                cairo_text_extents (cr, text, &te);
+
+                width += lb_width + 3 + ceil (te.width) + 12;
+        }
+
+        return width;
+}
+
+static gint
+curve_z_order_sort (GduCurve *a,
+                    GduCurve *b)
+{
+        return gdu_curve_get_z_order (a) - gdu_curve_get_z_order (b);
+}
+
 static gboolean
 gdu_graph_expose_event (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -294,6 +344,29 @@ gdu_graph_expose_event (GtkWidget      *widget,
         cairo_t *cr;
         gdouble width, height;
         guint n;
+        gdouble x, y;
+        guint twidth;
+        guint theight;
+        guint left_margin;
+        guint right_margin;
+        guint top_margin;
+        guint bottom_margin;
+        guint x_markers_height;
+        double gx, gy, gw, gh;
+        guint64 t_left;
+        guint64 t_right;
+        GTimeVal now;
+        GList *curve_list;
+        GList *l;
+        gdouble lb_width;
+        gdouble lb_height;
+        gdouble lb_padding;
+        gdouble lb_xpos;
+        gdouble lb_ypos;
+
+        curve_list = g_hash_table_get_values (graph->priv->curves);
+        curve_list = g_list_sort (curve_list,
+                                  (GCompareFunc) curve_z_order_sort);
 
         n_x_markers = graph->priv->x_markers != NULL ? g_strv_length (graph->priv->x_markers) : 0;
         n_y_markers_left = graph->priv->y_markers_left != NULL ? g_strv_length (graph->priv->y_markers_left) : 0;
@@ -308,47 +381,152 @@ gdu_graph_expose_event (GtkWidget      *widget,
                          event->area.width, event->area.height);
         cairo_clip (cr);
 
-        double gx, gy, gw, gh;
         gx = 0;
-        gy = 10;
-        gw = width - 10;
-        gh = height - gy - 30;
+        gy = 0;
+        gw = width;
+        gh = height;
 
-        guint twidth;
+        top_margin = 10;
+
+        /* measure text of all x markers */
+        bottom_margin = 0;
+        for (n = 0; n < n_x_markers; n++) {
+                theight = ceil (measure_height (cr, graph->priv->x_markers[n]));
+                if (theight > bottom_margin)
+                        bottom_margin = theight;
+        }
+        bottom_margin += 12; /* padding */
+        x_markers_height = bottom_margin;
+
+        /* compute how much size we need for legends */
+        bottom_margin += 6; /* padding */
+        lb_height = 14;
+        lb_width = 23; /* golden ratio */
+        lb_padding = 6;
+        bottom_margin += lb_height + lb_padding;
+
+        /* adjust drawing area */
+        gy += top_margin;
+        gh -= top_margin;
+        gh -= bottom_margin;
+
+        gint all_legends_width;
+        all_legends_width = compute_all_legends_width (cr,
+                                                       lb_width,
+                                                       curve_list);
+
+        /* draw legends */
+        lb_ypos = gy + gh + x_markers_height + 6; /* padding */
+        lb_xpos = 10 + ceil (((width - 20) - all_legends_width) / 2);
+        for (l = curve_list; l != NULL; l = l->next) {
+                GduCurve *c = GDU_CURVE (l->data);
+                GduColor *color;
+                GduColor *fill_color;
+                gdouble width;
+                GduCurveFlags flags;
+                const gchar *text;
+                gdouble x, y;
+                cairo_text_extents_t te;
+
+                color = gdu_curve_get_color (c);
+                fill_color = gdu_curve_get_fill_color (c);
+                if (fill_color == NULL)
+                        fill_color = color;
+                width = gdu_curve_get_width (c);
+                flags = gdu_curve_get_flags (c);
+                text = gdu_curve_get_legend (c);
+
+                if (text == NULL)
+                        continue;
+
+                x = lb_xpos + 0.5;
+                y = lb_ypos + 0.5;
+
+                cairo_new_path (cr);
+                cairo_set_dash (cr, NULL, 0, 0.0);
+                cairo_set_line_width (cr, 1.0);
+                cairo_rectangle (cr, x, y, lb_width, lb_height);
+                cairo_close_path (cr);
+                cairo_set_source_rgba (cr, 1, 1, 1, 1);
+                cairo_fill_preserve (cr);
+                cairo_set_source_rgba (cr, 0, 0, 0, 1);
+                cairo_stroke (cr);
+
+                cairo_new_path (cr);
+
+                if (flags * GDU_CURVE_FLAGS_FILLED) {
+                        if (flags & GDU_CURVE_FLAGS_FADE_EDGES) {
+                                set_fade_edges_pattern (cr, x, x + lb_width, fill_color);
+                        } else {
+                                cairo_set_source_rgba (cr,
+                                                       fill_color->red,
+                                                       fill_color->green,
+                                                       fill_color->blue,
+                                                       fill_color->alpha);
+                        }
+                        cairo_rectangle (cr, x + 1, y + 1, lb_width - 2, lb_height - 2);
+                        cairo_fill (cr);
+                } else {
+                        cairo_move_to (cr, x, y + lb_height/2.0);
+                        cairo_line_to (cr, x + lb_width / 2.0, y + lb_height/3.0);
+                        cairo_line_to (cr, x + lb_width, y + 2.0 * lb_height/3.0);
+
+                        cairo_set_line_width (cr, width);
+                        cairo_set_source_rgba (cr,
+                                               color->red,
+                                               color->green,
+                                               color->blue,
+                                               color->alpha);
+                        cairo_stroke (cr);
+                }
+
+                /* and now show the text */
+
+                cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+                cairo_select_font_face (cr, "sans",
+                                        CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+                cairo_set_font_size (cr, 8.0);
+                cairo_text_extents (cr, text, &te);
+                cairo_move_to (cr,
+                               x + lb_width + 3 - te.x_bearing,
+                               y + lb_height/2.0 - te.height/2 - te.y_bearing);
+
+                cairo_show_text (cr, text);
+
+                lb_xpos += lb_width + 3 + ceil (te.width) + 12;
+        }
 
         /* measure text on the left y-axis */
-        guint y_left_max_width;
-        y_left_max_width = 0;
+        left_margin = 0;
         for (n = 0; n < n_y_markers_left; n++) {
                 twidth = ceil (measure_width (cr, graph->priv->y_markers_left[n]));
-                if (twidth > y_left_max_width)
-                        y_left_max_width = twidth;
+                if (twidth > left_margin)
+                        left_margin = twidth;
         }
         /* include half width of first xmarker label */
         if (n_x_markers > 0) {
                 twidth = ceil (measure_width (cr, graph->priv->x_markers[0]));
-                if (twidth/2 > y_left_max_width)
-                        y_left_max_width = twidth/2;
+                if (twidth/2 > left_margin)
+                        left_margin = twidth/2;
         }
-        y_left_max_width += 6; /* padding */
-        gx += y_left_max_width;
-        gw -= y_left_max_width;
+        left_margin += 6; /* padding */
+        gx += left_margin;
+        gw -= left_margin;
 
         /* measure text on the right y-axis */
-        guint y_right_max_width;
-        y_right_max_width = 0;
+        right_margin = 0;
         for (n = 0; n < n_y_markers_right; n++) {
                 twidth = ceil (measure_width (cr, graph->priv->y_markers_right[n]));
-                if (twidth/2 > y_right_max_width)
-                        y_right_max_width = twidth/2;
+                if (twidth/2 > right_margin)
+                        right_margin = twidth/2;
         }
         /* include half width of last xmarker label */
         if (n_x_markers > 0) {
                 twidth = ceil (measure_width (cr, graph->priv->x_markers[n_x_markers - 1]));
-                y_right_max_width += twidth/2;
+                right_margin += twidth/2;
         }
-        y_right_max_width += 6; /* padding */
-        gw -= y_right_max_width;
+        right_margin += 6; /* padding */
+        gw -= right_margin;
 
         /* draw the box to draw in */
         cairo_set_source_rgb (cr, 1, 1, 1);
@@ -358,14 +536,15 @@ gdu_graph_expose_event (GtkWidget      *widget,
 
         /* draw markers on the left y-axis */
         for (n = 0; n < n_y_markers_left; n++) {
-                double pos;
+                gdouble pos;
+                gdouble dashes[1] = {2.0};
+                const gchar *s;
+                cairo_text_extents_t te;
 
                 pos = ceil (gy + gh / (n_y_markers_left - 1) * n);
 
-                const char *s;
                 s = graph->priv->y_markers_left[n_y_markers_left - 1 - n];
 
-                cairo_text_extents_t te;
                 cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
                 cairo_select_font_face (cr, "sans",
                                         CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
@@ -378,7 +557,6 @@ gdu_graph_expose_event (GtkWidget      *widget,
                 cairo_show_text (cr, s);
 
                 cairo_set_line_width (cr, 1.0);
-                double dashes[1] = {2.0};
                 cairo_set_dash (cr, dashes, 1, 0.0);
                 cairo_move_to (cr,
                                gx - 0.5,
@@ -391,55 +569,27 @@ gdu_graph_expose_event (GtkWidget      *widget,
 
         /* draw markers on the right y-axis */
         for (n = 0; n < n_y_markers_right; n++) {
-                double pos;
+                gdouble pos;
+                const gchar *s;
+                cairo_text_extents_t te;
 
                 pos = ceil (gy + gh / (n_y_markers_right - 1) * n);
 
-                const char *s;
                 s = graph->priv->y_markers_right[n_y_markers_right - 1 - n];
 
-                cairo_text_extents_t te;
                 cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
                 cairo_select_font_face (cr, "sans",
                                         CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
                 cairo_set_font_size (cr, 8.0);
                 cairo_text_extents (cr, s, &te);
                 cairo_move_to (cr,
-                               gx + gw + y_right_max_width/2.0 + 3 - te.width/2  - te.x_bearing,
+                               gx + gw + right_margin/2.0 + 3 - te.width/2  - te.x_bearing,
                                pos - te.height/2 - te.y_bearing);
 
                 cairo_show_text (cr, s);
         }
 
-        guint64 t_left;
-        guint64 t_right;
-        GTimeVal now;
-
         g_get_current_time (&now);
-        /*
-        switch (0) {
-        default:
-        case 0:
-                t_left = now.tv_sec - 6 * 60 * 60;
-                break;
-        case 1:
-                t_left = now.tv_sec - 24 * 60 * 60;
-                break;
-        case 2:
-                t_left = now.tv_sec - 3 * 24 * 60 * 60;
-                break;
-        case 3:
-                t_left = now.tv_sec - 12 * 24 * 60 * 60;
-                break;
-        case 4:
-                t_left = now.tv_sec - 36 * 24 * 60 * 60;
-                break;
-        case 5:
-                t_left = now.tv_sec - 96 * 24 * 60 * 60;
-                break;
-        }
-        t_right = now.tv_sec;
-        */
         t_left = now.tv_sec - 6 * 24 * 60 * 60;
         t_right = now.tv_sec;
 
@@ -463,7 +613,7 @@ gdu_graph_expose_event (GtkWidget      *widget,
                 cairo_text_extents (cr, s, &te);
                 cairo_move_to (cr,
                                pos - te.width/2  - te.x_bearing,
-                               height - 30.0/2  - te.height/2 - te.y_bearing); /* TODO */
+                               gy + gh + x_markers_height/2.0 - te.y_bearing);
 
                 cairo_show_text (cr, s);
 
@@ -482,77 +632,92 @@ gdu_graph_expose_event (GtkWidget      *widget,
         cairo_rectangle (cr, gx, gy, gw, gh);
         cairo_clip (cr);
 
-        /* draw all bands */
-        for (n = 0; n < graph->priv->bands->len; n++) {
-                Curve *c = (Curve *) graph->priv->bands->pdata[n];
+        for (l = curve_list; l != NULL; l = l->next) {
+                GduCurve *c = GDU_CURVE (l->data);
+                GduColor *color;
+                GduColor *fill_color;
+                gdouble width;
+                GduCurveFlags flags;
+                GArray *points;
                 guint m;
 
-                cairo_new_path (cr);
-                cairo_set_line_width (cr, 0.0);
-                cairo_set_source_rgba (cr, 0.5, 0.5, 0.5, 0.5);
+                color = gdu_curve_get_color (c);
+                fill_color = gdu_curve_get_fill_color (c);
+                if (fill_color == NULL)
+                        fill_color = color;
+                width = gdu_curve_get_width (c);
+                flags = gdu_curve_get_flags (c);
+                points = gdu_curve_get_points (c);
 
-                for (m = 0; m < c->points->len; m+= 2) {
-                        GduGraphPoint *point;
-                        gdouble x0, x1;
-                        gdouble x, width;
-                        cairo_pattern_t *pat;
+                m = 0;
+                while (m < points->len) {
+                        guint first_point_index;
 
-                        point = &g_array_index (c->points, GduGraphPoint, m);
-                        x0 = gx + gw * point->x;
+                        cairo_new_path (cr);
 
-                        point = &g_array_index (c->points, GduGraphPoint, m + 1);
-                        x1 = gx + gw * point->x;
+                        first_point_index = m;
+                        for (; m < points->len; m++) {
+                                GduPoint *point;
 
-                        x = x0;
-                        if (x1 < x0)
-                                x = x1;
-                        width = fabs (x1 - x0);
+                                point = &g_array_index (points, GduPoint, m);
 
-                        g_debug ("band: %f to %f", x0, x1);
+                                if (point->x == G_MAXDOUBLE &&
+                                    point->y == G_MAXDOUBLE) {
+                                        m++;
+                                        break;
+                                }
 
-                        pat = cairo_pattern_create_linear (x, gy,
-                                                           x + width, gy);
-                        cairo_pattern_add_color_stop_rgba (pat, 0.00, 1.00, 1.00, 1.00, 0.00);
-                        cairo_pattern_add_color_stop_rgba (pat, 0.35, 0.85, 0.85, 0.85, 0.50);
-                        cairo_pattern_add_color_stop_rgba (pat, 0.65, 0.85, 0.85, 0.85, 0.50);
-                        cairo_pattern_add_color_stop_rgba (pat, 1.00, 1.00, 1.00, 1.00, 0.00);
-                        cairo_set_source (cr, pat);
-                        cairo_pattern_destroy (pat);
+                                x = gx + gw * point->x;
+                                y = gy + gh * (1.0f - point->y);
 
-                        cairo_rectangle (cr, x, gy, width, gh);
-                        cairo_fill (cr);
-                }
+                                if (y < gy + 1.0)
+                                        y = gy;
+
+                                if (y > gy + gh - 1.0)
+                                        y = gy + gh - 1.0;
+
+                                cairo_line_to (cr, x, y);
+                        }
+
+                        /* fill if requested */
+                        if (flags & GDU_CURVE_FLAGS_FILLED) {
+                                GduPoint *point;
+                                gdouble first_x;
+
+                                /* first, close the path */
+                                cairo_line_to (cr, x, gy + gh);
+                                point = &g_array_index (points, GduPoint, first_point_index);
+                                first_x = gx + gw * point->x;
+                                cairo_line_to (cr, first_x, gy + gh);
+                                cairo_close_path (cr);
+
+                                if (flags & GDU_CURVE_FLAGS_FADE_EDGES) {
+                                        set_fade_edges_pattern (cr, first_x, x, fill_color);
+                                } else {
+                                        cairo_set_source_rgba (cr,
+                                                               fill_color->red,
+                                                               fill_color->green,
+                                                               fill_color->blue,
+                                                               fill_color->alpha);
+                                }
+                                cairo_fill_preserve (cr);
+                        }
+
+                        /* then draw the curve */
+                        cairo_set_dash (cr, NULL, 0, 0.0);
+                        cairo_set_line_width (cr, width);
+                        cairo_set_source_rgba (cr,
+                                               color->red,
+                                               color->green,
+                                               color->blue,
+                                               color->alpha);
+
+                        cairo_stroke (cr);
+
+                } /* process more points */
         }
 
-        /* draw all curves */
-        for (n = 0; n < graph->priv->curves->len; n++) {
-                Curve *c = (Curve *) graph->priv->curves->pdata[n];
-                guint m;
-
-                cairo_new_path (cr);
-                cairo_set_dash (cr, NULL, 0, 0.0);
-                cairo_set_line_width (cr, 1.0);
-                gdk_cairo_set_source_color (cr, c->color);
-
-                for (m = 0; m < c->points->len; m++) {
-                        GduGraphPoint *point;
-                        gdouble x, y;
-
-                        point = &g_array_index (c->points, GduGraphPoint, m);
-
-                        x = gx + gw * point->x;
-                        y = gy + gh * (1.0f - point->y);
-
-                        if (y < gy + 1.0)
-                                y = gy;
-
-                        if (y > gy + gh - 1.0)
-                                y = gy + gh - 1.0;
-
-                        cairo_line_to (cr, x, y);
-                }
-                cairo_stroke (cr);
-        }
+        g_list_free (curve_list);
 
         /* propagate event further */
         return FALSE;
@@ -562,85 +727,26 @@ gboolean
 gdu_graph_remove_curve (GduGraph           *graph,
                         const gchar        *curve_id)
 {
-        guint n;
-        gboolean found;
+        gboolean ret;
 
-        found = FALSE;
-        for (n = 0; n < graph->priv->curves->len; n++) {
-                Curve *c = (Curve *) graph->priv->curves->pdata[n];
-                if (g_strcmp0 (curve_id, c->id) == 0) {
-                        g_ptr_array_remove_index (graph->priv->curves, n);
-                        found = TRUE;
-                        break;
-                }
-        }
-
-        return found;
-}
-
-void
-gdu_graph_set_curve (GduGraph           *graph,
-                     const gchar        *curve_id,
-                     GdkColor           *color,
-                     GArray             *points)
-{
-        g_return_if_fail (GDU_IS_GRAPH (graph));
-        g_return_if_fail (curve_id != NULL);
-        g_return_if_fail (color != NULL);
-
-        if (points == NULL) {
-                gdu_graph_remove_curve (graph, curve_id);
-        } else {
-                gdu_graph_remove_curve (graph, curve_id);
-                g_ptr_array_add (graph->priv->curves,
-                                 curve_new (curve_id,
-                                            color,
-                                            points));
-        }
+        ret = g_hash_table_remove (graph->priv->curves, curve_id);
 
         if (GTK_WIDGET (graph)->window != NULL)
                 gdk_window_invalidate_rect (GTK_WIDGET (graph)->window, NULL, TRUE);
-}
 
-gboolean
-gdu_graph_remove_band (GduGraph           *graph,
-                       const gchar        *band_id)
-{
-        guint n;
-        gboolean found;
-
-        found = FALSE;
-        for (n = 0; n < graph->priv->bands->len; n++) {
-                Curve *c = (Curve *) graph->priv->bands->pdata[n];
-                if (g_strcmp0 (band_id, c->id) == 0) {
-                        g_ptr_array_remove_index (graph->priv->bands, n);
-                        found = TRUE;
-                        break;
-                }
-        }
-
-        return found;
+        return ret;
 }
 
 void
-gdu_graph_set_band (GduGraph           *graph,
-                    const gchar        *band_id,
-                    GdkColor           *color,
-                    GArray             *points)
+gdu_graph_add_curve (GduGraph           *graph,
+                     const gchar        *curve_id,
+                     GduCurve           *curve)
 {
         g_return_if_fail (GDU_IS_GRAPH (graph));
-        g_return_if_fail (band_id != NULL);
-        g_return_if_fail (color != NULL);
+        g_return_if_fail (curve_id != NULL);
+        g_return_if_fail (curve != NULL);
 
-        if (points == NULL) {
-                gdu_graph_remove_band (graph, band_id);
-        } else {
-                gdu_graph_remove_band (graph, band_id);
-                g_ptr_array_add (graph->priv->bands,
-                                 curve_new (band_id,
-                                            color,
-                                            points));
-        }
+        g_hash_table_insert (graph->priv->curves, g_strdup (curve_id), g_object_ref (curve));
 
         if (GTK_WIDGET (graph)->window != NULL)
                 gdk_window_invalidate_rect (GTK_WIDGET (graph)->window, NULL, TRUE);

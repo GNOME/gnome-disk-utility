@@ -64,30 +64,14 @@ void        gdu_graph_set_y_markers_left  (GduGraph           *graph,
 void        gdu_graph_set_y_markers_right (GduGraph           *graph,
                                            const gchar* const *markers);
 
-typedef struct GduGraphPoint GduGraphPoint;
+GduCurve   *gdu_graph_lookup_curve        (GduGraph           *graph,
+                                           const gchar        *curve_id);
 
-struct GduGraphPoint
-{
-        gfloat x;
-        gfloat y;
-        gpointer data;
-};
+void        gdu_graph_add_curve           (GduGraph           *graph,
+                                           const gchar        *curve_id,
+                                           GduCurve           *curve);
 
 gboolean    gdu_graph_remove_curve        (GduGraph           *graph,
                                            const gchar        *curve_id);
-
-void        gdu_graph_set_curve           (GduGraph           *graph,
-                                           const gchar        *curve_id,
-                                           GdkColor           *color,
-                                           GArray             *points);
-
-gboolean    gdu_graph_remove_band         (GduGraph           *graph,
-                                           const gchar        *band_id);
-
-void        gdu_graph_set_band            (GduGraph           *graph,
-                                           const gchar        *band_id,
-                                           GdkColor           *color,
-                                           GArray             *points);
-
 
 #endif /* GDU_GRAPH_H */

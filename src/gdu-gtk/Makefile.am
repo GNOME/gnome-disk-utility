@@ -1,26 +1,40 @@
 
 NULL =
 
+gdu-gtk-enumtypes.h: gdu-gtk-enums.h gdu-gtk-enumtypes.h.template
+	( top_builddir=`cd $(top_builddir) && pwd`; \
+	  cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.h.template gdu-gtk-enums.h ) > \
+	    gdu-gtk-enumtypes.h.tmp && mv gdu-gtk-enumtypes.h.tmp gdu-gtk-enumtypes.h
+
+gdu-gtk-enumtypes.c: gdu-gtk-enums.h gdu-gtk-enumtypes.c.template
+	( top_builddir=`cd $(top_builddir) && pwd`; \
+	  cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.c.template gdu-gtk-enums.h ) > \
+	    gdu-gtk-enumtypes.c.tmp && mv gdu-gtk-enumtypes.c.tmp gdu-gtk-enumtypes.c
+
 lib_LTLIBRARIES=libgdu-gtk.la
 
 libgdu_gtkincludedir=$(includedir)/gnome-disk-utility/gdu-gtk
 
 libgdu_gtkinclude_HEADERS =              						\
 	gdu-gtk.h									\
+	gdu-gtk-enums.h									\
+	gdu-gtk-enumtypes.h								\
 	gdu-gtk-types.h									\
 	gdu-time-label.h								\
 	gdu-ata-smart-dialog.h								\
+	gdu-curve.h									\
 	gdu-graph.h									\
-	gdu-ata-smart-attribute-dialog.h						\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	        	       			\
 	gdu-gtk.h				gdu-gtk.c				\
 	gdu-gtk-types.h									\
+	gdu-gtk-enums.h									\
+	gdu-gtk-enumtypes.h			gdu-gtk-enumtypes.c			\
 	gdu-time-label.h			gdu-time-label.c			\
 	gdu-ata-smart-dialog.h			gdu-ata-smart-dialog.c			\
+	gdu-curve.h				gdu-curve.c				\
 	gdu-graph.h				gdu-graph.c				\
-	gdu-ata-smart-attribute-dialog.h	gdu-ata-smart-attribute-dialog.c	\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\
@@ -60,7 +74,17 @@ libgdu_gtk_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gdu-gtk.pc
 
+BUILT_SOURCES =			\
+	gdu-gtk-enumtypes.c	\
+	gdu-gtk-enumtypes.h	\
+	$(NULL)
+
 CLEANFILES = $(BUILT_SOURCES) $(pkgconfig_DATA)
+
+EXTRADIST =				\
+	gdu-gtk-enumtypes.h.template	\
+	gdu-gtk-enumtypes.c.template	\
+	$(NULL)
 
 clean-local :
 	rm -f *~ $(BUILT_SOURCES)

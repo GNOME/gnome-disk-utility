@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-drive.h
+/* gdu-gtk-enums.h
  *
  * Copyright (C) 2007 David Zeuthen
  *
@@ -23,23 +23,16 @@
 #error "Only <gdu-gtk/gdu-gtk.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef __GDU_GTK_TYPES_H
-#define __GDU_GTK_TYPES_H
+#ifndef GDU_GTK_ENUMS_H
+#define GDU_GTK_ENUMS_H
 
 #include <glib-object.h>
-#include <gdu/gdu.h>
-#include <gtk/gtk.h>
-#include <gdu-gtk/gdu-gtk-enums.h>
 
-G_BEGIN_DECLS
+typedef enum
+{
+        GDU_CURVE_FLAGS_NONE       = 0,
+        GDU_CURVE_FLAGS_FILLED     = (1 << 0),
+        GDU_CURVE_FLAGS_FADE_EDGES = (1 << 1),
+} GduCurveFlags;
 
-typedef struct GduPoint                    GduPoint;
-typedef struct GduColor                    GduColor;
-typedef struct GduCurve                    GduCurve;
-typedef struct GduGraph                    GduGraph;
-typedef struct GduTimeLabel                GduTimeLabel;
-typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
-
-G_END_DECLS
-
-#endif /* __GDU_GTK_TYPES_H */
+#endif /* GDU_GTK_ENUMS_H */

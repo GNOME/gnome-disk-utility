@@ -23,9 +23,9 @@
 #include <glib/gi18n.h>
 
 #include "gdu-time-label.h"
+#include "gdu-curve.h"
 #include "gdu-graph.h"
 #include "gdu-ata-smart-dialog.h"
-#include "gdu-ata-smart-attribute-dialog.h"
 
 struct GduAtaSmartDialogPrivate
 {
@@ -166,13 +166,17 @@ selection_changed (GtkTreeSelection *tree_selection,
         g_debug ("selected %s", attr_name);
 
         GArray *cur_points;
+        GArray *worst_points;
+        GArray *threshold_points;
         GArray *raw_points;
         GArray *band_points;
         GList *l;
         guint64 now;
-        cur_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
-        raw_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
-        band_points = g_array_new (FALSE, FALSE, sizeof (GduGraphPoint));
+        cur_points = g_array_new (FALSE, FALSE, sizeof (GduPoint));
+        worst_points = g_array_new (FALSE, FALSE, sizeof (GduPoint));
+        threshold_points = g_array_new (FALSE, FALSE, sizeof (GduPoint));
+        raw_points = g_array_new (FALSE, FALSE, sizeof (GduPoint));
+        band_points = g_array_new (FALSE, FALSE, sizeof (GduPoint));
 
         guint64 raw_min;
         guint64 raw_max;
@@ -263,16 +267,14 @@ selection_changed (GtkTreeSelection *tree_selection,
                 GduAtaSmartHistoricalData *data = GDU_ATA_SMART_HISTORICAL_DATA (l->data);
                 GduAtaSmartAttribute *attr;
                 guint64 time_collected;
-                GduGraphPoint point;
+                GduPoint point;
                 guint64 age;
                 gboolean use_point;
 
-                memset (&point, '\0', sizeof (GduGraphPoint));
+                memset (&point, '\0', sizeof (GduPoint));
 
                 time_collected = gdu_ata_smart_historical_data_get_time_collected (data);
                 age = now - time_collected;
-
-                g_debug ("age = %d", (gint) age);
 
                 /* skip old points, except if the following point is not too old */
                 use_point = FALSE;
@@ -291,20 +293,30 @@ selection_changed (GtkTreeSelection *tree_selection,
 
                 if (use_point) {
 
-                        point.x = 1.0f - ((gfloat) age) / ((gfloat) timespan);
+                        point.x = 1.0 - ((gdouble) age) / ((gdouble) timespan);
 
                         attr = gdu_ata_smart_historical_data_get_attribute (data, attr_name);
                         if (attr != NULL) {
                                 guint current;
+                                guint worst;
+                                guint threshold;
                                 guint64 raw;
 
                                 current = gdu_ata_smart_attribute_get_current (attr);
+                                worst = gdu_ata_smart_attribute_get_worst (attr);
+                                threshold = gdu_ata_smart_attribute_get_threshold (attr);
                                 raw = gdu_ata_smart_attribute_get_pretty_value (attr);
 
                                 point.y = current / 255.0f;
                                 g_array_append_val (cur_points, point);
 
-                                point.y = ((gfloat) (raw - raw_min)) / ((gfloat) (raw_max - raw_min));
+                                point.y = worst / 255.0f;
+                                g_array_append_val (worst_points, point);
+
+                                point.y = threshold / 255.0f;
+                                g_array_append_val (threshold_points, point);
+
+                                point.y = ((gdouble) (raw - raw_min)) / ((gdouble) (raw_max - raw_min));
                                 g_array_append_val (raw_points, point);
 
                                 g_object_unref (attr);
@@ -318,12 +330,17 @@ selection_changed (GtkTreeSelection *tree_selection,
                                 band_start = last_age - tolerance;
                                 band_end = age + tolerance;
 
-                                point.x = 1.0f - band_start / ((gfloat) timespan);
-                                point.y = 0;
+                                point.x = 1.0 - band_start / ((gdouble) timespan);
+                                point.y = 1.0;
                                 g_array_append_val (band_points, point);
 
-                                point.x = 1.0f - band_end / ((gfloat) timespan);
-                                point.y = 0;
+                                point.x = 1.0 - band_end / ((gdouble) timespan);
+                                point.y = 1.0;
+                                g_array_append_val (band_points, point);
+
+                                /* close the segment */
+                                point.x = G_MAXDOUBLE;
+                                point.y = G_MAXDOUBLE;
                                 g_array_append_val (band_points, point);
                         }
                 }
@@ -331,26 +348,92 @@ selection_changed (GtkTreeSelection *tree_selection,
                 last_age = age;
         }
 
-        GdkColor cur_color = { 0, 0x8c00, 0xb000, 0xd700};
-        GdkColor raw_color = { 0, 0xfc00, 0xaf00, 0x3e00};
-        GdkColor band_color = { 0, 0x4000, 0x4000, 0x4000};
+#define GDU_COLOR_FROM_HEX(argb_hex, alpha)             \
+        {                                               \
+                (((argb_hex) >> 16)&0xff) / 255.0,      \
+                (((argb_hex) >>  8)&0xff) / 255.0,      \
+                (((argb_hex) >>  0)&0xff) / 255.0,      \
+                alpha                                   \
+        }
 
-        gdu_graph_set_curve (GDU_GRAPH (dialog->priv->graph),
+        /* see http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines for colors
+         */
+        GduColor raw_color       = GDU_COLOR_FROM_HEX (0xfcaf3e, 255.0); /* orange */
+        GduColor cur_color       = GDU_COLOR_FROM_HEX (0x729fcf, 255.0); /* sky blue */
+        GduColor worst_color     = GDU_COLOR_FROM_HEX (0xad7fa8, 255.0); /* plum */
+        GduColor threshold_color = GDU_COLOR_FROM_HEX (0xef2929, 255.0); /* scarlet red */
+        GduColor band_color      = { 0.00, 0.00, 0.00, 0.0 };
+        GduColor band_fill_color = { 0.85, 0.85, 0.85, 0.5 };
+        GduCurve *c;
+
+        /* add graphs in order */
+        gint z_order = 0;
+
+        /* first the bands representing no data */
+        c = gdu_curve_new ();
+        gdu_curve_set_legend (c, _("No data"));
+        gdu_curve_set_z_order (c, z_order++);
+        gdu_curve_set_points (c, band_points);
+        gdu_curve_set_color (c, &band_color);
+        gdu_curve_set_fill_color (c, &band_fill_color);
+        gdu_curve_set_flags (c, GDU_CURVE_FLAGS_FILLED | GDU_CURVE_FLAGS_FADE_EDGES);
+        gdu_graph_add_curve (GDU_GRAPH (dialog->priv->graph),
+                             "band",
+                             c);
+        g_object_unref (c);
+
+        /* then worst */
+        c = gdu_curve_new ();
+        gdu_curve_set_legend (c, _("Worst"));
+        gdu_curve_set_z_order (c, z_order++);
+        gdu_curve_set_points (c, worst_points);
+        gdu_curve_set_color (c, &worst_color);
+        gdu_curve_set_width (c, 1.0);
+        gdu_graph_add_curve (GDU_GRAPH (dialog->priv->graph),
+                             "worst",
+                             c);
+        g_object_unref (c);
+
+        /* then threshold */
+        c = gdu_curve_new ();
+        gdu_curve_set_legend (c, _("Treshold"));
+        gdu_curve_set_z_order (c, z_order++);
+        gdu_curve_set_points (c, threshold_points);
+        gdu_curve_set_color (c, &threshold_color);
+        gdu_curve_set_width (c, 1.0);
+        gdu_graph_add_curve (GDU_GRAPH (dialog->priv->graph),
+                             "threshold",
+                             c);
+        g_object_unref (c);
+
+        /* then current */
+        c = gdu_curve_new ();
+        gdu_curve_set_legend (c, _("Current"));
+        gdu_curve_set_z_order (c, z_order++);
+        gdu_curve_set_points (c, cur_points);
+        gdu_curve_set_color (c, &cur_color);
+        gdu_curve_set_width (c, 2.0);
+        gdu_graph_add_curve (GDU_GRAPH (dialog->priv->graph),
                              "current",
-                             &cur_color,
-                             cur_points);
+                             c);
+        g_object_unref (c);
 
-        gdu_graph_set_curve (GDU_GRAPH (dialog->priv->graph),
+
+        /* then raw */
+        c = gdu_curve_new ();
+        gdu_curve_set_legend (c, _("Raw")); /* TODO: units? */
+        gdu_curve_set_z_order (c, z_order++);
+        gdu_curve_set_points (c, raw_points);
+        gdu_curve_set_color (c, &raw_color);
+        gdu_curve_set_width (c, 2.0);
+        gdu_graph_add_curve (GDU_GRAPH (dialog->priv->graph),
                              "raw",
-                             &raw_color,
-                             raw_points);
-
-        gdu_graph_set_band (GDU_GRAPH (dialog->priv->graph),
-                            "discontinuity",
-                            &band_color,
-                            band_points);
+                             c);
+        g_object_unref (c);
 
         g_array_unref (cur_points);
+        g_array_unref (worst_points);
+        g_array_unref (threshold_points);
         g_array_unref (raw_points);
         g_array_unref (band_points);
 
@@ -415,7 +498,7 @@ gdu_ata_smart_dialog_constructed (GObject *object)
 
         graph = gdu_graph_new ();
         dialog->priv->graph = graph;
-        gtk_widget_set_size_request (graph, 480, 180);
+        gtk_widget_set_size_request (graph, 480, 250);
         gtk_box_pack_start (GTK_BOX (hbox), graph, TRUE, TRUE, 0);
 
         const gchar *time_axis[7];

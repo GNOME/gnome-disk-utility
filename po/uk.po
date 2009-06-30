@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-16 15:49+0300\n"
-"PO-Revision-Date: 2009-06-15 22:42+0300\n"
+"POT-Creation-Date: 2009-06-30 16:48+0300\n"
+"PO-Revision-Date: 2009-06-24 11:33+0300\n"
 "Last-Translator: wanderlust <wanderlust@ukr.net>\n"
 "Language-Team: ukrainian <Ukrainian <uk@li.org>>\n"
 "MIME-Version: 1.0\n"
@@ -65,72 +65,55 @@ msgstr "Шифрування"
 msgid "Whether the volume should be encrypted"
 msgstr "Чи потрібно шифрувати том"
 
-#: ../src/format-tool/gdu-format-dialog.c:318
-msgid "Are you sure you want to format the volume?"
-msgstr "Ви певні, що бажаєте відформатувати том?"
-
-#: ../src/format-tool/gdu-format-dialog.c:321
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" on the drive \"%s\" (%s). All "
-"existing data will be irrevocably erased."
-msgstr ""
-"Ви бажаєте відформатувати том \"%s\" на диску \"%s\" (%s). Після "
-"форматування дані буде втрачено без можливості відновлення."
-
-#: ../src/format-tool/gdu-format-dialog.c:327
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" (%s). All existing data will be "
-"irrevocably erased."
-msgstr ""
-"Ви бажаєте відфоматувати том \"%s\" (%s). Після форматування дані буде "
-"втрачено без можливості відновлення."
-
-#: ../src/format-tool/gdu-format-dialog.c:345
+#. Translators: Format is used as a verb here
+#: ../src/format-tool/gdu-format-dialog.c:325
 msgid "_Format"
 msgstr "Форм_aтувати"
 
-#: ../src/format-tool/gdu-format-dialog.c:349
+#: ../src/format-tool/gdu-format-dialog.c:327
 msgid "Disk _Utility"
 msgstr "Дискова _утиліта"
 
-#: ../src/format-tool/gdu-format-dialog.c:355
-msgid "Open volume in Palimpsest Disk Utility"
-msgstr "Відкрити том для в утиліті Palimpsest"
+#: ../src/format-tool/gdu-format-dialog.c:333
+msgid "Use Disk Utility to format volume"
+msgstr "Для форматування тому скористайтесь Disk Utility"
 
-#: ../src/format-tool/gdu-format-dialog.c:398
+#: ../src/format-tool/gdu-format-dialog.c:364
 #: ../src/palimpsest/gdu-section-unallocated.c:676
 #: ../src/palimpsest/gdu-section-unrecognized.c:441
 msgid "_Type:"
 msgstr "_Тип:"
 
-#: ../src/format-tool/gdu-format-dialog.c:404
+#: ../src/format-tool/gdu-format-dialog.c:370
 msgid "Compatible with all systems (FAT)"
 msgstr "Сумісний з усіма системами (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:406
+#: ../src/format-tool/gdu-format-dialog.c:372
 msgid "Compatible with Linux (ext2)"
 msgstr "Сумісний з Linux (ext2)"
 
-#: ../src/format-tool/gdu-format-dialog.c:408
+#: ../src/format-tool/gdu-format-dialog.c:374
 msgid "Compatible with Linux (ext3)"
 msgstr "Сумісний з Linux (ext3)"
 
-#: ../src/format-tool/gdu-format-dialog.c:410
+#: ../src/format-tool/gdu-format-dialog.c:376
 msgid "Encrypted, compatible with Linux (FAT)"
-msgstr "Шифрований, сумісний з Linux (ext2)"
+msgstr "Шифрований, сумісний з Linux (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:422
+#: ../src/format-tool/gdu-format-dialog.c:388
 msgid "_Name:"
 msgstr "_Назва:"
 
 #. Translators: Keep length of translation of "New Volume" to less than 16 characters
-#: ../src/format-tool/gdu-format-dialog.c:427
+#: ../src/format-tool/gdu-format-dialog.c:393
 msgid "New Volume"
 msgstr "Новий том"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:181
+#: ../src/format-tool/gdu-format-dialog.c:408
+msgid "Warning: All data on the volume will be irrevocably lost."
+msgstr "Увага: Всі дані, які зберігаються на томі буде безповоротно втрачено."
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:184
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
@@ -138,58 +121,120 @@ msgstr ""
 "Щоб запобігти пошкодженню даних, почекайте до завершення операції перед тим, "
 "як витягувати носій або від'єднувати пристрій."
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:213
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
 msgid "Device"
 msgstr "Пристрій"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:214
+#: ../src/format-tool/gdu-format-progress-dialog.c:217
 #: ../src/notification/gdu-slow-unmount-dialog.c:287
 msgid "The device to show the dialog for"
-msgstr "Пристрій показує діалогове вікно для"
+msgstr "Пристрій для якого показувати діалогове вікно"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:226
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "text"
 msgstr "текст"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:227
+#: ../src/format-tool/gdu-format-progress-dialog.c:230
 msgid "Text to show"
 msgstr "Текст, який зображується"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:111
 msgid "Error launching Disk Utility"
 msgstr "При запуску дискової утиліти виникла помилка"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:131
 msgid "Device to format"
 msgstr "Пристрій для форматування"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:121
+#: ../src/format-tool/gdu-format-tool.c:131 ../src/palimpsest/gdu-main.c:121
 #: ../src/palimpsest/gdu-main.c:122
 msgid "DEVICE"
 msgstr "ПРИСТРІЙ"
 
-#: ../src/format-tool/gdu-format-tool.c:182
+#: ../src/format-tool/gdu-format-tool.c:161
+#, c-format
+msgid "Operation was cancelled"
+msgstr "Операцію скавовано"
+
+#: ../src/format-tool/gdu-format-tool.c:252
 msgid "Gnome Disk Utility formatting tool"
 msgstr "Утиліта для форматування Gnome Disk Utility"
 
-#: ../src/format-tool/gdu-format-tool.c:253
-msgid "Formatting volume..."
-msgstr "Форматую том..."
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:299
+#, c-format
+msgid "Format partition %d of %s (%s)"
+msgstr "Форматувати розділ %d на %s (%s)"
 
-#: ../src/format-tool/gdu-format-tool.c:271
-msgid "Error creating filesystem"
-msgstr "При створенні файлової системи виникла помилка"
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:306
+#, c-format
+msgid "Formatting partition %d of %s (%s)"
+msgstr "Форматую розділ %d на %s (%s)"
 
-#: ../src/format-tool/gdu-format-tool.c:281
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:312
+#, c-format
+msgid "Format %s (%s)"
+msgstr "Форматувати %s (%s)"
+
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:316
+#, c-format
+msgid "Formatting %s (%s)"
+msgstr "Форматування %s (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:322
+#, c-format
+msgid "Format %s Volume (%s)"
+msgstr "Форматувати том %s (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:326
+#, c-format
+msgid "Formatting %s Volume (%s)"
+msgstr "Форматую том %s (%s)..."
+
+#: ../src/format-tool/gdu-format-tool.c:379
+msgid "Preparing..."
+msgstr "Підготовка..."
+
+#: ../src/format-tool/gdu-format-tool.c:420
+msgid "Unmounting..."
+msgstr "Від'єднання..."
+
+#: ../src/format-tool/gdu-format-tool.c:432
+#, c-format
+msgid "Unable to format '%s'"
+msgstr "Неможливо від форматувати '%s'"
+
+#: ../src/format-tool/gdu-format-tool.c:446
+msgid "Formatting..."
+msgstr "Форматую..."
+
+#: ../src/format-tool/gdu-format-tool.c:463
+msgid "Cancelling..."
+msgstr "Скасовую..."
+
+#: ../src/format-tool/gdu-format-tool.c:473
+msgid "Error formatting volume"
+msgstr "Помилка при форматуванні тому"
+
+#: ../src/format-tool/gdu-format-tool.c:484
 msgid "Mounting volume..."
 msgstr "Приєдную том..."
 
-#: ../src/format-tool/gdu-format-tool.c:305 ../src/palimpsest/gdu-shell.c:931
+#: ../src/format-tool/gdu-format-tool.c:508 ../src/palimpsest/gdu-shell.c:968
 msgid "Error mounting device"
 msgstr "Під час приєднання тому виникла помилка"
 
-#: ../src/format-tool/gdu-format-tool.c:322
+#: ../src/format-tool/gdu-format-tool.c:525
 msgid "Error storing passphrase in keyring"
 msgstr "При зберіганні парольної фрази у в'язці ключів виникла помилка"
 
@@ -580,22 +625,22 @@ msgstr "Оцінка проб помилок читання"
 msgid "Number of errors while reading from a disk."
 msgstr "Кількість помилок при читанні з диску."
 
-#: ../src/gdu/gdu-linux-md-drive.c:449
+#: ../src/gdu/gdu-linux-md-drive.c:497
 #, c-format
 msgid "%s Drive"
 msgstr "%s Пристрій"
 
-#: ../src/gdu/gdu-linux-md-drive.c:451
+#: ../src/gdu/gdu-linux-md-drive.c:499
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/gdu/gdu-linux-md-drive.c:457
+#: ../src/gdu/gdu-linux-md-drive.c:505
 #, c-format
 msgid "RAID device %s (%s)"
 msgstr "RAID-пристрій %s (%s)"
 
-#: ../src/gdu/gdu-linux-md-drive.c:464
+#: ../src/gdu/gdu-linux-md-drive.c:512
 #, c-format
 msgid "RAID device %s"
 msgstr "RAID-пристрій %s"
@@ -740,7 +785,7 @@ msgid "udf"
 msgstr "udf"
 
 #: ../src/gdu/gdu-util.c:250 ../src/palimpsest/gdu-section-swapspace.c:82
-#: ../src/palimpsest/gdu-shell.c:319
+#: ../src/palimpsest/gdu-shell.c:323
 msgid "Swap Space"
 msgstr "Розділ підкачки"
 
@@ -768,7 +813,7 @@ msgid "RAID Component (version %s)"
 msgstr "RAID-компонент (версія %s)"
 
 #: ../src/gdu/gdu-util.c:269
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1032
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
 #, c-format
 msgid "RAID Component"
 msgstr "RAID-компонент"
@@ -846,285 +891,293 @@ msgid "Starting RAID Array"
 msgstr "Запуск RAID масиву"
 
 #: ../src/gdu/gdu-util.c:319
+msgid "Checking RAID Array"
+msgstr "Перевіряю RAID масив"
+
+#: ../src/gdu/gdu-util.c:321
+msgid "Repairing RAID Array"
+msgstr "Виправлення RAID масиву"
+
+#: ../src/gdu/gdu-util.c:323
 msgid "Running S.M.A.R.T. Self Test"
 msgstr "Запуск тесту S.M.A.R.T. Self Test"
 
-#: ../src/gdu/gdu-util.c:321
+#: ../src/gdu/gdu-util.c:325
 msgid "Ejecting Media"
 msgstr "Видалення носія"
 
-#: ../src/gdu/gdu-util.c:323
+#: ../src/gdu/gdu-util.c:327
 msgid "Detaching Device"
 msgstr "Від'єднання пристрою"
 
-#: ../src/gdu/gdu-util.c:325
+#: ../src/gdu/gdu-util.c:329
 msgid "Forcibly Unmounting Filesystem"
 msgstr "Примусове від'єднання файлової системи"
 
-#: ../src/gdu/gdu-util.c:327
+#: ../src/gdu/gdu-util.c:331
 msgid "Forcibly Locking LUKS device"
 msgstr "Примусове розблокування LUKS пристрою"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
-#: ../src/gdu/gdu-util.c:342
+#: ../src/gdu/gdu-util.c:346
 msgid "MBR Partition Scheme"
 msgstr "Схема розділу MBR"
 
-#: ../src/gdu/gdu-util.c:343
+#: ../src/gdu/gdu-util.c:347
 msgid "EFI System Partition"
 msgstr "Розділ EFI System"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:345
+#: ../src/gdu/gdu-util.c:349
 msgid "Microsoft Reserved Partition"
 msgstr "Розділ Microsoft Reserved"
 
 #. {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")},
-#: ../src/gdu/gdu-util.c:347
+#: ../src/gdu/gdu-util.c:351
 msgid "LDM meta data Partition"
 msgstr "Розділ мета даних LDM"
 
-#: ../src/gdu/gdu-util.c:348
+#: ../src/gdu/gdu-util.c:352
 msgid "LDM data Partition"
 msgstr "Розділ даних LDM"
 
 #. Linux
-#: ../src/gdu/gdu-util.c:350
+#: ../src/gdu/gdu-util.c:354
 msgid "Basic Data Partition"
 msgstr "Розділ базових даних"
 
 #. Same GUID as MS!
-#: ../src/gdu/gdu-util.c:351
+#: ../src/gdu/gdu-util.c:355
 msgid "Linux RAID Partition"
 msgstr "RAID розділ Linux"
 
-#: ../src/gdu/gdu-util.c:352
+#: ../src/gdu/gdu-util.c:356
 msgid "Linux Swap Partition"
 msgstr "Розділ підкачки Linux"
 
-#: ../src/gdu/gdu-util.c:353
+#: ../src/gdu/gdu-util.c:357
 msgid "Linux LVM Partition"
 msgstr "Розділ Linux LVM"
 
-#: ../src/gdu/gdu-util.c:354
+#: ../src/gdu/gdu-util.c:358
 msgid "Linux Reserved Partition"
 msgstr "Зарезервований розділ Linux"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:356 ../src/gdu/gdu-util.c:364
+#: ../src/gdu/gdu-util.c:360 ../src/gdu/gdu-util.c:368
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Розділ Apple HFS/HFS+"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:357 ../src/gdu/gdu-util.c:363
+#: ../src/gdu/gdu-util.c:361 ../src/gdu/gdu-util.c:367
 msgid "Apple UFS Partition"
 msgstr "Розділ Apple UFS"
 
-#: ../src/gdu/gdu-util.c:358
+#: ../src/gdu/gdu-util.c:362
 msgid "Apple RAID Partition"
 msgstr "Розділ Apple RAID"
 
-#: ../src/gdu/gdu-util.c:365 ../src/gdu-gtk/gdu-gtk.c:1542
-#: ../src/palimpsest/gdu-shell.c:217 ../src/palimpsest/gdu-shell.c:245
+#: ../src/gdu/gdu-util.c:369 ../src/gdu-gtk/gdu-gtk.c:1542
+#: ../src/palimpsest/gdu-shell.c:221 ../src/palimpsest/gdu-shell.c:249
 msgid "Apple Partition Map"
 msgstr "Мапа розділу Apple"
 
-#: ../src/gdu/gdu-util.c:366
+#: ../src/gdu/gdu-util.c:370
 msgid "Unused Partition"
 msgstr "Розділ не використовується"
 
-#: ../src/gdu/gdu-util.c:367
+#: ../src/gdu/gdu-util.c:371
 msgid "Empty Partition"
 msgstr "Порожній розділ"
 
-#: ../src/gdu/gdu-util.c:368
+#: ../src/gdu/gdu-util.c:372
 msgid "Driver Partition"
 msgstr "Розділ Driver"
 
-#: ../src/gdu/gdu-util.c:369
+#: ../src/gdu/gdu-util.c:373
 msgid "Driver 4.3 Partition"
 msgstr "Розділ Driver 4.3"
 
-#: ../src/gdu/gdu-util.c:370
+#: ../src/gdu/gdu-util.c:374
 msgid "ProDOS file system"
 msgstr "Файлова система ProDOS"
 
-#: ../src/gdu/gdu-util.c:371
+#: ../src/gdu/gdu-util.c:375
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:372
+#: ../src/gdu/gdu-util.c:376
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:373
+#: ../src/gdu/gdu-util.c:377
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:374
+#: ../src/gdu/gdu-util.c:378
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:375
+#: ../src/gdu/gdu-util.c:379
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:378
+#: ../src/gdu/gdu-util.c:382
 msgid "Empty (0x00)"
 msgstr "Порожній (0x00)"
 
-#: ../src/gdu/gdu-util.c:379
+#: ../src/gdu/gdu-util.c:383
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:380
+#: ../src/gdu/gdu-util.c:384
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:381
+#: ../src/gdu/gdu-util.c:385
 msgid "Extended (0x05)"
 msgstr "Розширений (0x05)"
 
-#: ../src/gdu/gdu-util.c:382
+#: ../src/gdu/gdu-util.c:386
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:383
+#: ../src/gdu/gdu-util.c:387
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:388
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:385
+#: ../src/gdu/gdu-util.c:389
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:386
+#: ../src/gdu/gdu-util.c:390
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:387
+#: ../src/gdu/gdu-util.c:391
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 Ext d (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:388
+#: ../src/gdu/gdu-util.c:392
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:389
+#: ../src/gdu/gdu-util.c:393
 msgid "Hidden FAT12 (0x11)"
 msgstr "Схована FAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:394
 msgid "Compaq diagnostics (0x12)"
 msgstr "Діагностика Compaq (0x12)"
 
-#: ../src/gdu/gdu-util.c:391
+#: ../src/gdu/gdu-util.c:395
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "Схована FAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:396
 msgid "Hidden FAT16 (0x16)"
 msgstr "Схована FAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:393
+#: ../src/gdu/gdu-util.c:397
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "Схована HPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:398
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "Схована W95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:395
+#: ../src/gdu/gdu-util.c:399
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "Схована W95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:400
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "Схована W95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:397
+#: ../src/gdu/gdu-util.c:401
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#: ../src/gdu/gdu-util.c:398
+#: ../src/gdu/gdu-util.c:402
 msgid "Linux swap (0x82)"
 msgstr "Розділ підкачки Linux (0x82)"
 
-#: ../src/gdu/gdu-util.c:399
+#: ../src/gdu/gdu-util.c:403
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:404
 msgid "Hibernation (0x84)"
 msgstr "Hibernation (0x84)"
 
-#: ../src/gdu/gdu-util.c:401
+#: ../src/gdu/gdu-util.c:405
 msgid "Linux Extended (0x85)"
 msgstr "Linux Extended (0x85)"
 
-#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:406
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:403
+#: ../src/gdu/gdu-util.c:407
 msgid "Hibernation (0xa0)"
 msgstr "Hibernation (0xa0)"
 
-#: ../src/gdu/gdu-util.c:404
+#: ../src/gdu/gdu-util.c:408
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:405
+#: ../src/gdu/gdu-util.c:409
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:410
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:407
+#: ../src/gdu/gdu-util.c:411
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:412
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris boot (0xbe)"
 
-#: ../src/gdu/gdu-util.c:409
+#: ../src/gdu/gdu-util.c:413
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:414
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:411
+#: ../src/gdu/gdu-util.c:415
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:416
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:413
+#: ../src/gdu/gdu-util.c:417
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:414
+#: ../src/gdu/gdu-util.c:418
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Автовизначення Linux RAID  (0xfd)"
 
-#: ../src/gdu/gdu-util.c:438
+#: ../src/gdu/gdu-util.c:442
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Невідомий (%s)"
 
-#: ../src/gdu/gdu-util.c:448
+#: ../src/gdu/gdu-util.c:452
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
@@ -1132,7 +1185,7 @@ msgstr ""
 "Широковживаний формат, який сумісний майже з усіма пристроями та системами, "
 "зазвичай використовується для обміну файлами."
 
-#: ../src/gdu/gdu-util.c:452
+#: ../src/gdu/gdu-util.c:456
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
@@ -1140,7 +1193,7 @@ msgstr ""
 "Ця файлова система сумісна лише з системами Linux та надає стандартні для "
 "UNIX права доступу до файлів. Вона також не використовує журналу."
 
-#: ../src/gdu/gdu-util.c:458
+#: ../src/gdu/gdu-util.c:462
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
@@ -1148,13 +1201,13 @@ msgstr ""
 "Ця файлова система сумісна лише з системами Linux та надає стандартні для "
 "UNIX права доступу до файлів."
 
-#: ../src/gdu/gdu-util.c:462
+#: ../src/gdu/gdu-util.c:466
 msgid "Swap area used by the operating system for virtual memory."
 msgstr ""
 "Область підкачки використовується операційною системою в ролі віртуальної "
 "пам'яті."
 
-#: ../src/gdu/gdu-util.c:465
+#: ../src/gdu/gdu-util.c:469
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
@@ -1162,15 +1215,15 @@ msgstr ""
 "Рідна файлова система для родини операційних систем Windows. Не є абсолютно "
 "сумісною з іншими родинами операційних систем."
 
-#: ../src/gdu/gdu-util.c:469
+#: ../src/gdu/gdu-util.c:473
 msgid "No file system will be created."
 msgstr "Файлову систему не створено."
 
-#: ../src/gdu/gdu-util.c:472
+#: ../src/gdu/gdu-util.c:476
 msgid "Create an Extended Partition for logical partitions."
 msgstr "Створити розширений розділ для логічних розділів."
 
-#: ../src/gdu/gdu-util.c:485
+#: ../src/gdu/gdu-util.c:489
 msgid ""
 "The Master Boot Record scheme is compatible with almost any device or system "
 "but has a number of limitations with respect to disk size and number of "
@@ -1180,7 +1233,7 @@ msgstr ""
 "майже з усіма пристроями та системами, однак має ряд обмежень щодо розміру "
 "диску та кількості розділів."
 
-#: ../src/gdu/gdu-util.c:490
+#: ../src/gdu/gdu-util.c:494
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
@@ -1188,7 +1241,7 @@ msgstr ""
 "Спадкова схема, яка є несумісною майже з усіма системами за винятком систем "
 "родин Apple та більшості Linux систем. Не рекомендується для змінних носіїв."
 
-#: ../src/gdu/gdu-util.c:495
+#: ../src/gdu/gdu-util.c:499
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
@@ -1196,7 +1249,7 @@ msgstr ""
 "GUID система з сумісною з більшістю сучасних систем, однак може бути "
 "несумісною з деякими пристроями та \"спадковими\" системами."
 
-#: ../src/gdu/gdu-util.c:499
+#: ../src/gdu/gdu-util.c:503
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
@@ -1205,97 +1258,97 @@ msgstr ""
 "параметр лише якщо хочете уникнути розбиття диску з метою напр. використання "
 "всього простору диску або дискети чи Zip диску."
 
-#: ../src/gdu/gdu-util.c:682 ../src/gdu-gtk/gdu-gtk.c:946
+#: ../src/gdu/gdu-util.c:686 ../src/gdu-gtk/gdu-gtk.c:946
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "Парольна фраза для LUKS UUID %s"
 
-#: ../src/gdu/gdu-util.c:711
+#: ../src/gdu/gdu-util.c:715
 #, c-format
 msgid "%.1f kbit/s"
 msgstr "%.1f кбіт/с"
 
-#: ../src/gdu/gdu-util.c:714
+#: ../src/gdu/gdu-util.c:718
 #, c-format
 msgid "%.1f Mbit/s"
 msgstr "%.1f Мбіт/с"
 
-#: ../src/gdu/gdu-util.c:717
+#: ../src/gdu/gdu-util.c:721
 #, c-format
 msgid "%.1f Gbit/s"
 msgstr "%.1f Гбіт/с"
 
-#: ../src/gdu/gdu-util.c:732
+#: ../src/gdu/gdu-util.c:736
 msgid "SATA"
 msgstr "SATA"
 
-#: ../src/gdu/gdu-util.c:734
+#: ../src/gdu/gdu-util.c:738
 msgid "eSATA"
 msgstr "eSATA"
 
-#: ../src/gdu/gdu-util.c:736
+#: ../src/gdu/gdu-util.c:740
 msgid "PATA"
 msgstr "PATA"
 
-#: ../src/gdu/gdu-util.c:738
+#: ../src/gdu/gdu-util.c:742
 msgid "ATA"
 msgstr "ATA"
 
-#: ../src/gdu/gdu-util.c:740
+#: ../src/gdu/gdu-util.c:744
 msgid "SCSI"
 msgstr "SCSI"
 
-#: ../src/gdu/gdu-util.c:742
+#: ../src/gdu/gdu-util.c:746
 msgid "USB"
 msgstr "USB"
 
-#: ../src/gdu/gdu-util.c:744
+#: ../src/gdu/gdu-util.c:748
 msgid "Firewire"
 msgstr "Firewire"
 
-#: ../src/gdu/gdu-util.c:746
+#: ../src/gdu/gdu-util.c:750
 msgid "SDIO"
 msgstr "SDIO"
 
-#: ../src/gdu/gdu-util.c:748
+#: ../src/gdu/gdu-util.c:752
 msgid "Virtual"
 msgstr "Віртуальний"
 
-#: ../src/gdu/gdu-util.c:753 ../src/gdu-gtk/gdu-gtk.c:216
+#: ../src/gdu/gdu-util.c:757 ../src/gdu-gtk/gdu-gtk.c:216
 #: ../src/palimpsest/gdu-section-health.c:261
 #: ../src/palimpsest/gdu-section-health.c:269
 #: ../src/playground/grid/gdu-grid-element.c:566
 msgid "Unknown"
 msgstr "Невідомий"
 
-#: ../src/gdu/gdu-util.c:776
+#: ../src/gdu/gdu-util.c:780
 msgid "RAID-0"
 msgstr "RAID-0"
 
-#: ../src/gdu/gdu-util.c:778
+#: ../src/gdu/gdu-util.c:782
 msgid "RAID-1"
 msgstr "RAID-1"
 
-#: ../src/gdu/gdu-util.c:780
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:635
+#: ../src/gdu/gdu-util.c:784
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:699
 msgid "RAID-4"
 msgstr "RAID-4"
 
-#: ../src/gdu/gdu-util.c:782
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:637
+#: ../src/gdu/gdu-util.c:786
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:701
 msgid "RAID-5"
 msgstr "RAID-5"
 
-#: ../src/gdu/gdu-util.c:784
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
+#: ../src/gdu/gdu-util.c:788
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:703
 msgid "RAID-6"
 msgstr "RAID-6"
 
-#: ../src/gdu/gdu-util.c:786
+#: ../src/gdu/gdu-util.c:790
 msgid "RAID-10"
 msgstr "RAID-10"
 
-#: ../src/gdu/gdu-util.c:788
+#: ../src/gdu/gdu-util.c:792
 msgid "JBOD"
 msgstr "JBOD"
 
@@ -1585,7 +1638,7 @@ msgstr ""
 "Одна або декілька програм використовують том. Вимкніть програми, та знову "
 "спробуйте від'єднати том."
 
-#: ../src/gdu-gtk/gdu-gtk.c:417 ../src/palimpsest/gdu-shell.c:1610
+#: ../src/gdu-gtk/gdu-gtk.c:417 ../src/palimpsest/gdu-shell.c:1647
 msgid "_Unmount"
 msgstr "_Від'єднати"
 
@@ -1609,7 +1662,7 @@ msgstr "_Створити"
 msgid "Change _Passphrase"
 msgstr "Змінити _пароль"
 
-#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-shell.c:1613
+#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-shell.c:1650
 msgid "_Unlock"
 msgstr "_Розблокувати"
 
@@ -1694,13 +1747,13 @@ msgstr "Порожньо"
 msgid "Extended Partition"
 msgstr "Розширений розділ"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1527 ../src/palimpsest/gdu-shell.c:219
-#: ../src/palimpsest/gdu-shell.c:247
+#: ../src/gdu-gtk/gdu-gtk.c:1527 ../src/palimpsest/gdu-shell.c:223
+#: ../src/palimpsest/gdu-shell.c:251
 msgid "Master Boot Record"
 msgstr "Головний запис завантаження (MBR)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1532 ../src/palimpsest/gdu-shell.c:221
-#: ../src/palimpsest/gdu-shell.c:249
+#: ../src/gdu-gtk/gdu-gtk.c:1532 ../src/palimpsest/gdu-shell.c:225
+#: ../src/palimpsest/gdu-shell.c:253
 msgid "GUID Partition Table"
 msgstr "Таблиця розділу GUID"
 
@@ -1733,16 +1786,11 @@ msgstr "1 годину тому"
 msgid "%d hours ago"
 msgstr "%d годин(и) тому"
 
-#: ../src/nautilus-extension/nautilus-gdu.c:177
-#, c-format
-msgid "Could not unmount '%s'"
-msgstr "Не зміг від'єднати ''%s"
-
-#: ../src/nautilus-extension/nautilus-gdu.c:281
+#: ../src/nautilus-extension/nautilus-gdu.c:224
 msgid "_Format..."
 msgstr "Форм_атувати..."
 
-#: ../src/nautilus-extension/nautilus-gdu.c:282
+#: ../src/nautilus-extension/nautilus-gdu.c:225
 msgid "Create new filesystem on the selected device"
 msgstr "Створити нову файлову систему на обраному пристрої"
 
@@ -1756,7 +1804,7 @@ msgstr "Можна безпечно витягнути \"%s\"."
 #: ../src/notification/gdu-slow-unmount-dialog.c:233
 #, c-format
 msgid "Writing data to \"%s\"..."
-msgstr "Записую дані до \"%s\""
+msgstr "Записую дані до \"%s\"..."
 
 #: ../src/notification/gdu-slow-unmount-dialog.c:248
 msgid ""
@@ -1780,7 +1828,7 @@ msgid ""
 "information."
 msgstr ""
 "Один або кілька вінчестерів повідомили про можливі проблеми. Клацніть на "
-"іконці, щоб отримати детальнішу інформацію."
+"значку, щоб отримати детальнішу інформацію."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
@@ -1801,7 +1849,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:88
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
-#: ../src/palimpsest/gdu-shell.c:1471
+#: ../src/palimpsest/gdu-shell.c:1508
 #, c-format
 msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
@@ -1812,7 +1860,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
-#: ../src/palimpsest/gdu-shell.c:1476
+#: ../src/palimpsest/gdu-shell.c:1513
 #, c-format
 msgid ""
 "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
@@ -2267,10 +2315,6 @@ msgstr "Показати історію ATA SMART"
 msgid "Run an ATA SMART self test on the disk"
 msgstr "Запустити самоперевірку ATA SMART на диску"
 
-#: ../src/palimpsest/gdu-section-job.c:207
-msgid "_Cancel"
-msgstr "_Скасувати"
-
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:76
 msgid "Error adding component"
 msgstr "Помилка при додаванні складової"
@@ -2316,194 +2360,223 @@ msgstr ""
 msgid "_Remove Component"
 msgstr "В_идалити складову"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:631
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:695
 msgid "Striped (RAID-0)"
 msgstr "Частинний (RAID-0)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:633
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
 msgid "Mirrored (RAID-1)"
 msgstr "Віддзеркалений (RAID-1)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:641
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:705
 msgid "Linear (Just a Bunch Of Disks)"
 msgstr "Лінійний (всього-лиш набір дисків)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:648
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:712
 #, c-format
 msgid "%d Components"
 msgstr "Складових %d"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:714
 #, c-format
 msgid "%d Components (%s each)"
 msgstr "%d Складових (%s кожна)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:662
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:726
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr ""
+msgstr "Не працює, часткова готовність"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:670
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:734
 msgctxt "RAID status"
 msgid "Not running"
-msgstr ""
+msgstr "Не працює"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:672
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:736
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr ""
+msgstr "Не працює, може працювати з пониженими характеристиками"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:674
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:738
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
-msgstr ""
+msgstr "Не працює, не достатньо складових для запуску"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:693
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:757
 msgctxt "RAID status"
 msgid "Degraded"
-msgstr ""
+msgstr "З пониженими характеристиками"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:761
 msgctxt "RAID status"
 msgid "Running"
-msgstr ""
+msgstr "Працює"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:702
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:766
 msgctxt "RAID status"
 msgid "Reshaping"
-msgstr ""
+msgstr "Відновлення форми"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:706
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:769
 msgctxt "RAID status"
 msgid "Resyncing"
-msgstr ""
+msgstr "Повторна синхранізація"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:710
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:772
 msgctxt "RAID status"
 msgid "Repairing"
-msgstr ""
+msgstr "Виправлення"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:714
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:775
 msgctxt "RAID status"
 msgid "Recovering"
-msgstr ""
+msgstr "Відновлення"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:778
+msgctxt "RAID status"
+msgid "Checking"
+msgstr "Перевірка"
 
 #. Translators: this string tells about an ongoing synchronization.
 #. * %3.01f is replaced by the percentage of completion
 #. * %s is replaced by the speed of the operation
 #.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:786
 #, c-format
 msgctxt "RAID status"
 msgid " @ %3.01f%% (%s)"
-msgstr ""
+msgstr " @ %3.01f%% (%s)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:788
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:852
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr ""
+msgstr "Помилковий"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:793
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:857
 msgctxt "Linux MD slave state"
 msgid "In Sync"
-msgstr ""
+msgstr "Синхронізується"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:795
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:859
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "Майже заповнений"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:797
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:861
 msgctxt "Linux MD slave state"
 msgid "Blocked"
-msgstr ""
+msgstr "Блокований"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:799
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Spare"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:890
-msgid "Array Name:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:906
-msgid "Home Host:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:922
-msgid "Array Size:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:938
-msgid "RAID Type:"
-msgstr ""
+msgstr "Запасний"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:954
-msgid "Components:"
-msgstr ""
+msgid "Array Name:"
+msgstr "Назва масиву:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
+msgid "Home Host:"
+msgstr "Домашній вузол:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:986
+msgid "Array Size:"
+msgstr "Розмір масиву:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1002
+msgid "RAID Type:"
+msgstr "Тип RAID:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1018
+msgid "Components:"
+msgstr "Складові:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "State:"
-msgstr ""
+msgstr "Стан:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1001
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
 msgid "A_ttach"
-msgstr ""
+msgstr "При_єднати"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1007
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1071
 msgid ""
 "Attaches the stale component to the RAID array. After attachment, data from "
 "the array will be synchronized on the component."
 msgstr ""
+"Приєднує застарілі складові до RAID масиву. Після приєднання, дані масиву "
+"будуть синхронізовані на складовій."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1011
-#: ../src/palimpsest/gdu-shell.c:1612
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
+#: ../src/palimpsest/gdu-shell.c:1649
 msgid "_Detach"
-msgstr ""
+msgstr "_Від'єднати"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1017
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1081
 msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
+"Від'єднання працюючих складових з RAID масиву. Дані зі складової буде "
+"видалено, і її можна буде використовувати для інших цілей."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1021
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
 msgid "_Add..."
-msgstr ""
+msgstr "_Додати..."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1027
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1091
 msgid ""
 "Adds a new component to the running RAID array. Use this when replacing a "
 "failed component or adding a hot spare."
 msgstr ""
+"Додавання нової складової до RAID масиву, який працює. Використовується для "
+"заміни пошкодженої складової або додавання гарячої заміни."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1046
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1094
+msgid "Chec_k"
+msgstr "Пере_вірити"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1098
+msgid "Starts checking the RAID array for redundancy"
+msgstr "Розпочати перевірку RAID масиву на надлишковість"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
+msgid "_Repair"
+msgstr "В_иправити"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
+msgid "Starts repairing the RAID array"
+msgstr "Розпочати виправлення RAID масиву"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1122
 msgid "State"
-msgstr ""
+msgstr "Стан"
 
 #: ../src/palimpsest/gdu-section-no-media.c:113
-#: ../src/palimpsest/gdu-shell.c:235 ../src/palimpsest/gdu-shell.c:259
+#: ../src/palimpsest/gdu-shell.c:239 ../src/palimpsest/gdu-shell.c:263
 #, c-format
 msgid "No Media Detected"
-msgstr ""
+msgstr "Носіїв не виявлено"
 
 #: ../src/palimpsest/gdu-section-no-media.c:126
 msgid ""
 "To format or edit media, insert it into the drive and wait a few seconds."
 msgstr ""
+"Для форматування або редагування носія, вставте його в привід та зачекайте "
+"кілька секунд."
 
 #: ../src/palimpsest/gdu-section-no-media.c:137
 msgid "_Detect Media"
-msgstr ""
+msgstr "Ви_явити носій"
 
 #: ../src/palimpsest/gdu-section-partition.c:60
 msgid "Error deleting partition"
-msgstr ""
+msgstr "При знищенні розділу трапилася помилка"
 
 #: ../src/palimpsest/gdu-section-partition.c:112
 msgid "Are you sure you want to remove the partition, deleting existing data ?"
-msgstr ""
+msgstr "Ви певні, що бажаєте видалити розділ, знищивши на ньому всі дані ?"
 
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
@@ -2513,6 +2586,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d (мітка \"%s\") носія \"%s\" та всі розділи, які існують "
+"в межах поточного розширеного розділу, буде безповоротно видалено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
@@ -2522,6 +2599,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d (мітка \"%s\") носія \"%s\" буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
@@ -2531,6 +2611,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d носія \"%s\" та всі розділи, які знаходяться в межах "
+"поточного розширеного розділу, буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
@@ -2539,6 +2623,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d носія \"%s\" буде безповоротно втрачено\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
@@ -2548,6 +2635,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d (мітка \"%s\") \"%s\" та всі розділи, які знаходяться в "
+"межах поточного розширеного розділу, буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
@@ -2557,6 +2648,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d (мітка \"%s\") \"%s\" буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
@@ -2566,6 +2660,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d на \"%s\" та всі розділи, які знаходяться в межах "
+"поточного розширеного розділу, буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
@@ -2574,96 +2672,108 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d на \"%s\" буде безповоротно втрачено.\n"
+"\n"
+"Переконайтеся, що у Вас є резервні копії. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-partition.c:200
 msgid "_Delete Partition"
-msgstr ""
+msgstr "В_идалити розділ"
 
 #: ../src/palimpsest/gdu-section-partition.c:407
 msgid "Error modifying partition"
-msgstr ""
+msgstr "При зміні розділу виникла помилка"
 
 #: ../src/palimpsest/gdu-section-partition.c:528
 msgid "Partition"
-msgstr ""
+msgstr "Розділ"
 
 #: ../src/palimpsest/gdu-section-partition.c:541
 msgid ""
 "The attributes of the partition can be edited. The partition can also be "
 "deleted to make room for other data."
 msgstr ""
+"Атрибути розділу можна редагувати. Також розділ можна видалити, щоб "
+"збільшити місце для інших даних."
 
 #: ../src/palimpsest/gdu-section-partition.c:558
 msgid "Part_ition Label:"
-msgstr ""
+msgstr "Мітка _розділу:"
 
 #. flags
 #. used by mbr, apm
 #: ../src/palimpsest/gdu-section-partition.c:586
 msgid "_Bootable"
-msgstr ""
+msgstr "_Завантажувальний"
 
 #. used by gpt
 #: ../src/palimpsest/gdu-section-partition.c:594
 msgid "Required / Firm_ware"
-msgstr ""
+msgstr "Необхідно / _мікропрограма"
 
 #: ../src/palimpsest/gdu-section-partition.c:606
 msgid "Delete the partition"
-msgstr ""
+msgstr "Видалити розділ"
 
 #: ../src/palimpsest/gdu-section-partition.c:610
 msgid "_Revert"
-msgstr ""
+msgstr "_Повернути"
 
 #: ../src/palimpsest/gdu-section-partition.c:615
 msgid "Apply the changes made"
-msgstr ""
+msgstr "Застосувати зміни"
 
 #: ../src/palimpsest/gdu-section-swapspace.c:95
 msgid "The volume contains swap space."
-msgstr ""
+msgstr "Том містить область підкачки."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:91
 #: ../src/palimpsest/gdu-section-unrecognized.c:148
 msgid "Error creating partition"
-msgstr ""
+msgstr "При створенні розділу виникла помилка"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:407
 msgid ""
 "This is the last primary partition that can be created. If you need more "
 "partitions, you can create an Extended Partition."
 msgstr ""
+"Створений головний розділ є останнім. Якщо Вам потрібно більше розділів - "
+"створіть розширений розділ."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
 msgid ""
 "No more partitions can be created. You may want to delete  an existing "
 "partition and then create an Extended Partition."
 msgstr ""
+"Не можна створювати більше розділів. Ви можете видалити існуючий розділ та "
+"створити замість нього розширений."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
-msgstr ""
+msgstr "Створити розділ"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:614
 msgid ""
 "To create a new partition, select the size and whether to create a file "
 "system. The partition type, label and flags can be changed after creation."
 msgstr ""
+"Для створення нового розділу, оберіть місце та необхідність створення "
+"файлової системи. Тип розділу, мітку та прапорці можна буде змінити після "
+"створення."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
-msgstr ""
+msgstr "_Розмір:"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:650
 msgid "MB"
-msgstr ""
+msgstr "Мб"
 
 #. whether to chown fs root for user
 #: ../src/palimpsest/gdu-section-unallocated.c:700
 #: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
-msgstr ""
+msgstr "Стати в_ласником файлової системи"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:703
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
@@ -2672,12 +2782,15 @@ msgid ""
 "created file system be will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
+"Обрана файлова система підтримує концепцію власності. У випадку вибору "
+"параметру, створена файлова система буде Вашою власністю. В іншому випадку "
+"лише адміністратор зможе отримати до неї доступ."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:713
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
-msgstr ""
+msgstr "За_шифрувати базовий пристрій"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
@@ -2686,396 +2799,419 @@ msgid ""
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Шифрування захищає Ваші дані та вимагає парольної фрази для використання "
+"файлової системи. Це веде до зменшення швидкодії та може бути несумісним з "
+"іншими операційними системами, якщо Ви використовуєте носії."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:732
 msgid "Create partition"
-msgstr ""
+msgstr "Створити розділ"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:231
 msgid ""
 "Are you sure you want to create a new file system, deleting existing data ?"
 msgstr ""
+"Ви певні, що бажаєте створити нову файлову систему, знищивши існуючі дані?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
-#: ../src/palimpsest/gdu-shell.c:1455
+#: ../src/palimpsest/gdu-shell.c:1492
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d носія %s буде безповоротно видалено. Переконайтеся, що у "
+"Вас є зарезервовані копії важливих даних. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
-#: ../src/palimpsest/gdu-shell.c:1462
+#: ../src/palimpsest/gdu-shell.c:1499
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"Всі дані розділу %d на \"%s\" буде безповоротно видалено. Переконайтеся, що "
+"у Вас є зарезервовані копії важливих даних. Цю дію не можна скасувати."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
-msgstr ""
+msgstr "Створити файлову систему"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:410
 msgid ""
 "To create a new file system on the device, select the type and label and "
 "then press \"Create\". All existing data will be lost."
 msgstr ""
+"Для створення нової файлової системи, оберіть тип та мітку, а тоді натисніть "
+"\"Створити\". Всі існуючі дані буде втрачено."
 
-#: ../src/palimpsest/gdu-shell.c:223 ../src/palimpsest/gdu-shell.c:251
+#: ../src/palimpsest/gdu-shell.c:227 ../src/palimpsest/gdu-shell.c:255
 #, c-format
 msgid "Unknown Scheme: %s"
-msgstr ""
+msgstr "Невідома схема: %s"
 
-#: ../src/palimpsest/gdu-shell.c:227
+#: ../src/palimpsest/gdu-shell.c:231
 #, c-format
 msgid "Partitioned Media (%s)"
-msgstr ""
+msgstr "Носій, на якому присутні розділи (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:232
+#: ../src/palimpsest/gdu-shell.c:236
 msgid "Unpartitioned Media"
-msgstr ""
+msgstr "Носій, на якому нема розділів"
 
-#: ../src/palimpsest/gdu-shell.c:238 ../src/palimpsest/gdu-shell.c:262
-#: ../src/palimpsest/gdu-shell.c:326
+#: ../src/palimpsest/gdu-shell.c:242 ../src/palimpsest/gdu-shell.c:266
+#: ../src/palimpsest/gdu-shell.c:330
 #, c-format
 msgid "Unrecognized"
-msgstr ""
+msgstr "Невідомий"
 
-#: ../src/palimpsest/gdu-shell.c:256 ../src/palimpsest/gdu-shell.c:343
+#: ../src/palimpsest/gdu-shell.c:260 ../src/palimpsest/gdu-shell.c:347
 #, c-format
 msgid "Not Partitioned"
-msgstr ""
+msgstr "Без розділів"
 
-#: ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:273
 msgid "Linux Software RAID"
-msgstr ""
+msgstr "Програмний RAID Linux"
 
-#: ../src/palimpsest/gdu-shell.c:275
+#: ../src/palimpsest/gdu-shell.c:279
 #, c-format
 msgid "Connected via %s"
-msgstr ""
+msgstr "Приєднано через %s"
 
-#: ../src/palimpsest/gdu-shell.c:282 ../src/palimpsest/gdu-shell.c:350
-#: ../src/palimpsest/gdu-shell.c:385
+#: ../src/palimpsest/gdu-shell.c:286 ../src/palimpsest/gdu-shell.c:354
+#: ../src/palimpsest/gdu-shell.c:389
 #, c-format
 msgid "%s (Read Only)"
-msgstr ""
+msgstr "%s (Лише для читання)"
 
-#: ../src/palimpsest/gdu-shell.c:289
+#: ../src/palimpsest/gdu-shell.c:293
 msgid "Not running"
-msgstr ""
+msgstr "Не працює"
 
-#: ../src/palimpsest/gdu-shell.c:304
+#: ../src/palimpsest/gdu-shell.c:308
 #, c-format
 msgid "%s File System"
-msgstr ""
+msgstr "Файлова систему %s"
 
-#: ../src/palimpsest/gdu-shell.c:315
+#: ../src/palimpsest/gdu-shell.c:319
 msgid "Encrypted LUKS Device"
-msgstr ""
+msgstr "Шифрований пристрій LUKS"
 
-#: ../src/palimpsest/gdu-shell.c:322
+#: ../src/palimpsest/gdu-shell.c:326
 msgid "Data"
-msgstr ""
+msgstr "Дані"
 
-#: ../src/palimpsest/gdu-shell.c:331
+#: ../src/palimpsest/gdu-shell.c:335
 msgid "Cleartext LUKS Device"
-msgstr ""
+msgstr "Незашифрований пристрій LUKS"
 
-#: ../src/palimpsest/gdu-shell.c:338
+#: ../src/palimpsest/gdu-shell.c:342
 #, c-format
 msgid "Partition %d (%s)"
-msgstr ""
+msgstr "Розділ %d (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:381
+#: ../src/palimpsest/gdu-shell.c:385
 msgid "Unallocated Space"
-msgstr ""
+msgstr "Незайнятий простір"
 
-#: ../src/palimpsest/gdu-shell.c:864
+#: ../src/palimpsest/gdu-shell.c:901
 msgid "Error checking file system on device"
-msgstr ""
+msgstr "Помилка при перевірці файлової системи"
 
-#: ../src/palimpsest/gdu-shell.c:879
+#: ../src/palimpsest/gdu-shell.c:916
 #, c-format
 msgid "File system check on \"%s\" completed"
-msgstr ""
+msgstr "Перевірку файлової системи \"%s\" завершено"
 
-#: ../src/palimpsest/gdu-shell.c:883
+#: ../src/palimpsest/gdu-shell.c:920
 msgid "File system is clean."
-msgstr ""
+msgstr "Файлова систем чиста."
 
-#: ../src/palimpsest/gdu-shell.c:886
+#: ../src/palimpsest/gdu-shell.c:923
 msgid "File system is <b>NOT</b> clean."
-msgstr ""
+msgstr "Файлова система <b>МІСТИТЬ</b> помилки."
 
-#: ../src/palimpsest/gdu-shell.c:972
+#: ../src/palimpsest/gdu-shell.c:1009
 msgid "Error unmounting device"
-msgstr ""
+msgstr "При від'єднанні пристрою виникла помилка"
 
-#: ../src/palimpsest/gdu-shell.c:1026
+#: ../src/palimpsest/gdu-shell.c:1063
 msgid "Error ejecting device"
-msgstr ""
+msgstr "При при витягуванні пристрою виникла помилка"
 
-#: ../src/palimpsest/gdu-shell.c:1057
-#, fuzzy
+#: ../src/palimpsest/gdu-shell.c:1094
 msgid "Error detaching device"
-msgstr "Під час приєднання тому виникла помилка"
+msgstr "Підчас від'єднання тому виникла помилка"
 
-#: ../src/palimpsest/gdu-shell.c:1154
+#: ../src/palimpsest/gdu-shell.c:1191
 msgid "Error unlocking device"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1219
-msgid "Error locking encrypted device"
-msgstr ""
+msgstr "Помилка при розблокуванні пристрою"
 
 #: ../src/palimpsest/gdu-shell.c:1256
+msgid "Error locking encrypted device"
+msgstr "Помилка при блокуванні шифрованого пристрою"
+
+#: ../src/palimpsest/gdu-shell.c:1293
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
-msgstr ""
+msgstr "При запуску приводу \"%s\" виникла помилка."
 
-#: ../src/palimpsest/gdu-shell.c:1310
+#: ../src/palimpsest/gdu-shell.c:1347
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr ""
+"Ви певні, що бажаєте запустити привід \"%s\" з пониженими характеристиками ?"
 
-#: ../src/palimpsest/gdu-shell.c:1314
+#: ../src/palimpsest/gdu-shell.c:1351
 msgid ""
 "Starting a RAID array in degraded mode means that the RAID volume is no "
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
 "lost if a drive fails."
 msgstr ""
+"Запуск RAID масиву з пониженими характеристиками означає, що том RAID більше "
+"не зможе адекватно реагувати на помилки приводу. Дані тому можуть бути "
+"безповоротно втрачені при збою приводу."
 
-#: ../src/palimpsest/gdu-shell.c:1319
+#: ../src/palimpsest/gdu-shell.c:1356
 msgid "_Start Array"
-msgstr ""
+msgstr "_Запустити масив"
 
-#: ../src/palimpsest/gdu-shell.c:1347
+#: ../src/palimpsest/gdu-shell.c:1384
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
-msgstr ""
+msgstr "При зупинці приводу \"%s\" виникла помилка."
 
-#: ../src/palimpsest/gdu-shell.c:1399
+#: ../src/palimpsest/gdu-shell.c:1436
 msgid "Error erasing data"
-msgstr ""
+msgstr "Помилка при видаленні даних"
 
-#: ../src/palimpsest/gdu-shell.c:1451
+#: ../src/palimpsest/gdu-shell.c:1488
 msgid "Are you sure you want to erase the device ?"
-msgstr ""
+msgstr "Ви певні, що хочете стерти пристрій?"
 
-#: ../src/palimpsest/gdu-shell.c:1487 ../src/palimpsest/gdu-shell.c:1617
+#: ../src/palimpsest/gdu-shell.c:1524 ../src/palimpsest/gdu-shell.c:1654
 msgid "_Erase"
-msgstr ""
+msgstr "С_терти"
 
-#: ../src/palimpsest/gdu-shell.c:1546 ../src/palimpsest/gdu-shell.c:1841
+#: ../src/palimpsest/gdu-shell.c:1583 ../src/palimpsest/gdu-shell.c:1874
 msgid "Palimpsest Disk Utility"
 msgstr "Утиліта Palimpsest для роботи з дисками"
 
-#: ../src/palimpsest/gdu-shell.c:1551
+#: ../src/palimpsest/gdu-shell.c:1588
 msgid "translator-credits"
-msgstr ""
+msgstr "wanderlust <wanderlust@ukr.net>"
 
-#: ../src/palimpsest/gdu-shell.c:1604
+#: ../src/palimpsest/gdu-shell.c:1641
 msgid "_File"
-msgstr ""
+msgstr "_Файл"
 
-#: ../src/palimpsest/gdu-shell.c:1605
+#: ../src/palimpsest/gdu-shell.c:1642
 msgid "_Edit"
-msgstr ""
+msgstr "_Редагування"
 
-#: ../src/palimpsest/gdu-shell.c:1606 ../src/palimpsest/gdu-shell.c:1621
+#: ../src/palimpsest/gdu-shell.c:1643 ../src/palimpsest/gdu-shell.c:1658
 msgid "_Help"
-msgstr ""
+msgstr "_Довідка"
 
-#: ../src/palimpsest/gdu-shell.c:1608
+#: ../src/palimpsest/gdu-shell.c:1645
 msgid "_Check File System"
-msgstr ""
+msgstr "_Перевірити файлову систему"
 
-#: ../src/palimpsest/gdu-shell.c:1608
+#: ../src/palimpsest/gdu-shell.c:1645
 msgid "Check the file system"
-msgstr ""
+msgstr "Перевірити файлову систему"
 
-#: ../src/palimpsest/gdu-shell.c:1609
+#: ../src/palimpsest/gdu-shell.c:1646
 msgid "_Mount"
-msgstr ""
+msgstr "При_єднати"
 
-#: ../src/palimpsest/gdu-shell.c:1609
+#: ../src/palimpsest/gdu-shell.c:1646
 msgid "Mount the filesystem on device"
-msgstr ""
+msgstr "Приєднати файлову систему пристрою"
 
-#: ../src/palimpsest/gdu-shell.c:1610
+#: ../src/palimpsest/gdu-shell.c:1647
 msgid "Unmount the filesystem"
-msgstr ""
+msgstr "Від'єднати файлову систему"
 
-#: ../src/palimpsest/gdu-shell.c:1611
+#: ../src/palimpsest/gdu-shell.c:1648
 msgid "_Eject"
-msgstr ""
+msgstr "Ви_тягнути"
 
-#: ../src/palimpsest/gdu-shell.c:1611
+#: ../src/palimpsest/gdu-shell.c:1648
 msgid "Eject media from the device"
-msgstr ""
+msgstr "Витягнути носій з пристрою"
 
-#: ../src/palimpsest/gdu-shell.c:1612
+#: ../src/palimpsest/gdu-shell.c:1649
 msgid "Detach the device from the system, powering it off"
-msgstr ""
+msgstr "Від'єднати пристрій від системи, знеструмивши його"
 
-#: ../src/palimpsest/gdu-shell.c:1613
+#: ../src/palimpsest/gdu-shell.c:1650
 msgid "Unlock the encrypted device, making the data available in cleartext"
 msgstr ""
+"Розблокувати шифрований пристрій, перевівши дані у нешифрований формат."
 
-#: ../src/palimpsest/gdu-shell.c:1614
+#: ../src/palimpsest/gdu-shell.c:1651
 msgid "_Lock"
-msgstr ""
+msgstr "За_блокувати"
 
-#: ../src/palimpsest/gdu-shell.c:1614
+#: ../src/palimpsest/gdu-shell.c:1651
 msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgstr ""
+"Заблокувати шифрований пристрій, із забороною доступу до нешифрованих даних."
 
-#: ../src/palimpsest/gdu-shell.c:1615
+#: ../src/palimpsest/gdu-shell.c:1652
 msgid "_Start"
-msgstr ""
+msgstr "З_апустити"
 
-#: ../src/palimpsest/gdu-shell.c:1615
+#: ../src/palimpsest/gdu-shell.c:1652
 msgid "Start the array"
-msgstr ""
+msgstr "Запустити масив"
 
-#: ../src/palimpsest/gdu-shell.c:1616
+#: ../src/palimpsest/gdu-shell.c:1653
 msgid "_Stop"
-msgstr ""
+msgstr "З_упинити"
 
-#: ../src/palimpsest/gdu-shell.c:1616
+#: ../src/palimpsest/gdu-shell.c:1653
 msgid "Stop the array"
-msgstr ""
+msgstr "Зупинити масив"
 
-#: ../src/palimpsest/gdu-shell.c:1617
+#: ../src/palimpsest/gdu-shell.c:1654
 msgid "Erase the contents of the device"
-msgstr ""
+msgstr "Стерти вміст пристрою"
 
-#: ../src/palimpsest/gdu-shell.c:1620
+#: ../src/palimpsest/gdu-shell.c:1657
 msgid "_Quit"
-msgstr ""
+msgstr "Ви_йти"
 
-#: ../src/palimpsest/gdu-shell.c:1620
+#: ../src/palimpsest/gdu-shell.c:1657
 msgid "Quit"
-msgstr ""
+msgstr "Вийти"
 
-#: ../src/palimpsest/gdu-shell.c:1621
+#: ../src/palimpsest/gdu-shell.c:1658
 msgid "Get Help on Palimpsest Disk Utility"
-msgstr ""
+msgstr "Отримати довідку про Palimpsest Disk Utility"
 
-#: ../src/palimpsest/gdu-shell.c:1622
+#: ../src/palimpsest/gdu-shell.c:1659
 msgid "_About"
-msgstr ""
+msgstr "_Про програму"
 
-#: ../src/palimpsest/gdu-shell.c:1718
+#: ../src/palimpsest/gdu-shell.c:1743
 msgid "The operation failed."
-msgstr ""
+msgstr "Операція зазнала невдачі."
 
-#: ../src/palimpsest/gdu-shell.c:1721
+#: ../src/palimpsest/gdu-shell.c:1746
 msgid "The device is busy."
-msgstr ""
+msgstr "Пристрій зайнятий."
 
-#: ../src/palimpsest/gdu-shell.c:1724
+#: ../src/palimpsest/gdu-shell.c:1749
 msgid "The operation was cancelled."
-msgstr ""
+msgstr "Операцію скасовано."
 
-#: ../src/palimpsest/gdu-shell.c:1727
+#: ../src/palimpsest/gdu-shell.c:1752
 msgid "The daemon is being inhibited."
-msgstr ""
+msgstr "Роботу демона заборонено."
 
-#: ../src/palimpsest/gdu-shell.c:1730
+#: ../src/palimpsest/gdu-shell.c:1755
 msgid "An invalid option was passed."
-msgstr ""
+msgstr "Передано неправильний параметр."
 
-#: ../src/palimpsest/gdu-shell.c:1733
+#: ../src/palimpsest/gdu-shell.c:1758
 msgid "The operation is not supported."
-msgstr ""
+msgstr "Операція не підтримується."
 
-#: ../src/palimpsest/gdu-shell.c:1736
+#: ../src/palimpsest/gdu-shell.c:1761
 msgid "Getting ATA SMART data would wake up the device."
-msgstr ""
+msgstr "Отримання даних ATA SMART виведе пристрій з сплячого режиму."
 
-#: ../src/palimpsest/gdu-shell.c:1739
+#: ../src/palimpsest/gdu-shell.c:1764
 msgid "Permission denied."
-msgstr ""
+msgstr "Доступ заборонено."
 
-#: ../src/palimpsest/gdu-shell.c:1742
+#: ../src/palimpsest/gdu-shell.c:1767
 msgid "Unknown error"
-msgstr ""
+msgstr "Невідома помилка"
 
-#: ../src/palimpsest/gdu-shell.c:1778
+#: ../src/palimpsest/gdu-shell.c:1803
 msgid "_Details:"
-msgstr ""
+msgstr "_Докладніше:"
+
+#: ../src/palimpsest/gdu-shell.c:1908
+msgid "<small>_Cancel</small>"
+msgstr "<small>_Скасувати</small>"
 
 #: ../src/playground/grid/gdu-grid-details.c:134
 #: ../src/playground/grid/gdu-grid-element.c:877
 msgid "View"
-msgstr ""
+msgstr "Перегляд"
 
 #: ../src/playground/grid/gdu-grid-details.c:135
 msgid "The view to show details for"
-msgstr ""
+msgstr "Вигляд детальнішої інформації"
 
 #: ../src/playground/grid/gdu-grid-details.c:196
 msgid "Device:"
-msgstr ""
+msgstr "Пристрій:"
 
 #: ../src/playground/grid/gdu-grid-element.c:557
 msgid "Extended"
-msgstr ""
+msgstr "Розширений"
 
 #: ../src/playground/grid/gdu-grid-element.c:560
 msgid "Encrypted"
-msgstr ""
+msgstr "Шифрований"
 
 #: ../src/playground/grid/gdu-grid-element.c:563
 msgid "Free"
-msgstr ""
+msgstr "Вільний"
 
 #: ../src/playground/grid/gdu-grid-element.c:878
 msgid "The GduGridView object that the element is associated with"
-msgstr ""
+msgstr "Об'єкт GduGridView, який пов'язується з"
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
-msgstr ""
+msgstr "Представницький"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
 msgid ""
 "The presentable shown or NULL if this is a element representing lack of media"
-msgstr ""
+msgstr "Показує \"Представницький\" або NULL, якщо в елементі нема носія"
 
 #: ../src/playground/grid/gdu-grid-element.c:897
 msgid "Minimum Size"
-msgstr ""
+msgstr "Мінімальний розмір"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"
-msgstr ""
+msgstr "Мінімальний розмір елемента"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
-msgstr ""
+msgstr "Розмір у відсотках"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
 msgid ""
 "The size in percent this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"Необхідно вказувати розмір у відсотках для даного елемента або 0, щоб "
+"вказати мінімальний розмір"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
-msgstr ""
+msgstr "Прапорці"
 
 #: ../src/playground/grid/gdu-grid-element.c:922
 msgid "Flags for the element"
-msgstr ""
+msgstr "Прапорці елемента"
 
 #: ../src/playground/grid/gdu-grid-view.c:325
 msgid "Pool"
-msgstr ""
+msgstr "Пул"
 
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
-msgstr ""
+msgstr "Показувати пул пристроїв"
+
+

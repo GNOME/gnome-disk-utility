@@ -54,15 +54,13 @@ struct GduGraphClass
 
 GType       gdu_graph_get_type            (void);
 GtkWidget  *gdu_graph_new                 (void);
-gchar     **gdu_graph_get_x_markers       (GduGraph           *graph);
-gchar     **gdu_graph_get_y_markers_left  (GduGraph           *graph);
-gchar     **gdu_graph_get_y_markers_right (GduGraph           *graph);
-void        gdu_graph_set_x_markers       (GduGraph           *graph,
-                                           const gchar* const *markers);
-void        gdu_graph_set_y_markers_left  (GduGraph           *graph,
-                                           const gchar* const *markers);
-void        gdu_graph_set_y_markers_right (GduGraph           *graph,
-                                           const gchar* const *markers);
+
+gint64      gdu_graph_get_window_end_usec  (GduGraph     *graph);
+gint64      gdu_graph_get_window_size_usec (GduGraph     *graph);
+void        gdu_graph_set_window_end_usec  (GduGraph     *graph,
+                                            gint64        time_usec);
+void        gdu_graph_set_window_size_usec (GduGraph     *graph,
+                                            gint64        period_usec);
 
 GduCurve   *gdu_graph_lookup_curve        (GduGraph           *graph,
                                            const gchar        *curve_id);

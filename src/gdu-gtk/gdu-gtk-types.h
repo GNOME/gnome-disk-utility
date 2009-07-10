@@ -33,7 +33,7 @@
 
 G_BEGIN_DECLS
 
-typedef struct GduPoint                    GduPoint;
+typedef struct GduSample                   GduSample;
 typedef struct GduColor                    GduColor;
 typedef struct GduCurve                    GduCurve;
 typedef struct GduGraph                    GduGraph;

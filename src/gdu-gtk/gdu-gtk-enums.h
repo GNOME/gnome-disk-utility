@@ -28,11 +28,19 @@
 
 #include <glib-object.h>
 
-typedef enum
-{
-        GDU_CURVE_FLAGS_NONE       = 0,
-        GDU_CURVE_FLAGS_FILLED     = (1 << 0),
-        GDU_CURVE_FLAGS_FADE_EDGES = (1 << 1),
+typedef enum {
+        GDU_CURVE_FLAGS_NONE                = 0,
+        GDU_CURVE_FLAGS_FILLED              = (1 << 0),
+        GDU_CURVE_FLAGS_FADE_EDGES          = (1 << 1),
+        GDU_CURVE_FLAGS_AXIS_MARKERS_LEFT   = (1 << 2),
+        GDU_CURVE_FLAGS_AXIS_MARKERS_RIGHT  = (1 << 3),
+        GDU_CURVE_FLAGS_NORMALIZE           = (1 << 4),
 } GduCurveFlags;
+
+typedef enum {
+        GDU_CURVE_UNIT_NUMBER      = 0,
+        GDU_CURVE_UNIT_TIME        = 1,
+        GDU_CURVE_UNIT_TEMPERATURE = 2
+} GduCurveUnit;
 
 #endif /* GDU_GTK_ENUMS_H */

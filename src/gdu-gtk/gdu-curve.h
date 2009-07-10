@@ -55,7 +55,8 @@ GType          gdu_curve_get_type            (void) G_GNUC_CONST;
 GduCurve      *gdu_curve_new                 (void);
 
 GduCurveFlags  gdu_curve_get_flags           (GduCurve      *curve);
-GArray        *gdu_curve_get_points          (GduCurve      *curve);
+GduCurveUnit   gdu_curve_get_unit            (GduCurve      *curve);
+GArray        *gdu_curve_get_samples         (GduCurve      *curve);
 gint           gdu_curve_get_z_order         (GduCurve      *curve);
 GduColor      *gdu_curve_get_color           (GduCurve      *curve);
 GduColor      *gdu_curve_get_fill_color      (GduCurve      *curve);
@@ -64,8 +65,10 @@ const gchar   *gdu_curve_get_legend          (GduCurve      *curve);
 
 void           gdu_curve_set_flags           (GduCurve      *curve,
                                               GduCurveFlags  flags);
-void           gdu_curve_set_points          (GduCurve      *curve,
-                                              GArray        *points);
+void           gdu_curve_set_unit            (GduCurve      *curve,
+                                              GduCurveUnit   unit);
+void           gdu_curve_set_samples         (GduCurve      *curve,
+                                              GArray        *samples);
 void           gdu_curve_set_z_order         (GduCurve      *curve,
                                               gint           z_order);
 void           gdu_curve_set_color           (GduCurve      *curve,
@@ -79,16 +82,16 @@ void           gdu_curve_set_legend          (GduCurve      *curve,
 
 /* ----------------------------------------------------------------------------------------------------  */
 
-struct GduPoint
+struct GduSample
 {
-        gdouble x;
-        gdouble y;
+        gint64 time_usec;
+        gdouble value;
 };
 
-#define GDU_TYPE_POINT (gdu_point_get_type ())
-GType     gdu_point_get_type (void) G_GNUC_CONST;
-GduPoint *gdu_point_dup      (GduPoint *point);
-void      gdu_point_free     (GduPoint *point);
+#define GDU_TYPE_SAMPLE (gdu_sample_get_type ())
+GType      gdu_sample_get_type (void) G_GNUC_CONST;
+GduSample *gdu_sample_dup      (GduSample *sample);
+void       gdu_sample_free     (GduSample *sample);
 
 struct GduColor
 {

@@ -31,7 +31,8 @@
 struct GduCurvePrivate
 {
         GduCurveFlags flags;
-        GArray *points;
+        GduCurveUnit unit;
+        GArray *samples;
         gint z_order;
         GduColor *color;
         GduColor *fill_color;
@@ -45,7 +46,8 @@ enum
 {
         PROP_0,
         PROP_FLAGS,
-        PROP_POINTS,
+        PROP_UNIT,
+        PROP_SAMPLES,
         PROP_Z_ORDER,
         PROP_COLOR,
         PROP_FILL_COLOR,
@@ -66,8 +68,12 @@ gdu_curve_set_property (GObject      *object,
                 gdu_curve_set_flags (curve, g_value_get_flags (value));
                 break;
 
-        case PROP_POINTS:
-                gdu_curve_set_points (curve, g_value_get_boxed (value));
+        case PROP_UNIT:
+                gdu_curve_set_unit (curve, g_value_get_enum (value));
+                break;
+
+        case PROP_SAMPLES:
+                gdu_curve_set_samples (curve, g_value_get_boxed (value));
                 break;
 
         case PROP_Z_ORDER:
@@ -109,8 +115,12 @@ gdu_curve_get_property (GObject     *object,
                 g_value_set_flags (value, gdu_curve_get_flags (curve));
                 break;
 
-        case PROP_POINTS:
-                g_value_set_boxed (value, gdu_curve_get_points (curve));
+        case PROP_UNIT:
+                g_value_set_enum (value, gdu_curve_get_unit (curve));
+                break;
+
+        case PROP_SAMPLES:
+                g_value_set_boxed (value, gdu_curve_get_samples (curve));
                 break;
 
         case PROP_Z_ORDER:
@@ -148,8 +158,8 @@ gdu_curve_finalize (GObject *object)
                 gdu_color_free (curve->priv->color);
         if (curve->priv->fill_color != NULL)
                 gdu_color_free (curve->priv->fill_color);
-        if (curve->priv->points != NULL)
-                g_array_unref (curve->priv->points);
+        if (curve->priv->samples != NULL)
+                g_array_unref (curve->priv->samples);
 
         g_free (curve->priv->legend);
 
@@ -196,10 +206,21 @@ gdu_curve_class_init (GduCurveClass *klass)
                                                              G_PARAM_CONSTRUCT));
 
         g_object_class_install_property (gobject_class,
-                                         PROP_POINTS,
-                                         g_param_spec_boxed ("points",
-                                                             _("Points"),
-                                                             _("The points of the curve"),
+                                         PROP_UNIT,
+                                         g_param_spec_enum ("unit",
+                                                            _("Unit"),
+                                                            _("The unit used for the curve"),
+                                                            GDU_TYPE_CURVE_UNIT,
+                                                            GDU_CURVE_UNIT_NUMBER,
+                                                            G_PARAM_READABLE |
+                                                            G_PARAM_WRITABLE |
+                                                            G_PARAM_CONSTRUCT));
+
+        g_object_class_install_property (gobject_class,
+                                         PROP_SAMPLES,
+                                         g_param_spec_boxed ("samples",
+                                                             _("Samples"),
+                                                             _("The samples of the curve"),
                                                              G_TYPE_ARRAY,
                                                              G_PARAM_READABLE |
                                                              G_PARAM_WRITABLE));
@@ -279,11 +300,18 @@ gdu_curve_get_flags (GduCurve *curve)
         return curve->priv->flags;
 }
 
+GduCurveUnit
+gdu_curve_get_unit (GduCurve *curve)
+{
+        g_return_val_if_fail (GDU_IS_CURVE (curve), G_MAXINT);
+        return curve->priv->unit;
+}
+
 GArray *
-gdu_curve_get_points (GduCurve *curve)
+gdu_curve_get_samples (GduCurve *curve)
 {
         g_return_val_if_fail (GDU_IS_CURVE (curve), NULL);
-        return curve->priv->points;
+        return curve->priv->samples;
 }
 
 gint
@@ -324,22 +352,30 @@ gdu_curve_get_legend (GduCurve *curve)
 /* ---------------------------------------------------------------------------------------------------- */
 
 void
-gdu_curve_set_flags (GduCurve     *curve,
-                    GduCurveFlags  flags)
+gdu_curve_set_flags (GduCurve      *curve,
+                     GduCurveFlags  flags)
 {
         g_return_if_fail (GDU_IS_CURVE (curve));
         curve->priv->flags = flags;
 }
 
 void
-gdu_curve_set_points (GduCurve *curve,
-                      GArray   *points)
+gdu_curve_set_unit (GduCurve     *curve,
+                    GduCurveUnit  unit)
+{
+        g_return_if_fail (GDU_IS_CURVE (curve));
+        curve->priv->unit = unit;
+}
+
+void
+gdu_curve_set_samples (GduCurve *curve,
+                       GArray   *samples)
 {
         g_return_if_fail (GDU_IS_CURVE (curve));
 
-        if (curve->priv->points != NULL)
-                g_array_unref (curve->priv->points);
-        curve->priv->points = points != NULL ? g_array_ref (points) : NULL;
+        if (curve->priv->samples != NULL)
+                g_array_unref (curve->priv->samples);
+        curve->priv->samples = samples != NULL ? g_array_ref (samples) : NULL;
 }
 
 void
@@ -430,31 +466,31 @@ gdu_color_get_type (void)
   return g_define_type_id__volatile;
 }
 
-GduPoint *
-gdu_point_dup (GduPoint *point)
+GduSample *
+gdu_sample_dup (GduSample *sample)
 {
-        GduPoint *p;
-        p = g_memdup (point, sizeof (GduPoint));
+        GduSample *p;
+        p = g_memdup (sample, sizeof (GduSample));
         return p;
 }
 
 void
-gdu_point_free (GduPoint *point)
+gdu_sample_free (GduSample *sample)
 {
-        g_free (point);
+        g_free (sample);
 }
 
 GType
-gdu_point_get_type (void)
+gdu_sample_get_type (void)
 {
   static volatile gsize g_define_type_id__volatile = 0;
 
   if (g_once_init_enter (&g_define_type_id__volatile))
     {
       GType g_define_type_id =
-        g_boxed_type_register_static ("GduPoint",
-                                      (GBoxedCopyFunc) gdu_point_dup,
-                                      (GBoxedFreeFunc) gdu_point_free);
+        g_boxed_type_register_static ("GduSample",
+                                      (GBoxedCopyFunc) gdu_sample_dup,
+                                      (GBoxedFreeFunc) gdu_sample_free);
 
       g_once_init_leave (&g_define_type_id__volatile, g_define_type_id);
     }

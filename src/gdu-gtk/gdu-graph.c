@@ -19,6 +19,8 @@
  * 02111-1307, USA.
  */
 
+#define _GNU_SOURCE
+
 #include <config.h>
 #include <glib/gi18n.h>
 #include <string.h>
@@ -885,6 +887,7 @@ draw_curves (cairo_t *cr,
                 GduColor *fill_color;
                 gdouble width;
                 GduCurveFlags flags;
+                GduCurveUnit unit;
                 GArray *samples;
                 guint m;
                 gdouble sample_value_min;
@@ -896,6 +899,7 @@ draw_curves (cairo_t *cr,
                         fill_color = color;
                 width = gdu_curve_get_width (c);
                 flags = gdu_curve_get_flags (c);
+                unit = gdu_curve_get_unit (c);
                 samples = gdu_curve_get_samples (c);
 
                 /* if normalization is requested, find min/max for sample values in curve on window */
@@ -932,6 +936,112 @@ draw_curves (cairo_t *cr,
                 } else {
                         sample_value_min = 0.0;
                         sample_value_max = 1.0;
+                }
+
+                if (flags & GDU_CURVE_FLAGS_AXIS_MARKERS_LEFT) {
+                        gdouble sample_value_diff;
+                        gdouble step_size;
+                        gdouble step;
+                        gdouble step_end;
+
+                        //g_debug ("interval %f -> %f", sample_value_min, sample_value_max);
+
+                        sample_value_diff = sample_value_max - sample_value_min;
+                        //g_debug ("diff      = %f",        sample_value_diff);
+
+                        /* want at most fifteen axis markers bars (rounding means we'll get 1-10 bars) */
+                        step_size = ceil (sample_value_diff) / 10;
+                        //g_debug ("step_size = %f", step_size);
+
+                        /* round step_size to be a power of ten */
+                        step_size = pow10 (ceil (log10 (step_size)));
+                        //g_debug ("step_size (rounded) = %f", step_size);
+
+                        gdouble num_samples_after_adjust = sample_value_diff / step_size;
+                        //g_debug ("num_samples_after_adjust = %f", num_samples_after_adjust);
+
+                        if (num_samples_after_adjust < 2.0)
+                                step_size /= 2.0;
+
+                        //g_debug ("step_size (after adjust) = %f", step_size);
+
+
+                        step = sample_value_min - fmod (sample_value_min, step_size);
+
+                        step_end = sample_value_max - fmod (sample_value_max, step_size) + step_size;
+
+                        //g_debug ("step      = %f",        step);
+                        //g_debug ("step_end  = %f",        step_end);
+
+                        for ( ;step < step_end; step += step_size) {
+                                gdouble step_normalized;
+                                gchar buf[512];
+                                cairo_text_extents_t te;
+                                gint precision;
+
+                                step_normalized = (step - sample_value_min) /
+                                                  (sample_value_max - sample_value_min);
+
+                                y = ceil (gy + (gh - timebar_height) * (1.0f - step_normalized)) + 0.5;
+
+                                //g_debug ("axis line at %f -> %f", step, y);
+
+                                cairo_new_path (cr);
+                                cairo_move_to (cr, gx, y);
+                                cairo_line_to (cr, gx + gw, y);
+                                cairo_set_source_rgba (cr, 0.5, 0.5, 0.5, 0.75);
+                                cairo_set_line_width (cr, 1.0);
+                                cairo_set_dash (cr, NULL, 0, 0.0);
+                                cairo_stroke (cr);
+
+                                switch (unit) {
+                                case GDU_CURVE_UNIT_FLOATING:
+                                        g_snprintf (buf, sizeof buf, "%f", step);
+                                        break;
+                                case GDU_CURVE_UNIT_INTEGER:
+                                        g_snprintf (buf, sizeof buf, "%.0f", step);
+                                        break;
+                                case GDU_CURVE_UNIT_TIME_SECONDS:
+                                        precision = 0;
+                                        if (step > 60*60*24) {
+                                                if (step_size < 60*60*24)
+                                                        precision = 2;
+                                                g_snprintf (buf, sizeof buf, _("%.*f d"), precision, step / 60/60/24);
+                                        } else if (step > 60*60) {
+                                                if (step_size < 60*60)
+                                                        precision = 2;
+                                                g_snprintf (buf, sizeof buf, _("%.*f h"), precision, step / 60/60);
+                                        } else if (step > 60) {
+                                                if (step_size < 60)
+                                                        precision = 2;
+                                                g_snprintf (buf, sizeof buf, _("%.*f m"), precision, step / 60);
+                                        } else if (step > 1) {
+                                                if (step_size < 1)
+                                                        precision = 2;
+                                                g_snprintf (buf, sizeof buf, _("%.*f s"), precision, step);
+                                        } else {
+                                                g_snprintf (buf, sizeof buf, _("%.0f msec"), step * 1000);
+                                        }
+                                        break;
+                                case GDU_CURVE_UNIT_TEMPERATURE_KELVIN:
+                                        g_snprintf (buf, sizeof buf, _("%.0f\302\260 C"), step - 273.15);
+                                        break;
+                                }
+                                //g_debug ("buf = `%s'", buf);
+
+                                cairo_select_font_face (cr, "sans",
+                                                        CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+                                cairo_set_font_size (cr, 8.0);
+                                cairo_text_extents (cr, buf, &te);
+
+                                y = ceil (gy + te.y_bearing/2 + (gh - timebar_height) * (1.0f - step_normalized)) + 0.5;
+
+                                cairo_move_to (cr,
+                                               gx + 4,
+                                               y);
+                                cairo_set_source_rgba (cr, 0, 0, 0, 1.0);
+                                cairo_show_text (cr, buf);
+                        }
                 }
 
                 /* draw the curve */

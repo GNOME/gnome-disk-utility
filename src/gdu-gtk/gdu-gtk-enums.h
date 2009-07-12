@@ -37,10 +37,19 @@ typedef enum {
         GDU_CURVE_FLAGS_NORMALIZE           = (1 << 4),
 } GduCurveFlags;
 
+/**
+ * GduCurveUnit:
+ * @GDU_CURVE_UNIT_FLOATING: Value is a floating point number.
+ * @GDU_CURVE_UNIT_INTEGER: Value is an integer number, such as a count of some sort.
+ * @GDU_CURVE_UNIT_TIME_SECONDS: Value is a measure of time, in seconds.
+ * @GDU_CURVE_UNIT_TEMPERATURE_KELVIN: Value is a measure of temperature, in degrees Kelvin.
+ *
+ */
 typedef enum {
-        GDU_CURVE_UNIT_NUMBER      = 0,
-        GDU_CURVE_UNIT_TIME        = 1,
-        GDU_CURVE_UNIT_TEMPERATURE = 2
+        GDU_CURVE_UNIT_FLOATING            = 0,
+        GDU_CURVE_UNIT_INTEGER             = 1,
+        GDU_CURVE_UNIT_TIME_SECONDS        = 2,
+        GDU_CURVE_UNIT_TEMPERATURE_KELVIN  = 3
 } GduCurveUnit;
 
 #endif /* GDU_GTK_ENUMS_H */

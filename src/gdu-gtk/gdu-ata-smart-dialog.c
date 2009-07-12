@@ -170,88 +170,16 @@ selection_changed (GtkTreeSelection *tree_selection,
         GArray *threshold_samples;
         GArray *raw_samples;
         GArray *band_samples;
+        GduCurveUnit raw_unit;
         GList *l;
         guint64 now;
+
         cur_samples = g_array_new (FALSE, FALSE, sizeof (GduSample));
         worst_samples = g_array_new (FALSE, FALSE, sizeof (GduSample));
         threshold_samples = g_array_new (FALSE, FALSE, sizeof (GduSample));
         raw_samples = g_array_new (FALSE, FALSE, sizeof (GduSample));
         band_samples = g_array_new (FALSE, FALSE, sizeof (GduSample));
-
-        guint64 raw_min;
-        guint64 raw_max;
-        GduAtaSmartAttributeUnit raw_unit;
-        raw_min = G_MAXUINT64;
-        raw_max = 0;
-        for (l = dialog->priv->historical_data; l != NULL; l = l->next) {
-                GduAtaSmartHistoricalData *data = GDU_ATA_SMART_HISTORICAL_DATA (l->data);
-                GduAtaSmartAttribute *attr;
-
-                attr = gdu_ata_smart_historical_data_get_attribute (data, attr_name);
-                if (attr != NULL) {
-                        guint64 raw;
-
-                        raw = gdu_ata_smart_attribute_get_pretty_value (attr);
-                        raw_unit = gdu_ata_smart_attribute_get_pretty_unit (attr);
-                        if (raw < raw_min)
-                                raw_min = raw;
-                        if (raw > raw_max)
-                                raw_max = raw;
-                        g_object_unref (attr);
-                }
-        }
-
-        guint64 time_factor;
-        switch (raw_unit) {
-        case GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS:
-                if (raw_min > 1000 * 60 * 60 * 24) {
-                        time_factor = 1000 * 60 * 60 * 24;
-                } else if (raw_min > 1000 * 60 * 60) {
-                        time_factor = 1000 * 60 * 60;
-                } else if (raw_min > 1000 * 60) {
-                        time_factor = 1000 * 60;
-                } else if (raw_min > 1000) {
-                        time_factor = 1000;
-                } else {
-                        time_factor = 1;
-                }
-
-                if (raw_max - raw_min < 5 * time_factor) {
-                        raw_min -= (raw_min % time_factor);
-                        raw_max = raw_min + 5 * time_factor;
-                }
-                break;
-        case GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN:
-                if (raw_max - raw_min < 5000) {
-                        raw_min -= (raw_min % 1000);
-                        raw_max = raw_min + 5000;
-                }
-                break;
-        case GDU_ATA_SMART_ATTRIBUTE_UNIT_SECTORS:
-        case GDU_ATA_SMART_ATTRIBUTE_UNIT_NONE:
-        case GDU_ATA_SMART_ATTRIBUTE_UNIT_UNKNOWN:
-                if (raw_min - raw_max < 5) {
-                        raw_max = raw_min + 5;
-                }
-                break;
-        }
-
-#if 0
-        gchar **y_axis_left;
-        y_axis_left = g_new0 (gchar *, 6);
-        for (n = 0; n < 5; n++) {
-                guint64 raw_marker_value;
-                gchar *s;
-
-                raw_marker_value = raw_min + n * ((gdouble) (raw_max - raw_min)) / (5 - 1);
-
-                s = pretty_to_string (raw_marker_value, raw_unit, FALSE);
-                y_axis_left[n] = s;
-        }
-        y_axis_left[n] = NULL;
-        gdu_graph_set_y_markers_left (GDU_GRAPH (dialog->priv->graph), (const gchar* const *) y_axis_left);
-        g_strfreev (y_axis_left);
-#endif
+        raw_unit = GDU_CURVE_UNIT_INTEGER;
 
         guint64 tolerance;
         guint64 timespan;
@@ -317,7 +245,24 @@ selection_changed (GtkTreeSelection *tree_selection,
                                 sample.value = threshold / 255.0f;
                                 g_array_append_val (threshold_samples, sample);
 
-                                sample.value = ((gdouble) (raw - raw_min)) / ((gdouble) (raw_max - raw_min));
+                                switch (gdu_ata_smart_attribute_get_pretty_unit (attr)) {
+                                case GDU_ATA_SMART_ATTRIBUTE_UNIT_MSECONDS:
+                                        sample.value = ((gdouble) raw) / 1000.0;
+                                        raw_unit = GDU_CURVE_UNIT_TIME_SECONDS;
+                                        break;
+                                case GDU_ATA_SMART_ATTRIBUTE_UNIT_MKELVIN:
+                                        sample.value = ((gdouble) raw) / 1000.0;
+                                        raw_unit = GDU_CURVE_UNIT_TEMPERATURE_KELVIN;
+                                        break;
+                                default:
+                                case GDU_ATA_SMART_ATTRIBUTE_UNIT_UNKNOWN:
+                                case GDU_ATA_SMART_ATTRIBUTE_UNIT_NONE:
+                                case GDU_ATA_SMART_ATTRIBUTE_UNIT_SECTORS:
+                                        sample.value = (gdouble) raw;
+                                        raw_unit = GDU_CURVE_UNIT_INTEGER;
+                                        break;
+                                }
+
                                 g_array_append_val (raw_samples, sample);
 
                                 g_object_unref (attr);
@@ -420,6 +365,7 @@ selection_changed (GtkTreeSelection *tree_selection,
         gdu_curve_set_legend (c, _("Raw")); /* TODO: units? */
         gdu_curve_set_z_order (c, z_order++);
         gdu_curve_set_samples (c, raw_samples);
+        gdu_curve_set_unit (c, raw_unit);
         gdu_curve_set_color (c, &raw_color);
         gdu_curve_set_fill_color (c, &raw_fill_color);
         gdu_curve_set_width (c, 2.0);

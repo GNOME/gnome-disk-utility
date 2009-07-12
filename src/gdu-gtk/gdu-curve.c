@@ -211,7 +211,7 @@ gdu_curve_class_init (GduCurveClass *klass)
                                                             _("Unit"),
                                                             _("The unit used for the curve"),
                                                             GDU_TYPE_CURVE_UNIT,
-                                                            GDU_CURVE_UNIT_NUMBER,
+                                                            GDU_CURVE_UNIT_FLOATING,
                                                             G_PARAM_READABLE |
                                                             G_PARAM_WRITABLE |
                                                             G_PARAM_CONSTRUCT));

@@ -32,7 +32,17 @@
 
 G_BEGIN_DECLS
 
+struct GduTimeLabel;
 typedef struct GduTimeLabel             GduTimeLabel;
+
+struct GduPoolTreeModel;
+typedef struct GduPoolTreeModel         GduPoolTreeModel;
+
+struct GduPoolTreeView;
+typedef struct GduPoolTreeView          GduPoolTreeView;
+
+struct GduCreateLinuxMdDialog;
+typedef struct GduCreateLinuxMdDialog   GduCreateLinuxMdDialog;
 
 G_END_DECLS
 

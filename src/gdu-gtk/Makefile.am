@@ -9,12 +9,18 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-gtk.h							\
 	gdu-gtk-types.h							\
 	gdu-time-label.h						\
+	gdu-pool-tree-view.h						\
+	gdu-pool-tree-model.h						\
+	gdu-create-linux-md-dialog.h					\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               		\
 	gdu-gtk.h			gdu-gtk.c			\
 	gdu-gtk-types.h							\
 	gdu-time-label.h		gdu-time-label.c		\
+	gdu-pool-tree-view.h		gdu-pool-tree-view.c		\
+	gdu-pool-tree-model.h		gdu-pool-tree-model.c		\
+	gdu-create-linux-md-dialog.h	gdu-create-linux-md-dialog.c	\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

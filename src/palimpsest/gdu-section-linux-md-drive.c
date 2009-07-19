@@ -29,7 +29,6 @@
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
 
-#include "gdu-tree.h"
 #include "gdu-section-linux-md-drive.h"
 
 struct _GduSectionLinuxMdDrivePrivate
@@ -96,6 +95,8 @@ on_add_clicked (GtkButton *button,
         char *array_name;
         char *s;
         char *s2;
+        GtkWidget *scrolled_window;
+        GduPoolTreeModel *model;
 
         device = NULL;
         selected_device = NULL;
@@ -164,14 +165,14 @@ on_add_clicked (GtkButton *button,
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
 
-
-        GtkWidget *scrolled_window;
         scrolled_window = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                              GTK_SHADOW_IN);
-        tree_view = gdu_device_tree_new (pool);
+        model = gdu_pool_tree_model_new (pool);
+        tree_view = gdu_pool_tree_view_new (model);
+        g_object_unref (model);
         gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
 
 	gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
@@ -184,9 +185,7 @@ on_add_clicked (GtkButton *button,
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
 
-        selected_presentable = gdu_device_tree_get_selected_presentable (GTK_TREE_VIEW (tree_view));
-        if (selected_presentable != NULL)
-                g_object_ref (selected_presentable);
+        selected_presentable = gdu_pool_tree_view_get_selected_presentable (GDU_POOL_TREE_VIEW (tree_view));
         gtk_widget_destroy (dialog);
 
         if (response < 0)

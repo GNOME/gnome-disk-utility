@@ -19,7 +19,6 @@ palimpsest_SOURCES = 									\
 	gdu-section-encrypted.h			gdu-section-encrypted.c			\
 	gdu-section-linux-md-drive.h		gdu-section-linux-md-drive.c		\
 	gdu-section-no-media.h			gdu-section-no-media.c			\
-	gdu-tree.h				gdu-tree.c				\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

@@ -33,7 +33,6 @@
 #include <gdu-gtk/gdu-gtk.h>
 
 #include "gdu-shell.h"
-#include "gdu-tree.h"
 
 #include "gdu-section-health.h"
 #include "gdu-section-partition.h"
@@ -52,7 +51,7 @@ struct _GduShellPrivate
         GtkWidget *app_window;
         GduPool *pool;
 
-        GtkWidget *treeview;
+        GtkWidget *tree_view;
 
         GtkWidget *icon_image;
         GtkWidget *name_label;
@@ -138,8 +137,8 @@ gdu_shell_get_selected_presentable (GduShell *shell)
 void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
-        gdu_device_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
-        gtk_widget_grab_focus (shell->priv->treeview);
+        gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
+        gtk_widget_grab_focus (shell->priv->tree_view);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -811,10 +810,8 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
         GduPresentable *presentable;
-        GtkTreeView *device_tree_view;
 
-        device_tree_view = gtk_tree_selection_get_tree_view (selection);
-        presentable = gdu_device_tree_get_selected_presentable (device_tree_view);
+        presentable = gdu_pool_tree_view_get_selected_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 
         if (presentable != NULL) {
 
@@ -835,6 +832,8 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
                                   (GCallback) presentable_job_changed, shell);
 
                 gdu_shell_update (shell);
+
+                g_object_unref (presentable);
         }
 }
 
@@ -862,8 +861,8 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
                         gdu_shell_select_presentable (shell, enclosing_presentable);
                         g_object_unref (enclosing_presentable);
                 } else {
-                        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
-                        gtk_widget_grab_focus (shell->priv->treeview);
+                        gdu_pool_tree_view_select_first_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
+                        gtk_widget_grab_focus (shell->priv->tree_view);
                 }
         }
         gdu_shell_update (shell);
@@ -1559,6 +1558,25 @@ help_contents_action_callback (GtkAction *action, gpointer user_data)
 }
 
 static void
+new_linud_md_array_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GtkWidget *dialog;
+        gint response;
+
+        g_debug ("New Linux MD Array!");
+
+        dialog = gdu_create_linux_md_dialog_new (GTK_WINDOW (shell->priv->app_window),
+                                                 shell->priv->pool);
+
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+
+        g_debug ("response = %d", response);
+}
+
+static void
 quit_action_callback (GtkAction *action, gpointer user_data)
 {
         gtk_main_quit ();
@@ -1601,6 +1619,9 @@ static const gchar *ui =
         "<ui>"
         "  <menubar>"
         "    <menu action='file'>"
+        "      <menu action='file-new'>"
+        "        <menuitem action='file-new-linux-md-array'/>"
+        "      </menu>"
         "      <menuitem action='quit'/>"
         "    </menu>"
         "    <menu action='edit'>"
@@ -1644,6 +1665,8 @@ static const gchar *ui =
 
 static GtkActionEntry entries[] = {
         {"file", NULL, N_("_File"), NULL, NULL, NULL },
+        {"file-new", NULL, N_("_New"), NULL, NULL, NULL },
+        {"file-new-linux-md-array", "gdu-raid-array", N_("Software _RAID Array"), NULL, N_("Create a new Software RAID array"), G_CALLBACK (new_linud_md_array_callback)},
         {"edit", NULL, N_("_Edit"), NULL, NULL, NULL },
         {"help", NULL, N_("_Help"), NULL, NULL, NULL },
 
@@ -1861,7 +1884,7 @@ create_window (GduShell *shell)
         GtkWidget *toolbar;
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
-        GtkWidget *treeview_scrolled_window;
+        GtkWidget *tree_view_scrolled_window;
         GtkTreeSelection *select;
         GtkWidget *content_area;
         GtkWidget *button;
@@ -1870,6 +1893,7 @@ create_window (GduShell *shell)
         GtkWidget *vbox3;
         GtkWidget *hbox;
         GtkWidget *image;
+        GduPoolTreeModel *model;
 
         shell->priv->pool = gdu_pool_new ();
 
@@ -1891,14 +1915,16 @@ create_window (GduShell *shell)
         gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
 
         /* tree view */
-        treeview_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
+        tree_view_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                              GTK_SHADOW_IN);
-        shell->priv->treeview = gdu_device_tree_new (shell->priv->pool);
-        gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
+        model = gdu_pool_tree_model_new (shell->priv->pool);
+        shell->priv->tree_view = gdu_pool_tree_view_new (model);
+        g_object_unref (model);
+        gtk_container_add (GTK_CONTAINER (tree_view_scrolled_window), shell->priv->tree_view);
 
         /* --- */
 
@@ -1988,18 +2014,18 @@ create_window (GduShell *shell)
 
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();
-        gtk_paned_add1 (GTK_PANED (hpane), treeview_scrolled_window);
+        gtk_paned_add1 (GTK_PANED (hpane), tree_view_scrolled_window);
         gtk_paned_add2 (GTK_PANED (hpane), vbox1);
         //gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
 
-        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->treeview));
+        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->tree_view));
         gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
         g_signal_connect (select, "changed", (GCallback) device_tree_changed, shell);
 
         /* when starting up, set focus on tree view */
-        gtk_widget_grab_focus (shell->priv->treeview);
+        gtk_widget_grab_focus (shell->priv->tree_view);
 
         g_signal_connect (shell->priv->pool, "presentable-added", (GCallback) presentable_added, shell);
         g_signal_connect (shell->priv->pool, "presentable-removed", (GCallback) presentable_removed, shell);
@@ -2007,6 +2033,6 @@ create_window (GduShell *shell)
 
         gtk_widget_show_all (vbox);
 
-        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+        gdu_pool_tree_view_select_first_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 }
 

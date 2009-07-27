@@ -65,7 +65,10 @@ pretty_to_string (guint64 pretty_value, GduAtaSmartAttributeUnit pretty_unit)
                 } else if (pretty_value > 1000) {
                         ret = g_strdup_printf (_("%.3g secs"), pretty_value / 1000.0);
                 } else {
-                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        char *str;
+			str = g_strdup_printf ("%" G_GUINT64_FORMAT, pretty_value);
+                        ret = g_strdup_printf (_("%s msec"), str);
+                        g_free (str);
                 }
                 break;
 
@@ -294,6 +297,7 @@ smart_data_set (GduSectionHealth *section)
                 s = g_strconcat ("<span foreground='red'><b>",
                                  C_("ATA SMART test result", "FAILED"),
                                  "</b></span> ",
+                                 /* Translators: this is a detail that is appended to the test result, like 'FAILED (Electrical)' */
                                  C_("ATA SMART test result", "(Electrical)"),
                                  NULL);
                 break;
@@ -301,6 +305,7 @@ smart_data_set (GduSectionHealth *section)
                 s = g_strconcat ("<span foreground='red'><b>",
                                  C_("ATA SMART test result", "FAILED"),
                                  "</b></span> ",
+                                 /* Translators: this is a detail that is appended to the test result, like 'FAILED (Servo)' */
                                  C_("ATA SMART test result", "(Servo)"),
                                  NULL);
                 break;
@@ -308,6 +313,7 @@ smart_data_set (GduSectionHealth *section)
                 s = g_strconcat ("<span foreground='red'><b>",
                                  C_("ATA SMART test result", "FAILED"),
                                  "</b></span> ",
+                                 /* Translators: this is a detail that is appended to the test result, like 'FAILED (Read)' */
                                  C_("ATA SMART test result", "(Read)"),
                                  NULL);
                 break;
@@ -315,6 +321,7 @@ smart_data_set (GduSectionHealth *section)
                 s = g_strconcat ("<span foreground='red'><b>",
                                  C_("ATA SMART test result", "FAILED"),
                                  "</b></span> ",
+                                 /* Translators: this is a detail that is appended to the test result, like 'FAILED (Suspected of having handled damage)' */
                                  C_("ATA SMART test result", "(Suspected of having handled damage)"),
                                  NULL);
                 break;
@@ -605,6 +612,7 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                 val = val_y_top - (val_y_top - val_y_bottom) * n / (num_y_markers - 1);
 
                 char *s;
+                /* Translators: %g is a numeric temperature value */
                 s = g_strdup_printf (C_("ATA SMART graph label", "%g\302\260"), ceil (val));
 
                 cairo_text_extents_t te;
@@ -678,23 +686,34 @@ expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer user_d
                 if (age == 0) {
                         s = g_strdup_printf (C_("ATA SMART graph label", "now"));
                 } else if (age < 3600) {
+                        /* Translators: %d is a number of minutes */
                         s = g_strdup_printf (C_("ATA SMART graph label", "%dm"), age / 60);
                 } else if (age < 24 * 3600) {
                         int h = age/3600;
                         int m = (age%3600) / 60;
                         if (m == 0)
+                                /* Translators: %d is a number of hours */
                                 s = g_strdup_printf (C_("ATA SMART graph label", "%dh"), h);
                         else
+                                /* Translators: first %d is a number of hours, second %d is a number of minutes */
                                 s = g_strdup_printf (C_("ATA SMART graph label", "%dh %dm"), h, m);
                 } else {
                         int d = age/(24*3600);
                         int h = (age%(24*3600)) / 3600;
                         int m = (age%3600) / 60;
                         if (h == 0 && m == 0)
+                                /* Translators: %d is a number of days */
                                 s = g_strdup_printf (C_("ATA SMART graph label", "%dd"), d);
                         else if (m == 0)
+                                /* Translators: first %d is a number of days,
+                                 * second %d is a number of hours
+                                 */
                                 s = g_strdup_printf (C_("ATA SMART graph label", "%dd %dh"), d, h);
                         else
+                                /* Translators: first %d is a number of days,
+                                 * second %d is a number of hours
+                                 * third %d is a  number of minutes
+                                 */
                                 s = g_strdup_printf (C_("ATA SMART graph label", "%dd %dh %dm"), d, h, m);
                 }
 
@@ -1138,17 +1157,29 @@ on_details_clicked (GtkButton *button,
                 }
 
                 if (gdu_ata_smart_attribute_get_online (a)) {
+                        /* Translators: how often the attribute is updated
+                         * 'online' means 'every time data is collected'
+                         */ 
                         updates_str = _("Online");
                         tips_updates_str = _("Every time data is collected.");
                 } else {
+                        /* Translators: how often the attribute is updated
+                         * 'offline' means 'only when performing a self-test'
+                         */ 
                         updates_str = _("Offline");
                         tips_updates_str = _("Only when performing a self-test.");
                 }
 
                 if (gdu_ata_smart_attribute_get_prefailure (a)) {
+                        /* Translators: what a failure means
+                         * 'pre-fail' means 'sign of imminent disk failure'
+                         */ 
                         type_str = _("Pre-fail");
                         tips_type_str = _("Failure is a sign of imminent disk failure.");
                 } else {
+                        /* Translators: what a failure means
+                         * 'old-age' means 'sign of old age'
+                         */ 
                         type_str = _("Old-age");
                         tips_type_str = _("Failure is a sign of old age.");
                 }
@@ -1156,7 +1187,9 @@ on_details_clicked (GtkButton *button,
                 tooltip_str = g_strdup_printf ("<b>%s</b> %s\n"
                                                "<b>%s</b> %s\n"
                                                "<b>%s</b> %s",
+                                               /* Translators: 'type' means 'type of failure' here */
                                                _("Type:"), tips_type_str,
+                                               /* Translators: 'updates' refers to online/offline here */
                                                _("Updates:"), tips_updates_str,
                                                _("Description:"), desc_str);
 
@@ -1183,7 +1216,7 @@ on_details_clicked (GtkButton *button,
                                                                           icon_height,
                                                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                                           NULL);
-                                status_str = g_strdup (_("N/A"));
+                                status_str = g_strdup (C_("SMART Attribute status", "N/A"));
                 } else {
                         if (is_good) {
                                 status_pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -1191,7 +1224,7 @@ on_details_clicked (GtkButton *button,
                                                                           icon_height,
                                                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                                           NULL);
-                                status_str = g_strdup (_("OK"));
+                                status_str = g_strdup (C_("SMART Attribute status", "OK"));
                         } else {
                                 status_pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                           "gdu-smart-failing",
@@ -1199,7 +1232,7 @@ on_details_clicked (GtkButton *button,
                                                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                                                           NULL);
                                 status_str = g_strconcat ("<span foreground='red'><b>",
-                                                          _("FAILING"),
+                                                          C_("SMART Attribute status", "FAILING"),
                                                           "</b></span>",
                                                           NULL);
                         }
@@ -1456,6 +1489,7 @@ gdu_section_health_init (GduSectionHealth *section)
         section->priv = G_TYPE_INSTANCE_GET_PRIVATE (section, GDU_TYPE_SECTION_HEALTH, GduSectionHealthPrivate);
 
         label = gtk_label_new (NULL);
+        /* Translators: section heading, referring to disk health */
         s = g_strconcat ("<b>", _("Health"), "</b>", NULL);
         gtk_label_set_markup (GTK_LABEL (label), s);
         g_free (s);

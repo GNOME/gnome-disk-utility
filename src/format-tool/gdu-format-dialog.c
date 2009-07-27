@@ -361,6 +361,7 @@ gdu_format_dialog_constructed (GObject *object)
         /*  filesystem type  */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        /* Translators: 'type' means 'filesystem type' here. */
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Type:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
@@ -385,6 +386,7 @@ gdu_format_dialog_constructed (GObject *object)
         /*  filesystem label  */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        /* Translators: 'name' means 'filesystem label' here. */
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Name:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);

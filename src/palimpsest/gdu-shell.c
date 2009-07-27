@@ -224,10 +224,12 @@ details_update (GduShell *shell)
                                         } else if (strcmp (scheme, "gpt") == 0) {
                                                 s = g_strdup (_("GUID Partition Table"));
                                         } else {
+                                                /* Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt' */
                                                 s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
                                         }
 
                                         g_ptr_array_add (details,
+                                                         /* Translators: %s is the name of the partition table format, like 'Master Boot Record' */
                                                          g_strdup_printf (_("Partitioned Media (%s)"), s));
 
                                         g_free (s);
@@ -276,12 +278,14 @@ details_update (GduShell *shell)
                                 gdu_device_drive_get_connection_interface (device),
                                 gdu_device_drive_get_connection_speed (device));
                         g_ptr_array_add (details,
+                                         /* Translators: %s is the name of a connection, like 'USB at 2 MB/s' */
                                          g_strdup_printf (_("Connected via %s"), s));
                         g_free (s);
                 }
 
                 if (device_file != NULL) {
                         if (gdu_device_is_read_only (device)) {
+                        /* Translators: %s is the device file */
                         g_ptr_array_add (details,
                                          g_strdup_printf (_("%s (Read Only)"), device_file));
                         } else {
@@ -304,6 +308,7 @@ details_update (GduShell *shell)
                                 gdu_device_id_get_type (device),
                                 gdu_device_id_get_version (device),
                                 TRUE);
+                        /* Translators: %s is the filesystem name */
                         g_ptr_array_add (details,
                                          g_strdup_printf (_("%s File System"), fsname));
                         g_free (fsname);

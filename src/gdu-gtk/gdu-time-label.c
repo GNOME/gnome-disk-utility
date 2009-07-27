@@ -70,18 +70,10 @@ do_update (GduTimeLabel *time_label)
                 s = g_strdup_printf (_("Less than a minute ago"));
                 next_update = 60 - age;
         } else if (age < 60 * 60) {
-                if (age / 60 == 1) {
-                        s = g_strdup_printf (_("1 minute ago"));
-                } else {
-                        s = g_strdup_printf (_("%d minutes ago"), age / 60);
-                }
+                s = g_strdup_printf (ngettext ("%d minute ago", "%d minutes ago", age / 60), age / 60);
                 next_update = 60*(age/60 + 1) - age;
         } else {
-                if (age / 60 / 60 == 1) {
-                        s = g_strdup_printf (_("1 hour ago"));
-                } else {
-                        s = g_strdup_printf (_("%d hours ago"), age / 60 / 60);
-                }
+                s = g_strdup_printf (ngettext ("%d hour ago", "%d hours ago", age / 60 / 60), age / 60 / 60);
                 next_update = 60*60*(age/(60*60) + 1) - age;
         }
         gtk_label_set_text (GTK_LABEL (time_label), s);

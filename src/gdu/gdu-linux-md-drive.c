@@ -494,14 +494,21 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
                 level_str = gdu_linux_md_get_raid_level_for_display (level);
 
                 if (name == NULL || strlen (name) == 0) {
+                        /* Translators: %s is a RAID level, e.g. 'RAID-5' */
                         ret = g_strdup_printf (_("%s Drive"), level_str);
                 } else {
+                        /* Translators: First %s is a RAID level, e.g. 'RAID-5'
+                         * second %s is a drive name
+                         */
                         ret = g_strdup_printf (_("%s (%s)"), name, level_str);
                 }
 
                 g_free (level_str);
 
         } else if (drive->priv->device != NULL) {
+                /* Translators: First %s is a device file such as /dev/sda4
+                 * second %s is the state of the device
+                 */
                 ret = g_strdup_printf (_("RAID device %s (%s)"),
                                        gdu_device_get_device_file (drive->priv->device),
                                        gdu_device_linux_md_get_state (drive->priv->device));
@@ -509,6 +516,7 @@ gdu_linux_md_drive_get_name (GduPresentable *presentable)
         } else {
                 g_warn_if_fail (drive->priv->device_file != NULL);
 
+                /* Translators: %s is a device file such as /dev/sda4 */
                 ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
         }
 

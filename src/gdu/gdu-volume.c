@@ -270,12 +270,18 @@ gdu_volume_get_name (GduPresentable *presentable)
         }
 
         if (is_extended_partition) {
+                /* Translators: Label for an extended partition
+                 * %s is the size, formatted like '45 GB'
+                 */
                 result = g_strdup_printf (_("%s Extended"), strsize);
         } else if ((usage != NULL && strcmp (usage, "filesystem") == 0) &&
                    (label != NULL && strlen (label) > 0)) {
                 result = g_strdup (label);
         } else if (usage != NULL) {
                 if (strcmp (usage, "crypto") == 0) {
+                        /* Translators: Label for an extended partition
+                         * %s is the size, formatted like '45 GB'
+                         */
                         result = g_strdup_printf (_("%s Encrypted"), strsize);
                 } else if (gdu_device_is_optical_disc (volume->priv->device)) {
                         for (n = 0; disc_data[n].disc_type != NULL; n++) {
@@ -289,11 +295,20 @@ gdu_volume_get_name (GduPresentable *presentable)
                                 result = g_strdup (_("Optical Disc"));
                         }
                 } else if (strcmp (usage, "filesystem") == 0) {
+                        /* Translators: Label for a partition with a filesystem
+                         * %s is the size, formatted like '45 GB'
+                         */
                         result = g_strdup_printf (_("%s Filesystem"), strsize);
                 } else if (strcmp (usage, "partitiontable") == 0) {
+                        /* Translators: Label for a partition table
+                         * %s is the size, formatted like '45 GB'
+                         */
                         result = g_strdup_printf (_("%s Partition Table"), strsize);
                 } else if (strcmp (usage, "raid") == 0) {
                         if (strcmp (type, "LVM2_member") == 0) {
+                                /* Translators: Label for a LVM volume
+                                * %s is the size, formatted like '45 GB'
+                                */
                                 result = g_strdup_printf (_("%s LVM2 Physical Volume"), strsize);
                         } else {
                                 const gchar *array_name;
@@ -306,12 +321,21 @@ gdu_volume_get_name (GduPresentable *presentable)
                                 if (level != NULL && strlen (level) > 0)
                                         level_str = gdu_linux_md_get_raid_level_for_display (level);
                                 else
-                                        level_str = g_strdup (_("RAID"));
+                                        /* Translators: Used if no specific RAID level could be determined */
+                                        level_str = g_strdup (C_("RAID level", "RAID"));
 
                                 if (array_name != NULL && strlen (array_name) > 0) {
-                                        /* RAID component; the label is the array name */
+                                        /* Translators: label for a RAID component
+                                         * First %s is the size, formatted like '45 GB'
+                                         * second %s is the RAID level string, e.g 'RAID-5'
+                                         * third %s is the name of the array
+                                         */
                                         result = g_strdup_printf (_("%s %s (%s)"), strsize, level_str, array_name);
                                 } else {
+                                        /* Translators: label for a RAID component
+                                         * First %s is the size, formatted like '45 GB'
+                                         * second %s is the RAID level string, e.g 'RAID-5'
+                                         */
                                         result = g_strdup_printf (_("%s %s"), strsize, level_str);
                                 }
 
@@ -319,15 +343,27 @@ gdu_volume_get_name (GduPresentable *presentable)
                         }
                 } else if (strcmp (usage, "other") == 0) {
                         if (strcmp (type, "swap") == 0) {
+                                /* Translators: label for a swap partition
+                                 * %s is the size, formatted like '45 GB'
+                                 */
                                 result = g_strdup_printf (_("%s Swap Space"), strsize);
                         } else {
+                                /* Translators: label for a data partition
+                                 * %s is the size, formatted like '45 GB'
+                                 */
                                 result = g_strdup_printf (_("%s Data"), strsize);
                         }
                 } else if (strcmp (usage, "") == 0) {
+                        /* Translators: label for a volume of unrecognized use
+                         * %s is the size, formatted like '45 GB'
+                         */
                         result = g_strdup_printf (_("%s Unrecognized"), strsize);
                 }
         } else {
                 if (gdu_device_is_partition (volume->priv->device)) {
+                        /* Translators: label for a partition
+                         * %s is the size, formatted like '45 GB'
+                         */
                         result = g_strdup_printf (_("%s Partition"), strsize);
                 } else {
                         result = g_strdup_printf (_("%s Partition"), strsize);

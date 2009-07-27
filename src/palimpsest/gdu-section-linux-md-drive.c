@@ -692,26 +692,30 @@ update (GduSectionLinuxMdDrive *section)
         raid_size = gdu_presentable_get_size (presentable);
 
         if (strcmp (level, "raid0") == 0) {
-                level_str = g_strdup (_("Striped (RAID-0)"));
+                level_str = g_strdup (C_("RAID component type", "Striped (RAID-0)"));
         } else if (strcmp (level, "raid1") == 0) {
-                level_str = g_strdup (_("Mirrored (RAID-1)"));
+                level_str = g_strdup (C_("RAID component type", "Mirrored (RAID-1)"));
         } else if (strcmp (level, "raid4") == 0) {
-                level_str = g_strdup (_("RAID-4"));
+                level_str = g_strdup (C_("RAID component type", "RAID-4"));
         } else if (strcmp (level, "raid5") == 0) {
-                level_str = g_strdup (_("RAID-5"));
+                level_str = g_strdup (C_("RAID component type", "RAID-5"));
         } else if (strcmp (level, "raid6") == 0) {
-                level_str = g_strdup (_("RAID-6"));
+                level_str = g_strdup (C_("RAID component type", "RAID-6"));
         } else if (strcmp (level, "linear") == 0) {
-                level_str = g_strdup (_("Linear (Just a Bunch Of Disks)"));
+                level_str = g_strdup (C_("RAID component type", "Linear (Just a Bunch Of Disks)"));
         } else {
                 level_str = g_strdup (level);
         }
 
         s = gdu_util_get_size_for_display (component_size, FALSE);
         if (strcmp (level, "linear") == 0) {
-                components_str = g_strdup_printf (_("%d Components"), num_raid_devices);
+                /* Translators: %d is the number of components in the RAID */
+                components_str = g_strdup_printf (ngettext ("%d Component", "%d Components", num_raid_devices), num_raid_devices);
         } else {
-                components_str = g_strdup_printf (_("%d Components (%s each)"), num_raid_devices, s);
+                /* Translators: %d is the number of components in the RAID,
+                 * %s is the size of each component, formatted like '45 GB'
+                 */
+                components_str = g_strdup_printf (ngettext ("%d Component (%s)", "%d Components (%s each)", num_raid_devices), num_raid_devices, s);
         }
         g_free (s);
  
@@ -1091,12 +1095,14 @@ gdu_section_linux_md_drive_init (GduSectionLinuxMdDrive *section)
         gtk_widget_set_tooltip_text (button, _("Adds a new component to the running RAID array. Use this "
                                                "when replacing a failed component or adding a hot spare."));
 
+        /* Translators: this is a verb, as in 'check for consistency' */
         button = gtk_button_new_with_mnemonic (_("Chec_k"));
         gtk_container_add (GTK_CONTAINER (button_box), button);
         section->priv->add_button = button;
         g_signal_connect (button, "clicked", G_CALLBACK (on_check_clicked), section);
         gtk_widget_set_tooltip_text (button, _("Starts checking the RAID array for redundancy"));
 
+        /* Translators: this is a verb, as in 'repair this RAID array' */
         button = gtk_button_new_with_mnemonic (_("_Repair"));
         gtk_container_add (GTK_CONTAINER (button_box), button);
         section->priv->add_button = button;

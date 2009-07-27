@@ -647,6 +647,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        /* Translators: unit label for a control that determines partition size in megabytes */
         gtk_label_set_markup (GTK_LABEL (label), _("MB"));
         gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
 
@@ -658,6 +659,7 @@ gdu_section_unallocated_init (GduSectionUnallocated *section)
         /* _file system_ label */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+        /* Translators: 'label' means filesystem label here */
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Label:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);

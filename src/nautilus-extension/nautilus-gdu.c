@@ -221,6 +221,7 @@ nautilus_gdu_get_file_items (NautilusMenuProvider *provider,
                 goto out;
 
         item = nautilus_menu_item_new ("NautilusGdu::format",
+                                       /* Translators: this is a verb */
                                        _("_Format..."),
                                        _("Create new filesystem on the selected device"),
                                        "nautilus-gdu");

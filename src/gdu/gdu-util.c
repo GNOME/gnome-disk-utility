@@ -62,7 +62,7 @@ get_pow2_size (guint64 size)
         else
                 digits = 0;
 
-        str = g_strdup_printf (_("%.*f %s"), digits, displayed_size, unit);
+        str = g_strdup_printf ("%.*f %s", digits, displayed_size, unit);
 
         return str;
 }
@@ -91,7 +91,7 @@ get_pow10_size (guint64 size)
         else
                 digits = 0;
 
-        str = g_strdup_printf (_("%.*f %s"), digits, displayed_size, unit);
+        str = g_strdup_printf ("%.*f %s", digits, displayed_size, unit);
 
         return str;
 }
@@ -105,12 +105,19 @@ gdu_util_get_size_for_display (guint64 size, gboolean long_string)
         if (long_string) {
                 char *pow2_str;
                 char *pow10_str;
+                char *size_str;
 
                 pow2_str = get_pow2_size (size);
                 pow10_str = get_pow10_size (size);
+                size_str = g_strdup_printf ("%'" G_GINT64_FORMAT, size);
 
-                str = g_strdup_printf (_("%s / %s / %'" G_GINT64_FORMAT " bytes"), pow10_str, pow2_str, size);
+                /* Translators: The first %s is the size in power-of-10 units, e.g. 100 KB
+                 * the second %s is the size in power-of-2 units, e.g. 20 MiB
+                 * the third %s is the size as a number
+                 */
+                str = g_strdup_printf (_("%s / %s / %s bytes"), pow10_str, pow2_str, size_str);
 
+                g_free (size_str);
                 g_free (pow10_str);
                 g_free (pow2_str);
         } else {
@@ -138,18 +145,22 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
 
                 if (strcmp (fsversion, "FAT12") == 0) {
                         if (long_string) {
+                                /* Translators: FAT is a filesystem type */
                                 s = g_strdup (_("FAT (12-bit version)"));
                         } else {
+                                /* Translators: FAT is a filesystem type */
                                 s = g_strdup (_("FAT"));
                         }
                 } else if (strcmp (fsversion, "FAT16") == 0) {
                         if (long_string) {
+                                /* Translators: FAT is a filesystem type */
                                 s = g_strdup (_("FAT (16-bit version)"));
                         } else {
                                 s = g_strdup (_("FAT"));
                         }
                 } else if (strcmp (fsversion, "FAT32") == 0) {
                         if (long_string) {
+                                /* Translators: FAT is a filesystem type */
                                 s = g_strdup (_("FAT (32-bit version)"));
                         } else {
                                 s = g_strdup (_("FAT"));
@@ -164,20 +175,24 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
         } else if (strcmp (fstype, "ntfs") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: NTFS is a filesystem type */
                                 s = g_strdup_printf (_("NTFS (version %s)"), fsversion);
                         else
+                                /* Translators: NTFS is a filesystem type */
                                 s = g_strdup_printf (_("NTFS"));
                 } else {
                         s = g_strdup (_("NTFS"));
                 }
         } else if (strcmp (fstype, "hfs") == 0) {
                 if (long_string) {
+                        /* Translators: HFS is a filesystem type */
                         s = g_strdup (_("HFS"));
                 } else {
                         s = g_strdup (_("HFS"));
                 }
         } else if (strcmp (fstype, "hfsplus") == 0) {
                 if (long_string) {
+                        /* Translators: HFS+ is a filesystem type */
                         s = g_strdup (_("HFS+"));
                 } else {
                         s = g_strdup (_("HFS+"));
@@ -186,69 +201,90 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         s = g_strdup (_("Linux Unified Key Setup"));
                 } else {
+                        /* Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format */
                         s = g_strdup (_("LUKS"));
                 }
         } else if (strcmp (fstype, "ext2") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: Ext2 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext2 (version %s)"), fsversion);
                         else
+                                /* Translators: Ext2 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext2"));
                 } else {
+                        /* Translators: Ext2 is a filesystem type */
                         s = g_strdup (_("ext2"));
                 }
         } else if (strcmp (fstype, "ext3") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: Ext3 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext3 (version %s)"), fsversion);
                         else
+                                /* Translators: Ext3 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext3"));
                 } else {
+                        /* Translators: Ext3 is a filesystem type */
                         s = g_strdup (_("ext3"));
                 }
         } else if (strcmp (fstype, "jbd") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems' */
                                 s = g_strdup_printf (_("Journal for Linux ext3 (version %s)"), fsversion);
                         else
+                                /* Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems' */
                                 s = g_strdup_printf (_("Journal for Linux ext3"));
                 } else {
+                        /* Translators: jbd is a filesystem type */
                         s = g_strdup (_("jbd"));
                 }
         } else if (strcmp (fstype, "ext4") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: ext4 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext4 (version %s)"), fsversion);
                         else
+                                /* Translators: ext4 is a filesystem type */
                                 s = g_strdup_printf (_("Linux Ext4"));
                 } else {
+                        /* Translators: Ext4 is a filesystem type */
                         s = g_strdup (_("ext4"));
                 }
         } else if (strcmp (fstype, "xfs") == 0) {
                 if (long_string) {
                         if (strlen (fsversion) > 0)
+                                /* Translators: xfs is a filesystem type */
                                 s = g_strdup_printf (_("Linux XFS (version %s)"), fsversion);
                         else
+                                /* Translators: xfs is a filesystem type */
                                 s = g_strdup_printf (_("Linux XFS"));
                 } else {
+                        /* Translators: xfs is a filesystem type */
                         s = g_strdup (_("xfs"));
                 }
         } else if (strcmp (fstype, "iso9660") == 0) {
                 if (long_string) {
+                        /* Translators: iso9660 is a filesystem type */
                         s = g_strdup (_("ISO 9660"));
                 } else {
+                        /* Translators: iso9660 is a filesystem type */
                         s = g_strdup (_("iso9660"));
                 }
         } else if (strcmp (fstype, "udf") == 0) {
                 if (long_string) {
+                        /* Translators: udf is a filesystem type */
                         s = g_strdup (_("Universal Disk Format"));
                 } else {
+                        /* Translators: udf is a filesystem type */
                         s = g_strdup (_("udf"));
                 }
         } else if (strcmp (fstype, "swap") == 0) {
                 if (long_string) {
                         s = g_strdup (_("Swap Space"));
                 } else {
+                        /* Translators: filesystem type for swap space */
                         s = g_strdup (_("swap"));
                 }
         } else if (strcmp (fstype, "LVM2_member") == 0) {
@@ -258,6 +294,7 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         else
                                 s = g_strdup_printf (_("LVM2 Physical Volume"));
                 } else {
+                        /* Translators: short name for LVM2 Physical Volume */
                         s = g_strdup (_("lvm2_pv"));
                 }
 
@@ -268,6 +305,7 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         else
                                 s = g_strdup_printf (_("RAID Component"));
                 } else {
+                        /* Translators: short name for 'RAID Component' */
                         s = g_strdup (_("raid"));
                 }
         } else {
@@ -439,6 +477,9 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
                         return g_strdup (part_type[n].name);
         }
 
+        /* Translators: Shown for unknown partition types.
+         * %s is the partition type name
+         */
         return g_strdup_printf (_("Unknown (%s)"), type);
 }
 
@@ -733,34 +774,48 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
         name = NULL;
         if (connection_interface != NULL) {
                 if (strcmp (connection_interface, "ata_serial") == 0) {
+                        /* Translators: interface name for serial ATA disks */
                         name = _("SATA");
                 } else if (strcmp (connection_interface, "ata_serial_esata") == 0) {
+                        /* Translators: interface name for serial ATA disks */
                         name = _("eSATA");
                 } else if (strcmp (connection_interface, "ata_parallel") == 0) {
+                        /* Translators: interface name for parallel ATA disks */
                         name = _("PATA");
                 } else if (g_str_has_prefix (connection_interface, "ata")) {
+                        /* Translators: interface name for ATA disks */
                         name = _("ATA");
                 } else if (g_str_has_prefix (connection_interface, "scsi")) {
+                        /* Translators: interface name for SCSI disks */
                         name = _("SCSI");
                 } else if (strcmp (connection_interface, "usb") == 0) {
+                        /* Translators: interface name for USB disks */
                         name = _("USB");
                 } else if (strcmp (connection_interface, "firewire") == 0) {
+                        /* Translators: interface name for firewire disks */
                         name = _("Firewire");
                 } else if (strcmp (connection_interface, "sdio") == 0) {
+                        /* Translators: interface name for SDIO disks */
                         name = _("SDIO");
                 } else if (strcmp (connection_interface, "virtual") == 0) {
+                        /* Translators: interface name for virtual disks */
                         name = _("Virtual");
                 }
         }
 
         if (name == NULL)
-                name = _("Unknown");
+                /* Translators: name shown for unknown disk connection interfaces */
+                name = C_("connection name", "Unknown");
 
         if (connection_speed > 0) {
                 char *speed;
 
                 speed = gdu_util_get_speed_for_display (connection_speed);
-                result = g_strdup_printf ("%s at %s", name, speed);
+                /* Translators: Connection with speed information.
+                 * First %s is the connection name, like 'SATA' or 'USB'
+                 * second %s is the speed, like '2 Mbit/s'
+                 */
+                result = g_strdup_printf (_("%s at %s"), name, speed);
                 g_free (speed);
         } else {
                 result = g_strdup (name);
@@ -777,19 +832,19 @@ gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level)
         gchar *ret;
 
         if (strcmp (linux_md_raid_level, "raid0") == 0) {
-                ret = g_strdup (_("RAID-0"));
+                ret = g_strdup (C_("RAID level", "RAID-0"));
         } else if (strcmp (linux_md_raid_level, "raid1") == 0) {
-                ret = g_strdup (_("RAID-1"));
+                ret = g_strdup (C_("RAID level", "RAID-1"));
         } else if (strcmp (linux_md_raid_level, "raid4") == 0) {
-                ret = g_strdup (_("RAID-4"));
+                ret = g_strdup (C_("RAID level", "RAID-4"));
         } else if (strcmp (linux_md_raid_level, "raid5") == 0) {
-                ret = g_strdup (_("RAID-5"));
+                ret = g_strdup (C_("RAID level", "RAID-5"));
         } else if (strcmp (linux_md_raid_level, "raid6") == 0) {
-                ret = g_strdup (_("RAID-6"));
+                ret = g_strdup (C_("RAID level", "RAID-6"));
         } else if (strcmp (linux_md_raid_level, "raid10") == 0) {
-                ret = g_strdup (_("RAID-10"));
+                ret = g_strdup (C_("RAID level", "RAID-10"));
         } else if (strcmp (linux_md_raid_level, "linear") == 0) {
-                ret = g_strdup (_("JBOD"));
+                ret = g_strdup (C_("RAID level", "JBOD"));
         } else {
                 ret = g_strdup (linux_md_raid_level);
         }

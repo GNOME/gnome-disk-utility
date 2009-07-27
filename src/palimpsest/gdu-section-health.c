@@ -87,7 +87,7 @@ pretty_to_string (guint64 pretty_value, GduAtaSmartAttributeUnit pretty_unit)
         default:
         case GDU_ATA_SMART_ATTRIBUTE_UNIT_NONE:
         case GDU_ATA_SMART_ATTRIBUTE_UNIT_UNKNOWN:
-                ret = g_strdup_printf (_("%" G_GUINT64_FORMAT), pretty_value);
+                ret = g_strdup_printf ("%" G_GUINT64_FORMAT, pretty_value);
                 break;
         }
 

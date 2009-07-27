@@ -1751,7 +1751,7 @@ gdu_shell_raise_error (GduShell       *shell,
                 error_msg = _("The device is busy.");
                 break;
         case GDU_ERROR_CANCELLED:
-                error_msg = _("The operation was cancelled.");
+                error_msg = _("The operation was canceled.");
                 break;
         case GDU_ERROR_INHIBITED:
                 error_msg = _("The daemon is being inhibited.");

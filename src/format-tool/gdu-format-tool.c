@@ -158,7 +158,7 @@ on_progress_dialog_response (GtkDialog *dialog,
 {
         FormatData *data = user_data;
 
-        data->error = g_error_new (G_IO_ERROR, G_IO_ERROR_CANCELLED, _("Operation was cancelled"));
+        data->error = g_error_new (G_IO_ERROR, G_IO_ERROR_CANCELLED, _("Operation was canceled"));
         g_main_loop_quit (data->loop);
 }
 

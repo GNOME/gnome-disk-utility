@@ -285,10 +285,10 @@ smart_data_set (GduSectionHealth *section)
                 s = g_strdup (C_("ATA SMART test result", "Completed OK"));
                 break;
         case GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_ABORTED:
-                s = g_strdup (C_("ATA SMART test result", "Cancelled"));
+                s = g_strdup (C_("ATA SMART test result", "Canceled"));
                 break;
         case GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_INTERRUPTED:
-                s = g_strdup (C_("ATA SMART test result", "Cancelled (with hard or soft reset)"));
+                s = g_strdup (C_("ATA SMART test result", "Canceled (with hard or soft reset)"));
                 break;
         case GDU_ATA_SMART_SELF_TEST_EXECUTION_STATUS_FATAL:
                 s = g_strdup (C_("ATA SMART test result", "Not completed (a fatal error might have occured)"));

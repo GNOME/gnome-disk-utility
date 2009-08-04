@@ -320,7 +320,7 @@ gdu_presentable_get_enclosing_presentable (GduPresentable *presentable)
  *
  * Returns: The name. Caller must free the string with g_free().
  **/
-char *
+gchar *
 gdu_presentable_get_name (GduPresentable *presentable)
 {
   GduPresentableIface *iface;
@@ -330,6 +330,27 @@ gdu_presentable_get_name (GduPresentable *presentable)
   iface = GDU_PRESENTABLE_GET_IFACE (presentable);
 
   return (* iface->get_name) (presentable);
+}
+
+/**
+ * gdu_presentable_get_description:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a description for @presentable suitable for presentation in an user
+ * interface.
+ *
+ * Returns: The description. Caller must free the string with g_free().
+ */
+gchar *
+gdu_presentable_get_description (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_description) (presentable);
 }
 
 /**

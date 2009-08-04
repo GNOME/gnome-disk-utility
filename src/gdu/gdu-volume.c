@@ -196,7 +196,8 @@ gdu_volume_get_enclosing_presentable (GduPresentable *presentable)
 }
 
 static char *
-gdu_volume_get_name (GduPresentable *presentable)
+get_name_and_desc (GduPresentable  *presentable,
+                   gchar          **out_desc)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
         GduPresentable *drive_presentable;
@@ -204,6 +205,7 @@ gdu_volume_get_name (GduPresentable *presentable)
         const char *label;
         const char *usage;
         const char *type;
+        const char *version;
         const char *drive_media;
         const char *presentation_name;
         char *result;
@@ -211,19 +213,15 @@ gdu_volume_get_name (GduPresentable *presentable)
         char *strsize;
         guint64 size;
         guint n;
+        gchar *result_desc;
 
         result = NULL;
+        result_desc = NULL;
 
         drive_presentable = NULL;
         drive_device = NULL;
         drive_media = NULL;
         strsize = NULL;
-
-        presentation_name = gdu_device_get_presentation_name (volume->priv->device);
-        if (presentation_name != NULL && strlen (presentation_name) > 0) {
-                result = g_strdup (presentation_name);
-                goto out;
-        }
 
         drive_presentable = gdu_presentable_get_toplevel (presentable);
         if (drive_presentable != NULL) {
@@ -238,18 +236,25 @@ gdu_volume_get_name (GduPresentable *presentable)
                 size = gdu_device_get_size (volume->priv->device);
         strsize = gdu_util_get_size_for_display (size, FALSE);
 
+        presentation_name = gdu_device_get_presentation_name (volume->priv->device);
+        if (presentation_name != NULL && strlen (presentation_name) > 0) {
+                result = g_strdup (presentation_name);
+                goto out;
+        }
+
         /* see comment in gdu_pool_add_device_by_object_path() for how to avoid hardcoding 0x05 etc. types */
         is_extended_partition = FALSE;
         if (gdu_device_is_partition (volume->priv->device) &&
             strcmp (gdu_device_partition_get_scheme (volume->priv->device), "mbr") == 0) {
-                int type;
-                type = strtol (gdu_device_partition_get_type (volume->priv->device), NULL, 0);
-                if (type == 0x05 || type == 0x0f || type == 0x85)
+                int part_type;
+                part_type = strtol (gdu_device_partition_get_type (volume->priv->device), NULL, 0);
+                if (part_type == 0x05 || part_type == 0x0f || part_type == 0x85)
                         is_extended_partition = TRUE;
         }
 
         usage = gdu_device_id_get_usage (volume->priv->device);
         type = gdu_device_id_get_type (volume->priv->device);
+        version = gdu_device_id_get_version (volume->priv->device);
 
         /* handle optical discs */
         if (gdu_device_is_optical_disc (volume->priv->device) &&
@@ -276,7 +281,13 @@ gdu_volume_get_name (GduPresentable *presentable)
                 result = g_strdup_printf (_("%s Extended"), strsize);
         } else if ((usage != NULL && strcmp (usage, "filesystem") == 0) &&
                    (label != NULL && strlen (label) > 0)) {
+                gchar *fsdesc;
                 result = g_strdup (label);
+                fsdesc = gdu_util_get_fstype_for_display (type, version, TRUE);
+                result_desc = g_strdup_printf ("%s %s",
+                                               strsize,
+                                               fsdesc);
+                g_free (fsdesc);
         } else if (usage != NULL) {
                 if (strcmp (usage, "crypto") == 0) {
                         /* Translators: Label for an extended partition
@@ -299,6 +310,7 @@ gdu_volume_get_name (GduPresentable *presentable)
                          * %s is the size, formatted like '45 GB'
                          */
                         result = g_strdup_printf (_("%s Filesystem"), strsize);
+                        result_desc = gdu_util_get_fstype_for_display (type, version, TRUE);
                 } else if (strcmp (usage, "partitiontable") == 0) {
                         /* Translators: Label for a partition table
                          * %s is the size, formatted like '45 GB'
@@ -327,16 +339,21 @@ gdu_volume_get_name (GduPresentable *presentable)
                                 if (array_name != NULL && strlen (array_name) > 0) {
                                         /* Translators: label for a RAID component
                                          * First %s is the size, formatted like '45 GB'
-                                         * second %s is the RAID level string, e.g 'RAID-5'
-                                         * third %s is the name of the array
                                          */
-                                        result = g_strdup_printf (_("%s %s (%s)"), strsize, level_str, array_name);
+                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                        /* Translators: description for a RAID component
+                                         * First %s is the array name, e.g. 'My Photos RAID',
+                                         * second %s is the RAID level string, e.g 'RAID-5'
+                                         */
+                                        result_desc = g_strdup_printf (_("Part of \"%s\" %s array"),
+                                                                       array_name,
+                                                                       level_str);
                                 } else {
                                         /* Translators: label for a RAID component
                                          * First %s is the size, formatted like '45 GB'
-                                         * second %s is the RAID level string, e.g 'RAID-5'
                                          */
-                                        result = g_strdup_printf (_("%s %s"), strsize, level_str);
+                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                        result_desc = g_strdup (level_str);
                                 }
 
                                 g_free (level_str);
@@ -358,6 +375,7 @@ gdu_volume_get_name (GduPresentable *presentable)
                          * %s is the size, formatted like '45 GB'
                          */
                         result = g_strdup_printf (_("%s Unrecognized"), strsize);
+                        result_desc = g_strdup (_("Unknown or Unused"));
                 }
         } else {
                 if (gdu_device_is_partition (volume->priv->device)) {
@@ -374,14 +392,41 @@ gdu_volume_get_name (GduPresentable *presentable)
                 result = g_strdup_printf (_("%s Unrecognized"), strsize);
 
  out:
-        g_free (strsize);
-
         if (drive_device != NULL)
                 g_object_unref (drive_device);
         if (drive_presentable != NULL)
                 g_object_unref (drive_presentable);
 
+        if (result_desc == NULL) {
+                result_desc = g_strdup (strsize);
+        }
+
+        if (out_desc != NULL)
+                *out_desc = result_desc;
+        else
+                g_free (result_desc);
+
+        g_free (strsize);
+
         return result;
+}
+
+static char *
+gdu_volume_get_name (GduPresentable *presentable)
+{
+        return get_name_and_desc (presentable, NULL);
+}
+
+static gchar *
+gdu_volume_get_description (GduPresentable *presentable)
+{
+        gchar *desc;
+        gchar *name;
+
+        name = get_name_and_desc (presentable, &desc);
+        g_free (name);
+
+        return desc;
 }
 
 static GIcon *
@@ -617,6 +662,7 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_volume_get_device;
         iface->get_enclosing_presentable = gdu_volume_get_enclosing_presentable;
         iface->get_name = gdu_volume_get_name;
+        iface->get_description = gdu_volume_get_description;
         iface->get_icon = gdu_volume_get_icon;
         iface->get_offset = gdu_volume_get_offset;
         iface->get_size = gdu_volume_get_size;

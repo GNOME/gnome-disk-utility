@@ -27,12 +27,12 @@
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_CREATE_LINUX_MD_DIALOG            gdu_create_linux_md_dialog_get_type()
-#define GDU_CREATE_LINUX_MD_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialog))
-#define GDU_CREATE_LINUX_MD_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialogClass))
-#define GDU_IS_CREATE_LINUX_MD_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_CREATE_LINUX_MD_DIALOG))
-#define GDU_IS_CREATE_LINUX_MD_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDU_TYPE_CREATE_LINUX_MD_DIALOG))
-#define GDU_CREATE_LINUX_MD_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialogClass))
+#define GDU_TYPE_CREATE_LINUX_MD_DIALOG         (gdu_create_linux_md_dialog_get_type())
+#define GDU_CREATE_LINUX_MD_DIALOG(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialog))
+#define GDU_CREATE_LINUX_MD_DIALOG_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST ((k), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialogClass))
+#define GDU_IS_CREATE_LINUX_MD_DIALOG(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_CREATE_LINUX_MD_DIALOG))
+#define GDU_IS_CREATE_LINUX_MD_DIALOG_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_CREATE_LINUX_MD_DIALOG))
+#define GDU_CREATE_LINUX_MD_DIALOG_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDU_TYPE_CREATE_LINUX_MD_DIALOG, GduCreateLinuxMdDialogClass))
 
 typedef struct GduCreateLinuxMdDialogClass   GduCreateLinuxMdDialogClass;
 typedef struct GduCreateLinuxMdDialogPrivate GduCreateLinuxMdDialogPrivate;
@@ -51,10 +51,10 @@ struct GduCreateLinuxMdDialogClass
 };
 
 GType       gdu_create_linux_md_dialog_get_type  (void) G_GNUC_CONST;
-GtkWidget*  gdu_create_linux_md_dialog_new       (GtkWindow              *parent,
-                                                  GduPool                *pool);
-gchar      *gdu_create_linux_md_dialog_get_level (GduCreateLinuxMdDialog *dialog);
-gchar      *gdu_create_linux_md_dialog_get_name  (GduCreateLinuxMdDialog *dialog);
+GtkWidget*  gdu_create_linux_md_dialog_new       (GtkWindow               *parent,
+                                                  GduPool                 *pool);
+gchar      *gdu_create_linux_md_dialog_get_level (GduCreateLinuxMdDialog  *dialog);
+gchar      *gdu_create_linux_md_dialog_get_name  (GduCreateLinuxMdDialog  *dialog);
 
 G_END_DECLS
 

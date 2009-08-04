@@ -242,23 +242,27 @@ gdu_drive_get_enclosing_presentable (GduPresentable *presentable)
         return NULL;
 }
 
-static char *
+static gchar *
 gdu_drive_get_name (GduPresentable *presentable)
 {
         GduDrive *drive = GDU_DRIVE (presentable);
-        const char *vendor;
-        const char *model;
+        const gchar *vendor;
+        const gchar *model;
         const char *presentation_name;
+        const gchar* const *media_compat;
         guint64 size;
         gboolean is_removable;
-        char *strsize;
-        char *result;
+        GString *result;
+        gboolean is_rotational;
+        gboolean has_media;
+        gchar *strsize;
 
         strsize = NULL;
+        result = g_string_new (NULL);
 
         presentation_name = gdu_device_get_presentation_name (drive->priv->device);
         if (presentation_name != NULL && strlen (presentation_name) > 0) {
-                result = g_strdup (presentation_name);
+                g_string_append (result, presentation_name);
                 goto out;
         }
 
@@ -266,33 +270,199 @@ gdu_drive_get_name (GduPresentable *presentable)
         model = gdu_device_drive_get_model (drive->priv->device);
         size = gdu_device_get_size (drive->priv->device);
         is_removable = gdu_device_is_removable (drive->priv->device);
+        media_compat = (const gchar* const *) gdu_device_drive_get_media_compatibility (drive->priv->device);
+        has_media = gdu_device_is_media_available (drive->priv->device);
+        is_rotational = TRUE; /* TODO: add support in DKD for this */
 
-        if (vendor != NULL && strlen (vendor) == 0)
-                vendor = NULL;
-
-        if (model != NULL && strlen (model) == 0)
-                model = NULL;
-
-        if (!is_removable && size > 0) {
+        if (has_media && size > 0) {
                 strsize = gdu_util_get_size_for_display (size, FALSE);
         }
 
-        if (strsize != NULL) {
-                result = g_strdup_printf ("%s %s%s%s",
-                                        strsize,
-                                        vendor != NULL ? vendor : "",
-                                        vendor != NULL ? " " : "",
-                                        model != NULL ? model : "");
+
+        if (is_removable) {
+                guint n;
+                gboolean optical_cd;
+                gboolean optical_dvd;
+                gboolean optical_bd;
+                gboolean optical_hddvd;
+
+                /* TODO: should move to gdu-util.c */
+                optical_cd = FALSE;
+                optical_dvd = FALSE;
+                optical_bd = FALSE;
+                optical_hddvd = FALSE;
+                for (n = 0; media_compat != NULL && media_compat[n] != NULL; n++) {
+                        const gchar *media_name;
+                        const gchar *media;
+
+                        media = media_compat[n];
+                        media_name = NULL;
+                        if (g_strcmp0 (media, "flash_cf") == 0) {
+                                media_name = _("CompactFlash");
+                        } else if (g_strcmp0 (media, "flash_ms") == 0) {
+                                media_name = _("MemoryStick");
+                        } else if (g_strcmp0 (media, "flash_sm") == 0) {
+                                media_name = _("SmartMedia");
+                        } else if (g_strcmp0 (media, "flash_sd") == 0) {
+                                media_name = _("SecureDigital");
+                        } else if (g_strcmp0 (media, "flash_sdhc") == 0) {
+                                media_name = _("SD High Capcity");
+                        } else if (g_strcmp0 (media, "floppy") == 0) {
+                                media_name = _("Floppy");
+                        } else if (g_strcmp0 (media, "floppy_zip") == 0) {
+                                media_name = _("Zip");
+                        } else if (g_strcmp0 (media, "floppy_jaz") == 0) {
+                                media_name = _("Jaz");
+                        } else if (g_str_has_prefix (media, "flash")) {
+                                media_name = _("Flash");
+                        } else if (g_str_has_prefix (media, "optical_cd")) {
+                                optical_cd = TRUE;
+                        } else if (g_str_has_prefix (media, "optical_dvd")) {
+                                optical_dvd = TRUE;
+                        } else if (g_str_has_prefix (media, "optical_bd")) {
+                                optical_bd = TRUE;
+                        } else if (g_str_has_prefix (media, "optical_hddvd")) {
+                                optical_hddvd = TRUE;
+                        }
+
+                        if (media_name != NULL) {
+                                if (result->len > 0)
+                                        g_string_append_c (result, '/');
+                                g_string_append (result, media_name);
+                        }
+                }
+                if (optical_cd) {
+                        if (result->len > 0)
+                                g_string_append_c (result, '/');
+                        g_string_append (result, _("CD"));
+                }
+                if (optical_dvd) {
+                        if (result->len > 0)
+                                g_string_append_c (result, '/');
+                        g_string_append (result, _("DVD"));
+                }
+                if (optical_bd) {
+                        if (result->len > 0)
+                                g_string_append_c (result, '/');
+                        g_string_append (result, _("Blu-Ray"));
+                }
+                if (optical_hddvd) {
+                        if (result->len > 0)
+                                g_string_append_c (result, '/');
+                        g_string_append (result, _("HDDVD"));
+                }
+
+                /* If we know the media type, just append Drive */
+                if (result->len > 0) {
+                        g_string_append_c (result, ' ');
+                        g_string_append (result, _("Drive"));
+                } else {
+                        /* Otherwise use Vendor/Model */
+                        if (vendor != NULL && strlen (vendor) == 0)
+                                vendor = NULL;
+
+                        if (model != NULL && strlen (model) == 0)
+                                model = NULL;
+
+                        g_string_append_printf (result,
+                                                "%s%s%s",
+                                                vendor != NULL ? vendor : "",
+                                                vendor != NULL ? " " : "",
+                                                model != NULL ? model : "");
+                }
+
         } else {
-                result = g_strdup_printf ("%s%s%s",
-                                          vendor != NULL ? vendor : "",
-                                          vendor != NULL ? " " : "",
-                                          model != NULL ? model : "");
+                /* Media is not removable, use "Hard Disk" resp. "Solid-State Disk" */
+
+                if (is_rotational) {
+                        if (strsize != NULL) {
+                                g_string_append_printf (result,
+                                                        _("%s Hard Disk"),
+                                                        strsize);
+                        } else {
+                                g_string_append (result,
+                                                 _("%s Hard Disk"));
+                        }
+                } else {
+                        if (strsize != NULL) {
+                                g_string_append_printf (result,
+                                                        _("%s Solid-State Disk"),
+                                                        strsize);
+                        } else {
+                                g_string_append (result,
+                                                 _("%s Solid-State Disk"));
+                        }
+                }
         }
 
  out:
         g_free (strsize);
-        return result;
+        return g_string_free (result, FALSE);
+}
+
+static gchar *
+gdu_drive_get_description (GduPresentable *presentable)
+{
+        GduDrive *drive = GDU_DRIVE (presentable);
+        const gchar *vendor;
+        const gchar *model;
+        const gchar *part_table_scheme;
+        GString *result;
+        guint64 size;
+        gboolean is_removable;
+        gboolean has_media;
+
+        result = g_string_new (NULL);
+
+        vendor = gdu_device_drive_get_vendor (drive->priv->device);
+        model = gdu_device_drive_get_model (drive->priv->device);
+
+        size = gdu_device_get_size (drive->priv->device);
+        is_removable = gdu_device_is_removable (drive->priv->device);
+        has_media = gdu_device_is_media_available (drive->priv->device);
+        part_table_scheme = gdu_device_partition_table_get_scheme (drive->priv->device);
+
+        /* If removable, include size of media or the fact there is no media */
+        if (is_removable) {
+                if (has_media && size > 0) {
+                        gchar *strsize;
+                        strsize = gdu_util_get_size_for_display (size, FALSE);
+                        g_string_append_printf (result,
+                                                _("%s Media"),
+                                                strsize);
+                        g_free (strsize);
+                } else {
+                        g_string_append_printf (result,
+                                                _("No Media Detected"));
+                }
+        }
+
+        /* If we have media, include whether partitioned or not */
+        if (has_media && size > 0) {
+                if (result->len > 0)
+                        g_string_append (result, ", ");
+                if (gdu_device_is_partition_table (drive->priv->device)) {
+                        if (g_strcmp0 (part_table_scheme, "mbr") == 0) {
+                                g_string_append (result,
+                                                 _("MBR Partition Table"));
+                        } else if (g_strcmp0 (part_table_scheme, "gpt") == 0) {
+                                g_string_append (result,
+                                                 _("GUID Partition Table"));
+                        } else if (g_strcmp0 (part_table_scheme, "apm") == 0) {
+                                g_string_append (result,
+                                                 _("Apple Partition Table"));
+                        } else {
+                                g_string_append (result,
+                                                 _("Partitioned"));
+                        }
+                } else {
+                        g_string_append (result,
+                                         _("Not Partitioned"));
+                }
+        }
+
+
+        return g_string_free (result, FALSE);
 }
 
 static gboolean
@@ -465,6 +635,7 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_drive_get_device;
         iface->get_enclosing_presentable = gdu_drive_get_enclosing_presentable;
         iface->get_name = gdu_drive_get_name;
+        iface->get_description = gdu_drive_get_description;
         iface->get_icon = gdu_drive_get_icon;
         iface->get_offset = gdu_drive_get_offset;
         iface->get_size = gdu_drive_get_size;

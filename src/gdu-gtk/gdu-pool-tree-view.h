@@ -52,12 +52,12 @@ struct GduPoolTreeViewClass
         GtkTreeViewClass parent_class;
 };
 
-
 GType            gdu_pool_tree_view_get_type                 (void) G_GNUC_CONST;
-GtkWidget       *gdu_pool_tree_view_new                      (GduPoolTreeModel *model);
-GduPresentable  *gdu_pool_tree_view_get_selected_presentable (GduPoolTreeView  *view);
-void             gdu_pool_tree_view_select_presentable       (GduPoolTreeView  *view,
-                                                              GduPresentable   *presentable);
-void             gdu_pool_tree_view_select_first_presentable (GduPoolTreeView  *view);
+GtkWidget       *gdu_pool_tree_view_new                      (GduPoolTreeModel     *model,
+                                                              GduPoolTreeViewFlags  flags);
+GduPresentable  *gdu_pool_tree_view_get_selected_presentable (GduPoolTreeView      *view);
+void             gdu_pool_tree_view_select_presentable       (GduPoolTreeView      *view,
+                                                              GduPresentable       *presentable);
+void             gdu_pool_tree_view_select_first_presentable (GduPoolTreeView      *view);
 
 #endif /* GDU_POOL_TREE_VIEW_H */

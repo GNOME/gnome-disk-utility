@@ -147,10 +147,16 @@ gdu_volume_hole_get_name (GduPresentable *presentable)
         /* Translators: label for an unallocated space on a disk
          * %s is the size, formatted like '45 GB'
          */
-        result = g_strdup_printf (_("%s Unallocated"), strsize);
+        result = g_strdup_printf (_("%s Free"), strsize);
         g_free (strsize);
 
         return result;
+}
+
+static gchar *
+gdu_volume_hole_get_description (GduPresentable *presentable)
+{
+        return g_strdup (_("Unallocated Space"));
 }
 
 static GIcon *
@@ -298,6 +304,7 @@ gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
         iface->get_device = gdu_volume_hole_get_device;
         iface->get_enclosing_presentable = gdu_volume_hole_get_enclosing_presentable;
         iface->get_name = gdu_volume_hole_get_name;
+        iface->get_description = gdu_volume_hole_get_description;
         iface->get_icon = gdu_volume_hole_get_icon;
         iface->get_offset = gdu_volume_hole_get_offset;
         iface->get_size = gdu_volume_hole_get_size;

@@ -142,14 +142,17 @@ static void
 gdu_pool_tree_model_constructed (GObject *object)
 {
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (object);
-        GType column_types[4];
+        GType column_types[7];
         GList *presentables;
         GList *l;
 
         column_types[0] = GDK_TYPE_PIXBUF;
         column_types[1] = G_TYPE_STRING;
-        column_types[2] = GDU_TYPE_PRESENTABLE;
+        column_types[2] = G_TYPE_STRING;
         column_types[3] = G_TYPE_STRING;
+        column_types[4] = GDU_TYPE_PRESENTABLE;
+        column_types[5] = G_TYPE_BOOLEAN;
+        column_types[6] = G_TYPE_BOOLEAN;
 
         gtk_tree_store_set_column_types (GTK_TREE_STORE (object),
                                          G_N_ELEMENTS (column_types),
@@ -297,6 +300,49 @@ gdu_pool_tree_model_get_iter_for_presentable (GduPoolTreeModel *model,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+set_data_for_presentable (GduPoolTreeModel *model,
+                          GtkTreeIter      *iter,
+                          GduPresentable   *presentable)
+{
+        GduDevice *device;
+        GdkPixbuf *pixbuf;
+        gchar *vpd_name;
+        gchar *name;
+        gchar *desc;
+
+        device = gdu_presentable_get_device (presentable);
+
+        name = gdu_presentable_get_name (presentable);
+        desc = gdu_presentable_get_description (presentable);
+
+        // TODO:
+        //vpd_name = gdu_presentable_get_vpd_name (presentable);
+        vpd_name = g_strdup ("foo");
+
+        pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_SMALL_TOOLBAR);
+
+        /* TODO: insert NAME */
+        gtk_tree_store_set (GTK_TREE_STORE (model),
+                            iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_ICON, pixbuf,
+                            GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, vpd_name,
+                            GDU_POOL_TREE_MODEL_COLUMN_NAME, name,
+                            GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, desc,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, presentable,
+                            GDU_POOL_TREE_MODEL_COLUMN_TOGGLED, FALSE,
+                            GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED, FALSE,
+                            -1);
+
+        if (pixbuf != NULL)
+                g_object_unref (pixbuf);
+        g_free (vpd_name);
+        g_free (name);
+        g_free (desc);
+        if (device != NULL)
+                g_object_unref (device);
+}
+
+static void
 add_presentable (GduPoolTreeModel *model,
                  GduPresentable   *presentable,
                  GtkTreeIter      *iter_out)
@@ -304,8 +350,6 @@ add_presentable (GduPoolTreeModel *model,
         GtkTreeIter  iter;
         GtkTreeIter  iter2;
         GtkTreeIter *parent_iter;
-        GdkPixbuf   *pixbuf;
-        char        *name;
         GduPresentable *enclosing_presentable;
 
         /* check to see if presentable is already added */
@@ -327,27 +371,20 @@ add_presentable (GduPoolTreeModel *model,
                 g_object_unref (enclosing_presentable);
         }
 
-        name = gdu_presentable_get_name (presentable);
-        pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
 
         /*g_debug ("adding %s (%p)", gdu_presentable_get_id (presentable), presentable);*/
 
         gtk_tree_store_append (GTK_TREE_STORE (model),
                                &iter,
                                parent_iter);
-        gtk_tree_store_set (GTK_TREE_STORE (model),
-                            &iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_ICON, pixbuf,
-                            GDU_POOL_TREE_MODEL_COLUMN_NAME, name,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, presentable,
-                            -1);
+
+        set_data_for_presentable (model,
+                                  &iter,
+                                  presentable);
+
 
         if (iter_out != NULL)
                 *iter_out = iter;
-
-        g_free (name);
-        if (pixbuf != NULL)
-                g_object_unref (pixbuf);
 
 out:
         ;
@@ -382,29 +419,13 @@ on_presentable_changed (GduPool          *pool,
                         gpointer          user_data)
 {
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (user_data);
-        char *name;
         GtkTreeIter iter;
-        GdkPixbuf *pixbuf;
-        GduDevice *device;
 
         /* update name and icon */
         if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, &iter)) {
 
-                name = gdu_presentable_get_name (presentable);
-                device = gdu_presentable_get_device (presentable);
-
-                pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
-
-                gtk_tree_store_set (GTK_TREE_STORE (model),
-                                    &iter,
-                                    GDU_POOL_TREE_MODEL_COLUMN_ICON, pixbuf,
-                                    GDU_POOL_TREE_MODEL_COLUMN_NAME, name,
-                                    -1);
-
-                g_free (name);
-                if (pixbuf != NULL)
-                        g_object_unref (pixbuf);
-                if (device != NULL)
-                        g_object_unref (device);
+                set_data_for_presentable (model,
+                                          &iter,
+                                          presentable);
         }
 }

@@ -26,11 +26,12 @@
 
 #include "gdu-pool-tree-view.h"
 #include "gdu-pool-tree-model.h"
-
+#include "gdu-gtk-enumtypes.h"
 
 struct GduPoolTreeViewPrivate
 {
         GduPoolTreeModel *model;
+        GduPoolTreeViewFlags flags;
 };
 
 G_DEFINE_TYPE (GduPoolTreeView, gdu_pool_tree_view, GTK_TYPE_TREE_VIEW)
@@ -38,6 +39,7 @@ G_DEFINE_TYPE (GduPoolTreeView, gdu_pool_tree_view, GTK_TYPE_TREE_VIEW)
 enum {
         PROP_0,
         PROP_POOL_TREE_MODEL,
+        PROP_FLAGS,
 };
 
 static void
@@ -51,6 +53,10 @@ gdu_pool_tree_view_set_property (GObject      *object,
         switch (prop_id) {
         case PROP_POOL_TREE_MODEL:
                 view->priv->model = g_value_dup_object (value);
+                break;
+
+        case PROP_FLAGS:
+                view->priv->flags = g_value_get_flags (value);
                 break;
 
         default:
@@ -70,6 +76,10 @@ gdu_pool_tree_view_get_property (GObject     *object,
         switch (prop_id) {
         case PROP_POOL_TREE_MODEL:
                 g_value_set_object (value, view->priv->model);
+                break;
+
+        case PROP_FLAGS:
+                g_value_set_flags (value, view->priv->flags);
                 break;
 
         default:
@@ -101,6 +111,97 @@ on_row_inserted (GtkTreeModel *tree_model,
 }
 
 static void
+on_toggled (GtkCellRendererToggle *renderer,
+            const gchar           *path_string,
+            gpointer               user_data)
+{
+        GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
+        GtkTreeIter iter;
+        gboolean value;
+
+        if (!gtk_tree_model_get_iter_from_string (GTK_TREE_MODEL (view->priv->model),
+                                                  &iter,
+                                                  path_string))
+                goto out;
+
+        gtk_tree_model_get (GTK_TREE_MODEL (view->priv->model),
+                            &iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_TOGGLED, &value,
+                            -1);
+
+        gtk_tree_store_set (GTK_TREE_STORE (view->priv->model),
+                            &iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_TOGGLED, !value,
+                            -1);
+ out:
+        ;
+}
+
+static void
+format_markup (GtkCellLayout   *cell_layout,
+               GtkCellRenderer *renderer,
+               GtkTreeModel    *tree_model,
+               GtkTreeIter     *iter,
+               gpointer         user_data)
+{
+        GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
+        GtkTreeSelection *tree_selection;
+        gchar *name;
+        gchar *desc;
+        gchar *markup;
+        GtkStyle *style;
+        GdkColor desc_gdk_color = {0};
+        gchar *desc_color;
+        GtkStateType state;
+
+        tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+        gtk_tree_model_get (tree_model,
+                            iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
+                            GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, &desc,
+                            -1);
+
+        /* This color business shouldn't be this hard... */
+        style = gtk_widget_get_style (GTK_WIDGET (view));
+        if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
+                if (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (view)))
+                        state = GTK_STATE_SELECTED;
+                else
+                        state = GTK_STATE_ACTIVE;
+        } else {
+                state = GTK_STATE_NORMAL;
+        }
+#define BLEND_FACTOR 0.7
+        desc_gdk_color.red   = style->text[state].red   * BLEND_FACTOR +
+                               style->base[state].red   * (1.0 - BLEND_FACTOR);
+        desc_gdk_color.green = style->text[state].green * BLEND_FACTOR +
+                               style->base[state].green * (1.0 - BLEND_FACTOR);
+        desc_gdk_color.blue  = style->text[state].blue  * BLEND_FACTOR +
+                               style->base[state].blue  * (1.0 - BLEND_FACTOR);
+#undef BLEND_FACTOR
+        desc_color = g_strdup_printf ("#%02x%02x%02x",
+                                      (desc_gdk_color.red >> 8),
+                                      (desc_gdk_color.green >> 8),
+                                      (desc_gdk_color.blue >> 8));
+
+        markup = g_strdup_printf ("<b>%s</b>\n"
+                                  "<span fgcolor=\"%s\"><small>%s</small></span>",
+                                  name,
+                                  desc_color,
+                                  desc);
+
+        g_object_set (renderer,
+                      "markup", markup,
+                      NULL);
+
+        g_free (name);
+        g_free (desc);
+        g_free (markup);
+        g_free (desc_color);
+}
+
+static void
 gdu_pool_tree_view_constructed (GObject *object)
 {
         GduPoolTreeView *view = GDU_POOL_TREE_VIEW (object);
@@ -111,17 +212,51 @@ gdu_pool_tree_view_constructed (GObject *object)
                                  GTK_TREE_MODEL (view->priv->model));
 
         column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, "Title");
+        if (view->priv->flags & GDU_POOL_TREE_VIEW_FLAGS_SHOW_TOGGLE) {
+                renderer = gtk_cell_renderer_toggle_new ();
+                gtk_tree_view_column_pack_start (column,
+                                                 renderer,
+                                                 FALSE);
+                gtk_tree_view_column_set_attributes (column,
+                                                     renderer,
+                                                     "visible", GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED,
+                                                     "active", GDU_POOL_TREE_MODEL_COLUMN_TOGGLED,
+                                                     NULL);
+                g_signal_connect (renderer,
+                                  "toggled",
+                                  G_CALLBACK (on_toggled),
+                                  view);
+        }
+
         renderer = gtk_cell_renderer_pixbuf_new ();
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column, renderer,
+        gtk_tree_view_column_set_attributes (column,
+                                             renderer,
                                              "pixbuf", GDU_POOL_TREE_MODEL_COLUMN_ICON,
                                              NULL);
+        if (view->priv->flags & GDU_POOL_TREE_VIEW_FLAGS_SHOW_TOGGLE) {
+                gtk_tree_view_column_add_attribute (column,
+                                                    renderer,
+                                                    "sensitive", GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED);
+        }
+
         renderer = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_tree_view_column_set_attributes (column, renderer,
-                                             "text", GDU_POOL_TREE_MODEL_COLUMN_NAME,
-                                             NULL);
+        //gtk_tree_view_column_set_attributes (column,
+        //                                     renderer,
+        //                                     "markup", GDU_POOL_TREE_MODEL_COLUMN_NAME,
+        //                                     NULL);
+        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
+                                            renderer,
+                                            format_markup,
+                                            view,
+                                            NULL);
+
+        if (view->priv->flags & GDU_POOL_TREE_VIEW_FLAGS_SHOW_TOGGLE) {
+                gtk_tree_view_column_add_attribute (column,
+                                                    renderer,
+                                                    "sensitive", GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED);
+        }
         gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
@@ -166,6 +301,23 @@ gdu_pool_tree_view_class_init (GduPoolTreeViewClass *klass)
                                                               G_PARAM_WRITABLE |
                                                               G_PARAM_READABLE |
                                                               G_PARAM_CONSTRUCT_ONLY));
+
+        /**
+         * GduPoolTreeView:flags:
+         *
+         * Flags from the #GduPoolTreeViewFlags enumeration to
+         * customize behavior of the view.
+         */
+        g_object_class_install_property (gobject_class,
+                                         PROP_FLAGS,
+                                         g_param_spec_flags ("flags",
+                                                             NULL,
+                                                             NULL,
+                                                             GDU_TYPE_POOL_TREE_VIEW_FLAGS,
+                                                             GDU_POOL_TREE_VIEW_FLAGS_NONE,
+                                                             G_PARAM_WRITABLE |
+                                                             G_PARAM_READABLE |
+                                                             G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -175,10 +327,12 @@ gdu_pool_tree_view_init (GduPoolTreeView *view)
 }
 
 GtkWidget *
-gdu_pool_tree_view_new (GduPoolTreeModel *model)
+gdu_pool_tree_view_new (GduPoolTreeModel     *model,
+                        GduPoolTreeViewFlags  flags)
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_POOL_TREE_VIEW,
                                          "pool-tree-model", model,
+                                         "flags", flags,
                                          NULL));
 }
 
@@ -216,18 +370,19 @@ gdu_pool_tree_view_select_presentable (GduPoolTreeView *view,
         GtkTreePath *path;
         GtkTreeIter iter;
 
-        if (presentable == NULL)
-                goto out;
+        if (presentable == NULL) {
+                gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (view)));
+        } else {
+                if (!gdu_pool_tree_model_get_iter_for_presentable (view->priv->model, presentable, &iter))
+                        goto out;
 
-        if (!gdu_pool_tree_model_get_iter_for_presentable (view->priv->model, presentable, &iter))
-                goto out;
+                path = gtk_tree_model_get_path (GTK_TREE_MODEL (view->priv->model), &iter);
+                if (path == NULL)
+                        goto out;
 
-        path = gtk_tree_model_get_path (GTK_TREE_MODEL (view->priv->model), &iter);
-        if (path == NULL)
-                goto out;
-
-        gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), path, NULL, FALSE);
-        gtk_tree_path_free (path);
+                gtk_tree_view_set_cursor (GTK_TREE_VIEW (view), path, NULL, FALSE);
+                gtk_tree_path_free (path);
+        }
 out:
         ;
 }

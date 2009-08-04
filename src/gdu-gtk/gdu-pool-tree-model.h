@@ -39,12 +39,6 @@
 typedef struct GduPoolTreeModelClass       GduPoolTreeModelClass;
 typedef struct GduPoolTreeModelPrivate     GduPoolTreeModelPrivate;
 
-typedef enum {
-        GDU_POOL_TREE_MODEL_COLUMN_ICON,
-        GDU_POOL_TREE_MODEL_COLUMN_NAME,
-        GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE,
-} GduPoolTreeModelColumn;
-
 struct GduPoolTreeModel
 {
         GtkTreeStore parent;

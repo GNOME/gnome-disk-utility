@@ -1922,7 +1922,8 @@ create_window (GduShell *shell)
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                              GTK_SHADOW_IN);
         model = gdu_pool_tree_model_new (shell->priv->pool);
-        shell->priv->tree_view = gdu_pool_tree_view_new (model);
+        shell->priv->tree_view = gdu_pool_tree_view_new (model,
+                                                         GDU_POOL_TREE_VIEW_FLAGS_NONE);
         g_object_unref (model);
         gtk_container_add (GTK_CONTAINER (tree_view_scrolled_window), shell->priv->tree_view);
 

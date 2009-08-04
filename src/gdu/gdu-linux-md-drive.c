@@ -535,12 +535,18 @@ get_name_and_desc (GduPresentable  *presentable,
                         part_table_scheme = gdu_device_partition_table_get_scheme (drive->priv->device);
 
                         if (g_strcmp0 (part_table_scheme, "mbr") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 scheme_str = _("MBR Partition Table");
                         } else if (g_strcmp0 (part_table_scheme, "gpt") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 scheme_str = _("GUID Partition Table");
                         } else if (g_strcmp0 (part_table_scheme, "apm") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 scheme_str = _("Apple Partition Table");
                         } else {
+                                /* Translators: This string is used for conveying the partition table format when
+                                 * the format is unknown
+                                 */
                                 scheme_str = _("Partitioned");
                         }
 

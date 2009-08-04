@@ -375,6 +375,7 @@ get_name_and_desc (GduPresentable  *presentable,
                          * %s is the size, formatted like '45 GB'
                          */
                         result = g_strdup_printf (_("%s Unrecognized"), strsize);
+                        /* Translators: description for a volume of unrecognized use */
                         result_desc = g_strdup (_("Unknown or Unused"));
                 }
         } else {

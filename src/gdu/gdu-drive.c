@@ -298,22 +298,31 @@ gdu_drive_get_name (GduPresentable *presentable)
                         media = media_compat[n];
                         media_name = NULL;
                         if (g_strcmp0 (media, "flash_cf") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("CompactFlash");
                         } else if (g_strcmp0 (media, "flash_ms") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("MemoryStick");
                         } else if (g_strcmp0 (media, "flash_sm") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("SmartMedia");
                         } else if (g_strcmp0 (media, "flash_sd") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("SecureDigital");
                         } else if (g_strcmp0 (media, "flash_sdhc") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("SD High Capcity");
                         } else if (g_strcmp0 (media, "floppy") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("Floppy");
                         } else if (g_strcmp0 (media, "floppy_zip") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("Zip");
                         } else if (g_strcmp0 (media, "floppy_jaz") == 0) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("Jaz");
                         } else if (g_str_has_prefix (media, "flash")) {
+                                /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("Flash");
                         } else if (g_str_has_prefix (media, "optical_cd")) {
                                 optical_cd = TRUE;
@@ -334,27 +343,42 @@ gdu_drive_get_name (GduPresentable *presentable)
                 if (optical_cd) {
                         if (result->len > 0)
                                 g_string_append_c (result, '/');
+                        /* Translators: This word is used to describe the optical disc type, it may appear
+                         * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+                         */
                         g_string_append (result, _("CD"));
                 }
                 if (optical_dvd) {
                         if (result->len > 0)
                                 g_string_append_c (result, '/');
+                        /* Translators: This word is used to describe the optical disc type, it may appear
+                         * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+                         */
                         g_string_append (result, _("DVD"));
                 }
                 if (optical_bd) {
                         if (result->len > 0)
                                 g_string_append_c (result, '/');
+                        /* Translators: This word is used to describe the optical disc type, it may appear
+                         * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+                         */
                         g_string_append (result, _("Blu-Ray"));
                 }
                 if (optical_hddvd) {
                         if (result->len > 0)
                                 g_string_append_c (result, '/');
+                        /* Translators: This word is used to describe the optical disc type, it may appear
+                         * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+                         */
                         g_string_append (result, _("HDDVD"));
                 }
 
                 /* If we know the media type, just append Drive */
                 if (result->len > 0) {
                         g_string_append_c (result, ' ');
+                        /* Translators: This word is appended after the media type, e.g. 'CD/DVD Drive' or
+                         * 'CompactFlash Drive'
+                         */
                         g_string_append (result, _("Drive"));
                 } else {
                         /* Otherwise use Vendor/Model */
@@ -376,21 +400,33 @@ gdu_drive_get_name (GduPresentable *presentable)
 
                 if (is_rotational) {
                         if (strsize != NULL) {
+                                /* Translators: This string is used to describe a hard disk. The first %s is
+                                 * the size of the drive e.g. '45 GB'.
+                                 */
                                 g_string_append_printf (result,
                                                         _("%s Hard Disk"),
                                                         strsize);
                         } else {
+                                /* Translators: This string is used to describe a hard disk where the size
+                                 * is not known.
+                                 */
                                 g_string_append (result,
-                                                 _("%s Hard Disk"));
+                                                 _("Hard Disk"));
                         }
                 } else {
                         if (strsize != NULL) {
+                                /* Translators: This string is used to describe a SSD. The first %s is
+                                 * the size of the drive e.g. '45 GB'.
+                                 */
                                 g_string_append_printf (result,
                                                         _("%s Solid-State Disk"),
                                                         strsize);
                         } else {
+                                /* Translators: This string is used to describe a SSD where the size
+                                 * is not known.
+                                 */
                                 g_string_append (result,
-                                                 _("%s Solid-State Disk"));
+                                                 _("Solid-State Disk"));
                         }
                 }
         }
@@ -427,11 +463,17 @@ gdu_drive_get_description (GduPresentable *presentable)
                 if (has_media && size > 0) {
                         gchar *strsize;
                         strsize = gdu_util_get_size_for_display (size, FALSE);
+                        /* Translators: This string is the description of a drive. The first %s is the
+                         * size of the inserted media, for example '45 GB'.
+                         */
                         g_string_append_printf (result,
                                                 _("%s Media"),
                                                 strsize);
                         g_free (strsize);
                 } else {
+                        /* Translators: This string is used as a description text when no media has
+                         * been detected for a drive
+                         */
                         g_string_append_printf (result,
                                                 _("No Media Detected"));
                 }
@@ -443,19 +485,27 @@ gdu_drive_get_description (GduPresentable *presentable)
                         g_string_append (result, ", ");
                 if (gdu_device_is_partition_table (drive->priv->device)) {
                         if (g_strcmp0 (part_table_scheme, "mbr") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 g_string_append (result,
                                                  _("MBR Partition Table"));
                         } else if (g_strcmp0 (part_table_scheme, "gpt") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 g_string_append (result,
                                                  _("GUID Partition Table"));
                         } else if (g_strcmp0 (part_table_scheme, "apm") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
                                 g_string_append (result,
                                                  _("Apple Partition Table"));
                         } else {
+                                /* Translators: This string is used for conveying the partition table format when
+                                 * the format is unknown
+                                 */
                                 g_string_append (result,
                                                  _("Partitioned"));
                         }
                 } else {
+                        /* Translators: This string is used for conveying a device is not partitioned.
+                         */
                         g_string_append (result,
                                          _("Not Partitioned"));
                 }

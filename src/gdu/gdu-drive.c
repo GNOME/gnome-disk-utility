@@ -264,8 +264,10 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         pres = NULL;
 
         device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+        if (device == NULL)
+                goto out;
 
-        if (device != NULL && gdu_device_is_read_only (device))
+        if (gdu_device_is_read_only (device))
                 goto out;
 
         if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device))

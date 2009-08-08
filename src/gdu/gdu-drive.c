@@ -311,7 +311,7 @@ gdu_drive_get_name (GduPresentable *presentable)
                                 media_name = _("SecureDigital");
                         } else if (g_strcmp0 (media, "flash_sdhc") == 0) {
                                 /* Translators: This word is used to describe the media inserted into a device */
-                                media_name = _("SD High Capcity");
+                                media_name = _("SD High Capacity");
                         } else if (g_strcmp0 (media, "floppy") == 0) {
                                 /* Translators: This word is used to describe the media inserted into a device */
                                 media_name = _("Floppy");

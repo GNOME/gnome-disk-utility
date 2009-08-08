@@ -159,6 +159,18 @@ gdu_volume_hole_get_description (GduPresentable *presentable)
         return g_strdup (_("Unallocated Space"));
 }
 
+static char *
+gdu_volume_hole_get_vpd_name (GduPresentable *presentable)
+{
+        /* TODO: we might want to include more information in the future - such as
+         *
+         *       - Offset at where the hole is (at offset '45 GB')
+         *       - What partitions are adjacent (between partitions 3 and 4)
+         *
+         */
+        return g_strdup ("");
+}
+
 static GIcon *
 gdu_volume_hole_get_icon (GduPresentable *presentable)
 {
@@ -300,17 +312,18 @@ gdu_volume_hole_is_recognized (GduPresentable *presentable)
 static void
 gdu_volume_hole_presentable_iface_init (GduPresentableIface *iface)
 {
-        iface->get_id = gdu_volume_hole_get_id;
-        iface->get_device = gdu_volume_hole_get_device;
+        iface->get_id                    = gdu_volume_hole_get_id;
+        iface->get_device                = gdu_volume_hole_get_device;
         iface->get_enclosing_presentable = gdu_volume_hole_get_enclosing_presentable;
-        iface->get_name = gdu_volume_hole_get_name;
-        iface->get_description = gdu_volume_hole_get_description;
-        iface->get_icon = gdu_volume_hole_get_icon;
-        iface->get_offset = gdu_volume_hole_get_offset;
-        iface->get_size = gdu_volume_hole_get_size;
-        iface->get_pool = gdu_volume_hole_get_pool;
-        iface->is_allocated = gdu_volume_hole_is_allocated;
-        iface->is_recognized = gdu_volume_hole_is_recognized;
+        iface->get_name                  = gdu_volume_hole_get_name;
+        iface->get_description           = gdu_volume_hole_get_description;
+        iface->get_vpd_name              = gdu_volume_hole_get_vpd_name;
+        iface->get_icon                  = gdu_volume_hole_get_icon;
+        iface->get_offset                = gdu_volume_hole_get_offset;
+        iface->get_size                  = gdu_volume_hole_get_size;
+        iface->get_pool                  = gdu_volume_hole_get_pool;
+        iface->is_allocated              = gdu_volume_hole_is_allocated;
+        iface->is_recognized             = gdu_volume_hole_is_recognized;
 }
 
 void

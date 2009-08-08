@@ -91,6 +91,14 @@ void gdu_pool_op_linux_md_start (GduPool *pool,
                                  GduPoolLinuxMdStartCompletedFunc callback,
                                  gpointer user_data);
 
+void gdu_pool_op_linux_md_create (GduPool     *pool,
+                                  GPtrArray   *component_objpaths,
+                                  const gchar *level,
+                                  guint64      stripe_size,
+                                  const gchar *name,
+                                  GduPoolLinuxMdCreateCompletedFunc callback,
+                                  gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

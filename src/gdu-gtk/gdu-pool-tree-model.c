@@ -30,6 +30,7 @@
 struct GduPoolTreeModelPrivate
 {
         GduPool *pool;
+        GduPoolTreeModelFlags flags;
 };
 
 G_DEFINE_TYPE (GduPoolTreeModel, gdu_pool_tree_model, GTK_TYPE_TREE_STORE)
@@ -38,6 +39,7 @@ enum
 {
         PROP_0,
         PROP_POOL,
+        PROP_FLAGS,
 };
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -70,6 +72,10 @@ gdu_pool_tree_model_set_property (GObject      *object,
                 model->priv->pool = g_value_dup_object (value);
                 break;
 
+        case PROP_FLAGS:
+                model->priv->flags = g_value_get_flags (value);
+                break;
+
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
                 break;
@@ -87,6 +93,10 @@ gdu_pool_tree_model_get_property (GObject     *object,
         switch (prop_id) {
         case PROP_POOL:
                 g_value_set_object (value, model->priv->pool);
+                break;
+
+        case PROP_FLAGS:
+                g_value_set_flags (value, model->priv->flags);
                 break;
 
         default:
@@ -142,17 +152,18 @@ static void
 gdu_pool_tree_model_constructed (GObject *object)
 {
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (object);
-        GType column_types[7];
+        GType column_types[8];
         GList *presentables;
         GList *l;
 
-        column_types[0] = GDK_TYPE_PIXBUF;
+        column_types[0] = G_TYPE_ICON;
         column_types[1] = G_TYPE_STRING;
         column_types[2] = G_TYPE_STRING;
         column_types[3] = G_TYPE_STRING;
         column_types[4] = GDU_TYPE_PRESENTABLE;
         column_types[5] = G_TYPE_BOOLEAN;
         column_types[6] = G_TYPE_BOOLEAN;
+        column_types[7] = G_TYPE_BOOLEAN;
 
         gtk_tree_store_set_column_types (GTK_TREE_STORE (object),
                                          G_N_ELEMENTS (column_types),
@@ -222,6 +233,22 @@ gdu_pool_tree_model_class_init (GduPoolTreeModelClass *klass)
                                                               G_PARAM_WRITABLE |
                                                               G_PARAM_READABLE |
                                                               G_PARAM_CONSTRUCT_ONLY));
+
+        /**
+         * GduPoolTreeModel:flags:
+         *
+         * The flags for the model.
+         */
+        g_object_class_install_property (gobject_class,
+                                         PROP_FLAGS,
+                                         g_param_spec_flags ("flags",
+                                                             NULL,
+                                                             NULL,
+                                                             GDU_TYPE_POOL_TREE_MODEL_FLAGS,
+                                                             GDU_POOL_TREE_MODEL_FLAGS_NONE,
+                                                             G_PARAM_WRITABLE |
+                                                             G_PARAM_READABLE |
+                                                             G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -231,10 +258,12 @@ gdu_pool_tree_model_init (GduPoolTreeModel *model)
 }
 
 GduPoolTreeModel *
-gdu_pool_tree_model_new (GduPool *pool)
+gdu_pool_tree_model_new (GduPool               *pool,
+                         GduPoolTreeModelFlags  flags)
 {
         return GDU_POOL_TREE_MODEL (g_object_new (GDU_TYPE_POOL_TREE_MODEL,
                                                   "pool", pool,
+                                                  "flags", flags,
                                                   NULL));
 }
 
@@ -305,7 +334,7 @@ set_data_for_presentable (GduPoolTreeModel *model,
                           GduPresentable   *presentable)
 {
         GduDevice *device;
-        GdkPixbuf *pixbuf;
+        GIcon *icon;
         gchar *vpd_name;
         gchar *name;
         gchar *desc;
@@ -314,33 +343,56 @@ set_data_for_presentable (GduPoolTreeModel *model,
 
         name = gdu_presentable_get_name (presentable);
         desc = gdu_presentable_get_description (presentable);
+        vpd_name = gdu_presentable_get_vpd_name (presentable);
 
-        // TODO:
-        //vpd_name = gdu_presentable_get_vpd_name (presentable);
-        vpd_name = g_strdup ("foo");
-
-        pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_SMALL_TOOLBAR);
+        icon = gdu_presentable_get_icon (presentable);
 
         /* TODO: insert NAME */
         gtk_tree_store_set (GTK_TREE_STORE (model),
                             iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_ICON, pixbuf,
+                            GDU_POOL_TREE_MODEL_COLUMN_ICON, icon,
                             GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, vpd_name,
                             GDU_POOL_TREE_MODEL_COLUMN_NAME, name,
                             GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, desc,
                             GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, presentable,
+                            GDU_POOL_TREE_MODEL_COLUMN_VISIBLE, TRUE,
                             GDU_POOL_TREE_MODEL_COLUMN_TOGGLED, FALSE,
                             GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED, FALSE,
                             -1);
 
-        if (pixbuf != NULL)
-                g_object_unref (pixbuf);
+        g_object_unref (icon);
         g_free (vpd_name);
         g_free (name);
         g_free (desc);
         if (device != NULL)
                 g_object_unref (device);
 }
+
+static gboolean
+should_include_presentable (GduPoolTreeModel *model,
+                            GduPresentable   *presentable)
+{
+        gboolean ret;
+
+        ret = FALSE;
+
+        /* see if it should be ignored because it is a volume */
+        if ((model->priv->flags & GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES) &&
+            (GDU_IS_VOLUME (presentable) || GDU_IS_VOLUME_HOLE (presentable)))
+                goto out;
+
+        if (GDU_IS_DRIVE (presentable)) {
+                if ((model->priv->flags & GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES) &&
+                    (!gdu_drive_has_unallocated_space (GDU_DRIVE (presentable), NULL, NULL, NULL)))
+                        goto out;
+        }
+
+        ret = TRUE;
+
+ out:
+        return ret;
+}
+
 
 static void
 add_presentable (GduPoolTreeModel *model,
@@ -354,6 +406,9 @@ add_presentable (GduPoolTreeModel *model,
 
         /* check to see if presentable is already added */
         if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, NULL))
+                goto out;
+
+        if (!should_include_presentable (model, presentable))
                 goto out;
 
         /* set up parent relationship */
@@ -420,6 +475,9 @@ on_presentable_changed (GduPool          *pool,
 {
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (user_data);
         GtkTreeIter iter;
+
+        /* will do NOP if presentable has already been added */
+        add_presentable (model, presentable, NULL);
 
         /* update name and icon */
         if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, &iter)) {

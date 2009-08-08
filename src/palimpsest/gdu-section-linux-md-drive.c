@@ -170,7 +170,8 @@ on_add_clicked (GtkButton *button,
                                         GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                              GTK_SHADOW_IN);
-        model = gdu_pool_tree_model_new (pool);
+        model = gdu_pool_tree_model_new (pool,
+                                         GDU_POOL_TREE_MODEL_FLAGS_NONE);
         tree_view = gdu_pool_tree_view_new (model, GDU_POOL_TREE_VIEW_FLAGS_NONE);
         g_object_unref (model);
         gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);

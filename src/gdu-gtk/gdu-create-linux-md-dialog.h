@@ -50,11 +50,15 @@ struct GduCreateLinuxMdDialogClass
         GtkDialogClass parent_class;
 };
 
-GType       gdu_create_linux_md_dialog_get_type  (void) G_GNUC_CONST;
-GtkWidget*  gdu_create_linux_md_dialog_new       (GtkWindow               *parent,
-                                                  GduPool                 *pool);
-gchar      *gdu_create_linux_md_dialog_get_level (GduCreateLinuxMdDialog  *dialog);
-gchar      *gdu_create_linux_md_dialog_get_name  (GduCreateLinuxMdDialog  *dialog);
+GType       gdu_create_linux_md_dialog_get_type           (void) G_GNUC_CONST;
+GtkWidget*  gdu_create_linux_md_dialog_new                (GtkWindow               *parent,
+                                                           GduPool                 *pool);
+gchar      *gdu_create_linux_md_dialog_get_level          (GduCreateLinuxMdDialog  *dialog);
+gchar      *gdu_create_linux_md_dialog_get_name           (GduCreateLinuxMdDialog  *dialog);
+guint64     gdu_create_linux_md_dialog_get_size           (GduCreateLinuxMdDialog  *dialog);
+guint64     gdu_create_linux_md_dialog_get_component_size (GduCreateLinuxMdDialog  *dialog);
+guint64     gdu_create_linux_md_dialog_get_stripe_size    (GduCreateLinuxMdDialog  *dialog);
+GPtrArray  *gdu_create_linux_md_dialog_get_drives         (GduCreateLinuxMdDialog  *dialog);
 
 G_END_DECLS
 

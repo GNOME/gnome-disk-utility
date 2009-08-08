@@ -20,6 +20,7 @@
  */
 
 #include <config.h>
+#include <stdlib.h>
 #include <string.h>
 #include <glib/gi18n.h>
 #include <dbus/dbus-glib.h>
@@ -31,6 +32,8 @@
 #include "gdu-presentable.h"
 #include "gdu-device.h"
 #include "gdu-error.h"
+#include "gdu-volume.h"
+#include "gdu-volume-hole.h"
 
 /**
  * SECTION:gdu-drive
@@ -63,6 +66,11 @@ G_DEFINE_TYPE_WITH_CODE (GduDrive, gdu_drive, G_TYPE_OBJECT,
 static void device_job_changed (GduDevice *device, gpointer user_data);
 static void device_changed (GduDevice *device, gpointer user_data);
 
+static gboolean gdu_drive_has_unallocated_space_real (GduDrive        *drive,
+                                                      gboolean        *out_whole_disk_is_unitialized,
+                                                      guint64         *out_largest_segment,
+                                                      GduPresentable **out_presentable);
+
 static void
 gdu_drive_finalize (GduDrive *drive)
 {
@@ -91,6 +99,8 @@ gdu_drive_class_init (GduDriveClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_drive_finalize;
+
+        klass->has_unallocated_space = gdu_drive_has_unallocated_space_real;
 
         g_type_class_add_private (klass, sizeof (GduDrivePrivate));
 }
@@ -183,6 +193,178 @@ gdu_drive_deactivate (GduDrive                *drive,
         }
 }
 
+/**
+ * gdu_drive_has_unallocated_space:
+ * @drive: A #GduDrive.
+ * @out_whole_disk_is_unitialized: Return location for whether @drive is uninitialized or %NULL.
+ * @out_largest_segment: Return location biggest contigious free block of @drive or %NULL.
+ * @out_presentable: Return location for the presentable that represents free space or %NULL. Free
+ * with g_object_unref().
+ *
+ * This method computes the largest contigious free block of
+ * unallocated space on @drive.
+ *
+ * If @drive uses removable media and there is no media inserted,
+ * %FALSE is returned.
+ *
+ * If @drive appears to be completely uninitialized (such as a hard
+ * disk full of zeros), @out_whole_disk_is_unitialized is set to
+ * %TRUE, the size of the media/disk is returned in
+ * @out_largest_segment and %TRUE is returned. Note that this can
+ * also happen if @drive contains signatures unknown to the operating system
+ * so be careful.
+ *
+ * If the disk is partitioned and unallocated space exists but no more
+ * partitions can be created (due to e.g. four primary partitions on a
+ * MBR partitioned disk), this method returns %FALSE but
+ * @out_largest_segment will be set to a non-zero value.
+ *
+ * Additionally, @out_presentable will be set to either a
+ * #GduVolumeHole (if the disk is partitioned and has free space) or
+ * the #GduDrive (if the disk is uninitialized).
+ *
+ * Returns: %TRUE if @drive has unallocated space, %FALSE otherwise.
+ */
+gboolean
+gdu_drive_has_unallocated_space (GduDrive        *drive,
+                                 gboolean        *out_whole_disk_is_unitialized,
+                                 guint64         *out_largest_segment,
+                                 GduPresentable **out_presentable)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+
+        return klass->has_unallocated_space (drive,
+                                             out_whole_disk_is_unitialized,
+                                             out_largest_segment,
+                                             out_presentable);
+}
+
+static gboolean
+gdu_drive_has_unallocated_space_real (GduDrive        *drive,
+                                      gboolean        *out_whole_disk_is_unitialized,
+                                      guint64         *out_largest_segment,
+                                      GduPresentable **out_presentable)
+{
+        GduDevice *device;
+        GduPool *pool;
+        guint64 largest_segment;
+        gboolean whole_disk_uninitialized;
+        GList *enclosed_presentables;
+        GList *l;
+        gboolean has_extended_partition;
+        gboolean ret;
+        guint64 size;
+        GduPresentable *pres;
+
+        largest_segment = 0;
+        whole_disk_uninitialized = FALSE;
+        ret = FALSE;
+        device = NULL;
+        pool = NULL;
+        pres = NULL;
+
+        device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+
+        if (device != NULL && gdu_device_is_read_only (device))
+                goto out;
+
+        if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device))
+                goto out;
+
+        /* now figure out @whole_disk_is_uninitialized... this is to be set to %TRUE exactly
+         * when we _think_ the disk has never been used - we define this to happen when
+         *
+         *  1. The disk has no partition table; and
+         *
+         *  2. the whole-disk device is unrecognized
+         */
+        if (!gdu_device_is_partition_table (device) && strlen (gdu_device_id_get_usage (device)) == 0) {
+                whole_disk_uninitialized = TRUE;
+                largest_segment = gdu_device_get_size (device);
+                ret = TRUE;
+                pres = GDU_PRESENTABLE (drive);
+                goto out;
+        }
+
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (drive));
+
+        has_extended_partition = FALSE;
+        enclosed_presentables = gdu_pool_get_enclosed_presentables (pool,
+                                                                    GDU_PRESENTABLE (drive));
+        for (l = enclosed_presentables; l != NULL; l = l->next) {
+                GduPresentable *ep = GDU_PRESENTABLE (l->data);
+
+                if (GDU_IS_VOLUME_HOLE (ep)) {
+                        size = gdu_presentable_get_size (ep);
+
+                        if (size > largest_segment) {
+                                largest_segment = size;
+                                pres = ep;
+                        }
+                } else if (GDU_IS_VOLUME (ep)) {
+                        gint type;
+                        GduDevice *ep_device;
+
+                        ep_device = gdu_presentable_get_device (ep);
+
+                        type = strtol (gdu_device_partition_get_type (ep_device), NULL, 0);
+                        if (type == 0x05 || type == 0x0f || type == 0x85) {
+                                GList *logical_partitions;
+                                GList *ll;
+
+                                has_extended_partition = TRUE;
+
+                                /* This is MS-DOS extended partition, count volume holes inside */
+                                logical_partitions = gdu_pool_get_enclosed_presentables (pool, ep);
+                                for (ll = logical_partitions; ll != NULL; ll = ll->next) {
+                                        GduPresentable *lep = GDU_PRESENTABLE (ll->data);
+
+                                        if (GDU_IS_VOLUME_HOLE (lep)) {
+                                                size = gdu_presentable_get_size (lep);
+                                                if (size > largest_segment) {
+                                                        largest_segment = size;
+                                                        pres = lep;
+                                                }
+                                        }
+                                }
+                                g_list_foreach (logical_partitions, (GFunc) g_object_unref, NULL);
+                                g_list_free (logical_partitions);
+                        }
+                        g_object_unref (ep_device);
+                }
+        }
+        g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed_presentables);
+
+        ret = (largest_segment > 0);
+
+        /* Now igure out if the partition table is full (e.g. four primary partitions already) and
+         * return %FALSE and non-zero @out_largest_segment
+         */
+        if (g_strcmp0 (gdu_device_partition_table_get_scheme (device), "mbr") == 0 &&
+            gdu_device_partition_table_get_count (device) == 4 &&
+            !has_extended_partition) {
+                ret = FALSE;
+        }
+
+ out:
+        if (device != NULL)
+                g_object_unref (device);
+        if (pool != NULL)
+                g_object_unref (pool);
+
+        if (out_largest_segment != NULL)
+                *out_largest_segment = largest_segment;
+
+        if (out_whole_disk_is_unitialized != NULL)
+                *out_whole_disk_is_unitialized = whole_disk_uninitialized;
+
+        if (out_presentable != NULL) {
+                *out_presentable = (pres != NULL ? g_object_ref (pres) : NULL);
+        }
+
+        return ret;
+}
 
 static void
 gdu_drive_init (GduDrive *drive)
@@ -272,7 +454,7 @@ gdu_drive_get_name (GduPresentable *presentable)
         is_removable = gdu_device_is_removable (drive->priv->device);
         media_compat = (const gchar* const *) gdu_device_drive_get_media_compatibility (drive->priv->device);
         has_media = gdu_device_is_media_available (drive->priv->device);
-        is_rotational = TRUE; /* TODO: add support in DKD for this */
+        is_rotational = gdu_device_drive_get_is_rotational (drive->priv->device);
 
         if (has_media && size > 0) {
                 strsize = gdu_util_get_size_for_display (size, FALSE);
@@ -515,6 +697,34 @@ gdu_drive_get_description (GduPresentable *presentable)
         return g_string_free (result, FALSE);
 }
 
+static gchar *
+gdu_drive_get_vpd_name (GduPresentable *presentable)
+{
+        GduDrive *drive = GDU_DRIVE (presentable);
+        const gchar *vendor;
+        const gchar *model;
+        GString *result;
+
+        result = g_string_new (NULL);
+
+        vendor = gdu_device_drive_get_vendor (drive->priv->device);
+        model = gdu_device_drive_get_model (drive->priv->device);
+
+        if (vendor != NULL && strlen (vendor) == 0)
+                vendor = NULL;
+
+        if (model != NULL && strlen (model) == 0)
+                model = NULL;
+
+        g_string_append_printf (result,
+                                "%s%s%s",
+                                vendor != NULL ? vendor : "",
+                                vendor != NULL ? " " : "",
+                                model != NULL ? model : "");
+
+        return g_string_free (result, FALSE);
+}
+
 static gboolean
 strv_has (char **strv, const gchar *str)
 {
@@ -681,15 +891,17 @@ gdu_drive_is_recognized (GduPresentable *presentable)
 static void
 gdu_drive_presentable_iface_init (GduPresentableIface *iface)
 {
-        iface->get_id = gdu_drive_get_id;
-        iface->get_device = gdu_drive_get_device;
+        iface->get_id                    = gdu_drive_get_id;
+        iface->get_device                = gdu_drive_get_device;
         iface->get_enclosing_presentable = gdu_drive_get_enclosing_presentable;
-        iface->get_name = gdu_drive_get_name;
-        iface->get_description = gdu_drive_get_description;
-        iface->get_icon = gdu_drive_get_icon;
-        iface->get_offset = gdu_drive_get_offset;
-        iface->get_size = gdu_drive_get_size;
-        iface->get_pool = gdu_drive_get_pool;
-        iface->is_allocated = gdu_drive_is_allocated;
-        iface->is_recognized = gdu_drive_is_recognized;
+        iface->get_name                  = gdu_drive_get_name;
+        iface->get_description           = gdu_drive_get_description;
+        iface->get_vpd_name              = gdu_drive_get_vpd_name;
+        iface->get_icon                  = gdu_drive_get_icon;
+        iface->get_offset                = gdu_drive_get_offset;
+        iface->get_size                  = gdu_drive_get_size;
+        iface->get_pool                  = gdu_drive_get_pool;
+        iface->is_allocated              = gdu_drive_is_allocated;
+        iface->is_recognized             = gdu_drive_is_recognized;
 }
+

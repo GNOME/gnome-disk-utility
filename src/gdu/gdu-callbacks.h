@@ -153,6 +153,11 @@ typedef void (*GduPoolLinuxMdStartCompletedFunc) (GduPool    *pool,
                                                   GError     *error,
                                                   gpointer    user_data);
 
+typedef void (*GduPoolLinuxMdCreateCompletedFunc) (GduPool    *pool,
+                                                   char       *array_object_path,
+                                                   GError     *error,
+                                                   gpointer    user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduDrive */
 

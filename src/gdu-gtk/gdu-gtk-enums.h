@@ -30,25 +30,27 @@
 
 /**
  * GduPoolTreeModelColumn:
- * @GDU_POOL_TREE_MODEL_COLUMN_ICON: The icon for the presentable.
- * @GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME: Name for the presentable derived from Vital Product Data,
- * e.g. "ATA INTEL SSDSA2MH080G1GC".
+ * @GDU_POOL_TREE_MODEL_COLUMN_ICON: The #GIcon for the presentable.
  * @GDU_POOL_TREE_MODEL_COLUMN_NAME: Human readable name of the presentable, e.g. "80 GB Solid-state Disk" or
  * "Fedora (Rawhide)".
+ * @GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME: Name for the presentable derived from Vital Product Data,
+ * e.g. "ATA INTEL SSDSA2MH080G1GC".
  * @GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION: Human readable description of the presentable, e.g. "MBR Partition Table"
  * or "32GB Linux ext3".
  * @GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE: The #GduPresentable object.
- * @GDU_POOL_TREE_MODEL_COLUMN_TOGGLED: Whether the item can be toggled.
- * @GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED: Whether the item is toggled.
+ * @GDU_POOL_TREE_MODEL_COLUMN_VISIBLE: Whether the item is visible.
+ * @GDU_POOL_TREE_MODEL_COLUMN_TOGGLED: Whether the item is toggled.
+ * @GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED: Whether the item can be toggled.
  *
  * Columns used in #GduPoolTreeModel.
  */
 typedef enum {
         GDU_POOL_TREE_MODEL_COLUMN_ICON,
-        GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME,
         GDU_POOL_TREE_MODEL_COLUMN_NAME,
+        GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME,
         GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION,
         GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE,
+        GDU_POOL_TREE_MODEL_COLUMN_VISIBLE,
         GDU_POOL_TREE_MODEL_COLUMN_TOGGLED,
         GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED,
 } GduPoolTreeModelColumn;
@@ -57,5 +59,19 @@ typedef enum {
         GDU_POOL_TREE_VIEW_FLAGS_NONE        = 0,
         GDU_POOL_TREE_VIEW_FLAGS_SHOW_TOGGLE = (1<<0),
 } GduPoolTreeViewFlags;
+
+/**
+ * GduPoolTreeModelFlags:
+ * @GDU_POOL_TREE_MODEL_FLAGS_NONE: No flags set.
+ * @GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES: Don't include presentables representing volumes or holes.
+ * @GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES: Don't include drives that cannot be allocated to e.g. a RAID array.
+ *
+ * Flags used when creating a #GduPoolTreeModel.
+ */
+typedef enum {
+        GDU_POOL_TREE_MODEL_FLAGS_NONE                      = 0,
+        GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES                = (1<<0),
+        GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES   = (1<<2),
+} GduPoolTreeModelFlags;
 
 #endif /* GDU_GTK_ENUMS_H */

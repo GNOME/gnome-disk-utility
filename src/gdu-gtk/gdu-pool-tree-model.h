@@ -53,10 +53,11 @@ struct GduPoolTreeModelClass
 };
 
 
-GType             gdu_pool_tree_model_get_type                 (void);
-GduPoolTreeModel *gdu_pool_tree_model_new                      (GduPool *pool);
-gboolean          gdu_pool_tree_model_get_iter_for_presentable (GduPoolTreeModel *model,
-                                                                GduPresentable   *presentable,
-                                                                GtkTreeIter      *out_iter);
+GType             gdu_pool_tree_model_get_type                 (void) G_GNUC_CONST;
+GduPoolTreeModel *gdu_pool_tree_model_new                      (GduPool               *pool,
+                                                                GduPoolTreeModelFlags  flags);
+gboolean          gdu_pool_tree_model_get_iter_for_presentable (GduPoolTreeModel      *model,
+                                                                GduPresentable        *presentable,
+                                                                GtkTreeIter           *out_iter);
 
 #endif /* GDU_POOL_TREE_MODEL_H */

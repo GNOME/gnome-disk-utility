@@ -827,26 +827,87 @@ gdu_util_get_connection_for_display (const char *connection_interface, guint64 c
 /* ---------------------------------------------------------------------------------------------------- */
 
 gchar *
-gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level)
+gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level,
+                                         gboolean long_string)
 {
         gchar *ret;
 
         if (strcmp (linux_md_raid_level, "raid0") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-0"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Stripe (RAID-0)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-0"));
         } else if (strcmp (linux_md_raid_level, "raid1") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-1"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Mirror (RAID-1)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-1"));
         } else if (strcmp (linux_md_raid_level, "raid4") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-4"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Parity Disk (RAID-4)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-4"));
         } else if (strcmp (linux_md_raid_level, "raid5") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-5"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Distributed Parity (RAID-5)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-5"));
         } else if (strcmp (linux_md_raid_level, "raid6") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-6"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Dual Distributed Parity (RAID-6)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-6"));
         } else if (strcmp (linux_md_raid_level, "raid10") == 0) {
-                ret = g_strdup (C_("RAID level", "RAID-10"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Stripe of Mirrors (RAID-10)"));
+                else
+                        ret = g_strdup (C_("RAID level", "RAID-10"));
         } else if (strcmp (linux_md_raid_level, "linear") == 0) {
-                ret = g_strdup (C_("RAID level", "JBOD"));
+                if (long_string)
+                        ret = g_strdup (C_("RAID level", "Concatenated (Linear)"));
+                else
+                        ret = g_strdup (C_("RAID level", "Linear"));
         } else {
                 ret = g_strdup (linux_md_raid_level);
+        }
+
+        return ret;
+}
+
+char *
+gdu_linux_md_get_raid_level_description (const gchar *linux_md_raid_level)
+{
+        gchar *ret;
+
+        if (strcmp (linux_md_raid_level, "raid0") == 0) {
+                ret = g_strdup (_("Striped set without parity. "
+                                  "Provides improved performance but no fault tolerance. "
+                                  "If a single disk in the array fails, the entire RAID-0 array fails."));
+        } else if (strcmp (linux_md_raid_level, "raid1") == 0) {
+                ret = g_strdup (_("Mirrored set without parity. "
+                                  "Provides fault tolerance and improved performance for reading. "
+                                  "RAID-1 arrays can sustain all but one disk failing."));
+        } else if (strcmp (linux_md_raid_level, "raid4") == 0) {
+                ret = g_strdup (_("Striped set with parity on a single disk. "
+                                  "Provides improved performance and fault tolerance. "
+                                  "RAID-4 arrays can sustain a single disk failure."));
+        } else if (strcmp (linux_md_raid_level, "raid5") == 0) {
+                ret = g_strdup (_("Striped set with distributed parity. "
+                                  "Provides improved performance and fault tolerance. "
+                                  "RAID-5 arrays can sustain a single disk failure."));
+        } else if (strcmp (linux_md_raid_level, "raid6") == 0) {
+                ret = g_strdup (_("Striped set with dual distributed parity. "
+                                  "Provides improved performance and fault tolerance. "
+                                  "RAID-6 arrays can sustain two disk failures."));
+        } else if (strcmp (linux_md_raid_level, "raid10") == 0) {
+                ret = g_strdup (_("Striped set with distributed parity. "
+                                  "Provides improved performance and fault tolerance. "
+                                  "RAID-10 arrays can sustain multiple drive losses so long as no mirror loses all its drives."));
+        /*} else if (strcmp (linux_md_raid_level, "linear") == 0) {*/
+
+        } else {
+                ret = g_strdup_printf (_("Unknown RAID level %s."), linux_md_raid_level);
+                g_warning ("Please add support: %s", ret);
         }
 
         return ret;

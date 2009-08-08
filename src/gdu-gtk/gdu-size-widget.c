@@ -55,6 +55,8 @@ guint signals[LAST_SIGNAL] = {0,};
 
 G_DEFINE_TYPE (GduSizeWidget, gdu_size_widget, GTK_TYPE_HBOX)
 
+static void update_stepping (GduSizeWidget *widget);
+
 static void
 gdu_size_widget_finalize (GObject *object)
 {
@@ -215,6 +217,8 @@ gdu_size_widget_constructed (GObject *object)
                           "query-tooltip",
                           G_CALLBACK (on_query_tooltip),
                           widget);
+
+        update_stepping (widget);
 
         if (G_OBJECT_CLASS (gdu_size_widget_parent_class)->constructed != NULL)
                 G_OBJECT_CLASS (gdu_size_widget_parent_class)->constructed (object);

@@ -468,26 +468,36 @@ gdu_linux_md_drive_get_enclosing_presentable (GduPresentable *presentable)
 }
 
 static gchar *
-get_name_and_desc (GduPresentable  *presentable,
-                   gchar          **out_desc)
+get_names_and_desc (GduPresentable  *presentable,
+                    gchar          **out_vpd_name,
+                    gchar          **out_desc)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (presentable);
         GduDevice *component_device;
         gchar *ret;
         gchar *ret_desc;
+        gchar *ret_vpd;
         gchar *level_str;
         guint64 component_size;
         int num_slaves;
         int num_raid_devices;
         const char *level;
         const char *name;
+        gchar *strsize;
 
         ret = NULL;
         ret_desc = NULL;
+        ret_vpd = NULL;
+        strsize = NULL;
+
+        /* TODO: Maybe guess size from level, num_raid_devices and component_size? */
+        if (drive->priv->device != NULL) {
+                guint64 size;
+                size = gdu_device_get_size (drive->priv->device);
+                strsize = gdu_util_get_size_for_display (size, FALSE);
+        }
 
         if (drive->priv->slaves != NULL) {
-                guint64 size;
-                gchar *strsize;
 
                 component_device = GDU_DEVICE (drive->priv->slaves->data);
 
@@ -497,14 +507,7 @@ get_name_and_desc (GduPresentable  *presentable,
                 num_slaves = g_list_length (drive->priv->slaves);
                 component_size = gdu_device_get_size (component_device);
 
-                level_str = gdu_linux_md_get_raid_level_for_display (level);
-
-                strsize = NULL;
-                if (drive->priv->device != NULL) {
-                        size = gdu_device_get_size (component_device);
-                        strsize = gdu_util_get_size_for_display (size, FALSE);
-                }
-                /* TODO: Maybe guess size from level, num_raid_devices and component_size? */
+                level_str = gdu_linux_md_get_raid_level_for_display (level, FALSE);
 
                 if (name == NULL || strlen (name) == 0) {
                         if (strsize != NULL) {
@@ -565,10 +568,6 @@ get_name_and_desc (GduPresentable  *presentable,
 
                 g_free (level_str);
 
-                /* lame fallback */
-                if (ret_desc == NULL)
-                        ret_desc = g_strdup (_("RAID Array"));
-
         } else if (drive->priv->device != NULL) {
                 /* Translators: First %s is a device file such as /dev/sda4
                  * second %s is the state of the device
@@ -576,7 +575,6 @@ get_name_and_desc (GduPresentable  *presentable,
                 ret = g_strdup_printf (_("RAID device %s (%s)"),
                                        gdu_device_get_device_file (drive->priv->device),
                                        gdu_device_linux_md_get_state (drive->priv->device));
-
         } else {
                 g_warn_if_fail (drive->priv->device_file != NULL);
 
@@ -584,10 +582,33 @@ get_name_and_desc (GduPresentable  *presentable,
                 ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
         }
 
+        /* Fallback for description */
+        if (ret_desc == NULL) {
+                ret_desc = g_strdup (_("RAID Array"));
+        }
+
+        /* Fallback for VPD name */
+        if (ret_vpd == NULL) {
+                if (strsize != NULL) {
+                        /* Translators: %s is the size e.g. '45 GB' */
+                        ret_vpd = g_strdup_printf (_("%s Software RAID"),
+                                                   strsize);
+                } else {
+                        ret_vpd = g_strdup (_("Software RAID"));
+                }
+        }
+
         if (out_desc != NULL)
                 *out_desc = ret_desc;
         else
                 g_free (ret_desc);
+
+        if (out_vpd_name != NULL)
+                *out_vpd_name = ret_vpd;
+        else
+                g_free (ret_vpd);
+
+        g_free (strsize);
 
         return ret;
 }
@@ -595,7 +616,7 @@ get_name_and_desc (GduPresentable  *presentable,
 static char *
 gdu_linux_md_drive_get_name (GduPresentable *presentable)
 {
-        return get_name_and_desc (presentable, NULL);
+        return get_names_and_desc (presentable, NULL, NULL);
 }
 
 static gchar *
@@ -604,10 +625,22 @@ gdu_linux_md_drive_get_description (GduPresentable *presentable)
         gchar *desc;
         gchar *name;
 
-        name = get_name_and_desc (presentable, &desc);
+        name = get_names_and_desc (presentable, NULL, &desc);
         g_free (name);
 
         return desc;
+}
+
+static gchar *
+gdu_linux_md_drive_get_vpd_name (GduPresentable *presentable)
+{
+        gchar *vpd_name;
+        gchar *name;
+
+        name = get_names_and_desc (presentable, &vpd_name, NULL);
+        g_free (name);
+
+        return vpd_name;
 }
 
 static GIcon *
@@ -700,17 +733,18 @@ gdu_linux_md_drive_is_recognized (GduPresentable *presentable)
 static void
 gdu_linux_md_drive_presentable_iface_init (GduPresentableIface *iface)
 {
-        iface->get_id = gdu_linux_md_drive_get_id;
-        iface->get_device = gdu_linux_md_drive_get_device;
+        iface->get_id                    = gdu_linux_md_drive_get_id;
+        iface->get_device                = gdu_linux_md_drive_get_device;
         iface->get_enclosing_presentable = gdu_linux_md_drive_get_enclosing_presentable;
-        iface->get_name = gdu_linux_md_drive_get_name;
-        iface->get_description = gdu_linux_md_drive_get_description;
-        iface->get_icon = gdu_linux_md_drive_get_icon;
-        iface->get_offset = gdu_linux_md_drive_get_offset;
-        iface->get_size = gdu_linux_md_drive_get_size;
-        iface->get_pool = gdu_linux_md_drive_get_pool;
-        iface->is_allocated = gdu_linux_md_drive_is_allocated;
-        iface->is_recognized = gdu_linux_md_drive_is_recognized;
+        iface->get_name                  = gdu_linux_md_drive_get_name;
+        iface->get_description           = gdu_linux_md_drive_get_description;
+        iface->get_vpd_name              = gdu_linux_md_drive_get_vpd_name;
+        iface->get_icon                  = gdu_linux_md_drive_get_icon;
+        iface->get_offset                = gdu_linux_md_drive_get_offset;
+        iface->get_size                  = gdu_linux_md_drive_get_size;
+        iface->get_pool                  = gdu_linux_md_drive_get_pool;
+        iface->is_allocated              = gdu_linux_md_drive_is_allocated;
+        iface->is_recognized             = gdu_linux_md_drive_is_recognized;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

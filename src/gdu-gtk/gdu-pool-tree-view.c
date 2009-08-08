@@ -147,7 +147,9 @@ format_markup (GtkCellLayout   *cell_layout,
         GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
         GtkTreeSelection *tree_selection;
         gchar *name;
+        gchar *vpd_name;
         gchar *desc;
+        GduPresentable *p;
         gchar *markup;
         GtkStyle *style;
         GdkColor desc_gdk_color = {0};
@@ -158,7 +160,9 @@ format_markup (GtkCellLayout   *cell_layout,
 
         gtk_tree_model_get (tree_model,
                             iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                             GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
+                            GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, &vpd_name,
                             GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, &desc,
                             -1);
 
@@ -185,11 +189,23 @@ format_markup (GtkCellLayout   *cell_layout,
                                       (desc_gdk_color.green >> 8),
                                       (desc_gdk_color.blue >> 8));
 
-        markup = g_strdup_printf ("<b>%s</b>\n"
-                                  "<span fgcolor=\"%s\"><small>%s</small></span>",
-                                  name,
-                                  desc_color,
-                                  desc);
+        /* Only include VPD name for drives */
+        if (GDU_IS_DRIVE (p)) {
+                markup = g_strdup_printf ("<b>%s</b>\n"
+                                          "<span fgcolor=\"%s\"><small>%s\n%s</small></span>",
+                                          name,
+                                          desc_color,
+                                          vpd_name,
+                                          desc);
+        } else {
+                markup = g_strdup_printf ("<small>"
+                                          "<b>%s</b>\n"
+                                          "<span fgcolor=\"%s\">%s</span>"
+                                          "</small>",
+                                          name,
+                                          desc_color,
+                                          desc);
+        }
 
         g_object_set (renderer,
                       "markup", markup,
@@ -197,8 +213,65 @@ format_markup (GtkCellLayout   *cell_layout,
 
         g_free (name);
         g_free (desc);
+        g_free (vpd_name);
         g_free (markup);
         g_free (desc_color);
+        g_object_unref (p);
+}
+
+static void
+pixbuf_data_func (GtkCellLayout   *cell_layout,
+                  GtkCellRenderer *renderer,
+                  GtkTreeModel    *tree_model,
+                  GtkTreeIter     *iter,
+                  gpointer         user_data)
+{
+        GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
+        GduPresentable *p;
+        GIcon *icon;
+
+        gtk_tree_model_get (tree_model,
+                            iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
+                            GDU_POOL_TREE_MODEL_COLUMN_ICON, &icon,
+                            -1);
+
+#if 0
+        gint width, height;
+        GdkPixbuf *pixbuf;
+
+        gtk_tree_view_column_cell_get_size  (GTK_TREE_VIEW_COLUMN (cell_layout),
+                                             NULL,
+                                             NULL,
+                                             NULL,
+                                             &width,
+                                             &height);
+        //g_debug ("w=%d h=%d", width, height);
+
+        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (p,
+                                                                    height * 5 / 6);
+        g_object_set (renderer,
+                      "pixbuf", pixbuf,
+                      "width", 48,
+                      "height", 0,
+                      NULL);
+        g_object_unref (pixbuf);
+#else
+
+        GtkIconSize size;
+        size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+        if (GDU_IS_VOLUME (p) || GDU_IS_VOLUME_HOLE (p)) {
+                size = GTK_ICON_SIZE_MENU;
+        }
+
+        g_object_set (renderer,
+                      "gicon", icon,
+                      "stock-size", size,
+                      NULL);
+#endif
+
+        g_object_unref (p);
+        g_object_unref (icon);
 }
 
 static void
@@ -219,7 +292,6 @@ gdu_pool_tree_view_constructed (GObject *object)
                                                  FALSE);
                 gtk_tree_view_column_set_attributes (column,
                                                      renderer,
-                                                     "visible", GDU_POOL_TREE_MODEL_COLUMN_CAN_BE_TOGGLED,
                                                      "active", GDU_POOL_TREE_MODEL_COLUMN_TOGGLED,
                                                      NULL);
                 g_signal_connect (renderer,
@@ -230,10 +302,11 @@ gdu_pool_tree_view_constructed (GObject *object)
 
         renderer = gtk_cell_renderer_pixbuf_new ();
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column,
-                                             renderer,
-                                             "pixbuf", GDU_POOL_TREE_MODEL_COLUMN_ICON,
-                                             NULL);
+        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
+                                            renderer,
+                                            pixbuf_data_func,
+                                            view,
+                                            NULL);
         if (view->priv->flags & GDU_POOL_TREE_VIEW_FLAGS_SHOW_TOGGLE) {
                 gtk_tree_view_column_add_attribute (column,
                                                     renderer,
@@ -262,6 +335,7 @@ gdu_pool_tree_view_constructed (GObject *object)
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
         gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (view), FALSE);
+        gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (view), TRUE);
         gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (view), 16);
         gtk_tree_view_expand_all (GTK_TREE_VIEW (view));
 

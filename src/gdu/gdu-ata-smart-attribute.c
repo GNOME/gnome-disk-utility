@@ -169,7 +169,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
         const char *d;
         gboolean warn;
 
-        /* See http://ata_smartmontools.sourceforge.net/doc.html
+        /* See http://smartmontools.sourceforge.net/doc.html
          *     http://en.wikipedia.org/wiki/S.M.A.R.T
          *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-ATA_SMARTAttributesAnnex.pdf
          */
@@ -180,7 +180,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
         switch (attr->priv->id) {
         case 1:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Read Error Rate");
@@ -190,7 +190,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 2:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Throughput Performance");
@@ -198,7 +198,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 3:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Spinup Time");
@@ -206,7 +206,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 4:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Start/Stop Count");
@@ -214,7 +214,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 5:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Reallocated Sector Count");
@@ -224,7 +224,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 7:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Seek Error Rate");
@@ -232,7 +232,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 8:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Seek Timer Performance");
@@ -240,7 +240,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 9:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Power-On Hours");
@@ -248,7 +248,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 10:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Spinup Retry Count");
@@ -256,7 +256,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 11:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Calibration Retry Count");
@@ -264,7 +264,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 12:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Power Cycle Count");
@@ -272,7 +272,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 13:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Soft read error rate");
@@ -281,7 +281,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
 
         case 191:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("G-sense Error Rate");
@@ -289,7 +289,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 192:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Power-off Retract Count");
@@ -297,7 +297,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 193:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Load/Unload Cycle Count");
@@ -305,7 +305,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 194:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Temperature");
@@ -313,7 +313,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 195:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Hardware ECC Recovered");
@@ -321,7 +321,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 196:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Reallocation Count");
@@ -332,7 +332,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 197:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Current Pending Sector Count");
@@ -346,7 +346,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 198:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Uncorrectable Sector Count");
@@ -356,7 +356,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 199:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("UDMA CRC Error Rate");
@@ -364,7 +364,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 200:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Write Error Rate");
@@ -372,7 +372,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 201:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Soft Read Error Rate");
@@ -380,7 +380,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 202:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Data Address Mark Errors");
@@ -388,7 +388,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 203:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Run Out Cancel");
@@ -396,7 +396,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 204:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Soft ECC correction");
@@ -404,7 +404,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 205:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Thermal Asperity Rate");
@@ -412,7 +412,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 206:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Flying Height");
@@ -420,7 +420,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 207:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Spin High Current");
@@ -428,7 +428,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 208:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Spin Buzz");
@@ -436,7 +436,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 209:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Offline Seek Performance");
@@ -445,7 +445,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
 
         case 220:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Disk Shift");
@@ -454,7 +454,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 221:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("G-sense Error Rate");
@@ -462,7 +462,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 222:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Loaded Hours");
@@ -470,7 +470,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 223:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Load/Unload Retry Count");
@@ -479,7 +479,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 224:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Load Friction");
@@ -487,7 +487,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 225:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Load/Unload Cycle Count");
@@ -495,7 +495,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 226:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Load-in Time");
@@ -503,7 +503,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 227:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Torque Amplification Count");
@@ -511,7 +511,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 228:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Power-off Retract Count");
@@ -520,7 +520,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
 
         case 230:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("GMR Head Amplitude");
@@ -528,7 +528,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 231:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Temperature");
@@ -537,7 +537,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
 
         case 240:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Head Flying Hours");
@@ -545,7 +545,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                 break;
         case 250:
                 /* Translators: S.M.A.R.T attribute, see
-                 * http://ata_smartmontools.sourceforge.net/doc.html
+                 * http://smartmontools.sourceforge.net/doc.html
                  * or the next string for a longer explanation.
                  */
                 n = _("Read Error Retry Rate");

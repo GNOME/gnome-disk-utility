@@ -907,7 +907,7 @@ gdu_grid_element_class_init (GduGridElementClass *klass)
                                          PROP_PERCENT_SIZE,
                                          g_param_spec_double ("percent-size",
                                                               _("Percent Size"),
-                                                              _("The size in percent this element should claim or 0 to always claim the specified minimum size"),
+                                                              _("The size in percent that this element should claim or 0 to always claim the specified minimum size"),
                                                               0.0,
                                                               100.0,
                                                               0.0,

@@ -465,7 +465,7 @@ gdu_section_unrecognized_init (GduSectionUnrecognized *section)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), TRUE);
         gtk_widget_set_tooltip_text (check_button,
                                      _("The selected file system has a concept of file ownership. "
-                                       "If checked, the created file system be will owned by you. "
+                                       "If checked, the created file system will be owned by you. "
                                        "If not checked, only the super user can access the file system."));
         gtk_table_attach (GTK_TABLE (table), check_button, 0, 2, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);

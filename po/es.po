@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-13 14:23+0000\n"
-"PO-Revision-Date: 2009-08-14 13:23+0200\n"
+"POT-Creation-Date: 2009-08-14 12:33+0000\n"
+"PO-Revision-Date: 2009-08-14 19:35+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1266,11 +1266,11 @@ msgstr "Desacoplando dispositivo"
 
 #: ../src/gdu/gdu-util.c:367
 msgid "Forcibly Unmounting Filesystem"
-msgstr ""
+msgstr "Forzar desmontar el sistema de archivos"
 
 #: ../src/gdu/gdu-util.c:369
 msgid "Forcibly Locking LUKS device"
-msgstr ""
+msgstr "Forzar bloquear el dispositivo LUKS"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #: ../src/gdu/gdu-util.c:384
@@ -1586,24 +1586,35 @@ msgid ""
 "but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
+"El esquema del registro de arranque maestro (MBR) es compatible con casi "
+"cualquier dispositivo o sistema pero tiene ciertas limitaciones respecto al "
+"tamaño de discos y número de particiones."
 
 #: ../src/gdu/gdu-util.c:535
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
+"Un esquema heredado que es incompatible con la mayoría de sistemas excepto "
+"sistemas Apple y la mayoría de sistemas Linux. No se recomienda para soporte "
+"extraíbles."
 
 #: ../src/gdu/gdu-util.c:540
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
+"El esquema del GUID es compatible con la mayoría de sistemas modernos pero "
+"puede ser incompatible con algunos sistemas heredados."
 
 #: ../src/gdu/gdu-util.c:544
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
+"Marca el disco entero como no usado. Usar esta opción sólo si quiere evitar "
+"particionar el disco, por ejemplo uso de disco completo o disquetes normales "
+"y ZIP."
 
 #: ../src/gdu/gdu-util.c:727 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
@@ -1688,7 +1699,7 @@ msgstr "%s en %s"
 #: ../src/gdu/gdu-util.c:837
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
-msgstr ""
+msgstr "Dividido (RAID-0)"
 
 #: ../src/gdu/gdu-util.c:839
 msgctxt "RAID level"
@@ -1738,7 +1749,7 @@ msgstr "RAID-6"
 #: ../src/gdu/gdu-util.c:862
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
-msgstr ""
+msgstr "División de espejos (RAID-10)"
 
 #: ../src/gdu/gdu-util.c:864
 msgctxt "RAID level"
@@ -1961,7 +1972,7 @@ msgstr "Disco óptico virgen"
 #: ../src/gdu/gdu-volume.c:284
 #, c-format
 msgid "%s Extended"
-msgstr "%s extendida"
+msgstr "Extendida de %s"
 
 #: ../src/gdu/gdu-volume.c:285
 msgid "Contains logical partitions"
@@ -1985,7 +1996,7 @@ msgstr "Disco óptico"
 #: ../src/gdu/gdu-volume.c:316
 #, c-format
 msgid "%s Filesystem"
-msgstr "%s de sistema de archivos"
+msgstr "Sistema de archivos de %s"
 
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
@@ -1993,7 +2004,7 @@ msgstr "%s de sistema de archivos"
 #: ../src/gdu/gdu-volume.c:322
 #, c-format
 msgid "%s Partition Table"
-msgstr "%s de la tabla de particiones"
+msgstr "Tabla de particiones de %s"
 
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
@@ -2001,7 +2012,7 @@ msgstr "%s de la tabla de particiones"
 #: ../src/gdu/gdu-volume.c:328
 #, c-format
 msgid "%s LVM2 Physical Volume"
-msgstr ""
+msgstr "Volumen físico LVM2 de %s"
 
 #. Translators: Used if no specific RAID level could be determined
 #: ../src/gdu/gdu-volume.c:341
@@ -2015,7 +2026,7 @@ msgstr "RAID"
 #: ../src/gdu/gdu-volume.c:347 ../src/gdu/gdu-volume.c:359
 #, c-format
 msgid "%s RAID Component"
-msgstr "%s de componente RAID"
+msgstr "Componente RAID de %s"
 
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
@@ -2032,7 +2043,7 @@ msgstr "Parte de «%s», conjunto %s"
 #: ../src/gdu/gdu-volume.c:370
 #, c-format
 msgid "%s Swap Space"
-msgstr "%s de área de intercambio"
+msgstr "Área de intercambio de %s"
 
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
@@ -2107,11 +2118,11 @@ msgstr "Espacio sin usar"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
 #: ../src/playground/grid/gdu-grid-view.c:325
 msgid "Pool"
-msgstr ""
+msgstr "Conjunto"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
 msgid "The pool of devices"
-msgstr ""
+msgstr "El conjunto de dispositivos"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
 msgid "RAID Level"
@@ -2148,11 +2159,11 @@ msgstr "El tamaño de cada componente"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
 msgid "Stripe Size"
-msgstr ""
+msgstr "Tamaño de la división"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
 msgid "The requested stripe size of the array"
-msgstr ""
+msgstr "El tamaño solicitado de la división del conjunto"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
 msgid "Drives"
@@ -2260,7 +2271,7 @@ msgstr "Conjunto RAID nuevo"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
 msgid "Stripe S_ize:"
-msgstr ""
+msgstr "Ta_maño de la división:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
 msgid "4 KiB"
@@ -2333,15 +2344,15 @@ msgstr "Número de discos insuficiente para crear un conjunto %s."
 #, c-format
 msgid "To create a %s array, select %d disks."
 msgid_plural "To create a %s array, select %d disks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Para crear un conjunto %s, seleccione %d disco."
+msgstr[1] "Para crear un conjunto %s, seleccione %d discos."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
 #, c-format
 msgid "To create a %s array, select %d more disks."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Para crear un conjunto %s, seleccione %d disco más."
+msgstr[1] "Para crear un conjunto %s, seleccione %d discos más."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the size e.g. '42 GB'.
@@ -2351,7 +2362,7 @@ msgstr[1] ""
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1507
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr ""
+msgstr "Para crear un un conjunto de %s para un %s en %d discos, pulse «Create»"
 
 #: ../src/gdu-gtk/gdu-gtk.c:171
 msgctxt "application name"
@@ -2386,12 +2397,12 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-gtk.c:200
 msgctxt "application name"
 msgid "Process Viewer (top)"
-msgstr ""
+msgstr "Visor de procesos (top)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:204
 msgctxt "application name"
 msgid "Terminal Pager (less)"
-msgstr ""
+msgstr "Paginador de la terminal (less)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:216
 msgctxt "application name"
@@ -2401,19 +2412,19 @@ msgstr "Desconocido"
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
+msgstr "uid: %d  pid: %d  programa: %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:232
 #, c-format
 msgid "pid: %d  program: %s"
-msgstr ""
+msgstr "pid: %d  programa: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
 #: ../src/gdu-gtk/gdu-gtk.c:331 ../src/gdu-gtk/gdu-gtk.c:915
 #: ../src/gdu-gtk/gdu-gtk.c:1053
 #, c-format
 msgid "Partition %d on %s"
-msgstr ""
+msgstr "Partición %d en %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:367
 msgid "Cannot unmount volume"
@@ -2424,6 +2435,8 @@ msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
 msgstr ""
+"Una o más aplicaciones están usando el volumen. Cierre las aplicaciones y "
+"después intente desmontarlas de nuevo."
 
 #: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1916
 msgid "_Unmount"
@@ -2431,15 +2444,15 @@ msgstr "_Desmontar"
 
 #: ../src/gdu-gtk/gdu-gtk.c:495
 msgid "Passphrases do not match"
-msgstr ""
+msgstr "Las contraseñas no coinciden"
 
 #: ../src/gdu-gtk/gdu-gtk.c:502
 msgid "Passphrases do not differ"
-msgstr ""
+msgstr "Las contraseñas no difieren"
 
 #: ../src/gdu-gtk/gdu-gtk.c:508
 msgid "Passphrase can't be empty"
-msgstr ""
+msgstr "La contraseña no puede estar vacía"
 
 #: ../src/gdu-gtk/gdu-gtk.c:580
 msgid "Cr_eate"
@@ -2456,21 +2469,28 @@ msgstr "_Desbloquear"
 #: ../src/gdu-gtk/gdu-gtk.c:613
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr ""
+"Parar crear un dispositivo cifrado elija una contraseña para protejerlo"
 
 #: ../src/gdu-gtk/gdu-gtk.c:616
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr ""
+"Para cambiar la frase de paso introduzca tanto la contraseña actual como la "
+"nueva"
 
 #: ../src/gdu-gtk/gdu-gtk.c:619
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
+"Los datos en este dispositivo están almacenados de forma cifrada protegidos "
+"por una contraseña"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr ""
+"Los datos en este dispositivo se almacenarán de forma cifrada protegidos por "
+"una contraseña."
 
 #: ../src/gdu-gtk/gdu-gtk.c:635
 msgid ""

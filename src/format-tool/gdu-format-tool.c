@@ -416,26 +416,35 @@ main (int argc, char *argv[])
         if (gvolume != NULL) {
                 gmount = g_volume_get_mount (gvolume);
                 if (gmount != NULL) {
+                        GMountOperation *mount_op;
+
                         gdu_format_progress_dialog_set_text (GDU_FORMAT_PROGRESS_DIALOG (dialog),
                                                              _("Unmounting..."));
 
-                        g_mount_unmount (gmount,
-                                         G_MOUNT_UNMOUNT_NONE,
-                                         NULL,
-                                         unmount_cb,
-                                         format_data);
+                        mount_op = gtk_mount_operation_new (GTK_WINDOW (dialog));
+                        g_mount_unmount_with_operation (gmount,
+                                                        G_MOUNT_UNMOUNT_NONE,
+                                                        mount_op,
+                                                        NULL,
+                                                        unmount_cb,
+                                                        format_data);
+                        g_object_unref (mount_op);
                         g_main_loop_run (format_data->loop);
 
                         if (format_data->error != NULL) {
-                                gchar *primary;
 
-                                primary = g_strdup_printf (_("Unable to format '%s'"), volume_name);
-                                show_error_dialog (NULL,
-                                                   primary,
-                                                   format_data->error->message);
+                                if (!(format_data->error->domain == G_IO_ERROR &&
+                                      format_data->error->code == G_IO_ERROR_FAILED_HANDLED)) {
+                                        gchar *primary;
 
+                                        primary = g_strdup_printf (_("Unable to format '%s'"), volume_name);
+                                        show_error_dialog (NULL,
+                                                           primary,
+                                                           format_data->error->message);
+
+                                        g_free (primary);
+                                }
                                 g_error_free (format_data->error);
-                                g_free (primary);
                                 goto out;
                         }
                 }

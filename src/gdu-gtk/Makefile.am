@@ -16,7 +16,7 @@ BUILT_SOURCES =            	\
 	gdu-gtk-enumtypes.h     \
 	$(NULL)
 
-EXTRADIST =                         	\
+EXTRA_DIST =                         	\
 	gdu-gtk-enumtypes.h.template    \
 	gdu-gtk-enumtypes.c.template    \
 	$(NULL)

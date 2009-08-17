@@ -1,4 +1,4 @@
-AC_INIT([GNOME Disk Utility],[0.5],[mailto:david@fubar.dk],[gnome-disk-utility])
+AC_INIT([GNOME Disk Utility],[0.6],[mailto:david@fubar.dk],[gnome-disk-utility])
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 

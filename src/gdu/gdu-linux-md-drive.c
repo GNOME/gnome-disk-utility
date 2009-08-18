@@ -467,52 +467,180 @@ gdu_linux_md_drive_get_enclosing_presentable (GduPresentable *presentable)
         return NULL;
 }
 
-static char *
-gdu_linux_md_drive_get_name (GduPresentable *presentable)
+static gchar *
+get_names_and_desc (GduPresentable  *presentable,
+                    gchar          **out_vpd_name,
+                    gchar          **out_desc)
 {
         GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (presentable);
-        GduDevice *device;
-        char *ret;
-        char *level_str;
+        GduDevice *component_device;
+        gchar *ret;
+        gchar *ret_desc;
+        gchar *ret_vpd;
+        gchar *level_str;
         guint64 component_size;
         int num_slaves;
         int num_raid_devices;
         const char *level;
         const char *name;
+        gchar *strsize;
 
         ret = NULL;
+        ret_desc = NULL;
+        ret_vpd = NULL;
+        strsize = NULL;
+
+        /* TODO: Maybe guess size from level, num_raid_devices and component_size? */
+        if (drive->priv->device != NULL) {
+                guint64 size;
+                size = gdu_device_get_size (drive->priv->device);
+                strsize = gdu_util_get_size_for_display (size, FALSE);
+        }
 
         if (drive->priv->slaves != NULL) {
-                device = GDU_DEVICE (drive->priv->slaves->data);
 
-                level = gdu_device_linux_md_component_get_level (device);
-                name = gdu_device_linux_md_component_get_name (device);
-                num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (device);
+                component_device = GDU_DEVICE (drive->priv->slaves->data);
+
+                level = gdu_device_linux_md_component_get_level (component_device);
+                name = gdu_device_linux_md_component_get_name (component_device);
+                num_raid_devices = gdu_device_linux_md_component_get_num_raid_devices (component_device);
                 num_slaves = g_list_length (drive->priv->slaves);
-                component_size = gdu_device_get_size (device);
+                component_size = gdu_device_get_size (component_device);
 
-                level_str = gdu_linux_md_get_raid_level_for_display (level);
+                level_str = gdu_linux_md_get_raid_level_for_display (level, FALSE);
 
                 if (name == NULL || strlen (name) == 0) {
-                        ret = g_strdup_printf (_("%s Drive"), level_str);
+                        if (strsize != NULL) {
+                                /* Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5' */
+                                ret = g_strdup_printf (_("%s %s Drive"),
+                                                       strsize,
+                                                       level_str);
+                        } else {
+                                /* Translators: %s is a RAID level, e.g. 'RAID-5' */
+                                ret = g_strdup_printf (_("%s Drive"),
+                                                       level_str);
+                        }
                 } else {
-                        ret = g_strdup_printf (_("%s (%s)"), name, level_str);
+                        ret = g_strdup (name);
+                        if (strsize != NULL) {
+                                ret_desc = g_strdup_printf ("%s %s",
+                                                            strsize,
+                                                            level_str);
+                        } else {
+                                ret_desc = g_strdup (level_str);
+                        }
+                }
+
+                if (drive->priv->device != NULL && gdu_device_is_partition_table (drive->priv->device)) {
+                        const gchar *part_table_scheme;
+                        const gchar *scheme_str;
+
+                        part_table_scheme = gdu_device_partition_table_get_scheme (drive->priv->device);
+
+                        if (g_strcmp0 (part_table_scheme, "mbr") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
+                                scheme_str = _("MBR Partition Table");
+                        } else if (g_strcmp0 (part_table_scheme, "gpt") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
+                                scheme_str = _("GUID Partition Table");
+                        } else if (g_strcmp0 (part_table_scheme, "apm") == 0) {
+                                /* Translators: This string is used for conveying the partition table format */
+                                scheme_str = _("Apple Partition Table");
+                        } else {
+                                /* Translators: This string is used for conveying the partition table format when
+                                 * the format is unknown
+                                 */
+                                scheme_str = _("Partitioned");
+                        }
+
+                        if (ret_desc != NULL) {
+                                gchar *tmp;
+                                tmp = ret_desc;
+                                ret_desc = g_strconcat (ret_desc,
+                                                        ", ",
+                                                        scheme_str,
+                                                        NULL);
+                                g_free (tmp);
+                        } else {
+                                ret_desc = g_strdup (scheme_str);
+                        }
                 }
 
                 g_free (level_str);
 
         } else if (drive->priv->device != NULL) {
+                /* Translators: First %s is a device file such as /dev/sda4
+                 * second %s is the state of the device
+                 */
                 ret = g_strdup_printf (_("RAID device %s (%s)"),
                                        gdu_device_get_device_file (drive->priv->device),
                                        gdu_device_linux_md_get_state (drive->priv->device));
-
         } else {
                 g_warn_if_fail (drive->priv->device_file != NULL);
 
+                /* Translators: %s is a device file such as /dev/sda4 */
                 ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
         }
 
+        /* Fallback for description */
+        if (ret_desc == NULL) {
+                ret_desc = g_strdup (_("RAID Array"));
+        }
+
+        /* Fallback for VPD name */
+        if (ret_vpd == NULL) {
+                if (strsize != NULL) {
+                        /* Translators: %s is the size e.g. '45 GB' */
+                        ret_vpd = g_strdup_printf (_("%s Software RAID"),
+                                                   strsize);
+                } else {
+                        ret_vpd = g_strdup (_("Software RAID"));
+                }
+        }
+
+        if (out_desc != NULL)
+                *out_desc = ret_desc;
+        else
+                g_free (ret_desc);
+
+        if (out_vpd_name != NULL)
+                *out_vpd_name = ret_vpd;
+        else
+                g_free (ret_vpd);
+
+        g_free (strsize);
+
         return ret;
+}
+
+static char *
+gdu_linux_md_drive_get_name (GduPresentable *presentable)
+{
+        return get_names_and_desc (presentable, NULL, NULL);
+}
+
+static gchar *
+gdu_linux_md_drive_get_description (GduPresentable *presentable)
+{
+        gchar *desc;
+        gchar *name;
+
+        name = get_names_and_desc (presentable, NULL, &desc);
+        g_free (name);
+
+        return desc;
+}
+
+static gchar *
+gdu_linux_md_drive_get_vpd_name (GduPresentable *presentable)
+{
+        gchar *vpd_name;
+        gchar *name;
+
+        name = get_names_and_desc (presentable, &vpd_name, NULL);
+        g_free (name);
+
+        return vpd_name;
 }
 
 static GIcon *
@@ -605,16 +733,18 @@ gdu_linux_md_drive_is_recognized (GduPresentable *presentable)
 static void
 gdu_linux_md_drive_presentable_iface_init (GduPresentableIface *iface)
 {
-        iface->get_id = gdu_linux_md_drive_get_id;
-        iface->get_device = gdu_linux_md_drive_get_device;
+        iface->get_id                    = gdu_linux_md_drive_get_id;
+        iface->get_device                = gdu_linux_md_drive_get_device;
         iface->get_enclosing_presentable = gdu_linux_md_drive_get_enclosing_presentable;
-        iface->get_name = gdu_linux_md_drive_get_name;
-        iface->get_icon = gdu_linux_md_drive_get_icon;
-        iface->get_offset = gdu_linux_md_drive_get_offset;
-        iface->get_size = gdu_linux_md_drive_get_size;
-        iface->get_pool = gdu_linux_md_drive_get_pool;
-        iface->is_allocated = gdu_linux_md_drive_is_allocated;
-        iface->is_recognized = gdu_linux_md_drive_is_recognized;
+        iface->get_name                  = gdu_linux_md_drive_get_name;
+        iface->get_description           = gdu_linux_md_drive_get_description;
+        iface->get_vpd_name              = gdu_linux_md_drive_get_vpd_name;
+        iface->get_icon                  = gdu_linux_md_drive_get_icon;
+        iface->get_offset                = gdu_linux_md_drive_get_offset;
+        iface->get_size                  = gdu_linux_md_drive_get_size;
+        iface->get_pool                  = gdu_linux_md_drive_get_pool;
+        iface->is_allocated              = gdu_linux_md_drive_is_allocated;
+        iface->is_recognized             = gdu_linux_md_drive_is_recognized;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

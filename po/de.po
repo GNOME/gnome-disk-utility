@@ -1,12 +1,23 @@
 # German translation of gnome-disk-utility
-# Mario Blättermann <mariobl@gnome.org>, 2009.
 #
+# # device     - Gerät
+# # volume    - Datenträger
+# # operation - Vorgang
+# # disk         - Laufwerk
+# # RAID-arry - RAID-Anordnung
+# # Im RAID:
+# #       attach    -   einbinden
+# #       detach   -   austragen
+# #
+# Mario Blättermann <mariobl@gnome.org>, 2009.
+# Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 10:22+0200\n"
-"PO-Revision-Date: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&component=general\n"
+"POT-Creation-Date: 2009-08-11 13:08+0000\n"
+"PO-Revision-Date: 2009-08-09 16:09+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,17 +28,16 @@ msgstr ""
 "X-Poedit-Country: GERMANY\n"
 
 #: ../data/palimpsest.desktop.in.h:1
+msgid "Disk Utility"
+msgstr "Laufwerksverwaltung"
+
+#: ../data/palimpsest.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Verwalten von Laufwerken und Medien"
 
-#: ../data/palimpsest.desktop.in.h:2 ../src/palimpsest/gdu-shell.c:1644
-#: ../src/palimpsest/gdu-shell.c:2121
-msgid "Palimpsest Disk Utility"
-msgstr ""
-
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:1
 msgid "Disk Notifications"
-msgstr "Benachrichtigungen"
+msgstr "Benachrichtigungen über das Laufwerk"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:2
 msgid "Provides notifications related to disks"
@@ -35,11 +45,11 @@ msgstr "Stellt auf Medien bezogene Benachrichtigungen bereit"
 
 #: ../src/format-tool/gdu-format-dialog.c:135
 msgid "Volume"
-msgstr ""
+msgstr "Datenträger"
 
 #: ../src/format-tool/gdu-format-dialog.c:136
 msgid "The volume to format"
-msgstr ""
+msgstr "Der zu formatierende Datenträger"
 
 #: ../src/format-tool/gdu-format-dialog.c:148
 msgid "Filesystem type"
@@ -64,70 +74,62 @@ msgstr "Verschlüsselung"
 
 #: ../src/format-tool/gdu-format-dialog.c:171
 msgid "Whether the volume should be encrypted"
-msgstr ""
+msgstr "Legt fest, ob der Datenträger verschlüsselt wird"
 
-#: ../src/format-tool/gdu-format-dialog.c:318
-msgid "Are you sure you want to format the volume?"
-msgstr ""
-
-#: ../src/format-tool/gdu-format-dialog.c:321
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" on the drive \"%s\" (%s). All "
-"existing data will be irrevocably erased."
-msgstr ""
+#. Translators: Format is used as a verb here
+#: ../src/format-tool/gdu-format-dialog.c:325
+msgid "_Format"
+msgstr "_Formatieren"
 
 #: ../src/format-tool/gdu-format-dialog.c:327
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" (%s). All existing data will be "
-"irrevocably erased."
-msgstr ""
-
-#: ../src/format-tool/gdu-format-dialog.c:345
-msgid "_Format"
-msgstr ""
-
-#: ../src/format-tool/gdu-format-dialog.c:349
 msgid "Disk _Utility"
-msgstr ""
+msgstr "_Werkzeug für Laufwerke"
 
-#: ../src/format-tool/gdu-format-dialog.c:355
-msgid "Open volume in Palimpsest Disk Utility"
+#: ../src/format-tool/gdu-format-dialog.c:333
+msgid "Use Disk Utility to format volume"
 msgstr ""
+"Das Werkzeug für Laufwerke zum Formatieren eines Datenträgers verwenden"
 
-#: ../src/format-tool/gdu-format-dialog.c:398
-#: ../src/palimpsest/gdu-section-unallocated.c:712
-#: ../src/palimpsest/gdu-section-unrecognized.c:477
+#. Translators: 'type' means 'filesystem type' here.
+#: ../src/format-tool/gdu-format-dialog.c:365
+#: ../src/palimpsest/gdu-section-unallocated.c:678
+#: ../src/palimpsest/gdu-section-unrecognized.c:441
 msgid "_Type:"
 msgstr "_Typ:"
 
-#: ../src/format-tool/gdu-format-dialog.c:404
+#: ../src/format-tool/gdu-format-dialog.c:371
 msgid "Compatible with all systems (FAT)"
 msgstr "Kompatibel mit allen Systemen (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:406
+#: ../src/format-tool/gdu-format-dialog.c:373
 msgid "Compatible with Linux (ext2)"
 msgstr "Kompatibel mit Linux (ext2)"
 
-#: ../src/format-tool/gdu-format-dialog.c:408
+#: ../src/format-tool/gdu-format-dialog.c:375
 msgid "Compatible with Linux (ext3)"
 msgstr "Kompatibel mit Linux (ext3)"
 
-#: ../src/format-tool/gdu-format-dialog.c:410
+#: ../src/format-tool/gdu-format-dialog.c:377
 msgid "Encrypted, compatible with Linux (FAT)"
 msgstr "Verschlüsselt, kompatibel mit Linux (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:422
+#. Translators: 'name' means 'filesystem label' here.
+#: ../src/format-tool/gdu-format-dialog.c:390
 msgid "_Name:"
 msgstr "_Name:"
 
 #. Translators: Keep length of translation of "New Volume" to less than 16 characters
-#: ../src/format-tool/gdu-format-dialog.c:427
+#: ../src/format-tool/gdu-format-dialog.c:395
 msgid "New Volume"
-msgstr ""
+msgstr "Neuer Datenträger"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:181
+#: ../src/format-tool/gdu-format-dialog.c:410
+msgid "Warning: All data on the volume will be irrevocably lost."
+msgstr ""
+"Warnung: Alle Daten auf diesem Datenträger werden unwiderruflich verloren "
+"gehen."
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:184
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
@@ -135,76 +137,132 @@ msgstr ""
 "Um Datenverlust zu vermeiden, warten Sie bitte bis zum Beenden des Vorgangs, "
 "bevor Sie das Medium entfernen oder die Verbindung zum Gerät trennen."
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:213
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
 msgid "Device"
 msgstr "Gerät"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:214
+#: ../src/format-tool/gdu-format-progress-dialog.c:217
 #: ../src/notification/gdu-slow-unmount-dialog.c:287
 msgid "The device to show the dialog for"
 msgstr "Das Gerät, für welches der Dialog angezeigt werden soll"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:226
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "text"
 msgstr "text"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:227
+#: ../src/format-tool/gdu-format-progress-dialog.c:230
 msgid "Text to show"
 msgstr "Anzuzeigender Text"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:111
 msgid "Error launching Disk Utility"
-msgstr ""
+msgstr "Fehler beim Start der Laufwerksverwaltung"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:131
 msgid "Device to format"
 msgstr "Zu formatierendes Gerät"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:122
-#: ../src/palimpsest/gdu-main.c:123
+#: ../src/format-tool/gdu-format-tool.c:131 ../src/palimpsest/gdu-main.c:121
+#: ../src/palimpsest/gdu-main.c:122
 msgid "DEVICE"
 msgstr "GERÄT"
 
-#: ../src/format-tool/gdu-format-tool.c:182
+#: ../src/format-tool/gdu-format-tool.c:161
+#, c-format
+msgid "Operation was canceled"
+msgstr "Der Vorgang wurde abgebrochen"
+
+#: ../src/format-tool/gdu-format-tool.c:252
 msgid "Gnome Disk Utility formatting tool"
-msgstr ""
+msgstr "Formatierwerkzeug der GNOME-Laufwerksverwaltung"
 
-#: ../src/format-tool/gdu-format-tool.c:254
-msgid "Formatting volume..."
-msgstr ""
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:299
+#, c-format
+msgid "Format partition %d of %s (%s)"
+msgstr "Partition %d von %s (%s) formatieren"
 
-#: ../src/format-tool/gdu-format-tool.c:276
-msgid "You are not authorized to format the volume"
-msgstr ""
-
-#: ../src/format-tool/gdu-format-tool.c:277
-msgid "Contact your system administrator to obtain the necessary authorization."
-msgstr ""
-"Kontaktieren Sie Ihren Systemverwalter, um die nötige Legitimierung zu "
-"erhalten."
-
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
 #: ../src/format-tool/gdu-format-tool.c:306
-msgid "Error creating filesystem"
-msgstr "Fehler beim Erstellen des Dateisystems"
+#, c-format
+msgid "Formatting partition %d of %s (%s)"
+msgstr "Partition %d von %s (%s) wird formatiert"
 
-#: ../src/format-tool/gdu-format-tool.c:317
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:312
+#, c-format
+msgid "Format %s (%s)"
+msgstr "%s (%s) formatieren"
+
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:316
+#, c-format
+msgid "Formatting %s (%s)"
+msgstr "%s (%s) wird formatiert"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:322
+#, c-format
+msgid "Format %s Volume (%s)"
+msgstr "Datenträger mit %s formatieren (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:326
+#, c-format
+msgid "Formatting %s Volume (%s)"
+msgstr "Datenträger mit %s wird formatiert (%s)"
+
+#: ../src/format-tool/gdu-format-tool.c:379
+msgid "Preparing..."
+msgstr "Vorbereiten läuft …"
+
+#: ../src/format-tool/gdu-format-tool.c:420
+msgid "Unmounting..."
+msgstr "Wird ausgehangen …"
+
+#: ../src/format-tool/gdu-format-tool.c:432
+#, c-format
+msgid "Unable to format '%s'"
+msgstr "»%s« konnte nicht formatiert werden"
+
+#: ../src/format-tool/gdu-format-tool.c:446
+msgid "Formatting..."
+msgstr "Wird formatiert …"
+
+#: ../src/format-tool/gdu-format-tool.c:463
+msgid "Cancelling..."
+msgstr "Wird abgebrochen …"
+
+#: ../src/format-tool/gdu-format-tool.c:473
+msgid "Error formatting volume"
+msgstr "Fehler beim Formatieren des Datenträgers"
+
+#: ../src/format-tool/gdu-format-tool.c:484
 msgid "Mounting volume..."
-msgstr ""
+msgstr "Datenträger wird eingehangen …"
 
-#: ../src/format-tool/gdu-format-tool.c:341 ../src/palimpsest/gdu-shell.c:1060
+#: ../src/format-tool/gdu-format-tool.c:508 ../src/palimpsest/gdu-shell.c:972
 msgid "Error mounting device"
 msgstr "Fehler beim Einhängen des Gerätes"
 
-#: ../src/format-tool/gdu-format-tool.c:358
+#: ../src/format-tool/gdu-format-tool.c:525
 msgid "Error storing passphrase in keyring"
 msgstr "Fehler beim Speichern des Kennworts im Schlüsselbund"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:182
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:186
 msgid "Read Error Rate"
 msgstr "Lesefehlerrate"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:183
+#: ../src/gdu/gdu-ata-smart-attribute.c:187
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads."
@@ -213,903 +271,1287 @@ msgstr ""
 "verschiedener Wert deutet auf ein Problem mit der Plattenoberfläche oder den "
 "Schreib-/Leseköpfen hin."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:188
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:196
 msgid "Throughput Performance"
 msgstr "Datendurchsatz"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:189
-msgid "Average effeciency of the disk."
-msgstr "Durchschnittliche Effektivität des Mediums."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:192
-msgid "Spinup Time"
-msgstr "Hochdrehzeit"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:193
-msgid "Time needed to spin up the disk."
-msgstr "Zeit zur Beschleunigung des Mediums."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:196
-msgid "Start/Stop Count"
-msgstr ""
-
 #: ../src/gdu/gdu-ata-smart-attribute.c:197
+msgid "Average efficiency of the disk."
+msgstr "Durchschnittliche Effizienz des Laufwerks."
+
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:204
+msgid "Spinup Time"
+msgstr "Anlaufzeit"
+
+#: ../src/gdu/gdu-ata-smart-attribute.c:205
+msgid "Time needed to spin up the disk."
+msgstr "Zeit zum Anlaufen des Laufwerks."
+
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:212
+msgid "Start/Stop Count"
+msgstr "Start/Stopp-Zähler"
+
+#: ../src/gdu/gdu-ata-smart-attribute.c:213
 msgid "Number of spindle start/stop cycles."
-msgstr ""
+msgstr "Anzahl der Anlauf- und Stoppzyklen des Plattenstapels."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:200
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:220
 msgid "Reallocated Sector Count"
-msgstr ""
+msgstr "Anzahl neu zugewiesener Sektoren"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:201
+#: ../src/gdu/gdu-ata-smart-attribute.c:221
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it mark the sector as \"reallocated\" and transfers data "
 "to a special reserved area (spare area)."
 msgstr ""
+"Zähler für neu zugewiesene Sektoren. Wenn die Festplatte einen Lese- oder "
+"Schreibfehler erleidet, dann wird der Sektor als »neu zugewiesen« markiert "
+"und die Daten werden in einen reservierten Bereich (Reservebereich) "
+"verschoben."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:206
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:230
 msgid "Seek Error Rate"
 msgstr "Such-Fehlerrate"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:207
+#: ../src/gdu/gdu-ata-smart-attribute.c:231
 msgid "Frequency of errors while positioning."
-msgstr "Häufigkeit der Fehler während der Positionierung."
+msgstr ""
+"Häufigkeit der Fehler während der Positionierung des Schreib-/Lesekopfes."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:210
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:238
 msgid "Seek Timer Performance"
-msgstr ""
+msgstr "Positionierungszeit"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:211
+#: ../src/gdu/gdu-ata-smart-attribute.c:239
 msgid "Average efficiency of operatings while positioning"
-msgstr ""
-"Durchschnittliche Effektivität der Operationen während der Positionierung"
+msgstr "Durchschnittliche Effizienz für den Vorgang der Positionierung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:214
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:246
 msgid "Power-On Hours"
 msgstr "Betriebsstunden"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:215
+#: ../src/gdu/gdu-ata-smart-attribute.c:247
 msgid "Number of hours elapsed in the power-on state."
-msgstr "Stunden im eingeschalteten Zustand."
+msgstr "Anzahl der Stunden im eingeschalteten Zustand."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:218
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:254
 msgid "Spinup Retry Count"
-msgstr ""
+msgstr "Zähler für erneute Anlaufversuche"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:219
+#: ../src/gdu/gdu-ata-smart-attribute.c:255
 msgid "Number of retry attempts to spin up."
-msgstr ""
+msgstr "Anzahl der erneuten Anlaufversuche."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:222
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:262
 msgid "Calibration Retry Count"
-msgstr ""
+msgstr "Zähler für erneute Versuche einer Kalibrierung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:223
+#: ../src/gdu/gdu-ata-smart-attribute.c:263
 msgid "Number of attempts to calibrate the device."
 msgstr "Anzahl der Versuche zur Kalibrierung des Geräts."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:226
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:270
 msgid "Power Cycle Count"
 msgstr "Einschaltvorgänge"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:227
+#: ../src/gdu/gdu-ata-smart-attribute.c:271
 msgid "Number of power-on events."
 msgstr "Anzahl der Einschaltvorgänge."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:230
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:278
 msgid "Soft read error rate"
-msgstr ""
+msgstr "Fehlerrate beim Lesen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:231
+#: ../src/gdu/gdu-ata-smart-attribute.c:279
 msgid "Frequency of 'program' errors while reading from the disk."
-msgstr "Häufigkeit der »Programmfehler« beim Lesen vom Medium."
+msgstr "Häufigkeit gemeldeter Lesefehler vom Medium."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:235
-#: ../src/gdu/gdu-ata-smart-attribute.c:328
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:287
+#: ../src/gdu/gdu-ata-smart-attribute.c:460
 msgid "G-sense Error Rate"
-msgstr ""
+msgstr "Fehlerrate durch Stoßerkennung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:236
+#: ../src/gdu/gdu-ata-smart-attribute.c:288
 msgid "Frequency of mistakes as a result of impact loads."
-msgstr ""
+msgstr "Fehlerhäufigkeit aufgrund von Stoßbelastungen."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:239
-#: ../src/gdu/gdu-ata-smart-attribute.c:357
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:295
+#: ../src/gdu/gdu-ata-smart-attribute.c:517
 msgid "Power-off Retract Count"
-msgstr ""
+msgstr "Anzahl Zurückfahrbewegungen beim Ausschalten"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:240
+#: ../src/gdu/gdu-ata-smart-attribute.c:296
 msgid "Number of power-off or emergency retract cycles."
-msgstr ""
+msgstr "Anzahl der Rückfahrzyklen des Lesekopfes beim Ausschalten"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:243
-#: ../src/gdu/gdu-ata-smart-attribute.c:345
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:303
+#: ../src/gdu/gdu-ata-smart-attribute.c:493
 msgid "Load/Unload Cycle Count"
-msgstr ""
+msgstr "Parkvorgänge in Ruhezone"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:244
+#: ../src/gdu/gdu-ata-smart-attribute.c:304
 msgid "Number of cycles into landing zone position."
-msgstr ""
+msgstr "Anzahl der Parkvorgänge in der Ruhezone"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:247
-#: ../src/gdu/gdu-ata-smart-attribute.c:366
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:311
+#: ../src/gdu/gdu-ata-smart-attribute.c:534
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:248
-msgid "Current internal temperature in degrees Celcius."
+#: ../src/gdu/gdu-ata-smart-attribute.c:312
+msgid "Current internal temperature in degrees Celsius."
 msgstr "Gegenwärtige Innentemperatur in Grad Celsius."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:251
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:319
 msgid "Hardware ECC Recovered"
-msgstr ""
+msgstr "Korrigierte Bitfehler"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:252
+#: ../src/gdu/gdu-ata-smart-attribute.c:320
 msgid "Number of ECC on-the-fly errors."
-msgstr ""
+msgstr "Anzahl korrigierter Bitfehler beim Lesen."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:255
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:327
 msgid "Reallocation Count"
-msgstr ""
+msgstr "Zähler für Neuzuweisungen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:256
+#: ../src/gdu/gdu-ata-smart-attribute.c:328
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
-"total number of (successful and unsucessful) attempts to transfer data from "
+"total number of (successful and unsuccessful) attempts to transfer data from "
 "reallocated sectors to a spare area."
 msgstr ""
+"Anzahl der erneuten Zuweisungen. Der rohe Wert entspricht der Anzahl aller "
+"(erfolgreichen und fehlgeschlagenen) Versuche, Daten von neu zugewiesenen "
+"Sektoren in den Reservebereich zu verschieben."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:262
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:338
 msgid "Current Pending Sector Count"
-msgstr ""
+msgstr "Anzahl ausstehender Sektoren"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:263
+#: ../src/gdu/gdu-ata-smart-attribute.c:339
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
 "decreased and the sector is not remapped. Read errors on the sector will not "
 "remap the sector, it will only be remapped on a failed write attempt."
 msgstr ""
+"Anzahl der Sektoren, die auf eine Neuzuweisung warten. Wenn der neu "
+"zuzuweisende Sektor später erfolgreich beschrieben oder gelesen wird, dann "
+"wird dieser Wert kleiner und der Sektor wird nicht neu zugeordnet. "
+"Lesefehler führen nicht zu einer Neuzuweisung, sondern nur Schreibfehler."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:272
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:352
 msgid "Uncorrectable Sector Count"
-msgstr ""
+msgstr "Anzahl nicht korrigierbarer Sektoren"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:273
+#: ../src/gdu/gdu-ata-smart-attribute.c:353
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
-"rise in the value of this attribute indicates defects of the disk surface and/"
-"or problems in the mechanical subsystem."
+"rise in the value of this attribute indicates defects of the disk surface "
+"and/or problems in the mechanical subsystem."
 msgstr ""
 "Die Gesamtzahl von nicht korrigierbaren Fehlern beim Lesen oder Schreiben "
 "eines Sektors. Ein Anwachsen dieses Wertes könnte auf einen Defekt der "
 "Plattenoberfläche oder auf mechanische Probleme hindeuten."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:278
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:362
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC-Fehlerrate"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:279
+#: ../src/gdu/gdu-ata-smart-attribute.c:363
 msgid "Number of CRC errors during UDMA mode."
-msgstr ""
+msgstr "Anzahl von CRC-Fehlern im UDMA-Modus."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:282
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:370
 msgid "Write Error Rate"
 msgstr "Schreibfehlerrate"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:283
+#: ../src/gdu/gdu-ata-smart-attribute.c:371
 msgid ""
-"Number of errors while writing to disk (or) multi-zone error rate (or) flying-"
-"height."
+"Number of errors while writing to disk (or) multi-zone error rate (or) "
+"flying-height."
 msgstr ""
+"Anzahl von Fehlern beim Schreiben (oder) die Multi-Zone-Fehlerrate (oder) "
+"Fehlerzahl der Abtasthöhe."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:286
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:378
 msgid "Soft Read Error Rate"
-msgstr ""
+msgstr "Rate leichter Lesefehler"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:287
+#: ../src/gdu/gdu-ata-smart-attribute.c:379
 msgid "Number of off-track errors."
-msgstr ""
+msgstr "Anzahl verfehlter Spuren."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:290
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:386
 msgid "Data Address Mark Errors"
-msgstr ""
+msgstr "Fehler der Datenadressmarkierung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:291
+#: ../src/gdu/gdu-ata-smart-attribute.c:387
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific."
 msgstr ""
+"Fehlerzahl von Datenadressmarkierungen (DAM-Fehler) (oder) "
+"herstellerabhängig."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:294
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:394
 msgid "Run Out Cancel"
-msgstr ""
+msgstr "Leseabbrüche"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:295
+#: ../src/gdu/gdu-ata-smart-attribute.c:395
 msgid "Number of ECC errors."
 msgstr "Anzahl der ECC-Fehler."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:298
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:402
 msgid "Soft ECC correction"
-msgstr ""
+msgstr "Leichte ECC-Korrekturen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:299
+#: ../src/gdu/gdu-ata-smart-attribute.c:403
 msgid "Number of errors corrected by software ECC."
-msgstr ""
+msgstr "Anzahl durch Software korrigierter Fehler."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:302
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:410
 msgid "Thermal Asperity Rate"
-msgstr ""
+msgstr "Rate der thermischen Oberflächenunebenheiten"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:303
+#: ../src/gdu/gdu-ata-smart-attribute.c:411
 msgid "Number of Thermal Asperity Rate errors."
-msgstr ""
+msgstr "Anzahl der Fehler bedingt durch hohe Temperatur."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:306
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:418
 msgid "Flying Height"
 msgstr "Abtasthöhe"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:307
+#: ../src/gdu/gdu-ata-smart-attribute.c:419
 msgid "Height of heads above the disk surface."
 msgstr "Höhe der Abtastköpfe über der Plattenoberfläche."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:310
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:426
 msgid "Spin High Current"
-msgstr ""
+msgstr "Anlaufstromspitze"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:311
+#: ../src/gdu/gdu-ata-smart-attribute.c:427
 msgid "Amount of high current used to spin up the drive."
-msgstr ""
+msgstr "Maximale Stromaufnahme bei Anlauf des Laufwerks."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:314
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:434
 msgid "Spin Buzz"
 msgstr ""
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:315
+#: ../src/gdu/gdu-ata-smart-attribute.c:435
 msgid "Number of buzz routines to spin up the drive."
 msgstr ""
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:318
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:442
 msgid "Offline Seek Performance"
-msgstr ""
+msgstr "Positionierungszeit beim Selbsttest"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:319
+#: ../src/gdu/gdu-ata-smart-attribute.c:443
 msgid "Drive's seek performance during offline operations."
-msgstr ""
+msgstr "Positionierungszeit des Laufwerks während des Selbsttests."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:323
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:451
 msgid "Disk Shift"
-msgstr ""
+msgstr "Plattenverschiebung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:324
+#: ../src/gdu/gdu-ata-smart-attribute.c:452
 msgid ""
-"Shift of disk os possible as a result of strong shock loading in the store, "
+"Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature."
 msgstr ""
+"Eine Plattenverschiebung von der Drehachse ist durch starke Stoßbelastungen "
+"des Lagers z.B. nach einem Fall möglich (oder) durch Hitze."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:329
+#: ../src/gdu/gdu-ata-smart-attribute.c:461
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor."
-msgstr ""
+msgstr "Fehlerzahl in Folge von Stößen, soweit durch einen Sensor erkannt."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:332
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:468
 msgid "Loaded Hours"
-msgstr ""
+msgstr "Laufzeit"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:333
+#: ../src/gdu/gdu-ata-smart-attribute.c:469
 msgid "Number of hours in general operational state."
-msgstr ""
+msgstr "Stundenzahl im allgemeinen Betrieb."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:336
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:476
 msgid "Load/Unload Retry Count"
-msgstr ""
+msgstr "Zähler für Lesekopfbewegungen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:337
+#: ../src/gdu/gdu-ata-smart-attribute.c:477
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc."
 msgstr ""
+"Belastung des Laufwerks durch verschiedene Vorgänge wie Lesen, Schreiben, "
+"Kopfpositionierung usw."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:341
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:485
 msgid "Load Friction"
-msgstr ""
+msgstr "Reibungsbelastung"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:342
+#: ../src/gdu/gdu-ata-smart-attribute.c:486
 msgid "Load on drive cause by friction in mechanical parts of the store."
-msgstr ""
+msgstr "Laufwerksbelastungen durch Reibung in den mechanischen Teilen."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:346
+#: ../src/gdu/gdu-ata-smart-attribute.c:494
 msgid "Total number of load cycles."
-msgstr ""
+msgstr "Anzahl an Belastungszyklen."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:349
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:501
 msgid "Load-in Time"
-msgstr ""
+msgstr "Zeit der Leseköpfe über den Platten"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:350
+#: ../src/gdu/gdu-ata-smart-attribute.c:502
 msgid "General time for loading in a drive."
-msgstr ""
+msgstr "Allgemeine Belastungszeit eines Laufwerks."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:353
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:509
 msgid "Torque Amplification Count"
-msgstr ""
+msgstr "Zähler für Ausgleiche bei Drehmomentschwankungen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:354
+#: ../src/gdu/gdu-ata-smart-attribute.c:510
 msgid "Quantity efforts of the rotating moment of a drive."
-msgstr ""
+msgstr "Energieeinsatz für das Drehmoment eines Laufwerks."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:358
+#: ../src/gdu/gdu-ata-smart-attribute.c:518
 msgid "Number of power-off retract events."
-msgstr ""
+msgstr "Anzahl von Lesekopfparkvorgängen"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:362
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:526
 msgid "GMR Head Amplitude"
-msgstr ""
+msgstr "Amplitude des Lesekopfflatterns"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:363
+#: ../src/gdu/gdu-ata-smart-attribute.c:527
 msgid "Amplitude of heads trembling (GMR-head) in running mode."
-msgstr ""
+msgstr "Stärke des Kopfflatterns (GMR-Kopf) im Betrieb."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:367
+#: ../src/gdu/gdu-ata-smart-attribute.c:535
 msgid "Temperature of the drive."
-msgstr ""
+msgstr "Temperatur des Laufwerks."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:371
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:543
 msgid "Head Flying Hours"
-msgstr ""
+msgstr "Kopfbewegungszeit"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:372
+#: ../src/gdu/gdu-ata-smart-attribute.c:544
 msgid "Time while head is positioning."
-msgstr ""
+msgstr "Zeit, während der der Kopf positioniert wird."
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:375
+#. Translators: S.M.A.R.T attribute, see
+#. * http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu/gdu-ata-smart-attribute.c:551
 msgid "Read Error Retry Rate"
-msgstr ""
+msgstr "Lesefehlerrate"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:376
+#: ../src/gdu/gdu-ata-smart-attribute.c:552
 msgid "Number of errors while reading from a disk."
-msgstr ""
+msgstr "Anzahl der Lesefehler beim Lesen vom Laufwerk."
 
-#: ../src/gdu/gdu-linux-md-drive.c:449
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:455
+msgid "CompactFlash"
+msgstr "CompactFlash"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:458
+msgid "MemoryStick"
+msgstr "Speicher-Stick"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:461
+msgid "SmartMedia"
+msgstr "SmartMedia"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:464
+msgid "SecureDigital"
+msgstr "SecureDigital"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:467
+msgid "SD High Capacity"
+msgstr "SD High Capacity"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:470
+msgid "Floppy"
+msgstr "Diskette"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:473
+msgid "Zip"
+msgstr "Zip"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:476
+msgid "Jaz"
+msgstr "Jaz"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:479
+msgid "Flash"
+msgstr "Flash-Speicher"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:502
+msgid "CD"
+msgstr "CD"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:510
+msgid "DVD"
+msgstr "DVD"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:518
+msgid "Blu-Ray"
+msgstr "Blu-Ray-Medium"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:526
+msgid "HDDVD"
+msgstr "HDDVD-Medium"
+
+#. Translators: This word is appended after the media type, e.g. 'CD/DVD Drive' or
+#. * 'CompactFlash Drive'
+#.
+#: ../src/gdu/gdu-drive.c:576 ../src/gdu/gdu-drive.c:609
+#, fuzzy
+#| msgid "Drive"
+msgctxt "Media Type"
+msgid "Drive"
+msgstr "Laufwerk"
+
+#: ../src/gdu/gdu-drive.c:617
+#, c-format
+msgid "%s Hard Disk"
+msgstr "%s Festplatte"
+
+#: ../src/gdu/gdu-drive.c:624
+msgid "Hard Disk"
+msgstr "Festplatte"
+
+#: ../src/gdu/gdu-drive.c:632
+#, c-format
+msgid "%s Solid-State Disk"
+msgstr "%s Festkörperlaufwerk"
+
+#: ../src/gdu/gdu-drive.c:639
+msgid "Solid-State Disk"
+msgstr "Festkörperlaufwerk"
+
+#: ../src/gdu/gdu-drive.c:681
+#, c-format
+msgid "%s Media"
+msgstr "%s-Medium"
+
+#: ../src/gdu/gdu-drive.c:689 ../src/palimpsest/gdu-section-no-media.c:113
+#: ../src/palimpsest/gdu-shell.c:240 ../src/palimpsest/gdu-shell.c:264
+#, c-format
+msgid "No Media Detected"
+msgstr "Kein Medium erkannt"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:701 ../src/gdu/gdu-linux-md-drive.c:542
+msgid "MBR Partition Table"
+msgstr "MBR-Partitionstabelle"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:705 ../src/gdu/gdu-linux-md-drive.c:545
+#: ../src/gdu-gtk/gdu-gtk.c:1534 ../src/palimpsest/gdu-shell.c:224
+#: ../src/palimpsest/gdu-shell.c:254
+msgid "GUID Partition Table"
+msgstr "GUID-Partitionstabelle"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:709 ../src/gdu/gdu-linux-md-drive.c:548
+msgid "Apple Partition Table"
+msgstr "Apple-Partitionstabelle"
+
+#. Translators: This string is used for conveying the partition table format when
+#. * the format is unknown
+#.
+#: ../src/gdu/gdu-drive.c:715 ../src/gdu/gdu-linux-md-drive.c:553
+msgid "Partitioned"
+msgstr "Partitioniert"
+
+#: ../src/gdu/gdu-drive.c:721 ../src/palimpsest/gdu-shell.c:261
+#: ../src/palimpsest/gdu-shell.c:351
+#, c-format
+msgid "Not Partitioned"
+msgstr "Nicht partitioniert"
+
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:515
+#, c-format
+msgid "%s %s Drive"
+msgstr "Laufwerk %s %s"
+
+# Das wird dann z.B. zu RAID-5-Laufwerk expandiert.
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:520
 #, c-format
 msgid "%s Drive"
-msgstr "Laufwerk %s"
+msgstr "%s-Laufwerk"
 
-#: ../src/gdu/gdu-linux-md-drive.c:451
-#, c-format
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#: ../src/gdu/gdu-linux-md-drive.c:457
+#. Translators: First %s is a device file such as /dev/sda4
+#. * second %s is the state of the device
+#.
+#: ../src/gdu/gdu-linux-md-drive.c:575
 #, c-format
 msgid "RAID device %s (%s)"
 msgstr "RAID-Gerät %s (%s)"
 
-#: ../src/gdu/gdu-linux-md-drive.c:464
+#. Translators: %s is a device file such as /dev/sda4
+#: ../src/gdu/gdu-linux-md-drive.c:582
 #, c-format
 msgid "RAID device %s"
 msgstr "RAID-Gerät %s"
 
-#: ../src/gdu/gdu-util.c:65 ../src/gdu/gdu-util.c:94
+#: ../src/gdu/gdu-linux-md-drive.c:587
+msgid "RAID Array"
+msgstr "RAID-Anordnung"
+
+#. Translators: %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-md-drive.c:594
 #, c-format
-msgid "%.*f %s"
-msgstr "%.*f %s"
+msgid "%s Software RAID"
+msgstr "%s Software-RAID"
 
-#: ../src/gdu/gdu-util.c:112
-msgid "%s / %s / %'"
-msgstr "%s / %s / %'"
+#: ../src/gdu/gdu-linux-md-drive.c:597
+msgid "Software RAID"
+msgstr "Software-RAID"
 
-#: ../src/gdu/gdu-util.c:141
+#. Translators: The first %s is the size in power-of-10 units, e.g. 100 KB
+#. * the second %s is the size in power-of-2 units, e.g. 20 MiB
+#. * the third %s is the size as a number
+#.
+#: ../src/gdu/gdu-util.c:118
+#, c-format
+msgid "%s / %s / %s bytes"
+msgstr "%s / %s / %s Bytes"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:149
 msgid "FAT (12-bit version)"
 msgstr "FAT (12-Bit-Version)"
 
-#: ../src/gdu/gdu-util.c:143 ../src/gdu/gdu-util.c:149
-#: ../src/gdu/gdu-util.c:155 ../src/gdu/gdu-util.c:159
-#: ../src/gdu/gdu-util.c:161
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:152 ../src/gdu/gdu-util.c:159
+#: ../src/gdu/gdu-util.c:166 ../src/gdu/gdu-util.c:170
+#: ../src/gdu/gdu-util.c:172
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/gdu/gdu-util.c:147
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:157
 msgid "FAT (16-bit version)"
 msgstr "FAT (16-Bit-Version)"
 
-#: ../src/gdu/gdu-util.c:153
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:164
 msgid "FAT (32-bit version)"
 msgstr "FAT (32-Bit-Version)"
 
-#: ../src/gdu/gdu-util.c:167
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:179
 #, c-format
 msgid "NTFS (version %s)"
 msgstr "NTFS (Version %s)"
 
-#: ../src/gdu/gdu-util.c:169 ../src/gdu/gdu-util.c:171
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:182 ../src/gdu/gdu-util.c:184
 #, c-format
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/gdu/gdu-util.c:175 ../src/gdu/gdu-util.c:177
+#. Translators: HFS is a filesystem type
+#: ../src/gdu/gdu-util.c:189 ../src/gdu/gdu-util.c:191
 msgid "HFS"
 msgstr "HFS"
 
-#: ../src/gdu/gdu-util.c:181 ../src/gdu/gdu-util.c:183
+#. Translators: HFS+ is a filesystem type
+#: ../src/gdu/gdu-util.c:196 ../src/gdu/gdu-util.c:198
 msgid "HFS+"
 msgstr "HFS+"
 
-#: ../src/gdu/gdu-util.c:187
+#: ../src/gdu/gdu-util.c:202
 msgid "Linux Unified Key Setup"
 msgstr ""
 
-#: ../src/gdu/gdu-util.c:189
+#. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
+#: ../src/gdu/gdu-util.c:205
 msgid "LUKS"
 msgstr "LUKS"
 
-#: ../src/gdu/gdu-util.c:194
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:211
 #, c-format
 msgid "Linux Ext2 (version %s)"
 msgstr "Linux Ext2 (Version %s)"
 
-#: ../src/gdu/gdu-util.c:196
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:214
 #, c-format
 msgid "Linux Ext2"
 msgstr "Linux Ext2"
 
-#: ../src/gdu/gdu-util.c:198
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:217
 msgid "ext2"
 msgstr "ext2"
 
-#: ../src/gdu/gdu-util.c:203
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:223
 #, c-format
 msgid "Linux Ext3 (version %s)"
 msgstr "Linux Ext3 (Version %s)"
 
-#: ../src/gdu/gdu-util.c:205
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:226
 #, c-format
 msgid "Linux Ext3"
 msgstr "Linux Ext3"
 
-#: ../src/gdu/gdu-util.c:207
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:229
 msgid "ext3"
 msgstr "ext3"
 
-#: ../src/gdu/gdu-util.c:212
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:235
 #, c-format
 msgid "Journal for Linux ext3 (version %s)"
 msgstr "Journal für Linux ext3 (Version %s)"
 
-#: ../src/gdu/gdu-util.c:214
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:238
 #, c-format
 msgid "Journal for Linux ext3"
 msgstr "Journal for Linux ext3"
 
-#: ../src/gdu/gdu-util.c:216
+#. Translators: jbd is a filesystem type
+#: ../src/gdu/gdu-util.c:241
 msgid "jbd"
 msgstr "jbd"
 
-#: ../src/gdu/gdu-util.c:221
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:247
 #, c-format
 msgid "Linux Ext4 (version %s)"
 msgstr "Linux Ext4 (Version %s)"
 
-#: ../src/gdu/gdu-util.c:223
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:250
 #, c-format
 msgid "Linux Ext4"
 msgstr "Linux Ext4"
 
-#: ../src/gdu/gdu-util.c:225
+#. Translators: Ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:253
 msgid "ext4"
 msgstr "ext4"
 
-#: ../src/gdu/gdu-util.c:230
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:259
 #, c-format
 msgid "Linux XFS (version %s)"
 msgstr "Linux XFS (Version %s)"
 
-#: ../src/gdu/gdu-util.c:232
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:262
 #, c-format
 msgid "Linux XFS"
 msgstr "Linux XFS"
 
-#: ../src/gdu/gdu-util.c:234
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:265
 msgid "xfs"
 msgstr "xfs"
 
-#: ../src/gdu/gdu-util.c:238
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:270
 msgid "ISO 9660"
 msgstr "ISO 9660"
 
-#: ../src/gdu/gdu-util.c:240
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:273
 msgid "iso9660"
 msgstr "iso9660"
 
-#: ../src/gdu/gdu-util.c:244
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:278
 msgid "Universal Disk Format"
 msgstr "Universal Disk Format"
 
-#: ../src/gdu/gdu-util.c:246
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:281
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:250 ../src/palimpsest/gdu-section-swapspace.c:83
-#: ../src/palimpsest/gdu-shell.c:356
+#: ../src/gdu/gdu-util.c:285 ../src/palimpsest/gdu-section-swapspace.c:82
+#: ../src/palimpsest/gdu-shell.c:327
 msgid "Swap Space"
-msgstr "Swap-Speicher"
+msgstr "Auslagerungsspeicher"
 
-#: ../src/gdu/gdu-util.c:252
+#. Translators: filesystem type for swap space
+#: ../src/gdu/gdu-util.c:288
 msgid "swap"
-msgstr "swap"
+msgstr "Auslagerung"
 
-#: ../src/gdu/gdu-util.c:257
+#: ../src/gdu/gdu-util.c:293
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
-msgstr ""
+msgstr "Physikalischer LVM2-Datenträger (Version %s)"
 
-#: ../src/gdu/gdu-util.c:259
+#: ../src/gdu/gdu-util.c:295
 #, c-format
 msgid "LVM2 Physical Volume"
-msgstr ""
+msgstr "Physikalischer LVM2-Datenträger"
 
-#: ../src/gdu/gdu-util.c:261
+#. Translators: short name for LVM2 Physical Volume
+#: ../src/gdu/gdu-util.c:298
 msgid "lvm2_pv"
 msgstr "lvm2_pv"
 
-#: ../src/gdu/gdu-util.c:267
+#: ../src/gdu/gdu-util.c:304
 #, c-format
 msgid "RAID Component (version %s)"
 msgstr "RAID-Komponente (Version %s)"
 
-#: ../src/gdu/gdu-util.c:269
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
+#: ../src/gdu/gdu-util.c:306
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1114
 #, c-format
 msgid "RAID Component"
-msgstr "RAID Komponente"
+msgstr "RAID-Komponente"
 
-#: ../src/gdu/gdu-util.c:271
+#. Translators: short name for 'RAID Component'
+#: ../src/gdu/gdu-util.c:309
 msgid "raid"
 msgstr "raid"
 
-#: ../src/gdu/gdu-util.c:285
+#: ../src/gdu/gdu-util.c:323
 msgid "Creating File System"
 msgstr "Dateisystem wird erstellt"
 
-#: ../src/gdu/gdu-util.c:287
+#: ../src/gdu/gdu-util.c:325
 msgid "Mounting File System"
 msgstr "Dateisystem wird eingehängt"
 
-#: ../src/gdu/gdu-util.c:289
+#: ../src/gdu/gdu-util.c:327
 msgid "Unmounting File System"
 msgstr "Dateisystem wird ausgehängt"
 
-#: ../src/gdu/gdu-util.c:291
+#: ../src/gdu/gdu-util.c:329
 msgid "Checking File System"
 msgstr "Dateisystem wird überprüft"
 
-#: ../src/gdu/gdu-util.c:293
+#: ../src/gdu/gdu-util.c:331
 msgid "Creating LUKS Device"
 msgstr "LUKS-Gerät wird erstellt"
 
-#: ../src/gdu/gdu-util.c:295
+#: ../src/gdu/gdu-util.c:333
 msgid "Unlocking LUKS Device"
 msgstr "LUKS-Gerät wird entsperrt"
 
-#: ../src/gdu/gdu-util.c:297
+#: ../src/gdu/gdu-util.c:335
 msgid "Locking LUKS Device"
 msgstr "LUKS-Gerät wird gesperrt"
 
-#: ../src/gdu/gdu-util.c:299
+#: ../src/gdu/gdu-util.c:337
 msgid "Creating Partition Table"
 msgstr "Partitionstabelle wird erstellt"
 
-#: ../src/gdu/gdu-util.c:301
+#: ../src/gdu/gdu-util.c:339
 msgid "Deleting Partition"
 msgstr "Partition wird gelöscht"
 
-#: ../src/gdu/gdu-util.c:303
+#: ../src/gdu/gdu-util.c:341
 msgid "Creating Partition"
 msgstr "Partition wird erstellt"
 
-#: ../src/gdu/gdu-util.c:305
+#: ../src/gdu/gdu-util.c:343
 msgid "Modifying Partition"
 msgstr "Partition wird geändert"
 
-#: ../src/gdu/gdu-util.c:307
+#: ../src/gdu/gdu-util.c:345
 msgid "Setting Label for Device"
-msgstr ""
+msgstr "Gerät wird bezeichnet"
 
-#: ../src/gdu/gdu-util.c:309
+#: ../src/gdu/gdu-util.c:347
 msgid "Changing Passphrase for Encrypted LUKS Device"
-msgstr ""
+msgstr "Kennwort für verschlüsseltes LUKS-Gerät wird geändert"
 
-#: ../src/gdu/gdu-util.c:311
+#: ../src/gdu/gdu-util.c:349
 msgid "Adding Component to RAID Array"
-msgstr ""
+msgstr "Eine Komponente wird zur RAID-Anordnung hinzugefügt"
 
-#: ../src/gdu/gdu-util.c:313
+#: ../src/gdu/gdu-util.c:351
 msgid "Removing Component from RAID Array"
-msgstr ""
+msgstr "Eine Komponente wird von der RAID-Anordnung entfernt"
 
-#: ../src/gdu/gdu-util.c:315
+#: ../src/gdu/gdu-util.c:353
 msgid "Stopping RAID Array"
-msgstr ""
+msgstr "RAID-Anordnung wird angehalten"
 
-#: ../src/gdu/gdu-util.c:317
+#: ../src/gdu/gdu-util.c:355
 msgid "Starting RAID Array"
-msgstr ""
+msgstr "RAID-Anordnung wird gestartet"
 
-#: ../src/gdu/gdu-util.c:319
+#: ../src/gdu/gdu-util.c:357
+msgid "Checking RAID Array"
+msgstr "RAID-Anordnung wird überprüft"
+
+#: ../src/gdu/gdu-util.c:359
+msgid "Repairing RAID Array"
+msgstr "RAID-Anordnung wird repariert"
+
+#: ../src/gdu/gdu-util.c:361
 msgid "Running S.M.A.R.T. Self Test"
 msgstr "S.M.A.R.T. Selbsttest wird ausgeführt"
 
-#: ../src/gdu/gdu-util.c:321
+#: ../src/gdu/gdu-util.c:363
 msgid "Ejecting Media"
 msgstr "Medium wird ausgeworfen"
 
-#: ../src/gdu/gdu-util.c:323
-msgid "Forcibly Unmounting Filesystem"
-msgstr ""
+#: ../src/gdu/gdu-util.c:365
+msgid "Detaching Device"
+msgstr "Gerät wird entfernt"
 
-#: ../src/gdu/gdu-util.c:325
+#: ../src/gdu/gdu-util.c:367
+msgid "Forcibly Unmounting Filesystem"
+msgstr "Aushängen des Dateisystem wird erzwungen "
+
+#: ../src/gdu/gdu-util.c:369
 msgid "Forcibly Locking LUKS device"
-msgstr ""
+msgstr "Sperren des LUKS-Geräts wird erzwungen"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
-#: ../src/gdu/gdu-util.c:340
+#: ../src/gdu/gdu-util.c:384
 msgid "MBR Partition Scheme"
 msgstr "MBR-Partitionsschema"
 
-#: ../src/gdu/gdu-util.c:341
+#: ../src/gdu/gdu-util.c:385
 msgid "EFI System Partition"
 msgstr "EFI-Systempartition"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:343
+#: ../src/gdu/gdu-util.c:387
 msgid "Microsoft Reserved Partition"
-msgstr ""
+msgstr "Reservierte Microsoft-Partition"
 
 #. {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")},
-#: ../src/gdu/gdu-util.c:345
+#: ../src/gdu/gdu-util.c:389
 msgid "LDM meta data Partition"
 msgstr "LDM Metadaten-Partition"
 
-#: ../src/gdu/gdu-util.c:346
+#: ../src/gdu/gdu-util.c:390
 msgid "LDM data Partition"
 msgstr "LDM Daten-Partition"
 
 #. Linux
-#: ../src/gdu/gdu-util.c:348
+#: ../src/gdu/gdu-util.c:392
 msgid "Basic Data Partition"
-msgstr ""
+msgstr "Einfache Datenpartition"
 
 #. Same GUID as MS!
-#: ../src/gdu/gdu-util.c:349
+#: ../src/gdu/gdu-util.c:393
 msgid "Linux RAID Partition"
 msgstr "Linux RAID-Partition"
 
-#: ../src/gdu/gdu-util.c:350
+#: ../src/gdu/gdu-util.c:394
 msgid "Linux Swap Partition"
 msgstr "Linux Swap-Partition"
 
-#: ../src/gdu/gdu-util.c:351
+#: ../src/gdu/gdu-util.c:395
 msgid "Linux LVM Partition"
 msgstr "Linux LVM-Partition"
 
-#: ../src/gdu/gdu-util.c:352
+#: ../src/gdu/gdu-util.c:396
 msgid "Linux Reserved Partition"
 msgstr "Linux Reserve-Partition"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:354 ../src/gdu/gdu-util.c:362
+#: ../src/gdu/gdu-util.c:398 ../src/gdu/gdu-util.c:406
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Apple HFS/HFS+-Partition"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:355 ../src/gdu/gdu-util.c:361
+#: ../src/gdu/gdu-util.c:399 ../src/gdu/gdu-util.c:405
 msgid "Apple UFS Partition"
 msgstr "Apple UFS-Partition"
 
-#: ../src/gdu/gdu-util.c:356
+#: ../src/gdu/gdu-util.c:400
 msgid "Apple RAID Partition"
 msgstr "Apple RAID-Partition"
 
-#: ../src/gdu/gdu-util.c:363 ../src/gdu-gtk/gdu-gtk.c:1543
-#: ../src/palimpsest/gdu-shell.c:254 ../src/palimpsest/gdu-shell.c:282
+#: ../src/gdu/gdu-util.c:407 ../src/gdu-gtk/gdu-gtk.c:1544
+#: ../src/palimpsest/gdu-shell.c:220 ../src/palimpsest/gdu-shell.c:250
 msgid "Apple Partition Map"
 msgstr "Apple Partitionsverzeichnis"
 
-#: ../src/gdu/gdu-util.c:364
+#: ../src/gdu/gdu-util.c:408
 msgid "Unused Partition"
 msgstr "Unbenutzte Partition"
 
-#: ../src/gdu/gdu-util.c:365
+#: ../src/gdu/gdu-util.c:409
 msgid "Empty Partition"
 msgstr "Leere Partition"
 
-#: ../src/gdu/gdu-util.c:366
+#: ../src/gdu/gdu-util.c:410
 msgid "Driver Partition"
-msgstr ""
+msgstr "Treiber-Partition"
 
-#: ../src/gdu/gdu-util.c:367
+#: ../src/gdu/gdu-util.c:411
 msgid "Driver 4.3 Partition"
-msgstr ""
+msgstr "Treiber 4.3-Partition"
 
-#: ../src/gdu/gdu-util.c:368
+#: ../src/gdu/gdu-util.c:412
 msgid "ProDOS file system"
 msgstr "ProDOS-Dateisystem"
 
-#: ../src/gdu/gdu-util.c:369
+#: ../src/gdu/gdu-util.c:413
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:370
+#: ../src/gdu/gdu-util.c:414
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:371
+#: ../src/gdu/gdu-util.c:415
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:372
+#: ../src/gdu/gdu-util.c:416
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:373
+#: ../src/gdu/gdu-util.c:417
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:376
+#: ../src/gdu/gdu-util.c:420
 msgid "Empty (0x00)"
 msgstr "Leer (0x00)"
 
-#: ../src/gdu/gdu-util.c:377
+#: ../src/gdu/gdu-util.c:421
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:378
+#: ../src/gdu/gdu-util.c:422
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:379
+#: ../src/gdu/gdu-util.c:423
 msgid "Extended (0x05)"
 msgstr "Erweitert (0x05)"
 
-#: ../src/gdu/gdu-util.c:380
+#: ../src/gdu/gdu-util.c:424
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:381
+#: ../src/gdu/gdu-util.c:425
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:382
+#: ../src/gdu/gdu-util.c:426
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:383
+#: ../src/gdu/gdu-util.c:427
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:428
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:385
+#: ../src/gdu/gdu-util.c:429
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 Ext d (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:386
+#: ../src/gdu/gdu-util.c:430
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:387
+#: ../src/gdu/gdu-util.c:431
 msgid "Hidden FAT12 (0x11)"
 msgstr "Versteckte FAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:388
+#: ../src/gdu/gdu-util.c:432
 msgid "Compaq diagnostics (0x12)"
 msgstr "Compaq Diagnostics (0x12)"
 
-#: ../src/gdu/gdu-util.c:389
+#: ../src/gdu/gdu-util.c:433
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "Versteckte FAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:434
 msgid "Hidden FAT16 (0x16)"
 msgstr "Versteckte FAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:391
+#: ../src/gdu/gdu-util.c:435
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "Versteckte HPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:436
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "Versteckte W95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:393
+#: ../src/gdu/gdu-util.c:437
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "Versteckte W95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:438
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "Versteckte W95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:395
+#: ../src/gdu/gdu-util.c:439
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:440
 msgid "Linux swap (0x82)"
 msgstr "Linux swap (0x82)"
 
-#: ../src/gdu/gdu-util.c:397
+#: ../src/gdu/gdu-util.c:441
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:398
+#: ../src/gdu/gdu-util.c:442
 msgid "Hibernation (0x84)"
 msgstr "Hibernation (0x84)"
 
-#: ../src/gdu/gdu-util.c:399
+#: ../src/gdu/gdu-util.c:443
 msgid "Linux Extended (0x85)"
 msgstr "Linux Erweitert (0x85)"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:444
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:401
+#: ../src/gdu/gdu-util.c:445
 msgid "Hibernation (0xa0)"
-msgstr ""
+msgstr "Ruhezustand (0xa0)"
 
-#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:446
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:403
+#: ../src/gdu/gdu-util.c:447
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:404
+#: ../src/gdu/gdu-util.c:448
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:405
+#: ../src/gdu/gdu-util.c:449
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:450
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris boot (0xbe)"
 
-#: ../src/gdu/gdu-util.c:407
+#: ../src/gdu/gdu-util.c:451
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:452
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:409
+#: ../src/gdu/gdu-util.c:453
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:454
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:411
+#: ../src/gdu/gdu-util.c:455
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:456
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Linux RAID-Autoerkennung (0xfd)"
 
-#: ../src/gdu/gdu-util.c:436
+#. Translators: Shown for unknown partition types.
+#. * %s is the partition type name
+#.
+#: ../src/gdu/gdu-util.c:483
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Unbekannt (%s)"
 
-#: ../src/gdu/gdu-util.c:446
+#: ../src/gdu/gdu-util.c:493
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
@@ -1117,7 +1559,7 @@ msgstr ""
 "Ein mit beinahe jedem Gerät und System kompatibles populäres Format, "
 "typischerweise für den Dateiaustausch genutzt."
 
-#: ../src/gdu/gdu-util.c:450
+#: ../src/gdu/gdu-util.c:497
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
@@ -1126,7 +1568,7 @@ msgstr ""
 "Unterstützung für die klassischen UNIX-Zugriffsrechte bereit. Dieses "
 "Dateisystem enthält kein Journal."
 
-#: ../src/gdu/gdu-util.c:456
+#: ../src/gdu/gdu-util.c:503
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
@@ -1134,12 +1576,12 @@ msgstr ""
 "Dieses Dateisystem ist nur zu Linux-Systemen kompatibel und stellt "
 "Unterstützung für die klassischen UNIX-Zugriffsrechte bereit."
 
-#: ../src/gdu/gdu-util.c:460
+#: ../src/gdu/gdu-util.c:507
 msgid "Swap area used by the operating system for virtual memory."
 msgstr ""
 "Swap-Bereich, der vom Betriebssystem als Auslagerungsspeicher genutzt wird."
 
-#: ../src/gdu/gdu-util.c:463
+#: ../src/gdu/gdu-util.c:510
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
@@ -1147,403 +1589,878 @@ msgstr ""
 "Das native Windows-Dateisystem. Außerhalb der Windows-Welt nicht besonders "
 "kompatibel."
 
-#: ../src/gdu/gdu-util.c:467
+#: ../src/gdu/gdu-util.c:514
 msgid "No file system will be created."
 msgstr "Es wird kein Dateisystem erstellt."
 
-#: ../src/gdu/gdu-util.c:470
+#: ../src/gdu/gdu-util.c:517
 msgid "Create an Extended Partition for logical partitions."
 msgstr "Eine erweiterte Partition für logische Partitionen erstellen."
 
-#: ../src/gdu/gdu-util.c:483
+#: ../src/gdu/gdu-util.c:530
 msgid ""
 "The Master Boot Record scheme is compatible with almost any device or system "
-"but has a number of limitations with respect to to disk size and number of "
+"but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
 "Das Schema des »Master Boot Record« ist zu fast jedem Gerät oder System "
 "kompatibel. Allerdings gibt es eine Reihe von Einschränkungen hinsichtlich "
-"der Mediengröße und der anzahl der Partitionen."
+"der Mediengröße und der Anzahl der Partitionen."
 
-#: ../src/gdu/gdu-util.c:488
+#: ../src/gdu/gdu-util.c:535
 msgid ""
-"A legacy scheme that is incomptible with most systems except Apple systems "
+"A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
+"Ein veraltetes Schema, das mit den meisten Systemen inkompatibel ist, außer "
+"Apple-Systemen und den meisten Linux-Systemen. Es ist für Wechselmedien "
+"nicht empfehlenswert."
 
-#: ../src/gdu/gdu-util.c:493
+#: ../src/gdu/gdu-util.c:540
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
+"Das GUID-Schema ist mit den meisten modernen Systemen kompatibel, aber es "
+"könnte mit einigen Geräten und alten Systemen nicht kompatibel sein."
 
-#: ../src/gdu/gdu-util.c:497
+#: ../src/gdu/gdu-util.c:544
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
-"partitioing the disk for e.g. whole disk use or floppy / Zip disks."
+"partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
 "Markiert das gesamte Medium als unbenutzt. Wählen Sie diese Option nur dann, "
 "wenn Sie die Partitionierung verhindern wollen, um das Medium beispielsweise "
-"für Floppy- oder Zip-Disketten verwenden wollen."
+"ganz oder für Floppy- oder Zip-Disketten zu verwenden."
 
-#: ../src/gdu/gdu-util.c:680 ../src/gdu-gtk/gdu-gtk.c:947
+#: ../src/gdu/gdu-util.c:727 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "LUKS-Kennwort für UUID %s"
 
-#: ../src/gdu/gdu-util.c:709
+#: ../src/gdu/gdu-util.c:756
 #, c-format
 msgid "%.1f kbit/s"
 msgstr "%.1f kbit/s"
 
-#: ../src/gdu/gdu-util.c:712
+#: ../src/gdu/gdu-util.c:759
 #, c-format
 msgid "%.1f Mbit/s"
 msgstr "%.1f Mbit/s"
 
-#: ../src/gdu/gdu-util.c:715
+#: ../src/gdu/gdu-util.c:762
 #, c-format
 msgid "%.1f Gbit/s"
 msgstr "%.1f Gbit/s"
 
-#: ../src/gdu/gdu-util.c:730
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:778
 msgid "SATA"
 msgstr "SATA"
 
-#: ../src/gdu/gdu-util.c:732
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:781
 msgid "eSATA"
 msgstr "eSATA"
 
-#: ../src/gdu/gdu-util.c:734
+#. Translators: interface name for parallel ATA disks
+#: ../src/gdu/gdu-util.c:784
 msgid "PATA"
 msgstr "PATA"
 
-#: ../src/gdu/gdu-util.c:736
+#. Translators: interface name for ATA disks
+#: ../src/gdu/gdu-util.c:787
 msgid "ATA"
 msgstr "ATA"
 
-#: ../src/gdu/gdu-util.c:738
+#. Translators: interface name for SCSI disks
+#: ../src/gdu/gdu-util.c:790
 msgid "SCSI"
 msgstr "SCSI"
 
-#: ../src/gdu/gdu-util.c:740
+#. Translators: interface name for USB disks
+#: ../src/gdu/gdu-util.c:793
 msgid "USB"
 msgstr "USB"
 
-#: ../src/gdu/gdu-util.c:742
+#. Translators: interface name for firewire disks
+#: ../src/gdu/gdu-util.c:796
 msgid "Firewire"
 msgstr "Firewire"
 
-#: ../src/gdu/gdu-util.c:744
+#. Translators: interface name for SDIO disks
+#: ../src/gdu/gdu-util.c:799
 msgid "SDIO"
 msgstr "SDIO"
 
-#: ../src/gdu/gdu-util.c:746
+#. Translators: interface name for virtual disks
+#: ../src/gdu/gdu-util.c:802
 msgid "Virtual"
 msgstr "Virtuell"
 
-#: ../src/gdu/gdu-util.c:751 ../src/gdu-gtk/gdu-gtk.c:217
-#: ../src/palimpsest/gdu-section-health.c:278
-#: ../src/palimpsest/gdu-section-health.c:286
-#: ../src/playground/grid/gdu-grid-element.c:566
+#. Translators: name shown for unknown disk connection interfaces
+#: ../src/gdu/gdu-util.c:808
+msgctxt "connection name"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../src/gdu/gdu-util.c:774
+#. Translators: Connection with speed information.
+#. * First %s is the connection name, like 'SATA' or 'USB'
+#. * second %s is the speed, like '2 Mbit/s'
+#.
+#: ../src/gdu/gdu-util.c:818
+#, c-format
+msgid "%s at %s"
+msgstr "%s mit %s"
+
+#: ../src/gdu/gdu-util.c:837
+msgctxt "RAID level"
+msgid "Stripe (RAID-0)"
+msgstr "Verteilt (RAID 0)"
+
+#: ../src/gdu/gdu-util.c:839
+msgctxt "RAID level"
 msgid "RAID-0"
-msgstr "RAID-0"
+msgstr "RAID 0"
 
-#: ../src/gdu/gdu-util.c:776
+#: ../src/gdu/gdu-util.c:842
+msgctxt "RAID level"
+msgid "Mirror (RAID-1)"
+msgstr "Gespiegelt (RAID 1)"
+
+#: ../src/gdu/gdu-util.c:844
+msgctxt "RAID level"
 msgid "RAID-1"
-msgstr "RAID-1"
+msgstr "RAID 1"
 
-#: ../src/gdu/gdu-util.c:778 ../src/palimpsest/gdu-section-linux-md-drive.c:640
+#: ../src/gdu/gdu-util.c:847
+msgctxt "RAID level"
+msgid "Parity Disk (RAID-4)"
+msgstr "Mit Paritätslaufwerk (RAID 4)"
+
+#: ../src/gdu/gdu-util.c:849
+msgctxt "RAID level"
 msgid "RAID-4"
-msgstr "RAID-4"
+msgstr "RAID 4"
 
-#: ../src/gdu/gdu-util.c:780 ../src/palimpsest/gdu-section-linux-md-drive.c:642
+#: ../src/gdu/gdu-util.c:852
+msgctxt "RAID level"
+msgid "Distributed Parity (RAID-5)"
+msgstr "Verteilte Parität (RAID 5)"
+
+#: ../src/gdu/gdu-util.c:854
+msgctxt "RAID level"
 msgid "RAID-5"
-msgstr "RAID-5"
+msgstr "RAID 5"
 
-#: ../src/gdu/gdu-util.c:782 ../src/palimpsest/gdu-section-linux-md-drive.c:644
+#: ../src/gdu/gdu-util.c:857
+msgctxt "RAID level"
+msgid "Dual Distributed Parity (RAID-6)"
+msgstr "Zweifach verteilte Parität (RAID 6)"
+
+#: ../src/gdu/gdu-util.c:859
+msgctxt "RAID level"
 msgid "RAID-6"
-msgstr "RAID-6"
+msgstr "RAID 6"
 
-#: ../src/gdu/gdu-util.c:784
+#: ../src/gdu/gdu-util.c:862
+msgctxt "RAID level"
+msgid "Stripe of Mirrors (RAID-10)"
+msgstr "Verteilte Spiegel (RAID 10)"
+
+#: ../src/gdu/gdu-util.c:864
+msgctxt "RAID level"
 msgid "RAID-10"
-msgstr "RAID-10"
+msgstr "RAID 10"
 
-#: ../src/gdu/gdu-util.c:786
-msgid "JBOD"
-msgstr "JBOD"
+#: ../src/gdu/gdu-util.c:867
+msgctxt "RAID level"
+msgid "Concatenated (Linear)"
+msgstr "Zusammenhängend (linear)"
 
-#: ../src/gdu/gdu-volume.c:73
+#: ../src/gdu/gdu-util.c:869
+msgctxt "RAID level"
+msgid "Linear"
+msgstr "Linear"
+
+#: ../src/gdu/gdu-util.c:883
+msgid ""
+"Striped set without parity. Provides improved performance but no fault "
+"tolerance. If a single disk in the array fails, the entire RAID-0 array "
+"fails."
+msgstr ""
+"Verteilt ohne Parität. Ergibt verbesserte Geschwindigkeit, aber ohne "
+"Fehlertoleranz. Wenn eine einzige Platte der Anordnung versagt, so versagt "
+"die ganze RAID 0-Anordnung."
+
+#: ../src/gdu/gdu-util.c:887
+msgid ""
+"Mirrored set without parity. Provides fault tolerance and improved "
+"performance for reading. RAID-1 arrays can sustain all but one disk failing."
+msgstr ""
+"Gespiegelt ohne Parität. Ergibt Fehlertoleranz und verbesserte "
+"Lesegeschwindigkeit. RAID 1-Anordnungen können den Ausfall aller bis auf "
+"einer Platte überdauern."
+
+#: ../src/gdu/gdu-util.c:891
+msgid ""
+"Striped set with parity on a single disk. Provides improved performance and "
+"fault tolerance. RAID-4 arrays can sustain a single disk failure."
+msgstr ""
+"Verteilt mit Parität auf einer Platte. Ergibt Fehlertoleranz und verbesserte "
+"Geschwindigkeit. RAID 4-Anordnungen können den Ausfall einer Platte "
+"überdauern."
+
+#: ../src/gdu/gdu-util.c:895
+msgid ""
+"Striped set with distributed parity. Provides improved performance and fault "
+"tolerance. RAID-5 arrays can sustain a single disk failure."
+msgstr ""
+"Verteilt mit verteilter Parität. Ergibt Fehlertoleranz und verbesserte "
+"Geschwindigkeit. RAID 5-Anordnungen können den Ausfall einer einzigen Platte "
+"überdauern."
+
+#: ../src/gdu/gdu-util.c:899
+msgid ""
+"Striped set with dual distributed parity. Provides improved performance and "
+"fault tolerance. RAID-6 arrays can sustain two disk failures."
+msgstr ""
+"Verteilt mit zweifach verteilter Parität. Ergibt Fehlertoleranz und "
+"verbesserte Geschwindigkeit. RAID 6-Anordnungen können den Ausfall von zwei "
+"Platten überdauern."
+
+#: ../src/gdu/gdu-util.c:903
+msgid ""
+"Striped set with distributed parity. Provides improved performance and fault "
+"tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
+"mirror loses all its drives."
+msgstr ""
+"Verteilt mit verteilter Parität. Ergibt Fehlertoleranz und verbesserte "
+"Geschwindigkeit. RAID 10-Anordnungen können den Ausfall mehrerer Platten "
+"überdauern, solange kein Spiegel alle seine Platten verliert."
+
+#: ../src/gdu/gdu-util.c:909
+#, c-format
+msgid "Unknown RAID level %s."
+msgstr "Unbekannte RAID-Stufe %s."
+
+#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
+#: ../src/gdu/gdu-volume.c:74
 msgid "CD-ROM Disc"
 msgstr "CD-ROM-Medium"
 
-#: ../src/gdu/gdu-volume.c:73
+#: ../src/gdu/gdu-volume.c:74
 msgid "Blank CD-ROM Disc"
 msgstr "Leeres CD-ROM-Medium"
 
-#: ../src/gdu/gdu-volume.c:74
+#: ../src/gdu/gdu-volume.c:75
 msgid "CD-R Disc"
 msgstr "CD-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:74
+#: ../src/gdu/gdu-volume.c:75
 msgid "Blank CD-R Disc"
 msgstr "Leeres CD-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:76
 msgid "CD-RW Disc"
 msgstr "CD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:76
 msgid "Blank CD-RW Disc"
 msgstr "Leeres CD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:76 ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
 msgid "DVD-ROM Disc"
 msgstr "DVD-ROM-Medium"
 
-#: ../src/gdu/gdu-volume.c:76 ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
 msgid "Blank DVD-ROM Disc"
 msgstr "Leeres DVD-ROM-Medium"
 
-#: ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:79
 msgid "DVD-RW Disc"
 msgstr "DVD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:79
 msgid "Blank DVD-RW Disc"
 msgstr "Leeres DVD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:80
 msgid "DVD-RAM Disc"
 msgstr "DVD-RAM-Medium"
 
-#: ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:80
 msgid "Blank DVD-RAM Disc"
 msgstr "Leeres DVD-RAM-Medium"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:81
 msgid "DVD+R Disc"
 msgstr "DVD+R-Medium"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:81
 msgid "Blank DVD+R Disc"
 msgstr "Leeres DVD+R-Medium"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:82
 msgid "DVD+RW Disc"
 msgstr "DVD+RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:82
 msgid "Blank DVD+RW Disc"
 msgstr "Leeres DVD+RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
 msgid "DVD+R DL Disc"
 msgstr "DVD+R-Medium (zweischichtig)"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD+R DL Disc"
 msgstr "Leeres DVD+R-Medium (zweischichtig)"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:84
 msgid "DVD+RW DL Disc"
 msgstr "DVD+RW-Medium (zweischichtig)"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD+RW DL Disc"
 msgstr "Leeres DVD+RW-Medium (zweischichtig)"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blu-Ray Disc"
 msgstr "Blu-Ray-Medium"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blank Blu-Ray Disc"
 msgstr "Leeres Blu-Ray-Medium"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blu-Ray R Disc"
 msgstr "Blu-Ray-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blank Blu-Ray R Disc"
 msgstr "Leeres Blu-Ray-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blu-Ray RW Disc"
 msgstr "Blu-Ray-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blank Blu-Ray RW Disc"
 msgstr "Leeres Blu-Ray-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:88
 msgid "HD DVD Disc"
 msgstr "HD-DVD-Medium"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:88
 msgid "Blank HD DVD Disc"
 msgstr "Leeres HD-DVD-Medium"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:89
 msgid "HD DVD-R Disc"
 msgstr "HD-DVD-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:89
 msgid "Blank HD DVD-R Disc"
 msgstr "Leeres HD-DVD-R-Medium"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:90
 msgid "HD DVD-RW Disc"
 msgstr "HD-DVD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blank HD DVD-RW Disc"
 msgstr "Leeres HD-DVD-RW-Medium"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:91
 msgid "MO Disc"
-msgstr ""
-
-#: ../src/gdu/gdu-volume.c:90
-msgid "Blank MO Disc"
-msgstr ""
+msgstr "MO-Medium"
 
 #: ../src/gdu/gdu-volume.c:91
+msgid "Blank MO Disc"
+msgstr "Leeres MO-Medium"
+
+#: ../src/gdu/gdu-volume.c:92
 msgid "MRW Disc"
 msgstr "MRW-Medium"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blank MRW Disc"
 msgstr "Leeres MRW-Medium"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:93
 msgid "MRW/W Disc"
 msgstr "MRW/W-Medium"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:93
 msgid "Blank MRW/W Disc"
 msgstr "Leeres MRW/W-Medium"
 
-#: ../src/gdu/gdu-volume.c:265
+#: ../src/gdu/gdu-volume.c:274
 msgid "Blank Optical Disc"
-msgstr ""
+msgstr "Leeres optisches Medium"
 
-#: ../src/gdu/gdu-volume.c:272
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:284
 #, c-format
 msgid "%s Extended"
 msgstr "%s Erweitert"
 
-#: ../src/gdu/gdu-volume.c:278
+#: ../src/gdu/gdu-volume.c:285
+msgid "Contains logical partitions"
+msgstr "Enthält logische Partitionen"
+
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:300
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s Verschlüsselt"
 
-#: ../src/gdu/gdu-volume.c:288
+#: ../src/gdu/gdu-volume.c:310
 msgid "Optical Disc"
-msgstr ""
+msgstr "Optisches Medium"
 
-#: ../src/gdu/gdu-volume.c:291
+#. Translators: Label for a partition with a filesystem
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:316
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s Dateisystem"
 
-#: ../src/gdu/gdu-volume.c:293
+#. Translators: Label for a partition table
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:322
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s Partitionstabelle"
 
-#: ../src/gdu/gdu-volume.c:296
+#. Translators: Label for a LVM volume
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:328
 #, c-format
 msgid "%s LVM2 Physical Volume"
-msgstr ""
+msgstr "%s Physikalischer LVM2-Datenträger"
 
-#: ../src/gdu/gdu-volume.c:308
+#. Translators: Used if no specific RAID level could be determined
+#: ../src/gdu/gdu-volume.c:341
+msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
 
-#. RAID component; the label is the array name
-#: ../src/gdu/gdu-volume.c:312
+#. Translators: label for a RAID component
+#. * First %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:347 ../src/gdu/gdu-volume.c:359
 #, c-format
-msgid "%s %s (%s)"
-msgstr "%s %s (%s)"
+msgid "%s RAID Component"
+msgstr "%s RAID-Komponente"
 
-#: ../src/gdu/gdu-volume.c:314
+#. Translators: description for a RAID component
+#. * First %s is the array name, e.g. 'My Photos RAID',
+#. * second %s is the RAID level string, e.g 'RAID-5'
+#.
+#: ../src/gdu/gdu-volume.c:352
 #, c-format
-msgid "%s %s"
-msgstr "%s %s"
+msgid "Part of \"%s\" %s array"
+msgstr "Teil der »%s« %s-Anordnung "
 
-#: ../src/gdu/gdu-volume.c:321
+#. Translators: label for a swap partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:370
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s Swap-Bereich"
 
-#: ../src/gdu/gdu-volume.c:323
+#. Translators: label for a data partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:375
 #, c-format
 msgid "%s Data"
 msgstr "%s Daten"
 
-#: ../src/gdu/gdu-volume.c:326 ../src/gdu/gdu-volume.c:337
+#. Translators: label for a volume of unrecognized use
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:381 ../src/gdu/gdu-volume.c:397
 #, c-format
 msgid "%s Unrecognized"
-msgstr ""
+msgstr "%s unbekannt"
 
-#: ../src/gdu/gdu-volume.c:330 ../src/gdu/gdu-volume.c:332
+#. Translators: description for a volume of unrecognized use
+#: ../src/gdu/gdu-volume.c:383
+msgid "Unknown or Unused"
+msgstr "Unbekannt oder nicht verwendet"
+
+#. Translators: label for a partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:390 ../src/gdu/gdu-volume.c:392
 #, c-format
 msgid "%s Partition"
 msgstr "%s Partition"
 
-#: ../src/gdu/gdu-volume-hole.c:147
+#. Translators: The VPD name for a volume. The %d is the partition number
+#. * and the %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:424
 #, c-format
-msgid "%s Unallocated"
-msgstr "%s Nicht zugeteilt"
+msgid "Partition %d of %s"
+msgstr "Partition %d von %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:172
+#. Translators: The VPD name for a volume. The %d is the partition number.
+#.
+#: ../src/gdu/gdu-volume.c:430
+#, c-format
+msgid "Partition %d"
+msgstr "Partition %d"
+
+#. Translators: The VPD name for a whole-disk volume.
+#. * The %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:438
+#, c-format
+msgid "Whole-disk volume on %s"
+msgstr ""
+
+#. Translators: The VPD name for a whole-disk volume.
+#.
+#: ../src/gdu/gdu-volume.c:443
+msgid "Whole-disk volume"
+msgstr ""
+
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume-hole.c:150
+#, c-format
+msgid "%s Free"
+msgstr "%s frei"
+
+#: ../src/gdu/gdu-volume-hole.c:159 ../src/palimpsest/gdu-shell.c:389
+msgid "Unallocated Space"
+msgstr "Nicht zugeteilter Platz"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
+#: ../src/playground/grid/gdu-grid-view.c:325
+msgid "Pool"
+msgstr "Pool"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
+msgid "The pool of devices"
+msgstr "Der Gerätepool"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
+msgid "RAID Level"
+msgstr "RAID-Stufe"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:231
+msgid "The selected RAID level"
+msgstr "Die gewählte RAID-Stufe"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
+msgid "Name"
+msgstr "Name"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
+msgid "The requested name for the array"
+msgstr "Die gewünschte Name der Anordnung"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
+#: ../src/gdu-gtk/gdu-size-widget.c:242
+msgid "Size"
+msgstr "Größe"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
+msgid "The requested size of the array"
+msgstr "Die gewünschte Größe der Anordnung"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
+msgid "Component Size"
+msgstr "Komponentengröße"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:266
+msgid "The size of each component"
+msgstr "Die Größe jeder Komponente"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
+msgid "Stripe Size"
+msgstr "Streifengröße"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
+msgid "The requested stripe size of the array"
+msgstr "Die gewünschte Streifengröße der Anordnung"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
+msgid "Drives"
+msgstr "Laufwerke"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
+msgid "Array of drives to use for the array"
+msgstr "Laufwerksverbund für die Anordnung"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:740
+#, c-format
+msgid "The disk will be partitioned and a %s partition will be created"
+msgstr ""
+"Das Laufwerk wird partitioniert und eine %s Partition wird erstellt werden"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:747
+#, c-format
+msgid "A %s partition will be created"
+msgstr "Eine %s Partition wird erstellt werden"
+
+#. Translators: This is shown in the Details column.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:754
+msgid "The disk will be partitioned and a partition will be created"
+msgstr "Das Laufwerk wird partitioniert und eine Partition erstellt werden"
+
+#. Translators: This is shown in the Details column.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
+msgid "A partition will be created"
+msgstr "Eine Partition wird erstellt werden"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:771
+#, c-format
+msgid "Whole disk is uninitialized. %s available for use"
+msgstr "Das gesamte Laufwerk ist nicht initialisiert. %s stehen zur Verfügung"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:778
+#, c-format
+msgid "%s available for use"
+msgstr "%s stehen zur Verfügung"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:784
+#, c-format
+msgid "The disk has no partitions. %s available for use"
+msgstr "Das Laufwerk hat keine Partitionen. %s stehen zur Verfügung"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:789
+#, c-format
+msgid "The disk has %d partition"
+msgid_plural "The disk has %d partitions"
+msgstr[0] "Das Laufwerk hat %d Partition"
+msgstr[1] "Das Laufwerk hat %d Partitionen"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the dngettext() result of "The disk has %d partitions.".
+#. * Second %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:797
+#, c-format
+msgid "%s. Largest contiguous free block is %s"
+msgstr "%s. Größter zusammenhängender freier Block hat %s"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
+msgid "Create RAID Array"
+msgstr "RAID-Anordnung erstellen"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
+#: ../src/palimpsest/gdu-section-create-partition-table.c:103
+#: ../src/palimpsest/gdu-section-unrecognized.c:267
+msgid "C_reate"
+msgstr "E_rstellen"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:913
+msgid "General"
+msgstr "Allgemein"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:934
+msgid "RAID _Level:"
+msgstr "RAID-_Stufe:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
+msgid "Array _Name:"
+msgstr "_Name der Anordnung:"
+
+#. Translators: This is the default name to use for the new array.
+#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
+#. * 32 bytes since that's the on-disk-format limit.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:981
+msgid "New RAID Array"
+msgstr "Neue RAID-Anordnung"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
+msgid "Stripe S_ize:"
+msgstr "Streifen_größe:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
+msgid "4 KiB"
+msgstr "4 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1009
+msgid "8 KiB"
+msgstr "8 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1011
+msgid "16 KiB"
+msgstr "16 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1013
+msgid "32 KiB"
+msgstr "32 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1015
+msgid "64 KiB"
+msgstr "64 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1017
+msgid "128 KiB"
+msgstr "128 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1019
+msgid "256 KiB"
+msgstr "256 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1021
+msgid "512 KiB"
+msgstr "512 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1023
+msgid "1 MiB"
+msgstr "1 MiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
+msgid "Array _Size:"
+msgstr "_Größe der Anordnung:"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1076
+msgid "Use"
+msgstr "Belegung"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1096
+msgid "Disk"
+msgstr "Laufwerk"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1120
+msgid "Details"
+msgstr "Details"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1156
+msgid "Disks"
+msgstr "Laufwerke"
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1451
+#, c-format
+msgid "Insufficient number disks to create a %s array."
+msgstr "Ungenügende Laufwerksanzahl zur Erstellung einer %s-Anordnung."
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
+#, c-format
+msgid "To create a %s array, select %d disks."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] "Um eine %s-Anordnung zu erstellen, wählen Sie bitte %d Laufwerk."
+msgstr[1] "Um eine %s-Anordnung zu erstellen, wählen Sie bitte %d Laufwerke."
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
+#, c-format
+msgid "To create a %s array, select %d more disks."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] ""
+"Um eine %s-Anordnung zu erstellen, wählen Sie bitte %d weiteres Laufwerk."
+msgstr[1] ""
+"Um eine %s-Anordnung zu erstellen wählen Sie bitte %d weitere Laufwerke."
+
+# Häufiger msgid-Fehler: ein Knopf wird geklickt, drücken kann man nur eine Taste.
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the size e.g. '42 GB'.
+#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
+#. * Third parameter is the number of disks to use (always greater than 1).
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1507
+#, c-format
+msgid "To create a %s %s array on %d disks, press \"Create\""
+msgstr ""
+"Um eine %s %s-Anordnung auf %d Laufwerken zu erstellen, klicken Sie auf "
+"»Erstellen«"
+
+#: ../src/gdu-gtk/gdu-gtk.c:171
+msgctxt "application name"
 msgid "Bourne Again Shell"
-msgstr "Bourne-Again-Shell"
+msgstr "Bourne Again-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:177
+#: ../src/gdu-gtk/gdu-gtk.c:176
+msgctxt "application name"
 msgid "Bourne Shell"
 msgstr "Bourne-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:182
+#: ../src/gdu-gtk/gdu-gtk.c:181
+msgctxt "application name"
 msgid "C Shell"
 msgstr "C-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:187
+#: ../src/gdu-gtk/gdu-gtk.c:186
+msgctxt "application name"
 msgid "TENEX C Shell"
 msgstr "TENEX C-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:192
+#: ../src/gdu-gtk/gdu-gtk.c:191
+msgctxt "application name"
 msgid "Z Shell"
 msgstr "Z-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:197
+#: ../src/gdu-gtk/gdu-gtk.c:196
+msgctxt "application name"
 msgid "Korn Shell"
 msgstr "Korn-Shell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:201
+#: ../src/gdu-gtk/gdu-gtk.c:200
+msgctxt "application name"
 msgid "Process Viewer (top)"
 msgstr "Prozessanzeige (top)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:205
+#: ../src/gdu-gtk/gdu-gtk.c:204
+msgctxt "application name"
 msgid "Terminal Pager (less)"
 msgstr "Terminal-Pager (less)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:228
+#: ../src/gdu-gtk/gdu-gtk.c:216
+msgctxt "application name"
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
+msgstr "uid: %d  pid: %d  Programm: %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:233
+#: ../src/gdu-gtk/gdu-gtk.c:232
 #, c-format
 msgid "pid: %d  program: %s"
-msgstr ""
+msgstr "pid: %d  Programm: %s"
 
+#. Translators: %d is the partition number, %s the name of the disk
 #: ../src/gdu-gtk/gdu-gtk.c:331 ../src/gdu-gtk/gdu-gtk.c:915
 #: ../src/gdu-gtk/gdu-gtk.c:1053
 #, c-format
@@ -1552,15 +2469,17 @@ msgstr "Partition %d auf %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:367
 msgid "Cannot unmount volume"
-msgstr ""
+msgstr "Datenträger kann nicht ausgehängt werden"
 
 #: ../src/gdu-gtk/gdu-gtk.c:377
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
 msgstr ""
+"Eine oder mehrere Anwendungen verwenden den Datenträger. Beenden Sie die "
+"Anwendungen und versuchen Sie es erneut."
 
-#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1761
+#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1916
 msgid "_Unmount"
 msgstr "A_ushängen"
 
@@ -1578,13 +2497,13 @@ msgstr "Das Kennwort kann nicht leer bleiben"
 
 #: ../src/gdu-gtk/gdu-gtk.c:580
 msgid "Cr_eate"
-msgstr "_Erzeugen"
+msgstr "_Erstellen"
 
 #: ../src/gdu-gtk/gdu-gtk.c:582
 msgid "Change _Passphrase"
 msgstr "_Kennwort ändern"
 
-#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1793
+#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1919
 msgid "_Unlock"
 msgstr "_Entsperren"
 
@@ -1622,7 +2541,8 @@ msgstr ""
 "durch ein Kennwort."
 
 #: ../src/gdu-gtk/gdu-gtk.c:638
-msgid "To make the data available for use, enter the passphrase for the device."
+msgid ""
+"To make the data available for use, enter the passphrase for the device."
 msgstr ""
 "Um die Daten verfügbar zu machen, geben Sie das Kennwort des Gerätes ein."
 
@@ -1666,63 +2586,69 @@ msgstr "Kennwort eingeben"
 msgid "Empty (don't create a file system)"
 msgstr "Leer (kein Dateisystem erstellen)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1261
+#: ../src/gdu-gtk/gdu-gtk.c:1262
 msgid "Empty"
 msgstr "Leer"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1269
+#: ../src/gdu-gtk/gdu-gtk.c:1270
 msgid "Extended Partition"
 msgstr "Erweiterte Partition"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1528 ../src/palimpsest/gdu-shell.c:256
-#: ../src/palimpsest/gdu-shell.c:284
+#: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:222
+#: ../src/palimpsest/gdu-shell.c:252
 msgid "Master Boot Record"
 msgstr "Master Boot Record"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1533 ../src/palimpsest/gdu-shell.c:258
-#: ../src/palimpsest/gdu-shell.c:286
-msgid "GUID Partition Table"
-msgstr "GUID-Partitionstabelle"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1538
+#: ../src/gdu-gtk/gdu-gtk.c:1539
 msgid "Don't partition"
 msgstr "Nicht partitionieren"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:243
+msgid "The currently selected size"
+msgstr "Die derzeit gewählte Größe"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:256
+#: ../src/playground/grid/gdu-grid-element.c:897
+msgid "Minimum Size"
+msgstr "Minimale Größe"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:257
+msgid "The minimum size that can be selected"
+msgstr "Die minimal wählbare Größe"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:270
+msgid "Maximum Size"
+msgstr "Maximale Größe"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:271
+msgid "The maximum size that can be selected"
+msgstr "Die maximal wählbare Größe"
 
 #: ../src/gdu-gtk/gdu-time-label.c:70
 #, c-format
 msgid "Less than a minute ago"
-msgstr "Vor weniger als 1 minute"
+msgstr "Vor weniger als 1 Minute"
 
 #: ../src/gdu-gtk/gdu-time-label.c:74
 #, c-format
-msgid "1 minute ago"
-msgstr "Vor 1 Minute"
-
-#: ../src/gdu-gtk/gdu-time-label.c:76
-#, c-format
-msgid "%d minutes ago"
-msgstr "Vor %d Minuten"
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "Vor %d Minute"
+msgstr[1] "Vor %d Minuten"
 
 #: ../src/gdu-gtk/gdu-time-label.c:81
 #, c-format
-msgid "1 hour ago"
-msgstr "Vor 1 Stunde"
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "Vor %d Stunde"
+msgstr[1] "Vor %d Stunden"
 
-#: ../src/gdu-gtk/gdu-time-label.c:83
-#, c-format
-msgid "%d hours ago"
-msgstr "Vor %d Stunden"
-
-#: ../src/nautilus-extension/nautilus-gdu.c:177
-#, c-format
-msgid "Could not unmount '%s'"
-msgstr "»%s« konnte nicht ausgehängt werden"
-
-#: ../src/nautilus-extension/nautilus-gdu.c:281
+#. Translators: this is a verb
+#: ../src/nautilus-extension/nautilus-gdu.c:225
 msgid "_Format..."
 msgstr "_Formatieren …"
 
-#: ../src/nautilus-extension/nautilus-gdu.c:282
+#: ../src/nautilus-extension/nautilus-gdu.c:226
 msgid "Create new filesystem on the selected device"
 msgstr "Ein neues Dateisystem auf dem gewählten Gerät erstellen"
 
@@ -1748,39 +2674,41 @@ msgstr ""
 
 #: ../src/notification/notification-main.c:151
 msgid "One or more disks are failing"
-msgstr ""
+msgstr "Ein oder mehrere Laufwerke versagen"
 
 #: ../src/notification/notification-main.c:436
 msgid "A hard disk is failing"
-msgstr ""
+msgstr "Eine Festplatte versagt"
 
 #: ../src/notification/notification-main.c:437
 msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
 msgstr ""
+"Eine oder mehrere Festplatten melden Schäden. Klicken Sie für nähere "
+"Informationen auf das Symbol."
+
+#: ../src/palimpsest/gdu-main.c:121
+msgid "Volume to show"
+msgstr "Anzuzeigender Datenträger"
 
 #: ../src/palimpsest/gdu-main.c:122
-msgid "Volume to show"
-msgstr ""
-
-#: ../src/palimpsest/gdu-main.c:123
 msgid "Drive to show"
 msgstr "Anzuzeigendes Laufwerk"
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:60
+#: ../src/palimpsest/gdu-section-create-partition-table.c:56
 msgid "Error creating partition table"
 msgstr "Fehler beim Erstellen der Partitionstabelle"
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:89
+#: ../src/palimpsest/gdu-section-create-partition-table.c:85
 msgid "Are you sure you want to format the disk, deleting existing data ?"
 msgstr ""
 "Wollen Sie wirklich dieses Medium formatieren, wobei alle vorhandenen Daten "
 "gelöscht werden?"
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:92
-#: ../src/palimpsest/gdu-section-unrecognized.c:256
-#: ../src/palimpsest/gdu-shell.c:1569
+#: ../src/palimpsest/gdu-section-create-partition-table.c:88
+#: ../src/palimpsest/gdu-section-unrecognized.c:251
+#: ../src/palimpsest/gdu-shell.c:1512
 #, c-format
 msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
@@ -1790,9 +2718,9 @@ msgstr ""
 "sicher, dass Sie über eine Sicherungskopie verfügen. Dieser Vorgang kann "
 "nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:97
-#: ../src/palimpsest/gdu-section-unrecognized.c:261
-#: ../src/palimpsest/gdu-shell.c:1574
+#: ../src/palimpsest/gdu-section-create-partition-table.c:93
+#: ../src/palimpsest/gdu-section-unrecognized.c:256
+#: ../src/palimpsest/gdu-shell.c:1517
 #, c-format
 msgid ""
 "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
@@ -1802,29 +2730,11 @@ msgstr ""
 "sicher, dass Sie über eine Sicherungskopie verfügen. Dieser Vorgang kann "
 "nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:107
-#: ../src/palimpsest/gdu-section-create-partition-table.c:204
-#: ../src/palimpsest/gdu-section-unrecognized.c:272
-msgid "C_reate"
-msgstr "E_rstellen"
-
-#: ../src/palimpsest/gdu-section-create-partition-table.c:205
-#: ../src/palimpsest/gdu-section-unallocated.c:613
-#: ../src/palimpsest/gdu-section-unrecognized.c:417
-msgid "Create"
-msgstr "Erstellen"
-
-#: ../src/palimpsest/gdu-section-create-partition-table.c:207
-#: ../src/palimpsest/gdu-section-unallocated.c:615
-#: ../src/palimpsest/gdu-section-unrecognized.c:419
-msgid "_Create..."
-msgstr "_ Erstellen …"
-
-#: ../src/palimpsest/gdu-section-create-partition-table.c:218
+#: ../src/palimpsest/gdu-section-create-partition-table.c:181
 msgid "Create Partition Table"
 msgstr "Partitionstabelle erstellen"
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:231
+#: ../src/palimpsest/gdu-section-create-partition-table.c:194
 msgid ""
 "To create a new partition table, select the partition table type and then "
 "press \"Create\". All existing data will be lost."
@@ -1833,16 +2743,25 @@ msgstr ""
 "Partitionstabelle aus und klicken Sie auf »Erstellen«. Alle vorhandenen Daten "
 "gehen dabei verloren."
 
-#: ../src/palimpsest/gdu-section-create-partition-table.c:247
-#: ../src/palimpsest/gdu-section-partition.c:632
+#. Translators: 'Type' means partition type here
+#: ../src/palimpsest/gdu-section-create-partition-table.c:210
+#: ../src/palimpsest/gdu-section-partition.c:573
 msgid "Ty_pe:"
 msgstr "Ty_p:"
+
+#: ../src/palimpsest/gdu-section-create-partition-table.c:238
+#: ../src/palimpsest/gdu-section-unrecognized.c:498
+msgid "Create"
+msgstr "Erstellen"
 
 #: ../src/palimpsest/gdu-section-encrypted.c:253
 msgid ""
 "The volume contains encrypted data that can be unlocked with a passphrase. "
 "The passphrase can optionally be stored in the keyring."
 msgstr ""
+"Der Datenträger enthält verschlüsselte Daten, die mit einem Kennwort "
+"entsperrt werden können. Das Kennwort kann optional im Schlüsselbund "
+"hinterlegt werden."
 
 #: ../src/palimpsest/gdu-section-encrypted.c:266
 msgid "Change Pa_ssphrase..."
@@ -1852,685 +2771,742 @@ msgstr "Kenn_wort ändern …"
 msgid "F_orget Passphrase"
 msgstr "Kennw_ort vergessen"
 
-#: ../src/palimpsest/gdu-section-filesystem.c:147
+#: ../src/palimpsest/gdu-section-filesystem.c:135
 msgid "Error setting file system label"
 msgstr "Fehler beim Setzen der Dateisystembezeichnung"
 
-#: ../src/palimpsest/gdu-section-filesystem.c:226
-msgid "Ch_ange"
-msgstr "Ä_ndern"
-
-#: ../src/palimpsest/gdu-section-filesystem.c:227
-msgid "Change"
-msgstr "Ändern"
-
-#: ../src/palimpsest/gdu-section-filesystem.c:229
-msgid "Ch_ange..."
-msgstr "Ä_ndern …"
-
-#: ../src/palimpsest/gdu-section-filesystem.c:240
+#: ../src/palimpsest/gdu-section-filesystem.c:207
 msgid "Mountable Filesystem"
 msgstr "Einhängbares Dateisystem"
 
-#: ../src/palimpsest/gdu-section-filesystem.c:253
+#: ../src/palimpsest/gdu-section-filesystem.c:220
 msgid "The volume contains a mountable filesystem."
-msgstr ""
+msgstr "Der Datenträger enthält ein einhängbares Dateisystem"
 
-#: ../src/palimpsest/gdu-section-filesystem.c:269
-#: ../src/palimpsest/gdu-section-unallocated.c:697
-#: ../src/palimpsest/gdu-section-unrecognized.c:463
+#. Translators: 'label' means filesystem label here
+#: ../src/palimpsest/gdu-section-filesystem.c:236
+#: ../src/palimpsest/gdu-section-unallocated.c:663
+#: ../src/palimpsest/gdu-section-unrecognized.c:427
 msgid "_Label:"
 msgstr "_Bezeichnung:"
 
-#: ../src/palimpsest/gdu-section-health.c:68
+#: ../src/palimpsest/gdu-section-filesystem.c:246
+msgid "Change"
+msgstr "Ändern"
+
+#: ../src/palimpsest/gdu-section-health.c:60
 #, c-format
 msgid "%.3g days"
 msgstr "%.3g Tage"
 
-#: ../src/palimpsest/gdu-section-health.c:70
+#: ../src/palimpsest/gdu-section-health.c:62
 #, c-format
 msgid "%.3g hours"
 msgstr "%.3g Stunden"
 
-#: ../src/palimpsest/gdu-section-health.c:72
+#: ../src/palimpsest/gdu-section-health.c:64
 #, c-format
 msgid "%.3g mins"
 msgstr "%.3g Minuten"
 
-#: ../src/palimpsest/gdu-section-health.c:74
+#: ../src/palimpsest/gdu-section-health.c:66
 #, c-format
 msgid "%.3g secs"
 msgstr "%.3g Sekunden"
 
-#: ../src/palimpsest/gdu-section-health.c:76
-#: ../src/palimpsest/gdu-section-health.c:95
-msgid "%"
-msgstr "%"
+#: ../src/palimpsest/gdu-section-health.c:70
+#, c-format
+msgid "%s msec"
+msgstr "%s Millisekunden"
 
-#: ../src/palimpsest/gdu-section-health.c:81
+#: ../src/palimpsest/gdu-section-health.c:76
 #, c-format
 msgid "%d Sector"
 msgid_plural "%d Sectors"
 msgstr[0] "%d Sektor"
 msgstr[1] "%d Sektoren"
 
-#: ../src/palimpsest/gdu-section-health.c:89
+#: ../src/palimpsest/gdu-section-health.c:84
 #, c-format
 msgid "%.3g° C / %.3g° F"
 msgstr "%.3g° C / %.3g° F"
 
-#: ../src/palimpsest/gdu-section-health.c:112
+#: ../src/palimpsest/gdu-section-health.c:107
 msgid "Retrieving..."
-msgstr ""
+msgstr "Wird geholt …"
 
-#: ../src/palimpsest/gdu-section-health.c:134
+#: ../src/palimpsest/gdu-section-health.c:126
 msgid "ATA SMART not Supported"
 msgstr "ATA SMART wird nicht unterstützt"
 
+#: ../src/palimpsest/gdu-section-health.c:204
+#: ../src/palimpsest/gdu-section-health.c:211
 #: ../src/palimpsest/gdu-section-health.c:218
-#: ../src/palimpsest/gdu-section-health.c:225
-#: ../src/palimpsest/gdu-section-health.c:232
 msgctxt "ATA SMART status"
 msgid "Passed"
-msgstr ""
+msgstr "Bestanden"
 
-#: ../src/palimpsest/gdu-section-health.c:220
-#: ../src/palimpsest/gdu-section-health.c:250
+#: ../src/palimpsest/gdu-section-health.c:206
+#: ../src/palimpsest/gdu-section-health.c:236
 msgid "The disk has bad sectors."
 msgstr "Das Laufwerk enthält fehlerhafte Blöcke."
 
-#: ../src/palimpsest/gdu-section-health.c:227
-#: ../src/palimpsest/gdu-section-health.c:257
+#: ../src/palimpsest/gdu-section-health.c:213
+#: ../src/palimpsest/gdu-section-health.c:243
 msgid "One or more attributes exceeding threshold."
-msgstr ""
+msgstr "Ein oder mehrere Attribute überschreiten den Schwellwert."
 
-#: ../src/palimpsest/gdu-section-health.c:237
+#: ../src/palimpsest/gdu-section-health.c:223
 msgctxt "ATA SMART status"
 msgid "FAILING"
 msgstr "GESCHEITERT"
 
-#: ../src/palimpsest/gdu-section-health.c:241
-msgid "Drive failure expected in less than 24 hours. Save all data immediately."
+#: ../src/palimpsest/gdu-section-health.c:227
+msgid ""
+"Drive failure expected in less than 24 hours. Save all data immediately."
 msgstr ""
+"Ein Laufwerksversagen wird in weniger als 24 Stunden erwartet. Sichern Sie "
+"unbedingt sofort alle Daten."
 
+#: ../src/palimpsest/gdu-section-health.c:234
+#: ../src/palimpsest/gdu-section-health.c:241
 #: ../src/palimpsest/gdu-section-health.c:248
-#: ../src/palimpsest/gdu-section-health.c:255
-#: ../src/palimpsest/gdu-section-health.c:262
 msgctxt "ATA SMART status"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../src/palimpsest/gdu-section-health.c:299
+#: ../src/palimpsest/gdu-section-health.c:264
+#: ../src/palimpsest/gdu-section-health.c:272
+#: ../src/playground/grid/gdu-grid-element.c:566
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: ../src/palimpsest/gdu-section-health.c:285
 msgctxt "ATA SMART test result"
 msgid "Completed OK"
-msgstr ""
+msgstr "Erfolgreich abgeschlossen"
 
-#: ../src/palimpsest/gdu-section-health.c:302
+#: ../src/palimpsest/gdu-section-health.c:288
 msgctxt "ATA SMART test result"
-msgid "Cancelled"
+msgid "Canceled"
 msgstr "Abgebrochen"
 
-#: ../src/palimpsest/gdu-section-health.c:305
+#: ../src/palimpsest/gdu-section-health.c:291
 msgctxt "ATA SMART test result"
-msgid "Cancelled (with hard or soft reset)"
-msgstr ""
+msgid "Canceled (with hard or soft reset)"
+msgstr "Abgebrochen (durch hartes oder weiches Zurücksetzen)"
 
-#: ../src/palimpsest/gdu-section-health.c:308
+#: ../src/palimpsest/gdu-section-health.c:294
 msgctxt "ATA SMART test result"
 msgid "Not completed (a fatal error might have occured)"
 msgstr "Nicht abgeschlossen (ein fataler Fehler könnte aufgetreten sein)"
 
-#: ../src/palimpsest/gdu-section-health.c:312
-#: ../src/palimpsest/gdu-section-health.c:319
-#: ../src/palimpsest/gdu-section-health.c:326
-#: ../src/palimpsest/gdu-section-health.c:333
+#: ../src/palimpsest/gdu-section-health.c:298
+#: ../src/palimpsest/gdu-section-health.c:306
+#: ../src/palimpsest/gdu-section-health.c:314
+#: ../src/palimpsest/gdu-section-health.c:322
 msgctxt "ATA SMART test result"
 msgid "FAILED"
 msgstr "GESCHEITERT"
 
-#: ../src/palimpsest/gdu-section-health.c:314
+#. Translators: this is a detail that is appended to the test result, like 'FAILED (Electrical)'
+#: ../src/palimpsest/gdu-section-health.c:301
 msgctxt "ATA SMART test result"
 msgid "(Electrical)"
-msgstr ""
+msgstr "(Elektrisch)"
 
-#: ../src/palimpsest/gdu-section-health.c:321
+#. Translators: this is a detail that is appended to the test result, like 'FAILED (Servo)'
+#: ../src/palimpsest/gdu-section-health.c:309
 msgctxt "ATA SMART test result"
 msgid "(Servo)"
-msgstr ""
+msgstr "(Servo-Motor)"
 
-#: ../src/palimpsest/gdu-section-health.c:328
+#. Translators: this is a detail that is appended to the test result, like 'FAILED (Read)'
+#: ../src/palimpsest/gdu-section-health.c:317
 msgctxt "ATA SMART test result"
 msgid "(Read)"
-msgstr ""
+msgstr "(Lesen)"
 
-#: ../src/palimpsest/gdu-section-health.c:335
+#. Translators: this is a detail that is appended to the test result, like 'FAILED (Suspected of having handled damage)'
+#: ../src/palimpsest/gdu-section-health.c:325
 msgctxt "ATA SMART test result"
 msgid "(Suspected of having handled damage)"
-msgstr ""
+msgstr "(Verdacht auf behobenen Schaden)"
 
-#: ../src/palimpsest/gdu-section-health.c:339
+#: ../src/palimpsest/gdu-section-health.c:329
 msgctxt "ATA SMART test result"
 msgid "In progress"
 msgstr "In Bearbeitung"
 
-#: ../src/palimpsest/gdu-section-health.c:344
+#: ../src/palimpsest/gdu-section-health.c:334
 msgctxt "ATA SMART test result"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../src/palimpsest/gdu-section-health.c:625
+#. Translators: %g is a numeric temperature value
+#: ../src/palimpsest/gdu-section-health.c:616
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%g°"
 msgstr "%g°"
 
-#: ../src/palimpsest/gdu-section-health.c:696
+#: ../src/palimpsest/gdu-section-health.c:687
 msgctxt "ATA SMART graph label"
 msgid "now"
-msgstr ""
+msgstr "jetzt"
 
-#: ../src/palimpsest/gdu-section-health.c:698
+#. Translators: %d is a number of minutes
+#: ../src/palimpsest/gdu-section-health.c:690
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dm"
 msgstr "%dm"
 
-#: ../src/palimpsest/gdu-section-health.c:703
+#. Translators: %d is a number of hours
+#: ../src/palimpsest/gdu-section-health.c:696
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dh"
-msgstr ""
+msgstr "%dh"
 
-#: ../src/palimpsest/gdu-section-health.c:705
+#. Translators: first %d is a number of hours, second %d is a number of minutes
+#: ../src/palimpsest/gdu-section-health.c:699
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dh %dm"
-msgstr ""
+msgstr "%dh %dm"
 
-#: ../src/palimpsest/gdu-section-health.c:711
+#. Translators: %d is a number of days
+#: ../src/palimpsest/gdu-section-health.c:706
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dd"
-msgstr ""
+msgstr "%dT"
 
-#: ../src/palimpsest/gdu-section-health.c:713
+#. Translators: first %d is a number of days,
+#. * second %d is a number of hours
+#.
+#: ../src/palimpsest/gdu-section-health.c:711
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dd %dh"
-msgstr ""
+msgstr "%dT %dh"
 
-#: ../src/palimpsest/gdu-section-health.c:715
+#. Translators: first %d is a number of days,
+#. * second %d is a number of hours
+#. * third %d is a  number of minutes
+#.
+#: ../src/palimpsest/gdu-section-health.c:717
 #, c-format
 msgctxt "ATA SMART graph label"
 msgid "%dd %dh %dm"
-msgstr ""
+msgstr "%dT %dh %dm"
 
-#: ../src/palimpsest/gdu-section-health.c:943
+#: ../src/palimpsest/gdu-section-health.c:946
 msgid "ATA SMART Attributes"
-msgstr ""
+msgstr "ATA SMART-Attribute"
 
-#: ../src/palimpsest/gdu-section-health.c:967
+#: ../src/palimpsest/gdu-section-health.c:970
 msgid "View:"
-msgstr "Ansicht"
+msgstr "Ansicht:"
 
-#: ../src/palimpsest/gdu-section-health.c:971
+#: ../src/palimpsest/gdu-section-health.c:974
 msgid "6 hours"
 msgstr "6 Stunden"
 
-#: ../src/palimpsest/gdu-section-health.c:972
+#: ../src/palimpsest/gdu-section-health.c:975
 msgid "24 hours"
 msgstr "24 Stunden"
 
-#: ../src/palimpsest/gdu-section-health.c:973
+#: ../src/palimpsest/gdu-section-health.c:976
 msgid "3 days"
 msgstr "3 Tage"
 
-#: ../src/palimpsest/gdu-section-health.c:974
+#: ../src/palimpsest/gdu-section-health.c:977
 msgid "12 days"
 msgstr "12 Tage"
 
-#: ../src/palimpsest/gdu-section-health.c:975
+#: ../src/palimpsest/gdu-section-health.c:978
 msgid "36 days"
 msgstr "36 Tage"
 
-#: ../src/palimpsest/gdu-section-health.c:976
+#: ../src/palimpsest/gdu-section-health.c:979
 msgid "96 days"
 msgstr "96 Tage"
 
-#: ../src/palimpsest/gdu-section-health.c:1022
+#: ../src/palimpsest/gdu-section-health.c:1025
 msgctxt "SMART attribute"
 msgid "ID"
 msgstr "Kennung"
 
-#: ../src/palimpsest/gdu-section-health.c:1031
+#: ../src/palimpsest/gdu-section-health.c:1034
 msgctxt "SMART attribute"
 msgid "Attribute"
 msgstr "Attribut"
 
-#: ../src/palimpsest/gdu-section-health.c:1071
+#: ../src/palimpsest/gdu-section-health.c:1074
 msgctxt "SMART attribute"
 msgid "Value"
 msgstr "Wert"
 
-#: ../src/palimpsest/gdu-section-health.c:1081
+#: ../src/palimpsest/gdu-section-health.c:1084
 msgctxt "SMART attribute"
 msgid "Status"
 msgstr "Status"
 
-#: ../src/palimpsest/gdu-section-health.c:1152
+#: ../src/palimpsest/gdu-section-health.c:1155
 #, c-format
 msgid "No description for attribute %d."
 msgstr "Keine Beschreibung für Attribut %d."
 
-#: ../src/palimpsest/gdu-section-health.c:1157
+#. Translators: how often the attribute is updated
+#. * 'online' means 'every time data is collected'
+#.
+#: ../src/palimpsest/gdu-section-health.c:1163
 msgid "Online"
 msgstr "Online"
 
-#: ../src/palimpsest/gdu-section-health.c:1158
+#: ../src/palimpsest/gdu-section-health.c:1164
 msgid "Every time data is collected."
 msgstr "Daten werden jederzeit gesammelt."
 
-#: ../src/palimpsest/gdu-section-health.c:1160
+#. Translators: how often the attribute is updated
+#. * 'offline' means 'only when performing a self-test'
+#.
+#: ../src/palimpsest/gdu-section-health.c:1169
 msgid "Offline"
 msgstr "Offline"
 
-#: ../src/palimpsest/gdu-section-health.c:1161
+#: ../src/palimpsest/gdu-section-health.c:1170
 msgid "Only when performing a self-test."
 msgstr "Nur während der Ausführung eines Selbsttests."
 
-#: ../src/palimpsest/gdu-section-health.c:1165
+#. Translators: what a failure means
+#. * 'pre-fail' means 'sign of imminent disk failure'
+#.
+#: ../src/palimpsest/gdu-section-health.c:1177
 msgid "Pre-fail"
-msgstr ""
+msgstr "Vor Versagen"
 
-#: ../src/palimpsest/gdu-section-health.c:1166
+#: ../src/palimpsest/gdu-section-health.c:1178
 msgid "Failure is a sign of imminent disk failure."
-msgstr ""
+msgstr "Versagen ist ein Zeichen für anstehenden Laufwerksausfall"
 
-#: ../src/palimpsest/gdu-section-health.c:1168
+#. Translators: what a failure means
+#. * 'old-age' means 'sign of old age'
+#.
+#: ../src/palimpsest/gdu-section-health.c:1183
 msgid "Old-age"
-msgstr ""
+msgstr "Alterserscheinungen"
 
-#: ../src/palimpsest/gdu-section-health.c:1169
+#: ../src/palimpsest/gdu-section-health.c:1184
 msgid "Failure is a sign of old age."
-msgstr "Scheitern ist ein Zeichen hohen Alters."
+msgstr "Versagen ist ein Zeichen hohen Alters."
 
-#: ../src/palimpsest/gdu-section-health.c:1175
+#. Translators: 'type' means 'type of failure' here
+#: ../src/palimpsest/gdu-section-health.c:1191
 msgid "Type:"
 msgstr "Typ:"
 
-#: ../src/palimpsest/gdu-section-health.c:1176
+#. Translators: 'updates' refers to online/offline here
+#: ../src/palimpsest/gdu-section-health.c:1193
 msgid "Updates:"
 msgstr "Aktualisierungen:"
 
-#: ../src/palimpsest/gdu-section-health.c:1177
+#: ../src/palimpsest/gdu-section-health.c:1194
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: ../src/palimpsest/gdu-section-health.c:1202
+#: ../src/palimpsest/gdu-section-health.c:1219
+msgctxt "SMART Attribute status"
 msgid "N/A"
-msgstr ""
+msgstr "N/V"
 
-#: ../src/palimpsest/gdu-section-health.c:1210
+#: ../src/palimpsest/gdu-section-health.c:1227
+msgctxt "SMART Attribute status"
 msgid "OK"
 msgstr "OK"
 
-#: ../src/palimpsest/gdu-section-health.c:1218
+#: ../src/palimpsest/gdu-section-health.c:1235
+msgctxt "SMART Attribute status"
 msgid "FAILING"
-msgstr ""
+msgstr "VERSAGEND"
 
-#: ../src/palimpsest/gdu-section-health.c:1288
+#: ../src/palimpsest/gdu-section-health.c:1305
 msgid "Error initiating ATA SMART Self Test"
 msgstr "Fehler beim Starten des ATA-SMART-Selbsttests"
 
-#: ../src/palimpsest/gdu-section-health.c:1319
+#: ../src/palimpsest/gdu-section-health.c:1337
 msgid "ATA SMART Self Test"
 msgstr "ATA SMART-Selbsttest"
 
-#: ../src/palimpsest/gdu-section-health.c:1343
+#: ../src/palimpsest/gdu-section-health.c:1361
 msgid "Select what ATA SMART self test to run"
-msgstr ""
+msgstr "Wählen Sie, welcher ATA SMART-Selbsttest ausgeführt wird"
 
-#: ../src/palimpsest/gdu-section-health.c:1353
+#: ../src/palimpsest/gdu-section-health.c:1371
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
 "running."
 msgstr ""
+"Die Prüfung kann anhängig von Größe und Geschwindigkeit des Laufwerks sehr "
+"lange dauern. Sie können während des Tests bedenkenlos weiter arbeiten."
 
-#: ../src/palimpsest/gdu-section-health.c:1361
+#: ../src/palimpsest/gdu-section-health.c:1379
 msgid "_Short (usually less than ten minutes)"
 msgstr "_Kurz (üblicherweise weniger als zehn Minuten)"
 
-#: ../src/palimpsest/gdu-section-health.c:1363
+#: ../src/palimpsest/gdu-section-health.c:1381
 msgid "_Extended (usually tens of minutes)"
 msgstr "_Erweitert (üblicherweise mehr als zehn Minuten)"
 
-#: ../src/palimpsest/gdu-section-health.c:1365
+#: ../src/palimpsest/gdu-section-health.c:1383
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr ""
+msgstr "_Vermittlung (üblicherweise weniger als zehn Minuten)"
 
-#: ../src/palimpsest/gdu-section-health.c:1372
+#: ../src/palimpsest/gdu-section-health.c:1390
 msgid "_Initiate Self Test"
 msgstr "Selbsttest _starten"
 
-#: ../src/palimpsest/gdu-section-health.c:1492
+#. Translators: section heading, referring to disk health
+#: ../src/palimpsest/gdu-section-health.c:1493
 msgid "Health"
 msgstr "Zustand"
 
-#: ../src/palimpsest/gdu-section-health.c:1505
+#: ../src/palimpsest/gdu-section-health.c:1506
 msgid ""
 "Some disks support ATA SMART, a monitoring system for disks to detect and "
 "report on various indicators of reliability, in the hope of anticipating "
 "failures."
 msgstr ""
+"Einige Laufwerke unterstützen »ATA SMART«, ein Überwachungssystem für "
+"Laufwerke, das verschiedene Hinweise für die Zuverlässigkeit melden kann. "
+"Ziel ist die Vorhersage eines Versagens."
 
-#: ../src/palimpsest/gdu-section-health.c:1523
+#: ../src/palimpsest/gdu-section-health.c:1524
 msgid "Powered On:"
 msgstr "Eingeschaltet am:"
 
-#: ../src/palimpsest/gdu-section-health.c:1541
+#: ../src/palimpsest/gdu-section-health.c:1542
 msgid "Temperature:"
 msgstr "Temperatur:"
 
-#: ../src/palimpsest/gdu-section-health.c:1559
+#: ../src/palimpsest/gdu-section-health.c:1560
 msgid "Last Test:"
 msgstr "Letzter Test:"
 
-#: ../src/palimpsest/gdu-section-health.c:1577
+#: ../src/palimpsest/gdu-section-health.c:1578
 msgid "Updated:"
 msgstr "Aktualisiert:"
 
-#: ../src/palimpsest/gdu-section-health.c:1595
+#: ../src/palimpsest/gdu-section-health.c:1596
 msgid "Assessment:"
-msgstr ""
+msgstr "Einschätzung:"
 
-#: ../src/palimpsest/gdu-section-health.c:1630
-msgid "Refre_sh"
-msgstr "Aktuali_sieren"
-
-#: ../src/palimpsest/gdu-section-health.c:1631
+#: ../src/palimpsest/gdu-section-health.c:1629
 msgid "Refresh ATA SMART data from the device"
 msgstr "ATA SMART-Daten des Geräts auffrischen"
 
-#: ../src/palimpsest/gdu-section-health.c:1633
-msgid "Refre_sh..."
-msgstr "Aktuali_sieren …"
-
-#: ../src/palimpsest/gdu-section-health.c:1647
-#: ../src/palimpsest/gdu-section-health.c:1650
-msgid "_Details..."
-msgstr "_Details …"
-
-#: ../src/palimpsest/gdu-section-health.c:1648
+#: ../src/palimpsest/gdu-section-health.c:1634
 msgid "Show ATA SMART Historical Data"
-msgstr ""
+msgstr "Chronik der ATA SMART-Daten zeigen"
 
-#: ../src/palimpsest/gdu-section-health.c:1664
-#: ../src/palimpsest/gdu-section-health.c:1667
-msgid "Se_lf Test..."
-msgstr "Se_lbsttest …"
+#: ../src/palimpsest/gdu-section-health.c:1639
+msgid "Run an ATA SMART self test on the disk"
+msgstr "Einen ATA SMART-Selbsttest des Laufwerks ausführen"
 
-#: ../src/palimpsest/gdu-section-health.c:1665
-msgid "Run an ATA SMART Self Test"
-msgstr "ATA SMART-Selbsttest ausführen"
-
-#: ../src/palimpsest/gdu-section-job.c:228
-msgid "_Cancel"
-msgstr "A_bbrechen"
-
-#: ../src/palimpsest/gdu-section-job.c:229
-msgid "Cancel Job"
-msgstr "Vorgang abbrechen"
-
-#: ../src/palimpsest/gdu-section-job.c:231
-msgid "_Cancel..."
-msgstr "Abbre_chen …"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:75
 msgid "Error adding component"
 msgstr "Fehler beim Hinzufügen der Komponente"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:159
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:153
 #, c-format
 msgid "Select a volume to use as component in the array \"%s\""
-msgstr ""
+msgstr "Wählen Sie einen Datenträger als Komponente in der Anordnung »%s«"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:164
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:158
 msgid ""
 "Only volumes of acceptable sizes can be selected. You may need to manually "
 "create new volumes of acceptable sizes."
 msgstr ""
+"Nur Datenträger mit ausreichender Größe können gewählt werden. Eventuell "
+"müssen Sie manuell neue Datenträger ausreichender Größe erstellen."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:187
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
-msgstr ""
+msgstr "Datenträger _hinzufügen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:319
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:313
 msgid "Error removing component"
 msgstr "Fehler beim Entfernen der Komponente"
 
 #. confirmation dialog
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:403
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:398
 msgid "Are you sure you want to remove the component from the array ?"
 msgstr ""
+"Sind Sie sicher, dass die Komponente aus der Anordnung entfernt werden soll?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:405
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:400
 #, c-format
 msgid ""
 "The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
 "erased and the RAID Array might be degraded. Make sure important data is "
 "backed up. This action cannot be undone."
 msgstr ""
+"Die Daten auf Komponente »%s« der RAID-Anordnung »%s« werden unwiderruflich "
+"gelöscht werden und die Anordnung eventuell herabgestuft. Stellen Sie "
+"sicher, dass wichtige Daten gesichert sind. Der Vorgang kann nicht "
+"rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:416
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:411
 msgid "_Remove Component"
 msgstr "Komponente entfe_rnen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:636
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:695
+msgctxt "RAID component type"
 msgid "Striped (RAID-0)"
-msgstr ""
+msgstr "Verteilt (RAID 0)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:638
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
+msgctxt "RAID component type"
 msgid "Mirrored (RAID-1)"
-msgstr ""
+msgstr "Gespiegelt (RAID 1)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:646
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:699
+msgctxt "RAID component type"
+msgid "RAID-4"
+msgstr "RAID 4"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:701
+msgctxt "RAID component type"
+msgid "RAID-5"
+msgstr "RAID 5"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:703
+msgctxt "RAID component type"
+msgid "RAID-6"
+msgstr "RAID 6"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:705
+msgctxt "RAID component type"
 msgid "Linear (Just a Bunch Of Disks)"
-msgstr ""
+msgstr "Linear (Nur ein Stapel Laufwerke)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:653
+#. Translators: %d is the number of components in the RAID
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:713
 #, c-format
-msgid "%d Components"
-msgstr "%d Komponenten"
+msgid "%d Component"
+msgid_plural "%d Components"
+msgstr[0] "%d Komponente"
+msgstr[1] "%d Komponenten"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:655
+#. Translators: %d is the number of components in the RAID,
+#. * %s is the size of each component, formatted like '45 GB'
+#.
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:718
 #, c-format
-msgid "%d Components (%s each)"
-msgstr ""
+msgid "%d Component (%s)"
+msgid_plural "%d Components (%s each)"
+msgstr[0] "%d Komponente (%s)"
+msgstr[1] "%d Komponenten (je %s)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:667
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:730
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr ""
+msgstr "Nicht in Betrieb, teilweise zusammengesetzt"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:675
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:738
 msgctxt "RAID status"
 msgid "Not running"
-msgstr ""
+msgstr "Nicht in Betrieb"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:677
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:740
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr ""
+msgstr "Nicht in Betrieb, kann nur heruntergestuft gestartet werden"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:679
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:742
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
-msgstr ""
+msgstr "Nicht in Betrieb, es fehlen zum Starten Komponenten"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:698
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:761
 msgctxt "RAID status"
 msgid "Degraded"
-msgstr ""
+msgstr "Heruntergestuft"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:702
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:765
 msgctxt "RAID status"
 msgid "Running"
-msgstr ""
+msgstr "In Betrieb"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:707
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:770
 msgctxt "RAID status"
 msgid "Reshaping"
-msgstr ""
+msgstr "Wird neu angepasst"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:711
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
 msgid "Resyncing"
-msgstr ""
+msgstr "Wird neu abgeglichen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:715
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:776
 msgctxt "RAID status"
 msgid "Repairing"
-msgstr ""
+msgstr "Wird repariert"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:719
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:779
 msgctxt "RAID status"
 msgid "Recovering"
-msgstr ""
+msgstr "Wird wiederhergestellt"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:782
+msgctxt "RAID status"
+msgid "Checking"
+msgstr "Wird überprüft"
 
 #. Translators: this string tells about an ongoing synchronization.
 #. * %3.01f is replaced by the percentage of completion
 #. * %s is replaced by the speed of the operation
 #.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:727
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:790
 #, c-format
 msgctxt "RAID status"
 msgid " @ %3.01f%% (%s)"
 msgstr " @ %3.01f%% (%s)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:793
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:856
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr ""
+msgstr "Fehlerbehaftet"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:798
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:861
 msgctxt "Linux MD slave state"
 msgid "In Sync"
-msgstr ""
+msgstr "Abgeglichen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:800
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:802
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Blockiert"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:804
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:867
 msgctxt "Linux MD slave state"
 msgid "Spare"
-msgstr ""
+msgstr "Reserve"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:902
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"
-msgstr ""
+msgstr "Name der Anordnung:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:918
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 msgid "Home Host:"
-msgstr ""
+msgstr "In Rechner:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:934
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:990
 msgid "Array Size:"
-msgstr ""
+msgstr "Größe der Anordnung:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:950
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
 msgstr "RAID-Typ:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:966
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1022
 msgid "Components:"
 msgstr "Komponenten:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:982
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1038
 msgid "State:"
 msgstr "Status:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1016
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1067
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1069
 msgid "A_ttach"
-msgstr ""
+msgstr "_Einbinden"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1017
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1073
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
 msgid ""
 "Attaches the stale component to the RAID array. After attachment, data from "
 "the array will be synchronized on the component."
 msgstr ""
+"Die alte Komponente wird in die RAID-Anordnung eingebunden. Nach der "
+"Einbindung werden die Daten von der Anordnung auf die Komponente abgeglichen."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1021
-msgid "A_ttach..."
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1077
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
+#: ../src/palimpsest/gdu-shell.c:1918
 msgid "_Detach"
-msgstr ""
+msgstr "_Austragen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1035
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1083
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
 msgid ""
 "Detaches the running component from the RAID array. Data on the component "
-"will be erased and the volume will be ready for other use."
+"will be erased and the component will be ready for other use."
 msgstr ""
+"Die laufende Komponente wird aus der RAID-Anordnung ausgetragen. Die Daten "
+"auf der Komponente werden gelöscht und die Komponente kann anderweitig "
+"verwendet werden."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1039
-msgid "_Detach..."
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1052
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1056
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1087
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
 msgstr "_Hinzufügen …"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1093
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1095
 msgid ""
 "Adds a new component to the running RAID array. Use this when replacing a "
 "failed component or adding a hot spare."
 msgstr ""
+"Eine neue Komponente wird zur laufenden RAID-Anordnung hinzugefügt. "
+"Verwenden Sie diese Funktion beim Austausch einer defekten Komponente oder "
+"beim Hinzufügen einer sofort einsetzbaren Reserve."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
+#. Translators: this is a verb, as in 'check for consistency'
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
+msgid "Chec_k"
+msgstr "Über_prüfen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
+msgid "Starts checking the RAID array for redundancy"
+msgstr "Die RAID-Anordnung auf Redundanz überprüfen"
+
+#. Translators: this is a verb, as in 'repair this RAID array'
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1106
+msgid "_Repair"
+msgstr "_Reparieren"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1110
+msgid "Starts repairing the RAID array"
+msgstr "Reparatur der RAID-Anordnung beginnen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1128
 msgid "State"
 msgstr "Status"
-
-#: ../src/palimpsest/gdu-section-no-media.c:113
-#: ../src/palimpsest/gdu-shell.c:272 ../src/palimpsest/gdu-shell.c:296
-#, c-format
-msgid "No Media Detected"
-msgstr "Kein Medium erkannt"
 
 #: ../src/palimpsest/gdu-section-no-media.c:126
 msgid ""
 "To format or edit media, insert it into the drive and wait a few seconds."
 msgstr ""
+"Legen Sie das Medium zum Formatieren oder Bearbeiten in das Laufwerk und "
+"warten Sie einen Moment."
 
 #: ../src/palimpsest/gdu-section-no-media.c:137
 msgid "_Detect Media"
 msgstr "Me_dien erkennen"
 
-#: ../src/palimpsest/gdu-section-partition.c:65
+#: ../src/palimpsest/gdu-section-partition.c:60
 msgid "Error deleting partition"
 msgstr "Fehler beim Entfernen der Partition"
 
-#: ../src/palimpsest/gdu-section-partition.c:116
+#: ../src/palimpsest/gdu-section-partition.c:112
 msgid "Are you sure you want to remove the partition, deleting existing data ?"
 msgstr ""
 "Wollen Sie wirklich die Partition löschen und vorhandene Daten verlieren?"
 
-#: ../src/palimpsest/gdu-section-partition.c:121
+#: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
@@ -2538,8 +3514,14 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d mit dem Namen »%s« auf dem Medium in »%s« und alle "
+"Partitionen in dieser erweiterten Partition werden unwiderruflich gelöscht "
+"werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:131
+#: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
@@ -2547,8 +3529,13 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d mit dem Namen »%s« auf dem Medium in »%s« werden "
+"unwiderruflich gelöscht werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:141
+#: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" and all partitions contained "
@@ -2556,16 +3543,27 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d des Mediums in »%s« und alle Partitionen "
+"innerhalb dieser erweiterten Partition werden unwiderruflich gelöscht "
+"werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:150
+#: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d des Mediums in »%s« werden unwiderruflich "
+"gelöscht werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:161
+#: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
@@ -2573,8 +3571,14 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d mit dem Namen »%s« von »%s« und alle Partitionen "
+"innerhalb dieser erweiterten Partition werden unwiderruflich gelöscht "
+"werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:171
+#: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
@@ -2582,8 +3586,13 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d mit dem Namen »%s« von »%s« werden unwiderruflich "
+"gelöscht werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:181
+#: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" and all partitions contained in this "
@@ -2591,52 +3600,37 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d von »%s« und alle Partitionen innerhalb dieser "
+"erweiterten Partition werden unwiderruflich gelöscht werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:190
+#: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d von »%s« werden unwiderruflich gelöscht werden.\n"
+"\n"
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-partition.c:204
+#: ../src/palimpsest/gdu-section-partition.c:200
 msgid "_Delete Partition"
 msgstr "Partition _löschen"
 
-#: ../src/palimpsest/gdu-section-partition.c:425
+#: ../src/palimpsest/gdu-section-partition.c:407
 msgid "Error modifying partition"
 msgstr "Fehler beim Ändern der Partition"
 
-#: ../src/palimpsest/gdu-section-partition.c:559
-msgid "_Delete"
-msgstr "_Löschen"
-
-#: ../src/palimpsest/gdu-section-partition.c:560
-msgid "Delete"
-msgstr "Löschen"
-
-#: ../src/palimpsest/gdu-section-partition.c:562
-msgid "_Delete..."
-msgstr "_Löschen …"
-
-#: ../src/palimpsest/gdu-section-partition.c:574
-msgid "_Apply"
-msgstr "_Anwenden"
-
-#: ../src/palimpsest/gdu-section-partition.c:575
-msgid "Apply"
-msgstr "Anwenden"
-
-#: ../src/palimpsest/gdu-section-partition.c:577
-msgid "_Apply..."
-msgstr "_Anwenden …"
-
-#: ../src/palimpsest/gdu-section-partition.c:588
+#: ../src/palimpsest/gdu-section-partition.c:528
 msgid "Partition"
 msgstr "Partition"
 
-#: ../src/palimpsest/gdu-section-partition.c:601
+#: ../src/palimpsest/gdu-section-partition.c:541
 msgid ""
 "The attributes of the partition can be edited. The partition can also be "
 "deleted to make room for other data."
@@ -2644,60 +3638,68 @@ msgstr ""
 "Die Partitionsattribute können bearbeitet werden. Es ist auch möglich, die "
 "Partition zu löschen, um Platz für andere Daten zu schaffen."
 
-#: ../src/palimpsest/gdu-section-partition.c:618
+#: ../src/palimpsest/gdu-section-partition.c:558
 msgid "Part_ition Label:"
 msgstr "Part_itionsbezeichnung:"
 
 #. flags
 #. used by mbr, apm
-#: ../src/palimpsest/gdu-section-partition.c:646
+#: ../src/palimpsest/gdu-section-partition.c:587
 msgid "_Bootable"
 msgstr "_Bootfähig"
 
 #. used by gpt
-#: ../src/palimpsest/gdu-section-partition.c:654
+#: ../src/palimpsest/gdu-section-partition.c:595
 msgid "Required / Firm_ware"
-msgstr ""
+msgstr "Erforderlich / Firm_ware"
 
-#: ../src/palimpsest/gdu-section-partition.c:668
+#: ../src/palimpsest/gdu-section-partition.c:607
+msgid "Delete the partition"
+msgstr "Die Partition löschen"
+
+#: ../src/palimpsest/gdu-section-partition.c:611
 msgid "_Revert"
 msgstr "Zu_rücksetzen"
 
-#: ../src/palimpsest/gdu-section-swapspace.c:96
-msgid "The volume contains swap space."
-msgstr ""
+#: ../src/palimpsest/gdu-section-partition.c:616
+msgid "Apply the changes made"
+msgstr "Die Änderungen anwenden"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:96
-#: ../src/palimpsest/gdu-section-unrecognized.c:154
+#: ../src/palimpsest/gdu-section-swapspace.c:95
+msgid "The volume contains swap space."
+msgstr "Der Datenträger enthält Auslagerungsspeicher."
+
+#: ../src/palimpsest/gdu-section-unallocated.c:91
+#: ../src/palimpsest/gdu-section-unrecognized.c:148
 msgid "Error creating partition"
 msgstr "Fehler beim Erstellen der Partition"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:411
+#: ../src/palimpsest/gdu-section-unallocated.c:407
 msgid ""
 "This is the last primary partition that can be created. If you need more "
 "partitions, you can create an Extended Partition."
 msgstr ""
 "Dies ist die letzte primäre Partition, die Sie erstellen können. Falls Sie "
-"weitere Partitionen benötigen, müssen Sie eine erweiterte Partition erstellen."
+"weitere Partitionen benötigen, müssen Sie eine erweiterte Partition "
+"erstellen."
 
-#: ../src/palimpsest/gdu-section-unallocated.c:420
+#: ../src/palimpsest/gdu-section-unallocated.c:416
+#, fuzzy
+#| msgid ""
+#| "No more partitions can be created. You may want to delete  an existing "
+#| "partition and then create an Extended Partition."
 msgid ""
-"No more partitions can be created. You may want to delete  an existing "
+"No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
 "Es können keine weiteren Partitionen erstellt werden. Sie müssen zuvor eine "
 "Partition löschen und eine erweiterte Partition erstellen."
 
-#: ../src/palimpsest/gdu-section-unallocated.c:612
-#: ../src/palimpsest/gdu-section-unrecognized.c:416
-msgid "_Create"
-msgstr "_Erstellen"
-
-#: ../src/palimpsest/gdu-section-unallocated.c:637
+#: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
 msgstr "Partition erstellen"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:650
+#: ../src/palimpsest/gdu-section-unallocated.c:614
 msgid ""
 "To create a new partition, select the size and whether to create a file "
 "system. The partition type, label and flags can be changed after creation."
@@ -2706,390 +3708,423 @@ msgstr ""
 "fest, ob ein Dateisystem erstellt werden soll. Der Partitionstyp, die "
 "Bezeichnung und die Markierungen können nach der Erstellung geändert werden."
 
-#: ../src/palimpsest/gdu-section-unallocated.c:665
+#: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:686
+#. Translators: unit label for a control that determines partition size in megabytes
+#: ../src/palimpsest/gdu-section-unallocated.c:651
 msgid "MB"
 msgstr "MB"
 
 #. whether to chown fs root for user
-#: ../src/palimpsest/gdu-section-unallocated.c:736
-#: ../src/palimpsest/gdu-section-unrecognized.c:500
+#: ../src/palimpsest/gdu-section-unallocated.c:702
+#: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
-msgstr ""
+msgstr "_Besitzer des Dateisystems werden"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:739
-#: ../src/palimpsest/gdu-section-unrecognized.c:503
+#: ../src/palimpsest/gdu-section-unallocated.c:705
+#: ../src/palimpsest/gdu-section-unrecognized.c:467
+#, fuzzy
+#| msgid ""
+#| "The selected file system has a concept of file ownership. If checked, the "
+#| "created file system be will be owned by you. If not checked, only the "
+#| "super user can access the file system."
 msgid ""
 "The selected file system has a concept of file ownership. If checked, the "
-"created file system be will be owned by you. If not checked, only the super "
+"created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
+"Das ausgewählte Dateisystem kennt Zugriffsrechte. Ein Ankreuzen bedeutet, "
+"dass Sie das erstellte Dateisystem besitzen werden. Anderenfalls kann nur "
+"der Administrator auf das Dateisystem zugreifen."
 
 #. whether to encrypt underlying device
-#: ../src/palimpsest/gdu-section-unallocated.c:749
-#: ../src/palimpsest/gdu-section-unrecognized.c:513
+#: ../src/palimpsest/gdu-section-unallocated.c:715
+#: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
 msgstr "Dar_unterliegendes Gerät verschlüsseln"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:751
-#: ../src/palimpsest/gdu-section-unrecognized.c:515
+#: ../src/palimpsest/gdu-section-unallocated.c:717
+#: ../src/palimpsest/gdu-section-unrecognized.c:479
 msgid ""
-"Encryption protects your data, requiring a passphrase to be enterered before "
+"Encryption protects your data, requiring a passphrase to be entered before "
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Verschlüsselung schützt Ihre Daten. Ein Kennwort ist vor Verwendung des "
+"Dateisystems erforderlich. Die Geschwindigkeit kann abnehmen. Eventuell ist "
+"das Medium nicht mit anderen Betriebssystemen kompatibel."
 
-#: ../src/palimpsest/gdu-section-unrecognized.c:236
+#: ../src/palimpsest/gdu-section-unallocated.c:734
+msgid "Create partition"
+msgstr "Partition erstellen"
+
+#: ../src/palimpsest/gdu-section-unrecognized.c:231
 msgid ""
 "Are you sure you want to create a new file system, deleting existing data ?"
 msgstr ""
+"Sind Sie sicher, dass Sie ein neues Dateisystem erstellen und bestehende "
+"Daten löschen wollen?"
 
-#: ../src/palimpsest/gdu-section-unrecognized.c:240
-#: ../src/palimpsest/gdu-shell.c:1553
+#: ../src/palimpsest/gdu-section-unrecognized.c:235
+#: ../src/palimpsest/gdu-shell.c:1496
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d des Mediums in »%s« werden unwiderruflich "
+"gelöscht werden. Stellen Sie sicher, dass wichtige Daten gesichert sind. "
+"Dieser Vorgang kann nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-unrecognized.c:247
-#: ../src/palimpsest/gdu-shell.c:1560
+#: ../src/palimpsest/gdu-section-unrecognized.c:242
+#: ../src/palimpsest/gdu-shell.c:1503
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"Alle Daten auf Partition %d auf »%s« werden unwiderruflich gelöscht werden. "
+"Stellen Sie sicher, dass wichtige Daten gesichert sind. Dieser Vorgang kann "
+"nicht rückgängig gemacht werden."
 
-#: ../src/palimpsest/gdu-section-unrecognized.c:433
+#: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
 msgstr "Dateisystem erstellen"
 
-#: ../src/palimpsest/gdu-section-unrecognized.c:446
+#: ../src/palimpsest/gdu-section-unrecognized.c:410
 msgid ""
-"To create a new file system on the device, select the type and label and then "
-"press \"Create\". All existing data will be lost."
+"To create a new file system on the device, select the type and label and "
+"then press \"Create\". All existing data will be lost."
 msgstr ""
+"Wählen Sie zur Erstellung eines neuen Dateisystems auf dem Gerät den Typ und "
+"die Bezeichnung, und klicken Sie dann auf »Erstellen«. Alle vorhandenen Daten "
+"werden verloren gehen."
 
-#: ../src/palimpsest/gdu-shell.c:260 ../src/palimpsest/gdu-shell.c:288
+#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
+#: ../src/palimpsest/gdu-shell.c:227 ../src/palimpsest/gdu-shell.c:256
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Unbekanntes Schema: %s"
 
-#: ../src/palimpsest/gdu-shell.c:264
+#. Translators: %s is the name of the partition table format, like 'Master Boot Record'
+#: ../src/palimpsest/gdu-shell.c:232
 #, c-format
 msgid "Partitioned Media (%s)"
 msgstr "Partitioniertes Medium (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:237
 msgid "Unpartitioned Media"
 msgstr "Unpartitioniertes Medium"
 
-#: ../src/palimpsest/gdu-shell.c:275 ../src/palimpsest/gdu-shell.c:299
-#: ../src/palimpsest/gdu-shell.c:363
+#: ../src/palimpsest/gdu-shell.c:243 ../src/palimpsest/gdu-shell.c:267
+#: ../src/palimpsest/gdu-shell.c:334
 #, c-format
 msgid "Unrecognized"
-msgstr ""
+msgstr "Unbekannt"
 
-#: ../src/palimpsest/gdu-shell.c:293 ../src/palimpsest/gdu-shell.c:380
-#, c-format
-msgid "Not Partitioned"
-msgstr "Nicht partitioniert"
-
-#: ../src/palimpsest/gdu-shell.c:306
+#: ../src/palimpsest/gdu-shell.c:274
 msgid "Linux Software RAID"
 msgstr "Linux Software-RAID"
 
-#: ../src/palimpsest/gdu-shell.c:312
+#. Translators: %s is the name of a connection, like 'USB at 2 MB/s'
+#: ../src/palimpsest/gdu-shell.c:281
 #, c-format
 msgid "Connected via %s"
 msgstr "Verbunden über %s"
 
-#: ../src/palimpsest/gdu-shell.c:319 ../src/palimpsest/gdu-shell.c:387
-#: ../src/palimpsest/gdu-shell.c:422
+#: ../src/palimpsest/gdu-shell.c:289 ../src/palimpsest/gdu-shell.c:358
+#: ../src/palimpsest/gdu-shell.c:393
 #, c-format
 msgid "%s (Read Only)"
 msgstr "%s (nur lesbar)"
 
-#: ../src/palimpsest/gdu-shell.c:326
+#: ../src/palimpsest/gdu-shell.c:296
 msgid "Not running"
-msgstr ""
+msgstr "Nicht in Betrieb"
 
-#: ../src/palimpsest/gdu-shell.c:341
+#: ../src/palimpsest/gdu-shell.c:312
 #, c-format
 msgid "%s File System"
 msgstr "%s Dateisystem"
 
-#: ../src/palimpsest/gdu-shell.c:352
+#: ../src/palimpsest/gdu-shell.c:323
 msgid "Encrypted LUKS Device"
 msgstr "Verschlüsseltes LUKS-Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:359
+#: ../src/palimpsest/gdu-shell.c:330
 msgid "Data"
 msgstr "Daten"
 
-#: ../src/palimpsest/gdu-shell.c:368
+#: ../src/palimpsest/gdu-shell.c:339
 msgid "Cleartext LUKS Device"
 msgstr "Unverschlüsseltes LUKS-Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:375
+#: ../src/palimpsest/gdu-shell.c:346
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "Partition %d (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:418
-msgid "Unallocated Space"
-msgstr "Nicht zugeteilter Platz"
-
-#: ../src/palimpsest/gdu-shell.c:993
+#: ../src/palimpsest/gdu-shell.c:905
 msgid "Error checking file system on device"
 msgstr "Fehler beim Überprüfen des Dateisystems auf dem Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:1008
+#: ../src/palimpsest/gdu-shell.c:920
 #, c-format
 msgid "File system check on \"%s\" completed"
 msgstr "Dateisystemüberprüfung auf »%s« abgeschlossen"
 
-#: ../src/palimpsest/gdu-shell.c:1012
+#: ../src/palimpsest/gdu-shell.c:924
 msgid "File system is clean."
 msgstr "Dateisystem ist sauber."
 
-#: ../src/palimpsest/gdu-shell.c:1015
+#: ../src/palimpsest/gdu-shell.c:927
 msgid "File system is <b>NOT</b> clean."
 msgstr "Dateisystem ist <b>NICHT</b> sauber."
 
-#: ../src/palimpsest/gdu-shell.c:1101
+#: ../src/palimpsest/gdu-shell.c:1013
 msgid "Error unmounting device"
 msgstr "Fehler beim Aushängen des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1155
+#: ../src/palimpsest/gdu-shell.c:1067
 msgid "Error ejecting device"
 msgstr "Fehler beim Auswerfen des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1252
+#: ../src/palimpsest/gdu-shell.c:1098
+msgid "Error detaching device"
+msgstr "Fehler beim Entfernen des Gerätes"
+
+#: ../src/palimpsest/gdu-shell.c:1195
 msgid "Error unlocking device"
 msgstr "Fehler beim Entsperren des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1317
+#: ../src/palimpsest/gdu-shell.c:1260
 msgid "Error locking encrypted device"
 msgstr "Fehler beim Sperren des verschlüsselten Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1354
+#: ../src/palimpsest/gdu-shell.c:1297
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
 msgstr "Beim Starten des Laufwerks »%s« ist ein Fehler aufgetreten."
 
-#: ../src/palimpsest/gdu-shell.c:1408
+#: ../src/palimpsest/gdu-shell.c:1351
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr ""
+"Sind Sie sicher, dass das Laufwerk »%s« im heruntergestuften Modus gestartet "
+"werden soll?"
 
-#: ../src/palimpsest/gdu-shell.c:1412
+#: ../src/palimpsest/gdu-shell.c:1355
 msgid ""
 "Starting a RAID array in degraded mode means that the RAID volume is no "
-"longer tolerant to drive failures. Data on the volume may be irrevocably lost "
-"if a drive fails."
+"longer tolerant to drive failures. Data on the volume may be irrevocably "
+"lost if a drive fails."
 msgstr ""
+"Ein Start einer RAID-Anordnung im heruntergestuften Modus bedeutet, dass der "
+"RAID-Datenträger keine Laufwerksversagen mehr ausgleichen kann. Daten auf "
+"dem Datenträger können eventuell bei Versagen unwiderruflich verloren gehen."
 
-#: ../src/palimpsest/gdu-shell.c:1417
+#: ../src/palimpsest/gdu-shell.c:1360
 msgid "_Start Array"
-msgstr ""
+msgstr "Anordnung _starten"
 
-#: ../src/palimpsest/gdu-shell.c:1445
+#: ../src/palimpsest/gdu-shell.c:1388
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
 msgstr "Beim Stoppen des Geräts »%s« ist ein Fehler aufgetreten."
 
-#: ../src/palimpsest/gdu-shell.c:1497
+#: ../src/palimpsest/gdu-shell.c:1440
 msgid "Error erasing data"
-msgstr ""
+msgstr "Fehler beim Löschen von Daten"
 
-#: ../src/palimpsest/gdu-shell.c:1549
+#: ../src/palimpsest/gdu-shell.c:1492
 msgid "Are you sure you want to erase the device ?"
-msgstr ""
+msgstr "Sind Sie sicher, dass das Gerät gelöscht werden soll?"
 
-#: ../src/palimpsest/gdu-shell.c:1585 ../src/palimpsest/gdu-shell.c:1860
-#: ../src/palimpsest/gdu-shell.c:1861 ../src/palimpsest/gdu-shell.c:1862
+#: ../src/palimpsest/gdu-shell.c:1528 ../src/palimpsest/gdu-shell.c:1923
 msgid "_Erase"
+msgstr "_Löschen"
+
+#: ../src/palimpsest/gdu-shell.c:1603
+msgid "Error creating component for RAID array"
+msgstr "Fehler beim Erstellen einer Komponente für die RAID-Anordnung"
+
+#: ../src/palimpsest/gdu-shell.c:1630
+msgid "Error creating partition table for component for RAID array"
 msgstr ""
+"Fehler beim Erstellen der Partitionstabelle für eine Komponente für die RAID-"
+"Anordnung"
 
-#: ../src/palimpsest/gdu-shell.c:1649
+#: ../src/palimpsest/gdu-shell.c:1656
+msgid "Error creating RAID array"
+msgstr "Fehler beim Erstellen der RAID-Anordnung"
+
+#: ../src/palimpsest/gdu-shell.c:1847 ../src/palimpsest/gdu-shell.c:2148
+msgid "Palimpsest Disk Utility"
+msgstr "Palimpsest-Laufwerksverwaltung"
+
+#: ../src/palimpsest/gdu-shell.c:1852
 msgid "translator-credits"
-msgstr "Mario Blättermann <mariobl@gnome.org>"
+msgstr ""
+"Mario Blättermann <mariobl@gnome.org>\n"
+"Christian Kirbach <Christian.Kirbach@googlemail.com>"
 
-#: ../src/palimpsest/gdu-shell.c:1700
+#: ../src/palimpsest/gdu-shell.c:1908
 msgid "_File"
 msgstr "_Datei"
 
-#: ../src/palimpsest/gdu-shell.c:1701
+#: ../src/palimpsest/gdu-shell.c:1909
+msgid "_New"
+msgstr "_Neu"
+
+#: ../src/palimpsest/gdu-shell.c:1910
+msgid "Software _RAID Array"
+msgstr "Software _RAID-Anordnung"
+
+#: ../src/palimpsest/gdu-shell.c:1910
+msgid "Create a new Software RAID array"
+msgstr "Eine neue Software RAID-Anordnung erstellen"
+
+#: ../src/palimpsest/gdu-shell.c:1911
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../src/palimpsest/gdu-shell.c:1702 ../src/palimpsest/gdu-shell.c:1706
+#: ../src/palimpsest/gdu-shell.c:1912 ../src/palimpsest/gdu-shell.c:1927
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../src/palimpsest/gdu-shell.c:1704
-msgid "_Quit"
-msgstr "_Beenden"
-
-#: ../src/palimpsest/gdu-shell.c:1704
-msgid "Quit"
-msgstr "Beenden"
-
-#: ../src/palimpsest/gdu-shell.c:1706
-msgid "Get Help on Palimpsest Disk Utility"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1708
-msgid "_About"
-msgstr "_Info"
-
-#: ../src/palimpsest/gdu-shell.c:1726
+#: ../src/palimpsest/gdu-shell.c:1914
 msgid "_Check File System"
 msgstr "Dateisystem über_prüfen"
 
-#: ../src/palimpsest/gdu-shell.c:1727
+#: ../src/palimpsest/gdu-shell.c:1914
 msgid "Check the file system"
 msgstr "Dateisystem überprüfen"
 
-#: ../src/palimpsest/gdu-shell.c:1729
-msgid "_Check File System..."
-msgstr "Dateisystem über_prüfen …"
-
-#: ../src/palimpsest/gdu-shell.c:1730 ../src/palimpsest/gdu-shell.c:1731
-#: ../src/palimpsest/gdu-shell.c:1732
-msgid "_Check"
-msgstr "Über_prüfen"
-
-#: ../src/palimpsest/gdu-shell.c:1745
+#: ../src/palimpsest/gdu-shell.c:1915
 msgid "_Mount"
 msgstr "_Einhängen"
 
-#: ../src/palimpsest/gdu-shell.c:1746
-msgid "Mount the device"
-msgstr "Gerät einhängen"
+#: ../src/palimpsest/gdu-shell.c:1915
+msgid "Mount the filesystem on device"
+msgstr "Das Dateisystems auf dem Gerät einhängen"
 
-#: ../src/palimpsest/gdu-shell.c:1748
-msgid "_Mount..."
-msgstr "Ein_hängen …"
+#: ../src/palimpsest/gdu-shell.c:1916
+msgid "Unmount the filesystem"
+msgstr "Das Dateisystem aushängen"
 
-#: ../src/palimpsest/gdu-shell.c:1762
-msgid "Unmount the device"
-msgstr "Gerät aushängen"
-
-#: ../src/palimpsest/gdu-shell.c:1764
-msgid "_Unmount..."
-msgstr "_Aushängen …"
-
-#: ../src/palimpsest/gdu-shell.c:1777
+#: ../src/palimpsest/gdu-shell.c:1917
 msgid "_Eject"
 msgstr "Aus_werfen"
 
-#: ../src/palimpsest/gdu-shell.c:1778
+#: ../src/palimpsest/gdu-shell.c:1917
 msgid "Eject media from the device"
 msgstr "Medium aus dem Gerät auswerfen"
 
-#: ../src/palimpsest/gdu-shell.c:1780
-msgid "_Eject..."
-msgstr "Aus_werfen …"
+#: ../src/palimpsest/gdu-shell.c:1918
+msgid "Detach the device from the system, powering it off"
+msgstr "Das Gerät vom System entfernen und ausschalten"
 
-#: ../src/palimpsest/gdu-shell.c:1794
+#: ../src/palimpsest/gdu-shell.c:1919
 msgid "Unlock the encrypted device, making the data available in cleartext"
 msgstr ""
 "Entsperren des verschlüsselten Geräts, so dass die Daten im Klartext lesbar "
 "werden"
 
-#: ../src/palimpsest/gdu-shell.c:1796
-msgid "_Unlock..."
-msgstr "Entspe_rren …"
-
-#: ../src/palimpsest/gdu-shell.c:1809
+#: ../src/palimpsest/gdu-shell.c:1920
 msgid "_Lock"
 msgstr "_Sperren"
 
-#: ../src/palimpsest/gdu-shell.c:1810
+#: ../src/palimpsest/gdu-shell.c:1920
 msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgstr ""
-"Sperren des verschlüsselten Geräts, so dass die Klartext-Daten unlesbar werden"
+"Sperren des verschlüsselten Geräts, so dass die Klartext-Daten unlesbar "
+"werden"
 
-#: ../src/palimpsest/gdu-shell.c:1812
-msgid "_Lock..."
-msgstr "Sperren …"
-
-#: ../src/palimpsest/gdu-shell.c:1825
+#: ../src/palimpsest/gdu-shell.c:1921
 msgid "_Start"
-msgstr "_Start"
+msgstr "_Starten"
 
-#: ../src/palimpsest/gdu-shell.c:1826
+#: ../src/palimpsest/gdu-shell.c:1921
 msgid "Start the array"
-msgstr ""
+msgstr "Die Anordnung starten"
 
-#: ../src/palimpsest/gdu-shell.c:1828
-msgid "_Start..."
-msgstr "_Start …"
-
-#: ../src/palimpsest/gdu-shell.c:1841
+#: ../src/palimpsest/gdu-shell.c:1922
 msgid "_Stop"
-msgstr "_Stop"
+msgstr "_Stoppen"
 
-#: ../src/palimpsest/gdu-shell.c:1842
+#: ../src/palimpsest/gdu-shell.c:1922
 msgid "Stop the array"
-msgstr ""
+msgstr "Die Anordnung stoppen"
 
-#: ../src/palimpsest/gdu-shell.c:1844
-msgid "_Stop..."
-msgstr "_Stop …"
+#: ../src/palimpsest/gdu-shell.c:1923
+msgid "Erase the contents of the device"
+msgstr "Den Inhalt des Geräts löschen"
 
-#: ../src/palimpsest/gdu-shell.c:1857
-msgid "_Erase..."
-msgstr ""
+#: ../src/palimpsest/gdu-shell.c:1926
+msgid "_Quit"
+msgstr "_Beenden"
 
-#: ../src/palimpsest/gdu-shell.c:1858
-msgid "Erase the contents of the selected device"
-msgstr ""
+#: ../src/palimpsest/gdu-shell.c:1926
+msgid "Quit"
+msgstr "Beenden"
 
-#: ../src/palimpsest/gdu-shell.c:1999
+#: ../src/palimpsest/gdu-shell.c:1927
+msgid "Get Help on Palimpsest Disk Utility"
+msgstr "Hilfe zur Palimpsest-Laufwerksverwaltung bekommen"
+
+#: ../src/palimpsest/gdu-shell.c:1928
+msgid "_About"
+msgstr "_Info"
+
+#: ../src/palimpsest/gdu-shell.c:2007
+msgid "An error occured"
+msgstr "Es ist ein Fehler aufgetreten"
+
+#: ../src/palimpsest/gdu-shell.c:2016
 msgid "The operation failed."
-msgstr "Die Operation ist gescheitert."
+msgstr "Der Vorgang ist gescheitert."
 
-#: ../src/palimpsest/gdu-shell.c:2002
+#: ../src/palimpsest/gdu-shell.c:2019
 msgid "The device is busy."
 msgstr "Das Gerät ist beschäftigt."
 
-#: ../src/palimpsest/gdu-shell.c:2005
-msgid "The operation was cancelled."
-msgstr "Die Operation wurde abgebrochen."
+#: ../src/palimpsest/gdu-shell.c:2022
+msgid "The operation was canceled."
+msgstr "Der Vorgang wurde abgebrochen."
 
-#: ../src/palimpsest/gdu-shell.c:2008
+#: ../src/palimpsest/gdu-shell.c:2025
 msgid "The daemon is being inhibited."
-msgstr ""
+msgstr "Der Daemon wird blockiert."
 
-#: ../src/palimpsest/gdu-shell.c:2011
+#: ../src/palimpsest/gdu-shell.c:2028
 msgid "An invalid option was passed."
 msgstr "Eine ungültige Option wurde verwendet."
 
-#: ../src/palimpsest/gdu-shell.c:2014
+#: ../src/palimpsest/gdu-shell.c:2031
 msgid "The operation is not supported."
-msgstr "Die Operation wird nicht unterstützt."
+msgstr "Der Vorgang wird nicht unterstützt."
 
-#: ../src/palimpsest/gdu-shell.c:2017
+#: ../src/palimpsest/gdu-shell.c:2034
 msgid "Getting ATA SMART data would wake up the device."
-msgstr ""
+msgstr "Ein Holen der ATA SMART-Informationen würde das Gerät wecken."
 
-#: ../src/palimpsest/gdu-shell.c:2020
+#: ../src/palimpsest/gdu-shell.c:2037
+msgid "Permission denied."
+msgstr "Zugriff verweigert."
+
+#: ../src/palimpsest/gdu-shell.c:2040
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: ../src/palimpsest/gdu-shell.c:2056
+#: ../src/palimpsest/gdu-shell.c:2076
 msgid "_Details:"
 msgstr "_Details:"
 
-#: ../src/playground/grid/gdu-grid-details.c:105
-msgid "Operations should go here"
-msgstr ""
+#: ../src/palimpsest/gdu-shell.c:2186
+msgid "<small>_Cancel</small>"
+msgstr "<small>_Abbrechen</small>"
 
 #: ../src/playground/grid/gdu-grid-details.c:134
 #: ../src/playground/grid/gdu-grid-element.c:877
@@ -3098,7 +4133,7 @@ msgstr "Ansicht"
 
 #: ../src/playground/grid/gdu-grid-details.c:135
 msgid "The view to show details for"
-msgstr ""
+msgstr "Die Ansicht, für die Details angezeigt werden sollen"
 
 #: ../src/playground/grid/gdu-grid-details.c:196
 msgid "Device:"
@@ -3118,7 +4153,7 @@ msgstr "Frei"
 
 #: ../src/playground/grid/gdu-grid-element.c:878
 msgid "The GduGridView object that the element is associated with"
-msgstr ""
+msgstr "Das Objekt »GduGridView«, mit dem das Element verknüpft ist"
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
@@ -3129,23 +4164,25 @@ msgid ""
 "The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
 
-#: ../src/playground/grid/gdu-grid-element.c:897
-msgid "Minimum Size"
-msgstr "Minimale Größe"
-
 #: ../src/playground/grid/gdu-grid-element.c:898
-msgid "The mininum size of the element"
-msgstr "Die minimale Größe des Elements"
+msgid "The minimum size of the element"
+msgstr "Die kleinste Größe des Elements"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
 msgstr "Prozentuale Größe"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
+#, fuzzy
+#| msgid ""
+#| "The size in percent this element should claim or 0 to always claim the "
+#| "specified minimum size"
 msgid ""
-"The size in percent this element should claim or 0 to always claim the "
+"The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"Die Größe in Prozent, die dieses Element anfordern soll oder 0, um immer die "
+"festgelegte kleinste Größe anzufordern"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
@@ -3155,16 +4192,6 @@ msgstr "Markierungen"
 msgid "Flags for the element"
 msgstr "Markierungen des Elements"
 
-#: ../src/playground/grid/gdu-grid-view.c:325
-msgid "Pool"
-msgstr "Pool"
-
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
 msgstr "Der anzuzeigende Gerätepool"
-
-#~ msgid "Linux Second Ext. FS (version %s)"
-#~ msgstr "Linux Second Ext. FS (Version %s)"
-
-#~ msgid "Linux Second Ext. FS"
-#~ msgstr "Linux Second Ext. FS"

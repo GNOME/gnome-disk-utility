@@ -94,6 +94,7 @@ const char *gdu_device_get_mount_path (GduDevice *device);
 char **gdu_device_get_mount_paths (GduDevice *device);
 uid_t gdu_device_get_mounted_by_uid (GduDevice *device);
 gboolean    gdu_device_get_presentation_hide (GduDevice *device);
+gboolean    gdu_device_get_presentation_nopolicy (GduDevice *device);
 const char *gdu_device_get_presentation_name (GduDevice *device);
 const char *gdu_device_get_presentation_icon_name (GduDevice *device);
 
@@ -139,6 +140,7 @@ gboolean gdu_device_drive_get_is_media_ejectable (GduDevice *device);
 gboolean gdu_device_drive_get_requires_eject (GduDevice *device);
 gboolean gdu_device_drive_get_can_detach (GduDevice *device);
 gboolean gdu_device_drive_get_can_spindown (GduDevice *device);
+gboolean gdu_device_drive_get_is_rotational (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);

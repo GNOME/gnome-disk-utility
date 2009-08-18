@@ -33,7 +33,6 @@
 #include <gdu-gtk/gdu-gtk.h>
 
 #include "gdu-shell.h"
-#include "gdu-tree.h"
 
 #include "gdu-section-health.h"
 #include "gdu-section-partition.h"
@@ -52,7 +51,7 @@ struct _GduShellPrivate
         GtkWidget *app_window;
         GduPool *pool;
 
-        GtkWidget *treeview;
+        GtkWidget *tree_view;
 
         GtkWidget *icon_image;
         GtkWidget *name_label;
@@ -138,8 +137,8 @@ gdu_shell_get_selected_presentable (GduShell *shell)
 void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
-        gdu_device_tree_select_presentable (GTK_TREE_VIEW (shell->priv->treeview), presentable);
-        gtk_widget_grab_focus (shell->priv->treeview);
+        gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
+        gtk_widget_grab_focus (shell->priv->tree_view);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -224,10 +223,12 @@ details_update (GduShell *shell)
                                         } else if (strcmp (scheme, "gpt") == 0) {
                                                 s = g_strdup (_("GUID Partition Table"));
                                         } else {
+                                                /* Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt' */
                                                 s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
                                         }
 
                                         g_ptr_array_add (details,
+                                                         /* Translators: %s is the name of the partition table format, like 'Master Boot Record' */
                                                          g_strdup_printf (_("Partitioned Media (%s)"), s));
 
                                         g_free (s);
@@ -276,12 +277,14 @@ details_update (GduShell *shell)
                                 gdu_device_drive_get_connection_interface (device),
                                 gdu_device_drive_get_connection_speed (device));
                         g_ptr_array_add (details,
+                                         /* Translators: %s is the name of a connection, like 'USB at 2 MB/s' */
                                          g_strdup_printf (_("Connected via %s"), s));
                         g_free (s);
                 }
 
                 if (device_file != NULL) {
                         if (gdu_device_is_read_only (device)) {
+                        /* Translators: %s is the device file */
                         g_ptr_array_add (details,
                                          g_strdup_printf (_("%s (Read Only)"), device_file));
                         } else {
@@ -304,6 +307,7 @@ details_update (GduShell *shell)
                                 gdu_device_id_get_type (device),
                                 gdu_device_id_get_version (device),
                                 TRUE);
+                        /* Translators: %s is the filesystem name */
                         g_ptr_array_add (details,
                                          g_strdup_printf (_("%s File System"), fsname));
                         g_free (fsname);
@@ -806,10 +810,8 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
         GduPresentable *presentable;
-        GtkTreeView *device_tree_view;
 
-        device_tree_view = gtk_tree_selection_get_tree_view (selection);
-        presentable = gdu_device_tree_get_selected_presentable (device_tree_view);
+        presentable = gdu_pool_tree_view_get_selected_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 
         if (presentable != NULL) {
 
@@ -830,6 +832,8 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
                                   (GCallback) presentable_job_changed, shell);
 
                 gdu_shell_update (shell);
+
+                g_object_unref (presentable);
         }
 }
 
@@ -857,8 +861,8 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
                         gdu_shell_select_presentable (shell, enclosing_presentable);
                         g_object_unref (enclosing_presentable);
                 } else {
-                        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
-                        gtk_widget_grab_focus (shell->priv->treeview);
+                        gdu_pool_tree_view_select_first_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
+                        gtk_widget_grab_focus (shell->priv->tree_view);
                 }
         }
         gdu_shell_update (shell);
@@ -1553,6 +1557,266 @@ help_contents_action_callback (GtkAction *action, gpointer user_data)
         g_warning ("TODO: launch help");
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduShell *shell;
+
+        /* data obtained from GduCreateLinuxMdDialog */
+        gchar *level;
+        gchar *name;
+        guint64 size;
+        guint64 component_size;
+        guint64 stripe_size;
+        GPtrArray *drives;
+
+        /* List of created components - GduDevice objects */
+        GPtrArray *components;
+
+} CreateLinuxMdData;
+
+static void
+create_linux_md_data_free (CreateLinuxMdData *data)
+{
+        g_object_unref (data->shell);
+        g_free (data->level);
+        g_free (data->name);
+        g_ptr_array_unref (data->drives);
+        g_ptr_array_unref (data->components);
+        g_free (data);
+}
+
+static void create_linux_md_do (CreateLinuxMdData *data);
+
+static void
+new_linux_md_create_part_cb (GduDevice  *device,
+                             gchar      *created_device_object_path,
+                             GError     *error,
+                             gpointer    user_data)
+{
+        CreateLinuxMdData *data = user_data;
+
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       NULL,
+                                       error,
+                                       _("Error creating component for RAID array"));
+                g_error_free (error);
+
+                //g_debug ("Error creating component");
+        } else {
+                GduDevice *d;
+                d = gdu_pool_get_by_object_path (data->shell->priv->pool, created_device_object_path);
+                g_ptr_array_add (data->components, d);
+
+                //g_debug ("Done creating component");
+
+                /* now that we have a component... carry on... */
+                create_linux_md_do (data);
+        }
+}
+
+static void
+new_linux_md_create_part_table_cb (GduDevice  *device,
+                                   GError     *error,
+                                   gpointer    user_data)
+{
+        CreateLinuxMdData *data = user_data;
+
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       NULL,
+                                       error,
+                                       _("Error creating partition table for component for RAID array"));
+                g_error_free (error);
+
+                //g_debug ("Error creating partition table");
+        } else {
+
+                //g_debug ("Done creating partition table");
+
+                /* now that we have a partition table... carry on... */
+                create_linux_md_do (data);
+        }
+}
+
+static void
+new_linux_md_create_array_cb (GduPool    *pool,
+                              char       *array_object_path,
+                              GError     *error,
+                              gpointer    user_data)
+{
+
+        CreateLinuxMdData *data = user_data;
+
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       NULL,
+                                       error,
+                                       _("Error creating RAID array"));
+                g_error_free (error);
+
+                //g_debug ("Error creating array");
+        } else {
+                GduDevice *d;
+                GduPresentable *p;
+
+                /* YAY - array has been created - switch the shell to it */
+                d = gdu_pool_get_by_object_path (data->shell->priv->pool, array_object_path);
+                p = gdu_pool_get_drive_by_device (data->shell->priv->pool, d);
+                gdu_shell_select_presentable (data->shell, p);
+                g_object_unref (p);
+                g_object_unref (d);
+
+                //g_debug ("Done creating array");
+        }
+
+        create_linux_md_data_free (data);
+}
+
+static void
+create_linux_md_do (CreateLinuxMdData *data)
+{
+        if (data->components->len == data->drives->len) {
+                GPtrArray *objpaths;
+                guint n;
+
+                /* Create array */
+                //g_debug ("Yay, now creating array");
+
+                objpaths = g_ptr_array_new ();
+                for (n = 0; n < data->components->len; n++) {
+                        GduDevice *d = GDU_DEVICE (data->components->pdata[n]);
+                        g_ptr_array_add (objpaths, (gpointer) gdu_device_get_object_path (d));
+                }
+
+                gdu_pool_op_linux_md_create (data->shell->priv->pool,
+                                             objpaths,
+                                             data->level,
+                                             data->stripe_size,
+                                             data->name,
+                                             new_linux_md_create_array_cb,
+                                             data);
+                g_ptr_array_free (objpaths, TRUE);
+
+        } else {
+                GduDrive *drive;
+                guint num_component;
+                GduPresentable *p;
+                GduDevice *d;
+                guint64 largest_segment;
+                gboolean whole_disk_is_uninitialized;
+
+                num_component = data->components->len;
+                drive = GDU_DRIVE (data->drives->pdata[num_component]);
+
+                g_warn_if_fail (gdu_drive_has_unallocated_space (drive,
+                                                                 &whole_disk_is_uninitialized,
+                                                                 &largest_segment,
+                                                                 &p));
+                g_assert (p != NULL);
+
+                d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+
+                if (GDU_IS_VOLUME_HOLE (p)) {
+                        guint64 offset;
+                        guint64 size;
+                        const gchar *scheme;
+                        const gchar *type;
+                        gchar *label;
+
+                        offset = gdu_presentable_get_offset (p);
+                        size = data->component_size;
+
+                        //g_debug ("Creating component %d/%d of size %" G_GUINT64_FORMAT " bytes",
+                        //         num_component + 1,
+                        //         data->drives->len,
+                        //         size);
+
+                        scheme = gdu_device_partition_table_get_scheme (d);
+                        type = "";
+                        label = NULL;
+                        if (g_strcmp0 (scheme, "mbr") == 0) {
+                                type = "0xfd";
+                        } else if (g_strcmp0 (scheme, "gpt") == 0) {
+                                type = "A19D880F-05FC-4D3B-A006-743F0F84911E";
+                                /* Limited to 36 UTF-16LE characters according to on-disk format..
+                                 * Since a RAID array name is limited to 32 chars this should fit */
+                                label = g_strdup_printf ("RAID: %s", data->name);
+                        } else if (g_strcmp0 (scheme, "apt") == 0) {
+                                type = "Apple_Unix_SVR2";
+                                label = g_strdup_printf ("RAID: %s", data->name);
+                        }
+
+                        gdu_device_op_partition_create (d,
+                                                        offset,
+                                                        size,
+                                                        type,
+                                                        label != NULL ? label : "",
+                                                        NULL,
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        FALSE,
+                                                        new_linux_md_create_part_cb,
+                                                        data);
+                        g_free (label);
+
+                } else {
+
+                        /* otherwise the whole disk must be uninitialized... */
+                        g_assert (whole_disk_is_uninitialized);
+
+                        /* so create a partition table... */
+                        gdu_device_op_partition_table_create (d,
+                                                              "mbr",
+                                                              new_linux_md_create_part_table_cb,
+                                                              data);
+                }
+
+                g_object_unref (d);
+                g_object_unref (p);
+
+        }
+}
+
+static void
+new_linud_md_array_callback (GtkAction *action, gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GtkWidget *dialog;
+        gint response;
+
+        //g_debug ("New Linux MD Array!");
+
+        dialog = gdu_create_linux_md_dialog_new (GTK_WINDOW (shell->priv->app_window),
+                                                 shell->priv->pool);
+
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+
+        if (response == GTK_RESPONSE_OK) {
+                CreateLinuxMdData *data;
+
+                data = g_new0 (CreateLinuxMdData, 1);
+                data->shell          = g_object_ref (shell);
+                data->level          = gdu_create_linux_md_dialog_get_level (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+                data->name           = gdu_create_linux_md_dialog_get_name (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+                data->size           = gdu_create_linux_md_dialog_get_size (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+                data->component_size = gdu_create_linux_md_dialog_get_component_size (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+                data->stripe_size    = gdu_create_linux_md_dialog_get_stripe_size (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+                data->drives         = gdu_create_linux_md_dialog_get_drives (GDU_CREATE_LINUX_MD_DIALOG (dialog));
+
+                data->components  = g_ptr_array_new_with_free_func (g_object_unref);
+
+                create_linux_md_do (data);
+        }
+        gtk_widget_destroy (dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 quit_action_callback (GtkAction *action, gpointer user_data)
 {
@@ -1596,6 +1860,9 @@ static const gchar *ui =
         "<ui>"
         "  <menubar>"
         "    <menu action='file'>"
+        "      <menu action='file-new'>"
+        "        <menuitem action='file-new-linux-md-array'/>"
+        "      </menu>"
         "      <menuitem action='quit'/>"
         "    </menu>"
         "    <menu action='edit'>"
@@ -1639,6 +1906,8 @@ static const gchar *ui =
 
 static GtkActionEntry entries[] = {
         {"file", NULL, N_("_File"), NULL, NULL, NULL },
+        {"file-new", NULL, N_("_New"), NULL, NULL, NULL },
+        {"file-new-linux-md-array", "gdu-raid-array", N_("Software _RAID Array"), NULL, N_("Create a new Software RAID array"), G_CALLBACK (new_linud_md_array_callback)},
         {"edit", NULL, N_("_Edit"), NULL, NULL, NULL },
         {"help", NULL, N_("_Help"), NULL, NULL, NULL },
 
@@ -1703,7 +1972,7 @@ expander_cb (GtkExpander *expander, GParamSpec *pspec, GtkWindow *dialog)
 /**
  * gdu_shell_raise_error:
  * @shell: An object implementing the #GduShell interface
- * @presentable: The #GduPresentable for which the error was rasied
+ * @presentable: The #GduPresentable for which the error was raised or %NULL.
  * @error: The #GError obtained from the operation
  * @primary_markup_format: Format string for the primary markup text of the dialog
  * @...: Arguments for markup string
@@ -1728,11 +1997,15 @@ gdu_shell_raise_error (GduShell       *shell,
         GtkTextBuffer *buffer;
 
         g_return_if_fail (shell != NULL);
-        g_return_if_fail (presentable != NULL);
         g_return_if_fail (error != NULL);
 
-        window_title = gdu_presentable_get_name (presentable);
-        window_icon = gdu_presentable_get_icon (presentable);
+        window_icon = NULL;
+        if (presentable != NULL) {
+                window_title = gdu_presentable_get_name (presentable);
+                window_icon = gdu_presentable_get_icon (presentable);
+        } else {
+                window_title = g_strdup (_("An error occured"));
+        }
 
         va_start (args, primary_markup_format);
         error_text = g_strdup_vprintf (primary_markup_format, args);
@@ -1746,7 +2019,7 @@ gdu_shell_raise_error (GduShell       *shell,
                 error_msg = _("The device is busy.");
                 break;
         case GDU_ERROR_CANCELLED:
-                error_msg = _("The operation was cancelled.");
+                error_msg = _("The operation was canceled.");
                 break;
         case GDU_ERROR_INHIBITED:
                 error_msg = _("The daemon is being inhibited.");
@@ -1856,7 +2129,7 @@ create_window (GduShell *shell)
         GtkWidget *toolbar;
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
-        GtkWidget *treeview_scrolled_window;
+        GtkWidget *tree_view_scrolled_window;
         GtkTreeSelection *select;
         GtkWidget *content_area;
         GtkWidget *button;
@@ -1865,6 +2138,7 @@ create_window (GduShell *shell)
         GtkWidget *vbox3;
         GtkWidget *hbox;
         GtkWidget *image;
+        GduPoolTreeModel *model;
 
         shell->priv->pool = gdu_pool_new ();
 
@@ -1886,14 +2160,18 @@ create_window (GduShell *shell)
         gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
 
         /* tree view */
-        treeview_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
+        tree_view_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                         GTK_POLICY_NEVER,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (treeview_scrolled_window),
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                              GTK_SHADOW_IN);
-        shell->priv->treeview = gdu_device_tree_new (shell->priv->pool);
-        gtk_container_add (GTK_CONTAINER (treeview_scrolled_window), shell->priv->treeview);
+        model = gdu_pool_tree_model_new (shell->priv->pool,
+                                         GDU_POOL_TREE_MODEL_FLAGS_NONE);
+        shell->priv->tree_view = gdu_pool_tree_view_new (model,
+                                                         GDU_POOL_TREE_VIEW_FLAGS_NONE);
+        g_object_unref (model);
+        gtk_container_add (GTK_CONTAINER (tree_view_scrolled_window), shell->priv->tree_view);
 
         /* --- */
 
@@ -1983,18 +2261,18 @@ create_window (GduShell *shell)
 
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();
-        gtk_paned_add1 (GTK_PANED (hpane), treeview_scrolled_window);
+        gtk_paned_add1 (GTK_PANED (hpane), tree_view_scrolled_window);
         gtk_paned_add2 (GTK_PANED (hpane), vbox1);
         //gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);
 
-        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->treeview));
+        select = gtk_tree_view_get_selection (GTK_TREE_VIEW (shell->priv->tree_view));
         gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
         g_signal_connect (select, "changed", (GCallback) device_tree_changed, shell);
 
         /* when starting up, set focus on tree view */
-        gtk_widget_grab_focus (shell->priv->treeview);
+        gtk_widget_grab_focus (shell->priv->tree_view);
 
         g_signal_connect (shell->priv->pool, "presentable-added", (GCallback) presentable_added, shell);
         g_signal_connect (shell->priv->pool, "presentable-removed", (GCallback) presentable_removed, shell);
@@ -2002,6 +2280,6 @@ create_window (GduShell *shell)
 
         gtk_widget_show_all (vbox);
 
-        gdu_device_tree_select_first_presentable (GTK_TREE_VIEW (shell->priv->treeview));
+        gdu_pool_tree_view_select_first_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 }
 

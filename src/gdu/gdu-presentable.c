@@ -318,9 +318,21 @@ gdu_presentable_get_enclosing_presentable (GduPresentable *presentable)
  * Gets a name for @presentable suitable for presentation in an user
  * interface.
  *
+ * For drives (e.g. #GduDrive) this could be "80G Solid-State Disk",
+ * "500G Hard Disk", "CompactFlash Drive", "CD/DVD Drive"
+ *
+ * For volumes (e.g. #GduVolume) this string could be "Fedora
+ * (Rawhide)" (for filesystems with labels), "48G Free" (for
+ * unallocated space), "2GB Swap Space" (for swap), "430GB RAID
+ * Component" (for RAID components) and so on.
+ *
+ * Constrast with gdu_presentable_get_vpd_name() that returns a name
+ * based on Vital Product Data including things such as the name of
+ * the vendor, the model name and so on.
+ *
  * Returns: The name. Caller must free the string with g_free().
  **/
-char *
+gchar *
 gdu_presentable_get_name (GduPresentable *presentable)
 {
   GduPresentableIface *iface;
@@ -330,6 +342,60 @@ gdu_presentable_get_name (GduPresentable *presentable)
   iface = GDU_PRESENTABLE_GET_IFACE (presentable);
 
   return (* iface->get_name) (presentable);
+}
+
+/**
+ * gdu_presentable_get_vpd_name:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a name for @presentable suitable for presentation in an user
+ * interface that includes Vital Product Data details such as the name
+ * of the vendor, the model name and so on.
+ *
+ * For drives (e.g. #GduDrive) this typically includes the
+ * vendor/model strings obtained from the hardware, for example
+ * "MATSHITA DVD/CDRW UJDA775" or "ATA INTEL SSDSA2MH080G1GC".
+ *
+ * For volumes (e.g. #GduVolume) this includes information about e.g.
+ * partition infomation for example "Whole-disk volume on ATA INTEL
+ * SSDSA2MH080G1GC", "Partition 2 of ATA INTEL SSDSA2MH080G1GC".
+ *
+ * Contrast with gdu_presentable_get_name() that may not include this
+ * information.
+ *
+ * Returns: The name. Caller must free the string with g_free().
+ **/
+gchar *
+gdu_presentable_get_vpd_name (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_vpd_name) (presentable);
+}
+
+/**
+ * gdu_presentable_get_description:
+ * @presentable: A #GduPresentable.
+ *
+ * Gets a description for @presentable suitable for presentation in an user
+ * interface.
+ *
+ * Returns: The description. Caller must free the string with g_free().
+ */
+gchar *
+gdu_presentable_get_description (GduPresentable *presentable)
+{
+  GduPresentableIface *iface;
+
+  g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+
+  iface = GDU_PRESENTABLE_GET_IFACE (presentable);
+
+  return (* iface->get_description) (presentable);
 }
 
 /**

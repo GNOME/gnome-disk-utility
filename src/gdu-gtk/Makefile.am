@@ -3,35 +3,53 @@ NULL =
 
 gdu-gtk-enumtypes.h: gdu-gtk-enums.h gdu-gtk-enumtypes.h.template
 	( top_builddir=`cd $(top_builddir) && pwd`; \
-	  cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.h.template gdu-gtk-enums.h ) > \
-	    gdu-gtk-enumtypes.h.tmp && mv gdu-gtk-enumtypes.h.tmp gdu-gtk-enumtypes.h
+	 cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.h.template gdu-gtk-enums.h ) > \
+	   gdu-gtk-enumtypes.h.tmp && mv gdu-gtk-enumtypes.h.tmp gdu-gtk-enumtypes.h
 
 gdu-gtk-enumtypes.c: gdu-gtk-enums.h gdu-gtk-enumtypes.c.template
 	( top_builddir=`cd $(top_builddir) && pwd`; \
-	  cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.c.template gdu-gtk-enums.h ) > \
-	    gdu-gtk-enumtypes.c.tmp && mv gdu-gtk-enumtypes.c.tmp gdu-gtk-enumtypes.c
+	 cd $(srcdir) && glib-mkenums --template gdu-gtk-enumtypes.c.template gdu-gtk-enums.h ) > \
+	   gdu-gtk-enumtypes.c.tmp && mv gdu-gtk-enumtypes.c.tmp gdu-gtk-enumtypes.c
+
+BUILT_SOURCES =            	\
+	gdu-gtk-enumtypes.c     \
+	gdu-gtk-enumtypes.h     \
+	$(NULL)
+
+EXTRA_DIST =                         	\
+	gdu-gtk-enumtypes.h.template    \
+	gdu-gtk-enumtypes.c.template    \
+	$(NULL)
 
 lib_LTLIBRARIES=libgdu-gtk.la
 
 libgdu_gtkincludedir=$(includedir)/gnome-disk-utility/gdu-gtk
 
-libgdu_gtkinclude_HEADERS =              						\
-	gdu-gtk.h									\
-	gdu-gtk-enums.h									\
-	gdu-gtk-enumtypes.h								\
-	gdu-gtk-types.h									\
-	gdu-time-label.h								\
-	gdu-ata-smart-dialog.h								\
-	gdu-curve.h									\
-	gdu-graph.h									\
+libgdu_gtkinclude_HEADERS =              				\
+	gdu-gtk.h							\
+	gdu-gtk-types.h							\
+	gdu-gtk-enums.h							\
+	gdu-gtk-enumtypes.h						\
+	gdu-time-label.h						\
+	gdu-pool-tree-view.h						\
+	gdu-pool-tree-model.h						\
+	gdu-size-widget.h						\
+	gdu-create-linux-md-dialog.h					\
+	gdu-ata-smart-dialog.h						\
+	gdu-curve.h							\
+	gdu-graph.h							\
 	$(NULL)
 
-libgdu_gtk_la_SOURCES =                 	        	       			\
+libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-gtk.h				gdu-gtk.c				\
-	gdu-gtk-types.h									\
 	gdu-gtk-enums.h									\
 	gdu-gtk-enumtypes.h			gdu-gtk-enumtypes.c			\
+	gdu-gtk-types.h									\
 	gdu-time-label.h			gdu-time-label.c			\
+	gdu-pool-tree-view.h			gdu-pool-tree-view.c			\
+	gdu-pool-tree-model.h			gdu-pool-tree-model.c			\
+	gdu-size-widget.h			gdu-size-widget.c			\
+	gdu-create-linux-md-dialog.h		gdu-create-linux-md-dialog.c		\
 	gdu-ata-smart-dialog.h			gdu-ata-smart-dialog.c			\
 	gdu-curve.h				gdu-curve.c				\
 	gdu-graph.h				gdu-graph.c				\
@@ -73,11 +91,6 @@ libgdu_gtk_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gdu-gtk.pc
-
-BUILT_SOURCES =			\
-	gdu-gtk-enumtypes.c	\
-	gdu-gtk-enumtypes.h	\
-	$(NULL)
 
 CLEANFILES = $(BUILT_SOURCES) $(pkgconfig_DATA)
 

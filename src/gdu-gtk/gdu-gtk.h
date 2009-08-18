@@ -29,9 +29,13 @@
 #define __GDU_GTK_INSIDE_GDU_GTK_H
 #include <gdu-gtk/gdu-gtk-types.h>
 #include <gdu-gtk/gdu-gtk-enumtypes.h>
+#include <gdu-gtk/gdu-time-label.h>
+#include <gdu-gtk/gdu-pool-tree-view.h>
+#include <gdu-gtk/gdu-pool-tree-model.h>
+#include <gdu-gtk/gdu-size-widget.h>
+#include <gdu-gtk/gdu-create-linux-md-dialog.h>
 #include <gdu-gtk/gdu-curve.h>
 #include <gdu-gtk/gdu-graph.h>
-#include <gdu-gtk/gdu-time-label.h>
 #include <gdu-gtk/gdu-ata-smart-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 

@@ -66,6 +66,11 @@ struct _GduDriveClass
                                               GduDriveDeactivateFunc callback,
                                               gpointer               user_data);
 
+        gboolean   (*has_unallocated_space) (GduDrive        *drive,
+                                             gboolean        *out_whole_disk_is_unitialized,
+                                             guint64         *out_largest_segment,
+                                             GduPresentable **out_presentable);
+
 };
 
 GType       gdu_drive_get_type           (void);
@@ -81,6 +86,11 @@ void        gdu_drive_activate              (GduDrive              *drive,
 void        gdu_drive_deactivate            (GduDrive              *drive,
                                              GduDriveDeactivateFunc callback,
                                              gpointer               user_data);
+
+gboolean    gdu_drive_has_unallocated_space (GduDrive        *drive,
+                                             gboolean        *out_whole_disk_is_unitialized,
+                                             guint64         *out_largest_segment,
+                                             GduPresentable **out_presentable);
 
 G_END_DECLS
 

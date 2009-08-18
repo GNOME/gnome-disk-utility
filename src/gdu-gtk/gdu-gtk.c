@@ -168,40 +168,40 @@ show_busy_get_list_store (ShowBusyData *data, int *num_rows)
                                 /* special handling for common programs without desktop files */
                                 if (strcmp (basename, "bash") == 0   ||
                                     strcmp (basename, "-bash") == 0) {
-                                        name = g_strdup (_("Bourne Again Shell"));
+                                        name = g_strdup (C_("application name", "Bourne Again Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "sh") == 0   ||
                                            strcmp (basename, "-sh") == 0) {
-                                        name = g_strdup (_("Bourne Shell"));
+                                        name = g_strdup (C_("application name", "Bourne Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "csh") == 0   ||
                                            strcmp (basename, "-csh") == 0) {
-                                        name = g_strdup (_("C Shell"));
+                                        name = g_strdup (C_("application name", "C Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "tcsh") == 0   ||
                                            strcmp (basename, "-tcsh") == 0) {
-                                        name = g_strdup (_("TENEX C Shell"));
+                                        name = g_strdup (C_("application name", "TENEX C Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "zsh") == 0   ||
                                            strcmp (basename, "-zsh") == 0) {
-                                        name = g_strdup (_("Z Shell"));
+                                        name = g_strdup (C_("application name", "Z Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "ksh") == 0   ||
                                            strcmp (basename, "-ksh") == 0) {
-                                        name = g_strdup (_("Korn Shell"));
+                                        name = g_strdup (C_("application name", "Korn Shell"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            "terminal", 24, 0, NULL);
                                 } else if (strcmp (basename, "top") == 0) {
-                                        name = g_strdup (_("Process Viewer (top)"));
+                                        name = g_strdup (C_("application name", "Process Viewer (top)"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            GTK_STOCK_GOTO_TOP, 24, 0, NULL);
                                 } else if (strcmp (basename, "less") == 0) {
-                                        name = g_strdup (_("Terminal Pager (less)"));
+                                        name = g_strdup (C_("application name", "Terminal Pager (less)"));
                                         pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                                            GTK_STOCK_FILE, 24, 0, NULL);
                                 }
@@ -213,7 +213,7 @@ show_busy_get_list_store (ShowBusyData *data, int *num_rows)
 
                                 g_free (basename);
                         } else {
-                                name = g_strdup (_("Unknown"));
+                                name = g_strdup (C_("application name", "Unknown"));
                         }
                 }
 
@@ -327,6 +327,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
                 /* todo: icon list */
                 window_icon = gdu_presentable_get_icon (enclosing_drive);
                 g_object_unref (enclosing_drive);
+                /* Translators: %d is the partition number, %s the name of the disk */
                 window_title = g_strdup_printf (_("Partition %d on %s"),
                                                 gdu_device_partition_get_number (device),
                                                 s);
@@ -1255,6 +1256,7 @@ gdu_util_fstype_combo_box_create_store (GduPool *pool, const char *include_exten
         g_list_free (known_filesystems);
 
         gtk_list_store_append (store, &iter);
+        /* Translators: Used as an option in a combobox of filesystem types, meaning 'do not create a filesystem' */
         gtk_list_store_set (store, &iter,
                             0, "empty",
                             1, _("Empty"),

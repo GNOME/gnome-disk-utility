@@ -73,6 +73,7 @@ typedef struct
         char   **device_mount_paths;
         uid_t    device_mounted_by_uid;
         gboolean device_presentation_hide;
+        gboolean device_presentation_nopolicy;
         char    *device_presentation_name;
         char    *device_presentation_icon_name;
         guint64  device_size;
@@ -119,6 +120,7 @@ typedef struct
         gboolean drive_is_media_ejectable;
         gboolean drive_can_detach;
         gboolean drive_can_spindown;
+        gboolean drive_is_rotational;
 
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
@@ -233,6 +235,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->device_mounted_by_uid = g_value_get_uint (value);
         else if (strcmp (key, "device-presentation-hide") == 0)
                 props->device_presentation_hide = g_value_get_boolean (value);
+        else if (strcmp (key, "device-presentation-nopolicy") == 0)
+                props->device_presentation_nopolicy = g_value_get_boolean (value);
         else if (strcmp (key, "device-presentation-name") == 0)
                 props->device_presentation_name = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "device-presentation-icon-name") == 0)
@@ -318,6 +322,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_can_detach = g_value_get_boolean (value);
         else if (strcmp (key, "drive-can-spindown") == 0)
                 props->drive_can_spindown = g_value_get_boolean (value);
+        else if (strcmp (key, "drive-is-rotational") == 0)
+                props->drive_is_rotational = g_value_get_boolean (value);
 
         else if (strcmp (key, "optical-disc-is-blank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -892,6 +898,12 @@ gdu_device_get_presentation_hide (GduDevice *device)
         return device->priv->props->device_presentation_hide;
 }
 
+gboolean
+gdu_device_get_presentation_nopolicy (GduDevice *device)
+{
+        return device->priv->props->device_presentation_nopolicy;
+}
+
 const char *
 gdu_device_get_presentation_name (GduDevice *device)
 {
@@ -1113,6 +1125,12 @@ gboolean
 gdu_device_drive_get_can_spindown (GduDevice *device)
 {
         return device->priv->props->drive_can_spindown;
+}
+
+gboolean
+gdu_device_drive_get_is_rotational (GduDevice *device)
+{
+        return device->priv->props->drive_is_rotational;
 }
 
 gboolean

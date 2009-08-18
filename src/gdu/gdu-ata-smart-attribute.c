@@ -169,7 +169,7 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
         const char *d;
         gboolean warn;
 
-        /* See http://ata_smartmontools.sourceforge.net/doc.html
+        /* See http://smartmontools.sourceforge.net/doc.html
          *     http://en.wikipedia.org/wiki/S.M.A.R.T
          *     http://www.t13.org/Documents/UploadedDocuments/docs2005/e05148r0-ACS-ATA_SMARTAttributesAnnex.pdf
          */
@@ -179,79 +179,151 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
         warn = FALSE;
         switch (attr->priv->id) {
         case 1:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Read Error Rate");
                 d = _("Frequency of errors while reading raw data from the disk. "
                       "A non-zero value indicates a problem with "
                       "either the disk surface or read/write heads.");
                 break;
         case 2:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Throughput Performance");
                 d = _("Average efficiency of the disk.");
                 break;
         case 3:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Spinup Time");
                 d = _("Time needed to spin up the disk.");
                 break;
         case 4:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Start/Stop Count");
                 d = _("Number of spindle start/stop cycles.");
                 break;
         case 5:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Reallocated Sector Count");
                 d = _("Count of remapped sectors. "
                       "When the hard drive finds a read/write/verification error, it mark the sector "
                       "as \"reallocated\" and transfers data to a special reserved area (spare area).");
                 break;
         case 7:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Seek Error Rate");
                 d = _("Frequency of errors while positioning.");
                 break;
         case 8:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Seek Timer Performance");
                 d = _("Average efficiency of operatings while positioning");
                 break;
         case 9:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Power-On Hours");
                 d = _("Number of hours elapsed in the power-on state.");
                 break;
         case 10:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Spinup Retry Count");
                 d = _("Number of retry attempts to spin up.");
                 break;
         case 11:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Calibration Retry Count");
                 d = _("Number of attempts to calibrate the device.");
                 break;
         case 12:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Power Cycle Count");
                 d = _("Number of power-on events.");
                 break;
         case 13:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Soft read error rate");
                 d = _("Frequency of 'program' errors while reading from the disk.");
                 break;
 
         case 191:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("G-sense Error Rate");
                 d = _("Frequency of mistakes as a result of impact loads.");
                 break;
         case 192:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Power-off Retract Count");
                 d = _("Number of power-off or emergency retract cycles.");
                 break;
         case 193:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Load/Unload Cycle Count");
                 d = _("Number of cycles into landing zone position.");
                 break;
         case 194:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Temperature");
                 d = _("Current internal temperature in degrees Celsius.");
                 break;
         case 195:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Hardware ECC Recovered");
                 d = _("Number of ECC on-the-fly errors.");
                 break;
         case 196:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Reallocation Count");
                 d = _("Number of remapping operations. "
                       "The raw value of this attribute shows the total number of (successful "
@@ -259,6 +331,10 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                       "to a spare area.");
                 break;
         case 197:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Current Pending Sector Count");
                 d = _("Number of sectors waiting to be remapped. "
                       "If the sector waiting to be remapped is subsequently written or read "
@@ -269,109 +345,209 @@ attribute_get_details (GduAtaSmartAttribute  *attr,
                         warn = TRUE;
                 break;
         case 198:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Uncorrectable Sector Count");
                 d = _("The total number of uncorrectable errors when reading/writing a sector. "
                       "A rise in the value of this attribute indicates defects of the "
                       "disk surface and/or problems in the mechanical subsystem.");
                 break;
         case 199:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("UDMA CRC Error Rate");
                 d = _("Number of CRC errors during UDMA mode.");
                 break;
         case 200:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Write Error Rate");
                 d = _("Number of errors while writing to disk (or) multi-zone error rate (or) flying-height.");
                 break;
         case 201:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Soft Read Error Rate");
                 d = _("Number of off-track errors.");
                 break;
         case 202:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Data Address Mark Errors");
                 d = _("Number of Data Address Mark (DAM) errors (or) vendor-specific.");
                 break;
         case 203:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Run Out Cancel");
                 d = _("Number of ECC errors.");
                 break;
         case 204:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Soft ECC correction");
                 d = _("Number of errors corrected by software ECC.");
                 break;
         case 205:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Thermal Asperity Rate");
                 d = _("Number of Thermal Asperity Rate errors.");
                 break;
         case 206:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Flying Height");
                 d = _("Height of heads above the disk surface.");
                 break;
         case 207:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Spin High Current");
                 d = _("Amount of high current used to spin up the drive.");
                 break;
         case 208:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Spin Buzz");
                 d = _("Number of buzz routines to spin up the drive.");
                 break;
         case 209:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Offline Seek Performance");
                 d = _("Drive's seek performance during offline operations.");
                 break;
 
         case 220:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Disk Shift");
                 d = _("Shift of disk is possible as a result of strong shock loading in the store, "
                       "as a result of falling (or) temperature.");
                 break;
         case 221:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("G-sense Error Rate");
                 d = _("Number of errors as a result of impact loads as detected by a shock sensor.");
                 break;
         case 222:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Loaded Hours");
                 d = _("Number of hours in general operational state.");
                 break;
         case 223:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Load/Unload Retry Count");
                 d = _("Loading on drive caused by numerous recurrences of operations, like reading, "
                       "recording, positioning of heads, etc.");
                 break;
         case 224:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Load Friction");
                 d = _("Load on drive cause by friction in mechanical parts of the store.");
                 break;
         case 225:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Load/Unload Cycle Count");
                 d = _("Total number of load cycles.");
                 break;
         case 226:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Load-in Time");
                 d = _("General time for loading in a drive.");
                 break;
         case 227:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Torque Amplification Count");
                 d = _("Quantity efforts of the rotating moment of a drive.");
                 break;
         case 228:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Power-off Retract Count");
                 d = _("Number of power-off retract events.");
                 break;
 
         case 230:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("GMR Head Amplitude");
                 d = _("Amplitude of heads trembling (GMR-head) in running mode.");
                 break;
         case 231:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Temperature");
                 d = _("Temperature of the drive.");
                 break;
 
         case 240:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Head Flying Hours");
                 d = _("Time while head is positioning.");
                 break;
         case 250:
+                /* Translators: S.M.A.R.T attribute, see
+                 * http://smartmontools.sourceforge.net/doc.html
+                 * or the next string for a longer explanation.
+                 */
                 n = _("Read Error Retry Rate");
                 d = _("Number of errors while reading from a disk.");
                 break;

@@ -562,18 +562,20 @@ gdu_drive_get_name (GduPresentable *presentable)
                 strsize = gdu_util_get_size_for_display (size, FALSE);
         }
 
-
         if (is_removable) {
 
                 get_drive_name_from_media_compat (drive->priv->device, result);
 
                 /* If we know the media type, just append Drive */
                 if (result->len > 0) {
-                        g_string_append_c (result, ' ');
-                        /* Translators: This word is appended after the media type, e.g. 'CD/DVD Drive' or
-                         * 'CompactFlash Drive'
-                         */
-                        g_string_append (result, C_("Media Type", "Drive"));
+                        GString *new_result;
+
+                        new_result = g_string_new (NULL);
+                        /* Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash' */
+                        g_string_append_printf (new_result, _("%s Drive"),
+                                                result->str);
+                        g_string_free (result, TRUE);
+                        result = new_result;
                 } else {
                         /* Otherwise use Vendor/Model */
                         if (vendor != NULL && strlen (vendor) == 0)
@@ -597,16 +599,23 @@ gdu_drive_get_name (GduPresentable *presentable)
                 get_drive_name_from_media_compat (drive->priv->device, result);
 
                 if (result->len > 0) {
-                        /* prepend the size if it is known */
+                        GString *new_result;
+
+                        new_result = g_string_new (NULL);
                         if (strsize != NULL) {
-                                g_string_prepend_c (result, ' ');
-                                g_string_prepend (result, strsize);
+                                /* Translators: first %s is the size, second %s is the media type
+                                 * e.g. 'CD/DVD' or 'CompactFlash'
+                                 */
+                                g_string_append_printf (new_result, _("%s %s Drive"),
+                                                        strsize,
+                                                        result->str);
+                        } else {
+                                /* Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash' */
+                                g_string_append_printf (new_result, _("%s Drive"),
+                                                        result->str);
                         }
-                        g_string_append_c (result, ' ');
-                        /* Translators: This word is appended after the media type, e.g. 'CD/DVD Drive' or
-                         * 'CompactFlash Drive'
-                         */
-                        g_string_append (result, C_("Media Type", "Drive"));
+                        g_string_free (result, TRUE);
+                        result = new_result;
                 } else {
                         if (is_rotational) {
                                 if (strsize != NULL) {

@@ -613,30 +613,26 @@ gdu_drive_get_name (GduPresentable *presentable)
                                         /* Translators: This string is used to describe a hard disk. The first %s is
                                          * the size of the drive e.g. '45 GB'.
                                          */
-                                        g_string_append_printf (result,
-                                                                _("%s Hard Disk"),
+                                        g_string_append_printf (result, _("%s Hard Disk"),
                                                                 strsize);
                                 } else {
                                         /* Translators: This string is used to describe a hard disk where the size
                                          * is not known.
                                          */
-                                        g_string_append (result,
-                                                         _("Hard Disk"));
+                                        g_string_append (result, _("Hard Disk"));
                                 }
                         } else {
                                 if (strsize != NULL) {
                                         /* Translators: This string is used to describe a SSD. The first %s is
                                          * the size of the drive e.g. '45 GB'.
                                          */
-                                        g_string_append_printf (result,
-                                                                _("%s Solid-State Disk"),
+                                        g_string_append_printf (result, _("%s Solid-State Disk"),
                                                                 strsize);
                                 } else {
                                         /* Translators: This string is used to describe a SSD where the size
                                          * is not known.
                                          */
-                                        g_string_append (result,
-                                                         _("Solid-State Disk"));
+                                        g_string_append (result, _("Solid-State Disk"));
                                 }
                         }
                 }
@@ -677,16 +673,14 @@ gdu_drive_get_description (GduPresentable *presentable)
                         /* Translators: This string is the description of a drive. The first %s is the
                          * size of the inserted media, for example '45 GB'.
                          */
-                        g_string_append_printf (result,
-                                                _("%s Media"),
+                        g_string_append_printf (result, _("%s Media"),
                                                 strsize);
                         g_free (strsize);
                 } else {
                         /* Translators: This string is used as a description text when no media has
                          * been detected for a drive
                          */
-                        g_string_append_printf (result,
-                                                _("No Media Detected"));
+                        g_string_append_printf (result, _("No Media Detected"));
                 }
         }
 
@@ -697,28 +691,23 @@ gdu_drive_get_description (GduPresentable *presentable)
                 if (gdu_device_is_partition_table (drive->priv->device)) {
                         if (g_strcmp0 (part_table_scheme, "mbr") == 0) {
                                 /* Translators: This string is used for conveying the partition table format */
-                                g_string_append (result,
-                                                 _("MBR Partition Table"));
+                                g_string_append (result, _("MBR Partition Table"));
                         } else if (g_strcmp0 (part_table_scheme, "gpt") == 0) {
                                 /* Translators: This string is used for conveying the partition table format */
-                                g_string_append (result,
-                                                 _("GUID Partition Table"));
+                                g_string_append (result, _("GUID Partition Table"));
                         } else if (g_strcmp0 (part_table_scheme, "apm") == 0) {
                                 /* Translators: This string is used for conveying the partition table format */
-                                g_string_append (result,
-                                                 _("Apple Partition Table"));
+                                g_string_append (result, _("Apple Partition Table"));
                         } else {
                                 /* Translators: This string is used for conveying the partition table format when
                                  * the format is unknown
                                  */
-                                g_string_append (result,
-                                                 _("Partitioned"));
+                                g_string_append (result, _("Partitioned"));
                         }
                 } else {
                         /* Translators: This string is used for conveying a device is not partitioned.
                          */
-                        g_string_append (result,
-                                         _("Not Partitioned"));
+                        g_string_append (result, _("Not Partitioned"));
                 }
         }
 

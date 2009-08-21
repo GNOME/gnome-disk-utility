@@ -201,7 +201,7 @@ details_update (GduShell *shell)
         if (presentable_size > 0) {
                 strsize_long = gdu_util_get_size_for_display (presentable_size, TRUE);
         } else {
-                strsize_long = g_strdup ("Unknown Size");
+                strsize_long = g_strdup (_("Unknown Size"));
         }
 
         if (GDU_IS_DRIVE (presentable)) {

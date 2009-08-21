@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 14:30+0300\n"
-"PO-Revision-Date: 2009-08-21 17:57+0300\n"
+"POT-Creation-Date: 2009-08-21 18:04+0300\n"
+"PO-Revision-Date: 2009-08-21 18:59+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "Language: ar\n"
@@ -302,9 +302,9 @@ msgstr ""
 
 #: ../src/gdu/gdu-ata-smart-attribute.c:221
 msgid ""
-"Count of remapped sectors. When the hard drive finds a "
-"read/write/verification error, it mark the sector as \"reallocated\" and "
-"transfers data to a special reserved area (spare area)."
+"Count of remapped sectors. When the hard drive finds a read/write/"
+"verification error, it mark the sector as \"reallocated\" and transfers data "
+"to a special reserved area (spare area)."
 msgstr ""
 
 #. Translators: S.M.A.R.T attribute, see
@@ -1572,8 +1572,8 @@ msgid ""
 "but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
-"مخطط \"قطاع الإقلاع الرئيس\" متوافق مع كل الأجهزة والأنظمة تقريبا، لكن به قيود "
-"على حجم القرص وعدد الأقسام."
+"مخطط \"قطاع الإقلاع الرئيس\" متوافق مع كل الأجهزة والأنظمة تقريبا، لكن به "
+"قيود على حجم القرص وعدد الأقسام."
 
 #: ../src/gdu/gdu-util.c:535
 msgid ""
@@ -2328,21 +2328,23 @@ msgid "Insufficient number disks to create a %s array."
 msgstr "عدد الأقراص لا يكفي لإنشاء مصفوفة %s."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
+#, c-format
 msgid "To create a %s array, select %d disks."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "لإنشاء مصوفوفة %s، اختر %d قرص."
-msgstr[1] "لإنشاء مصوفوفة %s، اختر %.0sقرصا."
-msgstr[2] "لإنشاء مصوفوفة %s، اختر %.0sقرصين."
+msgstr[1] "لإنشاء مصوفوفة %s، اختر %d قرصا."
+msgstr[2] "لإنشاء مصوفوفة %s، اختر %d قرصين."
 msgstr[3] "لإنشاء مصوفوفة %s، اختر %d أقراص."
 msgstr[4] "لإنشاء مصوفوفة %s، اختر %d قرصا."
 msgstr[5] "لإنشاء مصوفوفة %s، اختر %d قرص."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
+#, c-format
 msgid "To create a %s array, select %d more disks."
 msgid_plural "To create a %s array, select %d more disks."
 msgstr[0] "لإنشاء مصوفوفة %s، اختر %d أقراص أكثر."
-msgstr[1] "لإنشاء مصوفوفة %s، اختر %.0sقرصا زيادة."
-msgstr[2] "لإنشاء مصوفوفة %s، اختر %.0sقرصين زيادة."
+msgstr[1] "لإنشاء مصوفوفة %s، اختر %d قرصا زيادة."
+msgstr[2] "لإنشاء مصوفوفة %s، اختر %d قرصين زيادة."
 msgstr[3] "لإنشاء مصوفوفة %s، اختر %d أقراص زيادة."
 msgstr[4] "لإنشاء مصوفوفة %s، اختر %d قرصا زيادة."
 msgstr[5] "لإنشاء مصوفوفة %s، اختر %d قرص زيادة."
@@ -3058,15 +3060,15 @@ msgstr "فشل"
 
 #: ../src/palimpsest/gdu-section-health.c:1305
 msgid "Error initiating ATA SMART Self Test"
-msgstr ""
+msgstr "خطأ أثناء بدء اختبار ATA SMART الذاتي"
 
 #: ../src/palimpsest/gdu-section-health.c:1337
 msgid "ATA SMART Self Test"
-msgstr ""
+msgstr "اختبار ATA SMART الذاتي"
 
 #: ../src/palimpsest/gdu-section-health.c:1361
 msgid "Select what ATA SMART self test to run"
-msgstr ""
+msgstr "اختر أي اختبار ATA SMART سيُشغل"
 
 #: ../src/palimpsest/gdu-section-health.c:1371
 msgid ""
@@ -3074,14 +3076,16 @@ msgid ""
 "size of the disk. You can continue using your system while the test is "
 "running."
 msgstr ""
+"قد تأخذ الاختبارات وقتا طويلا لتكتمل حسب سرعة وحجم القرص. يمكنك الاستمرار في "
+"استخدام النظام بينما تُجرى الاختبارات."
 
 #: ../src/palimpsest/gdu-section-health.c:1379
 msgid "_Short (usually less than ten minutes)"
-msgstr ""
+msgstr "_قصير (أقل من عشر دقائق عادة)"
 
 #: ../src/palimpsest/gdu-section-health.c:1381
 msgid "_Extended (usually tens of minutes)"
-msgstr ""
+msgstr "_ممتد (عشر دقائق عادة)"
 
 #: ../src/palimpsest/gdu-section-health.c:1383
 msgid "C_onveyance (usually less than ten minutes)"
@@ -3089,7 +3093,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-health.c:1390
 msgid "_Initiate Self Test"
-msgstr ""
+msgstr "اب_دأ الاختبار الذاتي"
 
 #. Translators: section heading, referring to disk health
 #: ../src/palimpsest/gdu-section-health.c:1493
@@ -3121,7 +3125,7 @@ msgstr "مُحدَّث:"
 
 #: ../src/palimpsest/gdu-section-health.c:1596
 msgid "Assessment:"
-msgstr ""
+msgstr "التقييم:"
 
 #: ../src/palimpsest/gdu-section-health.c:1629
 msgid "Refresh ATA SMART data from the device"
@@ -3137,43 +3141,48 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:75
 msgid "Error adding component"
-msgstr ""
+msgstr "خطأ أثناء إضافة المكون"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:153
 #, c-format
 msgid "Select a volume to use as component in the array \"%s\""
-msgstr ""
+msgstr "اختر جزءا ليُستخدم كمكون في المصفوفة \"%s\""
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:158
 msgid ""
 "Only volumes of acceptable sizes can be selected. You may need to manually "
 "create new volumes of acceptable sizes."
 msgstr ""
+"تُختار الأجزاء ذات الحجوم المناسبة فقط. قد تحتاج إلى إنشاء أجزاء جديدة ذات "
+"حجم مناسب يدويا."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
-msgstr ""
+msgstr "أضِف _جزءا"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:313
 msgid "Error removing component"
-msgstr ""
+msgstr "خطأ أثناء إزالة المكون"
 
 #. confirmation dialog
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:398
 msgid "Are you sure you want to remove the component from the array ?"
-msgstr ""
+msgstr "أمتأكّد من رغبتك في حذف هذا المكون من المصفوفة؟"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:400
 #, c-format
 msgid ""
-"The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
-"erased and the RAID Array might be degraded. Make sure important data is "
-"backed up. This action cannot be undone."
+"The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably erased "
+"and the RAID Array might be degraded. Make sure important data is backed "
+"up. This action cannot be undone."
 msgstr ""
+"ستُحذف البيانات الموجودة على المكون \"%s\" من مصفوفة RAID‏ \"%s\" بلا رجعة، وقد "
+"تتأثر مصفوفة RAID سلبا. تأكد من أن البيانات المهمة محفوظة احتياطية إذ لا "
+"يمكن التراجع عن هذا الإجراء."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:411
 msgid "_Remove Component"
-msgstr ""
+msgstr "أزِل الم_كون"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:695
 msgctxt "RAID component type"
@@ -3188,30 +3197,34 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:699
 msgctxt "RAID component type"
 msgid "RAID-4"
-msgstr ""
+msgstr "RAID-4"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:701
 msgctxt "RAID component type"
 msgid "RAID-5"
-msgstr ""
+msgstr "RAID-5"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:703
 msgctxt "RAID component type"
 msgid "RAID-6"
-msgstr ""
+msgstr "RAID-6"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:705
 msgctxt "RAID component type"
 msgid "Linear (Just a Bunch Of Disks)"
-msgstr ""
+msgstr "خطي (مجرد مجموعة من الأقراص)"
 
 #. Translators: %d is the number of components in the RAID
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:713
 #, c-format
 msgid "%d Component"
 msgid_plural "%d Components"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "لا مكونات"
+msgstr[1] "مكون واحد"
+msgstr[2] "موكونين"
+msgstr[3] "%d مكونات"
+msgstr[4] "%d مكونا"
+msgstr[5] "%d مكون"
 
 #. Translators: %d is the number of components in the RAID,
 #. * %s is the size of each component, formatted like '45 GB'
@@ -3220,18 +3233,22 @@ msgstr[1] ""
 #, c-format
 msgid "%d Component (%s)"
 msgid_plural "%d Components (%s each)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "لا مكونات %d (%s)"
+msgstr[1] "مكون واحد %d (%s)"
+msgstr[2] "مكونين %d (كل واحد %s)"
+msgstr[3] "%d مكونات (كل واحد %s)"
+msgstr[4] "%d مكونا (كل واحد %s)"
+msgstr[5] "%d مكون (كل واحد %s)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:730
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr ""
+msgstr "لا يعمل، مجمع جزئيا"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:738
 msgctxt "RAID status"
 msgid "Not running"
-msgstr ""
+msgstr "لا يعمل"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:740
 msgctxt "RAID status"
@@ -3251,32 +3268,32 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:765
 msgctxt "RAID status"
 msgid "Running"
-msgstr ""
+msgstr "يعمل"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:770
 msgctxt "RAID status"
 msgid "Reshaping"
-msgstr ""
+msgstr "يعاد تشكيله"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
 msgid "Resyncing"
-msgstr ""
+msgstr "يُزامن"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:776
 msgctxt "RAID status"
 msgid "Repairing"
-msgstr ""
+msgstr "يُصلح"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:779
 msgctxt "RAID status"
 msgid "Recovering"
-msgstr ""
+msgstr "يتعافى"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:782
 msgctxt "RAID status"
 msgid "Checking"
-msgstr ""
+msgstr "يفحص"
 
 #. Translators: this string tells about an ongoing synchronization.
 #. * %3.01f is replaced by the percentage of completion
@@ -3286,17 +3303,17 @@ msgstr ""
 #, c-format
 msgctxt "RAID status"
 msgid " @ %3.01f%% (%s)"
-msgstr ""
+msgstr " @ %3.01f%% (%s)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:856
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr ""
+msgstr "معيوب"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:861
 msgctxt "Linux MD slave state"
 msgid "In Sync"
-msgstr ""
+msgstr "مُزامن"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
@@ -3306,28 +3323,28 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
 msgid "Blocked"
-msgstr ""
+msgstr "موصد"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:867
 msgctxt "Linux MD slave state"
 msgid "Spare"
-msgstr ""
+msgstr "غير مشغول"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"
-msgstr ""
+msgstr "اسم المصفوفة:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 msgid "Home Host:"
-msgstr ""
+msgstr "اسم المستضيف:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:990
 msgid "Array Size:"
-msgstr ""
+msgstr "حجم المصفوفة:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
-msgstr ""
+msgstr "نوع RAID:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1022
 msgid "Components:"
@@ -3503,7 +3520,7 @@ msgstr ""
 #. used by mbr, apm
 #: ../src/palimpsest/gdu-section-partition.c:587
 msgid "_Bootable"
-msgstr ""
+msgstr "_قابل للإقلاع"
 
 #. used by gpt
 #: ../src/palimpsest/gdu-section-partition.c:595
@@ -3512,7 +3529,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:607
 msgid "Delete the partition"
-msgstr ""
+msgstr "احذف القسم"
 
 #: ../src/palimpsest/gdu-section-partition.c:611
 msgid "_Revert"
@@ -3520,38 +3537,44 @@ msgstr "ا_عكس"
 
 #: ../src/palimpsest/gdu-section-partition.c:616
 msgid "Apply the changes made"
-msgstr ""
+msgstr "طبق التغييرات"
 
 #: ../src/palimpsest/gdu-section-swapspace.c:95
 msgid "The volume contains swap space."
-msgstr ""
+msgstr "الجزء يحتوي مساحة تبديل"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:91
 #: ../src/palimpsest/gdu-section-unrecognized.c:148
 msgid "Error creating partition"
-msgstr ""
+msgstr "خطأ أثناء إنشاء القسم"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:407
 msgid ""
 "This is the last primary partition that can be created. If you need more "
 "partitions, you can create an Extended Partition."
 msgstr ""
+"هذا آخر قسم أولي يمكن إنشاؤه. إذا أردت المزيد من الأقسام فيُمكنك إنشاء قسم "
+"ممتد."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
 msgid ""
 "No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
+"لا يمكن إنشاء المزيد من الأقسام. ربما قد تريد حذف أحد الأقسام ثم إنشاء قسم "
+"ممتد."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
-msgstr ""
+msgstr "أنشئ قسما"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:614
 msgid ""
 "To create a new partition, select the size and whether to create a file "
 "system. The partition type, label and flags can be changed after creation."
 msgstr ""
+"لإنشاء قسم، اختر الحجم وما إذا يُنشأ نظام ملفات أم لا. نوع القسم والعنوان "
+"والشارات يمكن تغييرها لا حقا."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
@@ -3560,7 +3583,7 @@ msgstr "ال_حجم:"
 #. Translators: unit label for a control that determines partition size in megabytes
 #: ../src/palimpsest/gdu-section-unallocated.c:651
 msgid "MB"
-msgstr ""
+msgstr "م.بايت"
 
 #. whether to chown fs root for user
 #: ../src/palimpsest/gdu-section-unallocated.c:702
@@ -3580,7 +3603,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
-msgstr ""
+msgstr "_عمّ الجهاز الحاوي"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
@@ -3597,7 +3620,7 @@ msgstr "أنشئ قسما"
 #: ../src/palimpsest/gdu-section-unrecognized.c:231
 msgid ""
 "Are you sure you want to create a new file system, deleting existing data ?"
-msgstr ""
+msgstr "أمتأكد أنك تريد إنشاء نظام ملفات جديد وحذف البيانات الموجودة؟"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
 #: ../src/palimpsest/gdu-shell.c:1496
@@ -3606,6 +3629,8 @@ msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"ستُحذف كل البيانات على القسم %d في الوسيط \"%s\" بلا رجعة. تأكد من أن البيانات "
+"المهمة محفوظة احتياطيا إذ لا يمكن التراجع عن هذا الإجراء."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1503
@@ -3614,32 +3639,40 @@ msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"ستُحذف كل البيانات على القسم %d من \"%s\" بلا رجعة. تأكد من أن البيانات المهمة "
+"محفوظة احتياطيا إذ لا يمكن التراجع عن هذا الإجراء."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
-msgstr ""
+msgstr "أنشئ نظام ملفات"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:410
 msgid ""
 "To create a new file system on the device, select the type and label and "
 "then press \"Create\". All existing data will be lost."
 msgstr ""
+"لإنشاء نظام ملفات جديد على الجهاز، اختر النوع والعنوان ثم انقر \"أنشئ\". "
+"ستُفقد كل البيانات الموجودة."
+
+#: ../src/palimpsest/gdu-shell.c:204
+msgid "Unknown Size"
+msgstr "الحجم مجهول"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
 #: ../src/palimpsest/gdu-shell.c:227 ../src/palimpsest/gdu-shell.c:256
 #, c-format
 msgid "Unknown Scheme: %s"
-msgstr ""
+msgstr "مخطط مجهول: %s"
 
 #. Translators: %s is the name of the partition table format, like 'Master Boot Record'
 #: ../src/palimpsest/gdu-shell.c:232
 #, c-format
 msgid "Partitioned Media (%s)"
-msgstr ""
+msgstr "وسط مقسّم (%s)"
 
 #: ../src/palimpsest/gdu-shell.c:237
 msgid "Unpartitioned Media"
-msgstr ""
+msgstr "وسط غير مقسم"
 
 #: ../src/palimpsest/gdu-shell.c:243 ../src/palimpsest/gdu-shell.c:267
 #: ../src/palimpsest/gdu-shell.c:334
@@ -3655,7 +3688,7 @@ msgstr "‏ RAID لينكس برمجي"
 #: ../src/palimpsest/gdu-shell.c:281
 #, c-format
 msgid "Connected via %s"
-msgstr ""
+msgstr "متصل عبر %s"
 
 #: ../src/palimpsest/gdu-shell.c:289 ../src/palimpsest/gdu-shell.c:358
 #: ../src/palimpsest/gdu-shell.c:393
@@ -3674,7 +3707,7 @@ msgstr "نظام ملفات %s"
 
 #: ../src/palimpsest/gdu-shell.c:323
 msgid "Encrypted LUKS Device"
-msgstr ""
+msgstr "جهاز LUKS مُعمّى"
 
 #: ../src/palimpsest/gdu-shell.c:330
 msgid "Data"
@@ -3682,7 +3715,7 @@ msgstr "بيانات"
 
 #: ../src/palimpsest/gdu-shell.c:339
 msgid "Cleartext LUKS Device"
-msgstr ""
+msgstr "جهاز LUKS مُظهّر"
 
 #: ../src/palimpsest/gdu-shell.c:346
 #, c-format
@@ -3973,8 +4006,7 @@ msgstr "متاح"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
 msgid ""
-"The presentable shown or NULL if this is a element representing lack of "
-"media"
+"The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
 
 #: ../src/playground/grid/gdu-grid-element.c:898

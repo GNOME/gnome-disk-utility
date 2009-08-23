@@ -39,6 +39,7 @@ typedef struct GduCurve                    GduCurve;
 typedef struct GduGraph                    GduGraph;
 typedef struct GduTimeLabel                GduTimeLabel;
 typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
+typedef struct GduSpinner                  GduSpinner;
 
 struct GduPoolTreeModel;
 typedef struct GduPoolTreeModel         GduPoolTreeModel;

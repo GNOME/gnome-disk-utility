@@ -226,7 +226,7 @@ pixbuf_data_func (GtkCellLayout   *cell_layout,
                   GtkTreeIter     *iter,
                   gpointer         user_data)
 {
-        GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
+        //GduPoolTreeView *view = GDU_POOL_TREE_VIEW (user_data);
         GduPresentable *p;
         GIcon *icon;
 

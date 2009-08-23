@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <stdlib.h>
+#include <glib/gstdio.h>
+#include <errno.h>
 
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
@@ -48,6 +50,8 @@ typedef struct
         gboolean show_icon_for_ata_smart_failures;
 
         NotifyNotification *ata_smart_notification;
+
+        GFileMonitor *ata_smart_ignore_monitor;
 
 } NotificationData;
 
@@ -132,10 +136,25 @@ on_status_icon_popup_menu (GtkStatusIcon *status_icon,
         show_menu_for_status_icon (data);
 }
 
+static void
+on_ata_smart_ignore_monitor_changed (GFileMonitor     *monitor,
+                                     GFile            *file,
+                                     GFile            *other_file,
+                                     GFileMonitorEvent event_type,
+                                     gpointer          user_data)
+{
+        NotificationData *data = user_data;
+        update_all (data);
+}
+
 static NotificationData *
 notification_data_new (void)
 {
         NotificationData *data;
+        GFile *file;
+        gchar *dir_path;
+        GError *error;
+        struct stat stat_buf;
 
         data = g_new0 (NotificationData, 1);
 
@@ -151,6 +170,37 @@ notification_data_new (void)
         gtk_status_icon_set_tooltip_markup (data->status_icon, _("One or more disks are failing"));
         g_signal_connect (data->status_icon, "activate", G_CALLBACK (on_status_icon_activate), data);
         g_signal_connect (data->status_icon, "popup-menu", G_CALLBACK (on_status_icon_popup_menu), data);
+
+        dir_path = g_build_filename (g_get_user_config_dir (),
+                                     "gnome-disk-utility",
+                                     "ata-smart-ignore",
+                                     NULL);
+        if (g_stat (dir_path, &stat_buf) != 0) {
+                if (g_mkdir_with_parents (dir_path, 0755) != 0) {
+                        g_warning ("Error creating directory `%s': %s",
+                                   dir_path,
+                                   g_strerror (errno));
+                }
+        }
+
+        file = g_file_new_for_path (dir_path);
+
+        error = NULL;
+        data->ata_smart_ignore_monitor = g_file_monitor_directory (file,
+                                                                   G_FILE_MONITOR_NONE,
+                                                                   NULL,
+                                                                   &error);
+        if (data->ata_smart_ignore_monitor != NULL) {
+                g_signal_connect (data->ata_smart_ignore_monitor,
+                                  "changed",
+                                  G_CALLBACK (on_ata_smart_ignore_monitor_changed),
+                                  data);
+        } else {
+                g_warning ("Error monitoring directory `%s': %s", dir_path, error->message);
+                g_error_free (error);
+        }
+        g_free (dir_path);
+        g_object_unref (file);
 
         return data;
 }
@@ -172,6 +222,11 @@ notification_data_free (NotificationData *data)
         g_list_free (data->devices_being_unmounted);
         g_list_foreach (data->ata_smart_failures, (GFunc) g_object_unref, NULL);
         g_list_free (data->ata_smart_failures);
+
+        if (data->ata_smart_ignore_monitor != NULL) {
+                g_object_unref (data->ata_smart_ignore_monitor);
+        }
+
         g_free (data);
 }
 
@@ -323,6 +378,39 @@ update_unmount_dialogs (NotificationData *data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/* TODO: keep in sync with src/gdu-gtk/gdu-ata-smart-dialog.c */
+static gboolean
+get_ata_smart_no_warn (GduDevice *device)
+{
+        gboolean ret;
+        gchar *path;
+        gchar *disk_id;
+        struct stat stat_buf;
+
+        ret = FALSE;
+
+        disk_id = g_strdup_printf ("%s-%s-%s-%s",
+                                   gdu_device_drive_get_vendor (device),
+                                   gdu_device_drive_get_model (device),
+                                   gdu_device_drive_get_revision (device),
+                                   gdu_device_drive_get_serial (device));
+
+        path = g_build_filename (g_get_user_config_dir (),
+                                 "gnome-disk-utility",
+                                 "ata-smart-ignore",
+                                 disk_id,
+                                 NULL);
+
+        if (g_stat (path, &stat_buf) == 0) {
+                ret = TRUE;
+        }
+
+        g_free (path);
+        g_free (disk_id);
+
+        return ret;
+}
+
 static void
 update_ata_smart_failures (NotificationData *data)
 {
@@ -338,14 +426,24 @@ update_ata_smart_failures (NotificationData *data)
 
         for (l = devices; l != NULL; l = l->next) {
                 GduDevice *device = GDU_DEVICE (l->data);
+                gboolean available;
+                const gchar *status;
+                guint64 time_collected;
 
-                if (!gdu_device_drive_ata_smart_get_is_available (device))
+                available = gdu_device_drive_ata_smart_get_is_available (device);
+                time_collected = gdu_device_drive_ata_smart_get_time_collected (device);
+                status = gdu_device_drive_ata_smart_get_status (device);
+
+                if (!available || time_collected == 0)
                         continue;
 
-                if (!((gdu_device_drive_ata_smart_get_is_failing (device) &&
-                       gdu_device_drive_ata_smart_get_is_failing_valid (device)) ||
-                      gdu_device_drive_ata_smart_get_has_bad_sectors (device) ||
-                      gdu_device_drive_ata_smart_get_has_bad_attributes (device)))
+                /* only warn on these statuses.. */
+                if (!((g_strcmp0 (status, "BAD_SECTOR_MANY") == 0) ||
+                      (g_strcmp0 (status, "BAD_ATTRIBUTE_NOW") == 0) ||
+                      (g_strcmp0 (status, "BAD_STATUS") == 0)))
+                        continue;
+
+                if (get_ata_smart_no_warn (device))
                         continue;
 
                 current = g_list_prepend (current, device);
@@ -432,11 +530,13 @@ update_status_icon (NotificationData *data)
         /* we've started showing the icon for ATA RAID failures; pop up a libnotify notification */
         if (old_show_icon_for_ata_smart_failures != data->show_icon_for_ata_smart_failures) {
 
-		data->ata_smart_notification = notify_notification_new
-                        (_("A hard disk is failing"),
-                         _("One or more hard disks report health problems. Click the icon to get more information."),
-                         "gtk-dialog-warning",
-                         NULL);
+		data->ata_smart_notification = notify_notification_new (
+                    /* Translators: This is used as the title of the notification */
+                    _("A hard disk may be failing"),
+                    /* Translators: This is used as the text of the notification*/
+                    _("One or more hard disks report health problems. Click the icon to get more information."),
+                    "gtk-dialog-warning",
+                    NULL);
                 notify_notification_attach_to_status_icon (data->ata_smart_notification,
                                                            data->status_icon);
                 notify_notification_set_urgency (data->ata_smart_notification, NOTIFY_URGENCY_CRITICAL);
@@ -502,18 +602,42 @@ show_menu_for_status_icon (NotificationData *data)
         for (l = data->ata_smart_failures; l != NULL; l = l->next) {
                 GduDevice *device = GDU_DEVICE (l->data);
                 GduPresentable *presentable;
-                gchar *device_name;
+                gchar *name;
+                gchar *vpd_name;
+                const gchar *status;
+                gchar *status_desc;
+                gboolean highlight;
                 GdkPixbuf *pixbuf;
                 GtkWidget *image;
                 GtkWidget *menu_item;
+                gchar *s;
 
                 presentable = gdu_pool_get_drive_by_device (data->pool, device);
-                device_name = gdu_presentable_get_name (presentable);
+                name = gdu_presentable_get_name (presentable);
+                vpd_name = gdu_presentable_get_vpd_name (presentable);
 
-                menu_item = gtk_image_menu_item_new_with_label (device_name);
+                status = gdu_device_drive_ata_smart_get_status (device);
+                status_desc = gdu_util_ata_smart_status_to_desc (status, &highlight, NULL, NULL);
+
+                if (highlight) {
+                        s = g_strdup_printf ("<span fgcolor=\"red\"><b>%s</b></span>", status_desc);
+                        g_free (status_desc);
+                        status_desc = s;
+                }
+
+                s = g_strdup_printf ("<b>%s</b> – %s\n"
+                                     "<small>%s</small>",
+                                     name,
+                                     vpd_name,
+                                     status_desc);
+
+                menu_item = gtk_image_menu_item_new_with_label (s);
+                gtk_label_set_use_markup (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menu_item))), TRUE);
+                gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menu_item), TRUE);
+
                 g_object_set_data_full (G_OBJECT (menu_item), "gdu-device", g_object_ref (device), g_object_unref);
 
-                pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_MENU);
+                pixbuf = gdu_util_get_pixbuf_for_presentable (presentable, GTK_ICON_SIZE_SMALL_TOOLBAR);
                 image = gtk_image_new_from_pixbuf (pixbuf);
                 g_object_unref (pixbuf);
                 gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), image);
@@ -525,7 +649,10 @@ show_menu_for_status_icon (NotificationData *data)
 
                 gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
-                g_free (device_name);
+                g_free (name);
+                g_free (vpd_name);
+                g_free (status_desc);
+                g_free (s);
                 g_object_unref (presentable);
         }
         gtk_widget_show_all (menu);

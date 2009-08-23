@@ -75,10 +75,6 @@
                                                      G_TYPE_STRING,   \
                                                      G_TYPE_INVALID))
 
-GduAtaSmartAttribute *_gdu_ata_smart_attribute_new   (gpointer data);
-
-GduAtaSmartHistoricalData * _gdu_ata_smart_historical_data_new            (gpointer data);
-
 GduKnownFilesystem    *_gdu_known_filesystem_new       (gpointer data);
 
 GduProcess            * _gdu_process_new               (gpointer data);

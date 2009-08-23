@@ -37,8 +37,6 @@
 #include <gdu/gdu-pool.h>
 #include <gdu/gdu-presentable.h>
 #include <gdu/gdu-process.h>
-#include <gdu/gdu-ata-smart-historical-data.h>
-#include <gdu/gdu-ata-smart-attribute.h>
 #include <gdu/gdu-util.h>
 #include <gdu/gdu-volume.h>
 #include <gdu/gdu-volume-hole.h>

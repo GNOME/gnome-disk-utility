@@ -9,10 +9,6 @@
 G_BEGIN_DECLS
 
 /* enumerations from "gdu-gtk-enums.h" */
-GType gdu_curve_flags_get_type (void) G_GNUC_CONST;
-#define GDU_TYPE_CURVE_FLAGS (gdu_curve_flags_get_type ())
-GType gdu_curve_unit_get_type (void) G_GNUC_CONST;
-#define GDU_TYPE_CURVE_UNIT (gdu_curve_unit_get_type ())
 GType gdu_pool_tree_model_column_get_type (void) G_GNUC_CONST;
 #define GDU_TYPE_POOL_TREE_MODEL_COLUMN (gdu_pool_tree_model_column_get_type ())
 GType gdu_pool_tree_view_flags_get_type (void) G_GNUC_CONST;

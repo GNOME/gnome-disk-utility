@@ -50,6 +50,11 @@ char *gdu_linux_md_get_raid_level_for_display (const gchar *linux_md_raid_level,
 
 char *gdu_linux_md_get_raid_level_description (const gchar *linux_md_raid_level);
 
+gchar *gdu_util_ata_smart_status_to_desc (const gchar  *status,
+                                          gboolean     *out_highlight,
+                                          gchar       **out_action_text,
+                                          GIcon       **out_icon);
+
 typedef void (*GduUtilPartTypeForeachFunc) (const char *scheme,
                                             const char *type,
                                             const char *name,

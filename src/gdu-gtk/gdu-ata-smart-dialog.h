@@ -55,7 +55,7 @@ struct GduAtaSmartDialogClass
 
 GType       gdu_ata_smart_dialog_get_type (void) G_GNUC_CONST;
 GtkWidget*  gdu_ata_smart_dialog_new      (GtkWindow *parent,
-                                           GduDevice *device);
+                                           GduDrive  *drive);
 
 G_END_DECLS
 

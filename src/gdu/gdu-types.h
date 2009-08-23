@@ -43,8 +43,6 @@ typedef struct _GduVolumeHole             GduVolumeHole;
 
 typedef struct _GduKnownFilesystem        GduKnownFilesystem;
 typedef struct _GduProcess                GduProcess;
-typedef struct _GduAtaSmartHistoricalData GduAtaSmartHistoricalData;
-typedef struct _GduAtaSmartAttribute      GduAtaSmartAttribute;
 
 G_END_DECLS
 

@@ -122,11 +122,6 @@ typedef void (*GduDeviceCancelJobCompletedFunc) (GduDevice  *device,
                                                  GError     *error,
                                                  gpointer    user_data);
 
-typedef void (*GduDeviceDriveAtaSmartGetHistoricalDataCompletedFunc) (GduDevice *device,
-                                                                      GList     *smart_data,
-                                                                      GError    *error,
-                                                                      gpointer   user_data);
-
 typedef void (*GduDeviceFilesystemListOpenFilesCompletedFunc) (GduDevice    *device,
                                                                GList        *processes,
                                                                GError       *error,

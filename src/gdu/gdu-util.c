@@ -357,8 +357,12 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Checking RAID Array"));
         } else if (strcmp (job_id, "LinuxMdRepair") == 0) {
                 s = g_strdup (_("Repairing RAID Array"));
-        } else if (strcmp (job_id, "DriveAtaSmartInitiateSelftest") == 0) {
-                s = g_strdup (_("Running S.M.A.R.T. Self Test"));
+        } else if (strcmp (job_id, "DriveAtaSmartSelftestShort") == 0) {
+                s = g_strdup (_("Running Short SMART Self-Test"));
+        } else if (strcmp (job_id, "DriveAtaSmartSelftestExtended") == 0) {
+                s = g_strdup (_("Running Extended SMART Self-Test"));
+        } else if (strcmp (job_id, "DriveAtaSmartSelftestConveyance") == 0) {
+                s = g_strdup (_("Running Conveyance SMART Self-Test"));
         } else if (strcmp (job_id, "DriveEject") == 0) {
                 s = g_strdup (_("Ejecting Media"));
         } else if (strcmp (job_id, "DriveDetach") == 0) {
@@ -915,3 +919,86 @@ gdu_linux_md_get_raid_level_description (const gchar *linux_md_raid_level)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/**
+ * gdu_util_ata_smart_status_to_desc:
+ * @status: Status from libatasmart, e.g. <quote>BAD_STATUS</quote>.
+ * @out_highlight: Return value (or %NULL) for suggesting whether the status should be highlighted.
+ * @out_action_text: Return value (or %NULL) for suggested action. Free with g_free().
+ * @out_icon: Return value (or %NULL) for icon to show. Free with g_object_unref().
+ *
+ * Gets a human readable representation of @status.
+ *
+ * Returns: The human readable status. Free with g_free().
+ */
+gchar *
+gdu_util_ata_smart_status_to_desc (const gchar  *status,
+                                   gboolean     *out_highlight,
+                                   gchar       **out_action_text,
+                                   GIcon       **out_icon)
+{
+        const gchar *desc;
+        const gchar *action_text;
+        gchar *ret;
+        gboolean highlight;
+        GIcon *icon;
+
+        highlight = FALSE;
+        action_text = NULL;
+        if (g_strcmp0 (status, "GOOD") == 0) {
+                /* Translators: Overall description of the GOOD status */
+                desc = _("Disk is healthy");
+                icon = g_themed_icon_new ("gdu-smart-healthy");
+        } else if (g_strcmp0 (status, "BAD_ATTRIBUTE_IN_THE_PAST") == 0) {
+                /* Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status */
+                desc = _("Disk was used outside of design parameters in the past");
+                icon = g_themed_icon_new ("gdu-smart-healthy");
+        } else if (g_strcmp0 (status, "BAD_SECTOR") == 0) {
+                /* Translators: Overall description of the BAD_SECTOR status */
+                desc = _("Disk has a few bad sectors");
+                icon = g_themed_icon_new ("gdu-smart-healthy");
+        } else if (g_strcmp0 (status, "BAD_ATTRIBUTE_NOW") == 0) {
+                /* Translators: Overall description of the BAD_ATTRIBUTE_NOW status */
+                desc = _("DISK IS BEING USED OUTSIDE DESIGN PARAMETERS");
+                /* Translators: Suggested action for the BAD_ATTRIBUTE_NOW status */
+                action_text = _("Backup all data and replace the disk");
+                highlight = TRUE;
+                icon = g_themed_icon_new ("gdu-smart-threshold");
+        } else if (g_strcmp0 (status, "BAD_SECTOR_MANY") == 0) {
+                /* Translators: Overall description of the BAD_SECTOR_MANY status */
+                desc = _("DISK HAS MANY BAD SECTORS");
+                highlight = TRUE;
+                /* Translators: Suggested action for the BAD_SECTOR_MANY status */
+                action_text = _("Backup all data and replace the disk");
+                icon = g_themed_icon_new ("gdu-smart-threshold");
+        } else if (g_strcmp0 (status, "BAD_STATUS") == 0) {
+                /* Translators: Overall description of the BAD_STATUS status */
+                desc = _("DISK FAILURE IS IMMINENT");
+                /* Translators: Suggested action for the BAD_STATUS status */
+                action_text = _("Backup all data and replace the disk");
+                highlight = TRUE;
+                icon = g_themed_icon_new ("gdu-smart-failing");
+        } else if (status == NULL || strlen (status) == 0) {
+                /* Translators: Description when the overall SMART status is unknown */
+                desc = _("Unknown");
+                icon = g_themed_icon_new ("gdu-smart-unknown");
+        } else {
+                desc = status;
+                icon = g_themed_icon_new ("gdu-smart-unknown");
+        }
+
+        if (out_highlight != NULL)
+                *out_highlight = highlight;
+
+        if (out_action_text != NULL)
+                *out_action_text = g_strdup (action_text);
+
+        if (out_icon != NULL)
+                *out_icon = g_object_ref (icon);
+        g_object_unref (icon);
+
+        ret = g_strdup (desc);
+
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

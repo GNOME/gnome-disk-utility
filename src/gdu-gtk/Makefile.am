@@ -35,6 +35,8 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-pool-tree-model.h						\
 	gdu-size-widget.h						\
 	gdu-create-linux-md-dialog.h					\
+	gdu-ata-smart-dialog.h						\
+	gdu-spinner.h							\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -47,6 +49,8 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-pool-tree-model.h			gdu-pool-tree-model.c			\
 	gdu-size-widget.h			gdu-size-widget.c			\
 	gdu-create-linux-md-dialog.h		gdu-create-linux-md-dialog.c		\
+	gdu-ata-smart-dialog.h			gdu-ata-smart-dialog.c			\
+	gdu-spinner.h				gdu-spinner.c				\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\
@@ -69,7 +73,9 @@ libgdu_gtk_la_CFLAGS = 					\
 	$(GNOME_KEYRING_CFLAGS)				\
 	$(GTK2_CFLAGS)					\
 	$(WARN_CFLAGS)					\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)					\
+	$(LIBATASMART_CFLAGS)				\
+	$(NULL)
 
 libgdu_gtk_la_LIBADD = 					\
 	$(GLIB2_LIBS)					\
@@ -78,7 +84,9 @@ libgdu_gtk_la_LIBADD = 					\
 	$(DBUS_GLIB_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
 	$(GTK2_LIBS)					\
-	$(INTLLIBS)
+	$(INTLLIBS)					\
+	$(LIBATASMART_LIBS)				\
+	$(NULL)
 
 libgdu_gtk_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 		        -export-dynamic -no-undefined -export-symbols-regex '(^gdu_.*)'
@@ -87,6 +95,11 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gdu-gtk.pc
 
 CLEANFILES = $(BUILT_SOURCES) $(pkgconfig_DATA)
+
+EXTRADIST =				\
+	gdu-gtk-enumtypes.h.template	\
+	gdu-gtk-enumtypes.c.template	\
+	$(NULL)
 
 clean-local :
 	rm -f *~ $(BUILT_SOURCES)

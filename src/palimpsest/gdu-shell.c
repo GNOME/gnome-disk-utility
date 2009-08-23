@@ -34,7 +34,6 @@
 
 #include "gdu-shell.h"
 
-#include "gdu-section-health.h"
 #include "gdu-section-partition.h"
 #include "gdu-section-create-partition-table.h"
 #include "gdu-section-unallocated.h"
@@ -273,13 +272,43 @@ details_update (GduShell *shell)
                         g_ptr_array_add (details,
                                          g_strdup (_("Linux Software RAID")));
                 } else {
-                        s = gdu_util_get_connection_for_display (
-                                gdu_device_drive_get_connection_interface (device),
-                                gdu_device_drive_get_connection_speed (device));
-                        g_ptr_array_add (details,
-                                         /* Translators: %s is the name of a connection, like 'USB at 2 MB/s' */
-                                         g_strdup_printf (_("Connected via %s"), s));
-                        g_free (s);
+                        if (gdu_device_drive_ata_smart_get_is_available (device) &&
+                            gdu_device_drive_ata_smart_get_time_collected (device) > 0) {
+                                gchar *smart_status;
+                                gchar *status_desc;
+                                gboolean highlight;
+                                gboolean rtl;
+
+                                rtl = (gtk_widget_get_direction (GTK_WIDGET (shell->priv->app_window)) == GTK_TEXT_DIR_RTL);
+
+                                status_desc = gdu_util_ata_smart_status_to_desc (gdu_device_drive_ata_smart_get_status (device),
+                                                                                 &highlight,
+                                                                                 NULL,
+                                                                                 NULL);
+                                /* Translators: the %s is the SMART status of the disk e.g. 'Healthy' */
+                                if (highlight) {
+                                        s = g_strdup_printf ("<span fgcolor=\"red\"><b>%s</b></span>", status_desc);
+                                        g_free (status_desc);
+                                        status_desc = s;
+                                }
+                                smart_status = g_strdup_printf (_("SMART status: %s"),
+                                                                status_desc);
+                                g_free (status_desc);
+
+                                s = g_strdup_printf (rtl ? "<a href=\"gnome-disk-utility://show-smart\" title=\"%2$s\">%3$s</a> – %1$s" :
+                                                     "%s – <a href=\"gnome-disk-utility://show-smart\" title=\"%s\">%s</a>",
+                                                     smart_status,
+                                                     /* Translators: this the SMART hyperlink tooltip */
+                                                     _("View details about SMART for this disk"),
+                                                     /* Translators: this is the text for the SMART hyperlink */
+                                                     _("More Information"));
+                                g_free (smart_status);
+
+                                g_ptr_array_add (details, s);
+
+                        } else {
+                                g_ptr_array_add (details, g_strdup (_("SMART is not available")));
+                        }
                 }
 
                 if (device_file != NULL) {
@@ -425,6 +454,7 @@ details_update (GduShell *shell)
 
                 s = g_strdup_printf ("<span foreground='%s'>%s</span>", detail_color, detail_str);
                 gtk_label_set_markup (GTK_LABEL (label), s);
+                gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
                 g_free (s);
         }
 
@@ -483,13 +513,6 @@ compute_sections_to_show (GduShell *shell)
                 if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device)) {
 
                         sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
-
-                } else {
-
-                        if (gdu_device_drive_ata_smart_get_is_available (device)) {
-                                sections_to_show = g_list_append (sections_to_show,
-                                                                  (gpointer) GDU_TYPE_SECTION_HEALTH);
-                        }
 
                 }
 
@@ -2120,6 +2143,33 @@ gdu_shell_raise_error (GduShell       *shell,
 }
 
 static void
+on_activate_link_for_details_label (GtkLabel    *label,
+                                    const gchar *uri,
+                                    gpointer     user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (g_str_has_prefix (uri, "gnome-disk-utility://")) {
+
+                if (g_strcmp0 (uri, "gnome-disk-utility://show-smart") == 0) {
+                        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
+                                GtkWidget *dialog;
+
+                                dialog = gdu_ata_smart_dialog_new (GTK_WINDOW (shell->priv->app_window),
+                                                                   GDU_DRIVE (shell->priv->presentable_now_showing));
+                                gtk_widget_show_all (dialog);
+                                gtk_dialog_run (GTK_DIALOG (dialog));
+                                gtk_widget_destroy (dialog);
+                        } else {
+                                g_warning ("Trying to show ATA SMART dialog for presentable that is not a drive");
+                        }
+                }
+
+                g_signal_stop_emission_by_name (label, "activate-link");
+        }
+}
+
+static void
 create_window (GduShell *shell)
 {
         GtkWidget *vbox;
@@ -2236,21 +2286,37 @@ create_window (GduShell *shell)
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        g_signal_connect (label,
+                          "activate-link",
+                          G_CALLBACK (on_activate_link_for_details_label),
+                          shell);
         shell->priv->details0_label = label;
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        g_signal_connect (label,
+                          "activate-link",
+                          G_CALLBACK (on_activate_link_for_details_label),
+                          shell);
         shell->priv->details1_label = label;
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        g_signal_connect (label,
+                          "activate-link",
+                          G_CALLBACK (on_activate_link_for_details_label),
+                          shell);
         shell->priv->details2_label = label;
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
+        g_signal_connect (label,
+                          "activate-link",
+                          G_CALLBACK (on_activate_link_for_details_label),
+                          shell);
         shell->priv->details3_label = label;
 
         /* --- */

@@ -9,7 +9,6 @@ palimpsest_SOURCES = 									\
 						gdu-main.c				\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
-	gdu-section-health.h			gdu-section-health.c			\
 	gdu-section-create-partition-table.h	gdu-section-create-partition-table.c	\
 	gdu-section-partition.h			gdu-section-partition.c			\
 	gdu-section-unallocated.h		gdu-section-unallocated.c		\

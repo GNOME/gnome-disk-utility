@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-23 18:25+0000\n"
-"PO-Revision-Date: 2009-08-23 23:02+0200\n"
+"POT-Creation-Date: 2009-08-23 21:04+0000\n"
+"PO-Revision-Date: 2009-08-29 21:12+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -724,22 +724,19 @@ msgid "Repairing RAID Array"
 msgstr "Reparando el conjunto RAID"
 
 #: ../src/gdu/gdu-util.c:361
-#, fuzzy
 #| msgid "Running S.M.A.R.T. Self Test"
 msgid "Running Short SMART Self-Test"
-msgstr "Ejecutar autocomprobación S.M.A.R.T."
+msgstr "Ejecutando autocomprobación corta SMART"
 
 #: ../src/gdu/gdu-util.c:363
-#, fuzzy
 #| msgid "Running S.M.A.R.T. Self Test"
 msgid "Running Extended SMART Self-Test"
-msgstr "Ejecutar autocomprobación S.M.A.R.T."
+msgstr "Ejecutando autocomprobación extendida SMART"
 
 #: ../src/gdu/gdu-util.c:365
-#, fuzzy
 #| msgid "Running S.M.A.R.T. Self Test"
 msgid "Running Conveyance SMART Self-Test"
-msgstr "Ejecutar autocomprobación S.M.A.R.T."
+msgstr "Ejecutando autocomprobación de transmisión SMART"
 
 #: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
@@ -1314,7 +1311,6 @@ msgstr "Nivel de RAID desconocido: %s."
 
 #. Translators: Overall description of the GOOD status
 #: ../src/gdu/gdu-util.c:949
-#| msgid "Disk Utility"
 msgid "Disk is healthy"
 msgstr "El disco está sano"
 
@@ -1325,7 +1321,6 @@ msgstr "El disco se usó en el pasado fuera de los parámetros de diseño"
 
 #. Translators: Overall description of the BAD_SECTOR status
 #: ../src/gdu/gdu-util.c:957
-#| msgid "The disk has bad sectors."
 msgid "Disk has a few bad sectors"
 msgstr "El disco tiene algunos sectores erróneos"
 
@@ -1686,10 +1681,6 @@ msgid "Read Error Rate"
 msgstr "Tasa de errores de lectura"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:145
-#| msgid ""
-#| "Frequency of errors while reading raw data from the disk. A non-zero "
-#| "value indicates a problem with either the disk surface or read/write "
-#| "heads."
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -1706,7 +1697,6 @@ msgid "Throughput Performance"
 msgstr "Rendimiento de la transferencia"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:155
-#| msgid "Average efficiency of the disk."
 msgid "Average efficiency of the disk"
 msgstr "Eficiencia media del disco"
 
@@ -1718,7 +1708,6 @@ msgid "Spinup Time"
 msgstr "Tiempo de reactivación"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:163
-#| msgid "Time needed to spin up the disk."
 msgid "Time needed to spin up the disk"
 msgstr "Tiempo necesario para reactivar el disco"
 
@@ -1730,7 +1719,6 @@ msgid "Start/Stop Count"
 msgstr "Contador de inicios/paradas"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:171
-#| msgid "Number of spindle start/stop cycles."
 msgid "Number of spindle start/stop cycles"
 msgstr "Número de ciclos de inicio/parada de los ejes"
 
@@ -1742,10 +1730,6 @@ msgid "Reallocated Sector Count"
 msgstr "Contador de sectores reubicados"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
-#| msgid ""
-#| "Count of remapped sectors. When the hard drive finds a read/write/"
-#| "verification error, it mark the sector as \"reallocated\" and transfers "
-#| "data to a special reserved area (spare area)."
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it mark the sector as \"reallocated\" and transfers data "
@@ -1774,7 +1758,6 @@ msgid "Seek Error Rate"
 msgstr "Tasa de errores de búsqueda"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:197
-#| msgid "Frequency of errors while positioning."
 msgid "Frequency of errors while positioning"
 msgstr "Frecuencia de errores al posicionarse"
 
@@ -1799,7 +1782,6 @@ msgstr "Horas encendido"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:213
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:537
-#| msgid "Number of hours elapsed in the power-on state."
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Número de horas transcurridas en estado encendido"
 
@@ -1811,7 +1793,6 @@ msgid "Spinup Retry Count"
 msgstr "Contador de intentos de reactivación"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:221
-#| msgid "Number of retry attempts to spin up."
 msgid "Number of retry attempts to spin up"
 msgstr "Número de intentos de reactivación"
 
@@ -1823,7 +1804,6 @@ msgid "Calibration Retry Count"
 msgstr "Contador de intentos de calibración"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:229
-#| msgid "Number of attempts to calibrate the device."
 msgid "Number of attempts to calibrate the device"
 msgstr "Número de intentos para calibrar el dispositivo"
 
@@ -1835,7 +1815,6 @@ msgid "Power Cycle Count"
 msgstr "Contador de ciclos de encendido"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:237
-#| msgid "Number of power-on events."
 msgid "Number of power-on events"
 msgstr "Número de eventos de encendido"
 
@@ -1847,7 +1826,6 @@ msgid "Soft read error rate"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:245
-#| msgid "Frequency of 'program' errors while reading from the disk."
 msgid "Frequency of 'program' errors while reading from the disk"
 msgstr "Frecuencia de errores de «programa» al leer del disco"
 
@@ -1859,7 +1837,6 @@ msgid "Reported Uncorrectable Errors"
 msgstr "Errores no corregibles informados"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
-#| msgid "Number of errors corrected by software ECC."
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Número de errores que no se pueden recuperar usando hardware ECC"
 
@@ -1879,12 +1856,10 @@ msgstr ""
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:268
-#| msgid "Temperature"
 msgid "Airflow Temperature"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:269
-#| msgid "Temperature of the drive."
 msgid "Airflow temperature of the drive"
 msgstr ""
 
@@ -1897,7 +1872,6 @@ msgid "G-sense Error Rate"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:277
-#| msgid "Frequency of mistakes as a result of impact loads."
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Frecuencia de errores como resultado de cargas de impacto"
 
@@ -1910,7 +1884,6 @@ msgid "Power-off Retract Count"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:285
-#| msgid "Number of power-on events."
 msgid "Number of power-off or emergency retract cycles"
 msgstr ""
 
@@ -1923,7 +1896,6 @@ msgid "Load/Unload Cycle Count"
 msgstr "Contador de ciclos de carga/descarga"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:293
-#| msgid "Number of cycles into landing zone position."
 msgid "Number of cycles into landing zone position"
 msgstr "Número de ciclos al posicionarse en el área de aterrizaje"
 
@@ -1936,7 +1908,6 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:301
-#| msgid "Current internal temperature in degrees Celsius."
 msgid "Current internal temperature of the drive"
 msgstr "Temperatura interna actual de la unidad"
 
@@ -2113,13 +2084,12 @@ msgstr "Número de errores corregidos por software ECC."
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:397
 msgid "Thermal Asperity Rate"
-msgstr ""
+msgstr "Tasa de aspereza termal"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:398
-#, fuzzy
 #| msgid "Number of ECC on-the-fly errors."
 msgid "Number of Thermal Asperity Rate errors"
-msgstr "Número de errores ECC al vuelo."
+msgstr "Número de errores de tasa de aspereza termal"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2222,7 +2192,6 @@ msgid "Load/Unload Retry Count"
 msgstr "Contador de intentos de carga/descarga"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:463
-#, fuzzy
 #| msgid ""
 #| "Loading on drive caused by numerous recurrences of operations, like "
 #| "reading, recording, positioning of heads, etc."
@@ -2231,7 +2200,7 @@ msgid ""
 "recording, positioning of heads, etc"
 msgstr ""
 "Carga en la unidad causada por recurrencias de operaciones como lectura, "
-"grabación, posicionamiento de los cabezales, etc."
+"grabación, posicionamiento de los cabezales, etc"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2245,7 +2214,6 @@ msgid "Load on drive cause by friction in mechanical parts of the store"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
-#, fuzzy
 #| msgid "Total number of load cycles."
 msgid "Total number of load cycles"
 msgstr "Número total de ciclos de carga"
@@ -2258,10 +2226,9 @@ msgid "Load-in Time"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:488
-#, fuzzy
 #| msgid "General time for loading in a drive."
 msgid "General time for loading in a drive"
-msgstr "Tiempo general para la carga en un dispositivo."
+msgstr "Tiempo general para la carga en una unidad"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2275,7 +2242,6 @@ msgid "Quantity efforts of the rotating moment of a drive"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
-#| msgid "Number of power-on events."
 msgid "Number of power-off retract events"
 msgstr ""
 
@@ -2291,7 +2257,6 @@ msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:520
-#| msgid "Temperature of the drive."
 msgid "Temperature of the drive"
 msgstr "Temperatura de la unidad"
 
@@ -2312,12 +2277,10 @@ msgstr ""
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:544
-#| msgid "Uncorrectable Sector Count"
 msgid "Uncorrectable ECC Count"
 msgstr "Contador de sectores EEC incorregibles"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:545
-#| msgid "Number of ECC errors."
 msgid "Number of uncorrectable ECC errors"
 msgstr "Número de errores ECC no corregibles"
 
@@ -2326,13 +2289,15 @@ msgstr "Número de errores ECC no corregibles"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:552
 msgid "Good Block Rate"
-msgstr ""
+msgstr "Tasa de bloques correctos"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
 msgstr ""
+"Número de bloques reservados disponibles como porcentaje del número total de "
+"bloques reservados"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2342,7 +2307,6 @@ msgid "Head Flying Hours"
 msgstr "Horas de vuelo del cabezal"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
-#| msgid "Time while head is positioning."
 msgid "Time while head is positioning"
 msgstr "Tiempo mientras que el cabezal se posiciona"
 
@@ -2354,7 +2318,6 @@ msgid "Read Error Retry Rate"
 msgstr "Tasa de reintento de errores de lectura"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:570
-#| msgid "Number of errors while reading from a disk."
 msgid "Number of errors while reading from a disk"
 msgstr "Número de errores al leer de un disco"
 
@@ -2363,7 +2326,6 @@ msgstr "Número de errores al leer de un disco"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:819
 #, c-format
-#| msgid "No description for attribute %d."
 msgid "No description for attribute %d"
 msgstr "No existe una descripción para el atributo %d"
 
@@ -2384,8 +2346,6 @@ msgstr "Umbral:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:902
-#| msgctxt "SMART attribute"
-#| msgid "Value"
 msgid "Value:"
 msgstr "Valor:"
 
@@ -2399,15 +2359,11 @@ msgstr "Valor:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1064
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2181
-#| msgctxt "SMART Attribute status"
-#| msgid "N/A"
 msgid "N/A"
 msgstr "N/D"
 
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
-#| msgctxt "RAID status"
-#| msgid "Repairing"
 msgid "Failing"
 msgstr "Fallando"
 
@@ -2419,8 +2375,6 @@ msgstr "Falló en el pasado"
 #. Translators: Shown in the treeview for an attribute that we want to warn about
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1053
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1061
-#| msgctxt "RAID status"
-#| msgid "Repairing"
 msgid "Warning"
 msgstr "Advertencia"
 
@@ -2431,7 +2385,6 @@ msgstr "Bien"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1234
-#| msgid "Select what ATA SMART self test to run"
 msgid "Select what SMART self test to run"
 msgstr "Seleccionar qué autocomprobación SMART ejecutar"
 
@@ -2442,6 +2395,9 @@ msgid ""
 "size of the disk. You can continue using your system while the test is "
 "running."
 msgstr ""
+"Completar las comprobaciones pueden llevar mucho tiempo dependiendo de la "
+"velocidad y tamaño del disco. Puede continuar usando su sistema mientras la "
+"comprobación se está ejecutando."
 
 #. Translators: Radio button for short test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
@@ -2456,7 +2412,7 @@ msgstr "_Extendida (generalmente docenas de minutos)"
 #. Translators: Radio button for conveyance test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr ""
+msgstr "_Transmisión (generalmente menos de diez minutos)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
@@ -2486,15 +2442,11 @@ msgstr "Datos SMART"
 
 #. Translators: Label used before the drive combo box
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1536
-#| msgctxt "Media Type"
-#| msgid "Drive"
 msgid "_Drive:"
 msgstr "_Unidad:"
 
 #. Translators: Heading used in the main dialog for the SMART status
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1584
-#| msgctxt "SMART attribute"
-#| msgid "Status"
 msgid "Status"
 msgstr "Estado"
 
@@ -2514,7 +2466,6 @@ msgstr "Actualizado:"
 
 #. Translators: Used in the status table when data is currently being updated
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1621
-#| msgid "Preparing..."
 msgid "Updating..."
 msgstr "Actualizando…"
 
@@ -2525,7 +2476,6 @@ msgstr "Lee los datos SMART del disco, despertándolo si es necesario"
 
 #. Translators: Text used in the hyperlink in the status table to update the SMART status
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1642
-#| msgid "Updates:"
 msgid "Update now"
 msgstr "Actualizar ahora"
 
@@ -2543,7 +2493,6 @@ msgstr "Autocomprobaciones:"
 
 #. Translators: Tooltip for the "Run self-test" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1695
-#| msgid "Run an ATA SMART self test on the disk"
 msgid "Initiates a self-test on the drive"
 msgstr "Inicia una autocomprobación en la unidad"
 
@@ -2555,11 +2504,10 @@ msgstr "Ejecutar autocomprobación"
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1714
 msgid "Cancels the currently running test"
-msgstr ""
+msgstr "Cancela la comprobación actual en ejecución"
 
 #. Translators: Text used in the hyperlink in the status table to cancel a self-test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1716
-#| msgid "_Cancel"
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2568,35 +2516,33 @@ msgstr "Cancelar"
 #. Translators: Tooltip for the "Model Name:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1742
 msgid "The name of the model of the disk"
-msgstr ""
+msgstr "El nombre del modelo del disco"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1748
 msgid "Model Name:"
-msgstr ""
+msgstr "Nombre del modelo:"
 
 #. ------------------------------
 #. firmware
 #. Translators: Tooltip for the "Firmware Version:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1766
-#, fuzzy
 #| msgid "Average efficiency of the disk."
 msgid "The firmware version of the disk"
-msgstr "Eficiencia media del disco."
+msgstr "La versión de firmware del disco"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1772
 msgid "Firmware Version:"
-msgstr ""
+msgstr "Versión del firmware:"
 
 #. ------------------------------
 #. serial
 #. Translators: Tooltip for the "Serial:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1790
-#, fuzzy
 #| msgid "Temperature of the drive."
 msgid "The serial number of the disk"
-msgstr "Temperatura del dispositivo."
+msgstr "El número de serie del disco"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1796
@@ -2608,7 +2554,7 @@ msgstr "Número de serie:"
 #. Translators: Tooltip for the "Powered On:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1814
 msgid "The amount of elapsed time the disk has been in a powered-up state"
-msgstr ""
+msgstr "El tiempo transcurrido en el que el disco ha estado encendido"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1820
@@ -2619,7 +2565,6 @@ msgstr "Encendido:"
 #. temperature
 #. Translators: Tooltip for the "Temperature:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1838
-#| msgid "Temperature of the drive."
 msgid "The temperature of the disk"
 msgstr "La temperatura del disco"
 
@@ -2637,8 +2582,6 @@ msgstr "La suma de sectores erróneos pendientes y reubicados"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1868
-#| msgid "%d Sector"
-#| msgid_plural "%d Sectors"
 msgid "Bad Sectors:"
 msgstr "Sectores erróneos:"
 
@@ -2647,53 +2590,49 @@ msgstr "Sectores erróneos:"
 #. Translators: Tooltip for the "Self Assessment" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1884
 msgid "The assessment from the disk itself whether it is about to fail"
-msgstr ""
+msgstr "La estimación propia del disco indicando si está a punto de fallar"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1890
-#, fuzzy
 #| msgid "Assessment:"
 msgid "Self Assessment:"
-msgstr "Valoración:"
+msgstr "Estimación propia:"
 
 #. ------------------------------
 #. overall assessment
 #. Translators: Tooltip for the "Overall Assessment" in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1906
 msgid "An overall assessment of the health of the disk"
-msgstr ""
+msgstr "Una estimación general de la salud del disco"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1912
-#, fuzzy
 #| msgid "Assessment:"
 msgid "Overall Assessment:"
-msgstr "Valoración:"
+msgstr "Estimación general:"
 
 #. ------------------------------
 #. Translators: Tooltip for the "Do not warn if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr ""
+"Dejar sin marcar para recibir notificaciones si el disco comienza a fallar"
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
-#, fuzzy
 #| msgid "A hard disk is failing"
 msgid "Don't _warn me if the disk is failing"
-msgstr "Un disco duro está fallando"
+msgstr "No a_visarme si el disco está fallando"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
-#, fuzzy
 #| msgctxt "SMART attribute"
 #| msgid "Attribute"
 msgid "_Attributes"
-msgstr "Atributo"
+msgstr "_Atributos"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
-#, fuzzy
 #| msgctxt "SMART attribute"
 #| msgid "ID"
 msgid "ID"
@@ -2701,7 +2640,6 @@ msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2000
-#, fuzzy
 #| msgctxt "SMART attribute"
 #| msgid "Attribute"
 msgid "Attribute"
@@ -2709,14 +2647,12 @@ msgstr "Atributo"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2017
-#, fuzzy
 #| msgid "Assessment:"
 msgid "Assessment"
-msgstr "Valoración:"
+msgstr "Estimación"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
-#, fuzzy
 #| msgctxt "SMART attribute"
 #| msgid "Value"
 msgid "Value"
@@ -2727,39 +2663,39 @@ msgstr "Valor"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2130
 #, c-format
 msgid "%.1f years"
-msgstr ""
+msgstr "%.1f años"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2134
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.3g days"
 msgid "%.1f days"
-msgstr "%.3g días"
+msgstr "%.1f días"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2138
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.3g hours"
 msgid "%.1f hours"
-msgstr "%.3g horas"
+msgstr "%.1f horas"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2142
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.1f kbit/s"
 msgid "%.1f minutes"
-msgstr "%.1f kbit/s"
+msgstr "%.1f minutos"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2146
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.3g secs"
 msgid "%.1f seconds"
-msgstr "%.3g seg."
+msgstr "%.1f segundos"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
@@ -2768,7 +2704,7 @@ msgid "%"
 msgstr "%"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2158
-#, fuzzy, c-format
+#, c-format
 #| msgid "%d Sector"
 #| msgid_plural "%d Sectors"
 msgid "%d sector"
@@ -2780,10 +2716,10 @@ msgstr[1] "%d sectores"
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2170
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.3g° C / %.3g° F"
 msgid "%.0f° C / %.0f° F"
-msgstr "%.3g° C / %.3g° F"
+msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
@@ -2804,10 +2740,9 @@ msgstr "El fallo es un signo de antigüedad."
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2248
-#, fuzzy
 #| msgid "Every time data is collected."
 msgid "Every time data is collected (Online)"
-msgstr "Cada vez que se obtienen los datos."
+msgstr "Cada vez que se obtienen los datos (en línea)."
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
@@ -2827,40 +2762,40 @@ msgid ""
 "Updates: %s\n"
 "Raw: 0x%02x%02x%02x%02x%02x%02x"
 msgstr ""
+"Tipo: %s\n"
+"Actualización: %s\n"
+"Crudo: 0x%02x%02x%02x%02x%02x%02x"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2465
-#, fuzzy
 #| msgid "No Media Detected"
 msgid "No drive selected"
-msgstr "No se ha detectado ningún soporte"
+msgstr "No se seleccionó ninguna unidad"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2472
-#, fuzzy
 #| msgid "ATA SMART not Supported"
 msgid "SMART not supported"
-msgstr "ATA SMART no está soportado"
+msgstr "SMART no está soportado"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2480
 msgid "SMART data never collected"
-msgstr ""
+msgstr "Nunca se obtuvieron datos SMART"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2487
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2493
 msgid "SMART data is malformed"
-msgstr ""
+msgstr "Los datos SMART están malformados"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2529
-#, fuzzy
 #| msgctxt "ATA SMART status"
 #| msgid "Passed"
 msgid "Passed"
@@ -2870,43 +2805,41 @@ msgstr "Pasado"
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2535
-#, fuzzy
 #| msgctxt "ATA SMART status"
 #| msgid "FAILING"
 msgid "FAILING"
-msgstr "Fallando"
+msgstr "FALLANDO"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2547
 msgid "None"
-msgstr ""
+msgstr "Ninguno"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2552
-#, fuzzy, c-format
+#, c-format
 #| msgid "%d Sector"
 #| msgid_plural "%d Sectors"
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
-msgstr[0] "%d sector"
-msgstr[1] "%d sectores"
+msgstr[0] "%d sector erróneo"
+msgstr[1] "%d sectores erróneos"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2590
 msgid "Last self-test completed OK"
-msgstr ""
+msgstr "La última autocomprobación se completó correctamente"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2594
-#, fuzzy
 #| msgid "Operation was canceled"
 msgid "Last self-test was cancelled"
-msgstr "Se canceló la operación"
+msgstr "La última autocomprobación se canceló"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
 msgid "Last self-test was cancelled (with hard or soft reset)"
-msgstr ""
+msgstr "La última autocomprobación se canceló (con reinicio duro o suave)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602

@@ -559,7 +559,7 @@ gdu_drive_get_name (GduPresentable *presentable)
         is_rotational = gdu_device_drive_get_is_rotational (drive->priv->device);
 
         if (has_media && size > 0) {
-                strsize = gdu_util_get_size_for_display (size, FALSE);
+                strsize = gdu_util_get_size_for_display (size, FALSE, FALSE);
         }
 
         if (is_removable) {
@@ -678,7 +678,7 @@ gdu_drive_get_description (GduPresentable *presentable)
         if (is_removable) {
                 if (has_media && size > 0) {
                         gchar *strsize;
-                        strsize = gdu_util_get_size_for_display (size, FALSE);
+                        strsize = gdu_util_get_size_for_display (size, FALSE, FALSE);
                         /* Translators: This string is the description of a drive. The first %s is the
                          * size of the inserted media, for example '45 GB'.
                          */

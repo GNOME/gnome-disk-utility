@@ -171,6 +171,7 @@ on_add_clicked (GtkButton *button,
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                              GTK_SHADOW_IN);
         model = gdu_pool_tree_model_new (pool,
+                                         NULL,
                                          GDU_POOL_TREE_MODEL_FLAGS_NONE);
         tree_view = gdu_pool_tree_view_new (model, GDU_POOL_TREE_VIEW_FLAGS_NONE);
         g_object_unref (model);
@@ -707,7 +708,9 @@ update (GduSectionLinuxMdDrive *section)
                 level_str = g_strdup (level);
         }
 
-        s = gdu_util_get_size_for_display (component_size, FALSE);
+        s = gdu_util_get_size_for_display (component_size,
+                                           FALSE,
+                                           FALSE);
         if (strcmp (level, "linear") == 0) {
                 /* Translators: %d is the number of components in the RAID */
                 components_str = g_strdup_printf (ngettext ("%d Component", "%d Components", num_raid_devices), num_raid_devices);
@@ -722,7 +725,9 @@ update (GduSectionLinuxMdDrive *section)
         if (raid_size == 0) {
                 raid_size_str = g_strdup_printf ("-");
         } else {
-                raid_size_str = gdu_util_get_size_for_display (raid_size, TRUE);
+                raid_size_str = gdu_util_get_size_for_display (raid_size,
+                                                               FALSE,
+                                                               TRUE);
         }
 
         if (!gdu_drive_is_active (GDU_DRIVE (linux_md_drive))) {

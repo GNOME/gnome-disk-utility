@@ -143,7 +143,7 @@ gdu_volume_hole_get_name (GduPresentable *presentable)
         char *result;
         char *strsize;
 
-        strsize = gdu_util_get_size_for_display (volume_hole->priv->size, FALSE);
+        strsize = gdu_util_get_size_for_display (volume_hole->priv->size, FALSE, FALSE);
         /* Translators: label for an unallocated space on a disk
          * %s is the size, formatted like '45 GB'
          */

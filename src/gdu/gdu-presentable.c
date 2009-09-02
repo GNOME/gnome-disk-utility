@@ -25,6 +25,7 @@
 #include <dbus/dbus-glib.h>
 
 #include "gdu-presentable.h"
+#include "gdu-pool.h"
 
 /**
  * SECTION:gdu-presentable
@@ -596,3 +597,63 @@ gdu_presentable_compare (GduPresentable *a,
 
         return ret;
 }
+
+GList *
+gdu_presentable_get_enclosed (GduPresentable *presentable)
+{
+        GList *l;
+        GList *presentables;
+        GList *ret;
+        GduPool *pool;
+
+        pool = gdu_presentable_get_pool (presentable);
+        presentables = gdu_pool_get_presentables (pool);
+
+        ret = NULL;
+        for (l = presentables; l != NULL; l = l->next) {
+                GduPresentable *p = l->data;
+                GduPresentable *e;
+
+                e = gdu_presentable_get_enclosing_presentable (p);
+                if (e != NULL) {
+                        if (gdu_presentable_equals (e, presentable)) {
+                                GList *enclosed_by_p;
+
+                                ret = g_list_prepend (ret, g_object_ref (p));
+
+                                enclosed_by_p = gdu_presentable_get_enclosed (p);
+                                ret = g_list_concat (ret, enclosed_by_p);
+                        }
+                        g_object_unref (e);
+                }
+        }
+
+        g_list_foreach (presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (presentables);
+        g_object_unref (pool);
+        return ret;
+}
+
+gboolean
+gdu_presentable_encloses (GduPresentable *a,
+                          GduPresentable *b)
+{
+        GList *enclosed_by_a;
+        GList *l;
+        gboolean ret;
+
+        ret = FALSE;
+        enclosed_by_a = gdu_presentable_get_enclosed (a);
+        for (l = enclosed_by_a; l != NULL; l = l->next) {
+                GduPresentable *p = GDU_PRESENTABLE (l->data);
+                if (gdu_presentable_equals (b, p)) {
+                        ret = TRUE;
+                        break;
+                }
+        }
+        g_list_foreach (enclosed_by_a, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed_by_a);
+
+        return ret;
+}
+

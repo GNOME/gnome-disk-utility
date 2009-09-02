@@ -26,12 +26,12 @@
 #ifndef GDU_SECTION_H
 #define GDU_SECTION_H
 
-#define GDU_TYPE_SECTION             (gdu_section_get_type ())
-#define GDU_SECTION(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_SECTION, GduSection))
-#define GDU_SECTION_CLASS(obj)       (G_TYPE_CHECK_CLASS_CAST ((obj), GDU_SECTION,  GduSectionClass))
-#define GDU_IS_SECTION(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDU_TYPE_SECTION))
-#define GDU_IS_SECTION_CLASS(obj)    (G_TYPE_CHECK_CLASS_TYPE ((obj), GDU_TYPE_SECTION))
-#define GDU_SECTION_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_SECTION, GduSectionClass))
+#define GDU_TYPE_SECTION           (gdu_section_get_type ())
+#define GDU_SECTION(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_SECTION, GduSection))
+#define GDU_SECTION_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_TYPE_SECTION,  GduSectionClass))
+#define GDU_IS_SECTION(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_SECTION))
+#define GDU_IS_SECTION_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_SECTION))
+#define GDU_SECTION_GET_CLASS(o)   (G_TYPE_INSTANCE_GET_CLASS ((o), GDU_TYPE_SECTION, GduSectionClass))
 
 typedef struct _GduSectionClass       GduSectionClass;
 typedef struct _GduSection            GduSection;

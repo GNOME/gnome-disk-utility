@@ -127,7 +127,7 @@ on_hscale_format_value (GtkScale *scale,
 {
         gchar *ret;
 
-        ret = gdu_util_get_size_for_display ((guint64 ) value, FALSE);
+        ret = gdu_util_get_size_for_display ((guint64 ) value, FALSE, FALSE);
 
         return ret;
 }
@@ -175,7 +175,7 @@ on_query_tooltip (GtkWidget  *w,
         gchar *s;
         gchar *s1;
 
-        s1 = gdu_util_get_size_for_display (widget->priv->size, TRUE);
+        s1 = gdu_util_get_size_for_display (widget->priv->size, FALSE, TRUE);
         /* TODO: handle this use-case
         s = g_strdup_printf ("<b>%s</b>\n"
                              "\n"

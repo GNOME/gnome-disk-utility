@@ -237,7 +237,7 @@ get_names_and_desc (GduPresentable  *presentable,
                 size = gdu_device_partition_get_size (volume->priv->device);
         else
                 size = gdu_device_get_size (volume->priv->device);
-        strsize = gdu_util_get_size_for_display (size, FALSE);
+        strsize = gdu_util_get_size_for_display (size, FALSE, FALSE);
 
         presentation_name = gdu_device_get_presentation_name (volume->priv->device);
         if (presentation_name != NULL && strlen (presentation_name) > 0) {

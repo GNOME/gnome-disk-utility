@@ -30,6 +30,7 @@
 struct GduPoolTreeModelPrivate
 {
         GduPool *pool;
+        GduPresentable *root;
         GduPoolTreeModelFlags flags;
 };
 
@@ -38,6 +39,7 @@ G_DEFINE_TYPE (GduPoolTreeModel, gdu_pool_tree_model, GTK_TYPE_TREE_STORE)
 enum
 {
         PROP_0,
+        PROP_ROOT,
         PROP_POOL,
         PROP_FLAGS,
 };
@@ -72,6 +74,11 @@ gdu_pool_tree_model_set_property (GObject      *object,
                 model->priv->pool = g_value_dup_object (value);
                 break;
 
+        case PROP_ROOT:
+                if (g_value_get_object (value) != NULL)
+                        model->priv->root = g_value_dup_object (value);
+                break;
+
         case PROP_FLAGS:
                 model->priv->flags = g_value_get_flags (value);
                 break;
@@ -93,6 +100,10 @@ gdu_pool_tree_model_get_property (GObject     *object,
         switch (prop_id) {
         case PROP_POOL:
                 g_value_set_object (value, model->priv->pool);
+                break;
+
+        case PROP_ROOT:
+                g_value_set_object (value, model->priv->root);
                 break;
 
         case PROP_FLAGS:
@@ -235,6 +246,22 @@ gdu_pool_tree_model_class_init (GduPoolTreeModelClass *klass)
                                                               G_PARAM_CONSTRUCT_ONLY));
 
         /**
+         * GduPoolTreeModel:root:
+         *
+         * %NULL to include all #GduPresentable objects in #GduPoolTreeModel:pool, otherwise only
+         * include presentables that are descendents of this #GduPresentable.
+         */
+        g_object_class_install_property (gobject_class,
+                                         PROP_ROOT,
+                                         g_param_spec_object ("root",
+                                                              NULL,
+                                                              NULL,
+                                                              GDU_TYPE_PRESENTABLE,
+                                                              G_PARAM_WRITABLE |
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_CONSTRUCT_ONLY));
+
+        /**
          * GduPoolTreeModel:flags:
          *
          * The flags for the model.
@@ -259,10 +286,12 @@ gdu_pool_tree_model_init (GduPoolTreeModel *model)
 
 GduPoolTreeModel *
 gdu_pool_tree_model_new (GduPool               *pool,
+                         GduPresentable        *root,
                          GduPoolTreeModelFlags  flags)
 {
         return GDU_POOL_TREE_MODEL (g_object_new (GDU_TYPE_POOL_TREE_MODEL,
                                                   "pool", pool,
+                                                  "root", root,
                                                   "flags", flags,
                                                   NULL));
 }
@@ -381,6 +410,34 @@ should_include_presentable (GduPoolTreeModel *model,
             (GDU_IS_VOLUME (presentable) || GDU_IS_VOLUME_HOLE (presentable)))
                 goto out;
 
+        if (model->priv->root != NULL) {
+                gboolean is_enclosed_by_root;
+                GduPresentable *p_iter;
+
+                is_enclosed_by_root = FALSE;
+                p_iter = g_object_ref (presentable);
+                do {
+                        GduPresentable *p;
+
+                        p = gdu_presentable_get_enclosing_presentable (p_iter);
+                        g_object_unref (p_iter);
+                        if (p == NULL)
+                                break;
+
+                        if (p == model->priv->root) {
+                                is_enclosed_by_root = TRUE;
+                                g_object_unref (p);
+                                break;
+                        }
+
+                        p_iter = p;
+
+                } while (TRUE);
+
+                if (!is_enclosed_by_root)
+                        goto out;
+        }
+
         if (GDU_IS_DRIVE (presentable)) {
                 if ((model->priv->flags & GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES) &&
                     (!gdu_drive_has_unallocated_space (GDU_DRIVE (presentable), NULL, NULL, NULL)))
@@ -418,10 +475,14 @@ add_presentable (GduPoolTreeModel *model,
                 if (gdu_pool_tree_model_get_iter_for_presentable (model, enclosing_presentable, &iter2)) {
                         parent_iter = &iter2;
                 } else {
-                        /* add parent if it's not already added */
-                        g_warning ("No parent for %s", gdu_presentable_get_id (enclosing_presentable));
-                        add_presentable (model, enclosing_presentable, &iter2);
-                        parent_iter = &iter2;
+                        if (should_include_presentable (model, enclosing_presentable)) {
+                                /* add parent if it's not already added */
+                                g_warning ("No parent for %s", gdu_presentable_get_id (enclosing_presentable));
+                                add_presentable (model, enclosing_presentable, &iter2);
+                                parent_iter = &iter2;
+                        } else {
+                                /* parent explicitly excluded */
+                        }
                 }
                 g_object_unref (enclosing_presentable);
         }

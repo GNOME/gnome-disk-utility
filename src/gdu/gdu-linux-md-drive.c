@@ -494,7 +494,7 @@ get_names_and_desc (GduPresentable  *presentable,
         if (drive->priv->device != NULL) {
                 guint64 size;
                 size = gdu_device_get_size (drive->priv->device);
-                strsize = gdu_util_get_size_for_display (size, FALSE);
+                strsize = gdu_util_get_size_for_display (size, FALSE, FALSE);
         }
 
         if (drive->priv->slaves != NULL) {

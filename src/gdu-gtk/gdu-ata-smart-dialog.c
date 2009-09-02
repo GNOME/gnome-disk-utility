@@ -32,6 +32,8 @@
 #include "gdu-ata-smart-dialog.h"
 #include "gdu-spinner.h"
 #include "gdu-pool-tree-model.h"
+#include "gdu-details-table.h"
+#include "gdu-details-element.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -47,25 +49,17 @@ struct GduAtaSmartDialogPrivate
         GduPoolTreeModel *pool_tree_model;
         GtkWidget *drive_combo_box;
 
-        GtkWidget *updated_label;
-        GtkWidget *updating_spinner;
-        GtkWidget *updating_label;
-        GtkWidget *update_link_label;
+        GduDetailsElement *updated_element;
+        GduDetailsElement *self_test_element;
+        GduDetailsElement *model_element;
+        GduDetailsElement *firmware_element;
+        GduDetailsElement *serial_element;
+        GduDetailsElement *powered_on_element;
+        GduDetailsElement *temperature_element;
+        GduDetailsElement *bad_sectors_element;
+        GduDetailsElement *self_assessment_element;
+        GduDetailsElement *overall_assessment_element;
 
-        GtkWidget *self_test_result_label;
-        GtkWidget *self_test_progress_bar;
-        GtkWidget *self_test_run_link_label;
-        GtkWidget *self_test_cancel_link_label;
-
-        GtkWidget *model_label;
-        GtkWidget *firmware_label;
-        GtkWidget *serial_label;
-        GtkWidget *power_on_hours_label;
-        GtkWidget *temperature_label;
-        GtkWidget *sectors_label;
-        GtkWidget *self_assessment_label;
-        GtkWidget *overall_assessment_image;
-        GtkWidget *overall_assessment_label;
         GtkWidget *no_warn_check_button;
 
         GtkWidget *tree_view;
@@ -81,6 +75,9 @@ enum
         PROP_0,
         PROP_DRIVE,
 };
+
+static gboolean is_self_test_running (GduDevice *device,
+                                      SkSmartSelfTest *out_test_type);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -1129,17 +1126,14 @@ refresh_cb (GduDevice  *device,
 
 
 static void
-on_activate_link_update_smart_data (GtkLabel    *label,
-                                    const gchar *uri,
-                                    gpointer     user_data)
+on_updated_element_activated (GduDetailsElement    *element,
+                              gpointer     user_data)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
 
         gdu_device_drive_ata_smart_refresh_data (dialog->priv->device,
                                                  refresh_cb,
                                                  dialog);
-
-        g_signal_stop_emission_by_name (label, "activate-link");
 
         dialog->priv->is_updating = TRUE;
         update_dialog (dialog);
@@ -1157,23 +1151,6 @@ cancel_self_test_cb (GduDevice  *device,
                 g_error_free (error);
 }
 
-
-static void
-on_activate_link_cancel_self_test (GtkLabel    *link_label,
-                                   const gchar *uri,
-                                   gpointer     user_data)
-{
-        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
-
-        g_signal_stop_emission_by_name (link_label, "activate-link");
-
-        gdu_device_op_cancel_job (dialog->priv->device,
-                                  cancel_self_test_cb,
-                                  dialog);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static void
 run_self_test_cb (GduDevice  *device,
                   GError     *error,
@@ -1186,9 +1163,8 @@ run_self_test_cb (GduDevice  *device,
 
 
 static void
-on_activate_link_run_self_test (GtkLabel    *link_label,
-                                const gchar *uri,
-                                gpointer     user_data)
+on_self_tests_element_activated (GduDetailsElement *element,
+                                 gpointer           user_data)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
         GtkWidget *test_dialog;
@@ -1203,7 +1179,12 @@ on_activate_link_run_self_test (GtkLabel    *link_label,
         gint response;
         const gchar *test;
 
-        g_signal_stop_emission_by_name (link_label, "activate-link");
+        if (is_self_test_running (dialog->priv->device, NULL)) {
+                gdu_device_op_cancel_job (dialog->priv->device,
+                                          cancel_self_test_cb,
+                                          dialog);
+                goto out;
+        }
 
         test_dialog = gtk_dialog_new_with_buttons (NULL,
                                                    GTK_WINDOW (dialog),
@@ -1479,14 +1460,10 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         GtkWidget *align;
         GtkWidget *vbox;
         GtkWidget *vbox2;
-        GtkWidget *hbox;
-        GtkWidget *image;
         GtkWidget *table;
         GtkWidget *label;
         GtkWidget *tree_view;
         GtkWidget *scrolled_window;
-        GtkWidget *spinner;
-        GtkWidget *progress_bar;
         GtkWidget *check_button;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
@@ -1498,6 +1475,8 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         GtkTreeIter iter = {0};
         const gchar *tooltip_markup;
         gboolean rtl;
+        GPtrArray *elements;
+        GduDetailsElement *element;
 
         rtl = (gtk_widget_get_direction (GTK_WIDGET (dialog)) == GTK_TEXT_DIR_RTL);
 
@@ -1518,6 +1497,7 @@ gdu_ata_smart_dialog_constructed (GObject *object)
 
         pool = gdu_device_get_pool (dialog->priv->device);
         dialog->priv->pool_tree_model = gdu_pool_tree_model_new (pool,
+                                                                 NULL,
                                                                  GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES);
         g_object_unref (pool);
 
@@ -1593,342 +1573,102 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         vbox2 = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
 
-        table = gtk_table_new (4, 2, FALSE);
-        gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-        gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+        elements = g_ptr_array_new_with_free_func (g_object_unref);
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Updated:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Updated' item in the status table */
+                                           _("Time since SMART data was last read – SMART data is updated every "
+                                             "30 minutes unless the disk is sleeping"));
+        g_signal_connect (element,
+                          "activated",
+                          G_CALLBACK (on_updated_element_activated),
+                          dialog);
+        g_ptr_array_add (elements, element);
+        dialog->priv->updated_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Self-tests:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Self-tests' item in the status table */
+                                           _("The result of the last self-test that ran on the disk"));
+        g_signal_connect (element,
+                          "activated",
+                          G_CALLBACK (on_self_tests_element_activated),
+                          dialog);
+        g_ptr_array_add (elements, element);
+        dialog->priv->self_test_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Model:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Model' item in the status table */
+                                           _("The name of the model of the disk"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->model_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Firmware Version:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Firmware Version' item in the
+                                            * status table */
+                                           _("The firmware version of the disk"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->firmware_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Serial Number:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Serial Number' item in the status table */
+                                           _("The serial number of the disk"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->serial_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Powered On:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Powered On' item in the status table */
+                                           _("The amount of elapsed time the disk has been in a powered-up state"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->powered_on_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Temperature:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Temperature' item in the status table */
+                                           _("The temperature of the disk"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->temperature_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Bad Sectors:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Bad Sectors' item in the status table */
+                                           _("The sum of pending and reallocated bad sectors"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->bad_sectors_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Self Assessment:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Self Assesment' item in the status table */
+                                           _("The assessment from the disk itself whether it is about to fail"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->self_assessment_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Overall Assessment:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Overall Assessment' item in the
+                                            * status table */
+                                           _("An overall assessment of the health of the disk"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->overall_assessment_element = element;
+
+        table = gdu_details_table_new (1, elements);
+        g_ptr_array_unref (elements);
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-
-        row = 0;
-
-        /* ------------------------------ */
-        /* updated */
-
-        /* Translators: Tooltip for the Updated item in the status table */
-        tooltip_markup = _("Time since SMART data was last read – SMART data is updated every 30 minutes unless "
-                           "the disk is sleeping");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Updated:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        hbox = gtk_hbox_new (FALSE, 0);
-
-        /* Translators: Used in the status table when data is currently being updated */
-        label = gtk_label_new (_("Updating..."));
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        dialog->priv->updating_label = label;
-
-        spinner = gdu_spinner_new ();
-        gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 6);
-        dialog->priv->updating_spinner = spinner;
-
-        label = gdu_time_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->updated_label = label;
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-
-        label = gtk_label_new (NULL);
-        s = g_strdup_printf (rtl ? "<a href=\"update-now\" title=\"%s\">%s</a> – " :
-                                   " – <a href=\"update-now\" title=\"%s\">%s</a>",
-                             /* Translators: Tooltip for the "Update Now" hyperlink */
-                             _("Reads SMART data from the disk, waking it up if necessary"),
-                            /* Translators: Text used in the hyperlink in the status table to update the SMART status */
-                             _("Update now"));
-        gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->update_link_label = label;
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_update_smart_data),
-                          dialog);
-
-        gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-        row++;
-
-        /* control visibility (see update_dialog()) */
-        gtk_widget_set_no_show_all (dialog->priv->updated_label, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->updating_label, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->updating_spinner, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->update_link_label, TRUE);
-
-        /* ------------------------------ */
-        /* self-tests */
-
-        /* Translators: Tooltip for the Self-tests item in the status table */
-        tooltip_markup = _("The result of the last self-test that ran on the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Self-tests:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        hbox = gtk_hbox_new (FALSE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        dialog->priv->self_test_result_label = label;
-
-
-        progress_bar = gtk_progress_bar_new ();
-        gtk_box_pack_start (GTK_BOX (hbox), progress_bar, FALSE, FALSE, 0);
-        dialog->priv->self_test_progress_bar = progress_bar;
-
-        label = gtk_label_new (NULL);
-        s = g_strdup_printf (rtl ? "<a href=\"run-self-test\" title=\"%s\">%s</a> – " :
-                                   " – <a href=\"run-self-test\" title=\"%s\">%s</a>",
-                             /* Translators: Tooltip for the "Run self-test" hyperlink */
-                             _("Initiates a self-test on the drive"),
-                             /* Translators: Text used in the hyperlink in the status table to run a self-test */
-                             _("Run self-test"));
-        gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        dialog->priv->self_test_run_link_label = label;
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_run_self_test),
-                          dialog);
-
-        label = gtk_label_new (NULL);
-        gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
-        s = g_strdup_printf (rtl ? "<a href=\"cancel-self-test\" title=\"%s\">%s</a> – " :
-                                   " – <a href=\"cancel-self-test\" title=\"%s\">%s</a>",
-                             /* Translators: Tooptip for the "Cancel" hyperlink */
-                             _("Cancels the currently running test"),
-                             /* Translators: Text used in the hyperlink in the status table to cancel a self-test */
-                             _("Cancel"));
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        dialog->priv->self_test_cancel_link_label = label;
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_cancel_self_test),
-                          dialog);
-
-        gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* control visibility (see update_dialog()) */
-        gtk_widget_set_no_show_all (dialog->priv->self_test_result_label, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->self_test_progress_bar, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->self_test_run_link_label, TRUE);
-        gtk_widget_set_no_show_all (dialog->priv->self_test_cancel_link_label, TRUE);
-
-        /* ------------------------------ */
-        /* model */
-
-        /* Translators: Tooltip for the "Model Name:" item in the status table */
-        tooltip_markup = _("The name of the model of the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Model Name:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->model_label = label;
-
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* ------------------------------ */
-        /* firmware */
-
-        /* Translators: Tooltip for the "Firmware Version:" item in the status table */
-        tooltip_markup = _("The firmware version of the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Firmware Version:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->firmware_label = label;
-
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* ------------------------------ */
-        /* serial */
-
-        /* Translators: Tooltip for the "Serial:" item in the status table */
-        tooltip_markup = _("The serial number of the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Serial Number:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->serial_label = label;
-
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* ------------------------------ */
-        /* power on hours */
-
-        /* Translators: Tooltip for the "Powered On:" item in the status table */
-        tooltip_markup = _("The amount of elapsed time the disk has been in a powered-up state");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Powered On:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->power_on_hours_label = label;
-
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* ------------------------------ */
-        /* temperature */
-
-        /* Translators: Tooltip for the "Temperature:" item in the status table */
-        tooltip_markup = _("The temperature of the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Temperature:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->temperature_label = label;
-
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        row++;
-
-        /* ------------------------------ */
-        /* bad sectors */
-
-        /* Translators: Tooltip for the "Bad Sectors" item in the status table */
-        tooltip_markup = _("The sum of pending and reallocated bad sectors");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Bad Sectors:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->sectors_label = label;
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-        row++;
-
-        /* ------------------------------ */
-        /* self assessment */
-
-        /* Translators: Tooltip for the "Self Assessment" item in the status table */
-        tooltip_markup = _("The assessment from the disk itself whether it is about to fail");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Self Assessment:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        dialog->priv->self_assessment_label = label;
-        gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-        row++;
-
-        /* ------------------------------ */
-        /* overall assessment */
-
-        /* Translators: Tooltip for the "Overall Assessment" in the status table */
-        tooltip_markup = _("An overall assessment of the health of the disk");
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        /* Translators: Item name in the status table */
-        gtk_label_set_markup (GTK_LABEL (label), _("Overall Assessment:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        hbox = gtk_hbox_new (FALSE, 2);
-        image = gtk_image_new_from_icon_name ("gdu-smart-unknown",
-                                              GTK_ICON_SIZE_MENU);
-        gtk_widget_set_tooltip_markup (image, tooltip_markup);
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-        dialog->priv->overall_assessment_image = image;
-
-        label = gtk_label_new (NULL);
-        gtk_widget_set_tooltip_markup (label, tooltip_markup);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        dialog->priv->overall_assessment_label = label;
-        gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-
-        gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-        row++;
 
         /* ------------------------------ */
 
@@ -2425,7 +2165,7 @@ update_dialog (GduAtaSmartDialog *dialog)
         gchar *selftest_text;
         gchar *action_text;
         gboolean highlight;
-        GTimeVal updated;
+        guint64 updated;
         gconstpointer blob;
         gsize blob_size;
         GIcon *status_icon;
@@ -2450,8 +2190,7 @@ update_dialog (GduAtaSmartDialog *dialog)
         temperature_text = NULL;
         selftest_text = NULL;
         action_text = NULL;
-        updated.tv_sec = 0;
-        dialog->priv->last_updated = 0;
+        updated = 0;
         status_icon = NULL;
         sk_disk = NULL;
 
@@ -2494,8 +2233,7 @@ update_dialog (GduAtaSmartDialog *dialog)
                 goto has_data;
         }
 
-        dialog->priv->last_updated = updated.tv_sec = gdu_device_drive_ata_smart_get_time_collected (dialog->priv->device);
-        updated.tv_usec = 0;
+        dialog->priv->last_updated = updated = gdu_device_drive_ata_smart_get_time_collected (dialog->priv->device);
 
         s = gdu_util_ata_smart_status_to_desc (gdu_device_drive_ata_smart_get_status (dialog->priv->device),
                                                &highlight,
@@ -2644,25 +2382,110 @@ update_dialog (GduAtaSmartDialog *dialog)
 
         if (status_icon == NULL)
                 status_icon = g_themed_icon_new ("gdu-smart-unknown");
-        gtk_image_set_from_gicon (GTK_IMAGE (dialog->priv->overall_assessment_image),
-                                  status_icon,
-                                  GTK_ICON_SIZE_MENU);
+        gdu_details_element_set_icon (dialog->priv->overall_assessment_element, status_icon);
 
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->self_assessment_label), self_assessment_text != NULL ? self_assessment_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->overall_assessment_label), overall_assessment_text != NULL ? overall_assessment_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->sectors_label), bad_sectors_text != NULL ? bad_sectors_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->power_on_hours_label), powered_on_text != NULL ? powered_on_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->temperature_label), temperature_text != NULL ? temperature_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->model_label), model_text != NULL ? model_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->firmware_label), firmware_text != NULL ? firmware_text : "-");
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->serial_label), serial_text != NULL ? serial_text : "-");
-        if (updated.tv_sec == 0) {
-                gdu_time_label_set_time (GDU_TIME_LABEL (dialog->priv->updated_label), NULL);
-                gtk_label_set_markup (GTK_LABEL (dialog->priv->updated_label), "-");
+        gdu_details_element_set_text (dialog->priv->self_assessment_element,
+                                      self_assessment_text != NULL ? self_assessment_text : "-");
+        gdu_details_element_set_text (dialog->priv->overall_assessment_element,
+                                      overall_assessment_text != NULL ? overall_assessment_text : "-");
+        gdu_details_element_set_text (dialog->priv->bad_sectors_element,
+                                      bad_sectors_text != NULL ? bad_sectors_text : "-");
+        gdu_details_element_set_text (dialog->priv->powered_on_element,
+                                      powered_on_text != NULL ? powered_on_text : "-");
+        gdu_details_element_set_text (dialog->priv->temperature_element,
+                                      temperature_text != NULL ? temperature_text : "-");
+        gdu_details_element_set_text (dialog->priv->model_element,
+                                      model_text != NULL ? model_text : "-");
+        gdu_details_element_set_text (dialog->priv->firmware_element,
+                                      firmware_text != NULL ? firmware_text : "-");
+        gdu_details_element_set_text (dialog->priv->serial_element,
+                                      serial_text != NULL ? serial_text : "-");
+        if (dialog->priv->is_updating) {
+                gdu_details_element_set_is_spinning (dialog->priv->updated_element, TRUE);
+                gdu_details_element_set_text (dialog->priv->updated_element, "Updating");
+                gdu_details_element_set_time (dialog->priv->updated_element, 0);
+                gdu_details_element_set_action_text (dialog->priv->updated_element, NULL);
+                gdu_details_element_set_action_tooltip (dialog->priv->updated_element, NULL);
         } else {
-                gdu_time_label_set_time (GDU_TIME_LABEL (dialog->priv->updated_label), &updated);
+                gdu_details_element_set_is_spinning (dialog->priv->updated_element, FALSE);
+                if (updated > 0) {
+                        gdu_details_element_set_time (dialog->priv->updated_element, updated);
+                        gdu_details_element_set_text (dialog->priv->updated_element, NULL);
+                } else {
+                        gdu_details_element_set_time (dialog->priv->updated_element, 0);
+                        gdu_details_element_set_text (dialog->priv->updated_element, "-");
+                }
+                gdu_details_element_set_action_text (dialog->priv->updated_element,
+                                                     /* Translators: Text used in the hyperlink in the status table
+                                                      * to update the SMART status */
+                                                     _("Update Now"));
+                gdu_details_element_set_action_tooltip (dialog->priv->updated_element,
+                                                        /* Translators: Tooltip for the "Update Now" hyperlink */
+                                                        _("Reads SMART data from the disk, waking it up if necessary"));
         }
-        gtk_label_set_markup (GTK_LABEL (dialog->priv->self_test_result_label), selftest_text != NULL ? selftest_text : "-");
+
+        if (dialog->priv->device != NULL && is_self_test_running (dialog->priv->device, &test_type)) {
+                gdouble fraction;
+                const gchar *test_type_str;
+
+                switch (test_type) {
+                case SK_SMART_SELF_TEST_SHORT:
+                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
+                        test_type_str = _("Short self-test in progress: ");
+                        break;
+                case SK_SMART_SELF_TEST_EXTENDED:
+                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
+                        test_type_str = _("Extended self-test in progress: ");
+                        break;
+                case SK_SMART_SELF_TEST_CONVEYANCE:
+                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
+                        test_type_str = _("Conveyance self-test in progress: ");
+                        break;
+                default:
+                        g_assert_not_reached ();
+                        break;
+                }
+
+                if (gdu_device_job_is_cancellable (dialog->priv->device)) {
+                        gdu_details_element_set_action_text (dialog->priv->self_test_element,
+                                                             /* Translators: Text used in the hyperlink in the status
+                                                              * table to cancel a self-test */
+                                                             _("Cancel Test"));
+                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element,
+                                                                /* Translators: Tooptip for the "Cancel" hyperlink */
+                                                                _("Cancels the currently running test"));
+                } else {
+                        gdu_details_element_set_action_text (dialog->priv->self_test_element, NULL);
+                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element, NULL);
+                }
+                gdu_details_element_set_text (dialog->priv->self_test_element, test_type_str);
+
+                fraction = gdu_device_job_get_percentage (dialog->priv->device) / 100.0;
+                if (fraction < 0.0)
+                        fraction = 0.0;
+                if (fraction > 1.0)
+                        fraction = 1.0;
+
+                gdu_details_element_set_progress (dialog->priv->self_test_element, fraction);
+        } else {
+                gdu_details_element_set_progress (dialog->priv->self_test_element, -1.0);
+                gdu_details_element_set_text (dialog->priv->self_test_element,
+                                              selftest_text != NULL ? selftest_text : "-");
+                if (dialog->priv->device != NULL) {
+                        /* TODO: check if self-tests are available at all */
+                        gdu_details_element_set_action_text (dialog->priv->self_test_element,
+                                                             /* Translators: Text used in the hyperlink in the
+                                                              * status table to run a self-test */
+                                                             _("Run self-test"));
+                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element,
+                                                                /* Translators: Tooltip for the "Run self-test"
+                                                                 * hyperlink */
+                                                                _("Initiates a self-test on the drive"));
+                } else {
+                        gdu_details_element_set_action_text (dialog->priv->self_test_element, NULL);
+                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element, NULL);
+                }
+        }
 
         if (sk_disk == NULL) {
                 gtk_list_store_clear (dialog->priv->attr_list_store);
@@ -2702,76 +2525,6 @@ update_dialog (GduAtaSmartDialog *dialog)
         if (dialog->priv->device != NULL)
                 no_warn = get_ata_smart_no_warn (dialog->priv->device);
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->priv->no_warn_check_button), no_warn);
-
-        /* control visility of update widgets */
-        if (dialog->priv->is_updating) {
-                gtk_widget_hide (dialog->priv->updated_label);
-                gtk_widget_hide (dialog->priv->update_link_label);
-                gtk_widget_show (dialog->priv->updating_spinner);
-                gtk_widget_show (dialog->priv->updating_label);
-                gdu_spinner_start (GDU_SPINNER (dialog->priv->updating_spinner));
-        } else {
-                gtk_widget_hide (dialog->priv->updating_spinner);
-                gdu_spinner_stop (GDU_SPINNER (dialog->priv->updating_spinner));
-                gtk_widget_hide (dialog->priv->updating_label);
-                gtk_widget_show (dialog->priv->updated_label);
-                if (dialog->priv->device == NULL) {
-                        gtk_widget_hide (dialog->priv->update_link_label);
-                } else {
-                        gtk_widget_show (dialog->priv->update_link_label);
-                }
-        }
-
-        /* control visibility of self-test widgets */
-        if (dialog->priv->device != NULL && is_self_test_running (dialog->priv->device, &test_type)) {
-                gdouble fraction;
-                const gchar *test_type_str;
-
-                fraction = gdu_device_job_get_percentage (dialog->priv->device) / 100.0;
-                if (fraction < 0.0)
-                        fraction = 0.0;
-                if (fraction > 1.0)
-                        fraction = 1.0;
-
-                gtk_widget_show (dialog->priv->self_test_result_label);
-                gtk_widget_hide (dialog->priv->self_test_run_link_label);
-                gtk_widget_show (dialog->priv->self_test_progress_bar);
-                if (gdu_device_job_is_cancellable (dialog->priv->device))
-                        gtk_widget_show (dialog->priv->self_test_cancel_link_label);
-                else
-                        gtk_widget_hide (dialog->priv->self_test_cancel_link_label);
-                gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (dialog->priv->self_test_progress_bar),
-                                               fraction);
-
-                switch (test_type) {
-                case SK_SMART_SELF_TEST_SHORT:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Short self-test in progress: ");
-                        break;
-                case SK_SMART_SELF_TEST_EXTENDED:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Extended self-test in progress: ");
-                        break;
-                case SK_SMART_SELF_TEST_CONVEYANCE:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Conveyance self-test in progress: ");
-                        break;
-                default:
-                        g_assert_not_reached ();
-                        break;
-                }
-                gtk_label_set_markup (GTK_LABEL (dialog->priv->self_test_result_label),
-                                      test_type_str);
-        } else {
-                gtk_widget_hide (dialog->priv->self_test_progress_bar);
-                gtk_widget_hide (dialog->priv->self_test_cancel_link_label);
-                gtk_widget_show (dialog->priv->self_test_result_label);
-                if (dialog->priv->device == NULL) {
-                        gtk_widget_hide (dialog->priv->self_test_run_link_label);
-                } else {
-                        gtk_widget_show (dialog->priv->self_test_run_link_label);
-                }
-        }
 
         if (sk_disk != NULL)
                 sk_disk_free (sk_disk);

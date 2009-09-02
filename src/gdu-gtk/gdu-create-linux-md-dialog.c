@@ -731,7 +731,7 @@ notes_data_func (GtkCellLayout   *cell_layout,
 
                         if (array_size > 1000 * 1000) {
                                 gchar *strsize;
-                                strsize = gdu_util_get_size_for_display (component_size, FALSE);
+                                strsize = gdu_util_get_size_for_display (component_size, FALSE, FALSE);
 
                                 if (whole_disk_is_uninitialized) {
                                         /* Translators: This is shown in the Details column.
@@ -762,7 +762,7 @@ notes_data_func (GtkCellLayout   *cell_layout,
                 } else {
                         gchar *strsize;
 
-                        strsize = gdu_util_get_size_for_display (largest_segment, FALSE);
+                        strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
 
                         if (whole_disk_is_uninitialized) {
                                 /* Translators: This is shown in the Details column.
@@ -1064,6 +1064,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         GtkTreeViewColumn *column;
 
         dialog->priv->model = gdu_pool_tree_model_new (dialog->priv->pool,
+                                                       NULL,
                                                        GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES |
                                                        GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES);
 
@@ -1498,7 +1499,7 @@ update (GduCreateLinuxMdDialog *dialog)
                 if (tip_text == NULL) {
                         gchar *strsize;
 
-                        strsize = gdu_util_get_size_for_display (array_size, FALSE);
+                        strsize = gdu_util_get_size_for_display (array_size, FALSE, FALSE);
                         /* Translators: This is for the tip text shown in the dialog.
                          * First %s is the size e.g. '42 GB'.
                          * Second %s is the short localized name for the RAID level, e.g. "RAID-1".

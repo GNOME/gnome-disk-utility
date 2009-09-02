@@ -43,6 +43,8 @@
 #include "gdu-section-encrypted.h"
 #include "gdu-section-linux-md-drive.h"
 #include "gdu-section-no-media.h"
+#include "gdu-section-drive.h"
+#include "gdu-section-volumes.h"
 #include "bling-spinner.h"
 
 struct _GduShellPrivate
@@ -198,7 +200,9 @@ details_update (GduShell *shell)
 
         presentable_size = gdu_presentable_get_size (presentable);
         if (presentable_size > 0) {
-                strsize_long = gdu_util_get_size_for_display (presentable_size, TRUE);
+                strsize_long = gdu_util_get_size_for_display (presentable_size,
+                                                              FALSE,
+                                                              TRUE);
         } else {
                 strsize_long = g_strdup (_("Unknown Size"));
         }
@@ -504,15 +508,21 @@ compute_sections_to_show (GduShell *shell)
 
         if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_DRIVE);
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
+
                 sections_to_show = g_list_append (sections_to_show,
                                                   (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
 
 
         } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
 
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_DRIVE);
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
+
                 if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device)) {
 
-                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
+                        //sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
 
                 }
 
@@ -720,6 +730,21 @@ gdu_shell_update (GduShell *shell)
         last_presentable = shell->priv->presentable_now_showing;
 
         sections_to_show = compute_sections_to_show (shell);
+        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
+                gtk_widget_hide (shell->priv->icon_image);
+                gtk_widget_hide (shell->priv->name_label);
+                gtk_widget_hide (shell->priv->details0_label);
+                gtk_widget_hide (shell->priv->details1_label);
+                gtk_widget_hide (shell->priv->details2_label);
+                gtk_widget_hide (shell->priv->details3_label);
+        } else {
+                gtk_widget_show (shell->priv->icon_image);
+                gtk_widget_show (shell->priv->name_label);
+                gtk_widget_show (shell->priv->details0_label);
+                gtk_widget_show (shell->priv->details1_label);
+                gtk_widget_show (shell->priv->details2_label);
+                gtk_widget_show (shell->priv->details3_label);
+        }
 
         if (job_in_progress) {
                 gchar *desc;
@@ -797,7 +822,7 @@ gdu_shell_update (GduShell *shell)
 
                         gtk_box_pack_start (GTK_BOX (shell->priv->sections_vbox),
                                             section,
-                                            TRUE, TRUE, 0);
+                                            FALSE, FALSE, 0);
                 }
 
         }
@@ -1867,7 +1892,7 @@ about_action_callback (GtkAction *action, gpointer user_data)
                                          NULL);
 
         gtk_show_about_dialog (GTK_WINDOW (shell->priv->app_window),
-                               "program-name", _("Palimpsest Disk Utility"),
+                               "program-name", _("Disk Utility"),
                                "version", VERSION,
                                "copyright", "\xc2\xa9 2008 Red Hat, Inc.",
                                "authors", authors,
@@ -1888,6 +1913,7 @@ static const gchar *ui =
         "      </menu>"
         "      <menuitem action='quit'/>"
         "    </menu>"
+#if 0
         "    <menu action='edit'>"
         "      <menuitem action='mount'/>"
         "      <menuitem action='unmount'/>"
@@ -1904,6 +1930,7 @@ static const gchar *ui =
         "      <separator/>"
         "      <menuitem action='erase'/>"
         "    </menu>"
+#endif
         "    <menu action='help'>"
         "      <menuitem action='contents'/>"
         "      <menuitem action='about'/>"
@@ -1945,9 +1972,8 @@ static GtkActionEntry entries[] = {
         {"stop", "gdu-raid-array-stop", N_("_Stop"), NULL, N_("Stop the array"), G_CALLBACK (stop_action_callback)},
         {"erase", "nautilus-gdu", N_("_Erase"), NULL, N_("Erase the contents of the device"), G_CALLBACK (erase_action_callback)},
 
-
         {"quit", GTK_STOCK_QUIT, N_("_Quit"), "<Ctrl>Q", N_("Quit"), G_CALLBACK (quit_action_callback)},
-        {"contents", GTK_STOCK_HELP, N_("_Help"), "F1", N_("Get Help on Palimpsest Disk Utility"), G_CALLBACK (help_contents_action_callback)},
+        {"contents", GTK_STOCK_HELP, N_("_Help"), "F1", N_("Get Help on Disk Utility"), G_CALLBACK (help_contents_action_callback)},
         {"about", GTK_STOCK_ABOUT, N_("_About"), NULL, NULL, G_CALLBACK (about_action_callback)}
 };
 
@@ -2176,7 +2202,6 @@ create_window (GduShell *shell)
         GtkWidget *vbox1;
         GtkWidget *vbox2;
         GtkWidget *menubar;
-        GtkWidget *toolbar;
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
         GtkWidget *tree_view_scrolled_window;
@@ -2189,13 +2214,14 @@ create_window (GduShell *shell)
         GtkWidget *hbox;
         GtkWidget *image;
         GduPoolTreeModel *model;
+        GtkTreeViewColumn *column;
 
         shell->priv->pool = gdu_pool_new ();
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);
         gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 800, 600);
-        gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Palimpsest Disk Utility"));
+        gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
 
         vbox = gtk_vbox_new (FALSE, 0);
         gtk_container_add (GTK_CONTAINER (shell->priv->app_window), vbox);
@@ -2206,8 +2232,6 @@ create_window (GduShell *shell)
 
         menubar = gtk_ui_manager_get_widget (shell->priv->ui_manager, "/menubar");
         gtk_box_pack_start (GTK_BOX (vbox), menubar, FALSE, FALSE, 0);
-        toolbar = gtk_ui_manager_get_widget (shell->priv->ui_manager, "/toolbar");
-        gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
 
         /* tree view */
         tree_view_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -2217,11 +2241,13 @@ create_window (GduShell *shell)
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                              GTK_SHADOW_IN);
         model = gdu_pool_tree_model_new (shell->priv->pool,
-                                         GDU_POOL_TREE_MODEL_FLAGS_NONE);
+                                         NULL,
+                                         GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES);
         shell->priv->tree_view = gdu_pool_tree_view_new (model,
                                                          GDU_POOL_TREE_VIEW_FLAGS_NONE);
         g_object_unref (model);
         gtk_container_add (GTK_CONTAINER (tree_view_scrolled_window), shell->priv->tree_view);
+
 
         /* --- */
 
@@ -2261,7 +2287,7 @@ create_window (GduShell *shell)
         /* --- */
 
         vbox2 = gtk_vbox_new (FALSE, 0);
-        gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
+        //gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
         gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
 
         /* --- */
@@ -2321,12 +2347,24 @@ create_window (GduShell *shell)
 
         /* --- */
 
-        shell->priv->sections_vbox = gtk_vbox_new (FALSE, 18);
-        gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 8);
+        shell->priv->sections_vbox = gtk_vbox_new (FALSE, 12);
+        gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, TRUE, TRUE, 0);
 
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label),
+                                            _("_Storage Devices"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), shell->priv->tree_view);
+
+        column = gtk_tree_view_get_column (GTK_TREE_VIEW (shell->priv->tree_view), 0);
+        gtk_tree_view_column_set_widget (column, label);
+        gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (shell->priv->tree_view), TRUE);
+        gtk_widget_show (label);
+
         gtk_paned_add1 (GTK_PANED (hpane), tree_view_scrolled_window);
         gtk_paned_add2 (GTK_PANED (hpane), vbox1);
         //gtk_paned_set_position (GTK_PANED (hpane), 260);

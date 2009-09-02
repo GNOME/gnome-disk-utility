@@ -33,10 +33,12 @@
 #define KILOBYTE_FACTOR 1000.0
 #define MEGABYTE_FACTOR (1000.0 * 1000.0)
 #define GIGABYTE_FACTOR (1000.0 * 1000.0 * 1000.0)
+#define TERABYTE_FACTOR (1000.0 * 1000.0 * 1000.0 * 1000.0)
 
 #define KIBIBYTE_FACTOR 1024.0
 #define MEBIBYTE_FACTOR (1024.0 * 1024.0)
 #define GIBIBYTE_FACTOR (1024.0 * 1024.0 * 1024.0)
+#define TEBIBYTE_FACTOR (1024.0 * 1024.0 * 1024.0 * 10242.0)
 
 static char *
 get_pow2_size (guint64 size)
@@ -52,9 +54,12 @@ get_pow2_size (guint64 size)
         } else if (size < GIBIBYTE_FACTOR) {
                 displayed_size = (double) size / MEBIBYTE_FACTOR;
                 unit = "MiB";
-        } else {
+        } else if (size < TEBIBYTE_FACTOR) {
                 displayed_size = (double) size / GIBIBYTE_FACTOR;
                 unit = "GiB";
+        } else {
+                displayed_size = (double) size / TEBIBYTE_FACTOR;
+                unit = "TiB";
         }
 
         if (displayed_size < 10.0)
@@ -81,9 +86,12 @@ get_pow10_size (guint64 size)
         } else if (size < GIGABYTE_FACTOR) {
                 displayed_size = (double) size / MEGABYTE_FACTOR;
                 unit = "MB";
-        } else {
+        } else if (size < TERABYTE_FACTOR) {
                 displayed_size = (double) size / GIGABYTE_FACTOR;
                 unit = "GB";
+        } else {
+                displayed_size = (double) size / TERABYTE_FACTOR;
+                unit = "TB";
         }
 
         if (displayed_size < 10.0)
@@ -97,31 +105,45 @@ get_pow10_size (guint64 size)
 }
 
 
-char *
-gdu_util_get_size_for_display (guint64 size, gboolean long_string)
+gchar *
+gdu_util_get_size_for_display (guint64 size,
+                               gboolean use_pow2,
+                               gboolean long_string)
 {
-        char *str;
+        gchar *str;
 
         if (long_string) {
-                char *pow2_str;
-                char *pow10_str;
-                char *size_str;
+                gchar *size_str;
 
-                pow2_str = get_pow2_size (size);
-                pow10_str = get_pow10_size (size);
                 size_str = g_strdup_printf ("%'" G_GINT64_FORMAT, size);
 
-                /* Translators: The first %s is the size in power-of-10 units, e.g. 100 KB
-                 * the second %s is the size in power-of-2 units, e.g. 20 MiB
-                 * the third %s is the size as a number
-                 */
-                str = g_strdup_printf (_("%s / %s / %s bytes"), pow10_str, pow2_str, size_str);
+                if (use_pow2) {
+                        gchar *pow2_str;
+                        pow2_str = get_pow2_size (size);
+
+                        /* Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
+                         * the second %s is the size as a number e.g. '65,536 bytes'
+                         */
+                        str = g_strdup_printf (_("%s (%s bytes)"), pow2_str, size_str);
+                        g_free (pow2_str);
+                } else {
+                        gchar *pow10_str;
+                        pow10_str = get_pow10_size (size);
+
+                        /* Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
+                         * the second %s is the size as a number e.g. '100,000 bytes'
+                         */
+                        str = g_strdup_printf (_("%s (%s bytes)"), pow10_str, size_str);
+                        g_free (pow10_str);
+                }
 
                 g_free (size_str);
-                g_free (pow10_str);
-                g_free (pow2_str);
         } else {
-                str = get_pow10_size (size);
+                if (use_pow2) {
+                        str = get_pow2_size (size);
+                } else {
+                        str = get_pow10_size (size);
+                }
         }
 
         return str;

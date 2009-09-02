@@ -40,18 +40,13 @@ typedef struct GduGraph                    GduGraph;
 typedef struct GduTimeLabel                GduTimeLabel;
 typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
 typedef struct GduSpinner                  GduSpinner;
-
-struct GduPoolTreeModel;
-typedef struct GduPoolTreeModel         GduPoolTreeModel;
-
-struct GduPoolTreeView;
-typedef struct GduPoolTreeView          GduPoolTreeView;
-
-struct GduCreateLinuxMdDialog;
-typedef struct GduCreateLinuxMdDialog   GduCreateLinuxMdDialog;
-
-struct GduSizeWidget;
-typedef struct GduSizeWidget            GduSizeWidget;
+typedef struct GduPoolTreeModel            GduPoolTreeModel;
+typedef struct GduPoolTreeView             GduPoolTreeView;
+typedef struct GduCreateLinuxMdDialog      GduCreateLinuxMdDialog;
+typedef struct GduSizeWidget               GduSizeWidget;
+typedef struct GduVolumeGrid               GduVolumeGrid;
+typedef struct GduDetailsTable             GduDetailsTable;
+typedef struct GduDetailsElement           GduDetailsElement;
 
 G_END_DECLS
 

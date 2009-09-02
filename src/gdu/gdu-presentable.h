@@ -103,6 +103,11 @@ gboolean        gdu_presentable_equals                    (GduPresentable *a,
 gint            gdu_presentable_compare                   (GduPresentable *a,
                                                            GduPresentable *b);
 
+GList          *gdu_presentable_get_enclosed              (GduPresentable *presentable);
+gboolean        gdu_presentable_encloses                  (GduPresentable *a,
+                                                           GduPresentable *b);
+
+
 G_END_DECLS
 
 #endif /* __GDU_PRESENTABLE_H */

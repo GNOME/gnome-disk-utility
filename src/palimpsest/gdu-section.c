@@ -135,7 +135,8 @@ gdu_section_class_init (GduSectionClass *klass)
                                                               NULL,
                                                               GDU_TYPE_SHELL,
                                                               G_PARAM_WRITABLE |
-                                                              G_PARAM_READABLE));
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_CONSTRUCT));
 
         /**
          * GduSection:presentable:
@@ -149,7 +150,8 @@ gdu_section_class_init (GduSectionClass *klass)
                                                               NULL,
                                                               GDU_TYPE_PRESENTABLE,
                                                               G_PARAM_WRITABLE |
-                                                              G_PARAM_READABLE));
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_CONSTRUCT));
 }
 
 static void

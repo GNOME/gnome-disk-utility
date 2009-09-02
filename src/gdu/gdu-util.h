@@ -30,7 +30,10 @@
 
 G_BEGIN_DECLS
 
-char *gdu_util_get_size_for_display (guint64 size, gboolean long_string);
+gchar *gdu_util_get_size_for_display (guint64  size,
+                                      gboolean use_pow2,
+                                      gboolean long_string);
+
 char *gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboolean long_string);
 
 char *gdu_util_fstype_get_description (char *fstype);

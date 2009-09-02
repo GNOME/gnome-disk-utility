@@ -8,17 +8,19 @@
 # # Im RAID:
 # #       attach    -   einbinden
 # #       detach   -   austragen
+# # bad sector   -  fehlerhafter Sektor
+# # 
 # #
 # Mario Blättermann <mariobl@gnome.org>, 2009.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-11 13:08+0000\n"
-"PO-Revision-Date: 2009-08-09 16:09+0100\n"
-"Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-02 02:39+0200\n"
+"PO-Revision-Date: 2009-09-02 02:38+0200\n"
+"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -221,586 +223,38 @@ msgstr "Datenträger mit %s wird formatiert (%s)"
 msgid "Preparing..."
 msgstr "Vorbereiten läuft …"
 
-#: ../src/format-tool/gdu-format-tool.c:420
+#: ../src/format-tool/gdu-format-tool.c:422
 msgid "Unmounting..."
 msgstr "Wird ausgehangen …"
 
-#: ../src/format-tool/gdu-format-tool.c:432
+#: ../src/format-tool/gdu-format-tool.c:440
 #, c-format
 msgid "Unable to format '%s'"
 msgstr "»%s« konnte nicht formatiert werden"
 
-#: ../src/format-tool/gdu-format-tool.c:446
+#: ../src/format-tool/gdu-format-tool.c:455
 msgid "Formatting..."
 msgstr "Wird formatiert …"
 
-#: ../src/format-tool/gdu-format-tool.c:463
+#: ../src/format-tool/gdu-format-tool.c:472
 msgid "Cancelling..."
 msgstr "Wird abgebrochen …"
 
-#: ../src/format-tool/gdu-format-tool.c:473
+#: ../src/format-tool/gdu-format-tool.c:482
 msgid "Error formatting volume"
 msgstr "Fehler beim Formatieren des Datenträgers"
 
-#: ../src/format-tool/gdu-format-tool.c:484
+#: ../src/format-tool/gdu-format-tool.c:493
 msgid "Mounting volume..."
 msgstr "Datenträger wird eingehangen …"
 
-#: ../src/format-tool/gdu-format-tool.c:508 ../src/palimpsest/gdu-shell.c:972
+#: ../src/format-tool/gdu-format-tool.c:517 ../src/palimpsest/gdu-shell.c:995
 msgid "Error mounting device"
 msgstr "Fehler beim Einhängen des Gerätes"
 
-#: ../src/format-tool/gdu-format-tool.c:525
+#: ../src/format-tool/gdu-format-tool.c:534
 msgid "Error storing passphrase in keyring"
 msgstr "Fehler beim Speichern des Kennworts im Schlüsselbund"
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:186
-msgid "Read Error Rate"
-msgstr "Lesefehlerrate"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:187
-msgid ""
-"Frequency of errors while reading raw data from the disk. A non-zero value "
-"indicates a problem with either the disk surface or read/write heads."
-msgstr ""
-"Häufigkeit der Fehler beim Lesen von Rohdaten vom Medium. Ein von Null "
-"verschiedener Wert deutet auf ein Problem mit der Plattenoberfläche oder den "
-"Schreib-/Leseköpfen hin."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:196
-msgid "Throughput Performance"
-msgstr "Datendurchsatz"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:197
-msgid "Average efficiency of the disk."
-msgstr "Durchschnittliche Effizienz des Laufwerks."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:204
-msgid "Spinup Time"
-msgstr "Anlaufzeit"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:205
-msgid "Time needed to spin up the disk."
-msgstr "Zeit zum Anlaufen des Laufwerks."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:212
-msgid "Start/Stop Count"
-msgstr "Start/Stopp-Zähler"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:213
-msgid "Number of spindle start/stop cycles."
-msgstr "Anzahl der Anlauf- und Stoppzyklen des Plattenstapels."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:220
-msgid "Reallocated Sector Count"
-msgstr "Anzahl neu zugewiesener Sektoren"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:221
-msgid ""
-"Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it mark the sector as \"reallocated\" and transfers data "
-"to a special reserved area (spare area)."
-msgstr ""
-"Zähler für neu zugewiesene Sektoren. Wenn die Festplatte einen Lese- oder "
-"Schreibfehler erleidet, dann wird der Sektor als »neu zugewiesen« markiert "
-"und die Daten werden in einen reservierten Bereich (Reservebereich) "
-"verschoben."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:230
-msgid "Seek Error Rate"
-msgstr "Such-Fehlerrate"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:231
-msgid "Frequency of errors while positioning."
-msgstr ""
-"Häufigkeit der Fehler während der Positionierung des Schreib-/Lesekopfes."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:238
-msgid "Seek Timer Performance"
-msgstr "Positionierungszeit"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:239
-msgid "Average efficiency of operatings while positioning"
-msgstr "Durchschnittliche Effizienz für den Vorgang der Positionierung"
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:246
-msgid "Power-On Hours"
-msgstr "Betriebsstunden"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:247
-msgid "Number of hours elapsed in the power-on state."
-msgstr "Anzahl der Stunden im eingeschalteten Zustand."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:254
-msgid "Spinup Retry Count"
-msgstr "Zähler für erneute Anlaufversuche"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:255
-msgid "Number of retry attempts to spin up."
-msgstr "Anzahl der erneuten Anlaufversuche."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:262
-msgid "Calibration Retry Count"
-msgstr "Zähler für erneute Versuche einer Kalibrierung"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:263
-msgid "Number of attempts to calibrate the device."
-msgstr "Anzahl der Versuche zur Kalibrierung des Geräts."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:270
-msgid "Power Cycle Count"
-msgstr "Einschaltvorgänge"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:271
-msgid "Number of power-on events."
-msgstr "Anzahl der Einschaltvorgänge."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:278
-msgid "Soft read error rate"
-msgstr "Fehlerrate beim Lesen"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:279
-msgid "Frequency of 'program' errors while reading from the disk."
-msgstr "Häufigkeit gemeldeter Lesefehler vom Medium."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:287
-#: ../src/gdu/gdu-ata-smart-attribute.c:460
-msgid "G-sense Error Rate"
-msgstr "Fehlerrate durch Stoßerkennung"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:288
-msgid "Frequency of mistakes as a result of impact loads."
-msgstr "Fehlerhäufigkeit aufgrund von Stoßbelastungen."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:295
-#: ../src/gdu/gdu-ata-smart-attribute.c:517
-msgid "Power-off Retract Count"
-msgstr "Anzahl Zurückfahrbewegungen beim Ausschalten"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:296
-msgid "Number of power-off or emergency retract cycles."
-msgstr "Anzahl der Rückfahrzyklen des Lesekopfes beim Ausschalten"
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:303
-#: ../src/gdu/gdu-ata-smart-attribute.c:493
-msgid "Load/Unload Cycle Count"
-msgstr "Parkvorgänge in Ruhezone"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:304
-msgid "Number of cycles into landing zone position."
-msgstr "Anzahl der Parkvorgänge in der Ruhezone"
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:311
-#: ../src/gdu/gdu-ata-smart-attribute.c:534
-msgid "Temperature"
-msgstr "Temperatur"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:312
-msgid "Current internal temperature in degrees Celsius."
-msgstr "Gegenwärtige Innentemperatur in Grad Celsius."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:319
-msgid "Hardware ECC Recovered"
-msgstr "Korrigierte Bitfehler"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:320
-msgid "Number of ECC on-the-fly errors."
-msgstr "Anzahl korrigierter Bitfehler beim Lesen."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:327
-msgid "Reallocation Count"
-msgstr "Zähler für Neuzuweisungen"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:328
-msgid ""
-"Number of remapping operations. The raw value of this attribute shows the "
-"total number of (successful and unsuccessful) attempts to transfer data from "
-"reallocated sectors to a spare area."
-msgstr ""
-"Anzahl der erneuten Zuweisungen. Der rohe Wert entspricht der Anzahl aller "
-"(erfolgreichen und fehlgeschlagenen) Versuche, Daten von neu zugewiesenen "
-"Sektoren in den Reservebereich zu verschieben."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:338
-msgid "Current Pending Sector Count"
-msgstr "Anzahl ausstehender Sektoren"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:339
-msgid ""
-"Number of sectors waiting to be remapped. If the sector waiting to be "
-"remapped is subsequently written or read successfully, this value is "
-"decreased and the sector is not remapped. Read errors on the sector will not "
-"remap the sector, it will only be remapped on a failed write attempt."
-msgstr ""
-"Anzahl der Sektoren, die auf eine Neuzuweisung warten. Wenn der neu "
-"zuzuweisende Sektor später erfolgreich beschrieben oder gelesen wird, dann "
-"wird dieser Wert kleiner und der Sektor wird nicht neu zugeordnet. "
-"Lesefehler führen nicht zu einer Neuzuweisung, sondern nur Schreibfehler."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:352
-msgid "Uncorrectable Sector Count"
-msgstr "Anzahl nicht korrigierbarer Sektoren"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:353
-msgid ""
-"The total number of uncorrectable errors when reading/writing a sector. A "
-"rise in the value of this attribute indicates defects of the disk surface "
-"and/or problems in the mechanical subsystem."
-msgstr ""
-"Die Gesamtzahl von nicht korrigierbaren Fehlern beim Lesen oder Schreiben "
-"eines Sektors. Ein Anwachsen dieses Wertes könnte auf einen Defekt der "
-"Plattenoberfläche oder auf mechanische Probleme hindeuten."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:362
-msgid "UDMA CRC Error Rate"
-msgstr "UDMA CRC-Fehlerrate"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:363
-msgid "Number of CRC errors during UDMA mode."
-msgstr "Anzahl von CRC-Fehlern im UDMA-Modus."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:370
-msgid "Write Error Rate"
-msgstr "Schreibfehlerrate"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:371
-msgid ""
-"Number of errors while writing to disk (or) multi-zone error rate (or) "
-"flying-height."
-msgstr ""
-"Anzahl von Fehlern beim Schreiben (oder) die Multi-Zone-Fehlerrate (oder) "
-"Fehlerzahl der Abtasthöhe."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:378
-msgid "Soft Read Error Rate"
-msgstr "Rate leichter Lesefehler"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:379
-msgid "Number of off-track errors."
-msgstr "Anzahl verfehlter Spuren."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:386
-msgid "Data Address Mark Errors"
-msgstr "Fehler der Datenadressmarkierung"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:387
-msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific."
-msgstr ""
-"Fehlerzahl von Datenadressmarkierungen (DAM-Fehler) (oder) "
-"herstellerabhängig."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:394
-msgid "Run Out Cancel"
-msgstr "Leseabbrüche"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:395
-msgid "Number of ECC errors."
-msgstr "Anzahl der ECC-Fehler."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:402
-msgid "Soft ECC correction"
-msgstr "Leichte ECC-Korrekturen"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:403
-msgid "Number of errors corrected by software ECC."
-msgstr "Anzahl durch Software korrigierter Fehler."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:410
-msgid "Thermal Asperity Rate"
-msgstr "Rate der thermischen Oberflächenunebenheiten"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:411
-msgid "Number of Thermal Asperity Rate errors."
-msgstr "Anzahl der Fehler bedingt durch hohe Temperatur."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:418
-msgid "Flying Height"
-msgstr "Abtasthöhe"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:419
-msgid "Height of heads above the disk surface."
-msgstr "Höhe der Abtastköpfe über der Plattenoberfläche."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:426
-msgid "Spin High Current"
-msgstr "Anlaufstromspitze"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:427
-msgid "Amount of high current used to spin up the drive."
-msgstr "Maximale Stromaufnahme bei Anlauf des Laufwerks."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:434
-msgid "Spin Buzz"
-msgstr ""
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:435
-msgid "Number of buzz routines to spin up the drive."
-msgstr ""
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:442
-msgid "Offline Seek Performance"
-msgstr "Positionierungszeit beim Selbsttest"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:443
-msgid "Drive's seek performance during offline operations."
-msgstr "Positionierungszeit des Laufwerks während des Selbsttests."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:451
-msgid "Disk Shift"
-msgstr "Plattenverschiebung"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:452
-msgid ""
-"Shift of disk is possible as a result of strong shock loading in the store, "
-"as a result of falling (or) temperature."
-msgstr ""
-"Eine Plattenverschiebung von der Drehachse ist durch starke Stoßbelastungen "
-"des Lagers z.B. nach einem Fall möglich (oder) durch Hitze."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:461
-msgid ""
-"Number of errors as a result of impact loads as detected by a shock sensor."
-msgstr "Fehlerzahl in Folge von Stößen, soweit durch einen Sensor erkannt."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:468
-msgid "Loaded Hours"
-msgstr "Laufzeit"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:469
-msgid "Number of hours in general operational state."
-msgstr "Stundenzahl im allgemeinen Betrieb."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:476
-msgid "Load/Unload Retry Count"
-msgstr "Zähler für Lesekopfbewegungen"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:477
-msgid ""
-"Loading on drive caused by numerous recurrences of operations, like reading, "
-"recording, positioning of heads, etc."
-msgstr ""
-"Belastung des Laufwerks durch verschiedene Vorgänge wie Lesen, Schreiben, "
-"Kopfpositionierung usw."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:485
-msgid "Load Friction"
-msgstr "Reibungsbelastung"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:486
-msgid "Load on drive cause by friction in mechanical parts of the store."
-msgstr "Laufwerksbelastungen durch Reibung in den mechanischen Teilen."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:494
-msgid "Total number of load cycles."
-msgstr "Anzahl an Belastungszyklen."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:501
-msgid "Load-in Time"
-msgstr "Zeit der Leseköpfe über den Platten"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:502
-msgid "General time for loading in a drive."
-msgstr "Allgemeine Belastungszeit eines Laufwerks."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:509
-msgid "Torque Amplification Count"
-msgstr "Zähler für Ausgleiche bei Drehmomentschwankungen"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:510
-msgid "Quantity efforts of the rotating moment of a drive."
-msgstr "Energieeinsatz für das Drehmoment eines Laufwerks."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:518
-msgid "Number of power-off retract events."
-msgstr "Anzahl von Lesekopfparkvorgängen"
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:526
-msgid "GMR Head Amplitude"
-msgstr "Amplitude des Lesekopfflatterns"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:527
-msgid "Amplitude of heads trembling (GMR-head) in running mode."
-msgstr "Stärke des Kopfflatterns (GMR-Kopf) im Betrieb."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:535
-msgid "Temperature of the drive."
-msgstr "Temperatur des Laufwerks."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:543
-msgid "Head Flying Hours"
-msgstr "Kopfbewegungszeit"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:544
-msgid "Time while head is positioning."
-msgstr "Zeit, während der der Kopf positioniert wird."
-
-#. Translators: S.M.A.R.T attribute, see
-#. * http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../src/gdu/gdu-ata-smart-attribute.c:551
-msgid "Read Error Retry Rate"
-msgstr "Lesefehlerrate"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:552
-msgid "Number of errors while reading from a disk."
-msgstr "Anzahl der Lesefehler beim Lesen vom Laufwerk."
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:455
@@ -875,54 +329,80 @@ msgstr "Blu-Ray-Medium"
 msgid "HDDVD"
 msgstr "HDDVD-Medium"
 
-#. Translators: This word is appended after the media type, e.g. 'CD/DVD Drive' or
-#. * 'CompactFlash Drive'
-#.
-#: ../src/gdu/gdu-drive.c:576 ../src/gdu/gdu-drive.c:609
-#, fuzzy
-#| msgid "Drive"
-msgctxt "Media Type"
-msgid "Drive"
-msgstr "Laufwerk"
+# Das wird dann z.B. zu RAID-5-Laufwerk expandiert.
+#. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-drive.c:575 ../src/gdu/gdu-drive.c:614
+#: ../src/gdu/gdu-linux-md-drive.c:520
+#, c-format
+msgid "%s Drive"
+msgstr "%s-Laufwerk"
 
-#: ../src/gdu/gdu-drive.c:617
+#. Translators: first %s is the size, second %s is the media type
+#. * e.g. 'CD/DVD' or 'CompactFlash'
+#.
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-drive.c:609 ../src/gdu/gdu-linux-md-drive.c:515
+#, c-format
+msgid "%s %s Drive"
+msgstr "Laufwerk %s %s"
+
+#. Translators: This string is used to describe a hard disk. The first %s is
+#. * the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:625
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s Festplatte"
 
-#: ../src/gdu/gdu-drive.c:624
+#. Translators: This string is used to describe a hard disk where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:631
 msgid "Hard Disk"
 msgstr "Festplatte"
 
-#: ../src/gdu/gdu-drive.c:632
+#. Translators: This string is used to describe a SSD. The first %s is
+#. * the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:638
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s Festkörperlaufwerk"
 
-#: ../src/gdu/gdu-drive.c:639
+#. Translators: This string is used to describe a SSD where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:644
 msgid "Solid-State Disk"
 msgstr "Festkörperlaufwerk"
 
-#: ../src/gdu/gdu-drive.c:681
+#. Translators: This string is the description of a drive. The first %s is the
+#. * size of the inserted media, for example '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:685
 #, c-format
 msgid "%s Media"
 msgstr "%s-Medium"
 
-#: ../src/gdu/gdu-drive.c:689 ../src/palimpsest/gdu-section-no-media.c:113
-#: ../src/palimpsest/gdu-shell.c:240 ../src/palimpsest/gdu-shell.c:264
+#. Translators: This string is used as a description text when no media has
+#. * been detected for a drive
+#.
+#: ../src/gdu/gdu-drive.c:692 ../src/palimpsest/gdu-section-no-media.c:113
+#: ../src/palimpsest/gdu-shell.c:239 ../src/palimpsest/gdu-shell.c:263
 #, c-format
 msgid "No Media Detected"
 msgstr "Kein Medium erkannt"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:701 ../src/gdu/gdu-linux-md-drive.c:542
+#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-linux-md-drive.c:542
 msgid "MBR Partition Table"
 msgstr "MBR-Partitionstabelle"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:705 ../src/gdu/gdu-linux-md-drive.c:545
-#: ../src/gdu-gtk/gdu-gtk.c:1534 ../src/palimpsest/gdu-shell.c:224
-#: ../src/palimpsest/gdu-shell.c:254
+#: ../src/gdu/gdu-drive.c:706 ../src/gdu/gdu-linux-md-drive.c:545
+#: ../src/gdu-gtk/gdu-gtk.c:1534 ../src/palimpsest/gdu-shell.c:223
+#: ../src/palimpsest/gdu-shell.c:253
 msgid "GUID Partition Table"
 msgstr "GUID-Partitionstabelle"
 
@@ -934,28 +414,17 @@ msgstr "Apple-Partitionstabelle"
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:715 ../src/gdu/gdu-linux-md-drive.c:553
+#: ../src/gdu/gdu-drive.c:714 ../src/gdu/gdu-linux-md-drive.c:553
 msgid "Partitioned"
 msgstr "Partitioniert"
 
-#: ../src/gdu/gdu-drive.c:721 ../src/palimpsest/gdu-shell.c:261
-#: ../src/palimpsest/gdu-shell.c:351
+#. Translators: This string is used for conveying a device is not partitioned.
+#.
+#: ../src/gdu/gdu-drive.c:719 ../src/palimpsest/gdu-shell.c:260
+#: ../src/palimpsest/gdu-shell.c:380
 #, c-format
 msgid "Not Partitioned"
 msgstr "Nicht partitioniert"
-
-#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:515
-#, c-format
-msgid "%s %s Drive"
-msgstr "Laufwerk %s %s"
-
-# Das wird dann z.B. zu RAID-5-Laufwerk expandiert.
-#. Translators: %s is a RAID level, e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:520
-#, c-format
-msgid "%s Drive"
-msgstr "%s-Laufwerk"
 
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
@@ -1040,7 +509,7 @@ msgstr "HFS+"
 
 #: ../src/gdu/gdu-util.c:202
 msgid "Linux Unified Key Setup"
-msgstr ""
+msgstr "Linux Unified Key Setup"
 
 #. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
 #: ../src/gdu/gdu-util.c:205
@@ -1153,7 +622,7 @@ msgid "udf"
 msgstr "udf"
 
 #: ../src/gdu/gdu-util.c:285 ../src/palimpsest/gdu-section-swapspace.c:82
-#: ../src/palimpsest/gdu-shell.c:327
+#: ../src/palimpsest/gdu-shell.c:356
 msgid "Swap Space"
 msgstr "Auslagerungsspeicher"
 
@@ -1270,288 +739,297 @@ msgid "Repairing RAID Array"
 msgstr "RAID-Anordnung wird repariert"
 
 #: ../src/gdu/gdu-util.c:361
-msgid "Running S.M.A.R.T. Self Test"
-msgstr "S.M.A.R.T. Selbsttest wird ausgeführt"
+msgid "Running Short SMART Self-Test"
+msgstr "Kurzer S.M.A.R.T.-Selbsttest wird ausgeführt"
 
 #: ../src/gdu/gdu-util.c:363
+msgid "Running Extended SMART Self-Test"
+msgstr "Erweiterter S.M.A.R.T.-Selbsttest wird ausgeführt"
+
+# ATA-6 ergänzt zwei weitere Varianten. Die eine empfiehlt sich nach einem Laufwerkstransport (genannt Conveyance – ähnlich dem Kurztest), ...
+#: ../src/gdu/gdu-util.c:365
+msgid "Running Conveyance SMART Self-Test"
+msgstr "S.M.A.R.T.-Selbsttest auf Transportschaden wird ausgeführt"
+
+#: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
 msgstr "Medium wird ausgeworfen"
 
-#: ../src/gdu/gdu-util.c:365
+#: ../src/gdu/gdu-util.c:369
 msgid "Detaching Device"
 msgstr "Gerät wird entfernt"
 
-#: ../src/gdu/gdu-util.c:367
+#: ../src/gdu/gdu-util.c:371
 msgid "Forcibly Unmounting Filesystem"
 msgstr "Aushängen des Dateisystem wird erzwungen "
 
-#: ../src/gdu/gdu-util.c:369
+#: ../src/gdu/gdu-util.c:373
 msgid "Forcibly Locking LUKS device"
 msgstr "Sperren des LUKS-Geräts wird erzwungen"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:388
 msgid "MBR Partition Scheme"
 msgstr "MBR-Partitionsschema"
 
-#: ../src/gdu/gdu-util.c:385
+#: ../src/gdu/gdu-util.c:389
 msgid "EFI System Partition"
 msgstr "EFI-Systempartition"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:387
+#: ../src/gdu/gdu-util.c:391
 msgid "Microsoft Reserved Partition"
 msgstr "Reservierte Microsoft-Partition"
 
 #. {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")},
-#: ../src/gdu/gdu-util.c:389
+#: ../src/gdu/gdu-util.c:393
 msgid "LDM meta data Partition"
 msgstr "LDM Metadaten-Partition"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:394
 msgid "LDM data Partition"
 msgstr "LDM Daten-Partition"
 
 #. Linux
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:396
 msgid "Basic Data Partition"
 msgstr "Einfache Datenpartition"
 
 #. Same GUID as MS!
-#: ../src/gdu/gdu-util.c:393
+#: ../src/gdu/gdu-util.c:397
 msgid "Linux RAID Partition"
 msgstr "Linux RAID-Partition"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:398
 msgid "Linux Swap Partition"
 msgstr "Linux Swap-Partition"
 
-#: ../src/gdu/gdu-util.c:395
+#: ../src/gdu/gdu-util.c:399
 msgid "Linux LVM Partition"
 msgstr "Linux LVM-Partition"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:400
 msgid "Linux Reserved Partition"
 msgstr "Linux Reserve-Partition"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:398 ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:402 ../src/gdu/gdu-util.c:410
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Apple HFS/HFS+-Partition"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:399 ../src/gdu/gdu-util.c:405
+#: ../src/gdu/gdu-util.c:403 ../src/gdu/gdu-util.c:409
 msgid "Apple UFS Partition"
 msgstr "Apple UFS-Partition"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:404
 msgid "Apple RAID Partition"
 msgstr "Apple RAID-Partition"
 
-#: ../src/gdu/gdu-util.c:407 ../src/gdu-gtk/gdu-gtk.c:1544
-#: ../src/palimpsest/gdu-shell.c:220 ../src/palimpsest/gdu-shell.c:250
+#: ../src/gdu/gdu-util.c:411 ../src/gdu-gtk/gdu-gtk.c:1544
+#: ../src/palimpsest/gdu-shell.c:219 ../src/palimpsest/gdu-shell.c:249
 msgid "Apple Partition Map"
 msgstr "Apple Partitionsverzeichnis"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:412
 msgid "Unused Partition"
 msgstr "Unbenutzte Partition"
 
-#: ../src/gdu/gdu-util.c:409
+#: ../src/gdu/gdu-util.c:413
 msgid "Empty Partition"
 msgstr "Leere Partition"
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:414
 msgid "Driver Partition"
 msgstr "Treiber-Partition"
 
-#: ../src/gdu/gdu-util.c:411
+#: ../src/gdu/gdu-util.c:415
 msgid "Driver 4.3 Partition"
 msgstr "Treiber 4.3-Partition"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:416
 msgid "ProDOS file system"
 msgstr "ProDOS-Dateisystem"
 
-#: ../src/gdu/gdu-util.c:413
+#: ../src/gdu/gdu-util.c:417
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:414
+#: ../src/gdu/gdu-util.c:418
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:415
+#: ../src/gdu/gdu-util.c:419
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:416
+#: ../src/gdu/gdu-util.c:420
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:417
+#: ../src/gdu/gdu-util.c:421
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:420
+#: ../src/gdu/gdu-util.c:424
 msgid "Empty (0x00)"
 msgstr "Leer (0x00)"
 
-#: ../src/gdu/gdu-util.c:421
+#: ../src/gdu/gdu-util.c:425
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:422
+#: ../src/gdu/gdu-util.c:426
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:423
+#: ../src/gdu/gdu-util.c:427
 msgid "Extended (0x05)"
 msgstr "Erweitert (0x05)"
 
-#: ../src/gdu/gdu-util.c:424
+#: ../src/gdu/gdu-util.c:428
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:425
+#: ../src/gdu/gdu-util.c:429
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:426
+#: ../src/gdu/gdu-util.c:430
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:427
+#: ../src/gdu/gdu-util.c:431
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:428
+#: ../src/gdu/gdu-util.c:432
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:429
+#: ../src/gdu/gdu-util.c:433
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 Ext d (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:430
+#: ../src/gdu/gdu-util.c:434
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:431
+#: ../src/gdu/gdu-util.c:435
 msgid "Hidden FAT12 (0x11)"
 msgstr "Versteckte FAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:432
+#: ../src/gdu/gdu-util.c:436
 msgid "Compaq diagnostics (0x12)"
 msgstr "Compaq Diagnostics (0x12)"
 
-#: ../src/gdu/gdu-util.c:433
+#: ../src/gdu/gdu-util.c:437
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "Versteckte FAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:434
+#: ../src/gdu/gdu-util.c:438
 msgid "Hidden FAT16 (0x16)"
 msgstr "Versteckte FAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:435
+#: ../src/gdu/gdu-util.c:439
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "Versteckte HPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:436
+#: ../src/gdu/gdu-util.c:440
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "Versteckte W95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:437
+#: ../src/gdu/gdu-util.c:441
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "Versteckte W95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:438
+#: ../src/gdu/gdu-util.c:442
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "Versteckte W95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:439
+#: ../src/gdu/gdu-util.c:443
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#: ../src/gdu/gdu-util.c:440
+#: ../src/gdu/gdu-util.c:444
 msgid "Linux swap (0x82)"
 msgstr "Linux swap (0x82)"
 
-#: ../src/gdu/gdu-util.c:441
+#: ../src/gdu/gdu-util.c:445
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:442
+#: ../src/gdu/gdu-util.c:446
 msgid "Hibernation (0x84)"
 msgstr "Hibernation (0x84)"
 
-#: ../src/gdu/gdu-util.c:443
+#: ../src/gdu/gdu-util.c:447
 msgid "Linux Extended (0x85)"
 msgstr "Linux Erweitert (0x85)"
 
-#: ../src/gdu/gdu-util.c:444
+#: ../src/gdu/gdu-util.c:448
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:445
+#: ../src/gdu/gdu-util.c:449
 msgid "Hibernation (0xa0)"
 msgstr "Ruhezustand (0xa0)"
 
-#: ../src/gdu/gdu-util.c:446
+#: ../src/gdu/gdu-util.c:450
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:447
+#: ../src/gdu/gdu-util.c:451
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:448
+#: ../src/gdu/gdu-util.c:452
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:449
+#: ../src/gdu/gdu-util.c:453
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:450
+#: ../src/gdu/gdu-util.c:454
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris boot (0xbe)"
 
-#: ../src/gdu/gdu-util.c:451
+#: ../src/gdu/gdu-util.c:455
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:452
+#: ../src/gdu/gdu-util.c:456
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:453
+#: ../src/gdu/gdu-util.c:457
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:454
+#: ../src/gdu/gdu-util.c:458
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:455
+#: ../src/gdu/gdu-util.c:459
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:456
+#: ../src/gdu/gdu-util.c:460
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Linux RAID-Autoerkennung (0xfd)"
 
 #. Translators: Shown for unknown partition types.
 #. * %s is the partition type name
 #.
-#: ../src/gdu/gdu-util.c:483
+#: ../src/gdu/gdu-util.c:487
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Unbekannt (%s)"
 
-#: ../src/gdu/gdu-util.c:493
+#: ../src/gdu/gdu-util.c:497
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
@@ -1559,7 +1037,7 @@ msgstr ""
 "Ein mit beinahe jedem Gerät und System kompatibles populäres Format, "
 "typischerweise für den Dateiaustausch genutzt."
 
-#: ../src/gdu/gdu-util.c:497
+#: ../src/gdu/gdu-util.c:501
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
@@ -1568,7 +1046,7 @@ msgstr ""
 "Unterstützung für die klassischen UNIX-Zugriffsrechte bereit. Dieses "
 "Dateisystem enthält kein Journal."
 
-#: ../src/gdu/gdu-util.c:503
+#: ../src/gdu/gdu-util.c:507
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
@@ -1576,12 +1054,12 @@ msgstr ""
 "Dieses Dateisystem ist nur zu Linux-Systemen kompatibel und stellt "
 "Unterstützung für die klassischen UNIX-Zugriffsrechte bereit."
 
-#: ../src/gdu/gdu-util.c:507
+#: ../src/gdu/gdu-util.c:511
 msgid "Swap area used by the operating system for virtual memory."
 msgstr ""
 "Swap-Bereich, der vom Betriebssystem als Auslagerungsspeicher genutzt wird."
 
-#: ../src/gdu/gdu-util.c:510
+#: ../src/gdu/gdu-util.c:514
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
@@ -1589,15 +1067,15 @@ msgstr ""
 "Das native Windows-Dateisystem. Außerhalb der Windows-Welt nicht besonders "
 "kompatibel."
 
-#: ../src/gdu/gdu-util.c:514
+#: ../src/gdu/gdu-util.c:518
 msgid "No file system will be created."
 msgstr "Es wird kein Dateisystem erstellt."
 
-#: ../src/gdu/gdu-util.c:517
+#: ../src/gdu/gdu-util.c:521
 msgid "Create an Extended Partition for logical partitions."
 msgstr "Eine erweiterte Partition für logische Partitionen erstellen."
 
-#: ../src/gdu/gdu-util.c:530
+#: ../src/gdu/gdu-util.c:534
 msgid ""
 "The Master Boot Record scheme is compatible with almost any device or system "
 "but has a number of limitations with respect to disk size and number of "
@@ -1607,7 +1085,7 @@ msgstr ""
 "kompatibel. Allerdings gibt es eine Reihe von Einschränkungen hinsichtlich "
 "der Mediengröße und der Anzahl der Partitionen."
 
-#: ../src/gdu/gdu-util.c:535
+#: ../src/gdu/gdu-util.c:539
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
@@ -1616,7 +1094,7 @@ msgstr ""
 "Apple-Systemen und den meisten Linux-Systemen. Es ist für Wechselmedien "
 "nicht empfehlenswert."
 
-#: ../src/gdu/gdu-util.c:540
+#: ../src/gdu/gdu-util.c:544
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
@@ -1624,7 +1102,7 @@ msgstr ""
 "Das GUID-Schema ist mit den meisten modernen Systemen kompatibel, aber es "
 "könnte mit einigen Geräten und alten Systemen nicht kompatibel sein."
 
-#: ../src/gdu/gdu-util.c:544
+#: ../src/gdu/gdu-util.c:548
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
@@ -1633,73 +1111,73 @@ msgstr ""
 "wenn Sie die Partitionierung verhindern wollen, um das Medium beispielsweise "
 "ganz oder für Floppy- oder Zip-Disketten zu verwenden."
 
-#: ../src/gdu/gdu-util.c:727 ../src/gdu-gtk/gdu-gtk.c:947
+#: ../src/gdu/gdu-util.c:731 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "LUKS-Kennwort für UUID %s"
 
-#: ../src/gdu/gdu-util.c:756
+#: ../src/gdu/gdu-util.c:760
 #, c-format
 msgid "%.1f kbit/s"
 msgstr "%.1f kbit/s"
 
-#: ../src/gdu/gdu-util.c:759
+#: ../src/gdu/gdu-util.c:763
 #, c-format
 msgid "%.1f Mbit/s"
 msgstr "%.1f Mbit/s"
 
-#: ../src/gdu/gdu-util.c:762
+#: ../src/gdu/gdu-util.c:766
 #, c-format
 msgid "%.1f Gbit/s"
 msgstr "%.1f Gbit/s"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:778
+#: ../src/gdu/gdu-util.c:782
 msgid "SATA"
 msgstr "SATA"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:781
+#: ../src/gdu/gdu-util.c:785
 msgid "eSATA"
 msgstr "eSATA"
 
 #. Translators: interface name for parallel ATA disks
-#: ../src/gdu/gdu-util.c:784
+#: ../src/gdu/gdu-util.c:788
 msgid "PATA"
 msgstr "PATA"
 
 #. Translators: interface name for ATA disks
-#: ../src/gdu/gdu-util.c:787
+#: ../src/gdu/gdu-util.c:791
 msgid "ATA"
 msgstr "ATA"
 
 #. Translators: interface name for SCSI disks
-#: ../src/gdu/gdu-util.c:790
+#: ../src/gdu/gdu-util.c:794
 msgid "SCSI"
 msgstr "SCSI"
 
 #. Translators: interface name for USB disks
-#: ../src/gdu/gdu-util.c:793
+#: ../src/gdu/gdu-util.c:797
 msgid "USB"
 msgstr "USB"
 
 #. Translators: interface name for firewire disks
-#: ../src/gdu/gdu-util.c:796
+#: ../src/gdu/gdu-util.c:800
 msgid "Firewire"
 msgstr "Firewire"
 
 #. Translators: interface name for SDIO disks
-#: ../src/gdu/gdu-util.c:799
+#: ../src/gdu/gdu-util.c:803
 msgid "SDIO"
 msgstr "SDIO"
 
 #. Translators: interface name for virtual disks
-#: ../src/gdu/gdu-util.c:802
+#: ../src/gdu/gdu-util.c:806
 msgid "Virtual"
 msgstr "Virtuell"
 
 #. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:808
+#: ../src/gdu/gdu-util.c:812
 msgctxt "connection name"
 msgid "Unknown"
 msgstr "Unbekannt"
@@ -1708,82 +1186,82 @@ msgstr "Unbekannt"
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
 #.
-#: ../src/gdu/gdu-util.c:818
+#: ../src/gdu/gdu-util.c:822
 #, c-format
 msgid "%s at %s"
 msgstr "%s mit %s"
 
-#: ../src/gdu/gdu-util.c:837
+#: ../src/gdu/gdu-util.c:841
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
 msgstr "Verteilt (RAID 0)"
 
-#: ../src/gdu/gdu-util.c:839
+#: ../src/gdu/gdu-util.c:843
 msgctxt "RAID level"
 msgid "RAID-0"
 msgstr "RAID 0"
 
-#: ../src/gdu/gdu-util.c:842
+#: ../src/gdu/gdu-util.c:846
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
 msgstr "Gespiegelt (RAID 1)"
 
-#: ../src/gdu/gdu-util.c:844
+#: ../src/gdu/gdu-util.c:848
 msgctxt "RAID level"
 msgid "RAID-1"
 msgstr "RAID 1"
 
-#: ../src/gdu/gdu-util.c:847
+#: ../src/gdu/gdu-util.c:851
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
 msgstr "Mit Paritätslaufwerk (RAID 4)"
 
-#: ../src/gdu/gdu-util.c:849
+#: ../src/gdu/gdu-util.c:853
 msgctxt "RAID level"
 msgid "RAID-4"
 msgstr "RAID 4"
 
-#: ../src/gdu/gdu-util.c:852
+#: ../src/gdu/gdu-util.c:856
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
 msgstr "Verteilte Parität (RAID 5)"
 
-#: ../src/gdu/gdu-util.c:854
+#: ../src/gdu/gdu-util.c:858
 msgctxt "RAID level"
 msgid "RAID-5"
 msgstr "RAID 5"
 
-#: ../src/gdu/gdu-util.c:857
+#: ../src/gdu/gdu-util.c:861
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
 msgstr "Zweifach verteilte Parität (RAID 6)"
 
-#: ../src/gdu/gdu-util.c:859
+#: ../src/gdu/gdu-util.c:863
 msgctxt "RAID level"
 msgid "RAID-6"
 msgstr "RAID 6"
 
-#: ../src/gdu/gdu-util.c:862
+#: ../src/gdu/gdu-util.c:866
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
 msgstr "Verteilte Spiegel (RAID 10)"
 
-#: ../src/gdu/gdu-util.c:864
+#: ../src/gdu/gdu-util.c:868
 msgctxt "RAID level"
 msgid "RAID-10"
 msgstr "RAID 10"
 
-#: ../src/gdu/gdu-util.c:867
+#: ../src/gdu/gdu-util.c:871
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
 msgstr "Zusammenhängend (linear)"
 
-#: ../src/gdu/gdu-util.c:869
+#: ../src/gdu/gdu-util.c:873
 msgctxt "RAID level"
 msgid "Linear"
 msgstr "Linear"
 
-#: ../src/gdu/gdu-util.c:883
+#: ../src/gdu/gdu-util.c:887
 msgid ""
 "Striped set without parity. Provides improved performance but no fault "
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
@@ -1793,7 +1271,7 @@ msgstr ""
 "Fehlertoleranz. Wenn eine einzige Platte der Anordnung versagt, so versagt "
 "die ganze RAID 0-Anordnung."
 
-#: ../src/gdu/gdu-util.c:887
+#: ../src/gdu/gdu-util.c:891
 msgid ""
 "Mirrored set without parity. Provides fault tolerance and improved "
 "performance for reading. RAID-1 arrays can sustain all but one disk failing."
@@ -1802,7 +1280,7 @@ msgstr ""
 "Lesegeschwindigkeit. RAID 1-Anordnungen können den Ausfall aller bis auf "
 "einer Platte überdauern."
 
-#: ../src/gdu/gdu-util.c:891
+#: ../src/gdu/gdu-util.c:895
 msgid ""
 "Striped set with parity on a single disk. Provides improved performance and "
 "fault tolerance. RAID-4 arrays can sustain a single disk failure."
@@ -1811,7 +1289,7 @@ msgstr ""
 "Geschwindigkeit. RAID 4-Anordnungen können den Ausfall einer Platte "
 "überdauern."
 
-#: ../src/gdu/gdu-util.c:895
+#: ../src/gdu/gdu-util.c:899
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
@@ -1820,7 +1298,7 @@ msgstr ""
 "Geschwindigkeit. RAID 5-Anordnungen können den Ausfall einer einzigen Platte "
 "überdauern."
 
-#: ../src/gdu/gdu-util.c:899
+#: ../src/gdu/gdu-util.c:903
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
@@ -1829,7 +1307,7 @@ msgstr ""
 "verbesserte Geschwindigkeit. RAID 6-Anordnungen können den Ausfall von zwei "
 "Platten überdauern."
 
-#: ../src/gdu/gdu-util.c:903
+#: ../src/gdu/gdu-util.c:907
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
@@ -1839,10 +1317,71 @@ msgstr ""
 "Geschwindigkeit. RAID 10-Anordnungen können den Ausfall mehrerer Platten "
 "überdauern, solange kein Spiegel alle seine Platten verliert."
 
-#: ../src/gdu/gdu-util.c:909
+#: ../src/gdu/gdu-util.c:913
 #, c-format
 msgid "Unknown RAID level %s."
 msgstr "Unbekannte RAID-Stufe %s."
+
+#. Translators: Overall description of the GOOD status
+#: ../src/gdu/gdu-util.c:949
+msgid "Disk is healthy"
+msgstr "Laufwerk ist funktionstüchtig"
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
+#: ../src/gdu/gdu-util.c:953
+msgid "Disk was used outside of design parameters in the past"
+msgstr ""
+"Das Laufwerk wurde in der Vergangenheit außerhalb der erlaubten "
+"Betriebsbedingungen betrieben"
+
+#. Translators: Overall description of the BAD_SECTOR status
+#: ../src/gdu/gdu-util.c:957
+msgid "Disk has a few bad sectors"
+msgstr "Das Laufwerk enthält einige fehlerhafte Sektoren"
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
+#: ../src/gdu/gdu-util.c:961
+msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
+msgstr ""
+"DAS LAUFWERK WIRD AUSSERHALB DER ERLAUBTEN BETRIEBSBEDINGUNGEN BETRIEBEN"
+
+#. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
+#. Translators: Suggested action for the BAD_SECTOR_MANY status
+#. Translators: Suggested action for the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:963 ../src/gdu/gdu-util.c:971
+#: ../src/gdu/gdu-util.c:977
+msgid "Backup all data and replace the disk"
+msgstr "Sichern Sie alle Daten und ersetzen Sie das Laufwerk"
+
+#. Translators: Overall description of the BAD_SECTOR_MANY status
+#: ../src/gdu/gdu-util.c:968
+msgid "DISK HAS MANY BAD SECTORS"
+msgstr "LAUFWERK HAT VIELE FEHLERHAFTE SEKTOREN"
+
+#. Translators: Overall description of the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:975
+msgid "DISK FAILURE IS IMMINENT"
+msgstr "LAUFWERKSVERSAGEN STEHT UNMITTELBAR BEVOR"
+
+#. Translators: Description when the overall SMART status is unknown
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is unknown
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we don't know if the disk has bad sectors
+#. Translators: Shown in the "Powered On" item in the status table when we don't know
+#. * the amount of time the disk has been powered on
+#. Translators: Shown in the "Temperature" item in the status table when we don't know
+#. * the temperature of the disk
+#.
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu/gdu-util.c:982 ../src/gdu-gtk/gdu-ata-smart-dialog.c:2524
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2542
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2562
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2571
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2633
+#: ../src/playground/grid/gdu-grid-element.c:566
+msgid "Unknown"
+msgstr "Unbekannt"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
 #: ../src/gdu/gdu-volume.c:74
@@ -2124,19 +1663,21 @@ msgstr "Partition %d von %s"
 msgid "Partition %d"
 msgstr "Partition %d"
 
+# Hier gibt es einen Konflikt bei der Überseztung von "volume" mit "Datenträger".
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
 #: ../src/gdu/gdu-volume.c:438
-#, c-format
+#, fuzzy, c-format
 msgid "Whole-disk volume on %s"
-msgstr ""
+msgstr "Datenträger über vollständiges Laufwerk auf %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
 #: ../src/gdu/gdu-volume.c:443
+#, fuzzy
 msgid "Whole-disk volume"
-msgstr ""
+msgstr "Datenträger über vollständiges Laufwerk"
 
 #. Translators: label for an unallocated space on a disk
 #. * %s is the size, formatted like '45 GB'
@@ -2146,9 +1687,1143 @@ msgstr ""
 msgid "%s Free"
 msgstr "%s frei"
 
-#: ../src/gdu/gdu-volume-hole.c:159 ../src/palimpsest/gdu-shell.c:389
+#: ../src/gdu/gdu-volume-hole.c:159 ../src/palimpsest/gdu-shell.c:418
 msgid "Unallocated Space"
 msgstr "Nicht zugeteilter Platz"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:144
+msgid "Read Error Rate"
+msgstr "Lesefehlerrate"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:145
+msgid ""
+"Frequency of errors while reading raw data from the disk. A non-zero value "
+"indicates a problem with either the disk surface or read/write heads"
+msgstr ""
+"Häufigkeit der Fehler beim Lesen von Rohdaten vom Laufwerk. Ein von Null "
+"verschiedener Wert deutet auf ein Problem mit der Plattenoberfläche oder den "
+"Schreib-/Leseköpfen hin"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:154
+msgid "Throughput Performance"
+msgstr "Datendurchsatz"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:155
+msgid "Average efficiency of the disk"
+msgstr "Durchschnittliche Effizienz des Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:162
+msgid "Spinup Time"
+msgstr "Anlaufzeit"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:163
+msgid "Time needed to spin up the disk"
+msgstr "Zeit zum Anlaufen des Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:170
+msgid "Start/Stop Count"
+msgstr "Start/Stopp-Zähler"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:171
+msgid "Number of spindle start/stop cycles"
+msgstr "Anzahl der Anlauf- und Stoppzyklen des Plattenstapels"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:178
+msgid "Reallocated Sector Count"
+msgstr "Anzahl neu zugewiesener Sektoren"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
+msgid ""
+"Count of remapped sectors. When the hard drive finds a read/write/"
+"verification error, it mark the sector as \"reallocated\" and transfers data "
+"to a special reserved area (spare area)"
+msgstr ""
+"Zähler für neu zugewiesene Sektoren. Wenn die Festplatte einen Lese- oder "
+"Schreibfehler erleidet, dann wird der Sektor als »neu zugewiesen« markiert "
+"und die Daten werden in einen explizit reservierten Bereich (Reservebereich) "
+"verschoben"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:188
+msgid "Read Channel Margin"
+msgstr "Spielraum des Lesekanals"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:189
+msgid "Margin of a channel while reading data."
+msgstr "Spielraum des Kanals beim Lesen von Daten."
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:196
+msgid "Seek Error Rate"
+msgstr "Such-Fehlerrate"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:197
+msgid "Frequency of errors while positioning"
+msgstr ""
+"Häufigkeit der Fehler während der Positionierung des Schreib-/Lesekopfes"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:204
+msgid "Seek Timer Performance"
+msgstr "Positionierungszeit"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:205
+msgid "Average efficiency of operatings while positioning"
+msgstr "Durchschnittliche Effizienz für den Vorgang der Positionierung"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:212
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:536
+msgid "Power-On Hours"
+msgstr "Betriebsstunden"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:213
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:537
+msgid "Number of hours elapsed in the power-on state"
+msgstr "Anzahl der Stunden im eingeschalteten Zustand"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:220
+msgid "Spinup Retry Count"
+msgstr "Zähler für erneute Anlaufversuche"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:221
+msgid "Number of retry attempts to spin up"
+msgstr "Anzahl der erneuten Anlaufversuche"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:228
+msgid "Calibration Retry Count"
+msgstr "Zähler für erneute Versuche einer Kalibrierung"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:229
+msgid "Number of attempts to calibrate the device"
+msgstr "Anzahl der Versuche zur Kalibrierung des Geräts"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:236
+msgid "Power Cycle Count"
+msgstr "Einschaltvorgänge"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:237
+msgid "Number of power-on events"
+msgstr "Anzahl der Einschaltvorgänge"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:244
+msgid "Soft read error rate"
+msgstr "Fehlerrate beim Lesen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:245
+msgid "Frequency of 'program' errors while reading from the disk"
+msgstr "Häufigkeit gemeldeter Lesefehler vom Medium"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:252
+msgid "Reported Uncorrectable Errors"
+msgstr "Gemeldete nicht korrigierbare Fehler"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
+msgid "Number of errors that could not be recovered using hardware ECC"
+msgstr "Anzahl der nicht durch Hardware (ECC) korrigierbaren Fehler"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:260
+msgid "High Fly Writes"
+msgstr "Überhöhte Schreibvorgänge"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
+msgid ""
+"Number of times a recording head is flying outside its normal operating range"
+msgstr ""
+"Anzahl der Schreibvorgänge des Schreibkopfes außerhalb der erlaubten "
+"Betriebshöhe über dem Medium"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:268
+msgid "Airflow Temperature"
+msgstr "Temperatur der Luft"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:269
+msgid "Airflow temperature of the drive"
+msgstr "Temperatur der Luft im Laufwerk"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:276
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:446
+msgid "G-sense Error Rate"
+msgstr "Fehlerrate durch Stoßerkennung"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:277
+msgid "Frequency of mistakes as a result of impact loads"
+msgstr "Fehlerhäufigkeit aufgrund von Stoßbelastungen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:284
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:503
+msgid "Power-off Retract Count"
+msgstr "Anzahl Zurückfahrbewegungen beim Ausschalten"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:285
+msgid "Number of power-off or emergency retract cycles"
+msgstr ""
+"Anzahl der Rückfahrzyklen des Lesekopfes beim Ausschalten oder in Notfällen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:292
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:479
+msgid "Load/Unload Cycle Count"
+msgstr "Parkvorgänge in Ruhezone"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:293
+msgid "Number of cycles into landing zone position"
+msgstr "Anzahl der Parkvorgänge in der Ruhezone"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:300
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:519
+msgid "Temperature"
+msgstr "Temperatur"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:301
+msgid "Current internal temperature of the drive"
+msgstr "Aktuelle Innentemperatur des Laufwerks in Grad Celsius"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:308
+msgid "Hardware ECC Recovered"
+msgstr "Durch Hardware (ECC) korrigierte Bitfehler"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:309
+msgid "Number of ECC on-the-fly errors"
+msgstr "Anzahl durch Hardware (ECC) korrigierter Bitfehler beim Lesen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
+msgid "Reallocation Count"
+msgstr "Zähler für Neuzuweisungen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:317
+msgid ""
+"Number of remapping operations. The raw value of this attribute shows the "
+"total number of (successful and unsuccessful) attempts to transfer data from "
+"reallocated sectors to a spare area"
+msgstr ""
+"Anzahl der erneuten Zuweisungen. Der rohe Wert entspricht der Anzahl aller "
+"(erfolgreichen und fehlgeschlagenen) Versuche, Daten von neu zugewiesenen "
+"Sektoren in den Reservebereich zu verschieben"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+msgid "Current Pending Sector Count"
+msgstr "Anzahl ausstehender Sektoren"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
+msgid ""
+"Number of sectors waiting to be remapped. If the sector waiting to be "
+"remapped is subsequently written or read successfully, this value is "
+"decreased and the sector is not remapped. Read errors on the sector will not "
+"remap the sector, it will only be remapped on a failed write attempt"
+msgstr ""
+"Anzahl der Sektoren, die auf eine Neuzuweisung warten. Wenn der neu "
+"zuzuweisende Sektor später erfolgreich beschrieben oder gelesen wird, dann "
+"wird dieser Wert kleiner und der Sektor wird nicht neu zugeordnet. "
+"Lesefehler führen nicht zu einer Neuzuweisung, sondern nur Schreibfehler"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:339
+msgid "Uncorrectable Sector Count"
+msgstr "Anzahl nicht korrigierbarer Sektoren"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:340
+msgid ""
+"The total number of uncorrectable errors when reading/writing a sector. A "
+"rise in the value of this attribute indicates defects of the disk surface "
+"and/or problems in the mechanical subsystem"
+msgstr ""
+"Die Gesamtzahl von nicht korrigierbaren Fehlern beim Lesen oder Schreiben "
+"eines Sektors. Ein Anwachsen dieses Wertes könnte auf einen Defekt der "
+"Plattenoberfläche oder auf mechanische Probleme hinweisen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:349
+msgid "UDMA CRC Error Rate"
+msgstr "UDMA CRC-Fehlerrate"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:350
+msgid "Number of CRC errors during UDMA mode"
+msgstr "Anzahl von CRC-Fehlern im UDMA-Modus"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:357
+msgid "Write Error Rate"
+msgstr "Schreibfehlerrate"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:358
+msgid ""
+"Number of errors while writing to disk (or) multi-zone error rate (or) "
+"flying-height"
+msgstr ""
+"Anzahl von Fehlern beim Schreiben (oder) die Multi-Zone-Fehlerrate (oder) "
+"Fehlerzahl der Abtasthöhe"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:365
+msgid "Soft Read Error Rate"
+msgstr "Rate leichter Lesefehler"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:366
+msgid "Number of off-track errors"
+msgstr "Anzahl verfehlter Spuren"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:373
+msgid "Data Address Mark Errors"
+msgstr "Fehler der Datenadressmarkierung"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:374
+msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
+msgstr ""
+"Fehlerzahl von Datenadressmarkierungen (DAM-Fehler) (oder) herstellerabhängig"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:381
+msgid "Run Out Cancel"
+msgstr "Leseabbrüche"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:382
+msgid "Number of ECC errors"
+msgstr "Anzahl der ECC-Fehler"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:389
+msgid "Soft ECC correction"
+msgstr "Leichte ECC-Korrekturen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:390
+msgid "Number of errors corrected by software ECC"
+msgstr "Anzahl durch Software-ECC korrigierter Fehler."
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:397
+msgid "Thermal Asperity Rate"
+msgstr "Rate der thermischen Oberflächenunebenheiten"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:398
+msgid "Number of Thermal Asperity Rate errors"
+msgstr "Anzahl der Fehler bedingt durch hohe Temperatur"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:405
+msgid "Flying Height"
+msgstr "Abtasthöhe"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:406
+msgid "Height of heads above the disk surface"
+msgstr "Höhe der Abtastköpfe über der Plattenoberfläche"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:413
+msgid "Spin High Current"
+msgstr "Anlaufstromspitze"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:414
+msgid "Amount of high current used to spin up the drive"
+msgstr "Maximale Stromaufnahme bei Anlauf des Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:421
+msgid "Spin Buzz"
+msgstr "Wiederholte Anlaufversuche"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:422
+msgid "Number of buzz routines to spin up the drive"
+msgstr "Anzahl wiederholter Anlaufversuche des Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:429
+msgid "Offline Seek Performance"
+msgstr "Positionierungszeit beim Selbsttest"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:430
+msgid "Drive's seek performance during offline operations"
+msgstr "Positionierungszeit des Laufwerks während des Selbsttests"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:437
+msgid "Disk Shift"
+msgstr "Plattenverschiebung"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:438
+msgid ""
+"Shift of disk is possible as a result of strong shock loading in the store, "
+"as a result of falling (or) temperature"
+msgstr ""
+"Eine Plattenverschiebung von der Drehachse ist durch starke Stoßbelastungen "
+"des Lagers z.B. nach einem Fall möglich (oder) durch Hitze"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:447
+msgid ""
+"Number of errors as a result of impact loads as detected by a shock sensor"
+msgstr "Fehlerzahl in Folge von Stößen, soweit durch einen Sensor erkannt"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:454
+msgid "Loaded Hours"
+msgstr "Laufzeit"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:455
+msgid "Number of hours in general operational state"
+msgstr "Stundenzahl im allgemeinen Betrieb"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:462
+msgid "Load/Unload Retry Count"
+msgstr "Zähler für Lesekopfbewegungen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:463
+msgid ""
+"Loading on drive caused by numerous recurrences of operations, like reading, "
+"recording, positioning of heads, etc"
+msgstr ""
+"Belastung des Laufwerks durch verschiedene Vorgänge wie Lesen, Schreiben, "
+"Kopfpositionierung usw."
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:471
+msgid "Load Friction"
+msgstr "Reibungsbelastung"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:472
+msgid "Load on drive cause by friction in mechanical parts of the store"
+msgstr "Laufwerksbelastungen durch Reibung in den mechanischen Teilen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
+msgid "Total number of load cycles"
+msgstr "Anzahl an Belastungszyklen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:487
+msgid "Load-in Time"
+msgstr "Zeit der Leseköpfe über den Platten"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:488
+msgid "General time for loading in a drive"
+msgstr "Allgemeine Belastungszeit eines Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:495
+msgid "Torque Amplification Count"
+msgstr "Zähler für Ausgleiche bei Drehmomentschwankungen"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:496
+msgid "Quantity efforts of the rotating moment of a drive"
+msgstr "Energieeinsatz für das Drehmoment eines Laufwerks"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
+msgid "Number of power-off retract events"
+msgstr "Anzahl der Parkvorgänge des Lesekopfes"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:511
+msgid "GMR Head Amplitude"
+msgstr "Amplitude des Lesekopfflatterns"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:512
+msgid "Amplitude of heads trembling (GMR-head) in running mode"
+msgstr "Stärke des Kopfflatterns (GMR-Kopf) im Betrieb"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:520
+msgid "Temperature of the drive"
+msgstr "Temperatur des Laufwerks"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:527
+msgid "Endurance Remaining"
+msgstr "Verbleibende Löschvorgänge"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:528
+msgid ""
+"Number of physical erase cycles completed on the drive as a percentage of "
+"the maximum physical erase cycles the drive supports"
+msgstr ""
+"Prozentzahl der vollständigen physikalischen Löschzyklen des Laufwerks von "
+"der maximal unterstützen Zahl Zyklen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:544
+msgid "Uncorrectable ECC Count"
+msgstr "Anzahl nicht korrigierbarer ECC-Fehler"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:545
+msgid "Number of uncorrectable ECC errors"
+msgstr "Anzahl der nicht korrigierbaren ECC-Fehler"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:552
+msgid "Good Block Rate"
+msgstr "Anteil fehlerfreier Blöcke"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
+msgid ""
+"Number of available reserved blocks as a percentage of the total number of "
+"reserved blocks"
+msgstr "Zahl der verfügbaren fehlerfreien Blöcke von der Gesamtzahl in Prozent"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:561
+msgid "Head Flying Hours"
+msgstr "Kopfbewegungszeit"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
+msgid "Time while head is positioning"
+msgstr "Zeit, während der der Kopf positioniert wird"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:569
+msgid "Read Error Retry Rate"
+msgstr "Lesefehlerrate"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:570
+msgid "Number of errors while reading from a disk"
+msgstr "Anzahl der Lesefehler beim Lesen vom Laufwerk"
+
+#. Translators: This is shown in the attribute treeview when no description is found.
+#. * %d is the attribute number.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:819
+#, c-format
+msgid "No description for attribute %d"
+msgstr "Keine Beschreibung für Attribut %d"
+
+#. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:896
+msgid "Normalized:"
+msgstr "Normalisiert:"
+
+#. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:898
+msgid "Worst:"
+msgstr "Schlechtester:"
+
+#. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:900
+msgid "Threshold:"
+msgstr "Grenzwert:"
+
+#. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:902
+msgid "Value:"
+msgstr "Wert:"
+
+#. Translators: This is used in the attribute treview when normalized/worst/treshold
+#. * value isn't available
+#. Translators: Shown in the treeview for an attribute we don't know the status about
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * where the value cannot be interpreted
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:952
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:960
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1064
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2181
+msgid "N/A"
+msgstr "unbekannt"
+
+#. Translators: Shown in the treeview for a failing attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
+msgid "Failing"
+msgstr "Versagt"
+
+#. Translators: Shown in the treeview for an attribute that failed in the past
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1049
+msgid "Failed in the past"
+msgstr "Versagen in der Vergangenheit"
+
+#. Translators: Shown in the treeview for an attribute that we want to warn about
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1053
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1061
+msgid "Warning"
+msgstr "Warnung"
+
+#. Translators: Shown in the treeview for an attribute that is good
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1056
+msgid "Good"
+msgstr "Gut"
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1234
+msgid "Select what SMART self test to run"
+msgstr "Wählen Sie, welcher SMART-Selbsttest ausgeführt werden soll"
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1245
+msgid ""
+"The tests may take a very long time to complete depending on the speed and "
+"size of the disk. You can continue using your system while the test is "
+"running."
+msgstr ""
+"Die Prüfung kann anhängig von Größe und Geschwindigkeit des Laufwerks sehr "
+"lange dauern. Sie können während des Tests bedenkenlos weiter arbeiten."
+
+#. Translators: Radio button for short test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
+msgid "_Short (usually less than ten minutes)"
+msgstr "_Kurz (üblicherweise weniger als zehn Minuten)"
+
+#. Translators: Radio button for extended test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1257
+msgid "_Extended (usually tens of minutes)"
+msgstr "_Erweitert (üblicherweise mehr als zehn Minuten)"
+
+#. Translators: Radio button for conveyance test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
+msgid "C_onveyance (usually less than ten minutes)"
+msgstr "_Vermittlung (üblicherweise weniger als zehn Minuten)"
+
+#. Translators: Button in "Run self-test dialog"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
+msgid "_Initiate Self Test"
+msgstr "Selbsttest _starten"
+
+#. Translators: Used in the drive combo-box to indicate the health status is unknown
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
+msgid "Health status is unknown"
+msgstr "Funktionstüchtigkeit ist unbekannt"
+
+#. Translators: Used in the drive combo-box to indicate SMART is not enabled
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1348
+msgid "SMART is not enabled"
+msgstr "SMART ist nicht aktiviert"
+
+#. Translators: Used in the drive combo-box to indicate SMART is not available
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
+#: ../src/palimpsest/gdu-shell.c:310
+msgid "SMART is not available"
+msgstr "SMART ist nicht verfügbar"
+
+#. Translators: Title of the SMART dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1505
+msgid "SMART Data"
+msgstr "SMART-Werte"
+
+#. Translators: Label used before the drive combo box
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1536
+msgid "_Drive:"
+msgstr "_Laufwerk:"
+
+#. Translators: Heading used in the main dialog for the SMART status
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1584
+msgid "Status"
+msgstr "Status"
+
+#. ------------------------------
+#. updated
+#. Translators: Tooltip for the Updated item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
+msgid ""
+"Time since SMART data was last read – SMART data is updated every 30 minutes "
+"unless the disk is sleeping"
+msgstr ""
+"Zeit seit dem letzten Auslesen der SMART-Werte - SMART-Werte werden alle 30 "
+"Minuten aktualisiert, solange sich das Laufwerk nicht im Ruhezustand befindet"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
+msgid "Updated:"
+msgstr "Aktualisiert:"
+
+#. Translators: Used in the status table when data is currently being updated
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1621
+msgid "Updating..."
+msgstr "Wird aktualisiert …"
+
+#. Translators: Tooltip for the "Update Now" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
+msgid "Reads SMART data from the disk, waking it up if necessary"
+msgstr "SMART-Werte werden vom Laufwerk gelesen, gegebenenfalls mit Aufwecken"
+
+#. Translators: Text used in the hyperlink in the status table to update the SMART status
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1642
+msgid "Update now"
+msgstr "Jetzt aktualisieren"
+
+#. ------------------------------
+#. self-tests
+#. Translators: Tooltip for the Self-tests item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1668
+msgid "The result of the last self-test that ran on the disk"
+msgstr "Das Ergebnis des letzten Selbsttests des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1674
+msgid "Self-tests:"
+msgstr "Selbsttests:"
+
+#. Translators: Tooltip for the "Run self-test" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1695
+msgid "Initiates a self-test on the drive"
+msgstr "Einen Selbsttest des Laufwerks veranlassen"
+
+#. Translators: Text used in the hyperlink in the status table to run a self-test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+msgid "Run self-test"
+msgstr "Selbsttests ausführen"
+
+#. Translators: Tooptip for the "Cancel" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1714
+msgid "Cancels the currently running test"
+msgstr "Den derzeit laufenden Test abbrechen"
+
+#. Translators: Text used in the hyperlink in the status table to cancel a self-test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1716
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. ------------------------------
+#. model
+#. Translators: Tooltip for the "Model Name:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1742
+msgid "The name of the model of the disk"
+msgstr "Der Modellname des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1748
+msgid "Model Name:"
+msgstr "Modellname:"
+
+#. ------------------------------
+#. firmware
+#. Translators: Tooltip for the "Firmware Version:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1766
+msgid "The firmware version of the disk"
+msgstr "Die Version der Firmware des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1772
+msgid "Firmware Version:"
+msgstr "Firmware-Version:"
+
+#. ------------------------------
+#. serial
+#. Translators: Tooltip for the "Serial:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1790
+msgid "The serial number of the disk"
+msgstr "Die Seriennummer des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1796
+msgid "Serial Number:"
+msgstr "Seriennummer:"
+
+#. ------------------------------
+#. power on hours
+#. Translators: Tooltip for the "Powered On:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1814
+msgid "The amount of elapsed time the disk has been in a powered-up state"
+msgstr "Die vergangene Zeit seit Einschalten des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1820
+msgid "Powered On:"
+msgstr "Eingeschaltet am:"
+
+#. ------------------------------
+#. temperature
+#. Translators: Tooltip for the "Temperature:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1838
+msgid "The temperature of the disk"
+msgstr "Temperatur des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1844
+msgid "Temperature:"
+msgstr "Temperatur:"
+
+#. ------------------------------
+#. bad sectors
+#. Translators: Tooltip for the "Bad Sectors" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1862
+msgid "The sum of pending and reallocated bad sectors"
+msgstr "Die Summe von ausstehenden und neu zugewiesenen fehlerhaften Sektoren"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1868
+msgid "Bad Sectors:"
+msgstr "Fehlerhafte Sektoren:"
+
+#. ------------------------------
+#. self assessment
+#. Translators: Tooltip for the "Self Assessment" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1884
+msgid "The assessment from the disk itself whether it is about to fail"
+msgstr "Eine Einschätzung des Laufwerks über ein drohendes Versagen"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1890
+msgid "Self Assessment:"
+msgstr "Selbsteinschätzung:"
+
+#. ------------------------------
+#. overall assessment
+#. Translators: Tooltip for the "Overall Assessment" in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1906
+msgid "An overall assessment of the health of the disk"
+msgstr "Eine allgemeine Einschätzung der Funktionstüchtigkeit des Laufwerks"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1912
+msgid "Overall Assessment:"
+msgstr "Allgemeine Einschätzung:"
+
+#. ------------------------------
+#. Translators: Tooltip for the "Do not warn if disk is failing" check button
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
+msgid "Leave unchecked to get notified if the disk starts failing"
+msgstr ""
+"Abwählen, wenn Benachrichtigungen bei Laufwerksversagen gewünscht werden"
+
+#. Translators: Check button in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
+msgid "Don't _warn me if the disk is failing"
+msgstr "_Nicht bei Versagen des Laufwerks warnen"
+
+#. Translators: Heading used in the main dialog for SMART attributes
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
+msgid "_Attributes"
+msgstr "_Attribute"
+
+#. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
+msgid "ID"
+msgstr "Kennung"
+
+#. Translators: This string is used as the column title in the treeview for the attribute name and description
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2000
+msgid "Attribute"
+msgstr "Attribut"
+
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2017
+msgid "Assessment"
+msgstr "Einschätzung"
+
+#. Translators: This string is used as the column title in the treeview for the value of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
+msgid "Value"
+msgstr "Wert"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one year
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2130
+#, c-format
+msgid "%.1f years"
+msgstr "%.1f Jahre"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one day
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2134
+#, c-format
+msgid "%.1f days"
+msgstr "%.1f Tage"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one hour
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2138
+#, c-format
+msgid "%.1f hours"
+msgstr "%.1f Stunden"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one minute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2142
+#, c-format
+msgid "%.1f minutes"
+msgstr "%.1f Minuten"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one second
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2146
+#, c-format
+msgid "%.1f seconds"
+msgstr "%.1f Sekunden"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that is counted in milliseconds
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2150
+msgid "%"
+msgstr "%"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2158
+#, c-format
+msgid "%d sector"
+msgid_plural "%d sectors"
+msgstr[0] "%d Sektor"
+msgstr[1] "%d Sektoren"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
+#. * is the temperature in degrees Fahrenheit
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2170
+#, c-format
+msgid "%.0f° C / %.0f° F"
+msgstr "%.0f° C / %.0f° F"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Pre-Fail)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2238
+msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
+msgstr ""
+"Versagen ist ein Zeichen für anstehenden Laufwerksausfall (vor Versagen)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Old-Age)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2242
+msgid "Failure is a sign of old age (Old-Age)"
+msgstr "Versagen ist ein Zeichen hohen Alters"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2248
+msgid "Every time data is collected (Online)"
+msgstr "Jedes Mal, wenn Daten gesammelt werden (Online)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Not Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2252
+msgid "Only during off-line activities (Not Online)"
+msgstr "Nur während offline Aktivitäten (Nicht Online)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview.
+#. * First %s is the type of the attribute (Pre-Fail or Old-Age).
+#. * Second %s is the update type (Online or Not Online).
+#. * The six %x is the raw data of the attribute.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2260
+#, c-format
+msgid ""
+"Type: %s\n"
+"Updates: %s\n"
+"Raw: 0x%02x%02x%02x%02x%02x%02x"
+msgstr ""
+"Typ: %s\n"
+"Aktualisierung: %s\n"
+"Rohdaten: 0x%02x%02x%02x%02x%02x%02x"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when no drive is currently selected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2465
+msgid "No drive selected"
+msgstr "Kein Laufwerk ausgewählt"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is not available
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2472
+msgid "SMART not supported"
+msgstr "SMART wird nicht unterstützt"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is supported but data was never collected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2480
+msgid "SMART data never collected"
+msgstr "SMART-Daten wurden noch nie gesammelt"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when the SMART data is malformed
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2487
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2493
+msgid "SMART data is malformed"
+msgstr "SMART-Daten sind fehlerhaft"
+
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is PASSED
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2529
+msgid "Passed"
+msgstr "Bestanden"
+
+#. Translators: Shown in the "Self-assessment" item in
+#. * the status table when the self-assessment of the
+#. * drive is FAILING
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2535
+msgid "FAILING"
+msgstr "GESCHEITERT"
+
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we the disk has no bad sectors
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2547
+msgid "None"
+msgstr "Keine"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2552
+#, c-format
+msgid "%d bad sector"
+msgid_plural "%d bad sectors"
+msgstr[0] "%d defekter Sektor"
+msgstr[1] "%d defekte Sektoren"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2590
+msgid "Last self-test completed OK"
+msgstr "Der letzte Selbsttest wurde bestanden"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2594
+msgid "Last self-test was cancelled"
+msgstr "Der letzte Selbsttest wurde abgebrochen"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
+msgid "Last self-test was cancelled (with hard or soft reset)"
+msgstr ""
+"Der letzte Selbsttest wurde abgebrochen (durch hartes oder weiches "
+"Zurücksetzen)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
+msgid "Last self-test not completed (a fatal error might have occured)"
+msgstr ""
+"Der letzte Selbsttest wurde nicht abgeschlossen (ein schwerwiegender Fehler "
+"könnte aufgetreten sein)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
+msgid "Last self-test FAILED (Electrical)"
+msgstr "Der letzte Selbsttest wurde NICHT BESTANDEN (Elektrisch)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
+msgid "Last self-test FAILED (Servo)"
+msgstr "Der letzte Selbsttest wurde NICHT BESTANDEN (Servo)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2616
+msgid "Last self-test FAILED (Read)"
+msgstr "Der letzte Selbsttest wurde NICHT BESTANDEN (Lesefehler)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2621
+msgid "Last self-test FAILED (Suspected of having handled damage)"
+msgstr ""
+"Der letzte Selbsttest wurde NICHT BESTANDEN (Verdacht auf behandelten "
+"Schaden)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2626
+msgid "Self-test is in progress"
+msgstr "Selbsttest läuft"
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2749
+msgid "Short self-test in progress: "
+msgstr "Kurzer Selbsttest läuft:"
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2753
+msgid "Extended self-test in progress: "
+msgstr "Erweiterter Selbsttest läuft:"
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2757
+msgid "Conveyance self-test in progress: "
+msgstr "Selbsttest auf Transportschäden läuft:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
 #: ../src/playground/grid/gdu-grid-view.c:325
@@ -2479,7 +3154,7 @@ msgstr ""
 "Eine oder mehrere Anwendungen verwenden den Datenträger. Beenden Sie die "
 "Anwendungen und versuchen Sie es erneut."
 
-#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1916
+#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1939
 msgid "_Unmount"
 msgstr "A_ushängen"
 
@@ -2503,7 +3178,7 @@ msgstr "_Erstellen"
 msgid "Change _Passphrase"
 msgstr "_Kennwort ändern"
 
-#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1919
+#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1942
 msgid "_Unlock"
 msgstr "_Entsperren"
 
@@ -2594,8 +3269,8 @@ msgstr "Leer"
 msgid "Extended Partition"
 msgstr "Erweiterte Partition"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:222
-#: ../src/palimpsest/gdu-shell.c:252
+#: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:221
+#: ../src/palimpsest/gdu-shell.c:251
 msgid "Master Boot Record"
 msgstr "Master Boot Record"
 
@@ -2672,15 +3347,17 @@ msgstr ""
 "Um Datenverlust zu vermeiden, warten Sie bitte bis zum Beenden des Vorgangs, "
 "bevor Sie das Medium entfernen oder die Verbindung zum Gerät trennen."
 
-#: ../src/notification/notification-main.c:151
+#: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
 msgstr "Ein oder mehrere Laufwerke versagen"
 
-#: ../src/notification/notification-main.c:436
-msgid "A hard disk is failing"
-msgstr "Eine Festplatte versagt"
+#. Translators: This is used as the title of the notification
+#: ../src/notification/notification-main.c:535
+msgid "A hard disk may be failing"
+msgstr "Eine Festplatte könnte versagen"
 
-#: ../src/notification/notification-main.c:437
+#. Translators: This is used as the text of the notification
+#: ../src/notification/notification-main.c:537
 msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
@@ -2708,7 +3385,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:88
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
-#: ../src/palimpsest/gdu-shell.c:1512
+#: ../src/palimpsest/gdu-shell.c:1535
 #, c-format
 msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
@@ -2720,7 +3397,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
-#: ../src/palimpsest/gdu-shell.c:1517
+#: ../src/palimpsest/gdu-shell.c:1540
 #, c-format
 msgid ""
 "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
@@ -2793,428 +3470,6 @@ msgstr "_Bezeichnung:"
 #: ../src/palimpsest/gdu-section-filesystem.c:246
 msgid "Change"
 msgstr "Ändern"
-
-#: ../src/palimpsest/gdu-section-health.c:60
-#, c-format
-msgid "%.3g days"
-msgstr "%.3g Tage"
-
-#: ../src/palimpsest/gdu-section-health.c:62
-#, c-format
-msgid "%.3g hours"
-msgstr "%.3g Stunden"
-
-#: ../src/palimpsest/gdu-section-health.c:64
-#, c-format
-msgid "%.3g mins"
-msgstr "%.3g Minuten"
-
-#: ../src/palimpsest/gdu-section-health.c:66
-#, c-format
-msgid "%.3g secs"
-msgstr "%.3g Sekunden"
-
-#: ../src/palimpsest/gdu-section-health.c:70
-#, c-format
-msgid "%s msec"
-msgstr "%s Millisekunden"
-
-#: ../src/palimpsest/gdu-section-health.c:76
-#, c-format
-msgid "%d Sector"
-msgid_plural "%d Sectors"
-msgstr[0] "%d Sektor"
-msgstr[1] "%d Sektoren"
-
-#: ../src/palimpsest/gdu-section-health.c:84
-#, c-format
-msgid "%.3g° C / %.3g° F"
-msgstr "%.3g° C / %.3g° F"
-
-#: ../src/palimpsest/gdu-section-health.c:107
-msgid "Retrieving..."
-msgstr "Wird geholt …"
-
-#: ../src/palimpsest/gdu-section-health.c:126
-msgid "ATA SMART not Supported"
-msgstr "ATA SMART wird nicht unterstützt"
-
-#: ../src/palimpsest/gdu-section-health.c:204
-#: ../src/palimpsest/gdu-section-health.c:211
-#: ../src/palimpsest/gdu-section-health.c:218
-msgctxt "ATA SMART status"
-msgid "Passed"
-msgstr "Bestanden"
-
-#: ../src/palimpsest/gdu-section-health.c:206
-#: ../src/palimpsest/gdu-section-health.c:236
-msgid "The disk has bad sectors."
-msgstr "Das Laufwerk enthält fehlerhafte Blöcke."
-
-#: ../src/palimpsest/gdu-section-health.c:213
-#: ../src/palimpsest/gdu-section-health.c:243
-msgid "One or more attributes exceeding threshold."
-msgstr "Ein oder mehrere Attribute überschreiten den Schwellwert."
-
-#: ../src/palimpsest/gdu-section-health.c:223
-msgctxt "ATA SMART status"
-msgid "FAILING"
-msgstr "GESCHEITERT"
-
-#: ../src/palimpsest/gdu-section-health.c:227
-msgid ""
-"Drive failure expected in less than 24 hours. Save all data immediately."
-msgstr ""
-"Ein Laufwerksversagen wird in weniger als 24 Stunden erwartet. Sichern Sie "
-"unbedingt sofort alle Daten."
-
-#: ../src/palimpsest/gdu-section-health.c:234
-#: ../src/palimpsest/gdu-section-health.c:241
-#: ../src/palimpsest/gdu-section-health.c:248
-msgctxt "ATA SMART status"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#: ../src/palimpsest/gdu-section-health.c:264
-#: ../src/palimpsest/gdu-section-health.c:272
-#: ../src/playground/grid/gdu-grid-element.c:566
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#: ../src/palimpsest/gdu-section-health.c:285
-msgctxt "ATA SMART test result"
-msgid "Completed OK"
-msgstr "Erfolgreich abgeschlossen"
-
-#: ../src/palimpsest/gdu-section-health.c:288
-msgctxt "ATA SMART test result"
-msgid "Canceled"
-msgstr "Abgebrochen"
-
-#: ../src/palimpsest/gdu-section-health.c:291
-msgctxt "ATA SMART test result"
-msgid "Canceled (with hard or soft reset)"
-msgstr "Abgebrochen (durch hartes oder weiches Zurücksetzen)"
-
-#: ../src/palimpsest/gdu-section-health.c:294
-msgctxt "ATA SMART test result"
-msgid "Not completed (a fatal error might have occured)"
-msgstr "Nicht abgeschlossen (ein fataler Fehler könnte aufgetreten sein)"
-
-#: ../src/palimpsest/gdu-section-health.c:298
-#: ../src/palimpsest/gdu-section-health.c:306
-#: ../src/palimpsest/gdu-section-health.c:314
-#: ../src/palimpsest/gdu-section-health.c:322
-msgctxt "ATA SMART test result"
-msgid "FAILED"
-msgstr "GESCHEITERT"
-
-#. Translators: this is a detail that is appended to the test result, like 'FAILED (Electrical)'
-#: ../src/palimpsest/gdu-section-health.c:301
-msgctxt "ATA SMART test result"
-msgid "(Electrical)"
-msgstr "(Elektrisch)"
-
-#. Translators: this is a detail that is appended to the test result, like 'FAILED (Servo)'
-#: ../src/palimpsest/gdu-section-health.c:309
-msgctxt "ATA SMART test result"
-msgid "(Servo)"
-msgstr "(Servo-Motor)"
-
-#. Translators: this is a detail that is appended to the test result, like 'FAILED (Read)'
-#: ../src/palimpsest/gdu-section-health.c:317
-msgctxt "ATA SMART test result"
-msgid "(Read)"
-msgstr "(Lesen)"
-
-#. Translators: this is a detail that is appended to the test result, like 'FAILED (Suspected of having handled damage)'
-#: ../src/palimpsest/gdu-section-health.c:325
-msgctxt "ATA SMART test result"
-msgid "(Suspected of having handled damage)"
-msgstr "(Verdacht auf behobenen Schaden)"
-
-#: ../src/palimpsest/gdu-section-health.c:329
-msgctxt "ATA SMART test result"
-msgid "In progress"
-msgstr "In Bearbeitung"
-
-#: ../src/palimpsest/gdu-section-health.c:334
-msgctxt "ATA SMART test result"
-msgid "Unknown"
-msgstr "Unbekannt"
-
-#. Translators: %g is a numeric temperature value
-#: ../src/palimpsest/gdu-section-health.c:616
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%g°"
-msgstr "%g°"
-
-#: ../src/palimpsest/gdu-section-health.c:687
-msgctxt "ATA SMART graph label"
-msgid "now"
-msgstr "jetzt"
-
-#. Translators: %d is a number of minutes
-#: ../src/palimpsest/gdu-section-health.c:690
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dm"
-msgstr "%dm"
-
-#. Translators: %d is a number of hours
-#: ../src/palimpsest/gdu-section-health.c:696
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dh"
-msgstr "%dh"
-
-#. Translators: first %d is a number of hours, second %d is a number of minutes
-#: ../src/palimpsest/gdu-section-health.c:699
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dh %dm"
-msgstr "%dh %dm"
-
-#. Translators: %d is a number of days
-#: ../src/palimpsest/gdu-section-health.c:706
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd"
-msgstr "%dT"
-
-#. Translators: first %d is a number of days,
-#. * second %d is a number of hours
-#.
-#: ../src/palimpsest/gdu-section-health.c:711
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd %dh"
-msgstr "%dT %dh"
-
-#. Translators: first %d is a number of days,
-#. * second %d is a number of hours
-#. * third %d is a  number of minutes
-#.
-#: ../src/palimpsest/gdu-section-health.c:717
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd %dh %dm"
-msgstr "%dT %dh %dm"
-
-#: ../src/palimpsest/gdu-section-health.c:946
-msgid "ATA SMART Attributes"
-msgstr "ATA SMART-Attribute"
-
-#: ../src/palimpsest/gdu-section-health.c:970
-msgid "View:"
-msgstr "Ansicht:"
-
-#: ../src/palimpsest/gdu-section-health.c:974
-msgid "6 hours"
-msgstr "6 Stunden"
-
-#: ../src/palimpsest/gdu-section-health.c:975
-msgid "24 hours"
-msgstr "24 Stunden"
-
-#: ../src/palimpsest/gdu-section-health.c:976
-msgid "3 days"
-msgstr "3 Tage"
-
-#: ../src/palimpsest/gdu-section-health.c:977
-msgid "12 days"
-msgstr "12 Tage"
-
-#: ../src/palimpsest/gdu-section-health.c:978
-msgid "36 days"
-msgstr "36 Tage"
-
-#: ../src/palimpsest/gdu-section-health.c:979
-msgid "96 days"
-msgstr "96 Tage"
-
-#: ../src/palimpsest/gdu-section-health.c:1025
-msgctxt "SMART attribute"
-msgid "ID"
-msgstr "Kennung"
-
-#: ../src/palimpsest/gdu-section-health.c:1034
-msgctxt "SMART attribute"
-msgid "Attribute"
-msgstr "Attribut"
-
-#: ../src/palimpsest/gdu-section-health.c:1074
-msgctxt "SMART attribute"
-msgid "Value"
-msgstr "Wert"
-
-#: ../src/palimpsest/gdu-section-health.c:1084
-msgctxt "SMART attribute"
-msgid "Status"
-msgstr "Status"
-
-#: ../src/palimpsest/gdu-section-health.c:1155
-#, c-format
-msgid "No description for attribute %d."
-msgstr "Keine Beschreibung für Attribut %d."
-
-#. Translators: how often the attribute is updated
-#. * 'online' means 'every time data is collected'
-#.
-#: ../src/palimpsest/gdu-section-health.c:1163
-msgid "Online"
-msgstr "Online"
-
-#: ../src/palimpsest/gdu-section-health.c:1164
-msgid "Every time data is collected."
-msgstr "Daten werden jederzeit gesammelt."
-
-#. Translators: how often the attribute is updated
-#. * 'offline' means 'only when performing a self-test'
-#.
-#: ../src/palimpsest/gdu-section-health.c:1169
-msgid "Offline"
-msgstr "Offline"
-
-#: ../src/palimpsest/gdu-section-health.c:1170
-msgid "Only when performing a self-test."
-msgstr "Nur während der Ausführung eines Selbsttests."
-
-#. Translators: what a failure means
-#. * 'pre-fail' means 'sign of imminent disk failure'
-#.
-#: ../src/palimpsest/gdu-section-health.c:1177
-msgid "Pre-fail"
-msgstr "Vor Versagen"
-
-#: ../src/palimpsest/gdu-section-health.c:1178
-msgid "Failure is a sign of imminent disk failure."
-msgstr "Versagen ist ein Zeichen für anstehenden Laufwerksausfall"
-
-#. Translators: what a failure means
-#. * 'old-age' means 'sign of old age'
-#.
-#: ../src/palimpsest/gdu-section-health.c:1183
-msgid "Old-age"
-msgstr "Alterserscheinungen"
-
-#: ../src/palimpsest/gdu-section-health.c:1184
-msgid "Failure is a sign of old age."
-msgstr "Versagen ist ein Zeichen hohen Alters."
-
-#. Translators: 'type' means 'type of failure' here
-#: ../src/palimpsest/gdu-section-health.c:1191
-msgid "Type:"
-msgstr "Typ:"
-
-#. Translators: 'updates' refers to online/offline here
-#: ../src/palimpsest/gdu-section-health.c:1193
-msgid "Updates:"
-msgstr "Aktualisierungen:"
-
-#: ../src/palimpsest/gdu-section-health.c:1194
-msgid "Description:"
-msgstr "Beschreibung:"
-
-#: ../src/palimpsest/gdu-section-health.c:1219
-msgctxt "SMART Attribute status"
-msgid "N/A"
-msgstr "N/V"
-
-#: ../src/palimpsest/gdu-section-health.c:1227
-msgctxt "SMART Attribute status"
-msgid "OK"
-msgstr "OK"
-
-#: ../src/palimpsest/gdu-section-health.c:1235
-msgctxt "SMART Attribute status"
-msgid "FAILING"
-msgstr "VERSAGEND"
-
-#: ../src/palimpsest/gdu-section-health.c:1305
-msgid "Error initiating ATA SMART Self Test"
-msgstr "Fehler beim Starten des ATA-SMART-Selbsttests"
-
-#: ../src/palimpsest/gdu-section-health.c:1337
-msgid "ATA SMART Self Test"
-msgstr "ATA SMART-Selbsttest"
-
-#: ../src/palimpsest/gdu-section-health.c:1361
-msgid "Select what ATA SMART self test to run"
-msgstr "Wählen Sie, welcher ATA SMART-Selbsttest ausgeführt wird"
-
-#: ../src/palimpsest/gdu-section-health.c:1371
-msgid ""
-"The tests may take a very long time to complete depending on the speed and "
-"size of the disk. You can continue using your system while the test is "
-"running."
-msgstr ""
-"Die Prüfung kann anhängig von Größe und Geschwindigkeit des Laufwerks sehr "
-"lange dauern. Sie können während des Tests bedenkenlos weiter arbeiten."
-
-#: ../src/palimpsest/gdu-section-health.c:1379
-msgid "_Short (usually less than ten minutes)"
-msgstr "_Kurz (üblicherweise weniger als zehn Minuten)"
-
-#: ../src/palimpsest/gdu-section-health.c:1381
-msgid "_Extended (usually tens of minutes)"
-msgstr "_Erweitert (üblicherweise mehr als zehn Minuten)"
-
-#: ../src/palimpsest/gdu-section-health.c:1383
-msgid "C_onveyance (usually less than ten minutes)"
-msgstr "_Vermittlung (üblicherweise weniger als zehn Minuten)"
-
-#: ../src/palimpsest/gdu-section-health.c:1390
-msgid "_Initiate Self Test"
-msgstr "Selbsttest _starten"
-
-#. Translators: section heading, referring to disk health
-#: ../src/palimpsest/gdu-section-health.c:1493
-msgid "Health"
-msgstr "Zustand"
-
-#: ../src/palimpsest/gdu-section-health.c:1506
-msgid ""
-"Some disks support ATA SMART, a monitoring system for disks to detect and "
-"report on various indicators of reliability, in the hope of anticipating "
-"failures."
-msgstr ""
-"Einige Laufwerke unterstützen »ATA SMART«, ein Überwachungssystem für "
-"Laufwerke, das verschiedene Hinweise für die Zuverlässigkeit melden kann. "
-"Ziel ist die Vorhersage eines Versagens."
-
-#: ../src/palimpsest/gdu-section-health.c:1524
-msgid "Powered On:"
-msgstr "Eingeschaltet am:"
-
-#: ../src/palimpsest/gdu-section-health.c:1542
-msgid "Temperature:"
-msgstr "Temperatur:"
-
-#: ../src/palimpsest/gdu-section-health.c:1560
-msgid "Last Test:"
-msgstr "Letzter Test:"
-
-#: ../src/palimpsest/gdu-section-health.c:1578
-msgid "Updated:"
-msgstr "Aktualisiert:"
-
-#: ../src/palimpsest/gdu-section-health.c:1596
-msgid "Assessment:"
-msgstr "Einschätzung:"
-
-#: ../src/palimpsest/gdu-section-health.c:1629
-msgid "Refresh ATA SMART data from the device"
-msgstr "ATA SMART-Daten des Geräts auffrischen"
-
-#: ../src/palimpsest/gdu-section-health.c:1634
-msgid "Show ATA SMART Historical Data"
-msgstr "Chronik der ATA SMART-Daten zeigen"
-
-#: ../src/palimpsest/gdu-section-health.c:1639
-msgid "Run an ATA SMART self test on the disk"
-msgstr "Einen ATA SMART-Selbsttest des Laufwerks ausführen"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:75
 msgid "Error adding component"
@@ -3438,7 +3693,7 @@ msgstr ""
 "Einbindung werden die Daten von der Anordnung auf die Komponente abgeglichen."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
-#: ../src/palimpsest/gdu-shell.c:1918
+#: ../src/palimpsest/gdu-shell.c:1941
 msgid "_Detach"
 msgstr "_Austragen"
 
@@ -3684,15 +3939,11 @@ msgstr ""
 "erstellen."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
-#, fuzzy
-#| msgid ""
-#| "No more partitions can be created. You may want to delete  an existing "
-#| "partition and then create an Extended Partition."
 msgid ""
 "No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
-"Es können keine weiteren Partitionen erstellt werden. Sie müssen zuvor eine "
+"Es können keine weiteren Partitionen erstellt werden. Sie sollten eine "
 "Partition löschen und eine erweiterte Partition erstellen."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
@@ -3725,19 +3976,14 @@ msgstr "_Besitzer des Dateisystems werden"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
-#, fuzzy
-#| msgid ""
-#| "The selected file system has a concept of file ownership. If checked, the "
-#| "created file system be will be owned by you. If not checked, only the "
-#| "super user can access the file system."
 msgid ""
 "The selected file system has a concept of file ownership. If checked, the "
 "created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
-"Das ausgewählte Dateisystem kennt Zugriffsrechte. Ein Ankreuzen bedeutet, "
-"dass Sie das erstellte Dateisystem besitzen werden. Anderenfalls kann nur "
-"der Administrator auf das Dateisystem zugreifen."
+"Das ausgewählte Dateisystem arbeitet mit Zugriffsrechten. Ein Ankreuzen "
+"bedeutet, dass Sie der Eigentümer des erstellten Dateisystems sein werden."
+"Anderenfalls kann nur der Systemverwalter auf das Dateisystem zugreifen."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:715
@@ -3768,7 +4014,7 @@ msgstr ""
 "Daten löschen wollen?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
-#: ../src/palimpsest/gdu-shell.c:1496
+#: ../src/palimpsest/gdu-shell.c:1519
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
@@ -3779,7 +4025,7 @@ msgstr ""
 "Dieser Vorgang kann nicht rückgängig gemacht werden."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
-#: ../src/palimpsest/gdu-shell.c:1503
+#: ../src/palimpsest/gdu-shell.c:1526
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
@@ -3802,120 +4048,133 @@ msgstr ""
 "die Bezeichnung, und klicken Sie dann auf »Erstellen«. Alle vorhandenen Daten "
 "werden verloren gehen."
 
+#: ../src/palimpsest/gdu-shell.c:203
+msgid "Unknown Size"
+msgstr "Unbekannte Größe"
+
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-shell.c:227 ../src/palimpsest/gdu-shell.c:256
+#: ../src/palimpsest/gdu-shell.c:226 ../src/palimpsest/gdu-shell.c:255
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Unbekanntes Schema: %s"
 
 #. Translators: %s is the name of the partition table format, like 'Master Boot Record'
-#: ../src/palimpsest/gdu-shell.c:232
+#: ../src/palimpsest/gdu-shell.c:231
 #, c-format
 msgid "Partitioned Media (%s)"
 msgstr "Partitioniertes Medium (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:237
+#: ../src/palimpsest/gdu-shell.c:236
 msgid "Unpartitioned Media"
 msgstr "Unpartitioniertes Medium"
 
-#: ../src/palimpsest/gdu-shell.c:243 ../src/palimpsest/gdu-shell.c:267
-#: ../src/palimpsest/gdu-shell.c:334
+#: ../src/palimpsest/gdu-shell.c:242 ../src/palimpsest/gdu-shell.c:266
+#: ../src/palimpsest/gdu-shell.c:363
 #, c-format
 msgid "Unrecognized"
 msgstr "Unbekannt"
 
-#: ../src/palimpsest/gdu-shell.c:274
+#: ../src/palimpsest/gdu-shell.c:273
 msgid "Linux Software RAID"
 msgstr "Linux Software-RAID"
 
-#. Translators: %s is the name of a connection, like 'USB at 2 MB/s'
-#: ../src/palimpsest/gdu-shell.c:281
+#: ../src/palimpsest/gdu-shell.c:294
 #, c-format
-msgid "Connected via %s"
-msgstr "Verbunden über %s"
+msgid "SMART status: %s"
+msgstr "SMART-Status: %s"
 
-#: ../src/palimpsest/gdu-shell.c:289 ../src/palimpsest/gdu-shell.c:358
-#: ../src/palimpsest/gdu-shell.c:393
+#. Translators: this the SMART hyperlink tooltip
+#: ../src/palimpsest/gdu-shell.c:302
+msgid "View details about SMART for this disk"
+msgstr "Details zu diesem Laufwerk mittels SMART anzeigen"
+
+#. Translators: this is the text for the SMART hyperlink
+#: ../src/palimpsest/gdu-shell.c:304
+msgid "More Information"
+msgstr "Weitere Informationen"
+
+#: ../src/palimpsest/gdu-shell.c:318 ../src/palimpsest/gdu-shell.c:387
+#: ../src/palimpsest/gdu-shell.c:422
 #, c-format
 msgid "%s (Read Only)"
 msgstr "%s (nur lesbar)"
 
-#: ../src/palimpsest/gdu-shell.c:296
+#: ../src/palimpsest/gdu-shell.c:325
 msgid "Not running"
 msgstr "Nicht in Betrieb"
 
-#: ../src/palimpsest/gdu-shell.c:312
+#: ../src/palimpsest/gdu-shell.c:341
 #, c-format
 msgid "%s File System"
 msgstr "%s Dateisystem"
 
-#: ../src/palimpsest/gdu-shell.c:323
+#: ../src/palimpsest/gdu-shell.c:352
 msgid "Encrypted LUKS Device"
 msgstr "Verschlüsseltes LUKS-Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:330
+#: ../src/palimpsest/gdu-shell.c:359
 msgid "Data"
 msgstr "Daten"
 
-#: ../src/palimpsest/gdu-shell.c:339
+#: ../src/palimpsest/gdu-shell.c:368
 msgid "Cleartext LUKS Device"
 msgstr "Unverschlüsseltes LUKS-Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:346
+#: ../src/palimpsest/gdu-shell.c:375
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "Partition %d (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:905
+#: ../src/palimpsest/gdu-shell.c:928
 msgid "Error checking file system on device"
 msgstr "Fehler beim Überprüfen des Dateisystems auf dem Gerät"
 
-#: ../src/palimpsest/gdu-shell.c:920
+#: ../src/palimpsest/gdu-shell.c:943
 #, c-format
 msgid "File system check on \"%s\" completed"
 msgstr "Dateisystemüberprüfung auf »%s« abgeschlossen"
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:947
 msgid "File system is clean."
 msgstr "Dateisystem ist sauber."
 
-#: ../src/palimpsest/gdu-shell.c:927
+#: ../src/palimpsest/gdu-shell.c:950
 msgid "File system is <b>NOT</b> clean."
 msgstr "Dateisystem ist <b>NICHT</b> sauber."
 
-#: ../src/palimpsest/gdu-shell.c:1013
+#: ../src/palimpsest/gdu-shell.c:1036
 msgid "Error unmounting device"
 msgstr "Fehler beim Aushängen des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1067
+#: ../src/palimpsest/gdu-shell.c:1090
 msgid "Error ejecting device"
 msgstr "Fehler beim Auswerfen des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1098
+#: ../src/palimpsest/gdu-shell.c:1121
 msgid "Error detaching device"
 msgstr "Fehler beim Entfernen des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1195
+#: ../src/palimpsest/gdu-shell.c:1218
 msgid "Error unlocking device"
 msgstr "Fehler beim Entsperren des Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1260
+#: ../src/palimpsest/gdu-shell.c:1283
 msgid "Error locking encrypted device"
 msgstr "Fehler beim Sperren des verschlüsselten Gerätes"
 
-#: ../src/palimpsest/gdu-shell.c:1297
+#: ../src/palimpsest/gdu-shell.c:1320
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
 msgstr "Beim Starten des Laufwerks »%s« ist ein Fehler aufgetreten."
 
-#: ../src/palimpsest/gdu-shell.c:1351
+#: ../src/palimpsest/gdu-shell.c:1374
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr ""
 "Sind Sie sicher, dass das Laufwerk »%s« im heruntergestuften Modus gestartet "
 "werden soll?"
 
-#: ../src/palimpsest/gdu-shell.c:1355
+#: ../src/palimpsest/gdu-shell.c:1378
 msgid ""
 "Starting a RAID array in degraded mode means that the RAID volume is no "
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
@@ -3925,204 +4184,204 @@ msgstr ""
 "RAID-Datenträger keine Laufwerksversagen mehr ausgleichen kann. Daten auf "
 "dem Datenträger können eventuell bei Versagen unwiderruflich verloren gehen."
 
-#: ../src/palimpsest/gdu-shell.c:1360
+#: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
 msgstr "Anordnung _starten"
 
-#: ../src/palimpsest/gdu-shell.c:1388
+#: ../src/palimpsest/gdu-shell.c:1411
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
 msgstr "Beim Stoppen des Geräts »%s« ist ein Fehler aufgetreten."
 
-#: ../src/palimpsest/gdu-shell.c:1440
+#: ../src/palimpsest/gdu-shell.c:1463
 msgid "Error erasing data"
 msgstr "Fehler beim Löschen von Daten"
 
-#: ../src/palimpsest/gdu-shell.c:1492
+#: ../src/palimpsest/gdu-shell.c:1515
 msgid "Are you sure you want to erase the device ?"
 msgstr "Sind Sie sicher, dass das Gerät gelöscht werden soll?"
 
-#: ../src/palimpsest/gdu-shell.c:1528 ../src/palimpsest/gdu-shell.c:1923
+#: ../src/palimpsest/gdu-shell.c:1551 ../src/palimpsest/gdu-shell.c:1946
 msgid "_Erase"
 msgstr "_Löschen"
 
-#: ../src/palimpsest/gdu-shell.c:1603
+#: ../src/palimpsest/gdu-shell.c:1626
 msgid "Error creating component for RAID array"
 msgstr "Fehler beim Erstellen einer Komponente für die RAID-Anordnung"
 
-#: ../src/palimpsest/gdu-shell.c:1630
+#: ../src/palimpsest/gdu-shell.c:1653
 msgid "Error creating partition table for component for RAID array"
 msgstr ""
 "Fehler beim Erstellen der Partitionstabelle für eine Komponente für die RAID-"
 "Anordnung"
 
-#: ../src/palimpsest/gdu-shell.c:1656
+#: ../src/palimpsest/gdu-shell.c:1679
 msgid "Error creating RAID array"
 msgstr "Fehler beim Erstellen der RAID-Anordnung"
 
-#: ../src/palimpsest/gdu-shell.c:1847 ../src/palimpsest/gdu-shell.c:2148
+#: ../src/palimpsest/gdu-shell.c:1870 ../src/palimpsest/gdu-shell.c:2198
 msgid "Palimpsest Disk Utility"
 msgstr "Palimpsest-Laufwerksverwaltung"
 
-#: ../src/palimpsest/gdu-shell.c:1852
+#: ../src/palimpsest/gdu-shell.c:1875
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mariobl@gnome.org>\n"
 "Christian Kirbach <Christian.Kirbach@googlemail.com>"
 
-#: ../src/palimpsest/gdu-shell.c:1908
+#: ../src/palimpsest/gdu-shell.c:1931
 msgid "_File"
 msgstr "_Datei"
 
-#: ../src/palimpsest/gdu-shell.c:1909
+#: ../src/palimpsest/gdu-shell.c:1932
 msgid "_New"
 msgstr "_Neu"
 
-#: ../src/palimpsest/gdu-shell.c:1910
+#: ../src/palimpsest/gdu-shell.c:1933
 msgid "Software _RAID Array"
 msgstr "Software _RAID-Anordnung"
 
-#: ../src/palimpsest/gdu-shell.c:1910
+#: ../src/palimpsest/gdu-shell.c:1933
 msgid "Create a new Software RAID array"
 msgstr "Eine neue Software RAID-Anordnung erstellen"
 
-#: ../src/palimpsest/gdu-shell.c:1911
+#: ../src/palimpsest/gdu-shell.c:1934
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../src/palimpsest/gdu-shell.c:1912 ../src/palimpsest/gdu-shell.c:1927
+#: ../src/palimpsest/gdu-shell.c:1935 ../src/palimpsest/gdu-shell.c:1950
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: ../src/palimpsest/gdu-shell.c:1914
+#: ../src/palimpsest/gdu-shell.c:1937
 msgid "_Check File System"
 msgstr "Dateisystem über_prüfen"
 
-#: ../src/palimpsest/gdu-shell.c:1914
+#: ../src/palimpsest/gdu-shell.c:1937
 msgid "Check the file system"
 msgstr "Dateisystem überprüfen"
 
-#: ../src/palimpsest/gdu-shell.c:1915
+#: ../src/palimpsest/gdu-shell.c:1938
 msgid "_Mount"
 msgstr "_Einhängen"
 
-#: ../src/palimpsest/gdu-shell.c:1915
+#: ../src/palimpsest/gdu-shell.c:1938
 msgid "Mount the filesystem on device"
-msgstr "Das Dateisystems auf dem Gerät einhängen"
+msgstr "Das Dateisystem auf dem Gerät einhängen"
 
-#: ../src/palimpsest/gdu-shell.c:1916
+#: ../src/palimpsest/gdu-shell.c:1939
 msgid "Unmount the filesystem"
 msgstr "Das Dateisystem aushängen"
 
-#: ../src/palimpsest/gdu-shell.c:1917
+#: ../src/palimpsest/gdu-shell.c:1940
 msgid "_Eject"
 msgstr "Aus_werfen"
 
-#: ../src/palimpsest/gdu-shell.c:1917
+#: ../src/palimpsest/gdu-shell.c:1940
 msgid "Eject media from the device"
 msgstr "Medium aus dem Gerät auswerfen"
 
-#: ../src/palimpsest/gdu-shell.c:1918
+#: ../src/palimpsest/gdu-shell.c:1941
 msgid "Detach the device from the system, powering it off"
 msgstr "Das Gerät vom System entfernen und ausschalten"
 
-#: ../src/palimpsest/gdu-shell.c:1919
+#: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
 msgstr ""
 "Entsperren des verschlüsselten Geräts, so dass die Daten im Klartext lesbar "
 "werden"
 
-#: ../src/palimpsest/gdu-shell.c:1920
+#: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
 msgstr "_Sperren"
 
-#: ../src/palimpsest/gdu-shell.c:1920
+#: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgstr ""
 "Sperren des verschlüsselten Geräts, so dass die Klartext-Daten unlesbar "
 "werden"
 
-#: ../src/palimpsest/gdu-shell.c:1921
+#: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
 msgstr "_Starten"
 
-#: ../src/palimpsest/gdu-shell.c:1921
+#: ../src/palimpsest/gdu-shell.c:1944
 msgid "Start the array"
 msgstr "Die Anordnung starten"
 
-#: ../src/palimpsest/gdu-shell.c:1922
+#: ../src/palimpsest/gdu-shell.c:1945
 msgid "_Stop"
 msgstr "_Stoppen"
 
-#: ../src/palimpsest/gdu-shell.c:1922
+#: ../src/palimpsest/gdu-shell.c:1945
 msgid "Stop the array"
 msgstr "Die Anordnung stoppen"
 
-#: ../src/palimpsest/gdu-shell.c:1923
+#: ../src/palimpsest/gdu-shell.c:1946
 msgid "Erase the contents of the device"
 msgstr "Den Inhalt des Geräts löschen"
 
-#: ../src/palimpsest/gdu-shell.c:1926
+#: ../src/palimpsest/gdu-shell.c:1949
 msgid "_Quit"
 msgstr "_Beenden"
 
-#: ../src/palimpsest/gdu-shell.c:1926
+#: ../src/palimpsest/gdu-shell.c:1949
 msgid "Quit"
 msgstr "Beenden"
 
-#: ../src/palimpsest/gdu-shell.c:1927
+#: ../src/palimpsest/gdu-shell.c:1950
 msgid "Get Help on Palimpsest Disk Utility"
 msgstr "Hilfe zur Palimpsest-Laufwerksverwaltung bekommen"
 
-#: ../src/palimpsest/gdu-shell.c:1928
+#: ../src/palimpsest/gdu-shell.c:1951
 msgid "_About"
 msgstr "_Info"
 
-#: ../src/palimpsest/gdu-shell.c:2007
+#: ../src/palimpsest/gdu-shell.c:2030
 msgid "An error occured"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: ../src/palimpsest/gdu-shell.c:2016
+#: ../src/palimpsest/gdu-shell.c:2039
 msgid "The operation failed."
 msgstr "Der Vorgang ist gescheitert."
 
-#: ../src/palimpsest/gdu-shell.c:2019
+#: ../src/palimpsest/gdu-shell.c:2042
 msgid "The device is busy."
 msgstr "Das Gerät ist beschäftigt."
 
-#: ../src/palimpsest/gdu-shell.c:2022
+#: ../src/palimpsest/gdu-shell.c:2045
 msgid "The operation was canceled."
 msgstr "Der Vorgang wurde abgebrochen."
 
-#: ../src/palimpsest/gdu-shell.c:2025
+#: ../src/palimpsest/gdu-shell.c:2048
 msgid "The daemon is being inhibited."
 msgstr "Der Daemon wird blockiert."
 
-#: ../src/palimpsest/gdu-shell.c:2028
+#: ../src/palimpsest/gdu-shell.c:2051
 msgid "An invalid option was passed."
 msgstr "Eine ungültige Option wurde verwendet."
 
-#: ../src/palimpsest/gdu-shell.c:2031
+#: ../src/palimpsest/gdu-shell.c:2054
 msgid "The operation is not supported."
 msgstr "Der Vorgang wird nicht unterstützt."
 
-#: ../src/palimpsest/gdu-shell.c:2034
+#: ../src/palimpsest/gdu-shell.c:2057
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "Ein Holen der ATA SMART-Informationen würde das Gerät wecken."
 
-#: ../src/palimpsest/gdu-shell.c:2037
+#: ../src/palimpsest/gdu-shell.c:2060
 msgid "Permission denied."
 msgstr "Zugriff verweigert."
 
-#: ../src/palimpsest/gdu-shell.c:2040
+#: ../src/palimpsest/gdu-shell.c:2063
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: ../src/palimpsest/gdu-shell.c:2076
+#: ../src/palimpsest/gdu-shell.c:2099
 msgid "_Details:"
 msgstr "_Details:"
 
-#: ../src/palimpsest/gdu-shell.c:2186
+#: ../src/palimpsest/gdu-shell.c:2236
 msgid "<small>_Cancel</small>"
 msgstr "<small>_Abbrechen</small>"
 
@@ -4173,16 +4432,12 @@ msgid "Percent Size"
 msgstr "Prozentuale Größe"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
-#, fuzzy
-#| msgid ""
-#| "The size in percent this element should claim or 0 to always claim the "
-#| "specified minimum size"
 msgid ""
 "The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
-"Die Größe in Prozent, die dieses Element anfordern soll oder 0, um immer die "
-"festgelegte kleinste Größe anzufordern"
+"Die Größe in Prozent, die dieses Element anfordern soll oder »0«, um immer "
+"die festgelegte Mindestgröße anzufordern"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
@@ -4195,3 +4450,168 @@ msgstr "Markierungen des Elements"
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
 msgstr "Der anzuzeigende Gerätepool"
+
+#~ msgid "%.3g mins"
+#~ msgstr "%.3g Minuten"
+
+#~ msgid "%s msec"
+#~ msgstr "%s Millisekunden"
+
+#~ msgid "Retrieving..."
+#~ msgstr "Wird geholt …"
+
+#~ msgid "One or more attributes exceeding threshold."
+#~ msgstr "Ein oder mehrere Attribute überschreiten den Schwellwert."
+
+#~ msgid ""
+#~ "Drive failure expected in less than 24 hours. Save all data immediately."
+#~ msgstr ""
+#~ "Ein Laufwerksversagen wird in weniger als 24 Stunden erwartet. Sichern "
+#~ "Sie unbedingt sofort alle Daten."
+
+#~ msgctxt "ATA SMART status"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "Completed OK"
+#~ msgstr "Erfolgreich abgeschlossen"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "FAILED"
+#~ msgstr "GESCHEITERT"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "(Electrical)"
+#~ msgstr "(Elektrisch)"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "(Servo)"
+#~ msgstr "(Servo-Motor)"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "(Read)"
+#~ msgstr "(Lesen)"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "In progress"
+#~ msgstr "In Bearbeitung"
+
+#~ msgctxt "ATA SMART test result"
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%g°"
+#~ msgstr "%g°"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "now"
+#~ msgstr "jetzt"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dm"
+#~ msgstr "%dm"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dh"
+#~ msgstr "%dh"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dh %dm"
+#~ msgstr "%dh %dm"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dd"
+#~ msgstr "%dT"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dd %dh"
+#~ msgstr "%dT %dh"
+
+#~ msgctxt "ATA SMART graph label"
+#~ msgid "%dd %dh %dm"
+#~ msgstr "%dT %dh %dm"
+
+#~ msgid "ATA SMART Attributes"
+#~ msgstr "ATA SMART-Attribute"
+
+#~ msgid "View:"
+#~ msgstr "Ansicht:"
+
+#~ msgid "6 hours"
+#~ msgstr "6 Stunden"
+
+#~ msgid "24 hours"
+#~ msgstr "24 Stunden"
+
+#~ msgid "3 days"
+#~ msgstr "3 Tage"
+
+#~ msgid "12 days"
+#~ msgstr "12 Tage"
+
+#~ msgid "36 days"
+#~ msgstr "36 Tage"
+
+#~ msgid "96 days"
+#~ msgstr "96 Tage"
+
+#~ msgid "Online"
+#~ msgstr "Online"
+
+#~ msgid "Offline"
+#~ msgstr "Offline"
+
+#~ msgid "Only when performing a self-test."
+#~ msgstr "Nur während der Ausführung eines Selbsttests."
+
+#~ msgid "Pre-fail"
+#~ msgstr "Vor Versagen"
+
+#~ msgid "Old-age"
+#~ msgstr "Alterserscheinungen"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Description:"
+#~ msgstr "Beschreibung:"
+
+#~ msgctxt "SMART Attribute status"
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgctxt "SMART Attribute status"
+#~ msgid "FAILING"
+#~ msgstr "VERSAGEND"
+
+#~ msgid "Error initiating ATA SMART Self Test"
+#~ msgstr "Fehler beim Starten des ATA-SMART-Selbsttests"
+
+#~ msgid "ATA SMART Self Test"
+#~ msgstr "ATA SMART-Selbsttest"
+
+#~ msgid "Health"
+#~ msgstr "Zustand"
+
+#~ msgid ""
+#~ "Some disks support ATA SMART, a monitoring system for disks to detect and "
+#~ "report on various indicators of reliability, in the hope of anticipating "
+#~ "failures."
+#~ msgstr ""
+#~ "Einige Laufwerke unterstützen »ATA SMART«, ein Überwachungssystem für "
+#~ "Laufwerke, das verschiedene Hinweise für die Zuverlässigkeit melden kann. "
+#~ "Ziel ist die Vorhersage eines Versagens."
+
+#~ msgid "Last Test:"
+#~ msgstr "Letzter Test:"
+
+#~ msgid "Refresh ATA SMART data from the device"
+#~ msgstr "ATA SMART-Daten des Geräts auffrischen"
+
+#~ msgid "Show ATA SMART Historical Data"
+#~ msgstr "Chronik der ATA SMART-Daten zeigen"
+
+#~ msgid "Connected via %s"
+#~ msgstr "Verbunden über %s"

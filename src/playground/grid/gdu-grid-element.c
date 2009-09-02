@@ -546,7 +546,7 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                         fstype_str = gdu_util_get_fstype_for_display (gdu_device_id_get_type (d),
                                                                       gdu_device_id_get_version (d),
                                                                       FALSE);
-                        size_str = gdu_util_get_size_for_display (gdu_device_get_size (d), FALSE);
+                        size_str = gdu_util_get_size_for_display (gdu_device_get_size (d), FALSE, FALSE);
                         s1 = g_strdup_printf ("%s %s", size_str, fstype_str);
                         g_free (fstype_str);
                         g_free (size_str);
@@ -555,16 +555,24 @@ gdu_grid_element_expose_event (GtkWidget           *widget,
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x0f") == 0 ||
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x85") == 0)) {
                         s = g_strdup (_("Extended"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable), FALSE);
+                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable),
+                                                            FALSE,
+                                                            FALSE);
                 } else if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "crypto") == 0) {
                         s = g_strdup (_("Encrypted"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable), FALSE);
+                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable),
+                                                            FALSE,
+                                                            FALSE);
                 } else if (!gdu_presentable_is_allocated (element->priv->presentable)) {
                         s = g_strdup (_("Free"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable), FALSE);
+                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable),
+                                                            FALSE,
+                                                            FALSE);
                 } else if (!gdu_presentable_is_recognized (element->priv->presentable)) {
                         s = g_strdup (_("Unknown"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable), FALSE);
+                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->priv->presentable),
+                                                            FALSE,
+                                                            FALSE);
                 }
 
                 if (s == NULL)

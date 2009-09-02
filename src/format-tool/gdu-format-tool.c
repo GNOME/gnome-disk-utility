@@ -289,7 +289,9 @@ main (int argc, char *argv[])
         if (toplevel != NULL && GDU_IS_DRIVE (toplevel)) {
                 drive_name = gdu_presentable_get_name (toplevel);
         }
-        size_str = gdu_util_get_size_for_display (gdu_device_get_size (device), FALSE);
+        size_str = gdu_util_get_size_for_display (gdu_device_get_size (device),
+                                                  FALSE,
+                                                  FALSE);
 
         if (drive_name != NULL) {
                 if (gdu_device_is_partition (device)) {

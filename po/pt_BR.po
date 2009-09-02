@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 # César Veiga <tombs@linuxmail.org>, 2009.
 # Og Maciel <ogmaciel@gnome.org>, 2009.
+# Lucas Azevedo <lucasazevedo9@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-26 20:28-0400\n"
-"PO-Revision-Date: 2009-08-26 21:53-0500\n"
-"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
+"POT-Creation-Date: 2009-09-02 12:36-0400\n"
+"PO-Revision-Date: 2009-09-01 13:39-0300\n"
+"Last-Translator: Lucas Azevedo <lucasazevedo9@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1829,7 +1830,7 @@ msgstr "Frequência de erros de \"programa\" quando lendo da unidade"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:252
 msgid "Reported Uncorrectable Errors"
-msgstr ""
+msgstr "Erros não corrigíveis reportados"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
 msgid "Number of errors that could not be recovered using hardware ECC"
@@ -2083,12 +2084,11 @@ msgstr "Quantia de alta corrente usada para acelerar a unidade"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:421
 msgid "Spin Buzz"
-msgstr ""
+msgstr "Buzz de rotação"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:422
-#, fuzzy
 msgid "Number of buzz routines to spin up the drive"
-msgstr "Quantia de alta corrente usada para acelerar a unidade."
+msgstr "Quantidade de rotinas de buzz para acelerar a unidade"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2768,7 +2768,6 @@ msgstr "O último auto-teste FALHOU (Elétrico)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
-#, fuzzy
 msgid "Last self-test FAILED (Servo)"
 msgstr "O último auto-teste FALHOU (Servo)"
 
@@ -2805,11 +2804,11 @@ msgstr "Auto-teste de transporte em progresso: "
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
 #: ../src/playground/grid/gdu-grid-view.c:325
 msgid "Pool"
-msgstr "Pool"
+msgstr "Conjunto"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
 msgid "The pool of devices"
-msgstr "A pool de dispositivos"
+msgstr "O conjunto de dispositivos"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
 msgid "RAID Level"
@@ -3608,7 +3607,7 @@ msgstr "Sincronizado"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "Gravação"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
@@ -3659,14 +3658,14 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "_Detach"
-msgstr "_Desanexar"
+msgstr "_Ejetar"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
 msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
-"Desanexa o componente em execução da matriz RAID. Dados no componente serão "
+"Ejeta o componente em execução da matriz RAID. Dados no componente serão "
 "apagados e o componente estará pronto para outros usos."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
@@ -3731,6 +3730,12 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d com nome \"%s\" na mídia em \"%s\" e todas as "
+"partições contidas nesta partição extendida serão apagados de forma "
+"irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
@@ -3740,6 +3745,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d com nome \"%s\" na mídia em \"%s\" serão "
+"apagados de forma irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
@@ -3749,6 +3759,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d na mídia em \"%s\" e todas as partições "
+"contidas nesta partição extendida serão apagados de forma irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
@@ -3757,6 +3772,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d na mídia em \"%s\" serão apagados de forma "
+"irrecuperável.\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
@@ -3766,6 +3785,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d com nome \"%s\" de \"%s\" e todas as partições "
+"contidas nesta partição extendida serão apagados de forma irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
@@ -3775,6 +3799,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d com nome \"%s\" de \"%s\" serão apagados de "
+"forma irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
@@ -3784,6 +3813,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d de \"%s\" e todas as partições contidas nesta "
+"partição extendida serão apagados de forma irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
@@ -3792,6 +3826,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d de \"%s\" serão apagados de forma "
+"irrecuperável.\n"
+"\n"
+"Certifique-se de fazer uma cópia de segurança de dados importantes. Esta "
+"ação não pode ser desfeita."
 
 # E_xcluir é uma tecla de acesso padronizada na tradução do GTK+
 #: ../src/palimpsest/gdu-section-partition.c:200
@@ -3811,6 +3850,8 @@ msgid ""
 "The attributes of the partition can be edited. The partition can also be "
 "deleted to make room for other data."
 msgstr ""
+"Os atributos da partição podem ser editados. A partição pode também ser "
+"apagada para dar espaço para outros dados."
 
 # Só porque _P não vai ficar bom em inglês não quer dizer que _R seja ruim em pt_BR
 #: ../src/palimpsest/gdu-section-partition.c:558
@@ -3843,7 +3884,7 @@ msgstr "Aplicar as alterações efetuadas"
 
 #: ../src/palimpsest/gdu-section-swapspace.c:95
 msgid "The volume contains swap space."
-msgstr ""
+msgstr "O volume contém espaço de swap."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:91
 #: ../src/palimpsest/gdu-section-unrecognized.c:148
@@ -3855,12 +3896,16 @@ msgid ""
 "This is the last primary partition that can be created. If you need more "
 "partitions, you can create an Extended Partition."
 msgstr ""
+"Esta é a última partição primária que pode ser criada. Se você precisa de "
+"mais partições, você pode criar uma Partição Extendida."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
 msgid ""
 "No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
+"Não é possível criar mais partições. Você pode apagar uma partição existente "
+"e então criar uma Partição Extendida."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
@@ -3871,6 +3916,9 @@ msgid ""
 "To create a new partition, select the size and whether to create a file "
 "system. The partition type, label and flags can be changed after creation."
 msgstr ""
+"Para criar uma nova partição, selecione o tamanho e se deseja criar um "
+"sistema de arquivos. O tipo de partição, rótulo e sinalizadores podem ser "
+"mudados após a criação."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
@@ -3885,7 +3933,7 @@ msgstr "MB"
 #: ../src/palimpsest/gdu-section-unallocated.c:702
 #: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
-msgstr ""
+msgstr "Tom_ar posse do sistema de arquivos"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
@@ -3894,12 +3942,15 @@ msgid ""
 "created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
+"O sistema de arquivos selecionado usa o conceito de posse. Se marcado, o "
+"sistema de arquivos criado vai ser possuído por você. Se não for marcado, "
+"apenas o super usuário pode acessar o sistema de arquivos."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
-msgstr ""
+msgstr "Cr_iptografar dispositivo subjacente"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
@@ -3908,6 +3959,10 @@ msgid ""
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Criptografar protege os seus dados, requisitando que seja entrada uma palavra "
+"passe antes que o sistema de arquivos seja utilizado. Pode diminuir "
+"performance e não ser compatível se você usa a mídia em outros sistemas "
+"operacionais."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:734
 msgid "Create partition"
@@ -3927,6 +3982,9 @@ msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d na mídia em \"%s\" serão apagados "
+"irrecuperavelmente. Certifique-se de ter uma cópia de segurança dos dados "
+"importantes. Esta ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1526
@@ -3935,6 +3993,9 @@ msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"Todos os dados na partição %d de \"%s\" serão apagados de forma "
+"irrecuperável. Certifique-se de ter uma cópia de segurança dos dados "
+"importantes. Esta ação não pode ser desfeita."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
@@ -3945,6 +4006,9 @@ msgid ""
 "To create a new file system on the device, select the type and label and "
 "then press \"Create\". All existing data will be lost."
 msgstr ""
+"Para criar um novo sistema de arquivos no dispositivo, selecione o tipo e o "
+"rótulo e então pressione \"Criar\". Todos os dados existentes vão ser "
+"perdidos."
 
 #: ../src/palimpsest/gdu-shell.c:203
 msgid "Unknown Size"
@@ -3954,17 +4018,17 @@ msgstr "Tamanho desconhecido"
 #: ../src/palimpsest/gdu-shell.c:226 ../src/palimpsest/gdu-shell.c:255
 #, c-format
 msgid "Unknown Scheme: %s"
-msgstr ""
+msgstr "Esquema desconhecido: %s"
 
 #. Translators: %s is the name of the partition table format, like 'Master Boot Record'
 #: ../src/palimpsest/gdu-shell.c:231
 #, c-format
 msgid "Partitioned Media (%s)"
-msgstr ""
+msgstr "Mídia particionada (%s)"
 
 #: ../src/palimpsest/gdu-shell.c:236
 msgid "Unpartitioned Media"
-msgstr ""
+msgstr "Mídia não particionada"
 
 #: ../src/palimpsest/gdu-shell.c:242 ../src/palimpsest/gdu-shell.c:266
 #: ../src/palimpsest/gdu-shell.c:363
@@ -3979,36 +4043,36 @@ msgstr "RAID via Software Linux"
 #: ../src/palimpsest/gdu-shell.c:294
 #, c-format
 msgid "SMART status: %s"
-msgstr ""
+msgstr "Status do SMART: %s"
 
 #. Translators: this the SMART hyperlink tooltip
 #: ../src/palimpsest/gdu-shell.c:302
 msgid "View details about SMART for this disk"
-msgstr ""
+msgstr "Ver detalhes sobre SMART para este disco"
 
 #. Translators: this is the text for the SMART hyperlink
 #: ../src/palimpsest/gdu-shell.c:304
 msgid "More Information"
-msgstr ""
+msgstr "Mais informações"
 
 #: ../src/palimpsest/gdu-shell.c:318 ../src/palimpsest/gdu-shell.c:387
 #: ../src/palimpsest/gdu-shell.c:422
 #, c-format
 msgid "%s (Read Only)"
-msgstr ""
+msgstr "%s (Apenas leitura)"
 
 #: ../src/palimpsest/gdu-shell.c:325
 msgid "Not running"
-msgstr ""
+msgstr "Não está em execução"
 
 #: ../src/palimpsest/gdu-shell.c:341
 #, c-format
 msgid "%s File System"
-msgstr ""
+msgstr "Sistema de arquivos %s"
 
 #: ../src/palimpsest/gdu-shell.c:352
 msgid "Encrypted LUKS Device"
-msgstr ""
+msgstr "Dispositivo LUKS criptografado"
 
 #: ../src/palimpsest/gdu-shell.c:359
 msgid "Data"
@@ -4016,12 +4080,12 @@ msgstr "Dados"
 
 #: ../src/palimpsest/gdu-shell.c:368
 msgid "Cleartext LUKS Device"
-msgstr ""
+msgstr "Dispositivo LUKS em texto puro"
 
 #: ../src/palimpsest/gdu-shell.c:375
 #, c-format
 msgid "Partition %d (%s)"
-msgstr ""
+msgstr "Partição %d (%s)"
 
 #: ../src/palimpsest/gdu-shell.c:928
 msgid "Error checking file system on device"
@@ -4030,7 +4094,7 @@ msgstr "Erro ao verificar sistema de arquivos no dispositivo"
 #: ../src/palimpsest/gdu-shell.c:943
 #, c-format
 msgid "File system check on \"%s\" completed"
-msgstr ""
+msgstr "Checagem de sistema de arquivos em \"%s\" concluída"
 
 #: ../src/palimpsest/gdu-shell.c:947
 msgid "File system is clean."
@@ -4038,7 +4102,7 @@ msgstr "Sistema de arquivos está limpo."
 
 #: ../src/palimpsest/gdu-shell.c:950
 msgid "File system is <b>NOT</b> clean."
-msgstr ""
+msgstr "Sistema de arquivos <b>NÃO</b> está limpo."
 
 #: ../src/palimpsest/gdu-shell.c:1036
 msgid "Error unmounting device"
@@ -4054,21 +4118,23 @@ msgstr "Erro ao ejetar dispositivo"
 
 #: ../src/palimpsest/gdu-shell.c:1218
 msgid "Error unlocking device"
-msgstr ""
+msgstr "Erro ao destrancar dispositivo"
 
 #: ../src/palimpsest/gdu-shell.c:1283
 msgid "Error locking encrypted device"
-msgstr ""
+msgstr "Erro ao trancar dispositivo criptografado"
 
 #: ../src/palimpsest/gdu-shell.c:1320
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
-msgstr ""
+msgstr "Ocorreu um erro ao iniciar a unidade \"%s\"."
 
 #: ../src/palimpsest/gdu-shell.c:1374
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr ""
+"Você tem certeza de que deseja iniciar a unidade \"%s\" em modo "
+"degradado ?"
 
 #: ../src/palimpsest/gdu-shell.c:1378
 msgid ""
@@ -4076,27 +4142,30 @@ msgid ""
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
 "lost if a drive fails."
 msgstr ""
+"Iniciando uma matriz RAID em modo degradado significa que o volume RAID não é "
+"mais tolerante à falhas de unidades. Dados no volume podem ser perdidos de "
+"forma irrecuperável se o dispostivo falhar."
 
 #: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
-msgstr ""
+msgstr "_Iniciar matriz"
 
 #: ../src/palimpsest/gdu-shell.c:1411
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
-msgstr ""
+msgstr "Houve um erro ao parar a unidade \"%s\"."
 
 #: ../src/palimpsest/gdu-shell.c:1463
 msgid "Error erasing data"
-msgstr ""
+msgstr "Erro ao apagar dados"
 
 #: ../src/palimpsest/gdu-shell.c:1515
 msgid "Are you sure you want to erase the device ?"
-msgstr ""
+msgstr "Você tem certeza que quer apagar os dados do dispositivo?"
 
 #: ../src/palimpsest/gdu-shell.c:1551 ../src/palimpsest/gdu-shell.c:1946
 msgid "_Erase"
-msgstr ""
+msgstr "_Apagar"
 
 #: ../src/palimpsest/gdu-shell.c:1626
 msgid "Error creating component for RAID array"
@@ -4104,7 +4173,7 @@ msgstr "Erro ao criar componente para a matriz RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1653
 msgid "Error creating partition table for component for RAID array"
-msgstr ""
+msgstr "Erro ao criar tabela de partições para componente na matriz RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1679
 msgid "Error creating RAID array"
@@ -4112,11 +4181,12 @@ msgstr "Erro ao criar a matriz RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1870 ../src/palimpsest/gdu-shell.c:2198
 msgid "Palimpsest Disk Utility"
-msgstr ""
+msgstr "Utilitário de Disco Palimpsest"
 
 #: ../src/palimpsest/gdu-shell.c:1875
 msgid "translator-credits"
-msgstr "Og Maciel <ogmaciel@gnome.org"
+msgstr "Og Maciel <ogmaciel@gnome.org\n"
+"Lucas Azevedo <lucasazevedo9@gmail.com>"
 
 #: ../src/palimpsest/gdu-shell.c:1931
 msgid "_File"
@@ -4132,207 +4202,215 @@ msgstr "Matriz _RAID por software"
 
 #: ../src/palimpsest/gdu-shell.c:1933
 msgid "Create a new Software RAID array"
-msgstr ""
+msgstr "Criar nova matriz de Software por RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1934
 msgid "_Edit"
-msgstr ""
+msgstr "_Editar"
 
 #: ../src/palimpsest/gdu-shell.c:1935 ../src/palimpsest/gdu-shell.c:1950
 msgid "_Help"
-msgstr ""
+msgstr "_Ajuda"
 
 #: ../src/palimpsest/gdu-shell.c:1937
 msgid "_Check File System"
-msgstr ""
+msgstr "_Checar sistema de arquivos"
 
 #: ../src/palimpsest/gdu-shell.c:1937
 msgid "Check the file system"
-msgstr ""
+msgstr "Checar o sistema de arquivos"
 
 #: ../src/palimpsest/gdu-shell.c:1938
 msgid "_Mount"
-msgstr ""
+msgstr "_Montar"
 
 #: ../src/palimpsest/gdu-shell.c:1938
 msgid "Mount the filesystem on device"
-msgstr ""
+msgstr "Montar o sistema de arquivos no dispositivo"
 
 #: ../src/palimpsest/gdu-shell.c:1939
 msgid "Unmount the filesystem"
-msgstr ""
+msgstr "Desmontar o sistema de arquivos"
 
 #: ../src/palimpsest/gdu-shell.c:1940
 msgid "_Eject"
-msgstr ""
+msgstr "_Ejetar"
 
 #: ../src/palimpsest/gdu-shell.c:1940
 msgid "Eject media from the device"
-msgstr ""
+msgstr "Ejetar mídia do dispositivo"
 
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "Detach the device from the system, powering it off"
-msgstr ""
+msgstr "Ejetar o dispositivo do sistema, desligando-o"
 
 #: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
 msgstr ""
+"Destrancar o dispositivo criptografado, tornando os dados disponíveis em texto "
+"puro."
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
-msgstr ""
+msgstr "_Trancar"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgstr ""
+"Trancar o dispositivo criptografado, tornando os dados em texto puro "
+"indisponíveis"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
-msgstr ""
+msgstr "_Iniciar"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "Start the array"
-msgstr ""
+msgstr "Iniciar a matriz"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "_Stop"
-msgstr ""
+msgstr "_Parar"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "Stop the array"
-msgstr ""
+msgstr "Parar a matriz"
 
 #: ../src/palimpsest/gdu-shell.c:1946
 msgid "Erase the contents of the device"
-msgstr ""
+msgstr "Apagar conteúdo do dispositivo"
 
 #: ../src/palimpsest/gdu-shell.c:1949
 msgid "_Quit"
-msgstr ""
+msgstr "_Sair"
 
 #: ../src/palimpsest/gdu-shell.c:1949
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 #: ../src/palimpsest/gdu-shell.c:1950
 msgid "Get Help on Palimpsest Disk Utility"
-msgstr ""
+msgstr "Obter ajuda no utilitário de disco Palimpsest"
 
 #: ../src/palimpsest/gdu-shell.c:1951
 msgid "_About"
-msgstr ""
+msgstr "_Sobre"
 
 #: ../src/palimpsest/gdu-shell.c:2030
 msgid "An error occured"
-msgstr ""
+msgstr "Houve um erro"
 
 #: ../src/palimpsest/gdu-shell.c:2039
 msgid "The operation failed."
-msgstr ""
+msgstr "A operação falhou."
 
 #: ../src/palimpsest/gdu-shell.c:2042
 msgid "The device is busy."
-msgstr ""
+msgstr "O dispositivo está ocupado."
 
 #: ../src/palimpsest/gdu-shell.c:2045
 msgid "The operation was canceled."
-msgstr ""
+msgstr "A operação foi cancelada."
 
 #: ../src/palimpsest/gdu-shell.c:2048
 msgid "The daemon is being inhibited."
-msgstr ""
+msgstr "O daemon está sendo inibido."
 
 #: ../src/palimpsest/gdu-shell.c:2051
 msgid "An invalid option was passed."
-msgstr ""
+msgstr "Uma opção inválida foi passada."
 
 #: ../src/palimpsest/gdu-shell.c:2054
 msgid "The operation is not supported."
-msgstr ""
+msgstr "A operação não é suportada."
 
 #: ../src/palimpsest/gdu-shell.c:2057
 msgid "Getting ATA SMART data would wake up the device."
-msgstr ""
+msgstr "Receber dados ATA SMART acordaria o dispositivo."
 
 #: ../src/palimpsest/gdu-shell.c:2060
 msgid "Permission denied."
-msgstr ""
+msgstr "Permissão negada."
 
 #: ../src/palimpsest/gdu-shell.c:2063
 msgid "Unknown error"
-msgstr ""
+msgstr "Erro desconhecido"
 
 #: ../src/palimpsest/gdu-shell.c:2099
 msgid "_Details:"
-msgstr ""
+msgstr "_Detalhes:"
 
 #: ../src/palimpsest/gdu-shell.c:2236
 msgid "<small>_Cancel</small>"
-msgstr ""
+msgstr "<small>_Cancelar</small>"
 
 #: ../src/playground/grid/gdu-grid-details.c:134
 #: ../src/playground/grid/gdu-grid-element.c:877
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: ../src/playground/grid/gdu-grid-details.c:135
 msgid "The view to show details for"
-msgstr ""
+msgstr "A visualização para mostrar detalhes"
 
 #: ../src/playground/grid/gdu-grid-details.c:196
 msgid "Device:"
-msgstr ""
+msgstr "Dispositivo:"
 
 #: ../src/playground/grid/gdu-grid-element.c:557
 msgid "Extended"
-msgstr ""
+msgstr "Extendida"
 
 #: ../src/playground/grid/gdu-grid-element.c:560
 msgid "Encrypted"
-msgstr ""
+msgstr "Criptografado"
 
 #: ../src/playground/grid/gdu-grid-element.c:563
 msgid "Free"
-msgstr ""
+msgstr "Livre"
 
 #: ../src/playground/grid/gdu-grid-element.c:878
 msgid "The GduGridView object that the element is associated with"
-msgstr ""
+msgstr "O objeto GduGridView ao qual este elemento está associado"
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
-msgstr ""
+msgstr "Apresentável"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
 msgid ""
 "The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
+"O apresentável mostrados ou NULL se este for um elemento representando "
+"falta de mídia"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"
-msgstr ""
+msgstr "O tamanho mínimo do elemento"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
-msgstr ""
+msgstr "Tamanho em porcentagem"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
 msgid ""
 "The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"O tamanho em porcentagem que esse elemento deveria reivindicar ou 0 para "
+"sempre reivindicar o tamanho mínimo especificado"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
-msgstr ""
+msgstr "Sinalizadores"
 
 #: ../src/playground/grid/gdu-grid-element.c:922
 msgid "Flags for the element"
-msgstr ""
+msgstr "Sinalizadores para o elemento"
 
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
-msgstr ""
+msgstr "O conjunto de dispositivos para mostrar"
 
 #~ msgid "24 hours"
 #~ msgstr "24 horas"

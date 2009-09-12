@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-disc-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-09-01 11:18+0000\n"
+"POT-Creation-Date: 2009-09-12 09:05+0000\n"
 "PO-Revision-Date: 2009-09-01 11:18+0100\n"
 "Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -34,7 +34,7 @@ msgstr "Obaveštenja o disku"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:2
 msgid "Provides notifications related to disks"
-msgstr "Uključuje obaveštavanja koja su vezana diskove"
+msgstr "Uključuje obaveštenja vezana za diskove"
 
 #: ../src/format-tool/gdu-format-dialog.c:135
 msgid "Volume"
@@ -54,11 +54,11 @@ msgstr "Izabrani sistem datoteka"
 
 #: ../src/format-tool/gdu-format-dialog.c:159
 msgid "Filesystem label"
-msgstr "Naziv za sistem datoteka"
+msgstr "Natpis za sistem datoteka"
 
 #: ../src/format-tool/gdu-format-dialog.c:160
 msgid "The requested filesystem label"
-msgstr "Naziv za izabrani sistem datoteka"
+msgstr "Natpis za izabrani sistem datoteka"
 
 #: ../src/format-tool/gdu-format-dialog.c:170
 #: ../src/palimpsest/gdu-section-encrypted.c:240
@@ -108,7 +108,7 @@ msgstr "Šifrovan, podržan na linuksu (FAT)"
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/format-tool/gdu-format-dialog.c:390
 msgid "_Name:"
-msgstr "_Naziv:"
+msgstr "_Natpis:"
 
 #. Translators: Keep length of translation of "New Volume" to less than 16 characters
 #: ../src/format-tool/gdu-format-dialog.c:395
@@ -671,7 +671,7 @@ msgstr "Pravim LUKS uređaj"
 
 #: ../src/gdu/gdu-util.c:333
 msgid "Unlocking LUKS Device"
-msgstr "Otkručavam LUKS uređaj"
+msgstr "Otključavam LUKS uređaj"
 
 #: ../src/gdu/gdu-util.c:335
 msgid "Locking LUKS Device"
@@ -723,7 +723,7 @@ msgstr "Proveravam RAID opseg"
 
 #: ../src/gdu/gdu-util.c:359
 msgid "Repairing RAID Array"
-msgstr "Poporavljam RAID opseg"
+msgstr "Popravljam RAID opseg"
 
 #: ../src/gdu/gdu-util.c:361
 msgid "Running Short SMART Self-Test"
@@ -873,7 +873,7 @@ msgstr "FAT16 <32M (0x04)"
 
 #: ../src/gdu/gdu-util.c:427
 msgid "Extended (0x05)"
-msgstr "Ekstended (0x05)"
+msgstr "Linuks (0x05)"
 
 #: ../src/gdu/gdu-util.c:428
 msgid "FAT16 (0x06)"
@@ -1020,36 +1020,38 @@ msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
 msgstr ""
-"Popularan format koji je saglasan sa skoro svim uređajima i sistemima, obično "
-"se koristi za razmenu datoteka."
+"Popularan format koji je saglasan sa skoro svim uređajima i sistemima, "
+"obično se koristi za razmenu datoteka."
 
 #: ../src/gdu/gdu-util.c:501
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
 msgstr ""
-"Ovaj sistem datoteka je saglasan samo sa Linuksom i obezbeđuje osnovnu "
-"UNIX podršku za ovlašćenja nad datotekama. Sistem datoteka ne koristi dnevnik."
+"Ovaj sistem datoteka je saglasan samo sa Linuksom i obezbeđuje osnovnu UNIX "
+"podršku za ovlašćenja nad datotekama. Sistem datoteka ne koristi dnevnik."
 
 #: ../src/gdu/gdu-util.c:507
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
 msgstr ""
-"Ovaj sistem datoteka je saglasan samo sa Linuksom i obezbeđuje osnovnu "
-"UNIX podršku za ovlašćenja nad datotekama."
+"Ovaj sistem datoteka je saglasan samo sa Linuksom i obezbeđuje osnovnu UNIX "
+"podršku za ovlašćenja nad datotekama."
 
 #: ../src/gdu/gdu-util.c:511
 msgid "Swap area used by the operating system for virtual memory."
 msgstr ""
-"Operativni sistem koristi dopunsku zamenu za memoriju kada nestane RAM memorija."
+"Operativni sistem koristi dopunsku zamenu za memoriju kada nestane RAM "
+"memorija."
 
 #: ../src/gdu/gdu-util.c:514
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
 msgstr ""
-"Izvorni Windows sistem datoteka. Nije saglasan sa ostalim operativnim sistemima."
+"Izvorni Windows sistem datoteka. Nije saglasan sa ostalim operativnim "
+"sistemima."
 
 #: ../src/gdu/gdu-util.c:518
 msgid "No file system will be created."
@@ -1082,8 +1084,8 @@ msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
-"GUID šema je saglasna sa većinom današnjih sistema, ali može da "
-"pravi probleme sa nekim uređajima i starim sistemima."
+"GUID šema je saglasna sa većinom današnjih sistema, ali može da pravi "
+"probleme sa nekim uređajima i starim sistemima."
 
 #: ../src/gdu/gdu-util.c:548
 msgid ""
@@ -1091,7 +1093,7 @@ msgid ""
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
 "Obeležava ceo disk kao neupotrebljen. Koristite ovu opciju samo ako želite da "
-"izbegnete particionisanje diska, kao što je potrebno za flopi i zip disktete."
+"izbegnete particionisanje diska, kao što je potrebno za flopi i zip diskete."
 
 #: ../src/gdu/gdu-util.c:731 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
@@ -1250,8 +1252,8 @@ msgid ""
 "fails."
 msgstr ""
 "Diskovi povezani u traku bez parnosti. Omogućava poboljšani učinak, ali ne "
-"toleriše greške na disku. Ukoliko jedan disk u opsegu otkaže, ceo "
-"RAID-0 opseg će prestati da radi."
+"toleriše greške na disku. Ukoliko jedan disk u opsegu otkaže, ceo RAID-0 "
+"opseg će prestati da radi."
 
 #: ../src/gdu/gdu-util.c:891
 msgid ""
@@ -1275,16 +1277,17 @@ msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
 msgstr ""
-"Diskovi povezani u traku uz raspodeljenu parnost. Obezbeđuje poboljšani učinak i "
-"kontrolu grešaka. RAID-5 opseg može da radi i ukoliko otkaže jedan disk."
+"Diskovi povezani u traku uz raspodeljenu parnost. Obezbeđuje poboljšani učinak "
+"i kontrolu grešaka. RAID-5 opseg može da radi i ukoliko otkaže jedan disk."
 
 #: ../src/gdu/gdu-util.c:903
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
 msgstr ""
-"Diskovi povezani u traku uz dvostruko raspodeljenu parnost. Obezbeđuje poboljšani "
-"učinak i kontrolu grešaka. RAID-6 opseg može da radi i ukoliko otkaže jedan disk."
+"Diskovi povezani u traku uz dvostruko raspodeljenu parnost. Obezbeđuje "
+"poboljšani učinak i kontrolu grešaka. RAID-6 opseg može da radi i ukoliko "
+"otkaže jedan disk."
 
 #: ../src/gdu/gdu-util.c:907
 msgid ""
@@ -1292,9 +1295,9 @@ msgid ""
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
 "mirror loses all its drives."
 msgstr ""
-"Diskovi povezani u traku uz raspodeljenu parnost. Obezbeđuje poboljšani učinak i "
-"kontrolu grešaka. RAID-10 opseg može da radi i ukoliko otkaže više diskove, dok "
-"god klonovi ne izgube sve diskove."
+"Diskovi povezani u traku uz raspodeljenu parnost. Obezbeđuje poboljšani učinak "
+"i kontrolu grešaka. RAID-10 opseg može da radi i ukoliko otkaže više "
+"diskove, dok god klonovi ne izgube sve diskove."
 
 #: ../src/gdu/gdu-util.c:913
 #, c-format
@@ -1410,35 +1413,35 @@ msgstr "Prazan DVD-RAM disk"
 
 #: ../src/gdu/gdu-volume.c:81
 msgid "DVD+R Disc"
-msgstr "DVD+ disk"
+msgstr "DVD+R disk"
 
 #: ../src/gdu/gdu-volume.c:81
 msgid "Blank DVD+R Disc"
-msgstr "Prazan DVD+ disk"
+msgstr "Prazan DVD+R disk"
 
 #: ../src/gdu/gdu-volume.c:82
 msgid "DVD+RW Disc"
-msgstr "Prepisiv DVD+ disk"
+msgstr "Prepisiv DVD+R disk"
 
 #: ../src/gdu/gdu-volume.c:82
 msgid "Blank DVD+RW Disc"
-msgstr "Prazan, prepisiv DVD+"
+msgstr "Prazan, prepisiv DVD+R"
 
 #: ../src/gdu/gdu-volume.c:83
 msgid "DVD+R DL Disc"
-msgstr "Dvoslojni DVD+ disk"
+msgstr "Dvoslojni DVD+R disk"
 
 #: ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD+R DL Disc"
-msgstr "Prazan, dvosnojni DVD+"
+msgstr "Prazan, dvoslojni DVD+R"
 
 #: ../src/gdu/gdu-volume.c:84
 msgid "DVD+RW DL Disc"
-msgstr "Dvoslojni, prepisiv DVD+"
+msgstr "Dvoslojni, prepisiv DVD+R"
 
 #: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD+RW DL Disc"
-msgstr "Prazan, dvosnojni, prepisiv DVD+"
+msgstr "Prazan, dvoslojni, prepisiv DVD+R"
 
 #: ../src/gdu/gdu-volume.c:85
 msgid "Blu-Ray Disc"
@@ -1510,7 +1513,7 @@ msgstr "MRW/W disk"
 
 #: ../src/gdu/gdu-volume.c:93
 msgid "Blank MRW/W Disc"
-msgstr "prazan MRW/W disk"
+msgstr "Prazan MRW/W disk"
 
 #: ../src/gdu/gdu-volume.c:274
 msgid "Blank Optical Disc"
@@ -1685,7 +1688,7 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:154
 msgid "Throughput Performance"
-msgstr "Propustna moć"
+msgstr "Propusna moć"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
@@ -1726,9 +1729,9 @@ msgid ""
 "verification error, it mark the sector as \"reallocated\" and transfers data "
 "to a special reserved area (spare area)"
 msgstr ""
-"Broj sektora koji su iznova mapirani. Kada tvrdi disk nađe grešku pri "
-"čitanju/pisanju/proveri, on označava sektor kao „prerezervisan“ i prenosi "
-"podatke u specijalno ostavljen prostor."
+"Broj sektora koji su iznova mapirani. Kada tvrdi disk nađe grešku pri čitanju/"
+"pisanju/proveri, on označava sektor kao „prerezervisan“ i prenosi podatke u "
+"specijalno ostavljen prostor."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1796,7 +1799,7 @@ msgstr "Broj pokušaja kalibracije"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
-msgstr "Broj pokušaja da kalibriše uređaj"
+msgstr "Broj pokušaja za kalibraciju uređaja"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1829,7 +1832,7 @@ msgstr "Nepopravljive greške"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
 msgid "Number of errors that could not be recovered using hardware ECC"
-msgstr "Broj grešaka koje ne mogu biti popravene pomoću EEC-a uređaja"
+msgstr "Broj grešaka koje ne mogu biti popravljene pomoću ECC-a iz uređaja"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1841,8 +1844,7 @@ msgstr "Glava van putanje"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
-msgstr ""
-"Broj upisivanja kada je glava za upis bila izvan njene normalne putanje"
+msgstr "Broj upisivanja kada je glava za upis bila izvan njene normalne putanje"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1860,7 +1862,6 @@ msgstr "Temperatura vazduha koji cirkuliše unutar uređaja"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:276
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:446
-#, fuzzy
 msgid "G-sense Error Rate"
 msgstr "Učestalost G-sens grešaka"
 
@@ -1909,11 +1910,11 @@ msgstr "Trenutna temperatura unutar uređaja"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:308
 msgid "Hardware ECC Recovered"
-msgstr "Povraćeni EEC uređaja"
+msgstr "Povraćeni ECC uređaja"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:309
 msgid "Number of ECC on-the-fly errors"
-msgstr "Broj EEC grešaka u toku rada"
+msgstr "Broj ECC grešaka u toku rada"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1928,9 +1929,9 @@ msgid ""
 "total number of (successful and unsuccessful) attempts to transfer data from "
 "reallocated sectors to a spare area"
 msgstr ""
-"Broj remapiranja. Raw vrednost ove osobine pokazuje ukupan broj (uspešnih i "
-"neuspešnih) pokušaja prenosa podataka iz prerezervisanih sektora u specijalno "
-"ostavljen prostor"
+"Broj remapiranja. Izvorna vrednost ove osobine pokazuje ukupan broj (uspešnih "
+"i neuspešnih) pokušaja prenosa podataka iz prerezervisanih sektora u "
+"specijalno ostavljen prostor"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1964,16 +1965,16 @@ msgid ""
 "rise in the value of this attribute indicates defects of the disk surface "
 "and/or problems in the mechanical subsystem"
 msgstr ""
-"Ukupan broj grešaka tokom čitanja/upusa sektora, koje se ne mogu ispraviti. "
-"Povećanje ove vrednosti ukazuje na oštećenje površine diska i/ili problema "
-"u njegovim mehaničkim delovima"
+"Ukupan broj grešaka tokom čitanja/upisa sektora, koje se ne mogu ispraviti. "
+"Povećanje ove vrednosti ukazuje na oštećenje površine diska i/ili problema u "
+"njegovim mehaničkim delovima"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:349
 msgid "UDMA CRC Error Rate"
-msgstr "Stopa UDMA CRC grešak"
+msgstr "Stopa UDMA CRC grešaka"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:350
 msgid "Number of CRC errors during UDMA mode"
@@ -1991,8 +1992,8 @@ msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
-"Broj grešaka prilikom upisa na disk (ili) stopa oštećenja na više mesta "
-"(ili) promena visine glave za upis"
+"Broj grešaka prilikom upisa na disk (ili) stopa oštećenja na više mesta (ili) "
+"promena visine glave za upis"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2020,7 +2021,6 @@ msgstr "Broj grešaka u oznaci adrese podataka (DAM)"
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:381
-#, fuzzy
 msgid "Run Out Cancel"
 msgstr "Prekid izlaska"
 
@@ -2066,22 +2066,20 @@ msgstr "Visina glava iznad površine diska"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:413
 msgid "Spin High Current"
-msgstr "Napon zaokreta"
+msgstr "Struja zaokreta"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:414
 msgid "Amount of high current used to spin up the drive"
-msgstr "Količina visokog napona koja se koristi da se pokrene uređaj"
+msgstr "Količina struje koja se koristi da se pokrene uređaj"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:421
-#, fuzzy
 msgid "Spin Buzz"
 msgstr "Zujanje zaokreta"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:422
-#, fuzzy
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Količina zujanja koja se koristi za pokretanje uređaja"
 
@@ -2090,11 +2088,11 @@ msgstr "Količina zujanja koja se koristi za pokretanje uređaja"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:429
 msgid "Offline Seek Performance"
-msgstr "Pretraga van mreže"
+msgstr "Pretraga dok disk ne radi"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:430
 msgid "Drive's seek performance during offline operations"
-msgstr "Učinak pretrage podataka diska tokom radnji van mreže"
+msgstr "Učinak pretrage podataka kada disk ne radi"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2108,21 +2106,20 @@ msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
-"Delovi diska su pomereni iz ležišta, što može biti posledica tubmanja prilikom "
-"transporta, pada ili ekstremne temperature"
+"Delovi diska su pomereni iz ležišta, što može biti posledica tumbanja "
+"prilikom transporta, pada ili ekstremne temperature"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:447
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
-msgstr ""
-"Senzor šoka je otkrio brojne greške koje su posledica udarca"
+msgstr "Senzor šoka je otkrio brojne greške koje su posledica udarca"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:454
 msgid "Loaded Hours"
-msgstr "Časova rada	"
+msgstr "Časova rada"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:455
 msgid "Number of hours in general operational state"
@@ -2152,7 +2149,8 @@ msgstr "Trenje pri čitanju"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:472
 msgid "Load on drive cause by friction in mechanical parts of the store"
-msgstr "Loše čitanje podataka sa uređaja izazvano trenjem u mehaničkim delovima diska"
+msgstr ""
+"Loše čitanje podataka sa uređaja izazvano trenjem u mehaničkim delovima diska"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
 msgid "Total number of load cycles"
@@ -2181,9 +2179,8 @@ msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Broj pokušaja rotacionog momenta uređaja"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
-#, fuzzy
 msgid "Number of power-off retract events"
-msgstr "Broj zahtevanih gašenja"
+msgstr "Broj vraćanja glave pri gašenju"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2231,7 +2228,7 @@ msgstr "Broj ECC greški koje se ne mogu ispraviti"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:552
 msgid "Good Block Rate"
-msgstr "Dobrih blokova"
+msgstr "Broj dobrih blokova"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
 msgid ""
@@ -2374,7 +2371,7 @@ msgstr "SMART nije uključen"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
 #: ../src/palimpsest/gdu-shell.c:310
 msgid "SMART is not available"
-msgstr "SMART nije distupan"
+msgstr "SMART nije dostupan"
 
 #. Translators: Title of the SMART dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1505
@@ -2399,8 +2396,8 @@ msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
 msgstr ""
-"Vreme kada su pslednji put očitani SMART podaci — SMART podaci se ažuriraju na "
-"svakih 30 minuta osim ako disk nije uspavan"
+"Vreme kada su poslednji put očitani SMART podaci — SMART podaci se ažuriraju "
+"na svakih 30 minuta osim ako disk nije uspavan"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
@@ -2543,7 +2540,7 @@ msgstr "Procena iz diska:"
 #. Translators: Tooltip for the "Overall Assessment" in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1906
 msgid "An overall assessment of the health of the disk"
-msgstr "Ukupna procena izpravnosti diska"
+msgstr "Ukupna procena ispravnosti diska"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1912
@@ -2554,7 +2551,8 @@ msgstr "Zbirna procena:"
 #. Translators: Tooltip for the "Do not warn if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
-msgstr "Ostavite isključeno kako bi bili obavešteni ukoliko disk počne da otkazuje"
+msgstr ""
+"Ostavite isključeno kako bi bili obavešteni ukoliko disk počne da otkazuje"
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
@@ -2579,7 +2577,7 @@ msgstr "Osobina"
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2017
 msgid "Assessment"
-msgstr "Prcena"
+msgstr "Procena"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
@@ -2740,7 +2738,7 @@ msgstr[3] "Jedan oštećen sektor"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2590
 msgid "Last self-test completed OK"
-msgstr "Poslednji test je uspeško završen"
+msgstr "Poslednji test je uspešno završen"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2594
@@ -2751,9 +2749,8 @@ msgstr "Poslednji test je otkazan"
 # ~Miloš
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
-#, fuzzy
 msgid "Last self-test was cancelled (with hard or soft reset)"
-msgstr "Poslednji test j otkazan (sa velikim ili malim resetom)"
+msgstr "Poslednji test je otkazan (nasilno ili programom)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
@@ -2864,7 +2861,7 @@ msgstr "Opseg diskove ka upotrebu u opsegu"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:740
 #, c-format
 msgid "The disk will be partitioned and a %s partition will be created"
-msgstr "Particionisaću disk i naprviti particiju od %s"
+msgstr "Particionisaću disk i napraviti particiju od %s"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -2877,7 +2874,7 @@ msgstr "Napravljena je particija od %s"
 #. Translators: This is shown in the Details column.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:754
 msgid "The disk will be partitioned and a partition will be created"
-msgstr "Particionisaću disk i napraviću particiju"
+msgstr "Particionisaću disk i napraviti particiju"
 
 #. Translators: This is shown in the Details column.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
@@ -3188,8 +3185,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-gtk.c:638
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
-msgstr ""
-"Unesite lozinku uređaja kako bi mogli da koristite podatke."
+msgstr "Unesite lozinku uređaja kako bi mogli da koristite podatke."
 
 #: ../src/gdu-gtk/gdu-gtk.c:647
 msgid "Incorrect Passphrase. Try again."
@@ -3363,9 +3359,8 @@ msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
-"Svi podaci na medijumu u „%s“ će biti zauvek obrisani. Proverite da li "
-"imate rezervnu kopiju svih važnih podataka, pošto ovo ne možete da "
-"poništite."
+"Svi podaci na medijumu u „%s“ će biti zauvek obrisani. Proverite da li imate "
+"rezervnu kopiju svih važnih podataka, pošto ovo ne možete da poništite."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
@@ -3423,7 +3418,7 @@ msgstr "Greška pri postavljanju natpisa sistema"
 
 #: ../src/palimpsest/gdu-section-filesystem.c:207
 msgid "Mountable Filesystem"
-msgstr "Montabilno"
+msgstr "Može se montirati"
 
 #: ../src/palimpsest/gdu-section-filesystem.c:220
 msgid "The volume contains a mountable filesystem."
@@ -3454,8 +3449,8 @@ msgid ""
 "Only volumes of acceptable sizes can be selected. You may need to manually "
 "create new volumes of acceptable sizes."
 msgstr ""
-"Možete da izaberete samo diskove prihvatljive veličine. Možda je potrebno "
-"da ručno napravite nove diskove prihvatljive veličine."
+"Možete da izaberete samo diskove prihvatljive veličine. Možda je potrebno da "
+"ručno napravite nove diskove prihvatljive veličine."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
@@ -3477,9 +3472,9 @@ msgid ""
 "erased and the RAID Array might be degraded. Make sure important data is "
 "backed up. This action cannot be undone."
 msgstr ""
-"Podaci na komponenti „%s“ unutar RAID opsega „%s“ će biti zauvek obrisani "
-"i RAID opseg može ostati delimičan. Proverite da li imate rezervnu kopiju "
-"svih važnih podataka, jer se ovo ne može poništiti."
+"Podaci na komponenti „%s“ unutar RAID opsega „%s“ će biti zauvek obrisani i "
+"RAID opseg može ostati delimičan. Proverite da li imate rezervnu kopiju svih "
+"važnih podataka, jer se ovo ne može poništiti."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:411
 msgid "_Remove Component"
@@ -3532,7 +3527,7 @@ msgstr[3] "Jedna komponenta"
 #, c-format
 msgid "%d Component (%s)"
 msgid_plural "%d Components (%s each)"
-msgstr[0] "	%d komponenta (od %s)"
+msgstr[0] "\t%d komponenta (od %s)"
 msgstr[1] "%d komponente (od po %s)"
 msgstr[2] "%d komponenata (od po %s)"
 msgstr[3] "%d komponenta (od %s)"
@@ -3641,7 +3636,7 @@ msgstr "Veličina opsega:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
-msgstr "Vrsta RAID-a:"
+msgstr "Vrsta RAID opsega:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1022
 msgid "Components:"
@@ -3673,8 +3668,8 @@ msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
-"Otkačuje pokrenutu komponentu iz RAID opsega. Podaci na ovoj komponenti "
-"će biti obrisani i komponenta će biti spremna za druge namene."
+"Otkačinje pokrenutu komponentu iz RAID opsega. Podaci na ovoj komponenti će "
+"biti obrisani i komponenta će biti spremna za druge namene."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
@@ -3694,7 +3689,6 @@ msgid "Chec_k"
 msgstr "_Proveri"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
-#, fuzzy
 msgid "Starts checking the RAID array for redundancy"
 msgstr "Započinje proveru redudantnosti RAID opsega"
 
@@ -3705,7 +3699,7 @@ msgstr "P_opravi"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1110
 msgid "Starts repairing the RAID array"
-msgstr "Započinje proveru RAID opsega"
+msgstr "Započinje popravku RAID opsega"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1128
 msgid "State"
@@ -3728,7 +3722,8 @@ msgstr "Greška prilikom brisanja particije"
 
 #: ../src/palimpsest/gdu-section-partition.c:112
 msgid "Are you sure you want to remove the partition, deleting existing data ?"
-msgstr "Da li sigurno želite da uklonite particiju uz brisanje postojećih podataka?"
+msgstr ""
+"Da li sigurno želite da uklonite particiju uz brisanje postojećih podataka?"
 
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
@@ -3742,7 +3737,8 @@ msgstr ""
 "i sve particije koje se nalaze na ovoj proširenoj particiji će biti zauvek "
 "obrisane.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
@@ -3755,7 +3751,8 @@ msgstr ""
 "Svi podaci na particiji od %d koja se zove „%s“ i nalazi na medijumu u „%s“ "
 "će biti zauvek obrisani.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
@@ -3768,7 +3765,8 @@ msgstr ""
 "Svi podaci particije od %d na medijumu u „%s“ i sve particije koje se nalaze "
 "na ovoj proširenoj particiji će biti zauvek obrisane.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
@@ -3779,7 +3777,8 @@ msgid ""
 msgstr ""
 "Svi podaci particije od %d na medijumu u „%s“ će biti zauvek obrisani.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
@@ -3789,11 +3788,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Svi podaci na particiji od %d koja se zove „%s“ na „%s“ i sve particije "
-"koje se nalaze na ovoj proširenoj particiji će biti zauvek obrisane.\n"
+"Svi podaci na particiji od %d koja se zove „%s“ na „%s“ i sve particije koje "
+"se nalaze na ovoj proširenoj particiji će biti zauvek obrisane.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
-
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
@@ -3806,8 +3805,8 @@ msgstr ""
 "Svi podaci na particiji od %d koja se zove „%s“ na „%s“ će biti zauvek "
 "obrisani.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
-
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
@@ -3820,8 +3819,8 @@ msgstr ""
 "Svi podaci particije od %d na „%s“ i sve particije koje se nalaze na ovoj "
 "proširenoj particiji će biti zauvek obrisani.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
-
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
@@ -3832,8 +3831,8 @@ msgid ""
 msgstr ""
 "Svi podaci particije od %d na „%s“ će biti zauvek obrisani.\n"
 "\n"
-"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može poništiti."
-
+"Proverite da li imate rezervnu kopiju svih podataka, jer se ovo ne može "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-partition.c:200
 msgid "_Delete Partition"
@@ -3868,7 +3867,7 @@ msgstr "_Za podizanje sistema"
 #. used by gpt
 #: ../src/palimpsest/gdu-section-partition.c:595
 msgid "Required / Firm_ware"
-msgstr "Potrebno / Firver"
+msgstr "Potrebno / Firmver"
 
 #: ../src/palimpsest/gdu-section-partition.c:607
 msgid "Delete the partition"
@@ -3943,7 +3942,7 @@ msgid ""
 msgstr ""
 "Izabrani sistem datoteka podržava ovlašćenja korisnicima. Ukoliko odaberete "
 "ovo, vi ćete biti vlasnik sistema datoteka, a u suprotnom će samo "
-"administrator moži da mu pristupi."
+"administrator moći da mu pristupi."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:715
@@ -3970,7 +3969,8 @@ msgstr "Napravi particiju"
 msgid ""
 "Are you sure you want to create a new file system, deleting existing data ?"
 msgstr ""
-"Da li zaista želite da napravite novi sistem datoteka, brišući postojeće podatke?"
+"Da li zaista želite da napravite novi sistem datoteka, brišući postojeće "
+"podatke?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
 #: ../src/palimpsest/gdu-shell.c:1519
@@ -3980,7 +3980,8 @@ msgid ""
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
 "Svi podaci particije %d na medijumu „%s“ će biti zauvek obrisani. Proverite "
-"da li imate rezervnu kopiju svih važnih podataka, jer se ovo ne možet poništiti."
+"da li imate rezervnu kopiju svih važnih podataka, jer se ovo ne možet "
+"poništiti."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1526
@@ -3989,8 +3990,8 @@ msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
-"Svi podaci particije %d na „%s“ će biti zauvek obrisani. Proverite "
-"da li imate rezervnu kopiju svih važnih podataka, jer se ovo ne možet poništiti."
+"Svi podaci particije %d na „%s“ će biti zauvek obrisani. Proverite da li "
+"imate rezervnu kopiju svih važnih podataka, jer se ovo ne možet poništiti."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
@@ -4001,8 +4002,8 @@ msgid ""
 "To create a new file system on the device, select the type and label and "
 "then press \"Create\". All existing data will be lost."
 msgstr ""
-"Za pravljenje novog sistema datoteka izaberite vrstu i natpis, pa kliknite "
-"na „Napravi“. Svi postojeći podaci će biti obrisani."
+"Za pravljenje novog sistema datoteka izaberite vrstu i natpis, pa kliknite na "
+"„Napravi“. Svi postojeći podaci će biti obrisani."
 
 #: ../src/palimpsest/gdu-shell.c:203
 msgid "Unknown Size"
@@ -4178,8 +4179,7 @@ msgstr "Palimpsest upravnik diskova"
 #: ../src/palimpsest/gdu-shell.c:1875
 msgid "translator-credits"
 msgstr ""
-"Miloš Popović <gpopac@gmail.com>"
-"\n"
+"Miloš Popović <gpopac@gmail.com>\n"
 "http://prevod.org — prevod na srpski jezik."
 
 #: ../src/palimpsest/gdu-shell.c:1931
@@ -4220,7 +4220,7 @@ msgstr "_Montiraj"
 
 #: ../src/palimpsest/gdu-shell.c:1938
 msgid "Mount the filesystem on device"
-msgstr "Monira sistema datoteka na uređaju"
+msgstr "Montira sistem datoteka na uređaju"
 
 #: ../src/palimpsest/gdu-shell.c:1939
 msgid "Unmount the filesystem"
@@ -4236,11 +4236,12 @@ msgstr "Izbacuje medijum iz uređaja"
 
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "Detach the device from the system, powering it off"
-msgstr "Otkačuje uređaj iz sistema isključujući mu struju"
+msgstr "Otkačinje uređaj iz sistema isključujući mu struju"
 
 #: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
-msgstr "Otključava šifrovani uređaj, tako da su podaci dostupni kao običan tekst"
+msgstr ""
+"Otključava šifrovani uređaj, tako da su podaci dostupni kao običan tekst"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
@@ -4248,7 +4249,8 @@ msgstr "_Zaključaj"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
-msgstr "Zaključava šifrovani uređaj i onemogućava dostupnost podataka kao običan tekst"
+msgstr ""
+"Zaključava šifrovani uređaj i onemogućava dostupnost podataka kao običan tekst"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
@@ -4316,11 +4318,11 @@ msgstr "Radnja nije podržana."
 
 #: ../src/palimpsest/gdu-shell.c:2057
 msgid "Getting ATA SMART data would wake up the device."
-msgstr "Pikupljanje ATA SMART podataka će probuditi uređaj."
+msgstr "Prikupljanje ATA SMART podataka će probuditi uređaj."
 
 #: ../src/palimpsest/gdu-shell.c:2060
 msgid "Permission denied."
-msgstr "Nema ovlašćenja."
+msgstr "Nemate ovlašćenja."
 
 #: ../src/palimpsest/gdu-shell.c:2063
 msgid "Unknown error"
@@ -4385,7 +4387,7 @@ msgid ""
 "The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
-"Veličina u procentima koju ovaj element traba da zauzme, ili 0 kako bi uvek "
+"Veličina u procentima koju ovaj element treba da zauzme, ili 0 kako bi uvek "
 "zauzeo najmanju veličinu"
 
 #: ../src/playground/grid/gdu-grid-element.c:921

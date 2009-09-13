@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-13 07:54+0300\n"
-"PO-Revision-Date: 2009-09-04 18:26+0300\n"
+"POT-Creation-Date: 2009-09-13 10:44+0300\n"
+"PO-Revision-Date: 2009-09-13 10:43+0300\n"
 "Last-Translator: Ivaylo Valkov <ivaylo@e-valkov.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -724,16 +724,15 @@ msgstr "Поправяне на RAID масив"
 
 #: ../src/gdu/gdu-util.c:361
 msgid "Running Short SMART Self-Test"
-msgstr "Стартиране на съкратена процедура за самодиагностика (SMART)"
+msgstr "Стартиране на съкратената самодиагностика (S.M.A.R.T.)"
 
 #: ../src/gdu/gdu-util.c:363
 msgid "Running Extended SMART Self-Test"
-msgstr "Стартиране на разширена процедура за самодиагностика (SMART)"
+msgstr "Стартиране на разширената самодиагностика (S.M.A.R.T.)"
 
 #: ../src/gdu/gdu-util.c:365
-#, fuzzy
 msgid "Running Conveyance SMART Self-Test"
-msgstr "Стартиране на ?? самодиагностика (SMART)"
+msgstr "Стартиране на транспортната самодиагностика (S.M.A.R.T.)"
 
 #: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
@@ -826,11 +825,11 @@ msgstr "Празен дял"
 
 #: ../src/gdu/gdu-util.c:414
 msgid "Driver Partition"
-msgstr ""
+msgstr "Дял за Macintosh (Driver)"
 
 #: ../src/gdu/gdu-util.c:415
 msgid "Driver 4.3 Partition"
-msgstr ""
+msgstr "Дял за Macintosh (Driver 4.3)"
 
 #: ../src/gdu/gdu-util.c:416
 msgid "ProDOS file system"
@@ -1177,7 +1176,7 @@ msgstr "%s със скорост %s"
 #: ../src/gdu/gdu-util.c:841
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
-msgstr ""
+msgstr "По отсеци (RAID-0)"
 
 #: ../src/gdu/gdu-util.c:843
 msgctxt "RAID level"
@@ -1187,7 +1186,7 @@ msgstr "RAID-0"
 #: ../src/gdu/gdu-util.c:846
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
-msgstr ""
+msgstr "Огледало (RAID-1)"
 
 #: ../src/gdu/gdu-util.c:848
 msgctxt "RAID level"
@@ -1197,7 +1196,7 @@ msgstr "RAID-1"
 #: ../src/gdu/gdu-util.c:851
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
-msgstr ""
+msgstr "С диск за проверка по четност (RAID-4)"
 
 #: ../src/gdu/gdu-util.c:853
 msgctxt "RAID level"
@@ -1207,7 +1206,7 @@ msgstr "RAID-4"
 #: ../src/gdu/gdu-util.c:856
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
-msgstr ""
+msgstr "Разпределена проверка по четност (RAID-5)"
 
 #: ../src/gdu/gdu-util.c:858
 msgctxt "RAID level"
@@ -1217,7 +1216,7 @@ msgstr "RAID-5"
 #: ../src/gdu/gdu-util.c:861
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
-msgstr ""
+msgstr "Двойно разпределена проверка по четност (RAID-6)"
 
 #: ../src/gdu/gdu-util.c:863
 msgctxt "RAID level"
@@ -1227,7 +1226,7 @@ msgstr "RAID-6"
 #: ../src/gdu/gdu-util.c:866
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
-msgstr ""
+msgstr "Отсеци с огледало (RAID-10)"
 
 #: ../src/gdu/gdu-util.c:868
 msgctxt "RAID level"
@@ -1237,12 +1236,12 @@ msgstr "RAID-10"
 #: ../src/gdu/gdu-util.c:871
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
-msgstr ""
+msgstr "Слети (линейно)"
 
 #: ../src/gdu/gdu-util.c:873
 msgctxt "RAID level"
 msgid "Linear"
-msgstr ""
+msgstr "Линейно"
 
 #: ../src/gdu/gdu-util.c:887
 msgid ""
@@ -1250,30 +1249,45 @@ msgid ""
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
 "fails."
 msgstr ""
+"Набор отсеци без проверка по четност. Предоставя по-добра производителност "
+"без устойчивост към грешки. Целият RAID-0 масив излиза от строя, ако и един "
+"диск в масива дефектира."
 
 #: ../src/gdu/gdu-util.c:891
 msgid ""
 "Mirrored set without parity. Provides fault tolerance and improved "
 "performance for reading. RAID-1 arrays can sustain all but one disk failing."
 msgstr ""
+"Набор огледала без проверка по четност. Предоставя по-добра производителност "
+"при четене и устойчивост към грешки. Целият RAID-1 масив излиза от строя, "
+"ако и последният диск дефектира."
 
 #: ../src/gdu/gdu-util.c:895
 msgid ""
 "Striped set with parity on a single disk. Provides improved performance and "
 "fault tolerance. RAID-4 arrays can sustain a single disk failure."
 msgstr ""
+"Набор отсеци с проверка по четност на един диск. Предоставя по-добра "
+"производителност и устойчивост към грешки. Целият RAID-4 масив излиза от "
+"строя, ако два диска в масива дефектират."
 
 #: ../src/gdu/gdu-util.c:899
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
 msgstr ""
+"Набор отсеци с разпределена проверка по четност. Предоставя по-добра "
+"производителност и устойчивост към грешки. Целият RAID-5 масив излиза от "
+"строя, ако два диска в масива дефектират."
 
 #: ../src/gdu/gdu-util.c:903
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
 msgstr ""
+"Набор отсеци с двойно разпределена проверка по четност. Предоставя по-добра "
+"производителност и устойчивост към грешки. Целият RAID-6 масив излиза от "
+"строя, ако три диска в масива дефектират."
 
 #: ../src/gdu/gdu-util.c:907
 msgid ""
@@ -1281,11 +1295,14 @@ msgid ""
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
 "mirror loses all its drives."
 msgstr ""
+"Набор отсеци с разпределена проверка по четност. Предоставя по-добра "
+"производителност и устойчивост към грешки. Целият RAID-10 масив излиза от "
+"строя, ако всички дискове в едно огледало дефектират."
 
 #: ../src/gdu/gdu-util.c:913
 #, c-format
 msgid "Unknown RAID level %s."
-msgstr ""
+msgstr "Непознато ниво на RAID %s."
 
 #. Translators: Overall description of the GOOD status
 #: ../src/gdu/gdu-util.c:949
@@ -1722,11 +1739,11 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
-msgstr ""
+msgstr "Допуск на четене на канала"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
-msgstr ""
+msgstr "Допуск на канала при четене на данни."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1800,9 +1817,8 @@ msgstr "Броят пускания на диска"
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:244
-#, fuzzy
 msgid "Soft read error rate"
-msgstr "Честота на програмните грешки при четене"
+msgstr "Честота на непоправимите грешки при четене"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:245
 msgid "Frequency of 'program' errors while reading from the disk"
@@ -1826,13 +1842,13 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:260
 msgid "High Fly Writes"
-msgstr ""
+msgstr "Записи от ненормално разстояние"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
-"Броят на ?? когато записващата глава се намира извън нормалния си работна "
+"Брой пъти, когато записващата глава се намира извън нормалния си работна "
 "област"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -1851,7 +1867,6 @@ msgstr "Температура на въздушния поток на устр�
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:276
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:446
-#, fuzzy
 msgid "G-sense Error Rate"
 msgstr "Честота на грешките при удар"
 
@@ -1965,12 +1980,10 @@ msgstr ""
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:349
-#, fuzzy
 msgid "UDMA CRC Error Rate"
-msgstr "Честота на CRC грешките при UDMA режим"
+msgstr "Честота на грешките от CRC при режим UDMA"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:350
-#, fuzzy
 msgid "Number of CRC errors during UDMA mode"
 msgstr ""
 "Броят на непоправимите грешки чрез цикличен код за корекция на грешки (CRC) "
@@ -1984,19 +1997,17 @@ msgid "Write Error Rate"
 msgstr "Честота на грешките при запис"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:358
-#, fuzzy
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
 "Броят на грешките при запис на диска (или) броят на грешките в няколко "
-"области (или) височина на полета"
+"области (или) височина на главата"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:365
-#, fuzzy
 msgid "Soft Read Error Rate"
 msgstr "Честота на програмните грешки при четене"
 
@@ -2008,7 +2019,6 @@ msgstr "Броят на грешките възникнали при излиз�
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:373
-#, fuzzy
 msgid "Data Address Mark Errors"
 msgstr "Грешки при отбелязване на адреса на данните"
 
@@ -2089,12 +2099,10 @@ msgstr "Броят на опитите за развъртане на устро
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:429
-#, fuzzy
 msgid "Offline Seek Performance"
 msgstr "Производителност на търсене в автономен режим"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:430
-#, fuzzy
 msgid "Drive's seek performance during offline operations"
 msgstr "Производителност на тресене при работа в автономен режим"
 
@@ -2106,7 +2114,6 @@ msgid "Disk Shift"
 msgstr "Приплъзване на диска"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:438
-#, fuzzy
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -2182,12 +2189,11 @@ msgstr "Коефициент на усилване на въртящия мом�
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:496
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "Количествени усилия към въртящия момент на устройството"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
-#, fuzzy
 msgid "Number of power-off retract events"
-msgstr "Броят на прибиранията на главите"
+msgstr "Броят на прибиранията на главите при изключване"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2209,13 +2215,15 @@ msgstr "Температура на устройството"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:527
 msgid "Endurance Remaining"
-msgstr ""
+msgstr "Остатъчна устойчивост"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:528
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
 msgstr ""
+"Процентното съотношение на извършените цикли на изтриване от устройството "
+"към максималния брой поддържани от него."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2233,20 +2241,22 @@ msgstr "Броят на непоправимите грешките чрез к�
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:552
 msgid "Good Block Rate"
-msgstr ""
+msgstr "Съотношение на добрите блокове"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
 msgstr ""
+"Процентното съотношение на наличните резервирани блокове към общия брой "
+"такива"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:561
 msgid "Head Flying Hours"
-msgstr ""
+msgstr "Часове работа на главата"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
 msgid "Time while head is positioning"
@@ -2257,7 +2267,7 @@ msgstr "Време, за което главата се позиционира"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:569
 msgid "Read Error Retry Rate"
-msgstr ""
+msgstr "Повторни четения при грешки"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:570
 msgid "Number of errors while reading from a disk"
@@ -2273,18 +2283,16 @@ msgstr "Няма описание за атрибута „%d“"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:896
-#, fuzzy
 msgid "Normalized:"
-msgstr "Нормиран:"
+msgstr "Нормализирано:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:898
 msgid "Worst:"
-msgstr ""
+msgstr "Най-лошо:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:900
-#, fuzzy
 msgid "Threshold:"
 msgstr "Праг:"
 
@@ -2309,12 +2317,12 @@ msgstr "Не е налична"
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
 msgid "Failing"
-msgstr ""
+msgstr "Разваля се"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1049
 msgid "Failed in the past"
-msgstr ""
+msgstr "Развалял се е в миналото"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1053
@@ -2330,7 +2338,7 @@ msgstr "В добро състояние"
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1234
 msgid "Select what SMART self test to run"
-msgstr "Изберете самодиагностиката (SMART), която да се изпълни."
+msgstr "Изберете самодиагностиката по SMART, която да се изпълни."
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1245
@@ -2355,35 +2363,33 @@ msgstr "_Разширена (обикновено продължава над д
 #. Translators: Radio button for conveyance test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr ""
+msgstr "_Транспортна (обикновено продължава под десет минути)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
-#, fuzzy
 msgid "_Initiate Self Test"
 msgstr "_Стартиране на самодиагностика"
 
 #. Translators: Used in the drive combo-box to indicate the health status is unknown
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
 msgid "Health status is unknown"
-msgstr ""
+msgstr "Състоянието е неизвестно"
 
 #. Translators: Used in the drive combo-box to indicate SMART is not enabled
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1348
 msgid "SMART is not enabled"
-msgstr ""
+msgstr "Технологията S.M.A.R.T. не е включена"
 
 #. Translators: Used in the drive combo-box to indicate SMART is not available
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
 #: ../src/palimpsest/gdu-shell.c:310
 msgid "SMART is not available"
-msgstr ""
+msgstr "Технологията S.M.A.R.T. липсва"
 
 #. Translators: Title of the SMART dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1505
-#, fuzzy
 msgid "SMART Data"
-msgstr "Данни от самодиагностика (SMART)"
+msgstr "Данни от S.M.A.R.T."
 
 #. Translators: Label used before the drive combo box
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1536
@@ -2403,6 +2409,8 @@ msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
 msgstr ""
+"Време на последно прочитане на данните от самодиагностиката на S.M.A.R.T. Те "
+"се обновяват на всеки 30 минути, освен ако дискът не е приспан"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
@@ -2418,6 +2426,8 @@ msgstr "Обновяване…"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
 msgid "Reads SMART data from the disk, waking it up if necessary"
 msgstr ""
+"Прочитане на данните на S.M.A.R.T. от диска. При необходимост дискът ще бъде "
+"събуден"
 
 #. Translators: Text used in the hyperlink in the status table to update the SMART status
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1642
@@ -2429,7 +2439,7 @@ msgstr "Обновяване в момента"
 #. Translators: Tooltip for the Self-tests item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1668
 msgid "The result of the last self-test that ran on the disk"
-msgstr ""
+msgstr "Резултатът от последната самодиагностика пусната на диска"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1674
@@ -2557,11 +2567,13 @@ msgstr "Пълна оценка:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr ""
+"Ако искате да бъдете известявани, когато дискът започне да се разваля, не "
+"избирайте тази възможност."
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
 msgid "Don't _warn me if the disk is failing"
-msgstr ""
+msgstr "_Без предупреждения за развалящ се диск"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
@@ -2665,7 +2677,6 @@ msgstr "Всеки път когато сe събират данни (Online)"
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2252
-#, fuzzy
 msgid "Only during off-line activities (Not Online)"
 msgstr "Само при дейности в автономен режим (Not Online)"
 
@@ -2800,24 +2811,24 @@ msgstr "Извършва се разширена самодиагностика:
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2757
 msgid "Conveyance self-test in progress: "
-msgstr ""
+msgstr "Извършва се транспортна самодиагностика: "
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
 #: ../src/playground/grid/gdu-grid-view.c:325
 msgid "Pool"
-msgstr ""
+msgstr "Запас"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
 msgid "The pool of devices"
-msgstr ""
+msgstr "Запас от устройства"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
 msgid "RAID Level"
-msgstr ""
+msgstr "Ниво на RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:231
 msgid "The selected RAID level"
-msgstr ""
+msgstr "Избраното ниво на RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
 msgid "Name"
@@ -2846,11 +2857,11 @@ msgstr "Размерът на всеки елемент"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
 msgid "Stripe Size"
-msgstr ""
+msgstr "Размер на отсек"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
 msgid "The requested stripe size of the array"
-msgstr ""
+msgstr "Заявеният размер на отсек в масива"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
 msgid "Drives"
@@ -2892,7 +2903,7 @@ msgstr "Ще бъде създаден дял"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:771
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
-msgstr ""
+msgstr "Дискът не е инициализиран. %s са свободни за употреба"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -2942,7 +2953,7 @@ msgstr "Общ"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:934
 msgid "RAID _Level:"
-msgstr ""
+msgstr "_Ниво на RAID:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
 msgid "Array _Name:"
@@ -2958,43 +2969,43 @@ msgstr "Нов RAID масив"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
 msgid "Stripe S_ize:"
-msgstr ""
+msgstr "_Размер на отсека:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
 msgid "4 KiB"
-msgstr "4 KiB"
+msgstr "4 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1009
 msgid "8 KiB"
-msgstr "8 KiB"
+msgstr "8 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1011
 msgid "16 KiB"
-msgstr "16 KiB"
+msgstr "16 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1013
 msgid "32 KiB"
-msgstr "32 KiB"
+msgstr "32 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1015
 msgid "64 KiB"
-msgstr "64 KiB"
+msgstr "64 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1017
 msgid "128 KiB"
-msgstr "128 KiB"
+msgstr "128 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1019
 msgid "256 KiB"
-msgstr "256 KiB"
+msgstr "256 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1021
 msgid "512 KiB"
-msgstr "512 KiB"
+msgstr "512 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1023
 msgid "1 MiB"
-msgstr "1 MiB"
+msgstr "1 MiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
 msgid "Array _Size:"
@@ -3089,10 +3100,9 @@ msgid "Process Viewer (top)"
 msgstr "Преглед на процеси (top)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:204
-#, fuzzy
 msgctxt "application name"
 msgid "Terminal Pager (less)"
-msgstr "Странициране на терминали (less)"
+msgstr "Програма за странициране (less)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:216
 msgctxt "application name"
@@ -3102,12 +3112,12 @@ msgstr "Неизвестна"
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
+msgstr "ид. потр.: %d  ид. проц.: %d  програма: %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:232
 #, c-format
 msgid "pid: %d  program: %s"
-msgstr ""
+msgstr "ид. проц.: %d  програма: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
 #: ../src/gdu-gtk/gdu-gtk.c:331 ../src/gdu-gtk/gdu-gtk.c:915
@@ -3243,7 +3253,6 @@ msgstr "Разширен дял"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:221
 #: ../src/palimpsest/gdu-shell.c:251
-#, fuzzy
 msgid "Master Boot Record"
 msgstr "Главен запис за начално зареждане (MBR)"
 
@@ -3322,12 +3331,12 @@ msgstr ""
 
 #: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
-msgstr ""
+msgstr "Поне един диск се разваля"
 
 #. Translators: This is used as the title of the notification
 #: ../src/notification/notification-main.c:535
 msgid "A hard disk may be failing"
-msgstr ""
+msgstr "Възможно е в момента да се разваля твърд диск"
 
 #. Translators: This is used as the text of the notification
 #: ../src/notification/notification-main.c:537
@@ -3335,6 +3344,8 @@ msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
 msgstr ""
+"От поне един диск бе поручен доклад, че се разваля. За повече информация "
+"натиснете иконата."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
@@ -3475,6 +3486,9 @@ msgid ""
 "erased and the RAID Array might be degraded. Make sure important data is "
 "backed up. This action cannot be undone."
 msgstr ""
+"Данните върху „%s“ — член на RAID масива „%s“, ще бъдат необратимо изтрити, "
+"а масивът може да премине във влошен режим. Уверете се, че сте направили "
+"резервно копие на важните данни — това действие е необратимо."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:411
 msgid "_Remove Component"
@@ -3483,12 +3497,12 @@ msgstr "_Премахване на елемент"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:695
 msgctxt "RAID component type"
 msgid "Striped (RAID-0)"
-msgstr ""
+msgstr "Разпределяне по отсеци (RAID-0)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:697
 msgctxt "RAID component type"
 msgid "Mirrored (RAID-1)"
-msgstr ""
+msgstr "Огледало (RAID-1)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:699
 msgctxt "RAID component type"
@@ -3508,7 +3522,7 @@ msgstr "RAID-6"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:705
 msgctxt "RAID component type"
 msgid "Linear (Just a Bunch Of Disks)"
-msgstr ""
+msgstr "Линеен (обикновен набор от дискове)"
 
 #. Translators: %d is the number of components in the RAID
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:713
@@ -3541,7 +3555,7 @@ msgstr "Не работи"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:740
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr ""
+msgstr "Не работи. Може да се включи само във влошен режим."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:742
 msgctxt "RAID status"
@@ -3551,7 +3565,7 @@ msgstr "Не работи. Няма достатъчен брой компоне
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:761
 msgctxt "RAID status"
 msgid "Degraded"
-msgstr ""
+msgstr "Влошен"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:765
 msgctxt "RAID status"
@@ -3561,12 +3575,12 @@ msgstr "Работи"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:770
 msgctxt "RAID status"
 msgid "Reshaping"
-msgstr ""
+msgstr "Преправяне"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
 msgid "Resyncing"
-msgstr ""
+msgstr "Повторно синхронизиране"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:776
 msgctxt "RAID status"
@@ -3596,7 +3610,7 @@ msgstr " @ %3.01f%% (%s)"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:856
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr ""
+msgstr "Дефектирал"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:861
 msgctxt "Linux MD slave state"
@@ -3606,12 +3620,12 @@ msgstr "Синхронизиране"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "Предимно писане"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
 msgid "Blocked"
-msgstr ""
+msgstr "Блокиран"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:867
 msgctxt "Linux MD slave state"
@@ -3632,7 +3646,7 @@ msgstr "Размер на масива:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
-msgstr ""
+msgstr "Вид RAID:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1022
 msgid "Components:"
@@ -3651,19 +3665,21 @@ msgid ""
 "Attaches the stale component to the RAID array. After attachment, data from "
 "the array will be synchronized on the component."
 msgstr ""
+"Добавяне на разсинхронизиран елемент към RAID масив. След добавянето масивът "
+"ще синхронизира данните върху елемента."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "_Detach"
-msgstr "_Освобождаване"
+msgstr "_Откачане"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
 msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
-"Освобождаване на работещият елемент от RAID масива. Данните на елемента ще "
-"бъдат изтрити и елемента ще бъде готов за друга употреба."
+"Откачане на работещият елемент от RAID масива. Данните на елемента ще бъдат "
+"изтрити и елемента ще бъде готов за друга употреба."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
@@ -3674,6 +3690,8 @@ msgid ""
 "Adds a new component to the running RAID array. Use this when replacing a "
 "failed component or adding a hot spare."
 msgstr ""
+"Добавяне на нов компонент към RAID масива. Ползвайте тази възможност, когато "
+"заменяте дефектирал компонент или добавяте нов без прекъсване на работата."
 
 #. Translators: this is a verb, as in 'check for consistency'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
@@ -3682,7 +3700,7 @@ msgstr "_Проверка"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
 msgid "Starts checking the RAID array for redundancy"
-msgstr ""
+msgstr "Започване на проверка за резервиранията на RAID масива"
 
 #. Translators: this is a verb, as in 'repair this RAID array'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1106
@@ -3855,12 +3873,12 @@ msgstr "_Етикет за дяла:"
 #. used by mbr, apm
 #: ../src/palimpsest/gdu-section-partition.c:587
 msgid "_Bootable"
-msgstr ""
+msgstr "_С възможност за стартиране"
 
 #. used by gpt
 #: ../src/palimpsest/gdu-section-partition.c:595
 msgid "Required / Firm_ware"
-msgstr ""
+msgstr "Задължитерно / _Фърмуер"
 
 #: ../src/palimpsest/gdu-section-partition.c:607
 msgid "Delete the partition"
@@ -3925,7 +3943,7 @@ msgstr "MB"
 #: ../src/palimpsest/gdu-section-unallocated.c:702
 #: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
-msgstr ""
+msgstr "_Задаване вие да сте притежателят на файловата система"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
@@ -3943,7 +3961,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
-msgstr ""
+msgstr "_Шифриране на устройството"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
@@ -3952,6 +3970,9 @@ msgid ""
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Шифрирането защитава данните ви. Ще трябва да въвеждате парола преди "
+"файловата система да може да се ползва. Шифрирането можи да понижи "
+"производителността и може да не е съвместимо с други операционни системи."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:734
 msgid "Create partition"
@@ -4051,7 +4072,7 @@ msgstr "%s (само за четене)"
 
 #: ../src/palimpsest/gdu-shell.c:325
 msgid "Not running"
-msgstr ""
+msgstr "Изключено"
 
 #: ../src/palimpsest/gdu-shell.c:341
 #, c-format
@@ -4060,7 +4081,7 @@ msgstr "%s файлова система"
 
 #: ../src/palimpsest/gdu-shell.c:352
 msgid "Encrypted LUKS Device"
-msgstr "Шифрирано устройство с LUKS"
+msgstr "Шифрирано устройство на LUKS"
 
 #: ../src/palimpsest/gdu-shell.c:359
 msgid "Data"
@@ -4068,7 +4089,7 @@ msgstr "Данни"
 
 #: ../src/palimpsest/gdu-shell.c:368
 msgid "Cleartext LUKS Device"
-msgstr ""
+msgstr "Дешифрирано устройство на LUKS"
 
 #: ../src/palimpsest/gdu-shell.c:375
 #, c-format
@@ -4085,14 +4106,12 @@ msgid "File system check on \"%s\" completed"
 msgstr "Завърши проверката на файловата система на „%s“"
 
 #: ../src/palimpsest/gdu-shell.c:947
-#, fuzzy
 msgid "File system is clean."
 msgstr "Файловата система е в добро състояние."
 
 #: ../src/palimpsest/gdu-shell.c:950
-#, fuzzy
 msgid "File system is <b>NOT</b> clean."
-msgstr "Файловата систнема <b>НЕ</b> е в добро състояние."
+msgstr "Файловата система <b>НЕ</b> е в добро състояние."
 
 #: ../src/palimpsest/gdu-shell.c:1036
 msgid "Error unmounting device"
@@ -4103,9 +4122,8 @@ msgid "Error ejecting device"
 msgstr "Грешка при изваждане на устройството"
 
 #: ../src/palimpsest/gdu-shell.c:1121
-#, fuzzy
 msgid "Error detaching device"
-msgstr "Грешка при освобождаване на устройството"
+msgstr "Грешка при откачане на устройството"
 
 #: ../src/palimpsest/gdu-shell.c:1218
 msgid "Error unlocking device"
@@ -4124,6 +4142,7 @@ msgstr "Грешка при стартиране на устройство „%s
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr ""
+"Сигурни ли сте, че искате да включите устройство „%s“ във влошен режим?"
 
 #: ../src/palimpsest/gdu-shell.c:1378
 msgid ""
@@ -4131,6 +4150,9 @@ msgid ""
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
 "lost if a drive fails."
 msgstr ""
+"Стартирането на масив RAID във влошен режим прекратява устойчивостта му към "
+"разваляне на устройство. В такива случаи данните върху него може да бъдат "
+"необратимо изгубени."
 
 #: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
@@ -4232,11 +4254,11 @@ msgstr "Изваждане на носителя от устройството"
 
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "Detach the device from the system, powering it off"
-msgstr ""
+msgstr "Изключване и откачане на устройството"
 
 #: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
-msgstr ""
+msgstr "Отключване на шифрираното устройство, което прави данните достъпни"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
@@ -4244,7 +4266,7 @@ msgstr "_Заключване"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
-msgstr ""
+msgstr "Заключване на шифрираното устройство, което прави данните недостъпни"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
@@ -4275,7 +4297,6 @@ msgid "Quit"
 msgstr "Спиране на програмата"
 
 #: ../src/palimpsest/gdu-shell.c:1950
-#, fuzzy
 msgid "Get Help on Palimpsest Disk Utility"
 msgstr "Показване на помощта за Инструмента за дискове (Palimpset)"
 
@@ -4362,12 +4383,13 @@ msgstr "Обекта (GduGridView), с който е свързан елемен
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
-msgstr ""
+msgstr "Показвано"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
 msgid ""
 "The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
+"Показваната стойност или NULL, ако този елемент означава липсата на носител"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"

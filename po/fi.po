@@ -120,6 +120,8 @@ msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
 msgstr ""
+"Estääksesi tiedon vioittumisen, odot kunnes tämä on valmistunut ennen kuin "
+"poistat median asemasta tai irrotat laitteen."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
@@ -364,7 +366,7 @@ msgstr "SSD-levy"
 #: ../src/gdu/gdu-drive.c:685
 #, c-format
 msgid "%s Media"
-msgstr ""
+msgstr "%s media"
 
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
@@ -373,7 +375,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-shell.c:239 ../src/palimpsest/gdu-shell.c:263
 #, c-format
 msgid "No Media Detected"
-msgstr ""
+msgstr "Mediaa ei havaittu"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-linux-md-drive.c:542
@@ -464,7 +466,7 @@ msgstr "FAT (16-bittinen versio)"
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:164
 msgid "FAT (32-bit version)"
-msgstr ""
+msgstr "FAT (32-bittinen versio)"
 
 #. Translators: NTFS is a filesystem type
 #: ../src/gdu/gdu-util.c:179
@@ -535,18 +537,18 @@ msgstr "ext3"
 #: ../src/gdu/gdu-util.c:235
 #, c-format
 msgid "Journal for Linux ext3 (version %s)"
-msgstr ""
+msgstr "Journaloitu linux ext3 (versio %s)" 
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:238
 #, c-format
 msgid "Journal for Linux ext3"
-msgstr ""
+msgstr "Journaloitu linux ext3"
 
 #. Translators: jbd is a filesystem type
 #: ../src/gdu/gdu-util.c:241
 msgid "jbd"
-msgstr ""
+msgstr "jdb"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:247
@@ -605,17 +607,17 @@ msgstr "udf"
 #: ../src/gdu/gdu-util.c:285 ../src/palimpsest/gdu-section-swapspace.c:82
 #: ../src/palimpsest/gdu-shell.c:356
 msgid "Swap Space"
-msgstr ""
+msgstr "Swap-tila"
 
 #. Translators: filesystem type for swap space
 #: ../src/gdu/gdu-util.c:288
 msgid "swap"
-msgstr ""
+msgstr "swap"
 
 #: ../src/gdu/gdu-util.c:293
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
-msgstr ""
+msgstr "LVM2 fyysinen taltio (versio %s)"
 
 #: ../src/gdu/gdu-util.c:295
 #, c-format
@@ -741,11 +743,11 @@ msgstr "Irrotetaan laitetta"
 
 #: ../src/gdu/gdu-util.c:371
 msgid "Forcibly Unmounting Filesystem"
-msgstr ""
+msgstr "Irrotetaan tiedostojärjestelmä väkisin"
 
 #: ../src/gdu/gdu-util.c:373
 msgid "Forcibly Locking LUKS device"
-msgstr ""
+msgstr "Lukitaan LUKS-laite väkisin"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #: ../src/gdu/gdu-util.c:388
@@ -1014,28 +1016,36 @@ msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
 msgstr ""
+"Suosittu muoto, joka on yhteensopiva lähes kaikkien laitteiden kanssa. Tätä "
+"käytetään tyypillisesti tiedostonsiirtoon."
 
 #: ../src/gdu/gdu-util.c:501
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
 msgstr ""
+"Tämä tiedostojärjestelmä on yhteensopiva vain linuxin knssa, tarjoaa tuen "
+"perinteisille UNIX-oikeuksille. Tämä tiedostojärjestelmä ei ole journaloitu."
 
 #: ../src/gdu/gdu-util.c:507
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
 msgstr ""
+"Tämä tiedostojärjestelmä on yhteensopiva vain linuxin knssa, tarjoaa tuen "
+"perinteisille UNIX-oikeuksille."
 
 #: ../src/gdu/gdu-util.c:511
 msgid "Swap area used by the operating system for virtual memory."
-msgstr ""
+msgstr "Tietokoneen virtuaalimuistille käytetty swap-alue."
 
 #: ../src/gdu/gdu-util.c:514
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
 msgstr ""
+"Windowsin oma tiedostojärjestelmä. Tämä ei ole yleisesti tuettu muissa "
+"käyttöjärjestelmissä kuin windowsissa."
 
 #: ../src/gdu/gdu-util.c:518
 msgid "No file system will be created."
@@ -1043,7 +1053,7 @@ msgstr "Tiedostojärjestelmää ei luoda."
 
 #: ../src/gdu/gdu-util.c:521
 msgid "Create an Extended Partition for logical partitions."
-msgstr ""
+msgstr "Luo laajennettu osio loogisille osioille."
 
 #: ../src/gdu/gdu-util.c:534
 msgid ""
@@ -1069,11 +1079,13 @@ msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
+"Merkitsee koko levyn käyttämättömäksi. Käytä tätä vain, jos et halua osioida "
+"levyä, esimerkiksi alustettaessa levykkeitä tai Zip-levyjä."
 
 #: ../src/gdu/gdu-util.c:731 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
-msgstr ""
+msgstr "LUKS-tunnuslause UUID:lle %s"
 
 #: ../src/gdu/gdu-util.c:760
 #, c-format
@@ -1678,7 +1690,7 @@ msgstr "Levyn käynnistysten ja sammutusten lukumäärä"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:178
 msgid "Reallocated Sector Count"
-msgstr ""
+msgstr "Uudelleenvarattujen sektoreiden laskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
 msgid ""
@@ -1703,22 +1715,22 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:196
 msgid "Seek Error Rate"
-msgstr ""
+msgstr "Seek-virheiden laskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:197
 msgid "Frequency of errors while positioning"
-msgstr ""
+msgstr "Lukupään siirrossa tapahtuneiden virheiden laskuri"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:204
 msgid "Seek Timer Performance"
-msgstr ""
+msgstr "Lukupääsiirtojen suorituskyky"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operatings while positioning"
-msgstr ""
+msgstr "Keskimääräinen toimintojen tehokkuus lukupäitä siirrettäessä"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1738,29 +1750,29 @@ msgstr "Kuinka monta tuntia levy on ollut virrat päällä"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:220
 msgid "Spinup Retry Count"
-msgstr ""
+msgstr "Käynnistyksen uudelleenyrityslaskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:221
 msgid "Number of retry attempts to spin up"
-msgstr ""
+msgstr "Kuinka monta kertaa levyä yritettiin käynnistää uudestaan"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:228
 msgid "Calibration Retry Count"
-msgstr ""
+msgstr "Kalibrointiyritysten laskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
-msgstr ""
+msgstr "Kuinka monta kertaa levyä on yritetty kalibroida"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:236
 msgid "Power Cycle Count"
-msgstr "Virrankatkaisulaskuri"
+msgstr "Virrankytkentöjen lukumäärä"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:237
 msgid "Number of power-on events"
@@ -1771,18 +1783,18 @@ msgstr "Kuinka monta kertaa virrat on kytketty"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
-msgstr ""
+msgstr "Ohjelmallisten lukuvirheiden tiheys"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:245
 msgid "Frequency of 'program' errors while reading from the disk"
-msgstr ""
+msgstr "Kuinka usein tapahtui ohjelmallisia virheitä luettaessa levyltä"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:252
 msgid "Reported Uncorrectable Errors"
-msgstr ""
+msgstr "Raportoidut korjaamattomat virheet"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
 msgid "Number of errors that could not be recovered using hardware ECC"
@@ -1857,7 +1869,7 @@ msgstr "Lämpötila"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:301
 msgid "Current internal temperature of the drive"
-msgstr ""
+msgstr "Levyn tämänhetkinen sisäinen lämpötila"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1875,7 +1887,7 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
 msgid "Reallocation Count"
-msgstr ""
+msgstr "Uudelleenallokointien laskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:317
 msgid ""
@@ -1922,7 +1934,7 @@ msgstr "UDMA CRC-virhelaskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:350
 msgid "Number of CRC errors during UDMA mode"
-msgstr ""
+msgstr "UDMA-tilan CRC-virheiden laskuri"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1968,18 +1980,18 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:382
 msgid "Number of ECC errors"
-msgstr ""
+msgstr "ECC-virheiden lukumäärä"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:389
 msgid "Soft ECC correction"
-msgstr ""
+msgstr "Ohjelmallisia ECC-korjausia"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:390
 msgid "Number of errors corrected by software ECC"
-msgstr ""
+msgstr "Kuinka monta virhettä on korjattu ohjelmallisella ECC:llä"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2267,16 +2279,18 @@ msgid ""
 "size of the disk. You can continue using your system while the test is "
 "running."
 msgstr ""
+"Nämä testit saattavat kestää hyvin pitkään, riippuen levyn nopeudesta ja "
+"koosta. Voit jatkaa tietokoneen käyttämistä normaalisti testien aikana."
 
 #. Translators: Radio button for short test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
 msgid "_Short (usually less than ten minutes)"
-msgstr ""
+msgstr "_Lyhyt (yleensä alle kymmenen minuuttia)"
 
 #. Translators: Radio button for extended test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1257
 msgid "_Extended (usually tens of minutes)"
-msgstr ""
+msgstr "_laajennettu (yleensä kymmeniä minuutteja)"
 
 #. Translators: Radio button for conveyance test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
@@ -2286,7 +2300,7 @@ msgstr ""
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
 msgid "_Initiate Self Test"
-msgstr ""
+msgstr "_Käynnistä levytesti"
 
 #. Translators: Used in the drive combo-box to indicate the health status is unknown
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
@@ -2296,18 +2310,18 @@ msgstr ""
 #. Translators: Used in the drive combo-box to indicate SMART is not enabled
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1348
 msgid "SMART is not enabled"
-msgstr ""
+msgstr "SMART ei ole päällä"
 
 #. Translators: Used in the drive combo-box to indicate SMART is not available
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
 #: ../src/palimpsest/gdu-shell.c:310
 msgid "SMART is not available"
-msgstr ""
+msgstr "SMART ei ole saatavilla"
 
 #. Translators: Title of the SMART dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1505
 msgid "SMART Data"
-msgstr ""
+msgstr "SMART-tiedot"
 
 #. Translators: Label used before the drive combo box
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1536
@@ -2327,6 +2341,8 @@ msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
 msgstr ""
+"Aika, jolloin SMART-tiedot luettiin viimeksi - SMART-tiedot päivitetään joka "
+"30. minuutti, jos levy ei ole virransäästötilassa"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
@@ -2341,7 +2357,7 @@ msgstr "Päivitetään..."
 #. Translators: Tooltip for the "Update Now" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
 msgid "Reads SMART data from the disk, waking it up if necessary"
-msgstr ""
+msgstr "Lukee SMART-tiedot levyltä, herättäen sen tarvittaessa"
 
 #. Translators: Text used in the hyperlink in the status table to update the SMART status
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1642
@@ -2353,27 +2369,27 @@ msgstr "Päivitä heti"
 #. Translators: Tooltip for the Self-tests item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1668
 msgid "The result of the last self-test that ran on the disk"
-msgstr ""
+msgstr "Viimeisimmän levyn SMART-testin tulos"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1674
 msgid "Self-tests:"
-msgstr ""
+msgstr "Levytestit:"
 
 #. Translators: Tooltip for the "Run self-test" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1695
 msgid "Initiates a self-test on the drive"
-msgstr ""
+msgstr "Käynnistää levyn sisäisen testin"
 
 #. Translators: Text used in the hyperlink in the status table to run a self-test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
 msgid "Run self-test"
-msgstr ""
+msgstr "Käynnistä levytesti"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1714
 msgid "Cancels the currently running test"
-msgstr ""
+msgstr "Peruu käynnissä olevan levytestin"
 
 #. Translators: Text used in the hyperlink in the status table to cancel a self-test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1716
@@ -2385,55 +2401,55 @@ msgstr "Peru"
 #. Translators: Tooltip for the "Model Name:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1742
 msgid "The name of the model of the disk"
-msgstr ""
+msgstr "Levyn yksityiskohtainen mallinimi"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1748
 msgid "Model Name:"
-msgstr ""
+msgstr "Mallinimi:"
 
 #. ------------------------------
 #. firmware
 #. Translators: Tooltip for the "Firmware Version:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1766
 msgid "The firmware version of the disk"
-msgstr ""
+msgstr "Levyn varusohjelmiston versio"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1772
 msgid "Firmware Version:"
-msgstr ""
+msgstr "Varusohjelmiston versio:"
 
 #. ------------------------------
 #. serial
 #. Translators: Tooltip for the "Serial:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1790
 msgid "The serial number of the disk"
-msgstr ""
+msgstr "Levyn sarjanumero"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1796
 msgid "Serial Number:"
-msgstr ""
+msgstr "Sarjanumero:"
 
 #. ------------------------------
 #. power on hours
 #. Translators: Tooltip for the "Powered On:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1814
 msgid "The amount of elapsed time the disk has been in a powered-up state"
-msgstr ""
+msgstr "Kuinka pitkään kaikkian levy on ollut päällä"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1820
 msgid "Powered On:"
-msgstr "Käynnistetty:"
+msgstr "Käynnistettynä:"
 
 #. ------------------------------
 #. temperature
 #. Translators: Tooltip for the "Temperature:" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1838
 msgid "The temperature of the disk"
-msgstr ""
+msgstr "Levyn lämpötila"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1844
@@ -2445,12 +2461,12 @@ msgstr "Lämpötila:"
 #. Translators: Tooltip for the "Bad Sectors" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1862
 msgid "The sum of pending and reallocated bad sectors"
-msgstr ""
+msgstr "Levyn odottavavien ja siirrettyjen virheellisten sektoreiden lukumäärä"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1868
 msgid "Bad Sectors:"
-msgstr ""
+msgstr "Virheelliset sektorit:"
 
 #. ------------------------------
 #. self assessment
@@ -2480,12 +2496,12 @@ msgstr ""
 #. Translators: Tooltip for the "Do not warn if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
-msgstr ""
+msgstr "Jätä valitsematta, jos haluat huomautuksen levyn alkaessa hajota"
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
 msgid "Don't _warn me if the disk is failing"
-msgstr ""
+msgstr "Älä v_aroita levyn hajoamisesta"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
@@ -2517,7 +2533,7 @@ msgstr "Arvo"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2130
 #, c-format
 msgid "%.1f years"
-msgstr ""
+msgstr "%.1f years"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
@@ -2566,7 +2582,7 @@ msgstr[1] "%d sektoria"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2170
 #, c-format
 msgid "%.0f° C / %.0f° F"
-msgstr ""
+msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
@@ -2672,37 +2688,37 @@ msgstr "Viimeisin testi peruttiin"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
 msgid "Last self-test was cancelled (with hard or soft reset)"
-msgstr ""
+msgstr "Viimeisin levytesti peruttiin (laitteisto- tai ohjelmanollauksella)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
 msgid "Last self-test not completed (a fatal error might have occured)"
-msgstr ""
+msgstr "Viimeisin levytesti ei valmistunut (saattoi tapahtua kriittinen virhe)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
 msgid "Last self-test FAILED (Electrical)"
-msgstr ""
+msgstr "Viimeisin levytesti EPÄONNISTUI (sähköinen virhe)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
 msgid "Last self-test FAILED (Servo)"
-msgstr ""
+msgstr "Viimeisin levytesti EPÄONNISTUI (servovirhe)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2616
 msgid "Last self-test FAILED (Read)"
-msgstr ""
+msgstr "Viimeisin levytesti EPÄONNISTUI (lukuvirhe)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2621
 msgid "Last self-test FAILED (Suspected of having handled damage)"
-msgstr ""
+msgstr "Viimeisin levytesti EPÄONNISTUI (luultavasti vioittunut)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2626
 msgid "Self-test is in progress"
-msgstr ""
+msgstr "Levytesti on käynnissä"
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2749
@@ -2801,7 +2817,7 @@ msgstr "Levy osioidaan ja osio luodaan"
 #. Translators: This is shown in the Details column.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
 msgid "A partition will be created"
-msgstr ""
+msgstr "Uusi osio luodaan"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -2841,7 +2857,7 @@ msgstr[1] "Levyllä on %d osiota"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:797
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
-msgstr ""
+msgstr "%s. Suurin yhtenäinen vapaa lohko on %s"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
 msgid "Create RAID Array"
@@ -2966,7 +2982,7 @@ msgstr[1] "Luo %s-pakka valitse %d levyä lisää."
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1507
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr ""
+msgstr "Luodaksesi %s %s-pakan %d levylle, valitse \"Luo\""
 
 #: ../src/gdu-gtk/gdu-gtk.c:171
 msgctxt "application name"
@@ -3039,6 +3055,8 @@ msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
 msgstr ""
+"Yksi tai useampi ohjelma käyttää osiota. Lopeta ohjelmat ja yritä irrottaa "
+"osio uudestaan."
 
 #: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1939
 msgid "_Unmount"
@@ -3070,16 +3088,17 @@ msgstr "_Avaa lukitus"
 
 #: ../src/gdu-gtk/gdu-gtk.c:613
 msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr ""
+msgstr "Syötä uusi salalause, jolla luotava uusi salattu osio suojataan"
 
 #: ../src/gdu-gtk/gdu-gtk.c:616
 msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr ""
+msgstr "Syötä sekä vanha että uusi salalause, jos haluat vaihtaa salalauseen"
 
 #: ../src/gdu-gtk/gdu-gtk.c:619
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
+"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu salalauseella"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
@@ -3091,19 +3110,21 @@ msgstr ""
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
+"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu salalauseella."
 
 #: ../src/gdu-gtk/gdu-gtk.c:638
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
 msgstr ""
+"Avaa osio luettavaksi syöttämällä laitteen salainen tunnuslause."
 
 #: ../src/gdu-gtk/gdu-gtk.c:647
 msgid "Incorrect Passphrase. Try again."
-msgstr ""
+msgstr "Virheellinen tunnuslause, yritä uudestaan:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:671
 msgid "C_urrent Passphrase:"
-msgstr ""
+msgstr "_Nykyinen tunnuslause:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:685
 msgid "_New Passphrase:"
@@ -3156,7 +3177,7 @@ msgstr "Älä osioi"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:243
 msgid "The currently selected size"
-msgstr ""
+msgstr "Nyt valittu koko"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:256
 #: ../src/playground/grid/gdu-grid-element.c:897
@@ -3201,19 +3222,19 @@ msgstr "_Alusta..."
 
 #: ../src/nautilus-extension/nautilus-gdu.c:226
 msgid "Create new filesystem on the selected device"
-msgstr ""
+msgstr "Luo uusi tiedostojärjestelmä valitulle laitteelle"
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
 msgid "It's now safe to remove \"%s\"."
-msgstr ""
+msgstr "Voit nyt turvallisesti irrottaa laitteen \"%s\"."
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:233
 #, c-format
 msgid "Writing data to \"%s\"..."
-msgstr ""
+msgstr "Kirjoitetaan tietoja laitteelle \"%s\""
 
 #: ../src/notification/gdu-slow-unmount-dialog.c:248
 msgid ""
@@ -3239,7 +3260,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
-msgstr ""
+msgstr "Näytettävä taltio"
 
 #: ../src/palimpsest/gdu-main.c:122
 msgid "Drive to show"
@@ -3251,7 +3272,7 @@ msgstr "Virhe luotaessa osiotaulua"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:85
 msgid "Are you sure you want to format the disk, deleting existing data ?"
-msgstr ""
+msgstr "Haluatko varmasti alustaa levyn ja poistaa kaiken olemassaolevan tiedon?"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:88
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
@@ -3261,6 +3282,8 @@ msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot medialla asemassa \"%s\" poistetaan pysyväst. Varmista, "
+"että tärkeät tiedot on varmuuskopioitu. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
@@ -3270,6 +3293,8 @@ msgid ""
 "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
 "data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot levyllä \"%s\" poistetaan pysyväst. Varmista, että tärkeät "
+"tiedot on varmuuskopioitu. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:181
 msgid "Create Partition Table"
@@ -3308,15 +3333,15 @@ msgstr "_Unohda tunnuslause"
 
 #: ../src/palimpsest/gdu-section-filesystem.c:135
 msgid "Error setting file system label"
-msgstr ""
+msgstr "Virhe asetettaessa tiedostojärjestelmän otsaketta"
 
 #: ../src/palimpsest/gdu-section-filesystem.c:207
 msgid "Mountable Filesystem"
-msgstr ""
+msgstr "Liitettävä tiedostojärjestelmä"
 
 #: ../src/palimpsest/gdu-section-filesystem.c:220
 msgid "The volume contains a mountable filesystem."
-msgstr ""
+msgstr "Taltio sisältää liitettävissä olevan tiedostojärjestelmän."
 
 #. Translators: 'label' means filesystem label here
 #: ../src/palimpsest/gdu-section-filesystem.c:236
@@ -3355,7 +3380,7 @@ msgstr "Virhe poistettaessa pakan osaa"
 #. confirmation dialog
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:398
 msgid "Are you sure you want to remove the component from the array ?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa tämän osan pakasta?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:400
 #, c-format
@@ -3455,7 +3480,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
 msgid "Resyncing"
-msgstr ""
+msgstr "Synkronoidaan"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:776
 msgctxt "RAID status"

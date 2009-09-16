@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-15 11:56+0300\n"
+"POT-Creation-Date: 2009-09-16 17:50+0300\n"
 "PO-Revision-Date: 2009-09-13 09:40+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -238,7 +238,7 @@ msgstr "Virhe liitettäessä laitetta"
 
 #: ../src/format-tool/gdu-format-tool.c:534
 msgid "Error storing passphrase in keyring"
-msgstr "Virhe tallennettaessa salalausetta avainnippuun"
+msgstr "Virhe tallennettaessa tunnuslausetta avainnippuun"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:455
@@ -537,7 +537,7 @@ msgstr "ext3"
 #: ../src/gdu/gdu-util.c:235
 #, c-format
 msgid "Journal for Linux ext3 (version %s)"
-msgstr "Journaloitu linux ext3 (versio %s)" 
+msgstr "Journaloitu linux ext3 (versio %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:238
@@ -695,7 +695,7 @@ msgstr "Asetetaan laitteen nimi"
 
 #: ../src/gdu/gdu-util.c:347
 msgid "Changing Passphrase for Encrypted LUKS Device"
-msgstr "Muutetaan LUKS-salatun laitteen salalausetta"
+msgstr "Muutetaan LUKS-salatun laitteen tunnuslausetta"
 
 #: ../src/gdu/gdu-util.c:349
 msgid "Adding Component to RAID Array"
@@ -1061,18 +1061,24 @@ msgid ""
 "but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
+"MBR-malli on yhteensopiva lähes kaikkien laitteiden kanssa, mutta siinä on "
+"useita rajoituksia levyn koon ja osioiden lukumäärän suhteen."
 
 #: ../src/gdu/gdu-util.c:539
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
+"Perinteinen malli, joka on epäyhteensopiva melkein kaikkien muiden paitsi "
+"Apple- ja linux-tietokoneiden kanssa. Ei suositeltava siirrettäville medioille."
 
 #: ../src/gdu/gdu-util.c:544
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
+"GUID-malli on yhteensopiva useimpien uusien järjestelmien kanssa, mutta "
+"ei välttämättä toimi kaikkialla eikä vanhoissa tietokoneissa."
 
 #: ../src/gdu/gdu-util.c:548
 msgid ""
@@ -1283,7 +1289,7 @@ msgstr "Levy on kunnossa"
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
 #: ../src/gdu/gdu-util.c:953
 msgid "Disk was used outside of design parameters in the past"
-msgstr ""
+msgstr "Levyä on käytetty aiemmin suunniteltujen arvojen ulkopuolella"
 
 #. Translators: Overall description of the BAD_SECTOR status
 #: ../src/gdu/gdu-util.c:957
@@ -1661,7 +1667,7 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
-msgstr ""
+msgstr "Levyn keskimääräinen tehokkuus"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1798,19 +1804,20 @@ msgstr "Raportoidut korjaamattomat virheet"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
 msgid "Number of errors that could not be recovered using hardware ECC"
-msgstr ""
+msgstr "Laskuri virheille, joita ei voitu korjata laitteistotason ECC-korjauksella"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:260
 msgid "High Fly Writes"
-msgstr ""
+msgstr "Korkealta kirjoitusten laskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
+"Kuinka monta kertaa lukupää on liikkunut normaalin toiminta-alueen ulkopuolella"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2020,11 +2027,11 @@ msgstr "Lukupäiden korkeus levyn pinnasta"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:413
 msgid "Spin High Current"
-msgstr ""
+msgstr "Käynnistyksen piikkivirta"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:414
 msgid "Amount of high current used to spin up the drive"
-msgstr ""
+msgstr "Suurin virta, jota käytetään levyn käynnistykseen"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2188,11 +2195,11 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:561
 msgid "Head Flying Hours"
-msgstr ""
+msgstr "Lukupään siirtoaikalaskuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
 msgid "Time while head is positioning"
-msgstr ""
+msgstr "Kuinka pitkään lukupäätä on siirretty"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2203,7 +2210,7 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:570
 msgid "Number of errors while reading from a disk"
-msgstr ""
+msgstr "Lukuvirheiden määrä luettaessa levyltä"
 
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
@@ -3064,15 +3071,15 @@ msgstr "_Irrota"
 
 #: ../src/gdu-gtk/gdu-gtk.c:495
 msgid "Passphrases do not match"
-msgstr "Salalauseet eivät täsmää"
+msgstr "Tunnuslauseet eivät täsmää"
 
 #: ../src/gdu-gtk/gdu-gtk.c:502
 msgid "Passphrases do not differ"
-msgstr "Salalauseet eivät eroa"
+msgstr "Tunnuslauseet eivät eroa"
 
 #: ../src/gdu-gtk/gdu-gtk.c:508
 msgid "Passphrase can't be empty"
-msgstr "Salalauseet eivät voi olla tyhjiä"
+msgstr "Tunnuslauseet eivät voi olla tyhjiä"
 
 #: ../src/gdu-gtk/gdu-gtk.c:580
 msgid "Cr_eate"
@@ -3080,7 +3087,7 @@ msgstr "_Luo"
 
 #: ../src/gdu-gtk/gdu-gtk.c:582
 msgid "Change _Passphrase"
-msgstr "Vaihda _salalausetta"
+msgstr "Vaihda _tunnuslausetta"
 
 #: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1942
 msgid "_Unlock"
@@ -3088,35 +3095,38 @@ msgstr "_Avaa lukitus"
 
 #: ../src/gdu-gtk/gdu-gtk.c:613
 msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr "Syötä uusi salalause, jolla luotava uusi salattu osio suojataan"
+msgstr "Syötä uusi tunnuslause, jolla luotava uusi salattu osio suojataan"
 
 #: ../src/gdu-gtk/gdu-gtk.c:616
 msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr "Syötä sekä vanha että uusi salalause, jos haluat vaihtaa salalauseen"
+msgstr "Syötä sekä vanha että uusi tunnuslause, jos haluat vaihtaa tunnuslauseen"
 
 #: ../src/gdu-gtk/gdu-gtk.c:619
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
-"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu salalauseella"
+"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu "
+"tunnuslauseella"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr ""
+"Tiedot tällä laittella tallennetaan salatussa muodossa ja suojataan "
+"tunnuslauseella."
 
 #: ../src/gdu-gtk/gdu-gtk.c:635
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
-"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu salalauseella."
+"Laitteen tiedot on tallennettu salatussa muodossa, joka on suojattu "
+"tunnuslauseella."
 
 #: ../src/gdu-gtk/gdu-gtk.c:638
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
-msgstr ""
-"Avaa osio luettavaksi syöttämällä laitteen salainen tunnuslause."
+msgstr "Avaa osio luettavaksi syöttämällä laitteen salainen tunnuslause."
 
 #: ../src/gdu-gtk/gdu-gtk.c:647
 msgid "Incorrect Passphrase. Try again."
@@ -3128,23 +3138,23 @@ msgstr "_Nykyinen tunnuslause:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:685
 msgid "_New Passphrase:"
-msgstr "_Uusi salalause:"
+msgstr "_Uusi tunnuslause:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_Verify Passphrase:"
-msgstr "_Vahvista salalause:"
+msgstr "_Vahvista tunnuslause:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:740
 msgid "_Passphrase:"
-msgstr "_Salalause:"
+msgstr "_Tunnuslause:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:755
 msgid "_Forget passphrase immediately"
-msgstr "_Unohda salalause heti"
+msgstr "_Unohda tunnuslause heti"
 
 #: ../src/gdu-gtk/gdu-gtk.c:758
 msgid "Remember passphrase until you _log out"
-msgstr ""
+msgstr "Muista tunnuslause _uloskirjautumiseen asti"
 
 #: ../src/gdu-gtk/gdu-gtk.c:761
 msgid "_Remember forever"
@@ -3152,7 +3162,7 @@ msgstr "_Muista aina"
 
 #: ../src/gdu-gtk/gdu-gtk.c:822
 msgid "Enter Passphrase"
-msgstr "Syötä salalause"
+msgstr "Syötä tunnuslause"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1241
 msgid "Empty (don't create a file system)"
@@ -3241,15 +3251,17 @@ msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
 msgstr ""
+"Estääksesi tiedon hukkumisen, odota kunnes toiminto on päättynyt ennen kuin "
+"poistat median tai irroitat laitteen."
 
 #: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
-msgstr ""
+msgstr "Yksi tai useampi levy on hajoamassa"
 
 #. Translators: This is used as the title of the notification
 #: ../src/notification/notification-main.c:535
 msgid "A hard disk may be failing"
-msgstr ""
+msgstr "Kiintolevy saattaa olla hajoamassa"
 
 #. Translators: This is used as the text of the notification
 #: ../src/notification/notification-main.c:537
@@ -3257,6 +3269,8 @@ msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
 msgstr ""
+"Yksi tai useampi kiintolevy ilmoitti ongelmista. Saat lisätietoja "
+"napsauttamalla kuvaketta."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
@@ -3272,7 +3286,8 @@ msgstr "Virhe luotaessa osiotaulua"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:85
 msgid "Are you sure you want to format the disk, deleting existing data ?"
-msgstr "Haluatko varmasti alustaa levyn ja poistaa kaiken olemassaolevan tiedon?"
+msgstr ""
+"Haluatko varmasti alustaa levyn ja poistaa kaiken olemassaolevan tiedon?"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:88
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
@@ -3282,8 +3297,8 @@ msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
-"Kaikki tiedot medialla asemassa \"%s\" poistetaan pysyväst. Varmista, "
-"että tärkeät tiedot on varmuuskopioitu. Tätä toimintoa ei voi perua."
+"Kaikki tiedot medialla asemassa \"%s\" poistetaan pysyväst. Varmista, että "
+"tärkeät tiedot on varmuuskopioitu. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
@@ -3305,6 +3320,8 @@ msgid ""
 "To create a new partition table, select the partition table type and then "
 "press \"Create\". All existing data will be lost."
 msgstr ""
+"Jos haluat luoda uuden osiotaulun, valitse osiotaulun tyyppi ja paina "
+"nappia \"Luo\". Kaikki aiempi tieto hukataan pysyvästi."
 
 #. Translators: 'Type' means partition type here
 #: ../src/palimpsest/gdu-section-create-partition-table.c:210
@@ -3322,6 +3339,8 @@ msgid ""
 "The volume contains encrypted data that can be unlocked with a passphrase. "
 "The passphrase can optionally be stored in the keyring."
 msgstr ""
+"Tämä osio sisältää salattua tietoa, jonka voi avata antamalla tunnuslauseen."
+"Tunnuslauseen voi myös tallentaa avainnippuun."
 
 #: ../src/palimpsest/gdu-section-encrypted.c:266
 msgid "Change Pa_ssphrase..."
@@ -3368,6 +3387,8 @@ msgid ""
 "Only volumes of acceptable sizes can be selected. You may need to manually "
 "create new volumes of acceptable sizes."
 msgstr ""
+"Voit valita vain sopivankokoisia taltioita. Saattaa olla että joudut "
+"luomaan uusia sopivankokoisia osioita."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
@@ -3576,6 +3597,8 @@ msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
+"Vapauttaa käytössä olevan osan RAID-pakasta. Tiedot tästä osasta "
+"pyyhitään ja sitä voi käyttää muuhun tarkoitukseen."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
@@ -3586,6 +3609,8 @@ msgid ""
 "Adds a new component to the running RAID array. Use this when replacing a "
 "failed component or adding a hot spare."
 msgstr ""
+"Lisää uuden osan käynnissä olevaan RAID-pakkaan. Käytä tätä, kun vaihdat "
+"vioittunutta osaa tai lisää kuuman varalevyn."
 
 #. Translators: this is a verb, as in 'check for consistency'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
@@ -3613,6 +3638,7 @@ msgstr "Tila"
 msgid ""
 "To format or edit media, insert it into the drive and wait a few seconds."
 msgstr ""
+"Jos haluat alustaa tai muokata mediaa, aseta se asemaan ja odota hetki."
 
 #: ../src/palimpsest/gdu-section-no-media.c:137
 msgid "_Detect Media"
@@ -3624,7 +3650,7 @@ msgstr "Virhe poistettaessa osiota"
 
 #: ../src/palimpsest/gdu-section-partition.c:112
 msgid "Are you sure you want to remove the partition, deleting existing data ?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa tämän osion, poistaen olemassaolevat tiedot?"
 
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
@@ -3634,6 +3660,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d nimeltään \"%s\" medialla \"%s\" sekä kaikki "
+"tämän laajennetun osion sisältämät osiot poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
@@ -3643,6 +3673,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d nimeltään \"%s\" medialla \"%s\" poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
@@ -3652,6 +3685,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d medialla \"%s\" sekä kaikki tämän laajennetun "
+"osion sisältämät osiot poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
@@ -3660,6 +3697,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d medialla \"%s\" poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
@@ -3669,6 +3709,10 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d nimeltään \"%s\" laitteessa \"%s\" sekä "
+"kaikki tämän laajennetun osion sisältämät osiot poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
@@ -3678,6 +3722,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d nimeltään \"%s\" laitteella \"%s\" poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
@@ -3687,6 +3734,11 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d laitteella \"%s\" sekä kaikki tämän "
+"laajennetun osion sisältämät osiot poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
+
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
@@ -3695,6 +3747,9 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d laitteessa \"%s\" poistetaan pysyvästi.\n"
+"\n"
+"Varmista, että tiedot on varmuuskopioita. Tätä toimintoa ei voi perua."
 
 #: ../src/palimpsest/gdu-section-partition.c:200
 msgid "_Delete Partition"
@@ -3713,6 +3768,8 @@ msgid ""
 "The attributes of the partition can be edited. The partition can also be "
 "deleted to make room for other data."
 msgstr ""
+"Osion määreitä voi muuttaa. Voit myös poistaa osion, jos tarvitset lisätilaa "
+"muille tiedoille."
 
 #: ../src/palimpsest/gdu-section-partition.c:558
 msgid "Part_ition Label:"
@@ -3755,12 +3812,16 @@ msgid ""
 "This is the last primary partition that can be created. If you need more "
 "partitions, you can create an Extended Partition."
 msgstr ""
+"Tämä on viimeisin ensisijainen osio joka voidaan luoda. Jos tarvitset "
+"useampia, voit tehdä tästä laajennetun osion."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
 msgid ""
 "No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
+"Enempää osioita ei voi luoda. Jos tarvitset lisää osioita, poista joku "
+"aikaisempi osio ja luo sille laajennettu osio."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
@@ -3771,6 +3832,9 @@ msgid ""
 "To create a new partition, select the size and whether to create a file "
 "system. The partition type, label and flags can be changed after creation."
 msgstr ""
+"Luodaksesi uuden osion, valitse sen koko ja luodaanko sille uusi "
+"tiedostojärjestelmä. Osiotyyppiä, otsaketta ja lippuja voi vaihtaa myös "
+"luonnin jälkeen."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
@@ -3785,7 +3849,7 @@ msgstr "Mt"
 #: ../src/palimpsest/gdu-section-unallocated.c:702
 #: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
-msgstr ""
+msgstr "_Aseta tiedostojärjestelmän oikeudet itsellesi"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
@@ -3794,12 +3858,15 @@ msgid ""
 "created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
+"Valitussa tiedostojärjestelmässä on käytössä tiedoston oikeudet. Jos valitset "
+"tämän, luotu tiedostojärjestelmä on sinun käytettävissäsi. Jos tätä ei valita, "
+"vain järjestelmän pääkäyttäjä voi muuttaa tiedostoja."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
-msgstr ""
+msgstr "_Salaa laitetasolla"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
@@ -3808,6 +3875,9 @@ msgid ""
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Salaus suojaa tietojasi ja vaatii tunnuslauseen syöttämisen ennen kuin "
+"tiedostojärjestelmää voi lukea. Tämä saattaa hidastaa käyttöä, eikä tietoja "
+"voi välttämättä lukea muista käyttöjärjestelmistä."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:734
 msgid "Create partition"
@@ -3817,6 +3887,7 @@ msgstr "Luo osio"
 msgid ""
 "Are you sure you want to create a new file system, deleting existing data ?"
 msgstr ""
+"Haluatko varmasti luoda uuden tiedostojärjestelmän ja poistaa aiemmat tiedot?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
 #: ../src/palimpsest/gdu-shell.c:1519
@@ -3825,6 +3896,9 @@ msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d medialla asemassa \"%s\" poistetaan pysyvästi. "
+"Varmista, että tärkeät tiedot on varmuuskopioitu. Tätä toimintoa ei voi "
+"perua."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1526
@@ -3833,16 +3907,21 @@ msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
+"Kaikki tiedot osiolla %d laitteessa \"%s\" poistetaan pysyvästi. "
+"Varmista, että tärkeät tiedot on varmuuskopioitu. Tätä toimintoa ei voi "
+"perua."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
-msgstr ""
+msgstr "Luo tiedostojärjestelmä"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:410
 msgid ""
 "To create a new file system on the device, select the type and label and "
 "then press \"Create\". All existing data will be lost."
 msgstr ""
+"Luodaksesi uuden tiedostojärjestelmän laitteelle, valitse tyyppi, otsake "
+"ja paina \"Luo\". Kaikki aikaisempi tieto laitteela hukataan."
 
 #: ../src/palimpsest/gdu-shell.c:203
 msgid "Unknown Size"
@@ -4077,7 +4156,8 @@ msgstr "Irrota laite järjestelmästä ja sammuta se"
 
 #: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
-msgstr "Avaa salatun laitteen lukitus, sallien selväkielisten tiedostojen lukemisen"
+msgstr ""
+"Avaa salatun laitteen lukitus, sallien selväkielisten tiedostojen lukemisen"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
@@ -4117,7 +4197,7 @@ msgstr "Lopeta"
 
 #: ../src/palimpsest/gdu-shell.c:1950
 msgid "Get Help on Palimpsest Disk Utility"
-msgstr ""
+msgstr "Etsi apua Palimpsest-levytyökalun käytössä"
 
 #: ../src/palimpsest/gdu-shell.c:1951
 msgid "_About"
@@ -4141,7 +4221,7 @@ msgstr "Toiminto peruttiin."
 
 #: ../src/palimpsest/gdu-shell.c:2048
 msgid "The daemon is being inhibited."
-msgstr ""
+msgstr "Palvelinprosessi on estetty."
 
 #: ../src/palimpsest/gdu-shell.c:2051
 msgid "An invalid option was passed."
@@ -4211,7 +4291,7 @@ msgstr ""
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"
-msgstr "Kohteen minimikoko"
+msgstr "Osan minimikoko"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
@@ -4222,6 +4302,8 @@ msgid ""
 "The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"Koko on prosenttiosuus, jonka tämä osa varaa, tai 0 jos halutaan aina "
+"varata määritelty minimimäärä."
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
@@ -4235,107 +4317,3 @@ msgstr "Kohteen liput"
 msgid "The pool of devices to show"
 msgstr ""
 
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
-
-#~ msgid "%.*f %s"
-#~ msgstr "%.*f %s"
-
-#~ msgid "JBOD"
-#~ msgstr "JBOD"
-
-#~ msgid "%s %s (%s)"
-#~ msgstr "%s %s (%s)"
-
-#~ msgid "%s Unallocated"
-#~ msgstr "%s varaamaton"
-
-#~ msgid "1 minute ago"
-#~ msgstr "1 minuutti sitten"
-
-#~ msgid "1 hour ago"
-#~ msgstr "1 tunti sitten"
-
-#~ msgid "%.3g mins"
-#~ msgstr "%.3g min"
-
-#~ msgctxt "ATA SMART status"
-#~ msgid "Unknown"
-#~ msgstr "Tuntematon"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "Completed OK"
-#~ msgstr "Valmistui onnistuen"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "Cancelled"
-#~ msgstr "Peruttu"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "FAILED"
-#~ msgstr "VIALLINEN"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Electrical)"
-#~ msgstr "(Sähköinen)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Servo)"
-#~ msgstr "(Servo)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Read)"
-#~ msgstr "(Luku)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "In progress"
-#~ msgstr "Kesken"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "Unknown"
-#~ msgstr "Tuntematon"
-
-#~ msgid "ATA SMART Attributes"
-#~ msgstr "ATA SMART-ominaisuudet"
-
-#~ msgid "View:"
-#~ msgstr "näytä:"
-
-#~ msgid "6 hours"
-#~ msgstr "6 tuntia"
-
-#~ msgid "24 hours"
-#~ msgstr "24 tuntia"
-
-#~ msgid "3 days"
-#~ msgstr "3 päivää"
-
-#~ msgid "12 days"
-#~ msgstr "12 päivää"
-
-#~ msgid "36 days"
-#~ msgstr "36 päivää"
-
-#~ msgid "96 days"
-#~ msgstr "96 päivää"
-
-#~ msgid "Type:"
-#~ msgstr "Tyyppi:"
-
-#~ msgid "Description:"
-#~ msgstr "Kuvaus:"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Last Test:"
-#~ msgstr "Viimeksi testattu:"
-
-#~ msgid "%d Components (%s each)"
-#~ msgstr "%d osaa (kukin %s)"
-
-#~ msgid "Are you sure you want to format the volume?"
-#~ msgstr "Haluatko varmasti alustaa taltion?"
-
-#~ msgid "Error creating filesystem"
-#~ msgstr "Virhe luotaessa tiedostojärjestelmää"

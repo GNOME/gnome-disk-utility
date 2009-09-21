@@ -1,16 +1,20 @@
-# Czech translation of gnome-disk-utility.
+# Czech translation of gnome-disk-utility
 # Copyright (C) 2009 the author(s) of gnome-disk-utility.
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Andre Klapper <ak-47@gmx.net>, 2009.
-# Marek Černocký <marek@manet.cz>, 2009.
 # Petr Kovar <pknbe@volny.cz>, 2009.
+# Marek Černocký <marek@manet.cz>, 2009.
+# Tomas Bzatek <tbzatek@redhat.com>, 2009.
+# Lucas Lommer <llommer@svn.gnome.org>, 2009. (just few fixes)
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility gnome-2-28\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-21 05:04+0200\n"
-"PO-Revision-Date: 2009-09-21 04:54+0200\n"
-"Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&component=general\n"
+"POT-Creation-Date: 2009-09-21 10:49+0000\n"
+"PO-Revision-Date: 2009-09-21 12:42+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +22,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Lokalize 1.0\n"
 
 #: ../data/palimpsest.desktop.in.h:1
 msgid "Disk Utility"
@@ -34,7 +37,7 @@ msgstr "Oznámení od disku"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:2
 msgid "Provides notifications related to disks"
-msgstr "Poskytuje oznámení vztahující se k diskům"
+msgstr "Oznamuje události vztahující se k diskům"
 
 #: ../src/format-tool/gdu-format-dialog.c:135
 msgid "Volume"
@@ -42,7 +45,7 @@ msgstr "Svazek"
 
 #: ../src/format-tool/gdu-format-dialog.c:136
 msgid "The volume to format"
-msgstr ""
+msgstr "Svazek, který naformátovat"
 
 #: ../src/format-tool/gdu-format-dialog.c:148
 msgid "Filesystem type"
@@ -72,15 +75,15 @@ msgstr "Zda by měl být svazek šifrovaný"
 #. Translators: Format is used as a verb here
 #: ../src/format-tool/gdu-format-dialog.c:325
 msgid "_Format"
-msgstr ""
+msgstr "_Formátovat"
 
 #: ../src/format-tool/gdu-format-dialog.c:327
 msgid "Disk _Utility"
-msgstr ""
+msgstr "Diskový _nástroj"
 
 #: ../src/format-tool/gdu-format-dialog.c:333
 msgid "Use Disk Utility to format volume"
-msgstr ""
+msgstr "Použít Diskový nástroj k naformátování svazku "
 
 #. Translators: 'type' means 'filesystem type' here.
 #: ../src/format-tool/gdu-format-dialog.c:365
@@ -95,15 +98,15 @@ msgstr "Kompatibilní se všemi systémy (FAT)"
 
 #: ../src/format-tool/gdu-format-dialog.c:373
 msgid "Compatible with Linux (ext2)"
-msgstr "Kompatibilní s Linuxem (ext2)"
+msgstr "Kompatibilní se systémy Linux (ext2)"
 
 #: ../src/format-tool/gdu-format-dialog.c:375
 msgid "Compatible with Linux (ext3)"
-msgstr "Kompatibilní s Linuxem (ext3)"
+msgstr "Kompatibilní se systémy Linux (ext3)"
 
 #: ../src/format-tool/gdu-format-dialog.c:377
 msgid "Encrypted, compatible with Linux (FAT)"
-msgstr "Šifrovaný, kompatibilní s Linuxem (FAT)"
+msgstr "Šifrovaný, kompatibilní se systémy Linux (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/format-tool/gdu-format-dialog.c:390
@@ -124,6 +127,8 @@ msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
 msgstr ""
+"Než vyjmete médium nebo odpojíte zařízení, vyčkejte, dokud se operace "
+"nedokončí, abyste předešli poškození dat."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
@@ -133,15 +138,15 @@ msgstr "Zařízení"
 #: ../src/format-tool/gdu-format-progress-dialog.c:217
 #: ../src/notification/gdu-slow-unmount-dialog.c:287
 msgid "The device to show the dialog for"
-msgstr ""
+msgstr "Zařízení, pro které se má zobrazit dialogové okno"
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "text"
-msgstr ""
+msgstr "text"
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:230
 msgid "Text to show"
-msgstr ""
+msgstr "Text, který se má zobrazit"
 
 #: ../src/format-tool/gdu-format-tool.c:111
 msgid "Error launching Disk Utility"
@@ -149,12 +154,12 @@ msgstr "Chyba při spouštění diskového nástroje"
 
 #: ../src/format-tool/gdu-format-tool.c:131
 msgid "Device to format"
-msgstr ""
+msgstr "Zařízení, které se má naformátovat"
 
 #: ../src/format-tool/gdu-format-tool.c:131 ../src/palimpsest/gdu-main.c:121
 #: ../src/palimpsest/gdu-main.c:122
 msgid "DEVICE"
-msgstr ""
+msgstr "ZAŘÍZENÍ"
 
 #: ../src/format-tool/gdu-format-tool.c:161
 #, c-format
@@ -163,7 +168,7 @@ msgstr "Operace byla zrušena"
 
 #: ../src/format-tool/gdu-format-tool.c:252
 msgid "Gnome Disk Utility formatting tool"
-msgstr ""
+msgstr "Nástroj pro formátování Diskový nástroj GNOME"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
@@ -171,7 +176,7 @@ msgstr ""
 #: ../src/format-tool/gdu-format-tool.c:299
 #, c-format
 msgid "Format partition %d of %s (%s)"
-msgstr ""
+msgstr "Formátování oddílu %d na zařízení %s (%s)"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
@@ -179,13 +184,13 @@ msgstr ""
 #: ../src/format-tool/gdu-format-tool.c:306
 #, c-format
 msgid "Formatting partition %d of %s (%s)"
-msgstr ""
+msgstr "Formátuje se oddíl %d na zařízení %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
 #: ../src/format-tool/gdu-format-tool.c:312
 #, c-format
 msgid "Format %s (%s)"
-msgstr ""
+msgstr "Formátování %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
 #: ../src/format-tool/gdu-format-tool.c:316
@@ -197,13 +202,13 @@ msgstr "Formátuje se %s (%s)"
 #: ../src/format-tool/gdu-format-tool.c:322
 #, c-format
 msgid "Format %s Volume (%s)"
-msgstr ""
+msgstr "Formátování svazku %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
 #: ../src/format-tool/gdu-format-tool.c:326
 #, c-format
 msgid "Formatting %s Volume (%s)"
-msgstr ""
+msgstr "Formátuje se svazek %s (%s)"
 
 #: ../src/format-tool/gdu-format-tool.c:379
 msgid "Preparing..."
@@ -270,7 +275,7 @@ msgstr "SD High Capacity"
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:470
 msgid "Floppy"
-msgstr "disketa"
+msgstr "typu diskety"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:473
@@ -709,11 +714,11 @@ msgstr "Odebírá se komponenta z diskového pole RAID"
 
 #: ../src/gdu/gdu-util.c:353
 msgid "Stopping RAID Array"
-msgstr "Zastavuje se diskové pole RAID"
+msgstr "Deaktivuje se diskové pole RAID"
 
 #: ../src/gdu/gdu-util.c:355
 msgid "Starting RAID Array"
-msgstr "Rozjíždí se diskové pole RAID"
+msgstr "Aktivuje se diskové pole RAID"
 
 #: ../src/gdu/gdu-util.c:357
 msgid "Checking RAID Array"
@@ -733,7 +738,7 @@ msgstr "Běží rozšířená autokontrola SMART"
 
 #: ../src/gdu/gdu-util.c:365
 msgid "Running Conveyance SMART Self-Test"
-msgstr "Běží přepravní autokontrola SMART"
+msgstr "Běží autokontrola SMART po přepravě"
 
 #: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
@@ -745,11 +750,11 @@ msgstr "Vyjímá se zařízení"
 
 #: ../src/gdu/gdu-util.c:371
 msgid "Forcibly Unmounting Filesystem"
-msgstr "Vynucené odpojování souborového systému"
+msgstr "Násilně se odpojuje souborový systém"
 
 #: ../src/gdu/gdu-util.c:373
 msgid "Forcibly Locking LUKS device"
-msgstr "Vynucené uzamykání zařízení LUKS"
+msgstr "Násilně se zamyká zařízení LUKS"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #: ../src/gdu/gdu-util.c:388
@@ -777,7 +782,7 @@ msgstr "Datový oddíl LDM"
 #. Linux
 #: ../src/gdu/gdu-util.c:396
 msgid "Basic Data Partition"
-msgstr ""
+msgstr "Základní datový oddíl"
 
 #. Same GUID as MS!
 #: ../src/gdu/gdu-util.c:397
@@ -826,11 +831,11 @@ msgstr "Prázdný oddíl"
 
 #: ../src/gdu/gdu-util.c:414
 msgid "Driver Partition"
-msgstr ""
+msgstr "Oddíl obsahující device driver"
 
 #: ../src/gdu/gdu-util.c:415
 msgid "Driver 4.3 Partition"
-msgstr ""
+msgstr "Oddíl obsahující SCSI Manager 4.3"
 
 #: ../src/gdu/gdu-util.c:416
 msgid "ProDOS file system"
@@ -939,7 +944,7 @@ msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:444
 msgid "Linux swap (0x82)"
-msgstr "Linuxový odkládací prostor (0x82)"
+msgstr "Odkládací prostor pro Linux (0x82)"
 
 #: ../src/gdu/gdu-util.c:445
 msgid "Linux (0x83)"
@@ -1019,14 +1024,14 @@ msgid ""
 "for file exchange."
 msgstr ""
 "Populární formát kompatibilní s většinou libovolných zařízení nebo systémů, "
-"typicky se používá pro vzájemnou výměnu souborů."
+"typicky používaný pro vzájemnou výměnu souborů."
 
 #: ../src/gdu/gdu-util.c:501
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
 msgstr ""
-"Souborový systém je kompatibilní pouze s Linuxovými systémy a poskytuje "
+"Souborový systém je kompatibilní pouze s linuxovými systémy a poskytuje "
 "podporu pro klasická UNIXová oprávnění souborů. Tento souborový systém "
 "nepoužívá žurnál."
 
@@ -1035,7 +1040,7 @@ msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
 msgstr ""
-"Souborový systém je kompatibilní pouze s Linuxovými systémy a poskytuje "
+"Souborový systém je kompatibilní pouze s linuxovými systémy a poskytuje "
 "podporu pro klasická UNIXová oprávnění souborů."
 
 #: ../src/gdu/gdu-util.c:511
@@ -1047,7 +1052,7 @@ msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
 msgstr ""
-"Přirozený souborový systém Windows. Není široce kompatibilní s jinými "
+"Nativní souborový systém Windows. Není zcela kompatibilní s jinými "
 "operačními systémy než Windows."
 
 #: ../src/gdu/gdu-util.c:518
@@ -1064,8 +1069,8 @@ msgid ""
 "but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
-"Osnova Master Boot Record (Hlavní zaváděcí záznam) je kompatibilní s "
-"většinou různých zařízení nebo systémů, ale má několik omezení ohledně "
+"Schéma Master Boot Record (Hlavní zaváděcí záznam) je kompatibilní s "
+"většinou různých zařízení nebo systémů, ale má jistá omezení ohledně "
 "velikosti disku a počtu oddílů."
 
 #: ../src/gdu/gdu-util.c:539
@@ -1073,8 +1078,8 @@ msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
-"Starší typ osnovy, který je nekompatibilní s většinou systémů vyjma systému "
-"od firmy Apple a většiny linuxových systémů. Není doporučeno pro vyjímatelná "
+"Starší typ schématu, který je nekompatibilní s většinou systémů vyjma "
+"systémů Apple a většiny linuxových systémů. Není doporučeno pro vyjímatelná "
 "média."
 
 #: ../src/gdu/gdu-util.c:544
@@ -1082,7 +1087,7 @@ msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
-"Osnova GUID je kompatibilní s většinou moderních systémů, ale může být "
+"Schéma GUID je kompatibilní s většinou moderních systémů, ale může být "
 "nekompatibilní s některými zařízeními nebo staršími systémy."
 
 #: ../src/gdu/gdu-util.c:548
@@ -1157,13 +1162,13 @@ msgstr "SDIO"
 #. Translators: interface name for virtual disks
 #: ../src/gdu/gdu-util.c:806
 msgid "Virtual"
-msgstr ""
+msgstr "Virtuální"
 
 #. Translators: name shown for unknown disk connection interfaces
 #: ../src/gdu/gdu-util.c:812
 msgctxt "connection name"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
@@ -1172,7 +1177,7 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:822
 #, c-format
 msgid "%s at %s"
-msgstr ""
+msgstr "%s na %s"
 
 #: ../src/gdu/gdu-util.c:841
 msgctxt "RAID level"
@@ -1237,12 +1242,12 @@ msgstr "RAID-10"
 #: ../src/gdu/gdu-util.c:871
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
-msgstr ""
+msgstr "Pospojování (Linear)"
 
 #: ../src/gdu/gdu-util.c:873
 msgctxt "RAID level"
 msgid "Linear"
-msgstr ""
+msgstr "Linear"
 
 #: ../src/gdu/gdu-util.c:887
 msgid ""
@@ -1312,7 +1317,7 @@ msgstr "Disk je zdravý"
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
 #: ../src/gdu/gdu-util.c:953
 msgid "Disk was used outside of design parameters in the past"
-msgstr ""
+msgstr "Disk se dříve používal mimo výrobní parametry"
 
 #. Translators: Overall description of the BAD_SECTOR status
 #: ../src/gdu/gdu-util.c:957
@@ -1322,7 +1327,7 @@ msgstr "Disk má několik vadných sektorů"
 #. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
 #: ../src/gdu/gdu-util.c:961
 msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
-msgstr ""
+msgstr "DISK PŘEKROČIL PARAMETRY SVÉ ŽIVOTNOSTI"
 
 #. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
 #. Translators: Suggested action for the BAD_SECTOR_MANY status
@@ -1340,7 +1345,7 @@ msgstr "DISK MÁ PŘÍLIŠ MNOHO VADNÝCH SEKTORŮ"
 #. Translators: Overall description of the BAD_STATUS status
 #: ../src/gdu/gdu-util.c:975
 msgid "DISK FAILURE IS IMMINENT"
-msgstr ""
+msgstr "DISKU BEZPROSTŘEDNĚ HROZÍ ZÁVADA"
 
 #. Translators: Description when the overall SMART status is unknown
 #. Translators: Shown in the "Self-assessment" item in the status table
@@ -1360,7 +1365,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2633
 #: ../src/playground/grid/gdu-grid-element.c:566
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
 #: ../src/gdu/gdu-volume.c:74
@@ -1648,13 +1653,13 @@ msgstr "Oddíl %d"
 #: ../src/gdu/gdu-volume.c:438
 #, c-format
 msgid "Whole-disk volume on %s"
-msgstr ""
+msgstr "Celodiskový svazek na zařízení %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
 #: ../src/gdu/gdu-volume.c:443
 msgid "Whole-disk volume"
-msgstr ""
+msgstr "Celodiskový svazek"
 
 #. Translators: label for an unallocated space on a disk
 #. * %s is the size, formatted like '45 GB'
@@ -1714,7 +1719,7 @@ msgstr "Start/Stop Count"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:171
 msgid "Number of spindle start/stop cycles"
-msgstr "Počet cyklů roztočení/zastavení hřídele"
+msgstr "Počet cyklů roztočení/zastavení hřídele."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1931,7 +1936,7 @@ msgid ""
 "total number of (successful and unsuccessful) attempts to transfer data from "
 "reallocated sectors to a spare area"
 msgstr ""
-"Počet operací přemapování. Syrová hodnota tohoto příznaku ukazuje celkový "
+"Počet operací přemapování. Surová hodnota tohoto příznaku ukazuje celkový "
 "počet (úspěšných a neúspěšných) pokusů přesunout data z přemístěných sektorů "
 "na náhradní místo."
 
@@ -2006,7 +2011,7 @@ msgstr "Soft Read Error Rate"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:366
 msgid "Number of off-track errors"
-msgstr ""
+msgstr "Počet chyb při čtení"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2026,11 +2031,11 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:381
 msgid "Run Out Cancel"
-msgstr ""
+msgstr "Run Out Cancel"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:382
 msgid "Number of ECC errors"
-msgstr ""
+msgstr "Počet chyb ECC"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2048,11 +2053,11 @@ msgstr "Počet chyb opravených softwarovým ECC."
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:397
 msgid "Thermal Asperity Rate"
-msgstr ""
+msgstr "Thermal Asperity Rate"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:398
 msgid "Number of Thermal Asperity Rate errors"
-msgstr ""
+msgstr "Počet chyb způsobených příliš vysokou teplotou."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2117,6 +2122,7 @@ msgstr ""
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
+"Počet chyb, které byly následkem silného nárazu detekované čidlem otřesů"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2134,13 +2140,15 @@ msgstr "Počet hodin v běžném provozním stavu."
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:462
 msgid "Load/Unload Retry Count"
-msgstr ""
+msgstr "Load/Unload Retry Count"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:463
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
 msgstr ""
+"Zatěžování disku způsobené četným opakováním operací jako čtení, zápis, "
+"přesun hlaviček na pozici atd."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2155,33 +2163,33 @@ msgstr "Zátěž disku způsobená třením v mechanické části úložiště."
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
 msgid "Total number of load cycles"
-msgstr ""
+msgstr "Celkový počet zátěžových cyklů"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:487
 msgid "Load-in Time"
-msgstr ""
+msgstr "Load-in Time"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:488
 msgid "General time for loading in a drive"
-msgstr ""
+msgstr "Souhrnný čas, kdy disk pracoval"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:495
 msgid "Torque Amplification Count"
-msgstr ""
+msgstr "Torque Amplification Count"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:496
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "Množství síly vynaložené na kroutící moment disku"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
 msgid "Number of power-off retract events"
-msgstr ""
+msgstr "Počet situací, kdy byla zrušena operace kvůli ztrátě napájení"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2203,13 +2211,15 @@ msgstr "Temperature of the drive"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:527
 msgid "Endurance Remaining"
-msgstr ""
+msgstr "Endurance Remaining"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:528
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
 msgstr ""
+"Počet dokončených fyzických mazacích cyklů na disku jako procentní podíl "
+"vůči maximálnímu množství fyzických mazacích cyklů, které disk podporuje."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2246,7 +2256,7 @@ msgstr "Head Flying Hours"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
 msgid "Time while head is positioning"
-msgstr "Čas, kdy se hlavičky přesouvaly na místo."
+msgstr "Čas strávený přesunem hlaviček na místo."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2334,7 +2344,7 @@ msgid ""
 "running."
 msgstr ""
 "Provedení testů může zabrat velmi dlouhou dobu v závislosti na rychlosti a "
-"velikosti disku. V průběhu testu můžete na svém systému pokračovat v práci."
+"velikosti disku. Během testu můžete pokračovat v práci."
 
 #. Translators: Radio button for short test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
@@ -2349,7 +2359,7 @@ msgstr "_Rozšířený (obvykle desítky minut)"
 #. Translators: Radio button for conveyance test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr "_Přeprava (obvykle méně než deset minut)"
+msgstr "_Po přepravě (obvykle méně než deset minut)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
@@ -2551,12 +2561,13 @@ msgstr "Souhrnné posouzení:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr ""
-"Ponechte nezaškrtnuté, abyste dostávali oznámení, když disk začne odcházet."
+"Ponechte nezaškrtnuté, abyste dostávali oznámení v případě, když disk začne "
+"selhávat."
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
 msgid "Don't _warn me if the disk is failing"
-msgstr "Ne_varovat mě v případě, že disk odchází"
+msgstr "Ne_varovat v případě, že disk začne selhávat"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
@@ -2644,25 +2655,25 @@ msgstr "%.0f° C / %.0f° F"
 #. * "(Pre-Fail)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2238
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
-msgstr "Chyba je předzvěstí brzkého selhání disku (Pre-Fail)"
+msgstr "chyba je předzvěstí brzkého selhání disku (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2242
 msgid "Failure is a sign of old age (Old-Age)"
-msgstr "Chyba je předzvěstí stáří (Old-Age)"
+msgstr "chyba je příznakem stáří (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2248
 msgid "Every time data is collected (Online)"
-msgstr "pokaždé, když se sbírají data (online)"
+msgstr "pokaždé, když se sbírají data (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2252
 msgid "Only during off-line activities (Not Online)"
-msgstr "pouze během off-line činností (není online)"
+msgstr "pouze během off-line operací (Not Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview.
 #. * First %s is the type of the attribute (Pre-Fail or Old-Age).
@@ -2678,7 +2689,7 @@ msgid ""
 msgstr ""
 "Typ: %s\n"
 "Aktualizace: %s\n"
-"Syrová data: x%02x%02x%02x%02x%02x%02x"
+"Surová data: x%02x%02x%02x%02x%02x%02x"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
@@ -2690,7 +2701,7 @@ msgstr "Není zvolený žádný disk"
 #. * when SMART is not available
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2472
 msgid "SMART not supported"
-msgstr "SMART není podporovaný"
+msgstr "SMART není podporován"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
@@ -2709,7 +2720,7 @@ msgstr "Data SMART jsou poškozená"
 #. * when the self-assessment of the drive is PASSED
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2529
 msgid "Passed"
-msgstr "Prošlo"
+msgstr "V pořádku"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
@@ -2782,26 +2793,26 @@ msgstr "Autokontrola probíhá"
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2749
 msgid "Short self-test in progress: "
-msgstr "Probíhá krátká autokontrola: "
+msgstr "Probíhá krátká autokontrola:"
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2753
 msgid "Extended self-test in progress: "
-msgstr "Probíhá rozšířená autokontrola: "
+msgstr "Probíhá rozšířená autokontrola:"
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2757
 msgid "Conveyance self-test in progress: "
-msgstr "Probíhá autokontrola přepravy: "
+msgstr "Probíhá autokontrola po přepravě:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
 #: ../src/playground/grid/gdu-grid-view.c:325
 msgid "Pool"
-msgstr ""
+msgstr "Fond"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
 msgid "The pool of devices"
-msgstr ""
+msgstr "Fond zařízení"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
 msgid "RAID Level"
@@ -2817,7 +2828,7 @@ msgstr "Název"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
 msgid "The requested name for the array"
-msgstr ""
+msgstr "Požadovaný název pro diskové pole"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
 #: ../src/gdu-gtk/gdu-size-widget.c:242
@@ -2826,15 +2837,15 @@ msgstr "Velikost"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
 msgid "The requested size of the array"
-msgstr ""
+msgstr "Požadovaná velikost diskového pole"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
 msgid "Component Size"
-msgstr ""
+msgstr "Velikost komponenty"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:266
 msgid "The size of each component"
-msgstr ""
+msgstr "Velikost každé z komponent"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
 msgid "Stripe Size"
@@ -2842,15 +2853,15 @@ msgstr "Velikost bloku"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
 msgid "The requested stripe size of the array"
-msgstr ""
+msgstr "Požadovaná velikost bloku pro pole"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
 msgid "Drives"
-msgstr ""
+msgstr "Drives"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
 msgid "Array of drives to use for the array"
-msgstr ""
+msgstr "Pole disků použitých pro diskové pole"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -3090,7 +3101,7 @@ msgstr "Stránkovač terminálu (less)"
 #: ../src/gdu-gtk/gdu-gtk.c:216
 msgctxt "application name"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
@@ -3212,7 +3223,7 @@ msgstr "Zapamatovat heslo až do vašeho odh_lášení"
 
 #: ../src/gdu-gtk/gdu-gtk.c:761
 msgid "_Remember forever"
-msgstr "Zapamatovat na_pořád"
+msgstr "Zapamatovat na_vždy"
 
 #: ../src/gdu-gtk/gdu-gtk.c:822
 msgid "Enter Passphrase"
@@ -3284,7 +3295,7 @@ msgstr[2] "Před %d hodinami"
 #. Translators: this is a verb
 #: ../src/nautilus-extension/nautilus-gdu.c:225
 msgid "_Format..."
-msgstr ""
+msgstr "_Formátovat..."
 
 #: ../src/nautilus-extension/nautilus-gdu.c:226
 msgid "Create new filesystem on the selected device"
@@ -3294,19 +3305,21 @@ msgstr "Vytvořit nový souborový systém na vybraném zařízení"
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
 msgid "It's now safe to remove \"%s\"."
-msgstr "Nyní lze bezpečně odebrat „%s“."
+msgstr "Nyní lze „%s“ bezpečně odebrat."
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:233
 #, c-format
 msgid "Writing data to \"%s\"..."
-msgstr "Zapisují se data do „%s“..."
+msgstr "Zapisují se data na „%s“..."
 
 #: ../src/notification/gdu-slow-unmount-dialog.c:248
 msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
 msgstr ""
+"Než vyjmete médium nebo odpojíte zařízení, počkejte, dokud se operace "
+"nedokončí, abyste předešli ztrátě dat."
 
 #: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
@@ -3315,7 +3328,7 @@ msgstr "Jeden nebo více disků selhalo"
 #. Translators: This is used as the title of the notification
 #: ../src/notification/notification-main.c:535
 msgid "A hard disk may be failing"
-msgstr "Pevný disk možná odchází"
+msgstr "Pevný disk zřejmě selhává"
 
 #. Translators: This is used as the text of the notification
 #: ../src/notification/notification-main.c:537
@@ -3323,16 +3336,16 @@ msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
 msgstr ""
-"Jeden nebo více pevných disků hlásí problémy se zdravím. Pro získání více "
-"informací klikněte na ikonu."
+"Jeden nebo více pevných disků hlásí problémy se spolehlivostí. Pro získání "
+"více informací klikněte na ikonu."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
-msgstr ""
+msgstr "Svazek, který zobrazit"
 
 #: ../src/palimpsest/gdu-main.c:122
 msgid "Drive to show"
-msgstr ""
+msgstr "Disk, který zobrazit"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:56
 msgid "Error creating partition table"
@@ -3500,7 +3513,7 @@ msgstr "RAID-6"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:705
 msgctxt "RAID component type"
 msgid "Linear (Just a Bunch Of Disks)"
-msgstr ""
+msgstr "Linear (jednoduše sdružené disky)"
 
 #. Translators: %d is the number of components in the RAID
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:713
@@ -3535,7 +3548,7 @@ msgstr "Neběží"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:740
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr "Neběží, lze spustit jen jako snížené"
+msgstr "Neběží, lze aktivovat jen jako degradované"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:742
 msgctxt "RAID status"
@@ -3545,7 +3558,7 @@ msgstr "Neběží, nedostatek komponent pro spuštění"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:761
 msgctxt "RAID status"
 msgid "Degraded"
-msgstr "Snížené"
+msgstr "Degradované"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:765
 msgctxt "RAID status"
@@ -3555,7 +3568,7 @@ msgstr "Běží"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:770
 msgctxt "RAID status"
 msgid "Reshaping"
-msgstr ""
+msgstr "Přebudovává se"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
@@ -3600,7 +3613,7 @@ msgstr "Synchronizovaný"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "Jen pro zápis"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
@@ -3680,7 +3693,7 @@ msgstr "Z_kontrolovat"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
 msgid "Starts checking the RAID array for redundancy"
-msgstr ""
+msgstr "Spustit kontrolu diskového pole RAID"
 
 #. Translators: this is a verb, as in 'repair this RAID array'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1106
@@ -3848,7 +3861,7 @@ msgstr "_Zaveditelný"
 #. used by gpt
 #: ../src/palimpsest/gdu-section-partition.c:595
 msgid "Required / Firm_ware"
-msgstr ""
+msgstr "Vyžadováno / Firm_ware"
 
 #: ../src/palimpsest/gdu-section-partition.c:607
 msgid "Delete the partition"
@@ -4023,7 +4036,7 @@ msgstr "Stav SMART: %s"
 #. Translators: this the SMART hyperlink tooltip
 #: ../src/palimpsest/gdu-shell.c:302
 msgid "View details about SMART for this disk"
-msgstr "Zobrazit podrobnosti o SMART pro tento disk"
+msgstr "Zobrazit podrobnosti o SMART atributech pro tento disk"
 
 #. Translators: this is the text for the SMART hyperlink
 #: ../src/palimpsest/gdu-shell.c:304
@@ -4102,12 +4115,12 @@ msgstr "Chyba při zamykání šifrovaného zařízení"
 #: ../src/palimpsest/gdu-shell.c:1320
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
-msgstr ""
+msgstr "Při aktivaci disku se vyskytla chyba „%s“."
 
 #: ../src/palimpsest/gdu-shell.c:1374
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-msgstr "Opravdu chcete rozjet disk „%s“ ve sníženém režimu?"
+msgstr "Opravdu chcete aktivovat disk „%s“ v degradovaném režimu?"
 
 #: ../src/palimpsest/gdu-shell.c:1378
 msgid ""
@@ -4115,18 +4128,18 @@ msgid ""
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
 "lost if a drive fails."
 msgstr ""
-"Rozjetí diskového pole RAID ve sníženém režimu znamená, že svazek RAID "
+"Aktivace diskového pole RAID v degradovaném režimu znamená, že svazek RAID "
 "nebude nadále odolný vůči závadám disků. Při závadě mohou být data na svazku "
-"nenávratně ztracena."
+"nenávratně ztracená."
 
 #: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
-msgstr "_Rozjet pole"
+msgstr "_Aktivovat pole"
 
 #: ../src/palimpsest/gdu-shell.c:1411
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
-msgstr "Vyskytla se chyba při zastavování disku „%s“."
+msgstr "Vyskytla se chyba při deaktivovaci disku „%s“."
 
 #: ../src/palimpsest/gdu-shell.c:1463
 msgid "Error erasing data"
@@ -4235,19 +4248,19 @@ msgstr "Zamknout šifrované zařízení, čímž se čistá data znepřístupn�
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
-msgstr "_Rozjet"
+msgstr "_Aktivovat"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "Start the array"
-msgstr "Rozjet pole"
+msgstr "Aktivovat diskové pole"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "_Stop"
-msgstr "_Zastavit"
+msgstr "_Deaktivovat"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "Stop the array"
-msgstr "Zastavit pole"
+msgstr "Deaktivovat diskové pole"
 
 #: ../src/palimpsest/gdu-shell.c:1946
 msgid "Erase the contents of the device"
@@ -4287,11 +4300,11 @@ msgstr "Operace byla zrušena."
 
 #: ../src/palimpsest/gdu-shell.c:2048
 msgid "The daemon is being inhibited."
-msgstr ""
+msgstr "Démon je potlačený."
 
 #: ../src/palimpsest/gdu-shell.c:2051
 msgid "An invalid option was passed."
-msgstr ""
+msgstr "Byla předána neplatná volba."
 
 #: ../src/palimpsest/gdu-shell.c:2054
 msgid "The operation is not supported."
@@ -4299,7 +4312,7 @@ msgstr "Operace není podporovaná."
 
 #: ../src/palimpsest/gdu-shell.c:2057
 msgid "Getting ATA SMART data would wake up the device."
-msgstr ""
+msgstr "Získávání dat z ATA SMART by zařízení probudilo."
 
 #: ../src/palimpsest/gdu-shell.c:2060
 msgid "Permission denied."
@@ -4320,11 +4333,11 @@ msgstr "<small>_Zrušit</small>"
 #: ../src/playground/grid/gdu-grid-details.c:134
 #: ../src/playground/grid/gdu-grid-element.c:877
 msgid "View"
-msgstr "Zobrazit"
+msgstr "View"
 
 #: ../src/playground/grid/gdu-grid-details.c:135
 msgid "The view to show details for"
-msgstr ""
+msgstr "Objekt view pro zobrazení podrobností"
 
 #: ../src/playground/grid/gdu-grid-details.c:196
 msgid "Device:"
@@ -4332,54 +4345,58 @@ msgstr "Zařízení:"
 
 #: ../src/playground/grid/gdu-grid-element.c:557
 msgid "Extended"
-msgstr ""
+msgstr "Rozšířený"
 
 #: ../src/playground/grid/gdu-grid-element.c:560
 msgid "Encrypted"
-msgstr ""
+msgstr "Šifrovaný"
 
 #: ../src/playground/grid/gdu-grid-element.c:563
 msgid "Free"
-msgstr ""
+msgstr "Volné místo"
 
 #: ../src/playground/grid/gdu-grid-element.c:878
 msgid "The GduGridView object that the element is associated with"
-msgstr ""
+msgstr "Objekt GduGridView, ke kterému je element přidružený"
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
-msgstr ""
+msgstr "Presentable"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
 msgid ""
 "The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
+"Zobrazený objekt presentable nebo NULL pokud se jedná o prvek představující "
+"chybějící médium"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"
-msgstr ""
+msgstr "Minimální velikost prvku"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
-msgstr ""
+msgstr "Procentuální velikost"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
 msgid ""
 "The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"Velikost v procentech, kterou by si měl tento prvek nárokovat nebo 0, aby si "
+"prvek nárokoval vždy zadanou minimální velikost"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
-msgstr ""
+msgstr "Příznaky"
 
 #: ../src/playground/grid/gdu-grid-element.c:922
 msgid "Flags for the element"
-msgstr ""
+msgstr "Příznaky pro prvek"
 
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
-msgstr ""
+msgstr "Objekt pool pro zařízení, která se mají zobrazit"
 
 #, fuzzy
 #~ msgid "Retrieving..."
@@ -4501,3 +4518,4 @@ msgstr ""
 
 #~ msgid "JBOD"
 #~ msgstr "JBOD"
+

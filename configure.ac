@@ -1,4 +1,4 @@
-AC_INIT([GNOME Disk Utility],[0.6],[mailto:david@fubar.dk],[gnome-disk-utility])
+AC_INIT([GNOME Disk Utility],[2.28.0],[mailto:david@fubar.dk],[gnome-disk-utility])
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 
@@ -128,7 +128,7 @@ GTK2_REQUIRED=2.17.2
 UNIQUE_REQUIRED=1.0
 LIBNOTIFY_REQUIRED=0.3.0
 NAUTILUS_REQUIRED=2.24.0
-DEVKIT_DISKS_REQUIRED=006
+DEVKIT_DISKS_REQUIRED=007
 
 SCROLLKEEPER_REQUIRED=0.3.14
 INTLTOOL_REQUIRED=0.35.0
@@ -229,7 +229,7 @@ AC_OUTPUT
 
 echo "
                   gnome-disk-utility $VERSION
-                ==========================
+                =============================
 
         prefix:                     ${prefix}
         libdir:                     ${libdir}

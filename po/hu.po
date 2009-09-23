@@ -2,15 +2,15 @@
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
-# Gabor Kelemen <kelemeng@gnome.hu>, 2009.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: g-d-u master\n"
+"Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-14 04:25+0200\n"
-"PO-Revision-Date: 2009-05-14 04:28+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
-"Language-Team: Hungarian <gnome@mail.fsf.hu>\n"
+"POT-Creation-Date: 2009-09-16 13:01+0200\n"
+"PO-Revision-Date: 2009-09-16 12:59+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,13 +18,12 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/palimpsest.desktop.in.h:1
+msgid "Disk Utility"
+msgstr "Lemezkezelő"
+
+#: ../data/palimpsest.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Lemezek és adathordozók kezelése"
-
-#: ../data/palimpsest.desktop.in.h:2 ../src/palimpsest/gdu-shell.c:1512
-#: ../src/palimpsest/gdu-shell.c:1804
-msgid "Palimpsest Disk Utility"
-msgstr "Palimpsest lemezkezelő"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:1
 msgid "Disk Notifications"
@@ -67,72 +66,57 @@ msgstr "Titkosítás"
 msgid "Whether the volume should be encrypted"
 msgstr "A kötet titkosított legyen-e"
 
-#: ../src/format-tool/gdu-format-dialog.c:318
-msgid "Are you sure you want to format the volume?"
-msgstr "Biztosan le kívánja formázni a kötetet?"
-
-#: ../src/format-tool/gdu-format-dialog.c:321
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" on the drive \"%s\" (%s). All "
-"existing data will be irrevocably erased."
-msgstr ""
-"A kötet („%s”) formázására készül a(z) „%s” (%s) meghajtón. A rajta lévő "
-"összes adat visszavonhatatlanul elvész."
-
-#: ../src/format-tool/gdu-format-dialog.c:327
-#, c-format
-msgid ""
-"You are about to format the volume \"%s\" (%s). All existing data will be "
-"irrevocably erased."
-msgstr ""
-"A(z) „%s” (%s) kötet formázására készül. A rajta lévő összes adat "
-"visszavonhatatlanul elvész."
-
-#: ../src/format-tool/gdu-format-dialog.c:345
+#. Translators: Format is used as a verb here
+#: ../src/format-tool/gdu-format-dialog.c:325
 msgid "_Format"
 msgstr "_Formázás"
 
-#: ../src/format-tool/gdu-format-dialog.c:349
+#: ../src/format-tool/gdu-format-dialog.c:327
 msgid "Disk _Utility"
 msgstr "_Lemezkezelő"
 
-#: ../src/format-tool/gdu-format-dialog.c:355
-msgid "Open volume in Palimpsest Disk Utility"
-msgstr "Kötet megnyitása a Palimpsest lemezkezelőben"
+#: ../src/format-tool/gdu-format-dialog.c:333
+msgid "Use Disk Utility to format volume"
+msgstr "A Lemezkezelő használata kötet formázására"
 
-#: ../src/format-tool/gdu-format-dialog.c:398
-#: ../src/palimpsest/gdu-section-unallocated.c:676
+#. Translators: 'type' means 'filesystem type' here.
+#: ../src/format-tool/gdu-format-dialog.c:365
+#: ../src/palimpsest/gdu-section-unallocated.c:678
 #: ../src/palimpsest/gdu-section-unrecognized.c:441
 msgid "_Type:"
 msgstr "_Típus:"
 
-#: ../src/format-tool/gdu-format-dialog.c:404
+#: ../src/format-tool/gdu-format-dialog.c:371
 msgid "Compatible with all systems (FAT)"
 msgstr "Kompatibilis minden rendszerrel (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:406
+#: ../src/format-tool/gdu-format-dialog.c:373
 msgid "Compatible with Linux (ext2)"
 msgstr "Linux-kompatibilis (ext2)"
 
-#: ../src/format-tool/gdu-format-dialog.c:408
+#: ../src/format-tool/gdu-format-dialog.c:375
 msgid "Compatible with Linux (ext3)"
 msgstr "Linux-kompatibilis (ext3)"
 
-#: ../src/format-tool/gdu-format-dialog.c:410
+#: ../src/format-tool/gdu-format-dialog.c:377
 msgid "Encrypted, compatible with Linux (FAT)"
 msgstr "Linux-kompatibilis, titkosított (FAT)"
 
-#: ../src/format-tool/gdu-format-dialog.c:422
+#. Translators: 'name' means 'filesystem label' here.
+#: ../src/format-tool/gdu-format-dialog.c:390
 msgid "_Name:"
 msgstr "_Név:"
 
 #. Translators: Keep length of translation of "New Volume" to less than 16 characters
-#: ../src/format-tool/gdu-format-dialog.c:427
+#: ../src/format-tool/gdu-format-dialog.c:395
 msgid "New Volume"
 msgstr "Új kötet"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:181
+#: ../src/format-tool/gdu-format-dialog.c:410
+msgid "Warning: All data on the volume will be irrevocably lost."
+msgstr "Figyelmeztetés: a kötet összes adata visszavonhatatlanul elvész."
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:184
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
@@ -140,986 +124,895 @@ msgstr ""
 "Az adatvesztés elkerülése érdekében várjon ennek befejeződéséig az "
 "adathordozó eltávolításával, vagy az eszköz leválasztásával."
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:213
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
 msgid "Device"
 msgstr "Eszköz"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:214
+#: ../src/format-tool/gdu-format-progress-dialog.c:217
 #: ../src/notification/gdu-slow-unmount-dialog.c:287
 msgid "The device to show the dialog for"
-msgstr "Az ablak mejelenítése ezen eszközhöz"
+msgstr "Az ablak megjelenítése ezen eszközhöz"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:226
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "text"
 msgstr "szöveg"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:227
+#: ../src/format-tool/gdu-format-progress-dialog.c:230
 msgid "Text to show"
 msgstr "Megjelenítendő szöveg"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:111
 msgid "Error launching Disk Utility"
 msgstr "Hiba a Lemezkezelő indításakor"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:131
 msgid "Device to format"
 msgstr "Formázandó eszköz"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:121
+#: ../src/format-tool/gdu-format-tool.c:131 ../src/palimpsest/gdu-main.c:121
 #: ../src/palimpsest/gdu-main.c:122
 msgid "DEVICE"
 msgstr "ESZKÖZ"
 
-#: ../src/format-tool/gdu-format-tool.c:182
+#: ../src/format-tool/gdu-format-tool.c:161
+#, c-format
+msgid "Operation was canceled"
+msgstr "A művelet megszakítva"
+
+#: ../src/format-tool/gdu-format-tool.c:252
 msgid "Gnome Disk Utility formatting tool"
 msgstr "Gnome Lemezkezelő formázóeszköz"
 
-#: ../src/format-tool/gdu-format-tool.c:253
-msgid "Formatting volume..."
-msgstr "Kötet formázása…"
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:299
+#, c-format
+msgid "Format partition %d of %s (%s)"
+msgstr "%2$s %1$d. partíciójának formázása (%3$s)"
 
-#: ../src/format-tool/gdu-format-tool.c:271
-msgid "Error creating filesystem"
-msgstr "Hiba a fájlrendszer létrehozásakor"
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:306
+#, c-format
+msgid "Formatting partition %d of %s (%s)"
+msgstr "%2$s %1$d. partíciójának formázása (%3$s)"
 
-#: ../src/format-tool/gdu-format-tool.c:281
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:312
+#, c-format
+msgid "Format %s (%s)"
+msgstr "%s formázása (%s)"
+
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:316
+#, c-format
+msgid "Formatting %s (%s)"
+msgstr "%s formázása (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:322
+#, c-format
+msgid "Format %s Volume (%s)"
+msgstr "%s kötet formázása (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:326
+#, c-format
+msgid "Formatting %s Volume (%s)"
+msgstr "%s kötet formázása (%s)"
+
+#: ../src/format-tool/gdu-format-tool.c:379
+msgid "Preparing..."
+msgstr "Előkészítés…"
+
+#: ../src/format-tool/gdu-format-tool.c:422
+msgid "Unmounting..."
+msgstr "Leválasztás…"
+
+#: ../src/format-tool/gdu-format-tool.c:440
+#, c-format
+msgid "Unable to format '%s'"
+msgstr "„%s” nem formázható"
+
+#: ../src/format-tool/gdu-format-tool.c:455
+msgid "Formatting..."
+msgstr "Formázás…"
+
+#: ../src/format-tool/gdu-format-tool.c:472
+msgid "Cancelling..."
+msgstr "Megszakítás…"
+
+#: ../src/format-tool/gdu-format-tool.c:482
+msgid "Error formatting volume"
+msgstr "Hiba a kötet formázásakor"
+
+#: ../src/format-tool/gdu-format-tool.c:493
 msgid "Mounting volume..."
 msgstr "Kötet csatolása…"
 
-#: ../src/format-tool/gdu-format-tool.c:305 ../src/palimpsest/gdu-shell.c:928
+#: ../src/format-tool/gdu-format-tool.c:517 ../src/palimpsest/gdu-shell.c:995
 msgid "Error mounting device"
 msgstr "Hiba az eszköz csatolásakor"
 
-#: ../src/format-tool/gdu-format-tool.c:322
+#: ../src/format-tool/gdu-format-tool.c:534
 msgid "Error storing passphrase in keyring"
 msgstr "Hiba a jelszó tárolásakor a kulcstartón"
 
-#: ../src/gdu/gdu-ata-smart-attribute.c:182
-msgid "Read Error Rate"
-msgstr "Olvasási hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:183
-msgid ""
-"Frequency of errors while reading raw data from the disk. A non-zero value "
-"indicates a problem with either the disk surface or read/write heads."
-msgstr ""
-"Hibák gyakorisága nyers adatok olvasásakor a lemezről. A nem nulla érték "
-"hibát jelez a lemez felületén vagy az író/olvasó fejeken."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:188
-msgid "Throughput Performance"
-msgstr "Átviteli teljesítmény"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:189
-msgid "Average effeciency of the disk."
-msgstr "A lemez átlagos hatékonysága."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:192
-msgid "Spinup Time"
-msgstr "Felpörgési idő"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:193
-msgid "Time needed to spin up the disk."
-msgstr "A lemez felpörgéséhez szükséges idő."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:196
-msgid "Start/Stop Count"
-msgstr "Felpörgések/leállások száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:197
-msgid "Number of spindle start/stop cycles."
-msgstr "A tengely indítási/leállási ciklusainak száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:200
-msgid "Reallocated Sector Count"
-msgstr "Áthelyezett szektorok száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:201
-msgid ""
-"Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it mark the sector as \"reallocated\" and transfers data "
-"to a special reserved area (spare area)."
-msgstr ""
-"Áthelyezett szektorok száma. Amikor a merevlemez írási/olvasási/ellenőrzési "
-"hibát talál, a szektort „áthelyezettként” jelöli és az adatokat egy "
-"speciális, fenntartott (tartalék) területre viszi át."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:206
-msgid "Seek Error Rate"
-msgstr "Keresési hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:207
-msgid "Frequency of errors while positioning."
-msgstr "Pozícionálás közbeni hibák gyakorisága."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:210
-msgid "Seek Timer Performance"
-msgstr "Átlagos fejpozícionálási idõ"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:211
-msgid "Average efficiency of operatings while positioning"
-msgstr "Műveletek átlagos hatékonysága pozícionáláskor"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:214
-msgid "Power-On Hours"
-msgstr "Bekapcsoltva töltött idő"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:215
-msgid "Number of hours elapsed in the power-on state."
-msgstr "Bekapcsolt állapotban eltelt órák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:218
-msgid "Spinup Retry Count"
-msgstr "Felpörgési újrapróbálkozások száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:219
-msgid "Number of retry attempts to spin up."
-msgstr "Felpörgetésre tett ismételt kísérletek száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:222
-msgid "Calibration Retry Count"
-msgstr "Kalibrációs újrapróbálkozások száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:223
-msgid "Number of attempts to calibrate the device."
-msgstr "Az eszköz kalibrálására tett kísérletek száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:226
-msgid "Power Cycle Count"
-msgstr "Bekapcsolási ciklusok száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:227
-msgid "Number of power-on events."
-msgstr "Bekapcsolási események száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:230
-msgid "Soft read error rate"
-msgstr "Szoftveres olvasási hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:231
-msgid "Frequency of 'program' errors while reading from the disk."
-msgstr "Szoftveres hibák gyakorisága a lemezről olvasáskor."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:235
-#: ../src/gdu/gdu-ata-smart-attribute.c:328
-msgid "G-sense Error Rate"
-msgstr "G-sense hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:236
-msgid "Frequency of mistakes as a result of impact loads."
-msgstr "Mechanikai behatások miatti hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:239
-#: ../src/gdu/gdu-ata-smart-attribute.c:357
-msgid "Power-off Retract Count"
-msgstr "Kikapcsolások száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:240
-msgid "Number of power-off or emergency retract cycles."
-msgstr "Kikapcsolási vagy vészleállási ciklusok száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:243
-#: ../src/gdu/gdu-ata-smart-attribute.c:345
-msgid "Load/Unload Cycle Count"
-msgstr "Parkolózónába lépési ciklusok száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:244
-msgid "Number of cycles into landing zone position."
-msgstr "Parkolózónába lépési ciklusok száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:247
-#: ../src/gdu/gdu-ata-smart-attribute.c:366
-msgid "Temperature"
-msgstr "Hőmérséklet"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:248
-msgid "Current internal temperature in degrees Celcius."
-msgstr "Aktuális belső hőmérséklet Celsius-fokban."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:251
-msgid "Hardware ECC Recovered"
-msgstr "Javítható hibák száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:252
-msgid "Number of ECC on-the-fly errors."
-msgstr "Menet közben javított hibák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:255
-msgid "Reallocation Count"
-msgstr "Áthelyezések száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:256
-msgid ""
-"Number of remapping operations. The raw value of this attribute shows the "
-"total number of (successful and unsucessful) attempts to transfer data from "
-"reallocated sectors to a spare area."
-msgstr ""
-"Áthelyezési műveletek száma. Az attribútum nyers értéke megjeleníti az "
-"adatok újraosztott szektorokból tartalékterületre való áthelyezésére tett "
-"(sikeres és sikertelen) kísérletek teljes számát."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:262
-msgid "Current Pending Sector Count"
-msgstr "Függõben lévõ szektorok száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:263
-msgid ""
-"Number of sectors waiting to be remapped. If the sector waiting to be "
-"remapped is subsequently written or read successfully, this value is "
-"decreased and the sector is not remapped. Read errors on the sector will not "
-"remap the sector, it will only be remapped on a failed write attempt."
-msgstr ""
-"Áthelyezésre váró szektorok száma. Ha az áthelyezésre váró szektort később "
-"sikerül írni vagy olvasni, akkor ez az érték csökken és a szektor nem kerül "
-"áthelyezésre. A szektor olvasási hibái nem helyezik át a szektort, csak a "
-"meghiúsult írási hibák."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:272
-msgid "Uncorrectable Sector Count"
-msgstr "Javíthatatlan szektorok száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:273
-msgid ""
-"The total number of uncorrectable errors when reading/writing a sector. A "
-"rise in the value of this attribute indicates defects of the disk surface "
-"and/or problems in the mechanical subsystem."
-msgstr ""
-"A szektorok olvasása/írásakor talált javíthatatlan hibák száma. Az "
-"attribútum értékének növekedése a lemezfelszín és/vagy a mechanikai "
-"alrendszer hibáit jelzi."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:278
-msgid "UDMA CRC Error Rate"
-msgstr "UDMA CRC hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:279
-msgid "Number of CRC errors during UDMA mode."
-msgstr "CRC hibák száma UDMA módban."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:282
-msgid "Write Error Rate"
-msgstr "Írási hibák gyakorisága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:283
-msgid ""
-"Number of errors while writing to disk (or) multi-zone error rate (or) "
-"flying-height."
-msgstr ""
-"A lemez írásakor előforduló hibák száma vagy többzónás hibák gyakorisága "
-"vagy repülési magasság."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:286
-msgid "Soft Read Error Rate"
-msgstr "Olvasási hibaarány"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:287
-msgid "Number of off-track errors."
-msgstr "Nem javítható olvasási hibák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:290
-msgid "Data Address Mark Errors"
-msgstr "Adatcímzési hibák száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:291
-msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific."
-msgstr "Adatcím-jelző (DAM) hibák száma, vagy gyártófüggő."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:294
-msgid "Run Out Cancel"
-msgstr "Adatjavítási hibák száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:295
-msgid "Number of ECC errors."
-msgstr "ECC hibák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:298
-msgid "Soft ECC correction"
-msgstr "Szoftveresen javított hibák száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:299
-msgid "Number of errors corrected by software ECC."
-msgstr "A szoftveres ECC által javított hibák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:302
-msgid "Thermal Asperity Rate"
-msgstr "Hõmérsékleti problémák száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:303
-msgid "Number of Thermal Asperity Rate errors."
-msgstr "Magas hõmérséklet miatti problémák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:306
-msgid "Flying Height"
-msgstr "Fej repülési magassága"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:307
-msgid "Height of heads above the disk surface."
-msgstr "A fejek lemezfelszín feletti magassága."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:310
-msgid "Spin High Current"
-msgstr "Bekapcsolási csúcsfeszültség"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:311
-msgid "Amount of high current used to spin up the drive."
-msgstr "A lemez felpörgetéséhez használt csúcsfeszültség."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:314
-msgid "Spin Buzz"
-msgstr "Felpörgési ciklusok"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:315
-msgid "Number of buzz routines to spin up the drive."
-msgstr "A lemez felpörgéséhez szükséges ciklusok száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:318
-msgid "Offline Seek Performance"
-msgstr "Önteszt alatti teljesítmény"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:319
-msgid "Drive's seek performance during offline operations."
-msgstr "A lemez öntesztje alatti pozícionálási teljesítmény."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:323
-msgid "Disk Shift"
-msgstr "Lemez elmozdulása"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:324
-msgid ""
-"Shift of disk os possible as a result of strong shock loading in the store, "
-"as a result of falling (or) temperature."
-msgstr ""
-"A lemez erős rázkódási terhelés hatására elmozdulhat, amely esés vagy a "
-"hőmérséklet hatására következhet be."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:329
-msgid "Number of errors as a result of impact loads as detected by a shock sensor."
-msgstr "A rázkódásérzékelő által érzékelt mechanikai behatások miatti hibák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:332
-msgid "Loaded Hours"
-msgstr "Bekapcsolva töltött idõ"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:333
-msgid "Number of hours in general operational state."
-msgstr "Általános működési állapotban töltött órák száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:336
-msgid "Load/Unload Retry Count"
-msgstr "Betöltések száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:337
-msgid ""
-"Loading on drive caused by numerous recurrences of operations, like reading, "
-"recording, positioning of heads, etc."
-msgstr ""
-"Különböző műveletek, például olvasás, írás, fejpozícionálás által okozott "
-"adatzónába lépések a lemezen."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:341
-msgid "Load Friction"
-msgstr "Súrlódási terhelés"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:342
-msgid "Load on drive cause by friction in mechanical parts of the store."
-msgstr "A tároló mechanikai alkatrészei által okozott súrlódás miatti terhelés."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:346
-msgid "Total number of load cycles."
-msgstr "Betöltési ciklusok teljes száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:349
-msgid "Load-in Time"
-msgstr "Betöltve töltött idõ"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:350
-msgid "General time for loading in a drive."
-msgstr "Betöltés teljes ideje a meghajtón."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:353
-msgid "Torque Amplification Count"
-msgstr "Felpörgési nyomaték értéke"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:354
-msgid "Quantity efforts of the rotating moment of a drive."
-msgstr ""
-"A lemez forgási sebességének változásainak ellensúlyozására tett kísérletek "
-"száma."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:358
-msgid "Number of power-off retract events."
-msgstr "Áramellátás megszűnése miatti parkolópályára állások."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:362
-msgid "GMR Head Amplitude"
-msgstr "GMR fej amplitúdója"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:363
-msgid "Amplitude of heads trembling (GMR-head) in running mode."
-msgstr "Mûvelet végzése közben a (GMR) fej kilengésének mértéke. "
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:367
-msgid "Temperature of the drive."
-msgstr "A meghajtó hőmérséklete."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:371
-msgid "Head Flying Hours"
-msgstr "Fejpozícionálási idő"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:372
-msgid "Time while head is positioning."
-msgstr "A fej pozícionálásával töltött összes idő."
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:375
-msgid "Read Error Retry Rate"
-msgstr "Olvasási újrapróbálkozások száma"
-
-#: ../src/gdu/gdu-ata-smart-attribute.c:376
-msgid "Number of errors while reading from a disk."
-msgstr "Hibák száma a lemez olvasásakor."
-
-#: ../src/gdu/gdu-linux-md-drive.c:449
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:455
+msgid "CompactFlash"
+msgstr "CompactFlash"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:458
+msgid "MemoryStick"
+msgstr "MemoryStick"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:461
+msgid "SmartMedia"
+msgstr "SmartMedia"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:464
+msgid "SecureDigital"
+msgstr "SecureDigital"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:467
+msgid "SD High Capacity"
+msgstr "SD High Capacity"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:470
+msgid "Floppy"
+msgstr "Hajlékonylemez"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:473
+msgid "Zip"
+msgstr "Zip"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:476
+msgid "Jaz"
+msgstr "Jaz"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:479
+msgid "Flash"
+msgstr "Flash"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:502
+msgid "CD"
+msgstr "CD"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:510
+msgid "DVD"
+msgstr "DVD"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:518
+msgid "Blu-Ray"
+msgstr "Blu-Ray"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:526
+msgid "HDDVD"
+msgstr "HDDVD"
+
+#. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-drive.c:575 ../src/gdu/gdu-drive.c:614
+#: ../src/gdu/gdu-linux-md-drive.c:520
 #, c-format
 msgid "%s Drive"
 msgstr "%s meghajtó"
 
-#: ../src/gdu/gdu-linux-md-drive.c:451
+#. Translators: first %s is the size, second %s is the media type
+#. * e.g. 'CD/DVD' or 'CompactFlash'
+#.
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#: ../src/gdu/gdu-drive.c:609 ../src/gdu/gdu-linux-md-drive.c:515
 #, c-format
-msgid "%s (%s)"
-msgstr "%s (%s)"
+msgid "%s %s Drive"
+msgstr "%s %s meghajtó"
 
-#: ../src/gdu/gdu-linux-md-drive.c:457
+#. Translators: This string is used to describe a hard disk. The first %s is
+#. * the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:625
+#, c-format
+msgid "%s Hard Disk"
+msgstr "%s merevlemez"
+
+#. Translators: This string is used to describe a hard disk where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:631
+msgid "Hard Disk"
+msgstr "Merevlemez"
+
+#. Translators: This string is used to describe a SSD. The first %s is
+#. * the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:638
+#, c-format
+msgid "%s Solid-State Disk"
+msgstr "%s szilárdtest-meghajtó"
+
+#. Translators: This string is used to describe a SSD where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:644
+msgid "Solid-State Disk"
+msgstr "Szilárdtest-meghajtó"
+
+#. Translators: This string is the description of a drive. The first %s is the
+#. * size of the inserted media, for example '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:685
+#, c-format
+msgid "%s Media"
+msgstr "%s adathordozó"
+
+#. Translators: This string is used as a description text when no media has
+#. * been detected for a drive
+#.
+#: ../src/gdu/gdu-drive.c:692 ../src/palimpsest/gdu-section-no-media.c:113
+#: ../src/palimpsest/gdu-shell.c:239 ../src/palimpsest/gdu-shell.c:263
+#, c-format
+msgid "No Media Detected"
+msgstr "Nem észlelhető adathordozó"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-linux-md-drive.c:542
+msgid "MBR Partition Table"
+msgstr "MBR partíciós tábla"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:706 ../src/gdu/gdu-linux-md-drive.c:545
+#: ../src/gdu-gtk/gdu-gtk.c:1534 ../src/palimpsest/gdu-shell.c:223
+#: ../src/palimpsest/gdu-shell.c:253
+msgid "GUID Partition Table"
+msgstr "GUID partíciós tábla"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:709 ../src/gdu/gdu-linux-md-drive.c:548
+msgid "Apple Partition Table"
+msgstr "Apple partíciós tábla"
+
+#. Translators: This string is used for conveying the partition table format when
+#. * the format is unknown
+#.
+#: ../src/gdu/gdu-drive.c:714 ../src/gdu/gdu-linux-md-drive.c:553
+msgid "Partitioned"
+msgstr "Particionálva"
+
+#. Translators: This string is used for conveying a device is not partitioned.
+#.
+#: ../src/gdu/gdu-drive.c:719 ../src/palimpsest/gdu-shell.c:260
+#: ../src/palimpsest/gdu-shell.c:380
+#, c-format
+msgid "Not Partitioned"
+msgstr "Nem particionált"
+
+#. Translators: First %s is a device file such as /dev/sda4
+#. * second %s is the state of the device
+#.
+#: ../src/gdu/gdu-linux-md-drive.c:575
 #, c-format
 msgid "RAID device %s (%s)"
 msgstr "%s (%s) RAID eszköz"
 
-#: ../src/gdu/gdu-linux-md-drive.c:464
+#. Translators: %s is a device file such as /dev/sda4
+#: ../src/gdu/gdu-linux-md-drive.c:582
 #, c-format
 msgid "RAID device %s"
 msgstr "%s RAID eszköz"
 
-#: ../src/gdu/gdu-util.c:65 ../src/gdu/gdu-util.c:94
+#: ../src/gdu/gdu-linux-md-drive.c:587
+msgid "RAID Array"
+msgstr "RAID tömb"
+
+#. Translators: %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-md-drive.c:594
 #, c-format
-msgid "%.*f %s"
-msgstr "%.*f %s"
+msgid "%s Software RAID"
+msgstr "%s szoftveres RAID"
 
-#: ../src/gdu/gdu-util.c:112
-msgid "%s / %s / %'"
-msgstr "%s / %s / %'"
+#: ../src/gdu/gdu-linux-md-drive.c:597
+msgid "Software RAID"
+msgstr "Szoftveres RAID"
 
-#: ../src/gdu/gdu-util.c:141
+#. Translators: The first %s is the size in power-of-10 units, e.g. 100 KB
+#. * the second %s is the size in power-of-2 units, e.g. 20 MiB
+#. * the third %s is the size as a number
+#.
+#: ../src/gdu/gdu-util.c:118
+#, c-format
+msgid "%s / %s / %s bytes"
+msgstr "%s / %s / %s bájt"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:149
 msgid "FAT (12-bit version)"
 msgstr "FAT (12 bites)"
 
-#: ../src/gdu/gdu-util.c:143 ../src/gdu/gdu-util.c:149
-#: ../src/gdu/gdu-util.c:155 ../src/gdu/gdu-util.c:159
-#: ../src/gdu/gdu-util.c:161
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:152 ../src/gdu/gdu-util.c:159
+#: ../src/gdu/gdu-util.c:166 ../src/gdu/gdu-util.c:170
+#: ../src/gdu/gdu-util.c:172
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/gdu/gdu-util.c:147
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:157
 msgid "FAT (16-bit version)"
 msgstr "FAT (16 bites)"
 
-#: ../src/gdu/gdu-util.c:153
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:164
 msgid "FAT (32-bit version)"
 msgstr "FAT (32 bites)"
 
-#: ../src/gdu/gdu-util.c:167
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:179
 #, c-format
 msgid "NTFS (version %s)"
 msgstr "NTFS (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:169 ../src/gdu/gdu-util.c:171
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:182 ../src/gdu/gdu-util.c:184
 #, c-format
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/gdu/gdu-util.c:175 ../src/gdu/gdu-util.c:177
+#. Translators: HFS is a filesystem type
+#: ../src/gdu/gdu-util.c:189 ../src/gdu/gdu-util.c:191
 msgid "HFS"
 msgstr "HFS"
 
-#: ../src/gdu/gdu-util.c:181 ../src/gdu/gdu-util.c:183
+#. Translators: HFS+ is a filesystem type
+#: ../src/gdu/gdu-util.c:196 ../src/gdu/gdu-util.c:198
 msgid "HFS+"
 msgstr "HFS+"
 
-#: ../src/gdu/gdu-util.c:187
+#: ../src/gdu/gdu-util.c:202
 msgid "Linux Unified Key Setup"
 msgstr "Egyesített linuxos kulcsbeállítás"
 
-#: ../src/gdu/gdu-util.c:189
+#. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
+#: ../src/gdu/gdu-util.c:205
 msgid "LUKS"
 msgstr "LUKS"
 
-#: ../src/gdu/gdu-util.c:194
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:211
 #, c-format
 msgid "Linux Ext2 (version %s)"
 msgstr "Linux Ext2 (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:196
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:214
 #, c-format
 msgid "Linux Ext2"
 msgstr "Linux Ext2"
 
-#: ../src/gdu/gdu-util.c:198
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:217
 msgid "ext2"
 msgstr "ext2"
 
-#: ../src/gdu/gdu-util.c:203
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:223
 #, c-format
 msgid "Linux Ext3 (version %s)"
 msgstr "Linux Ext3 (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:205
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:226
 #, c-format
 msgid "Linux Ext3"
 msgstr "Linux Ext3"
 
-#: ../src/gdu/gdu-util.c:207
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:229
 msgid "ext3"
 msgstr "ext3"
 
-#: ../src/gdu/gdu-util.c:212
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:235
 #, c-format
 msgid "Journal for Linux ext3 (version %s)"
 msgstr "Napló Linux ext3-hoz (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:214
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:238
 #, c-format
 msgid "Journal for Linux ext3"
 msgstr "Napló Linux ext3-hoz"
 
-#: ../src/gdu/gdu-util.c:216
+#. Translators: jbd is a filesystem type
+#: ../src/gdu/gdu-util.c:241
 msgid "jbd"
 msgstr "jbd"
 
-#: ../src/gdu/gdu-util.c:221
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:247
 #, c-format
 msgid "Linux Ext4 (version %s)"
 msgstr "Linux Ext4 (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:223
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:250
 #, c-format
 msgid "Linux Ext4"
 msgstr "Linux Ext4"
 
-#: ../src/gdu/gdu-util.c:225
+#. Translators: Ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:253
 msgid "ext4"
 msgstr "ext4"
 
-#: ../src/gdu/gdu-util.c:230
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:259
 #, c-format
 msgid "Linux XFS (version %s)"
 msgstr "Linux XFS (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:232
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:262
 #, c-format
 msgid "Linux XFS"
 msgstr "Linux XFS"
 
-#: ../src/gdu/gdu-util.c:234
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:265
 msgid "xfs"
 msgstr "xfs"
 
-#: ../src/gdu/gdu-util.c:238
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:270
 msgid "ISO 9660"
 msgstr "ISO 9660"
 
-#: ../src/gdu/gdu-util.c:240
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:273
 msgid "iso9660"
 msgstr "iso9660"
 
-#: ../src/gdu/gdu-util.c:244
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:278
 msgid "Universal Disk Format"
 msgstr "Univerzális lemezformátum"
 
-#: ../src/gdu/gdu-util.c:246
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:281
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:250 ../src/palimpsest/gdu-section-swapspace.c:82
-#: ../src/palimpsest/gdu-shell.c:319
+#: ../src/gdu/gdu-util.c:285 ../src/palimpsest/gdu-section-swapspace.c:82
+#: ../src/palimpsest/gdu-shell.c:356
 msgid "Swap Space"
 msgstr "Lapozóterület"
 
-#: ../src/gdu/gdu-util.c:252
+#. Translators: filesystem type for swap space
+#: ../src/gdu/gdu-util.c:288
 msgid "swap"
 msgstr "swap"
 
-#: ../src/gdu/gdu-util.c:257
+#: ../src/gdu/gdu-util.c:293
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
 msgstr "LVM2 fizikai kötet (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:259
+#: ../src/gdu/gdu-util.c:295
 #, c-format
 msgid "LVM2 Physical Volume"
 msgstr "LVM2 fizikai kötet"
 
-#: ../src/gdu/gdu-util.c:261
+#. Translators: short name for LVM2 Physical Volume
+#: ../src/gdu/gdu-util.c:298
 msgid "lvm2_pv"
 msgstr "lvm2_pv"
 
-#: ../src/gdu/gdu-util.c:267
+#: ../src/gdu/gdu-util.c:304
 #, c-format
 msgid "RAID Component (version %s)"
 msgstr "RAID összetevő (%s verzió)"
 
-#: ../src/gdu/gdu-util.c:269
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1032
+#: ../src/gdu/gdu-util.c:306
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1114
 #, c-format
 msgid "RAID Component"
 msgstr "RAID összetevő"
 
-#: ../src/gdu/gdu-util.c:271
+#. Translators: short name for 'RAID Component'
+#: ../src/gdu/gdu-util.c:309
 msgid "raid"
 msgstr "raid"
 
-#: ../src/gdu/gdu-util.c:285
+#: ../src/gdu/gdu-util.c:323
 msgid "Creating File System"
 msgstr "Fájlrendszer létrehozása"
 
-#: ../src/gdu/gdu-util.c:287
+#: ../src/gdu/gdu-util.c:325
 msgid "Mounting File System"
 msgstr "Fájlrendszer csatolása"
 
-#: ../src/gdu/gdu-util.c:289
+#: ../src/gdu/gdu-util.c:327
 msgid "Unmounting File System"
 msgstr "Fájlrendszer leválasztása"
 
-#: ../src/gdu/gdu-util.c:291
+#: ../src/gdu/gdu-util.c:329
 msgid "Checking File System"
 msgstr "Fájlrendszer ellenőrzése"
 
-#: ../src/gdu/gdu-util.c:293
+#: ../src/gdu/gdu-util.c:331
 msgid "Creating LUKS Device"
 msgstr "LUKS eszköz létrehozása"
 
-#: ../src/gdu/gdu-util.c:295
+#: ../src/gdu/gdu-util.c:333
 msgid "Unlocking LUKS Device"
 msgstr "LUKS eszköz feloldása"
 
-#: ../src/gdu/gdu-util.c:297
+#: ../src/gdu/gdu-util.c:335
 msgid "Locking LUKS Device"
 msgstr "LUKS eszköz zárolása"
 
-#: ../src/gdu/gdu-util.c:299
+#: ../src/gdu/gdu-util.c:337
 msgid "Creating Partition Table"
 msgstr "Partíciós tábla létrehozása"
 
-#: ../src/gdu/gdu-util.c:301
+#: ../src/gdu/gdu-util.c:339
 msgid "Deleting Partition"
 msgstr "Partíció törlése"
 
-#: ../src/gdu/gdu-util.c:303
+#: ../src/gdu/gdu-util.c:341
 msgid "Creating Partition"
 msgstr "Partíció létrehozása"
 
-#: ../src/gdu/gdu-util.c:305
+#: ../src/gdu/gdu-util.c:343
 msgid "Modifying Partition"
 msgstr "Partíció módosítása"
 
-#: ../src/gdu/gdu-util.c:307
+#: ../src/gdu/gdu-util.c:345
 msgid "Setting Label for Device"
 msgstr "Eszköz címkéjének beállítása"
 
-#: ../src/gdu/gdu-util.c:309
+#: ../src/gdu/gdu-util.c:347
 msgid "Changing Passphrase for Encrypted LUKS Device"
 msgstr "Titkosított LUKS eszköz jelmondatának módosítása"
 
-#: ../src/gdu/gdu-util.c:311
+#: ../src/gdu/gdu-util.c:349
 msgid "Adding Component to RAID Array"
 msgstr "Összetevő RAID tömbhöz adása"
 
-#: ../src/gdu/gdu-util.c:313
+#: ../src/gdu/gdu-util.c:351
 msgid "Removing Component from RAID Array"
 msgstr "Összetevő eltávolítása RAID tömbből"
 
-#: ../src/gdu/gdu-util.c:315
+#: ../src/gdu/gdu-util.c:353
 msgid "Stopping RAID Array"
 msgstr "RAID tömb leállítása"
 
-#: ../src/gdu/gdu-util.c:317
+#: ../src/gdu/gdu-util.c:355
 msgid "Starting RAID Array"
 msgstr "RAID tömb indítása"
 
-#: ../src/gdu/gdu-util.c:319
-msgid "Running S.M.A.R.T. Self Test"
-msgstr "S.M.A.R.T. önteszt futtatása"
+#: ../src/gdu/gdu-util.c:357
+msgid "Checking RAID Array"
+msgstr "RAID tömb ellenőrzése"
 
-#: ../src/gdu/gdu-util.c:321
+#: ../src/gdu/gdu-util.c:359
+msgid "Repairing RAID Array"
+msgstr "RAID tömb javítása"
+
+#: ../src/gdu/gdu-util.c:361
+msgid "Running Short SMART Self-Test"
+msgstr "Rövid SMART önteszt futtatása"
+
+#: ../src/gdu/gdu-util.c:363
+msgid "Running Extended SMART Self-Test"
+msgstr "Bővített SMART önteszt futtatása"
+
+#: ../src/gdu/gdu-util.c:365
+msgid "Running Conveyance SMART Self-Test"
+msgstr "Általános SMART önteszt futtatása"
+
+#: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
 msgstr "Adathordozó kiadása"
 
-#: ../src/gdu/gdu-util.c:323
+#: ../src/gdu/gdu-util.c:369
+msgid "Detaching Device"
+msgstr "Eszköz leválasztása"
+
+#: ../src/gdu/gdu-util.c:371
 msgid "Forcibly Unmounting Filesystem"
 msgstr "Fájlrendszer kényszerített leválasztása"
 
-#: ../src/gdu/gdu-util.c:325
+#: ../src/gdu/gdu-util.c:373
 msgid "Forcibly Locking LUKS device"
 msgstr "LUKS eszköz kényszerített zárolása"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
-#: ../src/gdu/gdu-util.c:340
+#: ../src/gdu/gdu-util.c:388
 msgid "MBR Partition Scheme"
 msgstr "MBR partícióséma"
 
-#: ../src/gdu/gdu-util.c:341
+#: ../src/gdu/gdu-util.c:389
 msgid "EFI System Partition"
 msgstr "EFI rendszerpartíció"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:343
+#: ../src/gdu/gdu-util.c:391
 msgid "Microsoft Reserved Partition"
-msgstr "Microsoft fenntartottpartíció"
+msgstr "Microsoft fenntartott partíció"
 
 #. {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")},
-#: ../src/gdu/gdu-util.c:345
+#: ../src/gdu/gdu-util.c:393
 msgid "LDM meta data Partition"
 msgstr "LDM metaadat-partíció"
 
-#: ../src/gdu/gdu-util.c:346
+#: ../src/gdu/gdu-util.c:394
 msgid "LDM data Partition"
 msgstr "LDM adatpartíció"
 
 #. Linux
-#: ../src/gdu/gdu-util.c:348
+#: ../src/gdu/gdu-util.c:396
 msgid "Basic Data Partition"
 msgstr "Alapszintű adatpartíció"
 
 #. Same GUID as MS!
-#: ../src/gdu/gdu-util.c:349
+#: ../src/gdu/gdu-util.c:397
 msgid "Linux RAID Partition"
 msgstr "Linux RAID partíció"
 
-#: ../src/gdu/gdu-util.c:350
+#: ../src/gdu/gdu-util.c:398
 msgid "Linux Swap Partition"
 msgstr "Linux lapozópartíció"
 
-#: ../src/gdu/gdu-util.c:351
+#: ../src/gdu/gdu-util.c:399
 msgid "Linux LVM Partition"
 msgstr "Linux LVM partíció"
 
-#: ../src/gdu/gdu-util.c:352
+#: ../src/gdu/gdu-util.c:400
 msgid "Linux Reserved Partition"
 msgstr "Linux fenntartott partíció"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:354 ../src/gdu/gdu-util.c:362
+#: ../src/gdu/gdu-util.c:402 ../src/gdu/gdu-util.c:410
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Apple HFS/HFS+ partíció"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:355 ../src/gdu/gdu-util.c:361
+#: ../src/gdu/gdu-util.c:403 ../src/gdu/gdu-util.c:409
 msgid "Apple UFS Partition"
 msgstr "Apple UFS partíció"
 
-#: ../src/gdu/gdu-util.c:356
+#: ../src/gdu/gdu-util.c:404
 msgid "Apple RAID Partition"
 msgstr "Apple RAID partíció"
 
-#: ../src/gdu/gdu-util.c:363 ../src/gdu-gtk/gdu-gtk.c:1542
-#: ../src/palimpsest/gdu-shell.c:217 ../src/palimpsest/gdu-shell.c:245
+#: ../src/gdu/gdu-util.c:411 ../src/gdu-gtk/gdu-gtk.c:1544
+#: ../src/palimpsest/gdu-shell.c:219 ../src/palimpsest/gdu-shell.c:249
 msgid "Apple Partition Map"
 msgstr "Apple partíciótérkép"
 
-#: ../src/gdu/gdu-util.c:364
+#: ../src/gdu/gdu-util.c:412
 msgid "Unused Partition"
 msgstr "Használaton kívüli partíció"
 
-#: ../src/gdu/gdu-util.c:365
+#: ../src/gdu/gdu-util.c:413
 msgid "Empty Partition"
 msgstr "Üres partíció"
 
-#: ../src/gdu/gdu-util.c:366
+#: ../src/gdu/gdu-util.c:414
 msgid "Driver Partition"
 msgstr "Meghajtópartíció"
 
-#: ../src/gdu/gdu-util.c:367
+#: ../src/gdu/gdu-util.c:415
 msgid "Driver 4.3 Partition"
 msgstr "4.3-as meghajtópartíció"
 
-#: ../src/gdu/gdu-util.c:368
+#: ../src/gdu/gdu-util.c:416
 msgid "ProDOS file system"
 msgstr "ProDOS fájlrendszer"
 
-#: ../src/gdu/gdu-util.c:369
+#: ../src/gdu/gdu-util.c:417
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:370
+#: ../src/gdu/gdu-util.c:418
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:371
+#: ../src/gdu/gdu-util.c:419
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:372
+#: ../src/gdu/gdu-util.c:420
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:373
+#: ../src/gdu/gdu-util.c:421
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:376
+#: ../src/gdu/gdu-util.c:424
 msgid "Empty (0x00)"
 msgstr "Üres (0x00)"
 
-#: ../src/gdu/gdu-util.c:377
+#: ../src/gdu/gdu-util.c:425
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:378
+#: ../src/gdu/gdu-util.c:426
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:379
+#: ../src/gdu/gdu-util.c:427
 msgid "Extended (0x05)"
 msgstr "Kiterjesztett (0x05)"
 
-#: ../src/gdu/gdu-util.c:380
+#: ../src/gdu/gdu-util.c:428
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:381
+#: ../src/gdu/gdu-util.c:429
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:382
+#: ../src/gdu/gdu-util.c:430
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:383
+#: ../src/gdu/gdu-util.c:431
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:432
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:385
+#: ../src/gdu/gdu-util.c:433
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 kiterjesztett (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:386
+#: ../src/gdu/gdu-util.c:434
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:387
+#: ../src/gdu/gdu-util.c:435
 msgid "Hidden FAT12 (0x11)"
 msgstr "Rejtett FAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:388
+#: ../src/gdu/gdu-util.c:436
 msgid "Compaq diagnostics (0x12)"
 msgstr "Compaq diagnosztikai (0x12)"
 
-#: ../src/gdu/gdu-util.c:389
+#: ../src/gdu/gdu-util.c:437
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "Rejtett FAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:438
 msgid "Hidden FAT16 (0x16)"
 msgstr "Rejtett FAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:391
+#: ../src/gdu/gdu-util.c:439
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "Rejtett HPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:440
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "Rejtett W95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:393
+#: ../src/gdu/gdu-util.c:441
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "Rejtett W95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:442
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "Rejtett W95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:395
+#: ../src/gdu/gdu-util.c:443
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:444
 msgid "Linux swap (0x82)"
 msgstr "Linux lapozó (0x82)"
 
-#: ../src/gdu/gdu-util.c:397
+#: ../src/gdu/gdu-util.c:445
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:398
+#: ../src/gdu/gdu-util.c:446
 msgid "Hibernation (0x84)"
 msgstr "Hibernálási (0x84)"
 
-#: ../src/gdu/gdu-util.c:399
+#: ../src/gdu/gdu-util.c:447
 msgid "Linux Extended (0x85)"
 msgstr "Linux kiterjesztett (0x85)"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:448
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:401
+#: ../src/gdu/gdu-util.c:449
 msgid "Hibernation (0xa0)"
 msgstr "Hibernálási (0xa0)"
 
-#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:450
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:403
+#: ../src/gdu/gdu-util.c:451
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:404
+#: ../src/gdu/gdu-util.c:452
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:405
+#: ../src/gdu/gdu-util.c:453
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:454
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris indító (0xbe)"
 
-#: ../src/gdu/gdu-util.c:407
+#: ../src/gdu/gdu-util.c:455
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:456
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:409
+#: ../src/gdu/gdu-util.c:457
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:458
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:411
+#: ../src/gdu/gdu-util.c:459
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:460
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Linux raid automatikus felismeréssel (0xfd)"
 
-#: ../src/gdu/gdu-util.c:436
+#. Translators: Shown for unknown partition types.
+#. * %s is the partition type name
+#.
+#: ../src/gdu/gdu-util.c:487
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Ismeretlen (%s)"
 
-#: ../src/gdu/gdu-util.c:446
+#: ../src/gdu/gdu-util.c:497
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
@@ -1127,7 +1020,7 @@ msgstr ""
 "Népszerű formátum, amely szinte minden eszközzel vagy rendszerrel "
 "kompatibilis, általában adatcserére használják."
 
-#: ../src/gdu/gdu-util.c:450
+#: ../src/gdu/gdu-util.c:501
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
@@ -1135,7 +1028,7 @@ msgstr ""
 "Ez a fájlrendszer csak Linux rendszerekkel kompatibilis és a klasszikus UNIX "
 "fájljogosultságokat támogatja. Ez a fájlrendszer nem használ naplózást."
 
-#: ../src/gdu/gdu-util.c:456
+#: ../src/gdu/gdu-util.c:507
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
@@ -1143,11 +1036,11 @@ msgstr ""
 "Ez a fájlrendszer csak Linux rendszerekkel kompatibilis és a klasszikus UNIX "
 "fájljogosultságokat támogatja."
 
-#: ../src/gdu/gdu-util.c:460
+#: ../src/gdu/gdu-util.c:511
 msgid "Swap area used by the operating system for virtual memory."
 msgstr "Az operációs rendszer virtuális memóriaként használt lapozóterülete."
 
-#: ../src/gdu/gdu-util.c:463
+#: ../src/gdu/gdu-util.c:514
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
@@ -1155,33 +1048,33 @@ msgstr ""
 "A Windows natív fájlrendszere. A Windowson kívül nem sok operációs "
 "rendszerrel kompatibilis."
 
-#: ../src/gdu/gdu-util.c:467
+#: ../src/gdu/gdu-util.c:518
 msgid "No file system will be created."
 msgstr "Nem kerül létrehozásra fájlrendszer."
 
-#: ../src/gdu/gdu-util.c:470
+#: ../src/gdu/gdu-util.c:521
 msgid "Create an Extended Partition for logical partitions."
 msgstr "Kiterjesztett partíció létrehozása logikai partíciókhoz."
 
-#: ../src/gdu/gdu-util.c:483
+#: ../src/gdu/gdu-util.c:534
 msgid ""
 "The Master Boot Record scheme is compatible with almost any device or system "
-"but has a number of limitations with respect to to disk size and number of "
+"but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
 "Az Elsődleges indítórekord séma majdnem minden eszközzel és rendszerrel "
 "kompatibilis, de megvannak a korlátai a lemez méretére és a partíciók "
 "számára vonatkozóan."
 
-#: ../src/gdu/gdu-util.c:488
+#: ../src/gdu/gdu-util.c:539
 msgid ""
-"A legacy scheme that is incomptible with most systems except Apple systems "
+"A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
-"Örökölt séma, amely kompatibilis a legtöbb rendszerrel, kivéve az Apple és a "
-"legtöbb Linux rendszert. Nem ajánlott cserélhető adathordozókra."
+"Örökölt séma, amely nem kompatibilis a legtöbb rendszerrel, kivéve az Apple "
+"és a legtöbb Linux rendszert. Nem ajánlott cserélhető adathordozókra."
 
-#: ../src/gdu/gdu-util.c:493
+#: ../src/gdu/gdu-util.c:544
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
@@ -1189,365 +1082,2009 @@ msgstr ""
 "A GUID séma kompatibilis a legtöbb korszerű rendszerrel, de inkompatibilis "
 "lehet néhány eszközzel és örökölt rendszerrel."
 
-#: ../src/gdu/gdu-util.c:497
+#: ../src/gdu/gdu-util.c:548
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
-"partitioing the disk for e.g. whole disk use or floppy / Zip disks."
+"partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
 "A teljes lemezt használaton kívülinek jelöli. Ezt csak akkor használja, ha "
-"el akarja kerülni a lemez partícionálását, például a teljes lemez "
+"el akarja kerülni a lemez particionálását, például a teljes lemez "
 "használatához vagy hajlékonylemezek esetén."
 
-#: ../src/gdu/gdu-util.c:680 ../src/gdu-gtk/gdu-gtk.c:946
+#: ../src/gdu/gdu-util.c:731 ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "LUKS jelszó a(z) %s UUID-hez"
 
-#: ../src/gdu/gdu-util.c:709
+#: ../src/gdu/gdu-util.c:760
 #, c-format
 msgid "%.1f kbit/s"
 msgstr "%.1f kbit/s"
 
-#: ../src/gdu/gdu-util.c:712
+#: ../src/gdu/gdu-util.c:763
 #, c-format
 msgid "%.1f Mbit/s"
 msgstr "%.1f Mbit/s"
 
-#: ../src/gdu/gdu-util.c:715
+#: ../src/gdu/gdu-util.c:766
 #, c-format
 msgid "%.1f Gbit/s"
 msgstr "%.1f Gbit/s"
 
-#: ../src/gdu/gdu-util.c:730
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:782
 msgid "SATA"
 msgstr "SATA"
 
-#: ../src/gdu/gdu-util.c:732
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:785
 msgid "eSATA"
 msgstr "eSATA"
 
-#: ../src/gdu/gdu-util.c:734
+#. Translators: interface name for parallel ATA disks
+#: ../src/gdu/gdu-util.c:788
 msgid "PATA"
 msgstr "PATA"
 
-#: ../src/gdu/gdu-util.c:736
+#. Translators: interface name for ATA disks
+#: ../src/gdu/gdu-util.c:791
 msgid "ATA"
 msgstr "ATA"
 
-#: ../src/gdu/gdu-util.c:738
+#. Translators: interface name for SCSI disks
+#: ../src/gdu/gdu-util.c:794
 msgid "SCSI"
 msgstr "SCSI"
 
-#: ../src/gdu/gdu-util.c:740
+#. Translators: interface name for USB disks
+#: ../src/gdu/gdu-util.c:797
 msgid "USB"
 msgstr "USB"
 
-#: ../src/gdu/gdu-util.c:742
+#. Translators: interface name for firewire disks
+#: ../src/gdu/gdu-util.c:800
 msgid "Firewire"
 msgstr "Firewire"
 
-#: ../src/gdu/gdu-util.c:744
+#. Translators: interface name for SDIO disks
+#: ../src/gdu/gdu-util.c:803
 msgid "SDIO"
 msgstr "SDIO"
 
-#: ../src/gdu/gdu-util.c:746
+#. Translators: interface name for virtual disks
+#: ../src/gdu/gdu-util.c:806
 msgid "Virtual"
 msgstr "Virtuális"
 
-#: ../src/gdu/gdu-util.c:751 ../src/gdu-gtk/gdu-gtk.c:216
-#: ../src/palimpsest/gdu-section-health.c:261
-#: ../src/palimpsest/gdu-section-health.c:269
+#. Translators: name shown for unknown disk connection interfaces
+#: ../src/gdu/gdu-util.c:812
+msgctxt "connection name"
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#. Translators: Connection with speed information.
+#. * First %s is the connection name, like 'SATA' or 'USB'
+#. * second %s is the speed, like '2 Mbit/s'
+#.
+#: ../src/gdu/gdu-util.c:822
+#, c-format
+msgid "%s at %s"
+msgstr "%s, sebesség: %s"
+
+#: ../src/gdu/gdu-util.c:841
+msgctxt "RAID level"
+msgid "Stripe (RAID-0)"
+msgstr "Összefűzött (RAID-0)"
+
+#: ../src/gdu/gdu-util.c:843
+msgctxt "RAID level"
+msgid "RAID-0"
+msgstr "RAID-0"
+
+#: ../src/gdu/gdu-util.c:846
+msgctxt "RAID level"
+msgid "Mirror (RAID-1)"
+msgstr "Tükrözött (RAID-1)"
+
+#: ../src/gdu/gdu-util.c:848
+msgctxt "RAID level"
+msgid "RAID-1"
+msgstr "RAID-1"
+
+#: ../src/gdu/gdu-util.c:851
+msgctxt "RAID level"
+msgid "Parity Disk (RAID-4)"
+msgstr "Paritáslemez (RAID-4)"
+
+#: ../src/gdu/gdu-util.c:853
+msgctxt "RAID level"
+msgid "RAID-4"
+msgstr "RAID-4"
+
+#: ../src/gdu/gdu-util.c:856
+msgctxt "RAID level"
+msgid "Distributed Parity (RAID-5)"
+msgstr "Osztott paritás (RAID-5)"
+
+#: ../src/gdu/gdu-util.c:858
+msgctxt "RAID level"
+msgid "RAID-5"
+msgstr "RAID-5"
+
+#: ../src/gdu/gdu-util.c:861
+msgctxt "RAID level"
+msgid "Dual Distributed Parity (RAID-6)"
+msgstr "Dupla osztott paritás (RAID-6)"
+
+#: ../src/gdu/gdu-util.c:863
+msgctxt "RAID level"
+msgid "RAID-6"
+msgstr "RAID-6"
+
+#: ../src/gdu/gdu-util.c:866
+msgctxt "RAID level"
+msgid "Stripe of Mirrors (RAID-10)"
+msgstr "Összefűzött tükrök (RAID-10)"
+
+#: ../src/gdu/gdu-util.c:868
+msgctxt "RAID level"
+msgid "RAID-10"
+msgstr "RAID-10"
+
+#: ../src/gdu/gdu-util.c:871
+msgctxt "RAID level"
+msgid "Concatenated (Linear)"
+msgstr "Összefűzött (lineáris)"
+
+#: ../src/gdu/gdu-util.c:873
+msgctxt "RAID level"
+msgid "Linear"
+msgstr "Lineáris"
+
+#: ../src/gdu/gdu-util.c:887
+msgid ""
+"Striped set without parity. Provides improved performance but no fault "
+"tolerance. If a single disk in the array fails, the entire RAID-0 array "
+"fails."
+msgstr ""
+"Összefűzött tömb paritás nélkül. Jobb teljesítményt biztosít, de a hibatűrés "
+"nem javul. Ha a tömb egy lemeze meghibásodik, az egész RAID-0 tömb "
+"meghibásodik."
+
+#: ../src/gdu/gdu-util.c:891
+msgid ""
+"Mirrored set without parity. Provides fault tolerance and improved "
+"performance for reading. RAID-1 arrays can sustain all but one disk failing."
+msgstr ""
+"Tükrözött tömb paritás nélkül. Jobb hibatűrést és olvasási teljesítményt "
+"biztosít. A RAID-1 tömbök egy kivételével az összes lemez meghibásodását "
+"elviselik."
+
+#: ../src/gdu/gdu-util.c:895
+msgid ""
+"Striped set with parity on a single disk. Provides improved performance and "
+"fault tolerance. RAID-4 arrays can sustain a single disk failure."
+msgstr ""
+"Összefűzött tömb egy lemezen lévő paritással. Jobb teljesítményt és "
+"hibatűrést biztosít. A RAID-4 tömbök elviselik egy lemez meghibásodását."
+
+#: ../src/gdu/gdu-util.c:899
+msgid ""
+"Striped set with distributed parity. Provides improved performance and fault "
+"tolerance. RAID-5 arrays can sustain a single disk failure."
+msgstr ""
+"Összefűzött tömb elosztott paritással. Jobb teljesítményt és hibatűrést "
+"biztosít. A RAID-5 tömbök elviselik egy lemez meghibásodását."
+
+#: ../src/gdu/gdu-util.c:903
+msgid ""
+"Striped set with dual distributed parity. Provides improved performance and "
+"fault tolerance. RAID-6 arrays can sustain two disk failures."
+msgstr ""
+"Összefűzött tömb dupla elosztott paritással. Jobb teljesítményt és "
+"hibatűrést biztosít. A RAID-6 tömbök elviselik két lemez meghibásodását."
+
+#: ../src/gdu/gdu-util.c:907
+msgid ""
+"Striped set with distributed parity. Provides improved performance and fault "
+"tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
+"mirror loses all its drives."
+msgstr ""
+"Összefűzött tömb elosztott paritással. Jobb teljesítményt és hibatűrést "
+"biztosít. A RAID-10 tömbök elviselik több lemez meghibásodását, amíg egy "
+"tükör minden lemeze el nem vész."
+
+#: ../src/gdu/gdu-util.c:913
+#, c-format
+msgid "Unknown RAID level %s."
+msgstr "Ismeretlen RAID-szint: %s."
+
+#. Translators: Overall description of the GOOD status
+#: ../src/gdu/gdu-util.c:949
+msgid "Disk is healthy"
+msgstr "A lemez egészséges"
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
+#: ../src/gdu/gdu-util.c:953
+msgid "Disk was used outside of design parameters in the past"
+msgstr "A lemez a múltban a tervezettől eltérő környezetben volt"
+
+#. Translators: Overall description of the BAD_SECTOR status
+#: ../src/gdu/gdu-util.c:957
+msgid "Disk has a few bad sectors"
+msgstr "A lemez hibás szektorokat tartalmaz"
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
+#: ../src/gdu/gdu-util.c:961
+msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
+msgstr "A LEMEZT A TERVEZETTŐL ELTÉRŐ KÖRNYEZETBEN HASZNÁLJA"
+
+#. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
+#. Translators: Suggested action for the BAD_SECTOR_MANY status
+#. Translators: Suggested action for the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:963 ../src/gdu/gdu-util.c:971
+#: ../src/gdu/gdu-util.c:977
+msgid "Backup all data and replace the disk"
+msgstr "Mentsen minden adatot és cserélje ki a lemezt"
+
+#. Translators: Overall description of the BAD_SECTOR_MANY status
+#: ../src/gdu/gdu-util.c:968
+msgid "DISK HAS MANY BAD SECTORS"
+msgstr "A LEMEZ SOK HIBÁS SZEKTORT TARTALMAZ"
+
+#. Translators: Overall description of the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:975
+msgid "DISK FAILURE IS IMMINENT"
+msgstr "A LEMEZ MEGHIBÁSODÁSA VÁRHATÓ"
+
+#. Translators: Description when the overall SMART status is unknown
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is unknown
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we don't know if the disk has bad sectors
+#. Translators: Shown in the "Powered On" item in the status table when we don't know
+#. * the amount of time the disk has been powered on
+#. Translators: Shown in the "Temperature" item in the status table when we don't know
+#. * the temperature of the disk
+#.
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu/gdu-util.c:982 ../src/gdu-gtk/gdu-ata-smart-dialog.c:2524
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2542
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2562
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2571
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2633
 #: ../src/playground/grid/gdu-grid-element.c:566
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: ../src/gdu/gdu-util.c:774
-msgid "RAID-0"
-msgstr "RAID-0"
-
-#: ../src/gdu/gdu-util.c:776
-msgid "RAID-1"
-msgstr "RAID-1"
-
-#: ../src/gdu/gdu-util.c:778
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:635
-msgid "RAID-4"
-msgstr "RAID-4"
-
-#: ../src/gdu/gdu-util.c:780
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:637
-msgid "RAID-5"
-msgstr "RAID-5"
-
-#: ../src/gdu/gdu-util.c:782
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
-msgid "RAID-6"
-msgstr "RAID-6"
-
-#: ../src/gdu/gdu-util.c:784
-msgid "RAID-10"
-msgstr "RAID-10"
-
-#: ../src/gdu/gdu-util.c:786
-msgid "JBOD"
-msgstr "JBOD"
-
-#: ../src/gdu/gdu-volume.c:73
+#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
+#: ../src/gdu/gdu-volume.c:74
 msgid "CD-ROM Disc"
 msgstr "CD-ROM lemez"
 
-#: ../src/gdu/gdu-volume.c:73
+#: ../src/gdu/gdu-volume.c:74
 msgid "Blank CD-ROM Disc"
 msgstr "Üres CD-ROM lemez"
 
-#: ../src/gdu/gdu-volume.c:74
+#: ../src/gdu/gdu-volume.c:75
 msgid "CD-R Disc"
 msgstr "CD-R lemez"
 
-#: ../src/gdu/gdu-volume.c:74
+#: ../src/gdu/gdu-volume.c:75
 msgid "Blank CD-R Disc"
 msgstr "Üres CD-R lemez"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:76
 msgid "CD-RW Disc"
 msgstr "CD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:76
 msgid "Blank CD-RW Disc"
 msgstr "Üres CD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:76 ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
 msgid "DVD-ROM Disc"
 msgstr "DVD-ROM lemez"
 
-#: ../src/gdu/gdu-volume.c:76 ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
 msgid "Blank DVD-ROM Disc"
 msgstr "Üres DVD-ROM lemez"
 
-#: ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:79
 msgid "DVD-RW Disc"
 msgstr "DVD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:79
 msgid "Blank DVD-RW Disc"
 msgstr "Üres DVD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:80
 msgid "DVD-RAM Disc"
 msgstr "DVD-RAM lemez"
 
-#: ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:80
 msgid "Blank DVD-RAM Disc"
 msgstr "Üres DVD-RAM lemez"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:81
 msgid "DVD+R Disc"
 msgstr "DVD+R lemez"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:81
 msgid "Blank DVD+R Disc"
 msgstr "Üres DVD+R lemez"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:82
 msgid "DVD+RW Disc"
 msgstr "DVD+RW lemez"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:82
 msgid "Blank DVD+RW Disc"
 msgstr "Üres DVD+RW lemez"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
 msgid "DVD+R DL Disc"
 msgstr "DVD+R DL lemez"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD+R DL Disc"
 msgstr "Üres DVD+R DL lemez"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:84
 msgid "DVD+RW DL Disc"
 msgstr "DVD+RW DL lemez"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD+RW DL Disc"
 msgstr "Üres DVD+RW DL lemez"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blu-Ray Disc"
 msgstr "Blu-Ray lemez"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blank Blu-Ray Disc"
 msgstr "Üres Blu-Ray lemez"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blu-Ray R Disc"
 msgstr "Blu-Ray R lemez"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blank Blu-Ray R Disc"
 msgstr "Üres Blu-Ray R lemez"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blu-Ray RW Disc"
 msgstr "Blu-Ray RW lemez"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blank Blu-Ray RW Disc"
 msgstr "Üres Blu-Ray RW lemez"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:88
 msgid "HD DVD Disc"
 msgstr "HD DVD lemez"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:88
 msgid "Blank HD DVD Disc"
 msgstr "Üres HD DVD lemez"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:89
 msgid "HD DVD-R Disc"
 msgstr "HD DVD-R lemez"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:89
 msgid "Blank HD DVD-R Disc"
 msgstr "Üres HD DVD-R lemez"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:90
 msgid "HD DVD-RW Disc"
 msgstr "HD DVD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blank HD DVD-RW Disc"
 msgstr "Üres HD DVD-RW lemez"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:91
 msgid "MO Disc"
 msgstr "MO lemez"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blank MO Disc"
 msgstr "Üres MO lemez"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:92
 msgid "MRW Disc"
 msgstr "MRW lemez"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blank MRW Disc"
 msgstr "Üres MRW lemez"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:93
 msgid "MRW/W Disc"
 msgstr "MRW/W lemez"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:93
 msgid "Blank MRW/W Disc"
 msgstr "Üres MRW/W lemez"
 
-#: ../src/gdu/gdu-volume.c:265
+#: ../src/gdu/gdu-volume.c:274
 msgid "Blank Optical Disc"
 msgstr "Üres optikai lemez"
 
-#: ../src/gdu/gdu-volume.c:272
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:284
 #, c-format
 msgid "%s Extended"
 msgstr "%s kiterjesztett"
 
-#: ../src/gdu/gdu-volume.c:278
+#: ../src/gdu/gdu-volume.c:285
+msgid "Contains logical partitions"
+msgstr "Logikai partíciókat tartalmaz"
+
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:300
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s titkosított"
 
-#: ../src/gdu/gdu-volume.c:288
+#: ../src/gdu/gdu-volume.c:310
 msgid "Optical Disc"
 msgstr "Optikai lemez"
 
-#: ../src/gdu/gdu-volume.c:291
+#. Translators: Label for a partition with a filesystem
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:316
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s fájlrendszer"
 
-#: ../src/gdu/gdu-volume.c:293
+#. Translators: Label for a partition table
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:322
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s partíciós tábla"
 
-#: ../src/gdu/gdu-volume.c:296
+#. Translators: Label for a LVM volume
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:328
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 fizikai kötet"
 
-#: ../src/gdu/gdu-volume.c:308
+#. Translators: Used if no specific RAID level could be determined
+#: ../src/gdu/gdu-volume.c:341
+msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
 
-#. RAID component; the label is the array name
-#: ../src/gdu/gdu-volume.c:312
+#. Translators: label for a RAID component
+#. * First %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:347 ../src/gdu/gdu-volume.c:359
 #, c-format
-msgid "%s %s (%s)"
-msgstr "%s %s (%s)"
+msgid "%s RAID Component"
+msgstr "%s RAID összetevő"
 
-#: ../src/gdu/gdu-volume.c:314
+#. Translators: description for a RAID component
+#. * First %s is the array name, e.g. 'My Photos RAID',
+#. * second %s is the RAID level string, e.g 'RAID-5'
+#.
+#: ../src/gdu/gdu-volume.c:352
 #, c-format
-msgid "%s %s"
-msgstr "%s %s"
+msgid "Part of \"%s\" %s array"
+msgstr "Egy „%s” nevű %s tömb része"
 
-#: ../src/gdu/gdu-volume.c:321
+#. Translators: label for a swap partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:370
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s lapozóterület"
 
-#: ../src/gdu/gdu-volume.c:323
+#. Translators: label for a data partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:375
 #, c-format
 msgid "%s Data"
 msgstr "%s adat"
 
-#: ../src/gdu/gdu-volume.c:326 ../src/gdu/gdu-volume.c:337
+#. Translators: label for a volume of unrecognized use
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:381 ../src/gdu/gdu-volume.c:397
 #, c-format
 msgid "%s Unrecognized"
 msgstr "%s ismeretlen"
 
-#: ../src/gdu/gdu-volume.c:330 ../src/gdu/gdu-volume.c:332
+#. Translators: description for a volume of unrecognized use
+#: ../src/gdu/gdu-volume.c:383
+msgid "Unknown or Unused"
+msgstr "Ismeretlen vagy nem használt"
+
+#. Translators: label for a partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:390 ../src/gdu/gdu-volume.c:392
 #, c-format
 msgid "%s Partition"
 msgstr "%s partíció"
 
-#: ../src/gdu/gdu-volume-hole.c:147
+#. Translators: The VPD name for a volume. The %d is the partition number
+#. * and the %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:424
 #, c-format
-msgid "%s Unallocated"
-msgstr "%s lefogalatlan"
+msgid "Partition %d of %s"
+msgstr "%d. partíció ezen: %s"
+
+#. Translators: The VPD name for a volume. The %d is the partition number.
+#.
+#: ../src/gdu/gdu-volume.c:430
+#, c-format
+msgid "Partition %d"
+msgstr "%d. partíció"
+
+#. Translators: The VPD name for a whole-disk volume.
+#. * The %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:438
+#, c-format
+msgid "Whole-disk volume on %s"
+msgstr "Teljes lemezes kötet ezen: %s"
+
+#. Translators: The VPD name for a whole-disk volume.
+#.
+#: ../src/gdu/gdu-volume.c:443
+msgid "Whole-disk volume"
+msgstr "Teljes lemezes kötet"
+
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume-hole.c:150
+#, c-format
+msgid "%s Free"
+msgstr "%s szabad"
+
+#: ../src/gdu/gdu-volume-hole.c:159 ../src/palimpsest/gdu-shell.c:418
+msgid "Unallocated Space"
+msgstr "Lefoglalatlan terület"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:144
+msgid "Read Error Rate"
+msgstr "Olvasási hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:145
+msgid ""
+"Frequency of errors while reading raw data from the disk. A non-zero value "
+"indicates a problem with either the disk surface or read/write heads"
+msgstr ""
+"Hibák gyakorisága nyers adatok olvasásakor a lemezről. A nem nulla érték "
+"hibát jelez a lemez felületén vagy az író/olvasó fejeken"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:154
+msgid "Throughput Performance"
+msgstr "Átviteli teljesítmény"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:155
+msgid "Average efficiency of the disk"
+msgstr "A lemez átlagos hatékonysága"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:162
+msgid "Spinup Time"
+msgstr "Felpörgési idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:163
+msgid "Time needed to spin up the disk"
+msgstr "A lemez felpörgéséhez szükséges idő"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:170
+msgid "Start/Stop Count"
+msgstr "Felpörgések/leállások száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:171
+msgid "Number of spindle start/stop cycles"
+msgstr "A tengely indítási/leállási ciklusainak száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:178
+msgid "Reallocated Sector Count"
+msgstr "Áthelyezett szektorok száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
+msgid ""
+"Count of remapped sectors. When the hard drive finds a read/write/"
+"verification error, it mark the sector as \"reallocated\" and transfers data "
+"to a special reserved area (spare area)"
+msgstr ""
+"Áthelyezett szektorok száma. Amikor a merevlemez írási/olvasási/ellenőrzési "
+"hibát talál, a szektort „áthelyezettként” jelöli és az adatokat egy "
+"speciális, fenntartott (tartalék) területre viszi át"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:188
+msgid "Read Channel Margin"
+msgstr "Csatorna olvasási határa"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:189
+msgid "Margin of a channel while reading data."
+msgstr "Csatorna tartaléka adatok olvasásakor."
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:196
+msgid "Seek Error Rate"
+msgstr "Keresési hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:197
+msgid "Frequency of errors while positioning"
+msgstr "Pozicionálás közbeni hibák gyakorisága"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:204
+msgid "Seek Timer Performance"
+msgstr "Átlagos fejpozicionálási idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:205
+msgid "Average efficiency of operatings while positioning"
+msgstr "Műveletek átlagos hatékonysága pozicionáláskor"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:212
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:536
+msgid "Power-On Hours"
+msgstr "Bekapcsolva töltött idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:213
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:537
+msgid "Number of hours elapsed in the power-on state"
+msgstr "Bekapcsolt állapotban eltelt órák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:220
+msgid "Spinup Retry Count"
+msgstr "Felpörgési újrapróbálkozások száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:221
+msgid "Number of retry attempts to spin up"
+msgstr "Felpörgetésre tett ismételt kísérletek száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:228
+msgid "Calibration Retry Count"
+msgstr "Kalibrációs újrapróbálkozások száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:229
+msgid "Number of attempts to calibrate the device"
+msgstr "Az eszköz kalibrálására tett kísérletek száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:236
+msgid "Power Cycle Count"
+msgstr "Bekapcsolási ciklusok száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:237
+msgid "Number of power-on events"
+msgstr "Bekapcsolási események száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:244
+msgid "Soft read error rate"
+msgstr "Szoftveres olvasási hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:245
+msgid "Frequency of 'program' errors while reading from the disk"
+msgstr "Szoftveres hibák gyakorisága a lemezről olvasáskor"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:252
+msgid "Reported Uncorrectable Errors"
+msgstr "Jelentett javíthatatlan hibák"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:253
+msgid "Number of errors that could not be recovered using hardware ECC"
+msgstr "A hardveres ECC használatával nem javítható hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:260
+msgid "High Fly Writes"
+msgstr "Túl magas írófejállások"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
+msgid ""
+"Number of times a recording head is flying outside its normal operating range"
+msgstr "Az írófej ennyi alkalommal repült a normál működési tartományon kívül"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:268
+msgid "Airflow Temperature"
+msgstr "Légáramlás hőmérséklete"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:269
+msgid "Airflow temperature of the drive"
+msgstr "A légáramlás hőmérséklete a meghajtóban"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:276
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:446
+msgid "G-sense Error Rate"
+msgstr "G-sense hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:277
+msgid "Frequency of mistakes as a result of impact loads"
+msgstr "Mechanikai behatások miatti hibák gyakorisága"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:284
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:503
+msgid "Power-off Retract Count"
+msgstr "Kikapcsolások száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:285
+msgid "Number of power-off or emergency retract cycles"
+msgstr "Kikapcsolási vagy vészleállási ciklusok száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:292
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:479
+msgid "Load/Unload Cycle Count"
+msgstr "Parkolózónába lépési ciklusok száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:293
+msgid "Number of cycles into landing zone position"
+msgstr "Parkolózónába lépési ciklusok száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:300
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:519
+msgid "Temperature"
+msgstr "Hőmérséklet"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:301
+msgid "Current internal temperature of the drive"
+msgstr "A meghajtó aktuális belső hőmérséklete"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:308
+msgid "Hardware ECC Recovered"
+msgstr "Javítható hibák száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:309
+msgid "Number of ECC on-the-fly errors"
+msgstr "Menet közben javított hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
+msgid "Reallocation Count"
+msgstr "Áthelyezések száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:317
+msgid ""
+"Number of remapping operations. The raw value of this attribute shows the "
+"total number of (successful and unsuccessful) attempts to transfer data from "
+"reallocated sectors to a spare area"
+msgstr ""
+"Áthelyezési műveletek száma. Az attribútum nyers értéke megjeleníti az "
+"adatok újraosztott szektorokból tartalékterületre való áthelyezésére tett "
+"(sikeres és sikertelen) kísérletek teljes számát"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+msgid "Current Pending Sector Count"
+msgstr "Függőben lévő szektorok száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
+msgid ""
+"Number of sectors waiting to be remapped. If the sector waiting to be "
+"remapped is subsequently written or read successfully, this value is "
+"decreased and the sector is not remapped. Read errors on the sector will not "
+"remap the sector, it will only be remapped on a failed write attempt"
+msgstr ""
+"Áthelyezésre váró szektorok száma. Ha az áthelyezésre váró szektort később "
+"sikerül írni vagy olvasni, akkor ez az érték csökken és a szektor nem kerül "
+"áthelyezésre. A szektor olvasási hibái nem helyezik át a szektort, csak a "
+"meghiúsult írási hibák"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:339
+msgid "Uncorrectable Sector Count"
+msgstr "Javíthatatlan szektorok száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:340
+msgid ""
+"The total number of uncorrectable errors when reading/writing a sector. A "
+"rise in the value of this attribute indicates defects of the disk surface "
+"and/or problems in the mechanical subsystem"
+msgstr ""
+"A szektorok olvasása/írásakor talált javíthatatlan hibák száma. Az "
+"attribútum értékének növekedése a lemezfelszín és/vagy a mechanikai "
+"alrendszer hibáit jelzi"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:349
+msgid "UDMA CRC Error Rate"
+msgstr "UDMA CRC hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:350
+msgid "Number of CRC errors during UDMA mode"
+msgstr "CRC hibák száma UDMA módban"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:357
+msgid "Write Error Rate"
+msgstr "Írási hibák gyakorisága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:358
+msgid ""
+"Number of errors while writing to disk (or) multi-zone error rate (or) "
+"flying-height"
+msgstr ""
+"A lemez írásakor előforduló hibák száma vagy többzónás hibák gyakorisága "
+"vagy repülési magasság"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:365
+msgid "Soft Read Error Rate"
+msgstr "Olvasási hibaarány"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:366
+msgid "Number of off-track errors"
+msgstr "Nem javítható olvasási hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:373
+msgid "Data Address Mark Errors"
+msgstr "Adatcímzési hibák száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:374
+msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
+msgstr "Adatcím-jelző (DAM) hibák száma, vagy gyártófüggő"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:381
+msgid "Run Out Cancel"
+msgstr "Adatjavítási hibák száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:382
+msgid "Number of ECC errors"
+msgstr "ECC hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:389
+msgid "Soft ECC correction"
+msgstr "Szoftveresen javított hibák száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:390
+msgid "Number of errors corrected by software ECC"
+msgstr "A szoftveres ECC által javított hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:397
+msgid "Thermal Asperity Rate"
+msgstr "Hőmérsékleti problémák száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:398
+msgid "Number of Thermal Asperity Rate errors"
+msgstr "Magas hőmérséklet miatti problémák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:405
+msgid "Flying Height"
+msgstr "Fej repülési magassága"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:406
+msgid "Height of heads above the disk surface"
+msgstr "A fejek lemezfelszín feletti magassága"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:413
+msgid "Spin High Current"
+msgstr "Bekapcsolási csúcsfeszültség"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:414
+msgid "Amount of high current used to spin up the drive"
+msgstr "A lemez felpörgetéséhez használt csúcsfeszültség"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:421
+msgid "Spin Buzz"
+msgstr "Felpörgési ciklusok"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:422
+msgid "Number of buzz routines to spin up the drive"
+msgstr "A lemez felpörgéséhez szükséges ciklusok száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:429
+msgid "Offline Seek Performance"
+msgstr "Önteszt alatti teljesítmény"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:430
+msgid "Drive's seek performance during offline operations"
+msgstr "A lemez öntesztje alatti pozicionálási teljesítmény"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:437
+msgid "Disk Shift"
+msgstr "Lemez elmozdulása"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:438
+msgid ""
+"Shift of disk is possible as a result of strong shock loading in the store, "
+"as a result of falling (or) temperature"
+msgstr ""
+"A lemez erős rázkódási terhelés hatására elmozdulhat, amely esés vagy a "
+"hőmérséklet hatására következhet be"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:447
+msgid ""
+"Number of errors as a result of impact loads as detected by a shock sensor"
+msgstr ""
+"A rázkódásérzékelő által érzékelt mechanikai behatások miatti hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:454
+msgid "Loaded Hours"
+msgstr "Bekapcsolva töltött idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:455
+msgid "Number of hours in general operational state"
+msgstr "Általános működőképes állapotban töltött órák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:462
+msgid "Load/Unload Retry Count"
+msgstr "Betöltések száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:463
+msgid ""
+"Loading on drive caused by numerous recurrences of operations, like reading, "
+"recording, positioning of heads, etc"
+msgstr ""
+"Különböző műveletek, például olvasás, írás, fejpozicionálás által okozott "
+"adatzónába lépések a lemezen"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:471
+msgid "Load Friction"
+msgstr "Súrlódási terhelés"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:472
+msgid "Load on drive cause by friction in mechanical parts of the store"
+msgstr "A tároló mechanikai alkatrészei által okozott súrlódás miatti terhelés"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
+msgid "Total number of load cycles"
+msgstr "Betöltési ciklusok teljes száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:487
+msgid "Load-in Time"
+msgstr "Betöltve töltött idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:488
+msgid "General time for loading in a drive"
+msgstr "Betöltés teljes ideje a meghajtón"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:495
+msgid "Torque Amplification Count"
+msgstr "Felpörgési nyomaték értéke"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:496
+msgid "Quantity efforts of the rotating moment of a drive"
+msgstr ""
+"A lemez forgási sebességének változásainak ellensúlyozására tett kísérletek "
+"száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:504
+msgid "Number of power-off retract events"
+msgstr "Áramellátás megszűnése miatti parkolópályára állások"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:511
+msgid "GMR Head Amplitude"
+msgstr "GMR fej amplitúdója"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:512
+msgid "Amplitude of heads trembling (GMR-head) in running mode"
+msgstr "Művelet végzése közben a (GMR) fej kilengésének mértéke"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:520
+msgid "Temperature of the drive"
+msgstr "A meghajtó hőmérséklete"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:527
+msgid "Endurance Remaining"
+msgstr "Hátralévő megbízhatóság"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:528
+msgid ""
+"Number of physical erase cycles completed on the drive as a percentage of "
+"the maximum physical erase cycles the drive supports"
+msgstr ""
+"A meghajtón elvégzett fizikai törlési ciklusok száma, a meghajtó által "
+"támogatott fizikai törlési ciklusok maximális számának százalékában"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:544
+msgid "Uncorrectable ECC Count"
+msgstr "Javíthatatlan ECC száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:545
+msgid "Number of uncorrectable ECC errors"
+msgstr "Javíthatatlan ECC hibák száma"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:552
+msgid "Good Block Rate"
+msgstr "Jó blokkok aránya"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
+msgid ""
+"Number of available reserved blocks as a percentage of the total number of "
+"reserved blocks"
+msgstr ""
+"Elérhető fenntartott blokkok száma, a fenntartott blokkok teljes számának "
+"százalékos arányában"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:561
+msgid "Head Flying Hours"
+msgstr "Fejpozicionálási idő"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:562
+msgid "Time while head is positioning"
+msgstr "A fej pozicionálásával töltött összes idő"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:569
+msgid "Read Error Retry Rate"
+msgstr "Olvasási újrapróbálkozások száma"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:570
+msgid "Number of errors while reading from a disk"
+msgstr "Hibák száma a lemez olvasásakor"
+
+#. Translators: This is shown in the attribute treeview when no description is found.
+#. * %d is the attribute number.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:819
+#, c-format
+msgid "No description for attribute %d"
+msgstr "A(z) %d. attribútumhoz nincs leírás"
+
+#. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:896
+msgid "Normalized:"
+msgstr "Normalizált:"
+
+#. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:898
+msgid "Worst:"
+msgstr "Legrosszabb:"
+
+#. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:900
+msgid "Threshold:"
+msgstr "Küszöb:"
+
+#. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:902
+msgid "Value:"
+msgstr "Érték:"
+
+#. Translators: This is used in the attribute treview when normalized/worst/treshold
+#. * value isn't available
+#. Translators: Shown in the treeview for an attribute we don't know the status about
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * where the value cannot be interpreted
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:952
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:960
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1064
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2181
+msgid "N/A"
+msgstr "N/A"
+
+#. Translators: Shown in the treeview for a failing attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
+msgid "Failing"
+msgstr "Hibázik"
+
+#. Translators: Shown in the treeview for an attribute that failed in the past
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1049
+msgid "Failed in the past"
+msgstr "A múltban meghibásodott"
+
+#. Translators: Shown in the treeview for an attribute that we want to warn about
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1053
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1061
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#. Translators: Shown in the treeview for an attribute that is good
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1056
+msgid "Good"
+msgstr "Jó"
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1234
+msgid "Select what SMART self test to run"
+msgstr "Válassza ki a futtatandó SMART önteszteket"
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1245
+msgid ""
+"The tests may take a very long time to complete depending on the speed and "
+"size of the disk. You can continue using your system while the test is "
+"running."
+msgstr ""
+"A tesztek sokáig tarthatnak a lemez sebességétől és méretétől függően. A "
+"teszt futása közben folytathatja a rendszer használatát."
+
+#. Translators: Radio button for short test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
+msgid "_Short (usually less than ten minutes)"
+msgstr "_Rövid (általában kevesebb, mint 10 perc)"
+
+#. Translators: Radio button for extended test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1257
+msgid "_Extended (usually tens of minutes)"
+msgstr "Bő_vített (több tíz perc)"
+
+# fixme!!!
+#. Translators: Radio button for conveyance test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1260
+msgid "C_onveyance (usually less than ten minutes)"
+msgstr "Á_ltalános (általában kevesebb, mint 10 perc)"
+
+#. Translators: Button in "Run self-test dialog"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1268
+msgid "_Initiate Self Test"
+msgstr "Önteszt in_dítása"
+
+#. Translators: Used in the drive combo-box to indicate the health status is unknown
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
+msgid "Health status is unknown"
+msgstr "Az egészségi állapot ismeretlen"
+
+#. Translators: Used in the drive combo-box to indicate SMART is not enabled
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1348
+msgid "SMART is not enabled"
+msgstr "A SMART nincs bekapcsolva"
+
+#. Translators: Used in the drive combo-box to indicate SMART is not available
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
+#: ../src/palimpsest/gdu-shell.c:310
+msgid "SMART is not available"
+msgstr "A SMART nem érhető el"
+
+#. Translators: Title of the SMART dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1505
+msgid "SMART Data"
+msgstr "SMART adatok"
+
+#. Translators: Label used before the drive combo box
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1536
+msgid "_Drive:"
+msgstr "_Meghajtó:"
+
+#. Translators: Heading used in the main dialog for the SMART status
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1584
+msgid "Status"
+msgstr "Állapot"
+
+#. ------------------------------
+#. updated
+#. Translators: Tooltip for the Updated item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
+msgid ""
+"Time since SMART data was last read – SMART data is updated every 30 minutes "
+"unless the disk is sleeping"
+msgstr ""
+"A SMART adatok utolsó olvasása óta eltelt idő - a SMART adatok 30 percenként "
+"frissülnek, ha a lemez nincs energiatakarékos módban"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
+msgid "Updated:"
+msgstr "Frissítve:"
+
+#. Translators: Used in the status table when data is currently being updated
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1621
+msgid "Updating..."
+msgstr "Frissítés…"
+
+#. Translators: Tooltip for the "Update Now" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
+msgid "Reads SMART data from the disk, waking it up if necessary"
+msgstr "A SMART adatok beolvasása a lemezről, szükség esetén felébresztve azt"
+
+#. Translators: Text used in the hyperlink in the status table to update the SMART status
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1642
+msgid "Update now"
+msgstr "Frissítés most"
+
+#. ------------------------------
+#. self-tests
+#. Translators: Tooltip for the Self-tests item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1668
+msgid "The result of the last self-test that ran on the disk"
+msgstr "A lemezen futtatott utolsó önellenőrzés eredménye"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1674
+msgid "Self-tests:"
+msgstr "Önellenőrzések:"
+
+#. Translators: Tooltip for the "Run self-test" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1695
+msgid "Initiates a self-test on the drive"
+msgstr "Önteszt kezdeményezése a meghajtón"
+
+#. Translators: Text used in the hyperlink in the status table to run a self-test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+msgid "Run self-test"
+msgstr "Önellenőrzés futtatása"
+
+#. Translators: Tooptip for the "Cancel" hyperlink
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1714
+msgid "Cancels the currently running test"
+msgstr "A jelenleg futó teszt megszakítása"
+
+#. Translators: Text used in the hyperlink in the status table to cancel a self-test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1716
+msgid "Cancel"
+msgstr "Megszakítás"
+
+#. ------------------------------
+#. model
+#. Translators: Tooltip for the "Model Name:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1742
+msgid "The name of the model of the disk"
+msgstr "A lemez típusneve"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1748
+msgid "Model Name:"
+msgstr "Típusnév:"
+
+#. ------------------------------
+#. firmware
+#. Translators: Tooltip for the "Firmware Version:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1766
+msgid "The firmware version of the disk"
+msgstr "A lemez firmware-verziója"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1772
+msgid "Firmware Version:"
+msgstr "Firmware-verzió:"
+
+#. ------------------------------
+#. serial
+#. Translators: Tooltip for the "Serial:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1790
+msgid "The serial number of the disk"
+msgstr "A lemez sorozatszáma"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1796
+msgid "Serial Number:"
+msgstr "Sorozatszám:"
+
+#. ------------------------------
+#. power on hours
+#. Translators: Tooltip for the "Powered On:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1814
+msgid "The amount of elapsed time the disk has been in a powered-up state"
+msgstr "A meghajtó által bekapcsolt állapotban töltött idő"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1820
+msgid "Powered On:"
+msgstr "Bekapcsolva:"
+
+#. ------------------------------
+#. temperature
+#. Translators: Tooltip for the "Temperature:" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1838
+msgid "The temperature of the disk"
+msgstr "A lemez hőmérséklete"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1844
+msgid "Temperature:"
+msgstr "Hőmérséklet:"
+
+#. ------------------------------
+#. bad sectors
+#. Translators: Tooltip for the "Bad Sectors" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1862
+msgid "The sum of pending and reallocated bad sectors"
+msgstr "Függőben lévő és áthelyezett hibás szektorok összesen"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1868
+msgid "Bad Sectors:"
+msgstr "Hibás szektorok:"
+
+#. ------------------------------
+#. self assessment
+#. Translators: Tooltip for the "Self Assessment" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1884
+msgid "The assessment from the disk itself whether it is about to fail"
+msgstr "A lemez saját felmérése a meghibásodásának veszélyéről"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1890
+msgid "Self Assessment:"
+msgstr "Önfelmérés:"
+
+#. ------------------------------
+#. overall assessment
+#. Translators: Tooltip for the "Overall Assessment" in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1906
+msgid "An overall assessment of the health of the disk"
+msgstr "A lemez egészségi állapotának átfogó felmérése"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1912
+msgid "Overall Assessment:"
+msgstr "Átfogó felmérés:"
+
+#. ------------------------------
+#. Translators: Tooltip for the "Do not warn if disk is failing" check button
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
+msgid "Leave unchecked to get notified if the disk starts failing"
+msgstr "Ezt kikapcsolva értesítést kap, ha a lemez hibázni kezd"
+
+#. Translators: Check button in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
+msgid "Don't _warn me if the disk is failing"
+msgstr "_Ne figyelmeztessen, ha a lemez meghibásodik"
+
+#. Translators: Heading used in the main dialog for SMART attributes
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1954
+msgid "_Attributes"
+msgstr "_Attribútumok"
+
+#. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
+msgid "ID"
+msgstr "Azonosító"
+
+#. Translators: This string is used as the column title in the treeview for the attribute name and description
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2000
+msgid "Attribute"
+msgstr "Attribútum"
+
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2017
+msgid "Assessment"
+msgstr "Felmérés"
+
+#. Translators: This string is used as the column title in the treeview for the value of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
+msgid "Value"
+msgstr "Érték"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one year
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2130
+#, c-format
+msgid "%.1f years"
+msgstr "%.1f év"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one day
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2134
+#, c-format
+msgid "%.1f days"
+msgstr "%.1f nap"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one hour
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2138
+#, c-format
+msgid "%.1f hours"
+msgstr "%.1f óra"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one minute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2142
+#, c-format
+msgid "%.1f minutes"
+msgstr "%.1f perc"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one second
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2146
+#, c-format
+msgid "%.1f seconds"
+msgstr "%.1f másodperc"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that is counted in milliseconds
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2150
+msgid "%"
+msgstr "%"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2158
+#, c-format
+msgid "%d sector"
+msgid_plural "%d sectors"
+msgstr[0] "%d szektor"
+msgstr[1] "%d szektor"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
+#. * is the temperature in degrees Fahrenheit
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2170
+#, c-format
+msgid "%.0f° C / %.0f° F"
+msgstr "%.0f° C / %.0f° F"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Pre-Fail)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2238
+msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
+msgstr "A hiba a rövidesen várható lemezmeghibásodás jele (Pre-Fail)"
+
+# fixme: :)
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Old-Age)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2242
+msgid "Failure is a sign of old age (Old-Age)"
+msgstr "A hiba a lemez hajlott korának jele (Old-Age)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2248
+msgid "Every time data is collected (Online)"
+msgstr "Minden időadat összegyűjtve (Online)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Not Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2252
+msgid "Only during off-line activities (Not Online)"
+msgstr "Csak önteszt alatti tevékenységek során (Not Online)"
+
+#. Translators: Used in the tooltip for a row in the attribute treeview.
+#. * First %s is the type of the attribute (Pre-Fail or Old-Age).
+#. * Second %s is the update type (Online or Not Online).
+#. * The six %x is the raw data of the attribute.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2260
+#, c-format
+msgid ""
+"Type: %s\n"
+"Updates: %s\n"
+"Raw: 0x%02x%02x%02x%02x%02x%02x"
+msgstr ""
+"Típus: %s\n"
+"Frissítések: %s\n"
+"Nyers: 0x%02x%02x%02x%02x%02x%02x"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when no drive is currently selected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2465
+msgid "No drive selected"
+msgstr "Nincs kiválasztva meghajtó"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is not available
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2472
+msgid "SMART not supported"
+msgstr "A SMART nem támogatott"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is supported but data was never collected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2480
+msgid "SMART data never collected"
+msgstr "A SMART adatok soha nem lettek összegyűjtve"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when the SMART data is malformed
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2487
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2493
+msgid "SMART data is malformed"
+msgstr "A SMART adatok rosszul formáltak"
+
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is PASSED
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2529
+msgid "Passed"
+msgstr "Sikerült"
+
+#. Translators: Shown in the "Self-assessment" item in
+#. * the status table when the self-assessment of the
+#. * drive is FAILING
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2535
+msgid "FAILING"
+msgstr "MEGHIBÁSODOTT"
+
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we the disk has no bad sectors
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2547
+msgid "None"
+msgstr "Nincs"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2552
+#, c-format
+msgid "%d bad sector"
+msgid_plural "%d bad sectors"
+msgstr[0] "%d hibás szektor"
+msgstr[1] "%d hibás szektor"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2590
+msgid "Last self-test completed OK"
+msgstr "Az utolsó önellenőrzés rendben befejeződött"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2594
+msgid "Last self-test was cancelled"
+msgstr "Az utolsó önellenőrzés megszakítva"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
+msgid "Last self-test was cancelled (with hard or soft reset)"
+msgstr ""
+"Az utolsó önellenőrzés megszakítva (hardveres vagy szoftveres megszakítás)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
+msgid "Last self-test not completed (a fatal error might have occured)"
+msgstr "Az utolsó önellenőrzés nem fejeződött be (végzetes hiba történhetett)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
+msgid "Last self-test FAILED (Electrical)"
+msgstr "Az utolsó önellenőrzés MEGHIÚSULT (elektromos)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
+msgid "Last self-test FAILED (Servo)"
+msgstr "Az utolsó önellenőrzés MEGHIÚSULT (szervo)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2616
+msgid "Last self-test FAILED (Read)"
+msgstr "Az utolsó önellenőrzés MEGHIÚSULT (olvasás)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2621
+msgid "Last self-test FAILED (Suspected of having handled damage)"
+msgstr "Az utolsó önellenőrzés MEGHIÚSULT (gyaníthatóan kezelt sérülése van)"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2626
+msgid "Self-test is in progress"
+msgstr "Önellenőrzés folyamatban"
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2749
+msgid "Short self-test in progress: "
+msgstr "Rövid önellenőrzés folyamatban: "
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2753
+msgid "Extended self-test in progress: "
+msgstr "Bővített önellenőrzés folyamatban: "
+
+#. Translators: Shown in the "Self-tests" item in the status table when a test is underway
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2757
+msgid "Conveyance self-test in progress: "
+msgstr "Általános önellenőrzés folyamatban: "
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
+#: ../src/playground/grid/gdu-grid-view.c:325
+msgid "Pool"
+msgstr "Tároló"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
+msgid "The pool of devices"
+msgstr "Az eszközök tárolója"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
+msgid "RAID Level"
+msgstr "RAID szint"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:231
+msgid "The selected RAID level"
+msgstr "A kiválasztott RAID szint"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
+msgid "Name"
+msgstr "Név"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
+msgid "The requested name for the array"
+msgstr "A tömb kért neve"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
+#: ../src/gdu-gtk/gdu-size-widget.c:242
+msgid "Size"
+msgstr "Méret"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
+msgid "The requested size of the array"
+msgstr "A tömb kért mérete"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
+msgid "Component Size"
+msgstr "Összetevő mérete"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:266
+msgid "The size of each component"
+msgstr "Az egyes összetevők mérete"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
+msgid "Stripe Size"
+msgstr "Csíkméret"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
+msgid "The requested stripe size of the array"
+msgstr "A tömb kért csíkmérete"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
+msgid "Drives"
+msgstr "Meghajtók"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
+msgid "Array of drives to use for the array"
+msgstr "A tömbhöz használandó meghajtók tömbje"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:740
+#, c-format
+msgid "The disk will be partitioned and a %s partition will be created"
+msgstr "A lemez particionálásra kerül és egy %s méretű partíció jön létre"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:747
+#, c-format
+msgid "A %s partition will be created"
+msgstr "Egy %s méretű fájlrendszer kerül létrehozásra"
+
+#. Translators: This is shown in the Details column.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:754
+msgid "The disk will be partitioned and a partition will be created"
+msgstr "A lemez particionálásra kerül és létrejön egy partíció"
+
+#. Translators: This is shown in the Details column.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
+msgid "A partition will be created"
+msgstr "Létrejön egy partíció"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:771
+#, c-format
+msgid "Whole disk is uninitialized. %s available for use"
+msgstr "A teljes lemez előkészítetlen. %s hely használható"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:778
+#, c-format
+msgid "%s available for use"
+msgstr "%s hely használható"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:784
+#, c-format
+msgid "The disk has no partitions. %s available for use"
+msgstr "A lemezen nincsenek partíciók. %s hely használható"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:789
+#, c-format
+msgid "The disk has %d partition"
+msgid_plural "The disk has %d partitions"
+msgstr[0] "A lemezen %d partíció van"
+msgstr[1] "A lemezen %d partíció van"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the dngettext() result of "The disk has %d partitions.".
+#. * Second %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:797
+#, c-format
+msgid "%s. Largest contiguous free block is %s"
+msgstr "%s. A legnagyobb összefüggő szabad blokk %s méretű"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
+msgid "Create RAID Array"
+msgstr "RAID tömb létrehozása"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
+#: ../src/palimpsest/gdu-section-create-partition-table.c:103
+#: ../src/palimpsest/gdu-section-unrecognized.c:267
+msgid "C_reate"
+msgstr "_Létrehozás"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:913
+msgid "General"
+msgstr "Általános"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:934
+msgid "RAID _Level:"
+msgstr "RAID s_zint:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
+msgid "Array _Name:"
+msgstr "Tömb _neve:"
+
+#. Translators: This is the default name to use for the new array.
+#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
+#. * 32 bytes since that's the on-disk-format limit.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:981
+msgid "New RAID Array"
+msgstr "Új RAID tömb"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
+msgid "Stripe S_ize:"
+msgstr "_Csíkméret:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
+msgid "4 KiB"
+msgstr "4 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1009
+msgid "8 KiB"
+msgstr "8 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1011
+msgid "16 KiB"
+msgstr "16 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1013
+msgid "32 KiB"
+msgstr "32 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1015
+msgid "64 KiB"
+msgstr "64 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1017
+msgid "128 KiB"
+msgstr "128 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1019
+msgid "256 KiB"
+msgstr "256 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1021
+msgid "512 KiB"
+msgstr "512 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1023
+msgid "1 MiB"
+msgstr "1 MiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
+msgid "Array _Size:"
+msgstr "_Tömbméret:"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1076
+msgid "Use"
+msgstr "Használat"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1096
+msgid "Disk"
+msgstr "Lemez"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1120
+msgid "Details"
+msgstr "Részletek"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1156
+msgid "Disks"
+msgstr "Lemezek"
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1451
+#, c-format
+msgid "Insufficient number disks to create a %s array."
+msgstr "Nincs elég lemez %s tömb létrehozásához."
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
+#, c-format
+msgid "To create a %s array, select %d disks."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] "%s tömb létrehozásához válasszon ki %d lemezt."
+msgstr[1] "%s tömb létrehozásához válasszon ki %d lemezt."
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
+#, c-format
+msgid "To create a %s array, select %d more disks."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] "%s tömb létrehozásához válasszon ki még %d lemezt."
+msgstr[1] "%s tömb létrehozásához válasszon ki még %d lemezt."
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the size e.g. '42 GB'.
+#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
+#. * Third parameter is the number of disks to use (always greater than 1).
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1507
+#, c-format
+msgid "To create a %s %s array on %d disks, press \"Create\""
+msgstr ""
+"Nyomja meg a „Létrehozás” gombot egy %s méretű %s tömb létrehozásához %d "
+"lemezen"
 
 #: ../src/gdu-gtk/gdu-gtk.c:171
+msgctxt "application name"
 msgid "Bourne Again Shell"
 msgstr "Bourne Again Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:176
+msgctxt "application name"
 msgid "Bourne Shell"
 msgstr "Bourne Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:181
+msgctxt "application name"
 msgid "C Shell"
 msgstr "C Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:186
+msgctxt "application name"
 msgid "TENEX C Shell"
 msgstr "TENEX C Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:191
+msgctxt "application name"
 msgid "Z Shell"
 msgstr "Z Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:196
+msgctxt "application name"
 msgid "Korn Shell"
 msgstr "Korn Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:200
+msgctxt "application name"
 msgid "Process Viewer (top)"
 msgstr "Folyamatmegjelenítő (top)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:204
+msgctxt "application name"
 msgid "Terminal Pager (less)"
 msgstr "Terminállapozó (less)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:216
+msgctxt "application name"
+msgid "Unknown"
+msgstr "Ismeretlen"
 
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
@@ -1559,17 +3096,18 @@ msgstr "uid: %d  pid: %d  program: %s"
 msgid "pid: %d  program: %s"
 msgstr "pid: %d  program: %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:330 ../src/gdu-gtk/gdu-gtk.c:914
-#: ../src/gdu-gtk/gdu-gtk.c:1052
+#. Translators: %d is the partition number, %s the name of the disk
+#: ../src/gdu-gtk/gdu-gtk.c:331 ../src/gdu-gtk/gdu-gtk.c:915
+#: ../src/gdu-gtk/gdu-gtk.c:1053
 #, c-format
 msgid "Partition %d on %s"
 msgstr "%d. partíció ezen: %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:366
+#: ../src/gdu-gtk/gdu-gtk.c:367
 msgid "Cannot unmount volume"
 msgstr "Nem választható le a kötet"
 
-#: ../src/gdu-gtk/gdu-gtk.c:376
+#: ../src/gdu-gtk/gdu-gtk.c:377
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
@@ -1577,121 +3115,141 @@ msgstr ""
 "Néhány alkalmazás használja a kötetet. Lépjen ki az alkalmazásokból és "
 "próbálja újra leválasztani."
 
-#: ../src/gdu-gtk/gdu-gtk.c:417 ../src/palimpsest/gdu-shell.c:1574
+#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1939
 msgid "_Unmount"
 msgstr "_Leválasztás"
 
-#: ../src/gdu-gtk/gdu-gtk.c:494
+#: ../src/gdu-gtk/gdu-gtk.c:495
 msgid "Passphrases do not match"
 msgstr "A jelmondatok eltérnek"
 
-#: ../src/gdu-gtk/gdu-gtk.c:501
+#: ../src/gdu-gtk/gdu-gtk.c:502
 msgid "Passphrases do not differ"
 msgstr "A jelmondatok nem térnek el"
 
-#: ../src/gdu-gtk/gdu-gtk.c:507
+#: ../src/gdu-gtk/gdu-gtk.c:508
 msgid "Passphrase can't be empty"
 msgstr "A jelmondat nem lehet üres"
 
-#: ../src/gdu-gtk/gdu-gtk.c:579
+#: ../src/gdu-gtk/gdu-gtk.c:580
 msgid "Cr_eate"
 msgstr "_Létrehozás"
 
-#: ../src/gdu-gtk/gdu-gtk.c:581
+#: ../src/gdu-gtk/gdu-gtk.c:582
 msgid "Change _Passphrase"
 msgstr "Jelmondat meg_változtatása"
 
-#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-shell.c:1576
+#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1942
 msgid "_Unlock"
 msgstr "_Feloldás"
 
-#: ../src/gdu-gtk/gdu-gtk.c:612
+#: ../src/gdu-gtk/gdu-gtk.c:613
 msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr "Titkosított eszköz készítése előtt válasszon jelmondatot annak védelméhez"
+msgstr ""
+"Titkosított eszköz készítése előtt válasszon jelmondatot annak védelméhez"
 
-#: ../src/gdu-gtk/gdu-gtk.c:615
+#: ../src/gdu-gtk/gdu-gtk.c:616
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr "A jelmondat módosításához adja meg a jelenlegi és az új jelmondatot is"
 
-#: ../src/gdu-gtk/gdu-gtk.c:618
-msgid "Data on this device is stored in an encrypted form protected by a passphrase"
+#: ../src/gdu-gtk/gdu-gtk.c:619
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr "Az eszköz adatai titkosítva, jelmondattal védve vannak tárolva"
 
-#: ../src/gdu-gtk/gdu-gtk.c:631
+#: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr "Az eszköz adatai titkosítva, jelmondattal védve lesznek tárolva"
 
-#: ../src/gdu-gtk/gdu-gtk.c:634
-msgid "Data on this device is stored in an encrypted form protected by a passphrase."
+#: ../src/gdu-gtk/gdu-gtk.c:635
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr "Az eszköz adatai titkosítva, jelmondattal védve vannak tárolva."
 
-#: ../src/gdu-gtk/gdu-gtk.c:637
-msgid "To make the data available for use, enter the passphrase for the device."
+#: ../src/gdu-gtk/gdu-gtk.c:638
+msgid ""
+"To make the data available for use, enter the passphrase for the device."
 msgstr "Az adatok használhatóvá tételéhez adja meg az eszköz jelmondatát."
 
-#: ../src/gdu-gtk/gdu-gtk.c:646
+#: ../src/gdu-gtk/gdu-gtk.c:647
 msgid "Incorrect Passphrase. Try again."
 msgstr "Helytelen jelmondat. Próbálja újra."
 
-#: ../src/gdu-gtk/gdu-gtk.c:670
+#: ../src/gdu-gtk/gdu-gtk.c:671
 msgid "C_urrent Passphrase:"
 msgstr "J_elenlegi jelmondat:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:684
+#: ../src/gdu-gtk/gdu-gtk.c:685
 msgid "_New Passphrase:"
 msgstr "Új jelm_ondat:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:697
+#: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_Verify Passphrase:"
 msgstr "Jelmondat _megerősítése:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:739
+#: ../src/gdu-gtk/gdu-gtk.c:740
 msgid "_Passphrase:"
 msgstr "_Jelmondat:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:754
+#: ../src/gdu-gtk/gdu-gtk.c:755
 msgid "_Forget passphrase immediately"
 msgstr "Jelmondat _azonnali elfelejtése"
 
-#: ../src/gdu-gtk/gdu-gtk.c:757
+#: ../src/gdu-gtk/gdu-gtk.c:758
 msgid "Remember passphrase until you _log out"
 msgstr "Jelmondat megjegyzése _kijelentkezésig"
 
-#: ../src/gdu-gtk/gdu-gtk.c:760
+#: ../src/gdu-gtk/gdu-gtk.c:761
 msgid "_Remember forever"
 msgstr "Meg_jegyzés örökre"
 
-#: ../src/gdu-gtk/gdu-gtk.c:821
+#: ../src/gdu-gtk/gdu-gtk.c:822
 msgid "Enter Passphrase"
 msgstr "Adja meg a jelmondatot"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1240
+#: ../src/gdu-gtk/gdu-gtk.c:1241
 msgid "Empty (don't create a file system)"
 msgstr "Üres (ne hozzon létre fájlrendszert)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1260
+#: ../src/gdu-gtk/gdu-gtk.c:1262
 msgid "Empty"
 msgstr "Üres"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1268
+#: ../src/gdu-gtk/gdu-gtk.c:1270
 msgid "Extended Partition"
 msgstr "Kiterjesztett partíció"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1527 ../src/palimpsest/gdu-shell.c:219
-#: ../src/palimpsest/gdu-shell.c:247
+#: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:221
+#: ../src/palimpsest/gdu-shell.c:251
 msgid "Master Boot Record"
 msgstr "Elsődleges indítórekord"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1532 ../src/palimpsest/gdu-shell.c:221
-#: ../src/palimpsest/gdu-shell.c:249
-msgid "GUID Partition Table"
-msgstr "GUID partíciós tábla"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1537
+#: ../src/gdu-gtk/gdu-gtk.c:1539
 msgid "Don't partition"
-msgstr "Ne partícionáljon"
+msgstr "Ne particionáljon"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:243
+msgid "The currently selected size"
+msgstr "A jelenleg kiválasztott méret"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:256
+#: ../src/playground/grid/gdu-grid-element.c:897
+msgid "Minimum Size"
+msgstr "Minimális méret"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:257
+msgid "The minimum size that can be selected"
+msgstr "A minimálisan kiválasztható méret"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:270
+msgid "Maximum Size"
+msgstr "Maximális méret"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:271
+msgid "The maximum size that can be selected"
+msgstr "A maximálisan kiválasztható méret"
 
 #: ../src/gdu-gtk/gdu-time-label.c:70
 #, c-format
@@ -1700,34 +3258,24 @@ msgstr "Kevesebb, mint egy perce"
 
 #: ../src/gdu-gtk/gdu-time-label.c:74
 #, c-format
-msgid "1 minute ago"
-msgstr "1 perce"
-
-#: ../src/gdu-gtk/gdu-time-label.c:76
-#, c-format
-msgid "%d minutes ago"
-msgstr "%d perce"
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "%d perce"
+msgstr[1] "%d perce"
 
 #: ../src/gdu-gtk/gdu-time-label.c:81
 #, c-format
-msgid "1 hour ago"
-msgstr "1 órája"
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "%d órája"
+msgstr[1] "%d órája"
 
-#: ../src/gdu-gtk/gdu-time-label.c:83
-#, c-format
-msgid "%d hours ago"
-msgstr "%d órája"
-
-#: ../src/nautilus-extension/nautilus-gdu.c:177
-#, c-format
-msgid "Could not unmount '%s'"
-msgstr "Nem választható le a kötet: „%s”"
-
-#: ../src/nautilus-extension/nautilus-gdu.c:281
+#. Translators: this is a verb
+#: ../src/nautilus-extension/nautilus-gdu.c:225
 msgid "_Format..."
 msgstr "_Formázás…"
 
-#: ../src/nautilus-extension/nautilus-gdu.c:282
+#: ../src/nautilus-extension/nautilus-gdu.c:226
 msgid "Create new filesystem on the selected device"
 msgstr "Új fájlrendszer létrehozása a kiválasztott eszközön"
 
@@ -1751,21 +3299,23 @@ msgstr ""
 "Az adatvesztés elkerüléséhez várjon ennek befejeződéséig az adathordozók "
 "eltávolításával vagy az eszköz leválasztásával."
 
-#: ../src/notification/notification-main.c:151
+#: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
-msgstr "Néhány lemez hibázik"
+msgstr "Néhány lemez meghibásodott"
 
-#: ../src/notification/notification-main.c:436
-msgid "A hard disk is failing"
-msgstr "Egy merevlemez hibázik"
+#. Translators: This is used as the title of the notification
+#: ../src/notification/notification-main.c:535
+msgid "A hard disk may be failing"
+msgstr "Lehet, hogy egy merevlemez meghibásodott"
 
-#: ../src/notification/notification-main.c:437
+#. Translators: This is used as the text of the notification
+#: ../src/notification/notification-main.c:537
 msgid ""
 "One or more hard disks report health problems. Click the icon to get more "
 "information."
 msgstr ""
-"Néhány merevlemez egészségi problémát jelez. További információkért "
-"kattintson ide."
+"Néhány merevlemez romló állapotot jelez. További információkért kattintson "
+"ide."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
@@ -1785,32 +3335,27 @@ msgstr "Biztosan formázni kívánja a lemezt, törölve a meglévő adatokat?"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:88
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
-#: ../src/palimpsest/gdu-shell.c:1437
+#: ../src/palimpsest/gdu-shell.c:1535
 #, c-format
 msgid ""
 "All data on the media in \"%s\" will be irrecovably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
-"Minden adat visszavonhatatlanul törlésre került a(z) „%s” adathordozójáról. "
+"Minden adat visszavonhatatlanul törlésre kerül a(z) „%s” adathordozójáról. "
 "Győződjön meg róla, hogy a fontos adatokról rendelkezik biztonsági "
 "másolattal. Ez a művelet nem vonható vissza."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
-#: ../src/palimpsest/gdu-shell.c:1442
+#: ../src/palimpsest/gdu-shell.c:1540
 #, c-format
 msgid ""
 "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
 "data is backed up. This action cannot be undone."
 msgstr ""
-"Minden adat visszavonhatatlanul törlésre került a(z) „%s” meghajtójáról. "
+"Minden adat visszavonhatatlanul törlésre kerül a(z) „%s” meghajtójáról. "
 "Győződjön meg róla, hogy a fontos adatokról rendelkezik biztonsági "
 "másolattal. Ez a művelet nem vonható vissza."
-
-#: ../src/palimpsest/gdu-section-create-partition-table.c:103
-#: ../src/palimpsest/gdu-section-unrecognized.c:267
-msgid "C_reate"
-msgstr "_Létrehozás"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:181
 msgid "Create Partition Table"
@@ -1824,8 +3369,9 @@ msgstr ""
 "Új partíciós tábla létrehozásához válassza ki a partíciós tábla típusát és "
 "nyomja meg a „Létrehozás” gombot. Ekkor minden meglévő adat elvész."
 
+#. Translators: 'Type' means partition type here
 #: ../src/palimpsest/gdu-section-create-partition-table.c:210
-#: ../src/palimpsest/gdu-section-partition.c:572
+#: ../src/palimpsest/gdu-section-partition.c:573
 msgid "Ty_pe:"
 msgstr "Típ_us:"
 
@@ -1862,8 +3408,9 @@ msgstr "Csatolható fájlrendszer"
 msgid "The volume contains a mountable filesystem."
 msgstr "A kötet csatolható fájlrendszert tartalmaz."
 
+#. Translators: 'label' means filesystem label here
 #: ../src/palimpsest/gdu-section-filesystem.c:236
-#: ../src/palimpsest/gdu-section-unallocated.c:661
+#: ../src/palimpsest/gdu-section-unallocated.c:663
 #: ../src/palimpsest/gdu-section-unrecognized.c:427
 msgid "_Label:"
 msgstr "_Címke:"
@@ -1872,401 +3419,16 @@ msgstr "_Címke:"
 msgid "Change"
 msgstr "Módosítás"
 
-#: ../src/palimpsest/gdu-section-health.c:60
-#, c-format
-msgid "%.3g days"
-msgstr "%.3g nap"
-
-#: ../src/palimpsest/gdu-section-health.c:62
-#, c-format
-msgid "%.3g hours"
-msgstr "%.3g óra"
-
-#: ../src/palimpsest/gdu-section-health.c:64
-#, c-format
-msgid "%.3g mins"
-msgstr "%.3g perc"
-
-#: ../src/palimpsest/gdu-section-health.c:66
-#, c-format
-msgid "%.3g secs"
-msgstr "%.3g másodperc"
-
-#: ../src/palimpsest/gdu-section-health.c:68
-#: ../src/palimpsest/gdu-section-health.c:87
-msgid "%"
-msgstr "%"
-
-#: ../src/palimpsest/gdu-section-health.c:73
-#, c-format
-msgid "%d Sector"
-msgid_plural "%d Sectors"
-msgstr[0] "%d szektor"
-msgstr[1] "%d szektor"
-
-#: ../src/palimpsest/gdu-section-health.c:81
-#, c-format
-msgid "%.3g° C / %.3g° F"
-msgstr "%.3g° C / %.3g° F"
-
-#: ../src/palimpsest/gdu-section-health.c:104
-msgid "Retrieving..."
-msgstr "Lekérés…"
-
-#: ../src/palimpsest/gdu-section-health.c:123
-msgid "ATA SMART not Supported"
-msgstr "Az ATA SMART nem támogatott"
-
-#: ../src/palimpsest/gdu-section-health.c:201
-#: ../src/palimpsest/gdu-section-health.c:208
-#: ../src/palimpsest/gdu-section-health.c:215
-msgctxt "ATA SMART status"
-msgid "Passed"
-msgstr "Sikerült"
-
-#: ../src/palimpsest/gdu-section-health.c:203
-#: ../src/palimpsest/gdu-section-health.c:233
-msgid "The disk has bad sectors."
-msgstr "A lemez hibás szektorokat tartalmaz"
-
-#: ../src/palimpsest/gdu-section-health.c:210
-#: ../src/palimpsest/gdu-section-health.c:240
-msgid "One or more attributes exceeding threshold."
-msgstr "Néhány attribútum túllépi a határértéket."
-
-#: ../src/palimpsest/gdu-section-health.c:220
-msgctxt "ATA SMART status"
-msgid "FAILING"
-msgstr "HIBÁZIK"
-
-#: ../src/palimpsest/gdu-section-health.c:224
-msgid "Drive failure expected in less than 24 hours. Save all data immediately."
-msgstr "A lemez meghibásodása 24 órán belül várható. Azonnal mentsen minden adatot."
-
-#: ../src/palimpsest/gdu-section-health.c:231
-#: ../src/palimpsest/gdu-section-health.c:238
-#: ../src/palimpsest/gdu-section-health.c:245
-msgctxt "ATA SMART status"
-msgid "Unknown"
-msgstr "Ismeretlen"
-
-#: ../src/palimpsest/gdu-section-health.c:282
-msgctxt "ATA SMART test result"
-msgid "Completed OK"
-msgstr "Rendben sikerült"
-
-#: ../src/palimpsest/gdu-section-health.c:285
-msgctxt "ATA SMART test result"
-msgid "Cancelled"
-msgstr "Megszakítva"
-
-#: ../src/palimpsest/gdu-section-health.c:288
-msgctxt "ATA SMART test result"
-msgid "Cancelled (with hard or soft reset)"
-msgstr "Megszakítva (hardveres vagy szoftveres megszakítás)"
-
-#: ../src/palimpsest/gdu-section-health.c:291
-msgctxt "ATA SMART test result"
-msgid "Not completed (a fatal error might have occured)"
-msgstr "Nem sikerült (végzetes hiba történhetett)"
-
-#: ../src/palimpsest/gdu-section-health.c:295
-#: ../src/palimpsest/gdu-section-health.c:302
-#: ../src/palimpsest/gdu-section-health.c:309
-#: ../src/palimpsest/gdu-section-health.c:316
-msgctxt "ATA SMART test result"
-msgid "FAILED"
-msgstr "SIKERTELEN"
-
-#: ../src/palimpsest/gdu-section-health.c:297
-msgctxt "ATA SMART test result"
-msgid "(Electrical)"
-msgstr "(elektromos)"
-
-#: ../src/palimpsest/gdu-section-health.c:304
-msgctxt "ATA SMART test result"
-msgid "(Servo)"
-msgstr "(szervó)"
-
-#: ../src/palimpsest/gdu-section-health.c:311
-msgctxt "ATA SMART test result"
-msgid "(Read)"
-msgstr "(olvasás)"
-
-#: ../src/palimpsest/gdu-section-health.c:318
-msgctxt "ATA SMART test result"
-msgid "(Suspected of having handled damage)"
-msgstr "(gyaníthatóan kezelt sérülése van)"
-
-#: ../src/palimpsest/gdu-section-health.c:322
-msgctxt "ATA SMART test result"
-msgid "In progress"
-msgstr "Folyamatban"
-
-#: ../src/palimpsest/gdu-section-health.c:327
-msgctxt "ATA SMART test result"
-msgid "Unknown"
-msgstr "Ismeretlen"
-
-#: ../src/palimpsest/gdu-section-health.c:608
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%g°"
-msgstr "%g°"
-
-#: ../src/palimpsest/gdu-section-health.c:679
-msgctxt "ATA SMART graph label"
-msgid "now"
-msgstr "most"
-
-#: ../src/palimpsest/gdu-section-health.c:681
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dm"
-msgstr "%dp"
-
-#: ../src/palimpsest/gdu-section-health.c:686
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dh"
-msgstr "%dó"
-
-#: ../src/palimpsest/gdu-section-health.c:688
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dh %dm"
-msgstr "%dó %dp"
-
-#: ../src/palimpsest/gdu-section-health.c:694
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd"
-msgstr "%dn"
-
-#: ../src/palimpsest/gdu-section-health.c:696
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd %dh"
-msgstr "%dn %dó"
-
-#: ../src/palimpsest/gdu-section-health.c:698
-#, c-format
-msgctxt "ATA SMART graph label"
-msgid "%dd %dh %dm"
-msgstr "%dn %dó %dp"
-
-#: ../src/palimpsest/gdu-section-health.c:927
-msgid "ATA SMART Attributes"
-msgstr "ATA SMART attribútumok"
-
-#: ../src/palimpsest/gdu-section-health.c:951
-msgid "View:"
-msgstr "Megjelenítés:"
-
-#: ../src/palimpsest/gdu-section-health.c:955
-msgid "6 hours"
-msgstr "6 óra"
-
-#: ../src/palimpsest/gdu-section-health.c:956
-msgid "24 hours"
-msgstr "24 óra"
-
-#: ../src/palimpsest/gdu-section-health.c:957
-msgid "3 days"
-msgstr "3 nap"
-
-#: ../src/palimpsest/gdu-section-health.c:958
-msgid "12 days"
-msgstr "12 nap"
-
-#: ../src/palimpsest/gdu-section-health.c:959
-msgid "36 days"
-msgstr "36 nap"
-
-#: ../src/palimpsest/gdu-section-health.c:960
-msgid "96 days"
-msgstr "96 nap"
-
-#: ../src/palimpsest/gdu-section-health.c:1006
-msgctxt "SMART attribute"
-msgid "ID"
-msgstr "Azonosító"
-
-#: ../src/palimpsest/gdu-section-health.c:1015
-msgctxt "SMART attribute"
-msgid "Attribute"
-msgstr "Attribútum"
-
-#: ../src/palimpsest/gdu-section-health.c:1055
-msgctxt "SMART attribute"
-msgid "Value"
-msgstr "Érték"
-
-#: ../src/palimpsest/gdu-section-health.c:1065
-msgctxt "SMART attribute"
-msgid "Status"
-msgstr "Állapot"
-
-#: ../src/palimpsest/gdu-section-health.c:1136
-#, c-format
-msgid "No description for attribute %d."
-msgstr "A(z) %d. attribútumhoz nincs leírás."
-
-#: ../src/palimpsest/gdu-section-health.c:1141
-msgid "Online"
-msgstr "Online"
-
-#: ../src/palimpsest/gdu-section-health.c:1142
-msgid "Every time data is collected."
-msgstr "Minden adat összegyűjve"
-
-#: ../src/palimpsest/gdu-section-health.c:1144
-msgid "Offline"
-msgstr "Offline"
-
-#: ../src/palimpsest/gdu-section-health.c:1145
-msgid "Only when performing a self-test."
-msgstr "Csak önteszt végrehajtásakor."
-
-#: ../src/palimpsest/gdu-section-health.c:1149
-msgid "Pre-fail"
-msgstr "Hiba előtti"
-
-#: ../src/palimpsest/gdu-section-health.c:1150
-msgid "Failure is a sign of imminent disk failure."
-msgstr "A hiba a rövidesen várható lemezmeghibásodás jele."
-
-#: ../src/palimpsest/gdu-section-health.c:1152
-msgid "Old-age"
-msgstr "Túl régi"
-
-# fixme: :)
-#: ../src/palimpsest/gdu-section-health.c:1153
-msgid "Failure is a sign of old age."
-msgstr "A hiba a lemez hajlott korának jele."
-
-#: ../src/palimpsest/gdu-section-health.c:1159
-msgid "Type:"
-msgstr "Típus:"
-
-#: ../src/palimpsest/gdu-section-health.c:1160
-msgid "Updates:"
-msgstr "Frissítések:"
-
-#: ../src/palimpsest/gdu-section-health.c:1161
-msgid "Description:"
-msgstr "Leírás:"
-
-#: ../src/palimpsest/gdu-section-health.c:1186
-msgid "N/A"
-msgstr "N/A"
-
-#: ../src/palimpsest/gdu-section-health.c:1194
-msgid "OK"
-msgstr "RENDBEN"
-
-#: ../src/palimpsest/gdu-section-health.c:1202
-msgid "FAILING"
-msgstr "HIBÁZIK"
-
-#: ../src/palimpsest/gdu-section-health.c:1272
-msgid "Error initiating ATA SMART Self Test"
-msgstr "Hiba az ATA SMART önteszt kezdeményezésekor"
-
-#: ../src/palimpsest/gdu-section-health.c:1304
-msgid "ATA SMART Self Test"
-msgstr "ATA SMART önteszt"
-
-#: ../src/palimpsest/gdu-section-health.c:1328
-msgid "Select what ATA SMART self test to run"
-msgstr "Válassza ki a futtatandó ATA SMART önteszteket"
-
-#: ../src/palimpsest/gdu-section-health.c:1338
-msgid ""
-"The tests may take a very long time to complete depending on the speed and "
-"size of the disk. You can continue using your system while the test is "
-"running."
-msgstr ""
-"A tesztek sokáig tarthatnak a lemez sebességétől és méretétől függően. A "
-"teszt futása közben folytathatja a rendszer használatát."
-
-#: ../src/palimpsest/gdu-section-health.c:1346
-msgid "_Short (usually less than ten minutes)"
-msgstr "_Rövid (általában kevesebb, mint 10 perc)"
-
-#: ../src/palimpsest/gdu-section-health.c:1348
-msgid "_Extended (usually tens of minutes)"
-msgstr "Bő_vített (több tíz perc)"
-
-# fixme!!!
-#: ../src/palimpsest/gdu-section-health.c:1350
-msgid "C_onveyance (usually less than ten minutes)"
-msgstr "Á_ltalános (általában kevesebb, mint 10 perc)"
-
-#: ../src/palimpsest/gdu-section-health.c:1357
-msgid "_Initiate Self Test"
-msgstr "Önteszt in_dítása"
-
-#: ../src/palimpsest/gdu-section-health.c:1459
-msgid "Health"
-msgstr "Egészség"
-
-#: ../src/palimpsest/gdu-section-health.c:1472
-msgid ""
-"Some disks support ATA SMART, a monitoring system for disks to detect and "
-"report on various indicators of reliability, in the hope of anticipating "
-"failures."
-msgstr ""
-"Néhány lemez támogatja az ATA SMART nevű lemezfigyelő rendszert, amely képes "
-"a megbízhatóséggal kapcsolatos jelzések észlelésére és jelentésére, a hibák "
-"előrejelzése reményében."
-
-#: ../src/palimpsest/gdu-section-health.c:1490
-msgid "Powered On:"
-msgstr "Bekapcsolva:"
-
-#: ../src/palimpsest/gdu-section-health.c:1508
-msgid "Temperature:"
-msgstr "Hőmérséklet:"
-
-#: ../src/palimpsest/gdu-section-health.c:1526
-msgid "Last Test:"
-msgstr "Utolsó teszt:"
-
-#: ../src/palimpsest/gdu-section-health.c:1544
-msgid "Updated:"
-msgstr "Frissítve:"
-
-#: ../src/palimpsest/gdu-section-health.c:1562
-msgid "Assessment:"
-msgstr "Felmérés:"
-
-#: ../src/palimpsest/gdu-section-health.c:1595
-msgid "Refresh ATA SMART data from the device"
-msgstr "ATA SMART adatok frissítése az eszközről"
-
-#: ../src/palimpsest/gdu-section-health.c:1600
-msgid "Show ATA SMART Historical Data"
-msgstr "ATA SMART történeti adatok megjelenítése"
-
-#: ../src/palimpsest/gdu-section-health.c:1605
-msgid "Run an ATA SMART self test on the disk"
-msgstr "ATA SMART önteszt futtatása a lemezen"
-
-#: ../src/palimpsest/gdu-section-job.c:207
-msgid "_Cancel"
-msgstr "Me_gszakítás"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:76
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:75
 msgid "Error adding component"
 msgstr "Hiba az összetevő hozzáadásakor"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:152
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:153
 #, c-format
 msgid "Select a volume to use as component in the array \"%s\""
 msgstr "Válassza ki a tömb („%s”) összetevőjeként használandó kötetet"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:157
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:158
 msgid ""
 "Only volumes of acceptable sizes can be selected. You may need to manually "
 "create new volumes of acceptable sizes."
@@ -2274,7 +3436,7 @@ msgstr ""
 "Csak elfogadható méretű kötetek választhatók ki. Szükség lehet elfogadható "
 "méretű új kötetek létrehozására saját kezűleg."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:180
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
 msgstr "_Kötet hozzáadása"
 
@@ -2302,142 +3464,173 @@ msgstr ""
 msgid "_Remove Component"
 msgstr "Összetevő eltá_volítása"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:631
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:695
+msgctxt "RAID component type"
 msgid "Striped (RAID-0)"
 msgstr "Összefűzött (RAID-0)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:633
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
+msgctxt "RAID component type"
 msgid "Mirrored (RAID-1)"
 msgstr "Tükrözött (RAID-1)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:641
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:699
+msgctxt "RAID component type"
+msgid "RAID-4"
+msgstr "RAID-4"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:701
+msgctxt "RAID component type"
+msgid "RAID-5"
+msgstr "RAID-5"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:703
+msgctxt "RAID component type"
+msgid "RAID-6"
+msgstr "RAID-6"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:705
+msgctxt "RAID component type"
 msgid "Linear (Just a Bunch Of Disks)"
 msgstr "Lineáris (csak egy halom lemez)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:648
+#. Translators: %d is the number of components in the RAID
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:713
 #, c-format
-msgid "%d Components"
-msgstr "%d összetevő"
+msgid "%d Component"
+msgid_plural "%d Components"
+msgstr[0] "%d összetevő"
+msgstr[1] "%d összetevő"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
+#. Translators: %d is the number of components in the RAID,
+#. * %s is the size of each component, formatted like '45 GB'
+#.
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:718
 #, c-format
-msgid "%d Components (%s each)"
-msgstr "%d összetevő (%s mind)"
+msgid "%d Component (%s)"
+msgid_plural "%d Components (%s each)"
+msgstr[0] "%d összetevő (%s)"
+msgstr[1] "%d összetevő (egyenként %s)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:662
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:730
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
 msgstr "Nem fut, részlegesen összeállítva"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:670
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:738
 msgctxt "RAID status"
 msgid "Not running"
 msgstr "Nem fut"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:672
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:740
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
 msgstr "Nem fut, csak leromolva indítható"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:674
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:742
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
 msgstr "Nem fut, nincs elég összetevő az indításhoz"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:693
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:761
 msgctxt "RAID status"
 msgid "Degraded"
 msgstr "Leromlott"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:765
 msgctxt "RAID status"
 msgid "Running"
 msgstr "Fut"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:702
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:770
 msgctxt "RAID status"
 msgid "Reshaping"
 msgstr "Újjáalakul"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:706
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:773
 msgctxt "RAID status"
 msgid "Resyncing"
 msgstr "Újraszinkronizál"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:710
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:776
 msgctxt "RAID status"
 msgid "Repairing"
 msgstr "Javítás"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:714
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:779
 msgctxt "RAID status"
 msgid "Recovering"
 msgstr "Helyreáll"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:782
+msgctxt "RAID status"
+msgid "Checking"
+msgstr "Ellenőrzés"
 
 #. Translators: this string tells about an ongoing synchronization.
 #. * %3.01f is replaced by the percentage of completion
 #. * %s is replaced by the speed of the operation
 #.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:790
 #, c-format
 msgctxt "RAID status"
 msgid " @ %3.01f%% (%s)"
 msgstr " @ %3.01f%% (%s)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:788
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:856
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr "Hibás"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:793
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:861
 msgctxt "Linux MD slave state"
 msgid "In Sync"
 msgstr "Szinkronban"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:795
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:863
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Jórészt írás"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:797
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:865
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Blokkolt"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:799
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:867
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Tartalék"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:890
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"
 msgstr "Tömb neve:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:906
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 msgid "Home Host:"
 msgstr "Tulajdonos gép:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:922
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:990
 msgid "Array Size:"
 msgstr "Tömbméret:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:938
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
 msgstr "RAID típusa:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:954
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1022
 msgid "Components:"
 msgstr "Összetevők"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:970
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1038
 msgid "State:"
 msgstr "Állapot:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1001
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1069
 msgid "A_ttach"
 msgstr "_Csatolás"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1007
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
 msgid ""
 "Attaches the stale component to the RAID array. After attachment, data from "
 "the array will be synchronized on the component."
@@ -2445,11 +3638,12 @@ msgstr ""
 "A szabadon álló összetevőt a RAID tömbhöz csatolja. A csatolás után a tömb "
 "adatai szinkronizálásra kerülnek az összetevőre."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1011
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
+#: ../src/palimpsest/gdu-shell.c:1941
 msgid "_Detach"
 msgstr "_Leválasztás"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1017
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
 msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
@@ -2457,11 +3651,11 @@ msgstr ""
 "Leválasztja a futó összetevőt a RAID tömbről. Az összetevő adatai törlésre "
 "kerülnek és a kötet használható lesz más célra."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1021
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
 msgstr "Hozzá_adás…"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1027
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1095
 msgid ""
 "Adds a new component to the running RAID array. Use this when replacing a "
 "failed component or adding a hot spare."
@@ -2469,18 +3663,31 @@ msgstr ""
 "Új összetevőt ad a futó RAID tömbhöz. Ez hibás összetevő cseréjére vagy "
 "tartalék hozzáadására használható."
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1046
+#. Translators: this is a verb, as in 'check for consistency'
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
+msgid "Chec_k"
+msgstr "_Ellenőrzés"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
+msgid "Starts checking the RAID array for redundancy"
+msgstr "A RAID tömb redundanciájának ellenőrzése"
+
+#. Translators: this is a verb, as in 'repair this RAID array'
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1106
+msgid "_Repair"
+msgstr "_Javítás"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1110
+msgid "Starts repairing the RAID array"
+msgstr "A RAID tömb javításának megkezdése"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1128
 msgid "State"
 msgstr "Állapot"
 
-#: ../src/palimpsest/gdu-section-no-media.c:113
-#: ../src/palimpsest/gdu-shell.c:235 ../src/palimpsest/gdu-shell.c:259
-#, c-format
-msgid "No Media Detected"
-msgstr "Nem észlelhető adathordozó"
-
 #: ../src/palimpsest/gdu-section-no-media.c:126
-msgid "To format or edit media, insert it into the drive and wait a few seconds."
+msgid ""
+"To format or edit media, insert it into the drive and wait a few seconds."
 msgstr ""
 "Adathordozó formázásához vagy szerkesztéséhez helyezze azt a meghajtóba és "
 "várjon pár pillanatig."
@@ -2495,7 +3702,8 @@ msgstr "Hiba a partíció törlésekor"
 
 #: ../src/palimpsest/gdu-section-partition.c:112
 msgid "Are you sure you want to remove the partition, deleting existing data ?"
-msgstr "Biztosan el kívánja távolítani a partíciót, törölve a meglévő adatokat?"
+msgstr ""
+"Biztosan el kívánja távolítani a partíciót, törölve a meglévő adatokat?"
 
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
@@ -2636,24 +3844,24 @@ msgstr "Partíció _címkéje:"
 
 #. flags
 #. used by mbr, apm
-#: ../src/palimpsest/gdu-section-partition.c:586
+#: ../src/palimpsest/gdu-section-partition.c:587
 msgid "_Bootable"
 msgstr "_Indítható"
 
 #. used by gpt
-#: ../src/palimpsest/gdu-section-partition.c:594
+#: ../src/palimpsest/gdu-section-partition.c:595
 msgid "Required / Firm_ware"
 msgstr "Szükséges / Firm_ware"
 
-#: ../src/palimpsest/gdu-section-partition.c:606
+#: ../src/palimpsest/gdu-section-partition.c:607
 msgid "Delete the partition"
 msgstr "Partíció törlése"
 
-#: ../src/palimpsest/gdu-section-partition.c:610
+#: ../src/palimpsest/gdu-section-partition.c:611
 msgid "_Revert"
 msgstr "_Visszaállítás"
 
-#: ../src/palimpsest/gdu-section-partition.c:615
+#: ../src/palimpsest/gdu-section-partition.c:616
 msgid "Apply the changes made"
 msgstr "A módosítások alkalmazása"
 
@@ -2676,7 +3884,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
 msgid ""
-"No more partitions can be created. You may want to delete  an existing "
+"No more partitions can be created. You may want to delete an existing "
 "partition and then create an Extended Partition."
 msgstr ""
 "Nem hozható létre több partíció. Törölje az egyik meglévő partíciót és "
@@ -2699,37 +3907,38 @@ msgstr ""
 msgid "_Size:"
 msgstr "_Méret:"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:650
+#. Translators: unit label for a control that determines partition size in megabytes
+#: ../src/palimpsest/gdu-section-unallocated.c:651
 msgid "MB"
 msgstr "MB"
 
 #. whether to chown fs root for user
-#: ../src/palimpsest/gdu-section-unallocated.c:700
+#: ../src/palimpsest/gdu-section-unallocated.c:702
 #: ../src/palimpsest/gdu-section-unrecognized.c:464
 msgid "T_ake ownership of file system"
 msgstr "Fájlrendszer saját t_ulajdonba vétele"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:703
+#: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
 msgid ""
 "The selected file system has a concept of file ownership. If checked, the "
-"created file system be will be owned by you. If not checked, only the super "
+"created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
 "A kiválasztott fájlrendszer értelmezi a fájlok tulajdonjogának fogalmát. Ha "
 "bejelöli, a létrehozott fájlrendszer az Ön tulajdona lesz. Ha nem jelöli be, "
-"csak a rendszergazda férhez hozzá a fájlrendszerhez."
+"csak a rendszergazda férhet hozzá a fájlrendszerhez."
 
 #. whether to encrypt underlying device
-#: ../src/palimpsest/gdu-section-unallocated.c:713
+#: ../src/palimpsest/gdu-section-unallocated.c:715
 #: ../src/palimpsest/gdu-section-unrecognized.c:477
 msgid "Encr_ypt underlying device"
 msgstr "Alapeszköz _titkosítása"
 
-#: ../src/palimpsest/gdu-section-unallocated.c:715
+#: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
 msgid ""
-"Encryption protects your data, requiring a passphrase to be enterered before "
+"Encryption protects your data, requiring a passphrase to be entered before "
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
@@ -2737,16 +3946,17 @@ msgstr ""
 "használatához. Csökkentheti a teljesítményt és nem kompatibilis, ha az "
 "adathordozót más operációs rendszereken használja."
 
-#: ../src/palimpsest/gdu-section-unallocated.c:732
+#: ../src/palimpsest/gdu-section-unallocated.c:734
 msgid "Create partition"
 msgstr "Partíció létrehozása"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:231
-msgid "Are you sure you want to create a new file system, deleting existing data ?"
+msgid ""
+"Are you sure you want to create a new file system, deleting existing data ?"
 msgstr "Biztosan új fájlrendszert készít, a meglévő adatok törlésével?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
-#: ../src/palimpsest/gdu-shell.c:1421
+#: ../src/palimpsest/gdu-shell.c:1519
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
@@ -2757,7 +3967,7 @@ msgstr ""
 "mentése. Ez a művelet nem vonható vissza."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
-#: ../src/palimpsest/gdu-shell.c:1428
+#: ../src/palimpsest/gdu-shell.c:1526
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
@@ -2779,289 +3989,336 @@ msgstr ""
 "Új fájlrendszer létrehozásához az eszközön válassza ki a típust és címkét, "
 "majd nyomja meg a „Létrehozás” gombot. Minden meglévő adat el fog veszni."
 
-#: ../src/palimpsest/gdu-shell.c:223 ../src/palimpsest/gdu-shell.c:251
+#: ../src/palimpsest/gdu-shell.c:203
+msgid "Unknown Size"
+msgstr "Ismeretlen méret"
+
+#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
+#: ../src/palimpsest/gdu-shell.c:226 ../src/palimpsest/gdu-shell.c:255
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Ismeretlen séma: %s"
 
-#: ../src/palimpsest/gdu-shell.c:227
+#. Translators: %s is the name of the partition table format, like 'Master Boot Record'
+#: ../src/palimpsest/gdu-shell.c:231
 #, c-format
 msgid "Partitioned Media (%s)"
-msgstr "Partícionált adathordozó (%s)"
+msgstr "Particionált adathordozó (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:232
+#: ../src/palimpsest/gdu-shell.c:236
 msgid "Unpartitioned Media"
-msgstr "Partícionálatlan adathordozó"
+msgstr "Particionálatlan adathordozó"
 
-#: ../src/palimpsest/gdu-shell.c:238 ../src/palimpsest/gdu-shell.c:262
-#: ../src/palimpsest/gdu-shell.c:326
+#: ../src/palimpsest/gdu-shell.c:242 ../src/palimpsest/gdu-shell.c:266
+#: ../src/palimpsest/gdu-shell.c:363
 #, c-format
 msgid "Unrecognized"
 msgstr "Ismeretlen"
 
-#: ../src/palimpsest/gdu-shell.c:256 ../src/palimpsest/gdu-shell.c:343
-#, c-format
-msgid "Not Partitioned"
-msgstr "Nem partícionált"
-
-#: ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:273
 msgid "Linux Software RAID"
 msgstr "Szoftveres Linux RAID"
 
-#: ../src/palimpsest/gdu-shell.c:275
+#: ../src/palimpsest/gdu-shell.c:294
 #, c-format
-msgid "Connected via %s"
-msgstr "Csatlakoztatva ezen: %s"
+msgid "SMART status: %s"
+msgstr "SMART állapot: %s"
 
-#: ../src/palimpsest/gdu-shell.c:282 ../src/palimpsest/gdu-shell.c:350
-#: ../src/palimpsest/gdu-shell.c:385
+#. Translators: this the SMART hyperlink tooltip
+#: ../src/palimpsest/gdu-shell.c:302
+msgid "View details about SMART for this disk"
+msgstr "A lemez SMART állapotával kapcsolatos részletek megjelenítése"
+
+#. Translators: this is the text for the SMART hyperlink
+#: ../src/palimpsest/gdu-shell.c:304
+msgid "More Information"
+msgstr "További információkért"
+
+#: ../src/palimpsest/gdu-shell.c:318 ../src/palimpsest/gdu-shell.c:387
+#: ../src/palimpsest/gdu-shell.c:422
 #, c-format
 msgid "%s (Read Only)"
 msgstr "%s (csak olvasható)"
 
-#: ../src/palimpsest/gdu-shell.c:289
+#: ../src/palimpsest/gdu-shell.c:325
 msgid "Not running"
 msgstr "Nem fut"
 
-#: ../src/palimpsest/gdu-shell.c:304
+#: ../src/palimpsest/gdu-shell.c:341
 #, c-format
 msgid "%s File System"
 msgstr "%s fájlrendszer"
 
-#: ../src/palimpsest/gdu-shell.c:315
+#: ../src/palimpsest/gdu-shell.c:352
 msgid "Encrypted LUKS Device"
 msgstr "Titkosított LUKS eszköz"
 
-#: ../src/palimpsest/gdu-shell.c:322
+#: ../src/palimpsest/gdu-shell.c:359
 msgid "Data"
 msgstr "Adat"
 
-#: ../src/palimpsest/gdu-shell.c:331
+#: ../src/palimpsest/gdu-shell.c:368
 msgid "Cleartext LUKS Device"
 msgstr "Egyszerű szöveges LUKS eszköz"
 
-#: ../src/palimpsest/gdu-shell.c:338
+#: ../src/palimpsest/gdu-shell.c:375
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "%d. partíció (%s)"
 
-#: ../src/palimpsest/gdu-shell.c:381
-msgid "Unallocated Space"
-msgstr "Lefoglalatlan terület"
-
-#: ../src/palimpsest/gdu-shell.c:861
+#: ../src/palimpsest/gdu-shell.c:928
 msgid "Error checking file system on device"
 msgstr "Hiba a fájlrendszer ellenőrzésekor az eszközön"
 
-#: ../src/palimpsest/gdu-shell.c:876
+#: ../src/palimpsest/gdu-shell.c:943
 #, c-format
 msgid "File system check on \"%s\" completed"
 msgstr "Fájlrendszer ellenőrzése kész a következőn: „%s”"
 
-#: ../src/palimpsest/gdu-shell.c:880
+#: ../src/palimpsest/gdu-shell.c:947
 msgid "File system is clean."
 msgstr "A fájlrendszer tiszta."
 
-#: ../src/palimpsest/gdu-shell.c:883
+#: ../src/palimpsest/gdu-shell.c:950
 msgid "File system is <b>NOT</b> clean."
 msgstr "A fájlrendszer <b>NEM</b> tiszta"
 
-#: ../src/palimpsest/gdu-shell.c:969
+#: ../src/palimpsest/gdu-shell.c:1036
 msgid "Error unmounting device"
 msgstr "Hiba az eszköz leválasztásakor"
 
-#: ../src/palimpsest/gdu-shell.c:1023
+#: ../src/palimpsest/gdu-shell.c:1090
 msgid "Error ejecting device"
 msgstr "Hiba az eszköz kiadásakor"
 
-#: ../src/palimpsest/gdu-shell.c:1120
+#: ../src/palimpsest/gdu-shell.c:1121
+msgid "Error detaching device"
+msgstr "Hiba az eszköz leválasztásakor"
+
+#: ../src/palimpsest/gdu-shell.c:1218
 msgid "Error unlocking device"
 msgstr "Hiba az eszköz feloldásakor"
 
-#: ../src/palimpsest/gdu-shell.c:1185
+#: ../src/palimpsest/gdu-shell.c:1283
 msgid "Error locking encrypted device"
 msgstr "Hiba a titkosított eszköz zárolásakor"
 
-#: ../src/palimpsest/gdu-shell.c:1222
+#: ../src/palimpsest/gdu-shell.c:1320
 #, c-format
 msgid "There was an error starting the drive \"%s\"."
 msgstr "Hiba történt a meghajtó („%s”) elindításakor."
 
-#: ../src/palimpsest/gdu-shell.c:1276
+#: ../src/palimpsest/gdu-shell.c:1374
 #, c-format
 msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr "Biztosan el akarja indítani a meghajtót („%s”) leromlott módban?"
 
-#: ../src/palimpsest/gdu-shell.c:1280
+#: ../src/palimpsest/gdu-shell.c:1378
 msgid ""
 "Starting a RAID array in degraded mode means that the RAID volume is no "
 "longer tolerant to drive failures. Data on the volume may be irrevocably "
 "lost if a drive fails."
 msgstr ""
-"A RAID tömb leromlott módban való indítása azt jelenti, hogy az már nem tűr "
-"további meghajtóhibákat. Az adatok visszavonhatatlanul elveszhetnek, ha a "
-"lemez meghibásodik."
+"A RAID tömb leromlott módban való indítása azt jelenti, hogy az már nem "
+"visel el további meghajtóhibákat. Az adatok visszavonhatatlanul "
+"elveszhetnek, ha a lemez meghibásodik."
 
-#: ../src/palimpsest/gdu-shell.c:1285
+#: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
 msgstr "_Tömb elindítása"
 
-#: ../src/palimpsest/gdu-shell.c:1313
+#: ../src/palimpsest/gdu-shell.c:1411
 #, c-format
 msgid "There was an error stopping the drive \"%s\"."
 msgstr "Hiba történt a meghajtó („%s”) leállításakor."
 
-#: ../src/palimpsest/gdu-shell.c:1365
+#: ../src/palimpsest/gdu-shell.c:1463
 msgid "Error erasing data"
 msgstr "Hiba az adatok törlésekor"
 
-#: ../src/palimpsest/gdu-shell.c:1417
+#: ../src/palimpsest/gdu-shell.c:1515
 msgid "Are you sure you want to erase the device ?"
 msgstr "Biztosan törölni kívánja az eszközt?"
 
-#: ../src/palimpsest/gdu-shell.c:1453 ../src/palimpsest/gdu-shell.c:1580
+#: ../src/palimpsest/gdu-shell.c:1551 ../src/palimpsest/gdu-shell.c:1946
 msgid "_Erase"
 msgstr "_Törlés"
 
-#: ../src/palimpsest/gdu-shell.c:1517
+#: ../src/palimpsest/gdu-shell.c:1626
+msgid "Error creating component for RAID array"
+msgstr "Hiba a RAID tömb összetevőjének létrehozásakor"
+
+#: ../src/palimpsest/gdu-shell.c:1653
+msgid "Error creating partition table for component for RAID array"
+msgstr "Hiba a partíciós tábla létrehozásakor a RAID tömb összetevőjéhez"
+
+#: ../src/palimpsest/gdu-shell.c:1679
+msgid "Error creating RAID array"
+msgstr "Hiba a RAID tömb létrehozásakor"
+
+#: ../src/palimpsest/gdu-shell.c:1870 ../src/palimpsest/gdu-shell.c:2198
+msgid "Palimpsest Disk Utility"
+msgstr "Palimpsest lemezkezelő"
+
+#: ../src/palimpsest/gdu-shell.c:1875
 msgid "translator-credits"
 msgstr "Kelemen Gábor <kelemeng@gnome.hu>"
 
-#: ../src/palimpsest/gdu-shell.c:1568
+#: ../src/palimpsest/gdu-shell.c:1931
 msgid "_File"
 msgstr "_Fájl"
 
-#: ../src/palimpsest/gdu-shell.c:1569
+#: ../src/palimpsest/gdu-shell.c:1932
+msgid "_New"
+msgstr "Ú_j"
+
+#: ../src/palimpsest/gdu-shell.c:1933
+msgid "Software _RAID Array"
+msgstr "Sz_oftveres RAID tömb"
+
+#: ../src/palimpsest/gdu-shell.c:1933
+msgid "Create a new Software RAID array"
+msgstr "Új szoftveres RAID tömb létrehozása"
+
+#: ../src/palimpsest/gdu-shell.c:1934
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: ../src/palimpsest/gdu-shell.c:1570 ../src/palimpsest/gdu-shell.c:1584
+#: ../src/palimpsest/gdu-shell.c:1935 ../src/palimpsest/gdu-shell.c:1950
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../src/palimpsest/gdu-shell.c:1572
+#: ../src/palimpsest/gdu-shell.c:1937
 msgid "_Check File System"
 msgstr "_Fájlrendszer ellenőrzése"
 
-#: ../src/palimpsest/gdu-shell.c:1572
+#: ../src/palimpsest/gdu-shell.c:1937
 msgid "Check the file system"
 msgstr "A fájlrendszer ellenőrzése"
 
-#: ../src/palimpsest/gdu-shell.c:1573
+#: ../src/palimpsest/gdu-shell.c:1938
 msgid "_Mount"
 msgstr "_Csatolás"
 
-#: ../src/palimpsest/gdu-shell.c:1573
+#: ../src/palimpsest/gdu-shell.c:1938
 msgid "Mount the filesystem on device"
 msgstr "Az eszköz fájlrendszerének csatolása"
 
-#: ../src/palimpsest/gdu-shell.c:1574
+#: ../src/palimpsest/gdu-shell.c:1939
 msgid "Unmount the filesystem"
 msgstr "Fájlrendszer leválasztása"
 
-#: ../src/palimpsest/gdu-shell.c:1575
+#: ../src/palimpsest/gdu-shell.c:1940
 msgid "_Eject"
 msgstr "_Kiadás"
 
-#: ../src/palimpsest/gdu-shell.c:1575
+#: ../src/palimpsest/gdu-shell.c:1940
 msgid "Eject media from the device"
 msgstr "Adathordozó kiadása az eszközből"
 
-#: ../src/palimpsest/gdu-shell.c:1576
+#: ../src/palimpsest/gdu-shell.c:1941
+msgid "Detach the device from the system, powering it off"
+msgstr "Az eszköz leválasztása a rendszerről, majd kikapcsolása"
+
+#: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
 msgstr ""
 "A titkosított eszköz feloldása, az adatok elérhetővé tételéhez egyszerű "
 "szövegben."
 
-#: ../src/palimpsest/gdu-shell.c:1577
+#: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
 msgstr "_Zárolás"
 
-#: ../src/palimpsest/gdu-shell.c:1577
+#: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgstr ""
 "A titkosított eszköz zárolása, az egyszerű szöveges adatokat elérhetetlenné "
 "téve"
 
-#: ../src/palimpsest/gdu-shell.c:1578
+#: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
 msgstr "In_dítás"
 
-#: ../src/palimpsest/gdu-shell.c:1578
+#: ../src/palimpsest/gdu-shell.c:1944
 msgid "Start the array"
 msgstr "A tömb elindítása"
 
-#: ../src/palimpsest/gdu-shell.c:1579
+#: ../src/palimpsest/gdu-shell.c:1945
 msgid "_Stop"
 msgstr "_Leállítás"
 
-#: ../src/palimpsest/gdu-shell.c:1579
+#: ../src/palimpsest/gdu-shell.c:1945
 msgid "Stop the array"
 msgstr "A tömb leállítása"
 
-#: ../src/palimpsest/gdu-shell.c:1580
+#: ../src/palimpsest/gdu-shell.c:1946
 msgid "Erase the contents of the device"
 msgstr "Az eszköz tartalmának törlése"
 
-#: ../src/palimpsest/gdu-shell.c:1583
+#: ../src/palimpsest/gdu-shell.c:1949
 msgid "_Quit"
 msgstr "_Kilépés"
 
-#: ../src/palimpsest/gdu-shell.c:1583
+#: ../src/palimpsest/gdu-shell.c:1949
 msgid "Quit"
 msgstr "Kilépés"
 
-#: ../src/palimpsest/gdu-shell.c:1584
+#: ../src/palimpsest/gdu-shell.c:1950
 msgid "Get Help on Palimpsest Disk Utility"
 msgstr "A Palimpsest lemezkezelő súgója"
 
-#: ../src/palimpsest/gdu-shell.c:1585
+#: ../src/palimpsest/gdu-shell.c:1951
 msgid "_About"
 msgstr "_Névjegy"
 
-#: ../src/palimpsest/gdu-shell.c:1681
+#: ../src/palimpsest/gdu-shell.c:2030
+msgid "An error occured"
+msgstr "Hiba történt"
+
+#: ../src/palimpsest/gdu-shell.c:2039
 msgid "The operation failed."
 msgstr "A művelet meghiúsult."
 
-#: ../src/palimpsest/gdu-shell.c:1684
+#: ../src/palimpsest/gdu-shell.c:2042
 msgid "The device is busy."
 msgstr "Az eszköz foglalt."
 
-#: ../src/palimpsest/gdu-shell.c:1687
-msgid "The operation was cancelled."
+#: ../src/palimpsest/gdu-shell.c:2045
+msgid "The operation was canceled."
 msgstr "A művelet megszakítva."
 
-#: ../src/palimpsest/gdu-shell.c:1690
+#: ../src/palimpsest/gdu-shell.c:2048
 msgid "The daemon is being inhibited."
 msgstr "A démon működése korlátozva van."
 
-#: ../src/palimpsest/gdu-shell.c:1693
+#: ../src/palimpsest/gdu-shell.c:2051
 msgid "An invalid option was passed."
 msgstr "Érvénytelen kapcsolót adott meg."
 
-#: ../src/palimpsest/gdu-shell.c:1696
+#: ../src/palimpsest/gdu-shell.c:2054
 msgid "The operation is not supported."
 msgstr "A művelet nem támogatott."
 
-#: ../src/palimpsest/gdu-shell.c:1699
+#: ../src/palimpsest/gdu-shell.c:2057
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "Az ATA SMART adatok lekérése felébresztené az eszközt."
 
-#: ../src/palimpsest/gdu-shell.c:1702
+#: ../src/palimpsest/gdu-shell.c:2060
 msgid "Permission denied."
 msgstr "Hozzáférés megtagadva."
 
-#: ../src/palimpsest/gdu-shell.c:1705
+#: ../src/palimpsest/gdu-shell.c:2063
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
-#: ../src/palimpsest/gdu-shell.c:1741
+#: ../src/palimpsest/gdu-shell.c:2099
 msgid "_Details:"
 msgstr "_Részletek:"
 
-#: ../src/playground/grid/gdu-grid-details.c:105
-msgid "Operations should go here"
-msgstr ""
+#: ../src/palimpsest/gdu-shell.c:2236
+msgid "<small>_Cancel</small>"
+msgstr "<small>Mé_gse</small>"
 
 #: ../src/playground/grid/gdu-grid-details.c:134
 #: ../src/playground/grid/gdu-grid-element.c:877
@@ -3070,7 +4327,7 @@ msgstr "Nézet"
 
 #: ../src/playground/grid/gdu-grid-details.c:135
 msgid "The view to show details for"
-msgstr ""
+msgstr "Nézet a következő részleteinek megjelenítéséhez:"
 
 #: ../src/playground/grid/gdu-grid-details.c:196
 msgid "Device:"
@@ -3090,47 +4347,42 @@ msgstr "Szabad"
 
 #: ../src/playground/grid/gdu-grid-element.c:878
 msgid "The GduGridView object that the element is associated with"
-msgstr ""
+msgstr "A GduGridView objektum, amelyhez az elem tartozik"
 
 #: ../src/playground/grid/gdu-grid-element.c:887
 msgid "Presentable"
-msgstr ""
+msgstr "Megjeleníthető"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
-msgid "The presentable shown or NULL if this is a element representing lack of media"
+msgid ""
+"The presentable shown or NULL if this is a element representing lack of media"
 msgstr ""
-
-#: ../src/playground/grid/gdu-grid-element.c:897
-msgid "Minimum Size"
-msgstr ""
+"A látható megjelenítendő, vagy NULL ha ez az elem az adathordozó hiányát "
+"jelzi"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
-msgid "The mininum size of the element"
-msgstr ""
+msgid "The minimum size of the element"
+msgstr "Az elem minimális mérete"
 
 #: ../src/playground/grid/gdu-grid-element.c:909
 msgid "Percent Size"
-msgstr ""
+msgstr "Százalékos méret"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
 msgid ""
-"The size in percent this element should claim or 0 to always claim the "
+"The size in percent that this element should claim or 0 to always claim the "
 "specified minimum size"
 msgstr ""
+"Az elem által elfoglalandó méret százalékban, vagy 0 a minimális mérethez"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
-msgstr ""
+msgstr "Jelzők"
 
 #: ../src/playground/grid/gdu-grid-element.c:922
 msgid "Flags for the element"
-msgstr ""
-
-#: ../src/playground/grid/gdu-grid-view.c:325
-msgid "Pool"
-msgstr ""
+msgstr "Az elem jelzői"
 
 #: ../src/playground/grid/gdu-grid-view.c:326
 msgid "The pool of devices to show"
-msgstr ""
-
+msgstr "A megjelenítendő eszközök halmaza"

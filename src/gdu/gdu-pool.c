@@ -1019,23 +1019,23 @@ get_properties (GduPool *pool)
                 goto out;
         }
 
-        value = g_hash_table_lookup (hash_table, "daemon-version");
+        value = g_hash_table_lookup (hash_table, "DaemonVersion");
         if (value == NULL) {
-                g_warning ("No property 'daemon-version'");
+                g_warning ("No property 'DaemonVersion'");
                 goto out;
         }
         pool->priv->daemon_version = g_strdup (g_value_get_string (value));
 
-        value = g_hash_table_lookup (hash_table, "supports-luks-devices");
+        value = g_hash_table_lookup (hash_table, "SupportsLuksDevices");
         if (value == NULL) {
-                g_warning ("No property 'supports-luks-devices'");
+                g_warning ("No property 'SupportsLuksDevices'");
                 goto out;
         }
         pool->priv->supports_luks_devices = g_value_get_boolean (value);
 
-        value = g_hash_table_lookup (hash_table, "known-filesystems");
+        value = g_hash_table_lookup (hash_table, "KnownFilesystems");
         if (value == NULL) {
-                g_warning ("No property 'known-filesystems'");
+                g_warning ("No property 'KnownFilesystems'");
                 goto out;
         }
         known_filesystems_array = g_value_get_boxed (value);

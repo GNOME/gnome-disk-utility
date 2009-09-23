@@ -47,6 +47,7 @@ typedef struct GduSizeWidget               GduSizeWidget;
 typedef struct GduVolumeGrid               GduVolumeGrid;
 typedef struct GduDetailsTable             GduDetailsTable;
 typedef struct GduDetailsElement           GduDetailsElement;
+typedef struct GduErrorDialog              GduErrorDialog;
 
 G_END_DECLS
 

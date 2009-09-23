@@ -322,10 +322,15 @@ eject_op_callback (GduDevice *device,
         GduShell *shell = GDU_SHELL (user_data);
 
         if (error != NULL) {
-                gdu_shell_raise_error (shell,
-                                       NULL,
-                                       error,
-                                       _("Error ejecting device"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                     device,
+                                                     _("Error ejecting media"),
+                                                     error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         }
         g_object_unref (shell);
@@ -361,10 +366,15 @@ detach_op_callback (GduDevice *device,
         GduShell *shell = GDU_SHELL (user_data);
 
         if (error != NULL) {
-                gdu_shell_raise_error (shell,
-                                       NULL,
-                                       error,
-                                       _("Error detaching device"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                     device,
+                                                     _("Error detaching drive"),
+                                                     error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         }
         g_object_unref (shell);

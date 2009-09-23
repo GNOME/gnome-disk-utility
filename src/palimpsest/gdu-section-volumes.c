@@ -153,10 +153,15 @@ unmount_op_callback (GduDevice *device,
         /* TODO: handle busy mounts using GtkMountOperation */
 
         if (error != NULL) {
-                gdu_shell_raise_error (shell,
-                                       NULL,
-                                       error,
-                                       _("Error unmounting device"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                      device,
+                                                      _("Error unmounting volume"),
+                                                      error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         }
         g_object_unref (shell);

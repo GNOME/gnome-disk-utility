@@ -40,6 +40,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-volume-grid.h						\
 	gdu-details-table.h						\
 	gdu-details-element.h						\
+	gdu-error-dialog.h						\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -57,6 +58,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-volume-grid.h			gdu-volume-grid.c			\
 	gdu-details-table.h			gdu-details-table.c			\
 	gdu-details-element.h			gdu-details-element.c			\
+	gdu-error-dialog.h			gdu-error-dialog.c			\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

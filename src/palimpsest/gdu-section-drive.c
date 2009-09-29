@@ -40,9 +40,36 @@ struct _GduSectionDrivePrivate
         GduDetailsElement *connection_element;
         GduDetailsElement *partitioning_element;
         GduDetailsElement *smart_element;
+
+        GduButtonElement *cddvd_button;
+        GduButtonElement *format_button;
+        GduButtonElement *eject_button;
+        GduButtonElement *detach_button;
+        GduButtonElement *smart_button;
 };
 
 G_DEFINE_TYPE (GduSectionDrive, gdu_section_drive, GDU_TYPE_SECTION)
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+has_strv0 (gchar **strv, const gchar *str)
+{
+        gboolean ret;
+        guint n;
+
+        ret = FALSE;
+
+        for (n = 0; strv != NULL && strv[n] != NULL; n++) {
+                if (g_strcmp0 (strv[n], str) == 0) {
+                        ret = TRUE;
+                        goto out;
+                }
+        }
+
+ out:
+        return ret;
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -169,6 +196,35 @@ gdu_section_drive_update (GduSection *_section)
         gdu_details_element_set_text (section->priv->connection_element, s);
         g_free (s);
 
+        /* buttons */
+        if (d != NULL &&
+            gdu_device_drive_ata_smart_get_is_available (d) &&
+            gdu_device_drive_ata_smart_get_time_collected (d) > 0) {
+                gdu_button_element_set_visible (section->priv->smart_button, TRUE);
+        } else {
+                gdu_button_element_set_visible (section->priv->smart_button, FALSE);
+        }
+
+        if (d != NULL && gdu_device_drive_get_is_media_ejectable (d)) {
+                gdu_button_element_set_visible (section->priv->eject_button, TRUE);
+        } else {
+                gdu_button_element_set_visible (section->priv->eject_button, FALSE);
+        }
+
+        if (d != NULL && gdu_device_drive_get_can_detach (d)) {
+                gdu_button_element_set_visible (section->priv->detach_button, TRUE);
+        } else {
+                gdu_button_element_set_visible (section->priv->detach_button, FALSE);
+        }
+
+        if (d != NULL && has_strv0 (gdu_device_drive_get_media_compatibility (d), "optical_cd")) {
+                gdu_button_element_set_visible (section->priv->cddvd_button, TRUE);
+                gdu_button_element_set_visible (section->priv->format_button, FALSE);
+        } else {
+                gdu_button_element_set_visible (section->priv->cddvd_button, FALSE);
+                gdu_button_element_set_visible (section->priv->format_button, TRUE);
+        }
+
  out:
         if (d != NULL)
                 g_object_unref (d);
@@ -176,71 +232,9 @@ gdu_section_drive_update (GduSection *_section)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static GtkWidget *
-create_button (const gchar *icon_name,
-               const gchar *button_primary,
-               const gchar *button_secondary)
-{
-        GtkWidget *hbox;
-        GtkWidget *label;
-        GtkWidget *image;
-        GtkWidget *button;
-        gchar *s;
-
-        image = gtk_image_new_from_icon_name (icon_name,
-                                              GTK_ICON_SIZE_BUTTON);
-        gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD_CHAR);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_single_line_mode (GTK_LABEL (label), FALSE);
-        s = g_strdup_printf ("%s\n"
-                             "<span fgcolor='#404040'><small>%s</small></span>",
-                             button_primary,
-                             button_secondary);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
-        g_free (s);
-
-        hbox = gtk_hbox_new (FALSE, 6);
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-        button = gtk_button_new ();
-        gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-        gtk_container_add (GTK_CONTAINER (button), hbox);
-
-        gtk_widget_set_size_request (label, 250, -1);
-
-        return button;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static gboolean
-has_strv0 (gchar **strv, const gchar *str)
-{
-        gboolean ret;
-        guint n;
-
-        ret = FALSE;
-
-        for (n = 0; strv != NULL && strv[n] != NULL; n++) {
-                if (g_strcmp0 (strv[n], str) == 0) {
-                        ret = TRUE;
-                        goto out;
-                }
-        }
-
- out:
-        return ret;
-}
-
 static void
-on_cddvd_button_clicked (GtkButton *button,
-                         gpointer   user_data)
+on_cddvd_button_clicked (GduButtonElement *button_element,
+                         gpointer          user_data)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
         GAppLaunchContext *launch_context;
@@ -297,8 +291,8 @@ on_cddvd_button_clicked (GtkButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_smart_button_clicked (GtkButton *button,
-                         gpointer   user_data)
+on_smart_button_clicked (GduButtonElement *button_element,
+                         gpointer          user_data)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
         GtkWindow *toplevel;
@@ -337,8 +331,8 @@ eject_op_callback (GduDevice *device,
 }
 
 static void
-on_eject_button_clicked (GtkButton *button,
-                         gpointer   user_data)
+on_eject_button_clicked (GduButtonElement *button_element,
+                         gpointer          user_data)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
         GduDevice *d;
@@ -381,8 +375,8 @@ detach_op_callback (GduDevice *device,
 }
 
 static void
-on_detach_button_clicked (GtkButton *button,
-                          gpointer   user_data)
+on_detach_button_clicked (GduButtonElement *button_element,
+                          gpointer          user_data)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
         GduDevice *d;
@@ -403,33 +397,6 @@ on_detach_button_clicked (GtkButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-add_button (GtkWidget *table,
-            GtkWidget *button,
-            guint     *row,
-            guint     *column)
-{
-        guint num_columns;
-
-        gtk_table_attach (GTK_TABLE (table),
-                          button,
-                          *column, *column + 1,
-                          *row, *row + 1,
-                          GTK_FILL,
-                          GTK_FILL,
-                          0, 0);
-
-        g_object_get (table,
-                      "n-columns", &num_columns,
-                      NULL);
-
-        *column += 1;
-        if (*column >= num_columns) {
-                *column = 0;
-                *row +=1;
-        }
-}
-
-static void
 gdu_section_drive_constructed (GObject *object)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (object);
@@ -437,14 +404,12 @@ gdu_section_drive_constructed (GObject *object)
         GtkWidget *label;
         GtkWidget *table;
         GtkWidget *vbox;
-        GtkWidget *button;
         gchar *s;
         GduPresentable *p;
         GduDevice *d;
         GPtrArray *elements;
         GduDetailsElement *element;
-        guint row;
-        guint column;
+        GduButtonElement *button_element;
 
         d = NULL;
 
@@ -500,8 +465,7 @@ gdu_section_drive_constructed (GObject *object)
         g_ptr_array_add (elements, element);
         section->priv->smart_element = element;
 
-        table = gdu_details_table_new (2,
-                                       elements);
+        table = gdu_details_table_new (2, elements);
         g_ptr_array_unref (elements);
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
@@ -511,65 +475,65 @@ gdu_section_drive_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
 
-        row = 0;
-        column = 0;
-        table = gtk_table_new (1, 2, FALSE);
-        gtk_table_set_row_spacings (GTK_TABLE (table), 0);
-        gtk_table_set_col_spacings (GTK_TABLE (table), 0);
-        gtk_container_add (GTK_CONTAINER (align), table);
-
         p = gdu_section_get_presentable (GDU_SECTION (section));
         d = gdu_presentable_get_device (p);
-        if (d != NULL && has_strv0 (gdu_device_drive_get_media_compatibility (d), "optical_cd")) {
-                button = create_button ("brasero",
-                                        _("Open CD/_DVD Application"),
-                                        _("Create and copy CDs and DVDs"));
-                g_signal_connect (button,
-                                  "clicked",
-                                  G_CALLBACK (on_cddvd_button_clicked),
-                                  section);
-                add_button (table, button, &row, &column);
-        } else {
-                button = create_button ("nautilus-gdu",
-                                        _("Format _Drive"),
-                                        _("Delete all data and partition the drive"));
-                add_button (table, button, &row, &column);
-        }
+        elements = g_ptr_array_new_with_free_func (g_object_unref);
 
-        if (d != NULL &&
-            gdu_device_drive_ata_smart_get_is_available (d) &&
-            gdu_device_drive_ata_smart_get_time_collected (d) > 0) {
-                button = create_button ("gdu-check-disk",
-                                        _("SM_ART Data"),
-                                        _("View SMART data and run self-tests"));
-                g_signal_connect (button,
-                                  "clicked",
-                                  G_CALLBACK (on_smart_button_clicked),
-                                  section);
-                add_button (table, button, &row, &column);
-        }
+        button_element = gdu_button_element_new ("brasero",
+                                                 _("Open CD/_DVD Application"),
+                                                 _("Create and copy CDs and DVDs"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_cddvd_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->cddvd_button = button_element;
 
-        if (d != NULL && gdu_device_drive_get_is_media_ejectable (d)) {
-                button = create_button ("gdu-eject",
-                                        _("_Eject"),
-                                        _("Eject media from the drive"));
-                g_signal_connect (button,
-                                  "clicked",
-                                  G_CALLBACK (on_eject_button_clicked),
-                                  section);
-                add_button (table, button, &row, &column);
-        }
+        button_element = gdu_button_element_new ("nautilus-gdu",
+                                                 _("Format _Drive"),
+                                                 _("Delete all data and partition the drive"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_format_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (elements, button_element);
+        section->priv->format_button = button_element;
 
-        if (d != NULL && gdu_device_drive_get_can_detach (d)) {
-                button = create_button ("gdu-detach",
-                                        _("Safe Rem_oval"),
-                                        _("Power down the drive so it can be removed"));
-                g_signal_connect (button,
-                                  "clicked",
-                                  G_CALLBACK (on_detach_button_clicked),
-                                  section);
-                add_button (table, button, &row, &column);
-        }
+        button_element = gdu_button_element_new ("gdu-check-disk",
+                                                 _("SM_ART Data"),
+                                                 _("View SMART data and run self-tests"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_smart_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->smart_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-eject",
+                                                 _("_Eject"),
+                                                 _("Eject media from the drive"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_eject_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->eject_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-detach",
+                                                 _("Safe Rem_oval"),
+                                                 _("Power down the drive so it can be removed"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_detach_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->detach_button = button_element;
+
+        table = gdu_button_table_new (2, elements);
+        g_ptr_array_unref (elements);
+        gtk_container_add (GTK_CONTAINER (align), table);
 
         /* -------------------------------------------------------------------------------- */
 

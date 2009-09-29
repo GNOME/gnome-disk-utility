@@ -95,5 +95,5 @@ void                gdu_details_element_set_is_spinning    (GduDetailsElement *e
 
 G_END_DECLS
 
-#endif  /* __GDU_SIZE_WIDGET_H */
+#endif  /* __GDU_DETAILS_ELEMENT_H */
 

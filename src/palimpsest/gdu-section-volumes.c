@@ -35,7 +35,7 @@ struct _GduSectionVolumesPrivate
 
         GtkWidget *grid;
         GtkWidget *details_table;
-        GtkWidget *buttons_align;
+        GtkWidget *button_table;
 
         /* shared between all volume types */
         GduDetailsElement *usage_element;
@@ -49,8 +49,12 @@ struct _GduSectionVolumesPrivate
         GduDetailsElement *fs_label_element;
         GduDetailsElement *fs_mount_point_element;
 
-        GtkWidget *fs_mount_button;
-        GtkWidget *fs_unmount_button;
+        GduButtonElement *fs_mount_button;
+        GduButtonElement *fs_unmount_button;
+        GduButtonElement *fs_check_button;
+        GduButtonElement *format_button;
+        GduButtonElement *partition_edit_button;
+        GduButtonElement *partition_delete_button;
 };
 
 G_DEFINE_TYPE (GduSectionVolumes, gdu_section_volumes, GDU_TYPE_SECTION)
@@ -67,78 +71,6 @@ gdu_section_volumes_finalize (GObject *object)
 
         if (G_OBJECT_CLASS (gdu_section_volumes_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_section_volumes_parent_class)->finalize (object);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static GtkWidget *
-create_button (const gchar *icon_name,
-               const gchar *button_primary,
-               const gchar *button_secondary)
-{
-        GtkWidget *hbox;
-        GtkWidget *label;
-        GtkWidget *image;
-        GtkWidget *button;
-        gchar *s;
-
-        image = gtk_image_new_from_icon_name (icon_name,
-                                              GTK_ICON_SIZE_BUTTON);
-        gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-        gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD_CHAR);
-        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_single_line_mode (GTK_LABEL (label), FALSE);
-        s = g_strdup_printf ("%s\n"
-                             "<span fgcolor='#404040'><small>%s</small></span>",
-                             button_primary,
-                             button_secondary);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
-        g_free (s);
-
-        hbox = gtk_hbox_new (FALSE, 6);
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-        button = gtk_button_new ();
-        gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-        gtk_container_add (GTK_CONTAINER (button), hbox);
-
-        gtk_widget_set_size_request (label, 250, -1);
-
-        return button;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-add_button (GtkWidget *table,
-            GtkWidget *button,
-            guint     *row,
-            guint     *column)
-{
-        guint num_columns;
-
-        gtk_table_attach (GTK_TABLE (table),
-                          button,
-                          *column, *column + 1,
-                          *row, *row + 1,
-                          GTK_FILL,
-                          GTK_FILL,
-                          0, 0);
-
-        g_object_get (table,
-                      "n-columns", &num_columns,
-                      NULL);
-
-        *column += 1;
-        if (*column >= num_columns) {
-                *column = 0;
-                *row +=1;
-        }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -168,8 +100,8 @@ unmount_op_callback (GduDevice *device,
 }
 
 static void
-on_unmount_button_clicked (GtkButton *button,
-                           gpointer   user_data)
+on_unmount_button_clicked (GduButtonElement *button_element,
+                           gpointer          user_data)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
 
@@ -221,8 +153,8 @@ mount_op_callback (GduDevice *device,
 }
 
 static void
-on_mount_button_clicked (GtkButton *button,
-                         gpointer   user_data)
+on_mount_button_clicked (GduButtonElement *button_element,
+                         gpointer          user_data)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
         GduPresentable *v;
@@ -262,10 +194,22 @@ gdu_section_volumes_update (GduSection *_section)
         gchar *s;
         gchar *s2;
         const gchar *usage;
+        gboolean show_fs_mount_button;
+        gboolean show_fs_unmount_button;
+        gboolean show_fs_check_button;
+        gboolean show_format_button;
+        gboolean show_partition_edit_button;
+        gboolean show_partition_delete_button;
 
         v = NULL;
         d = NULL;
         usage = "";
+        show_fs_mount_button = FALSE;
+        show_fs_unmount_button = FALSE;
+        show_fs_check_button = FALSE;
+        show_format_button = FALSE;
+        show_partition_edit_button = FALSE;
+        show_partition_delete_button = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -281,21 +225,6 @@ gdu_section_volumes_update (GduSection *_section)
 
         if (section->priv->cur_volume != v) {
                 GPtrArray *elements;
-                GtkWidget *child;
-                GtkWidget *table;
-                GtkWidget *button;
-                guint row;
-                guint column;
-
-                child = gtk_bin_get_child (GTK_BIN (section->priv->buttons_align));
-                if (child != NULL)
-                        gtk_container_remove (GTK_CONTAINER (section->priv->buttons_align), child);
-                row = 0;
-                column = 0;
-                table = gtk_table_new (1, 2, FALSE);
-                gtk_table_set_row_spacings (GTK_TABLE (table), 0);
-                gtk_table_set_col_spacings (GTK_TABLE (table), 0);
-                gtk_container_add (GTK_CONTAINER (section->priv->buttons_align), table);
 
                 if (section->priv->cur_volume != NULL)
                         g_object_unref (section->priv->cur_volume);
@@ -336,54 +265,10 @@ gdu_section_volumes_update (GduSection *_section)
 
                         section->priv->fs_mount_point_element = gdu_details_element_new (_("Mount Point:"), NULL, NULL);
                         g_ptr_array_add (elements, section->priv->fs_mount_point_element);
-
-                        button = create_button ("gdu-mount",
-                                                _("_Mount Volume"),
-                                                _("Mount the volume"));
-                        g_signal_connect (button,
-                                          "clicked",
-                                          G_CALLBACK (on_mount_button_clicked),
-                                          section);
-                        section->priv->fs_mount_button = button;
-                        add_button (table, button, &row, &column);
-
-                        button = create_button ("gdu-unmount",
-                                                _("_Unmount Volume"),
-                                                _("Unmount the volume"));
-                        g_signal_connect (button,
-                                          "clicked",
-                                          G_CALLBACK (on_unmount_button_clicked),
-                                          section);
-                        section->priv->fs_unmount_button = button;
-                        add_button (table, button, &row, &column);
-
-                        button = create_button ("gdu-check-disk",
-                                                _("_Check Filesystem"),
-                                                _("Check the filesystem for errors"));
-                        add_button (table, button, &row, &column);
-
-                        button = create_button ("nautilus-gdu",
-                                                _("Fo_rmat Volume"),
-                                                _("Format the volume"));
-                        add_button (table, button, &row, &column);
-
-                        if (d != NULL && gdu_device_is_partition (d)) {
-                                button = create_button (GTK_STOCK_EDIT,
-                                                        _("Ed_it Partition"),
-                                                        _("Change partition type and flags"));
-                                add_button (table, button, &row, &column);
-
-                                button = create_button (GTK_STOCK_DELETE,
-                                                        _("D_elete Partition"),
-                                                        _("Delete the partition"));
-                                add_button (table, button, &row, &column);
-                        }
                 }
 
                 gdu_details_table_set_elements (GDU_DETAILS_TABLE (section->priv->details_table), elements);
                 g_ptr_array_unref (elements);
-
-                gtk_widget_show_all (table);
         }
 
         /* ---------------------------------------------------------------------------------------------------- */
@@ -407,6 +292,9 @@ gdu_section_volumes_update (GduSection *_section)
                         gdu_details_element_set_text (section->priv->partition_element, s);
                         /* TODO: include partition flags... */
                         g_free (s);
+
+                        show_partition_edit_button = TRUE;
+                        show_partition_delete_button = TRUE;
                 } else {
                         gdu_details_element_set_text (section->priv->partition_element, "–");
                 }
@@ -466,14 +354,13 @@ gdu_section_volumes_update (GduSection *_section)
                         g_free (s);
                         g_free (s2);
 
-                        gtk_widget_set_sensitive (section->priv->fs_mount_button, FALSE);
-                        gtk_widget_set_sensitive (section->priv->fs_unmount_button, TRUE);
+                        show_fs_unmount_button = TRUE;
                 } else {
                         gdu_details_element_set_text (section->priv->fs_mount_point_element, _("Not Mounted"));
-
-                        gtk_widget_set_sensitive (section->priv->fs_mount_button, TRUE);
-                        gtk_widget_set_sensitive (section->priv->fs_unmount_button, FALSE);
+                        show_fs_mount_button = TRUE;
                 }
+
+                show_fs_check_button = TRUE;
 
         } else if (g_strcmp0 (usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
@@ -492,6 +379,14 @@ gdu_section_volumes_update (GduSection *_section)
                 g_object_unref (drive_device);
         }
 
+        show_format_button = TRUE;
+
+        gdu_button_element_set_visible (section->priv->fs_mount_button, show_fs_mount_button);
+        gdu_button_element_set_visible (section->priv->fs_unmount_button, show_fs_unmount_button);
+        gdu_button_element_set_visible (section->priv->fs_check_button, show_fs_check_button);
+        gdu_button_element_set_visible (section->priv->format_button, show_format_button);
+        gdu_button_element_set_visible (section->priv->partition_edit_button, show_partition_edit_button);
+        gdu_button_element_set_visible (section->priv->partition_delete_button, show_partition_delete_button);
 
  out:
         if (d != NULL)
@@ -517,6 +412,8 @@ static void
 gdu_section_volumes_constructed (GObject *object)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (object);
+        GPtrArray *button_elements;
+        GduButtonElement *button_element;
         GtkWidget *grid;
         GtkWidget *align;
         GtkWidget *label;
@@ -562,8 +459,83 @@ gdu_section_volumes_constructed (GObject *object)
 
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
-        section->priv->buttons_align = align;
         gtk_box_pack_start (GTK_BOX (vbox2), align, FALSE, FALSE, 0);
+
+        table = gdu_button_table_new (2, NULL);
+        section->priv->button_table = table;
+        gtk_container_add (GTK_CONTAINER (align), table);
+        button_elements = g_ptr_array_new_with_free_func (g_object_unref);
+
+        button_element = gdu_button_element_new ("gdu-mount",
+                                                 _("_Mount Volume"),
+                                                 _("Mount the volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_mount_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->fs_mount_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-unmount",
+                                                 _("_Unmount Volume"),
+                                                 _("Unmount the volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_unmount_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->fs_unmount_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-check-disk",
+                                                 _("_Check Filesystem"),
+                                                 _("Check the filesystem for errors"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_fsck_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->fs_check_button = button_element;
+
+        button_element = gdu_button_element_new ("nautilus-gdu",
+                                                 _("Fo_rmat Volume"),
+                                                 _("Format the volume"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_format_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->format_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_EDIT,
+                                                 _("Ed_it Partition"),
+                                                 _("Change partition type and flags"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_partition_edit_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->partition_edit_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_DELETE,
+                                                 _("D_elete Partition"),
+                                                 _("Delete the partition"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_partition_delete_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->partition_delete_button = button_element;
+
+        gdu_button_table_set_elements (GDU_BUTTON_TABLE (section->priv->button_table), button_elements);
+        g_ptr_array_unref (button_elements);
 
         /* -------------------------------------------------------------------------------- */
 

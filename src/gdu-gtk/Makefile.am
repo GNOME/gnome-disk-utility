@@ -43,6 +43,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-error-dialog.h						\
 	gdu-button-element.h						\
 	gdu-button-table.h						\
+	gdu-dialog.h							\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -63,6 +64,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-error-dialog.h			gdu-error-dialog.c			\
 	gdu-button-element.h			gdu-button-element.c			\
 	gdu-button-table.h			gdu-button-table.c			\
+	gdu-dialog.h				gdu-dialog.c				\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

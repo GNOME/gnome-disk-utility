@@ -42,6 +42,7 @@
 #include <gdu-gtk/gdu-error-dialog.h>
 #include <gdu-gtk/gdu-button-element.h>
 #include <gdu-gtk/gdu-button-table.h>
+#include <gdu-gtk/gdu-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS

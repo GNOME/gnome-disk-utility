@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-ata-smart-dialog.c
+/* gdu-error-dialog.c
  *
  * Copyright (C) 2009 David Zeuthen
  *
@@ -67,7 +67,6 @@ gdu_error_get_type (void)
 
 struct GduErrorDialogPrivate
 {
-        GduPresentable *presentable;
         gchar          *message;
         GError         *error;
 };
@@ -75,24 +74,18 @@ struct GduErrorDialogPrivate
 enum
 {
         PROP_0,
-        PROP_PRESENTABLE,
-        PROP_DRIVE_DEVICE,
-        PROP_VOLUME_DEVICE,
         PROP_MESSAGE,
         PROP_ERROR
 };
 
 
-G_DEFINE_TYPE (GduErrorDialog, gdu_error_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GduErrorDialog, gdu_error_dialog, GDU_TYPE_DIALOG)
 
 static void
 gdu_error_dialog_finalize (GObject *object)
 {
         GduErrorDialog *dialog = GDU_ERROR_DIALOG (object);
 
-        if (dialog->priv->presentable != NULL) {
-                g_object_unref (dialog->priv->presentable);
-        }
         g_free (dialog->priv->message);
         g_error_free (dialog->priv->error);
 
@@ -109,10 +102,6 @@ gdu_error_dialog_get_property (GObject    *object,
         GduErrorDialog *dialog = GDU_ERROR_DIALOG (object);
 
         switch (property_id) {
-        case PROP_PRESENTABLE:
-                g_value_set_object (value, dialog->priv->presentable);
-                break;
-
         case PROP_MESSAGE:
                 g_value_set_string (value, dialog->priv->message);
                 break;
@@ -134,37 +123,8 @@ gdu_error_dialog_set_property (GObject      *object,
                                GParamSpec   *pspec)
 {
         GduErrorDialog *dialog = GDU_ERROR_DIALOG (object);
-        GduDevice *device;
-        GduPool *pool;
 
         switch (property_id) {
-        case PROP_PRESENTABLE:
-                if (g_value_get_object (value) != NULL) {
-                        g_warn_if_fail (dialog->priv->presentable == NULL);
-                        dialog->priv->presentable = g_value_dup_object (value);
-                }
-                break;
-
-        case PROP_DRIVE_DEVICE:
-                device = GDU_DEVICE (g_value_get_object (value));
-                if (device != NULL) {
-                        pool = gdu_device_get_pool (device);
-                        g_warn_if_fail (dialog->priv->presentable == NULL);
-                        dialog->priv->presentable = gdu_pool_get_drive_by_device (pool, device);
-                        g_object_unref (pool);
-                }
-                break;
-
-        case PROP_VOLUME_DEVICE:
-                device = GDU_DEVICE (g_value_get_object (value));
-                if (device != NULL) {
-                        pool = gdu_device_get_pool (device);
-                        g_warn_if_fail (dialog->priv->presentable == NULL);
-                        dialog->priv->presentable = gdu_pool_get_volume_by_device (pool, device);
-                        g_object_unref (pool);
-                }
-                break;
-
         case PROP_MESSAGE:
                 dialog->priv->message = g_value_dup_string (value);
                 break;
@@ -175,6 +135,7 @@ gdu_error_dialog_set_property (GObject      *object,
 
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+                break;
         }
 }
 
@@ -212,7 +173,7 @@ gdu_error_dialog_constructed (GObject *object)
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-        icon = gdu_presentable_get_icon (dialog->priv->presentable);
+        icon = gdu_presentable_get_icon (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         error_icon = g_themed_icon_new (GTK_STOCK_DIALOG_ERROR);
         emblem = g_emblem_new (icon);
         emblemed_icon = g_emblemed_icon_new (error_icon,
@@ -269,8 +230,8 @@ gdu_error_dialog_constructed (GObject *object)
         if (error_msg == NULL)
                 error_msg = _("Unknown error");
 
-        name = gdu_presentable_get_name (dialog->priv->presentable);
-        vpd_name = gdu_presentable_get_vpd_name (dialog->priv->presentable);
+        name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+        vpd_name = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         s = g_strdup_printf (_("An error occured while performing an operation "
                                "on \"%s\" (%s): %s"),
                              name,
@@ -306,34 +267,6 @@ gdu_error_dialog_class_init (GduErrorDialogClass *klass)
         object_class->set_property = gdu_error_dialog_set_property;
         object_class->constructed  = gdu_error_dialog_constructed;
         object_class->finalize     = gdu_error_dialog_finalize;
-
-        g_object_class_install_property (object_class,
-                                         PROP_PRESENTABLE,
-                                         g_param_spec_object ("presentable",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_PRESENTABLE,
-                                                              G_PARAM_READABLE |
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_CONSTRUCT_ONLY));
-
-        g_object_class_install_property (object_class,
-                                         PROP_DRIVE_DEVICE,
-                                         g_param_spec_object ("drive-device",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_DEVICE,
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_CONSTRUCT_ONLY));
-
-        g_object_class_install_property (object_class,
-                                         PROP_VOLUME_DEVICE,
-                                         g_param_spec_object ("volume-device",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_DEVICE,
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_CONSTRUCT_ONLY));
 
         g_object_class_install_property (object_class,
                                          PROP_MESSAGE,

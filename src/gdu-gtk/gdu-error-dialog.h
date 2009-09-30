@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-ata-smart-dialog.h
+/* gdu-error-dialog.h
  *
  * Copyright (C) 2009 David Zeuthen
  *
@@ -27,6 +27,7 @@
 #define __GDU_ERROR_DIALOG_H
 
 #include <gdu-gtk/gdu-gtk-types.h>
+#include <gdu-gtk/gdu-dialog.h>
 
 G_BEGIN_DECLS
 
@@ -42,7 +43,7 @@ typedef struct GduErrorDialogPrivate GduErrorDialogPrivate;
 
 struct GduErrorDialog
 {
-        GtkDialog parent;
+        GduDialog parent;
 
         /*< private >*/
         GduErrorDialogPrivate *priv;
@@ -50,7 +51,7 @@ struct GduErrorDialog
 
 struct GduErrorDialogClass
 {
-        GtkDialogClass parent_class;
+        GduDialogClass parent_class;
 };
 
 GType       gdu_error_dialog_get_type (void) G_GNUC_CONST;

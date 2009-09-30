@@ -50,6 +50,8 @@ typedef struct GduDetailsElement           GduDetailsElement;
 typedef struct GduErrorDialog              GduErrorDialog;
 typedef struct GduButtonElement            GduButtonElement;
 typedef struct GduButtonTable              GduButtonTable;
+typedef struct GduDialog                   GduDialog;
+
 
 G_END_DECLS
 

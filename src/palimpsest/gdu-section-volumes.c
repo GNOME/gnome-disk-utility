@@ -55,6 +55,7 @@ struct _GduSectionVolumesPrivate
         GduButtonElement *format_button;
         GduButtonElement *partition_edit_button;
         GduButtonElement *partition_delete_button;
+        GduButtonElement *partition_create_button;
 };
 
 G_DEFINE_TYPE (GduSectionVolumes, gdu_section_volumes, GDU_TYPE_SECTION)
@@ -200,6 +201,7 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_format_button;
         gboolean show_partition_edit_button;
         gboolean show_partition_delete_button;
+        gboolean show_partition_create_button;
 
         v = NULL;
         d = NULL;
@@ -210,6 +212,7 @@ gdu_section_volumes_update (GduSection *_section)
         show_format_button = FALSE;
         show_partition_edit_button = FALSE;
         show_partition_delete_button = FALSE;
+        show_partition_create_button = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -287,11 +290,55 @@ gdu_section_volumes_update (GduSection *_section)
         }
         if (section->priv->partition_element != NULL) {
                 if (d != NULL && gdu_device_is_partition (d)) {
+                        const gchar * const *partition_flags;
+                        guint n;
+                        GString *str;
+
+                        str = g_string_new (NULL);
+                        partition_flags = (const gchar * const *) gdu_device_partition_get_flags (d);
+                        for (n = 0; partition_flags != NULL && partition_flags[n] != NULL; n++) {
+                                const gchar *flag = partition_flags[n];
+
+                                if (str->len > 0)
+                                        g_string_append (str, ", ");
+
+                                if (g_strcmp0 (flag, "boot") == 0) {
+                                        /* Translators: This is for the 'boot' MBR/APM partition flag */
+                                        g_string_append (str, _("Bootable"));
+                                } else if (g_strcmp0 (flag, "required") == 0) {
+                                        /* Translators: This is for the 'required' GPT partition flag */
+                                        g_string_append (str, _("Required"));
+                                } else if (g_strcmp0 (flag, "allocated") == 0) {
+                                        /* Translators: This is for the 'allocated' APM partition flag */
+                                        g_string_append (str, _("Allocated"));
+                                } else if (g_strcmp0 (flag, "allow_read") == 0) {
+                                        /* Translators: This is for the 'allow_read' APM partition flag */
+                                        g_string_append (str, _("Allow Read"));
+                                } else if (g_strcmp0 (flag, "allow_write") == 0) {
+                                        /* Translators: This is for the 'allow_write' APM partition flag */
+                                        g_string_append (str, _("Allow Write"));
+                                } else if (g_strcmp0 (flag, "boot_code_is_pic") == 0) {
+                                        /* Translators: This is for the 'boot_code_is_pic' APM partition flag */
+                                        g_string_append (str, _("Boot Code PIC"));
+                                } else {
+                                        g_string_append (str, flag);
+                                }
+                        }
+
                         s = gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (d),
                                                              gdu_device_partition_get_type (d));
-                        gdu_details_element_set_text (section->priv->partition_element, s);
-                        /* TODO: include partition flags... */
+                        if (str->len > 0) {
+                                /* Translators: First %s is the partition type, second %s is a comma
+                                 *              separated list of partition flags
+                                 */
+                                s2 = g_strdup_printf (C_("Partition Type", "%s (%s)"), s, str->str);
+                                gdu_details_element_set_text (section->priv->partition_element, s2);
+                                g_free (s2);
+                        } else {
+                                gdu_details_element_set_text (section->priv->partition_element, s);
+                        }
                         g_free (s);
+                        g_string_free (str, TRUE);
 
                         show_partition_edit_button = TRUE;
                         show_partition_delete_button = TRUE;
@@ -362,6 +409,7 @@ gdu_section_volumes_update (GduSection *_section)
 
                 show_fs_check_button = TRUE;
 
+                show_format_button = TRUE;
         } else if (g_strcmp0 (usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
                    g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0 &&
@@ -370,6 +418,7 @@ gdu_section_volumes_update (GduSection *_section)
                     g_strcmp0 (gdu_device_partition_get_type (d), "0x85") == 0)) {
                 gdu_details_element_set_text (section->priv->usage_element, _("Container for Logical Partitions"));
 
+                show_format_button = TRUE;
         } else if (GDU_IS_VOLUME_HOLE (v)) {
                 GduDevice *drive_device;
                 gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
@@ -377,9 +426,9 @@ gdu_section_volumes_update (GduSection *_section)
                 gdu_details_element_set_text (section->priv->device_element,
                                               gdu_device_get_device_file (drive_device));
                 g_object_unref (drive_device);
-        }
 
-        show_format_button = TRUE;
+                show_partition_create_button = TRUE;
+        }
 
         gdu_button_element_set_visible (section->priv->fs_mount_button, show_fs_mount_button);
         gdu_button_element_set_visible (section->priv->fs_unmount_button, show_fs_unmount_button);
@@ -387,6 +436,7 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->format_button, show_format_button);
         gdu_button_element_set_visible (section->priv->partition_edit_button, show_partition_edit_button);
         gdu_button_element_set_visible (section->priv->partition_delete_button, show_partition_delete_button);
+        gdu_button_element_set_visible (section->priv->partition_create_button, show_partition_create_button);
 
  out:
         if (d != NULL)
@@ -533,6 +583,18 @@ gdu_section_volumes_constructed (GObject *object)
 #endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->partition_delete_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_ADD,
+                                                 _("_Create Partition"),
+                                                 _("Create a new partition"));
+#if 0
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_partition_create_button_clicked),
+                          section);
+#endif
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->partition_create_button = button_element;
 
         gdu_button_table_set_elements (GDU_BUTTON_TABLE (section->priv->button_table), button_elements);
         g_ptr_array_unref (button_elements);

@@ -85,9 +85,9 @@ gdu_dialog_get_property (GObject    *object,
 
 static void
 gdu_dialog_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
 {
         GduDialog *dialog = GDU_DIALOG (object);
         GduDevice *device;
@@ -98,6 +98,7 @@ gdu_dialog_set_property (GObject      *object,
                 if (g_value_get_object (value) != NULL) {
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = g_value_dup_object (value);
+                        dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
                 }
                 break;
 
@@ -107,6 +108,7 @@ gdu_dialog_set_property (GObject      *object,
                         pool = gdu_device_get_pool (device);
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = gdu_pool_get_drive_by_device (pool, device);
+                        dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
                         g_object_unref (pool);
                 }
                 break;
@@ -117,6 +119,7 @@ gdu_dialog_set_property (GObject      *object,
                         pool = gdu_device_get_pool (device);
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = gdu_pool_get_volume_by_device (pool, device);
+                        dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
                         g_object_unref (pool);
                 }
                 break;
@@ -184,9 +187,6 @@ gdu_dialog_get_presentable (GduDialog *dialog)
 GduDevice *
 gdu_dialog_get_device (GduDialog *dialog)
 {
-        if (dialog->priv->device == NULL) {
-                dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
-        }
         return dialog->priv->device;
 }
 

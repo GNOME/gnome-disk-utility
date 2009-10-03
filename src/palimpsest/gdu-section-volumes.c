@@ -187,6 +187,66 @@ on_mount_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+partition_delete_op_callback (GduDevice *device,
+                              GError    *error,
+                              gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                gdu_shell_raise_error (shell,
+                                       NULL,
+                                       error,
+                                       _("Error deleting partition"));
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_partition_delete_button_clicked (GduButtonElement *button_element,
+                                    gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduDevice *d;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_confirmation_dialog_new (toplevel,
+                                              v,
+                                              _("Are you sure you want to delete the partition?"));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == GTK_RESPONSE_OK) {
+                gdu_device_op_partition_delete (d,
+                                                partition_delete_op_callback,
+                                                g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+        }
+        gtk_widget_destroy (dialog);
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 partition_modify_op_callback (GduDevice *device,
                               GError    *error,
                               gpointer   user_data)
@@ -665,12 +725,10 @@ gdu_section_volumes_constructed (GObject *object)
         button_element = gdu_button_element_new (GTK_STOCK_DELETE,
                                                  _("D_elete Partition"),
                                                  _("Delete the partition"));
-#if 0
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_partition_delete_button_clicked),
                           section);
-#endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->partition_delete_button = button_element;
 

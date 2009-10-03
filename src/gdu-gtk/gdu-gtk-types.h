@@ -48,6 +48,7 @@ typedef struct GduVolumeGrid               GduVolumeGrid;
 typedef struct GduDetailsTable             GduDetailsTable;
 typedef struct GduDetailsElement           GduDetailsElement;
 typedef struct GduErrorDialog              GduErrorDialog;
+typedef struct GduConfirmationDialog       GduConfirmationDialog;
 typedef struct GduButtonElement            GduButtonElement;
 typedef struct GduButtonTable              GduButtonTable;
 typedef struct GduDialog                   GduDialog;

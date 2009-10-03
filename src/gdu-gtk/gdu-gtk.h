@@ -40,6 +40,7 @@
 #include <gdu-gtk/gdu-details-table.h>
 #include <gdu-gtk/gdu-details-element.h>
 #include <gdu-gtk/gdu-error-dialog.h>
+#include <gdu-gtk/gdu-confirmation-dialog.h>
 #include <gdu-gtk/gdu-button-element.h>
 #include <gdu-gtk/gdu-button-table.h>
 #include <gdu-gtk/gdu-dialog.h>

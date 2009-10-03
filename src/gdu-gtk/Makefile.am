@@ -41,6 +41,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-details-table.h						\
 	gdu-details-element.h						\
 	gdu-error-dialog.h						\
+	gdu-confirmation-dialog.h					\
 	gdu-button-element.h						\
 	gdu-button-table.h						\
 	gdu-dialog.h							\
@@ -63,6 +64,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-details-table.h			gdu-details-table.c			\
 	gdu-details-element.h			gdu-details-element.c			\
 	gdu-error-dialog.h			gdu-error-dialog.c			\
+	gdu-confirmation-dialog.h		gdu-confirmation-dialog.c		\
 	gdu-button-element.h			gdu-button-element.c			\
 	gdu-button-table.h			gdu-button-table.c			\
 	gdu-dialog.h				gdu-dialog.c				\

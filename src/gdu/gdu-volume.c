@@ -413,7 +413,11 @@ get_names_and_desc (GduPresentable  *presentable,
 
                 drive_vpd_name = NULL;
                 if (volume->priv->enclosing_presentable != NULL) {
-                        drive_vpd_name = gdu_presentable_get_vpd_name (volume->priv->enclosing_presentable);
+                        if (GDU_IS_VOLUME (volume->priv->enclosing_presentable)) {
+                                drive_vpd_name = gdu_presentable_get_vpd_name (GDU_VOLUME (volume->priv->enclosing_presentable)->priv->enclosing_presentable);
+                        } else {
+                                drive_vpd_name = gdu_presentable_get_vpd_name (volume->priv->enclosing_presentable);
+                        }
                 }
 
                 if (gdu_device_is_partition (volume->priv->device)) {

@@ -648,6 +648,8 @@ recompute_grid (GduVolumeGrid *grid)
                         GridElement *logical_prev_element;
 
                         enclosed_logical_partitions = gdu_pool_get_enclosed_presentables (grid->priv->pool, ep);
+                        enclosed_logical_partitions = g_list_sort (enclosed_logical_partitions,
+                                                                   (GCompareFunc) presentable_sort_offset);
                         logical_prev_element = NULL;
                         for (ll = enclosed_logical_partitions; ll != NULL; ll = ll->next) {
                                 GduPresentable *logical_ep = GDU_PRESENTABLE (ll->data);

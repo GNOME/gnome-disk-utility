@@ -11,11 +11,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility master\n"
+"Project-Id-Version: gnome-disk-utility 2.28\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-26 06:22+0000\n"
-"PO-Revision-Date: 2009-08-31 22:16+0300\n"
+"POT-Creation-Date: 2009-09-21 05:39+0000\n"
+"PO-Revision-Date: 2009-10-01 20:25+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -136,7 +136,7 @@ msgstr "Gnome kettautiliit, vormindamise tööriist"
 #.
 #, c-format
 msgid "Format partition %d of %s (%s)"
-msgstr "Vorminda partitsioon %d seadmel %s (%s)"
+msgstr "Partitsiooni %d vormindamine seadmel %s (%s)"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
@@ -148,7 +148,7 @@ msgstr "Partitsiooni %d vormindamine seadmel %s (%s)"
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
 #, c-format
 msgid "Format %s (%s)"
-msgstr "Vorminda %s (%s)"
+msgstr "%s vormindamine (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
 #, c-format
@@ -158,7 +158,7 @@ msgstr "%s vormindamine (%s)"
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
 #, c-format
 msgid "Format %s Volume (%s)"
-msgstr "Vorminda %s köide (%s)"
+msgstr "%s köite vormindamine (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
 #, c-format
@@ -1338,13 +1338,13 @@ msgid ""
 "indicates a problem with either the disk surface or read/write heads"
 msgstr ""
 "Lugemisvigade sagedus toorandmete lugemisel kettalt. Nullist erinev väärtus "
-"viitab ketta pinna või lugemis/kirjutamispeade vigadele."
+"viitab ketta pinna või lugemis/kirjutamispeade kahjustustele."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 msgid "Throughput Performance"
-msgstr "Läbilaske jõudlus"
+msgstr "Läbilaskejõudlus"
 
 msgid "Average efficiency of the disk"
 msgstr "Ketta keskmine efektiivsus"
@@ -1353,7 +1353,7 @@ msgstr "Ketta keskmine efektiivsus"
 #. * or the next string for a longer explanation.
 #.
 msgid "Spinup Time"
-msgstr "Pöörete kogumise kestus"
+msgstr "Pöörete kogumise aeg"
 
 msgid "Time needed to spin up the disk"
 msgstr "Aeg, mis kulub pöörete tõstmiseks"
@@ -1378,9 +1378,10 @@ msgid ""
 "verification error, it mark the sector as \"reallocated\" and transfers data "
 "to a special reserved area (spare area)"
 msgstr ""
-"Ümbersuunatud sektorite arv. Kui kõvaketas leiab lugemisel/kirjutamisel/"
-"kontrollil vea, märgitakse see sektor \"ümbersuunatuks\" ning selle andmed "
-"kirjutatakse ümber erilisse reserveeritud kohta (spare area)."
+"Ümbersuunatud sektorite arv. Kui kõvaketas leiab "
+"lugemisel/kirjutamisel/kontrollil vea, märgitakse see sektor "
+"\"ümbersuunatuks\" ning selle andmed kirjutatakse ümber selleks reserveeritud "
+"alale (spare area)."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1404,7 +1405,7 @@ msgstr "Positsioneerimise vigade esinemise sagedus"
 #. * or the next string for a longer explanation.
 #.
 msgid "Seek Timer Performance"
-msgstr "Otsitaimeri jõudlus"
+msgstr "Otsijõudlus"
 
 msgid "Average efficiency of operatings while positioning"
 msgstr "Positsioneerimise operatsioonide keskmine jõudlus"
@@ -1413,7 +1414,7 @@ msgstr "Positsioneerimise operatsioonide keskmine jõudlus"
 #. * or the next string for a longer explanation.
 #.
 msgid "Power-On Hours"
-msgstr "Töötunde"
+msgstr "Töötunnid"
 
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Töötundide arv, mil seade on olnud sisselülitatud"
@@ -1443,7 +1444,7 @@ msgid "Power Cycle Count"
 msgstr "Toitetsüklite arv"
 
 msgid "Number of power-on events"
-msgstr "Sisselülitamise sündmuste arv"
+msgstr "Sisselülitamisete arv"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2001,7 +2002,7 @@ msgstr "Aeg, mil ketas on olnud sisselülitatud olekus"
 
 #. Translators: Item name in the status table
 msgid "Powered On:"
-msgstr "Lülitati sisse:"
+msgstr "Sisselülitatud olekus:"
 
 #. ------------------------------
 #. temperature
@@ -2031,7 +2032,7 @@ msgstr "Ketta enese hinnang selle kohta, kas see on riknemas"
 
 #. Translators: Item name in the status table
 msgid "Self Assessment:"
-msgstr "Enesehinnang:"
+msgstr "Enesehindamine:"
 
 #. ------------------------------
 #. overall assessment
@@ -2050,7 +2051,7 @@ msgstr "Kui tahad hoiatust ketta riknemise kohta, jäta märkimata"
 
 #. Translators: Check button in the status table
 msgid "Don't _warn me if the disk is failing"
-msgstr "Ära _hoiata, kui ketas hakkab riknema"
+msgstr "Ketta riknemisest ei _hoiatata"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 msgid "_Attributes"

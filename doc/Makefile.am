@@ -11,13 +11,13 @@ DOC_MODULE=gnome-disk-utility
 DOC_MAIN_SGML_FILE=gnome-disk-utility-docs.xml
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS=--ignore-headers="config.h devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h gdu-shared.h"
+SCAN_OPTIONS=--ignore-headers="config.h devkit-disks-daemon-glue.h devkit-disks-device-glue.h gdu-private.h gdu-marshal.h gdu-shared.h" --rebuild-sections
 # The directory containing the source code. Relative to $(srcdir)
-DOC_SOURCE_DIR=../src/gdu
+DOC_SOURCE_DIR=../src/gdu --source-dir=../src/gdu-gtk
 
 # Used for dependencies
-HFILE_GLOB=$(top_srcdir)/src/gdu/*.h
-CFILE_GLOB=$(top_srcdir)/src/gdu/*.c
+HFILE_GLOB=$(top_srcdir)/src/gdu*/*.h
+CFILE_GLOB=$(top_srcdir)/src/gdu*/*.c
 
 # Headers to ignore
 IGNORE_HFILES= 		\
@@ -28,8 +28,12 @@ IGNORE_HFILES= 		\
 INCLUDES = 				\
 	$(GTK_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)		\
-	-I$(top_srcdir) 		\
-	-I$(top_builddir)		\
+	-I$(top_srcdir)/src 		\
+	-I$(top_builddir)/src		\
+	-I$(top_srcdir)/src/gdu		\
+	-I$(top_builddir)/src/gdu	\
+	-I$(top_srcdir)/src/gdu-gtk	\
+	-I$(top_builddir)/src/gdu-gtk	\
 	$(NULL)
 
 GTKDOC_LIBS = \
@@ -39,6 +43,7 @@ GTKDOC_LIBS = \
 	$(DBUS_GLIB_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
 	$(top_builddir)/src/gdu/libgdu.la		\
+	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la	\
 	$(NULL)
 
 # Extra options to supply to gtkdoc-mkdb
@@ -63,14 +68,12 @@ FIXXREF_OPTIONS=
 MAINTAINERCLEANFILES =			\
 	*~				\
 	Makefile.in			\
-	gnome-disk-utility.types	\
-	gnome-disk-utility-*.txt	\
 	$(NULL)
 
 include $(top_srcdir)/gtk-doc.make
 
 CLEANFILES +=   *~						\
-		gnome-disk-utility-scan.*			\
+		gnome-disk-utility-scan*			\
 		gnome-disk-utility.args				\
 		gnome-disk-utility.hierarchy			\
 		gnome-disk-utility.interfaces			\
@@ -82,9 +85,9 @@ CLEANFILES +=   *~						\
 		gnome-disk-utility-overrides.txt		\
 		gnome-disk-utility-undeclared.txt		\
 		gnome-disk-utility-undocumented.txt		\
-		gnome-disk-utility-sections.txt			\ # remove when API is baked
+		gnome-disk-utility-sections.txt			\
 		*.stamp						\
-		-rf html xml					\
+		-rf html xml tmpl				\
 		$(NULL)
 
 # Version information for marking the documentation

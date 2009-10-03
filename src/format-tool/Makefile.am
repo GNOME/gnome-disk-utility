@@ -36,7 +36,6 @@ libexec_PROGRAMS = gdu-format-tool
 
 gdu_format_tool_SOURCES =						\
 					gdu-format-tool.c		\
-	gdu-format-dialog.h		gdu-format-dialog.c		\
 	gdu-format-progress-dialog.h	gdu-format-progress-dialog.c	\
 	$(NULL)
 

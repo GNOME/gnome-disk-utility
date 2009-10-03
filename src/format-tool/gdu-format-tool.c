@@ -34,7 +34,6 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 
-#include "gdu-format-dialog.h"
 #include "gdu-format-progress-dialog.h"
 
 typedef struct
@@ -330,8 +329,12 @@ main (int argc, char *argv[])
                                                    gdu_device_get_device_file (device));
         }
 
-        dialog = gdu_format_dialog_new (NULL, GDU_VOLUME (volume));
+        dialog = gdu_format_dialog_new (NULL, /* no parent window */
+                                        volume,
+                                        GDU_FORMAT_DIALOG_FLAGS_SIMPLE |
+                                        GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON);
         gtk_window_set_title (GTK_WINDOW (dialog), format_desc);
+        gtk_window_set_icon_name (GTK_WINDOW (dialog), "nautilus-gdu");
         gtk_widget_show_all (dialog);
 
         response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -370,7 +373,6 @@ main (int argc, char *argv[])
         }
 
         take_ownership = (g_strcmp0 (fs_type, "vfat") != 0);
-
 
         format_data = g_new0 (FormatData, 1);
         format_data->loop = loop;

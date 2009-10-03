@@ -15,6 +15,8 @@ GType gdu_pool_tree_view_flags_get_type (void) G_GNUC_CONST;
 #define GDU_TYPE_POOL_TREE_VIEW_FLAGS (gdu_pool_tree_view_flags_get_type ())
 GType gdu_pool_tree_model_flags_get_type (void) G_GNUC_CONST;
 #define GDU_TYPE_POOL_TREE_MODEL_FLAGS (gdu_pool_tree_model_flags_get_type ())
+GType gdu_format_dialog_flags_get_type (void) G_GNUC_CONST;
+#define GDU_TYPE_FORMAT_DIALOG_FLAGS (gdu_format_dialog_flags_get_type ())
 G_END_DECLS
 
 #endif /* __GDU_GTK_ENUM_TYPES_H__ */

@@ -45,6 +45,7 @@
 #include <gdu-gtk/gdu-button-table.h>
 #include <gdu-gtk/gdu-dialog.h>
 #include <gdu-gtk/gdu-edit-partition-dialog.h>
+#include <gdu-gtk/gdu-format-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS

@@ -56,6 +56,7 @@ struct GduDialogClass
 GType           gdu_dialog_get_type        (void) G_GNUC_CONST;
 GduPresentable *gdu_dialog_get_presentable (GduDialog *dialog);
 GduDevice      *gdu_dialog_get_device      (GduDialog *dialog);
+GduPool        *gdu_dialog_get_pool        (GduDialog *dialog);
 
 G_END_DECLS
 

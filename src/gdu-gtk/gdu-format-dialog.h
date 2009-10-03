@@ -27,11 +27,9 @@
 #define __GDU_FORMAT_DIALOG_H
 
 #include <gtk/gtk.h>
-#include <gdu/gdu.h>
+#include <gdu-gtk/gdu-gtk.h>
 
 G_BEGIN_DECLS
-
-/* TODO: move to libgdu-gtk */
 
 #define GDU_TYPE_FORMAT_DIALOG            gdu_format_dialog_get_type()
 #define GDU_FORMAT_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDU_TYPE_FORMAT_DIALOG, GduFormatDialog))
@@ -40,13 +38,12 @@ G_BEGIN_DECLS
 #define GDU_IS_FORMAT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDU_TYPE_FORMAT_DIALOG))
 #define GDU_FORMAT_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GDU_TYPE_FORMAT_DIALOG, GduFormatDialogClass))
 
-typedef struct GduFormatDialog        GduFormatDialog;
 typedef struct GduFormatDialogClass   GduFormatDialogClass;
 typedef struct GduFormatDialogPrivate GduFormatDialogPrivate;
 
 struct GduFormatDialog
 {
-        GtkDialog parent;
+        GduDialog parent;
 
         /*< private >*/
         GduFormatDialogPrivate *priv;
@@ -54,15 +51,24 @@ struct GduFormatDialog
 
 struct GduFormatDialogClass
 {
-        GtkDialogClass parent_class;
+        GduDialogClass parent_class;
 };
 
-GType       gdu_format_dialog_get_type     (void) G_GNUC_CONST;
-GtkWidget*  gdu_format_dialog_new          (GtkWindow *parent,
-                                            GduVolume *volume);
-gchar      *gdu_format_dialog_get_fs_type  (GduFormatDialog *dialog);
-gchar      *gdu_format_dialog_get_fs_label (GduFormatDialog *dialog);
-gboolean    gdu_format_dialog_get_encrypt  (GduFormatDialog *dialog);
+GType       gdu_format_dialog_get_type           (void) G_GNUC_CONST;
+GtkWidget  *gdu_format_dialog_new                (GtkWindow            *parent,
+                                                  GduPresentable       *presentable,
+                                                  GduFormatDialogFlags  flags);
+GtkWidget  *gdu_format_dialog_for_drive          (GtkWindow            *parent,
+                                                  GduDevice            *device,
+                                                  GduFormatDialogFlags  flags);
+GtkWidget  *gdu_format_dialog_for_volume         (GtkWindow            *parent,
+                                                  GduDevice            *device,
+                                                  GduFormatDialogFlags  flags);
+gchar      *gdu_format_dialog_get_fs_type        (GduFormatDialog *dialog);
+gchar      *gdu_format_dialog_get_fs_label       (GduFormatDialog *dialog);
+gchar     **gdu_format_dialog_get_fs_options     (GduFormatDialog *dialog);
+gboolean    gdu_format_dialog_get_encrypt        (GduFormatDialog *dialog);
+gboolean    gdu_format_dialog_get_take_ownership (GduFormatDialog *dialog);
 
 G_END_DECLS
 

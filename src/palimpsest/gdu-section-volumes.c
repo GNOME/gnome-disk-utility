@@ -227,7 +227,8 @@ on_partition_delete_button_clicked (GduButtonElement *button_element,
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
         dialog = gdu_confirmation_dialog_new (toplevel,
                                               v,
-                                              _("Are you sure you want to delete the partition?"));
+                                              _("Are you sure you want to delete the partition?"),
+                                              _("_Delete"));
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         if (response == GTK_RESPONSE_OK) {
@@ -238,6 +239,135 @@ on_partition_delete_button_clicked (GduButtonElement *button_element,
         gtk_widget_destroy (dialog);
 
  out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+
+typedef struct {
+        GduShell *shell;
+        GduPresentable *presentable;
+        char *encrypt_passphrase;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+} CreateFilesystemData;
+
+static void
+create_filesystem_data_free (CreateFilesystemData *data)
+{
+        if (data->shell != NULL)
+                g_object_unref (data->shell);
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->encrypt_passphrase != NULL) {
+                memset (data->encrypt_passphrase, '\0', strlen (data->encrypt_passphrase));
+                g_free (data->encrypt_passphrase);
+        }
+        g_free (data);
+}
+
+static void
+filesystem_create_op_callback (GduDevice  *device,
+                               GError     *error,
+                               gpointer    user_data)
+{
+        CreateFilesystemData *data = user_data;
+
+        if (error != NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       data->presentable,
+                                       error,
+                                       _("Error creating filesystem"));
+                g_error_free (error);
+        } else if (data->encrypt_passphrase != NULL) {
+                /* now set the passphrase if requested */
+                if (data->save_in_keyring || data->save_in_keyring_session) {
+                        gdu_util_save_secret (device,
+                                              data->encrypt_passphrase,
+                                              data->save_in_keyring_session);
+                }
+        }
+        if (data != NULL)
+                create_filesystem_data_free (data);
+}
+
+static void
+on_format_button_clicked (GduButtonElement *button_element,
+                          gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduDevice *d;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        GtkWidget *confirmation_dialog;
+        gint response;
+
+        v = NULL;
+        dialog = NULL;
+        confirmation_dialog = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_format_dialog_new (toplevel,
+                                        v,
+                                        GDU_FORMAT_DIALOG_FLAGS_NONE);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response == GTK_RESPONSE_OK) {
+                confirmation_dialog = gdu_confirmation_dialog_new (toplevel,
+                                                                   v,
+                                                                   _("Are you sure you want to format the volume?"),
+                                                                   _("_Format"));
+                gtk_widget_show_all (confirmation_dialog);
+                response = gtk_dialog_run (GTK_DIALOG (confirmation_dialog));
+                gtk_widget_hide (confirmation_dialog);
+                if (response == GTK_RESPONSE_OK) {
+                        CreateFilesystemData *data;
+
+                        data = g_new0 (CreateFilesystemData, 1);
+                        data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+                        data->presentable = g_object_ref (v);
+
+                        if (gdu_format_dialog_get_encrypt (GDU_FORMAT_DIALOG (dialog))) {
+                                data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (
+                                      gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                      &data->save_in_keyring,
+                                      &data->save_in_keyring_session);
+                                if (data->encrypt_passphrase == NULL) {
+                                        create_filesystem_data_free (data);
+                                        goto out;
+                                }
+                        }
+
+                        gdu_device_op_filesystem_create (d,
+                                                         gdu_format_dialog_get_fs_type (GDU_FORMAT_DIALOG (dialog)),
+                                                         gdu_format_dialog_get_fs_label (GDU_FORMAT_DIALOG (dialog)),
+                                                         data->encrypt_passphrase,
+                                                         gdu_format_dialog_get_take_ownership (GDU_FORMAT_DIALOG (dialog)),
+                                                         filesystem_create_op_callback,
+                                                         data);
+
+                }
+        }
+ out:
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+        if (confirmation_dialog != NULL)
+                gtk_widget_destroy (confirmation_dialog);
+
         if (d != NULL)
                 g_object_unref (d);
         if (v != NULL)
@@ -521,6 +651,7 @@ gdu_section_volumes_update (GduSection *_section)
         /* ---------------------------------------------------------------------------------------------------- */
         /* populate according to usage */
 
+        show_format_button = TRUE;
         if (g_strcmp0 (usage, "filesystem") == 0) {
                 gdu_details_element_set_text (section->priv->usage_element, _("Filesystem"));
                 s = gdu_util_get_fstype_for_display (gdu_device_id_get_type (d),
@@ -561,7 +692,6 @@ gdu_section_volumes_update (GduSection *_section)
 
                 show_fs_check_button = TRUE;
 
-                show_format_button = TRUE;
         } else if (g_strcmp0 (usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
                    g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0 &&
@@ -570,7 +700,7 @@ gdu_section_volumes_update (GduSection *_section)
                     g_strcmp0 (gdu_device_partition_get_type (d), "0x85") == 0)) {
                 gdu_details_element_set_text (section->priv->usage_element, _("Container for Logical Partitions"));
 
-                show_format_button = TRUE;
+                show_format_button = FALSE;
         } else if (GDU_IS_VOLUME_HOLE (v)) {
                 GduDevice *drive_device;
                 gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
@@ -580,6 +710,7 @@ gdu_section_volumes_update (GduSection *_section)
                 g_object_unref (drive_device);
 
                 show_partition_create_button = TRUE;
+                show_format_button = FALSE;
         }
 
         gdu_button_element_set_visible (section->priv->fs_mount_button, show_fs_mount_button);
@@ -703,12 +834,10 @@ gdu_section_volumes_constructed (GObject *object)
         button_element = gdu_button_element_new ("nautilus-gdu",
                                                  _("Fo_rmat Volume"),
                                                  _("Format the volume"));
-#if 0
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_format_button_clicked),
                           section);
-#endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->format_button = button_element;
 

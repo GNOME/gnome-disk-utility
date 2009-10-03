@@ -36,6 +36,7 @@ struct GduDialogPrivate
 {
         GduPresentable *presentable;
         GduDevice *device;
+        GduPool *pool;
 };
 
 enum
@@ -58,6 +59,9 @@ gdu_dialog_finalize (GObject *object)
         }
         if (dialog->priv->device != NULL) {
                 g_object_unref (dialog->priv->device);
+        }
+        if (dialog->priv->pool != NULL) {
+                g_object_unref (dialog->priv->pool);
         }
 
         if (G_OBJECT_CLASS (gdu_dialog_parent_class)->finalize != NULL)
@@ -99,6 +103,7 @@ gdu_dialog_set_property (GObject      *object,
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = g_value_dup_object (value);
                         dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
+                        dialog->priv->pool = gdu_presentable_get_pool (dialog->priv->presentable);
                 }
                 break;
 
@@ -109,6 +114,7 @@ gdu_dialog_set_property (GObject      *object,
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = gdu_pool_get_drive_by_device (pool, device);
                         dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
+                        dialog->priv->pool = gdu_presentable_get_pool (dialog->priv->presentable);
                         g_object_unref (pool);
                 }
                 break;
@@ -120,6 +126,7 @@ gdu_dialog_set_property (GObject      *object,
                         g_warn_if_fail (dialog->priv->presentable == NULL);
                         dialog->priv->presentable = gdu_pool_get_volume_by_device (pool, device);
                         dialog->priv->device = gdu_presentable_get_device (dialog->priv->presentable);
+                        dialog->priv->pool = gdu_presentable_get_pool (dialog->priv->presentable);
                         g_object_unref (pool);
                 }
                 break;
@@ -188,6 +195,12 @@ GduDevice *
 gdu_dialog_get_device (GduDialog *dialog)
 {
         return dialog->priv->device;
+}
+
+GduPool *
+gdu_dialog_get_pool (GduDialog *dialog)
+{
+        return dialog->priv->pool;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

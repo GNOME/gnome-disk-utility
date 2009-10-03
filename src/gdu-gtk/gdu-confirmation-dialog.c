@@ -32,13 +32,15 @@
 
 struct GduConfirmationDialogPrivate
 {
-        gchar          *message;
+        gchar *message;
+        gchar *button_text;
 };
 
 enum
 {
         PROP_0,
         PROP_MESSAGE,
+        PROP_BUTTON_TEXT
 };
 
 
@@ -68,6 +70,10 @@ gdu_confirmation_dialog_get_property (GObject    *object,
                 g_value_set_string (value, dialog->priv->message);
                 break;
 
+        case PROP_BUTTON_TEXT:
+                g_value_set_string (value, dialog->priv->button_text);
+                break;
+
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
                 break;
@@ -85,6 +91,10 @@ gdu_confirmation_dialog_set_property (GObject      *object,
         switch (property_id) {
         case PROP_MESSAGE:
                 dialog->priv->message = g_value_dup_string (value);
+                break;
+
+        case PROP_BUTTON_TEXT:
+                dialog->priv->button_text = g_value_dup_string (value);
                 break;
 
         default:
@@ -125,7 +135,7 @@ gdu_confirmation_dialog_constructed (GObject *object)
                                GTK_RESPONSE_CANCEL);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_DELETE,
+                               dialog->priv->button_text,
                                GTK_RESPONSE_OK);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
@@ -210,6 +220,16 @@ gdu_confirmation_dialog_class_init (GduConfirmationDialogClass *klass)
                                                               G_PARAM_READABLE |
                                                               G_PARAM_WRITABLE |
                                                               G_PARAM_CONSTRUCT_ONLY));
+
+        g_object_class_install_property (object_class,
+                                         PROP_BUTTON_TEXT,
+                                         g_param_spec_string ("button-text",
+                                                              NULL,
+                                                              NULL,
+                                                              GTK_STOCK_DELETE,
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_WRITABLE |
+                                                              G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -221,39 +241,45 @@ gdu_confirmation_dialog_init (GduConfirmationDialog *dialog)
 GtkWidget *
 gdu_confirmation_dialog_new (GtkWindow      *parent,
                              GduPresentable *presentable,
-                             const gchar    *message)
+                             const gchar    *message,
+                             const gchar    *button_text)
 {
         g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_CONFIRMATION_DIALOG,
                                          "transient-for", parent,
                                          "presentable", presentable,
                                          "message", message,
+                                         "button-text", button_text,
                                          NULL));
 }
 
 GtkWidget *
 gdu_confirmation_dialog_for_drive (GtkWindow      *parent,
                                    GduDevice      *device,
-                                   const gchar    *message)
+                                   const gchar    *message,
+                                   const gchar    *button_text)
 {
         g_return_val_if_fail (GDU_IS_DEVICE (device), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_CONFIRMATION_DIALOG,
                                          "transient-for", parent,
                                          "drive-device", device,
                                          "message", message,
+                                         "button-text", button_text,
                                          NULL));
 }
 
 GtkWidget *
 gdu_confirmation_dialog_for_volume (GtkWindow      *parent,
                                     GduDevice      *device,
-                                    const gchar    *message)
+                                    const gchar    *message,
+                                    const gchar    *button_text)
 {
         g_return_val_if_fail (GDU_IS_DEVICE (device), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_CONFIRMATION_DIALOG,
                                          "transient-for", parent,
                                          "volume-device", device,
                                          "message", message,
+                                         "button-text", button_text,
                                          NULL));
 }
 

@@ -253,8 +253,8 @@ gdu_edit_partition_dialog_constructed (GObject *object)
         GtkWidget *image;
         GtkWidget *label;
         gchar *s;
+        gchar *s2;
         GIcon *icon;
-        gchar *drive_vpd_name;
         GduPresentable *p;
         GduDevice *d;
         GduPool *pool;
@@ -265,8 +265,8 @@ gdu_edit_partition_dialog_constructed (GObject *object)
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_CLOSE,
-                               GTK_RESPONSE_CLOSE);
+                               GTK_STOCK_CANCEL,
+                               GTK_RESPONSE_CANCEL);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),
                                GTK_STOCK_APPLY,
@@ -292,12 +292,11 @@ gdu_edit_partition_dialog_constructed (GObject *object)
         drive_device = gdu_pool_get_by_object_path (pool, gdu_device_partition_get_slave (d));
         drive = gdu_pool_get_drive_by_device (pool, drive_device);
 
-        drive_vpd_name = gdu_presentable_get_vpd_name (drive);
-        s = g_strdup_printf (_("Edit partition %d of %s"),
-                             gdu_device_partition_get_number (d),
-                             drive_vpd_name);
+        s2 = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+        s = g_strdup_printf (_("Edit %s"), s2);
         gtk_window_set_title (GTK_WINDOW (dialog), s);
         g_free (s);
+        g_free (s2);
 
         /* --- */
 
@@ -385,8 +384,6 @@ gdu_edit_partition_dialog_constructed (GObject *object)
         g_object_unref (drive_device);
         g_object_unref (drive);
         g_object_unref (pool);
-
-        g_free (drive_vpd_name);
 
         update (dialog);
 

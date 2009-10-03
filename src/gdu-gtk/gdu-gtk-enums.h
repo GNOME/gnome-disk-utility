@@ -74,4 +74,19 @@ typedef enum {
         GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES   = (1<<2),
 } GduPoolTreeModelFlags;
 
+/**
+ * GduFormatDialogFlags:
+ * @GDU_FORMAT_DIALOG_FLAGS_NONE: No flags set.
+ * @GDU_FORMAT_DIALOG_FLAGS_SIMPLE: Show a simple form of the dialog.
+ * @GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON: Show a "Disk Utility" button.
+ *
+ * Flags used when creating a #GduFormatDialog.
+ */
+typedef enum {
+        GDU_FORMAT_DIALOG_FLAGS_NONE = 0,
+        GDU_FORMAT_DIALOG_FLAGS_SIMPLE = (1<<0),
+        GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON = (1<<1),
+} GduFormatDialogFlags;
+
+
 #endif /* GDU_GTK_ENUMS_H */

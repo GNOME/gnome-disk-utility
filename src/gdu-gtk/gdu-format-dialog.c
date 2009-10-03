@@ -355,6 +355,9 @@ update (GduFormatDialog *dialog)
                                 dialog->priv->take_ownership = FALSE;
                         }
                 }
+        } else {
+                gtk_widget_hide (dialog->priv->take_ownership_check_button);
+                dialog->priv->take_ownership = FALSE;
         }
         gtk_entry_set_max_length (GTK_ENTRY (dialog->priv->fs_label_entry), max_label_len);
         if (max_label_len == 0) {
@@ -365,8 +368,7 @@ update (GduFormatDialog *dialog)
         }
 
         if (! (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_SIMPLE)) {
-                if (g_strcmp0 (dialog->priv->fs_type, "empty") == 0 ||
-                    g_strcmp0 (dialog->priv->fs_type, "msdos_extended_partition") == 0) {
+                if (g_strcmp0 (dialog->priv->fs_type, "empty") == 0) {
                         gtk_widget_hide (dialog->priv->encrypt_check_button);
                         dialog->priv->encrypt = FALSE;
                 } else {
@@ -529,7 +531,7 @@ gdu_format_dialog_constructed (GObject *object)
                 dialog->priv->encrypt = FALSE;
                 dialog->priv->take_ownership = FALSE;
         } else {
-                combo_box = gdu_util_fstype_combo_box_create (gdu_dialog_get_pool (GDU_DIALOG (dialog)), "mbr");
+                combo_box = gdu_util_fstype_combo_box_create (gdu_dialog_get_pool (GDU_DIALOG (dialog)), NULL);
                 gdu_util_fstype_combo_box_select (combo_box, "ext4");
                 dialog->priv->fs_type = g_strdup ("ext4");
                 dialog->priv->fs_options = NULL;

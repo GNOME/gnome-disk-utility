@@ -22,7 +22,7 @@
 #include <config.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <dbus/dbus-glib.h>
 
 #include "gdu-private.h"

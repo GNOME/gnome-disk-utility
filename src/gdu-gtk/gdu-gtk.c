@@ -22,7 +22,7 @@
 #include <config.h>
 #include <glib-object.h>
 #include <string.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 

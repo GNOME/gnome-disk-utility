@@ -2145,9 +2145,12 @@ pretty_to_string (uint64_t              pretty_value,
                          * for a time-based unit that exceed one second */
                         ret = g_strdup_printf (_("%.1f seconds"), pretty_value / 1000.0);
                 } else {
+                        gchar *msec_str;
+                        msec_str = g_strdup_printf ("%" G_GUINT64_FORMAT, pretty_value);
                         /* Translators: Used in the treeview for the pretty/interpreted value of an attribute
                          * for a time-based unit that is counted in milliseconds */
-                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        ret = g_strdup_printf (_("%s msec"), msec_str);
+                        g_free (msec_str);
                 }
                 break;
 

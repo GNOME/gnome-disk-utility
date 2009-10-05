@@ -396,7 +396,7 @@ details_update (GduShell *shell)
 
                         str = g_string_new (s);
                         g_free (s);
-                        g_string_append (str, " mounted at ");
+                        g_string_append (str, _(" mounted at "));
                         for (n = 0; mount_paths[n] != NULL; n++) {
                                 if (n > 0)
                                         g_string_append (str, ", ");

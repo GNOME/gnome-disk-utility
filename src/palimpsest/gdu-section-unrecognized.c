@@ -233,14 +233,14 @@ on_erase_clicked (GtkButton *button,
         if (gdu_device_is_partition (device)) {
                 if (gdu_device_is_removable (toplevel_device)) {
                         secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" will be "
-                                                       "irrecovably erased. "
+                                                       "irrevocably erased. "
                                                        "Make sure important data is backed up. "
                                                        "This action cannot be undone."),
                                                      gdu_device_partition_get_number (device),
                                                      drive_name);
                 } else {
                         secondary = g_strdup_printf (_("All data on partition %d of \"%s\" will be "
-                                                       "irrecovably erased. "
+                                                       "irrevocably erased. "
                                                        "Make sure important data is backed up. "
                                                        "This action cannot be undone."),
                                                      gdu_device_partition_get_number (device),
@@ -248,12 +248,12 @@ on_erase_clicked (GtkButton *button,
                 }
         } else {
                 if (gdu_device_is_removable (toplevel_device)) {
-                        secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrecovably erased. "
+                        secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrevocably erased. "
                                                        "Make sure important data is backed up. "
                                                        "This action cannot be undone."),
                                                      drive_name);
                 } else {
-                        secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrecovably erased. "
+                        secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrevocably erased. "
                                                        "Make sure important data is backed up. "
                                                        "This action cannot be undone."),
                                                      drive_name);

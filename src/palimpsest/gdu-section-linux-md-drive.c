@@ -398,7 +398,7 @@ on_detach_clicked (GtkButton *button,
                 primary = g_strconcat ("<b><big>", _("Are you sure you want to remove the component from the array ?"), "</big></b>", NULL);
 
                 secondary = g_strdup_printf (_("The data on component \"%s\" of the RAID Array \"%s\" will be "
-                                               "irrecovably erased and the RAID Array might be degraded. "
+                                               "irrevocably erased and the RAID Array might be degraded. "
                                                "Make sure important data is backed up. "
                                                "This action cannot be undone."),
                                              component_name,

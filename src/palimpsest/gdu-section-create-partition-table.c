@@ -85,12 +85,12 @@ on_create_part_table_clicked (GtkButton *button, gpointer user_data)
         primary = g_strconcat ("<b><big>", _("Are you sure you want to format the disk, deleting existing data ?"), "</big></b>", NULL);
 
         if (gdu_device_is_removable (device)) {
-                secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrecovably erased. "
+                secondary = g_strdup_printf (_("All data on the media in \"%s\" will be irrevocably erased. "
                                                "Make sure important data is backed up. "
                                                "This action cannot be undone."),
                                              drive_name);
         } else {
-                secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrecovably erased. "
+                secondary = g_strdup_printf (_("All data on the drive \"%s\" will be irrevocably erased. "
                                                "Make sure important data is backed up. "
                                                "This action cannot be undone."),
                                              drive_name);

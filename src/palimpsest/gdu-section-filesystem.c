@@ -242,7 +242,7 @@ gdu_section_filesystem_init (GduSectionFilesystem *section)
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         section->priv->modify_fs_label_entry = entry;
 
-        button = gtk_button_new_with_mnemonic ("_Change");
+        button = gtk_button_new_with_mnemonic (_("_Change"));
         gtk_widget_set_tooltip_text (button, _("Change"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_change_clicked), section);
         section->priv->modify_button = button;

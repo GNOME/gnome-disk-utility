@@ -1405,7 +1405,7 @@ part_type_foreach_cb (const char *scheme,
         gtk_list_store_append (data->store, &iter);
         gtk_list_store_set (data->store, &iter,
                             0, type,
-                            1, name,
+                            1, _(name),
                             -1);
 }
 

@@ -1467,14 +1467,14 @@ update (GduCreateLinuxMdDialog *dialog)
                 if (tip_text == NULL) {
                         if (num_disks == 0) {
                                 tip_text = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                       "To create a %s array, select %d disks.",
+                                                                       "To create a %s array, select a disk.",
                                                                        "To create a %s array, select %d disks.",
                                                                        dialog->priv->num_disks_needed - num_disks),
                                                             level_str,
                                                             dialog->priv->num_disks_needed - num_disks);
                         } else {
                                 tip_text = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                       "To create a %s array, select %d more disks.",
+                                                                       "To create a %s array, select one more disk.",
                                                                        "To create a %s array, select %d more disks.",
                                                                        dialog->priv->num_disks_needed - num_disks),
                                                             level_str,

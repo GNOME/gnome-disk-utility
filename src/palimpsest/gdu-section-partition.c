@@ -603,16 +603,16 @@ gdu_section_partition_init (GduSectionPartition *section)
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
 
-        button = gtk_button_new_with_mnemonic ("_Delete");
+        button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
         gtk_widget_set_tooltip_text (button, _("Delete the partition"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_delete_partition_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        button = gtk_button_new_with_mnemonic (_("_Revert"));
+        button = gtk_button_new_from_stock (GTK_STOCK_REVERT_TO_SAVED);
         section->priv->modify_part_revert_button = button;
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        button = gtk_button_new_with_mnemonic ("_Apply");
+        button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
         gtk_widget_set_tooltip_text (button, _("Apply the changes made"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_modify_partition_apply_clicked), section);
         section->priv->modify_part_apply_button = button;

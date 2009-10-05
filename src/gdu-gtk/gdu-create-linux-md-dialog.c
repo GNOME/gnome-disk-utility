@@ -1448,7 +1448,7 @@ update (GduCreateLinuxMdDialog *dialog)
                         /* Translators: This is for the tip text shown in the dialog.
                          * First %s is the short localized name for the RAID level, e.g. "RAID-1".
                          */
-                        tip_text = g_strdup_printf (_("Insufficient number disks to create a %s array."),
+                        tip_text = g_strdup_printf (_("Insufficient number of disks to create a %s array."),
                                                     level_str);
                         tip_stock_icon = GTK_STOCK_DIALOG_ERROR;
                 }

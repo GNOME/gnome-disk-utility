@@ -227,8 +227,8 @@ nautilus_gdu_get_file_items (NautilusMenuProvider *provider,
                                        "nautilus-gdu");
         g_object_set_data_full (G_OBJECT (item),
                                 "gdu-device",
-                                device,
-                                (GDestroyNotify) g_object_ref);
+                                g_object_ref (device),
+                                (GDestroyNotify) g_object_unref);
         g_object_set_data_full (G_OBJECT (item),
                                 "nautilus-file",
                                 g_object_ref (nautilus_file),

@@ -34,8 +34,6 @@ static void nautilus_gdu_class_init    (NautilusGduClass *klass);
 
 static GType nautilus_gdu_type = 0;
 
-/*  TODO: push upstream  */
-#define G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE   "mountable::unix-device-file"
 
 static GduDevice *
 get_device_for_device_file (const gchar *device_file)

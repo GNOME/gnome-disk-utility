@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-05 20:53+0200\n"
-"PO-Revision-Date: 2009-10-05 20:54+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
+"POT-Creation-Date: 2009-10-05 18:54+0000\n"
+"PO-Revision-Date: 2009-10-22 17:36+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -1348,11 +1348,11 @@ msgstr "A LEMEZ MEGHIBÁSODÁSA VÁRHATÓ"
 #. * the temperature of the disk
 #.
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu/gdu-util.c:982 ../src/gdu-gtk/gdu-ata-smart-dialog.c:2524
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2542
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2562
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2571
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2633
+#: ../src/gdu/gdu-util.c:982 ../src/gdu-gtk/gdu-ata-smart-dialog.c:2527
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2545
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2565
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2574
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2636
 #: ../src/playground/grid/gdu-grid-element.c:566
 msgid "Unknown"
 msgstr "Ismeretlen"
@@ -1719,10 +1719,14 @@ msgid "Reallocated Sector Count"
 msgstr "Áthelyezett szektorok száma"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
+#| msgid ""
+#| "Count of remapped sectors. When the hard drive finds a read/write/"
+#| "verification error, it mark the sector as \"reallocated\" and transfers "
+#| "data to a special reserved area (spare area)"
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it mark the sector as \"reallocated\" and transfers data "
-"to a special reserved area (spare area)"
+"verification error, it marks the sector as \"reallocated\" and transfers "
+"data to a special reserved area (spare area)"
 msgstr ""
 "Áthelyezett szektorok száma. Amikor a merevlemez írási/olvasási/ellenőrzési "
 "hibát talál, a szektort „áthelyezettként” jelöli és az adatokat egy "
@@ -1758,7 +1762,8 @@ msgid "Seek Timer Performance"
 msgstr "Átlagos fejpozicionálási idő"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:205
-msgid "Average efficiency of operatings while positioning"
+#| msgid "Average efficiency of operatings while positioning"
+msgid "Average efficiency of operations while positioning"
 msgstr "Műveletek átlagos hatékonysága pozicionáláskor"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -2141,7 +2146,8 @@ msgid "Load Friction"
 msgstr "Súrlódási terhelés"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:472
-msgid "Load on drive cause by friction in mechanical parts of the store"
+#| msgid "Load on drive cause by friction in mechanical parts of the store"
+msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "A tároló mechanikai alkatrészei által okozott súrlódás miatti terhelés"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:480
@@ -2291,7 +2297,7 @@ msgstr "Érték:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:960
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1064
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2181
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2184
 msgid "N/A"
 msgstr "N/A"
 
@@ -2615,11 +2621,14 @@ msgstr "%.1f másodperc"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2150
-msgid "%"
-msgstr "%"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2152
+#, c-format
+#| msgid "%d sector"
+#| msgid_plural "%d sectors"
+msgid "%s msec"
+msgstr "%s em"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2161
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -2629,33 +2638,33 @@ msgstr[1] "%d szektor"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2170
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2173
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2238
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2241
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "A hiba a rövidesen várható lemezmeghibásodás jele (Pre-Fail)"
 
 # fixme: :)
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2242
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2245
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "A hiba a lemez hajlott korának jele (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2248
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2251
 msgid "Every time data is collected (Online)"
 msgstr "Minden időadat összegyűjtve (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2252
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2255
 msgid "Only during off-line activities (Not Online)"
 msgstr "Csak önteszt alatti tevékenységek során (Not Online)"
 
@@ -2664,7 +2673,7 @@ msgstr "Csak önteszt alatti tevékenységek során (Not Online)"
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2260
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2263
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -2677,49 +2686,49 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2465
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2468
 msgid "No drive selected"
 msgstr "Nincs kiválasztva meghajtó"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2472
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2475
 msgid "SMART not supported"
 msgstr "A SMART nem támogatott"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2480
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2483
 msgid "SMART data never collected"
 msgstr "A SMART adatok soha nem lettek összegyűjtve"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2487
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2493
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2490
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2496
 msgid "SMART data is malformed"
 msgstr "A SMART adatok rosszul formáltak"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2529
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2532
 msgid "Passed"
 msgstr "Sikerült"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2535
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2538
 msgid "FAILING"
 msgstr "MEGHIBÁSODOTT"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2547
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2550
 msgid "None"
 msgstr "Nincs"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2552
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2555
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
@@ -2727,62 +2736,63 @@ msgstr[0] "%d hibás szektor"
 msgstr[1] "%d hibás szektor"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2590
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2593
 msgid "Last self-test completed OK"
 msgstr "Az utolsó önellenőrzés rendben befejeződött"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2594
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2597
 msgid "Last self-test was cancelled"
 msgstr "Az utolsó önellenőrzés megszakítva"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2601
 msgid "Last self-test was cancelled (with hard or soft reset)"
 msgstr "Az utolsó önellenőrzés megszakítva (hardveres vagy szoftveres megszakítás)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
-msgid "Last self-test not completed (a fatal error might have occured)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2605
+#| msgid "Last self-test not completed (a fatal error might have occured)"
+msgid "Last self-test not completed (a fatal error might have occurred)"
 msgstr "Az utolsó önellenőrzés nem fejeződött be (végzetes hiba történhetett)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2609
 msgid "Last self-test FAILED (Electrical)"
 msgstr "Az utolsó önellenőrzés MEGHIÚSULT (elektromos)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2614
 msgid "Last self-test FAILED (Servo)"
 msgstr "Az utolsó önellenőrzés MEGHIÚSULT (szervo)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2616
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2619
 msgid "Last self-test FAILED (Read)"
 msgstr "Az utolsó önellenőrzés MEGHIÚSULT (olvasás)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2621
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2624
 msgid "Last self-test FAILED (Suspected of having handled damage)"
 msgstr "Az utolsó önellenőrzés MEGHIÚSULT (gyaníthatóan kezelt sérülése van)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2626
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2629
 msgid "Self-test is in progress"
 msgstr "Önellenőrzés folyamatban"
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2749
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2752
 msgid "Short self-test in progress: "
 msgstr "Rövid önellenőrzés folyamatban: "
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2753
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2756
 msgid "Extended self-test in progress: "
 msgstr "Bővített önellenőrzés folyamatban: "
 
 #. Translators: Shown in the "Self-tests" item in the status table when a test is underway
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2757
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2760
 msgid "Conveyance self-test in progress: "
 msgstr "Általános önellenőrzés folyamatban: "
 
@@ -3008,21 +3018,26 @@ msgstr "Lemezek"
 #.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1451
 #, c-format
-msgid "Insufficient number disks to create a %s array."
+#| msgid "Insufficient number disks to create a %s array."
+msgid "Insufficient number of disks to create a %s array."
 msgstr "Nincs elég lemez %s tömb létrehozásához."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
 #, c-format
-msgid "To create a %s array, select %d disks."
+#| msgid "To create a %s array, select %d disks."
+#| msgid_plural "To create a %s array, select %d disks."
+msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
-msgstr[0] "%s tömb létrehozásához válasszon ki %d lemezt."
+msgstr[0] "%s tömb létrehozásához válasszon ki egy lemezt."
 msgstr[1] "%s tömb létrehozásához válasszon ki %d lemezt."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
 #, c-format
-msgid "To create a %s array, select %d more disks."
+#| msgid "To create a %s array, select %d more disks."
+#| msgid_plural "To create a %s array, select %d more disks."
+msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] "%s tömb létrehozásához válasszon ki még %d lemezt."
+msgstr[0] "%s tömb létrehozásához válasszon ki még egy lemezt."
 msgstr[1] "%s tömb létrehozásához válasszon ki még %d lemezt."
 
 #. Translators: This is for the tip text shown in the dialog.
@@ -3329,8 +3344,11 @@ msgstr "Biztosan formázni kívánja a lemezt, törölve a meglévő adatokat?"
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
 #: ../src/palimpsest/gdu-shell.c:1535
 #, c-format
+#| msgid ""
+#| "All data on the media in \"%s\" will be irrecovably erased. Make sure "
+#| "important data is backed up. This action cannot be undone."
 msgid ""
-"All data on the media in \"%s\" will be irrecovably erased. Make sure "
+"All data on the media in \"%s\" will be irrevocably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
 "Minden adat visszavonhatatlanul törlésre kerül a(z) „%s” adathordozójáról. "
@@ -3341,8 +3359,11 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
 #: ../src/palimpsest/gdu-shell.c:1540
 #, c-format
+#| msgid ""
+#| "All data on the drive \"%s\" will be irrecovably erased. Make sure "
+#| "important data is backed up. This action cannot be undone."
 msgid ""
-"All data on the drive \"%s\" will be irrecovably erased. Make sure important "
+"All data on the drive \"%s\" will be irrevocably erased. Make sure important "
 "data is backed up. This action cannot be undone."
 msgstr ""
 "Minden adat visszavonhatatlanul törlésre kerül a(z) „%s” meghajtójáról. "
@@ -3447,8 +3468,12 @@ msgstr "Biztosan eltávolítja az összetevőt a tömbből?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:400
 #, c-format
+#| msgid ""
+#| "The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
+#| "erased and the RAID Array might be degraded. Make sure important data is "
+#| "backed up. This action cannot be undone."
 msgid ""
-"The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
+"The data on component \"%s\" of the RAID Array \"%s\" will be irrevocably "
 "erased and the RAID Array might be degraded. Make sure important data is "
 "backed up. This action cannot be undone."
 msgstr ""
@@ -3701,9 +3726,15 @@ msgstr "Biztosan el kívánja távolítani a partíciót, törölve a meglévő 
 
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
+#| msgid ""
+#| "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
+#| "partitions contained in this extended partition will be irrecovably "
+#| "erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-"partitions contained in this extended partition will be irrecovably erased.\n"
+"partitions contained in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3716,9 +3747,14 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
+#| msgid ""
+#| "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
+#| "irrecovably erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-"irrecovably erased.\n"
+"irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3730,9 +3766,14 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
+#| msgid ""
+#| "All data on partition %d on the media in \"%s\" and all partitions "
+#| "contained in this extended partition will be irrecovably erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
 "All data on partition %d on the media in \"%s\" and all partitions contained "
-"in this extended partition will be irrecovably erased.\n"
+"in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3745,8 +3786,13 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
+#| msgid ""
+#| "All data on partition %d on the media in \"%s\" will be irrecovably "
+#| "erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
-"All data on partition %d on the media in \"%s\" will be irrecovably erased.\n"
+"All data on partition %d on the media in \"%s\" will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3758,9 +3804,14 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
+#| msgid ""
+#| "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
+#| "contained in this extended partition will be irrecovably erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
 "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
-"contained in this extended partition will be irrecovably erased.\n"
+"contained in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3773,8 +3824,13 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
+#| msgid ""
+#| "All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
+#| "erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
-"All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
+"All data on partition %d with name \"%s\" of \"%s\" will be irrevocably "
 "erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
@@ -3787,9 +3843,14 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
+#| msgid ""
+#| "All data on partition %d of \"%s\" and all partitions contained in this "
+#| "extended partition will be irrecovably erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
 "All data on partition %d of \"%s\" and all partitions contained in this "
-"extended partition will be irrecovably erased.\n"
+"extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3801,8 +3862,12 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
+#| msgid ""
+#| "All data on partition %d of \"%s\" will be irrecovably erased.\n"
+#| "\n"
+#| "Make sure important data is backed up. This action cannot be undone."
 msgid ""
-"All data on partition %d of \"%s\" will be irrecovably erased.\n"
+"All data on partition %d of \"%s\" will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3947,8 +4012,12 @@ msgstr "Biztosan új fájlrendszert készít, a meglévő adatok törlésével?"
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
 #: ../src/palimpsest/gdu-shell.c:1519
 #, c-format
+#| msgid ""
+#| "All data on partition %d on the media in \"%s\" will be irrecovably "
+#| "erased. Make sure important data is backed up. This action cannot be "
+#| "undone."
 msgid ""
-"All data on partition %d on the media in \"%s\" will be irrecovably erased. "
+"All data on partition %d on the media in \"%s\" will be irrevocably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
 "A(z) „%2$s” eszköz adathordozóján található %1$d. partíció összes adata "
@@ -3958,8 +4027,11 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1526
 #, c-format
+#| msgid ""
+#| "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
+#| "important data is backed up. This action cannot be undone."
 msgid ""
-"All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
+"All data on partition %d of \"%s\" will be irrevocably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
 "A(z) „%2$s” részét képező %1$d. partíció összes adata visszavonhatatlanul "

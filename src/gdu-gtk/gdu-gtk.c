@@ -22,7 +22,7 @@
 #include <config.h>
 #include <glib-object.h>
 #include <string.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 
@@ -1405,7 +1405,7 @@ part_type_foreach_cb (const char *scheme,
         gtk_list_store_append (data->store, &iter);
         gtk_list_store_set (data->store, &iter,
                             0, type,
-                            1, name,
+                            1, _(name),
                             -1);
 }
 

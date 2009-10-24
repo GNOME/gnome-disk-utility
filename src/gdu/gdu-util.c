@@ -22,7 +22,7 @@
 #include <config.h>
 #include <glib-object.h>
 #include <string.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 
@@ -500,7 +500,7 @@ gdu_util_get_desc_for_part_type (const char *scheme, const char *type)
 
         for (n = 0; part_type[n].name != NULL; n++) {
                 if (g_ascii_strcasecmp (part_type[n].type, type) == 0)
-                        return g_strdup (part_type[n].name);
+                        return g_strdup (_(part_type[n].name));
         }
 
         /* Translators: Shown for unknown partition types.

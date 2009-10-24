@@ -116,7 +116,7 @@ on_delete_partition_clicked (GtkButton *button,
                         if (msdos_type == 0x05 || msdos_type == 0x0f || msdos_type == 0x85) {
                                 secondary = g_strdup_printf (_("All data on partition %d with name \"%s\" on the media in \"%s\" "
                                                              "and all partitions contained in this extended partition "
-                                                             "will be irrecovably erased.\n\n"
+                                                             "will be irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -125,7 +125,7 @@ on_delete_partition_clicked (GtkButton *button,
                         }
                         else {
                                 secondary = g_strdup_printf (_("All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-                                                             "irrecovably erased.\n\n"
+                                                             "irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -136,7 +136,7 @@ on_delete_partition_clicked (GtkButton *button,
                         if (msdos_type == 0x05 || msdos_type == 0x0f || msdos_type == 0x85) {
                                 secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" "
                                                              "and all partitions contained in this extended partition "
-                                                             "will be irrecovably erased.\n\n"
+                                                             "will be irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -144,7 +144,7 @@ on_delete_partition_clicked (GtkButton *button,
                         }
                         else {
                                 secondary = g_strdup_printf (_("All data on partition %d on the media in \"%s\" "
-                                                             "will be irrecovably erased.\n\n"
+                                                             "will be irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -156,7 +156,7 @@ on_delete_partition_clicked (GtkButton *button,
                         if (msdos_type == 0x05 || msdos_type == 0x0f || msdos_type == 0x85) {
                                 secondary = g_strdup_printf (_("All data on partition %d with name \"%s\" of \"%s\" "
                                                              "and all partitions contained in this extended partition "
-                                                             "will be irrecovably erased.\n\n"
+                                                             "will be irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -165,7 +165,7 @@ on_delete_partition_clicked (GtkButton *button,
                         }
                         else {
                                 secondary = g_strdup_printf (_("All data on partition %d with name \"%s\" of \"%s\" will be "
-                                                             "irrecovably erased.\n\n"
+                                                             "irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -176,7 +176,7 @@ on_delete_partition_clicked (GtkButton *button,
                         if (msdos_type == 0x05 || msdos_type == 0x0f || msdos_type == 0x85) {
                                 secondary = g_strdup_printf (_("All data on partition %d of \"%s\" "
                                                              "and all partitions contained in this extended partition "
-                                                             "will be irrecovably erased.\n\n"
+                                                             "will be irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -184,7 +184,7 @@ on_delete_partition_clicked (GtkButton *button,
                         }
                         else {
                                 secondary = g_strdup_printf (_("All data on partition %d of \"%s\" will be "
-                                                             "irrecovably erased.\n\n"
+                                                             "irrevocably erased.\n\n"
                                                              "Make sure important data is backed up. "
                                                              "This action cannot be undone."),
                                                              gdu_device_partition_get_number (device),
@@ -603,16 +603,16 @@ gdu_section_partition_init (GduSectionPartition *section)
         gtk_box_set_spacing (GTK_BOX (button_box), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), button_box, TRUE, TRUE, 0);
 
-        button = gtk_button_new_with_mnemonic ("_Delete");
+        button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
         gtk_widget_set_tooltip_text (button, _("Delete the partition"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_delete_partition_clicked), section);
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        button = gtk_button_new_with_mnemonic (_("_Revert"));
+        button = gtk_button_new_from_stock (GTK_STOCK_REVERT_TO_SAVED);
         section->priv->modify_part_revert_button = button;
         gtk_container_add (GTK_CONTAINER (button_box), button);
 
-        button = gtk_button_new_with_mnemonic ("_Apply");
+        button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
         gtk_widget_set_tooltip_text (button, _("Apply the changes made"));
         g_signal_connect (button, "clicked", G_CALLBACK (on_modify_partition_apply_clicked), section);
         section->priv->modify_part_apply_button = button;

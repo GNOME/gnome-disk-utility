@@ -20,7 +20,7 @@
  */
 
 #include <config.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <atasmart.h>
 #include <glib/gstdio.h>
 #include <sys/types.h>
@@ -174,7 +174,7 @@ static const SmartDetails smart_details[] = {
                  */
                 N_("Reallocated Sector Count"),
                 N_("Count of remapped sectors. "
-                   "When the hard drive finds a read/write/verification error, it mark the sector "
+                   "When the hard drive finds a read/write/verification error, it marks the sector "
                    "as \"reallocated\" and transfers data to a special reserved area (spare area)")
         },
         {
@@ -199,7 +199,7 @@ static const SmartDetails smart_details[] = {
                  * or the next string for a longer explanation.
                  */
                 N_("Seek Timer Performance"),
-                N_("Average efficiency of operatings while positioning")
+                N_("Average efficiency of operations while positioning")
         },
         {
                 "power-on-hours",
@@ -466,7 +466,7 @@ static const SmartDetails smart_details[] = {
                  * or the next string for a longer explanation.
                  */
                 N_("Load Friction"),
-                N_("Load on drive cause by friction in mechanical parts of the store")
+                N_("Load on drive caused by friction in mechanical parts of the store")
         },
         {
                 "load-cycle-count-2",
@@ -1885,9 +1885,12 @@ pretty_to_string (uint64_t              pretty_value,
                          * for a time-based unit that exceed one second */
                         ret = g_strdup_printf (_("%.1f seconds"), pretty_value / 1000.0);
                 } else {
+                        gchar *msec_str;
+                        msec_str = g_strdup_printf ("%" G_GUINT64_FORMAT, pretty_value);
                         /* Translators: Used in the treeview for the pretty/interpreted value of an attribute
                          * for a time-based unit that is counted in milliseconds */
-                        ret = g_strdup_printf (_("%" G_GUINT64_FORMAT " msec"), pretty_value);
+                        ret = g_strdup_printf (_("%s msec"), msec_str);
+                        g_free (msec_str);
                 }
                 break;
 
@@ -2337,7 +2340,7 @@ update_dialog (GduAtaSmartDialog *dialog)
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_FATAL:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test not completed (a fatal error might have occured)");
+                        self_text = _("Last self-test not completed (a fatal error might have occurred)");
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_ELECTRICAL:
                         /* Translators: Shown in the "Self-tests" item in the status table */

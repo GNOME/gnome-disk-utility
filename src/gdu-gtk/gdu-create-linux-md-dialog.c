@@ -1449,7 +1449,7 @@ update (GduCreateLinuxMdDialog *dialog)
                         /* Translators: This is for the tip text shown in the dialog.
                          * First %s is the short localized name for the RAID level, e.g. "RAID-1".
                          */
-                        tip_text = g_strdup_printf (_("Insufficient number disks to create a %s array."),
+                        tip_text = g_strdup_printf (_("Insufficient number of disks to create a %s array."),
                                                     level_str);
                         tip_stock_icon = GTK_STOCK_DIALOG_ERROR;
                 }
@@ -1468,14 +1468,14 @@ update (GduCreateLinuxMdDialog *dialog)
                 if (tip_text == NULL) {
                         if (num_disks == 0) {
                                 tip_text = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                       "To create a %s array, select %d disks.",
+                                                                       "To create a %s array, select a disk.",
                                                                        "To create a %s array, select %d disks.",
                                                                        dialog->priv->num_disks_needed - num_disks),
                                                             level_str,
                                                             dialog->priv->num_disks_needed - num_disks);
                         } else {
                                 tip_text = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                       "To create a %s array, select %d more disks.",
+                                                                       "To create a %s array, select one more disk.",
                                                                        "To create a %s array, select %d more disks.",
                                                                        dialog->priv->num_disks_needed - num_disks),
                                                             level_str,

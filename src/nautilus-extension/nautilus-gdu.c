@@ -34,8 +34,6 @@ static void nautilus_gdu_class_init    (NautilusGduClass *klass);
 
 static GType nautilus_gdu_type = 0;
 
-/*  TODO: push upstream  */
-#define G_FILE_ATTRIBUTE_MOUNTABLE_UNIX_DEVICE_FILE   "mountable::unix-device-file"
 
 static GduDevice *
 get_device_for_device_file (const gchar *device_file)
@@ -227,8 +225,8 @@ nautilus_gdu_get_file_items (NautilusMenuProvider *provider,
                                        "nautilus-gdu");
         g_object_set_data_full (G_OBJECT (item),
                                 "gdu-device",
-                                device,
-                                (GDestroyNotify) g_object_ref);
+                                g_object_ref (device),
+                                (GDestroyNotify) g_object_unref);
         g_object_set_data_full (G_OBJECT (item),
                                 "nautilus-file",
                                 g_object_ref (nautilus_file),

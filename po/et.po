@@ -11,12 +11,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility master\n"
+"Project-Id-Version: gnome-disk-utility MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-26 06:22+0000\n"
-"PO-Revision-Date: 2009-09-18 23:32+0300\n"
-"Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
+"POT-Creation-Date: 2009-10-07 05:02+0000\n"
+"PO-Revision-Date: 2009-10-17 15:20+0300\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1338,13 +1338,13 @@ msgid ""
 "indicates a problem with either the disk surface or read/write heads"
 msgstr ""
 "Lugemisvigade sagedus toorandmete lugemisel kettalt. Nullist erinev väärtus "
-"viitab ketta pinna või lugemis/kirjutamispeade vigadele."
+"viitab ketta pinna või lugemis/kirjutamispeade kahjustustele."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 msgid "Throughput Performance"
-msgstr "Läbilaske jõudlus"
+msgstr "Läbilaskejõudlus"
 
 msgid "Average efficiency of the disk"
 msgstr "Ketta keskmine efektiivsus"
@@ -1353,7 +1353,7 @@ msgstr "Ketta keskmine efektiivsus"
 #. * or the next string for a longer explanation.
 #.
 msgid "Spinup Time"
-msgstr "Pöörete kogumise kestus"
+msgstr "Pöörete kogumise aeg"
 
 msgid "Time needed to spin up the disk"
 msgstr "Aeg, mis kulub pöörete tõstmiseks"
@@ -1375,12 +1375,12 @@ msgstr "Ümbersuunatud sektorite arv"
 
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it mark the sector as \"reallocated\" and transfers data "
-"to a special reserved area (spare area)"
+"verification error, it marks the sector as \"reallocated\" and transfers "
+"data to a special reserved area (spare area)"
 msgstr ""
 "Ümbersuunatud sektorite arv. Kui kõvaketas leiab lugemisel/kirjutamisel/"
 "kontrollil vea, märgitakse see sektor \"ümbersuunatuks\" ning selle andmed "
-"kirjutatakse ümber erilisse reserveeritud kohta (spare area)."
+"kirjutatakse ümber selleks reserveeritud alale (spare area)."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1404,16 +1404,16 @@ msgstr "Positsioneerimise vigade esinemise sagedus"
 #. * or the next string for a longer explanation.
 #.
 msgid "Seek Timer Performance"
-msgstr "Otsitaimeri jõudlus"
+msgstr "Otsijõudlus"
 
-msgid "Average efficiency of operatings while positioning"
-msgstr "Positsioneerimise operatsioonide keskmine jõudlus"
+msgid "Average efficiency of operations while positioning"
+msgstr "Positsioneerimisoperatsioonide keskmine jõudlus"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 msgid "Power-On Hours"
-msgstr "Töötunde"
+msgstr "Töötunnid"
 
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Töötundide arv, mil seade on olnud sisselülitatud"
@@ -1443,7 +1443,7 @@ msgid "Power Cycle Count"
 msgstr "Toitetsüklite arv"
 
 msgid "Number of power-on events"
-msgstr "Sisselülitamise sündmuste arv"
+msgstr "Sisselülitamisete arv"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1720,8 +1720,8 @@ msgstr ""
 msgid "Load Friction"
 msgstr "Hõõrdekoormus"
 
-msgid "Load on drive cause by friction in mechanical parts of the store"
-msgstr "Ketta koormus, mida põhjustab salvesti mehaaniliste käiguosade hõõre"
+msgid "Load on drive caused by friction in mechanical parts of the store"
+msgstr "Ketta mehaaniliste käiguosade hõõrdest põhjustatud koormus"
 
 msgid "Total number of load cycles"
 msgstr "Koormustsüklite koguarv"
@@ -2001,7 +2001,7 @@ msgstr "Aeg, mil ketas on olnud sisselülitatud olekus"
 
 #. Translators: Item name in the status table
 msgid "Powered On:"
-msgstr "Lülitati sisse:"
+msgstr "Sisselülitatud olekus:"
 
 #. ------------------------------
 #. temperature
@@ -2031,7 +2031,7 @@ msgstr "Ketta enese hinnang selle kohta, kas see on riknemas"
 
 #. Translators: Item name in the status table
 msgid "Self Assessment:"
-msgstr "Enesehinnang:"
+msgstr "Enesehindamine:"
 
 #. ------------------------------
 #. overall assessment
@@ -2050,7 +2050,7 @@ msgstr "Kui tahad hoiatust ketta riknemise kohta, jäta märkimata"
 
 #. Translators: Check button in the status table
 msgid "Don't _warn me if the disk is failing"
-msgstr "Ära _hoiata, kui ketas hakkab riknema"
+msgstr "Ketta riknemisest ei _hoiatata"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 msgid "_Attributes"
@@ -2104,8 +2104,9 @@ msgstr "%.1f sekundit"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-msgid "%"
-msgstr "%"
+#, c-format
+msgid "%s msec"
+msgstr "%s msek"
 
 #, c-format
 msgid "%d sector"
@@ -2210,7 +2211,7 @@ msgid "Last self-test was cancelled (with hard or soft reset)"
 msgstr "Viimane enesetest katkestati (range või pehme taaskäivitusega)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-msgid "Last self-test not completed (a fatal error might have occured)"
+msgid "Last self-test not completed (a fatal error might have occurred)"
 msgstr "Viimane enesetest ei jõudnud lõpule (võis esineda saatuslik viga)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
@@ -2354,7 +2355,7 @@ msgid "General"
 msgstr "Üldine"
 
 msgid "RAID _Level:"
-msgstr "RAID-i tase:"
+msgstr "RAID-i _tase:"
 
 msgid "Array _Name:"
 msgstr "Massiivi _nimi:"
@@ -2418,19 +2419,19 @@ msgstr "Kettad"
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
 #, c-format
-msgid "Insufficient number disks to create a %s array."
+msgid "Insufficient number of disks to create a %s array."
 msgstr "%s massiivi loomiseks ei jagu kettaid."
 
 #, c-format
-msgid "To create a %s array, select %d disks."
+msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
-msgstr[0] "%s massiivi loomiseks vali %d ketas."
+msgstr[0] "%s massiivi loomiseks vali ketas."
 msgstr[1] "%s massiivi loomiseks vali %d ketast."
 
 #, c-format
-msgid "To create a %s array, select %d more disks."
+msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] "%s massiivi loomiseks vali veel %d ketas."
+msgstr[0] "%s massiivi loomiseks vali veel ketas."
 msgstr[1] "%s massiivi loomiseks vali veel %d ketast."
 
 #. Translators: This is for the tip text shown in the dialog.
@@ -2676,7 +2677,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on the media in \"%s\" will be irrecovably erased. Make sure "
+"All data on the media in \"%s\" will be irrevocably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
 "Kõik andmed andmekandjal seadmes \"%s\" kustutatakse pöördumatult. Veendu, "
@@ -2685,7 +2686,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on the drive \"%s\" will be irrecovably erased. Make sure important "
+"All data on the drive \"%s\" will be irrevocably erased. Make sure important "
 "data is backed up. This action cannot be undone."
 msgstr ""
 "Kõik andmed kettal \"%s\" kustutatakse pöördumatult. Veendu, et olulised "
@@ -2734,6 +2735,9 @@ msgstr "See köide sisaldab haagitavat failisüsteemi."
 msgid "_Label:"
 msgstr "_Pealdis:"
 
+msgid "_Change"
+msgstr "_Muuda"
+
 msgid "Change"
 msgstr "Muda"
 
@@ -2763,7 +2767,7 @@ msgstr "Kas sa oled kindel, et tahad komponendi massiivist eemaldada?"
 
 #, c-format
 msgid ""
-"The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
+"The data on component \"%s\" of the RAID Array \"%s\" will be irrevocably "
 "erased and the RAID Array might be degraded. Make sure important data is "
 "backed up. This action cannot be undone."
 msgstr ""
@@ -2972,7 +2976,7 @@ msgstr ""
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-"partitions contained in this extended partition will be irrecovably erased.\n"
+"partitions contained in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -2986,7 +2990,7 @@ msgstr ""
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-"irrecovably erased.\n"
+"irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -2999,7 +3003,7 @@ msgstr ""
 #, c-format
 msgid ""
 "All data on partition %d on the media in \"%s\" and all partitions contained "
-"in this extended partition will be irrecovably erased.\n"
+"in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3012,7 +3016,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on partition %d on the media in \"%s\" will be irrecovably erased.\n"
+"All data on partition %d on the media in \"%s\" will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3025,7 +3029,7 @@ msgstr ""
 #, c-format
 msgid ""
 "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
-"contained in this extended partition will be irrecovably erased.\n"
+"contained in this extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3038,7 +3042,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
+"All data on partition %d with name \"%s\" of \"%s\" will be irrevocably "
 "erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
@@ -3052,7 +3056,7 @@ msgstr ""
 #, c-format
 msgid ""
 "All data on partition %d of \"%s\" and all partitions contained in this "
-"extended partition will be irrecovably erased.\n"
+"extended partition will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3064,7 +3068,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on partition %d of \"%s\" will be irrecovably erased.\n"
+"All data on partition %d of \"%s\" will be irrevocably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
@@ -3103,9 +3107,6 @@ msgstr "Nõutud / _Püsivara"
 
 msgid "Delete the partition"
 msgstr "Partitsiooni kustutamine"
-
-msgid "_Revert"
-msgstr "_Taasta"
 
 msgid "Apply the changes made"
 msgstr "Tehtud muudatuste rakendamine"
@@ -3185,7 +3186,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on partition %d on the media in \"%s\" will be irrecovably erased. "
+"All data on partition %d on the media in \"%s\" will be irrevocably erased. "
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
 "Kõik andmed partitsioonil %d andmekandjal \"%s\" lähevad pöördumatult "
@@ -3194,7 +3195,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
+"All data on partition %d of \"%s\" will be irrevocably erased. Make sure "
 "important data is backed up. This action cannot be undone."
 msgstr ""
 "Kõik andmed partitsioonil %d (%s} lähevad pöördumatult kaotsi. Veendu, et "
@@ -3268,6 +3269,9 @@ msgstr "Lihtteksti LUKS-seade"
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "Partitsioon %d (%s)"
+
+msgid " mounted at "
+msgstr " haagitud asukohale "
 
 msgid "Error checking file system on device"
 msgstr "Viga seadme failisüsteemi kontrollimisel"

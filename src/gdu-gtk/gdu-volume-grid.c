@@ -53,11 +53,14 @@ struct GridElement
         GridElement *next;
 
         /* these values are set in recompute_size() */
-        gint x;
-        gint y;
-        gint width;
-        gint height;
+        guint x;
+        guint y;
+        guint width;
+        guint height;
         GridEdgeFlags edge_flags;
+
+        /* used for the job spinner */
+        guint spinner_current;
 };
 
 static void
@@ -84,6 +87,8 @@ struct GduVolumeGridPrivate
 
         GridElement *selected;
         GridElement *focused;
+
+        guint animation_timeout_id;
 };
 
 enum
@@ -105,15 +110,15 @@ G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_DRAWING_AREA)
 static void recompute_grid (GduVolumeGrid *grid);
 
 static void recompute_size (GduVolumeGrid *grid,
-                            gint           width,
-                            gint           height);
+                            guint          width,
+                            guint          height);
 
 static GridElement *find_element_for_presentable (GduVolumeGrid *grid,
                                                   GduPresentable *presentable);
 
 static GridElement *find_element_for_position (GduVolumeGrid *grid,
-                                               gint x,
-                                               gint y);
+                                               guint x,
+                                               guint y);
 
 static gboolean gdu_volume_grid_expose_event (GtkWidget           *widget,
                                               GdkEventExpose      *event);
@@ -156,6 +161,11 @@ gdu_volume_grid_finalize (GObject *object)
                                               on_presentable_job_changed,
                                               grid);
         g_object_unref (grid->priv->pool);
+
+        if (grid->priv->animation_timeout_id > 0) {
+                g_source_remove (grid->priv->animation_timeout_id);
+                grid->priv->animation_timeout_id = 0;
+        }
 
         if (G_OBJECT_CLASS (gdu_volume_grid_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_volume_grid_parent_class)->finalize (object);
@@ -497,10 +507,37 @@ presentable_sort_offset (GduPresentable *a, GduPresentable *b)
                 return 0;
 }
 
+static guint
+get_depth (GList *elements)
+{
+        guint depth;
+        GList *l;
+
+        depth = 0;
+        if (elements == NULL)
+                goto out;
+
+        for (l = elements; l != NULL; l = l->next) {
+                GridElement *ee = l->data;
+                guint ee_depth;
+
+                ee_depth = get_depth (ee->embedded_elements) + 1;
+                if (ee_depth > depth)
+                        depth = ee_depth;
+        }
+
+ out:
+        return depth;
+}
+
 static void
-recompute_size (GduVolumeGrid *grid,
-                gint           width,
-                gint           height)
+recompute_size_for_slice (GList  *elements,
+                          guint   width,
+                          guint   height,
+                          guint   total_width,
+                          guint   total_height,
+                          guint   offset_x,
+                          guint   offset_y)
 {
         GList *l;
         gint x;
@@ -508,14 +545,16 @@ recompute_size (GduVolumeGrid *grid,
 
         x = 0;
         pixels_left = width;
-        for (l = grid->priv->elements; l != NULL; l = l->next) {
+        for (l = elements; l != NULL; l = l->next) {
                 GridElement *element = l->data;
                 gint element_width;
-                gboolean is_first;
                 gboolean is_last;
+                guint element_depth;
 
-                is_first = (l == grid->priv->elements);
                 is_last  = (l->next == NULL);
+
+                element_depth = get_depth (element->embedded_elements);
+                //g_debug ("element_depth = %d (x,y)=(%d,%d) height=%d", element_depth, offset_x, offset_y, height);
 
                 if (is_last) {
                         element_width = pixels_left;
@@ -527,66 +566,110 @@ recompute_size (GduVolumeGrid *grid,
                         pixels_left -= element_width;
                 }
 
-                element->x = x;
-                element->y = 0;
+                element->x = x + offset_x;
+                element->y = offset_y;
                 element->width = element_width;
-                element->height = height;
-                element->edge_flags = GRID_EDGE_TOP | GRID_EDGE_BOTTOM;
-                if (is_first)
+                if (element_depth > 0) {
+                        element->height = height / (element_depth + 1);
+                } else {
+                        element->height = height;
+                }
+
+                if (element->x == 0)
                         element->edge_flags |= GRID_EDGE_LEFT;
-                if (is_last)
+                if (element->y == 0)
+                        element->edge_flags |= GRID_EDGE_TOP;
+                if (element->x + element->width == total_width)
                         element->edge_flags |= GRID_EDGE_RIGHT;
+                if (element->y + element->height == total_height)
+                        element->edge_flags |= GRID_EDGE_BOTTOM;
 
                 x += element_width;
 
-                /* for now we don't recurse - we only handle embedded element for toplevel elements */
-                if (element->embedded_elements != NULL) {
-                        gint e_x;
-                        gint e_width;
-                        gint e_pixels_left;
-                        GList *ll;
-
-                        element->height = height/3;
-                        element->edge_flags &= ~(GRID_EDGE_BOTTOM);
-
-                        e_x = element->x;
-                        e_width = element->width;
-                        e_pixels_left = e_width;
-                        for (ll = element->embedded_elements; ll != NULL; ll = ll->next) {
-                                GridElement *e_element = ll->data;
-                                gint e_element_width;
-                                gboolean e_is_first;
-                                gboolean e_is_last;
-
-                                e_is_first = (ll == element->embedded_elements);
-                                e_is_last  = (ll->next == NULL);
-
-                                if (e_is_last) {
-                                        e_element_width = e_pixels_left;
-                                        e_pixels_left = 0;
-                                } else {
-                                        e_element_width = e_element->size_ratio * e_width;
-                                        if (e_element_width > e_pixels_left)
-                                                element_width = e_pixels_left;
-                                        e_pixels_left -= e_element_width;
-                                }
-
-                                e_element->x = e_x;
-                                e_element->y = element->height;
-                                e_element->width = e_element_width;
-                                e_element->height = height - e_element->y;
-                                e_element->edge_flags = GRID_EDGE_BOTTOM;
-                                if (is_first && e_is_first)
-                                        e_element->edge_flags |= GRID_EDGE_LEFT;
-                                if (is_last && e_is_last)
-                                        e_element->edge_flags |= GRID_EDGE_RIGHT;
-
-                                e_x += e_element_width;
-
-                        }
-                }
+                recompute_size_for_slice (element->embedded_elements,
+                                          element->width,
+                                          height - element->height,
+                                          total_width,
+                                          total_height,
+                                          element->x,
+                                          element->height + element->y);
         }
 }
+
+static void
+recompute_size (GduVolumeGrid *grid,
+                guint          width,
+                guint          height)
+{
+        recompute_size_for_slice (grid->priv->elements,
+                                  width,
+                                  height,
+                                  width,
+                                  height,
+                                  0,
+                                  0);
+}
+
+static void
+add_luks_holders (GduVolumeGrid *grid,
+                  GridElement   *element)
+{
+        GduDevice *d;
+        GduDevice *dholder;
+        GduPresentable *pholder;
+        const gchar *holder;
+        GridElement *holder_element;
+
+        d = NULL;
+        dholder = NULL;
+        pholder = NULL;
+
+        d = gdu_presentable_get_device (element->presentable);
+        if (d == NULL)
+                goto out;
+
+        if (g_strcmp0 (gdu_device_id_get_usage (d), "crypto") != 0)
+                goto out;
+
+        holder = gdu_device_luks_get_holder (d);
+        if (holder == NULL || g_strcmp0 (holder, "/") == 0)
+                goto out;
+
+        dholder = gdu_pool_get_by_object_path (grid->priv->pool, holder);
+        if (dholder == NULL)
+                goto out;
+
+        pholder = gdu_pool_get_volume_by_device (grid->priv->pool, dholder);
+        if (pholder == NULL)
+                goto out;
+
+        holder_element = g_new0 (GridElement, 1);
+        holder_element->size_ratio = 1.0;
+        holder_element->presentable = g_object_ref (pholder);
+        holder_element->parent = element;
+
+        g_assert (element->embedded_elements == NULL);
+
+        //g_debug ("added holder %s for %s", gdu_device_get_device_file (dholder), gdu_device_get_device_file (d));
+
+        element->embedded_elements = g_list_append (element->embedded_elements,
+                                                    holder_element);
+
+        /* recurse - because we might have more than one level of encryption - for example
+         *
+         *   sda1 -> LUKS -> LUKS -> filesystem
+         */
+        add_luks_holders (grid, holder_element);
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (dholder != NULL)
+                g_object_unref (dholder);
+        if (pholder != NULL)
+                g_object_unref (pholder);
+}
+
 
 static void
 recompute_grid (GduVolumeGrid *grid)
@@ -668,10 +751,17 @@ recompute_grid (GduVolumeGrid *grid)
 
                                 element->embedded_elements = g_list_append (element->embedded_elements,
                                                                             logical_element);
+
+                                add_luks_holders (grid, logical_element);
+
                         }
                         g_list_foreach (enclosed_logical_partitions, (GFunc) g_object_unref, NULL);
                         g_list_free (enclosed_logical_partitions);
-                        }
+
+                }
+
+                add_luks_holders (grid, element);
+
                 if (ed != NULL)
                         g_object_unref (ed);
 
@@ -710,6 +800,63 @@ recompute_grid (GduVolumeGrid *grid)
 
         /* queue a redraw */
         gtk_widget_queue_draw (GTK_WIDGET (grid));
+}
+
+static void
+render_spinner (cairo_t   *cr,
+                guint      size,
+                guint      num_lines,
+                guint      current,
+                gdouble    x,
+                gdouble    y)
+{
+        guint n;
+        gdouble radius;
+        gdouble cx;
+        gdouble cy;
+        gdouble half;
+
+        cx = x + size/2.0;
+        cy = y + size/2.0;
+        radius = size/2.0;
+        half = num_lines / 2;
+
+        current = current % num_lines;
+
+        for (n = 0; n < num_lines; n++) {
+                gdouble inset;
+                gdouble t;
+
+                inset = 0.7 * radius;
+
+                /* transparency is a function of time and intial value */
+                t = (gdouble) ((n + num_lines - current) % num_lines) / num_lines;
+
+                cairo_set_source_rgba (cr, 0, 0, 0, t);
+                cairo_set_line_width (cr, 2.0);
+                cairo_move_to (cr,
+                               cx + (radius - inset) * cos (n * M_PI / half),
+                               cy + (radius - inset) * sin (n * M_PI / half));
+                cairo_line_to (cr,
+                               cx + radius * cos (n * M_PI / half),
+                               cy + radius * sin (n * M_PI / half));
+                cairo_stroke (cr);
+        }
+}
+
+static void
+render_pixbuf (cairo_t   *cr,
+               gdouble    x,
+               gdouble    y,
+               GdkPixbuf *pixbuf)
+{
+        gdk_cairo_set_source_pixbuf (cr, pixbuf, x, y);
+        cairo_rectangle (cr,
+                         x,
+                         y,
+                         gdk_pixbuf_get_width (pixbuf),
+                         gdk_pixbuf_get_height (pixbuf));
+        cairo_fill (cr);
 }
 
 static void
@@ -786,7 +933,8 @@ round_rect (cairo_t *cr,
         }
 }
 
-static void
+/* returns true if an animation timeout is needed */
+static gboolean
 render_element (GduVolumeGrid *grid,
                 cairo_t       *cr,
                 GridElement   *element,
@@ -794,6 +942,7 @@ render_element (GduVolumeGrid *grid,
                 gboolean       is_focused,
                 gboolean       is_grid_focused)
 {
+        gboolean need_animation_timeout;
         gdouble fill_red;
         gdouble fill_green;
         gdouble fill_blue;
@@ -830,6 +979,8 @@ render_element (GduVolumeGrid *grid,
         gdouble text_selected_not_focused_red;
         gdouble text_selected_not_focused_green;
         gdouble text_selected_not_focused_blue;
+
+        need_animation_timeout = FALSE;
 
         fill_red     = 1;
         fill_green   = 1;
@@ -1000,15 +1151,28 @@ render_element (GduVolumeGrid *grid,
                                ceil (element->y + element->height / 2 - 2 - te.height/2 - te.y_bearing));
                 cairo_show_text (cr, text);
 
-        } else { /* render descriptive text for the presentable */
+        } else { /* render descriptive text + icons for the presentable */
                 gchar *s;
                 gchar *s1;
                 cairo_text_extents_t te;
                 cairo_text_extents_t te1;
                 GduDevice *d;
                 gdouble text_height;
+                gboolean render_padlock_closed;
+                gboolean render_padlock_open;
+                gboolean render_job_in_progress;
+                GPtrArray *pixbufs_to_render;
+                guint icon_offset;
+                guint n;
+
+                render_padlock_closed = FALSE;
+                render_padlock_open = FALSE;
+                render_job_in_progress = FALSE;
 
                 d = gdu_presentable_get_device (element->presentable);
+
+                if (d != NULL && gdu_device_job_in_progress (d))
+                        render_job_in_progress = TRUE;
 
                 s = NULL;
                 s1 = NULL;
@@ -1039,6 +1203,11 @@ render_element (GduVolumeGrid *grid,
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
                                                             FALSE,
                                                             FALSE);
+                        if (g_strcmp0 (gdu_device_luks_get_holder (d), "/") == 0) {
+                                render_padlock_closed = TRUE;
+                        } else {
+                                render_padlock_open = TRUE;
+                        }
                 } else if (!gdu_presentable_is_allocated (element->presentable)) {
                         s = g_strdup (_("Free"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
@@ -1092,11 +1261,113 @@ render_element (GduVolumeGrid *grid,
                 g_free (s);
                 g_free (s1);
 
+                /* OK, done with the text - now render spinner and icons */
+                icon_offset = 0;
+
+                if (render_job_in_progress) {
+                        render_spinner (cr,
+                                        16,
+                                        12,
+                                        element->spinner_current,
+                                        ceil (element->x + element->width - 16 - icon_offset - 4),
+                                        ceil (element->y + element->height - 16 - 4));
+
+                        icon_offset += 16 + 2; /* padding */
+
+                        element->spinner_current += 1;
+
+                        need_animation_timeout = TRUE;
+                }
+
+                /* icons */
+                pixbufs_to_render = g_ptr_array_new_with_free_func (g_object_unref);
+                if (render_padlock_open)
+                        g_ptr_array_add (pixbufs_to_render,
+                                         gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                   "gdu-encrypted-unlock",
+                                                                   16, 0, NULL));
+                if (render_padlock_closed)
+                        g_ptr_array_add (pixbufs_to_render,
+                                         gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                                                   "gdu-encrypted-lock",
+                                                                   16, 0, NULL));
+                for (n = 0; n < pixbufs_to_render->len; n++) {
+                        GdkPixbuf *pixbuf = GDK_PIXBUF (pixbufs_to_render->pdata[n]);
+                        guint icon_width;
+                        guint icon_height;
+
+                        icon_width = gdk_pixbuf_get_width (pixbuf);
+                        icon_height = gdk_pixbuf_get_height (pixbuf);
+
+                        render_pixbuf (cr,
+                                       ceil (element->x + element->width - icon_width - icon_offset - 4),
+                                       ceil (element->y + element->height - icon_height - 4),
+                                       pixbuf);
+
+                        icon_offset += icon_width + 2; /* padding */
+                }
+                g_ptr_array_free (pixbufs_to_render, TRUE);
+
+
                 if (d != NULL)
                         g_object_unref (d);
         }
 
         cairo_restore (cr);
+
+        return need_animation_timeout;
+}
+
+static gboolean
+on_animation_timeout (gpointer data)
+{
+        GduVolumeGrid *grid = GDU_VOLUME_GRID (data);
+
+        gtk_widget_queue_draw (GTK_WIDGET (grid));
+
+        return TRUE; /* keep timeout around */
+}
+
+static gboolean
+render_slice (GduVolumeGrid *grid,
+              cairo_t       *cr,
+              GList         *elements)
+{
+        GList *l;
+        gboolean need_animation_timeout;
+
+        need_animation_timeout = FALSE;
+        for (l = elements; l != NULL; l = l->next) {
+                GridElement *element = l->data;
+                gboolean is_selected;
+                gboolean is_focused;
+                gboolean is_grid_focused;
+
+                is_selected = FALSE;
+                is_focused = FALSE;
+                is_grid_focused = GTK_WIDGET_HAS_FOCUS (grid);
+
+                if (element == grid->priv->selected)
+                        is_selected = TRUE;
+
+                if (element == grid->priv->focused) {
+                        if (grid->priv->focused != grid->priv->selected && is_grid_focused)
+                                is_focused = TRUE;
+                }
+
+                need_animation_timeout |= render_element (grid,
+                                                          cr,
+                                                          element,
+                                                          is_selected,
+                                                          is_focused,
+                                                          is_grid_focused);
+
+                need_animation_timeout |= render_slice (grid,
+                                                        cr,
+                                                        element->embedded_elements);
+        }
+
+        return need_animation_timeout;
 }
 
 static gboolean
@@ -1104,10 +1375,10 @@ gdu_volume_grid_expose_event (GtkWidget           *widget,
                               GdkEventExpose      *event)
 {
         GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
-        GList *l;
         cairo_t *cr;
         gdouble width;
         gdouble height;
+        gboolean need_animation_timeout;
 
         width = widget->allocation.width;
         height = widget->allocation.height;
@@ -1122,57 +1393,22 @@ gdu_volume_grid_expose_event (GtkWidget           *widget,
                          event->area.width, event->area.height);
         cairo_clip (cr);
 
-        for (l = grid->priv->elements; l != NULL; l = l->next) {
-                GridElement *element = l->data;
-                gboolean is_selected;
-                gboolean is_focused;
-                gboolean is_grid_focused;
-                GList *ll;
-
-                is_selected = FALSE;
-                is_focused = FALSE;
-                is_grid_focused = GTK_WIDGET_HAS_FOCUS (grid);
-
-                if (element == grid->priv->selected)
-                        is_selected = TRUE;
-
-                if (element == grid->priv->focused) {
-                        if (grid->priv->focused != grid->priv->selected && is_grid_focused)
-                                is_focused = TRUE;
-                }
-
-                render_element (grid,
-                                cr,
-                                element,
-                                is_selected,
-                                is_focused,
-                                is_grid_focused);
-
-                for (ll = element->embedded_elements; ll != NULL; ll = ll->next) {
-                        GridElement *element = ll->data;
-
-                        is_selected = FALSE;
-                        is_focused = FALSE;
-                        is_grid_focused = GTK_WIDGET_HAS_FOCUS (grid);
-
-                        if (element == grid->priv->selected)
-                                is_selected = TRUE;
-
-                        if (element == grid->priv->focused) {
-                                if (grid->priv->focused != grid->priv->selected && is_grid_focused)
-                                        is_focused = TRUE;
-                        }
-
-                        render_element (grid,
-                                        cr,
-                                        element,
-                                        is_selected,
-                                        is_focused,
-                                        is_grid_focused);
-                }
-        }
+        need_animation_timeout = render_slice (grid, cr, grid->priv->elements);
 
         cairo_destroy (cr);
+
+        if (need_animation_timeout) {
+                if (grid->priv->animation_timeout_id == 0) {
+                        grid->priv->animation_timeout_id = g_timeout_add (80,
+                                                                          on_animation_timeout,
+                                                                          grid);
+                }
+        } else {
+                if (grid->priv->animation_timeout_id > 0) {
+                        g_source_remove (grid->priv->animation_timeout_id);
+                        grid->priv->animation_timeout_id = 0;
+                }
+        }
 
         return FALSE;
 }
@@ -1212,8 +1448,8 @@ find_element_for_presentable (GduVolumeGrid *grid,
 
 static GridElement *
 do_find_element_for_position (GList *elements,
-                              gint   x,
-                              gint   y)
+                              guint  x,
+                              guint  y)
 {
         GList *l;
         GridElement *ret;
@@ -1243,8 +1479,8 @@ do_find_element_for_position (GList *elements,
 
 static GridElement *
 find_element_for_position (GduVolumeGrid *grid,
-                           gint x,
-                           gint y)
+                           guint x,
+                           guint y)
 {
         return do_find_element_for_position (grid->priv->elements, x, y);
 }

@@ -56,6 +56,10 @@ struct _GduSectionVolumesPrivate
         GduButtonElement *partition_edit_button;
         GduButtonElement *partition_delete_button;
         GduButtonElement *partition_create_button;
+        GduButtonElement *luks_lock_button;
+        GduButtonElement *luks_unlock_button;
+        GduButtonElement *luks_forget_passphrase_button;
+        GduButtonElement *luks_change_passphrase_button;
 };
 
 G_DEFINE_TYPE (GduSectionVolumes, gdu_section_volumes, GDU_TYPE_SECTION)
@@ -457,6 +461,383 @@ on_partition_edit_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_luks_forget_passphrase_button_clicked (GduButtonElement *button_element,
+                                          gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GtkWidget *dialog;
+        GduPresentable *v;
+        GduDevice *d;
+        gint response;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        dialog = gdu_confirmation_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
+                                              v,
+                                              _("Are you sure you want to forget the passphrase?"),
+                                              _("_Forget"));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == GTK_RESPONSE_OK) {
+                gdu_util_delete_secret (d);
+        }
+        gtk_widget_destroy (dialog);
+
+        gdu_section_update (GDU_SECTION (section));
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+luks_lock_op_callback (GduDevice *device,
+                       GError    *error,
+                       gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                      device,
+                                                      _("Error locking LUKS volume"),
+                                                      error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_luks_lock_button_clicked (GduButtonElement *button_element,
+                             gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduDevice *d;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        gdu_device_op_luks_lock (d,
+                                 luks_lock_op_callback,
+                                 g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void unlock_action_do (GduSectionVolumes *section,
+                              GduPresentable *presentable,
+                              gboolean bypass_keyring,
+                              gboolean indicate_wrong_passphrase);
+
+typedef struct {
+        GduSectionVolumes *section;
+        GduPresentable *presentable;
+        gboolean asked_user;
+} UnlockData;
+
+static UnlockData *
+unlock_data_new (GduSectionVolumes *section,
+                 GduPresentable    *presentable,
+                 gboolean           asked_user)
+{
+        UnlockData *data;
+        data = g_new0 (UnlockData, 1);
+        data->section = g_object_ref (section);
+        data->presentable = g_object_ref (presentable);
+        data->asked_user = asked_user;
+        return data;
+}
+
+static void
+unlock_data_free (UnlockData *data)
+{
+        g_object_unref (data->section);
+        g_object_unref (data->presentable);
+        g_free (data);
+}
+
+static gboolean
+unlock_retry (gpointer user_data)
+{
+        UnlockData *data = user_data;
+        GduDevice *device;
+        gboolean indicate_wrong_passphrase;
+
+        device = gdu_presentable_get_device (data->presentable);
+        if (device != NULL) {
+                indicate_wrong_passphrase = FALSE;
+
+                if (!data->asked_user) {
+                        /* if we attempted to unlock the device without asking the user
+                         * then the password must have come from the keyring.. hence,
+                         * since we failed, the password in the keyring is bad. Remove
+                         * it.
+                         */
+                        g_warning ("removing bad password from keyring");
+                        gdu_util_delete_secret (device);
+                } else {
+                        /* we did ask the user on the last try and that passphrase
+                         * didn't work.. make sure the new dialog tells him that
+                         */
+                        indicate_wrong_passphrase = TRUE;
+                }
+
+                unlock_action_do (data->section, data->presentable, TRUE, indicate_wrong_passphrase);
+                g_object_unref (device);
+        }
+        unlock_data_free (data);
+        return FALSE;
+}
+
+static void
+unlock_op_cb (GduDevice *device,
+              char      *object_path_of_cleartext_device,
+              GError    *error,
+              gpointer   user_data)
+{
+        UnlockData *data = user_data;
+        GduShell *shell;
+
+        shell = gdu_section_get_shell (GDU_SECTION (data->section));
+
+        if (error != NULL && error->code == GDU_ERROR_INHIBITED) {
+                GtkWidget *dialog;
+
+                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                      device,
+                                                      _("Error unlocking LUKS volume"),
+                                                      error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+
+                g_error_free (error);
+        } else if (error != NULL) {
+                /* retry */
+                g_idle_add (unlock_retry, data);
+                g_error_free (error);
+        } else {
+                unlock_data_free (data);
+                g_free (object_path_of_cleartext_device);
+        }
+}
+
+static void
+unlock_action_do (GduSectionVolumes *section,
+                  GduPresentable    *presentable,
+                  gboolean           bypass_keyring,
+                  gboolean           indicate_wrong_passphrase)
+{
+        gchar *secret;
+        gboolean asked_user;
+        GduDevice *device;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device != NULL) {
+                GduShell *shell;
+
+                shell = gdu_section_get_shell (GDU_SECTION (section));
+
+                secret = gdu_util_dialog_ask_for_secret (GTK_WIDGET (gdu_shell_get_toplevel (shell)),
+                                                         presentable,
+                                                         bypass_keyring,
+                                                         indicate_wrong_passphrase,
+                                                         &asked_user);
+                if (secret != NULL) {
+                        gdu_device_op_luks_unlock (device,
+                                                   secret,
+                                                   unlock_op_cb,
+                                                   unlock_data_new (section,
+                                                                    presentable,
+                                                                    asked_user));
+                        /* scrub the password */
+                        memset (secret, '\0', strlen (secret));
+                        g_free (secret);
+                }
+
+                g_object_unref (device);
+        }
+}
+
+
+static void
+on_luks_unlock_button_clicked (GduButtonElement *button_element,
+                               gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        unlock_action_do (section, v, FALSE, FALSE);
+
+ out:
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        char *old_secret;
+        char *new_secret;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+        GduPresentable *presentable;
+        GduSectionVolumes *section;
+} ChangePassphraseData;
+
+static void
+change_passphrase_data_free (ChangePassphraseData *data)
+{
+        /* scrub the secrets */
+        if (data->old_secret != NULL) {
+                memset (data->old_secret, '\0', strlen (data->old_secret));
+                g_free (data->old_secret);
+        }
+        if (data->new_secret != NULL) {
+                memset (data->new_secret, '\0', strlen (data->new_secret));
+                g_free (data->new_secret);
+        }
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->section != NULL)
+                g_object_unref (data->section);
+        g_free (data);
+}
+
+static void change_passphrase_do (GduSectionVolumes *section,
+                                  GduPresentable    *presentable,
+                                  gboolean           bypass_keyring,
+                                  gboolean           indicate_wrong_passphrase);
+
+static void
+change_passphrase_completed (GduDevice  *device,
+                             GError     *error,
+                             gpointer    user_data)
+{
+        ChangePassphraseData *data = user_data;
+
+        if (error == NULL) {
+                /* It worked! Now update the keyring */
+
+                if (data->save_in_keyring || data->save_in_keyring_session)
+                        gdu_util_save_secret (device, data->new_secret, data->save_in_keyring_session);
+                else
+                        gdu_util_delete_secret (device);
+
+                change_passphrase_data_free (data);
+        } else {
+                /* It didn't work. Because the given passphrase was wrong. Try again,
+                 * this time forcibly bypassing the keyring and telling the user
+                 * the given passphrase was wrong.
+                 */
+                change_passphrase_do (data->section, data->presentable, TRUE, TRUE);
+                change_passphrase_data_free (data);
+        }
+}
+
+static void
+change_passphrase_do (GduSectionVolumes *section,
+                      GduPresentable    *presentable,
+                      gboolean           bypass_keyring,
+                      gboolean           indicate_wrong_passphrase)
+{
+        GduDevice *device;
+        ChangePassphraseData *data;
+
+        device = gdu_presentable_get_device (presentable);
+        if (device == NULL) {
+                goto out;
+        }
+
+        data = g_new0 (ChangePassphraseData, 1);
+        data->presentable = g_object_ref (presentable);
+        data->section = g_object_ref (section);
+
+        if (!gdu_util_dialog_change_secret (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))),
+                                            presentable,
+                                            &data->old_secret,
+                                            &data->new_secret,
+                                            &data->save_in_keyring,
+                                            &data->save_in_keyring_session,
+                                            bypass_keyring,
+                                            indicate_wrong_passphrase)) {
+                change_passphrase_data_free (data);
+                goto out;
+        }
+
+        gdu_device_op_luks_change_passphrase (device,
+                                              data->old_secret,
+                                              data->new_secret,
+                                              change_passphrase_completed,
+                                              data);
+
+out:
+        if (device != NULL) {
+                g_object_unref (device);
+        }
+}
+
+static void
+on_luks_change_passphrase_button_clicked (GduButtonElement *button_element,
+                                          gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        change_passphrase_do (section, v, FALSE, FALSE);
+
+ out:
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -472,6 +853,10 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_partition_edit_button;
         gboolean show_partition_delete_button;
         gboolean show_partition_create_button;
+        gboolean show_luks_lock_button;
+        gboolean show_luks_unlock_button;
+        gboolean show_luks_forget_passphrase_button;
+        gboolean show_luks_change_passphrase_button;
 
         v = NULL;
         d = NULL;
@@ -483,6 +868,10 @@ gdu_section_volumes_update (GduSection *_section)
         show_partition_edit_button = FALSE;
         show_partition_delete_button = FALSE;
         show_partition_create_button = FALSE;
+        show_luks_lock_button = FALSE;
+        show_luks_unlock_button = FALSE;
+        show_luks_forget_passphrase_button = FALSE;
+        show_luks_change_passphrase_button = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -692,6 +1081,19 @@ gdu_section_volumes_update (GduSection *_section)
 
                 show_fs_check_button = TRUE;
 
+        } else if (g_strcmp0 (usage, "crypto") == 0) {
+
+                if (g_strcmp0 (gdu_device_luks_get_holder (d), "/") == 0) {
+                        show_luks_unlock_button = TRUE;
+                        gdu_details_element_set_text (section->priv->usage_element, _("Encrypted Volume (Locked)"));
+                } else {
+                        show_luks_lock_button = TRUE;
+                        gdu_details_element_set_text (section->priv->usage_element, _("Encrypted Volume (Unlocked)"));
+                }
+                if (gdu_util_have_secret (d))
+                        show_luks_forget_passphrase_button = TRUE;
+                show_luks_change_passphrase_button = TRUE;
+
         } else if (g_strcmp0 (usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
                    g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0 &&
@@ -720,6 +1122,10 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->partition_edit_button, show_partition_edit_button);
         gdu_button_element_set_visible (section->priv->partition_delete_button, show_partition_delete_button);
         gdu_button_element_set_visible (section->priv->partition_create_button, show_partition_create_button);
+        gdu_button_element_set_visible (section->priv->luks_lock_button, show_luks_lock_button);
+        gdu_button_element_set_visible (section->priv->luks_unlock_button, show_luks_unlock_button);
+        gdu_button_element_set_visible (section->priv->luks_forget_passphrase_button, show_luks_forget_passphrase_button);
+        gdu_button_element_set_visible (section->priv->luks_change_passphrase_button, show_luks_change_passphrase_button);
 
  out:
         if (d != NULL)
@@ -872,6 +1278,47 @@ gdu_section_volumes_constructed (GObject *object)
 #endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->partition_create_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-encrypted-lock",
+                                                 _("_Lock Volume"),
+                                                 _("Make encrypted data unavailable"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_luks_lock_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->luks_lock_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-encrypted-unlock",
+                                                 _("_Unlock Volume"),
+                                                 _("Make encrypted data available"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_luks_unlock_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->luks_unlock_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_CLEAR,
+                                                 _("Forge_t Passphrase"),
+                                                 _("Delete passphrase from keyring"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_luks_forget_passphrase_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->luks_forget_passphrase_button = button_element;
+
+        /* TODO: not a great choice for the icon but _EDIT would conflict with "Edit Partition */
+        button_element = gdu_button_element_new (GTK_STOCK_FIND_AND_REPLACE,
+                                                 _("Change _Passphrase"),
+                                                 _("Change passphrase"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_luks_change_passphrase_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->luks_change_passphrase_button = button_element;
 
         gdu_button_table_set_elements (GDU_BUTTON_TABLE (section->priv->button_table), button_elements);
         g_ptr_array_unref (button_elements);

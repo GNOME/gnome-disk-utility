@@ -88,5 +88,4 @@ typedef enum {
         GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON = (1<<1),
 } GduFormatDialogFlags;
 
-
 #endif /* GDU_GTK_ENUMS_H */

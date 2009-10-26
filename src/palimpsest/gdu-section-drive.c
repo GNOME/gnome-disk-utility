@@ -397,6 +397,81 @@ on_detach_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+partition_table_create_op_callback (GduDevice  *device,
+                                    GError     *error,
+                                    gpointer    user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+
+                g_debug ("error: %s", error->message);
+
+                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                     device,
+                                                     _("Error formatting drive"),
+                                                     error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_format_button_clicked (GduButtonElement *button_element,
+                          gpointer          user_data)
+{
+        GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
+        GduDevice *d;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        GtkWidget *confirmation_dialog;
+        gint response;
+
+        dialog = NULL;
+        confirmation_dialog = NULL;
+
+        d = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        if (d == NULL)
+                goto out;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_partition_dialog_for_drive (toplevel,
+                                                 d);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response == GTK_RESPONSE_OK) {
+                confirmation_dialog = gdu_confirmation_dialog_for_drive (toplevel,
+                                                                         d,
+                                                                         _("Are you sure you want to format the drive?"),
+                                                                         _("_Format"));
+                gtk_widget_show_all (confirmation_dialog);
+                response = gtk_dialog_run (GTK_DIALOG (confirmation_dialog));
+                gtk_widget_hide (confirmation_dialog);
+                if (response == GTK_RESPONSE_OK) {
+                        gdu_device_op_partition_table_create (d,
+                                                    gdu_partition_dialog_get_scheme (GDU_PARTITION_DIALOG (dialog)),
+                                                    partition_table_create_op_callback,
+                                                    g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+                }
+        }
+ out:
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+        if (confirmation_dialog != NULL)
+                gtk_widget_destroy (confirmation_dialog);
+        if (d != NULL)
+                g_object_unref (d);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_drive_constructed (GObject *object)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (object);
@@ -492,12 +567,10 @@ gdu_section_drive_constructed (GObject *object)
         button_element = gdu_button_element_new ("nautilus-gdu",
                                                  _("Format _Drive"),
                                                  _("Delete all data and partition the drive"));
-#if 0
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_format_button_clicked),
                           section);
-#endif
         g_ptr_array_add (elements, button_element);
         section->priv->format_button = button_element;
 

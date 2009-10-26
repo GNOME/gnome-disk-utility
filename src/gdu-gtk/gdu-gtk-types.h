@@ -54,6 +54,7 @@ typedef struct GduButtonTable              GduButtonTable;
 typedef struct GduDialog                   GduDialog;
 typedef struct GduEditPartitionDialog      GduEditPartitionDialog;
 typedef struct GduFormatDialog             GduFormatDialog;
+typedef struct GduPartitionDialog          GduPartitionDialog;
 
 
 G_END_DECLS

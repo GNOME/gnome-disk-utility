@@ -268,6 +268,7 @@ gdu_error_dialog_constructed (GObject *object)
         text_view = gtk_text_view_new_with_buffer (buffer);
         g_object_unref (buffer);
         gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+        gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD_CHAR);
         gtk_container_add (GTK_CONTAINER (expander), scrolled_window);
         gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
 

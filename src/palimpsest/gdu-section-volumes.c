@@ -91,10 +91,10 @@ unmount_op_callback (GduDevice *device,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                      device,
-                                                      _("Error unmounting volume"),
-                                                      error);
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error unmounting volume"),
+                                                          error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -389,10 +389,10 @@ partition_modify_op_callback (GduDevice *device,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                      device,
-                                                      _("Error modifying partition"),
-                                                      error);
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error modifying partition"),
+                                                          error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -511,10 +511,10 @@ luks_lock_op_callback (GduDevice *device,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                      device,
-                                                      _("Error locking LUKS volume"),
-                                                      error);
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error locking LUKS volume"),
+                                                          error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -634,10 +634,10 @@ unlock_op_cb (GduDevice *device,
         if (error != NULL && error->code == GDU_ERROR_INHIBITED) {
                 GtkWidget *dialog;
 
-                dialog = gdu_error_dialog_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                      device,
-                                                      _("Error unlocking LUKS volume"),
-                                                      error);
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error unlocking LUKS volume"),
+                                                          error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));

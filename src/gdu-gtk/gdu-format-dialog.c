@@ -240,9 +240,9 @@ gdu_format_dialog_new (GtkWindow            *parent,
 }
 
 GtkWidget *
-gdu_format_dialog_for_drive (GtkWindow            *parent,
-                             GduDevice            *device,
-                             GduFormatDialogFlags  flags)
+gdu_format_dialog_new_for_drive (GtkWindow            *parent,
+                                 GduDevice            *device,
+                                 GduFormatDialogFlags  flags)
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_FORMAT_DIALOG,
                                          "transient-for", parent,
@@ -252,9 +252,9 @@ gdu_format_dialog_for_drive (GtkWindow            *parent,
 }
 
 GtkWidget *
-gdu_format_dialog_for_volume (GtkWindow            *parent,
-                              GduDevice            *device,
-                              GduFormatDialogFlags  flags)
+gdu_format_dialog_new_for_volume (GtkWindow            *parent,
+                                  GduDevice            *device,
+                                  GduFormatDialogFlags  flags)
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_FORMAT_DIALOG,
                                          "transient-for", parent,

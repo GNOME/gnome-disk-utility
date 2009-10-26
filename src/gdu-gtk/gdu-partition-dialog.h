@@ -51,12 +51,12 @@ struct GduPartitionDialogClass
         GduDialogClass parent_class;
 };
 
-GType       gdu_partition_dialog_get_type           (void) G_GNUC_CONST;
-GtkWidget  *gdu_partition_dialog_new                (GtkWindow               *parent,
-                                                     GduPresentable          *presentable);
-GtkWidget  *gdu_partition_dialog_for_drive          (GtkWindow               *parent,
-                                                     GduDevice               *device);
-gchar      *gdu_partition_dialog_get_scheme         (GduPartitionDialog      *dialog);
+GType       gdu_partition_dialog_get_type      (void) G_GNUC_CONST;
+GtkWidget  *gdu_partition_dialog_new           (GtkWindow               *parent,
+                                                GduPresentable          *presentable);
+GtkWidget  *gdu_partition_dialog_new_for_drive (GtkWindow               *parent,
+                                                GduDevice               *device);
+gchar      *gdu_partition_dialog_get_scheme    (GduPartitionDialog      *dialog);
 
 G_END_DECLS
 

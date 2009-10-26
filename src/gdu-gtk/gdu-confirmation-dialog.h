@@ -54,19 +54,19 @@ struct GduConfirmationDialogClass
         GduDialogClass parent_class;
 };
 
-GType       gdu_confirmation_dialog_get_type   (void) G_GNUC_CONST;
-GtkWidget  *gdu_confirmation_dialog_new        (GtkWindow      *parent,
-                                                GduPresentable *presentable,
-                                                const gchar    *message,
-                                                const gchar    *button_text);
-GtkWidget  *gdu_confirmation_dialog_for_drive  (GtkWindow      *parent,
-                                                GduDevice      *device,
-                                                const gchar    *message,
-                                                const gchar    *button_text);
-GtkWidget  *gdu_confirmation_dialog_for_volume (GtkWindow      *parent,
-                                                GduDevice      *device,
-                                                const gchar    *message,
-                                                const gchar    *button_text);
+GType       gdu_confirmation_dialog_get_type       (void) G_GNUC_CONST;
+GtkWidget  *gdu_confirmation_dialog_new            (GtkWindow      *parent,
+                                                    GduPresentable *presentable,
+                                                    const gchar    *message,
+                                                    const gchar    *button_text);
+GtkWidget  *gdu_confirmation_dialog_new_for_drive  (GtkWindow      *parent,
+                                                    GduDevice      *device,
+                                                    const gchar    *message,
+                                                    const gchar    *button_text);
+GtkWidget  *gdu_confirmation_dialog_new_for_volume (GtkWindow      *parent,
+                                                    GduDevice      *device,
+                                                    const gchar    *message,
+                                                    const gchar    *button_text);
 
 G_END_DECLS
 

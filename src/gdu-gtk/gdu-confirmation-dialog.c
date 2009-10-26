@@ -254,10 +254,10 @@ gdu_confirmation_dialog_new (GtkWindow      *parent,
 }
 
 GtkWidget *
-gdu_confirmation_dialog_for_drive (GtkWindow      *parent,
-                                   GduDevice      *device,
-                                   const gchar    *message,
-                                   const gchar    *button_text)
+gdu_confirmation_dialog_new_for_drive (GtkWindow      *parent,
+                                       GduDevice      *device,
+                                       const gchar    *message,
+                                       const gchar    *button_text)
 {
         g_return_val_if_fail (GDU_IS_DEVICE (device), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_CONFIRMATION_DIALOG,
@@ -269,10 +269,10 @@ gdu_confirmation_dialog_for_drive (GtkWindow      *parent,
 }
 
 GtkWidget *
-gdu_confirmation_dialog_for_volume (GtkWindow      *parent,
-                                    GduDevice      *device,
-                                    const gchar    *message,
-                                    const gchar    *button_text)
+gdu_confirmation_dialog_new_for_volume (GtkWindow      *parent,
+                                        GduDevice      *device,
+                                        const gchar    *message,
+                                        const gchar    *button_text)
 {
         g_return_val_if_fail (GDU_IS_DEVICE (device), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_CONFIRMATION_DIALOG,

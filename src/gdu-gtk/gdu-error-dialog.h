@@ -54,19 +54,19 @@ struct GduErrorDialogClass
         GduDialogClass parent_class;
 };
 
-GType       gdu_error_dialog_get_type (void) G_GNUC_CONST;
-GtkWidget  *gdu_error_dialog_new             (GtkWindow      *parent,
-                                              GduPresentable *presentable,
-                                              const gchar    *message,
-                                              const GError   *error);
-GtkWidget  *gdu_error_dialog_for_drive       (GtkWindow      *parent,
-                                              GduDevice      *device,
-                                              const gchar    *message,
-                                              const GError   *error);
-GtkWidget  *gdu_error_dialog_for_volume      (GtkWindow      *parent,
-                                              GduDevice      *device,
-                                              const gchar    *message,
-                                              const GError   *error);
+GType       gdu_error_dialog_get_type       (void) G_GNUC_CONST;
+GtkWidget  *gdu_error_dialog_new            (GtkWindow      *parent,
+                                             GduPresentable *presentable,
+                                             const gchar    *message,
+                                             const GError   *error);
+GtkWidget  *gdu_error_dialog_new_for_drive  (GtkWindow      *parent,
+                                             GduDevice      *device,
+                                             const gchar    *message,
+                                             const GError   *error);
+GtkWidget  *gdu_error_dialog_new_for_volume (GtkWindow      *parent,
+                                             GduDevice      *device,
+                                             const gchar    *message,
+                                             const GError   *error);
 
 G_END_DECLS
 

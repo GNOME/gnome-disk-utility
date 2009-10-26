@@ -58,10 +58,10 @@ GType       gdu_format_dialog_get_type           (void) G_GNUC_CONST;
 GtkWidget  *gdu_format_dialog_new                (GtkWindow            *parent,
                                                   GduPresentable       *presentable,
                                                   GduFormatDialogFlags  flags);
-GtkWidget  *gdu_format_dialog_for_drive          (GtkWindow            *parent,
+GtkWidget  *gdu_format_dialog_new_for_drive      (GtkWindow            *parent,
                                                   GduDevice            *device,
                                                   GduFormatDialogFlags  flags);
-GtkWidget  *gdu_format_dialog_for_volume         (GtkWindow            *parent,
+GtkWidget  *gdu_format_dialog_new_for_volume     (GtkWindow            *parent,
                                                   GduDevice            *device,
                                                   GduFormatDialogFlags  flags);
 gchar      *gdu_format_dialog_get_fs_type        (GduFormatDialog *dialog);

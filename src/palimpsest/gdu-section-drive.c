@@ -317,10 +317,10 @@ eject_op_callback (GduDevice *device,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                     device,
-                                                     _("Error ejecting media"),
-                                                     error);
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                         device,
+                                                         _("Error ejecting media"),
+                                                         error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -361,10 +361,10 @@ detach_op_callback (GduDevice *device,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                     device,
-                                                     _("Error detaching drive"),
-                                                     error);
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                         device,
+                                                         _("Error detaching drive"),
+                                                         error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -408,10 +408,10 @@ partition_table_create_op_callback (GduDevice  *device,
 
                 g_debug ("error: %s", error->message);
 
-                dialog = gdu_error_dialog_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
-                                                     device,
-                                                     _("Error formatting drive"),
-                                                     error);
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                         device,
+                                                         _("Error formatting drive"),
+                                                         error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -440,16 +440,15 @@ on_format_button_clicked (GduButtonElement *button_element,
                 goto out;
 
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
-        dialog = gdu_partition_dialog_for_drive (toplevel,
-                                                 d);
+        dialog = gdu_partition_dialog_new_for_drive (toplevel, d);
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_hide (dialog);
         if (response == GTK_RESPONSE_OK) {
-                confirmation_dialog = gdu_confirmation_dialog_for_drive (toplevel,
-                                                                         d,
-                                                                         _("Are you sure you want to format the drive?"),
-                                                                         _("_Format"));
+                confirmation_dialog = gdu_confirmation_dialog_new_for_drive (toplevel,
+                                                                             d,
+                                                                             _("Are you sure you want to format the drive?"),
+                                                                             _("_Format"));
                 gtk_widget_show_all (confirmation_dialog);
                 response = gtk_dialog_run (GTK_DIALOG (confirmation_dialog));
                 gtk_widget_hide (confirmation_dialog);

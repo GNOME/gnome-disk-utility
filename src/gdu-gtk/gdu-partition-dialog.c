@@ -123,8 +123,8 @@ gdu_partition_dialog_new (GtkWindow            *parent,
 }
 
 GtkWidget *
-gdu_partition_dialog_for_drive (GtkWindow            *parent,
-                                GduDevice            *device)
+gdu_partition_dialog_new_for_drive (GtkWindow            *parent,
+                                    GduDevice            *device)
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_PARTITION_DIALOG,
                                          "transient-for", parent,

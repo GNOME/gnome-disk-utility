@@ -145,11 +145,13 @@ static void
 gdu_error_dialog_constructed (GObject *object)
 {
         GduErrorDialog *dialog = GDU_ERROR_DIALOG (object);
+        GtkWidget *button;
         GtkWidget *content_area;
         GtkWidget *hbox;
         GtkWidget *vbox;
         GtkWidget *image;
         GtkWidget *label;
+        GtkWidget *expander;
         gchar *s;
         GIcon *icon;
         GEmblem *emblem;
@@ -158,18 +160,22 @@ gdu_error_dialog_constructed (GObject *object)
         gchar *name;
         gchar *vpd_name;
         const gchar *error_msg;
+        GtkWidget *scrolled_window;
+        GtkWidget *text_view;
+        GtkTextBuffer *buffer;
 
         icon = NULL;
         name = NULL;
         vpd_name = NULL;
 
         gtk_window_set_title (GTK_WINDOW (dialog), _(""));
+        gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
-        gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_CLOSE,
-                               GTK_RESPONSE_CLOSE);
+        button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                        GTK_STOCK_CLOSE,
+                                        GTK_RESPONSE_CLOSE);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
@@ -244,6 +250,27 @@ gdu_error_dialog_constructed (GObject *object)
 	gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
+        s = g_strdup_printf ("<b>%s</b>", _("_Details"));
+        expander = gtk_expander_new (s);
+        g_free (s);
+        gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
+        gtk_expander_set_use_underline (GTK_EXPANDER (expander), TRUE);
+        gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+
+        scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                        GTK_POLICY_AUTOMATIC,
+                                        GTK_POLICY_AUTOMATIC);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                             GTK_SHADOW_IN);
+        buffer = gtk_text_buffer_new (NULL);
+        gtk_text_buffer_set_text (buffer, dialog->priv->error->message, -1);
+        text_view = gtk_text_view_new_with_buffer (buffer);
+        g_object_unref (buffer);
+        gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+        gtk_container_add (GTK_CONTAINER (expander), scrolled_window);
+        gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+
         g_object_unref (icon);
         g_object_unref (emblem);
         g_object_unref (error_icon);
@@ -251,6 +278,8 @@ gdu_error_dialog_constructed (GObject *object)
 
         g_free (name);
         g_free (vpd_name);
+
+        gtk_widget_grab_focus (button);
 
         if (G_OBJECT_CLASS (gdu_error_dialog_parent_class)->constructed != NULL)
                 G_OBJECT_CLASS (gdu_error_dialog_parent_class)->constructed (object);

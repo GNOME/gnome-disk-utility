@@ -37,6 +37,7 @@ struct GduFormatDialogPrivate
 
         GtkWidget *fs_label_entry;
         GtkWidget *fs_type_combo_box;
+        GtkWidget *fs_type_desc_label;
         GtkWidget *take_ownership_check_button;
         GtkWidget *encrypt_check_button;
 
@@ -543,6 +544,19 @@ gdu_format_dialog_constructed (GObject *object)
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
         dialog->priv->fs_type_combo_box = combo_box;
         row++;
+
+        if (! (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_SIMPLE)) {
+                label = gtk_label_new (NULL);
+                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+                gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+                gtk_table_attach (GTK_TABLE (table), label, 1, 2, row, row +1,
+                                  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+                dialog->priv->fs_type_desc_label = label;
+                row++;
+                gdu_util_fstype_combo_box_set_desc_label (dialog->priv->fs_type_combo_box,
+                                                          dialog->priv->fs_type_desc_label);
+        }
+
 
         /*  filesystem label  */
         label = gtk_label_new (NULL);

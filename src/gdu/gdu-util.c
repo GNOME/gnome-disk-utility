@@ -408,7 +408,7 @@ static struct {
         /* see http://en.wikipedia.org/wiki/GUID_Partition_Table */
 
         /* Linux */
-        {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")}, /* Same GUID as MS! */
+        {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Linux Basic Data Partition")}, /* Same as MS BDP */
         {"gpt", "A19D880F-05FC-4D3B-A006-743F0F84911E", N_("Linux RAID Partition")},
         {"gpt", "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F", N_("Linux Swap Partition")},
         {"gpt", "E6D6D379-F507-44C2-A23C-238F2A3DF928", N_("Linux LVM Partition")},
@@ -419,7 +419,7 @@ static struct {
         {"gpt", "21686148-6449-6E6F-744E-656564454649", N_("BIOS Boot Partition")},
         /* Microsoft */
         {"gpt", "E3C9E316-0B5C-4DB8-817D-F92DF00215AE", N_("Microsoft Reserved Partition")},
-        /* {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Basic Data Partition")}, Same GUID as Linux */
+        {"gpt", "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7", N_("Microsoft Basic Data Partition")}, /* Same as Linux BDP */
         {"gpt", "5808C8AA-7E8F-42E0-85D2-E1E90434CFB3", N_("Microsoft LDM Metadata Partition")},
         {"gpt", "AF9B60A0-1431-4F62-BC68-3311714A69AD", N_("Microsoft LDM Data Partition")},
         {"gpt", "DE94BBA4-06D1-4D40-A16A-BFD50179D6AC", N_("Microsoft Windows Recovery Environment")},
@@ -433,21 +433,12 @@ static struct {
         {"gpt", "516E7CB6-6ECF-11D6-8FF8-00022D09712B", N_("FreeBSD UFS Partition")},
         {"gpt", "516E7CB8-6ECF-11D6-8FF8-00022D09712B", N_("FreeBSD Vinum Partition")},
         {"gpt", "516E7CBA-6ECF-11D6-8FF8-00022D09712B", N_("FreeBSD ZFS Partition")},
-        /* Mac OS X */
-        {"gpt", "48465300-0000-11AA-AA11-00306543ECAC", N_("Apple HFS/HFS+ Partition")},
-        {"gpt", "55465300-0000-11AA-AA11-00306543ECAC", N_("Apple UFS Partition")},
-        {"gpt", "6A898CC3-1DD2-11B2-99A6-080020736631", N_("Apple ZFS Partition")},
-        {"gpt", "52414944-0000-11AA-AA11-00306543ECAC", N_("Apple RAID Partition")},
-        {"gpt", "52414944-5F4F-11AA-AA11-00306543ECAC", N_("Apple RAID Partition (Offline)")},
-        {"gpt", "426F6F74-0000-11AA-AA11-00306543ECAC", N_("Apple Boot Partition")},
-        {"gpt", "4C616265-6C00-11AA-AA11-00306543ECAC", N_("Apple Label Partition")},
-        {"gpt", "5265636F-7665-11AA-AA11-00306543ECAC", N_("Apple TV Recovery Partition")},
         /* Solaris */
         {"gpt", "6A82CB45-1DD2-11B2-99A6-080020736631", N_("Solaris Boot Partition")},
         {"gpt", "6A85CF4D-1DD2-11B2-99A6-080020736631", N_("Solaris Root Partition")},
         {"gpt", "6A87C46F-1DD2-11B2-99A6-080020736631", N_("Solaris Swap Partition")},
         {"gpt", "6A8B642B-1DD2-11B2-99A6-080020736631", N_("Solaris Backup Partition")},
-        {"gpt", "6A898CC3-1DD2-11B2-99A6-080020736631", N_("Solaris /usr Partition")},
+        {"gpt", "6A898CC3-1DD2-11B2-99A6-080020736631", N_("Solaris /usr Partition")}, /* Same as Apple ZFS */
         {"gpt", "6A8EF2E9-1DD2-11B2-99A6-080020736631", N_("Solaris /var Partition")},
         {"gpt", "6A90BA39-1DD2-11B2-99A6-080020736631", N_("Solaris /home Partition")},
         {"gpt", "6A9283A5-1DD2-11B2-99A6-080020736631", N_("Solaris Alternate Sector Partition")},
@@ -456,6 +447,15 @@ static struct {
         {"gpt", "6A980767-1DD2-11B2-99A6-080020736631", N_("Solaris Reserved Partition (3)")},
         {"gpt", "6A96237F-1DD2-11B2-99A6-080020736631", N_("Solaris Reserved Partition (4)")},
         {"gpt", "6A8D2AC7-1DD2-11B2-99A6-080020736631", N_("Solaris Reserved Partition (5)")},
+        /* Mac OS X */
+        {"gpt", "48465300-0000-11AA-AA11-00306543ECAC", N_("Apple HFS/HFS+ Partition")},
+        {"gpt", "55465300-0000-11AA-AA11-00306543ECAC", N_("Apple UFS Partition")},
+        {"gpt", "6A898CC3-1DD2-11B2-99A6-080020736631", N_("Apple ZFS Partition")}, /* Same as Solaris /usr */
+        {"gpt", "52414944-0000-11AA-AA11-00306543ECAC", N_("Apple RAID Partition")},
+        {"gpt", "52414944-5F4F-11AA-AA11-00306543ECAC", N_("Apple RAID Partition (Offline)")},
+        {"gpt", "426F6F74-0000-11AA-AA11-00306543ECAC", N_("Apple Boot Partition")},
+        {"gpt", "4C616265-6C00-11AA-AA11-00306543ECAC", N_("Apple Label Partition")},
+        {"gpt", "5265636F-7665-11AA-AA11-00306543ECAC", N_("Apple TV Recovery Partition")},
         /* NetBSD */
         {"gpt", "49F48D32-B10E-11DC-B99B-0019D1879648", N_("NetBSD Swap Partition")},
         {"gpt", "49F48D5A-B10E-11DC-B99B-0019D1879648", N_("NetBSD FFS Partition")},

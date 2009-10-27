@@ -1481,6 +1481,7 @@ gdu_section_volumes_update (GduSection *_section)
                 }
         }
 
+ out:
         gdu_button_element_set_visible (section->priv->fs_mount_button, show_fs_mount_button);
         gdu_button_element_set_visible (section->priv->fs_unmount_button, show_fs_unmount_button);
         gdu_button_element_set_visible (section->priv->fs_check_button, show_fs_check_button);
@@ -1493,8 +1494,6 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->luks_unlock_button, show_luks_unlock_button);
         gdu_button_element_set_visible (section->priv->luks_forget_passphrase_button, show_luks_forget_passphrase_button);
         gdu_button_element_set_visible (section->priv->luks_change_passphrase_button, show_luks_change_passphrase_button);
-
- out:
         if (d != NULL)
                 g_object_unref (d);
         if (v != NULL)

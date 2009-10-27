@@ -56,6 +56,7 @@ typedef struct GduEditPartitionDialog      GduEditPartitionDialog;
 typedef struct GduFormatDialog             GduFormatDialog;
 typedef struct GduPartitionDialog          GduPartitionDialog;
 typedef struct GduCreatePartitionDialog    GduCreatePartitionDialog;
+typedef struct GduEditFilesystemDialog     GduEditFilesystemDialog;
 
 
 G_END_DECLS

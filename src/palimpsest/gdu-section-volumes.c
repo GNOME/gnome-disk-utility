@@ -40,7 +40,9 @@ struct _GduSectionVolumesPrivate
         /* shared between all volume types */
         GduDetailsElement *usage_element;
         GduDetailsElement *capacity_element;
-        GduDetailsElement *partition_element;
+        GduDetailsElement *partition_type_element;
+        GduDetailsElement *partition_flags_element;
+        GduDetailsElement *partition_label_element;
         GduDetailsElement *device_element;
 
         /* elements for the 'filesystem' usage */
@@ -52,6 +54,7 @@ struct _GduSectionVolumesPrivate
         GduButtonElement *fs_mount_button;
         GduButtonElement *fs_unmount_button;
         GduButtonElement *fs_check_button;
+        GduButtonElement *fs_change_label_button;
         GduButtonElement *format_button;
         GduButtonElement *partition_edit_button;
         GduButtonElement *partition_delete_button;
@@ -940,8 +943,6 @@ partition_create_op_callback (GduDevice  *device,
                 gtk_widget_destroy (dialog);
                 g_error_free (error);
         } else {
-                g_debug ("Created %s", created_device_object_path);
-
                 if (data->encrypt_passphrase != NULL) {
                         GduDevice *cleartext_device;
                         GduPool *pool;
@@ -1095,6 +1096,76 @@ on_partition_create_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+filesystem_set_label_op_callback (GduDevice *device,
+                                  GError    *error,
+                                  gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error changing label"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_fs_change_label_button_clicked (GduButtonElement *button_element,
+                                   gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduDevice *d;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+
+        v = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_edit_filesystem_dialog_new (toplevel, v);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == GTK_RESPONSE_APPLY) {
+                gchar *label;
+
+                label = gdu_edit_filesystem_dialog_get_label (GDU_EDIT_FILESYSTEM_DIALOG (dialog));
+
+                gdu_device_op_filesystem_set_label (d,
+                                                    label,
+                                                    filesystem_set_label_op_callback,
+                                                    g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+
+                g_free (label);
+        }
+        gtk_widget_destroy (dialog);
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -1102,10 +1173,12 @@ gdu_section_volumes_update (GduSection *_section)
         GduDevice *d;
         gchar *s;
         gchar *s2;
-        const gchar *usage;
+        const gchar *id_usage;
+        const gchar *id_type;
         gboolean show_fs_mount_button;
         gboolean show_fs_unmount_button;
         gboolean show_fs_check_button;
+        gboolean show_fs_change_label_button;
         gboolean show_format_button;
         gboolean show_partition_edit_button;
         gboolean show_partition_delete_button;
@@ -1114,13 +1187,17 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_luks_unlock_button;
         gboolean show_luks_forget_passphrase_button;
         gboolean show_luks_change_passphrase_button;
+        GduKnownFilesystem *kfs;
 
         v = NULL;
         d = NULL;
-        usage = "";
+        kfs = NULL;
+        id_usage = "";
+        id_type = "";
         show_fs_mount_button = FALSE;
         show_fs_unmount_button = FALSE;
         show_fs_check_button = FALSE;
+        show_fs_change_label_button = FALSE;
         show_format_button = FALSE;
         show_partition_edit_button = FALSE;
         show_partition_delete_button = FALSE;
@@ -1135,7 +1212,15 @@ gdu_section_volumes_update (GduSection *_section)
         if (v != NULL) {
                 d = gdu_presentable_get_device (v);
                 if (d != NULL) {
-                        usage = gdu_device_id_get_usage (d);
+                        GduPool *pool;
+
+                        pool = gdu_device_get_pool (d);
+
+                        id_usage = gdu_device_id_get_usage (d);
+                        id_type = gdu_device_id_get_type (d);
+                        kfs = gdu_pool_get_known_filesystem_by_id (pool, id_type);
+
+                        g_object_unref (pool);
                 }
         }
 
@@ -1151,7 +1236,9 @@ gdu_section_volumes_update (GduSection *_section)
 
                 section->priv->usage_element = NULL;
                 section->priv->capacity_element = NULL;
-                section->priv->partition_element = NULL;
+                section->priv->partition_type_element = NULL;
+                section->priv->partition_flags_element = NULL;
+                section->priv->partition_label_element = NULL;
                 section->priv->device_element = NULL;
                 section->priv->fs_type_element = NULL;
                 section->priv->fs_label_element = NULL;
@@ -1166,13 +1253,19 @@ gdu_section_volumes_update (GduSection *_section)
                 section->priv->device_element = gdu_details_element_new (_("Device:"), NULL, NULL);
                 g_ptr_array_add (elements, section->priv->device_element);
 
-                section->priv->partition_element = gdu_details_element_new (_("Partition:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->partition_element);
+                section->priv->partition_type_element = gdu_details_element_new (_("Partition Type:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->partition_type_element);
+
+                section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->partition_label_element);
+
+                section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->partition_flags_element);
 
                 section->priv->capacity_element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
                 g_ptr_array_add (elements, section->priv->capacity_element);
 
-                if (g_strcmp0 (usage, "filesystem") == 0) {
+                if (g_strcmp0 (id_usage, "filesystem") == 0) {
                         section->priv->fs_type_element = gdu_details_element_new (_("Type:"), NULL, NULL);
                         g_ptr_array_add (elements, section->priv->fs_type_element);
 
@@ -1204,8 +1297,9 @@ gdu_section_volumes_update (GduSection *_section)
                         gdu_details_element_set_text (section->priv->capacity_element, "–");
                 }
         }
-        if (section->priv->partition_element != NULL) {
+        if (section->priv->partition_type_element != NULL) {
                 if (d != NULL && gdu_device_is_partition (d)) {
+                        const gchar *partition_label;
                         const gchar * const *partition_flags;
                         guint n;
                         GString *str;
@@ -1243,20 +1337,23 @@ gdu_section_volumes_update (GduSection *_section)
 
                         s = gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (d),
                                                              gdu_device_partition_get_type (d));
-                        if (str->len > 0) {
-                                /* Translators: First %s is the partition type, second %s is a comma
-                                 *              separated list of partition flags
-                                 */
-                                s2 = g_strdup_printf (C_("Partition Type", "%s (%s)"), s, str->str);
-                                gdu_details_element_set_text (section->priv->partition_element, s2);
-                                g_free (s2);
-                        } else {
-                                gdu_details_element_set_text (section->priv->partition_element, s);
-                        }
+                        gdu_details_element_set_text (section->priv->partition_type_element, s);
                         g_free (s);
+                        if (str->len > 0) {
+                                gdu_details_element_set_text (section->priv->partition_flags_element, str->str);
+                        } else {
+                                gdu_details_element_set_text (section->priv->partition_flags_element, "–");
+                        }
                         g_string_free (str, TRUE);
 
                         show_partition_delete_button = TRUE;
+
+                        partition_label = gdu_device_partition_get_label (d);
+                        if (partition_label != NULL && strlen (partition_label) > 0) {
+                                gdu_details_element_set_text (section->priv->partition_label_element, partition_label);
+                        } else {
+                                gdu_details_element_set_text (section->priv->partition_label_element, "–");
+                        }
 
                         /* Don't show partition edit button for extended partitions */
                         show_partition_edit_button = TRUE;
@@ -1271,7 +1368,7 @@ gdu_section_volumes_update (GduSection *_section)
                                 }
                         }
                 } else {
-                        gdu_details_element_set_text (section->priv->partition_element, "–");
+                        gdu_details_element_set_text (section->priv->partition_type_element, "–");
                 }
         }
         if (section->priv->device_element != NULL) {
@@ -1298,7 +1395,7 @@ gdu_section_volumes_update (GduSection *_section)
         /* populate according to usage */
 
         show_format_button = TRUE;
-        if (g_strcmp0 (usage, "filesystem") == 0) {
+        if (g_strcmp0 (id_usage, "filesystem") == 0) {
                 gdu_details_element_set_text (section->priv->usage_element, _("Filesystem"));
                 s = gdu_util_get_fstype_for_display (gdu_device_id_get_type (d),
                                                      gdu_device_id_get_version (d),
@@ -1338,7 +1435,7 @@ gdu_section_volumes_update (GduSection *_section)
 
                 show_fs_check_button = TRUE;
 
-        } else if (g_strcmp0 (usage, "crypto") == 0) {
+        } else if (g_strcmp0 (id_usage, "crypto") == 0) {
 
                 if (g_strcmp0 (gdu_device_luks_get_holder (d), "/") == 0) {
                         show_luks_unlock_button = TRUE;
@@ -1351,7 +1448,7 @@ gdu_section_volumes_update (GduSection *_section)
                         show_luks_forget_passphrase_button = TRUE;
                 show_luks_change_passphrase_button = TRUE;
 
-        } else if (g_strcmp0 (usage, "") == 0 &&
+        } else if (g_strcmp0 (id_usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
                    g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0 &&
                    (g_strcmp0 (gdu_device_partition_get_type (d), "0x05") == 0 ||
@@ -1373,9 +1470,22 @@ gdu_section_volumes_update (GduSection *_section)
                 show_format_button = FALSE;
         }
 
+        if (kfs != NULL) {
+                if (show_fs_unmount_button) {
+                        if (gdu_known_filesystem_get_supports_online_label_rename (kfs)) {
+                                show_fs_change_label_button = TRUE;
+                        }
+                } else {
+                        if (gdu_known_filesystem_get_supports_label_rename (kfs)) {
+                                show_fs_change_label_button = TRUE;
+                        }
+                }
+        }
+
         gdu_button_element_set_visible (section->priv->fs_mount_button, show_fs_mount_button);
         gdu_button_element_set_visible (section->priv->fs_unmount_button, show_fs_unmount_button);
         gdu_button_element_set_visible (section->priv->fs_check_button, show_fs_check_button);
+        gdu_button_element_set_visible (section->priv->fs_change_label_button, show_fs_change_label_button);
         gdu_button_element_set_visible (section->priv->format_button, show_format_button);
         gdu_button_element_set_visible (section->priv->partition_edit_button, show_partition_edit_button);
         gdu_button_element_set_visible (section->priv->partition_delete_button, show_partition_delete_button);
@@ -1390,6 +1500,8 @@ gdu_section_volumes_update (GduSection *_section)
                 g_object_unref (d);
         if (v != NULL)
                 g_object_unref (v);
+        if (kfs != NULL)
+                g_object_unref (kfs);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1483,6 +1595,16 @@ gdu_section_volumes_constructed (GObject *object)
         g_ptr_array_add (button_elements, button_element);
         section->priv->fs_unmount_button = button_element;
 
+        button_element = gdu_button_element_new ("nautilus-gdu",
+                                                 _("Fo_rmat Volume"),
+                                                 _("Format the volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_format_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->format_button = button_element;
+
         button_element = gdu_button_element_new ("gdu-check-disk",
                                                  _("_Check Filesystem"),
                                                  _("Check the filesystem for errors"));
@@ -1495,19 +1617,20 @@ gdu_section_volumes_constructed (GObject *object)
         g_ptr_array_add (button_elements, button_element);
         section->priv->fs_check_button = button_element;
 
-        button_element = gdu_button_element_new ("nautilus-gdu",
-                                                 _("Fo_rmat Volume"),
-                                                 _("Format the volume"));
+        /* TODO: better icon */
+        button_element = gdu_button_element_new (GTK_STOCK_BOLD,
+                                                 _("Edit _Label"),
+                                                 _("Change the label of the volume"));
         g_signal_connect (button_element,
                           "clicked",
-                          G_CALLBACK (on_format_button_clicked),
+                          G_CALLBACK (on_fs_change_label_button_clicked),
                           section);
         g_ptr_array_add (button_elements, button_element);
-        section->priv->format_button = button_element;
+        section->priv->fs_change_label_button = button_element;
 
         button_element = gdu_button_element_new (GTK_STOCK_EDIT,
                                                  _("Ed_it Partition"),
-                                                 _("Change partition type and flags"));
+                                                 _("Change partition type, label and flags"));
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_partition_edit_button_clicked),

@@ -48,6 +48,7 @@
 #include <gdu-gtk/gdu-format-dialog.h>
 #include <gdu-gtk/gdu-partition-dialog.h>
 #include <gdu-gtk/gdu-create-partition-dialog.h>
+#include <gdu-gtk/gdu-edit-filesystem-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS

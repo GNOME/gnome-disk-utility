@@ -1366,6 +1366,8 @@ gdu_section_volumes_update (GduSection *_section)
                         }
                 } else {
                         gdu_details_element_set_text (section->priv->partition_type_element, "–");
+                        gdu_details_element_set_text (section->priv->partition_flags_element, "–");
+                        gdu_details_element_set_text (section->priv->partition_label_element, "–");
                 }
         }
         if (section->priv->device_element != NULL) {

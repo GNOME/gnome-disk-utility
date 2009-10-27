@@ -92,6 +92,10 @@ gboolean    gdu_drive_has_unallocated_space (GduDrive        *drive,
                                              guint64         *out_largest_segment,
                                              GduPresentable **out_presentable);
 
+gboolean    gdu_drive_count_mbr_partitions  (GduDrive        *drive,
+                                             guint           *out_num_primary_partitions,
+                                             gboolean        *out_has_extended_partition);
+
 G_END_DECLS
 
 #endif /* __GDU_DRIVE_H */

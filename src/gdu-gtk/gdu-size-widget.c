@@ -150,19 +150,6 @@ on_hscale_value_changed (GtkRange  *range,
         }
 }
 
-static void
-gdu_size_widget_init (GduSizeWidget *widget)
-{
-        widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget,
-                                                    GDU_TYPE_SIZE_WIDGET,
-                                                    GduSizeWidgetPrivate);
-
-        widget->priv->hscale = gtk_hscale_new_with_range (0,
-                                                          10,
-                                                          1);
-        gtk_scale_set_draw_value (GTK_SCALE (widget->priv->hscale), TRUE);
-}
-
 static gboolean
 on_query_tooltip (GtkWidget  *w,
                   gint        x,
@@ -225,9 +212,34 @@ gdu_size_widget_constructed (GObject *object)
 }
 
 static void
+gdu_size_widget_init (GduSizeWidget *widget)
+{
+        widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget,
+                                                    GDU_TYPE_SIZE_WIDGET,
+                                                    GduSizeWidgetPrivate);
+
+        widget->priv->hscale = gtk_hscale_new_with_range (0,
+                                                          10,
+                                                          1);
+        gtk_scale_set_draw_value (GTK_SCALE (widget->priv->hscale), TRUE);
+}
+
+static gboolean
+gdu_size_widget_mnemonic_activate (GtkWidget *_widget,
+                                   gboolean   group_cycling)
+{
+        GduSizeWidget *widget = GDU_SIZE_WIDGET (_widget);
+        return gtk_widget_mnemonic_activate (widget->priv->hscale, group_cycling);
+}
+
+static void
 gdu_size_widget_class_init (GduSizeWidgetClass *klass)
 {
-        GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+        GObjectClass *gobject_class;
+        GtkWidgetClass *widget_class;
+
+        gobject_class = G_OBJECT_CLASS (klass);
+        widget_class = GTK_WIDGET_CLASS (klass);
 
         g_type_class_add_private (klass, sizeof (GduSizeWidgetPrivate));
 
@@ -235,6 +247,8 @@ gdu_size_widget_class_init (GduSizeWidgetClass *klass)
         gobject_class->set_property        = gdu_size_widget_set_property;
         gobject_class->constructed         = gdu_size_widget_constructed;
         gobject_class->finalize            = gdu_size_widget_finalize;
+
+        widget_class->mnemonic_activate    = gdu_size_widget_mnemonic_activate;
 
         g_object_class_install_property (gobject_class,
                                          PROP_SIZE,

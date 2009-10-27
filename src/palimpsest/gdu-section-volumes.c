@@ -837,6 +837,263 @@ on_luks_change_passphrase_button_clicked (GduButtonElement *button_element,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+can_create_partition (GduSectionVolumes *section,
+                      GduVolumeHole     *hole,
+                      gboolean          *out_can_create_extended)
+{
+        GduPresentable *drive;
+        GduDevice *drive_device;
+        gboolean can_create;
+        gboolean can_create_extended;
+        guint num_primary;
+        gboolean has_extended;
+        const gchar *part_scheme;
+        GduPresentable *enclosing_presentable_for_hole;
+
+        can_create = FALSE;
+        can_create_extended = FALSE;
+
+        enclosing_presentable_for_hole = NULL;
+        drive_device = NULL;
+
+        drive = gdu_section_get_presentable (GDU_SECTION (section));
+        drive_device = gdu_presentable_get_device (drive);
+        if (drive_device == NULL)
+                goto out;
+
+        part_scheme = gdu_device_partition_table_get_scheme (drive_device);
+
+        if (g_strcmp0 (part_scheme, "mbr") != 0) {
+                can_create = TRUE;
+                goto out;
+        }
+
+        enclosing_presentable_for_hole = gdu_presentable_get_enclosing_presentable (GDU_PRESENTABLE (hole));
+        if (GDU_IS_DRIVE (enclosing_presentable_for_hole)) {
+                /* hole is in primary partition space */
+                if (gdu_drive_count_mbr_partitions (GDU_DRIVE (drive), &num_primary, &has_extended)) {
+                        if (num_primary < 4) {
+                                can_create = TRUE;
+                                if (!has_extended)
+                                        can_create_extended = TRUE;
+                        }
+                }
+        } else {
+                /* hole is in an extended partition */
+                can_create = TRUE;
+        }
+
+ out:
+        if (enclosing_presentable_for_hole != NULL)
+                g_object_unref (enclosing_presentable_for_hole);
+
+        if (drive_device != NULL)
+                g_object_unref (drive_device);
+
+        if (out_can_create_extended)
+                *out_can_create_extended = can_create_extended;
+
+        return can_create;
+}
+
+
+typedef struct {
+        GduShell *shell;
+        GduPresentable *presentable;
+        char *encrypt_passphrase;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+} CreatePartitionData;
+
+static void
+create_partition_data_free (CreatePartitionData *data)
+{
+        if (data->shell != NULL)
+                g_object_unref (data->shell);
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->encrypt_passphrase != NULL) {
+                memset (data->encrypt_passphrase, '\0', strlen (data->encrypt_passphrase));
+                g_free (data->encrypt_passphrase);
+        }
+        g_free (data);
+}
+
+static void
+partition_create_op_callback (GduDevice  *device,
+                              gchar      *created_device_object_path,
+                              GError     *error,
+                              gpointer    user_data)
+{
+        CreatePartitionData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error creating partition"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        } else {
+                g_debug ("Created %s", created_device_object_path);
+
+                if (data->encrypt_passphrase != NULL) {
+                        GduDevice *cleartext_device;
+                        GduPool *pool;
+
+                        pool = gdu_device_get_pool (device);
+                        cleartext_device = gdu_pool_get_by_object_path (pool, created_device_object_path);
+                        if (cleartext_device != NULL) {
+                                const gchar *cryptotext_device_object_path;
+
+                                cryptotext_device_object_path = gdu_device_luks_cleartext_get_slave (cleartext_device);
+                                if (cryptotext_device_object_path != NULL) {
+                                        GduDevice *cryptotext_device;
+
+                                        cryptotext_device = gdu_pool_get_by_object_path (pool,
+                                                                                         cryptotext_device_object_path);
+                                        if (cryptotext_device != NULL) {
+                                                /* now set the passphrase if requested */
+                                                if (data->save_in_keyring || data->save_in_keyring_session) {
+                                                        gdu_util_save_secret (cryptotext_device,
+                                                                              data->encrypt_passphrase,
+                                                                              data->save_in_keyring_session);
+                                                }
+                                                g_object_unref (cryptotext_device);
+                                        }
+                                }
+                                g_object_unref (cleartext_device);
+                        }
+                }
+
+                g_free (created_device_object_path);
+        }
+
+        if (data != NULL)
+                create_partition_data_free (data);
+}
+
+static void
+on_partition_create_button_clicked (GduButtonElement *button_element,
+                                    gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduPresentable *drive;
+        GduDevice *drive_device;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+        GduFormatDialogFlags flags;
+        const gchar *part_scheme;
+        gboolean can_create_extended;
+
+        v = NULL;
+        drive_device = NULL;
+        dialog = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL || !GDU_IS_VOLUME_HOLE (v))
+                goto out;
+
+        drive = gdu_section_get_presentable (GDU_SECTION (section));
+        drive_device = gdu_presentable_get_device (drive);
+        if (drive_device == NULL)
+                goto out;
+
+        part_scheme = gdu_device_partition_table_get_scheme (drive_device);
+
+        flags = GDU_FORMAT_DIALOG_FLAGS_NONE;
+        if (!can_create_partition (section, GDU_VOLUME_HOLE (v), &can_create_extended))
+                goto out;
+        if (can_create_extended)
+                flags |= GDU_FORMAT_DIALOG_FLAGS_ALLOW_MSDOS_EXTENDED;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_create_partition_dialog_new_for_drive (toplevel,
+                                                            drive_device,
+                                                            gdu_presentable_get_size (v),
+                                                            flags);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response == GTK_RESPONSE_OK) {
+                CreatePartitionData *data;
+                gchar *fs_type;
+                gchar *fs_label;
+                gboolean fs_take_ownership;
+                guint64 offset;
+                guint64 size;
+                gchar *part_type;
+
+                data = g_new0 (CreatePartitionData, 1);
+                data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+                data->presentable = g_object_ref (v);
+
+                if (gdu_format_dialog_get_encrypt (GDU_FORMAT_DIALOG (dialog))) {
+                        data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (GTK_WIDGET (toplevel),
+                                                                                       &data->save_in_keyring,
+                                                                                       &data->save_in_keyring_session);
+                        if (data->encrypt_passphrase == NULL) {
+                                create_partition_data_free (data);
+                                goto out;
+                        }
+                }
+
+                fs_type = gdu_format_dialog_get_fs_type (GDU_FORMAT_DIALOG (dialog));
+                fs_label = gdu_format_dialog_get_fs_label (GDU_FORMAT_DIALOG (dialog));
+                fs_take_ownership = gdu_format_dialog_get_take_ownership (GDU_FORMAT_DIALOG (dialog));
+
+                offset = gdu_presentable_get_offset (v);
+                size = gdu_create_partition_dialog_get_size (GDU_CREATE_PARTITION_DIALOG (dialog));
+
+                if (strcmp (fs_type, "msdos_extended_partition") == 0) {
+                        part_type = g_strdup ("0x05");
+                        g_free (fs_type);
+                        g_free (fs_label);
+                        fs_type = g_strdup ("");
+                        fs_label = g_strdup ("");
+                        fs_take_ownership = FALSE;
+                } else {
+                        part_type = gdu_util_get_default_part_type_for_scheme_and_fstype (part_scheme,
+                                                                                          fs_type,
+                                                                                          size);
+                }
+
+                gdu_device_op_partition_create (drive_device,
+                                                offset,
+                                                size,
+                                                part_type,
+                                                "",   /* empty partition label for now */
+                                                NULL, /* no flags for the partition */
+                                                fs_type,
+                                                fs_label,
+                                                data->encrypt_passphrase,
+                                                fs_take_ownership,
+                                                partition_create_op_callback,
+                                                data);
+
+                g_free (fs_type);
+                g_free (fs_label);
+                g_free (part_type);
+        }
+ out:
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+
+        if (drive_device != NULL)
+                g_object_unref (drive_device);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 gdu_section_volumes_update (GduSection *_section)
 {
@@ -1111,7 +1368,8 @@ gdu_section_volumes_update (GduSection *_section)
                                               gdu_device_get_device_file (drive_device));
                 g_object_unref (drive_device);
 
-                show_partition_create_button = TRUE;
+                if (can_create_partition (section, GDU_VOLUME_HOLE (v), NULL))
+                        show_partition_create_button = TRUE;
                 show_format_button = FALSE;
         }
 
@@ -1270,12 +1528,10 @@ gdu_section_volumes_constructed (GObject *object)
         button_element = gdu_button_element_new (GTK_STOCK_ADD,
                                                  _("_Create Partition"),
                                                  _("Create a new partition"));
-#if 0
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_partition_create_button_clicked),
                           section);
-#endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->partition_create_button = button_element;
 

@@ -239,6 +239,83 @@ gdu_drive_has_unallocated_space (GduDrive        *drive,
                                              out_presentable);
 }
 
+/**
+ * gdu_drive_count_mbr_partitions:
+ * @drive: A #GduDrive.
+ * @out_num_primary_partitions: Return location for number of primary partitions.
+ * @out_has_extended_partition: Return location for number of extended partitions.
+ *
+ * Counts the number of primary partitions and figures out if there's an extended partition.
+ *
+ * Returns: %TRUE if @out_num_logical_partitions and @out_has_extended_partition is set, %FALSE otherwise.
+ */
+gboolean
+gdu_drive_count_mbr_partitions (GduDrive  *drive,
+                                guint     *out_num_primary_partitions,
+                                gboolean  *out_has_extended_partition)
+{
+        guint num_primary_partitions;
+        gboolean has_extended_partition;
+        gboolean ret;
+        GduDevice *device;
+        GduPool *pool;
+        GList *enclosed_presentables;
+        GList *l;
+
+        ret = FALSE;
+        num_primary_partitions = 0;
+        has_extended_partition = FALSE;
+        pool = NULL;
+        device = NULL;
+
+        device = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+        if (device == NULL)
+                goto out;
+
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (drive));
+
+        if (!gdu_device_is_partition_table (device) ||
+            g_strcmp0 (gdu_device_partition_table_get_scheme (device), "mbr") != 0) {
+                goto out;
+        }
+
+        enclosed_presentables = gdu_pool_get_enclosed_presentables (pool, GDU_PRESENTABLE (drive));
+        for (l = enclosed_presentables; l != NULL; l = l->next) {
+                GduPresentable *ep = GDU_PRESENTABLE (l->data);
+
+                if (GDU_IS_VOLUME (ep)) {
+                        gint type;
+                        GduDevice *ep_device;
+
+                        ep_device = gdu_presentable_get_device (ep);
+
+                        type = strtol (gdu_device_partition_get_type (ep_device), NULL, 0);
+                        if (type == 0x05 || type == 0x0f || type == 0x85) {
+                                has_extended_partition = TRUE;
+                        }
+                        num_primary_partitions++;
+                        g_object_unref (ep_device);
+                }
+        }
+        g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed_presentables);
+
+        ret = TRUE;
+
+ out:
+        if (device != NULL)
+                g_object_unref (device);
+        if (pool != NULL)
+                g_object_unref (pool);
+
+        if (out_num_primary_partitions != NULL)
+                *out_num_primary_partitions = num_primary_partitions;
+        if (out_has_extended_partition != NULL)
+                *out_has_extended_partition = has_extended_partition;
+        return ret;
+}
+
+
 static gboolean
 gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                                       gboolean        *out_whole_disk_is_unitialized,

@@ -34,6 +34,9 @@
 struct GduFormatDialogPrivate
 {
         GduFormatDialogFlags flags;
+        gchar *affirmative_button_mnemonic;
+
+        GtkWidget *table;
 
         GtkWidget *fs_label_entry;
         GtkWidget *fs_type_combo_box;
@@ -58,6 +61,7 @@ enum
         PROP_FS_LABEL,
         PROP_ENCRYPT,
         PROP_TAKE_OWNERSHIP,
+        PROP_AFFIRMATIVE_BUTTON_MNEMONIC,
 };
 
 static void gdu_format_dialog_constructed (GObject *object);
@@ -71,6 +75,7 @@ gdu_format_dialog_finalize (GObject *object)
 
         g_free (dialog->priv->fs_type);
         g_strfreev (dialog->priv->fs_options);
+        g_free (dialog->priv->affirmative_button_mnemonic);
 
         if (dialog->priv->removed_signal_handler_id > 0) {
                 g_signal_handler_disconnect (gdu_dialog_get_presentable (GDU_DIALOG (dialog)),
@@ -131,6 +136,10 @@ gdu_format_dialog_set_property (GObject      *object,
         switch (property_id) {
         case PROP_FLAGS:
                 dialog->priv->flags = g_value_get_flags (value);
+                break;
+
+        case PROP_AFFIRMATIVE_BUTTON_MNEMONIC:
+                dialog->priv->affirmative_button_mnemonic = g_value_dup_string (value);
                 break;
 
         default:
@@ -219,12 +228,29 @@ gdu_format_dialog_class_init (GduFormatDialogClass *klass)
                                                                G_PARAM_STATIC_NAME |
                                                                G_PARAM_STATIC_NICK |
                                                                G_PARAM_STATIC_BLURB));
+
+        g_object_class_install_property (object_class,
+                                         PROP_AFFIRMATIVE_BUTTON_MNEMONIC,
+                                         g_param_spec_string ("affirmative-button-mnemonic",
+                                                              _("Affirmative Button Mnemonic"),
+                                                              _("The mnemonic label for the affirmative button"),
+                                                              /* Translators: Format is used as a verb here */
+                                                              _("_Format"),
+                                                              G_PARAM_WRITABLE |
+                                                              G_PARAM_CONSTRUCT_ONLY |
+                                                              G_PARAM_STATIC_NAME |
+                                                              G_PARAM_STATIC_NICK |
+                                                              G_PARAM_STATIC_BLURB));
 }
 
 static void
 gdu_format_dialog_init (GduFormatDialog *dialog)
 {
-        dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog, GDU_TYPE_FORMAT_DIALOG, GduFormatDialogPrivate);
+        dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
+                                                    GDU_TYPE_FORMAT_DIALOG,
+                                                    GduFormatDialogPrivate);
+
+        dialog->priv->table = gtk_table_new (2, 2, FALSE);
 }
 
 GtkWidget *
@@ -300,6 +326,14 @@ gdu_format_dialog_get_take_ownership  (GduFormatDialog *dialog)
         return dialog->priv->take_ownership;
 }
 
+GtkWidget *
+gdu_format_dialog_get_table (GduFormatDialog *dialog)
+{
+        g_return_val_if_fail (GDU_IS_FORMAT_DIALOG (dialog), NULL);
+        return dialog->priv->table;
+}
+
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -369,7 +403,8 @@ update (GduFormatDialog *dialog)
         }
 
         if (! (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_SIMPLE)) {
-                if (g_strcmp0 (dialog->priv->fs_type, "empty") == 0) {
+                if (g_strcmp0 (dialog->priv->fs_type, "empty") == 0 ||
+                    g_strcmp0 (dialog->priv->fs_type, "msdos_extended_partition") == 0) {
                         gtk_widget_hide (dialog->priv->encrypt_check_button);
                         dialog->priv->encrypt = FALSE;
                 } else {
@@ -468,8 +503,7 @@ gdu_format_dialog_constructed (GObject *object)
 
         gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
         gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               /* Translators: Format is used as a verb here */
-                               _("_Format"),
+                               dialog->priv->affirmative_button_mnemonic,
                                GTK_RESPONSE_OK);
 
         if (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON) {
@@ -501,9 +535,10 @@ gdu_format_dialog_constructed (GObject *object)
         vbox2 = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
 
-        row = 0;
-
-        table = gtk_table_new (2, 2, FALSE);
+        table = dialog->priv->table;
+        g_object_get (table,
+                      "n-rows", &row,
+                      NULL);
         gtk_table_set_col_spacings (GTK_TABLE (table), 12);
         gtk_table_set_row_spacings (GTK_TABLE (table), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
@@ -532,7 +567,13 @@ gdu_format_dialog_constructed (GObject *object)
                 dialog->priv->encrypt = FALSE;
                 dialog->priv->take_ownership = FALSE;
         } else {
-                combo_box = gdu_util_fstype_combo_box_create (gdu_dialog_get_pool (GDU_DIALOG (dialog)), NULL);
+                const gchar *include_extended_partitions_for_scheme;
+
+                include_extended_partitions_for_scheme = NULL;
+                if (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_ALLOW_MSDOS_EXTENDED)
+                        include_extended_partitions_for_scheme = "mbr";
+                combo_box = gdu_util_fstype_combo_box_create (gdu_dialog_get_pool (GDU_DIALOG (dialog)),
+                                                              include_extended_partitions_for_scheme);
                 gdu_util_fstype_combo_box_select (combo_box, "ext4");
                 dialog->priv->fs_type = g_strdup ("ext4");
                 dialog->priv->fs_options = NULL;

@@ -48,6 +48,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-edit-partition-dialog.h					\
 	gdu-format-dialog.h						\
 	gdu-partition-dialog.h						\
+	gdu-create-partition-dialog.h					\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -73,6 +74,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-edit-partition-dialog.h		gdu-edit-partition-dialog.c		\
 	gdu-format-dialog.h			gdu-format-dialog.c			\
 	gdu-partition-dialog.h			gdu-partition-dialog.c			\
+	gdu-create-partition-dialog.h		gdu-create-partition-dialog.c		\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

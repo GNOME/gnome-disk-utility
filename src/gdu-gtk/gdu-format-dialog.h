@@ -70,6 +70,8 @@ gchar     **gdu_format_dialog_get_fs_options     (GduFormatDialog *dialog);
 gboolean    gdu_format_dialog_get_encrypt        (GduFormatDialog *dialog);
 gboolean    gdu_format_dialog_get_take_ownership (GduFormatDialog *dialog);
 
+GtkWidget  *gdu_format_dialog_get_table          (GduFormatDialog *dialog);
+
 G_END_DECLS
 
 #endif  /* __GDU_FORMAT_DIALOG_H */

@@ -1188,6 +1188,7 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_luks_forget_passphrase_button;
         gboolean show_luks_change_passphrase_button;
         GduKnownFilesystem *kfs;
+        GPtrArray *elements;
 
         v = NULL;
         d = NULL;
@@ -1225,63 +1226,59 @@ gdu_section_volumes_update (GduSection *_section)
         }
 
         /* ---------------------------------------------------------------------------------------------------- */
-        /* rebuild table if the selected volume has changed */
+        /* rebuild table  */
 
-        if (section->priv->cur_volume != v) {
-                GPtrArray *elements;
+        if (section->priv->cur_volume != NULL)
+                g_object_unref (section->priv->cur_volume);
+        section->priv->cur_volume = v != NULL ? g_object_ref (v) : NULL;
 
-                if (section->priv->cur_volume != NULL)
-                        g_object_unref (section->priv->cur_volume);
-                section->priv->cur_volume = v != NULL ? g_object_ref (v) : NULL;
+        section->priv->usage_element = NULL;
+        section->priv->capacity_element = NULL;
+        section->priv->partition_type_element = NULL;
+        section->priv->partition_flags_element = NULL;
+        section->priv->partition_label_element = NULL;
+        section->priv->device_element = NULL;
+        section->priv->fs_type_element = NULL;
+        section->priv->fs_label_element = NULL;
+        section->priv->fs_available_element = NULL;
+        section->priv->fs_mount_point_element = NULL;
 
-                section->priv->usage_element = NULL;
-                section->priv->capacity_element = NULL;
-                section->priv->partition_type_element = NULL;
-                section->priv->partition_flags_element = NULL;
-                section->priv->partition_label_element = NULL;
-                section->priv->device_element = NULL;
-                section->priv->fs_type_element = NULL;
-                section->priv->fs_label_element = NULL;
-                section->priv->fs_available_element = NULL;
-                section->priv->fs_mount_point_element = NULL;
+        elements = g_ptr_array_new_with_free_func (g_object_unref);
 
-                elements = g_ptr_array_new_with_free_func (g_object_unref);
+        section->priv->usage_element = gdu_details_element_new (_("Usage:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->usage_element);
 
-                section->priv->usage_element = gdu_details_element_new (_("Usage:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->usage_element);
+        section->priv->device_element = gdu_details_element_new (_("Device:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->device_element);
 
-                section->priv->device_element = gdu_details_element_new (_("Device:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->device_element);
+        section->priv->partition_type_element = gdu_details_element_new (_("Partition Type:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->partition_type_element);
 
-                section->priv->partition_type_element = gdu_details_element_new (_("Partition Type:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->partition_type_element);
+        section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->partition_label_element);
 
-                section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->partition_label_element);
+        section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->partition_flags_element);
 
-                section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->partition_flags_element);
+        section->priv->capacity_element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
+        g_ptr_array_add (elements, section->priv->capacity_element);
 
-                section->priv->capacity_element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
-                g_ptr_array_add (elements, section->priv->capacity_element);
+        if (g_strcmp0 (id_usage, "filesystem") == 0) {
+                section->priv->fs_type_element = gdu_details_element_new (_("Type:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->fs_type_element);
 
-                if (g_strcmp0 (id_usage, "filesystem") == 0) {
-                        section->priv->fs_type_element = gdu_details_element_new (_("Type:"), NULL, NULL);
-                        g_ptr_array_add (elements, section->priv->fs_type_element);
+                section->priv->fs_available_element = gdu_details_element_new (_("Available:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->fs_available_element);
 
-                        section->priv->fs_available_element = gdu_details_element_new (_("Available:"), NULL, NULL);
-                        g_ptr_array_add (elements, section->priv->fs_available_element);
+                section->priv->fs_label_element = gdu_details_element_new (_("Label:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->fs_label_element);
 
-                        section->priv->fs_label_element = gdu_details_element_new (_("Label:"), NULL, NULL);
-                        g_ptr_array_add (elements, section->priv->fs_label_element);
-
-                        section->priv->fs_mount_point_element = gdu_details_element_new (_("Mount Point:"), NULL, NULL);
-                        g_ptr_array_add (elements, section->priv->fs_mount_point_element);
-                }
-
-                gdu_details_table_set_elements (GDU_DETAILS_TABLE (section->priv->details_table), elements);
-                g_ptr_array_unref (elements);
+                section->priv->fs_mount_point_element = gdu_details_element_new (_("Mount Point:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->fs_mount_point_element);
         }
+
+        gdu_details_table_set_elements (GDU_DETAILS_TABLE (section->priv->details_table), elements);
+        g_ptr_array_unref (elements);
 
         /* ---------------------------------------------------------------------------------------------------- */
         /* reset all elements */

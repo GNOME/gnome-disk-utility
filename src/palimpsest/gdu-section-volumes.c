@@ -1395,14 +1395,17 @@ gdu_section_volumes_update (GduSection *_section)
 
         show_format_button = TRUE;
         if (g_strcmp0 (id_usage, "filesystem") == 0) {
+                const gchar *label;
+
                 gdu_details_element_set_text (section->priv->usage_element, _("Filesystem"));
                 s = gdu_util_get_fstype_for_display (gdu_device_id_get_type (d),
                                                      gdu_device_id_get_version (d),
                                                      TRUE);
                 gdu_details_element_set_text (section->priv->fs_type_element, s);
                 g_free (s);
-                gdu_details_element_set_text (section->priv->fs_label_element,
-                                              gdu_device_id_get_label (d));
+                label = gdu_device_id_get_label (d);
+                if (label != NULL && strlen (label) > 0)
+                        gdu_details_element_set_text (section->priv->fs_label_element, label);
 
                 /* TODO: figure out amount of free space */
                 gdu_details_element_set_text (section->priv->fs_available_element, "–");

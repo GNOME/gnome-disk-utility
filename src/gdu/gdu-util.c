@@ -624,21 +624,26 @@ gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const 
 
         /* TODO: this function needs work: handle swap partitions, msdos extended, raid, LVM, EFI GPT etc. */
 
-        if (strcmp (scheme, "mbr") == 0) {
-                if (strcmp (fstype, "vfat") == 0) {
+        if (g_strcmp0 (scheme, "mbr") == 0) {
+                if (g_strcmp0 (fstype, "vfat") == 0) {
                         /* TODO: maybe consider size */
                         type = "0x0c";
-                } else if (strcmp (fstype, "swap") == 0) {
+                } else if (g_strcmp0 (fstype, "swap") == 0) {
                         type = "0x82";
-                } else if (strcmp (fstype, "ntfs") == 0) {
+                } else if (g_strcmp0 (fstype, "ntfs") == 0) {
                         type = "0x07";
                 } else {
                         type = "0x83";
                 }
-        } else if (strcmp (scheme, "gpt") == 0) {
-                /* default to Basic Data Partition for now */
-                type = "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7";
-        } else if (strcmp (scheme, "apm") == 0) {
+        } else if (g_strcmp0 (scheme, "gpt") == 0) {
+                if (g_strcmp0 (fstype, "swap") == 0) {
+                        /* Linux Swap Partition */
+                        type = "0657FD6D-A4AB-43C4-84E5-0933C84B4F4F";
+                } else {
+                        /* Linux/Microsoft Basic Data Partition */
+                        type = "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7";
+                }
+        } else if (g_strcmp0 (scheme, "apm") == 0) {
                 type = "Windows_FAT_32";
         }
 

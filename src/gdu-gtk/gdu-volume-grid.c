@@ -31,6 +31,8 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#define ELEMENT_MINIMUM_WIDTH 60
+
 typedef enum
 {
         GRID_EDGE_NONE    = 0,
@@ -106,6 +108,10 @@ enum
 static guint signals[LAST_SIGNAL] = {0};
 
 G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_DRAWING_AREA)
+
+static guint get_depth (GList *elements);
+
+static guint get_num_elements_for_slice (GList *elements);
 
 static void recompute_grid (GduVolumeGrid *grid);
 
@@ -435,6 +441,35 @@ gdu_volume_grid_realize (GtkWidget *widget)
         gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
 }
 
+static guint
+get_num_elements_for_slice (GList *elements)
+{
+        GList *l;
+        guint num_elements;
+
+        num_elements = 0;
+        for (l = elements; l != NULL; l = l->next) {
+                GridElement *element = l->data;
+                num_elements += get_num_elements_for_slice (element->embedded_elements);
+        }
+
+        if (num_elements > 0)
+                return num_elements;
+        else
+                return 1;
+}
+
+
+static void
+gdu_volume_grid_size_request (GtkWidget      *widget,
+                              GtkRequisition *requisition)
+{
+        GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+        guint num_elements;
+
+        num_elements = get_num_elements_for_slice (grid->priv->elements);
+        requisition->width = num_elements * ELEMENT_MINIMUM_WIDTH;
+}
 
 static void
 gdu_volume_grid_class_init (GduVolumeGridClass *klass)
@@ -452,6 +487,7 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
         widget_class->realize            = gdu_volume_grid_realize;
         widget_class->key_press_event    = gdu_volume_grid_key_press_event;
         widget_class->button_press_event = gdu_volume_grid_button_press_event;
+        widget_class->size_request       = gdu_volume_grid_size_request;
         widget_class->expose_event       = gdu_volume_grid_expose_event;
 
         g_object_class_install_property (object_class,
@@ -531,17 +567,26 @@ get_depth (GList *elements)
 }
 
 static void
-recompute_size_for_slice (GList  *elements,
-                          guint   width,
-                          guint   height,
-                          guint   total_width,
-                          guint   total_height,
-                          guint   offset_x,
-                          guint   offset_y)
+recompute_size_for_slice (GduPresentable *presentable,
+                          GList          *elements,
+                          guint           width,
+                          guint           height,
+                          guint           total_width,
+                          guint           total_height,
+                          guint           offset_x,
+                          guint           offset_y)
 {
         GList *l;
         gint x;
         gint pixels_left;
+        guint num_elements;
+
+        /* first steal all the allocated minimum width - then distribute remaining pixels
+         * based on the size_ratio and add the allocated minimum width.
+         */
+        num_elements = get_num_elements_for_slice (elements);
+        width -= num_elements * ELEMENT_MINIMUM_WIDTH;
+        g_warn_if_fail (width >= 0);
 
         x = 0;
         pixels_left = width;
@@ -560,11 +605,15 @@ recompute_size_for_slice (GList  *elements,
                         element_width = pixels_left;
                         pixels_left = 0;
                 } else {
+
                         element_width = element->size_ratio * width;
                         if (element_width > pixels_left)
                                 element_width = pixels_left;
                         pixels_left -= element_width;
                 }
+
+                num_elements = get_num_elements_for_slice (element->embedded_elements);
+                element_width += num_elements * ELEMENT_MINIMUM_WIDTH;
 
                 element->x = x + offset_x;
                 element->y = offset_y;
@@ -586,7 +635,8 @@ recompute_size_for_slice (GList  *elements,
 
                 x += element_width;
 
-                recompute_size_for_slice (element->embedded_elements,
+                recompute_size_for_slice (element->presentable,
+                                          element->embedded_elements,
                                           element->width,
                                           height - element->height,
                                           total_width,
@@ -601,7 +651,8 @@ recompute_size (GduVolumeGrid *grid,
                 guint          width,
                 guint          height)
 {
-        recompute_size_for_slice (grid->priv->elements,
+        recompute_size_for_slice (GDU_PRESENTABLE (grid->priv->drive),
+                                  grid->priv->elements,
                                   width,
                                   height,
                                   width,

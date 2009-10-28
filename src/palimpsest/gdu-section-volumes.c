@@ -1181,6 +1181,102 @@ on_fs_change_label_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+fsck_op_callback (GduDevice *device,
+                  gboolean   is_clean,
+                  GError    *error,
+                  gpointer   user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduShell *shell;
+
+        shell = gdu_section_get_shell (GDU_SECTION (section));
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error checking filesystem on volume"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        } else {
+                GtkWidget *dialog;
+                gchar *name;
+                gchar *vpd_name;
+                GduPool *pool;
+                GduPresentable *p;
+
+                /* TODO: would probably be nice with GduInformationDialog or, more
+                 * generally, a GduProgressDialog class
+                 */
+                pool = gdu_device_get_pool (device);
+                p = gdu_pool_get_volume_by_device (pool, device);
+
+                name = gdu_presentable_get_name (p);
+                vpd_name = gdu_presentable_get_vpd_name (p);
+
+                dialog = gtk_message_dialog_new (GTK_WINDOW (GTK_WINDOW (gdu_shell_get_toplevel (shell))),
+                                                 GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                 is_clean ? GTK_MESSAGE_INFO : GTK_MESSAGE_WARNING,
+                                                 GTK_BUTTONS_CLOSE,
+                                                 _("File system check on \"%s\" (%s) completed"),
+                                                 name, vpd_name);
+                if (is_clean) {
+                        gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                                                    _("File system is clean."));
+                } else {
+                        gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                                                    _("File system is <b>NOT</b> clean."));
+                }
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+
+                g_free (vpd_name);
+                g_free (name);
+                g_object_unref (pool);
+                g_object_unref (p);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_fsck_button_clicked (GduButtonElement *button_element,
+                        gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+
+        GduPresentable *v;
+        GduDevice *d;
+
+        v = NULL;
+        d = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        gdu_device_op_filesystem_check (d,
+                                        fsck_op_callback,
+                                        g_object_ref (section));
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -1624,12 +1720,10 @@ gdu_section_volumes_constructed (GObject *object)
         button_element = gdu_button_element_new ("gdu-check-disk",
                                                  _("_Check Filesystem"),
                                                  _("Check the filesystem for errors"));
-#if 0
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_fsck_button_clicked),
                           section);
-#endif
         g_ptr_array_add (button_elements, button_element);
         section->priv->fs_check_button = button_element;
 

@@ -149,10 +149,15 @@ mount_op_callback (GduDevice *device,
         GduShell *shell = GDU_SHELL (user_data);
 
         if (error != NULL) {
-                gdu_shell_raise_error (shell,
-                                       NULL,
-                                       error,
-                                       _("Error mounting device"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error mounting volume"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         } else {
                 g_free (mount_point);
@@ -201,10 +206,15 @@ partition_delete_op_callback (GduDevice *device,
         GduShell *shell = GDU_SHELL (user_data);
 
         if (error != NULL) {
-                gdu_shell_raise_error (shell,
-                                       NULL,
-                                       error,
-                                       _("Error deleting partition"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error deleting partition"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         }
         g_object_unref (shell);
@@ -285,10 +295,15 @@ filesystem_create_op_callback (GduDevice  *device,
         CreateFilesystemData *data = user_data;
 
         if (error != NULL) {
-                gdu_shell_raise_error (data->shell,
-                                       data->presentable,
-                                       error,
-                                       _("Error creating filesystem"));
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                          device,
+                                                          _("Error creating filesystem"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
                 g_error_free (error);
         } else if (data->encrypt_passphrase != NULL) {
                 /* now set the passphrase if requested */

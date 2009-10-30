@@ -229,7 +229,8 @@ get_names_and_desc (GduPresentable  *presentable,
         drive_presentable = gdu_presentable_get_toplevel (presentable);
         if (drive_presentable != NULL) {
                 drive_device = gdu_presentable_get_device (drive_presentable);
-                drive_media = gdu_device_drive_get_media (drive_device);
+                if (drive_device != NULL)
+                  drive_media = gdu_device_drive_get_media (drive_device);
         }
 
         label = gdu_device_id_get_label (volume->priv->device);

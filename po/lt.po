@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-18 17:28+0300\n"
-"PO-Revision-Date: 2009-10-30 16:34+0200\n"
+"POT-Creation-Date: 2009-10-30 16:44+0200\n"
+"PO-Revision-Date: 2009-10-30 16:44+0200\n"
 "Last-Translator: Rytis Umbrasas <rytumb@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -124,8 +124,8 @@ msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
 msgstr ""
-"Siekiant išvegti duomenų praradimo, neišimkite ir neatjunkite įrenginio, kol "
-"operacija nebus baigta."
+"Neišimkite ir neatjunkite įrenginio, kol šis darbas bus baigtas, kitaip gali "
+"būti sugadinti duomenys."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
@@ -252,7 +252,7 @@ msgstr "CompactFlash"
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:458
 msgid "MemoryStick"
-msgstr "Atminties kortelė"
+msgstr "MemoryStick"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:461
@@ -779,7 +779,7 @@ msgstr "LDM duomenų skaidinys"
 #. Linux
 #: ../src/gdu/gdu-util.c:396
 msgid "Basic Data Partition"
-msgstr "Basic Data (BPD) skaidinys"
+msgstr "Basic Data (BDP) skaidinys"
 
 #. Same GUID as MS!
 #: ../src/gdu/gdu-util.c:397
@@ -1466,7 +1466,7 @@ msgstr "Blu-Ray RW diskas"
 
 #: ../src/gdu/gdu-volume.c:87
 msgid "Blank Blu-Ray RW Disc"
-msgstr "Tuščias Blu-Ray RW diskus"
+msgstr "Tuščias Blu-Ray RW diskas"
 
 #: ../src/gdu/gdu-volume.c:88
 msgid "HD DVD Disc"
@@ -1674,7 +1674,7 @@ msgstr "Nepriskirta vieta"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:144
 msgid "Read Error Rate"
-msgstr "Sskaitymo klaidų dažnis"
+msgstr "Skaitymo klaidų dažnis"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:145
 msgid ""
@@ -1842,7 +1842,7 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:260
 msgid "High Fly Writes"
-msgstr "Rašymai judant aukštai"
+msgstr "„High Fly“ rašymai"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
 msgid ""
@@ -2313,7 +2313,7 @@ msgstr "Reikšmė:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1064
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2181
 msgid "N/A"
-msgstr "Nėra duomenų"
+msgstr "N/D"
 
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
@@ -2458,12 +2458,12 @@ msgstr "Pradėti pasitikrinimą"
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1714
 msgid "Cancels the currently running test"
-msgstr "Atšaukti dabar vykstančius tikrinimus"
+msgstr "Nutraukia vykdomą tikrinimą"
 
 #. Translators: Text used in the hyperlink in the status table to cancel a self-test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1716
 msgid "Cancel"
-msgstr "Atšaukti"
+msgstr "Atsisakyti"
 
 #. ------------------------------
 #. model
@@ -2658,13 +2658,13 @@ msgstr "%.0f° C / %.0f° F"
 #. * "(Pre-Fail)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2238
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
-msgstr "Šis gedimas nurodo gresiantį disko gedimą (Pre-Fail)"
+msgstr "Šis trikis nurodo gresiantį disko gedimą (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2242
 msgid "Failure is a sign of old age (Old-Age)"
-msgstr "Šis gedimas yra disko senėjimo požymis (Old-Age)"
+msgstr "Šis trikis yra disko senėjimo požymis (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
@@ -2760,7 +2760,7 @@ msgstr "Paskutinis pasitikrinimo testas buvo atšauktas"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2598
 msgid "Last self-test was cancelled (with hard or soft reset)"
 msgstr ""
-"Paskutinis pasitikrinimo testas buvo atšauktas (pricerstinai ar įprastai "
+"Paskutinis pasitikrinimo testas buvo atšauktas (priverstinai ar įprastai "
 "atstatant į pradinę būseną)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
@@ -2771,17 +2771,17 @@ msgstr "Paskutinis pasitikrinimas nebaigtas (galėjo įvykti lemtinga klaida)"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
 msgid "Last self-test FAILED (Electrical)"
-msgstr "Paskutinis pasitikrinimas NEPAVYKO (Elektrinis)"
+msgstr "Paskutinis pasitikrinimas NEPAVYKO (elektrinis trikis)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2611
 msgid "Last self-test FAILED (Servo)"
-msgstr "Paskutinis pasitikrinimas NEPAVYKO (Servo)"
+msgstr "Paskutinis pasitikrinimas NEPAVYKO (servo trikis)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2616
 msgid "Last self-test FAILED (Read)"
-msgstr "Paskutinis pasitikrinimas NEPAVYKO (Skaitymo)"
+msgstr "Paskutinis pasitikrinimas NEPAVYKO (skaitymo trikis)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2621
@@ -3032,7 +3032,7 @@ msgstr "Diskai"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1451
 #, c-format
 msgid "Insufficient number disks to create a %s array."
-msgstr "Masyvo %s sukurūmui nepakanka diskų."
+msgstr "Masyvui %s sukurti nepakanka diskų."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
 #, c-format
@@ -3680,8 +3680,8 @@ msgid ""
 "Detaches the running component from the RAID array. Data on the component "
 "will be erased and the component will be ready for other use."
 msgstr ""
-"Išimama veikianti RAID masyvo komponentė. Duomenys komponentėje bus "
-"ištrinti ir ją bus galima naudoti kitiems reikalams."
+"Išimama veikianti RAID masyvo komponentė. Duomenys komponentėje bus ištrinti "
+"ir ją bus galima naudoti kitiems reikalams."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
@@ -3711,7 +3711,7 @@ msgstr "_Taisyti"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1110
 msgid "Starts repairing the RAID array"
-msgstr "Pradedamas RAID masyvo taisymas"
+msgstr "Pradeda RAID masyvo taisymą"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1128
 msgid "State"
@@ -4213,7 +4213,7 @@ msgstr "Sukurti naują programinį RAID masyvą"
 
 #: ../src/palimpsest/gdu-shell.c:1934
 msgid "_Edit"
-msgstr "_Taisymas"
+msgstr "_Taisa"
 
 #: ../src/palimpsest/gdu-shell.c:1935 ../src/palimpsest/gdu-shell.c:1950
 msgid "_Help"
@@ -4307,7 +4307,7 @@ msgstr "Įvyko klaida"
 
 #: ../src/palimpsest/gdu-shell.c:2039
 msgid "The operation failed."
-msgstr "Veiksmas nesėkminga."
+msgstr "Veiksmas nesėkmingas."
 
 #: ../src/palimpsest/gdu-shell.c:2042
 msgid "The device is busy."

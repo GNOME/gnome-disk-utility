@@ -150,6 +150,7 @@ guint gdu_device_optical_disc_get_num_audio_tracks (GduDevice *device);
 guint gdu_device_optical_disc_get_num_sessions (GduDevice *device);
 
 const char *gdu_device_linux_md_component_get_level (GduDevice *device);
+int         gdu_device_linux_md_component_get_position (GduDevice *device);
 int         gdu_device_linux_md_component_get_num_raid_devices (GduDevice *device);
 const char *gdu_device_linux_md_component_get_uuid (GduDevice *device);
 const char *gdu_device_linux_md_component_get_home_host (GduDevice *device);

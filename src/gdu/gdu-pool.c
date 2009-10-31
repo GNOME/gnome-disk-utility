@@ -1493,6 +1493,32 @@ gdu_pool_get_drive_by_device (GduPool *pool, GduDevice *device)
         return ret;
 }
 
+GduLinuxMdDrive *
+gdu_pool_get_linux_md_drive_by_uuid (GduPool *pool, const gchar *uuid)
+{
+        GduLinuxMdDrive *ret;
+        GList *l;
+
+        /* TODO: use lookaside hash table */
+
+        ret = NULL;
+
+        for (l = pool->priv->presentables; l != NULL; l = l->next) {
+                GduPresentable *p = GDU_PRESENTABLE (l->data);
+
+                if (! GDU_IS_LINUX_MD_DRIVE (p))
+                        continue;
+
+                if (g_strcmp0 (uuid, gdu_linux_md_drive_get_uuid (GDU_LINUX_MD_DRIVE (p))) == 0) {
+                        ret = g_object_ref (p);
+                        goto out;
+                }
+        }
+
+ out:
+        return ret;
+}
+
 GduPresentable *
 gdu_pool_get_presentable_by_id (GduPool *pool, const gchar *id)
 {

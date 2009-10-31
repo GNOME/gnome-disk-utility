@@ -80,6 +80,8 @@ struct _GduShellPrivate
 
 static GObjectClass *parent_class = NULL;
 
+static GduSection *get_section_by_type (GduShell *shell, GType section_type);
+
 G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 
 static void
@@ -138,8 +140,58 @@ gdu_shell_get_selected_presentable (GduShell *shell)
 void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
-        gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
-        gtk_widget_grab_focus (shell->priv->tree_view);
+        gboolean selected;
+
+        if (GDU_IS_DRIVE (presentable)) {
+                gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
+                gtk_widget_grab_focus (shell->priv->tree_view);
+                selected = TRUE;
+        } else if (GDU_IS_VOLUME (presentable)) {
+                GduDevice *device;
+                GduPresentable *p_to_select;
+
+                p_to_select = NULL;
+                device = gdu_presentable_get_device (presentable);
+                if (device != NULL) {
+                        if (gdu_device_is_partition (device)) {
+                                GduDevice *drive_device;
+                                drive_device = gdu_pool_get_by_object_path (shell->priv->pool,
+                                                                            gdu_device_partition_get_slave (device));
+                                if (drive_device != NULL) {
+                                        p_to_select = gdu_pool_get_drive_by_device (shell->priv->pool, drive_device);
+                                        g_object_unref (drive_device);
+                                }
+                        } else {
+                                p_to_select = gdu_pool_get_drive_by_device (shell->priv->pool, device);
+                        }
+                        g_object_unref (device);
+                }
+
+                if (p_to_select != NULL) {
+                        GduSection *volumes_section;
+
+                        gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view),
+                                                               p_to_select);
+                        gtk_widget_grab_focus (shell->priv->tree_view);
+
+                        volumes_section = get_section_by_type (shell, GDU_TYPE_SECTION_VOLUMES);
+                        g_warn_if_fail (volumes_section != NULL);
+                        if (volumes_section != NULL) {
+                                g_warn_if_fail (gdu_section_volumes_select_volume (GDU_SECTION_VOLUMES (volumes_section),
+                                                                                   presentable));
+                        }
+
+                        selected = TRUE;
+                        g_object_unref (p_to_select);
+                }
+        } else {
+        }
+
+        if (!selected) {
+                g_warning ("%s: %s: Unhandled presentable %s",
+                           G_STRLOC, G_STRFUNC,
+                           gdu_presentable_get_id (presentable));
+        }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -508,11 +560,8 @@ compute_sections_to_show (GduShell *shell)
 
         if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_DRIVE);
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
                 sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
-
-                sections_to_show = g_list_append (sections_to_show,
-                                                  (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
 
 
         } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
@@ -837,6 +886,28 @@ gdu_shell_update (GduShell *shell)
 
         if (device != NULL)
                 g_object_unref (device);
+}
+
+static GduSection *
+get_section_by_type (GduShell *shell, GType section_type)
+{
+        GList *children;
+        GList *l;
+        GduSection *ret;
+
+        ret = NULL;
+        children = gtk_container_get_children (GTK_CONTAINER (shell->priv->sections_vbox));
+        for (l = children; l != NULL; l = l->next) {
+                GduSection *section = GDU_SECTION (l->data);
+
+                if (g_type_is_a (G_OBJECT_TYPE (section), section_type)) {
+                        ret = section;
+                        break;
+                }
+        }
+        g_list_free (children);
+
+        return ret;
 }
 
 static void

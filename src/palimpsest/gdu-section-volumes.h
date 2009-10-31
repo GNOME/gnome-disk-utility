@@ -51,8 +51,10 @@ struct _GduSectionVolumesClass
         GduSectionClass parent_class;
 };
 
-GType            gdu_section_volumes_get_type (void);
-GtkWidget       *gdu_section_volumes_new      (GduShell       *shell,
-                                               GduPresentable *presentable);
+GType            gdu_section_volumes_get_type      (void);
+GtkWidget       *gdu_section_volumes_new           (GduShell       *shell,
+                                                    GduPresentable *presentable);
+gboolean         gdu_section_volumes_select_volume (GduSectionVolumes *section,
+                                                    GduPresentable    *volume);
 
 #endif /* GDU_SECTION_VOLUMES_H */

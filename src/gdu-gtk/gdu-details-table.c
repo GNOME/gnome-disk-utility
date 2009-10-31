@@ -229,6 +229,7 @@ typedef struct {
         GtkWidget *action_hyphen_label;
         GtkWidget *action_label;
         GtkWidget *progress_bar;
+        GtkWidget *widget_bin;
 } ElementData;
 
 static void on_details_element_changed (GduDetailsElement *element,
@@ -264,6 +265,7 @@ on_details_element_changed (GduDetailsElement *element,
         const gchar *action_tooltip;
         guint64 time;
         gdouble progress;
+        GtkWidget *widget;
 
         s = g_strdup_printf ("<span fgcolor='#404040'>%s</span>",
                              gdu_details_element_get_heading (element));
@@ -348,6 +350,23 @@ on_details_element_changed (GduDetailsElement *element,
                 gtk_widget_set_no_show_all (data->progress_bar, TRUE);
                 gtk_widget_hide (data->progress_bar);
         }
+
+        widget = gdu_details_element_get_widget (element);
+        if (widget != NULL) {
+                GtkWidget *child;
+                child = gtk_bin_get_child (GTK_BIN (data->widget_bin));
+                if (child != widget) {
+                        if (child != NULL)
+                                gtk_container_remove (GTK_CONTAINER (data->widget_bin), child);
+                        gtk_container_add (GTK_CONTAINER (data->widget_bin), widget);
+                }
+        } else {
+                GtkWidget *child;
+                child = gtk_bin_get_child (GTK_BIN (data->widget_bin));
+                if (child != NULL) {
+                        gtk_container_remove (GTK_CONTAINER (data->widget_bin), child);
+                }
+        }
 }
 
 static void
@@ -419,7 +438,7 @@ do_relayout (GduDetailsTable *table)
                 data->element = g_object_ref (element);
 
                 data->heading_label = gtk_label_new (NULL);
-                gtk_misc_set_alignment (GTK_MISC (data->heading_label), 0.0, 0.5);
+                gtk_misc_set_alignment (GTK_MISC (data->heading_label), 0.0, 0.0);
                 gtk_table_attach (GTK_TABLE (column_table),
                                   data->heading_label,
                                   0, 1, row, row + 1,
@@ -452,6 +471,9 @@ do_relayout (GduDetailsTable *table)
                 data->action_label = g_object_ref (gtk_label_new (NULL));
                 gtk_misc_set_alignment (GTK_MISC (data->action_label), 0.0, 0.5);
                 gtk_box_pack_start (GTK_BOX (hbox), data->action_label, FALSE, FALSE, 0);
+
+                data->widget_bin = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+                gtk_box_pack_start (GTK_BOX (hbox), data->widget_bin, FALSE, FALSE, 0);
 
                 gtk_table_attach (GTK_TABLE (column_table),
                                   hbox,

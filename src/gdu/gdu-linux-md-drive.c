@@ -379,6 +379,12 @@ gdu_linux_md_drive_has_slave    (GduLinuxMdDrive  *drive,
         return g_list_find (drive->priv->slaves, device) != NULL;
 }
 
+const gchar *
+gdu_linux_md_drive_get_uuid (GduLinuxMdDrive *drive)
+{
+        return drive->priv->uuid;
+}
+
 /**
  * gdu_linux_md_drive_get_slaves:
  * @drive: A #GduLinuxMdDrive.
@@ -489,6 +495,7 @@ get_names_and_desc (GduPresentable  *presentable,
         ret_desc = NULL;
         ret_vpd = NULL;
         strsize = NULL;
+        level_str = NULL;
 
         /* TODO: Maybe guess size from level, num_raid_devices and component_size? */
         if (drive->priv->device != NULL) {
@@ -512,12 +519,12 @@ get_names_and_desc (GduPresentable  *presentable,
                 if (name == NULL || strlen (name) == 0) {
                         if (strsize != NULL) {
                                 /* Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5' */
-                                ret = g_strdup_printf (_("%s %s Drive"),
+                                ret = g_strdup_printf (_("%s %s Array"),
                                                        strsize,
                                                        level_str);
                         } else {
                                 /* Translators: %s is a RAID level, e.g. 'RAID-5' */
-                                ret = g_strdup_printf (_("%s Drive"),
+                                ret = g_strdup_printf (_("%s Array"),
                                                        level_str);
                         }
                 } else {
@@ -566,13 +573,11 @@ get_names_and_desc (GduPresentable  *presentable,
                         }
                 }
 
-                g_free (level_str);
-
         } else if (drive->priv->device != NULL) {
                 /* Translators: First %s is a device file such as /dev/sda4
                  * second %s is the state of the device
                  */
-                ret = g_strdup_printf (_("RAID device %s (%s)"),
+                ret = g_strdup_printf (_("RAID Array %s (%s)"),
                                        gdu_device_get_device_file (drive->priv->device),
                                        gdu_device_linux_md_get_state (drive->priv->device));
         } else {
@@ -580,6 +585,12 @@ get_names_and_desc (GduPresentable  *presentable,
 
                 /* Translators: %s is a device file such as /dev/sda4 */
                 ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
+        }
+
+        /* Fallback for level_str */
+        if (level_str == NULL) {
+                /* Translators: fallback for level */
+                level_str = g_strdup (C_("RAID Level fallback", "RAID"));
         }
 
         /* Fallback for description */
@@ -590,11 +601,13 @@ get_names_and_desc (GduPresentable  *presentable,
         /* Fallback for VPD name */
         if (ret_vpd == NULL) {
                 if (strsize != NULL) {
-                        /* Translators: %s is the size e.g. '45 GB' */
-                        ret_vpd = g_strdup_printf (_("%s Software RAID"),
-                                                   strsize);
+                        /* Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5' */
+                        ret_vpd = g_strdup_printf (_("%s %s Array"),
+                                                   strsize,
+                                                   level_str);
                 } else {
-                        ret_vpd = g_strdup (_("Software RAID"));
+                        /* Translators: %s is the level e.g. 'RAID-5' */
+                        ret_vpd = g_strdup_printf (_("%s Array"), level_str);
                 }
         }
 
@@ -609,6 +622,7 @@ get_names_and_desc (GduPresentable  *presentable,
                 g_free (ret_vpd);
 
         g_free (strsize);
+        g_free (level_str);
 
         return ret;
 }
@@ -1004,4 +1018,44 @@ gdu_linux_md_drive_deactivate (GduDrive               *_drive,
         gdu_device_op_linux_md_stop (drive->priv->device,
                                      deactivation_completed,
                                      deactivation_data_new (drive, callback, user_data));
+}
+
+gchar *
+gdu_linux_md_drive_get_slave_state_markup (GduLinuxMdDrive  *drive,
+                                           GduDevice        *slave)
+{
+        gchar *slave_state_str;
+
+        slave_state_str = NULL;
+        if (gdu_drive_is_active (GDU_DRIVE (drive))) {
+                GduLinuxMdDriveSlaveFlags slave_flags;
+                GPtrArray *slave_state;
+                gchar *s;
+
+                slave_flags = gdu_linux_md_drive_get_slave_flags (drive, slave);
+
+                slave_state = g_ptr_array_new_with_free_func (g_free);
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED)
+                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Not Attached")));
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_FAULTY) {
+                        s = g_strconcat ("<span foreground='red'><b>",
+                                         C_("Linux MD slave state", "Faulty"),
+                                         "</b></span>", NULL);
+                        g_ptr_array_add (slave_state, s);
+                }
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_IN_SYNC)
+                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Fully Synchronized")));
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_WRITEMOSTLY)
+                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Writemostly")));
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED)
+                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Blocked")));
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE)
+                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Spare")));
+                g_ptr_array_add (slave_state, NULL);
+                slave_state_str = g_strjoinv (", ", (gchar **) slave_state->pdata);
+                g_ptr_array_free (slave_state, TRUE);
+
+        }
+
+        return slave_state_str;
 }

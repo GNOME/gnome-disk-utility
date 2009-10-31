@@ -1277,6 +1277,49 @@ on_fsck_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_usage_element_activated (GduDetailsElement *element,
+                            gpointer           user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduDevice *d;
+        GduLinuxMdDrive *linux_md_drive;
+        GduPool *pool;
+
+        v = NULL;
+        d = NULL;
+        linux_md_drive = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL)
+                goto out;
+
+        d = gdu_presentable_get_device (v);
+        if (d == NULL)
+                goto out;
+
+        pool = gdu_device_get_pool (d);
+
+        linux_md_drive = gdu_pool_get_linux_md_drive_by_uuid (pool, gdu_device_linux_md_component_get_uuid (d));
+        if (linux_md_drive == NULL)
+                goto out;
+
+        gdu_shell_select_presentable (gdu_section_get_shell (GDU_SECTION (section)), GDU_PRESENTABLE (linux_md_drive));
+
+ out:
+        if (linux_md_drive != NULL)
+                g_object_unref (linux_md_drive);
+        if (pool != NULL)
+                g_object_unref (pool);
+        if (d != NULL)
+                g_object_unref (d);
+        if (v != NULL)
+                g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -1358,6 +1401,10 @@ gdu_section_volumes_update (GduSection *_section)
 
         section->priv->usage_element = gdu_details_element_new (_("Usage:"), NULL, NULL);
         g_ptr_array_add (elements, section->priv->usage_element);
+        g_signal_connect (section->priv->usage_element,
+                          "activated",
+                          G_CALLBACK (on_usage_element_activated),
+                          section);
 
         section->priv->device_element = gdu_details_element_new (_("Device:"), NULL, NULL);
         g_ptr_array_add (elements, section->priv->device_element);
@@ -1365,11 +1412,13 @@ gdu_section_volumes_update (GduSection *_section)
         section->priv->partition_type_element = gdu_details_element_new (_("Partition Type:"), NULL, NULL);
         g_ptr_array_add (elements, section->priv->partition_type_element);
 
-        section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
-        g_ptr_array_add (elements, section->priv->partition_label_element);
+        if (d != NULL && gdu_device_is_partition (d)) {
+                section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->partition_label_element);
 
-        section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
-        g_ptr_array_add (elements, section->priv->partition_flags_element);
+                section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->partition_flags_element);
+        }
 
         section->priv->capacity_element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
         g_ptr_array_add (elements, section->priv->capacity_element);
@@ -1394,8 +1443,10 @@ gdu_section_volumes_update (GduSection *_section)
         /* ---------------------------------------------------------------------------------------------------- */
         /* reset all elements */
 
-        if (section->priv->usage_element != NULL)
+        if (section->priv->usage_element != NULL) {
                 gdu_details_element_set_text (section->priv->usage_element, "–");
+                gdu_details_element_set_action_text (section->priv->usage_element, NULL);
+        }
         if (section->priv->capacity_element != NULL) {
                 if (v != NULL) {
                         s = gdu_util_get_size_for_display (gdu_presentable_get_size (v), FALSE, TRUE);
@@ -1477,8 +1528,6 @@ gdu_section_volumes_update (GduSection *_section)
                         }
                 } else {
                         gdu_details_element_set_text (section->priv->partition_type_element, "–");
-                        gdu_details_element_set_text (section->priv->partition_flags_element, "–");
-                        gdu_details_element_set_text (section->priv->partition_label_element, "–");
                 }
         }
         if (section->priv->device_element != NULL) {
@@ -1561,6 +1610,11 @@ gdu_section_volumes_update (GduSection *_section)
                         show_luks_forget_passphrase_button = TRUE;
                 show_luks_change_passphrase_button = TRUE;
 
+        } else if (d != NULL && gdu_device_is_linux_md_component (d)) {
+
+                gdu_details_element_set_text (section->priv->usage_element, _("RAID Component"));
+                gdu_details_element_set_action_text (section->priv->usage_element, _("Go to array"));
+
         } else if (g_strcmp0 (id_usage, "") == 0 &&
                    d != NULL && gdu_device_is_partition (d) &&
                    g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0 &&
@@ -1608,6 +1662,7 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->luks_unlock_button, show_luks_unlock_button);
         gdu_button_element_set_visible (section->priv->luks_forget_passphrase_button, show_luks_forget_passphrase_button);
         gdu_button_element_set_visible (section->priv->luks_change_passphrase_button, show_luks_change_passphrase_button);
+
         if (d != NULL)
                 g_object_unref (d);
         if (v != NULL)
@@ -1709,7 +1764,7 @@ gdu_section_volumes_constructed (GObject *object)
 
         button_element = gdu_button_element_new ("nautilus-gdu",
                                                  _("Fo_rmat Volume"),
-                                                 _("Format the volume"));
+                                                 _("Erase or format the volume"));
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_format_button_clicked),
@@ -1719,7 +1774,7 @@ gdu_section_volumes_constructed (GObject *object)
 
         button_element = gdu_button_element_new ("gdu-check-disk",
                                                  _("_Check Filesystem"),
-                                                 _("Check the filesystem for errors"));
+                                                 _("Check and repair the filesystem"));
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_fsck_button_clicked),
@@ -1850,4 +1905,12 @@ gdu_section_volumes_new (GduShell       *shell,
                                          "shell", shell,
                                          "presentable", presentable,
                                          NULL));
+}
+
+gboolean
+gdu_section_volumes_select_volume (GduSectionVolumes *section,
+                                   GduPresentable    *volume)
+{
+        g_return_val_if_fail (GDU_IS_SECTION_VOLUMES (section), FALSE);
+        return gdu_volume_grid_select (GDU_VOLUME_GRID (section->priv->grid), volume);
 }

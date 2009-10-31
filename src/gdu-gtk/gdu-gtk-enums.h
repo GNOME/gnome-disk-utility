@@ -79,7 +79,7 @@ typedef enum {
  * @GDU_FORMAT_DIALOG_FLAGS_NONE: No flags set.
  * @GDU_FORMAT_DIALOG_FLAGS_SIMPLE: Show a simple form of the dialog.
  * @GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON: Show a "Disk Utility" button.
- * @GDU_FORMAT_DIALOG_FLAGS_ALLOW_MSDOS_EXTENDED: Allow selection MS-DOS extended partition instead of a file system.
+ * @GDU_FORMAT_DIALOG_FLAGS_ALLOW_MSDOS_EXTENDED: Allow selecting a MS-DOS extended partition instead of a file system.
  *
  * Flags used when creating a #GduFormatDialog.
  */
@@ -89,5 +89,17 @@ typedef enum {
         GDU_FORMAT_DIALOG_FLAGS_DISK_UTILITY_BUTTON = (1<<1),
         GDU_FORMAT_DIALOG_FLAGS_ALLOW_MSDOS_EXTENDED = (1<<2)
 } GduFormatDialogFlags;
+
+/**
+ * GduDiskSelectionWidgetFlags:
+ * @GDU_DISK_SELECTION_WIDGET_FLAGS_NONE: No flags set.
+ * @GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE: Allow multiple disks to be selected.
+ *
+ * Flags used when creating a #GduDiskSelectionWidget.
+ */
+typedef enum {
+        GDU_DISK_SELECTION_WIDGET_FLAGS_NONE = 0,
+        GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE = (1<<0)
+} GduDiskSelectionWidgetFlags;
 
 #endif /* GDU_GTK_ENUMS_H */

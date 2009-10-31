@@ -96,6 +96,17 @@ gdu_section_drive_update (GduSection *_section)
         const gchar *serial;
         const gchar *wwn;
         GIcon *icon;
+        gboolean show_cddvd_button;
+        gboolean show_format_button;
+        gboolean show_eject_button;
+        gboolean show_detach_button;
+        gboolean show_smart_button;
+
+        show_cddvd_button = FALSE;
+        show_format_button = FALSE;
+        show_eject_button = FALSE;
+        show_detach_button = FALSE;
+        show_smart_button = FALSE;
 
         d = NULL;
         p = gdu_section_get_presentable (_section);
@@ -200,32 +211,31 @@ gdu_section_drive_update (GduSection *_section)
         if (d != NULL &&
             gdu_device_drive_ata_smart_get_is_available (d) &&
             gdu_device_drive_ata_smart_get_time_collected (d) > 0) {
-                gdu_button_element_set_visible (section->priv->smart_button, TRUE);
-        } else {
-                gdu_button_element_set_visible (section->priv->smart_button, FALSE);
+                show_smart_button = TRUE;
         }
 
         if (d != NULL && gdu_device_drive_get_is_media_ejectable (d)) {
-                gdu_button_element_set_visible (section->priv->eject_button, TRUE);
-        } else {
-                gdu_button_element_set_visible (section->priv->eject_button, FALSE);
+                show_eject_button =  TRUE;
         }
 
         if (d != NULL && gdu_device_drive_get_can_detach (d)) {
-                gdu_button_element_set_visible (section->priv->detach_button, TRUE);
-        } else {
-                gdu_button_element_set_visible (section->priv->detach_button, FALSE);
+                show_detach_button = TRUE;
         }
 
         if (d != NULL && has_strv0 (gdu_device_drive_get_media_compatibility (d), "optical_cd")) {
-                gdu_button_element_set_visible (section->priv->cddvd_button, TRUE);
-                gdu_button_element_set_visible (section->priv->format_button, FALSE);
+                show_cddvd_button = TRUE;
         } else {
-                gdu_button_element_set_visible (section->priv->cddvd_button, FALSE);
-                gdu_button_element_set_visible (section->priv->format_button, TRUE);
+                show_format_button = TRUE;
         }
 
  out:
+        gdu_button_element_set_visible (section->priv->cddvd_button, show_cddvd_button);
+        gdu_button_element_set_visible (section->priv->format_button, show_format_button);
+        gdu_button_element_set_visible (section->priv->eject_button, show_eject_button);
+        gdu_button_element_set_visible (section->priv->detach_button, show_detach_button);
+        gdu_button_element_set_visible (section->priv->smart_button, show_smart_button);
+
+
         if (d != NULL)
                 g_object_unref (d);
 }
@@ -406,8 +416,6 @@ partition_table_create_op_callback (GduDevice  *device,
         if (error != NULL) {
                 GtkWidget *dialog;
 
-                g_debug ("error: %s", error->message);
-
                 dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
                                                          device,
                                                          _("Error formatting drive"),
@@ -421,11 +429,12 @@ partition_table_create_op_callback (GduDevice  *device,
         g_object_unref (shell);
 }
 
-static void
-on_format_button_clicked (GduButtonElement *button_element,
-                          gpointer          user_data)
+/* exported, can only assume user_data is a GduSection */
+void
+gdu_section_drive_on_format_button_clicked (GduButtonElement *button_element,
+                                            gpointer          user_data)
 {
-        GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
+        GduSection *section = GDU_SECTION (user_data);
         GduDevice *d;
         GtkWindow *toplevel;
         GtkWidget *dialog;
@@ -435,11 +444,11 @@ on_format_button_clicked (GduButtonElement *button_element,
         dialog = NULL;
         confirmation_dialog = NULL;
 
-        d = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        d = gdu_presentable_get_device (gdu_section_get_presentable (section));
         if (d == NULL)
                 goto out;
 
-        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (section)));
         dialog = gdu_partition_dialog_new_for_drive (toplevel, d);
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -456,7 +465,7 @@ on_format_button_clicked (GduButtonElement *button_element,
                         gdu_device_op_partition_table_create (d,
                                                     gdu_partition_dialog_get_scheme (GDU_PARTITION_DIALOG (dialog)),
                                                     partition_table_create_op_callback,
-                                                    g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+                                                    g_object_ref (gdu_section_get_shell (section)));
                 }
         }
  out:
@@ -485,7 +494,8 @@ gdu_section_drive_constructed (GObject *object)
         GduDetailsElement *element;
         GduButtonElement *button_element;
 
-        d = NULL;
+        p = gdu_section_get_presentable (GDU_SECTION (section));
+        d = gdu_presentable_get_device (p);
 
         gtk_box_set_spacing (GTK_BOX (section), 12);
 
@@ -549,8 +559,6 @@ gdu_section_drive_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
 
-        p = gdu_section_get_presentable (GDU_SECTION (section));
-        d = gdu_presentable_get_device (p);
         elements = g_ptr_array_new_with_free_func (g_object_unref);
 
         button_element = gdu_button_element_new ("brasero",
@@ -565,10 +573,10 @@ gdu_section_drive_constructed (GObject *object)
 
         button_element = gdu_button_element_new ("nautilus-gdu",
                                                  _("Format _Drive"),
-                                                 _("Delete all data and partition the drive"));
+                                                 _("Erase or partition the drive"));
         g_signal_connect (button_element,
                           "clicked",
-                          G_CALLBACK (on_format_button_clicked),
+                          G_CALLBACK (gdu_section_drive_on_format_button_clicked),
                           section);
         g_ptr_array_add (elements, button_element);
         section->priv->format_button = button_element;

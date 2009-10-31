@@ -92,13 +92,16 @@ typedef enum {
         GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE         = (1<<5),
 } GduLinuxMdDriveSlaveFlags;
 
-GType                      gdu_linux_md_drive_get_type             (void);
-const gchar               *gdu_linux_md_drive_get_uuid             (GduLinuxMdDrive  *drive);
-gboolean                   gdu_linux_md_drive_has_slave            (GduLinuxMdDrive  *drive,
-                                                                    GduDevice        *device);
-GList                     *gdu_linux_md_drive_get_slaves           (GduLinuxMdDrive  *drive);
-GduLinuxMdDriveSlaveFlags  gdu_linux_md_drive_get_slave_flags      (GduLinuxMdDrive  *drive,
-                                                                    GduDevice        *slave);
+GType                      gdu_linux_md_drive_get_type               (void);
+const gchar               *gdu_linux_md_drive_get_uuid               (GduLinuxMdDrive  *drive);
+gboolean                   gdu_linux_md_drive_has_slave              (GduLinuxMdDrive  *drive,
+                                                                      GduDevice        *device);
+GList                     *gdu_linux_md_drive_get_slaves             (GduLinuxMdDrive  *drive);
+GduLinuxMdDriveSlaveFlags  gdu_linux_md_drive_get_slave_flags        (GduLinuxMdDrive  *drive,
+                                                                      GduDevice        *slave);
+gchar                     *gdu_linux_md_drive_get_slave_state_markup (GduLinuxMdDrive  *drive,
+                                                                      GduDevice        *slave);
+
 G_END_DECLS
 
 #endif /* __GDU_LINUX_MD_DRIVE_H */

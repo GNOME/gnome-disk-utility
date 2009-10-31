@@ -343,20 +343,20 @@ get_names_and_desc (GduPresentable  *presentable,
                                 if (array_name != NULL && strlen (array_name) > 0) {
                                         /* Translators: label for a RAID component
                                          * First %s is the size, formatted like '45 GB'
+                                         * Second %s is the RAID level string, e.g 'RAID-5'
                                          */
-                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                        result = g_strdup_printf (_("%s %s Component"), strsize, level_str);
                                         /* Translators: description for a RAID component
                                          * First %s is the array name, e.g. 'My Photos RAID',
-                                         * second %s is the RAID level string, e.g 'RAID-5'
                                          */
-                                        result_desc = g_strdup_printf (_("Part of \"%s\" %s array"),
-                                                                       array_name,
-                                                                       level_str);
+                                        result_desc = g_strdup_printf (_("Part of \"%s\" array"),
+                                                                       array_name);
                                 } else {
                                         /* Translators: label for a RAID component
                                          * First %s is the size, formatted like '45 GB'
+                                         * Second %s is the RAID level string, e.g 'RAID-5'
                                          */
-                                        result = g_strdup_printf (_("%s RAID Component"), strsize);
+                                        result = g_strdup_printf (_("%s %s Component"), strsize, level_str);
                                         result_desc = g_strdup (level_str);
                                 }
 

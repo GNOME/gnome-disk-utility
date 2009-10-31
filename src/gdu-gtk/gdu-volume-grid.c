@@ -1174,7 +1174,11 @@ render_element (GduVolumeGrid *grid,
                 cairo_text_extents_t te;
                 const gchar *text;
 
-                text = _("No Media Detected");
+                if (GDU_IS_LINUX_MD_DRIVE (grid->priv->drive)) {
+                        text = _("RAID Array is not running");
+                } else {
+                        text = _("No Media Detected");
+                }
 
                 if (is_selected) {
                         if (is_grid_focused) {
@@ -1259,6 +1263,9 @@ render_element (GduVolumeGrid *grid,
                         } else {
                                 render_padlock_open = TRUE;
                         }
+                } else if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "raid") == 0 &&
+                           gdu_device_is_linux_md_component (d)) {
+                        s1 = g_strdup (gdu_device_linux_md_component_get_name (d));
                 } else if (!gdu_presentable_is_allocated (element->presentable)) {
                         s = g_strdup (_("Free"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
@@ -1607,4 +1614,33 @@ on_presentable_job_changed (GduPool        *pool,
 {
         GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
         maybe_recompute (grid, p);
+}
+
+gboolean
+gdu_volume_grid_select (GduVolumeGrid       *grid,
+                        GduPresentable      *volume)
+{
+        GridElement *element;
+        gboolean ret;
+
+        g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), FALSE);
+
+        ret = FALSE;
+
+        element = find_element_for_presentable (grid, volume);
+        if (element != NULL) {
+                grid->priv->selected = element;
+                grid->priv->focused = element;
+
+                g_signal_emit (grid,
+                               signals[CHANGED_SIGNAL],
+                               0);
+
+                gtk_widget_grab_focus (GTK_WIDGET (grid));
+                gtk_widget_queue_draw (GTK_WIDGET (grid));
+
+                ret = TRUE;
+        }
+
+        return ret;
 }

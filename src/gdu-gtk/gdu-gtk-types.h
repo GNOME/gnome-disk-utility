@@ -33,30 +33,33 @@
 
 G_BEGIN_DECLS
 
-typedef struct GduSample                   GduSample;
-typedef struct GduColor                    GduColor;
-typedef struct GduCurve                    GduCurve;
-typedef struct GduGraph                    GduGraph;
-typedef struct GduTimeLabel                GduTimeLabel;
-typedef struct GduAtaSmartDialog           GduAtaSmartDialog;
-typedef struct GduSpinner                  GduSpinner;
-typedef struct GduPoolTreeModel            GduPoolTreeModel;
-typedef struct GduPoolTreeView             GduPoolTreeView;
-typedef struct GduCreateLinuxMdDialog      GduCreateLinuxMdDialog;
-typedef struct GduSizeWidget               GduSizeWidget;
-typedef struct GduVolumeGrid               GduVolumeGrid;
-typedef struct GduDetailsTable             GduDetailsTable;
-typedef struct GduDetailsElement           GduDetailsElement;
-typedef struct GduErrorDialog              GduErrorDialog;
-typedef struct GduConfirmationDialog       GduConfirmationDialog;
-typedef struct GduButtonElement            GduButtonElement;
-typedef struct GduButtonTable              GduButtonTable;
-typedef struct GduDialog                   GduDialog;
-typedef struct GduEditPartitionDialog      GduEditPartitionDialog;
-typedef struct GduFormatDialog             GduFormatDialog;
-typedef struct GduPartitionDialog          GduPartitionDialog;
-typedef struct GduCreatePartitionDialog    GduCreatePartitionDialog;
-typedef struct GduEditFilesystemDialog     GduEditFilesystemDialog;
+typedef struct GduSample                    GduSample;
+typedef struct GduColor                     GduColor;
+typedef struct GduCurve                     GduCurve;
+typedef struct GduGraph                     GduGraph;
+typedef struct GduTimeLabel                 GduTimeLabel;
+typedef struct GduAtaSmartDialog            GduAtaSmartDialog;
+typedef struct GduSpinner                   GduSpinner;
+typedef struct GduPoolTreeModel             GduPoolTreeModel;
+typedef struct GduPoolTreeView              GduPoolTreeView;
+typedef struct GduCreateLinuxMdDialog       GduCreateLinuxMdDialog;
+typedef struct GduSizeWidget                GduSizeWidget;
+typedef struct GduVolumeGrid                GduVolumeGrid;
+typedef struct GduDetailsTable              GduDetailsTable;
+typedef struct GduDetailsElement            GduDetailsElement;
+typedef struct GduErrorDialog               GduErrorDialog;
+typedef struct GduConfirmationDialog        GduConfirmationDialog;
+typedef struct GduButtonElement             GduButtonElement;
+typedef struct GduButtonTable               GduButtonTable;
+typedef struct GduDialog                    GduDialog;
+typedef struct GduEditPartitionDialog       GduEditPartitionDialog;
+typedef struct GduFormatDialog              GduFormatDialog;
+typedef struct GduPartitionDialog           GduPartitionDialog;
+typedef struct GduCreatePartitionDialog     GduCreatePartitionDialog;
+typedef struct GduEditFilesystemDialog      GduEditFilesystemDialog;
+typedef struct GduDiskSelectionWidget       GduDiskSelectionWidget;
+typedef struct GduAddComponentLinuxMdDialog GduAddComponentLinuxMdDialog;
+typedef struct GduEditLinuxMdDialog         GduEditLinuxMdDialog;
 
 
 G_END_DECLS

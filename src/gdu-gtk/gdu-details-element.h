@@ -71,6 +71,7 @@ const gchar        *gdu_details_element_get_action_text    (GduDetailsElement *e
 const gchar        *gdu_details_element_get_action_uri     (GduDetailsElement *element);
 const gchar        *gdu_details_element_get_action_tooltip (GduDetailsElement *element);
 gboolean            gdu_details_element_get_is_spinning    (GduDetailsElement *element);
+GtkWidget          *gdu_details_element_get_widget         (GduDetailsElement *element);
 
 void                gdu_details_element_set_heading        (GduDetailsElement *element,
                                                             const gchar       *heading);
@@ -92,6 +93,8 @@ void                gdu_details_element_set_action_tooltip (GduDetailsElement *e
                                                             const gchar       *action_tooltip);
 void                gdu_details_element_set_is_spinning    (GduDetailsElement *element,
                                                             gboolean           is_spinning);
+void                gdu_details_element_set_widget         (GduDetailsElement *element,
+                                                            GtkWidget         *widget);
 
 G_END_DECLS
 

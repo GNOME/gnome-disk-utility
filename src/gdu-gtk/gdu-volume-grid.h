@@ -59,6 +59,8 @@ struct GduVolumeGridClass
 GType           gdu_volume_grid_get_type         (void) G_GNUC_CONST;
 GtkWidget*      gdu_volume_grid_new              (GduDrive            *drive);
 GduPresentable *gdu_volume_grid_get_selected     (GduVolumeGrid       *grid);
+gboolean        gdu_volume_grid_select           (GduVolumeGrid       *grid,
+                                                  GduPresentable      *volume);
 
 G_END_DECLS
 

@@ -41,6 +41,7 @@ struct GduDetailsElementPrivate
         gchar *action_uri;
         gchar *action_tooltip;
         gboolean is_spinning;
+        GtkWidget *widget;
 };
 
 enum
@@ -55,7 +56,8 @@ enum
         PROP_ACTION_TEXT,
         PROP_ACTION_URI,
         PROP_ACTION_TOOLTIP,
-        PROP_IS_SPINNING
+        PROP_IS_SPINNING,
+        PROP_WIDGET
 };
 
 enum
@@ -136,6 +138,10 @@ gdu_details_element_get_property (GObject    *object,
                 g_value_set_boolean (value, gdu_details_element_get_is_spinning (element));
                 break;
 
+        case PROP_WIDGET:
+                g_value_set_object (value, gdu_details_element_get_widget (element));
+                break;
+
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
                 break;
@@ -190,6 +196,10 @@ gdu_details_element_set_property (GObject      *object,
 
         case PROP_IS_SPINNING:
                 gdu_details_element_set_is_spinning (element, g_value_get_boolean (value));
+                break;
+
+        case PROP_WIDGET:
+                gdu_details_element_set_widget (element, g_value_get_object (value));
                 break;
 
         default:
@@ -322,6 +332,16 @@ gdu_details_element_class_init (GduDetailsElementClass *klass)
                                                                G_PARAM_READABLE |
                                                                G_PARAM_WRITABLE |
                                                                G_PARAM_CONSTRUCT));
+
+        g_object_class_install_property (gobject_class,
+                                         PROP_WIDGET,
+                                         g_param_spec_object ("widget",
+                                                              NULL,
+                                                              NULL,
+                                                              GTK_TYPE_WIDGET,
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_WRITABLE |
+                                                              G_PARAM_CONSTRUCT));
 
         signals[CHANGED_SIGNAL] = g_signal_new ("changed",
                                                 GDU_TYPE_DETAILS_ELEMENT,
@@ -497,7 +517,7 @@ gdu_details_element_set_icon (GduDetailsElement *element,
         if (!g_icon_equal (element->priv->icon, icon)) {
                 if (element->priv->icon != NULL)
                         g_object_unref (element->priv->icon);
-                element->priv->icon = g_object_ref (icon);
+                element->priv->icon = icon != NULL ? g_object_ref (icon) : NULL;
                 g_object_notify (G_OBJECT (element), "icon");
                 g_signal_emit (element, signals[CHANGED_SIGNAL], 0);
         }
@@ -552,5 +572,27 @@ gdu_details_element_set_is_spinning (GduDetailsElement *element,
                 g_object_notify (G_OBJECT (element), "is-spinning");
                 g_signal_emit (element, signals[CHANGED_SIGNAL], 0);
         }
+}
+
+
+/* widget overrides anything else */
+
+GtkWidget *
+gdu_details_element_get_widget (GduDetailsElement *element)
+{
+        g_return_val_if_fail (GDU_IS_DETAILS_ELEMENT (element), NULL);
+        return element->priv->widget;
+}
+
+void
+gdu_details_element_set_widget (GduDetailsElement *element,
+                                GtkWidget         *widget)
+{
+        g_return_if_fail (GDU_IS_DETAILS_ELEMENT (element));
+        if (element->priv->widget != NULL)
+                g_object_unref (element->priv->widget);
+        element->priv->widget = widget != NULL ? g_object_ref_sink (widget) : NULL;
+        g_object_notify (G_OBJECT (element), "widget");
+        g_signal_emit (element, signals[CHANGED_SIGNAL], 0);
 }
 

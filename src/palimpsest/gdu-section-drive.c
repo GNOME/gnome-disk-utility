@@ -160,8 +160,11 @@ gdu_section_drive_update (GduSection *_section)
                 gdu_details_element_set_text (section->priv->partitioning_element, s);
                 g_free (s);
         } else {
-                gdu_details_element_set_text (section->priv->partitioning_element,
-                                              _("Not Partitioned"));
+                if (gdu_device_is_media_available (d)) {
+                        gdu_details_element_set_text (section->priv->partitioning_element, _("Not Partitioned"));
+                } else {
+                        gdu_details_element_set_text (section->priv->partitioning_element, "–");
+                }
         }
 
         if (gdu_device_drive_ata_smart_get_is_available (d) &&

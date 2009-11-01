@@ -1610,6 +1610,10 @@ gdu_section_volumes_update (GduSection *_section)
                         show_luks_forget_passphrase_button = TRUE;
                 show_luks_change_passphrase_button = TRUE;
 
+        } else if (g_strcmp0 (id_usage, "other") == 0 && g_strcmp0 (id_type, "swap") == 0) {
+
+                gdu_details_element_set_text (section->priv->usage_element, _("Swap Space"));
+
         } else if (d != NULL && gdu_device_is_linux_md_component (d)) {
 
                 gdu_details_element_set_text (section->priv->usage_element, _("RAID Component"));

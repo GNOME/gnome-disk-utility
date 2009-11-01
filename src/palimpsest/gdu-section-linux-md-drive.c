@@ -703,6 +703,8 @@ on_components_dialog_attach_button_clicked (GduEditLinuxMdDialog *_dialog,
 typedef struct {
         GduShell *shell;
         GduLinuxMdDrive *linux_md_drive;
+        GduDrive *drive_to_add_to;
+        guint64 size;
 } AddComponentData;
 
 static void
@@ -712,6 +714,8 @@ add_component_data_free (AddComponentData *data)
                 g_object_unref (data->shell);
         if (data->linux_md_drive != NULL)
                 g_object_unref (data->linux_md_drive);
+        if (data->drive_to_add_to != NULL)
+                g_object_unref (data->drive_to_add_to);
         g_free (data);
 }
 
@@ -771,56 +775,59 @@ add_component_create_part_cb (GduDevice  *device,
                 add_component_data_free (data);
 }
 
+static void do_add_component (AddComponentData *data);
 
 static void
-on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
-                                         gpointer              user_data)
+add_component_create_part_table_cb (GduDevice  *device,
+                                    GError     *error,
+                                    gpointer    user_data)
 {
-        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
-        GduLinuxMdDrive *linux_md_drive;
-        GduDevice *device;
-        GtkWidget *dialog;
-        gint response;
-        GtkWindow *toplevel;
-        GduDrive *drive;
-        guint64 size;
+        AddComponentData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error creating partition table for RAID component"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+
+                add_component_data_free (data);
+        } else {
+                do_add_component (data);
+        }
+}
+
+static void
+do_add_component (AddComponentData *data)
+{
         gboolean whole_disk_is_uninitialized;
         guint64 largest_segment;
         GduPresentable *p;
+        GduDevice *linux_md_device;
         GduDevice *d;
-        AddComponentData *data;
 
-        device = NULL;
-        drive = NULL;
         p = NULL;
         d = NULL;
-        dialog = NULL;
+        linux_md_device = NULL;
 
-        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
-
-        linux_md_drive = GDU_LINUX_MD_DRIVE (gdu_section_get_presentable (GDU_SECTION (section)));
-        device = gdu_presentable_get_device (GDU_PRESENTABLE (linux_md_drive));
-        if (device == NULL)
+        linux_md_device = gdu_presentable_get_device (GDU_PRESENTABLE (data->linux_md_drive));
+        g_warn_if_fail (linux_md_device != NULL);
+        if (linux_md_device == NULL)
                 goto out;
 
-        dialog = gdu_add_component_linux_md_dialog_new (toplevel, linux_md_drive);
-        gtk_widget_show_all (dialog);
-        response = gtk_dialog_run (GTK_DIALOG (dialog));
-        gtk_widget_hide (dialog);
-        if (response != GTK_RESPONSE_APPLY)
-                goto out;
-
-        drive = gdu_add_component_linux_md_dialog_get_drive (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
-        size = gdu_add_component_linux_md_dialog_get_size (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
-
-        g_warn_if_fail (gdu_drive_has_unallocated_space (drive,
+        g_warn_if_fail (gdu_drive_has_unallocated_space (data->drive_to_add_to,
                                                          &whole_disk_is_uninitialized,
                                                          &largest_segment,
                                                          &p));
         g_assert (p != NULL);
-        g_assert_cmpint (size, <=, largest_segment);
+        g_assert_cmpint (data->size, <=, largest_segment);
 
-        d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (data->drive_to_add_to));
 
         if (GDU_IS_VOLUME_HOLE (p)) {
                 guint64 offset;
@@ -840,7 +847,7 @@ on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
                 scheme = gdu_device_partition_table_get_scheme (d);
                 type = "";
                 label = NULL;
-                name = gdu_device_linux_md_get_name (device);
+                name = gdu_device_linux_md_get_name (linux_md_device);
 
                 if (g_strcmp0 (scheme, "mbr") == 0) {
                         type = "0xfd";
@@ -860,13 +867,9 @@ on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
                                 label = g_strdup ("RAID Component");
                 }
 
-                data = g_new0 (AddComponentData, 1);
-                data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
-                data->linux_md_drive = g_object_ref (linux_md_drive);
-
                 gdu_device_op_partition_create (d,
                                                 offset,
-                                                size,
+                                                data->size,
                                                 type,
                                                 label != NULL ? label : "",
                                                 NULL,
@@ -878,20 +881,68 @@ on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
                                                 data);
                 g_free (label);
         } else {
-                g_error ("TODO: handle adding component on non-partitioned drive");
+                /* otherwise the whole disk must be uninitialized... */
+                g_assert (whole_disk_is_uninitialized);
+
+                /* so create a partition table... */
+                gdu_device_op_partition_table_create (d,
+                                                      "mbr",
+                                                      add_component_create_part_table_cb,
+                                                      data);
         }
+
+ out:
+        if (p != NULL)
+                g_object_unref (p);
+        if (d != NULL)
+                g_object_unref (d);
+        if (linux_md_device != NULL)
+                g_object_unref (linux_md_device);
+}
+
+
+static void
+on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
+                                         gpointer              user_data)
+{
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        GduLinuxMdDrive *linux_md_drive;
+        GduDevice *device;
+        GtkWidget *dialog;
+        gint response;
+        GtkWindow *toplevel;
+        AddComponentData *data;
+
+        device = NULL;
+        dialog = NULL;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+
+        linux_md_drive = GDU_LINUX_MD_DRIVE (gdu_section_get_presentable (GDU_SECTION (section)));
+        device = gdu_presentable_get_device (GDU_PRESENTABLE (linux_md_drive));
+        if (device == NULL)
+                goto out;
+
+        dialog = gdu_add_component_linux_md_dialog_new (toplevel, linux_md_drive);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response != GTK_RESPONSE_APPLY)
+                goto out;
+
+        data = g_new0 (AddComponentData, 1);
+        data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+        data->linux_md_drive = g_object_ref (linux_md_drive);
+        data->drive_to_add_to = gdu_add_component_linux_md_dialog_get_drive (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
+        data->size = gdu_add_component_linux_md_dialog_get_size (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
+
+        do_add_component (data);
 
  out:
         if (dialog != NULL)
                 gtk_widget_destroy (dialog);
-        if (drive != NULL)
-                g_object_unref (drive);
-        if (p != NULL)
-                g_object_unref (p);
         if (device != NULL)
                 g_object_unref (device);
-        if (d != NULL)
-                g_object_unref (d);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

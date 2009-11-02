@@ -390,7 +390,7 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 handled = FALSE;
 
         if (!handled)
-                g_warning ("unhandled property '%s'", key);
+                g_debug ("unhandled property '%s'", key);
 }
 
 static void
@@ -473,7 +473,7 @@ device_properties_get (DBusGConnection *bus,
                                 dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
                                 &hash_table,
                                 G_TYPE_INVALID)) {
-                g_warning ("Couldn't call GetAll() to get properties for %s: %s", object_path, error->message);
+                g_debug ("Error calling GetAll() when retrieving properties for %s: %s", object_path, error->message);
                 g_error_free (error);
 
                 device_properties_free (props);

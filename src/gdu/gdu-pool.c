@@ -917,7 +917,10 @@ device_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoin
 
         device = gdu_pool_get_by_object_path (pool, object_path);
         if (device == NULL) {
-                g_warning ("No device to remove for remove %s", object_path);
+                /* This is not fatal - the device may have been removed when GetAll() failed
+                 * when getting properties
+                 */
+                g_debug ("No device to remove for remove %s", object_path);
                 goto out;
         }
 
@@ -1014,7 +1017,7 @@ get_properties (GduPool *pool)
                                 dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
                                 &hash_table,
                                 G_TYPE_INVALID)) {
-                g_warning ("Couldn't call GetAll() to get properties for /: %s", error->message);
+                g_debug ("Error calling GetAll() when retrieving properties for /: %s", error->message);
                 g_error_free (error);
                 goto out;
         }

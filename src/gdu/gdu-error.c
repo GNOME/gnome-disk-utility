@@ -85,6 +85,10 @@ _gdu_error_fixup (GError *error)
                 error->code = GDU_ERROR_ATA_SMART_WOULD_WAKEUP;
         else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.PermissionDenied") == 0)
                 error->code = GDU_ERROR_PERMISSION_DENIED;
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.FilesystemDriverMissing") == 0)
+                error->code = GDU_ERROR_FILESYSTEM_DRIVER_MISSING;
+        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.FilesystemToolsMissing") == 0)
+                error->code = GDU_ERROR_FILESYSTEM_TOOLS_MISSING;
         else
                 matched = FALSE;
 

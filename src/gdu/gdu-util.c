@@ -330,6 +330,14 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         /* Translators: short name for 'RAID Component' */
                         s = g_strdup (_("raid"));
                 }
+        } else if (strcmp (fstype, "minix") == 0) {
+                if (long_string) {
+                        /* Translators: long filesystem type for minix */
+                        s = g_strdup (_("Minix"));
+                } else {
+                        /* Translators: filesystem type for minix */
+                        s = g_strdup (_("minix"));
+                }
         } else {
                 s = g_strdup (fstype);
         }
@@ -501,6 +509,7 @@ static struct {
         {"mbr", "0x1c",  N_("Hidden W95 FAT32 (LBA) (0x1c)")},
         {"mbr", "0x1e",  N_("Hidden W95 FAT16 (LBA) (0x1e)")},
         {"mbr", "0x3c",  N_("PartitionMagic (0x3c)")},
+        {"mbr", "0x81",  N_("Minix (0x81)")}, /* cf. http://en.wikipedia.org/wiki/MINIX_file_system */
         {"mbr", "0x82",  N_("Linux swap (0x82)")},
         {"mbr", "0x83",  N_("Linux (0x83)")},
         {"mbr", "0x84",  N_("Hibernation (0x84)")},
@@ -574,6 +583,10 @@ gdu_util_fstype_get_description (char *fstype)
                 return g_strdup (_("The native Windows file system. Not widely compatible with other "
                                    "operating systems than Windows."));
 
+        else if (strcmp (fstype, "minix") == 0)
+                return g_strdup (_("Simple filesystem with low overhead and UNIX permissions support. "
+                                   "Not widely compatible with other operating systems than Linux and Minix."));
+
         else if (strcmp (fstype, "empty") == 0)
                 return g_strdup (_("No file system will be created."));
 
@@ -632,6 +645,8 @@ gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const 
                         type = "0x82";
                 } else if (g_strcmp0 (fstype, "ntfs") == 0) {
                         type = "0x07";
+                } else if (g_strcmp0 (fstype, "minix") == 0) {
+                        type = "0x81";
                 } else {
                         type = "0x83";
                 }

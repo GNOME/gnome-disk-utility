@@ -231,6 +231,12 @@ gdu_error_dialog_constructed (GObject *object)
                 case GDU_ERROR_PERMISSION_DENIED:
                         error_msg = _("Permission denied");
                         break;
+                case GDU_ERROR_FILESYSTEM_DRIVER_MISSING:
+                        error_msg = _("Filesystem driver not installed");
+                        break;
+                case GDU_ERROR_FILESYSTEM_TOOLS_MISSING:
+                        error_msg = _("Filesystem tools not installed");
+                        break;
                 }
         }
         if (error_msg == NULL)

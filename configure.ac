@@ -27,7 +27,9 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 #### gcc warning flags
 
-AC_ARG_ENABLE(ansi,             [  --enable-ansi           enable -ansi -pedantic gcc flags],enable_ansi=$enableval,enable_ansi=no)
+AC_ARG_ENABLE(ansi, AS_HELP_STRING([--enable-ansi],
+  [enable -ansi -pedantic gcc flags]),
+  enable_ansi=$enableval,enable_ansi=no)
 
 if test "x$GCC" = "xyes"; then
   changequote(,)dnl
@@ -110,7 +112,7 @@ GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
 GNOME_MAINTAINER_MODE_DEFINES
 
-AC_ARG_ENABLE(gtk-doc, AC_HELP_STRING([--enable-gtk-doc],
+AC_ARG_ENABLE(gtk-doc, AS_HELP_STRING([--enable-gtk-doc],
   [use gtk-doc to build documentation [default=yes]]),,
   enable_gtk_doc=yes)
 GTK_DOC_CHECK([1.3])
@@ -135,21 +137,19 @@ UDISKS_NEXT_ABI_INCOMPATIBLE_VERSION=1.1.0
 SCROLLKEEPER_REQUIRED=0.3.14
 INTLTOOL_REQUIRED=0.35.0
 
-PKG_CHECK_MODULES(GLIB2, glib-2.0 >= $GLIB2_REQUIRED)
-PKG_CHECK_MODULES(GOBJECT2, gobject-2.0 >= $GOBJECT2_REQUIRED)
-PKG_CHECK_MODULES(GIO2, gio-2.0 >= $GIO2_REQUIRED)
-PKG_CHECK_MODULES(GIO_UNIX2, gio-unix-2.0 >= $GIO2_REQUIRED)
-PKG_CHECK_MODULES(GTHREAD2, gthread-2.0 >= $GLIB2_REQUIRED)
-PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
-PKG_CHECK_MODULES(GNOME_KEYRING, gnome-keyring-1 >= $GNOME_KEYRING_REQUIRED)
-PKG_CHECK_MODULES(GTK2, gtk+-2.0 >= $GTK2_REQUIRED)
-PKG_CHECK_MODULES(UNIQUE, unique-1.0 >= $UNIQUE_REQUIRED)
-PKG_CHECK_MODULES(LIBNOTIFY, libnotify  >= $LIBNOTIFY_REQUIRED)
-PKG_CHECK_MODULES(UDISKS, udisks  >= $UDISKS_REQUIRED udisks < $UDISKS_NEXT_ABI_INCOMPATIBLE_VERSION)
+PKG_CHECK_MODULES(GLIB2, [glib-2.0 >= $GLIB2_REQUIRED])
+PKG_CHECK_MODULES(GOBJECT2, [gobject-2.0 >= $GOBJECT2_REQUIRED])
+PKG_CHECK_MODULES(GIO2, [gio-2.0 >= $GIO2_REQUIRED])
+PKG_CHECK_MODULES(GIO_UNIX2, [gio-unix-2.0 >= $GIO2_REQUIRED])
+PKG_CHECK_MODULES(GTHREAD2, [gthread-2.0 >= $GLIB2_REQUIRED])
+PKG_CHECK_MODULES(DBUS_GLIB, [dbus-glib-1 >= $DBUS_GLIB_REQUIRED])
+PKG_CHECK_MODULES(GNOME_KEYRING, [gnome-keyring-1 >= $GNOME_KEYRING_REQUIRED])
+PKG_CHECK_MODULES(GTK2, [gtk+-2.0 >= $GTK2_REQUIRED])
+PKG_CHECK_MODULES(UNIQUE, [unique-1.0 >= $UNIQUE_REQUIRED])
+PKG_CHECK_MODULES(LIBNOTIFY, [libnotify  >= $LIBNOTIFY_REQUIRED])
+PKG_CHECK_MODULES(UDISKS, [udisks  >= $UDISKS_REQUIRED udisks < $UDISKS_NEXT_ABI_INCOMPATIBLE_VERSION])
 PKG_CHECK_MODULES(X11, [x11])
 PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.14])
-AC_SUBST(LIBATASMART_CFLAGS)
-AC_SUBST(LIBATASMART_LIBS)
 
 # *************
 # Documentation
@@ -176,7 +176,7 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext domain])
 # ******************
 
 have_nautilus=no
-AC_ARG_ENABLE(nautilus, AC_HELP_STRING([--disable-nautilus], [disable nautilus extension]))
+AC_ARG_ENABLE(nautilus, AS_HELP_STRING([--disable-nautilus], [disable nautilus extension]))
 
 if test "x$enable_nautilus" != "xno"; then
 	PKG_CHECK_MODULES(NAUTILUS, libnautilus-extension >= $NAUTILUS_REQUIRED,

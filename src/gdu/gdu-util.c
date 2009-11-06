@@ -287,6 +287,18 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                         /* Translators: xfs is a filesystem type */
                         s = g_strdup (_("xfs"));
                 }
+        } else if (strcmp (fstype, "reiserfs") == 0) {
+                if (long_string) {
+                        if (strlen (fsversion) > 0)
+                                /* Translators: reiserfs is a filesystem type */
+                                s = g_strdup_printf (_("ReiserFS (version %s)"), fsversion);
+                        else
+                                /* Translators: reiserfs is a filesystem type */
+                                s = g_strdup_printf (_("ReiserFS"));
+                } else {
+                        /* Translators: reiserfs is a filesystem type */
+                        s = g_strdup (_("reiserfs"));
+                }
         } else if (strcmp (fstype, "iso9660") == 0) {
                 if (long_string) {
                         /* Translators: iso9660 is a filesystem type */

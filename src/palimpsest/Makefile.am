@@ -32,6 +32,7 @@ palimpsest_CFLAGS = 					\
 	$(GNOME_KEYRING_CFLAGS)				\
 	$(GTK2_CFLAGS)					\
 	$(UNIQUE_CFLAGS)				\
+	$(X11_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(AM_CFLAGS)
 
@@ -46,6 +47,7 @@ palimpsest_LDADD = 					\
 	$(GNOME_KEYRING_LIBS)				\
 	$(GTK2_LIBS)					\
 	$(UNIQUE_LIBS)					\
+	$(X11_LIBS)					\
 	$(INTLLIBS)					\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la

@@ -121,7 +121,7 @@ GTK_DOC_CHECK([1.3])
 # Check for required packages
 # ***************************
 
-GLIB2_REQUIRED=2.16
+GLIB2_REQUIRED=2.22
 GOBJECT2_REQUIRED=2.16
 GIO2_REQUIRED=2.22
 DBUS_GLIB_REQUIRED=0.74

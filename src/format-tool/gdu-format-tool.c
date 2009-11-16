@@ -145,7 +145,7 @@ unmount_cb (GObject      *source_object,
         GMount *mount = G_MOUNT (source_object);
         UnmountData *data = user_data;
 
-        g_mount_unmount_finish (mount, res, &data->error);
+        g_mount_unmount_with_operation_finish (mount, res, &data->error);
 
         g_main_loop_quit (data->loop);
 }

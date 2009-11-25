@@ -60,6 +60,7 @@ typedef struct GduEditFilesystemDialog      GduEditFilesystemDialog;
 typedef struct GduDiskSelectionWidget       GduDiskSelectionWidget;
 typedef struct GduAddComponentLinuxMdDialog GduAddComponentLinuxMdDialog;
 typedef struct GduEditLinuxMdDialog         GduEditLinuxMdDialog;
+typedef struct GduDriveBenchmarkDialog      GduDriveBenchmarkDialog;
 
 
 G_END_DECLS

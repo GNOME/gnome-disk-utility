@@ -112,6 +112,7 @@ typedef struct
         char    *drive_model;
         char    *drive_revision;
         char    *drive_serial;
+        char    *drive_wwn;
         char    *drive_connection_interface;
         guint64  drive_connection_speed;
         char   **drive_media_compatibility;
@@ -120,6 +121,8 @@ typedef struct
         gboolean drive_can_detach;
         gboolean drive_can_spindown;
         gboolean drive_is_rotational;
+        guint    drive_rotation_rate;
+        char    *drive_write_cache;
 
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
@@ -293,6 +296,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_revision = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "DriveSerial") == 0)
                 props->drive_serial = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "DriveWwn") == 0)
+                props->drive_wwn = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "DriveConnectionInterface") == 0)
                 props->drive_connection_interface = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "DriveConnectionSpeed") == 0)
@@ -309,6 +314,10 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_can_spindown = g_value_get_boolean (value);
         else if (strcmp (key, "DriveIsRotational") == 0)
                 props->drive_is_rotational = g_value_get_boolean (value);
+        else if (strcmp (key, "DriveRotationRate") == 0)
+                props->drive_rotation_rate = g_value_get_uint (value);
+        else if (strcmp (key, "DriveWriteCache") == 0)
+                props->drive_write_cache = g_strdup (g_value_get_string (value));
 
         else if (strcmp (key, "OpticalDiscIsBlank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -424,6 +433,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_vendor);
         g_free (props->drive_revision);
         g_free (props->drive_serial);
+        g_free (props->drive_wwn);
         g_free (props->drive_connection_interface);
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
@@ -1036,6 +1046,12 @@ gdu_device_drive_get_serial (GduDevice *device)
 }
 
 const char *
+gdu_device_drive_get_wwn (GduDevice *device)
+{
+        return device->priv->props->drive_wwn;
+}
+
+const char *
 gdu_device_drive_get_connection_interface (GduDevice *device)
 {
         return device->priv->props->drive_connection_interface;
@@ -1057,6 +1073,12 @@ const char *
 gdu_device_drive_get_media (GduDevice *device)
 {
         return device->priv->props->drive_media;
+}
+
+const char *
+gdu_device_drive_get_write_cache (GduDevice *device)
+{
+        return device->priv->props->drive_write_cache;
 }
 
 gboolean
@@ -1088,6 +1110,12 @@ gboolean
 gdu_device_drive_get_is_rotational (GduDevice *device)
 {
         return device->priv->props->drive_is_rotational;
+}
+
+guint
+gdu_device_drive_get_rotation_rate (GduDevice *device)
+{
+        return device->priv->props->drive_rotation_rate;
 }
 
 gboolean
@@ -2343,3 +2371,57 @@ gdu_device_op_drive_poll_media (GduDevice                        *device,
                                                                        op_poll_media_cb,
                                                                        data);
 }
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceDriveBenchmarkCompletedFunc callback;
+        gpointer user_data;
+} DriveBenchmarkData;
+
+static void
+op_drive_benchmark_cb (DBusGProxy *proxy,
+                       GPtrArray *read_transfer_rate_results,
+                       GPtrArray *write_transfer_rate_results,
+                       GPtrArray *access_time_results,
+                       GError *error,
+                       gpointer user_data)
+{
+        DriveBenchmarkData *data = user_data;
+        _gdu_error_fixup (error);
+
+        if (data->callback != NULL) {
+                data->callback (data->device,
+                                read_transfer_rate_results,
+                                write_transfer_rate_results,
+                                access_time_results,
+                                error,
+                                data->user_data);
+        }
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void gdu_device_op_drive_benchmark (GduDevice                             *device,
+                                    gboolean                               do_write_benchmark,
+                                    const gchar* const *                   options,
+                                    GduDeviceDriveBenchmarkCompletedFunc   callback,
+                                    gpointer                               user_data)
+{
+        DriveBenchmarkData *data;
+
+        data = g_new0 (DriveBenchmarkData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_DeviceKit_Disks_Device_drive_benchmark_async (device->priv->proxy,
+                                                                      do_write_benchmark,
+                                                                      (const gchar **) options,
+                                                                      op_drive_benchmark_cb,
+                                                                      data);
+}
+
+
+/* -------------------------------------------------------------------------------- */

@@ -36,6 +36,8 @@ struct _GduSectionDrivePrivate
         GduDetailsElement *firmware_element;
         GduDetailsElement *serial_element;
         GduDetailsElement *wwn_element;
+        GduDetailsElement *write_cache_element;
+        GduDetailsElement *rotation_rate_element;
         GduDetailsElement *capacity_element;
         GduDetailsElement *connection_element;
         GduDetailsElement *partitioning_element;
@@ -46,6 +48,7 @@ struct _GduSectionDrivePrivate
         GduButtonElement *eject_button;
         GduButtonElement *detach_button;
         GduButtonElement *smart_button;
+        GduButtonElement *benchmark_button;
 };
 
 G_DEFINE_TYPE (GduSectionDrive, gdu_section_drive, GDU_TYPE_SECTION)
@@ -95,20 +98,26 @@ gdu_section_drive_update (GduSection *_section)
         const gchar *firmware;
         const gchar *serial;
         const gchar *wwn;
+        const gchar *write_cache;
+        guint rotation_rate;
+        gboolean is_rotational;
         GIcon *icon;
         gboolean show_cddvd_button;
         gboolean show_format_button;
         gboolean show_eject_button;
         gboolean show_detach_button;
         gboolean show_smart_button;
+        gboolean show_benchmark_button;
 
         show_cddvd_button = FALSE;
         show_format_button = FALSE;
         show_eject_button = FALSE;
         show_detach_button = FALSE;
         show_smart_button = FALSE;
+        show_benchmark_button = FALSE;
 
         d = NULL;
+        wwn = NULL;
         p = gdu_section_get_presentable (_section);
 
         d = gdu_presentable_get_device (p);
@@ -138,10 +147,41 @@ gdu_section_drive_update (GduSection *_section)
                 serial = "–";
         gdu_details_element_set_text (section->priv->serial_element, serial);
 
-        wwn = NULL; /*TODO: gdu_device_drive_get_wwn (d)*/
-        if (wwn == NULL || strlen (wwn) == 0)
-                wwn = "–";
-        gdu_details_element_set_text (section->priv->wwn_element, wwn);
+        wwn = gdu_device_drive_get_wwn (d);
+        if (wwn == NULL || strlen (wwn) == 0) {
+                gdu_details_element_set_text (section->priv->wwn_element, "–");
+        } else {
+                s = g_strdup_printf ("0x%s", wwn);
+                gdu_details_element_set_text (section->priv->wwn_element, s);
+                g_free (s);
+        }
+
+        write_cache = gdu_device_drive_get_write_cache (d);
+        is_rotational = gdu_device_drive_get_is_rotational (d);
+        rotation_rate = gdu_device_drive_get_rotation_rate (d);
+
+        if (write_cache == NULL || strlen (write_cache) == 0) {
+                gdu_details_element_set_text (section->priv->write_cache_element, "–");
+        } else if (g_strcmp0 (write_cache, "enabled") == 0) {
+                gdu_details_element_set_text (section->priv->write_cache_element, C_("Write Cache", "Enabled"));
+        } else if (g_strcmp0 (write_cache, "disabled") == 0) {
+                gdu_details_element_set_text (section->priv->write_cache_element, C_("Write Cache", "Disabled"));
+        } else {
+                gdu_details_element_set_text (section->priv->write_cache_element, write_cache);
+        }
+
+        if (is_rotational) {
+                if (rotation_rate > 0) {
+                        s = g_strdup_printf (_("%d RPM"), rotation_rate);
+                        gdu_details_element_set_text (section->priv->rotation_rate_element, s);
+                        g_free (s);
+                } else {
+                        gdu_details_element_set_text (section->priv->rotation_rate_element, "–");
+                }
+        } else {
+                gdu_details_element_set_text (section->priv->rotation_rate_element,
+                                              C_("Rotation Rate", "Solid-State Disk"));
+        }
 
         if (gdu_device_is_partition_table (d)) {
                 const gchar *scheme;
@@ -200,6 +240,7 @@ gdu_section_drive_update (GduSection *_section)
                                                    TRUE);
                 gdu_details_element_set_text (section->priv->capacity_element, s);
                 g_free (s);
+                show_benchmark_button = TRUE;
         } else {
                 gdu_details_element_set_text (section->priv->capacity_element,
                                               _("No Media Detected"));
@@ -237,6 +278,7 @@ gdu_section_drive_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->eject_button, show_eject_button);
         gdu_button_element_set_visible (section->priv->detach_button, show_detach_button);
         gdu_button_element_set_visible (section->priv->smart_button, show_smart_button);
+        gdu_button_element_set_visible (section->priv->benchmark_button, show_benchmark_button);
 
 
         if (d != NULL)
@@ -314,6 +356,22 @@ on_smart_button_clicked (GduButtonElement *button_element,
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
         dialog = gdu_ata_smart_dialog_new (toplevel,
                                            GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
+        gtk_widget_show_all (dialog);
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+}
+
+void
+gdu_section_drive_on_benchmark_button_clicked (GduButtonElement *button_element,
+                                               gpointer          user_data)
+{
+        GduSection *section = GDU_SECTION (user_data);
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_drive_benchmark_dialog_new (toplevel,
+                                                 GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
         gtk_widget_show_all (dialog);
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);
@@ -532,9 +590,18 @@ gdu_section_drive_constructed (GObject *object)
         g_ptr_array_add (elements, element);
         section->priv->firmware_element = element;
 
+        /* Translators: if you translate "World Wide Name", please include the abbreviation "WWN" */
         element = gdu_details_element_new (_("World Wide Name:"), NULL, NULL);
         g_ptr_array_add (elements, element);
         section->priv->wwn_element = element;
+
+        element = gdu_details_element_new (_("Write Cache:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->write_cache_element = element;
+
+        element = gdu_details_element_new (_("Rotation Rate:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->rotation_rate_element = element;
 
         element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
         g_ptr_array_add (elements, element);
@@ -561,6 +628,8 @@ gdu_section_drive_constructed (GObject *object)
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+
+        /* -------------------------------------------------------------------------------- */
 
         elements = g_ptr_array_new_with_free_func (g_object_unref);
 
@@ -613,6 +682,16 @@ gdu_section_drive_constructed (GObject *object)
                           section);
         g_ptr_array_add (elements, button_element);
         section->priv->detach_button = button_element;
+
+        button_element = gdu_button_element_new ("gtk-execute", /* TODO: better icon */
+                                                 _("_Benchmark"),
+                                                 _("Measure drive performance"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (gdu_section_drive_on_benchmark_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->benchmark_button = button_element;
 
         table = gdu_button_table_new (2, elements);
         g_ptr_array_unref (elements);

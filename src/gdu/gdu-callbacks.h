@@ -140,6 +140,13 @@ typedef void (*GduDeviceDrivePollMediaCompletedFunc) (GduDevice    *device,
                                                       GError       *error,
                                                       gpointer      user_data);
 
+typedef void (*GduDeviceDriveBenchmarkCompletedFunc) (GduDevice    *device,
+                                                      GPtrArray    *read_transfer_rate_results,
+                                                      GPtrArray    *write_transfer_rate_results,
+                                                      GPtrArray    *access_time_results,
+                                                      GError       *error,
+                                                      gpointer      user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduPool */
 

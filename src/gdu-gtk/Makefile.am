@@ -53,6 +53,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-disk-selection-widget.h					\
 	gdu-add-component-linux-md-dialog.h				\
 	gdu-edit-linux-md-dialog.h					\
+	gdu-drive-benchmark-dialog.h					\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -83,6 +84,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-disk-selection-widget.h		gdu-disk-selection-widget.c		\
 	gdu-add-component-linux-md-dialog.h	gdu-add-component-linux-md-dialog.c	\
 	gdu-edit-linux-md-dialog.h		gdu-edit-linux-md-dialog.c		\
+	gdu-drive-benchmark-dialog.h		gdu-drive-benchmark-dialog.c		\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\

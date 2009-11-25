@@ -50,6 +50,7 @@ struct _GduSectionLinuxMdDrivePrivate
         GduButtonElement *format_button;
         GduButtonElement *edit_components_button;
         GduButtonElement *check_button;
+        GduButtonElement *benchmark_button;
 };
 
 G_DEFINE_TYPE (GduSectionLinuxMdDrive, gdu_section_linux_md_drive, GDU_TYPE_SECTION)
@@ -296,6 +297,7 @@ gdu_section_linux_md_drive_update (GduSection *_section)
         gboolean show_format_button;
         gboolean show_edit_components_button;
         gboolean show_check_button;
+        gboolean show_benchmark_button;
         GList *slaves;
         GduDevice *slave;
         const gchar *level;
@@ -309,6 +311,7 @@ gdu_section_linux_md_drive_update (GduSection *_section)
         show_format_button = FALSE;
         show_edit_components_button = FALSE;
         show_check_button = FALSE;
+        show_benchmark_button = FALSE;
 
         p = gdu_section_get_presentable (_section);
         d = gdu_presentable_get_device (p);
@@ -368,6 +371,7 @@ gdu_section_linux_md_drive_update (GduSection *_section)
 
                 show_format_button = TRUE;
                 show_check_button = TRUE;
+                show_benchmark_button = TRUE;
                 show_edit_components_button = TRUE;
                 show_md_stop_button = TRUE;
         } else {
@@ -386,6 +390,7 @@ gdu_section_linux_md_drive_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->format_button, show_format_button);
         gdu_button_element_set_visible (section->priv->edit_components_button, show_edit_components_button);
         gdu_button_element_set_visible (section->priv->check_button, show_check_button);
+        gdu_button_element_set_visible (section->priv->benchmark_button, show_benchmark_button);
 
         if (d != NULL)
                 g_object_unref (d);
@@ -1177,6 +1182,16 @@ gdu_section_linux_md_drive_constructed (GObject *object)
                           section);
         g_ptr_array_add (elements, button_element);
         section->priv->edit_components_button = button_element;
+
+        button_element = gdu_button_element_new ("gtk-execute", /* TODO: better icon */
+                                                 _("_Benchmark"),
+                                                 _("Measure RAID array performance"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (gdu_section_drive_on_benchmark_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->benchmark_button = button_element;
 
         table = gdu_button_table_new (2, elements);
         g_ptr_array_unref (elements);

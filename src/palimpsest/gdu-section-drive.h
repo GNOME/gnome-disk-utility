@@ -55,10 +55,15 @@ GType            gdu_section_drive_get_type (void);
 GtkWidget       *gdu_section_drive_new      (GduShell       *shell,
                                              GduPresentable *presentable);
 
-/* exported for use in GduSectionLinuxMd and others - user_data must be a GduSection instance */
+/* these functions are exported for use in GduSectionLinuxMd and other sections - user_data must
+ * be a GduSection instance
+ */
 void
 gdu_section_drive_on_format_button_clicked (GduButtonElement *button_element,
                                             gpointer          user_data);
+void
+gdu_section_drive_on_benchmark_button_clicked (GduButtonElement *button_element,
+                                               gpointer          user_data);
 
 
 #endif /* GDU_SECTION_DRIVE_H */

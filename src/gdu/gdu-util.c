@@ -403,7 +403,7 @@ gdu_get_job_description (const char *job_id)
                 s = g_strdup (_("Forcibly Locking LUKS device"));
         } else {
                 s = g_strdup_printf ("%s", job_id);
-                g_warning ("No friendly string for job with id '%s'", job_id);
+                g_debug ("No friendly string for job with id '%s'", job_id);
         }
         return s;
 }
@@ -837,13 +837,13 @@ gdu_util_get_speed_for_display (guint64 speed)
 
         if (speed < 1000 * 1000) {
                 displayed_speed = (double) speed / 1000.0;
-                str = g_strdup_printf (_("%.1f kbit/s"), displayed_speed);
+                str = g_strdup_printf (_("%.1f KB/s"), displayed_speed);
         } else if (speed < 1000 * 1000 * 1000) {
                 displayed_speed = (double) speed / 1000.0 / 1000.0;
-                str = g_strdup_printf (_("%.1f Mbit/s"), displayed_speed);
+                str = g_strdup_printf (_("%.1f MB/s"), displayed_speed);
         } else {
                 displayed_speed = (double) speed / 1000.0 / 1000.0 / 1000.0;
-                str = g_strdup_printf (_("%.1f Gbit/s"), displayed_speed);
+                str = g_strdup_printf (_("%.1f GB/s"), displayed_speed);
         }
 
         return str;

@@ -52,6 +52,7 @@
 #include <gdu-gtk/gdu-disk-selection-widget.h>
 #include <gdu-gtk/gdu-add-component-linux-md-dialog.h>
 #include <gdu-gtk/gdu-edit-linux-md-dialog.h>
+#include <gdu-gtk/gdu-drive-benchmark-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS

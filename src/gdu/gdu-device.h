@@ -132,6 +132,7 @@ const char *gdu_device_drive_get_vendor (GduDevice *device);
 const char *gdu_device_drive_get_model (GduDevice *device);
 const char *gdu_device_drive_get_revision (GduDevice *device);
 const char *gdu_device_drive_get_serial (GduDevice *device);
+const char *gdu_device_drive_get_wwn (GduDevice *device);
 const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
@@ -141,6 +142,8 @@ gboolean gdu_device_drive_get_requires_eject (GduDevice *device);
 gboolean gdu_device_drive_get_can_detach (GduDevice *device);
 gboolean gdu_device_drive_get_can_spindown (GduDevice *device);
 gboolean gdu_device_drive_get_is_rotational (GduDevice *device);
+guint    gdu_device_drive_get_rotation_rate (GduDevice *device);
+const char *gdu_device_drive_get_write_cache (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);
@@ -344,6 +347,14 @@ void gdu_device_op_drive_detach                (GduDevice                       
 void gdu_device_op_drive_poll_media                 (GduDevice                        *device,
                                                      GduDeviceDrivePollMediaCompletedFunc   callback,
                                                      gpointer                          user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void gdu_device_op_drive_benchmark (GduDevice                             *device,
+                                    gboolean                               do_write_benchmark,
+                                    const gchar* const *                   options,
+                                    GduDeviceDriveBenchmarkCompletedFunc   callback,
+                                    gpointer                               user_data);
 
 G_END_DECLS
 

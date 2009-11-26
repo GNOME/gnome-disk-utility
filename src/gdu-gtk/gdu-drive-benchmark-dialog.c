@@ -679,7 +679,7 @@ gdu_drive_benchmark_dialog_constructed (GObject *object)
          * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
          * Second %s is the VPD name for the array (e.g. "158 GB RAID-0 Array" or "ATA WDC WD1001FALS-00J7B1").
          */
-        s = g_strdup_printf ("%s (%s) – Benchmark", name, vpd_name);
+        s = g_strdup_printf (_("%s (%s) – Benchmark"), name, vpd_name);
         gtk_window_set_title (GTK_WINDOW (dialog), s);
         g_free (s);
         g_free (vpd_name);

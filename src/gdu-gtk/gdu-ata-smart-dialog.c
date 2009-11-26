@@ -39,26 +39,22 @@
 
 struct GduAtaSmartDialogPrivate
 {
-        GduDrive *drive;
-        GduDevice *device;
-
         guint64 last_updated;
         gulong device_changed_signal_handler_id;
         gulong device_job_changed_signal_handler_id;
 
-        GduPoolTreeModel *pool_tree_model;
-        GtkWidget *drive_combo_box;
-
         GduDetailsElement *updated_element;
         GduDetailsElement *self_test_element;
-        GduDetailsElement *model_element;
-        GduDetailsElement *firmware_element;
-        GduDetailsElement *serial_element;
         GduDetailsElement *powered_on_element;
+        GduDetailsElement *power_cycles_element;
         GduDetailsElement *temperature_element;
         GduDetailsElement *bad_sectors_element;
         GduDetailsElement *self_assessment_element;
         GduDetailsElement *overall_assessment_element;
+
+        GduButtonElement *refresh_button;
+        GduButtonElement *self_test_button;
+        GduButtonElement *cancel_self_test_button;
 
         GtkWidget *no_warn_check_button;
 
@@ -68,12 +64,6 @@ struct GduAtaSmartDialogPrivate
         gboolean is_updating;
 
         gboolean has_been_constructed;
-};
-
-enum
-{
-        PROP_0,
-        PROP_DRIVE,
 };
 
 static gboolean is_self_test_running (GduDevice *device,
@@ -622,7 +612,7 @@ enum {
         N_COLUMNS,
 };
 
-G_DEFINE_TYPE (GduAtaSmartDialog, gdu_ata_smart_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GduAtaSmartDialog, gdu_ata_smart_dialog, GDU_TYPE_DIALOG)
 
 static void update_dialog (GduAtaSmartDialog *dialog);
 static void device_changed (GduDevice *device, gpointer user_data);
@@ -640,81 +630,12 @@ gdu_ata_smart_dialog_finalize (GObject *object)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (object);
 
-        if (dialog->priv->drive != NULL) {
-                g_object_unref (dialog->priv->drive);
-        }
-        if (dialog->priv->device != NULL) {
-                g_signal_handler_disconnect (dialog->priv->device, dialog->priv->device_changed_signal_handler_id);
-                g_signal_handler_disconnect (dialog->priv->device, dialog->priv->device_job_changed_signal_handler_id);
-                g_object_unref (dialog->priv->device);
-        }
+        g_signal_handler_disconnect (gdu_dialog_get_device (GDU_DIALOG (dialog)), dialog->priv->device_changed_signal_handler_id);
+        g_signal_handler_disconnect (gdu_dialog_get_device (GDU_DIALOG (dialog)), dialog->priv->device_job_changed_signal_handler_id);
         g_object_unref (dialog->priv->attr_list_store);
 
         if (G_OBJECT_CLASS (gdu_ata_smart_dialog_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_ata_smart_dialog_parent_class)->finalize (object);
-}
-
-static void
-gdu_ata_smart_dialog_get_property (GObject    *object,
-                                   guint       property_id,
-                                   GValue     *value,
-                                   GParamSpec *pspec)
-{
-        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (object);
-
-        switch (property_id) {
-        case PROP_DRIVE:
-                g_value_set_object (value, dialog->priv->drive);
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        }
-}
-
-static void
-gdu_ata_smart_dialog_set_property (GObject      *object,
-                                   guint         property_id,
-                                   const GValue *value,
-                                   GParamSpec   *pspec)
-{
-        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (object);
-
-        switch (property_id) {
-        case PROP_DRIVE:
-                if (dialog->priv->drive != NULL) {
-                        g_object_unref (dialog->priv->drive);
-                }
-                if (dialog->priv->device != NULL) {
-                        g_signal_handler_disconnect (dialog->priv->device,
-                                                     dialog->priv->device_changed_signal_handler_id);
-                        g_signal_handler_disconnect (dialog->priv->device,
-                                                     dialog->priv->device_job_changed_signal_handler_id);
-                        g_object_unref (dialog->priv->device);
-                }
-                if (g_value_get_object (value) != NULL) {
-                        dialog->priv->drive = g_value_dup_object (value);
-                        dialog->priv->device = gdu_presentable_get_device (GDU_PRESENTABLE (dialog->priv->drive));
-                        if (dialog->priv->device != NULL) {
-                                dialog->priv->device_changed_signal_handler_id = g_signal_connect (dialog->priv->device,
-                                                                                                   "changed",
-                                                                                                   G_CALLBACK (device_changed),
-                                                                                                   dialog);
-                                dialog->priv->device_job_changed_signal_handler_id = g_signal_connect (dialog->priv->device,
-                                                                                                       "job-changed",
-                                                                                                       G_CALLBACK (device_job_changed),
-                                                                                                       dialog);
-                        }
-                } else {
-                        dialog->priv->drive = NULL;
-                        dialog->priv->device = NULL;
-                }
-                update_dialog (dialog);
-                break;
-
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        }
 }
 
 static void
@@ -1117,8 +1038,18 @@ refresh_cb (GduDevice  *device,
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
 
         /* TODO: maybe show error dialog */
-        if (error != NULL)
+        if (error != NULL) {
+                GtkWidget *error_dialog;
+                error_dialog = gdu_error_dialog_new (GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (dialog))),
+                                                     gdu_dialog_get_presentable (GDU_DIALOG (dialog)),
+                                                     _("Error reading SMART data"),
+                                                     error);
+                gtk_widget_show_all (error_dialog);
+                gtk_window_present (GTK_WINDOW (error_dialog));
+                gtk_dialog_run (GTK_DIALOG (error_dialog));
+                gtk_widget_destroy (error_dialog);
                 g_error_free (error);
+        }
 
         dialog->priv->is_updating = FALSE;
         update_dialog (dialog);
@@ -1126,12 +1057,12 @@ refresh_cb (GduDevice  *device,
 
 
 static void
-on_updated_element_activated (GduDetailsElement    *element,
-                              gpointer     user_data)
+on_refresh_button_clicked (GduButtonElement *element,
+                           gpointer          user_data)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
 
-        gdu_device_drive_ata_smart_refresh_data (dialog->priv->device,
+        gdu_device_drive_ata_smart_refresh_data (gdu_dialog_get_device (GDU_DIALOG (dialog)),
                                                  refresh_cb,
                                                  dialog);
 
@@ -1152,6 +1083,21 @@ cancel_self_test_cb (GduDevice  *device,
 }
 
 static void
+on_cancel_self_test_button_clicked (GduButtonElement *button_element,
+                                    gpointer          user_data)
+{
+        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
+
+        if (is_self_test_running (gdu_dialog_get_device (GDU_DIALOG (dialog)), NULL)) {
+                gdu_device_op_cancel_job (gdu_dialog_get_device (GDU_DIALOG (dialog)),
+                                          cancel_self_test_cb,
+                                          dialog);
+        } else {
+                g_warning ("Self-test not running");
+        }
+}
+
+static void
 run_self_test_cb (GduDevice  *device,
                   GError     *error,
                   gpointer    user_data)
@@ -1163,8 +1109,8 @@ run_self_test_cb (GduDevice  *device,
 
 
 static void
-on_self_tests_element_activated (GduDetailsElement *element,
-                                 gpointer           user_data)
+on_self_test_button_clicked (GduButtonElement *button_element,
+                             gpointer          user_data)
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
         GtkWidget *test_dialog;
@@ -1179,10 +1125,8 @@ on_self_tests_element_activated (GduDetailsElement *element,
         gint response;
         const gchar *test;
 
-        if (is_self_test_running (dialog->priv->device, NULL)) {
-                gdu_device_op_cancel_job (dialog->priv->device,
-                                          cancel_self_test_cb,
-                                          dialog);
+        if (is_self_test_running (gdu_dialog_get_device (GDU_DIALOG (dialog)), NULL)) {
+                g_warning ("Self-test is already running");
                 goto out;
         }
 
@@ -1212,7 +1156,7 @@ on_self_tests_element_activated (GduDetailsElement *element,
 	label = gtk_label_new (NULL);
         s = g_strconcat ("<big><b>",
                          /* Translators: Shown in the "Run self-test" dialog */
-                         _("Select what SMART self test to run"),
+                         _("Choose SMART Self-test"),
                          "</b></big>",
                          NULL);
         gtk_label_set_markup (GTK_LABEL (label), s);
@@ -1246,7 +1190,7 @@ on_self_tests_element_activated (GduDetailsElement *element,
 
         gtk_dialog_add_button (GTK_DIALOG (test_dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
         /* Translators: Button in "Run self-test dialog" */
-        gtk_dialog_add_button (GTK_DIALOG (test_dialog), _("_Initiate Self Test"), 0);
+        gtk_dialog_add_button (GTK_DIALOG (test_dialog), _("_Run Self Test"), 0);
         gtk_dialog_set_default_response (GTK_DIALOG (test_dialog), 0);
 
         gtk_widget_show_all (test_dialog);
@@ -1264,167 +1208,13 @@ on_self_tests_element_activated (GduDetailsElement *element,
         if (response != 0)
                 goto out;
 
-        gdu_device_op_drive_ata_smart_initiate_selftest (dialog->priv->device,
+        gdu_device_op_drive_ata_smart_initiate_selftest (gdu_dialog_get_device (GDU_DIALOG (dialog)),
                                                          test,
                                                          run_self_test_cb,
                                                          dialog);
 
  out:
         ;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-disk_name_data_func (GtkCellLayout   *cell_layout,
-                     GtkCellRenderer *renderer,
-                     GtkTreeModel    *tree_model,
-                     GtkTreeIter     *iter,
-                     gpointer         user_data)
-{
-        gchar *name;
-        gchar *vpd_name;
-        gchar *markup;
-        gchar *desc;
-        GduPresentable *p;
-        GduDevice *d;
-        gboolean sensitive;
-        gchar *s;
-
-        gtk_tree_model_get (tree_model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
-                            GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, &vpd_name,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        d = gdu_presentable_get_device (p);
-
-        desc = NULL;
-        sensitive = FALSE;
-        if (d != NULL) {
-                if (gdu_device_drive_ata_smart_get_is_available (d) &&
-                    gdu_device_drive_ata_smart_get_time_collected (d) > 0) {
-                        const gchar *status;
-                        gboolean highlight;
-
-                        sensitive = TRUE;
-
-                        status = gdu_device_drive_ata_smart_get_status (d);
-                        if (status != NULL && strlen (status) > 0) {
-                                desc = gdu_util_ata_smart_status_to_desc (status, &highlight, NULL, NULL);
-                                if (highlight) {
-                                        s = g_strdup_printf ("<span fgcolor=\"red\"><b>%s</b></span>", desc);
-                                        g_free (desc);
-                                        desc = s;
-                                }
-                        } else if (gdu_device_drive_ata_smart_get_is_available (d) &&
-                                   gdu_device_drive_ata_smart_get_time_collected (d) > 0) {
-                                /* Translators: Used in the drive combo-box to indicate the health status is unknown */
-                                desc = g_strdup (_("Health status is unknown"));
-                        }
-                } else {
-                        if (gdu_device_drive_ata_smart_get_is_available (d)) {
-                                /* Translators: Used in the drive combo-box to indicate SMART is not enabled */
-                                desc = g_strdup (_("SMART is not enabled"));
-                        } else {
-                                /* Translators: Used in the drive combo-box to indicate SMART is not available */
-                                desc = g_strdup (_("SMART is not available"));
-                        }
-                }
-        }
-
-        if (desc != NULL) {
-                markup = g_strdup_printf ("<b>%s</b> – %s\n"
-                                          "<small>%s</small>",
-                                          name,
-                                          vpd_name,
-                                          desc);
-        } else {
-                markup = g_strdup_printf ("<b>%s</b> – %s\n"
-                                          "<small> </small>",
-                                          name,
-                                          vpd_name);
-        }
-
-        g_object_set (renderer,
-                      "markup", markup,
-                      "sensitive", sensitive,
-                      NULL);
-
-        g_free (name);
-        g_free (vpd_name);
-        g_free (markup);
-        g_free (desc);
-        g_object_unref (p);
-        if (d != NULL)
-                g_object_unref (d);
-}
-
-static void
-disk_name_gicon_func (GtkCellLayout   *cell_layout,
-                      GtkCellRenderer *renderer,
-                      GtkTreeModel    *tree_model,
-                      GtkTreeIter     *iter,
-                      gpointer         user_data)
-{
-        GIcon *icon;
-        GduPresentable *p;
-        GduDevice *d;
-        gboolean sensitive;
-
-        gtk_tree_model_get (tree_model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_ICON, &icon,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        d = gdu_presentable_get_device (p);
-        sensitive = FALSE;
-        if (d != NULL) {
-                if (gdu_device_drive_ata_smart_get_is_available (d) &&
-                    gdu_device_drive_ata_smart_get_time_collected (d) > 0)
-                        sensitive = TRUE;
-        }
-
-        g_object_set (renderer,
-                      "gicon", icon,
-                      "sensitive", sensitive,
-                      NULL);
-
-        g_object_unref (icon);
-        g_object_unref (p);
-        if (d != NULL)
-                g_object_unref (d);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_drive_combo_box_changed (GtkComboBox *combo_box,
-                            gpointer     user_data)
-{
-        GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
-        GtkTreeIter iter = {0};
-
-        if (gtk_combo_box_get_active_iter (combo_box, &iter)) {
-                GduPresentable *p;
-
-                gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->pool_tree_model),
-                                    &iter,
-                                    GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                                    -1);
-
-                g_object_set (dialog,
-                              "drive", GDU_DRIVE (p),
-                              NULL);
-
-                g_object_unref (p);
-        } else {
-                g_object_set (dialog,
-                              "drive", NULL,
-                              NULL);
-        }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1438,11 +1228,11 @@ on_no_warn_check_button_toggled (GtkToggleButton *toggle_button,
 
         is_active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->priv->no_warn_check_button));
 
-        if (dialog->priv->device == NULL)
+        if (gdu_dialog_get_device (GDU_DIALOG (dialog)) == NULL)
                 goto out;
 
-        if (get_ata_smart_no_warn (dialog->priv->device) != is_active) {
-                set_ata_smart_no_warn (dialog->priv->device, is_active);
+        if (get_ata_smart_no_warn (gdu_dialog_get_device (GDU_DIALOG (dialog))) != is_active) {
+                set_ata_smart_no_warn (gdu_dialog_get_device (GDU_DIALOG (dialog)), is_active);
                 update_dialog (dialog);
         }
 
@@ -1459,7 +1249,6 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         GtkWidget *content_area;
         GtkWidget *align;
         GtkWidget *vbox;
-        GtkWidget *vbox2;
         GtkWidget *table;
         GtkWidget *label;
         GtkWidget *tree_view;
@@ -1467,21 +1256,41 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         GtkWidget *check_button;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
-        gint row;
         GtkTreeSelection *selection;
         gchar *s;
-        GtkWidget *combo_box;
-        GduPool *pool;
-        GtkTreeIter iter = {0};
-        const gchar *tooltip_markup;
+        gchar *name;
+        gchar *vpd_name;
         gboolean rtl;
         GPtrArray *elements;
         GduDetailsElement *element;
+        GduButtonElement *button_element;
+
+        dialog->priv->device_changed_signal_handler_id =
+                g_signal_connect (gdu_dialog_get_device (GDU_DIALOG (dialog)),
+                                  "changed",
+                                  G_CALLBACK (device_changed),
+                                  dialog);
+
+        dialog->priv->device_job_changed_signal_handler_id =
+                g_signal_connect (gdu_dialog_get_device (GDU_DIALOG (dialog)),
+                                  "job-changed",
+                                  G_CALLBACK (device_job_changed),
+                                  dialog);
 
         rtl = (gtk_widget_get_direction (GTK_WIDGET (dialog)) == GTK_TEXT_DIR_RTL);
 
-        /* Translators: Title of the SMART dialog */
-        gtk_window_set_title (GTK_WINDOW (dialog), _("SMART Data"));
+        name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+        vpd_name = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+        /* Translators: The title of the SMART dialog.
+         * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
+         * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
+         */
+        s = g_strdup_printf (_("%s (%s) – SMART Data"), name, vpd_name);
+        gtk_window_set_title (GTK_WINDOW (dialog), s);
+        g_free (s);
+        g_free (vpd_name);
+        g_free (name);
+
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
@@ -1495,84 +1304,6 @@ gdu_ata_smart_dialog_constructed (GObject *object)
 
         /* ---------------------------------------------------------------------------------------------------- */
 
-        pool = gdu_device_get_pool (dialog->priv->device);
-        dialog->priv->pool_tree_model = gdu_pool_tree_model_new (pool,
-                                                                 NULL,
-                                                                 GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES);
-        g_object_unref (pool);
-
-        table = gtk_table_new (4, 2, FALSE);
-        gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-        gtk_table_set_row_spacings (GTK_TABLE (table), 0);
-        gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-        row = 0;
-
-        /* ------------------------------ */
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Label used before the drive combo box */
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Drive:"));
-        gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                          GTK_FILL, GTK_FILL, 0, 0);
-
-        combo_box = gtk_combo_box_new_with_model (GTK_TREE_MODEL (dialog->priv->pool_tree_model));
-        gtk_table_attach (GTK_TABLE (table), combo_box, 1, 2, row, row + 1,
-                          GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-        dialog->priv->drive_combo_box = combo_box;
-        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo_box);
-        g_signal_connect (combo_box,
-                          "changed",
-                          G_CALLBACK (on_drive_combo_box_changed),
-                          dialog);
-
-        renderer = gtk_cell_renderer_pixbuf_new ();
-        gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, FALSE);
-        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
-                                            renderer,
-                                            disk_name_gicon_func,
-                                            dialog,
-                                            NULL);
-        g_object_set (renderer,
-                      "stock-size", GTK_ICON_SIZE_SMALL_TOOLBAR,
-                      NULL);
-
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), renderer, TRUE);
-        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
-                                            renderer,
-                                            disk_name_data_func,
-                                            dialog,
-                                            NULL);
-
-        row++;
-
-        if (dialog->priv->drive != NULL) {
-                if (gdu_pool_tree_model_get_iter_for_presentable (dialog->priv->pool_tree_model,
-                                                                  GDU_PRESENTABLE (dialog->priv->drive),
-                                                                  &iter)) {
-                        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (dialog->priv->drive_combo_box), &iter);
-                }
-        }
-
-        /* ---------------------------------------------------------------------------------------------------- */
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        /* Translators: Heading used in the main dialog for the SMART status */
-        s = g_strconcat ("<b>", _("Status"), "</b>", NULL);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
-
-        vbox2 = gtk_vbox_new (FALSE, 6);
-        gtk_container_add (GTK_CONTAINER (align), vbox2);
-
         elements = g_ptr_array_new_with_free_func (g_object_unref);
 
         /* Translators: Item name in the status table */
@@ -1581,10 +1312,6 @@ gdu_ata_smart_dialog_constructed (GObject *object)
                                            /* Translators: Tooltip for the 'Updated' item in the status table */
                                            _("Time since SMART data was last read – SMART data is updated every "
                                              "30 minutes unless the disk is sleeping"));
-        g_signal_connect (element,
-                          "activated",
-                          G_CALLBACK (on_updated_element_activated),
-                          dialog);
         g_ptr_array_add (elements, element);
         dialog->priv->updated_element = element;
 
@@ -1593,37 +1320,8 @@ gdu_ata_smart_dialog_constructed (GObject *object)
                                            NULL,
                                            /* Translators: Tooltip for the 'Self-tests' item in the status table */
                                            _("The result of the last self-test that ran on the disk"));
-        g_signal_connect (element,
-                          "activated",
-                          G_CALLBACK (on_self_tests_element_activated),
-                          dialog);
         g_ptr_array_add (elements, element);
         dialog->priv->self_test_element = element;
-
-        /* Translators: Item name in the status table */
-        element = gdu_details_element_new (_("Model:"),
-                                           NULL,
-                                           /* Translators: Tooltip for the 'Model' item in the status table */
-                                           _("The name of the model of the disk"));
-        g_ptr_array_add (elements, element);
-        dialog->priv->model_element = element;
-
-        /* Translators: Item name in the status table */
-        element = gdu_details_element_new (_("Firmware Version:"),
-                                           NULL,
-                                           /* Translators: Tooltip for the 'Firmware Version' item in the
-                                            * status table */
-                                           _("The firmware version of the disk"));
-        g_ptr_array_add (elements, element);
-        dialog->priv->firmware_element = element;
-
-        /* Translators: Item name in the status table */
-        element = gdu_details_element_new (_("Serial Number:"),
-                                           NULL,
-                                           /* Translators: Tooltip for the 'Serial Number' item in the status table */
-                                           _("The serial number of the disk"));
-        g_ptr_array_add (elements, element);
-        dialog->priv->serial_element = element;
 
         /* Translators: Item name in the status table */
         element = gdu_details_element_new (_("Powered On:"),
@@ -1632,6 +1330,14 @@ gdu_ata_smart_dialog_constructed (GObject *object)
                                            _("The amount of elapsed time the disk has been in a powered-up state"));
         g_ptr_array_add (elements, element);
         dialog->priv->powered_on_element = element;
+
+        /* Translators: Item name in the status table */
+        element = gdu_details_element_new (_("Power Cycles:"),
+                                           NULL,
+                                           /* Translators: Tooltip for the 'Power Cycles' item in the status table */
+                                           _("The number of full disk power on/off cycles"));
+        g_ptr_array_add (elements, element);
+        dialog->priv->power_cycles_element = element;
 
         /* Translators: Item name in the status table */
         element = gdu_details_element_new (_("Temperature:"),
@@ -1666,24 +1372,53 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         g_ptr_array_add (elements, element);
         dialog->priv->overall_assessment_element = element;
 
-        table = gdu_details_table_new (1, elements);
+        table = gdu_details_table_new (2, elements);
         g_ptr_array_unref (elements);
-        gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
         /* ------------------------------ */
 
-        /* Translators: Tooltip for the "Do not warn if disk is failing" check button */
-        tooltip_markup = _("Leave unchecked to get notified if the disk starts failing");
+        elements = g_ptr_array_new_with_free_func (g_object_unref);
 
-        /* Translators: Check button in the status table */
-        check_button = gtk_check_button_new_with_mnemonic (_("Don't _warn me if the disk is failing"));
-        gtk_widget_set_tooltip_markup (check_button, tooltip_markup);
-        gtk_box_pack_start (GTK_BOX (vbox2), check_button, FALSE, FALSE, 0);
-        dialog->priv->no_warn_check_button = check_button;
-        g_signal_connect (check_button,
-                          "toggled",
-                          G_CALLBACK (on_no_warn_check_button_toggled),
+        button_element = gdu_button_element_new ("gtk-refresh",
+                                                 /* Translators: Button name */
+                                                 _("_Refresh"),
+                                                 /* Translators: Button details*/
+                                                 _("Reads SMART Data, waking up the disk"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_refresh_button_clicked),
                           dialog);
+        g_ptr_array_add (elements, button_element);
+        dialog->priv->refresh_button = button_element;
+
+        button_element = gdu_button_element_new ("gtk-execute", /* TODO: better icon */
+                                                 /* Translators: Button name */
+                                                 _("Run _Self-test"),
+                                                 /* Translators: Button details*/
+                                                 _("Test the disk surface for errors"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_self_test_button_clicked),
+                          dialog);
+        g_ptr_array_add (elements, button_element);
+        dialog->priv->self_test_button = button_element;
+
+        button_element = gdu_button_element_new ("gtk-cancel",
+                                                 /* Translators: Button name */
+                                                 _("_Cancel Self-test"),
+                                                 /* Translators: Button details*/
+                                                 _("Cancels the self-test"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_cancel_self_test_button_clicked),
+                          dialog);
+        g_ptr_array_add (elements, button_element);
+        dialog->priv->cancel_self_test_button = button_element;
+
+        table = gdu_button_table_new (2, elements);
+        g_ptr_array_unref (elements);
+        gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
         /* ---------------------------------------------------------------------------------------------------- */
         /* attributes in a tree view */
@@ -1800,7 +1535,20 @@ gdu_ata_smart_dialog_constructed (GObject *object)
 
         /* ---------------------------------------------------------------------------------------------------- */
 
-        gtk_window_set_default_size (GTK_WINDOW (dialog), 700, 600);
+        /* Translators: Check button in the status table */
+        check_button = gtk_check_button_new_with_mnemonic (_("Don't _warn if the disk is failing"));
+        /* Translators: Tooltip for the "Don't warn me if disk is failing" check button */
+        gtk_widget_set_tooltip_markup (check_button, _("Leave unchecked to get notified if the disk starts failing"));
+        gtk_box_pack_start (GTK_BOX (vbox), check_button, FALSE, FALSE, 0);
+        dialog->priv->no_warn_check_button = check_button;
+        g_signal_connect (check_button,
+                          "toggled",
+                          G_CALLBACK (on_no_warn_check_button_toggled),
+                          dialog);
+
+        /* ---------------------------------------------------------------------------------------------------- */
+
+        gtk_window_set_default_size (GTK_WINDOW (dialog), 600, 500);
 
         dialog->priv->has_been_constructed = TRUE;
         update_dialog (dialog);
@@ -1819,20 +1567,8 @@ gdu_ata_smart_dialog_class_init (GduAtaSmartDialogClass *klass)
 
         g_type_class_add_private (klass, sizeof (GduAtaSmartDialogPrivate));
 
-        object_class->get_property = gdu_ata_smart_dialog_get_property;
-        object_class->set_property = gdu_ata_smart_dialog_set_property;
         object_class->constructed  = gdu_ata_smart_dialog_constructed;
         object_class->finalize     = gdu_ata_smart_dialog_finalize;
-
-        g_object_class_install_property (object_class,
-                                         PROP_DRIVE,
-                                         g_param_spec_object ("drive",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_DRIVE,
-                                                              G_PARAM_READABLE |
-                                                              G_PARAM_WRITABLE |
-                                                              G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -1847,7 +1583,7 @@ gdu_ata_smart_dialog_new (GtkWindow *parent,
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_ATA_SMART_DIALOG,
                                          "transient-for", parent,
-                                         "drive", drive,
+                                         "presentable", GDU_PRESENTABLE (drive),
                                          NULL));
 }
 
@@ -2161,6 +1897,7 @@ update_dialog (GduAtaSmartDialog *dialog)
         gchar *overall_assessment_text;
         gchar *bad_sectors_text;
         gchar *powered_on_text;
+        gchar *power_cycles_text;
         gchar *model_text;
         gchar *firmware_text;
         gchar *serial_text;
@@ -2177,11 +1914,13 @@ update_dialog (GduAtaSmartDialog *dialog)
         uint64_t num_bad_sectors;
         uint64_t power_on_msec;
         uint64_t temperature_mkelvin;
+        uint64_t power_cycles_count;
         SkSmartSelfTest test_type;
         SkDisk *sk_disk;
         const SkSmartParsedData *parsed_data;
         const SkIdentifyParsedData *parsed_identify_data;
         gboolean no_warn;
+        GduDevice *device;
 
         self_assessment_text = NULL;
         overall_assessment_text = NULL;
@@ -2190,6 +1929,7 @@ update_dialog (GduAtaSmartDialog *dialog)
         firmware_text = NULL;
         serial_text = NULL;
         powered_on_text = NULL;
+        power_cycles_text = NULL;
         temperature_text = NULL;
         selftest_text = NULL;
         action_text = NULL;
@@ -2197,25 +1937,27 @@ update_dialog (GduAtaSmartDialog *dialog)
         status_icon = NULL;
         sk_disk = NULL;
 
+        device = gdu_dialog_get_device (GDU_DIALOG (dialog));
+
         /* avoid updating anything if the widgets hasn't been constsructed */
         if (!dialog->priv->has_been_constructed)
                 goto out;
 
-        if (dialog->priv->device == NULL) {
+        if (device == NULL) {
                 /* Translators: Shown in the "Overall Assessment" item in the status table
                  * when no drive is currently selected */
                 overall_assessment_text = g_strdup (_("No drive selected"));
                 goto has_data;
         }
 
-        if (!gdu_device_drive_ata_smart_get_is_available (dialog->priv->device)) {
+        if (!gdu_device_drive_ata_smart_get_is_available (device)) {
                 /* Translators: Shown in the "Overall Assessment" item in the status table
                  * when SMART is not available */
                 overall_assessment_text = g_strdup (_("SMART not supported"));
                 goto has_data;
         }
 
-        blob = gdu_device_drive_ata_smart_get_blob (dialog->priv->device, &blob_size);
+        blob = gdu_device_drive_ata_smart_get_blob (device, &blob_size);
         if (blob == NULL) {
                 /* Translators: Shown in the "Overall Assessment" item in the status table
                  * when SMART is supported but data was never collected */
@@ -2236,9 +1978,9 @@ update_dialog (GduAtaSmartDialog *dialog)
                 goto has_data;
         }
 
-        dialog->priv->last_updated = updated = gdu_device_drive_ata_smart_get_time_collected (dialog->priv->device);
+        dialog->priv->last_updated = updated = gdu_device_drive_ata_smart_get_time_collected (device);
 
-        s = gdu_util_ata_smart_status_to_desc (gdu_device_drive_ata_smart_get_status (dialog->priv->device),
+        s = gdu_util_ata_smart_status_to_desc (gdu_device_drive_ata_smart_get_status (device),
                                                &highlight,
                                                &action_text,
                                                &status_icon);
@@ -2305,6 +2047,14 @@ update_dialog (GduAtaSmartDialog *dialog)
                 powered_on_text = pretty_to_string (power_on_msec, SK_SMART_ATTRIBUTE_UNIT_MSECONDS);
         }
 
+        if (sk_disk_smart_get_power_cycle (sk_disk, &power_cycles_count) != 0) {
+                /* Translators: Shown in the "Power Cycles" item in the status table when we don't know
+                 * the amount of power cycles */
+                power_cycles_text = g_strdup (_("Unknown"));
+        } else {
+                power_cycles_text = pretty_to_string (power_cycles_count, SK_SMART_ATTRIBUTE_UNIT_NONE);
+        }
+
         if (sk_disk_smart_get_temperature (sk_disk, &temperature_mkelvin) != 0) {
                 /* Translators: Shown in the "Temperature" item in the status table when we don't know
                  * the temperature of the disk
@@ -2328,43 +2078,43 @@ update_dialog (GduAtaSmartDialog *dialog)
                 switch (parsed_data->self_test_execution_status) {
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_SUCCESS_OR_NEVER:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test completed OK");
+                        self_text = _("Completed OK");
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ABORTED:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test was cancelled");
+                        self_text = _("Cancelled");
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_INTERRUPTED:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test was cancelled (with hard or soft reset)");
+                        self_text = _("Cancelled (with hard or soft reset)");
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_FATAL:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test not completed (a fatal error might have occurred)");
+                        self_text = _("Not completed (a fatal error might have occurred)");
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_ELECTRICAL:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test FAILED (Electrical)");
+                        self_text = _("FAILED (Electrical)");
                         highlight = TRUE;
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_SERVO:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test FAILED (Servo)");
+                        self_text = _("FAILED (Servo)");
                         highlight = TRUE;
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_READ:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test FAILED (Read)");
+                        self_text = _("FAILED (Read)");
                         highlight = TRUE;
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_ERROR_HANDLING:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Last self-test FAILED (Suspected of having handled damage)");
+                        self_text = _("FAILED (Suspected of having handled damage)");
                         highlight = TRUE;
                         break;
                 case SK_SMART_SELF_TEST_EXECUTION_STATUS_INPROGRESS:
                         /* Translators: Shown in the "Self-tests" item in the status table */
-                        self_text = _("Self-test is in progress");
+                        self_text = _("In progress");
                         highlight = TRUE;
                         break;
 
@@ -2395,20 +2145,14 @@ update_dialog (GduAtaSmartDialog *dialog)
                                       bad_sectors_text != NULL ? bad_sectors_text : "-");
         gdu_details_element_set_text (dialog->priv->powered_on_element,
                                       powered_on_text != NULL ? powered_on_text : "-");
+        gdu_details_element_set_text (dialog->priv->power_cycles_element,
+                                      power_cycles_text != NULL ? power_cycles_text : "-");
         gdu_details_element_set_text (dialog->priv->temperature_element,
                                       temperature_text != NULL ? temperature_text : "-");
-        gdu_details_element_set_text (dialog->priv->model_element,
-                                      model_text != NULL ? model_text : "-");
-        gdu_details_element_set_text (dialog->priv->firmware_element,
-                                      firmware_text != NULL ? firmware_text : "-");
-        gdu_details_element_set_text (dialog->priv->serial_element,
-                                      serial_text != NULL ? serial_text : "-");
         if (dialog->priv->is_updating) {
                 gdu_details_element_set_is_spinning (dialog->priv->updated_element, TRUE);
                 gdu_details_element_set_text (dialog->priv->updated_element, "Updating");
                 gdu_details_element_set_time (dialog->priv->updated_element, 0);
-                gdu_details_element_set_action_text (dialog->priv->updated_element, NULL);
-                gdu_details_element_set_action_tooltip (dialog->priv->updated_element, NULL);
         } else {
                 gdu_details_element_set_is_spinning (dialog->priv->updated_element, FALSE);
                 if (updated > 0) {
@@ -2418,52 +2162,21 @@ update_dialog (GduAtaSmartDialog *dialog)
                         gdu_details_element_set_time (dialog->priv->updated_element, 0);
                         gdu_details_element_set_text (dialog->priv->updated_element, "-");
                 }
-                gdu_details_element_set_action_text (dialog->priv->updated_element,
-                                                     /* Translators: Text used in the hyperlink in the status table
-                                                      * to update the SMART status */
-                                                     _("Update Now"));
-                gdu_details_element_set_action_tooltip (dialog->priv->updated_element,
-                                                        /* Translators: Tooltip for the "Update Now" hyperlink */
-                                                        _("Reads SMART data from the disk, waking it up if necessary"));
         }
 
-        if (dialog->priv->device != NULL && is_self_test_running (dialog->priv->device, &test_type)) {
+        if (device != NULL && is_self_test_running (device, &test_type)) {
                 gdouble fraction;
-                const gchar *test_type_str;
 
-                switch (test_type) {
-                case SK_SMART_SELF_TEST_SHORT:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Short self-test in progress: ");
-                        break;
-                case SK_SMART_SELF_TEST_EXTENDED:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Extended self-test in progress: ");
-                        break;
-                case SK_SMART_SELF_TEST_CONVEYANCE:
-                        /* Translators: Shown in the "Self-tests" item in the status table when a test is underway */
-                        test_type_str = _("Conveyance self-test in progress: ");
-                        break;
-                default:
-                        g_assert_not_reached ();
-                        break;
-                }
+                gdu_button_element_set_visible (dialog->priv->self_test_button, FALSE);
 
-                if (gdu_device_job_is_cancellable (dialog->priv->device)) {
-                        gdu_details_element_set_action_text (dialog->priv->self_test_element,
-                                                             /* Translators: Text used in the hyperlink in the status
-                                                              * table to cancel a self-test */
-                                                             _("Cancel Test"));
-                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element,
-                                                                /* Translators: Tooptip for the "Cancel" hyperlink */
-                                                                _("Cancels the currently running test"));
+                if (gdu_device_job_is_cancellable (device)) {
+                        gdu_button_element_set_visible (dialog->priv->cancel_self_test_button, TRUE);
                 } else {
-                        gdu_details_element_set_action_text (dialog->priv->self_test_element, NULL);
-                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element, NULL);
+                        gdu_button_element_set_visible (dialog->priv->cancel_self_test_button, FALSE);
                 }
-                gdu_details_element_set_text (dialog->priv->self_test_element, test_type_str);
+                gdu_details_element_set_text (dialog->priv->self_test_element, NULL);
 
-                fraction = gdu_device_job_get_percentage (dialog->priv->device) / 100.0;
+                fraction = gdu_device_job_get_percentage (device) / 100.0;
                 if (fraction < 0.0)
                         fraction = 0.0;
                 if (fraction > 1.0)
@@ -2474,19 +2187,14 @@ update_dialog (GduAtaSmartDialog *dialog)
                 gdu_details_element_set_progress (dialog->priv->self_test_element, -1.0);
                 gdu_details_element_set_text (dialog->priv->self_test_element,
                                               selftest_text != NULL ? selftest_text : "-");
-                if (dialog->priv->device != NULL) {
+
+                gdu_button_element_set_visible (dialog->priv->cancel_self_test_button, FALSE);
+
+                if (device != NULL) {
                         /* TODO: check if self-tests are available at all */
-                        gdu_details_element_set_action_text (dialog->priv->self_test_element,
-                                                             /* Translators: Text used in the hyperlink in the
-                                                              * status table to run a self-test */
-                                                             _("Run self-test"));
-                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element,
-                                                                /* Translators: Tooltip for the "Run self-test"
-                                                                 * hyperlink */
-                                                                _("Initiates a self-test on the drive"));
+                        gdu_button_element_set_visible (dialog->priv->self_test_button, TRUE);
                 } else {
-                        gdu_details_element_set_action_text (dialog->priv->self_test_element, NULL);
-                        gdu_details_element_set_action_tooltip (dialog->priv->self_test_element, NULL);
+                        gdu_button_element_set_visible (dialog->priv->self_test_button, FALSE);
                 }
         }
 
@@ -2525,8 +2233,8 @@ update_dialog (GduAtaSmartDialog *dialog)
 
         /* update "no warning" check button */
         no_warn = FALSE;
-        if (dialog->priv->device != NULL)
-                no_warn = get_ata_smart_no_warn (dialog->priv->device);
+        if (device != NULL)
+                no_warn = get_ata_smart_no_warn (device);
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->priv->no_warn_check_button), no_warn);
 
         if (sk_disk != NULL)
@@ -2536,6 +2244,7 @@ update_dialog (GduAtaSmartDialog *dialog)
         g_free (overall_assessment_text);
         g_free (self_assessment_text);
         g_free (powered_on_text);
+        g_free (power_cycles_text);
         g_free (model_text);
         g_free (firmware_text);
         g_free (serial_text);
@@ -2551,7 +2260,7 @@ device_changed (GduDevice *device,
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
 
-        if (gdu_device_drive_ata_smart_get_time_collected (dialog->priv->device) != dialog->priv->last_updated) {
+        if (gdu_device_drive_ata_smart_get_time_collected (device) != dialog->priv->last_updated) {
                 update_dialog (dialog);
         }
 

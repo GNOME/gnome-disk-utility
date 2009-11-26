@@ -27,6 +27,7 @@
 #define __GDU_ATA_SMART_DIALOG_H
 
 #include <gdu-gtk/gdu-gtk-types.h>
+#include <gdu-gtk/gdu-dialog.h>
 
 G_BEGIN_DECLS
 
@@ -42,7 +43,7 @@ typedef struct GduAtaSmartDialogPrivate GduAtaSmartDialogPrivate;
 
 struct GduAtaSmartDialog
 {
-        GtkDialog parent;
+        GduDialog parent;
 
         /*< private >*/
         GduAtaSmartDialogPrivate *priv;
@@ -50,7 +51,7 @@ struct GduAtaSmartDialog
 
 struct GduAtaSmartDialogClass
 {
-        GtkDialogClass parent_class;
+        GduDialogClass parent_class;
 };
 
 GType       gdu_ata_smart_dialog_get_type (void) G_GNUC_CONST;

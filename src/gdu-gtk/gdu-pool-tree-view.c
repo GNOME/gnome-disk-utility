@@ -191,16 +191,17 @@ format_markup (GtkCellLayout   *cell_layout,
 
         /* Only include VPD name for drives */
         if (GDU_IS_DRIVE (p)) {
-                markup = g_strdup_printf ("<b>%s</b>\n"
-                                          "<span fgcolor=\"%s\"><small>%s\n%s</small></span>",
+                markup = g_strdup_printf ("<small>"
+                                          "<b>%s</b>\n"
+                                          "<small><span fgcolor=\"%s\">%s</span></small>"
+                                          "</small>",
                                           name,
                                           desc_color,
-                                          vpd_name,
-                                          desc);
+                                          vpd_name);
         } else {
                 markup = g_strdup_printf ("<small>"
                                           "<b>%s</b>\n"
-                                          "<span fgcolor=\"%s\">%s</span>"
+                                          "<small><span fgcolor=\"%s\">%s</span></small>"
                                           "</small>",
                                           name,
                                           desc_color,
@@ -236,39 +237,10 @@ pixbuf_data_func (GtkCellLayout   *cell_layout,
                             GDU_POOL_TREE_MODEL_COLUMN_ICON, &icon,
                             -1);
 
-#if 0
-        gint width, height;
-        GdkPixbuf *pixbuf;
-
-        gtk_tree_view_column_cell_get_size  (GTK_TREE_VIEW_COLUMN (cell_layout),
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             &width,
-                                             &height);
-        //g_debug ("w=%d h=%d", width, height);
-
-        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (p,
-                                                                    height * 5 / 6);
-        g_object_set (renderer,
-                      "pixbuf", pixbuf,
-                      "width", 48,
-                      "height", 0,
-                      NULL);
-        g_object_unref (pixbuf);
-#else
-
-        GtkIconSize size;
-        size = GTK_ICON_SIZE_SMALL_TOOLBAR;
-        if (GDU_IS_VOLUME (p) || GDU_IS_VOLUME_HOLE (p)) {
-                size = GTK_ICON_SIZE_MENU;
-        }
-
         g_object_set (renderer,
                       "gicon", icon,
-                      "stock-size", size,
+                      "stock-size", GTK_ICON_SIZE_MENU,
                       NULL);
-#endif
 
         g_object_unref (p);
         g_object_unref (icon);

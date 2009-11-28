@@ -193,7 +193,7 @@ format_markup (GtkCellLayout   *cell_layout,
         if (GDU_IS_DRIVE (p)) {
                 markup = g_strdup_printf ("<small>"
                                           "<b>%s</b>\n"
-                                          "<small><span fgcolor=\"%s\">%s</span></small>"
+                                          "<span fgcolor=\"%s\">%s</span>"
                                           "</small>",
                                           name,
                                           desc_color,
@@ -201,7 +201,7 @@ format_markup (GtkCellLayout   *cell_layout,
         } else {
                 markup = g_strdup_printf ("<small>"
                                           "<b>%s</b>\n"
-                                          "<small><span fgcolor=\"%s\">%s</span></small>"
+                                          "<span fgcolor=\"%s\">%s</span>"
                                           "</small>",
                                           name,
                                           desc_color,

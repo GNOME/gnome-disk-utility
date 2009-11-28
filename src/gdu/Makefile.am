@@ -4,6 +4,7 @@ BUILT_SOURCES =                                         	\
         devkit-disks-daemon-glue.h                      	\
         devkit-disks-device-glue.h				\
         devkit-disks-adapter-glue.h				\
+        devkit-disks-port-glue.h				\
 	gdu-marshal.h			gdu-marshal.c
 
 gdu-marshal.h: gdu-marshal.list
@@ -21,6 +22,9 @@ devkit-disks-device-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceK
 devkit-disks-adapter-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Adapter.xml Makefile.am
 	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-adapter-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Adapter.xml
 
+devkit-disks-port-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Port.xml Makefile.am
+	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-port-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Port.xml
+
 lib_LTLIBRARIES=libgdu.la
 
 libgduincludedir=$(includedir)/gnome-disk-utility/gdu
@@ -30,7 +34,8 @@ libgduinclude_HEADERS =              			\
 	gdu-types.h					\
 	gdu-callbacks.h					\
 	gdu-device.h					\
-	gdu-adapter.h				\
+	gdu-adapter.h					\
+	gdu-port.h					\
 	gdu-drive.h					\
 	gdu-linux-md-drive.h				\
 	gdu-error.h					\
@@ -52,6 +57,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-pool.c				gdu-pool.h				\
 	gdu-device.c				gdu-device.h				\
 	gdu-adapter.c				gdu-adapter.h				\
+	gdu-port.c				gdu-port.h				\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\
 	gdu-volume.c				gdu-volume.h				\

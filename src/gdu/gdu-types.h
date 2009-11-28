@@ -36,6 +36,7 @@ G_BEGIN_DECLS
 typedef struct _GduPool                   GduPool;
 typedef struct _GduDevice                 GduDevice;
 typedef struct _GduAdapter                GduAdapter;
+typedef struct _GduPort                   GduPort;
 
 typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
 typedef struct _GduDrive                  GduDrive;

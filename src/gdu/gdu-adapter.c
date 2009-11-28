@@ -48,6 +48,8 @@ typedef struct
         gchar *vendor;
         gchar *model;
         gchar *driver;
+        gchar *fabric;
+        guint num_ports;
 } AdapterProperties;
 
 static void
@@ -64,6 +66,10 @@ collect_props (const char *key, const GValue *value, AdapterProperties *props)
                 props->model = g_value_dup_string (value);
         else if (strcmp (key, "Driver") == 0)
                 props->driver = g_value_dup_string (value);
+        else if (strcmp (key, "Fabric") == 0)
+                props->fabric = g_value_dup_string (value);
+        else if (strcmp (key, "NumPorts") == 0)
+                props->num_ports = g_value_get_uint (value);
         else
                 handled = FALSE;
 
@@ -78,6 +84,7 @@ adapter_properties_free (AdapterProperties *props)
         g_free (props->vendor);
         g_free (props->model);
         g_free (props->driver);
+        g_free (props->fabric);
         g_free (props);
 }
 
@@ -119,12 +126,14 @@ adapter_properties_get (DBusGConnection *bus,
 
         g_hash_table_unref (hash_table);
 
-#if 0
+#if 1
         g_print ("----------------------------------------------------------------------\n");
         g_print ("native_path: %s\n", props->native_path);
         g_print ("vendor:      %s\n", props->vendor);
         g_print ("model:       %s\n", props->model);
         g_print ("driver:      %s\n", props->driver);
+        g_print ("fabric:      %s\n", props->fabric);
+        g_print ("num_ports:   %d\n", props->num_ports);
 #endif
 
 out:
@@ -312,4 +321,16 @@ const gchar *
 gdu_adapter_get_driver (GduAdapter *adapter)
 {
         return adapter->priv->props->driver;
+}
+
+const gchar *
+gdu_adapter_get_fabric (GduAdapter *adapter)
+{
+        return adapter->priv->props->fabric;
+}
+
+guint
+gdu_adapter_get_num_ports (GduAdapter *adapter)
+{
+        return adapter->priv->props->num_ports;
 }

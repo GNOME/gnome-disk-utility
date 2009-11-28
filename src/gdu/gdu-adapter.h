@@ -69,6 +69,8 @@ const gchar *gdu_adapter_get_native_path       (GduAdapter   *adapter);
 const gchar *gdu_adapter_get_vendor            (GduAdapter   *adapter);
 const gchar *gdu_adapter_get_model             (GduAdapter   *adapter);
 const gchar *gdu_adapter_get_driver            (GduAdapter   *adapter);
+const gchar *gdu_adapter_get_fabric            (GduAdapter   *adapter);
+guint        gdu_adapter_get_num_ports         (GduAdapter   *adapter);
 
 G_END_DECLS
 

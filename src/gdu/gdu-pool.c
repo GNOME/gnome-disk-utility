@@ -28,6 +28,7 @@
 #include "gdu-presentable.h"
 #include "gdu-device.h"
 #include "gdu-adapter.h"
+#include "gdu-port.h"
 #include "gdu-drive.h"
 #include "gdu-linux-md-drive.h"
 #include "gdu-volume.h"
@@ -54,6 +55,9 @@ enum {
         ADAPTER_ADDED,
         ADAPTER_REMOVED,
         ADAPTER_CHANGED,
+        PORT_ADDED,
+        PORT_REMOVED,
+        PORT_CHANGED,
         PRESENTABLE_ADDED,
         PRESENTABLE_REMOVED,
         PRESENTABLE_CHANGED,
@@ -79,8 +83,11 @@ struct _GduPoolPrivate
         /* the current set of devices we know about */
         GHashTable *object_path_to_device;
 
-        /* the current set of devices we know about */
+        /* the current set of adapters we know about */
         GHashTable *object_path_to_adapter;
+
+        /* the current set of ports we know about */
+        GHashTable *object_path_to_port;
 };
 
 G_DEFINE_TYPE (GduPool, gdu_pool, G_TYPE_OBJECT);
@@ -99,6 +106,8 @@ gdu_pool_finalize (GduPool *pool)
         g_hash_table_unref (pool->priv->object_path_to_device);
 
         g_hash_table_unref (pool->priv->object_path_to_adapter);
+
+        g_hash_table_unref (pool->priv->object_path_to_port);
 
         g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
         g_list_free (pool->priv->presentables);
@@ -239,6 +248,58 @@ gdu_pool_class_init (GduPoolClass *klass)
                               G_TYPE_NONE, 1,
                               GDU_TYPE_ADAPTER);
 
+        /**
+         * GduPool::port-added
+         * @pool: The #GduPool emitting the signal.
+         * @port: The #GduPort that was added.
+         *
+         * Emitted when @port is added to @pool.
+         **/
+        signals[PORT_ADDED] =
+                g_signal_new ("port-added",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, port_added),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_PORT);
+
+        /**
+         * GduPool::port-removed
+         * @pool: The #GduPool emitting the signal.
+         * @port: The #GduPort that was removed.
+         *
+         * Emitted when @port is removed from @pool. Recipients
+         * should release references to @port.
+         **/
+        signals[PORT_REMOVED] =
+                g_signal_new ("port-removed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, port_removed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_PORT);
+
+        /**
+         * GduPool::port-changed
+         * @pool: The #GduPool emitting the signal.
+         * @port: A #GduPort.
+         *
+         * Emitted when @port is changed.
+         **/
+        signals[PORT_CHANGED] =
+                g_signal_new ("port-changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, port_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_PORT);
+
 
         /**
          * GduPool::presentable-added
@@ -356,6 +417,11 @@ gdu_pool_init (GduPool *pool)
                                                                        g_str_equal,
                                                                        NULL,
                                                                        g_object_unref);
+
+        pool->priv->object_path_to_port = g_hash_table_new_full (g_str_hash,
+                                                                 g_str_equal,
+                                                                 NULL,
+                                                                 g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1183,6 +1249,96 @@ adapter_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoi
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+port_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data);
+
+static void
+port_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduPort *port;
+
+        pool = GDU_POOL (user_data);
+
+        port = gdu_pool_get_port_by_object_path (pool, object_path);
+        if (port != NULL) {
+                g_object_unref (port);
+                g_warning ("Treating add for previously added port %s as change", object_path);
+                port_changed_signal_handler (proxy, object_path, user_data);
+                goto out;
+        }
+
+        port = _gdu_port_new_from_object_path (pool, object_path);
+        if (port == NULL)
+                goto out;
+
+        g_hash_table_insert (pool->priv->object_path_to_port,
+                             (gpointer) gdu_port_get_object_path (port),
+                             port);
+        g_signal_emit (pool, signals[PORT_ADDED], 0, port);
+        //g_debug ("Added port %s", object_path);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+static void
+port_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduPort *port;
+
+        pool = GDU_POOL (user_data);
+
+        port = gdu_pool_get_port_by_object_path (pool, object_path);
+        if (port == NULL) {
+                g_warning ("No port to remove for remove %s", object_path);
+                goto out;
+        }
+
+        g_hash_table_remove (pool->priv->object_path_to_port,
+                             gdu_port_get_object_path (port));
+        g_signal_emit (pool, signals[PORT_REMOVED], 0, port);
+        g_signal_emit_by_name (port, "removed");
+        g_object_unref (port);
+        g_debug ("Removed port %s", object_path);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+static void
+port_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduPort *port;
+
+        pool = GDU_POOL (user_data);
+
+        port = gdu_pool_get_port_by_object_path (pool, object_path);
+        if (port == NULL) {
+                g_warning ("Ignoring change event on non-existant port %s", object_path);
+                goto out;
+        }
+
+        if (_gdu_port_changed (port)) {
+                g_signal_emit (pool, signals[PORT_CHANGED], 0, port);
+                g_signal_emit_by_name (port, "changed");
+        }
+        g_object_unref (port);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 get_properties (GduPool *pool)
 {
@@ -1264,6 +1420,7 @@ gdu_pool_new (void)
         int n;
         GPtrArray *devices;
         GPtrArray *adapters;
+        GPtrArray *ports;
         GduPool *pool;
         GError *error;
 
@@ -1324,6 +1481,16 @@ gdu_pool_new (void)
         dbus_g_proxy_connect_signal (pool->priv->proxy, "AdapterChanged",
                                      G_CALLBACK (adapter_changed_signal_handler), pool, NULL);
 
+        dbus_g_proxy_add_signal (pool->priv->proxy, "PortAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "PortRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "PortChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "PortAdded",
+                                     G_CALLBACK (port_added_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "PortRemoved",
+                                     G_CALLBACK (port_removed_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "PortChanged",
+                                     G_CALLBACK (port_changed_signal_handler), pool, NULL);
+
         /* get the properties on the daemon object at / */
         if (!get_properties (pool)) {
                 g_warning ("Couldn't get daemon properties");
@@ -1377,6 +1544,28 @@ gdu_pool_new (void)
         g_ptr_array_foreach (adapters, (GFunc) g_free, NULL);
         g_ptr_array_free (adapters, TRUE);
 
+        /* prime the list of ports */
+        error = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_enumerate_ports (pool->priv->proxy, &ports, &error)) {
+                g_warning ("Couldn't enumerate ports: %s", error->message);
+                g_error_free (error);
+                goto error;
+        }
+        for (n = 0; n < (int) ports->len; n++) {
+                const char *object_path;
+                GduPort *port;
+
+                object_path = ports->pdata[n];
+
+                port = _gdu_port_new_from_object_path (pool, object_path);
+
+                g_hash_table_insert (pool->priv->object_path_to_port,
+                                     (gpointer) gdu_port_get_object_path (port),
+                                     port);
+        }
+        g_ptr_array_foreach (ports, (GFunc) g_free, NULL);
+        g_ptr_array_free (ports, TRUE);
+
         /* and finally compute all presentables */
         recompute_presentables (pool);
 
@@ -1425,6 +1614,28 @@ gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path)
         GduAdapter *ret;
 
         ret = g_hash_table_lookup (pool->priv->object_path_to_adapter, object_path);
+        if (ret != NULL) {
+                g_object_ref (ret);
+        }
+        return ret;
+}
+
+/**
+ * gdu_pool_get_by_object_path:
+ * @pool: the pool
+ * @object_path: the D-Bus object path
+ *
+ * Looks up #GduPort object for @object_path.
+ *
+ * Returns: A #GduPort object for @object_path, otherwise
+ * #NULL. Caller must unref this object using g_object_unref().
+ **/
+GduPort *
+gdu_pool_get_port_by_object_path (GduPool *pool, const char *object_path)
+{
+        GduPort *ret;
+
+        ret = g_hash_table_lookup (pool->priv->object_path_to_port, object_path);
         if (ret != NULL) {
                 g_object_ref (ret);
         }
@@ -1617,7 +1828,7 @@ gdu_pool_get_devices (GduPool *pool)
  * gdu_pool_get_adapters:
  * @pool: A #GduPool.
  *
- * Get a list of all adapters. 
+ * Get a list of all adapters.
  *
  * Returns: A #GList of #GduAdapter objects. Caller must free this
  * (unref all objects, then use g_list_free()).
@@ -1630,6 +1841,27 @@ gdu_pool_get_adapters (GduPool *pool)
         ret = NULL;
 
         ret = g_hash_table_get_values (pool->priv->object_path_to_adapter);
+        g_list_foreach (ret, (GFunc) g_object_ref, NULL);
+        return ret;
+}
+
+/**
+ * gdu_pool_get_ports:
+ * @pool: A #GduPool.
+ *
+ * Get a list of all ports.
+ *
+ * Returns: A #GList of #GduPort objects. Caller must free this
+ * (unref all objects, then use g_list_free()).
+ **/
+GList *
+gdu_pool_get_ports (GduPool *pool)
+{
+        GList *ret;
+
+        ret = NULL;
+
+        ret = g_hash_table_get_values (pool->priv->object_path_to_port);
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
 }

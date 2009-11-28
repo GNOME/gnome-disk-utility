@@ -36,6 +36,8 @@ struct _GduSectionDrivePrivate
         GduDetailsElement *firmware_element;
         GduDetailsElement *serial_element;
         GduDetailsElement *wwn_element;
+        GduDetailsElement *port_number_element;
+        GduDetailsElement *device_element;
         GduDetailsElement *write_cache_element;
         GduDetailsElement *rotation_rate_element;
         GduDetailsElement *capacity_element;
@@ -102,6 +104,8 @@ gdu_section_drive_update (GduSection *_section)
         guint rotation_rate;
         gboolean is_rotational;
         GIcon *icon;
+        const gchar *port_object_path;
+        GduPort *port;
         gboolean show_cddvd_button;
         gboolean show_format_button;
         gboolean show_eject_button;
@@ -117,12 +121,37 @@ gdu_section_drive_update (GduSection *_section)
         show_benchmark_button = FALSE;
 
         d = NULL;
+        port = NULL;
         wwn = NULL;
         p = gdu_section_get_presentable (_section);
 
         d = gdu_presentable_get_device (p);
         if (d == NULL)
                 goto out;
+
+        port_object_path = gdu_device_drive_get_port (d);
+        if (port_object_path != NULL && strlen (port_object_path) > 1) {
+                GduPool *pool;
+                pool = gdu_device_get_pool (d);
+                port = gdu_pool_get_port_by_object_path (pool, port_object_path);
+                g_object_unref (pool);
+        }
+        if (port != NULL) {
+                gint port_number;
+
+                port_number = gdu_port_get_number (port);
+                if (port_number >= 0) {
+                        /* Start at 1 */
+                        s = g_strdup_printf ("%d", port_number + 1);
+                        gdu_details_element_set_text (section->priv->port_number_element, s);
+                        g_free (s);
+                } else {
+                        gdu_details_element_set_text (section->priv->port_number_element, "–");
+                }
+        } else {
+                gdu_details_element_set_text (section->priv->port_number_element, "–");
+        }
+        gdu_details_element_set_text (section->priv->device_element, gdu_device_get_device_file (d));
 
         model = gdu_device_drive_get_model (d);
         vendor = gdu_device_drive_get_vendor (d);
@@ -594,6 +623,14 @@ gdu_section_drive_constructed (GObject *object)
         element = gdu_details_element_new (_("World Wide Name:"), NULL, NULL);
         g_ptr_array_add (elements, element);
         section->priv->wwn_element = element;
+
+        element = gdu_details_element_new (_("Port Number:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->port_number_element = element;
+
+        element = gdu_details_element_new (_("Device:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->device_element = element;
 
         element = gdu_details_element_new (_("Write Cache:"), NULL, NULL);
         g_ptr_array_add (elements, element);

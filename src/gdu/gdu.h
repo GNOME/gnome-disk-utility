@@ -32,6 +32,7 @@
 #include <gdu/gdu-linux-md-drive.h>
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-adapter.h>
+#include <gdu/gdu-port.h>
 #include <gdu/gdu-drive.h>
 #include <gdu/gdu-error.h>
 #include <gdu/gdu-known-filesystem.h>

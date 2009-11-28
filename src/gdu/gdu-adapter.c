@@ -126,7 +126,7 @@ adapter_properties_get (DBusGConnection *bus,
 
         g_hash_table_unref (hash_table);
 
-#if 1
+#if 0
         g_print ("----------------------------------------------------------------------\n");
         g_print ("native_path: %s\n", props->native_path);
         g_print ("vendor:      %s\n", props->vendor);

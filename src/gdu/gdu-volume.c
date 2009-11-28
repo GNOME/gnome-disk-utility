@@ -226,7 +226,7 @@ get_names_and_desc (GduPresentable  *presentable,
         drive_media = NULL;
         strsize = NULL;
 
-        drive_presentable = gdu_presentable_get_toplevel (presentable);
+        drive_presentable = gdu_presentable_get_enclosing_presentable (presentable);
         if (drive_presentable != NULL) {
                 drive_device = gdu_presentable_get_device (drive_presentable);
                 drive_media = gdu_device_drive_get_media (drive_device);

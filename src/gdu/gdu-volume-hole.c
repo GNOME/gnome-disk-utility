@@ -186,7 +186,7 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
         name = NULL;
         is_removable = FALSE;
 
-        p = gdu_presentable_get_toplevel (presentable);
+        p = gdu_presentable_get_enclosing_presentable (presentable);
         if (p == NULL)
                 goto out;
 

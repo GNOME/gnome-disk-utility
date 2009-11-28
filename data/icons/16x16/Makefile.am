@@ -1,3 +1,5 @@
+NULL =
+
 icondir = $(datadir)/icons/hicolor/16x16/apps
 icon_DATA =				\
 	palimpsest.png			\
@@ -19,7 +21,9 @@ icon_DATA =				\
 	gdu-error.png			\
 	gdu-warning.png			\
 	gdu-unmountable.png		\
-	nautilus-gdu.png
+	nautilus-gdu.png		\
+	gdu-hba.png			\
+	$(NULL)
 
 EXTRA_DIST = \
 	$(icon_DATA)

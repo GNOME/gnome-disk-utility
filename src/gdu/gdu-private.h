@@ -84,7 +84,7 @@ void _gdu_error_fixup (GError *error);
 GduDevice  *_gdu_device_new_from_object_path  (GduPool     *pool, const char  *object_path);
 
 GduVolume   *_gdu_volume_new_from_device      (GduPool *pool, GduDevice *volume, GduPresentable *enclosing_presentable);
-GduDrive    *_gdu_drive_new_from_device       (GduPool *pool, GduDevice *drive);
+GduDrive    *_gdu_drive_new_from_device       (GduPool *pool, GduDevice *drive, GduPresentable *enclosing_presentable);
 GduVolumeHole   *_gdu_volume_hole_new       (GduPool *pool, guint64 offset, guint64 size, GduPresentable *enclosing_presentable);
 
 
@@ -104,6 +104,11 @@ void        _gdu_device_job_changed           (GduDevice   *device,
                                                gboolean     job_is_cancellable,
                                                double       job_percentage);
 
+GduController *_gdu_controller_new_from_object_path (GduPool *pool, const char *object_path);
+gboolean    _gdu_controller_changed               (GduController   *controller);
+GduHba *_gdu_hba_new_from_controller (GduPool *pool, GduController *controller);
+
+void _gdu_drive_rewrite_enclosing_presentable (GduDrive *drive);
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 

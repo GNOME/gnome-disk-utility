@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-types.h
+/* gdu-hba.h
  *
- * Copyright (C) 2007 David Zeuthen
+ * Copyright (C) 2009 David Zeuthen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -23,30 +23,39 @@
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef __GDU_TYPES_H
-#define __GDU_TYPES_H
+#ifndef __GDU_HBA_H
+#define __GDU_HBA_H
 
-#include <glib-object.h>
-#include <gio/gio.h>
+#include <gdu/gdu-types.h>
 
 G_BEGIN_DECLS
 
-/* forward type definitions */
+#define GDU_TYPE_HBA           (gdu_hba_get_type ())
+#define GDU_HBA(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_HBA, GduHba))
+#define GDU_HBA_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_HBA,  GduHbaClass))
+#define GDU_IS_HBA(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_HBA))
+#define GDU_IS_HBA_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_HBA))
+#define GDU_HBA_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_HBA, GduHbaClass))
 
-typedef struct _GduPool                   GduPool;
-typedef struct _GduDevice                 GduDevice;
-typedef struct _GduController             GduController;
+typedef struct _GduHbaClass       GduHbaClass;
+typedef struct _GduHbaPrivate     GduHbaPrivate;
 
-typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
-typedef struct _GduDrive                  GduDrive;
-typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
-typedef struct _GduVolume                 GduVolume;
-typedef struct _GduVolumeHole             GduVolumeHole;
-typedef struct _GduHba                    GduHba;
+struct _GduHba
+{
+        GObject parent;
 
-typedef struct _GduKnownFilesystem        GduKnownFilesystem;
-typedef struct _GduProcess                GduProcess;
+        /* private */
+        GduHbaPrivate *priv;
+};
+
+struct _GduHbaClass
+{
+        GObjectClass parent_class;
+};
+
+GType          gdu_hba_get_type       (void);
+GduController *gdu_hba_get_controller (GduHba *hba);
 
 G_END_DECLS
 
-#endif /* __GDU_TYPES_H */
+#endif /* __GDU_HBA_H */

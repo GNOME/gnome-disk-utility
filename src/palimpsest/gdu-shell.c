@@ -45,7 +45,7 @@
 #include "gdu-section-no-media.h"
 #include "gdu-section-drive.h"
 #include "gdu-section-volumes.h"
-#include "bling-spinner.h"
+#include "gdu-section-hba.h"
 
 struct _GduShellPrivate
 {
@@ -54,19 +54,7 @@ struct _GduShellPrivate
 
         GtkWidget *tree_view;
 
-        GtkWidget *icon_image;
-        GtkWidget *name_label;
-        GtkWidget *details0_label;
-        GtkWidget *details1_label;
-        GtkWidget *details2_label;
-        GtkWidget *details3_label;
-
         /* -------------------------------------------------------------------------------- */
-
-        GtkWidget *job_bar;
-        GtkWidget *job_description_label;
-        GtkWidget *job_progress_bar;
-        GtkWidget *job_spinner;
 
         GtkWidget *sections_vbox;
 
@@ -196,347 +184,6 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-details_update (GduShell *shell)
-{
-        GduPresentable *presentable;
-        gboolean ret;
-        char *s;
-        char *p;
-        char *detail_color;
-        char *name;
-        GIcon *icon;
-        GdkPixbuf *pixbuf;
-        GduDevice *device;
-        const char *usage;
-        const char *type;
-        const char *device_file;
-        guint64 presentable_size;
-        char *strsize_long;
-        GduPresentable *toplevel_presentable;
-        GduDevice *toplevel_device;
-        GPtrArray *details;
-        guint n;
-
-        ret = TRUE;
-
-        details = g_ptr_array_new ();
-
-        presentable = shell->priv->presentable_now_showing;
-
-        device = gdu_presentable_get_device (presentable);
-
-        toplevel_presentable = gdu_presentable_get_toplevel (presentable);
-        if (toplevel_presentable != NULL)
-                toplevel_device = gdu_presentable_get_device (toplevel_presentable);
-
-        icon = gdu_presentable_get_icon (presentable);
-        name = gdu_presentable_get_name (presentable);
-
-        pixbuf = gdu_util_get_pixbuf_for_presentable_at_pixel_size (presentable, 112);
-        gtk_image_set_from_pixbuf (GTK_IMAGE (shell->priv->icon_image), pixbuf);
-        g_object_unref (pixbuf);
-
-        s = g_strdup_printf ("<span font_desc='18'><b>%s</b></span>", name);
-        gtk_label_set_markup (GTK_LABEL (shell->priv->name_label), s);
-        g_free (s);
-
-        usage = NULL;
-        type = NULL;
-        device_file = NULL;
-        if (device != NULL) {
-                usage = gdu_device_id_get_usage (device);
-                type = gdu_device_id_get_type (device);
-                device_file = gdu_device_get_device_file (device);
-        }
-
-        presentable_size = gdu_presentable_get_size (presentable);
-        if (presentable_size > 0) {
-                strsize_long = gdu_util_get_size_for_display (presentable_size,
-                                                              FALSE,
-                                                              TRUE);
-        } else {
-                strsize_long = g_strdup (_("Unknown Size"));
-        }
-
-        if (GDU_IS_DRIVE (presentable)) {
-
-                g_ptr_array_add (details,
-                                 g_strdup (strsize_long));
-
-                if (device == NULL) {
-                        /* TODO */
-                } else {
-                        if (gdu_device_is_removable (device)) {
-                                if (gdu_device_is_partition_table (device)) {
-                                        const char *scheme;
-                                        scheme = gdu_device_partition_table_get_scheme (device);
-                                        if (strcmp (scheme, "apm") == 0) {
-                                                s = g_strdup (_("Apple Partition Map"));
-                                        } else if (strcmp (scheme, "mbr") == 0) {
-                                                s = g_strdup (_("Master Boot Record"));
-                                        } else if (strcmp (scheme, "gpt") == 0) {
-                                                s = g_strdup (_("GUID Partition Table"));
-                                        } else {
-                                                /* Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt' */
-                                                s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
-                                        }
-
-                                        g_ptr_array_add (details,
-                                                         /* Translators: %s is the name of the partition table format, like 'Master Boot Record' */
-                                                         g_strdup_printf (_("Partitioned Media (%s)"), s));
-
-                                        g_free (s);
-                                } else if (usage != NULL && strlen (usage) > 0) {
-                                        g_ptr_array_add (details,
-                                                         g_strdup (_("Unpartitioned Media")));
-                                } else if (!gdu_device_is_media_available (device)) {
-                                        g_ptr_array_add (details,
-                                                         g_strdup_printf (_("No Media Detected")));
-                                } else {
-                                        g_ptr_array_add (details,
-                                                         g_strdup_printf (_("Unrecognized")));
-                                }
-                        } else {
-                                if (gdu_device_is_partition_table (device)) {
-                                        const char *scheme;
-                                        scheme = gdu_device_partition_table_get_scheme (device);
-                                        if (strcmp (scheme, "apm") == 0) {
-                                                s = g_strdup (_("Apple Partition Map"));
-                                        } else if (strcmp (scheme, "mbr") == 0) {
-                                                s = g_strdup (_("Master Boot Record"));
-                                        } else if (strcmp (scheme, "gpt") == 0) {
-                                                s = g_strdup (_("GUID Partition Table"));
-                                        } else {
-                                                s = g_strdup_printf (_("Unknown Scheme: %s"), scheme);
-                                        }
-                                        g_ptr_array_add (details, s);
-                                } else if (usage != NULL && strlen (usage) > 0) {
-                                        g_ptr_array_add (details,
-                                                         g_strdup_printf (_("Not Partitioned")));
-                                } else if (!gdu_device_is_media_available (device)) {
-                                        g_ptr_array_add (details,
-                                                         g_strdup_printf (_("No Media Detected")));
-                                } else {
-                                        g_ptr_array_add (details,
-                                                         g_strdup_printf (_("Unrecognized")));
-                                }
-                        }
-                }
-
-                if (GDU_IS_LINUX_MD_DRIVE (presentable)) {
-                        g_ptr_array_add (details,
-                                         g_strdup (_("Linux Software RAID")));
-                } else {
-                        if (gdu_device_drive_ata_smart_get_is_available (device) &&
-                            gdu_device_drive_ata_smart_get_time_collected (device) > 0) {
-                                gchar *smart_status;
-                                gchar *status_desc;
-                                gboolean highlight;
-                                gboolean rtl;
-
-                                rtl = (gtk_widget_get_direction (GTK_WIDGET (shell->priv->app_window)) == GTK_TEXT_DIR_RTL);
-
-                                status_desc = gdu_util_ata_smart_status_to_desc (gdu_device_drive_ata_smart_get_status (device),
-                                                                                 &highlight,
-                                                                                 NULL,
-                                                                                 NULL);
-                                /* Translators: the %s is the SMART status of the disk e.g. 'Healthy' */
-                                if (highlight) {
-                                        s = g_strdup_printf ("<span fgcolor=\"red\"><b>%s</b></span>", status_desc);
-                                        g_free (status_desc);
-                                        status_desc = s;
-                                }
-                                smart_status = g_strdup_printf (_("SMART status: %s"),
-                                                                status_desc);
-                                g_free (status_desc);
-
-                                s = g_strdup_printf (rtl ? "<a href=\"gnome-disk-utility://show-smart\" title=\"%2$s\">%3$s</a> – %1$s" :
-                                                     "%s – <a href=\"gnome-disk-utility://show-smart\" title=\"%s\">%s</a>",
-                                                     smart_status,
-                                                     /* Translators: this the SMART hyperlink tooltip */
-                                                     _("View details about SMART for this disk"),
-                                                     /* Translators: this is the text for the SMART hyperlink */
-                                                     _("More Information"));
-                                g_free (smart_status);
-
-                                g_ptr_array_add (details, s);
-
-                        } else {
-                                g_ptr_array_add (details, g_strdup (_("SMART is not available")));
-                        }
-                }
-
-                if (device_file != NULL) {
-                        if (gdu_device_is_read_only (device)) {
-                        /* Translators: %s is the device file */
-                        g_ptr_array_add (details,
-                                         g_strdup_printf (_("%s (Read Only)"), device_file));
-                        } else {
-                        g_ptr_array_add (details,
-                                         g_strdup (device_file));
-                        }
-                } else {
-                        g_ptr_array_add (details,
-                                         g_strdup (_("Not running")));
-                }
-
-        } else if (GDU_IS_VOLUME (presentable)) {
-
-                g_ptr_array_add (details,
-                                 g_strdup (strsize_long));
-
-                if (strcmp (usage, "filesystem") == 0) {
-                        char *fsname;
-                        fsname = gdu_util_get_fstype_for_display (
-                                gdu_device_id_get_type (device),
-                                gdu_device_id_get_version (device),
-                                TRUE);
-                        /* Translators: %s is the filesystem name */
-                        g_ptr_array_add (details,
-                                         g_strdup_printf (_("%s File System"), fsname));
-                        g_free (fsname);
-                } else if (strcmp (usage, "raid") == 0) {
-                        char *fsname;
-                        fsname = gdu_util_get_fstype_for_display (
-                                gdu_device_id_get_type (device),
-                                gdu_device_id_get_version (device),
-                                TRUE);
-                        g_ptr_array_add (details, fsname);
-                } else if (strcmp (usage, "crypto") == 0) {
-                        g_ptr_array_add (details,
-                                         g_strdup (_("Encrypted LUKS Device")));
-                } else if (strcmp (usage, "other") == 0) {
-                        if (strcmp (type, "swap") == 0) {
-                                g_ptr_array_add (details,
-                                                 g_strdup (_("Swap Space")));
-                        } else {
-                                g_ptr_array_add (details,
-                                                 g_strdup (_("Data")));
-                        }
-                } else {
-                        g_ptr_array_add (details,
-                                         g_strdup (_("Unrecognized")));
-                }
-
-                if (gdu_device_is_luks_cleartext (device)) {
-                        g_ptr_array_add (details,
-                                         g_strdup (_("Cleartext LUKS Device")));
-                } else {
-                        if (gdu_device_is_partition (device)) {
-                                char *part_desc;
-                                part_desc = gdu_util_get_desc_for_part_type (gdu_device_partition_get_scheme (device),
-                                                                             gdu_device_partition_get_type (device));
-                                g_ptr_array_add (details,
-                                                 g_strdup_printf (_("Partition %d (%s)"),
-                                                                  gdu_device_partition_get_number (device), part_desc));
-                                g_free (part_desc);
-                        } else {
-                                g_ptr_array_add (details,
-                                                 g_strdup (_("Not Partitioned")));
-                        }
-                }
-
-                s = g_strdup (device_file);
-                if (gdu_device_is_read_only (device)) {
-                        p = s;
-                        s = g_strdup_printf (_("%s (Read Only)"), s);
-                        g_free (p);
-                }
-
-                if (gdu_device_is_mounted (device)) {
-                        gchar **mount_paths;
-                        GString *str;
-
-                        mount_paths = gdu_device_get_mount_paths (device);
-
-                        str = g_string_new (s);
-                        g_free (s);
-                        g_string_append (str, _(" mounted at "));
-                        for (n = 0; mount_paths[n] != NULL; n++) {
-                                if (n > 0)
-                                        g_string_append (str, ", ");
-                                g_string_append_printf (str, "<a href=\"file://%s\">%s</a>",
-                                                        mount_paths[n],
-                                                        mount_paths[n]);
-                        }
-                        s = g_string_free (str, FALSE);
-                }
-                g_ptr_array_add (details, s);
-
-
-        } else if (GDU_IS_VOLUME_HOLE (presentable)) {
-
-                g_ptr_array_add (details,
-                                 g_strdup (strsize_long));
-
-                g_ptr_array_add (details,
-                                 g_strdup (_("Unallocated Space")));
-
-                if (toplevel_device != NULL) {
-                        if (gdu_device_is_read_only (toplevel_device))
-                                g_ptr_array_add (details, g_strdup_printf (_("%s (Read Only)"), gdu_device_get_device_file (toplevel_device)));
-                        else
-                                g_ptr_array_add (details, g_strdup (gdu_device_get_device_file (toplevel_device)));
-                }
-        }
-
-        /* TODO: use symbolic colors (how?) or infer from current theme */
-        detail_color = g_strdup ("#808080");
-
-        for (n = 0; n < 4; n++) {
-                GtkWidget *label;
-                const gchar *detail_str;
-
-                switch (n) {
-                case 0:
-                        label = shell->priv->details0_label;
-                        break;
-                case 1:
-                        label = shell->priv->details1_label;
-                        break;
-                case 2:
-                        label = shell->priv->details2_label;
-                        break;
-                case 3:
-                        label = shell->priv->details3_label;
-                        break;
-                }
-
-                if (n < details->len)
-                        detail_str = details->pdata[n];
-                else
-                        detail_str = "";
-
-                s = g_strdup_printf ("<span foreground='%s'>%s</span>", detail_color, detail_str);
-                gtk_label_set_markup (GTK_LABEL (label), s);
-                gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
-                g_free (s);
-        }
-
-        if (icon != NULL)
-                g_object_unref (icon);
-        g_free (name);
-        g_free (strsize_long);
-
-        g_ptr_array_foreach (details, (GFunc) g_free, NULL);
-        g_ptr_array_free (details, TRUE);
-        g_free (detail_color);
-
-        if (device != NULL)
-                g_object_unref (device);
-
-        if (toplevel_presentable != NULL)
-                g_object_unref (toplevel_presentable);
-
-        if (toplevel_device != NULL)
-                g_object_unref (toplevel_device);
-
-        return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static void
 remove_section (GtkWidget *widget, gpointer callback_data)
 {
@@ -558,7 +205,11 @@ compute_sections_to_show (GduShell *shell)
         sections_to_show = NULL;
         device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
 
-        if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
+        if (GDU_IS_HBA (shell->priv->presentable_now_showing)) {
+
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_HBA);
+
+        } else if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
                 sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
                 sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
@@ -630,26 +281,6 @@ compute_sections_to_show (GduShell *shell)
         return sections_to_show;
 }
 
-static void
-on_job_bar_response (GtkInfoBar *info_bar,
-                     gint        response_id,
-                     gpointer    user_data)
-{
-        GduShell *shell = GDU_SHELL (user_data);
-
-        if (response_id == GTK_RESPONSE_CANCEL) {
-                if (shell->priv->presentable_now_showing != NULL) {
-                        GduDevice *device;
-
-                        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-                        if (device != NULL) {
-                                gdu_device_op_cancel_job (device, NULL, NULL);
-                                g_object_unref (device);
-                        }
-                }
-        }
-}
-
 /* called when a new presentable is selected
  *  - or a presentable changes
  *  - or the job state of a presentable changes
@@ -659,175 +290,15 @@ on_job_bar_response (GtkInfoBar *info_bar,
 void
 gdu_shell_update (GduShell *shell)
 {
-        GduDevice *device;
-        gboolean job_in_progress;
-        gboolean can_mount;
-        gboolean can_unmount;
-        gboolean can_eject;
-        gboolean can_detach;
-        gboolean can_lock;
-        gboolean can_unlock;
-        gboolean can_start;
-        gboolean can_stop;
-        gboolean can_fsck;
-        gboolean can_erase;
         static GduPresentable *last_presentable = NULL;
         gboolean reset_sections;
         GList *sections_to_show;
-        uid_t unlocked_by_uid;
-
-        job_in_progress = FALSE;
-        can_mount = FALSE;
-        can_fsck = FALSE;
-        can_unmount = FALSE;
-        can_eject = FALSE;
-        can_detach = FALSE;
-        can_unlock = FALSE;
-        can_lock = FALSE;
-        unlocked_by_uid = 0;
-        can_start = FALSE;
-        can_stop = FALSE;
-        can_erase = FALSE;
-
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
-        if (device != NULL) {
-                if (gdu_device_job_in_progress (device)) {
-                        job_in_progress = TRUE;
-                }
-
-                if (GDU_IS_VOLUME (shell->priv->presentable_now_showing)) {
-
-                        if (strcmp (gdu_device_id_get_usage (device), "filesystem") == 0) {
-                                GduKnownFilesystem *kfs;
-
-                                kfs = gdu_pool_get_known_filesystem_by_id (shell->priv->pool,
-                                                                           gdu_device_id_get_type (device));
-
-                                if (gdu_device_is_mounted (device)) {
-                                        can_unmount = TRUE;
-                                        if (kfs != NULL && gdu_known_filesystem_get_supports_online_fsck (kfs))
-                                                can_fsck = TRUE;
-                                } else {
-                                        can_mount = TRUE;
-                                        can_erase = TRUE;
-                                        if (kfs != NULL && gdu_known_filesystem_get_supports_fsck (kfs))
-                                                can_fsck = TRUE;
-                                }
-                        } else if (strcmp (gdu_device_id_get_usage (device), "crypto") == 0) {
-                                GList *enclosed_presentables;
-                                enclosed_presentables = gdu_pool_get_enclosed_presentables (
-                                        shell->priv->pool,
-                                        shell->priv->presentable_now_showing);
-                                if (enclosed_presentables != NULL && g_list_length (enclosed_presentables) == 1) {
-                                        GduPresentable *enclosed_presentable;
-                                        GduDevice *enclosed_device;
-
-                                        can_lock = TRUE;
-
-                                        enclosed_presentable = GDU_PRESENTABLE (enclosed_presentables->data);
-                                        enclosed_device = gdu_presentable_get_device (enclosed_presentable);
-                                        unlocked_by_uid = gdu_device_luks_cleartext_unlocked_by_uid (enclosed_device);
-                                        g_object_unref (enclosed_device);
-                                } else {
-                                        can_unlock = TRUE;
-                                        can_erase = TRUE;
-                                }
-                                g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
-                                g_list_free (enclosed_presentables);
-                        } else {
-                                can_erase = TRUE;
-                        }
-                }
-
-                if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
-                        if (gdu_device_is_removable (device) &&
-                            gdu_device_is_media_available (device))
-                                can_eject = TRUE;
-
-                        if (gdu_device_drive_get_can_detach (device))
-                                can_detach = TRUE;
-
-                        can_erase = TRUE;
-                        if (gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing)) &&
-                            !gdu_drive_is_active (GDU_DRIVE (shell->priv->presentable_now_showing)))
-                                can_erase = FALSE;
-                }
-        }
-
-        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) &&
-            gdu_drive_is_activatable (GDU_DRIVE (shell->priv->presentable_now_showing))) {
-                GduDrive *drive = GDU_DRIVE (shell->priv->presentable_now_showing);
-
-                can_stop = gdu_drive_can_deactivate (drive);
-
-                can_start = gdu_drive_can_activate (drive, NULL);
-        }
-
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "mount"), can_mount);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "unmount"), can_unmount);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "eject"), can_eject);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "detach"), can_detach);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "fsck"), can_fsck);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "lock"), can_lock);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "unlock"), can_unlock);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "start"), can_start);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "stop"), can_stop);
-        gtk_action_set_sensitive (gtk_action_group_get_action (shell->priv->action_group, "erase"), can_erase);
 
         reset_sections = (shell->priv->presentable_now_showing != last_presentable);
 
         last_presentable = shell->priv->presentable_now_showing;
 
         sections_to_show = compute_sections_to_show (shell);
-        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
-                gtk_widget_hide (shell->priv->icon_image);
-                gtk_widget_hide (shell->priv->name_label);
-                gtk_widget_hide (shell->priv->details0_label);
-                gtk_widget_hide (shell->priv->details1_label);
-                gtk_widget_hide (shell->priv->details2_label);
-                gtk_widget_hide (shell->priv->details3_label);
-        } else {
-                gtk_widget_show (shell->priv->icon_image);
-                gtk_widget_show (shell->priv->name_label);
-                gtk_widget_show (shell->priv->details0_label);
-                gtk_widget_show (shell->priv->details1_label);
-                gtk_widget_show (shell->priv->details2_label);
-                gtk_widget_show (shell->priv->details3_label);
-        }
-
-        if (job_in_progress) {
-                gchar *desc;
-                gchar *s;
-                gdouble percentage;
-
-                desc = gdu_get_job_description (gdu_device_job_get_id (device));
-
-                s = g_strdup_printf ("<small><b>%s</b></small>", desc);
-                gtk_label_set_markup (GTK_LABEL (shell->priv->job_description_label), s);
-                g_free (s);
-                g_free (desc);
-
-                gtk_widget_set_no_show_all (shell->priv->job_bar, FALSE);
-                gtk_widget_show_all (shell->priv->job_bar);
-
-                gtk_info_bar_set_response_sensitive (GTK_INFO_BAR (shell->priv->job_bar),
-                                                     GTK_RESPONSE_CANCEL,
-                                                     gdu_device_job_is_cancellable (device));
-
-                percentage = gdu_device_job_get_percentage (device);
-                if (percentage >= 0) {
-                        gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (shell->priv->job_progress_bar),
-                                                       percentage / 100.0);
-                        gtk_widget_hide (shell->priv->job_spinner);
-                } else {
-                        bling_spinner_start (BLING_SPINNER (shell->priv->job_spinner));
-                        gtk_widget_hide (shell->priv->job_progress_bar);
-                }
-
-        } else {
-                bling_spinner_stop (BLING_SPINNER (shell->priv->job_spinner));
-                gtk_widget_hide_all (shell->priv->job_bar);
-        }
 
         /* if this differs from what we currently show, prompt a reset */
         if (!reset_sections) {
@@ -881,11 +352,6 @@ gdu_shell_update (GduShell *shell)
         gtk_container_foreach (GTK_CONTAINER (shell->priv->sections_vbox),
                                update_section,
                                shell);
-
-        details_update (shell);
-
-        if (device != NULL)
-                g_object_unref (device);
 }
 
 static GduSection *
@@ -2240,33 +1706,6 @@ gdu_shell_raise_error (GduShell       *shell,
 }
 
 static void
-on_activate_link_for_details_label (GtkLabel    *label,
-                                    const gchar *uri,
-                                    gpointer     user_data)
-{
-        GduShell *shell = GDU_SHELL (user_data);
-
-        if (g_str_has_prefix (uri, "gnome-disk-utility://")) {
-
-                if (g_strcmp0 (uri, "gnome-disk-utility://show-smart") == 0) {
-                        if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
-                                GtkWidget *dialog;
-
-                                dialog = gdu_ata_smart_dialog_new (GTK_WINDOW (shell->priv->app_window),
-                                                                   GDU_DRIVE (shell->priv->presentable_now_showing));
-                                gtk_widget_show_all (dialog);
-                                gtk_dialog_run (GTK_DIALOG (dialog));
-                                gtk_widget_destroy (dialog);
-                        } else {
-                                g_warning ("Trying to show ATA SMART dialog for presentable that is not a drive");
-                        }
-                }
-
-                g_signal_stop_emission_by_name (label, "activate-link");
-        }
-}
-
-static void
 create_window (GduShell *shell)
 {
         GtkWidget *vbox;
@@ -2277,13 +1716,7 @@ create_window (GduShell *shell)
         GtkWidget *hpane;
         GtkWidget *tree_view_scrolled_window;
         GtkTreeSelection *select;
-        GtkWidget *content_area;
-        GtkWidget *button;
         GtkWidget *label;
-        GtkWidget *align;
-        GtkWidget *vbox3;
-        GtkWidget *hbox;
-        GtkWidget *image;
         GduPoolTreeModel *model;
         GtkTreeViewColumn *column;
 
@@ -2326,95 +1759,9 @@ create_window (GduShell *shell)
 
         /* --- */
 
-        shell->priv->job_bar = gtk_info_bar_new ();
-        button = gtk_button_new ();
-        label = gtk_label_new (NULL);
-        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label),
-                                            _("<small>_Cancel</small>"));
-        gtk_container_add (GTK_CONTAINER (button), label);
-        gtk_info_bar_add_action_widget (GTK_INFO_BAR (shell->priv->job_bar),
-                                        button,
-                                        GTK_RESPONSE_CANCEL);
-        g_signal_connect (shell->priv->job_bar,
-                          "response",
-                          G_CALLBACK (on_job_bar_response),
-                          shell);
-        gtk_widget_set_no_show_all (shell->priv->job_bar, TRUE);
-        gtk_info_bar_set_message_type (GTK_INFO_BAR (shell->priv->job_bar),
-                                       GTK_MESSAGE_INFO);
-        gtk_box_pack_start (GTK_BOX (vbox1), shell->priv->job_bar, FALSE, FALSE, 0);
-
-        content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (shell->priv->job_bar));
-        shell->priv->job_description_label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (shell->priv->job_description_label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_description_label, FALSE, FALSE, 0);
-        shell->priv->job_progress_bar = gtk_progress_bar_new ();
-        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_progress_bar, FALSE, FALSE, 0);
-
-        shell->priv->job_spinner = bling_spinner_new ();
-        gtk_widget_set_size_request (shell->priv->job_spinner, 16, 16);
-        gtk_box_pack_start (GTK_BOX (content_area), shell->priv->job_spinner, FALSE, FALSE, 0);
-
-        /* --- */
-
         vbox2 = gtk_vbox_new (FALSE, 0);
         //gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
         gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
-
-        /* --- */
-
-        hbox = gtk_hbox_new (FALSE, 12);
-        gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, TRUE, 0);
-
-        image = gtk_image_new ();
-        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
-        shell->priv->icon_image = image;
-
-        vbox3 = gtk_vbox_new (FALSE, 0);
-        align = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-        gtk_container_add (GTK_CONTAINER (align), vbox3);
-        gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, TRUE, 0);
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
-        shell->priv->name_label = label;
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_for_details_label),
-                          shell);
-        shell->priv->details0_label = label;
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_for_details_label),
-                          shell);
-        shell->priv->details1_label = label;
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_for_details_label),
-                          shell);
-        shell->priv->details2_label = label;
-
-        label = gtk_label_new (NULL);
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox3), label, FALSE, TRUE, 0);
-        g_signal_connect (label,
-                          "activate-link",
-                          G_CALLBACK (on_activate_link_for_details_label),
-                          shell);
-        shell->priv->details3_label = label;
 
         /* --- */
 

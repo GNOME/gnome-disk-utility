@@ -1,7 +1,9 @@
+NULL =
 
 BUILT_SOURCES =                                         	\
         devkit-disks-daemon-glue.h                      	\
         devkit-disks-device-glue.h				\
+        devkit-disks-controller-glue.h				\
 	gdu-marshal.h			gdu-marshal.c
 
 gdu-marshal.h: gdu-marshal.list
@@ -16,6 +18,9 @@ devkit-disks-daemon-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceK
 devkit-disks-device-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Device.xml Makefile.am
 	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-device-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Device.xml
 
+devkit-disks-controller-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Controller.xml Makefile.am
+	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-controller-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Controller.xml
+
 lib_LTLIBRARIES=libgdu.la
 
 libgduincludedir=$(includedir)/gnome-disk-utility/gdu
@@ -25,6 +30,7 @@ libgduinclude_HEADERS =              			\
 	gdu-types.h					\
 	gdu-callbacks.h					\
 	gdu-device.h					\
+	gdu-controller.h				\
 	gdu-drive.h					\
 	gdu-linux-md-drive.h				\
 	gdu-error.h					\
@@ -34,7 +40,9 @@ libgduinclude_HEADERS =              			\
 	gdu-process.h					\
 	gdu-util.h					\
 	gdu-volume.h					\
-	gdu-volume-hole.h
+	gdu-volume-hole.h				\
+	gdu-hba.h					\
+	$(NULL)
 
 libgdu_la_SOURCES =                                					\
 						gdu.h					\
@@ -43,6 +51,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-util.h				gdu-util.c				\
 	gdu-pool.c				gdu-pool.h				\
 	gdu-device.c				gdu-device.h				\
+	gdu-controller.c			gdu-controller.h			\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\
 	gdu-volume.c				gdu-volume.h				\
@@ -51,8 +60,10 @@ libgdu_la_SOURCES =                                					\
 	gdu-known-filesystem.c			gdu-known-filesystem.h			\
 	gdu-error.c				gdu-error.h				\
 	gdu-process.c				gdu-process.h				\
+	gdu-hba.c				gdu-hba.h				\
 						gdu-private.h				\
-	$(BUILT_SOURCES)
+	$(BUILT_SOURCES)								\
+	$(NULL)
 
 libgdu_la_CPPFLAGS = 					\
 	-I$(top_srcdir)/src				\

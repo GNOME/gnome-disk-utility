@@ -53,6 +53,7 @@ struct _GduDrivePrivate
 {
         GduDevice *device;
         GduPool *pool;
+        GduPresentable *enclosing_presentable;
         gchar *id;
 };
 
@@ -84,6 +85,9 @@ gdu_drive_finalize (GduDrive *drive)
 
         if (drive->priv->pool != NULL)
                 g_object_unref (drive->priv->pool);
+
+        if (drive->priv->enclosing_presentable != NULL)
+                g_object_unref (drive->priv->enclosing_presentable);
 
         g_free (drive->priv->id);
 
@@ -468,13 +472,15 @@ device_job_changed (GduDevice *device, gpointer user_data)
 }
 
 GduDrive *
-_gdu_drive_new_from_device (GduPool *pool, GduDevice *device)
+_gdu_drive_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *enclosing_presentable)
 {
         GduDrive *drive;
 
         drive = GDU_DRIVE (g_object_new (GDU_TYPE_DRIVE, NULL));
         drive->priv->device = g_object_ref (device);
         drive->priv->pool = g_object_ref (pool);
+        drive->priv->enclosing_presentable =
+                enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
         drive->priv->id = g_strdup_printf ("drive_%s", gdu_device_get_device_file (drive->priv->device));
 
         g_signal_connect (device, "changed", (GCallback) device_changed, drive);
@@ -500,6 +506,9 @@ gdu_drive_get_device (GduPresentable *presentable)
 static GduPresentable *
 gdu_drive_get_enclosing_presentable (GduPresentable *presentable)
 {
+        GduDrive *drive = GDU_DRIVE (presentable);
+        if (drive->priv->enclosing_presentable != NULL)
+                return g_object_ref (drive->priv->enclosing_presentable);
         return NULL;
 }
 
@@ -1009,3 +1018,28 @@ gdu_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->is_recognized             = gdu_drive_is_recognized;
 }
 
+void
+_gdu_drive_rewrite_enclosing_presentable (GduDrive *drive)
+{
+        if (drive->priv->enclosing_presentable != NULL) {
+                const gchar *enclosing_presentable_id;
+                GduPresentable *new_enclosing_presentable;
+
+                enclosing_presentable_id = gdu_presentable_get_id (drive->priv->enclosing_presentable);
+
+                new_enclosing_presentable = gdu_pool_get_presentable_by_id (drive->priv->pool,
+                                                                            enclosing_presentable_id);
+                if (new_enclosing_presentable == NULL) {
+                        g_warning ("Error rewriting enclosing_presentable for %s, no such id %s",
+                                   drive->priv->id,
+                                   enclosing_presentable_id);
+                        goto out;
+                }
+
+                g_object_unref (drive->priv->enclosing_presentable);
+                drive->priv->enclosing_presentable = new_enclosing_presentable;
+        }
+
+ out:
+        ;
+}

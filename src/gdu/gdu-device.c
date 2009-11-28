@@ -123,6 +123,7 @@ typedef struct
         gboolean drive_is_rotational;
         guint    drive_rotation_rate;
         char    *drive_write_cache;
+        char    *drive_controller;
 
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
@@ -318,6 +319,8 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_rotation_rate = g_value_get_uint (value);
         else if (strcmp (key, "DriveWriteCache") == 0)
                 props->drive_write_cache = g_strdup (g_value_get_string (value));
+        else if (strcmp (key, "DriveController") == 0)
+                props->drive_controller = g_strdup (g_value_get_boxed (value));
 
         else if (strcmp (key, "OpticalDiscIsBlank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -437,6 +440,8 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_connection_interface);
         g_strfreev (props->drive_media_compatibility);
         g_free (props->drive_media);
+        g_free (props->drive_write_cache);
+        g_free (props->drive_controller);
 
         g_free (props->drive_ata_smart_status);
         g_free (props->drive_ata_smart_blob);
@@ -1079,6 +1084,12 @@ const char *
 gdu_device_drive_get_write_cache (GduDevice *device)
 {
         return device->priv->props->drive_write_cache;
+}
+
+const char *
+gdu_device_drive_get_controller (GduDevice *device)
+{
+        return device->priv->props->drive_controller;
 }
 
 gboolean

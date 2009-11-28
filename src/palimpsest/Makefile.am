@@ -4,8 +4,6 @@ NULL =
 bin_PROGRAMS = palimpsest
 
 palimpsest_SOURCES = 									\
-	bling-color.h				bling-color.c				\
-	bling-spinner.h				bling-spinner.c				\
 						gdu-main.c				\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
@@ -20,6 +18,7 @@ palimpsest_SOURCES = 									\
 	gdu-section-no-media.h			gdu-section-no-media.c			\
 	gdu-section-drive.h			gdu-section-drive.c			\
 	gdu-section-volumes.h			gdu-section-volumes.c			\
+	gdu-section-hba.h			gdu-section-hba.c			\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

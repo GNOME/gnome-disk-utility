@@ -57,29 +57,29 @@ gdu_section_hba_update (GduSection *_section)
 {
         GduSectionHba *section = GDU_SECTION_HBA (_section);
         GduPresentable *p;
-        GduController *c;
+        GduAdapter *a;
         const gchar *vendor;
         const gchar *model;
         const gchar *driver;
 
-        c = NULL;
+        a = NULL;
         p = gdu_section_get_presentable (_section);
 
-        c = gdu_hba_get_controller (GDU_HBA (p));
-        if (c == NULL)
+        a = gdu_hba_get_adapter (GDU_HBA (p));
+        if (a == NULL)
                 goto out;
 
-        vendor = gdu_controller_get_vendor (c);
-        model = gdu_controller_get_model (c);
-        driver = gdu_controller_get_driver (c);
+        vendor = gdu_adapter_get_vendor (a);
+        model = gdu_adapter_get_model (a);
+        driver = gdu_adapter_get_driver (a);
         gdu_details_element_set_text (section->priv->vendor_element, vendor);
         gdu_details_element_set_text (section->priv->model_element, model);
         gdu_details_element_set_text (section->priv->driver_element, driver);
 
 
  out:
-        if (c != NULL)
-                g_object_unref (c);
+        if (a != NULL)
+                g_object_unref (a);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

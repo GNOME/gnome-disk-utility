@@ -28,7 +28,7 @@
 #include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
-#include "gdu-controller.h"
+#include "gdu-adapter.h"
 #include "gdu-hba.h"
 #include "gdu-presentable.h"
 #include "gdu-linux-md-drive.h"
@@ -39,14 +39,14 @@
  * @short_description: HBAs
  *
  * #GduHba objects are used to represent host board adapters (also
- * called disk controllers).
+ * called disk adapters).
  *
  * See the documentation for #GduPresentable for the big picture.
  */
 
 struct _GduHbaPrivate
 {
-        GduController *controller;
+        GduAdapter *adapter;
         GduPool *pool;
         gchar *id;
 };
@@ -58,7 +58,7 @@ G_DEFINE_TYPE_WITH_CODE (GduHba, gdu_hba, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
                                                 gdu_hba_presentable_iface_init))
 
-static void controller_changed (GduController *controller, gpointer user_data);
+static void adapter_changed (GduAdapter *adapter, gpointer user_data);
 
 
 static void
@@ -68,9 +68,9 @@ gdu_hba_finalize (GObject *object)
 
         //g_debug ("##### finalized hba '%s' %p", hba->priv->id, hba);
 
-        if (hba->priv->controller != NULL) {
-                g_signal_handlers_disconnect_by_func (hba->priv->controller, controller_changed, hba);
-                g_object_unref (hba->priv->controller);
+        if (hba->priv->adapter != NULL) {
+                g_signal_handlers_disconnect_by_func (hba->priv->adapter, adapter_changed, hba);
+                g_object_unref (hba->priv->adapter);
         }
 
         if (hba->priv->pool != NULL)
@@ -101,7 +101,7 @@ gdu_hba_init (GduHba *hba)
 }
 
 static void
-controller_changed (GduController *controller, gpointer user_data)
+adapter_changed (GduAdapter *adapter, gpointer user_data)
 {
         GduHba *hba = GDU_HBA (user_data);
         g_signal_emit_by_name (hba, "changed");
@@ -109,15 +109,15 @@ controller_changed (GduController *controller, gpointer user_data)
 }
 
 GduHba *
-_gdu_hba_new_from_controller (GduPool *pool, GduController *controller)
+_gdu_hba_new_from_adapter (GduPool *pool, GduAdapter *adapter)
 {
         GduHba *hba;
 
         hba = GDU_HBA (g_object_new (GDU_TYPE_HBA, NULL));
-        hba->priv->controller = g_object_ref (controller);
+        hba->priv->adapter = g_object_ref (adapter);
         hba->priv->pool = g_object_ref (pool);
-        hba->priv->id = g_strdup (gdu_controller_get_native_path (hba->priv->controller));
-        g_signal_connect (controller, "changed", (GCallback) controller_changed, hba);
+        hba->priv->id = g_strdup (gdu_adapter_get_native_path (hba->priv->adapter));
+        g_signal_connect (adapter, "changed", (GCallback) adapter_changed, hba);
         return hba;
 }
 
@@ -155,8 +155,8 @@ gdu_hba_get_vpd_name (GduPresentable *presentable)
         const gchar *vendor;
         const gchar *model;
 
-        vendor = gdu_controller_get_vendor (hba->priv->controller);
-        model = gdu_controller_get_model (hba->priv->controller);
+        vendor = gdu_adapter_get_vendor (hba->priv->adapter);
+        model = gdu_adapter_get_model (hba->priv->adapter);
         //s = g_strdup_printf ("%s %s", vendor, model);
         s = g_strdup (model);
         return s;
@@ -193,7 +193,7 @@ static GduPool *
 gdu_hba_get_pool (GduPresentable *presentable)
 {
         GduHba *hba = GDU_HBA (presentable);
-        return gdu_controller_get_pool (hba->priv->controller);
+        return gdu_adapter_get_pool (hba->priv->adapter);
 }
 
 static gboolean
@@ -208,10 +208,10 @@ gdu_hba_is_recognized (GduPresentable *presentable)
         return FALSE;
 }
 
-GduController *
-gdu_hba_get_controller (GduHba *hba)
+GduAdapter *
+gdu_hba_get_adapter (GduHba *hba)
 {
-        return g_object_ref (hba->priv->controller);
+        return g_object_ref (hba->priv->adapter);
 }
 
 static void

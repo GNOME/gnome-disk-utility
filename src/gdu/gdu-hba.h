@@ -53,8 +53,8 @@ struct _GduHbaClass
         GObjectClass parent_class;
 };
 
-GType          gdu_hba_get_type       (void);
-GduController *gdu_hba_get_controller (GduHba *hba);
+GType       gdu_hba_get_type    (void);
+GduAdapter *gdu_hba_get_adapter (GduHba *hba);
 
 G_END_DECLS
 

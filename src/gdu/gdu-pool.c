@@ -27,7 +27,7 @@
 #include "gdu-pool.h"
 #include "gdu-presentable.h"
 #include "gdu-device.h"
-#include "gdu-controller.h"
+#include "gdu-adapter.h"
 #include "gdu-drive.h"
 #include "gdu-linux-md-drive.h"
 #include "gdu-volume.h"
@@ -51,9 +51,9 @@ enum {
         DEVICE_REMOVED,
         DEVICE_CHANGED,
         DEVICE_JOB_CHANGED,
-        CONTROLLER_ADDED,
-        CONTROLLER_REMOVED,
-        CONTROLLER_CHANGED,
+        ADAPTER_ADDED,
+        ADAPTER_REMOVED,
+        ADAPTER_CHANGED,
         PRESENTABLE_ADDED,
         PRESENTABLE_REMOVED,
         PRESENTABLE_CHANGED,
@@ -80,7 +80,7 @@ struct _GduPoolPrivate
         GHashTable *object_path_to_device;
 
         /* the current set of devices we know about */
-        GHashTable *object_path_to_controller;
+        GHashTable *object_path_to_adapter;
 };
 
 G_DEFINE_TYPE (GduPool, gdu_pool, G_TYPE_OBJECT);
@@ -98,7 +98,7 @@ gdu_pool_finalize (GduPool *pool)
 
         g_hash_table_unref (pool->priv->object_path_to_device);
 
-        g_hash_table_unref (pool->priv->object_path_to_controller);
+        g_hash_table_unref (pool->priv->object_path_to_adapter);
 
         g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
         g_list_free (pool->priv->presentables);
@@ -188,56 +188,56 @@ gdu_pool_class_init (GduPoolClass *klass)
                               GDU_TYPE_DEVICE);
 
         /**
-         * GduPool::controller-added
+         * GduPool::adapter-added
          * @pool: The #GduPool emitting the signal.
-         * @controller: The #GduController that was added.
+         * @adapter: The #GduAdapter that was added.
          *
-         * Emitted when @controller is added to @pool.
+         * Emitted when @adapter is added to @pool.
          **/
-        signals[CONTROLLER_ADDED] =
-                g_signal_new ("controller-added",
+        signals[ADAPTER_ADDED] =
+                g_signal_new ("adapter-added",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduPoolClass, controller_added),
+                              G_STRUCT_OFFSET (GduPoolClass, adapter_added),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__OBJECT,
                               G_TYPE_NONE, 1,
-                              GDU_TYPE_CONTROLLER);
+                              GDU_TYPE_ADAPTER);
 
         /**
-         * GduPool::controller-removed
+         * GduPool::adapter-removed
          * @pool: The #GduPool emitting the signal.
-         * @controller: The #GduController that was removed.
+         * @adapter: The #GduAdapter that was removed.
          *
-         * Emitted when @controller is removed from @pool. Recipients
-         * should release references to @controller.
+         * Emitted when @adapter is removed from @pool. Recipients
+         * should release references to @adapter.
          **/
-        signals[CONTROLLER_REMOVED] =
-                g_signal_new ("controller-removed",
+        signals[ADAPTER_REMOVED] =
+                g_signal_new ("adapter-removed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduPoolClass, controller_removed),
+                              G_STRUCT_OFFSET (GduPoolClass, adapter_removed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__OBJECT,
                               G_TYPE_NONE, 1,
-                              GDU_TYPE_CONTROLLER);
+                              GDU_TYPE_ADAPTER);
 
         /**
-         * GduPool::controller-changed
+         * GduPool::adapter-changed
          * @pool: The #GduPool emitting the signal.
-         * @controller: A #GduController.
+         * @adapter: A #GduAdapter.
          *
-         * Emitted when @controller is changed.
+         * Emitted when @adapter is changed.
          **/
-        signals[CONTROLLER_CHANGED] =
-                g_signal_new ("controller-changed",
+        signals[ADAPTER_CHANGED] =
+                g_signal_new ("adapter-changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduPoolClass, controller_changed),
+                              G_STRUCT_OFFSET (GduPoolClass, adapter_changed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__OBJECT,
                               G_TYPE_NONE, 1,
-                              GDU_TYPE_CONTROLLER);
+                              GDU_TYPE_ADAPTER);
 
 
         /**
@@ -352,7 +352,7 @@ gdu_pool_init (GduPool *pool)
                                                                    NULL,
                                                                    g_object_unref);
 
-        pool->priv->object_path_to_controller = g_hash_table_new_full (g_str_hash,
+        pool->priv->object_path_to_adapter = g_hash_table_new_full (g_str_hash,
                                                                        g_str_equal,
                                                                        NULL,
                                                                        g_object_unref);
@@ -671,14 +671,14 @@ recompute_presentables (GduPool *pool)
 {
         GList *l;
         GList *devices;
-        GList *controllers;
+        GList *adapters;
         GList *new_partitioned_drives;
         GList *new_presentables;
         GList *added_presentables;
         GList *removed_presentables;
         GHashTable *hash_map_from_drive_to_extended_partition;
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
-        GHashTable *hash_map_from_controller_objpath_to_hba;
+        GHashTable *hash_map_from_adapter_objpath_to_hba;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
          * compute the complete set of presentables every time and diff it against the
@@ -703,25 +703,25 @@ recompute_presentables (GduPool *pool)
                                                                       NULL,
                                                                       NULL);
 
-        hash_map_from_controller_objpath_to_hba = g_hash_table_new_full (g_str_hash,
+        hash_map_from_adapter_objpath_to_hba = g_hash_table_new_full (g_str_hash,
                                                                          g_str_equal,
                                                                          NULL,
                                                                          NULL);
 
         /* First add all HBAs */
-        controllers = gdu_pool_get_controllers (pool);
-        for (l = controllers; l != NULL; l = l->next) {
-                GduController *controller = GDU_CONTROLLER (l->data);
+        adapters = gdu_pool_get_adapters (pool);
+        for (l = adapters; l != NULL; l = l->next) {
+                GduAdapter *adapter = GDU_ADAPTER (l->data);
                 GduHba *hba;
 
-                hba = _gdu_hba_new_from_controller (pool, controller);
+                hba = _gdu_hba_new_from_adapter (pool, adapter);
 
-                g_hash_table_insert (hash_map_from_controller_objpath_to_hba,
-                                     (gpointer) gdu_controller_get_object_path (controller),
+                g_hash_table_insert (hash_map_from_adapter_objpath_to_hba,
+                                     (gpointer) gdu_adapter_get_object_path (adapter),
                                      hba);
 
                 new_presentables = g_list_prepend (new_presentables, hba);
-        } /* for all controllers */
+        } /* for all adapters */
 
         /* TODO: Ensure that pool->priv->devices is in topological sort order, then just loop
          *       through it and handle devices sequentially.
@@ -772,15 +772,15 @@ recompute_presentables (GduPool *pool)
 
 
                         } else {
-                                const gchar *controller_objpath;
+                                const gchar *adapter_objpath;
                                 GduPresentable *hba;
 
                                 hba = NULL;
 
-                                controller_objpath = gdu_device_drive_get_controller (device);
-                                if (controller_objpath != NULL)
-                                        hba = g_hash_table_lookup (hash_map_from_controller_objpath_to_hba,
-                                                                   controller_objpath);
+                                adapter_objpath = gdu_device_drive_get_adapter (device);
+                                if (adapter_objpath != NULL)
+                                        hba = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                                                   adapter_objpath);
 
                                 drive = _gdu_drive_new_from_device (pool, device, hba);
                         }
@@ -914,7 +914,7 @@ recompute_presentables (GduPool *pool)
         g_list_free (new_partitioned_drives);
         g_hash_table_unref (hash_map_from_drive_to_extended_partition);
         g_hash_table_unref (hash_map_from_linux_md_uuid_to_drive);
-        g_hash_table_unref (hash_map_from_controller_objpath_to_hba);
+        g_hash_table_unref (hash_map_from_adapter_objpath_to_hba);
 
         /* figure out the diff */
         new_presentables = g_list_sort (new_presentables, (GCompareFunc) gdu_presentable_compare);
@@ -970,8 +970,8 @@ recompute_presentables (GduPool *pool)
         g_list_free (new_presentables);
         g_list_foreach (devices, (GFunc) g_object_unref, NULL);
         g_list_free (devices);
-        g_list_foreach (controllers, (GFunc) g_object_unref, NULL);
-        g_list_free (controllers);
+        g_list_foreach (adapters, (GFunc) g_object_unref, NULL);
+        g_list_free (adapters);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1094,33 +1094,33 @@ device_job_changed_signal_handler (DBusGProxy *proxy,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-controller_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data);
+adapter_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data);
 
 static void
-controller_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+adapter_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
 {
         GduPool *pool;
-        GduController *controller;
+        GduAdapter *adapter;
 
         pool = GDU_POOL (user_data);
 
-        controller = gdu_pool_get_controller_by_object_path (pool, object_path);
-        if (controller != NULL) {
-                g_object_unref (controller);
-                g_warning ("Treating add for previously added controller %s as change", object_path);
-                controller_changed_signal_handler (proxy, object_path, user_data);
+        adapter = gdu_pool_get_adapter_by_object_path (pool, object_path);
+        if (adapter != NULL) {
+                g_object_unref (adapter);
+                g_warning ("Treating add for previously added adapter %s as change", object_path);
+                adapter_changed_signal_handler (proxy, object_path, user_data);
                 goto out;
         }
 
-        controller = _gdu_controller_new_from_object_path (pool, object_path);
-        if (controller == NULL)
+        adapter = _gdu_adapter_new_from_object_path (pool, object_path);
+        if (adapter == NULL)
                 goto out;
 
-        g_hash_table_insert (pool->priv->object_path_to_controller,
-                             (gpointer) gdu_controller_get_object_path (controller),
-                             controller);
-        g_signal_emit (pool, signals[CONTROLLER_ADDED], 0, controller);
-        //g_debug ("Added controller %s", object_path);
+        g_hash_table_insert (pool->priv->object_path_to_adapter,
+                             (gpointer) gdu_adapter_get_object_path (adapter),
+                             adapter);
+        g_signal_emit (pool, signals[ADAPTER_ADDED], 0, adapter);
+        //g_debug ("Added adapter %s", object_path);
 
         recompute_presentables (pool);
 
@@ -1129,25 +1129,25 @@ controller_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpo
 }
 
 static void
-controller_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+adapter_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
 {
         GduPool *pool;
-        GduController *controller;
+        GduAdapter *adapter;
 
         pool = GDU_POOL (user_data);
 
-        controller = gdu_pool_get_controller_by_object_path (pool, object_path);
-        if (controller == NULL) {
-                g_warning ("No controller to remove for remove %s", object_path);
+        adapter = gdu_pool_get_adapter_by_object_path (pool, object_path);
+        if (adapter == NULL) {
+                g_warning ("No adapter to remove for remove %s", object_path);
                 goto out;
         }
 
-        g_hash_table_remove (pool->priv->object_path_to_controller,
-                             gdu_controller_get_object_path (controller));
-        g_signal_emit (pool, signals[CONTROLLER_REMOVED], 0, controller);
-        g_signal_emit_by_name (controller, "removed");
-        g_object_unref (controller);
-        g_debug ("Removed controller %s", object_path);
+        g_hash_table_remove (pool->priv->object_path_to_adapter,
+                             gdu_adapter_get_object_path (adapter));
+        g_signal_emit (pool, signals[ADAPTER_REMOVED], 0, adapter);
+        g_signal_emit_by_name (adapter, "removed");
+        g_object_unref (adapter);
+        g_debug ("Removed adapter %s", object_path);
 
         recompute_presentables (pool);
 
@@ -1156,24 +1156,24 @@ controller_removed_signal_handler (DBusGProxy *proxy, const char *object_path, g
 }
 
 static void
-controller_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+adapter_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
 {
         GduPool *pool;
-        GduController *controller;
+        GduAdapter *adapter;
 
         pool = GDU_POOL (user_data);
 
-        controller = gdu_pool_get_controller_by_object_path (pool, object_path);
-        if (controller == NULL) {
-                g_warning ("Ignoring change event on non-existant controller %s", object_path);
+        adapter = gdu_pool_get_adapter_by_object_path (pool, object_path);
+        if (adapter == NULL) {
+                g_warning ("Ignoring change event on non-existant adapter %s", object_path);
                 goto out;
         }
 
-        if (_gdu_controller_changed (controller)) {
-                g_signal_emit (pool, signals[CONTROLLER_CHANGED], 0, controller);
-                g_signal_emit_by_name (controller, "changed");
+        if (_gdu_adapter_changed (adapter)) {
+                g_signal_emit (pool, signals[ADAPTER_CHANGED], 0, adapter);
+                g_signal_emit_by_name (adapter, "changed");
         }
-        g_object_unref (controller);
+        g_object_unref (adapter);
 
         recompute_presentables (pool);
 
@@ -1263,7 +1263,7 @@ gdu_pool_new (void)
 {
         int n;
         GPtrArray *devices;
-        GPtrArray *controllers;
+        GPtrArray *adapters;
         GduPool *pool;
         GError *error;
 
@@ -1314,15 +1314,15 @@ gdu_pool_new (void)
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceJobChanged",
                                      G_CALLBACK (device_job_changed_signal_handler), pool, NULL);
 
-        dbus_g_proxy_add_signal (pool->priv->proxy, "ControllerAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (pool->priv->proxy, "ControllerRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
-        dbus_g_proxy_add_signal (pool->priv->proxy, "ControllerChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
-        dbus_g_proxy_connect_signal (pool->priv->proxy, "ControllerAdded",
-                                     G_CALLBACK (controller_added_signal_handler), pool, NULL);
-        dbus_g_proxy_connect_signal (pool->priv->proxy, "ControllerRemoved",
-                                     G_CALLBACK (controller_removed_signal_handler), pool, NULL);
-        dbus_g_proxy_connect_signal (pool->priv->proxy, "ControllerChanged",
-                                     G_CALLBACK (controller_changed_signal_handler), pool, NULL);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "AdapterAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "AdapterRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "AdapterChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "AdapterAdded",
+                                     G_CALLBACK (adapter_added_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "AdapterRemoved",
+                                     G_CALLBACK (adapter_removed_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "AdapterChanged",
+                                     G_CALLBACK (adapter_changed_signal_handler), pool, NULL);
 
         /* get the properties on the daemon object at / */
         if (!get_properties (pool)) {
@@ -1355,27 +1355,27 @@ gdu_pool_new (void)
         g_ptr_array_foreach (devices, (GFunc) g_free, NULL);
         g_ptr_array_free (devices, TRUE);
 
-        /* prime the list of controllers */
+        /* prime the list of adapters */
         error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_enumerate_controllers (pool->priv->proxy, &controllers, &error)) {
-                g_warning ("Couldn't enumerate controllers: %s", error->message);
+        if (!org_freedesktop_DeviceKit_Disks_enumerate_adapters (pool->priv->proxy, &adapters, &error)) {
+                g_warning ("Couldn't enumerate adapters: %s", error->message);
                 g_error_free (error);
                 goto error;
         }
-        for (n = 0; n < (int) controllers->len; n++) {
+        for (n = 0; n < (int) adapters->len; n++) {
                 const char *object_path;
-                GduController *controller;
+                GduAdapter *adapter;
 
-                object_path = controllers->pdata[n];
+                object_path = adapters->pdata[n];
 
-                controller = _gdu_controller_new_from_object_path (pool, object_path);
+                adapter = _gdu_adapter_new_from_object_path (pool, object_path);
 
-                g_hash_table_insert (pool->priv->object_path_to_controller,
-                                     (gpointer) gdu_controller_get_object_path (controller),
-                                     controller);
+                g_hash_table_insert (pool->priv->object_path_to_adapter,
+                                     (gpointer) gdu_adapter_get_object_path (adapter),
+                                     adapter);
         }
-        g_ptr_array_foreach (controllers, (GFunc) g_free, NULL);
-        g_ptr_array_free (controllers, TRUE);
+        g_ptr_array_foreach (adapters, (GFunc) g_free, NULL);
+        g_ptr_array_free (adapters, TRUE);
 
         /* and finally compute all presentables */
         recompute_presentables (pool);
@@ -1414,17 +1414,17 @@ gdu_pool_get_by_object_path (GduPool *pool, const char *object_path)
  * @pool: the pool
  * @object_path: the D-Bus object path
  *
- * Looks up #GduController object for @object_path.
+ * Looks up #GduAdapter object for @object_path.
  *
- * Returns: A #GduController object for @object_path, otherwise
+ * Returns: A #GduAdapter object for @object_path, otherwise
  * #NULL. Caller must unref this object using g_object_unref().
  **/
-GduController *
-gdu_pool_get_controller_by_object_path (GduPool *pool, const char *object_path)
+GduAdapter *
+gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path)
 {
-        GduController *ret;
+        GduAdapter *ret;
 
-        ret = g_hash_table_lookup (pool->priv->object_path_to_controller, object_path);
+        ret = g_hash_table_lookup (pool->priv->object_path_to_adapter, object_path);
         if (ret != NULL) {
                 g_object_ref (ret);
         }
@@ -1614,22 +1614,22 @@ gdu_pool_get_devices (GduPool *pool)
 }
 
 /**
- * gdu_pool_get_controllers:
+ * gdu_pool_get_adapters:
  * @pool: A #GduPool.
  *
- * Get a list of all controllers. 
+ * Get a list of all adapters. 
  *
- * Returns: A #GList of #GduController objects. Caller must free this
+ * Returns: A #GList of #GduAdapter objects. Caller must free this
  * (unref all objects, then use g_list_free()).
  **/
 GList *
-gdu_pool_get_controllers (GduPool *pool)
+gdu_pool_get_adapters (GduPool *pool)
 {
         GList *ret;
 
         ret = NULL;
 
-        ret = g_hash_table_get_values (pool->priv->object_path_to_controller);
+        ret = g_hash_table_get_values (pool->priv->object_path_to_adapter);
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
 }

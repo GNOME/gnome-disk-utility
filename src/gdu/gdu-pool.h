@@ -59,9 +59,9 @@ struct _GduPoolClass
         void (*device_changed) (GduPool *pool, GduDevice *device);
         void (*device_job_changed) (GduPool *pool, GduDevice *device);
 
-        void (*controller_added) (GduPool *pool, GduDevice *device);
-        void (*controller_removed) (GduPool *pool, GduDevice *device);
-        void (*controller_changed) (GduPool *pool, GduDevice *device);
+        void (*adapter_added) (GduPool *pool, GduDevice *device);
+        void (*adapter_removed) (GduPool *pool, GduDevice *device);
+        void (*adapter_changed) (GduPool *pool, GduDevice *device);
 
         void (*presentable_added) (GduPool *pool, GduPresentable *presentable);
         void (*presentable_removed) (GduPool *pool, GduPresentable *presentable);
@@ -91,8 +91,8 @@ GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);
 GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable);
 
-GduController  *gdu_pool_get_controller_by_object_path (GduPool *pool, const char *object_path);
-GList      *gdu_pool_get_controllers           (GduPool *pool);
+GduAdapter *gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path);
+GList      *gdu_pool_get_adapters               (GduPool *pool);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

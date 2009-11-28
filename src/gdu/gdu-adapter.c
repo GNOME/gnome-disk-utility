@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-controller.c
+/* gdu-adapter.c
  *
  * Copyright (C) 2009 David Zeuthen
  *
@@ -30,8 +30,8 @@
 
 #include "gdu-private.h"
 #include "gdu-pool.h"
-#include "gdu-controller.h"
-#include "devkit-disks-controller-glue.h"
+#include "gdu-adapter.h"
+#include "devkit-disks-adapter-glue.h"
 
 /* --- SUCKY CODE BEGIN --- */
 
@@ -48,10 +48,10 @@ typedef struct
         gchar *vendor;
         gchar *model;
         gchar *driver;
-} ControllerProperties;
+} AdapterProperties;
 
 static void
-collect_props (const char *key, const GValue *value, ControllerProperties *props)
+collect_props (const char *key, const GValue *value, AdapterProperties *props)
 {
         gboolean handled = TRUE;
 
@@ -72,7 +72,7 @@ collect_props (const char *key, const GValue *value, ControllerProperties *props
 }
 
 static void
-controller_properties_free (ControllerProperties *props)
+adapter_properties_free (AdapterProperties *props)
 {
         g_free (props->native_path);
         g_free (props->vendor);
@@ -81,17 +81,17 @@ controller_properties_free (ControllerProperties *props)
         g_free (props);
 }
 
-static ControllerProperties *
-controller_properties_get (DBusGConnection *bus,
+static AdapterProperties *
+adapter_properties_get (DBusGConnection *bus,
                            const char *object_path)
 {
-        ControllerProperties *props;
+        AdapterProperties *props;
         GError *error;
         GHashTable *hash_table;
         DBusGProxy *prop_proxy;
-        const char *ifname = "org.freedesktop.DeviceKit.Disks.Controller";
+        const char *ifname = "org.freedesktop.DeviceKit.Disks.Adapter";
 
-        props = g_new0 (ControllerProperties, 1);
+        props = g_new0 (AdapterProperties, 1);
 
 	prop_proxy = dbus_g_proxy_new_for_name (bus,
                                                 "org.freedesktop.DeviceKit.Disks",
@@ -110,7 +110,7 @@ controller_properties_get (DBusGConnection *bus,
                 g_warning ("Couldn't call GetAll() to get properties for %s: %s", object_path, error->message);
                 g_error_free (error);
 
-                controller_properties_free (props);
+                adapter_properties_free (props);
                 props = NULL;
                 goto out;
         }
@@ -134,7 +134,7 @@ out:
 
 /* --- SUCKY CODE END --- */
 
-struct _GduControllerPrivate
+struct _GduAdapterPrivate
 {
         DBusGConnection *bus;
         DBusGProxy *proxy;
@@ -142,7 +142,7 @@ struct _GduControllerPrivate
 
         char *object_path;
 
-        ControllerProperties *props;
+        AdapterProperties *props;
 };
 
 enum {
@@ -154,49 +154,49 @@ enum {
 static GObjectClass *parent_class = NULL;
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (GduController, gdu_controller, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GduAdapter, gdu_adapter, G_TYPE_OBJECT);
 
 GduPool *
-gdu_controller_get_pool (GduController *controller)
+gdu_adapter_get_pool (GduAdapter *adapter)
 {
-        return g_object_ref (controller->priv->pool);
+        return g_object_ref (adapter->priv->pool);
 }
 
 static void
-gdu_controller_finalize (GduController *controller)
+gdu_adapter_finalize (GduAdapter *adapter)
 {
-        g_debug ("##### finalized controller %s",
-                 controller->priv->props != NULL ? controller->priv->props->native_path : controller->priv->object_path);
+        g_debug ("##### finalized adapter %s",
+                 adapter->priv->props != NULL ? adapter->priv->props->native_path : adapter->priv->object_path);
 
-        dbus_g_connection_unref (controller->priv->bus);
-        g_free (controller->priv->object_path);
-        if (controller->priv->proxy != NULL)
-                g_object_unref (controller->priv->proxy);
-        if (controller->priv->pool != NULL)
-                g_object_unref (controller->priv->pool);
-        if (controller->priv->props != NULL)
-                controller_properties_free (controller->priv->props);
+        dbus_g_connection_unref (adapter->priv->bus);
+        g_free (adapter->priv->object_path);
+        if (adapter->priv->proxy != NULL)
+                g_object_unref (adapter->priv->proxy);
+        if (adapter->priv->pool != NULL)
+                g_object_unref (adapter->priv->pool);
+        if (adapter->priv->props != NULL)
+                adapter_properties_free (adapter->priv->props);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
-                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (controller));
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (adapter));
 }
 
 static void
-gdu_controller_class_init (GduControllerClass *klass)
+gdu_adapter_class_init (GduAdapterClass *klass)
 {
         GObjectClass *obj_class = (GObjectClass *) klass;
 
         parent_class = g_type_class_peek_parent (klass);
 
-        obj_class->finalize = (GObjectFinalizeFunc) gdu_controller_finalize;
+        obj_class->finalize = (GObjectFinalizeFunc) gdu_adapter_finalize;
 
-        g_type_class_add_private (klass, sizeof (GduControllerPrivate));
+        g_type_class_add_private (klass, sizeof (GduAdapterPrivate));
 
         signals[CHANGED] =
                 g_signal_new ("changed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduControllerClass, changed),
+                              G_STRUCT_OFFSET (GduAdapterClass, changed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE, 0);
@@ -204,28 +204,28 @@ gdu_controller_class_init (GduControllerClass *klass)
                 g_signal_new ("removed",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduControllerClass, removed),
+                              G_STRUCT_OFFSET (GduAdapterClass, removed),
                               NULL, NULL,
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE, 0);
 }
 
 static void
-gdu_controller_init (GduController *controller)
+gdu_adapter_init (GduAdapter *adapter)
 {
-        controller->priv = G_TYPE_INSTANCE_GET_PRIVATE (controller, GDU_TYPE_CONTROLLER, GduControllerPrivate);
+        adapter->priv = G_TYPE_INSTANCE_GET_PRIVATE (adapter, GDU_TYPE_ADAPTER, GduAdapterPrivate);
 }
 
 static gboolean
-update_info (GduController *controller)
+update_info (GduAdapter *adapter)
 {
-        ControllerProperties *new_properties;
+        AdapterProperties *new_properties;
 
-        new_properties = controller_properties_get (controller->priv->bus, controller->priv->object_path);
+        new_properties = adapter_properties_get (adapter->priv->bus, adapter->priv->object_path);
         if (new_properties != NULL) {
-                if (controller->priv->props != NULL)
-                        controller_properties_free (controller->priv->props);
-                controller->priv->props = new_properties;
+                if (adapter->priv->props != NULL)
+                        adapter_properties_free (adapter->priv->props);
+                adapter->priv->props = new_properties;
                 return TRUE;
         } else {
                 return FALSE;
@@ -233,50 +233,50 @@ update_info (GduController *controller)
 }
 
 
-GduController *
-_gdu_controller_new_from_object_path (GduPool *pool, const char *object_path)
+GduAdapter *
+_gdu_adapter_new_from_object_path (GduPool *pool, const char *object_path)
 {
         GError *error;
-        GduController *controller;
+        GduAdapter *adapter;
 
-        controller = GDU_CONTROLLER (g_object_new (GDU_TYPE_CONTROLLER, NULL));
-        controller->priv->object_path = g_strdup (object_path);
-        controller->priv->pool = g_object_ref (pool);
+        adapter = GDU_ADAPTER (g_object_new (GDU_TYPE_ADAPTER, NULL));
+        adapter->priv->object_path = g_strdup (object_path);
+        adapter->priv->pool = g_object_ref (pool);
 
         error = NULL;
-        controller->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (controller->priv->bus == NULL) {
+        adapter->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+        if (adapter->priv->bus == NULL) {
                 g_warning ("Couldn't connect to system bus: %s", error->message);
                 g_error_free (error);
                 goto error;
         }
 
-	controller->priv->proxy = dbus_g_proxy_new_for_name (controller->priv->bus,
+	adapter->priv->proxy = dbus_g_proxy_new_for_name (adapter->priv->bus,
                                                          "org.freedesktop.DeviceKit.Disks",
-                                                         controller->priv->object_path,
-                                                         "org.freedesktop.DeviceKit.Disks.Controller");
-        dbus_g_proxy_set_default_timeout (controller->priv->proxy, INT_MAX);
-        dbus_g_proxy_add_signal (controller->priv->proxy, "Changed", G_TYPE_INVALID);
+                                                         adapter->priv->object_path,
+                                                         "org.freedesktop.DeviceKit.Disks.Adapter");
+        dbus_g_proxy_set_default_timeout (adapter->priv->proxy, INT_MAX);
+        dbus_g_proxy_add_signal (adapter->priv->proxy, "Changed", G_TYPE_INVALID);
 
         /* TODO: connect signals */
 
-        if (!update_info (controller))
+        if (!update_info (adapter))
                 goto error;
 
-        g_debug ("_gdu_controller_new_from_object_path: %s", controller->priv->props->native_path);
+        g_debug ("_gdu_adapter_new_from_object_path: %s", adapter->priv->props->native_path);
 
-        return controller;
+        return adapter;
 error:
-        g_object_unref (controller);
+        g_object_unref (adapter);
         return NULL;
 }
 
 gboolean
-_gdu_controller_changed (GduController *controller)
+_gdu_adapter_changed (GduAdapter *adapter)
 {
-        g_debug ("_gdu_controller_changed: %s", controller->priv->props->native_path);
-        if (update_info (controller)) {
-                g_signal_emit (controller, signals[CHANGED], 0);
+        g_debug ("_gdu_adapter_changed: %s", adapter->priv->props->native_path);
+        if (update_info (adapter)) {
+                g_signal_emit (adapter, signals[CHANGED], 0);
                 return TRUE;
         } else {
                 return FALSE;
@@ -284,32 +284,32 @@ _gdu_controller_changed (GduController *controller)
 }
 
 const gchar *
-gdu_controller_get_object_path (GduController *controller)
+gdu_adapter_get_object_path (GduAdapter *adapter)
 {
-        return controller->priv->object_path;
+        return adapter->priv->object_path;
 }
 
 
 const gchar *
-gdu_controller_get_native_path (GduController *controller)
+gdu_adapter_get_native_path (GduAdapter *adapter)
 {
-        return controller->priv->props->native_path;
+        return adapter->priv->props->native_path;
 }
 
 const gchar *
-gdu_controller_get_vendor (GduController *controller)
+gdu_adapter_get_vendor (GduAdapter *adapter)
 {
-        return controller->priv->props->vendor;
+        return adapter->priv->props->vendor;
 }
 
 const gchar *
-gdu_controller_get_model (GduController *controller)
+gdu_adapter_get_model (GduAdapter *adapter)
 {
-        return controller->priv->props->model;
+        return adapter->priv->props->model;
 }
 
 const gchar *
-gdu_controller_get_driver (GduController *controller)
+gdu_adapter_get_driver (GduAdapter *adapter)
 {
-        return controller->priv->props->driver;
+        return adapter->priv->props->driver;
 }

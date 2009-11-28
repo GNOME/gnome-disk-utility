@@ -104,9 +104,9 @@ void        _gdu_device_job_changed           (GduDevice   *device,
                                                gboolean     job_is_cancellable,
                                                double       job_percentage);
 
-GduController *_gdu_controller_new_from_object_path (GduPool *pool, const char *object_path);
-gboolean    _gdu_controller_changed               (GduController   *controller);
-GduHba *_gdu_hba_new_from_controller (GduPool *pool, GduController *controller);
+GduAdapter *_gdu_adapter_new_from_object_path (GduPool *pool, const char *object_path);
+gboolean    _gdu_adapter_changed               (GduAdapter   *adapter);
+GduHba *_gdu_hba_new_from_adapter (GduPool *pool, GduAdapter *adapter);
 
 void _gdu_drive_rewrite_enclosing_presentable (GduDrive *drive);
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);

@@ -84,13 +84,8 @@ gdu_section_hba_update (GduSection *_section)
         fabric = gdu_adapter_get_fabric (a);
         num_ports = gdu_adapter_get_num_ports (a);
 
-        if (num_ports > 0) {
-                num_ports_str = g_strdup_printf ("%d", num_ports);
-        } else {
-                num_ports_str = g_strdup ("–");
-        }
+        /* TODO: maybe move these blocks of code to gdu-util.c as util functions */
 
-        /* TODO: maybe move to gdu-util.c */
         if (g_str_has_prefix (fabric, "ata_pata")) {
                 fabric_str = g_strdup ("Parallel ATA");
         } else if (g_str_has_prefix (fabric, "ata_sata")) {
@@ -103,6 +98,19 @@ gdu_section_hba_update (GduSection *_section)
                 fabric_str = g_strdup ("SCSI");
         } else {
                 fabric_str = g_strdup ("–");
+        }
+
+        if (num_ports > 0) {
+                if (g_strcmp0 (fabric, "scsi_sas") == 0) {
+                        /* Translators: Used for SAS to convey the number of PHYs in the
+                         * "Number of Ports" element. You should probably not translate PHY.
+                         */
+                        num_ports_str = g_strdup_printf (_("%d PHYs"), num_ports);
+                } else {
+                        num_ports_str = g_strdup_printf ("%d", num_ports);
+                }
+        } else {
+                num_ports_str = g_strdup ("–");
         }
 
         gdu_details_element_set_text (section->priv->vendor_element, vendor);

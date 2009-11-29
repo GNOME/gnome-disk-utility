@@ -35,6 +35,8 @@ struct _GduSectionHbaPrivate
         GduDetailsElement *vendor_element;
         GduDetailsElement *model_element;
         GduDetailsElement *driver_element;
+        GduDetailsElement *fabric_element;
+        GduDetailsElement *num_ports_element;
 };
 
 G_DEFINE_TYPE (GduSectionHba, gdu_section_hba, GDU_TYPE_SECTION)
@@ -61,8 +63,15 @@ gdu_section_hba_update (GduSection *_section)
         const gchar *vendor;
         const gchar *model;
         const gchar *driver;
+        const gchar *fabric;
+        guint num_ports;
+        gchar *fabric_str;
+        gchar *num_ports_str;
 
         a = NULL;
+        fabric_str = NULL;
+        num_ports_str = NULL;
+
         p = gdu_section_get_presentable (_section);
 
         a = gdu_hba_get_adapter (GDU_HBA (p));
@@ -72,12 +81,41 @@ gdu_section_hba_update (GduSection *_section)
         vendor = gdu_adapter_get_vendor (a);
         model = gdu_adapter_get_model (a);
         driver = gdu_adapter_get_driver (a);
+        fabric = gdu_adapter_get_fabric (a);
+        num_ports = gdu_adapter_get_num_ports (a);
+
+        if (num_ports > 0) {
+                num_ports_str = g_strdup_printf ("%d", num_ports);
+        } else {
+                num_ports_str = g_strdup ("–");
+        }
+
+        /* TODO: maybe move to gdu-util.c */
+        if (g_str_has_prefix (fabric, "ata_pata")) {
+                fabric_str = g_strdup ("Parallel ATA");
+        } else if (g_str_has_prefix (fabric, "ata_sata")) {
+                fabric_str = g_strdup ("Serial ATA");
+        } else if (g_str_has_prefix (fabric, "ata")) {
+                fabric_str = g_strdup ("ATA");
+        } else if (g_str_has_prefix (fabric, "scsi_sas")) {
+                fabric_str = g_strdup ("Serial Attached SCSI");
+        } else if (g_str_has_prefix (fabric, "scsi")) {
+                fabric_str = g_strdup ("SCSI");
+        } else {
+                fabric_str = g_strdup ("–");
+        }
+
         gdu_details_element_set_text (section->priv->vendor_element, vendor);
         gdu_details_element_set_text (section->priv->model_element, model);
         gdu_details_element_set_text (section->priv->driver_element, driver);
 
+        gdu_details_element_set_text (section->priv->fabric_element, fabric_str);
+        gdu_details_element_set_text (section->priv->num_ports_element, num_ports_str);
+
 
  out:
+        g_free (fabric_str);
+        g_free (num_ports_str);
         if (a != NULL)
                 g_object_unref (a);
 }
@@ -132,6 +170,14 @@ gdu_section_hba_constructed (GObject *object)
         element = gdu_details_element_new (_("Driver:"), NULL, NULL);
         g_ptr_array_add (elements, element);
         section->priv->driver_element = element;
+
+        element = gdu_details_element_new (_("Fabric:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->fabric_element = element;
+
+        element = gdu_details_element_new (_("Number of Ports:"), NULL, NULL);
+        g_ptr_array_add (elements, element);
+        section->priv->num_ports_element = element;
 
         table = gdu_details_table_new (1, elements);
         g_ptr_array_unref (elements);

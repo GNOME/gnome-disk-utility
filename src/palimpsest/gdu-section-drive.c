@@ -36,7 +36,7 @@ struct _GduSectionDrivePrivate
         GduDetailsElement *firmware_element;
         GduDetailsElement *serial_element;
         GduDetailsElement *wwn_element;
-        GduDetailsElement *port_number_element;
+        GduDetailsElement *location_element;
         GduDetailsElement *device_element;
         GduDetailsElement *write_cache_element;
         GduDetailsElement *rotation_rate_element;
@@ -141,15 +141,18 @@ gdu_section_drive_update (GduSection *_section)
 
                 port_number = gdu_port_get_number (port);
                 if (port_number >= 0) {
-                        /* Start at 1 */
-                        s = g_strdup_printf ("%d", port_number + 1);
-                        gdu_details_element_set_text (section->priv->port_number_element, s);
+                        /* Translators: This is used in the "Location" element for a disk
+                         * directly connected to the Host Adapter (aka HBA) - port numbers
+                         * start at 1
+                         */
+                        s = g_strdup_printf (_("Port %d of Host Adapter"), port_number + 1);
+                        gdu_details_element_set_text (section->priv->location_element, s);
                         g_free (s);
                 } else {
-                        gdu_details_element_set_text (section->priv->port_number_element, "–");
+                        gdu_details_element_set_text (section->priv->location_element, "–");
                 }
         } else {
-                gdu_details_element_set_text (section->priv->port_number_element, "–");
+                gdu_details_element_set_text (section->priv->location_element, "–");
         }
         gdu_details_element_set_text (section->priv->device_element, gdu_device_get_device_file (d));
 
@@ -624,9 +627,9 @@ gdu_section_drive_constructed (GObject *object)
         g_ptr_array_add (elements, element);
         section->priv->wwn_element = element;
 
-        element = gdu_details_element_new (_("Port Number:"), NULL, NULL);
+        element = gdu_details_element_new (_("Location:"), NULL, NULL);
         g_ptr_array_add (elements, element);
-        section->priv->port_number_element = element;
+        section->priv->location_element = element;
 
         element = gdu_details_element_new (_("Device:"), NULL, NULL);
         g_ptr_array_add (elements, element);

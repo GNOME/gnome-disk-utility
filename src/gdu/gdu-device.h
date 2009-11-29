@@ -145,7 +145,7 @@ gboolean gdu_device_drive_get_is_rotational (GduDevice *device);
 guint    gdu_device_drive_get_rotation_rate (GduDevice *device);
 const char *gdu_device_drive_get_write_cache (GduDevice *device);
 const char *gdu_device_drive_get_adapter (GduDevice *device);
-const char *gdu_device_drive_get_port (GduDevice *device);
+char **gdu_device_drive_get_ports (GduDevice *device);
 
 gboolean gdu_device_optical_disc_get_is_blank (GduDevice *device);
 gboolean gdu_device_optical_disc_get_is_appendable (GduDevice *device);

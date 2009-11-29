@@ -104,7 +104,7 @@ gdu_section_drive_update (GduSection *_section)
         guint rotation_rate;
         gboolean is_rotational;
         GIcon *icon;
-        const gchar *port_object_path;
+        gchar **port_object_paths;
         GduPort *port;
         gboolean show_cddvd_button;
         gboolean show_format_button;
@@ -129,11 +129,12 @@ gdu_section_drive_update (GduSection *_section)
         if (d == NULL)
                 goto out;
 
-        port_object_path = gdu_device_drive_get_port (d);
-        if (port_object_path != NULL && strlen (port_object_path) > 1) {
+        /* TODO: handle multiple ports */
+        port_object_paths = gdu_device_drive_get_ports (d);
+        if (port_object_paths != NULL && port_object_paths[0] != NULL) {
                 GduPool *pool;
                 pool = gdu_device_get_pool (d);
-                port = gdu_pool_get_port_by_object_path (pool, port_object_path);
+                port = gdu_pool_get_port_by_object_path (pool, port_object_paths[0]);
                 g_object_unref (pool);
         }
         if (port != NULL) {
@@ -141,6 +142,8 @@ gdu_section_drive_update (GduSection *_section)
 
                 port_number = gdu_port_get_number (port);
                 if (port_number >= 0) {
+                        /* TODO: provide a link to the HBA? Probably */
+
                         /* Translators: This is used in the "Location" element for a disk
                          * directly connected to the Host Adapter (aka HBA) - port numbers
                          * start at 1

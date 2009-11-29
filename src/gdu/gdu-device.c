@@ -124,7 +124,7 @@ typedef struct
         guint    drive_rotation_rate;
         char    *drive_write_cache;
         char    *drive_adapter;
-        char    *drive_port;
+        char   **drive_ports;
 
         gboolean optical_disc_is_blank;
         gboolean optical_disc_is_appendable;
@@ -322,8 +322,17 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
                 props->drive_write_cache = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "DriveAdapter") == 0)
                 props->drive_adapter = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "DrivePort") == 0)
-                props->drive_port = g_strdup (g_value_get_boxed (value));
+        else if (strcmp (key, "DrivePorts") == 0) {
+                guint n;
+                GPtrArray *object_paths;
+
+                object_paths = g_value_get_boxed (value);
+
+                props->drive_ports = g_new0 (char *, object_paths->len + 1);
+                for (n = 0; n < object_paths->len; n++)
+                        props->drive_ports[n] = g_strdup (object_paths->pdata[n]);
+                props->drive_ports[n] = NULL;
+        }
 
         else if (strcmp (key, "OpticalDiscIsBlank") == 0)
                 props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -385,13 +394,13 @@ collect_props (const char *key, const GValue *value, DeviceProperties *props)
         else if (strcmp (key, "LinuxMdVersion") == 0)
                 props->linux_md_version = g_strdup (g_value_get_string (value));
         else if (strcmp (key, "LinuxMdSlaves") == 0) {
-                int n;
+                guint n;
                 GPtrArray *object_paths;
 
                 object_paths = g_value_get_boxed (value);
 
                 props->linux_md_slaves = g_new0 (char *, object_paths->len + 1);
-                for (n = 0; n < (int) object_paths->len; n++)
+                for (n = 0; n < object_paths->len; n++)
                         props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
                 props->linux_md_slaves[n] = NULL;
         }
@@ -445,7 +454,7 @@ device_properties_free (DeviceProperties *props)
         g_free (props->drive_media);
         g_free (props->drive_write_cache);
         g_free (props->drive_adapter);
-        g_free (props->drive_port);
+        g_strfreev (props->drive_ports);
 
         g_free (props->drive_ata_smart_status);
         g_free (props->drive_ata_smart_blob);
@@ -1096,10 +1105,10 @@ gdu_device_drive_get_adapter (GduDevice *device)
         return device->priv->props->drive_adapter;
 }
 
-const char *
-gdu_device_drive_get_port (GduDevice *device)
+char **
+gdu_device_drive_get_ports (GduDevice *device)
 {
-        return device->priv->props->drive_port;
+        return device->priv->props->drive_ports;
 }
 
 gboolean

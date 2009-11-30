@@ -32,6 +32,7 @@
 #include <gdu/gdu-linux-md-drive.h>
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-adapter.h>
+#include <gdu/gdu-expander.h>
 #include <gdu/gdu-port.h>
 #include <gdu/gdu-drive.h>
 #include <gdu/gdu-error.h>
@@ -43,6 +44,7 @@
 #include <gdu/gdu-volume.h>
 #include <gdu/gdu-volume-hole.h>
 #include <gdu/gdu-hba.h>
+#include <gdu/gdu-hub.h>
 #include <gdu/gdu-callbacks.h>
 
 #undef __GDU_INSIDE_GDU_H

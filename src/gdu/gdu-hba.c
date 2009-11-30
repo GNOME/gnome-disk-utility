@@ -143,8 +143,27 @@ gdu_hba_get_enclosing_presentable (GduPresentable *presentable)
 static char *
 gdu_hba_get_name (GduPresentable *presentable)
 {
-        /* TODO: include type e.g. SATA-I, SATA-II, SAS etc */
-        return g_strdup (_("Host Adapter"));
+        GduHba *hba = GDU_HBA (presentable);
+        const gchar *fabric;
+        gchar *fabric_str;
+
+        fabric = gdu_adapter_get_fabric (hba->priv->adapter);
+
+        if (g_str_has_prefix (fabric, "ata_pata")) {
+                fabric_str = g_strdup ("PATA Host Adapter");
+        } else if (g_str_has_prefix (fabric, "ata_sata")) {
+                fabric_str = g_strdup ("SATA Host Adapter");
+        } else if (g_str_has_prefix (fabric, "ata")) {
+                fabric_str = g_strdup ("ATA Host Adapter");
+        } else if (g_str_has_prefix (fabric, "scsi_sas")) {
+                fabric_str = g_strdup ("SAS Host Adapter");
+        } else if (g_str_has_prefix (fabric, "scsi")) {
+                fabric_str = g_strdup ("SCSI Host Adapter");
+        } else {
+                fabric_str = g_strdup ("Host Adapter");
+        }
+
+        return fabric_str;
 }
 
 static gchar *

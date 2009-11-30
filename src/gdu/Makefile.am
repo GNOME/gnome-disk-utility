@@ -4,6 +4,7 @@ BUILT_SOURCES =                                         	\
         devkit-disks-daemon-glue.h                      	\
         devkit-disks-device-glue.h				\
         devkit-disks-adapter-glue.h				\
+        devkit-disks-expander-glue.h				\
         devkit-disks-port-glue.h				\
 	gdu-marshal.h			gdu-marshal.c
 
@@ -22,6 +23,9 @@ devkit-disks-device-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceK
 devkit-disks-adapter-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Adapter.xml Makefile.am
 	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-adapter-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Adapter.xml
 
+devkit-disks-expander-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Expander.xml Makefile.am
+	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-expander-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Expander.xml
+
 devkit-disks-port-glue.h: /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Port.xml Makefile.am
 	dbus-binding-tool --prefix=devkit_disks_daemon --mode=glib-client --output=devkit-disks-port-glue.h /usr/share/dbus-1/interfaces/org.freedesktop.DeviceKit.Disks.Port.xml
 
@@ -35,6 +39,7 @@ libgduinclude_HEADERS =              			\
 	gdu-callbacks.h					\
 	gdu-device.h					\
 	gdu-adapter.h					\
+	gdu-expander.h					\
 	gdu-port.h					\
 	gdu-drive.h					\
 	gdu-linux-md-drive.h				\
@@ -47,6 +52,7 @@ libgduinclude_HEADERS =              			\
 	gdu-volume.h					\
 	gdu-volume-hole.h				\
 	gdu-hba.h					\
+	gdu-hub.h					\
 	$(NULL)
 
 libgdu_la_SOURCES =                                					\
@@ -57,6 +63,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-pool.c				gdu-pool.h				\
 	gdu-device.c				gdu-device.h				\
 	gdu-adapter.c				gdu-adapter.h				\
+	gdu-expander.c				gdu-expander.h				\
 	gdu-port.c				gdu-port.h				\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\
@@ -67,6 +74,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-error.c				gdu-error.h				\
 	gdu-process.c				gdu-process.h				\
 	gdu-hba.c				gdu-hba.h				\
+	gdu-hub.c				gdu-hub.h				\
 						gdu-private.h				\
 	$(BUILT_SOURCES)								\
 	$(NULL)

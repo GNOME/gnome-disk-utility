@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-types.h
+/* gdu-hub.h
  *
- * Copyright (C) 2007 David Zeuthen
+ * Copyright (C) 2009 David Zeuthen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -23,33 +23,39 @@
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef __GDU_TYPES_H
-#define __GDU_TYPES_H
+#ifndef __GDU_HUB_H
+#define __GDU_HUB_H
 
-#include <glib-object.h>
-#include <gio/gio.h>
+#include <gdu/gdu-types.h>
 
 G_BEGIN_DECLS
 
-/* forward type definitions */
+#define GDU_TYPE_HUB           (gdu_hub_get_type ())
+#define GDU_HUB(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_HUB, GduHub))
+#define GDU_HUB_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_HUB,  GduHubClass))
+#define GDU_IS_HUB(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_HUB))
+#define GDU_IS_HUB_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_HUB))
+#define GDU_HUB_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_HUB, GduHubClass))
 
-typedef struct _GduPool                   GduPool;
-typedef struct _GduDevice                 GduDevice;
-typedef struct _GduAdapter                GduAdapter;
-typedef struct _GduExpander               GduExpander;
-typedef struct _GduPort                   GduPort;
+typedef struct _GduHubClass       GduHubClass;
+typedef struct _GduHubPrivate     GduHubPrivate;
 
-typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
-typedef struct _GduDrive                  GduDrive;
-typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
-typedef struct _GduVolume                 GduVolume;
-typedef struct _GduVolumeHole             GduVolumeHole;
-typedef struct _GduHba                    GduHba;
-typedef struct _GduHub                    GduHub;
+struct _GduHub
+{
+        GObject parent;
 
-typedef struct _GduKnownFilesystem        GduKnownFilesystem;
-typedef struct _GduProcess                GduProcess;
+        /* private */
+        GduHubPrivate *priv;
+};
+
+struct _GduHubClass
+{
+        GObjectClass parent_class;
+};
+
+GType        gdu_hub_get_type     (void);
+GduExpander *gdu_hub_get_expander (GduHub *hub);
 
 G_END_DECLS
 
-#endif /* __GDU_TYPES_H */
+#endif /* __GDU_HUB_H */

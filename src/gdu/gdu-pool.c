@@ -28,11 +28,14 @@
 #include "gdu-presentable.h"
 #include "gdu-device.h"
 #include "gdu-adapter.h"
+#include "gdu-expander.h"
 #include "gdu-port.h"
 #include "gdu-drive.h"
 #include "gdu-linux-md-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
+#include "gdu-hba.h"
+#include "gdu-hub.h"
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
 
@@ -55,6 +58,9 @@ enum {
         ADAPTER_ADDED,
         ADAPTER_REMOVED,
         ADAPTER_CHANGED,
+        EXPANDER_ADDED,
+        EXPANDER_REMOVED,
+        EXPANDER_CHANGED,
         PORT_ADDED,
         PORT_REMOVED,
         PORT_CHANGED,
@@ -86,6 +92,9 @@ struct _GduPoolPrivate
         /* the current set of adapters we know about */
         GHashTable *object_path_to_adapter;
 
+        /* the current set of expanders we know about */
+        GHashTable *object_path_to_expander;
+
         /* the current set of ports we know about */
         GHashTable *object_path_to_port;
 };
@@ -106,6 +115,8 @@ gdu_pool_finalize (GduPool *pool)
         g_hash_table_unref (pool->priv->object_path_to_device);
 
         g_hash_table_unref (pool->priv->object_path_to_adapter);
+
+        g_hash_table_unref (pool->priv->object_path_to_expander);
 
         g_hash_table_unref (pool->priv->object_path_to_port);
 
@@ -247,6 +258,58 @@ gdu_pool_class_init (GduPoolClass *klass)
                               g_cclosure_marshal_VOID__OBJECT,
                               G_TYPE_NONE, 1,
                               GDU_TYPE_ADAPTER);
+
+        /**
+         * GduPool::expander-added
+         * @pool: The #GduPool emitting the signal.
+         * @expander: The #GduExpander that was added.
+         *
+         * Emitted when @expander is added to @pool.
+         **/
+        signals[EXPANDER_ADDED] =
+                g_signal_new ("expander-added",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, expander_added),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_EXPANDER);
+
+        /**
+         * GduPool::expander-removed
+         * @pool: The #GduPool emitting the signal.
+         * @expander: The #GduExpander that was removed.
+         *
+         * Emitted when @expander is removed from @pool. Recipients
+         * should release references to @expander.
+         **/
+        signals[EXPANDER_REMOVED] =
+                g_signal_new ("expander-removed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, expander_removed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_EXPANDER);
+
+        /**
+         * GduPool::expander-changed
+         * @pool: The #GduPool emitting the signal.
+         * @expander: A #GduExpander.
+         *
+         * Emitted when @expander is changed.
+         **/
+        signals[EXPANDER_CHANGED] =
+                g_signal_new ("expander-changed",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, expander_changed),
+                              NULL, NULL,
+                              g_cclosure_marshal_VOID__OBJECT,
+                              G_TYPE_NONE, 1,
+                              GDU_TYPE_EXPANDER);
 
         /**
          * GduPool::port-added
@@ -414,9 +477,14 @@ gdu_pool_init (GduPool *pool)
                                                                    g_object_unref);
 
         pool->priv->object_path_to_adapter = g_hash_table_new_full (g_str_hash,
-                                                                       g_str_equal,
-                                                                       NULL,
-                                                                       g_object_unref);
+                                                                    g_str_equal,
+                                                                    NULL,
+                                                                    g_object_unref);
+
+        pool->priv->object_path_to_expander = g_hash_table_new_full (g_str_hash,
+                                                                     g_str_equal,
+                                                                     NULL,
+                                                                     g_object_unref);
 
         pool->priv->object_path_to_port = g_hash_table_new_full (g_str_hash,
                                                                  g_str_equal,
@@ -738,6 +806,7 @@ recompute_presentables (GduPool *pool)
         GList *l;
         GList *devices;
         GList *adapters;
+        GList *expanders;
         GList *new_partitioned_drives;
         GList *new_presentables;
         GList *added_presentables;
@@ -745,6 +814,7 @@ recompute_presentables (GduPool *pool)
         GHashTable *hash_map_from_drive_to_extended_partition;
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
         GHashTable *hash_map_from_adapter_objpath_to_hba;
+        GHashTable *hash_map_from_expander_objpath_to_hub;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
          * compute the complete set of presentables every time and diff it against the
@@ -774,6 +844,11 @@ recompute_presentables (GduPool *pool)
                                                                          NULL,
                                                                          NULL);
 
+        hash_map_from_expander_objpath_to_hub = g_hash_table_new_full (g_str_hash,
+                                                                       g_str_equal,
+                                                                       NULL,
+                                                                       NULL);
+
         /* First add all HBAs */
         adapters = gdu_pool_get_adapters (pool);
         for (l = adapters; l != NULL; l = l->next) {
@@ -788,6 +863,47 @@ recompute_presentables (GduPool *pool)
 
                 new_presentables = g_list_prepend (new_presentables, hba);
         } /* for all adapters */
+
+        /* Then all expanders */
+        expanders = gdu_pool_get_expanders (pool);
+        for (l = expanders; l != NULL; l = l->next) {
+                GduExpander *expander = GDU_EXPANDER (l->data);
+                GduHub *hub;
+                gchar **port_object_paths;
+                GduPresentable *expander_parent;
+
+                /* we are guaranteed that upstream ports all stem from the same expander or
+                 * host adapter - so just pick the first one */
+                expander_parent = NULL;
+                port_object_paths = gdu_expander_get_upstream_ports (expander);
+                if (port_object_paths != NULL && port_object_paths[0] != NULL) {
+                        GduPort *port;
+
+                        port = gdu_pool_get_port_by_object_path (pool, port_object_paths[0]);
+
+                        /* For now, always choose the adapter as the parent - this is *probably*
+                         * the right thing (e.g. what people expect) to do _anyway_ because of
+                         * the way expanders are daisy-chained
+                         */
+                        if (port != NULL) {
+                                const gchar *adapter_object_path;
+                                adapter_object_path = gdu_port_get_adapter (port);
+                                expander_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                                                       adapter_object_path);
+                                g_object_unref (port);
+                        }
+                }
+
+                g_warn_if_fail (expander_parent != NULL);
+
+                hub = _gdu_hub_new_from_expander (pool, expander, expander_parent);
+
+                g_hash_table_insert (hash_map_from_expander_objpath_to_hub,
+                                     (gpointer) gdu_expander_get_object_path (expander),
+                                     hub);
+
+                new_presentables = g_list_prepend (new_presentables, hub);
+        } /* for all expanders */
 
         /* TODO: Ensure that pool->priv->devices is in topological sort order, then just loop
          *       through it and handle devices sequentially.
@@ -838,17 +954,46 @@ recompute_presentables (GduPool *pool)
 
 
                         } else {
-                                const gchar *adapter_objpath;
-                                GduPresentable *hba;
+                                GduPresentable *drive_parent;
 
-                                hba = NULL;
+                                drive_parent = NULL;
+#if 1
+                                gchar **port_object_paths;
+
+                                /* we are guaranteed that upstream ports all stem from the same expander or
+                                 * host adapter - so just pick the first one */
+                                port_object_paths = gdu_device_drive_get_ports (device);
+                                if (port_object_paths != NULL && port_object_paths[0] != NULL) {
+                                        GduPort *port;
+
+                                        port = gdu_pool_get_port_by_object_path (pool, port_object_paths[0]);
+                                        /* choose the expander, if available, otherwise the adapter */
+                                        if (port != NULL) {
+                                                const gchar *parent_object_path;
+                                                const gchar *adapter_object_path;
+
+                                                parent_object_path = gdu_port_get_parent (port);
+                                                adapter_object_path = gdu_port_get_adapter (port);
+                                                if (g_strcmp0 (parent_object_path, adapter_object_path) != 0) {
+                                                        drive_parent = g_hash_table_lookup (hash_map_from_expander_objpath_to_hub,
+                                                                                            parent_object_path);
+                                                } else {
+                                                        drive_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                                                                            adapter_object_path);
+                                                }
+                                                g_object_unref (port);
+                                        }
+                                }
+#else
+                                const gchar *adapter_objpath;
 
                                 adapter_objpath = gdu_device_drive_get_adapter (device);
                                 if (adapter_objpath != NULL)
-                                        hba = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
-                                                                   adapter_objpath);
+                                        drive_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                                                            adapter_objpath);
+#endif
 
-                                drive = _gdu_drive_new_from_device (pool, device, hba);
+                                drive = _gdu_drive_new_from_device (pool, device, drive_parent);
                         }
                         new_presentables = g_list_prepend (new_presentables, drive);
 
@@ -981,6 +1126,7 @@ recompute_presentables (GduPool *pool)
         g_hash_table_unref (hash_map_from_drive_to_extended_partition);
         g_hash_table_unref (hash_map_from_linux_md_uuid_to_drive);
         g_hash_table_unref (hash_map_from_adapter_objpath_to_hba);
+        g_hash_table_unref (hash_map_from_expander_objpath_to_hub);
 
         /* figure out the diff */
         new_presentables = g_list_sort (new_presentables, (GCompareFunc) gdu_presentable_compare);
@@ -1013,7 +1159,9 @@ recompute_presentables (GduPool *pool)
                 /* rewrite all enclosing_presentable references for presentables we are going to add
                  * such that they really refer to presentables _previously_ added
                  */
-                if (GDU_IS_DRIVE (p))
+                if (GDU_IS_HUB (p))
+                        _gdu_hub_rewrite_enclosing_presentable (GDU_HUB (p));
+                else if (GDU_IS_DRIVE (p))
                         _gdu_drive_rewrite_enclosing_presentable (GDU_DRIVE (p));
                 else if (GDU_IS_VOLUME (p))
                         _gdu_volume_rewrite_enclosing_presentable (GDU_VOLUME (p));
@@ -1038,6 +1186,8 @@ recompute_presentables (GduPool *pool)
         g_list_free (devices);
         g_list_foreach (adapters, (GFunc) g_object_unref, NULL);
         g_list_free (adapters);
+        g_list_foreach (expanders, (GFunc) g_object_unref, NULL);
+        g_list_free (expanders);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1250,6 +1400,96 @@ adapter_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpoi
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+expander_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data);
+
+static void
+expander_added_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduExpander *expander;
+
+        pool = GDU_POOL (user_data);
+
+        expander = gdu_pool_get_expander_by_object_path (pool, object_path);
+        if (expander != NULL) {
+                g_object_unref (expander);
+                g_warning ("Treating add for previously added expander %s as change", object_path);
+                expander_changed_signal_handler (proxy, object_path, user_data);
+                goto out;
+        }
+
+        expander = _gdu_expander_new_from_object_path (pool, object_path);
+        if (expander == NULL)
+                goto out;
+
+        g_hash_table_insert (pool->priv->object_path_to_expander,
+                             (gpointer) gdu_expander_get_object_path (expander),
+                             expander);
+        g_signal_emit (pool, signals[EXPANDER_ADDED], 0, expander);
+        //g_debug ("Added expander %s", object_path);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+static void
+expander_removed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduExpander *expander;
+
+        pool = GDU_POOL (user_data);
+
+        expander = gdu_pool_get_expander_by_object_path (pool, object_path);
+        if (expander == NULL) {
+                g_warning ("No expander to remove for remove %s", object_path);
+                goto out;
+        }
+
+        g_hash_table_remove (pool->priv->object_path_to_expander,
+                             gdu_expander_get_object_path (expander));
+        g_signal_emit (pool, signals[EXPANDER_REMOVED], 0, expander);
+        g_signal_emit_by_name (expander, "removed");
+        g_object_unref (expander);
+        g_debug ("Removed expander %s", object_path);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+static void
+expander_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data)
+{
+        GduPool *pool;
+        GduExpander *expander;
+
+        pool = GDU_POOL (user_data);
+
+        expander = gdu_pool_get_expander_by_object_path (pool, object_path);
+        if (expander == NULL) {
+                g_warning ("Ignoring change event on non-existant expander %s", object_path);
+                goto out;
+        }
+
+        if (_gdu_expander_changed (expander)) {
+                g_signal_emit (pool, signals[EXPANDER_CHANGED], 0, expander);
+                g_signal_emit_by_name (expander, "changed");
+        }
+        g_object_unref (expander);
+
+        recompute_presentables (pool);
+
+ out:
+        ;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 port_changed_signal_handler (DBusGProxy *proxy, const char *object_path, gpointer user_data);
 
 static void
@@ -1420,6 +1660,7 @@ gdu_pool_new (void)
         int n;
         GPtrArray *devices;
         GPtrArray *adapters;
+        GPtrArray *expanders;
         GPtrArray *ports;
         GduPool *pool;
         GError *error;
@@ -1480,6 +1721,16 @@ gdu_pool_new (void)
                                      G_CALLBACK (adapter_removed_signal_handler), pool, NULL);
         dbus_g_proxy_connect_signal (pool->priv->proxy, "AdapterChanged",
                                      G_CALLBACK (adapter_changed_signal_handler), pool, NULL);
+
+        dbus_g_proxy_add_signal (pool->priv->proxy, "ExpanderAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "ExpanderRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_add_signal (pool->priv->proxy, "ExpanderChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "ExpanderAdded",
+                                     G_CALLBACK (expander_added_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "ExpanderRemoved",
+                                     G_CALLBACK (expander_removed_signal_handler), pool, NULL);
+        dbus_g_proxy_connect_signal (pool->priv->proxy, "ExpanderChanged",
+                                     G_CALLBACK (expander_changed_signal_handler), pool, NULL);
 
         dbus_g_proxy_add_signal (pool->priv->proxy, "PortAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "PortRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
@@ -1544,6 +1795,28 @@ gdu_pool_new (void)
         g_ptr_array_foreach (adapters, (GFunc) g_free, NULL);
         g_ptr_array_free (adapters, TRUE);
 
+        /* prime the list of expanders */
+        error = NULL;
+        if (!org_freedesktop_DeviceKit_Disks_enumerate_expanders (pool->priv->proxy, &expanders, &error)) {
+                g_warning ("Couldn't enumerate expanders: %s", error->message);
+                g_error_free (error);
+                goto error;
+        }
+        for (n = 0; n < (int) expanders->len; n++) {
+                const char *object_path;
+                GduExpander *expander;
+
+                object_path = expanders->pdata[n];
+
+                expander = _gdu_expander_new_from_object_path (pool, object_path);
+
+                g_hash_table_insert (pool->priv->object_path_to_expander,
+                                     (gpointer) gdu_expander_get_object_path (expander),
+                                     expander);
+        }
+        g_ptr_array_foreach (expanders, (GFunc) g_free, NULL);
+        g_ptr_array_free (expanders, TRUE);
+
         /* prime the list of ports */
         error = NULL;
         if (!org_freedesktop_DeviceKit_Disks_enumerate_ports (pool->priv->proxy, &ports, &error)) {
@@ -1599,7 +1872,7 @@ gdu_pool_get_by_object_path (GduPool *pool, const char *object_path)
 }
 
 /**
- * gdu_pool_get_by_object_path:
+ * gdu_pool_get_adapter_by_object_path:
  * @pool: the pool
  * @object_path: the D-Bus object path
  *
@@ -1614,6 +1887,28 @@ gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path)
         GduAdapter *ret;
 
         ret = g_hash_table_lookup (pool->priv->object_path_to_adapter, object_path);
+        if (ret != NULL) {
+                g_object_ref (ret);
+        }
+        return ret;
+}
+
+/**
+ * gdu_pool_get_expander_by_object_path:
+ * @pool: the pool
+ * @object_path: the D-Bus object path
+ *
+ * Looks up #GduExpander object for @object_path.
+ *
+ * Returns: A #GduExpander object for @object_path, otherwise
+ * #NULL. Caller must unref this object using g_object_unref().
+ **/
+GduExpander *
+gdu_pool_get_expander_by_object_path (GduPool *pool, const char *object_path)
+{
+        GduExpander *ret;
+
+        ret = g_hash_table_lookup (pool->priv->object_path_to_expander, object_path);
         if (ret != NULL) {
                 g_object_ref (ret);
         }
@@ -1841,6 +2136,27 @@ gdu_pool_get_adapters (GduPool *pool)
         ret = NULL;
 
         ret = g_hash_table_get_values (pool->priv->object_path_to_adapter);
+        g_list_foreach (ret, (GFunc) g_object_ref, NULL);
+        return ret;
+}
+
+/**
+ * gdu_pool_get_expanders:
+ * @pool: A #GduPool.
+ *
+ * Get a list of all expanders.
+ *
+ * Returns: A #GList of #GduExpander objects. Caller must free this
+ * (unref all objects, then use g_list_free()).
+ **/
+GList *
+gdu_pool_get_expanders (GduPool *pool)
+{
+        GList *ret;
+
+        ret = NULL;
+
+        ret = g_hash_table_get_values (pool->priv->object_path_to_expander);
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
 }

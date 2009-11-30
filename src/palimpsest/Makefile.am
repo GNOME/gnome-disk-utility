@@ -19,6 +19,7 @@ palimpsest_SOURCES = 									\
 	gdu-section-drive.h			gdu-section-drive.c			\
 	gdu-section-volumes.h			gdu-section-volumes.c			\
 	gdu-section-hba.h			gdu-section-hba.c			\
+	gdu-section-hub.h			gdu-section-hub.c			\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

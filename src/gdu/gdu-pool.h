@@ -63,6 +63,10 @@ struct _GduPoolClass
         void (*adapter_removed) (GduPool *pool, GduAdapter *adapter);
         void (*adapter_changed) (GduPool *pool, GduAdapter *adapter);
 
+        void (*expander_added) (GduPool *pool, GduExpander *expander);
+        void (*expander_removed) (GduPool *pool, GduExpander *expander);
+        void (*expander_changed) (GduPool *pool, GduExpander *expander);
+
         void (*port_added) (GduPool *pool, GduPort *port);
         void (*port_removed) (GduPool *pool, GduPort *port);
         void (*port_changed) (GduPool *pool, GduPort *port);
@@ -97,6 +101,9 @@ GList      *gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *p
 
 GduAdapter *gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path);
 GList      *gdu_pool_get_adapters               (GduPool *pool);
+
+GduExpander *gdu_pool_get_expander_by_object_path (GduPool *pool, const char *object_path);
+GList      *gdu_pool_get_expanders               (GduPool *pool);
 
 GduPort    *gdu_pool_get_port_by_object_path (GduPool *pool, const char *object_path);
 GList      *gdu_pool_get_ports               (GduPool *pool);

@@ -46,6 +46,7 @@
 #include "gdu-section-drive.h"
 #include "gdu-section-volumes.h"
 #include "gdu-section-hba.h"
+#include "gdu-section-hub.h"
 
 struct _GduShellPrivate
 {
@@ -208,6 +209,10 @@ compute_sections_to_show (GduShell *shell)
         if (GDU_IS_HBA (shell->priv->presentable_now_showing)) {
 
                 sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_HBA);
+
+        } else if (GDU_IS_HUB (shell->priv->presentable_now_showing)) {
+
+                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_HUB);
 
         } else if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 

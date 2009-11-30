@@ -139,21 +139,71 @@ gdu_section_drive_update (GduSection *_section)
         }
         if (port != NULL) {
                 gint port_number;
+                GduPool *pool;
+                GduAdapter *adapter;
+                GduExpander *expander;
+                const gchar *port_parent_object_path;
+                const gchar *fabric;
+                gchar *s;
 
+                pool = gdu_device_get_pool (d);
+
+                port_parent_object_path = gdu_port_get_parent (port);
+
+                expander = NULL;
+                adapter = gdu_pool_get_adapter_by_object_path (pool, port_parent_object_path);
+                if (adapter == NULL) {
+                        expander = gdu_pool_get_expander_by_object_path (pool, port_parent_object_path);
+                        adapter = gdu_pool_get_adapter_by_object_path (pool, gdu_device_drive_get_adapter (d));
+                }
+                fabric = NULL;
+                if (adapter != NULL)
+                        fabric = gdu_adapter_get_fabric (adapter);
+
+                s = NULL;
                 port_number = gdu_port_get_number (port);
                 if (port_number >= 0) {
                         /* TODO: provide a link to the HBA? Probably */
 
-                        /* Translators: This is used in the "Location" element for a disk
-                         * directly connected to the Host Adapter (aka HBA) - port numbers
-                         * start at 1
-                         */
-                        s = g_strdup_printf (_("Port %d of Host Adapter"), port_number + 1);
-                        gdu_details_element_set_text (section->priv->location_element, s);
-                        g_free (s);
-                } else {
-                        gdu_details_element_set_text (section->priv->location_element, "–");
+                        if (expander == NULL) {
+                                if (g_strcmp0 (fabric, "scsi_sas") == 0) {
+                                        /* Translators: This is used in the "Location" element for a disk
+                                         * directly connected to the SAS Host Adapter - PHY numbers
+                                         * start at 1
+                                         */
+                                        s = g_strdup_printf (_("PHY %d of SAS Host Adapter"), port_number + 1);
+                                } else {
+                                        /* Translators: This is used in the "Location" element for a disk
+                                         * directly connected to the Host Adapter (aka HBA) - port numbers
+                                         * start at 1
+                                         */
+                                        s = g_strdup_printf (_("Port %d of Host Adapter"), port_number + 1);
+                                }
+                        } else {
+                                if (g_strcmp0 (fabric, "scsi_sas") == 0) {
+                                        /* Translators: This is used in the "Location" element for a disk
+                                         * connected to a SAS expander - PHY numbers start at 1
+                                         */
+                                        s = g_strdup_printf (_("PHY %d of Expander"), port_number + 1);
+                                } else {
+                                        /* Translators: This is used in the "Location" element for a disk
+                                         * connected to an expander / port multiplier - port numbers
+                                         * start at 1
+                                         */
+                                        s = g_strdup_printf (_("Port %d of Expander"), port_number + 1);
+                                }
+                        }
                 }
+                if (s == NULL)
+                        s = g_strdup ("–");
+                gdu_details_element_set_text (section->priv->location_element, s);
+                g_free (s);
+
+                g_object_unref (pool);
+                if (adapter != NULL)
+                        g_object_unref (adapter);
+                if (expander != NULL)
+                        g_object_unref (expander);
         } else {
                 gdu_details_element_set_text (section->priv->location_element, "–");
         }

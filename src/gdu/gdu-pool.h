@@ -108,6 +108,8 @@ GList      *gdu_pool_get_expanders               (GduPool *pool);
 GduPort    *gdu_pool_get_port_by_object_path (GduPool *pool, const char *object_path);
 GList      *gdu_pool_get_ports               (GduPool *pool);
 
+GduPresentable *gdu_pool_get_hub_by_object_path (GduPool *pool, const gchar *object_path);
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 void gdu_pool_op_linux_md_start (GduPool *pool,

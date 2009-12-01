@@ -38,7 +38,7 @@
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
 
-#include "devkit-disks-daemon-glue.h"
+#include "udisks-daemon-glue.h"
 #include "gdu-marshal.h"
 
 /**
@@ -46,7 +46,7 @@
  * @title: GduPool
  * @short_description: Enumerate and monitor storage devices
  *
- * The #GduPool object represents a connection to the DeviceKit-disks daemon.
+ * The #GduPool object represents a connection to the udisks daemon.
  */
 
 enum {
@@ -1590,15 +1590,15 @@ get_properties (GduPool *pool)
         ret = FALSE;
 
 	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
-                                                "org.freedesktop.DeviceKit.Disks",
-                                                "/org/freedesktop/DeviceKit/Disks",
+                                                "org.freedesktop.UDisks",
+                                                "/org/freedesktop/UDisks",
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
         if (!dbus_g_proxy_call (prop_proxy,
                                 "GetAll",
                                 &error,
                                 G_TYPE_STRING,
-                                "org.freedesktop.DeviceKit.Disks",
+                                "org.freedesktop.UDisks",
                                 G_TYPE_INVALID,
                                 dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
                                 &hash_table,
@@ -1684,9 +1684,9 @@ gdu_pool_new (void)
                 G_TYPE_INVALID);
 
 	pool->priv->proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
-                                                       "org.freedesktop.DeviceKit.Disks",
-                                                       "/org/freedesktop/DeviceKit/Disks",
-                                                       "org.freedesktop.DeviceKit.Disks");
+                                                       "org.freedesktop.UDisks",
+                                                       "/org/freedesktop/UDisks",
+                                                       "org.freedesktop.UDisks");
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceAdded", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceRemoved", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
         dbus_g_proxy_add_signal (pool->priv->proxy, "DeviceChanged", DBUS_TYPE_G_OBJECT_PATH, G_TYPE_INVALID);
@@ -1747,7 +1747,7 @@ gdu_pool_new (void)
 
         /* prime the list of devices */
         error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_enumerate_devices (pool->priv->proxy, &devices, &error)) {
+        if (!org_freedesktop_UDisks_enumerate_devices (pool->priv->proxy, &devices, &error)) {
                 g_warning ("Couldn't enumerate devices: %s", error->message);
                 g_error_free (error);
                 goto error;
@@ -1772,7 +1772,7 @@ gdu_pool_new (void)
 
         /* prime the list of adapters */
         error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_enumerate_adapters (pool->priv->proxy, &adapters, &error)) {
+        if (!org_freedesktop_UDisks_enumerate_adapters (pool->priv->proxy, &adapters, &error)) {
                 g_warning ("Couldn't enumerate adapters: %s", error->message);
                 g_error_free (error);
                 goto error;
@@ -1794,7 +1794,7 @@ gdu_pool_new (void)
 
         /* prime the list of expanders */
         error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_enumerate_expanders (pool->priv->proxy, &expanders, &error)) {
+        if (!org_freedesktop_UDisks_enumerate_expanders (pool->priv->proxy, &expanders, &error)) {
                 g_warning ("Couldn't enumerate expanders: %s", error->message);
                 g_error_free (error);
                 goto error;
@@ -1816,7 +1816,7 @@ gdu_pool_new (void)
 
         /* prime the list of ports */
         error = NULL;
-        if (!org_freedesktop_DeviceKit_Disks_enumerate_ports (pool->priv->proxy, &ports, &error)) {
+        if (!org_freedesktop_UDisks_enumerate_ports (pool->priv->proxy, &ports, &error)) {
                 g_warning ("Couldn't enumerate ports: %s", error->message);
                 g_error_free (error);
                 goto error;
@@ -2438,11 +2438,11 @@ gdu_pool_op_linux_md_start (GduPool *pool,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_linux_md_start_async (pool->priv->proxy,
-                                                              component_objpaths,
-                                                              (const char **) options,
-                                                              op_linux_md_start_cb,
-                                                              data);
+        org_freedesktop_UDisks_linux_md_start_async (pool->priv->proxy,
+                                                     component_objpaths,
+                                                     (const char **) options,
+                                                     op_linux_md_start_cb,
+                                                     data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2494,14 +2494,14 @@ gdu_pool_op_linux_md_create (GduPool *pool,
         data->callback = callback;
         data->user_data = user_data;
 
-        org_freedesktop_DeviceKit_Disks_linux_md_create_async (pool->priv->proxy,
-                                                               component_objpaths,
-                                                               level,
-                                                               stripe_size,
-                                                               name,
-                                                               (const char **) options,
-                                                               op_linux_md_create_cb,
-                                                               data);
+        org_freedesktop_UDisks_linux_md_create_async (pool->priv->proxy,
+                                                      component_objpaths,
+                                                      level,
+                                                      stripe_size,
+                                                      name,
+                                                      (const char **) options,
+                                                      op_linux_md_create_cb,
+                                                      data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2510,9 +2510,9 @@ gdu_pool_op_linux_md_create (GduPool *pool,
  * gdu_pool_get_daemon_version:
  * @pool: A #GduPool.
  *
- * Get the version of the DeviceKit-daemon on the system.
+ * Get the version of the udisks on the system.
  *
- * Returns: The version of DeviceKit-disks daemon. Caller must free
+ * Returns: The version of udisks daemon. Caller must free
  * this string using g_free().
  **/
 char *
@@ -2542,15 +2542,15 @@ gdu_pool_is_daemon_inhibited (GduPool *pool)
         ret = TRUE;
 
 	prop_proxy = dbus_g_proxy_new_for_name (pool->priv->bus,
-                                                "org.freedesktop.DeviceKit.Disks",
-                                                "/org/freedesktop/DeviceKit/Disks",
+                                                "org.freedesktop.UDisks",
+                                                "/org/freedesktop/UDisks",
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
         if (!dbus_g_proxy_call (prop_proxy,
                                 "Get",
                                 &error,
                                 G_TYPE_STRING,
-                                "org.freedesktop.DeviceKit.Disks",
+                                "org.freedesktop.UDisks",
                                 G_TYPE_STRING,
                                 "daemon-is-inhibited",
                                 G_TYPE_INVALID,
@@ -2575,7 +2575,7 @@ gdu_pool_is_daemon_inhibited (GduPool *pool)
  * gdu_pool_get_known_filesystems:
  * @pool: A #GduPool.
  *
- * Get a list of file systems known to the DeviceKit-disks daemon.
+ * Get a list of file systems known to the udisks daemon.
  *
  * Returns: A #GList of #GduKnownFilesystem objects. Caller must free
  * this (unref all objects, then use g_list_free()).
@@ -2622,7 +2622,7 @@ out:
  * gdu_pool_supports_luks_devices:
  * @pool: A #GduPool.
  *
- * Determine if the DeviceKit-disks daemon supports LUKS encrypted
+ * Determine if the udisks daemon supports LUKS encrypted
  * devices.
  *
  * Returns: #TRUE only if the daemon supports LUKS encrypted devices.

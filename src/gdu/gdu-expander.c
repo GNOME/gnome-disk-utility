@@ -31,14 +31,14 @@
 #include "gdu-private.h"
 #include "gdu-pool.h"
 #include "gdu-expander.h"
-#include "devkit-disks-expander-glue.h"
+#include "udisks-expander-glue.h"
 
 /* --- SUCKY CODE BEGIN --- */
 
 /* This totally sucks; dbus-bindings-tool and dbus-glib should be able
  * to do this for us.
  *
- * TODO: keep in sync with code in tools/devkit-disks in DeviceKit-disks.
+ * TODO: keep in sync with code in tools/udisks in udisks.
  */
 
 typedef struct
@@ -110,12 +110,12 @@ expander_properties_get (DBusGConnection *bus,
         GError *error;
         GHashTable *hash_table;
         DBusGProxy *prop_proxy;
-        const char *ifname = "org.freedesktop.DeviceKit.Disks.Expander";
+        const char *ifname = "org.freedesktop.UDisks.Expander";
 
         props = g_new0 (ExpanderProperties, 1);
 
 	prop_proxy = dbus_g_proxy_new_for_name (bus,
-                                                "org.freedesktop.DeviceKit.Disks",
+                                                "org.freedesktop.UDisks",
                                                 object_path,
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
@@ -282,9 +282,9 @@ _gdu_expander_new_from_object_path (GduPool *pool, const char *object_path)
         }
 
 	expander->priv->proxy = dbus_g_proxy_new_for_name (expander->priv->bus,
-                                                         "org.freedesktop.DeviceKit.Disks",
+                                                         "org.freedesktop.UDisks",
                                                          expander->priv->object_path,
-                                                         "org.freedesktop.DeviceKit.Disks.Expander");
+                                                         "org.freedesktop.UDisks.Expander");
         dbus_g_proxy_set_default_timeout (expander->priv->proxy, INT_MAX);
         dbus_g_proxy_add_signal (expander->priv->proxy, "Changed", G_TYPE_INVALID);
 

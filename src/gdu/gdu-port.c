@@ -31,14 +31,14 @@
 #include "gdu-private.h"
 #include "gdu-pool.h"
 #include "gdu-port.h"
-#include "devkit-disks-port-glue.h"
+#include "udisks-port-glue.h"
 
 /* --- SUCKY CODE BEGIN --- */
 
 /* This totally sucks; dbus-bindings-tool and dbus-glib should be able
  * to do this for us.
  *
- * TODO: keep in sync with code in tools/devkit-disks in DeviceKit-disks.
+ * TODO: keep in sync with code in tools/udisks in udisks.
  */
 
 typedef struct
@@ -88,12 +88,12 @@ port_properties_get (DBusGConnection *bus,
         GError *error;
         GHashTable *hash_table;
         DBusGProxy *prop_proxy;
-        const char *ifname = "org.freedesktop.DeviceKit.Disks.Port";
+        const char *ifname = "org.freedesktop.UDisks.Port";
 
         props = g_new0 (PortProperties, 1);
 
 	prop_proxy = dbus_g_proxy_new_for_name (bus,
-                                                "org.freedesktop.DeviceKit.Disks",
+                                                "org.freedesktop.UDisks",
                                                 object_path,
                                                 "org.freedesktop.DBus.Properties");
         error = NULL;
@@ -251,9 +251,9 @@ _gdu_port_new_from_object_path (GduPool *pool, const char *object_path)
         }
 
 	port->priv->proxy = dbus_g_proxy_new_for_name (port->priv->bus,
-                                                         "org.freedesktop.DeviceKit.Disks",
+                                                         "org.freedesktop.UDisks",
                                                          port->priv->object_path,
-                                                         "org.freedesktop.DeviceKit.Disks.Port");
+                                                         "org.freedesktop.UDisks.Port");
         dbus_g_proxy_set_default_timeout (port->priv->proxy, INT_MAX);
         dbus_g_proxy_add_signal (port->priv->proxy, "Changed", G_TYPE_INVALID);
 

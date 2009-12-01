@@ -62,7 +62,7 @@ typedef enum
 /**
  * GDU_ERROR:
  *
- * Error domain used for errors reported from DeviceKit-disks daemon
+ * Error domain used for errors reported from udisks daemon
  * via D-Bus. Note that not all remote errors are mapped to this
  * domain. Errors in this domain will come from the #GduError
  * enumeration. See #GError for more information on error domains.

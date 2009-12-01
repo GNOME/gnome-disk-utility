@@ -69,25 +69,25 @@ _gdu_error_fixup (GError *error)
                 return;
 
         matched = TRUE;
-        if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Failed") == 0)
+        if (strcmp (name, "org.freedesktop.UDisks.Error.Failed") == 0)
                 error->code = GDU_ERROR_FAILED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Busy") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.Busy") == 0)
                 error->code = GDU_ERROR_BUSY;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Cancelled") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.Cancelled") == 0)
                 error->code = GDU_ERROR_CANCELLED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.Inhibited") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.Inhibited") == 0)
                 error->code = GDU_ERROR_INHIBITED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.InvalidOption") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.InvalidOption") == 0)
                 error->code = GDU_ERROR_INVALID_OPTION;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.NotSupported") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.NotSupported") == 0)
                 error->code = GDU_ERROR_NOT_SUPPORTED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.AtaSmartWouldWakeup") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.AtaSmartWouldWakeup") == 0)
                 error->code = GDU_ERROR_ATA_SMART_WOULD_WAKEUP;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.PermissionDenied") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.PermissionDenied") == 0)
                 error->code = GDU_ERROR_PERMISSION_DENIED;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.FilesystemDriverMissing") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.FilesystemDriverMissing") == 0)
                 error->code = GDU_ERROR_FILESYSTEM_DRIVER_MISSING;
-        else if (strcmp (name, "org.freedesktop.DeviceKit.Disks.Error.FilesystemToolsMissing") == 0)
+        else if (strcmp (name, "org.freedesktop.UDisks.Error.FilesystemToolsMissing") == 0)
                 error->code = GDU_ERROR_FILESYSTEM_TOOLS_MISSING;
         else
                 matched = FALSE;

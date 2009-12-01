@@ -963,6 +963,8 @@ recompute_presentables (GduPool *pool)
                                 GduPresentable *drive_parent;
                                 gchar **port_object_paths;
 
+                                drive_parent = NULL;
+
                                 /* we are guaranteed that upstream ports all stem from the same expander or
                                  * host adapter - so just pick the first one */
                                 port_object_paths = gdu_device_drive_get_ports (device);

@@ -28,6 +28,7 @@
 #include "gdu-private.h"
 #include "gdu-util.h"
 #include "gdu-pool.h"
+#include "gdu-adapter.h"
 #include "gdu-expander.h"
 #include "gdu-hub.h"
 #include "gdu-presentable.h"
@@ -38,14 +39,15 @@
  * @title: GduHub
  * @short_description: HUBs
  *
- * #GduHub objects are used to represent host board expanders (also
- * called disk expanders).
+ * #GduHub objects are used to represent Host Adapters and Expanders
+ * (e.g. SAS Expanders and SATA Port Multipliers).
  *
  * See the documentation for #GduPresentable for the big picture.
  */
 
 struct _GduHubPrivate
 {
+        GduAdapter *adapter;
         GduExpander *expander;
         GduPool *pool;
         GduPresentable *enclosing_presentable;
@@ -59,6 +61,7 @@ G_DEFINE_TYPE_WITH_CODE (GduHub, gdu_hub, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
                                                 gdu_hub_presentable_iface_init))
 
+static void adapter_changed (GduAdapter *adapter, gpointer user_data);
 static void expander_changed (GduExpander *expander, gpointer user_data);
 
 
@@ -72,6 +75,11 @@ gdu_hub_finalize (GObject *object)
         if (hub->priv->expander != NULL) {
                 g_signal_handlers_disconnect_by_func (hub->priv->expander, expander_changed, hub);
                 g_object_unref (hub->priv->expander);
+        }
+
+        if (hub->priv->adapter != NULL) {
+                g_signal_handlers_disconnect_by_func (hub->priv->adapter, adapter_changed, hub);
+                g_object_unref (hub->priv->adapter);
         }
 
         if (hub->priv->pool != NULL)
@@ -105,6 +113,14 @@ gdu_hub_init (GduHub *hub)
 }
 
 static void
+adapter_changed (GduAdapter *adapter, gpointer user_data)
+{
+        GduHub *hub = GDU_HUB (user_data);
+        g_signal_emit_by_name (hub, "changed");
+        g_signal_emit_by_name (hub->priv->pool, "presentable-changed", hub);
+}
+
+static void
 expander_changed (GduExpander *expander, gpointer user_data)
 {
         GduHub *hub = GDU_HUB (user_data);
@@ -112,18 +128,28 @@ expander_changed (GduExpander *expander, gpointer user_data)
         g_signal_emit_by_name (hub->priv->pool, "presentable-changed", hub);
 }
 
+/* expander may be NULL */
 GduHub *
-_gdu_hub_new_from_expander (GduPool *pool, GduExpander *expander, GduPresentable *enclosing_presentable)
+_gdu_hub_new (GduPool        *pool,
+              GduAdapter     *adapter,
+              GduExpander    *expander,
+              GduPresentable *enclosing_presentable)
 {
         GduHub *hub;
 
         hub = GDU_HUB (g_object_new (GDU_TYPE_HUB, NULL));
-        hub->priv->expander = g_object_ref (expander);
+        hub->priv->adapter = g_object_ref (adapter);
+        hub->priv->expander = expander != NULL ? g_object_ref (expander) : NULL;
         hub->priv->pool = g_object_ref (pool);
         hub->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
-        hub->priv->id = g_strdup (gdu_expander_get_native_path (hub->priv->expander));
-        g_signal_connect (expander, "changed", (GCallback) expander_changed, hub);
+        if (expander != NULL)
+                hub->priv->id = g_strdup (gdu_expander_get_native_path (hub->priv->expander));
+        else
+                hub->priv->id = g_strdup (gdu_adapter_get_native_path (hub->priv->adapter));
+        g_signal_connect (adapter, "changed", (GCallback) adapter_changed, hub);
+        if (expander != NULL)
+                g_signal_connect (expander, "changed", (GCallback) expander_changed, hub);
         return hub;
 }
 
@@ -152,8 +178,34 @@ gdu_hub_get_enclosing_presentable (GduPresentable *presentable)
 static char *
 gdu_hub_get_name (GduPresentable *presentable)
 {
+        GduHub *hub = GDU_HUB (presentable);
+        gchar *ret;
+
         /* TODO: include type e.g. SATA Port Multiplier, SAS Expander etc */
-        return g_strdup (_("SAS Expander"));
+        if (hub->priv->expander == NULL) {
+                const gchar *fabric;
+
+                fabric = gdu_adapter_get_fabric (hub->priv->adapter);
+
+                if (g_str_has_prefix (fabric, "ata_pata")) {
+                        ret = g_strdup ("PATA Host Adapter");
+                } else if (g_str_has_prefix (fabric, "ata_sata")) {
+                        ret = g_strdup ("SATA Host Adapter");
+                } else if (g_str_has_prefix (fabric, "ata")) {
+                        ret = g_strdup ("ATA Host Adapter");
+                } else if (g_str_has_prefix (fabric, "scsi_sas")) {
+                        ret = g_strdup ("SAS Host Adapter");
+                } else if (g_str_has_prefix (fabric, "scsi")) {
+                        ret = g_strdup ("SCSI Host Adapter");
+                } else {
+                        ret = g_strdup ("Host Adapter");
+                }
+
+        } else {
+                ret = g_strdup (_("SAS Expander"));
+        }
+
+        return ret;
 }
 
 static gchar *
@@ -164,9 +216,17 @@ gdu_hub_get_vpd_name (GduPresentable *presentable)
         const gchar *vendor;
         const gchar *model;
 
-        vendor = gdu_expander_get_vendor (hub->priv->expander);
-        model = gdu_expander_get_model (hub->priv->expander);
-        s = g_strdup_printf ("%s %s", vendor, model);
+        if (hub->priv->expander == NULL) {
+                vendor = gdu_adapter_get_vendor (hub->priv->adapter);
+                model = gdu_adapter_get_model (hub->priv->adapter);
+                //s = g_strdup_printf ("%s %s", vendor, model);
+                s = g_strdup (model);
+        } else {
+                vendor = gdu_expander_get_vendor (hub->priv->expander);
+                model = gdu_expander_get_model (hub->priv->expander);
+                s = g_strdup_printf ("%s %s", vendor, model);
+        }
+
         return s;
 }
 
@@ -201,7 +261,7 @@ static GduPool *
 gdu_hub_get_pool (GduPresentable *presentable)
 {
         GduHub *hub = GDU_HUB (presentable);
-        return gdu_expander_get_pool (hub->priv->expander);
+        return gdu_adapter_get_pool (hub->priv->adapter);
 }
 
 static gboolean
@@ -216,10 +276,16 @@ gdu_hub_is_recognized (GduPresentable *presentable)
         return FALSE;
 }
 
+GduAdapter *
+gdu_hub_get_adapter (GduHub *hub)
+{
+        return g_object_ref (hub->priv->adapter);
+}
+
 GduExpander *
 gdu_hub_get_expander (GduHub *hub)
 {
-        return g_object_ref (hub->priv->expander);
+        return hub->priv->expander != NULL ? g_object_ref (hub->priv->expander) : NULL;
 }
 
 static void

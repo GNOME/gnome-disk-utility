@@ -44,7 +44,6 @@ typedef struct _GduDrive                  GduDrive;
 typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
 typedef struct _GduVolume                 GduVolume;
 typedef struct _GduVolumeHole             GduVolumeHole;
-typedef struct _GduHba                    GduHba;
 typedef struct _GduHub                    GduHub;
 
 typedef struct _GduKnownFilesystem        GduKnownFilesystem;

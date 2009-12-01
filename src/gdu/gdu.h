@@ -43,7 +43,6 @@
 #include <gdu/gdu-util.h>
 #include <gdu/gdu-volume.h>
 #include <gdu/gdu-volume-hole.h>
-#include <gdu/gdu-hba.h>
 #include <gdu/gdu-hub.h>
 #include <gdu/gdu-callbacks.h>
 

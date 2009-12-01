@@ -34,7 +34,6 @@
 #include "gdu-linux-md-drive.h"
 #include "gdu-volume.h"
 #include "gdu-volume-hole.h"
-#include "gdu-hba.h"
 #include "gdu-hub.h"
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
@@ -813,7 +812,7 @@ recompute_presentables (GduPool *pool)
         GList *removed_presentables;
         GHashTable *hash_map_from_drive_to_extended_partition;
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
-        GHashTable *hash_map_from_adapter_objpath_to_hba;
+        GHashTable *hash_map_from_adapter_objpath_to_hub;
         GHashTable *hash_map_from_expander_objpath_to_hub;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
@@ -839,35 +838,39 @@ recompute_presentables (GduPool *pool)
                                                                       NULL,
                                                                       NULL);
 
-        hash_map_from_adapter_objpath_to_hba = g_hash_table_new_full (g_str_hash,
-                                                                         g_str_equal,
-                                                                         NULL,
-                                                                         NULL);
+        hash_map_from_adapter_objpath_to_hub = g_hash_table_new_full (g_str_hash,
+                                                                      g_str_equal,
+                                                                      NULL,
+                                                                      NULL);
 
         hash_map_from_expander_objpath_to_hub = g_hash_table_new_full (g_str_hash,
                                                                        g_str_equal,
                                                                        NULL,
                                                                        NULL);
 
-        /* First add all HBAs */
+        /* First add all HBAs as Hub objects */
         adapters = gdu_pool_get_adapters (pool);
         for (l = adapters; l != NULL; l = l->next) {
                 GduAdapter *adapter = GDU_ADAPTER (l->data);
-                GduHba *hba;
+                GduHub *hub;
 
-                hba = _gdu_hba_new_from_adapter (pool, adapter);
+                hub = _gdu_hub_new (pool,
+                                    adapter,
+                                    NULL,   /* expander */
+                                    NULL);  /* enclosing_presentable */
 
-                g_hash_table_insert (hash_map_from_adapter_objpath_to_hba,
+                g_hash_table_insert (hash_map_from_adapter_objpath_to_hub,
                                      (gpointer) gdu_adapter_get_object_path (adapter),
-                                     hba);
+                                     hub);
 
-                new_presentables = g_list_prepend (new_presentables, hba);
+                new_presentables = g_list_prepend (new_presentables, hub);
         } /* for all adapters */
 
         /* Then all expanders */
         expanders = gdu_pool_get_expanders (pool);
         for (l = expanders; l != NULL; l = l->next) {
                 GduExpander *expander = GDU_EXPANDER (l->data);
+                GduAdapter *adapter;
                 GduHub *hub;
                 gchar **port_object_paths;
                 GduPresentable *expander_parent;
@@ -888,15 +891,18 @@ recompute_presentables (GduPool *pool)
                         if (port != NULL) {
                                 const gchar *adapter_object_path;
                                 adapter_object_path = gdu_port_get_adapter (port);
-                                expander_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                adapter = gdu_pool_get_adapter_by_object_path (pool, adapter_object_path);
+                                expander_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hub,
                                                                        adapter_object_path);
                                 g_object_unref (port);
                         }
                 }
 
                 g_warn_if_fail (expander_parent != NULL);
+                g_warn_if_fail (adapter != NULL);
 
-                hub = _gdu_hub_new_from_expander (pool, expander, expander_parent);
+                hub = _gdu_hub_new (pool, adapter, expander, expander_parent);
+                g_object_unref (adapter);
 
                 g_hash_table_insert (hash_map_from_expander_objpath_to_hub,
                                      (gpointer) gdu_expander_get_object_path (expander),
@@ -955,9 +961,6 @@ recompute_presentables (GduPool *pool)
 
                         } else {
                                 GduPresentable *drive_parent;
-
-                                drive_parent = NULL;
-#if 1
                                 gchar **port_object_paths;
 
                                 /* we are guaranteed that upstream ports all stem from the same expander or
@@ -978,20 +981,12 @@ recompute_presentables (GduPool *pool)
                                                         drive_parent = g_hash_table_lookup (hash_map_from_expander_objpath_to_hub,
                                                                                             parent_object_path);
                                                 } else {
-                                                        drive_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
+                                                        drive_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hub,
                                                                                             adapter_object_path);
                                                 }
                                                 g_object_unref (port);
                                         }
                                 }
-#else
-                                const gchar *adapter_objpath;
-
-                                adapter_objpath = gdu_device_drive_get_adapter (device);
-                                if (adapter_objpath != NULL)
-                                        drive_parent = g_hash_table_lookup (hash_map_from_adapter_objpath_to_hba,
-                                                                            adapter_objpath);
-#endif
 
                                 drive = _gdu_drive_new_from_device (pool, device, drive_parent);
                         }
@@ -1125,7 +1120,7 @@ recompute_presentables (GduPool *pool)
         g_list_free (new_partitioned_drives);
         g_hash_table_unref (hash_map_from_drive_to_extended_partition);
         g_hash_table_unref (hash_map_from_linux_md_uuid_to_drive);
-        g_hash_table_unref (hash_map_from_adapter_objpath_to_hba);
+        g_hash_table_unref (hash_map_from_adapter_objpath_to_hub);
         g_hash_table_unref (hash_map_from_expander_objpath_to_hub);
 
         /* figure out the diff */

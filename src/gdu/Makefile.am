@@ -51,7 +51,6 @@ libgduinclude_HEADERS =              			\
 	gdu-util.h					\
 	gdu-volume.h					\
 	gdu-volume-hole.h				\
-	gdu-hba.h					\
 	gdu-hub.h					\
 	$(NULL)
 
@@ -73,7 +72,6 @@ libgdu_la_SOURCES =                                					\
 	gdu-known-filesystem.c			gdu-known-filesystem.h			\
 	gdu-error.c				gdu-error.h				\
 	gdu-process.c				gdu-process.h				\
-	gdu-hba.c				gdu-hba.h				\
 	gdu-hub.c				gdu-hub.h				\
 						gdu-private.h				\
 	$(BUILT_SOURCES)								\

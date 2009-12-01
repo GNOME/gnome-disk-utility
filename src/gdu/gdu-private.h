@@ -106,11 +106,14 @@ void        _gdu_device_job_changed           (GduDevice   *device,
 
 GduAdapter *_gdu_adapter_new_from_object_path (GduPool *pool, const char *object_path);
 gboolean    _gdu_adapter_changed              (GduAdapter   *adapter);
-GduHba     *_gdu_hba_new_from_adapter         (GduPool *pool, GduAdapter *adapter);
 
 GduExpander *_gdu_expander_new_from_object_path (GduPool *pool, const char *object_path);
-gboolean    _gdu_expander_changed              (GduExpander   *expander);
-GduHub      *_gdu_hub_new_from_expander         (GduPool *pool, GduExpander *expander, GduPresentable *enclosing_presentable);
+gboolean    _gdu_expander_changed               (GduExpander   *expander);
+
+GduHub     *_gdu_hub_new                        (GduPool        *pool,
+                                                 GduAdapter     *adapter,
+                                                 GduExpander    *expander,
+                                                 GduPresentable *enclosing_presentable);
 
 GduPort    *_gdu_port_new_from_object_path (GduPool *pool, const char *object_path);
 gboolean    _gdu_port_changed               (GduPort   *port);

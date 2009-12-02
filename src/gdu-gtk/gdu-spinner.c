@@ -21,9 +21,8 @@
  * by Christian Hergert <christian.hergert@gmail.com>
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "config.h"
+#include <glib/gi18n-lib.h>
 
 #include <gtk/gtk.h>
 #include <math.h>

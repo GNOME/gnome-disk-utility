@@ -19,10 +19,11 @@
  * 02111-1307, USA.
  */
 
-#include <config.h>
+#include "config.h"
+#include <glib/gi18n-lib.h>
+
 #include <glib-object.h>
 #include <string.h>
-#include <glib/gi18n-lib.h>
 #include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
 

@@ -19,10 +19,11 @@
  * 02111-1307, USA.
  */
 
-#include <config.h>
+#include "config.h"
+#include <glib/gi18n-lib.h>
+
 #include <stdlib.h>
 #include <string.h>
-#include <glib/gi18n-lib.h>
 #include <dbus/dbus-glib.h>
 #include <time.h>
 #include <gio/gdesktopappinfo.h>

@@ -21,8 +21,8 @@
  */
 
 #include "config.h"
-
 #include <glib/gi18n-lib.h>
+
 #include <gdu/gdu.h>
 #include <gdu-gtk/gdu-gtk.h>
 

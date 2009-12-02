@@ -19,10 +19,10 @@
  * 02111-1307, USA.
  */
 
-#include <config.h>
+#include "config.h"
+#include <glib/gi18n.h>
 
 #include <gtk/gtk.h>
-#include <glib/gi18n.h>
 #include <stdlib.h>
 #include <glib/gstdio.h>
 #include <errno.h>

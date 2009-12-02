@@ -19,11 +19,12 @@
  * 02111-1307, USA.
  */
 
-#include <config.h>
+#include "config.h"
+#include <glib/gi18n.h>
+
 #include <glib-object.h>
 #include <string.h>
 #include <stdlib.h>
-#include <glib/gi18n.h>
 #include <unique/unique.h>
 
 #include "gdu-shell.h"

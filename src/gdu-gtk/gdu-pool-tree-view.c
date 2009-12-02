@@ -20,8 +20,9 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#include <config.h>
+#include "config.h"
 #include <glib/gi18n-lib.h>
+
 #include <string.h>
 
 #include "gdu-pool-tree-view.h"

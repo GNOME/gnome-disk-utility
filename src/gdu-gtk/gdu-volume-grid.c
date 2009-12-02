@@ -19,8 +19,10 @@
  * 02111-1307, USA.
  */
 
+#include "config.h"
+#include <glib/gi18n-lib.h>
+
 #include <math.h>
-#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
 #include <X11/XKBlib.h>

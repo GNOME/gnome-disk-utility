@@ -5,17 +5,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&component=general\n"
-"POT-Creation-Date: 2009-08-29 19:13+0000\n"
-"PO-Revision-Date: 2009-09-10 23:25+0300\n"
-"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
-"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
+"POT-Creation-Date: 2009-11-23 21:14+0000\n"
+"PO-Revision-Date: 2009-11-27 03:26+0200\n"
+"Last-Translator: Adi Roiban <adi@roiban.ro>\n"
+"Language-Team: Romanian GNOME Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2);;\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);;\n"
 
 #: ../data/palimpsest.desktop.in.h:1
 msgid "Disk Utility"
@@ -23,7 +22,7 @@ msgstr "Utilitar de disc"
 
 #: ../data/palimpsest.desktop.in.h:2
 msgid "Manage Drives and Media"
-msgstr "Administrează dispozitive și media"
+msgstr "Administrează dispozitive și medii de stocare"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:1
 msgid "Disk Notifications"
@@ -117,12 +116,8 @@ msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "Avertisment: Toate datele de pe volum vor fi pierdute definitiv."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:184
-msgid ""
-"To prevent data corruption, wait until this has finished before removing "
-"media or disconnecting the device."
-msgstr ""
-"Pentru a preveni coruperea datelor, așteptați până când acest proces se "
-"încheie înainte de a deconecta sau scoate dispozitivul."
+msgid "To prevent data corruption, wait until this has finished before removing media or disconnecting the device."
+msgstr "Pentru a preveni coruperea datelor, așteptați până când acest proces se încheie înainte de a deconecta sau scoate dispozitivul."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
@@ -150,7 +145,8 @@ msgstr "Eroare la lansarea Utilitarului de disc"
 msgid "Device to format"
 msgstr "Dispozitivul de formatat"
 
-#: ../src/format-tool/gdu-format-tool.c:131 ../src/palimpsest/gdu-main.c:121
+#: ../src/format-tool/gdu-format-tool.c:131
+#: ../src/palimpsest/gdu-main.c:121
 #: ../src/palimpsest/gdu-main.c:122
 msgid "DEVICE"
 msgstr "DISPOZITIV"
@@ -233,7 +229,8 @@ msgstr "Eroare la formatarea volumului"
 msgid "Mounting volume..."
 msgstr "Se montează volumul..."
 
-#: ../src/format-tool/gdu-format-tool.c:517 ../src/palimpsest/gdu-shell.c:995
+#: ../src/format-tool/gdu-format-tool.c:517
+#: ../src/palimpsest/gdu-shell.c:995
 msgid "Error mounting device"
 msgstr "Eroare la montarea volumului"
 
@@ -316,7 +313,8 @@ msgstr "HD DVD"
 
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
-#: ../src/gdu/gdu-drive.c:575 ../src/gdu/gdu-drive.c:614
+#: ../src/gdu/gdu-drive.c:575
+#: ../src/gdu/gdu-drive.c:614
 #: ../src/gdu/gdu-linux-md-drive.c:520
 #, c-format
 msgid "%s Drive"
@@ -326,7 +324,8 @@ msgstr "Unitatea %s"
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
-#: ../src/gdu/gdu-drive.c:609 ../src/gdu/gdu-linux-md-drive.c:515
+#: ../src/gdu/gdu-drive.c:609
+#: ../src/gdu/gdu-linux-md-drive.c:515
 #, c-format
 msgid "%s %s Drive"
 msgstr "Unitatea %s %s"
@@ -367,44 +366,52 @@ msgstr "Disc solid-state"
 #: ../src/gdu/gdu-drive.c:685
 #, c-format
 msgid "%s Media"
-msgstr "Media de %s"
+msgstr "Mediu de stocare de %s"
 
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu/gdu-drive.c:692 ../src/palimpsest/gdu-section-no-media.c:113
-#: ../src/palimpsest/gdu-shell.c:239 ../src/palimpsest/gdu-shell.c:263
+#: ../src/gdu/gdu-drive.c:692
+#: ../src/palimpsest/gdu-section-no-media.c:113
+#: ../src/palimpsest/gdu-shell.c:239
+#: ../src/palimpsest/gdu-shell.c:263
 #, c-format
 msgid "No Media Detected"
-msgstr "Nu s-a detectat nici o media"
+msgstr "Nu s-a detectat nici o mediu de stocare"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-linux-md-drive.c:542
+#: ../src/gdu/gdu-drive.c:703
+#: ../src/gdu/gdu-linux-md-drive.c:542
 msgid "MBR Partition Table"
 msgstr "Tabelă de partiții MBR"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:706 ../src/gdu/gdu-linux-md-drive.c:545
-#: ../src/gdu-gtk/gdu-gtk.c:1534 ../src/palimpsest/gdu-shell.c:223
+#: ../src/gdu/gdu-drive.c:706
+#: ../src/gdu/gdu-linux-md-drive.c:545
+#: ../src/gdu-gtk/gdu-gtk.c:1534
+#: ../src/palimpsest/gdu-shell.c:223
 #: ../src/palimpsest/gdu-shell.c:253
 msgid "GUID Partition Table"
 msgstr "Tabelă de partiții GUID"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:709 ../src/gdu/gdu-linux-md-drive.c:548
+#: ../src/gdu/gdu-drive.c:709
+#: ../src/gdu/gdu-linux-md-drive.c:548
 msgid "Apple Partition Table"
 msgstr "Tabelă de partiții Apple"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:714 ../src/gdu/gdu-linux-md-drive.c:553
+#: ../src/gdu/gdu-drive.c:714
+#: ../src/gdu/gdu-linux-md-drive.c:553
 msgid "Partitioned"
 msgstr "Partiționat"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:719 ../src/palimpsest/gdu-shell.c:260
+#: ../src/gdu/gdu-drive.c:719
+#: ../src/palimpsest/gdu-shell.c:260
 #: ../src/palimpsest/gdu-shell.c:380
 #, c-format
 msgid "Not Partitioned"
@@ -426,7 +433,7 @@ msgstr "Dispozitivul RAID %s"
 
 #: ../src/gdu/gdu-linux-md-drive.c:587
 msgid "RAID Array"
-msgstr "Tabloul RAID"
+msgstr "Matricea RAID"
 
 #. Translators: %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-md-drive.c:594
@@ -453,8 +460,10 @@ msgid "FAT (12-bit version)"
 msgstr "FAT (versiunea 12-biți)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:152 ../src/gdu/gdu-util.c:159
-#: ../src/gdu/gdu-util.c:166 ../src/gdu/gdu-util.c:170
+#: ../src/gdu/gdu-util.c:152
+#: ../src/gdu/gdu-util.c:159
+#: ../src/gdu/gdu-util.c:166
+#: ../src/gdu/gdu-util.c:170
 #: ../src/gdu/gdu-util.c:172
 msgid "FAT"
 msgstr "FAT"
@@ -476,18 +485,21 @@ msgid "NTFS (version %s)"
 msgstr "NTFS (versiunea %s)"
 
 #. Translators: NTFS is a filesystem type
-#: ../src/gdu/gdu-util.c:182 ../src/gdu/gdu-util.c:184
+#: ../src/gdu/gdu-util.c:182
+#: ../src/gdu/gdu-util.c:184
 #, c-format
 msgid "NTFS"
 msgstr "NTFS"
 
 #. Translators: HFS is a filesystem type
-#: ../src/gdu/gdu-util.c:189 ../src/gdu/gdu-util.c:191
+#: ../src/gdu/gdu-util.c:189
+#: ../src/gdu/gdu-util.c:191
 msgid "HFS"
 msgstr "HFS"
 
 #. Translators: HFS+ is a filesystem type
-#: ../src/gdu/gdu-util.c:196 ../src/gdu/gdu-util.c:198
+#: ../src/gdu/gdu-util.c:196
+#: ../src/gdu/gdu-util.c:198
 msgid "HFS+"
 msgstr "HFS+"
 
@@ -605,7 +617,8 @@ msgstr "Formatul de disc universal (UDF)"
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:285 ../src/palimpsest/gdu-section-swapspace.c:82
+#: ../src/gdu/gdu-util.c:285
+#: ../src/palimpsest/gdu-section-swapspace.c:82
 #: ../src/palimpsest/gdu-shell.c:356
 msgid "Swap Space"
 msgstr "Spațiu swap"
@@ -700,27 +713,27 @@ msgstr "Se schimbă fraza secretă pentru dispozitivul criptat LUKS"
 
 #: ../src/gdu/gdu-util.c:349
 msgid "Adding Component to RAID Array"
-msgstr "Se adaugă o componentă în tabloul RAID"
+msgstr "Se adaugă o componentă în matricea RAID"
 
 #: ../src/gdu/gdu-util.c:351
 msgid "Removing Component from RAID Array"
-msgstr "Se elimină o componentă din tabloul RAID"
+msgstr "Se elimină o componentă din matricea RAID"
 
 #: ../src/gdu/gdu-util.c:353
 msgid "Stopping RAID Array"
-msgstr "Se oprește tabloul RAID"
+msgstr "Se oprește matricea RAID"
 
 #: ../src/gdu/gdu-util.c:355
 msgid "Starting RAID Array"
-msgstr "Se pornește tabloul RAID"
+msgstr "Se pornește matricea RAID"
 
 #: ../src/gdu/gdu-util.c:357
 msgid "Checking RAID Array"
-msgstr "Se verifică tabloul RAID"
+msgstr "Se verifică matricea RAID"
 
 #: ../src/gdu/gdu-util.c:359
 msgid "Repairing RAID Array"
-msgstr "Se repară tabloul RAID"
+msgstr "Se repară matricea RAID"
 
 #: ../src/gdu/gdu-util.c:361
 msgid "Running Short SMART Self-Test"
@@ -736,7 +749,7 @@ msgstr "Se execută testul S.M.A.R.T. de transport"
 
 #: ../src/gdu/gdu-util.c:367
 msgid "Ejecting Media"
-msgstr "Se scoate media"
+msgstr "Se scoate mediul de stocare"
 
 #: ../src/gdu/gdu-util.c:369
 msgid "Detaching Device"
@@ -796,13 +809,15 @@ msgid "Linux Reserved Partition"
 msgstr "Partiție rezervată Linux"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:402 ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:410
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Partiție Apple HFS/HFS+"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:403 ../src/gdu/gdu-util.c:409
+#: ../src/gdu/gdu-util.c:403
+#: ../src/gdu/gdu-util.c:409
 msgid "Apple UFS Partition"
 msgstr "Partiție Apple UFS"
 
@@ -810,8 +825,10 @@ msgstr "Partiție Apple UFS"
 msgid "Apple RAID Partition"
 msgstr "Partiție Apple RAID"
 
-#: ../src/gdu/gdu-util.c:411 ../src/gdu-gtk/gdu-gtk.c:1544
-#: ../src/palimpsest/gdu-shell.c:219 ../src/palimpsest/gdu-shell.c:249
+#: ../src/gdu/gdu-util.c:411
+#: ../src/gdu-gtk/gdu-gtk.c:1544
+#: ../src/palimpsest/gdu-shell.c:219
+#: ../src/palimpsest/gdu-shell.c:249
 msgid "Apple Partition Map"
 msgstr "Hartă de partiții Apple"
 
@@ -1013,41 +1030,24 @@ msgid "Unknown (%s)"
 msgstr "Necunoscut (%s)"
 
 #: ../src/gdu/gdu-util.c:497
-msgid ""
-"A popular format compatible with almost any device or system, typically used "
-"for file exchange."
-msgstr ""
-"Un format popular compatibil cu aproape orice dispozitiv sau sistem, "
-"utilizat pentru schimb de fișiere."
+msgid "A popular format compatible with almost any device or system, typically used for file exchange."
+msgstr "Un format popular compatibil cu aproape orice dispozitiv sau sistem, utilizat pentru schimb de fișiere."
 
 #: ../src/gdu/gdu-util.c:501
-msgid ""
-"This file system is compatible with Linux systems only and provides classic "
-"UNIX file permissions support. This file system does not use a journal."
-msgstr ""
-"Acest sistem de fișiere este compatibil doar cu sisteme Linux și oferă "
-"suport doar pentru permisiuni de fișiere UNIX clasice. Acest sistem de "
-"fișiere nu folosește un jurnal."
+msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support. This file system does not use a journal."
+msgstr "Acest sistem de fișiere este compatibil doar cu sisteme Linux și oferă suport doar pentru permisiuni de fișiere UNIX clasice. Acest sistem de fișiere nu folosește un jurnal."
 
 #: ../src/gdu/gdu-util.c:507
-msgid ""
-"This file system is compatible with Linux systems only and provides classic "
-"UNIX file permissions support."
-msgstr ""
-"Acest sistem de fișiere este compatibil doar cu sisteme Linux și oferă "
-"suport doar pentru permisiuni de fișiere UNIX clasice."
+msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support."
+msgstr "Acest sistem de fișiere este compatibil doar cu sisteme Linux și oferă suport doar pentru permisiuni de fișiere UNIX clasice."
 
 #: ../src/gdu/gdu-util.c:511
 msgid "Swap area used by the operating system for virtual memory."
 msgstr "Zona swap folosită de sistemul de operare pentru memorie virtuală."
 
 #: ../src/gdu/gdu-util.c:514
-msgid ""
-"The native Windows file system. Not widely compatible with other operating "
-"systems than Windows."
-msgstr ""
-"Sistemul de fișiere nativ Windows. Nu prea este compatibil cu alte sisteme "
-"de operare în afara Windows."
+msgid "The native Windows file system. Not widely compatible with other operating systems than Windows."
+msgstr "Sistemul de fișiere nativ Windows. Nu prea este compatibil cu alte sisteme de operare în afara Windows."
 
 #: ../src/gdu/gdu-util.c:518
 msgid "No file system will be created."
@@ -1058,42 +1058,23 @@ msgid "Create an Extended Partition for logical partitions."
 msgstr "Creează o partiție extinsă pentru partiții logice."
 
 #: ../src/gdu/gdu-util.c:534
-msgid ""
-"The Master Boot Record scheme is compatible with almost any device or system "
-"but has a number of limitations with respect to disk size and number of "
-"partitions."
-msgstr ""
-"Schema MBR (Înregistrarea principală de boot) este compatibilă cu aproape "
-"orice dispozitiv sau sistem, dar are un număr de limitări în ceea ce "
-"privește dimensiunea discului și numărul de partiții."
+msgid "The Master Boot Record scheme is compatible with almost any device or system but has a number of limitations with respect to disk size and number of partitions."
+msgstr "Schema MBR (Înregistrarea principală de boot) este compatibilă cu aproape orice dispozitiv sau sistem, dar are un număr de limitări în ceea ce privește dimensiunea discului și numărul de partiții."
 
 #: ../src/gdu/gdu-util.c:539
-msgid ""
-"A legacy scheme that is incompatible with most systems except Apple systems "
-"and most Linux systems. Not recommended for removable media."
-msgstr ""
-"Schemă moștenită ce este incompatibilă cu majoritatea sistemelor în afara "
-"celor Apple și a majorității sistemelor Linux. Nu este recomandată media "
-"detașabile."
+msgid "A legacy scheme that is incompatible with most systems except Apple systems and most Linux systems. Not recommended for removable media."
+msgstr "Schemă moștenită ce este incompatibilă cu majoritatea sistemelor în afara celor Apple și a majorității sistemelor Linux. Nu este recomandată pentru medii de stocare detașabile."
 
 #: ../src/gdu/gdu-util.c:544
-msgid ""
-"The GUID scheme is compatible with most modern systems but may be "
-"incompatible with some devices and legacy systems."
-msgstr ""
-"Schema GUID este compatibilă cu majoritatea sistemelor moderne, dar poate fi "
-"incompatibilă cu unele dispozitive și sisteme mai vechi."
+msgid "The GUID scheme is compatible with most modern systems but may be incompatible with some devices and legacy systems."
+msgstr "Schema GUID este compatibilă cu majoritatea sistemelor moderne, dar poate fi incompatibilă cu unele dispozitive și sisteme mai vechi."
 
 #: ../src/gdu/gdu-util.c:548
-msgid ""
-"Marks the entire disk as unused. Use this option only if you want to avoid "
-"partitioning the disk for e.g. whole disk use or floppy / Zip disks."
-msgstr ""
-"Marchează întreg discul ca neutilizat. Folosiți această opțiune doar dacă "
-"doriți să evitați partiționarea discului (de. ex. pentru utilizarea "
-"întregului disc sau dichete floppy sau Zip)."
+msgid "Marks the entire disk as unused. Use this option only if you want to avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
+msgstr "Marchează întreg discul ca neutilizat. Folosiți această opțiune doar dacă doriți să evitați partiționarea discului (de. ex. pentru utilizarea întregului disc sau dichete floppy sau Zip)."
 
-#: ../src/gdu/gdu-util.c:731 ../src/gdu-gtk/gdu-gtk.c:947
+#: ../src/gdu/gdu-util.c:731
+#: ../src/gdu-gtk/gdu-gtk.c:947
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "Fraza secretă LUKS pentru UUID %s"
@@ -1244,60 +1225,28 @@ msgid "Linear"
 msgstr "Liniar"
 
 #: ../src/gdu/gdu-util.c:887
-msgid ""
-"Striped set without parity. Provides improved performance but no fault "
-"tolerance. If a single disk in the array fails, the entire RAID-0 array "
-"fails."
-msgstr ""
-"Configurat în mod întrețesut fără paritate. Se crește performanța, dar nu și "
-"toleranța la defecte. Dacă doar un singur disc din tablou eșuează, tot "
-"tabloul RAID-0 eșuează."
+msgid "Striped set without parity. Provides improved performance but no fault tolerance. If a single disk in the array fails, the entire RAID-0 array fails."
+msgstr "Configurat în mod întrețesut fără paritate. Se crește performanța, dar nu și toleranța la defecte. Dacă doar un singur disc din matrice eșuează, toată matricea RAID-0 eșuează."
 
 #: ../src/gdu/gdu-util.c:891
-msgid ""
-"Mirrored set without parity. Provides fault tolerance and improved "
-"performance for reading. RAID-1 arrays can sustain all but one disk failing."
-msgstr ""
-"Configurat în mod oglindit fără paritate. Se crește toleranța la defecte și "
-"performanțele de citire. Tablourile RAID-1 pot susține căderea a oricâte "
-"discuri cât timp măcar unul mai funcționează."
+msgid "Mirrored set without parity. Provides fault tolerance and improved performance for reading. RAID-1 arrays can sustain all but one disk failing."
+msgstr "Configurat în mod oglindit fără paritate. Se crește toleranța la defecte și performanțele de citire. Matricile RAID-1 pot tolera căderea a oricâte discuri cât timp măcar unul mai funcționează."
 
 #: ../src/gdu/gdu-util.c:895
-msgid ""
-"Striped set with parity on a single disk. Provides improved performance and "
-"fault tolerance. RAID-4 arrays can sustain a single disk failure."
-msgstr ""
-"Configurat în mod întrețesut cu paritate pe un singur disc. Se crește "
-"performanța și toleranța la defecte. Tablorile RAID-4 pot susține căderea "
-"unui singur disc."
+msgid "Striped set with parity on a single disk. Provides improved performance and fault tolerance. RAID-4 arrays can sustain a single disk failure."
+msgstr "Configurat în mod întrețesut cu paritate pe un singur disc. Se crește performanța și toleranța la defecte. Matricile RAID-4 pot tolera căderea unui singur disc."
 
 #: ../src/gdu/gdu-util.c:899
-msgid ""
-"Striped set with distributed parity. Provides improved performance and fault "
-"tolerance. RAID-5 arrays can sustain a single disk failure."
-msgstr ""
-"Configurat în mod întrețesut cu paritate distribuită. Se crește performanța "
-"și toleranța la defecte. Tablorile RAID-5 pot susține căderea unui singur "
-"disc."
+msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-5 arrays can sustain a single disk failure."
+msgstr "Configurat în mod întrețesut cu paritate distribuită. Se crește performanța și toleranța la defecte. Matricile RAID-5 pot tolera căderea unui singur disc."
 
 #: ../src/gdu/gdu-util.c:903
-msgid ""
-"Striped set with dual distributed parity. Provides improved performance and "
-"fault tolerance. RAID-6 arrays can sustain two disk failures."
-msgstr ""
-"Configurat în mod întrețesut cu paritate distribuită dublă. Se crește "
-"performanța și toleranța la defecte. Tablorile RAID-6 pot susține căderea a "
-"două discuri."
+msgid "Striped set with dual distributed parity. Provides improved performance and fault tolerance. RAID-6 arrays can sustain two disk failures."
+msgstr "Configurat în mod întrețesut cu paritate distribuită dublă. Se crește performanța și toleranța la defecte. Matricile RAID-6 pot tolera căderea a două discuri."
 
 #: ../src/gdu/gdu-util.c:907
-msgid ""
-"Striped set with distributed parity. Provides improved performance and fault "
-"tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
-"mirror loses all its drives."
-msgstr ""
-"Configurat în mod întrețesut cu paritate distribuită. Se crește performanța "
-"și toleranța la defecte. Tablorile RAID-10 pot susține căderi multiple de "
-"discuri atât timp cât niciuna din oglinzi nu-și pierde toate discurile."
+msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-10 arrays can sustain multiple drive losses so long as no mirror loses all its drives."
+msgstr "Configurat în mod întrețesut cu paritate distribuită. Se crește performanța și toleranța la defecte. Matricile RAID-10 pot tolera căderi multiple de discuri atât timp cât niciuna din oglinzi nu-și pierde toate discurile."
 
 #: ../src/gdu/gdu-util.c:913
 #, c-format
@@ -1327,7 +1276,8 @@ msgstr "DISCUL ESTE UTILIZAT ÎN AFARA PARAMETRILOR DE PROIECTARE"
 #. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
 #. Translators: Suggested action for the BAD_SECTOR_MANY status
 #. Translators: Suggested action for the BAD_STATUS status
-#: ../src/gdu/gdu-util.c:963 ../src/gdu/gdu-util.c:971
+#: ../src/gdu/gdu-util.c:963
+#: ../src/gdu/gdu-util.c:971
 #: ../src/gdu/gdu-util.c:977
 msgid "Backup all data and replace the disk"
 msgstr "Creați cópii de siguranță pentru toate datele și înlocuiți discul"
@@ -1353,7 +1303,8 @@ msgstr "EȘECUL DISCULUI ESTE IMINENT"
 #. * the temperature of the disk
 #.
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu/gdu-util.c:982 ../src/gdu-gtk/gdu-ata-smart-dialog.c:2524
+#: ../src/gdu/gdu-util.c:982
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2524
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2542
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2562
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2571
@@ -1387,11 +1338,13 @@ msgstr "Disc CD-RW"
 msgid "Blank CD-RW Disc"
 msgstr "Disc CD-RW gol"
 
-#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:78
 msgid "DVD-ROM Disc"
 msgstr "Disc DVD-ROM"
 
-#: ../src/gdu/gdu-volume.c:77 ../src/gdu/gdu-volume.c:78
+#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:78
 msgid "Blank DVD-ROM Disc"
 msgstr "Disc DVD-ROM gol"
 
@@ -1515,38 +1468,38 @@ msgstr "Disc MRW/W"
 msgid "Blank MRW/W Disc"
 msgstr "Disc MRW/W gol"
 
-#: ../src/gdu/gdu-volume.c:274
+#: ../src/gdu/gdu-volume.c:275
 msgid "Blank Optical Disc"
 msgstr "Disc Optical gol"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:284
+#: ../src/gdu/gdu-volume.c:285
 #, c-format
 msgid "%s Extended"
 msgstr "%s Extins"
 
-#: ../src/gdu/gdu-volume.c:285
+#: ../src/gdu/gdu-volume.c:286
 msgid "Contains logical partitions"
 msgstr "Conține partiții logice"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:300
+#: ../src/gdu/gdu-volume.c:301
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s criptat"
 
-#: ../src/gdu/gdu-volume.c:310
+#: ../src/gdu/gdu-volume.c:311
 msgid "Optical Disc"
 msgstr "Disc optic"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:316
+#: ../src/gdu/gdu-volume.c:317
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s sistem de fișiere"
@@ -1554,7 +1507,7 @@ msgstr "%s sistem de fișiere"
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:322
+#: ../src/gdu/gdu-volume.c:323
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s tabelă de partiții"
@@ -1562,13 +1515,13 @@ msgstr "%s tabelă de partiții"
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:328
+#: ../src/gdu/gdu-volume.c:329
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr "%s volum fizic LVM2"
 
 #. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:341
+#: ../src/gdu/gdu-volume.c:342
 msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
@@ -1576,7 +1529,8 @@ msgstr "RAID"
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:347 ../src/gdu/gdu-volume.c:359
+#: ../src/gdu/gdu-volume.c:348
+#: ../src/gdu/gdu-volume.c:360
 #, c-format
 msgid "%s RAID Component"
 msgstr "Componentă RAID de %s"
@@ -1585,15 +1539,15 @@ msgstr "Componentă RAID de %s"
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #. * second %s is the RAID level string, e.g 'RAID-5'
 #.
-#: ../src/gdu/gdu-volume.c:352
+#: ../src/gdu/gdu-volume.c:353
 #, c-format
 msgid "Part of \"%s\" %s array"
-msgstr "Parte din „%s” tablou %s"
+msgstr "Parte din „%s” matricea %s"
 
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:370
+#: ../src/gdu/gdu-volume.c:371
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s spațiu swap"
@@ -1601,7 +1555,7 @@ msgstr "%s spațiu swap"
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:375
+#: ../src/gdu/gdu-volume.c:376
 #, c-format
 msgid "%s Data"
 msgstr "%s Data"
@@ -1609,20 +1563,22 @@ msgstr "%s Data"
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:381 ../src/gdu/gdu-volume.c:397
+#: ../src/gdu/gdu-volume.c:382
+#: ../src/gdu/gdu-volume.c:398
 #, c-format
 msgid "%s Unrecognized"
 msgstr "%s Nerecunoscut"
 
 #. Translators: description for a volume of unrecognized use
-#: ../src/gdu/gdu-volume.c:383
+#: ../src/gdu/gdu-volume.c:384
 msgid "Unknown or Unused"
-msgstr "Necunoscută sau nefolosit"
+msgstr "Necunoscut sau nefolosit"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:390 ../src/gdu/gdu-volume.c:392
+#: ../src/gdu/gdu-volume.c:391
+#: ../src/gdu/gdu-volume.c:393
 #, c-format
 msgid "%s Partition"
 msgstr "%s Partiție"
@@ -1630,14 +1586,14 @@ msgstr "%s Partiție"
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:424
+#: ../src/gdu/gdu-volume.c:425
 #, c-format
 msgid "Partition %d of %s"
 msgstr "Partiția %d din %s"
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
-#: ../src/gdu/gdu-volume.c:430
+#: ../src/gdu/gdu-volume.c:431
 #, c-format
 msgid "Partition %d"
 msgstr "Partiția %d"
@@ -1645,14 +1601,14 @@ msgstr "Partiția %d"
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:438
+#: ../src/gdu/gdu-volume.c:439
 #, c-format
 msgid "Whole-disk volume on %s"
 msgstr "Volum pe întreg discul pe %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
-#: ../src/gdu/gdu-volume.c:443
+#: ../src/gdu/gdu-volume.c:444
 msgid "Whole-disk volume"
 msgstr "Volum pe întreg discul"
 
@@ -1664,7 +1620,8 @@ msgstr "Volum pe întreg discul"
 msgid "%s Free"
 msgstr "Spațiu liber %s"
 
-#: ../src/gdu/gdu-volume-hole.c:159 ../src/palimpsest/gdu-shell.c:418
+#: ../src/gdu/gdu-volume-hole.c:159
+#: ../src/palimpsest/gdu-shell.c:418
 msgid "Unallocated Space"
 msgstr "Spațiu nealocat"
 
@@ -1676,12 +1633,8 @@ msgid "Read Error Rate"
 msgstr "Rata erorilor de citire"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:145
-msgid ""
-"Frequency of errors while reading raw data from the disk. A non-zero value "
-"indicates a problem with either the disk surface or read/write heads"
-msgstr ""
-"Frecvența erorilor la citirea datelor brute de pe disc. O valoare nenulă "
-"indică o problemă a suprafeței discului sau a capetelor de scriere/citire"
+msgid "Frequency of errors while reading raw data from the disk. A non-zero value indicates a problem with either the disk surface or read/write heads"
+msgstr "Frecvența erorilor la citirea datelor brute de pe disc. O valoare nenulă indică o problemă a suprafeței discului sau a capetelor de scriere/citire"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1724,14 +1677,8 @@ msgid "Reallocated Sector Count"
 msgstr "Numărul de sectoare realocate"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:179
-msgid ""
-"Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it mark the sector as \"reallocated\" and transfers data "
-"to a special reserved area (spare area)"
-msgstr ""
-"Numărul de sectoare realocate. Când un disc întâlnește o eroare de citire/"
-"scriere/verificare, marchează sectorul ca „realocat” și transferă datele "
-"către o zonă specială rezervată (zona de rezervă)"
+msgid "Count of remapped sectors. When the hard drive finds a read/write/verification error, it mark the sector as \"reallocated\" and transfers data to a special reserved area (spare area)"
+msgstr "Numărul de sectoare reasociate. Când un disc întâlnește o eroare de citire/scriere/verificare, marchează sectorul ca „realocat” și transferă datele către o zonă specială rezervată (zona de rezervă)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1764,7 +1711,7 @@ msgstr "Performanța cronometrului de derulare"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operatings while positioning"
-msgstr "Eficiența medie a operațiilor la poziționare"
+msgstr "Eficiența medie a operațiilor în timpul poziționării"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1842,11 +1789,8 @@ msgid "High Fly Writes"
 msgstr "Scrieri din zbor înalt"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:261
-msgid ""
-"Number of times a recording head is flying outside its normal operating range"
-msgstr ""
-"Numărul evenimentelor în care capul de înregistrare este în zbor în afara "
-"parametrilor normali de operare"
+msgid "Number of times a recording head is flying outside its normal operating range"
+msgstr "Numărul evenimentelor în care capul de înregistrare este în zbor în afara parametrilor normali de operare"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1926,14 +1870,8 @@ msgid "Reallocation Count"
 msgstr "Contorul realocărilor"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:317
-msgid ""
-"Number of remapping operations. The raw value of this attribute shows the "
-"total number of (successful and unsuccessful) attempts to transfer data from "
-"reallocated sectors to a spare area"
-msgstr ""
-"Numărul operațiilor de reasociere. Valoarea brută a acestui atribut indică "
-"numărul total de tentative (reușite sau nu) de transfer a datelor din "
-"sectoare realocate către zona de rezervă"
+msgid "Number of remapping operations. The raw value of this attribute shows the total number of (successful and unsuccessful) attempts to transfer data from reallocated sectors to a spare area"
+msgstr "Numărul operațiilor de reasociere. Valoarea brută a acestui atribut indică numărul total de tentative (reușite sau nu) de transfer a datelor din sectoare realocate către zona de rezervă"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1943,16 +1881,8 @@ msgid "Current Pending Sector Count"
 msgstr "Contorul sectoarelor în așteptare"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
-msgid ""
-"Number of sectors waiting to be remapped. If the sector waiting to be "
-"remapped is subsequently written or read successfully, this value is "
-"decreased and the sector is not remapped. Read errors on the sector will not "
-"remap the sector, it will only be remapped on a failed write attempt"
-msgstr ""
-"Numărul sectoarelor ce așteaptă să fie realocate. Dacă un sector ce așteaptă "
-"să fie realocat este ulterior scris sau citit, această valoare este "
-"decrementată, iar sectorul nu este realocat. Erorile de citire pe acest "
-"sector nu vor genera realocarea sectorului, ci doar cele de scriere"
+msgid "Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt"
+msgstr "Numărul sectoarelor ce așteaptă să fie realocate. Dacă un sector ce așteaptă să fie realocat este ulterior scris sau citit, această valoare este decrementată, iar sectorul nu este realocat. Erorile de citire pe acest sector nu vor genera realocarea sectorului, ci doar cele de scriere"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1962,14 +1892,8 @@ msgid "Uncorrectable Sector Count"
 msgstr "Contorul sectoarelor necorectabile"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:340
-msgid ""
-"The total number of uncorrectable errors when reading/writing a sector. A "
-"rise in the value of this attribute indicates defects of the disk surface "
-"and/or problems in the mechanical subsystem"
-msgstr ""
-"Numărul total de erori necorectabile la citirea/scrierea unui sector. O "
-"creștere a acestui atribut indică defectarea suprafeței discului sau "
-"probleme ale subsistemului mecanic"
+msgid "The total number of uncorrectable errors when reading/writing a sector. A rise in the value of this attribute indicates defects of the disk surface and/or problems in the mechanical subsystem"
+msgstr "Numărul total de erori necorectabile la citirea/scrierea unui sector. O creștere a acestui atribut indică defectarea suprafeței discului sau probleme ale subsistemului mecanic"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1990,12 +1914,8 @@ msgid "Write Error Rate"
 msgstr "Rata erorilor de scriere"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:358
-msgid ""
-"Number of errors while writing to disk (or) multi-zone error rate (or) "
-"flying-height"
-msgstr ""
-"Numărul de erori apărute la scrierea pe disc (sau) rata erorilor multi-zonă "
-"(sau) înălțimea de zbor"
+msgid "Number of errors while writing to disk (or) multi-zone error rate (or) flying-height"
+msgstr "Numărul de erori apărute la scrierea pe disc (sau) rata erorilor multi-zonă (sau) înălțimea de zbor"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2017,9 +1937,7 @@ msgstr "Erori de marcaj al adresei datelor (DAM)"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:374
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
-msgstr ""
-"Numărul de erori ale marcajului adrese a datelor (DAM) (sau) un câmp "
-"nestandard specific producătorului"
+msgstr "Numărul de erori ale marcajului adrese a datelor (DAM) (sau) un câmp nestandard specific producătorului"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2106,16 +2024,11 @@ msgid "Disk Shift"
 msgstr "Deplasarea discului"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:438
-msgid ""
-"Shift of disk is possible as a result of strong shock loading in the store, "
-"as a result of falling (or) temperature"
-msgstr ""
-"Deplasarea discului poate fi generată de un șoc puternic cauzat de "
-"temperatură sau cădere."
+msgid "Shift of disk is possible as a result of strong shock loading in the store, as a result of falling (or) temperature"
+msgstr "Deplasarea discului poate fi generată de un șoc puternic cauzat de temperatură sau cădere."
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:447
-msgid ""
-"Number of errors as a result of impact loads as detected by a shock sensor"
+msgid "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "Numărul de erori cauzate de impacturi detectate de senzorul de șocuri."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -2137,12 +2050,8 @@ msgid "Load/Unload Retry Count"
 msgstr "Contorul de reîncercări de încărcare/descărcare"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:463
-msgid ""
-"Loading on drive caused by numerous recurrences of operations, like reading, "
-"recording, positioning of heads, etc"
-msgstr ""
-"Încărcarea unității cauzată de numeroase operații recurente, ca citirea, "
-"înregistrarea, poziționarea capetelor, etc."
+msgid "Loading on drive caused by numerous recurrences of operations, like reading, recording, positioning of heads, etc"
+msgstr "Încărcarea unității cauzată de numeroase operații recurente, ca citirea, înregistrarea, poziționarea capetelor, etc."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2208,12 +2117,8 @@ msgid "Endurance Remaining"
 msgstr "Anduranță rămasă"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:528
-msgid ""
-"Number of physical erase cycles completed on the drive as a percentage of "
-"the maximum physical erase cycles the drive supports"
-msgstr ""
-"Numărul ciclurilor complete de ștergere fizică pe unitate ca procent al "
-"numărului maxim de cicluri de ștergere fizică suportat"
+msgid "Number of physical erase cycles completed on the drive as a percentage of the maximum physical erase cycles the drive supports"
+msgstr "Numărul ciclurilor complete de ștergere fizică pe unitate ca procent al numărului maxim de cicluri de ștergere fizică suportat"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2234,12 +2139,8 @@ msgid "Good Block Rate"
 msgstr "Raport bun de blocuri"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:553
-msgid ""
-"Number of available reserved blocks as a percentage of the total number of "
-"reserved blocks"
-msgstr ""
-"Numărul blocurilor rezervate disponibile ca procent al numărului total de "
-"blocuri rezervate"
+msgid "Number of available reserved blocks as a percentage of the total number of reserved blocks"
+msgstr "Numărul blocurilor rezervate disponibile ca procent al numărului total de blocuri rezervate"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2332,14 +2233,8 @@ msgstr "Alegeți testul propriu ATA SMART de executat"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1245
-msgid ""
-"The tests may take a very long time to complete depending on the speed and "
-"size of the disk. You can continue using your system while the test is "
-"running."
-msgstr ""
-"S-ar putea ca testele să dureze un timp îndelungat dependent de viteza și "
-"dimensiunea discurilor. Puteți să utilizați sistemul în timp ce testele se "
-"execută."
+msgid "The tests may take a very long time to complete depending on the speed and size of the disk. You can continue using your system while the test is running."
+msgstr "S-ar putea ca testele să dureze un timp îndelungat dependent de viteza și dimensiunea discurilor. Puteți să utilizați sistemul în timp ce testele se execută."
 
 #. Translators: Radio button for short test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1254
@@ -2396,12 +2291,8 @@ msgstr "Stare"
 #. updated
 #. Translators: Tooltip for the Updated item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
-msgid ""
-"Time since SMART data was last read – SMART data is updated every 30 minutes "
-"unless the disk is sleeping"
-msgstr ""
-"Durata de la ultima citire a datelor SMART – dacă discul nu este în starea "
-"de veghe, datele SMART sunt actualizate la fiecare 30 de minute"
+msgid "Time since SMART data was last read – SMART data is updated every 30 minutes unless the disk is sleeping"
+msgstr "Durata de la ultima citire a datelor SMART – dacă discul nu este în starea de veghe, datele SMART sunt actualizate la fiecare 30 de minute"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1614
@@ -2555,9 +2446,7 @@ msgstr "Evaluare totală:"
 #. Translators: Tooltip for the "Do not warn if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "Leave unchecked to get notified if the disk starts failing"
-msgstr ""
-"Lăsați-l nebifat pentru a primi notificări atunci când discurile încep să "
-"eșueze"
+msgstr "Lăsați-l nebifat pentru a primi notificări atunci când discurile încep să eșueze"
 
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1939
@@ -2756,9 +2645,7 @@ msgstr "Ultimul test propriu a fost anulat (printr-o resetare hard sau soft)"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2602
 msgid "Last self-test not completed (a fatal error might have occured)"
-msgstr ""
-"Ultimul test propriu nu a fost completat (s-ar putea să se fi produs o "
-"eroare fatală)"
+msgstr "Ultimul test propriu este incomplet (s-ar putea să se fi produs o eroare fatală)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2606
@@ -2823,7 +2710,7 @@ msgstr "Nume"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
 msgid "The requested name for the array"
-msgstr "Numele cerut al tabloului"
+msgstr "Numele cerut al matricii"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
 #: ../src/gdu-gtk/gdu-size-widget.c:242
@@ -2832,7 +2719,7 @@ msgstr "Dimensiune"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
 msgid "The requested size of the array"
-msgstr "Dimensiunea cerută al tabloului"
+msgstr "Dimensiunea cerută a matricii"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
 msgid "Component Size"
@@ -2848,7 +2735,7 @@ msgstr "Dimensiune întrețesut"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
 msgid "The requested stripe size of the array"
-msgstr "Dimensiunea întrețesută cerută a tabloului"
+msgstr "Dimensiunea întrețesută cerută a matricii"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
 msgid "Drives"
@@ -2856,7 +2743,7 @@ msgstr "Unități"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
 msgid "Array of drives to use for the array"
-msgstr "Tablou de unități folosite de tablou"
+msgstr "Matrice de unități de folosit în matrice"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -2927,7 +2814,7 @@ msgstr "%s. Cel mai mare bloc contiguu are %s"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
 msgid "Create RAID Array"
-msgstr "Creează tablou RAID"
+msgstr "Creează o matrice RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
 #: ../src/palimpsest/gdu-section-create-partition-table.c:103
@@ -2945,7 +2832,7 @@ msgstr "Nive_l RAID:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
 msgid "Array _Name:"
-msgstr "_Numele tabloului:"
+msgstr "_Numele matricii:"
 
 #. Translators: This is the default name to use for the new array.
 #. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
@@ -2953,7 +2840,7 @@ msgstr "_Numele tabloului:"
 #.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:981
 msgid "New RAID Array"
-msgstr "Tablou RAID nou"
+msgstr "Matrice RAID nouă"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
 msgid "Stripe S_ize:"
@@ -2997,7 +2884,7 @@ msgstr "1 MiO"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
 msgid "Array _Size:"
-msgstr "Dimen_siunea tabloului:"
+msgstr "Dimen_siunea matricii:"
 
 #. Tranlators: this string is used for the column header
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1076
@@ -3024,23 +2911,23 @@ msgstr "Discuri"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1451
 #, c-format
 msgid "Insufficient number disks to create a %s array."
-msgstr "Număr insuficient de discuri pentru a crea un tablou %s"
+msgstr "Număr insuficient de discuri pentru a crea o matrice %s."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1470
 #, c-format
 msgid "To create a %s array, select %d disks."
 msgid_plural "To create a %s array, select %d disks."
-msgstr[0] "Pentru a crea un tablou %s, selectați %d disc."
-msgstr[1] "Pentru a crea un tablou %s, selectați %d discuri."
-msgstr[2] "Pentru a crea un tablou %s, selectați %d de discuri."
+msgstr[0] "Pentru a crea o matrice %s, selectați un disc."
+msgstr[1] "Pentru a crea o matrice %s, selectați %d discuri."
+msgstr[2] "Pentru a crea o matrice %s, selectați %d de discuri."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1477
 #, c-format
 msgid "To create a %s array, select %d more disks."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] "Pentru a crea un tablou %s, mai selectați %d disc."
-msgstr[1] "Pentru a crea un tablou %s, mai selectați %d discuri."
-msgstr[2] "Pentru a crea un tablou %s, mai selectați %d de discuri."
+msgstr[0] "Pentru a crea o matrice %s, mai selectați un disc."
+msgstr[1] "Pentru a crea o matrice %s, mai selectați %d discuri."
+msgstr[2] "Pentru a crea o matrice %s, mai selectați %d de discuri."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the size e.g. '42 GB'.
@@ -3050,8 +2937,7 @@ msgstr[2] "Pentru a crea un tablou %s, mai selectați %d de discuri."
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1507
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr ""
-"Pentru a crea un array de %s de tip %s folosind %d discuri, apăsați „Creează”"
+msgstr "Pentru a crea un array de %s de tip %s folosind %d discuri, apăsați „Creează”"
 
 #: ../src/gdu-gtk/gdu-gtk.c:171
 msgctxt "application name"
@@ -3109,7 +2995,8 @@ msgid "pid: %d  program: %s"
 msgstr "pid: %d  program: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:331 ../src/gdu-gtk/gdu-gtk.c:915
+#: ../src/gdu-gtk/gdu-gtk.c:331
+#: ../src/gdu-gtk/gdu-gtk.c:915
 #: ../src/gdu-gtk/gdu-gtk.c:1053
 #, c-format
 msgid "Partition %d on %s"
@@ -3120,14 +3007,11 @@ msgid "Cannot unmount volume"
 msgstr "Nu pot demonta volumul"
 
 #: ../src/gdu-gtk/gdu-gtk.c:377
-msgid ""
-"One or more applications are using the volume. Quit the applications, and "
-"then try unmounting again."
-msgstr ""
-"Una sau mai multe aplicații folosesc volumul. Închideți aplicațiile și "
-"reîncercați să demontați volumul."
+msgid "One or more applications are using the volume. Quit the applications, and then try unmounting again."
+msgstr "Una sau mai multe aplicații folosesc volumul. Închideți aplicațiile și reîncercați să demontați volumul."
 
-#: ../src/gdu-gtk/gdu-gtk.c:418 ../src/palimpsest/gdu-shell.c:1939
+#: ../src/gdu-gtk/gdu-gtk.c:418
+#: ../src/palimpsest/gdu-shell.c:1939
 msgid "_Unmount"
 msgstr "Demon_tare"
 
@@ -3151,48 +3035,34 @@ msgstr "Cr_eează"
 msgid "Change _Passphrase"
 msgstr "Schimbă _fraza secretă"
 
-#: ../src/gdu-gtk/gdu-gtk.c:584 ../src/palimpsest/gdu-shell.c:1942
+#: ../src/gdu-gtk/gdu-gtk.c:584
+#: ../src/palimpsest/gdu-shell.c:1942
 msgid "_Unlock"
 msgstr "_Deblochează"
 
 #: ../src/gdu-gtk/gdu-gtk.c:613
 msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr ""
-"Pentru a crea un dispozitiv criptat, alegeți o frază secretă pentru a o "
-"proteja"
+msgstr "Pentru a crea un dispozitiv criptat, alegeți o frază secretă pentru a o proteja"
 
 #: ../src/gdu-gtk/gdu-gtk.c:616
 msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr ""
-"Pentru a schimba fraza secretă, introduceți fraza secretă curentă și cea nouă"
+msgstr "Pentru a schimba fraza secretă, introduceți fraza secretă curentă și cea nouă"
 
 #: ../src/gdu-gtk/gdu-gtk.c:619
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase"
-msgstr ""
-"Datele de pe acest dispozitiv sunt stocate într-o formă criptată protejate "
-"de o frază secretă"
+msgid "Data on this device is stored in an encrypted form protected by a passphrase"
+msgstr "Datele de pe acest dispozitiv sunt stocate într-o formă criptată protejate de o frază secretă"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
-msgid ""
-"Data on this device will be stored in an encrypted form protected by a "
-"passphrase."
-msgstr ""
-"Datele de pe acest dispozitiv vor fi stocate într-o formă criptată protejate "
-"de o frază secretă."
+msgid "Data on this device will be stored in an encrypted form protected by a passphrase."
+msgstr "Datele de pe acest dispozitiv vor fi stocate într-o formă criptată protejate de o frază secretă."
 
 #: ../src/gdu-gtk/gdu-gtk.c:635
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase."
-msgstr ""
-"Datele de pe acest dispozitiv sunt stocate într-o formă criptată protejate "
-"de o frază secretă."
+msgid "Data on this device is stored in an encrypted form protected by a passphrase."
+msgstr "Datele de pe acest dispozitiv sunt stocate într-o formă criptată protejate de o frază secretă."
 
 #: ../src/gdu-gtk/gdu-gtk.c:638
-msgid ""
-"To make the data available for use, enter the passphrase for the device."
-msgstr ""
-"Pentru a putea utiliza datele, introduceți fraza secretă a dispozitivului."
+msgid "To make the data available for use, enter the passphrase for the device."
+msgstr "Pentru a putea utiliza datele, introduceți fraza secretă a dispozitivului."
 
 #: ../src/gdu-gtk/gdu-gtk.c:647
 msgid "Incorrect Passphrase. Try again."
@@ -3242,7 +3112,8 @@ msgstr "Gol"
 msgid "Extended Partition"
 msgstr "Partiție extinsă"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1529 ../src/palimpsest/gdu-shell.c:221
+#: ../src/gdu-gtk/gdu-gtk.c:1529
+#: ../src/palimpsest/gdu-shell.c:221
 #: ../src/palimpsest/gdu-shell.c:251
 msgid "Master Boot Record"
 msgstr "Înregistrarea principală de boot (MBR)"
@@ -3315,12 +3186,8 @@ msgid "Writing data to \"%s\"..."
 msgstr "Se scriu date pe „%s”..."
 
 #: ../src/notification/gdu-slow-unmount-dialog.c:248
-msgid ""
-"To prevent data loss, wait until this has finished before removing media or "
-"disconnecting the device."
-msgstr ""
-"Pentru a preveni pierderea datelor, așteptați până la terminarea operației "
-"înainte de a deconecta dispozitivul sau media."
+msgid "To prevent data loss, wait until this has finished before removing media or disconnecting the device."
+msgstr "Pentru a preveni pierderea datelor, așteptați până la terminarea operației înainte de a deconecta dispozitivul sau mediul de stocare."
 
 #: ../src/notification/notification-main.c:170
 msgid "One or more disks are failing"
@@ -3333,12 +3200,8 @@ msgstr "S-ar putea ca un hard disc să eșueze"
 
 #. Translators: This is used as the text of the notification
 #: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
-msgstr ""
-"Unul sau mai multe discuri au reportat probleme de funcționare. Apăsați pe "
-"pictogramă pentru mai multe informații."
+msgid "One or more hard disks report health problems. Click the icon to get more information."
+msgstr "Unul sau mai multe discuri au reportat probleme de funcționare. Apăsați pe pictogramă pentru mai multe informații."
 
 #: ../src/palimpsest/gdu-main.c:121
 msgid "Volume to show"
@@ -3360,37 +3223,23 @@ msgstr "Sigur doriți să formatați discul ștergând astfel datele existente?"
 #: ../src/palimpsest/gdu-section-unrecognized.c:251
 #: ../src/palimpsest/gdu-shell.c:1535
 #, c-format
-msgid ""
-"All data on the media in \"%s\" will be irrecovably erased. Make sure "
-"important data is backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe media „%s” vor fi șterse irecuperabil. Asigurați-vă că "
-"aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi "
-"anulată."
+msgid "All data on the media in \"%s\" will be irrecovably erased. Make sure important data is backed up. This action cannot be undone."
+msgstr "Toate datele de pe mediul de stocare „%s” vor fi șterse irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:93
 #: ../src/palimpsest/gdu-section-unrecognized.c:256
 #: ../src/palimpsest/gdu-shell.c:1540
 #, c-format
-msgid ""
-"All data on the drive \"%s\" will be irrecovably erased. Make sure important "
-"data is backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe unitatea „%s” vor fi șterse irecuperabil. Asigurați-vă că "
-"aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi "
-"reparată."
+msgid "All data on the drive \"%s\" will be irrecovably erased. Make sure important data is backed up. This action cannot be undone."
+msgstr "Toate datele de pe unitatea „%s” vor fi șterse irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:181
 msgid "Create Partition Table"
 msgstr "Creează tabela de partiții"
 
 #: ../src/palimpsest/gdu-section-create-partition-table.c:194
-msgid ""
-"To create a new partition table, select the partition table type and then "
-"press \"Create\". All existing data will be lost."
-msgstr ""
-"Pentru a crea o nouă tabelă de partiții, alegeți tipul tabelei de partiții "
-"și apăsați „Creează”. Toate datele existente vor fi pierdute."
+msgid "To create a new partition table, select the partition table type and then press \"Create\". All existing data will be lost."
+msgstr "Pentru a crea o nouă tabelă de partiții, alegeți tipul tabelei de partiții și apăsați „Creează”. Toate datele existente vor fi pierdute."
 
 #. Translators: 'Type' means partition type here
 #: ../src/palimpsest/gdu-section-create-partition-table.c:210
@@ -3404,12 +3253,8 @@ msgid "Create"
 msgstr "Creează"
 
 #: ../src/palimpsest/gdu-section-encrypted.c:253
-msgid ""
-"The volume contains encrypted data that can be unlocked with a passphrase. "
-"The passphrase can optionally be stored in the keyring."
-msgstr ""
-"Volumul conține date criptate ce pot fi deblocate cu o frază secretă. "
-"Opțional, fraza secretă poate fi păstrată în inelul de chei."
+msgid "The volume contains encrypted data that can be unlocked with a passphrase. The passphrase can optionally be stored in the keyring."
+msgstr "Volumul conține date criptate ce pot fi deblocate cu o frază secretă. Opțional, fraza secretă poate fi păstrată în inelul de chei."
 
 #: ../src/palimpsest/gdu-section-encrypted.c:266
 msgid "Change Pa_ssphrase..."
@@ -3438,6 +3283,10 @@ msgstr "Volumul conține un sistem de fișiere montabil"
 msgid "_Label:"
 msgstr "E_tichetă:"
 
+#: ../src/palimpsest/gdu-section-filesystem.c:245
+msgid "_Change"
+msgstr "S_chimbă"
+
 #: ../src/palimpsest/gdu-section-filesystem.c:246
 msgid "Change"
 msgstr "Schimbă"
@@ -3449,15 +3298,11 @@ msgstr "Eroare la adăugarea componentei"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:153
 #, c-format
 msgid "Select a volume to use as component in the array \"%s\""
-msgstr "Alegeți un volum care să fie utilizat ca o componentă a tabloului„%s”"
+msgstr "Alegeți un volum care să fie utilizat ca o componentă a matricii „%s”"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:158
-msgid ""
-"Only volumes of acceptable sizes can be selected. You may need to manually "
-"create new volumes of acceptable sizes."
-msgstr ""
-"Doar volumele de dimensiuni acceptabile pot fi selectate. S-ar putea să fiți "
-"nevoiți să creați manual volume de dimensiune acceptabilă."
+msgid "Only volumes of acceptable sizes can be selected. You may need to manually create new volumes of acceptable sizes."
+msgstr "Doar volumele de dimensiuni acceptabile pot fi selectate. S-ar putea să fiți nevoiți să creați manual volume de dimensiune acceptabilă."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
@@ -3470,18 +3315,12 @@ msgstr "Eroare la eliminarea componentei"
 #. confirmation dialog
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:398
 msgid "Are you sure you want to remove the component from the array ?"
-msgstr "Sigur doriți eliminarea componentei din tablou?"
+msgstr "Sigur doriți eliminarea componentei din matrice?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:400
 #, c-format
-msgid ""
-"The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
-"erased and the RAID Array might be degraded. Make sure important data is "
-"backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe componenta „%s” a grupului RAID „%s” vor fi șterse "
-"irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor "
-"importante. Această acțiune nu poate fi reparată."
+msgid "The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably erased and the RAID Array might be degraded. Make sure important data is backed up. This action cannot be undone."
+msgstr "Toate datele de pe componenta „%s” a grupului RAID „%s” vor fi șterse irecuperabil, iar starea matricii RAID se poate degrada. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:411
 msgid "_Remove Component"
@@ -3629,7 +3468,7 @@ msgstr "Rezervă"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"
-msgstr "Numele tabloului:"
+msgstr "Numele matricii:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 msgid "Home Host:"
@@ -3637,7 +3476,7 @@ msgstr "Server de apartenență:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:990
 msgid "Array Size:"
-msgstr "Dimensiunea tabloului:"
+msgstr "Dimensiunea matricii:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1006
 msgid "RAID Type:"
@@ -3656,12 +3495,8 @@ msgid "A_ttach"
 msgstr "A_tașează"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
-msgid ""
-"Attaches the stale component to the RAID array. After attachment, data from "
-"the array will be synchronized on the component."
-msgstr ""
-"Atașează componenta cu date învechite la tabloul RAID. După atașare, datele "
-"din tablou vor fi sincronizate în componentă."
+msgid "Attaches the stale component to the RAID array. After attachment, data from the array will be synchronized on the component."
+msgstr "Atașează componenta cu date învechite la matricea RAID. După atașare, datele din matrice vor fi sincronizate în această componentă."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
 #: ../src/palimpsest/gdu-shell.c:1941
@@ -3669,24 +3504,16 @@ msgid "_Detach"
 msgstr "_Detașează"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1085
-msgid ""
-"Detaches the running component from the RAID array. Data on the component "
-"will be erased and the component will be ready for other use."
-msgstr ""
-"Detașează componenta de pe tabloul RAID. Datele de pe componentă vor fi "
-"șterse, iar componenta va putea fi folosită în alte scopuri."
+msgid "Detaches the running component from the RAID array. Data on the component will be erased and the component will be ready for other use."
+msgstr "Detașează această componenta de pe matricea RAID. Datele de pe ea vor fi șterse, iar componenta va putea fi folosită în alte scopuri."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1089
 msgid "_Add..."
 msgstr "_Adaugă..."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1095
-msgid ""
-"Adds a new component to the running RAID array. Use this when replacing a "
-"failed component or adding a hot spare."
-msgstr ""
-"Adaugă o nouă componentă la tabloul RAID funcțional. Utilizați acestă "
-"funcționalitate când înlocuiți o componentă defectă sau adăugați o rezervă."
+msgid "Adds a new component to the running RAID array. Use this when replacing a failed component or adding a hot spare."
+msgstr "Adaugă o nouă componentă la matricea RAID funcțională. Utilizați această funcționalitate când înlocuiți o componentă defectă sau adăugați o rezervă."
 
 #. Translators: this is a verb, as in 'check for consistency'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
@@ -3695,7 +3522,7 @@ msgstr "Veri_fică"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
 msgid "Starts checking the RAID array for redundancy"
-msgstr "Începe verificarea tabloului RAID pentru redundanță"
+msgstr "Începe verificarea matricii RAID pentru redundanță"
 
 #. Translators: this is a verb, as in 'repair this RAID array'
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1106
@@ -3704,22 +3531,19 @@ msgstr "_Repară"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1110
 msgid "Starts repairing the RAID array"
-msgstr "Începe repararea tabloului RAID"
+msgstr "Începe repararea matricii RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1128
 msgid "State"
 msgstr "Stare"
 
 #: ../src/palimpsest/gdu-section-no-media.c:126
-msgid ""
-"To format or edit media, insert it into the drive and wait a few seconds."
-msgstr ""
-"Pentru a formata sau edita media, introduceți-o în dispozitiv și așteptați "
-"câteva secunde"
+msgid "To format or edit media, insert it into the drive and wait a few seconds."
+msgstr "Pentru a formata sau a modifica mediul de stocare, introduceți-l în dispozitiv și așteptați câteva secunde."
 
 #: ../src/palimpsest/gdu-section-no-media.c:137
 msgid "_Detect Media"
-msgstr "_Detectează media"
+msgstr "_Detectează mediul de stocare"
 
 #: ../src/palimpsest/gdu-section-partition.c:60
 msgid "Error deleting partition"
@@ -3732,43 +3556,32 @@ msgstr "Siguri doriți să eliminați partiția, ștergând toate datele?"
 #: ../src/palimpsest/gdu-section-partition.c:117
 #, c-format
 msgid ""
-"All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-"partitions contained in this extended partition will be irrecovably erased.\n"
+"All data on partition %d with name \"%s\" on the media in \"%s\" and all partitions contained in this extended partition will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d cu numele „%s” de pe media „%s” și toate "
-"partițiile conținute în această partiție extinsă vor fi șterse "
-"irecuperabil.\n"
+"Toate datele de pe partiția %d cu numele „%s” de pe mediul de stocare „%s” și toate partițiile conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:127
 #, c-format
 msgid ""
-"All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-"irrecovably erased.\n"
+"All data on partition %d with name \"%s\" on the media in \"%s\" will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe partiția %d cu numele „%s” de pe media „%s” vor fi șterse "
-"irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor "
-"importante. Această acțiune nu poate fi reparată."
+msgstr "Toate datele de pe partiția %d cu numele „%s” de pe mediul de stocare „%s” vor fi șterse irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:137
 #, c-format
 msgid ""
-"All data on partition %d on the media in \"%s\" and all partitions contained "
-"in this extended partition will be irrecovably erased.\n"
+"All data on partition %d on the media in \"%s\" and all partitions contained in this extended partition will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d de pe media „%s” și toate partițiile "
-"conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
+"Toate datele de pe partiția %d de pe mediul de stocare „%s” și toate partițiile conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:146
 #, c-format
@@ -3777,52 +3590,42 @@ msgid ""
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d de pe media „%s” vor fi șterse irecuperabil.\n"
+"Toate datele de pe partiția %d de pe mediul de stocare „%s” vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:157
 #, c-format
 msgid ""
-"All data on partition %d with name \"%s\" of \"%s\" and all partitions "
-"contained in this extended partition will be irrecovably erased.\n"
+"All data on partition %d with name \"%s\" of \"%s\" and all partitions contained in this extended partition will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d cu numele „%s” de pe „%s” și toate partițiile "
-"conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
+"Toate datele de pe partiția %d cu numele „%s” de pe „%s” și toate partițiile conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:167
 #, c-format
 msgid ""
-"All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
-"erased.\n"
+"All data on partition %d with name \"%s\" of \"%s\" will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d cu numele „%s” de pe „%s” vor fi șterse "
-"irecuperabil.\n"
+"Toate datele de pe partiția %d cu numele „%s” de pe „%s” vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:177
 #, c-format
 msgid ""
-"All data on partition %d of \"%s\" and all partitions contained in this "
-"extended partition will be irrecovably erased.\n"
+"All data on partition %d of \"%s\" and all partitions contained in this extended partition will be irrecovably erased.\n"
 "\n"
 "Make sure important data is backed up. This action cannot be undone."
 msgstr ""
-"Toate datele de pe partiția %d de pe „%s” și toate partițiile conținute în "
-"această partiție extinsă vor fi șterse irecuperabil.\n"
+"Toate datele de pe partiția %d de pe „%s” și toate partițiile conținute în această partiție extinsă vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:186
 #, c-format
@@ -3833,8 +3636,7 @@ msgid ""
 msgstr ""
 "Toate datele de pe partiția %d de pe „%s” vor fi șterse irecuperabil.\n"
 "\n"
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-partition.c:200
 msgid "_Delete Partition"
@@ -3849,12 +3651,8 @@ msgid "Partition"
 msgstr "Partiție"
 
 #: ../src/palimpsest/gdu-section-partition.c:541
-msgid ""
-"The attributes of the partition can be edited. The partition can also be "
-"deleted to make room for other data."
-msgstr ""
-"Atributele partiției pot fi editate. De asemenea, partiția poate fi ștearsă "
-"pentru a mări spațiul pentru alte date."
+msgid "The attributes of the partition can be edited. The partition can also be deleted to make room for other data."
+msgstr "Atributele partiției pot fi modificate. De asemenea, partiția poate fi ștearsă pentru a mări spațiul pentru alte date."
 
 #: ../src/palimpsest/gdu-section-partition.c:558
 msgid "Part_ition Label:"
@@ -3875,10 +3673,6 @@ msgstr "Necesar / _microcod"
 msgid "Delete the partition"
 msgstr "Șterge partiția"
 
-#: ../src/palimpsest/gdu-section-partition.c:611
-msgid "_Revert"
-msgstr "_Revenire"
-
 #: ../src/palimpsest/gdu-section-partition.c:616
 msgid "Apply the changes made"
 msgstr "Aplică modificările făcute"
@@ -3893,33 +3687,20 @@ msgid "Error creating partition"
 msgstr "Eroare la crearea partiției"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:407
-msgid ""
-"This is the last primary partition that can be created. If you need more "
-"partitions, you can create an Extended Partition."
-msgstr ""
-"Aceasta este ultima partiție primară care poate fi creată. Dacă aveți nevoie "
-"de mai multe partiții, puteți crea o partiție extinsă."
+msgid "This is the last primary partition that can be created. If you need more partitions, you can create an Extended Partition."
+msgstr "Aceasta este ultima partiție primară care poate fi creată. Dacă aveți nevoie de mai multe partiții, puteți crea o partiție extinsă."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:416
-msgid ""
-"No more partitions can be created. You may want to delete an existing "
-"partition and then create an Extended Partition."
-msgstr ""
-"Nu mai pot fi create partiții noi. Puteți șterge o partiție existentă și "
-"apoi puteți crea o partiție extinsă."
+msgid "No more partitions can be created. You may want to delete an existing partition and then create an Extended Partition."
+msgstr "Nu mai pot fi create partiții noi. Puteți șterge o partiție existentă și apoi puteți crea o partiție extinsă."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:601
 msgid "Create Partition"
 msgstr "Creează partiție"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:614
-msgid ""
-"To create a new partition, select the size and whether to create a file "
-"system. The partition type, label and flags can be changed after creation."
-msgstr ""
-"Pentru a crea o nouă partiție, alegeți dimensiunea și dacă doriți să creați "
-"și un sistem de fișiere. Tipul, eticheta și flagurile pot fi modificate "
-"ulterior."
+msgid "To create a new partition, select the size and whether to create a file system. The partition type, label and flags can be changed after creation."
+msgstr "Pentru a crea o nouă partiție, alegeți dimensiunea și dacă doriți să creați și un sistem de fișiere. Tipul, eticheta și flagurile pot fi modificate ulterior."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:629
 msgid "_Size:"
@@ -3938,14 +3719,8 @@ msgstr "Întră în posesi_a sistemului de fișiere"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:705
 #: ../src/palimpsest/gdu-section-unrecognized.c:467
-msgid ""
-"The selected file system has a concept of file ownership. If checked, the "
-"created file system will be owned by you. If not checked, only the super "
-"user can access the file system."
-msgstr ""
-"Sistemul de fișiere selectat are conceptul de posesor. Dacă este bifat, veți "
-"fi posesorul sistemului de fișiere creat. Dacă nu este bifat, doar "
-"superutilizatorul poate accesa sistemul de fișiere."
+msgid "The selected file system has a concept of file ownership. If checked, the created file system will be owned by you. If not checked, only the super user can access the file system."
+msgstr "Sistemul de fișiere selectat are conceptul de posesor. Dacă este bifat, veți fi posesorul sistemului de fișiere creat. Dacă nu este bifat, doar superutilizatorul poate accesa sistemul de fișiere."
 
 #. whether to encrypt underlying device
 #: ../src/palimpsest/gdu-section-unallocated.c:715
@@ -3955,67 +3730,44 @@ msgstr "Criptea_ză dispozitivul de bază"
 
 #: ../src/palimpsest/gdu-section-unallocated.c:717
 #: ../src/palimpsest/gdu-section-unrecognized.c:479
-msgid ""
-"Encryption protects your data, requiring a passphrase to be entered before "
-"the file system can be used. May decrease performance and may not be "
-"compatible if you use the media on other operating systems."
-msgstr ""
-"Criptarea vă protejează datele, necesitând o frază secretă înainte ca "
-"sistemul de fișiere să poată fi utilizat. Performanța poate fi scăzută și "
-"există posibilitatea ca media să nu poată fi accesată de pe alte sisteme de "
-"operare."
+msgid "Encryption protects your data, requiring a passphrase to be entered before the file system can be used. May decrease performance and may not be compatible if you use the media on other operating systems."
+msgstr "Criptarea vă protejează datele, necesitând o frază secretă înainte ca sistemul de fișiere să poată fi utilizat. Performanța poate fi scăzută și există posibilitatea ca mediul de stocare să nu poată fi accesat de pe alte sisteme de operare."
 
 #: ../src/palimpsest/gdu-section-unallocated.c:734
 msgid "Create partition"
 msgstr "Creează partiția"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:231
-msgid ""
-"Are you sure you want to create a new file system, deleting existing data ?"
-msgstr ""
-"Sigur doriți să creați noul sistem de fișiere, ștergând astfel toate datele "
-"existente?"
+msgid "Are you sure you want to create a new file system, deleting existing data ?"
+msgstr "Sigur doriți să creați noul sistem de fișiere, ștergând astfel toate datele existente?"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:235
 #: ../src/palimpsest/gdu-shell.c:1519
 #, c-format
-msgid ""
-"All data on partition %d on the media in \"%s\" will be irrecovably erased. "
-"Make sure important data is backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe partiția %d de pe media „%s” vor fi șterse irecuperabil. "
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+msgid "All data on partition %d on the media in \"%s\" will be irrecovably erased. Make sure important data is backed up. This action cannot be undone."
+msgstr "Toate datele de pe partiția %d de pe mediul de stocare „%s” vor fi șterse irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:242
 #: ../src/palimpsest/gdu-shell.c:1526
 #, c-format
-msgid ""
-"All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
-"important data is backed up. This action cannot be undone."
-msgstr ""
-"Toate datele de pe partiția %d de pe „%s” vor fi șterse irecuperabil. "
-"Asigurați-vă că aveți o copie de siguranță a datelor importante. Această "
-"acțiune nu poate fi reparată."
+msgid "All data on partition %d of \"%s\" will be irrecovably erased. Make sure important data is backed up. This action cannot be undone."
+msgstr "Toate datele de pe partiția %d de pe „%s” vor fi șterse irecuperabil. Asigurați-vă că aveți o copie de siguranță a datelor importante. Această acțiune nu poate fi anulată."
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:397
 msgid "Create File System"
 msgstr "Creează sistemul de fișiere"
 
 #: ../src/palimpsest/gdu-section-unrecognized.c:410
-msgid ""
-"To create a new file system on the device, select the type and label and "
-"then press \"Create\". All existing data will be lost."
-msgstr ""
-"Pentru a crea un nou sistem de fișiere pe dispozitiv, alegeți tipul, "
-"eticheta și apăsați „Creează”. Toate datele existente vor fi pierdute."
+msgid "To create a new file system on the device, select the type and label and then press \"Create\". All existing data will be lost."
+msgstr "Pentru a crea un nou sistem de fișiere pe dispozitiv, alegeți tipul, eticheta și apăsați „Creează”. Toate datele existente vor fi pierdute."
 
 #: ../src/palimpsest/gdu-shell.c:203
 msgid "Unknown Size"
 msgstr "Dimensiune necunoscută"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-shell.c:226 ../src/palimpsest/gdu-shell.c:255
+#: ../src/palimpsest/gdu-shell.c:226
+#: ../src/palimpsest/gdu-shell.c:255
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Schemă necunoscută: %s"
@@ -4024,13 +3776,14 @@ msgstr "Schemă necunoscută: %s"
 #: ../src/palimpsest/gdu-shell.c:231
 #, c-format
 msgid "Partitioned Media (%s)"
-msgstr "Media partiționată (%s)"
+msgstr "Mediu de stocare partiționat (%s)"
 
 #: ../src/palimpsest/gdu-shell.c:236
 msgid "Unpartitioned Media"
-msgstr "Media nepartiționată"
+msgstr "Mediu de stocare nepartiționat"
 
-#: ../src/palimpsest/gdu-shell.c:242 ../src/palimpsest/gdu-shell.c:266
+#: ../src/palimpsest/gdu-shell.c:242
+#: ../src/palimpsest/gdu-shell.c:266
 #: ../src/palimpsest/gdu-shell.c:363
 #, c-format
 msgid "Unrecognized"
@@ -4055,7 +3808,8 @@ msgstr "Vizualizați detalii despre SMART pentru acest disc"
 msgid "More Information"
 msgstr "Informații suplimentare"
 
-#: ../src/palimpsest/gdu-shell.c:318 ../src/palimpsest/gdu-shell.c:387
+#: ../src/palimpsest/gdu-shell.c:318
+#: ../src/palimpsest/gdu-shell.c:387
 #: ../src/palimpsest/gdu-shell.c:422
 #, c-format
 msgid "%s (Read Only)"
@@ -4086,6 +3840,10 @@ msgstr "Dispozitiv LUKS în clar"
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "Partiția %d (%s)"
+
+#: ../src/palimpsest/gdu-shell.c:399
+msgid " mounted at "
+msgstr " montat pe"
 
 #: ../src/palimpsest/gdu-shell.c:928
 msgid "Error checking file system on device"
@@ -4135,18 +3893,12 @@ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
 msgstr "Sigur doriți să porniți unitatea „%s” în modul degradat?"
 
 #: ../src/palimpsest/gdu-shell.c:1378
-msgid ""
-"Starting a RAID array in degraded mode means that the RAID volume is no "
-"longer tolerant to drive failures. Data on the volume may be irrevocably "
-"lost if a drive fails."
-msgstr ""
-"Pornirea unui tablou RAID în mod degradat înseamnă că volumul RAID nu mai "
-"este tolerand la defecte ale unității. Datele de pe volum pot fi pierdute în "
-"mod irecuperabil dacă una din unități se defectează."
+msgid "Starting a RAID array in degraded mode means that the RAID volume is no longer tolerant to drive failures. Data on the volume may be irrevocably lost if a drive fails."
+msgstr "Pornirea unei matrice RAID în mod degradat înseamnă că volumul RAID nu mai este tolerant la defecte ale unității. Datele de pe volum pot fi pierdute în mod irecuperabil dacă una din unități se defectează."
 
 #: ../src/palimpsest/gdu-shell.c:1383
 msgid "_Start Array"
-msgstr "_Start tablou"
+msgstr "_Start matrice"
 
 #: ../src/palimpsest/gdu-shell.c:1411
 #, c-format
@@ -4161,23 +3913,25 @@ msgstr "Eroare la ștergerea datelor"
 msgid "Are you sure you want to erase the device ?"
 msgstr "Sigur doriți să ștergeți acest dispozitiv?"
 
-#: ../src/palimpsest/gdu-shell.c:1551 ../src/palimpsest/gdu-shell.c:1946
+#: ../src/palimpsest/gdu-shell.c:1551
+#: ../src/palimpsest/gdu-shell.c:1946
 msgid "_Erase"
 msgstr "Șt_erge"
 
 #: ../src/palimpsest/gdu-shell.c:1626
 msgid "Error creating component for RAID array"
-msgstr "Eroare la crearea componentei tabloului RAID"
+msgstr "Eroare la crearea componentei matricii RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1653
 msgid "Error creating partition table for component for RAID array"
-msgstr "Eroare la crearea tabelei de partiții pentru componenta tabloului RAID"
+msgstr "Eroare la crearea tabelei de partiții pentru componenta matricii RAID"
 
 #: ../src/palimpsest/gdu-shell.c:1679
 msgid "Error creating RAID array"
-msgstr "Eroare la crearea tabloului RAID"
+msgstr "Eroare la crearea matricii RAID"
 
-#: ../src/palimpsest/gdu-shell.c:1870 ../src/palimpsest/gdu-shell.c:2198
+#: ../src/palimpsest/gdu-shell.c:1870
+#: ../src/palimpsest/gdu-shell.c:2198
 msgid "Palimpsest Disk Utility"
 msgstr "Utilitarul de disc Palimpsest"
 
@@ -4195,17 +3949,18 @@ msgstr "_Nou:"
 
 #: ../src/palimpsest/gdu-shell.c:1933
 msgid "Software _RAID Array"
-msgstr "Tablou _RAID software"
+msgstr "Matrice _RAID software"
 
 #: ../src/palimpsest/gdu-shell.c:1933
 msgid "Create a new Software RAID array"
-msgstr "Creează un nou tabloului RAID software"
+msgstr "Creează o nouă matrice RAID software"
 
 #: ../src/palimpsest/gdu-shell.c:1934
 msgid "_Edit"
 msgstr "_Editare"
 
-#: ../src/palimpsest/gdu-shell.c:1935 ../src/palimpsest/gdu-shell.c:1950
+#: ../src/palimpsest/gdu-shell.c:1935
+#: ../src/palimpsest/gdu-shell.c:1950
 msgid "_Help"
 msgstr "_Ajutor"
 
@@ -4235,7 +3990,7 @@ msgstr "Scoat_e"
 
 #: ../src/palimpsest/gdu-shell.c:1940
 msgid "Eject media from the device"
-msgstr "Scoate media din dispozitiv"
+msgstr "Scoate mediul de stocare din dispozitiv"
 
 #: ../src/palimpsest/gdu-shell.c:1941
 msgid "Detach the device from the system, powering it off"
@@ -4243,9 +3998,7 @@ msgstr "Detașează dispozitivul de la sistem oprind alimentarea"
 
 #: ../src/palimpsest/gdu-shell.c:1942
 msgid "Unlock the encrypted device, making the data available in cleartext"
-msgstr ""
-"Deblochează dispozitivul criptat, pentru a putea utiliza datele de pe acesta "
-"în clar"
+msgstr "Deblochează dispozitivul criptat, pentru a putea utiliza datele de pe acesta în clar"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "_Lock"
@@ -4253,8 +4006,7 @@ msgstr "B_lochează"
 
 #: ../src/palimpsest/gdu-shell.c:1943
 msgid "Lock the encrypted device, making the cleartext data unavailable"
-msgstr ""
-"Blochează dispozitivul criptat, pentru a nu permite accesul la date în clar"
+msgstr "Blochează dispozitivul criptat, pentru a nu permite accesul la date în clar"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "_Start"
@@ -4262,7 +4014,7 @@ msgstr "_Start"
 
 #: ../src/palimpsest/gdu-shell.c:1944
 msgid "Start the array"
-msgstr "Pornește tabloul"
+msgstr "Pornește matricea"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "_Stop"
@@ -4270,7 +4022,7 @@ msgstr "_Stop"
 
 #: ../src/palimpsest/gdu-shell.c:1945
 msgid "Stop the array"
-msgstr "Oprește tabloul"
+msgstr "Oprește matricea"
 
 #: ../src/palimpsest/gdu-shell.c:1946
 msgid "Erase the contents of the device"
@@ -4374,10 +4126,8 @@ msgid "Presentable"
 msgstr "Prezentabil"
 
 #: ../src/playground/grid/gdu-grid-element.c:888
-msgid ""
-"The presentable shown or NULL if this is a element representing lack of media"
-msgstr ""
-"Prezentabilul afișat sau NULL dacă acest element reprezintă lipsa media"
+msgid "The presentable shown or NULL if this is a element representing lack of media"
+msgstr "Prezentabilul afișat sau NULL dacă acest element reprezintă lipsa mediului de stocare"
 
 #: ../src/playground/grid/gdu-grid-element.c:898
 msgid "The minimum size of the element"
@@ -4388,12 +4138,8 @@ msgid "Percent Size"
 msgstr "Dimensiune procentuală"
 
 #: ../src/playground/grid/gdu-grid-element.c:910
-msgid ""
-"The size in percent that this element should claim or 0 to always claim the "
-"specified minimum size"
-msgstr ""
-"Dimensiunea în procente pe care acest element o va cere sau 0 pentru a cere "
-"întotdeauna minimul specificat"
+msgid "The size in percent that this element should claim or 0 to always claim the specified minimum size"
+msgstr "Dimensiunea în procente pe care acest element o va cere sau 0 pentru a cere întotdeauna minimul specificat"
 
 #: ../src/playground/grid/gdu-grid-element.c:921
 msgid "Flags"
@@ -4407,187 +4153,4 @@ msgstr "Flaguri pentru element"
 msgid "The pool of devices to show"
 msgstr "Mulțimea de dispozitive de afișat"
 
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
 
-#~ msgid "%.*f %s"
-#~ msgstr "%.*f %s"
-
-#~ msgid "JBOD"
-#~ msgstr "JBOD"
-
-#~ msgid "%s %s (%s)"
-#~ msgstr "%s %s (%s)"
-
-#~ msgid "%s Unallocated"
-#~ msgstr "%s Nealocat"
-
-#~ msgid "1 minute ago"
-#~ msgstr "În urmă cu un minut"
-
-#~ msgid "1 hour ago"
-#~ msgstr "În urmă cu o oră"
-
-#~ msgid "%.3g mins"
-#~ msgstr "%.3g minute"
-
-#~ msgid "Retrieving..."
-#~ msgstr "Se recepționează..."
-
-#~ msgid "One or more attributes exceeding threshold."
-#~ msgstr "Unul sau mai multe atribute depășesc pragul limită."
-
-#~ msgctxt "ATA SMART status"
-#~ msgid "FAILING"
-#~ msgstr "SE EȘUEAZĂ"
-
-#~ msgid ""
-#~ "Drive failure expected in less than 24 hours. Save all data immediately."
-#~ msgstr ""
-#~ "Eșecul unității este așteptat în mai puțin de 24 de ore. Salvați toate "
-#~ "datele imediat."
-
-#~ msgctxt "ATA SMART status"
-#~ msgid "Unknown"
-#~ msgstr "Necunoscut"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "Completed OK"
-#~ msgstr "Completat OK"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "FAILED"
-#~ msgstr "EȘUAT"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Electrical)"
-#~ msgstr "(Electric)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Servo)"
-#~ msgstr "(Servo)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "(Read)"
-#~ msgstr "(Citire)"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "In progress"
-#~ msgstr "În desfășurare"
-
-#~ msgctxt "ATA SMART test result"
-#~ msgid "Unknown"
-#~ msgstr "Necunoscut"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%g°"
-#~ msgstr "%g°"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "now"
-#~ msgstr "acum"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dm"
-#~ msgstr "%dm"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dh"
-#~ msgstr "%dh"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dh %dm"
-#~ msgstr "%dh %dm"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dd"
-#~ msgstr "%dd"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dd %dh"
-#~ msgstr "%dd %dh"
-
-#~ msgctxt "ATA SMART graph label"
-#~ msgid "%dd %dh %dm"
-#~ msgstr "%dd %dh %dm"
-
-#~ msgid "ATA SMART Attributes"
-#~ msgstr "Atribute ATA SMART"
-
-#~ msgid "View:"
-#~ msgstr "Vizualizare:"
-
-#~ msgid "6 hours"
-#~ msgstr "6 ore"
-
-#~ msgid "24 hours"
-#~ msgstr "24 ore"
-
-#~ msgid "3 days"
-#~ msgstr "3 zile"
-
-#~ msgid "12 days"
-#~ msgstr "12 zile"
-
-#~ msgid "36 days"
-#~ msgstr "36 de zile"
-
-#~ msgid "96 days"
-#~ msgstr "96 de zile"
-
-#~ msgid "Online"
-#~ msgstr "Conectat"
-
-#~ msgid "Offline"
-#~ msgstr "Deconectat"
-
-#~ msgid "Only when performing a self-test."
-#~ msgstr "Doar când se execută un test propriu."
-
-#~ msgid "Pre-fail"
-#~ msgstr "Înainte de eșec"
-
-#~ msgid "Old-age"
-#~ msgstr "Învechire"
-
-#~ msgid "Type:"
-#~ msgstr "Tip:"
-
-#~ msgid "Description:"
-#~ msgstr "Descriere:"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Error initiating ATA SMART Self Test"
-#~ msgstr "Eroare la inițierea testului propriu ATA SMART"
-
-#~ msgid "ATA SMART Self Test"
-#~ msgstr "Testul propriu ATA SMART"
-
-#~ msgid "Health"
-#~ msgstr "Sănătate"
-
-#~ msgid ""
-#~ "Some disks support ATA SMART, a monitoring system for disks to detect and "
-#~ "report on various indicators of reliability, in the hope of anticipating "
-#~ "failures."
-#~ msgstr ""
-#~ "Unele discuri implemenrează ATA SMART, un sistem de monitorizazre a "
-#~ "discurilor ce poate detecta și raporta varii indicatori de fiabilitate cu "
-#~ "scopul anticipării defectelor."
-
-#~ msgid "Last Test:"
-#~ msgstr "Ultimul test:"
-
-#~ msgid "Refresh ATA SMART data from the device"
-#~ msgstr "Împrospătează ATA SMART cu date de la dispozitiv"
-
-#~ msgid "Show ATA SMART Historical Data"
-#~ msgstr "Afișează date istorice ATA SMART"
-
-#~ msgid "%d Components (%s each)"
-#~ msgstr "%d Componente (%s fiecare)"
-
-#~ msgid "Connected via %s"
-#~ msgstr "Conectat via %s"

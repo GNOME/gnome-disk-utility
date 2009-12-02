@@ -128,15 +128,15 @@ gdu_section_hub_update (GduSection *_section)
         }
 
         if (g_str_has_prefix (fabric, "ata_pata")) {
-                fabric_str = g_strdup ("Parallel ATA");
+                fabric_str = g_strdup (_("Parallel ATA"));
         } else if (g_str_has_prefix (fabric, "ata_sata")) {
-                fabric_str = g_strdup ("Serial ATA");
+                fabric_str = g_strdup (_("Serial ATA"));
         } else if (g_str_has_prefix (fabric, "ata")) {
-                fabric_str = g_strdup ("ATA");
+                fabric_str = g_strdup (_("ATA"));
         } else if (g_str_has_prefix (fabric, "scsi_sas")) {
-                fabric_str = g_strdup ("Serial Attached SCSI");
+                fabric_str = g_strdup (_("Serial Attached SCSI"));
         } else if (g_str_has_prefix (fabric, "scsi")) {
-                fabric_str = g_strdup ("SCSI");
+                fabric_str = g_strdup (_("SCSI"));
         } else {
                 fabric_str = g_strdup ("–");
         }

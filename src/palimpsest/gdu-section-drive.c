@@ -160,13 +160,15 @@ gdu_section_drive_update (GduSection *_section)
                                 if (g_strcmp0 (fabric, "scsi_sas") == 0) {
                                         /* Translators: This is used in the "Location" element for a disk
                                          * connected to a SAS Adapter or Expander - The %d is the
-                                         * PHY number (starts at 1) and the %s is the Adapter/Expander name.
+                                         * PHY number (starts at 1) and the %s is the Adapter/Expander
+                                         * name (e.g. "SAS Host Adapter").
                                          */
                                         s = g_strdup_printf (_("PHY %d of %s"), port_number + 1, hub_name);
                                 } else {
                                         /* Translators: This is used in the "Location" element for a disk
                                          * connected to a Adapter or Expander - The %d is the
-                                         * PHY number (starts at 1) and the %s is the Adapter/Expander name.
+                                         * PHY number (starts at 1) and the %s is the Adapter/Expander
+                                         * name (e.g. "SATA Host Adapter").
                                          */
                                         s = g_strdup_printf (_("Port %d of %s"), port_number + 1, hub_name);
                                 }
@@ -235,7 +237,10 @@ gdu_section_drive_update (GduSection *_section)
 
         if (is_rotational) {
                 if (rotation_rate > 0) {
-                        s = g_strdup_printf (_("%d RPM"), rotation_rate);
+                        /* Translators: This is for the rotation rate of a hard
+                         * disk - RPM means rounds per minute
+                         */
+                        s = g_strdup_printf (C_("Rotation Rate", "%d RPM"), rotation_rate);
                         gdu_details_element_set_text (section->priv->rotation_rate_element, s);
                         g_free (s);
                 } else {
@@ -290,8 +295,8 @@ gdu_section_drive_update (GduSection *_section)
                 g_free (s);
                 g_object_unref (icon);
         } else {
-                gdu_details_element_set_text (section->priv->smart_element,
-                                              _("Not Supported"));
+                /* Translators: This string is used when SMART is not supported */
+                gdu_details_element_set_text (section->priv->smart_element, _("Not Supported"));
                 icon = g_themed_icon_new ("gdu-smart-unknown");
                 gdu_details_element_set_icon (section->priv->smart_element, icon);
                 g_object_unref (icon);
@@ -305,8 +310,7 @@ gdu_section_drive_update (GduSection *_section)
                 g_free (s);
                 show_benchmark_button = TRUE;
         } else {
-                gdu_details_element_set_text (section->priv->capacity_element,
-                                              _("No Media Detected"));
+                gdu_details_element_set_text (section->priv->capacity_element, _("No Media Detected"));
         }
 
         s = gdu_util_get_connection_for_display (gdu_device_drive_get_connection_interface (d),
@@ -342,7 +346,6 @@ gdu_section_drive_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->detach_button, show_detach_button);
         gdu_button_element_set_visible (section->priv->smart_button, show_smart_button);
         gdu_button_element_set_visible (section->priv->benchmark_button, show_benchmark_button);
-
 
         if (d != NULL)
                 g_object_unref (d);

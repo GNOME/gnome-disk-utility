@@ -188,17 +188,17 @@ gdu_hub_get_name (GduPresentable *presentable)
                 fabric = gdu_adapter_get_fabric (hub->priv->adapter);
 
                 if (g_str_has_prefix (fabric, "ata_pata")) {
-                        ret = g_strdup ("PATA Host Adapter");
+                        ret = g_strdup (_("PATA Host Adapter"));
                 } else if (g_str_has_prefix (fabric, "ata_sata")) {
-                        ret = g_strdup ("SATA Host Adapter");
+                        ret = g_strdup (_("SATA Host Adapter"));
                 } else if (g_str_has_prefix (fabric, "ata")) {
-                        ret = g_strdup ("ATA Host Adapter");
+                        ret = g_strdup (_("ATA Host Adapter"));
                 } else if (g_str_has_prefix (fabric, "scsi_sas")) {
-                        ret = g_strdup ("SAS Host Adapter");
+                        ret = g_strdup (_("SAS Host Adapter"));
                 } else if (g_str_has_prefix (fabric, "scsi")) {
-                        ret = g_strdup ("SCSI Host Adapter");
+                        ret = g_strdup (_("SCSI Host Adapter"));
                 } else {
-                        ret = g_strdup ("Host Adapter");
+                        ret = g_strdup (_("Host Adapter"));
                 }
 
         } else {

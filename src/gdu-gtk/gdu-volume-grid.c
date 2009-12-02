@@ -1175,8 +1175,10 @@ render_element (GduVolumeGrid *grid,
                 const gchar *text;
 
                 if (GDU_IS_LINUX_MD_DRIVE (grid->priv->drive)) {
+                        /* Translators: This is shown in the grid for a RAID array that is not running */
                         text = _("RAID Array is not running");
                 } else {
+                        /* Translators: This is shown in the grid for a drive when no media has been detected */
                         text = _("No Media Detected");
                 }
 
@@ -1249,11 +1251,13 @@ render_element (GduVolumeGrid *grid,
                            (g_strcmp0 (gdu_device_partition_get_type (d), "0x05") == 0 ||
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x0f") == 0 ||
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x85") == 0)) {
+                        /* Translators: shown in the grid for an extended MS-DOS partition */
                         s = g_strdup (_("Extended"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
                                                             FALSE,
                                                             FALSE);
                 } else if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "crypto") == 0) {
+                        /* Translators: shown in the grid for an encrypted LUKS volume */
                         s = g_strdup (_("Encrypted"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
                                                             FALSE,
@@ -1267,11 +1271,13 @@ render_element (GduVolumeGrid *grid,
                            gdu_device_is_linux_md_component (d)) {
                         s1 = g_strdup (gdu_device_linux_md_component_get_name (d));
                 } else if (!gdu_presentable_is_allocated (element->presentable)) {
+                        /* Translators: shown in the grid for space that is not claimed by any partition */
                         s = g_strdup (_("Free"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
                                                             FALSE,
                                                             FALSE);
                 } else if (!gdu_presentable_is_recognized (element->presentable)) {
+                        /* Translators: shown in the grid when we don't know the purpose/usage of the partition */
                         s = g_strdup (_("Unknown"));
                         s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
                                                             FALSE,

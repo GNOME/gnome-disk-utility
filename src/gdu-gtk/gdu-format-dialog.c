@@ -513,6 +513,7 @@ gdu_format_dialog_constructed (GObject *object)
                 gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))),
                                                     button,
                                                     TRUE);
+                /* Translators: this is the tooltip for the "Disk Utility" button */
                 gtk_widget_set_tooltip_text (button, _("Use Disk Utility to format volume"));
         }
         gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -607,7 +608,9 @@ gdu_format_dialog_constructed (GObject *object)
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         entry = gtk_entry_new ();
-        /* Translators: Keep length of translation of "New Volume" to less than 16 characters */
+        /* Translators: Default name to use for the formatted volume. Keep length of
+         * translation of "New Volume" to less than 16 characters.
+         */
         gtk_entry_set_text (GTK_ENTRY (entry), _("New Volume"));
         gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
                           GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);

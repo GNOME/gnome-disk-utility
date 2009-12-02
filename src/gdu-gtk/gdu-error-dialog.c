@@ -244,8 +244,7 @@ gdu_error_dialog_constructed (GObject *object)
 
         name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         vpd_name = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
-        s = g_strdup_printf (_("An error occured while performing an operation "
-                               "on \"%s\" (%s): %s"),
+        s = g_strdup_printf (_("An error occured while performing an operation on \"%s\" (%s): %s"),
                              name,
                              vpd_name,
                              error_msg);

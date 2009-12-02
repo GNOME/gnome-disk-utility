@@ -822,8 +822,8 @@ update_details (GduEditLinuxMdDialog *dialog)
                 g_free (s);
                 g_object_unref (icon);
         } else {
-                gdu_details_element_set_text (dialog->priv->component_smart_element,
-                                              _("Not Supported"));
+                /* Translators: Used when SMART is not supported on the RAID component */
+                gdu_details_element_set_text (dialog->priv->component_smart_element, _("Not Supported"));
                 icon = g_themed_icon_new ("gdu-smart-unknown");
                 gdu_details_element_set_icon (dialog->priv->component_smart_element, icon);
                 g_object_unref (icon);

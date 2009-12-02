@@ -181,6 +181,9 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_label_set_width_chars (GTK_LABEL (label), 70); /* TODO: hate */
+        /* Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
+         * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
+         */
         s = g_strdup_printf (_("Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"),
                              component_size_str,
                              array_name,

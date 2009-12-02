@@ -677,7 +677,8 @@ gdu_drive_benchmark_dialog_constructed (GObject *object)
         vpd_name = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         /* Translators: The title of the benchmark dialog.
          * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
-         * Second %s is the VPD name for the array (e.g. "158 GB RAID-0 Array" or "ATA WDC WD1001FALS-00J7B1").
+         * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
+         * or "ATA WDC WD1001FALS-00J7B1").
          */
         s = g_strdup_printf (_("%s (%s) – Benchmark"), name, vpd_name);
         gtk_window_set_title (GTK_WINDOW (dialog), s);
@@ -944,11 +945,13 @@ on_drawing_area_expose_event (GtkWidget      *widget,
                 gdouble val;
 
                 val = n * speed_res;
-                s = g_strdup_printf ("%d MB/s", (gint) (val / (1000 * 1000)));
+                /* Translators: This is used in the benchmark graph - %d is megabytes per second */
+                s = g_strdup_printf (_("%d MB/s"), (gint) (val / (1000 * 1000)));
                 g_ptr_array_add (p, s);
 
                 val = n * time_res;
-                s = g_strdup_printf ("%3g ms", val * 1000.0);
+                /* Translators: This is used in the benchmark graph - %g is number of milliseconds */
+                s = g_strdup_printf (_("%3g ms"), val * 1000.0);
                 g_ptr_array_add (p2, s);
         }
         g_ptr_array_add (p, NULL);
@@ -1277,6 +1280,7 @@ update_dialog (GduDriveBenchmarkDialog *dialog)
                         gdu_details_element_set_text (dialog->priv->write_max_element, "–");
                         gdu_details_element_set_text (dialog->priv->write_avg_element, "–");
                 }
+                /* Translators: This is used in the benchmark table - %f is number of milliseconds */
                 s = g_strdup_printf ("%.1f ms", access_avg * 1000.0);
                 gdu_details_element_set_text (dialog->priv->access_avg_element, s);
                 g_free (s);

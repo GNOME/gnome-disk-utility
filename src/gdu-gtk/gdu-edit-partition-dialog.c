@@ -293,6 +293,9 @@ gdu_edit_partition_dialog_constructed (GObject *object)
         drive = gdu_pool_get_drive_by_device (pool, drive_device);
 
         s2 = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+        /* Translators: title of the dialog - first %s is the name of the volume
+         * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
+         */
         s = g_strdup_printf (_("Edit %s"), s2);
         gtk_window_set_title (GTK_WINDOW (dialog), s);
         g_free (s);

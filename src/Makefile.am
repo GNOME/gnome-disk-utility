@@ -1,4 +1,4 @@
-SUBDIRS = gdu gdu-gtk palimpsest notification playground format-tool
+SUBDIRS = gdu gdu-gtk palimpsest notification format-tool
 
 if ENABLE_NAUTILUS
 SUBDIRS += nautilus-extension

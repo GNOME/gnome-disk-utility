@@ -211,8 +211,6 @@ src/gdu-gtk/Makefile
 src/gdu-gtk/gdu-gtk.pc
 src/palimpsest/Makefile
 src/notification/Makefile
-src/playground/Makefile
-src/playground/grid/Makefile
 src/format-tool/Makefile
 src/nautilus-extension/Makefile
 po/Makefile.in

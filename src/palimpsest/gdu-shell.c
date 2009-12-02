@@ -34,15 +34,7 @@
 
 #include "gdu-shell.h"
 
-#include "gdu-section-partition.h"
-#include "gdu-section-create-partition-table.h"
-#include "gdu-section-unallocated.h"
-#include "gdu-section-unrecognized.h"
-#include "gdu-section-filesystem.h"
-#include "gdu-section-swapspace.h"
-#include "gdu-section-encrypted.h"
 #include "gdu-section-linux-md-drive.h"
-#include "gdu-section-no-media.h"
 #include "gdu-section-drive.h"
 #include "gdu-section-volumes.h"
 #include "gdu-section-hub.h"
@@ -225,55 +217,7 @@ compute_sections_to_show (GduShell *shell)
                         //sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
 
                 }
-
-        } else if (GDU_IS_VOLUME (shell->priv->presentable_now_showing) && device != NULL) {
-
-                if (gdu_device_is_partition (device))
-                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_PARTITION);
-
-                if (gdu_presentable_is_recognized (shell->priv->presentable_now_showing)) {
-                        const char *usage;
-                        const char *type;
-
-                        usage = gdu_device_id_get_usage (device);
-                        type = gdu_device_id_get_type (device);
-
-                        if (usage != NULL && strcmp (usage, "filesystem") == 0) {
-                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_FILESYSTEM);
-                        } else if (usage != NULL && strcmp (usage, "crypto") == 0) {
-                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_ENCRYPTED);
-                        } else if (usage != NULL && strcmp (usage, "other") == 0 &&
-                                   type != NULL && strcmp (type, "swap") == 0) {
-                                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_SWAPSPACE);
-                        }
-                } else {
-                        GduPresentable *toplevel_presentable;
-                        GduDevice *toplevel_device;
-
-                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_UNRECOGNIZED);
-
-                        /* Also show a "Create partition table" section for a volume if the drive isn't partitioned */
-                        toplevel_presentable = gdu_presentable_get_toplevel (shell->priv->presentable_now_showing);
-                        if (toplevel_presentable != NULL) {
-                                toplevel_device = gdu_presentable_get_device (toplevel_presentable);
-
-                                if (toplevel_device != NULL) {
-                                        if (!gdu_device_is_partition_table (toplevel_device)) {
-                                                sections_to_show = g_list_append (
-                                                                                  sections_to_show, (gpointer) GDU_TYPE_SECTION_CREATE_PARTITION_TABLE);
-                                        }
-                                        g_object_unref (toplevel_device);
-                                }
-                                g_object_unref (toplevel_presentable);
-                        }
-                }
-
-        } else if (GDU_IS_VOLUME_HOLE (shell->priv->presentable_now_showing)) {
-
-                sections_to_show = g_list_append (sections_to_show,
-                                                  (gpointer) GDU_TYPE_SECTION_UNALLOCATED);
         }
-
 
         if (device != NULL)
                 g_object_unref (device);

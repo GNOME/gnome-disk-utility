@@ -7,15 +7,7 @@ palimpsest_SOURCES = 									\
 						gdu-main.c				\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
-	gdu-section-create-partition-table.h	gdu-section-create-partition-table.c	\
-	gdu-section-partition.h			gdu-section-partition.c			\
-	gdu-section-unallocated.h		gdu-section-unallocated.c		\
-	gdu-section-unrecognized.h		gdu-section-unrecognized.c		\
-	gdu-section-filesystem.h		gdu-section-filesystem.c		\
-	gdu-section-swapspace.h			gdu-section-swapspace.c			\
-	gdu-section-encrypted.h			gdu-section-encrypted.c			\
 	gdu-section-linux-md-drive.h		gdu-section-linux-md-drive.c		\
-	gdu-section-no-media.h			gdu-section-no-media.c			\
 	gdu-section-drive.h			gdu-section-drive.c			\
 	gdu-section-volumes.h			gdu-section-volumes.c			\
 	gdu-section-hub.h			gdu-section-hub.c			\

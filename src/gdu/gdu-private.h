@@ -75,6 +75,8 @@
                                                      G_TYPE_STRING,   \
                                                      G_TYPE_INVALID))
 
+DBusGConnection *_gdu_pool_get_connection (GduPool *pool);
+
 GduKnownFilesystem    *_gdu_known_filesystem_new       (gpointer data);
 
 GduProcess            * _gdu_process_new               (gpointer data);

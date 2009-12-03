@@ -167,7 +167,6 @@ out:
 
 struct _GduExpanderPrivate
 {
-        DBusGConnection *bus;
         DBusGProxy *proxy;
         GduPool *pool;
 
@@ -199,7 +198,6 @@ gdu_expander_finalize (GduExpander *expander)
         g_debug ("##### finalized expander %s",
                  expander->priv->props != NULL ? expander->priv->props->native_path : expander->priv->object_path);
 
-        dbus_g_connection_unref (expander->priv->bus);
         g_free (expander->priv->object_path);
         if (expander->priv->proxy != NULL)
                 g_object_unref (expander->priv->proxy);
@@ -252,7 +250,8 @@ update_info (GduExpander *expander)
 {
         ExpanderProperties *new_properties;
 
-        new_properties = expander_properties_get (expander->priv->bus, expander->priv->object_path);
+        new_properties = expander_properties_get (_gdu_pool_get_connection (expander->priv->pool),
+                                                  expander->priv->object_path);
         if (new_properties != NULL) {
                 if (expander->priv->props != NULL)
                         expander_properties_free (expander->priv->props);
@@ -267,25 +266,16 @@ update_info (GduExpander *expander)
 GduExpander *
 _gdu_expander_new_from_object_path (GduPool *pool, const char *object_path)
 {
-        GError *error;
         GduExpander *expander;
 
         expander = GDU_EXPANDER (g_object_new (GDU_TYPE_EXPANDER, NULL));
         expander->priv->object_path = g_strdup (object_path);
         expander->priv->pool = g_object_ref (pool);
 
-        error = NULL;
-        expander->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (expander->priv->bus == NULL) {
-                g_warning ("Couldn't connect to system bus: %s", error->message);
-                g_error_free (error);
-                goto error;
-        }
-
-	expander->priv->proxy = dbus_g_proxy_new_for_name (expander->priv->bus,
-                                                         "org.freedesktop.UDisks",
-                                                         expander->priv->object_path,
-                                                         "org.freedesktop.UDisks.Expander");
+	expander->priv->proxy = dbus_g_proxy_new_for_name (_gdu_pool_get_connection (expander->priv->pool),
+                                                           "org.freedesktop.UDisks",
+                                                           expander->priv->object_path,
+                                                           "org.freedesktop.UDisks.Expander");
         dbus_g_proxy_set_default_timeout (expander->priv->proxy, INT_MAX);
         dbus_g_proxy_add_signal (expander->priv->proxy, "Changed", G_TYPE_INVALID);
 

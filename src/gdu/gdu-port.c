@@ -137,7 +137,6 @@ out:
 
 struct _GduPortPrivate
 {
-        DBusGConnection *bus;
         DBusGProxy *proxy;
         GduPool *pool;
 
@@ -169,7 +168,6 @@ gdu_port_finalize (GduPort *port)
         g_debug ("##### finalized port %s",
                  port->priv->props != NULL ? port->priv->props->native_path : port->priv->object_path);
 
-        dbus_g_connection_unref (port->priv->bus);
         g_free (port->priv->object_path);
         if (port->priv->proxy != NULL)
                 g_object_unref (port->priv->proxy);
@@ -222,7 +220,8 @@ update_info (GduPort *port)
 {
         PortProperties *new_properties;
 
-        new_properties = port_properties_get (port->priv->bus, port->priv->object_path);
+        new_properties = port_properties_get (_gdu_pool_get_connection (port->priv->pool),
+                                              port->priv->object_path);
         if (new_properties != NULL) {
                 if (port->priv->props != NULL)
                         port_properties_free (port->priv->props);
@@ -237,25 +236,16 @@ update_info (GduPort *port)
 GduPort *
 _gdu_port_new_from_object_path (GduPool *pool, const char *object_path)
 {
-        GError *error;
         GduPort *port;
 
         port = GDU_PORT (g_object_new (GDU_TYPE_PORT, NULL));
         port->priv->object_path = g_strdup (object_path);
         port->priv->pool = g_object_ref (pool);
 
-        error = NULL;
-        port->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (port->priv->bus == NULL) {
-                g_warning ("Couldn't connect to system bus: %s", error->message);
-                g_error_free (error);
-                goto error;
-        }
-
-	port->priv->proxy = dbus_g_proxy_new_for_name (port->priv->bus,
-                                                         "org.freedesktop.UDisks",
-                                                         port->priv->object_path,
-                                                         "org.freedesktop.UDisks.Port");
+	port->priv->proxy = dbus_g_proxy_new_for_name (_gdu_pool_get_connection (port->priv->pool),
+                                                       "org.freedesktop.UDisks",
+                                                       port->priv->object_path,
+                                                       "org.freedesktop.UDisks.Port");
         dbus_g_proxy_set_default_timeout (port->priv->proxy, INT_MAX);
         dbus_g_proxy_add_signal (port->priv->proxy, "Changed", G_TYPE_INVALID);
 

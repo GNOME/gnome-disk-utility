@@ -117,10 +117,12 @@ message_received (UniqueApp         *app,
 
 const char *volume_to_show = NULL;
 const char *drive_to_show = NULL;
+const char *dbus_address = NULL;
 
 static GOptionEntry entries[] = {
         { "show-volume", 0, 0, G_OPTION_ARG_FILENAME, &volume_to_show, N_("Volume to show"), N_("DEVICE") },
         { "show-drive", 0, 0, G_OPTION_ARG_FILENAME, &drive_to_show, N_("Drive to show"), N_("DEVICE") },
+        { "address", 'a', 0, G_OPTION_ARG_STRING, &dbus_address, "D-Bus address to connect to", NULL },
         { NULL }
 };
 
@@ -177,7 +179,7 @@ main (int argc, char **argv)
                         return 1;
         }
 
-        shell = gdu_shell_new ();
+        shell = gdu_shell_new (dbus_address);
 
         g_signal_connect (unique_app, "message-received",
                           G_CALLBACK (message_received), shell);

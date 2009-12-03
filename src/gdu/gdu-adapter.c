@@ -91,7 +91,7 @@ adapter_properties_free (AdapterProperties *props)
 
 static AdapterProperties *
 adapter_properties_get (DBusGConnection *bus,
-                           const char *object_path)
+                        const char *object_path)
 {
         AdapterProperties *props;
         GError *error;
@@ -146,7 +146,6 @@ out:
 
 struct _GduAdapterPrivate
 {
-        DBusGConnection *bus;
         DBusGProxy *proxy;
         GduPool *pool;
 
@@ -178,7 +177,6 @@ gdu_adapter_finalize (GduAdapter *adapter)
         g_debug ("##### finalized adapter %s",
                  adapter->priv->props != NULL ? adapter->priv->props->native_path : adapter->priv->object_path);
 
-        dbus_g_connection_unref (adapter->priv->bus);
         g_free (adapter->priv->object_path);
         if (adapter->priv->proxy != NULL)
                 g_object_unref (adapter->priv->proxy);
@@ -231,7 +229,8 @@ update_info (GduAdapter *adapter)
 {
         AdapterProperties *new_properties;
 
-        new_properties = adapter_properties_get (adapter->priv->bus, adapter->priv->object_path);
+        new_properties = adapter_properties_get (_gdu_pool_get_connection (adapter->priv->pool),
+                                                 adapter->priv->object_path);
         if (new_properties != NULL) {
                 if (adapter->priv->props != NULL)
                         adapter_properties_free (adapter->priv->props);
@@ -246,25 +245,16 @@ update_info (GduAdapter *adapter)
 GduAdapter *
 _gdu_adapter_new_from_object_path (GduPool *pool, const char *object_path)
 {
-        GError *error;
         GduAdapter *adapter;
 
         adapter = GDU_ADAPTER (g_object_new (GDU_TYPE_ADAPTER, NULL));
         adapter->priv->object_path = g_strdup (object_path);
         adapter->priv->pool = g_object_ref (pool);
 
-        error = NULL;
-        adapter->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (adapter->priv->bus == NULL) {
-                g_warning ("Couldn't connect to system bus: %s", error->message);
-                g_error_free (error);
-                goto error;
-        }
-
-	adapter->priv->proxy = dbus_g_proxy_new_for_name (adapter->priv->bus,
-                                                         "org.freedesktop.UDisks",
-                                                         adapter->priv->object_path,
-                                                         "org.freedesktop.UDisks.Adapter");
+	adapter->priv->proxy = dbus_g_proxy_new_for_name (_gdu_pool_get_connection (adapter->priv->pool),
+                                                          "org.freedesktop.UDisks",
+                                                          adapter->priv->object_path,
+                                                          "org.freedesktop.UDisks.Adapter");
         dbus_g_proxy_set_default_timeout (adapter->priv->proxy, INT_MAX);
         dbus_g_proxy_add_signal (adapter->priv->proxy, "Changed", G_TYPE_INVALID);
 

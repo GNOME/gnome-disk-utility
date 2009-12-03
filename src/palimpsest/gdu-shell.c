@@ -42,6 +42,8 @@
 
 struct _GduShellPrivate
 {
+        gchar *dbus_address;
+
         GtkWidget *app_window;
         GduPool *pool;
 
@@ -68,6 +70,7 @@ G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 static void
 gdu_shell_finalize (GduShell *shell)
 {
+        g_free (shell->priv->dbus_address);
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (shell));
 }
@@ -90,13 +93,16 @@ static void
 gdu_shell_init (GduShell *shell)
 {
         shell->priv = G_TYPE_INSTANCE_GET_PRIVATE (shell, GDU_TYPE_SHELL, GduShellPrivate);
-        create_window (shell);
 }
 
 GduShell *
-gdu_shell_new (void)
+gdu_shell_new (const gchar *dbus_address)
 {
-        return GDU_SHELL (g_object_new (GDU_TYPE_SHELL, NULL));;
+        GduShell *shell;
+        shell = GDU_SHELL (g_object_new (GDU_TYPE_SHELL, NULL));
+        shell->priv->dbus_address = g_strdup (dbus_address);
+        create_window (shell);
+        return shell;
 }
 
 GtkWidget *
@@ -1665,7 +1671,7 @@ create_window (GduShell *shell)
         GduPoolTreeModel *model;
         GtkTreeViewColumn *column;
 
-        shell->priv->pool = gdu_pool_new ();
+        shell->priv->pool = gdu_pool_new_for_address (shell->priv->dbus_address);
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);

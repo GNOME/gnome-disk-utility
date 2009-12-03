@@ -512,6 +512,7 @@ device_properties_get (DBusGConnection *bus,
                 props = NULL;
                 goto out;
         }
+        g_debug ("yay, got props for %s", object_path);
 
         g_hash_table_foreach (hash_table, (GHFunc) collect_props, props);
 
@@ -526,7 +527,6 @@ out:
 
 struct _GduDevicePrivate
 {
-        DBusGConnection *bus;
         DBusGProxy *proxy;
         GduPool *pool;
 
@@ -559,7 +559,6 @@ gdu_device_finalize (GduDevice *device)
         g_debug ("##### finalized device %s",
                  device->priv->props != NULL ? device->priv->props->device_file : device->priv->object_path);
 
-        dbus_g_connection_unref (device->priv->bus);
         g_free (device->priv->object_path);
         if (device->priv->proxy != NULL)
                 g_object_unref (device->priv->proxy);
@@ -620,7 +619,8 @@ update_info (GduDevice *device)
 {
         DeviceProperties *new_properties;
 
-        new_properties = device_properties_get (device->priv->bus, device->priv->object_path);
+        new_properties = device_properties_get (_gdu_pool_get_connection (device->priv->pool),
+                                                device->priv->object_path);
         if (new_properties != NULL) {
                 if (device->priv->props != NULL)
                         device_properties_free (device->priv->props);
@@ -635,22 +635,13 @@ update_info (GduDevice *device)
 GduDevice *
 _gdu_device_new_from_object_path (GduPool *pool, const char *object_path)
 {
-        GError *error;
         GduDevice *device;
 
         device = GDU_DEVICE (g_object_new (GDU_TYPE_DEVICE, NULL));
         device->priv->object_path = g_strdup (object_path);
         device->priv->pool = g_object_ref (pool);
 
-        error = NULL;
-        device->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (device->priv->bus == NULL) {
-                g_warning ("Couldn't connect to system bus: %s", error->message);
-                g_error_free (error);
-                goto error;
-        }
-
-	device->priv->proxy = dbus_g_proxy_new_for_name (device->priv->bus,
+	device->priv->proxy = dbus_g_proxy_new_for_name (_gdu_pool_get_connection (device->priv->pool),
                                                          "org.freedesktop.UDisks",
                                                          device->priv->object_path,
                                                          "org.freedesktop.UDisks.Device");

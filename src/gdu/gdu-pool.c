@@ -1608,7 +1608,8 @@ get_properties (GduPool *pool)
                                 dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
                                 &hash_table,
                                 G_TYPE_INVALID)) {
-                g_debug ("Error calling GetAll() when retrieving properties for /: %s", error->message);
+                g_debug ("Error calling GetAll() retrieving properties for /org/freedesktop/UDisks: %s",
+                         error->message);
                 g_error_free (error);
                 goto out;
         }
@@ -1649,15 +1650,28 @@ out:
         return ret;
 }
 
+
 /**
  * gdu_pool_new:
  *
  * Create a new #GduPool object.
  *
  * Returns: A #GduPool object. Caller must free this object using g_object_unref().
- **/
+ */
 GduPool *
 gdu_pool_new (void)
+{
+        return gdu_pool_new_for_address (NULL);
+}
+
+DBusGConnection *
+_gdu_pool_get_connection (GduPool *pool)
+{
+        return pool->priv->bus;
+}
+
+GduPool *
+gdu_pool_new_for_address (const gchar *dbus_address)
 {
         int n;
         GPtrArray *devices;
@@ -1670,11 +1684,22 @@ gdu_pool_new (void)
         pool = GDU_POOL (g_object_new (GDU_TYPE_POOL, NULL));
 
         error = NULL;
-        pool->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        if (pool->priv->bus == NULL) {
-                g_warning ("Couldn't connect to system bus: %s", error->message);
-                g_error_free (error);
-                goto error;
+        if (dbus_address == NULL) {
+                pool->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+                if (pool->priv->bus == NULL) {
+                        g_warning ("Couldn't connect to system bus: %s", error->message);
+                        g_error_free (error);
+                        goto error;
+                }
+        } else {
+                pool->priv->bus = dbus_g_connection_open (dbus_address, &error);
+                if (pool->priv->bus == NULL) {
+                        g_warning ("Couldn't connect to address `%s': %s",
+                                   dbus_address,
+                                   error->message);
+                        g_error_free (error);
+                        goto error;
+                }
         }
 
         dbus_g_object_register_marshaller (
@@ -1704,6 +1729,12 @@ gdu_pool_new (void)
                                  G_TYPE_BOOLEAN,
                                  G_TYPE_DOUBLE,
                                  G_TYPE_INVALID);
+
+        /* get the properties on the daemon object */
+        if (!get_properties (pool)) {
+                g_warning ("Couldn't get daemon properties");
+                goto error;
+        }
 
         dbus_g_proxy_connect_signal (pool->priv->proxy, "DeviceAdded",
                                      G_CALLBACK (device_added_signal_handler), pool, NULL);
@@ -1743,12 +1774,6 @@ gdu_pool_new (void)
                                      G_CALLBACK (port_removed_signal_handler), pool, NULL);
         dbus_g_proxy_connect_signal (pool->priv->proxy, "PortChanged",
                                      G_CALLBACK (port_changed_signal_handler), pool, NULL);
-
-        /* get the properties on the daemon object at / */
-        if (!get_properties (pool)) {
-                g_warning ("Couldn't get daemon properties");
-                goto error;
-        }
 
         /* prime the list of devices */
         error = NULL;

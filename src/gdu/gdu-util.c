@@ -231,10 +231,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         if (strlen (fsversion) > 0)
                                 /* Translators: Ext2 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext2 (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Ext2 (version %s)"), fsversion);
                         else
                                 /* Translators: Ext2 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext2"));
+                                s = g_strdup_printf (_("Ext2"));
                 } else {
                         /* Translators: Ext2 is a filesystem type */
                         s = g_strdup (_("ext2"));
@@ -243,10 +243,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         if (strlen (fsversion) > 0)
                                 /* Translators: Ext3 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext3 (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Ext3 (version %s)"), fsversion);
                         else
                                 /* Translators: Ext3 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext3"));
+                                s = g_strdup_printf (_("Ext3"));
                 } else {
                         /* Translators: Ext3 is a filesystem type */
                         s = g_strdup (_("ext3"));
@@ -255,10 +255,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         if (strlen (fsversion) > 0)
                                 /* Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems' */
-                                s = g_strdup_printf (_("Journal for Linux ext3 (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Journal for Ext3 (version %s)"), fsversion);
                         else
                                 /* Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems' */
-                                s = g_strdup_printf (_("Journal for Linux ext3"));
+                                s = g_strdup_printf (_("Journal for Ext3"));
                 } else {
                         /* Translators: jbd is a filesystem type */
                         s = g_strdup (_("jbd"));
@@ -267,10 +267,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         if (strlen (fsversion) > 0)
                                 /* Translators: ext4 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext4 (version %s)"), fsversion);
+                                s = g_strdup_printf (_("Ext4 (version %s)"), fsversion);
                         else
                                 /* Translators: ext4 is a filesystem type */
-                                s = g_strdup_printf (_("Linux Ext4"));
+                                s = g_strdup_printf (_("Ext4"));
                 } else {
                         /* Translators: Ext4 is a filesystem type */
                         s = g_strdup (_("ext4"));
@@ -279,10 +279,10 @@ gdu_util_get_fstype_for_display (const char *fstype, const char *fsversion, gboo
                 if (long_string) {
                         if (strlen (fsversion) > 0)
                                 /* Translators: xfs is a filesystem type */
-                                s = g_strdup_printf (_("Linux XFS (version %s)"), fsversion);
+                                s = g_strdup_printf (_("XFS (version %s)"), fsversion);
                         else
                                 /* Translators: xfs is a filesystem type */
-                                s = g_strdup_printf (_("Linux XFS"));
+                                s = g_strdup_printf (_("XFS"));
                 } else {
                         /* Translators: xfs is a filesystem type */
                         s = g_strdup (_("xfs"));

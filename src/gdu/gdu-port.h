@@ -69,6 +69,7 @@ const gchar *gdu_port_get_native_path       (GduPort   *port);
 const gchar *gdu_port_get_adapter           (GduPort   *port);
 const gchar *gdu_port_get_parent            (GduPort   *port);
 gint         gdu_port_get_number            (GduPort   *port);
+const gchar *gdu_port_get_connector_type    (GduPort   *port);
 
 G_END_DECLS
 

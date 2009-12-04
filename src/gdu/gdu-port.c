@@ -50,6 +50,7 @@ typedef struct
         gchar *adapter;
         gchar *parent;
         gint number;
+        gchar *connector_type;
 } PortProperties;
 
 static void
@@ -66,6 +67,8 @@ collect_props (const char *key, const GValue *value, PortProperties *props)
                 props->parent = g_value_dup_boxed (value);
         else if (strcmp (key, "Number") == 0)
                 props->number = g_value_get_int (value);
+        else if (strcmp (key, "ConnectorType") == 0)
+                props->connector_type = g_value_dup_string (value);
         else
                 handled = FALSE;
 
@@ -79,6 +82,7 @@ port_properties_free (PortProperties *props)
         g_free (props->native_path);
         g_free (props->adapter);
         g_free (props->parent);
+        g_free (props->connector_type);
         g_free (props);
 }
 
@@ -122,10 +126,11 @@ port_properties_get (DBusGConnection *bus,
 
 #if 0
         g_print ("----------------------------------------------------------------------\n");
-        g_print ("native_path:  %s\n", props->native_path);
-        g_print ("adapter:      %s\n", props->adapter);
-        g_print ("parent:       %s\n", props->parent);
-        g_print ("number:       %d\n", props->number);
+        g_print ("native_path:    %s\n", props->native_path);
+        g_print ("adapter:        %s\n", props->adapter);
+        g_print ("parent:         %s\n", props->parent);
+        g_print ("number:         %d\n", props->number);
+        g_print ("connector_type: %s\n", props->connector_type);
 #endif
 
 out:
@@ -303,4 +308,10 @@ gint
 gdu_port_get_number (GduPort *port)
 {
         return port->priv->props->number;
+}
+
+const gchar *
+gdu_port_get_connector_type (GduPort *port)
+{
+        return port->priv->props->connector_type;
 }

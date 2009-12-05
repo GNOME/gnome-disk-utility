@@ -40,6 +40,8 @@
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
 
+#include "gdu-ssh-bridge.h"
+
 #include "udisks-daemon-glue.h"
 #include "gdu-marshal.h"
 
@@ -1661,7 +1663,7 @@ out:
 GduPool *
 gdu_pool_new (void)
 {
-        return gdu_pool_new_for_address (NULL);
+        return gdu_pool_new_for_address (NULL, NULL);
 }
 
 DBusGConnection *
@@ -1671,7 +1673,8 @@ _gdu_pool_get_connection (GduPool *pool)
 }
 
 GduPool *
-gdu_pool_new_for_address (const gchar *dbus_address)
+gdu_pool_new_for_address (const gchar     *ssh_address,
+                          GMountOperation *connect_operation)
 {
         int n;
         GPtrArray *devices;
@@ -1684,18 +1687,18 @@ gdu_pool_new_for_address (const gchar *dbus_address)
         pool = GDU_POOL (g_object_new (GDU_TYPE_POOL, NULL));
 
         error = NULL;
-        if (dbus_address == NULL) {
+        if (ssh_address == NULL) {
                 pool->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
                 if (pool->priv->bus == NULL) {
-                        g_warning ("Couldn't connect to system bus: %s", error->message);
+                        g_warning ("Error connecting to system bus: %s", error->message);
                         g_error_free (error);
                         goto error;
                 }
         } else {
-                pool->priv->bus = dbus_g_connection_open (dbus_address, &error);
+                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_address, connect_operation, &error);
                 if (pool->priv->bus == NULL) {
-                        g_warning ("Couldn't connect to address `%s': %s",
-                                   dbus_address,
+                        g_warning ("Error connecting to ssh address `%s': %s",
+                                   ssh_address,
                                    error->message);
                         g_error_free (error);
                         goto error;

@@ -54,7 +54,8 @@ struct _GduShellClass
 };
 
 GType           gdu_shell_get_type                 (void);
-GduShell       *gdu_shell_new                      (const char *dbus_address);
+GduShell       *gdu_shell_new                      (const char      *ssh_address,
+                                                    GMountOperation *connect_operation);
 GtkWidget      *gdu_shell_get_toplevel             (GduShell       *shell);
 GduPool        *gdu_shell_get_pool                 (GduShell       *shell);
 void            gdu_shell_update                   (GduShell       *shell);

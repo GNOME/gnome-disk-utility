@@ -42,7 +42,7 @@
 
 struct _GduShellPrivate
 {
-        gchar *dbus_address;
+        gchar *ssh_address;
 
         GtkWidget *app_window;
         GduPool *pool;
@@ -70,7 +70,7 @@ G_DEFINE_TYPE (GduShell, gdu_shell, G_TYPE_OBJECT);
 static void
 gdu_shell_finalize (GduShell *shell)
 {
-        g_free (shell->priv->dbus_address);
+        g_free (shell->priv->ssh_address);
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (shell));
 }
@@ -87,7 +87,8 @@ gdu_shell_class_init (GduShellClass *klass)
         g_type_class_add_private (klass, sizeof (GduShellPrivate));
 }
 
-static void create_window (GduShell *shell);
+static void create_window (GduShell        *shell,
+                           GMountOperation *connect_operation);
 
 static void
 gdu_shell_init (GduShell *shell)
@@ -96,12 +97,13 @@ gdu_shell_init (GduShell *shell)
 }
 
 GduShell *
-gdu_shell_new (const gchar *dbus_address)
+gdu_shell_new (const gchar     *ssh_address,
+               GMountOperation *connect_operation)
 {
         GduShell *shell;
         shell = GDU_SHELL (g_object_new (GDU_TYPE_SHELL, NULL));
-        shell->priv->dbus_address = g_strdup (dbus_address);
-        create_window (shell);
+        shell->priv->ssh_address = g_strdup (ssh_address);
+        create_window (shell, connect_operation);
         return shell;
 }
 
@@ -1657,7 +1659,8 @@ gdu_shell_raise_error (GduShell       *shell,
 }
 
 static void
-create_window (GduShell *shell)
+create_window (GduShell *shell,
+               GMountOperation *connect_operation)
 {
         GtkWidget *vbox;
         GtkWidget *vbox1;
@@ -1671,7 +1674,7 @@ create_window (GduShell *shell)
         GduPoolTreeModel *model;
         GtkTreeViewColumn *column;
 
-        shell->priv->pool = gdu_pool_new_for_address (shell->priv->dbus_address);
+        shell->priv->pool = gdu_pool_new_for_address (shell->priv->ssh_address, connect_operation);
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);

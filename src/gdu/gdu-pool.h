@@ -79,7 +79,8 @@ struct _GduPoolClass
 
 GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
-GduPool    *gdu_pool_new_for_address    (const gchar *dbus_address);
+GduPool    *gdu_pool_new_for_address    (const gchar     *ssh_address,
+                                         GMountOperation *connect_operation);
 
 char       *gdu_pool_get_daemon_version (GduPool *pool);
 gboolean    gdu_pool_is_daemon_inhibited (GduPool *pool);

@@ -87,8 +87,7 @@ gdu_shell_class_init (GduShellClass *klass)
         g_type_class_add_private (klass, sizeof (GduShellPrivate));
 }
 
-static void create_window (GduShell        *shell,
-                           GMountOperation *connect_operation);
+static void create_window (GduShell        *shell);
 
 static void
 gdu_shell_init (GduShell *shell)
@@ -97,13 +96,12 @@ gdu_shell_init (GduShell *shell)
 }
 
 GduShell *
-gdu_shell_new (const gchar     *ssh_address,
-               GMountOperation *connect_operation)
+gdu_shell_new (const gchar *ssh_address)
 {
         GduShell *shell;
         shell = GDU_SHELL (g_object_new (GDU_TYPE_SHELL, NULL));
         shell->priv->ssh_address = g_strdup (ssh_address);
-        create_window (shell, connect_operation);
+        create_window (shell);
         return shell;
 }
 
@@ -1659,8 +1657,7 @@ gdu_shell_raise_error (GduShell       *shell,
 }
 
 static void
-create_window (GduShell *shell,
-               GMountOperation *connect_operation)
+create_window (GduShell *shell)
 {
         GtkWidget *vbox;
         GtkWidget *vbox1;
@@ -1673,8 +1670,17 @@ create_window (GduShell *shell,
         GtkWidget *label;
         GduPoolTreeModel *model;
         GtkTreeViewColumn *column;
+        GError *error;
 
-        shell->priv->pool = gdu_pool_new_for_address (shell->priv->ssh_address, connect_operation);
+        error = NULL;
+        shell->priv->pool = gdu_pool_new_for_address (shell->priv->ssh_address, &error);
+        if (error != NULL) {
+                g_printerr ("Error connecting to `%s': %s",
+                            shell->priv->ssh_address,
+                            error->message);
+                g_error_free (error);
+                g_critical ("Exiting");
+        }
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
         gtk_window_set_resizable (GTK_WINDOW (shell->priv->app_window), TRUE);

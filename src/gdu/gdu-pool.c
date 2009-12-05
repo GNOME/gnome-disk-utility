@@ -41,6 +41,7 @@
 #include "gdu-private.h"
 
 #include "gdu-ssh-bridge.h"
+#include "gdu-error.h"
 
 #include "udisks-daemon-glue.h"
 #include "gdu-marshal.h"
@@ -107,8 +108,10 @@ G_DEFINE_TYPE (GduPool, gdu_pool, G_TYPE_OBJECT);
 static void
 gdu_pool_finalize (GduPool *pool)
 {
-        dbus_g_connection_unref (pool->priv->bus);
-        g_object_unref (pool->priv->proxy);
+        if (pool->priv->bus != NULL)
+                dbus_g_connection_unref (pool->priv->bus);
+        if (pool->priv->proxy != NULL)
+                g_object_unref (pool->priv->proxy);
 
         g_free (pool->priv->daemon_version);
 
@@ -1663,7 +1666,17 @@ out:
 GduPool *
 gdu_pool_new (void)
 {
-        return gdu_pool_new_for_address (NULL, NULL);
+        GduPool *pool;
+        GError *error;
+
+        error = NULL;
+        pool = gdu_pool_new_for_address (NULL, &error);
+        if (pool != NULL) {
+                g_printerr ("Error constructing pool: %s\n", error->message);
+                g_error_free (error);
+        }
+
+        return pool;
 }
 
 DBusGConnection *
@@ -1674,7 +1687,7 @@ _gdu_pool_get_connection (GduPool *pool)
 
 GduPool *
 gdu_pool_new_for_address (const gchar     *ssh_address,
-                          GMountOperation *connect_operation)
+                          GError         **error)
 {
         int n;
         GPtrArray *devices;
@@ -1682,25 +1695,20 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
         GPtrArray *expanders;
         GPtrArray *ports;
         GduPool *pool;
-        GError *error;
+        GError *local_error;
+
+        local_error = NULL;
 
         pool = GDU_POOL (g_object_new (GDU_TYPE_POOL, NULL));
 
-        error = NULL;
         if (ssh_address == NULL) {
-                pool->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+                pool->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, error);
                 if (pool->priv->bus == NULL) {
-                        g_warning ("Error connecting to system bus: %s", error->message);
-                        g_error_free (error);
                         goto error;
                 }
         } else {
-                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_address, connect_operation, &error);
+                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_address, error);
                 if (pool->priv->bus == NULL) {
-                        g_warning ("Error connecting to ssh address `%s': %s",
-                                   ssh_address,
-                                   error->message);
-                        g_error_free (error);
                         goto error;
                 }
         }
@@ -1779,10 +1787,11 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
                                      G_CALLBACK (port_changed_signal_handler), pool, NULL);
 
         /* prime the list of devices */
-        error = NULL;
-        if (!org_freedesktop_UDisks_enumerate_devices (pool->priv->proxy, &devices, &error)) {
-                g_warning ("Couldn't enumerate devices: %s", error->message);
-                g_error_free (error);
+        if (!org_freedesktop_UDisks_enumerate_devices (pool->priv->proxy, &devices, &local_error)) {
+                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                             _("Error enumerating devices: %s"),
+                             local_error->message);
+                g_error_free (local_error);
                 goto error;
         }
 
@@ -1804,10 +1813,11 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
         g_ptr_array_free (devices, TRUE);
 
         /* prime the list of adapters */
-        error = NULL;
-        if (!org_freedesktop_UDisks_enumerate_adapters (pool->priv->proxy, &adapters, &error)) {
-                g_warning ("Couldn't enumerate adapters: %s", error->message);
-                g_error_free (error);
+        if (!org_freedesktop_UDisks_enumerate_adapters (pool->priv->proxy, &adapters, &local_error)) {
+                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                             _("Error enumerating adapters: %s"),
+                             local_error->message);
+                g_error_free (local_error);
                 goto error;
         }
         for (n = 0; n < (int) adapters->len; n++) {
@@ -1826,10 +1836,11 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
         g_ptr_array_free (adapters, TRUE);
 
         /* prime the list of expanders */
-        error = NULL;
-        if (!org_freedesktop_UDisks_enumerate_expanders (pool->priv->proxy, &expanders, &error)) {
-                g_warning ("Couldn't enumerate expanders: %s", error->message);
-                g_error_free (error);
+        if (!org_freedesktop_UDisks_enumerate_expanders (pool->priv->proxy, &expanders, &local_error)) {
+                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                             _("Error enumerating expanders: %s"),
+                             local_error->message);
+                g_error_free (local_error);
                 goto error;
         }
         for (n = 0; n < (int) expanders->len; n++) {
@@ -1848,10 +1859,11 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
         g_ptr_array_free (expanders, TRUE);
 
         /* prime the list of ports */
-        error = NULL;
-        if (!org_freedesktop_UDisks_enumerate_ports (pool->priv->proxy, &ports, &error)) {
-                g_warning ("Couldn't enumerate ports: %s", error->message);
-                g_error_free (error);
+        if (!org_freedesktop_UDisks_enumerate_ports (pool->priv->proxy, &ports, &local_error)) {
+                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                             _("Error enumerating ports: %s"),
+                             local_error->message);
+                g_error_free (local_error);
                 goto error;
         }
         for (n = 0; n < (int) ports->len; n++) {

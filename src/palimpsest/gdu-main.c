@@ -179,10 +179,7 @@ main (int argc, char **argv)
                         return 1;
         }
 
-        GMountOperation *connect_operation;
-        connect_operation = gtk_mount_operation_new (NULL);
-        shell = gdu_shell_new (dbus_address, connect_operation);
-        g_object_unref (connect_operation);
+        shell = gdu_shell_new (dbus_address);
 
         g_signal_connect (unique_app, "message-received",
                           G_CALLBACK (message_received), shell);

@@ -47,6 +47,9 @@
  *
  *  Client can now use the D-Bus connection - Server is guaranteed to forward method calls and signals
  *  to and from the org.freedesktop.UDisks service running on Server
+ *
+ *  The reason we pass have an authorization SECRET is that otherwise
+ *  malicious users on both the Client and Server may interfere.
  */
 
 typedef struct {
@@ -157,10 +160,27 @@ on_new_connection (DBusServer     *server,
         ;
 }
 
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+static void
+child_setup (gpointer user_data)
+{
+        gint fd;
+
+        /* lose controlling terminal - this forces $SSH_ASKPASS to be used for authentication */
+        if ((fd = open("/dev/tty", O_RDWR)) >= 0) {
+                ioctl(fd, TIOCNOTTY, 0); /* lose controlling terminal */
+                close(fd);
+        }
+}
+
 DBusGConnection *
 _gdu_ssh_bridge_connect (GduPool          *pool,
                          const gchar      *ssh_address,
-                         GMountOperation  *connect_operation,
                          GError          **error)
 {
         BridgeData *data;
@@ -284,7 +304,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                        ssh_argv,
                                        NULL,
                                        G_SPAWN_SEARCH_PATH,
-                                       NULL,
+                                       child_setup,
                                        NULL,
                                        &ssh_pid,
                                        &stdin_fd,
@@ -310,28 +330,38 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         g_object_unref (stdout_stream);
         g_object_unref (stderr_stream);
 
-        /* Read and parse the remote port number */
-        s = g_data_input_stream_read_line (stderr_data_stream,
-                                           NULL, /* gsize *length */
-                                           NULL,
-                                           &local_error);
-        if (s == NULL) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error reading output for reverse tunnel setup on host `%s': %s"),
-                             ssh_address, local_error->message);
-                g_error_free (local_error);
-                goto out;
+        while (TRUE) {
+                /* Read and parse the remote port number */
+                s = g_data_input_stream_read_line (stderr_data_stream,
+                                                   NULL, /* gsize *length */
+                                                   NULL,
+                                                   &local_error);
+                if (s == NULL) {
+                        if (local_error != NULL) {
+                                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                                             _("Error reading stderr output from host `%s': %s"),
+                                             ssh_address, local_error->message);
+                                g_error_free (local_error);
+                        } else {
+                                /* This happens if ssh exits due to e.g. permission denied */
+                                g_set_error (error, GDU_ERROR, GDU_ERROR_PERMISSION_DENIED,
+                                             _("Failed to log into host `%s'"),
+                                             ssh_address);
+                        }
+                        goto out;
+                } else if (strlen (s) == 0) {
+                        g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                                     _("Unexpected blank line in stderr output from host `%s'"),
+                                     ssh_address);
+                        g_free (s);
+                        goto out;
+                } else if (sscanf (s, "Allocated port %d for remote forward to", &remote_port) == 1) {
+                        g_free (s);
+                        break;
+                }
         }
-        if (sscanf (s, "Allocated port %d for remote forward to", &remote_port) != 1) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Unexpected output from ssh: "
-                               "Expected `Allocated port <number> for remote forward to' but got `%s'"),
-                             s);
-                g_free (s);
-                goto out;
-        }
+
         //g_print ("Yay, remote port is %d (forwarding to local port %d)\n", remote_port, local_port);
-        g_free (s);
 
         /* Now start the bridge - the udisks-tcp-bridge program will connect to the remote port
          * which is forwarded to the local port by ssh
@@ -342,7 +372,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                               NULL,
                                               &local_error)) {
                 g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error executing `%s' on host `%s': %s"),
+                             _("Error sending `%s' to host `%s': %s"),
                              s, ssh_address, local_error->message);
                 g_error_free (local_error);
                 g_free (s);
@@ -358,14 +388,14 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                            &local_error);
         if (s == NULL) {
                 g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error reading output from udisks-tcp-bridge program on host `%s': %s"),
+                             _("Error reading stderr output from host `%s': %s"),
                              ssh_address, local_error->message);
                 g_error_free (local_error);
                 goto out;
         }
         if (g_strcmp0 (s, "udisks-tcp-bridge: Waiting for secret") != 0) {
                 g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Unexpected output from udisks-tcp-bridge program on host `%s': "
+                             _("Unexpected stderr output from from host `%s': "
                                "Expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"),
                              ssh_address, s);
                 g_free (s);
@@ -400,14 +430,14 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                            &local_error);
         if (s == NULL) {
                 g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error reading output from udisks-tcp-bridge program on host `%s': %s"),
+                             _("Error reading stderr from host `%s': %s"),
                              ssh_address, local_error->message);
                 g_error_free (local_error);
                 goto out;
         }
         if (sscanf (s, "udisks-tcp-bridge: Attempting to connect to port %d", &remote_port) != 1) {
                 g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Unexpected output from udisks-tcp-bridge program on host `%s': "
+                             _("Unexpected stderr output from host `%s': "
                                "Expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"),
                              ssh_address, remote_port, s);
                 g_free (s);
@@ -415,7 +445,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         }
         g_free (s);
 
-        /* Wait for connection and authorization */
+        /* Wait for D-Bus connection and authorization */
         data->loop = g_main_loop_new (NULL, FALSE);
         g_main_loop_run (data->loop);
 
@@ -440,8 +470,10 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
  out:
         if (data != NULL)
                 bridge_data_free (data);
-        if (server != NULL)
+        if (server != NULL) {
+                dbus_server_disconnect (server);
                 dbus_server_unref (server);
+        }
         if (stdin_data_stream != NULL)
                 g_object_unref (stdin_data_stream);
         if (stdout_data_stream != NULL)

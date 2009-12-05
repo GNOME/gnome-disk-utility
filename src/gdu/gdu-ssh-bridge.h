@@ -31,7 +31,6 @@
 
 DBusGConnection * _gdu_ssh_bridge_connect (GduPool          *pool,
                                            const gchar      *ssh_address,
-                                           GMountOperation  *connect_operation,
                                            GError          **error);
 
 #endif /* __GDU_SSH_BRIDGE_H */

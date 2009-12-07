@@ -477,7 +477,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         /* Now start the bridge - the udisks-tcp-bridge program will connect to the remote port
          * which is forwarded to the local port by ssh
          */
-        s = g_strdup_printf ("/usr/lib/udisks/udisks-tcp-bridge -p %d\n", remote_port);
+        s = g_strdup_printf ("udisks-tcp-bridge -p %d\n", remote_port);
         if (!g_data_output_stream_put_string (stdin_data_stream,
                                               s,
                                               data->cancellable,

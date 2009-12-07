@@ -1317,7 +1317,7 @@ create_linux_md_do (CreateLinuxMdData *data)
 }
 
 static void
-new_linud_md_array_callback (GtkAction *action, gpointer user_data)
+new_linux_md_array_callback (GtkAction *action, gpointer user_data)
 {
         GduShell *shell = GDU_SHELL (user_data);
         GtkWidget *dialog;
@@ -1348,6 +1348,25 @@ new_linud_md_array_callback (GtkAction *action, gpointer user_data)
 
                 create_linux_md_do (data);
         }
+        gtk_widget_destroy (dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_file_connect_action (GtkAction *action,
+                        gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+        GtkWidget *dialog;
+        gint response;
+
+        dialog = gdu_connect_to_server_dialog_new (GTK_WINDOW (shell->priv->app_window));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+        g_debug ("response = %d", response);
+
         gtk_widget_destroy (dialog);
 }
 
@@ -1399,6 +1418,7 @@ static const gchar *ui =
         "      <menu action='file-new'>"
         "        <menuitem action='file-new-linux-md-array'/>"
         "      </menu>"
+        "      <menuitem action='file-connect'/>"
         "      <menuitem action='quit'/>"
         "    </menu>"
 #if 0
@@ -1444,8 +1464,9 @@ static const gchar *ui =
 
 static GtkActionEntry entries[] = {
         {"file", NULL, N_("_File"), NULL, NULL, NULL },
+        {"file-connect", "gtk-connect", N_("_Connect to server"), NULL, N_("Connect to a remote server and manage disks"), G_CALLBACK (on_file_connect_action)},
         {"file-new", NULL, N_("_New"), NULL, NULL, NULL },
-        {"file-new-linux-md-array", "gdu-raid-array", N_("Software _RAID Array"), NULL, N_("Create a new Software RAID array"), G_CALLBACK (new_linud_md_array_callback)},
+        {"file-new-linux-md-array", "gdu-raid-array", N_("Software _RAID Array"), NULL, N_("Create a new Software RAID array"), G_CALLBACK (new_linux_md_array_callback)},
         {"edit", NULL, N_("_Edit"), NULL, NULL, NULL },
         {"help", NULL, N_("_Help"), NULL, NULL, NULL },
 

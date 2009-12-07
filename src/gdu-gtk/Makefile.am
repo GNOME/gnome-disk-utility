@@ -54,6 +54,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-add-component-linux-md-dialog.h				\
 	gdu-edit-linux-md-dialog.h					\
 	gdu-drive-benchmark-dialog.h					\
+	gdu-connect-to-server-dialog.h					\
 	$(NULL)
 
 libgdu_gtk_la_SOURCES =                 	               				\
@@ -85,6 +86,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-add-component-linux-md-dialog.h	gdu-add-component-linux-md-dialog.c	\
 	gdu-edit-linux-md-dialog.h		gdu-edit-linux-md-dialog.c		\
 	gdu-drive-benchmark-dialog.h		gdu-drive-benchmark-dialog.c		\
+	gdu-connect-to-server-dialog.h		gdu-connect-to-server-dialog.c		\
 	$(NULL)
 
 libgdu_gtk_la_CPPFLAGS = 				\
@@ -109,6 +111,7 @@ libgdu_gtk_la_CFLAGS = 					\
 	$(WARN_CFLAGS)					\
 	$(AM_CFLAGS)					\
 	$(LIBATASMART_CFLAGS)				\
+	$(AVAHI_UI_CFLAGS)				\
 	$(NULL)
 
 libgdu_gtk_la_LIBADD = 					\
@@ -120,6 +123,7 @@ libgdu_gtk_la_LIBADD = 					\
 	$(GTK2_LIBS)					\
 	$(INTLLIBS)					\
 	$(LIBATASMART_LIBS)				\
+	$(AVAHI_UI_LIBS)				\
 	$(NULL)
 
 libgdu_gtk_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \

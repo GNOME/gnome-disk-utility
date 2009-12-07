@@ -1696,7 +1696,7 @@ create_window (GduShell *shell)
         error = NULL;
         shell->priv->pool = gdu_pool_new_for_address (shell->priv->ssh_address, &error);
         if (error != NULL) {
-                g_printerr ("Error connecting to `%s': %s",
+                g_printerr ("Error connecting to `%s': `%s'\n",
                             shell->priv->ssh_address,
                             error->message);
                 g_error_free (error);

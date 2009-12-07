@@ -23,6 +23,9 @@
 #include <glib/gi18n-lib.h>
 
 #include <stdio.h>
+#include <sys/types.h>
+#include <signal.h>
+
 #include <gio/gunixinputstream.h>
 #include <gio/gunixoutputstream.h>
 #include <dbus/dbus-glib-lowlevel.h>
@@ -52,8 +55,25 @@
  *  malicious users on both the Client and Server may interfere.
  */
 
+/* TODO: Need to do all this async (or in a thread) so we can have API like this
+ *
+ *   void gdu_pool_new_for_address            (const gchar         *ssh_address,
+ *                                             GMountOperation     *connect_operation,
+ *                                             GCancellable        *cancellable,
+ *                                             GAsyncReadyCallback  callback,
+ *                                             gpointer             user_data);
+ *
+ *   GduPool *gdu_pool_new_for_address_finish (GAsyncResult        *res,
+ *                                             GError             **error);
+ *
+ * on the GduPool object. Also, we won't initially use the @connect_operation parameter for
+ * now - but can do if (or once) we supply our own program to use in $SSH_ASKPASS.
+ */
+
 typedef struct {
         gchar *secret;
+
+        GCancellable *cancellable;
         GMainLoop *loop;
         DBusConnection *server_connection;
         gboolean authorized;
@@ -80,6 +100,8 @@ bridge_data_free (BridgeData *data)
                                                data);
                 dbus_connection_unref (data->server_connection);
         }
+        if (data->cancellable != NULL)
+                g_object_unref (data->cancellable);
         g_free (data);
 }
 
@@ -178,6 +200,26 @@ child_setup (gpointer user_data)
         }
 }
 
+static void
+fixup_newlines (gchar *s)
+{
+        gsize len;
+
+        if (s == NULL)
+                goto out;
+
+        len = strlen (s);
+        if (len < 1)
+                goto out;
+
+        if (s[len - 1] == '\r')
+                s[len - 1] = '\0';
+
+ out:
+        ;
+}
+
+
 DBusGConnection *
 _gdu_ssh_bridge_connect (GduPool          *pool,
                          const gchar      *ssh_address,
@@ -221,6 +263,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         stdin_data_stream = NULL;
         stdout_data_stream = NULL;
         stderr_data_stream = NULL;
+        ssh_pid = 0;
 
         data = g_new0 (BridgeData, 1);
         str = g_string_new (NULL);
@@ -229,6 +272,8 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                 g_string_append_printf (str, "%08x", r);
         }
         data->secret = g_string_free (str, FALSE);
+        data->cancellable = g_cancellable_new ();
+        data->loop = g_main_loop_new (NULL, FALSE);
 
         /* Create and start the local DBusServer */
         for (local_port = 9000; local_port < 10000; local_port++) {
@@ -240,7 +285,9 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                         if (g_strcmp0 (dbus_error.name, "org.freedesktop.DBus.Error.AddressInUse") == 0) {
                                 continue;
                         } else {
-                                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                                g_set_error (error,
+                                             GDU_ERROR,
+                                             GDU_ERROR_FAILED,
                                              _("Error listening to address `localhost:%d': %s: %s\n"),
                                              local_port,
                                              dbus_error.name,
@@ -268,7 +315,9 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                                  NULL);
         /* Allow only anonymous auth */
         if (!dbus_server_set_auth_mechanisms (server, auth_mechanisms)) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
                              _("Error setting auth mechanisms on local DBusServer\n"));
                 goto out;
         }
@@ -330,34 +379,96 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         g_object_unref (stdout_stream);
         g_object_unref (stderr_stream);
 
+        /* Read and parse output from ssh */
         while (TRUE) {
-                /* Read and parse the remote port number */
+                //g_print (" - Reading...\n");
+
                 s = g_data_input_stream_read_line (stderr_data_stream,
                                                    NULL, /* gsize *length */
-                                                   NULL,
+                                                   data->cancellable,
                                                    &local_error);
                 if (s == NULL) {
                         if (local_error != NULL) {
-                                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                                             _("Error reading stderr output from host `%s': %s"),
-                                             ssh_address, local_error->message);
+                                g_set_error (error,
+                                             GDU_ERROR,
+                                             GDU_ERROR_FAILED,
+                                             _("Error reading stderr output: %s"),
+                                             local_error->message);
                                 g_error_free (local_error);
                         } else {
-                                /* This happens if ssh exits due to e.g. permission denied */
-                                g_set_error (error, GDU_ERROR, GDU_ERROR_PERMISSION_DENIED,
-                                             _("Failed to log into host `%s'"),
-                                             ssh_address);
+                                g_set_error_literal (error,
+                                                     GDU_ERROR,
+                                                     GDU_ERROR_FAILED,
+                                                     _("Error reading stderr output: No content"));
                         }
                         goto out;
-                } else if (strlen (s) == 0) {
-                        g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                                     _("Unexpected blank line in stderr output from host `%s'"),
-                                     ssh_address);
-                        g_free (s);
-                        goto out;
-                } else if (sscanf (s, "Allocated port %d for remote forward to", &remote_port) == 1) {
+                }
+
+                fixup_newlines (s);
+                //g_print (" - Read `%s'\n", s);
+
+                if (sscanf (s, "Allocated port %d for remote forward to", &remote_port) == 1) {
+                        /* got it */
                         g_free (s);
                         break;
+                } else if (strstr (s, "Permanently added") != NULL &&
+                           strstr (s, "to the list of known hosts") != NULL) {
+                        /* just continue */
+                        g_free (s);
+                } else {
+                        GString *full_error_message;
+
+                        /* otherwise assume error - Keep reading output as it may be
+                         * multi-line, e.g.
+                         *
+                         *   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                         *   @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+                         *   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+                         *   IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+                         *   Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+                         */
+                        full_error_message = g_string_new (s);
+                        g_free (s);
+
+                        /* sleep for a bit to ensure we've buffered all the data from ssh's
+                         * stderr stream (TODO: this is slightly racy
+                         */
+                        usleep (100 * 1000);
+
+                        /* kill ssh process early so we won't block on reading additional data if there is none */
+                        if (ssh_pid > 0) {
+                                kill (ssh_pid, SIGTERM);
+                                ssh_pid = 0;
+                        }
+
+                        while (TRUE) {
+                                s = g_data_input_stream_read_line (stderr_data_stream,
+                                                                   NULL, /* gsize *length */
+                                                                   data->cancellable,
+                                                                   NULL);
+                                if (s != NULL) {
+                                        fixup_newlines (s);
+                                        g_string_append (full_error_message, s);
+                                        g_string_append_c (full_error_message, '\n');
+                                } else {
+                                        break;
+                                }
+                        }
+
+                        s = g_string_free (full_error_message, FALSE);
+                        if (strlen (s) > 0) {
+                                g_set_error_literal (error,
+                                                     GDU_ERROR,
+                                                     GDU_ERROR_FAILED,
+                                                     s);
+                        } else {
+                                g_set_error_literal (error,
+                                                     GDU_ERROR,
+                                                     GDU_ERROR_FAILED,
+                                                     _("Error logging in"));
+                        }
+                        g_free (s);
+                        goto out;
                 }
         }
 
@@ -369,11 +480,14 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         s = g_strdup_printf ("/usr/lib/udisks/udisks-tcp-bridge -p %d\n", remote_port);
         if (!g_data_output_stream_put_string (stdin_data_stream,
                                               s,
-                                              NULL,
+                                              data->cancellable,
                                               &local_error)) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error sending `%s' to host `%s': %s"),
-                             s, ssh_address, local_error->message);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Error sending `%s': %s"),
+                             s,
+                             local_error->message);
                 g_error_free (local_error);
                 g_free (s);
                 goto out;
@@ -384,20 +498,23 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
          */
         s = g_data_input_stream_read_line (stderr_data_stream,
                                            NULL, /* gsize *length */
-                                           NULL,
+                                           data->cancellable,
                                            &local_error);
         if (s == NULL) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error reading stderr output from host `%s': %s"),
-                             ssh_address, local_error->message);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Error reading stderr output: %s"),
+                             local_error->message);
                 g_error_free (local_error);
                 goto out;
         }
         if (g_strcmp0 (s, "udisks-tcp-bridge: Waiting for secret") != 0) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Unexpected stderr output from from host `%s': "
-                               "Expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"),
-                             ssh_address, s);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"),
+                             s);
                 g_free (s);
                 goto out;
         }
@@ -408,11 +525,13 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         s = g_strdup_printf ("%s\n", data->secret);
         if (!g_data_output_stream_put_string (stdin_data_stream,
                                               s,
-                                              NULL,
+                                              data->cancellable,
                                               &local_error)) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error passing authorization secret to host `%s': %s"),
-                             ssh_address, local_error->message);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Error passing authorization secret: %s"),
+                             local_error->message);
                 g_error_free (local_error);
                 memset (s, '\0', strlen (s));
                 g_free (s);
@@ -426,27 +545,30 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
          */
         s = g_data_input_stream_read_line (stderr_data_stream,
                                            NULL, /* gsize *length */
-                                           NULL,
+                                           data->cancellable,
                                            &local_error);
         if (s == NULL) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Error reading stderr from host `%s': %s"),
-                             ssh_address, local_error->message);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Error reading stderr from: %s"),
+                             local_error->message);
                 g_error_free (local_error);
                 goto out;
         }
         if (sscanf (s, "udisks-tcp-bridge: Attempting to connect to port %d", &remote_port) != 1) {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("Unexpected stderr output from host `%s': "
-                               "Expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"),
-                             ssh_address, remote_port, s);
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             _("Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"),
+                             remote_port,
+                             s);
                 g_free (s);
                 goto out;
         }
         g_free (s);
 
         /* Wait for D-Bus connection and authorization */
-        data->loop = g_main_loop_new (NULL, FALSE);
         g_main_loop_run (data->loop);
 
         if (data->server_connection != NULL) {
@@ -454,20 +576,27 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                         ret = dbus_connection_get_g_connection (dbus_connection_ref (data->server_connection));
                 } else {
                         dbus_connection_close (data->server_connection);
-                        g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                                     _("The udisks-tcp-bridge program on host `%s' didn't prove it was "
-                                       "authorized: %s"),
-                                     ssh_address,
+                        g_set_error (error,
+                                     GDU_ERROR,
+                                     GDU_ERROR_FAILED,
+                                     _("The udisks-tcp-bridge program failed to prove it was authorized: %s"),
                                      data->error_message != NULL ? data->error_message : "(no detail)");
                 }
         } else {
-                g_set_error (error, GDU_ERROR, GDU_ERROR_FAILED,
-                             _("The udisks-tcp-bridge program on host `%s' didn't prove it was "
-                               "authorized"),
-                             ssh_address);
+                g_set_error_literal (error,
+                                     GDU_ERROR,
+                                     GDU_ERROR_FAILED,
+                                     _("The udisks-tcp-bridge program failed to prove it was authorized"));
         }
 
  out:
+        if (ret == NULL) {
+                /* kill ssh connection if we failed */
+                if (ssh_pid > 0) {
+                        kill (ssh_pid, SIGTERM);
+                }
+        }
+
         if (data != NULL)
                 bridge_data_free (data);
         if (server != NULL) {

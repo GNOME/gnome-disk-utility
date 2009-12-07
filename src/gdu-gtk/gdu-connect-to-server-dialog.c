@@ -163,6 +163,8 @@ on_hostname_entry_changed (GtkEditable *editable,
         gboolean sensitive;
         const gchar *text;
 
+        /* TODO: potentially validate the host name? */
+
         sensitive = FALSE;
         text = gtk_entry_get_text (GTK_ENTRY (dialog->priv->hostname_entry));
         if (text != NULL && strlen (text) > 0)
@@ -183,13 +185,12 @@ gdu_connect_to_server_dialog_constructed (GObject *object)
         GtkWidget *table;
         GtkWidget *entry;
         GtkWidget *vbox;
+        GtkWidget *image;
         gint row;
+        gchar *s;
 
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 0);
-        gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
 
         gtk_window_set_title (GTK_WINDOW (dialog), _("Connect to Server"));
 
@@ -199,6 +200,8 @@ gdu_connect_to_server_dialog_constructed (GObject *object)
                                         GTK_RESPONSE_OK);
 
         button = gtk_button_new_with_mnemonic (_("_Browse..."));
+        image = gtk_image_new_from_stock (GTK_STOCK_NETWORK, GTK_ICON_SIZE_BUTTON);
+        gtk_button_set_image (GTK_BUTTON (button), image);
         gtk_box_pack_start (GTK_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))),
                             button,
                             FALSE,
@@ -208,47 +211,69 @@ gdu_connect_to_server_dialog_constructed (GObject *object)
                                             button,
                                             TRUE);
         /* Translators: this is the tooltip for the "Browse..." button */
-        gtk_widget_set_tooltip_text (button, _("Discover servers on the local network"));
+        gtk_widget_set_tooltip_text (button, _("Browse servers discovered via the DNS-SD protocol"));
         g_signal_connect (button,
                           "clicked",
                           G_CALLBACK (on_dns_sd_clicked),
                           dialog);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-        gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
         vbox = content_area;
-        gtk_box_set_spacing (GTK_BOX (vbox), 6);
+        gtk_box_set_spacing (GTK_BOX (vbox), 12);
 
         /* -------------------------------------------------------------------------------- */
 
-        table = gtk_table_new (3, 2, FALSE);
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        /* Translators: This is the label explaining the dialog
+         */
+        gtk_label_set_markup (GTK_LABEL (label), _("To manage storage devices on another machine, enter the address and press “Connect”. The connection will be made using the <i>Secure Shell</i> protocol."));
+        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
+        /* -------------------------------------------------------------------------------- */
+
+        table = gtk_table_new (3, 1, FALSE);
         gtk_table_set_col_spacings (GTK_TABLE (table), 12);
         gtk_table_set_row_spacings (GTK_TABLE (table), 6);
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
         row = 0;
 
+        /* Translators: This is the tooltip for the "Server Address" entry
+         */
+        s = g_strdup (_("The hostname or address to connect to"));
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("Server _Address:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_widget_set_tooltip_text (label, s);
 
         entry = gtk_entry_new ();
         gtk_table_attach (GTK_TABLE (table), entry, 1, 2, row, row + 1,
                           GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         dialog->priv->hostname_entry = entry;
+        gtk_widget_set_tooltip_text (entry, s);
+        gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+        g_free (s);
+
         row++;
+
+        /* Translators: This is the tooltip for the "User Name" entry
+         * First %s is the UNIX user name e.g. 'davidz'.
+         */
+        s = g_strdup (_("The user name to connect as"));
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_User Name:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
+        gtk_widget_set_tooltip_text (label, s);
 
         entry = gtk_entry_new ();
         gtk_entry_set_text (GTK_ENTRY (entry), g_get_user_name ());
@@ -256,6 +281,10 @@ gdu_connect_to_server_dialog_constructed (GObject *object)
                           GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
         dialog->priv->username_entry = entry;
+        gtk_widget_set_tooltip_text (entry, s);
+        gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+        g_free (s);
+
         row++;
 
         gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);

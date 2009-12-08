@@ -525,7 +525,18 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 goto out;
         }
 
-        p = gdu_presentable_get_toplevel (presentable);
+        p = gdu_presentable_get_enclosing_presentable (GDU_PRESENTABLE (presentable));
+        /* handle logical partitions enclosed by an extented partition */
+        if (GDU_IS_VOLUME (p)) {
+                GduPresentable *temp;
+                temp = p;
+                p = gdu_presentable_get_enclosing_presentable (p);
+                g_object_unref (temp);
+                if (!GDU_IS_DRIVE (p)) {
+                        g_object_unref (p);
+                        p = NULL;
+                }
+        }
         if (p == NULL)
                 goto out;
 

@@ -1671,7 +1671,7 @@ gdu_pool_new (void)
 
         error = NULL;
         pool = gdu_pool_new_for_address (NULL, &error);
-        if (pool != NULL) {
+        if (pool == NULL) {
                 g_printerr ("Error constructing pool: %s\n", error->message);
                 g_error_free (error);
         }

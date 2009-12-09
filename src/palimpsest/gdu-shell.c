@@ -40,13 +40,19 @@
 #include "gdu-section-volumes.h"
 #include "gdu-section-hub.h"
 
+static gboolean add_pool (GduShell     *shell,
+                          const gchar  *ssh_user_name,
+                          const gchar  *ssh_address,
+                          GError      **error);
+
 struct _GduShellPrivate
 {
         gchar *ssh_address;
 
         GtkWidget *app_window;
-        GduPool *pool;
+        GPtrArray *pools;
 
+        GduPoolTreeModel *model;
         GtkWidget *tree_view;
 
         /* -------------------------------------------------------------------------------- */
@@ -93,6 +99,8 @@ static void
 gdu_shell_init (GduShell *shell)
 {
         shell->priv = G_TYPE_INSTANCE_GET_PRIVATE (shell, GDU_TYPE_SHELL, GduShellPrivate);
+
+        shell->priv->pools = g_ptr_array_new ();
 }
 
 GduShell *
@@ -112,9 +120,18 @@ gdu_shell_get_toplevel (GduShell *shell)
 }
 
 GduPool *
-gdu_shell_get_pool (GduShell *shell)
+gdu_shell_get_pool_for_selected_presentable (GduShell *shell)
 {
-        return shell->priv->pool;
+        GduPool *pool;
+
+        if (shell->priv->presentable_now_showing != NULL) {
+                pool = gdu_presentable_get_pool (shell->priv->presentable_now_showing);
+                g_object_unref (pool);
+        } else {
+                pool = NULL;
+        }
+
+        return pool;
 }
 
 
@@ -128,12 +145,11 @@ void
 gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
 {
         gboolean selected;
+        GduPool *pool;
 
-        if (GDU_IS_DRIVE (presentable)) {
-                gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
-                gtk_widget_grab_focus (shell->priv->tree_view);
-                selected = TRUE;
-        } else if (GDU_IS_VOLUME (presentable)) {
+        pool = gdu_presentable_get_pool (presentable);
+
+        if (GDU_IS_VOLUME (presentable)) {
                 GduDevice *device;
                 GduPresentable *p_to_select;
 
@@ -142,14 +158,14 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
                 if (device != NULL) {
                         if (gdu_device_is_partition (device)) {
                                 GduDevice *drive_device;
-                                drive_device = gdu_pool_get_by_object_path (shell->priv->pool,
+                                drive_device = gdu_pool_get_by_object_path (pool,
                                                                             gdu_device_partition_get_slave (device));
                                 if (drive_device != NULL) {
-                                        p_to_select = gdu_pool_get_drive_by_device (shell->priv->pool, drive_device);
+                                        p_to_select = gdu_pool_get_drive_by_device (pool, drive_device);
                                         g_object_unref (drive_device);
                                 }
                         } else {
-                                p_to_select = gdu_pool_get_drive_by_device (shell->priv->pool, device);
+                                p_to_select = gdu_pool_get_drive_by_device (pool, device);
                         }
                         g_object_unref (device);
                 }
@@ -172,6 +188,9 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
                         g_object_unref (p_to_select);
                 }
         } else {
+                gdu_pool_tree_view_select_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view), presentable);
+                gtk_widget_grab_focus (shell->priv->tree_view);
+                selected = TRUE;
         }
 
         if (!selected) {
@@ -179,6 +198,8 @@ gdu_shell_select_presentable (GduShell *shell, GduPresentable *presentable)
                            G_STRLOC, G_STRFUNC,
                            gdu_presentable_get_id (presentable));
         }
+
+        g_object_unref (pool);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -416,6 +437,7 @@ help_contents_action_callback (GtkAction *action, gpointer user_data)
 
 typedef struct {
         GduShell *shell;
+        GduPool *pool;
 
         /* data obtained from GduCreateLinuxMdDialog */
         gchar *level;
@@ -434,6 +456,7 @@ static void
 create_linux_md_data_free (CreateLinuxMdData *data)
 {
         g_object_unref (data->shell);
+        g_object_unref (data->pool);
         g_free (data->level);
         g_free (data->name);
         g_ptr_array_unref (data->drives);
@@ -461,13 +484,19 @@ new_linux_md_create_part_cb (GduDevice  *device,
                 //g_debug ("Error creating component");
         } else {
                 GduDevice *d;
-                d = gdu_pool_get_by_object_path (data->shell->priv->pool, created_device_object_path);
+                GduPool *pool;
+
+                pool = gdu_device_get_pool (device);
+
+                d = gdu_pool_get_by_object_path (pool, created_device_object_path);
                 g_ptr_array_add (data->components, d);
 
                 //g_debug ("Done creating component");
 
                 /* now that we have a component... carry on... */
                 create_linux_md_do (data);
+
+                g_object_unref (pool);
         }
 }
 
@@ -517,8 +546,8 @@ new_linux_md_create_array_cb (GduPool    *pool,
                 GduPresentable *p;
 
                 /* YAY - array has been created - switch the shell to it */
-                d = gdu_pool_get_by_object_path (data->shell->priv->pool, array_object_path);
-                p = gdu_pool_get_drive_by_device (data->shell->priv->pool, d);
+                d = gdu_pool_get_by_object_path (pool, array_object_path);
+                p = gdu_pool_get_drive_by_device (pool, d);
                 gdu_shell_select_presentable (data->shell, p);
                 g_object_unref (p);
                 g_object_unref (d);
@@ -545,7 +574,7 @@ create_linux_md_do (CreateLinuxMdData *data)
                         g_ptr_array_add (objpaths, (gpointer) gdu_device_get_object_path (d));
                 }
 
-                gdu_pool_op_linux_md_create (data->shell->priv->pool,
+                gdu_pool_op_linux_md_create (data->pool,
                                              objpaths,
                                              data->level,
                                              data->stripe_size,
@@ -641,11 +670,13 @@ new_linux_md_array_callback (GtkAction *action, gpointer user_data)
         GduShell *shell = GDU_SHELL (user_data);
         GtkWidget *dialog;
         gint response;
+        GduPool *pool;
 
         //g_debug ("New Linux MD Array!");
 
-        dialog = gdu_create_linux_md_dialog_new (GTK_WINDOW (shell->priv->app_window),
-                                                 shell->priv->pool);
+        pool = gdu_shell_get_pool_for_selected_presentable (shell);
+
+        dialog = gdu_create_linux_md_dialog_new (GTK_WINDOW (shell->priv->app_window), pool);
 
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -655,6 +686,7 @@ new_linux_md_array_callback (GtkAction *action, gpointer user_data)
                 CreateLinuxMdData *data;
 
                 data = g_new0 (CreateLinuxMdData, 1);
+                data->pool           = g_object_ref (pool);
                 data->shell          = g_object_ref (shell);
                 data->level          = gdu_create_linux_md_dialog_get_level (GDU_CREATE_LINUX_MD_DIALOG (dialog));
                 data->name           = gdu_create_linux_md_dialog_get_name (GDU_CREATE_LINUX_MD_DIALOG (dialog));
@@ -684,9 +716,38 @@ on_file_connect_action (GtkAction *action,
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
 
-        g_debug ("response = %d", response);
+        if (response == GTK_RESPONSE_OK) {
+                const gchar *user_name;
+                const gchar *address;
+                GError *error;
 
-        gtk_widget_destroy (dialog);
+                user_name = gdu_connect_to_server_dialog_get_user_name (GDU_CONNECT_TO_SERVER_DIALOG (dialog));
+                address = gdu_connect_to_server_dialog_get_address (GDU_CONNECT_TO_SERVER_DIALOG (dialog));
+
+                gtk_widget_destroy (dialog);
+
+                error = NULL;
+                if (!add_pool (shell, user_name, address, &error)) {
+                        GtkWidget *dialog;
+                        gchar *s;
+
+                        s = g_strdup_printf (_("Error connecting to “%s”"), address);
+
+                        dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                       NULL,
+                                                       s,
+                                                       error);
+                        g_free (s);
+                        gtk_widget_show_all (dialog);
+                        gtk_window_present (GTK_WINDOW (dialog));
+                        gtk_dialog_run (GTK_DIALOG (dialog));
+                        gtk_widget_destroy (dialog);
+
+                        g_error_free (error);
+                }
+        } else {
+                gtk_widget_destroy (dialog);
+        }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -951,6 +1012,43 @@ gdu_shell_raise_error (GduShell       *shell,
         g_free (error_text);
 }
 
+static gboolean
+add_pool (GduShell     *shell,
+          const gchar  *ssh_user_name,
+          const gchar  *ssh_address,
+          GError      **error)
+{
+        GduPool *pool;
+        gboolean ret;
+
+        ret = FALSE;
+
+        pool = gdu_pool_new_for_address (ssh_user_name, ssh_address, error);
+        if (pool == NULL)
+                goto out;
+
+        g_signal_connect (pool, "presentable-added", (GCallback) presentable_added, shell);
+        g_signal_connect (pool, "presentable-removed", (GCallback) presentable_removed, shell);
+
+        g_ptr_array_add (shell->priv->pools, pool);
+
+        if (shell->priv->model != NULL) {
+                GduPresentable *selected_presentable;
+
+                selected_presentable = gdu_shell_get_selected_presentable (shell);
+
+                gdu_pool_tree_model_set_pools (shell->priv->model, shell->priv->pools);
+
+                if (selected_presentable != NULL)
+                        gdu_shell_select_presentable (shell, selected_presentable);
+        }
+
+        ret = TRUE;
+
+ out:
+        return ret;
+}
+
 static void
 create_window (GduShell *shell)
 {
@@ -963,18 +1061,14 @@ create_window (GduShell *shell)
         GtkWidget *tree_view_scrolled_window;
         GtkTreeSelection *select;
         GtkWidget *label;
-        GduPoolTreeModel *model;
         GtkTreeViewColumn *column;
         GError *error;
 
         error = NULL;
-        shell->priv->pool = gdu_pool_new_for_address (shell->priv->ssh_address, &error);
-        if (error != NULL) {
-                g_printerr ("Error connecting to `%s': `%s'\n",
-                            shell->priv->ssh_address,
-                            error->message);
+        if (!add_pool (shell, NULL, NULL, &error)) {
+                g_printerr ("Error creating pool: `%s'\n", error->message);
                 g_error_free (error);
-                g_critical ("Exiting");
+                g_critical ("Bailing out");
         }
 
         shell->priv->app_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -999,12 +1093,12 @@ create_window (GduShell *shell)
                                         GTK_POLICY_AUTOMATIC);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (tree_view_scrolled_window),
                                              GTK_SHADOW_IN);
-        model = gdu_pool_tree_model_new (shell->priv->pool,
-                                         NULL,
-                                         GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES);
-        shell->priv->tree_view = gdu_pool_tree_view_new (model,
+        shell->priv->model = gdu_pool_tree_model_new (shell->priv->pools,
+                                                      NULL,
+                                                      GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES);
+        shell->priv->tree_view = gdu_pool_tree_view_new (shell->priv->model,
                                                          GDU_POOL_TREE_VIEW_FLAGS_NONE);
-        g_object_unref (model);
+        g_object_unref (shell->priv->model);
         gtk_container_add (GTK_CONTAINER (tree_view_scrolled_window), shell->priv->tree_view);
 
 
@@ -1051,8 +1145,6 @@ create_window (GduShell *shell)
         /* when starting up, set focus on tree view */
         gtk_widget_grab_focus (shell->priv->tree_view);
 
-        g_signal_connect (shell->priv->pool, "presentable-added", (GCallback) presentable_added, shell);
-        g_signal_connect (shell->priv->pool, "presentable-removed", (GCallback) presentable_removed, shell);
         g_signal_connect (shell->priv->app_window, "delete-event", gtk_main_quit, NULL);
 
         gtk_widget_show_all (vbox);

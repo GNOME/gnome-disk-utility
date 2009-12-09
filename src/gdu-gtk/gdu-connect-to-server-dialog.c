@@ -30,8 +30,6 @@
 
 struct GduConnectToServerDialogPrivate
 {
-        gchar *address;
-
         GtkWidget *hostname_entry;
         GtkWidget *username_entry;
 };
@@ -39,6 +37,7 @@ struct GduConnectToServerDialogPrivate
 enum
 {
         PROP_0,
+        PROP_USER_NAME,
         PROP_ADDRESS,
 };
 
@@ -49,9 +48,7 @@ static void gdu_connect_to_server_dialog_constructed (GObject *object);
 static void
 gdu_connect_to_server_dialog_finalize (GObject *object)
 {
-        GduConnectToServerDialog *dialog = GDU_CONNECT_TO_SERVER_DIALOG (object);
-
-        g_free (dialog->priv->address);
+        //GduConnectToServerDialog *dialog = GDU_CONNECT_TO_SERVER_DIALOG (object);
 
         if (G_OBJECT_CLASS (gdu_connect_to_server_dialog_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_connect_to_server_dialog_parent_class)->finalize (object);
@@ -66,8 +63,12 @@ gdu_connect_to_server_dialog_get_property (GObject    *object,
         GduConnectToServerDialog *dialog = GDU_CONNECT_TO_SERVER_DIALOG (object);
 
         switch (property_id) {
+        case PROP_USER_NAME:
+                g_value_take_string (value, gdu_connect_to_server_dialog_get_user_name (dialog));
+                break;
+
         case PROP_ADDRESS:
-                g_value_set_string (value, dialog->priv->address);
+                g_value_take_string (value, gdu_connect_to_server_dialog_get_address (dialog));
                 break;
 
         default:
@@ -86,6 +87,17 @@ gdu_connect_to_server_dialog_class_init (GduConnectToServerDialogClass *klass)
         object_class->get_property = gdu_connect_to_server_dialog_get_property;
         object_class->constructed  = gdu_connect_to_server_dialog_constructed;
         object_class->finalize     = gdu_connect_to_server_dialog_finalize;
+
+        g_object_class_install_property (object_class,
+                                         PROP_USER_NAME,
+                                         g_param_spec_string ("user-name",
+                                                              _("User Name"),
+                                                              _("The chosen user name"),
+                                                              NULL,
+                                                              G_PARAM_READABLE |
+                                                              G_PARAM_STATIC_NAME |
+                                                              G_PARAM_STATIC_NICK |
+                                                              G_PARAM_STATIC_BLURB));
 
         g_object_class_install_property (object_class,
                                          PROP_ADDRESS,
@@ -116,10 +128,17 @@ gdu_connect_to_server_dialog_new (GtkWindow *parent)
 /* ---------------------------------------------------------------------------------------------------- */
 
 gchar *
+gdu_connect_to_server_dialog_get_user_name (GduConnectToServerDialog *dialog)
+{
+        g_return_val_if_fail (GDU_IS_CONNECT_TO_SERVER_DIALOG (dialog), NULL);
+        return g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->priv->username_entry)));
+}
+
+gchar *
 gdu_connect_to_server_dialog_get_address  (GduConnectToServerDialog *dialog)
 {
         g_return_val_if_fail (GDU_IS_CONNECT_TO_SERVER_DIALOG (dialog), NULL);
-        return g_strdup (dialog->priv->address);
+        return g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->priv->hostname_entry)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

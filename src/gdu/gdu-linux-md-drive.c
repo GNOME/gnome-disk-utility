@@ -62,6 +62,8 @@ struct _GduLinuxMdDrivePrivate
         gchar *device_file;
 
         gchar *id;
+
+        GduPresentable *enclosing_presentable;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -118,6 +120,9 @@ gdu_linux_md_drive_finalize (GObject *object)
 
         g_free (drive->priv->uuid);
         g_free (drive->priv->device_file);
+
+        if (drive->priv->enclosing_presentable != NULL)
+                g_object_unref (drive->priv->enclosing_presentable);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (drive));
@@ -326,6 +331,7 @@ device_job_changed (GduPool *pool, GduDevice *device, gpointer user_data)
  * @pool: A #GduPool.
  * @uuid: The UUID for the array.
  * @device_file: The device file for the array.
+ * @enclosing_presentable: The enclosing presentable
  *
  * Creates a new #GduLinuxMdDrive. Note that only one of @uuid and
  * @device_file may be %NULL.
@@ -333,7 +339,8 @@ device_job_changed (GduPool *pool, GduDevice *device, gpointer user_data)
 GduLinuxMdDrive *
 _gdu_linux_md_drive_new (GduPool      *pool,
                          const gchar  *uuid,
-                         const gchar  *device_file)
+                         const gchar  *device_file,
+                         GduPresentable *enclosing_presentable)
 {
         GduLinuxMdDrive *drive;
 
@@ -353,6 +360,9 @@ _gdu_linux_md_drive_new (GduPool      *pool,
                 drive->priv->id = g_strdup_printf ("linux_md_%s", device_file);
                 drive->priv->device = gdu_pool_get_by_device_file (pool, device_file);
         }
+
+        drive->priv->enclosing_presentable =
+                enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
 
         return drive;
 }
@@ -471,6 +481,9 @@ gdu_linux_md_drive_get_device (GduPresentable *presentable)
 static GduPresentable *
 gdu_linux_md_drive_get_enclosing_presentable (GduPresentable *presentable)
 {
+        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (presentable);
+        if (drive->priv->enclosing_presentable != NULL)
+                return g_object_ref (drive->priv->enclosing_presentable);
         return NULL;
 }
 
@@ -760,6 +773,34 @@ gdu_linux_md_drive_presentable_iface_init (GduPresentableIface *iface)
         iface->get_pool                  = gdu_linux_md_drive_get_pool;
         iface->is_allocated              = gdu_linux_md_drive_is_allocated;
         iface->is_recognized             = gdu_linux_md_drive_is_recognized;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+_gdu_linux_md_drive_rewrite_enclosing_presentable (GduLinuxMdDrive *drive)
+{
+        if (drive->priv->enclosing_presentable != NULL) {
+                const gchar *enclosing_presentable_id;
+                GduPresentable *new_enclosing_presentable;
+
+                enclosing_presentable_id = gdu_presentable_get_id (drive->priv->enclosing_presentable);
+
+                new_enclosing_presentable = gdu_pool_get_presentable_by_id (drive->priv->pool,
+                                                                            enclosing_presentable_id);
+                if (new_enclosing_presentable == NULL) {
+                        g_warning ("Error rewriting enclosing_presentable for %s, no such id %s",
+                                   drive->priv->id,
+                                   enclosing_presentable_id);
+                        goto out;
+                }
+
+                g_object_unref (drive->priv->enclosing_presentable);
+                drive->priv->enclosing_presentable = new_enclosing_presentable;
+        }
+
+ out:
+        ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

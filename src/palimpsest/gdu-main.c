@@ -38,16 +38,18 @@ show_volume (GduShell   *shell,
         GduPresentable *presentable;
 
         presentable = NULL;
-        pool = gdu_shell_get_pool (shell);
-        device = gdu_pool_get_by_device_file (pool, device_file);
-        if (device) {
-                presentable = gdu_pool_get_volume_by_device (pool, device);
-                g_object_unref (device);
-        }
-        if (presentable) {
-                gdu_shell_select_presentable (shell, presentable);
-                g_object_unref (presentable);
-                return TRUE;
+        pool = gdu_shell_get_pool_for_selected_presentable (shell);
+        if (pool != NULL) {
+                device = gdu_pool_get_by_device_file (pool, device_file);
+                if (device != NULL) {
+                        presentable = gdu_pool_get_volume_by_device (pool, device);
+                        g_object_unref (device);
+                }
+                if (presentable != NULL) {
+                        gdu_shell_select_presentable (shell, presentable);
+                        g_object_unref (presentable);
+                        return TRUE;
+                }
         }
 
         return FALSE;
@@ -62,16 +64,18 @@ show_drive (GduShell   *shell,
         GduPresentable *presentable;
 
         presentable = NULL;
-        pool = gdu_shell_get_pool (shell);
-        device = gdu_pool_get_by_device_file (pool, device_file);
-        if (device) {
-                presentable = gdu_pool_get_drive_by_device (pool, device);
-                g_object_unref (device);
-        }
-        if (presentable) {
-                gdu_shell_select_presentable (shell, presentable);
-                g_object_unref (presentable);
-                return TRUE;
+        pool = gdu_shell_get_pool_for_selected_presentable (shell);
+        if (pool != NULL) {
+                device = gdu_pool_get_by_device_file (pool, device_file);
+                if (device != NULL) {
+                        presentable = gdu_pool_get_drive_by_device (pool, device);
+                        g_object_unref (device);
+                }
+                if (presentable != NULL) {
+                        gdu_shell_select_presentable (shell, presentable);
+                        g_object_unref (presentable);
+                        return TRUE;
+                }
         }
 
         return FALSE;

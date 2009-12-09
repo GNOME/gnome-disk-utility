@@ -54,9 +54,11 @@ struct GduPoolTreeModelClass
 
 
 GType             gdu_pool_tree_model_get_type                 (void) G_GNUC_CONST;
-GduPoolTreeModel *gdu_pool_tree_model_new                      (GduPool               *pool,
+GduPoolTreeModel *gdu_pool_tree_model_new                      (GPtrArray             *pools,
                                                                 GduPresentable        *root,
                                                                 GduPoolTreeModelFlags  flags);
+void              gdu_pool_tree_model_set_pools                (GduPoolTreeModel      *model,
+                                                                GPtrArray             *pools);
 gboolean          gdu_pool_tree_model_get_iter_for_presentable (GduPoolTreeModel      *model,
                                                                 GduPresentable        *presentable,
                                                                 GtkTreeIter           *out_iter);

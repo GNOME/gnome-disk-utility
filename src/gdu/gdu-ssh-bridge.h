@@ -30,6 +30,7 @@
 #include "gdu-types.h"
 
 DBusGConnection * _gdu_ssh_bridge_connect (GduPool          *pool,
+                                           const gchar      *ssh_user_name,
                                            const gchar      *ssh_address,
                                            GError          **error);
 

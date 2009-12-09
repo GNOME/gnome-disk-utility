@@ -80,6 +80,9 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 struct _GduPoolPrivate
 {
+        gchar *ssh_user_name;
+        gchar *ssh_address;
+
         DBusGConnection *bus;
         DBusGProxy *proxy;
 
@@ -821,6 +824,7 @@ recompute_presentables (GduPool *pool)
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
         GHashTable *hash_map_from_adapter_objpath_to_hub;
         GHashTable *hash_map_from_expander_objpath_to_hub;
+        GduPresentable *machine;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
          * compute the complete set of presentables every time and diff it against the
@@ -834,6 +838,9 @@ recompute_presentables (GduPool *pool)
 
         new_presentables = NULL;
         new_partitioned_drives = NULL;
+
+        machine = GDU_PRESENTABLE (_gdu_machine_new (pool));
+        new_presentables = g_list_prepend (new_presentables, machine);
 
         hash_map_from_drive_to_extended_partition = g_hash_table_new_full ((GHashFunc) gdu_presentable_hash,
                                                                            (GEqualFunc) gdu_presentable_equals,
@@ -863,8 +870,8 @@ recompute_presentables (GduPool *pool)
 
                 hub = _gdu_hub_new (pool,
                                     adapter,
-                                    NULL,   /* expander */
-                                    NULL);  /* enclosing_presentable */
+                                    NULL,      /* expander */
+                                    machine);  /* enclosing_presentable */
 
                 g_hash_table_insert (hash_map_from_adapter_objpath_to_hub,
                                      (gpointer) gdu_adapter_get_object_path (adapter),
@@ -941,6 +948,7 @@ recompute_presentables (GduPool *pool)
 
                         if (gdu_device_is_linux_md (device)) {
                                 const gchar *uuid;
+                                GduPresentable *linux_md_parent;
 
                                 uuid = gdu_device_linux_md_get_uuid (device);
 
@@ -948,8 +956,11 @@ recompute_presentables (GduPool *pool)
                                 if (uuid != NULL && strlen (uuid) == 0)
                                         uuid = NULL;
 
+                                /* TODO: Create transient GduHub object for all RAID arrays? */
+                                linux_md_parent = machine;
+
                                 if (uuid != NULL) {
-                                        drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL));
+                                        drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
 
                                         /* Due to the topological sorting of devices, we are guaranteed that
                                          * that running Linux MD arrays come before the slaves.
@@ -962,7 +973,8 @@ recompute_presentables (GduPool *pool)
                                 } else {
                                         drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool,
                                                                                     NULL,
-                                                                                    gdu_device_get_device_file (device)));
+                                                                                    gdu_device_get_device_file (device),
+                                                                                    linux_md_parent));
                                 }
 
 
@@ -995,6 +1007,14 @@ recompute_presentables (GduPool *pool)
                                                 }
                                                 g_object_unref (port);
                                         }
+                                }
+
+                                if (drive_parent == NULL) {
+                                        /* TODO: Create transient GduHub object for
+                                         *
+                                         *   - USB/Firewire/SDIO connected drives
+                                         */
+                                        drive_parent = machine;
                                 }
 
                                 drive = _gdu_drive_new_from_device (pool, device, drive_parent);
@@ -1099,8 +1119,12 @@ recompute_presentables (GduPool *pool)
                         uuid = gdu_device_linux_md_component_get_uuid (device);
                         if (g_hash_table_lookup (hash_map_from_linux_md_uuid_to_drive, uuid) == NULL) {
                                 GduDrive *drive;
+                                GduPresentable *linux_md_parent;
 
-                                drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL));
+                                /* TODO: Create transient GduHub object for all RAID arrays? */
+                                linux_md_parent = machine;
+
+                                drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
                                 new_presentables = g_list_prepend (new_presentables, drive);
 
                                 g_hash_table_insert (hash_map_from_linux_md_uuid_to_drive,
@@ -1167,6 +1191,8 @@ recompute_presentables (GduPool *pool)
                         _gdu_hub_rewrite_enclosing_presentable (GDU_HUB (p));
                 else if (GDU_IS_DRIVE (p))
                         _gdu_drive_rewrite_enclosing_presentable (GDU_DRIVE (p));
+                else if (GDU_IS_LINUX_MD_DRIVE (p))
+                        _gdu_linux_md_drive_rewrite_enclosing_presentable (GDU_LINUX_MD_DRIVE (p));
                 else if (GDU_IS_VOLUME (p))
                         _gdu_volume_rewrite_enclosing_presentable (GDU_VOLUME (p));
                 else if (GDU_IS_VOLUME_HOLE (p))
@@ -1670,7 +1696,7 @@ gdu_pool_new (void)
         GError *error;
 
         error = NULL;
-        pool = gdu_pool_new_for_address (NULL, &error);
+        pool = gdu_pool_new_for_address (NULL, NULL, &error);
         if (pool == NULL) {
                 g_printerr ("Error constructing pool: %s\n", error->message);
                 g_error_free (error);
@@ -1686,7 +1712,8 @@ _gdu_pool_get_connection (GduPool *pool)
 }
 
 GduPool *
-gdu_pool_new_for_address (const gchar     *ssh_address,
+gdu_pool_new_for_address (const gchar     *ssh_user_name,
+                          const gchar     *ssh_address,
                           GError         **error)
 {
         int n;
@@ -1707,10 +1734,12 @@ gdu_pool_new_for_address (const gchar     *ssh_address,
                         goto error;
                 }
         } else {
-                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_address, error);
+                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_user_name, ssh_address, error);
                 if (pool->priv->bus == NULL) {
                         goto error;
                 }
+                pool->priv->ssh_user_name = g_strdup (ssh_user_name);
+                pool->priv->ssh_address  = g_strdup (ssh_address);
         }
 
         dbus_g_object_register_marshaller (
@@ -2678,4 +2707,15 @@ gdu_pool_supports_luks_devices (GduPool *pool)
         return pool->priv->supports_luks_devices;
 }
 
+const gchar *
+gdu_pool_get_ssh_user_name (GduPool *pool)
+{
+        return pool->priv->ssh_user_name;
+}
+
+const gchar *
+gdu_pool_get_ssh_address (GduPool *pool)
+{
+        return pool->priv->ssh_address;
+}
 

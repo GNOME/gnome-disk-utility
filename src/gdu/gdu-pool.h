@@ -79,8 +79,12 @@ struct _GduPoolClass
 
 GType       gdu_pool_get_type           (void);
 GduPool    *gdu_pool_new                (void);
-GduPool    *gdu_pool_new_for_address    (const gchar     *ssh_address,
-                                         GError         **error);
+GduPool    *gdu_pool_new_for_address    (const gchar  *ssh_user_name,
+                                         const gchar  *ssh_address,
+                                         GError      **error);
+
+const gchar *gdu_pool_get_ssh_user_name (GduPool *pool);
+const gchar *gdu_pool_get_ssh_address   (GduPool *pool);
 
 char       *gdu_pool_get_daemon_version (GduPool *pool);
 gboolean    gdu_pool_is_daemon_inhibited (GduPool *pool);

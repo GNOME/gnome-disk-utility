@@ -1062,11 +1062,15 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         GtkWidget *scrolled_window;
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
+        GPtrArray *pools;
 
-        dialog->priv->model = gdu_pool_tree_model_new (dialog->priv->pool,
+        pools = g_ptr_array_new ();
+        g_ptr_array_add (pools, dialog->priv->pool);
+        dialog->priv->model = gdu_pool_tree_model_new (pools,
                                                        NULL,
                                                        GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES |
                                                        GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES);
+        g_ptr_array_unref (pools);
 
         tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->priv->model));
         gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree_view), TRUE);

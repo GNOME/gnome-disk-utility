@@ -797,11 +797,15 @@ gdu_disk_selection_widget_constructed (GObject *object)
         GtkCellRenderer *renderer;
         GtkTreeViewColumn *column;
         GtkTreeModel *model;
+        GPtrArray *pools;
 
-        model = GTK_TREE_MODEL (gdu_pool_tree_model_new (widget->priv->pool,
+        pools = g_ptr_array_new ();
+        g_ptr_array_add (pools, widget->priv->pool);
+        model = GTK_TREE_MODEL (gdu_pool_tree_model_new (pools,
                                                          NULL,
                                                          GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES |
                                                          GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES));
+        g_ptr_array_unref (pools);
 
         widget->priv->model = gtk_tree_model_filter_new (model, NULL);
         g_object_unref (model);

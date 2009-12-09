@@ -1,7 +1,7 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
-/* gdu-types.h
+/* gdu-machine.h
  *
- * Copyright (C) 2007 David Zeuthen
+ * Copyright (C) 2009 David Zeuthen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -23,34 +23,38 @@
 #error "Only <gdu/gdu.h> can be included directly, this file may disappear or change contents."
 #endif
 
-#ifndef __GDU_TYPES_H
-#define __GDU_TYPES_H
+#ifndef __GDU_MACHINE_H
+#define __GDU_MACHINE_H
 
-#include <glib-object.h>
-#include <gio/gio.h>
+#include <gdu/gdu-types.h>
 
 G_BEGIN_DECLS
 
-/* forward type definitions */
+#define GDU_TYPE_MACHINE           (gdu_machine_get_type ())
+#define GDU_MACHINE(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_MACHINE, GduMachine))
+#define GDU_MACHINE_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_MACHINE,  GduMachineClass))
+#define GDU_IS_MACHINE(o)          (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_MACHINE))
+#define GDU_IS_MACHINE_CLASS(k)    (G_TYPE_CHECK_CLASS_TYPE ((k), GDU_TYPE_MACHINE))
+#define GDU_MACHINE_GET_CLASS(k)   (G_TYPE_INSTANCE_GET_CLASS ((k), GDU_TYPE_MACHINE, GduMachineClass))
 
-typedef struct _GduPool                   GduPool;
-typedef struct _GduDevice                 GduDevice;
-typedef struct _GduAdapter                GduAdapter;
-typedef struct _GduExpander               GduExpander;
-typedef struct _GduPort                   GduPort;
+typedef struct _GduMachineClass       GduMachineClass;
+typedef struct _GduMachinePrivate     GduMachinePrivate;
 
-typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
+struct _GduMachine
+{
+        GObject parent;
 
-typedef struct _GduDrive                  GduDrive;
-typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
-typedef struct _GduVolume                 GduVolume;
-typedef struct _GduVolumeHole             GduVolumeHole;
-typedef struct _GduHub                    GduHub;
-typedef struct _GduMachine                GduMachine;
+        /* private */
+        GduMachinePrivate *priv;
+};
 
-typedef struct _GduKnownFilesystem        GduKnownFilesystem;
-typedef struct _GduProcess                GduProcess;
+struct _GduMachineClass
+{
+        GObjectClass parent_class;
+};
+
+GType        gdu_machine_get_type     (void);
 
 G_END_DECLS
 
-#endif /* __GDU_TYPES_H */
+#endif /* __GDU_MACHINE_H */

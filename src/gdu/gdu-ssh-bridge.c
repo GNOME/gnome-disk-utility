@@ -57,7 +57,8 @@
 
 /* TODO: Need to do all this async (or in a thread) so we can have API like this
  *
- *   void gdu_pool_new_for_address            (const gchar         *ssh_address,
+ *   void gdu_pool_new_for_address            (const gchar         *ssh_user_name,
+ *                                             const gchar         *ssh_address,
  *                                             GMountOperation     *connect_operation,
  *                                             GCancellable        *cancellable,
  *                                             GAsyncReadyCallback  callback,
@@ -222,6 +223,7 @@ fixup_newlines (gchar *s)
 
 DBusGConnection *
 _gdu_ssh_bridge_connect (GduPool          *pool,
+                         const gchar      *ssh_user_name,
                          const gchar      *ssh_address,
                          GError          **error)
 {
@@ -330,8 +332,10 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                                         "-o \"ForwardAgent no\" "
                                         "-o \"Protocol 2\" "
                                         "-o \"NoHostAuthenticationForLocalhost yes\" "
-                                        "%s",
+                                        "%s%c%s",
                                         local_port,
+                                        ssh_user_name != NULL ? ssh_user_name : "",
+                                        ssh_user_name != NULL ? '@' : ' ',
                                         ssh_address);
         //g_print ("command line: `%s'\n", command_line);
         if (!g_shell_parse_argv (command_line,

@@ -50,9 +50,10 @@ struct GduConnectToServerDialogClass
         GtkDialogClass parent_class;
 };
 
-GType       gdu_connect_to_server_dialog_get_type    (void) G_GNUC_CONST;
-GtkWidget*  gdu_connect_to_server_dialog_new         (GtkWindow                 *parent);
-gchar      *gdu_connect_to_server_dialog_get_address (GduConnectToServerDialog  *dialog);
+GType       gdu_connect_to_server_dialog_get_type      (void) G_GNUC_CONST;
+GtkWidget*  gdu_connect_to_server_dialog_new           (GtkWindow                 *parent);
+gchar      *gdu_connect_to_server_dialog_get_user_name (GduConnectToServerDialog  *dialog);
+gchar      *gdu_connect_to_server_dialog_get_address   (GduConnectToServerDialog  *dialog);
 
 G_END_DECLS
 

@@ -44,6 +44,7 @@
 #include <gdu/gdu-volume.h>
 #include <gdu/gdu-volume-hole.h>
 #include <gdu/gdu-hub.h>
+#include <gdu/gdu-machine.h>
 #include <gdu/gdu-callbacks.h>
 
 #undef __GDU_INSIDE_GDU_H

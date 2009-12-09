@@ -53,18 +53,18 @@ struct _GduShellClass
         GObjectClass parent_class;
 };
 
-GType           gdu_shell_get_type                 (void);
-GduShell       *gdu_shell_new                      (const char      *ssh_address);
-GtkWidget      *gdu_shell_get_toplevel             (GduShell       *shell);
-GduPool        *gdu_shell_get_pool                 (GduShell       *shell);
-void            gdu_shell_update                   (GduShell       *shell);
-GduPresentable *gdu_shell_get_selected_presentable (GduShell       *shell);
-void            gdu_shell_select_presentable       (GduShell       *shell,
-                                                    GduPresentable *presentable);
-void            gdu_shell_raise_error              (GduShell       *shell,
-                                                    GduPresentable *presentable,
-                                                    GError         *error,
-                                                    const char     *primary_markup_format,
-                                                    ...);
+GType           gdu_shell_get_type                          (void);
+GduShell       *gdu_shell_new                               (const char      *ssh_address);
+GtkWidget      *gdu_shell_get_toplevel                      (GduShell       *shell);
+GduPool        *gdu_shell_get_pool_for_selected_presentable (GduShell       *shell);
+void            gdu_shell_update                            (GduShell       *shell);
+GduPresentable *gdu_shell_get_selected_presentable          (GduShell       *shell);
+void            gdu_shell_select_presentable                (GduShell       *shell,
+                                                             GduPresentable *presentable);
+void            gdu_shell_raise_error                       (GduShell       *shell,
+                                                             GduPresentable *presentable,
+                                                             GError         *error,
+                                                             const char     *primary_markup_format,
+                                                             ...);
 
 #endif /* GDU_SHELL_H */

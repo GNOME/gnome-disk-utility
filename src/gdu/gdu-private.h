@@ -92,7 +92,8 @@ GduVolumeHole   *_gdu_volume_hole_new       (GduPool *pool, guint64 offset, guin
 
 GduLinuxMdDrive   *_gdu_linux_md_drive_new             (GduPool              *pool,
                                                         const gchar          *uuid,
-                                                        const gchar          *device_file);
+                                                        const gchar          *device_file,
+                                                        GduPresentable *enclosing_presentable);
 
 gboolean _gdu_linux_md_drive_has_uuid (GduLinuxMdDrive  *drive,
                                        const gchar      *uuid);
@@ -120,8 +121,11 @@ GduHub     *_gdu_hub_new                        (GduPool        *pool,
 GduPort    *_gdu_port_new_from_object_path (GduPool *pool, const char *object_path);
 gboolean    _gdu_port_changed               (GduPort   *port);
 
+GduMachine *_gdu_machine_new (GduPool *pool);
+
 void _gdu_hub_rewrite_enclosing_presentable (GduHub *hub);
 void _gdu_drive_rewrite_enclosing_presentable (GduDrive *drive);
+void _gdu_linux_md_drive_rewrite_enclosing_presentable (GduLinuxMdDrive *drive);
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 

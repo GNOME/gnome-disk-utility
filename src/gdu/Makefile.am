@@ -52,6 +52,7 @@ libgduinclude_HEADERS =              			\
 	gdu-volume.h					\
 	gdu-volume-hole.h				\
 	gdu-hub.h					\
+	gdu-machine.h					\
 	$(NULL)
 
 libgdu_la_SOURCES =                                					\
@@ -73,6 +74,7 @@ libgdu_la_SOURCES =                                					\
 	gdu-error.c				gdu-error.h				\
 	gdu-process.c				gdu-process.h				\
 	gdu-hub.c				gdu-hub.h				\
+	gdu-machine.c				gdu-machine.h				\
 						gdu-private.h				\
 	gdu-ssh-bridge.c			gdu-ssh-bridge.h			\
 	$(BUILT_SOURCES)								\

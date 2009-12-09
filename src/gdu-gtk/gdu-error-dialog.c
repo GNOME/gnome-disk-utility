@@ -154,20 +154,11 @@ gdu_error_dialog_constructed (GObject *object)
         GtkWidget *label;
         GtkWidget *expander;
         gchar *s;
-        GIcon *icon;
-        GEmblem *emblem;
-        GIcon *error_icon;
-        GIcon *emblemed_icon;
-        gchar *name;
-        gchar *vpd_name;
         const gchar *error_msg;
         GtkWidget *scrolled_window;
         GtkWidget *text_view;
         GtkTextBuffer *buffer;
-
-        icon = NULL;
-        name = NULL;
-        vpd_name = NULL;
+        GduPresentable *presentable;
 
         gtk_window_set_title (GTK_WINDOW (dialog), _(""));
         gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
@@ -180,17 +171,31 @@ gdu_error_dialog_constructed (GObject *object)
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-        icon = gdu_presentable_get_icon (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
-        error_icon = g_themed_icon_new (GTK_STOCK_DIALOG_ERROR);
-        emblem = g_emblem_new (icon);
-        emblemed_icon = g_emblemed_icon_new (error_icon,
-                                             emblem);
+        presentable = gdu_dialog_get_presentable (GDU_DIALOG (dialog));
+        if (presentable != NULL) {
+                GIcon *icon;
+                GEmblem *emblem;
+                GIcon *error_icon;
+                GIcon *emblemed_icon;
+
+                icon = gdu_presentable_get_icon (presentable);
+                error_icon = g_themed_icon_new (GTK_STOCK_DIALOG_ERROR);
+                emblem = g_emblem_new (icon);
+                emblemed_icon = g_emblemed_icon_new (error_icon,
+                                                     emblem);
+                image = gtk_image_new_from_gicon (emblemed_icon, GTK_ICON_SIZE_DIALOG);
+
+                g_object_unref (icon);
+                g_object_unref (emblem);
+                g_object_unref (error_icon);
+                g_object_unref (emblemed_icon);
+        } else {
+                image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
+        }
 
         hbox = gtk_hbox_new (FALSE, 12);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
-        image = gtk_image_new_from_gicon (emblemed_icon,
-                                          GTK_ICON_SIZE_DIALOG);
         gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
@@ -243,12 +248,22 @@ gdu_error_dialog_constructed (GObject *object)
         if (error_msg == NULL)
                 error_msg = _("Unknown error");
 
-        name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
-        vpd_name = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
-        s = g_strdup_printf (_("An error occured while performing an operation on \"%s\" (%s): %s"),
-                             name,
-                             vpd_name,
-                             error_msg);
+        if (presentable != NULL) {
+                gchar *name;
+                gchar *vpd_name;
+
+                name = gdu_presentable_get_name (presentable);
+                vpd_name = gdu_presentable_get_vpd_name (presentable);
+                s = g_strdup_printf (_("An error occured while performing an operation on \"%s\" (%s): %s"),
+                                     name,
+                                     vpd_name,
+                                     error_msg);
+
+                g_free (name);
+                g_free (vpd_name);
+        } else {
+                s = g_strdup_printf (_("An error occured: %s"), error_msg);
+        }
 
         label = gtk_label_new (s);
         g_free (s);
@@ -277,14 +292,6 @@ gdu_error_dialog_constructed (GObject *object)
         gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD_CHAR);
         gtk_container_add (GTK_CONTAINER (expander), scrolled_window);
         gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-
-        g_object_unref (icon);
-        g_object_unref (emblem);
-        g_object_unref (error_icon);
-        g_object_unref (emblemed_icon);
-
-        g_free (name);
-        g_free (vpd_name);
 
         gtk_widget_grab_focus (button);
 
@@ -337,7 +344,7 @@ gdu_error_dialog_new (GtkWindow      *parent,
                       const gchar    *message,
                       const GError   *error)
 {
-        g_return_val_if_fail (GDU_IS_PRESENTABLE (presentable), NULL);
+        g_return_val_if_fail (presentable == NULL || GDU_IS_PRESENTABLE (presentable), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_ERROR_DIALOG,
                                          "transient-for", parent,
                                          "presentable", presentable,

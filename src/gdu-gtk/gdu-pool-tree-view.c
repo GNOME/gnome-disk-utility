@@ -211,6 +211,8 @@ format_markup (GtkCellLayout   *cell_layout,
 
         g_object_set (renderer,
                       "markup", markup,
+                      "ellipsize-set", TRUE,
+                      "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
                       NULL);
 
         g_free (name);
@@ -288,10 +290,6 @@ gdu_pool_tree_view_constructed (GObject *object)
 
         renderer = gtk_cell_renderer_text_new ();
         gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        //gtk_tree_view_column_set_attributes (column,
-        //                                     renderer,
-        //                                     "markup", GDU_POOL_TREE_MODEL_COLUMN_NAME,
-        //                                     NULL);
         gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
                                             renderer,
                                             format_markup,

@@ -1134,6 +1134,7 @@ create_window (GduShell *shell)
 
         gtk_paned_add1 (GTK_PANED (hpane), tree_view_scrolled_window);
         gtk_paned_add2 (GTK_PANED (hpane), vbox1);
+        gtk_widget_set_size_request (shell->priv->tree_view, 260, -1),
         //gtk_paned_set_position (GTK_PANED (hpane), 260);
 
         gtk_box_pack_start (GTK_BOX (vbox), hpane, TRUE, TRUE, 0);

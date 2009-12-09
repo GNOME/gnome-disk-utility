@@ -359,9 +359,10 @@ gdu_details_element_class_init (GduDetailsElementClass *klass)
                                                   G_STRUCT_OFFSET (GduDetailsElementClass, activated),
                                                   NULL,
                                                   NULL,
-                                                  g_cclosure_marshal_VOID__VOID,
+                                                  g_cclosure_marshal_VOID__STRING,
                                                   G_TYPE_NONE,
-                                                  0);
+                                                  1,
+                                                  G_TYPE_STRING);
 }
 
 GduDetailsElement *

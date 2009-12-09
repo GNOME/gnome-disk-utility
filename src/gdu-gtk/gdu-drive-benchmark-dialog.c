@@ -631,7 +631,8 @@ cancel_job_cb (GduDevice  *device,
 
 static void
 on_updated_element_activated (GduDetailsElement    *element,
-                              gpointer     user_data)
+                              const gchar          *uri,
+                              gpointer              user_data)
 {
         GduDriveBenchmarkDialog *dialog = GDU_DRIVE_BENCHMARK_DIALOG (user_data);
 

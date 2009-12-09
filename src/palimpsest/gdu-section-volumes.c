@@ -1279,6 +1279,7 @@ on_fsck_button_clicked (GduButtonElement *button_element,
 
 static void
 on_usage_element_activated (GduDetailsElement *element,
+                            const gchar       *uri,
                             gpointer           user_data)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
@@ -1316,6 +1317,41 @@ on_usage_element_activated (GduDetailsElement *element,
                 g_object_unref (d);
         if (v != NULL)
                 g_object_unref (v);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_fs_mount_point_element_activated (GduDetailsElement *element,
+                                     const gchar       *uri,
+                                     gpointer           user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GError *error;
+        gchar *s;
+
+        /* We want to use nautilus instead of gtk_show_uri() because
+         * the latter doesn't handle automatically mounting the mount
+         * - maybe gtk_show_uri() should do that though...
+         */
+
+        s = g_strdup_printf ("nautilus \"%s\"", uri);
+
+        error = NULL;
+        if (!g_spawn_command_line_async (s, &error)) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
+                                               gdu_section_get_presentable (GDU_SECTION (section)),
+                                               _("Error spawning nautilus: %s"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+
+        g_free (s);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1436,6 +1472,10 @@ gdu_section_volumes_update (GduSection *_section)
 
                 section->priv->fs_mount_point_element = gdu_details_element_new (_("Mount Point:"), NULL, NULL);
                 g_ptr_array_add (elements, section->priv->fs_mount_point_element);
+                g_signal_connect (section->priv->fs_mount_point_element,
+                                  "activated",
+                                  G_CALLBACK (on_fs_mount_point_element_activated),
+                                  section);
         }
 
         gdu_details_table_set_elements (GDU_DETAILS_TABLE (section->priv->details_table), elements);
@@ -1574,14 +1614,34 @@ gdu_section_volumes_update (GduSection *_section)
 
                 if (gdu_device_is_mounted (d)) {
                         const gchar* const *mount_paths;
+                        GduPool *pool;
+                        const gchar *ssh_address;
+
+                        pool = gdu_device_get_pool (d);
+                        ssh_address = gdu_pool_get_ssh_address (pool);
 
                         /* For now we ignore if the device is mounted in multiple places */
                         mount_paths = (const gchar* const *) gdu_device_get_mount_paths (d);
-                        s = g_strdup_printf ("<a title=\"%s\" href=\"file://%s\">%s</a>",
-                                              /* Translators: this the mount point hyperlink tooltip */
-                                              _("View files on the volume"),
-                                             mount_paths[0],
-                                             mount_paths[0]);
+
+                        if (ssh_address != NULL) {
+                                /* We don't use the ssh user name right now - we could do that
+                                 * but if the user logs in as root it might be bad...
+                                 */
+                                s = g_strdup_printf ("<a title=\"%s\" href=\"sftp://%s/%s\">%s</a>",
+                                                     /* Translators: this the mount point hyperlink tooltip for a
+                                                      * remote server - it uses the sftp:// protocol
+                                                      */
+                                                     _("View files on the volume using a SFTP network share"),
+                                                     ssh_address,
+                                                     mount_paths[0],
+                                                     mount_paths[0]);
+                        } else {
+                                s = g_strdup_printf ("<a title=\"%s\" href=\"file://%s\">%s</a>",
+                                                     /* Translators: this the mount point hyperlink tooltip */
+                                                     _("View files on the volume"),
+                                                     mount_paths[0],
+                                                     mount_paths[0]);
+                        }
                         /* Translators: this the the text for the mount point
                          * item - %s is the mount point, e.g. '/media/disk'
                          */
@@ -1589,6 +1649,7 @@ gdu_section_volumes_update (GduSection *_section)
                         gdu_details_element_set_text (section->priv->fs_mount_point_element, s2);
                         g_free (s);
                         g_free (s2);
+                        g_object_unref (pool);
 
                         show_fs_unmount_button = TRUE;
                 } else {

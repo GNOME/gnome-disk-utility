@@ -53,7 +53,8 @@ struct GduDetailsElementClass
         void (*changed) (GduDetailsElement *element);
 
         /* signals */
-        void (*activated) (GduDetailsElement *element);
+        void (*activated) (GduDetailsElement *element,
+                           const gchar       *uri);
 };
 
 GType               gdu_details_element_get_type            (void) G_GNUC_CONST;

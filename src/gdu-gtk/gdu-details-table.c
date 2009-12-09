@@ -235,9 +235,9 @@ typedef struct {
 static void on_details_element_changed (GduDetailsElement *element,
                                         ElementData       *data);
 
-static void on_activate_link (GtkLabel    *label,
-                              const gchar *uri,
-                              gpointer     user_data);
+static gboolean on_activate_link (GtkLabel    *label,
+                                  const gchar *uri,
+                                  gpointer     user_data);
 
 static void
 element_data_free (ElementData *data)
@@ -369,15 +369,15 @@ on_details_element_changed (GduDetailsElement *element,
         }
 }
 
-static void
+static gboolean
 on_activate_link (GtkLabel    *label,
                   const gchar *uri,
                   gpointer     user_data)
 {
         ElementData *data = user_data;
 
-        g_signal_emit_by_name (data->element, "activated");
-        g_signal_stop_emission_by_name (label, "activate-link");
+        g_signal_emit_by_name (data->element, "activated", uri);
+        return TRUE;
 }
 
 static void
@@ -485,6 +485,10 @@ do_relayout (GduDetailsTable *table)
                 g_signal_connect (element,
                                   "changed",
                                   G_CALLBACK (on_details_element_changed),
+                                  data);
+                g_signal_connect (data->label,
+                                  "activate-link",
+                                  G_CALLBACK (on_activate_link),
                                   data);
                 g_signal_connect (data->action_label,
                                   "activate-link",

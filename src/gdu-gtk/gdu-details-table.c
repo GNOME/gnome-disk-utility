@@ -454,6 +454,7 @@ do_relayout (GduDetailsTable *table)
                 gtk_box_pack_start (GTK_BOX (hbox), data->spinner, FALSE, FALSE, 0);
 
                 data->label = gtk_label_new (NULL);
+                gtk_label_set_track_visited_links (GTK_LABEL (data->label), FALSE);
                 gtk_misc_set_alignment (GTK_MISC (data->label), 0.0, 0.5);
                 gtk_box_pack_start (GTK_BOX (hbox), data->label, FALSE, FALSE, 0);
 
@@ -469,6 +470,7 @@ do_relayout (GduDetailsTable *table)
                 gtk_box_pack_start (GTK_BOX (hbox), data->action_hyphen_label, FALSE, FALSE, 0);
 
                 data->action_label = g_object_ref (gtk_label_new (NULL));
+                gtk_label_set_track_visited_links (GTK_LABEL (data->action_label), FALSE);
                 gtk_misc_set_alignment (GTK_MISC (data->action_label), 0.0, 0.5);
                 gtk_box_pack_start (GTK_BOX (hbox), data->action_label, FALSE, FALSE, 0);
 

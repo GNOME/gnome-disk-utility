@@ -253,6 +253,109 @@ compute_sections_to_show (GduShell *shell)
         return sections_to_show;
 }
 
+
+static void
+update_title (GduShell *shell)
+{
+        GduPresentable *presentable;
+        gchar *name;
+        gchar *vpd_name;
+        gchar *s;
+        GduPool *pool;
+        const gchar *ssh_address;
+        GduDevice *device;
+        gchar *device_file;
+
+        presentable = shell->priv->presentable_now_showing;
+
+        if (presentable == NULL) {
+                /* Translators: Window title when no item is selected.
+                 */
+                s = g_strdup (_("Disk Utility"));
+                goto out;
+        }
+
+        pool = gdu_presentable_get_pool (presentable);
+        name = gdu_presentable_get_name (presentable);
+        vpd_name = gdu_presentable_get_vpd_name (presentable);
+        device = gdu_presentable_get_device (presentable);
+        device_file = NULL;
+        if (device != NULL) {
+                device_file = g_strdup (gdu_device_get_device_file (device));
+                g_object_unref (device);
+        }
+
+        ssh_address = gdu_pool_get_ssh_address (pool);
+
+        if (ssh_address != NULL) {
+                if (GDU_IS_MACHINE (presentable)) {
+                        /* Translators: Window title when the item representing a remote machine is selected.
+                         * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+                         */
+                        s = g_strdup_printf (_("%s — Disk Utility"),
+                                             ssh_address);
+                } else {
+                        if (device_file != NULL) {
+                                /* Translators: Window title when an item on a remote machine is selected and there is a device file.
+                                 * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+                                 * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+                                 * Third is the device file (e.g. '/dev/sda')
+                                 * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+                                 */
+                                s = g_strdup_printf (_("%s (%s) [%s] @ %s — Disk Utility"),
+                                                     name,
+                                                     vpd_name,
+                                                     device_file,
+                                                     ssh_address);
+                        } else {
+                                /* Translators: Window title when an item on a remote machine is selected.
+                                 * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+                                 * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+                                 * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+                                 */
+                                s = g_strdup_printf (_("%s (%s) @ %s — Disk Utility"),
+                                                     name,
+                                                     vpd_name,
+                                                     ssh_address);
+                        }
+                }
+        } else {
+                if (GDU_IS_MACHINE (presentable)) {
+                        /* Translators: Window title when the item representing the local machine is selected.
+                         */
+                        s = g_strdup (_("Disk Utility"));
+                } else {
+                        if (device_file != NULL) {
+                                /* Translators: Window title when an item on the local machine is selected and there is a device file.
+                                 * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+                                 * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+                                 * Third is the device file (e.g. '/dev/sda')
+                                 */
+                                s = g_strdup_printf (_("%s (%s) [%s] — Disk Utility"),
+                                                     name,
+                                                     vpd_name,
+                                                     device_file);
+                        } else {
+                                /* Translators: Window title when an item on the local machine is selected.
+                                 * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+                                 * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+                                 */
+                                s = g_strdup_printf (_("%s (%s) — Disk Utility"),
+                                                     name,
+                                                     vpd_name);
+                        }
+                }
+        }
+        g_free (vpd_name);
+        g_free (name);
+        g_object_unref (pool);
+        g_free (device_file);
+
+ out:
+        gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), s);
+        g_free (s);
+}
+
 /* called when a new presentable is selected
  *  - or a presentable changes
  *  - or the job state of a presentable changes
@@ -265,6 +368,8 @@ gdu_shell_update (GduShell *shell)
         static GduPresentable *last_presentable = NULL;
         gboolean reset_sections;
         GList *sections_to_show;
+
+        update_title (shell);
 
         reset_sections = (shell->priv->presentable_now_showing != last_presentable);
 
@@ -996,7 +1101,6 @@ gdu_shell_raise_error (GduShell       *shell,
         g_signal_connect (dialog, "map", G_CALLBACK (fix_focus_cb), NULL);
 
 
-        gtk_window_set_title (GTK_WINDOW (dialog), window_title);
         // TODO: no support for GIcon in GtkWindow
         //gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon_name);
 

@@ -126,7 +126,7 @@ gdu_machine_get_name (GduPresentable *presentable)
         ssh_address = gdu_pool_get_ssh_address (machine->priv->pool);
 
         if (ssh_address == NULL) {
-                ret = g_strdup (_("This Machine"));
+                ret = g_strdup (_("Local Storage"));
         } else {
                 /* TODO: use display-hostname */
                 ret = g_strdup_printf (_("Storage on %s"), ssh_address);

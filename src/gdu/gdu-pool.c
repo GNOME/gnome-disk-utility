@@ -55,6 +55,7 @@
  */
 
 enum {
+        DISCONNECTED,
         DEVICE_ADDED,
         DEVICE_REMOVED,
         DEVICE_CHANGED,
@@ -78,10 +79,16 @@ enum {
 static GObjectClass *parent_class = NULL;
 static guint signals[LAST_SIGNAL] = { 0 };
 
+static void _gdu_pool_disconnect (GduPool *pool);
+
 struct _GduPoolPrivate
 {
+        gboolean is_disconnected;
+
         gchar *ssh_user_name;
         gchar *ssh_address;
+        GPid ssh_pid;
+        guint ssh_child_watch_id;
 
         DBusGConnection *bus;
         DBusGProxy *proxy;
@@ -108,29 +115,28 @@ struct _GduPoolPrivate
 
 G_DEFINE_TYPE (GduPool, gdu_pool, G_TYPE_OBJECT);
 
+static void remove_all_objects_and_dbus_proxies (GduPool *pool);
+
 static void
 gdu_pool_finalize (GduPool *pool)
 {
-        if (pool->priv->bus != NULL)
-                dbus_g_connection_unref (pool->priv->bus);
-        if (pool->priv->proxy != NULL)
-                g_object_unref (pool->priv->proxy);
+        g_print ("in gdu_pool_finalize()\n");
 
-        g_free (pool->priv->daemon_version);
-
-        g_list_foreach (pool->priv->known_filesystems, (GFunc) g_object_unref, NULL);
-        g_list_free (pool->priv->known_filesystems);
+        remove_all_objects_and_dbus_proxies (pool);
 
         g_hash_table_unref (pool->priv->object_path_to_device);
-
         g_hash_table_unref (pool->priv->object_path_to_adapter);
-
         g_hash_table_unref (pool->priv->object_path_to_expander);
-
         g_hash_table_unref (pool->priv->object_path_to_port);
 
-        g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
-        g_list_free (pool->priv->presentables);
+        if (pool->priv->ssh_child_watch_id > 0) {
+                g_source_remove (pool->priv->ssh_child_watch_id);
+                pool->priv->ssh_child_watch_id = 0;
+        }
+        if (pool->priv->ssh_pid > 0) {
+                kill (pool->priv->ssh_pid, SIGTERM);
+                pool->priv->ssh_pid = 0;
+        }
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (pool));
@@ -146,6 +152,25 @@ gdu_pool_class_init (GduPoolClass *klass)
         obj_class->finalize = (GObjectFinalizeFunc) gdu_pool_finalize;
 
         g_type_class_add_private (klass, sizeof (GduPoolPrivate));
+
+        /**
+         * GduPool::disconnected
+         * @pool: The #GduPool emitting the signal.
+         *
+         * Emitted when the underlying connection has been disconnected.
+         *
+         * If you hold a reference to @pool, now is a good time to give it up.
+         */
+        signals[DISCONNECTED] =
+                g_signal_new ("disconnected",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduPoolClass, disconnected),
+                              NULL,
+                              NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
 
         /**
          * GduPool::device-added
@@ -1711,6 +1736,31 @@ _gdu_pool_get_connection (GduPool *pool)
         return pool->priv->bus;
 }
 
+static void
+on_ssh_process_terminated (GPid     pid,
+                           gint     status,
+                           gpointer user_data)
+{
+        GduPool *pool = GDU_POOL (user_data);
+
+        g_print ("wohoo, ssh process has been terminated\n");
+
+        /* need to take a temp ref since receivers of the ::disconnected signal
+         * may unref the pool
+         */
+        g_object_ref (pool);
+
+        _gdu_pool_disconnect (pool);
+
+        g_spawn_close_pid (pid);
+
+        g_source_remove (pool->priv->ssh_child_watch_id);
+        pool->priv->ssh_child_watch_id = 0;
+        pool->priv->ssh_pid = 0;
+
+        g_object_unref (pool);
+}
+
 GduPool *
 gdu_pool_new_for_address (const gchar     *ssh_user_name,
                           const gchar     *ssh_address,
@@ -1734,12 +1784,21 @@ gdu_pool_new_for_address (const gchar     *ssh_user_name,
                         goto error;
                 }
         } else {
-                pool->priv->bus = _gdu_ssh_bridge_connect (pool, ssh_user_name, ssh_address, error);
+                pool->priv->bus = _gdu_ssh_bridge_connect (ssh_user_name,
+                                                           ssh_address,
+                                                           &(pool->priv->ssh_pid),
+                                                           error);
                 if (pool->priv->bus == NULL) {
                         goto error;
                 }
                 pool->priv->ssh_user_name = g_strdup (ssh_user_name);
                 pool->priv->ssh_address  = g_strdup (ssh_address);
+
+                /* Watch the ssh process */
+                g_print ("pid is %d\n", pool->priv->ssh_pid);
+                pool->priv->ssh_child_watch_id = g_child_watch_add (pool->priv->ssh_pid,
+                                                                    on_ssh_process_terminated,
+                                                                    pool);
         }
 
         dbus_g_object_register_marshaller (
@@ -2719,3 +2778,42 @@ gdu_pool_get_ssh_address (GduPool *pool)
         return pool->priv->ssh_address;
 }
 
+static void
+remove_all_objects_and_dbus_proxies (GduPool *pool)
+{
+        g_free (pool->priv->daemon_version);
+        pool->priv->daemon_version = NULL;
+
+        g_list_foreach (pool->priv->known_filesystems, (GFunc) g_object_unref, NULL);
+        g_list_free (pool->priv->known_filesystems);
+        pool->priv->known_filesystems = NULL;
+
+        g_hash_table_remove_all (pool->priv->object_path_to_device);
+        g_hash_table_remove_all (pool->priv->object_path_to_adapter);
+        g_hash_table_remove_all (pool->priv->object_path_to_expander);
+        g_hash_table_remove_all (pool->priv->object_path_to_port);
+
+        g_list_foreach (pool->priv->presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (pool->priv->presentables);
+        pool->priv->presentables = NULL;
+
+        if (pool->priv->proxy != NULL) {
+                g_object_unref (pool->priv->proxy);
+                pool->priv->proxy = NULL;
+        }
+
+        if (pool->priv->bus != NULL) {
+                dbus_g_connection_unref (pool->priv->bus);
+                pool->priv->bus = NULL;
+        }
+}
+
+static void
+_gdu_pool_disconnect (GduPool *pool)
+{
+        g_return_if_fail (!pool->priv->is_disconnected);
+
+        remove_all_objects_and_dbus_proxies (pool);
+        pool->priv->is_disconnected = TRUE;
+        g_signal_emit (pool, signals[DISCONNECTED], 0);
+}

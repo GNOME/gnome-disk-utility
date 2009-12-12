@@ -54,6 +54,8 @@ struct _GduPoolClass
         GObjectClass parent_class;
 
         /* signals */
+        void (*disconnected) (GduPool *pool);
+
         void (*device_added) (GduPool *pool, GduDevice *device);
         void (*device_removed) (GduPool *pool, GduDevice *device);
         void (*device_changed) (GduPool *pool, GduDevice *device);

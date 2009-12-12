@@ -1116,6 +1116,18 @@ gdu_shell_raise_error (GduShell       *shell,
         g_free (error_text);
 }
 
+static void
+pool_disconnected (GduPool  *pool,
+                   gpointer user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        g_warn_if_fail (g_ptr_array_remove (shell->priv->pools, pool));
+        g_object_unref (pool);
+
+        gdu_pool_tree_model_set_pools (shell->priv->model, shell->priv->pools);
+}
+
 static gboolean
 add_pool (GduShell     *shell,
           const gchar  *ssh_user_name,
@@ -1133,6 +1145,7 @@ add_pool (GduShell     *shell,
 
         g_signal_connect (pool, "presentable-added", (GCallback) presentable_added, shell);
         g_signal_connect (pool, "presentable-removed", (GCallback) presentable_removed, shell);
+        g_signal_connect (pool, "disconnected", (GCallback) pool_disconnected, shell);
 
         g_ptr_array_add (shell->priv->pools, pool);
 

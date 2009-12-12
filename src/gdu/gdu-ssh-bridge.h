@@ -29,9 +29,9 @@
 #include <dbus/dbus-glib.h>
 #include "gdu-types.h"
 
-DBusGConnection * _gdu_ssh_bridge_connect (GduPool          *pool,
-                                           const gchar      *ssh_user_name,
+DBusGConnection * _gdu_ssh_bridge_connect (const gchar      *ssh_user_name,
                                            const gchar      *ssh_address,
+                                           GPid             *out_pid,
                                            GError          **error);
 
 #endif /* __GDU_SSH_BRIDGE_H */

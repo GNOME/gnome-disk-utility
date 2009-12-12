@@ -25,6 +25,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <signal.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include <gio/gunixinputstream.h>
 #include <gio/gunixoutputstream.h>
@@ -183,12 +188,6 @@ on_new_connection (DBusServer     *server,
         ;
 }
 
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-
 static void
 child_setup (gpointer user_data)
 {
@@ -222,9 +221,9 @@ fixup_newlines (gchar *s)
 
 
 DBusGConnection *
-_gdu_ssh_bridge_connect (GduPool          *pool,
-                         const gchar      *ssh_user_name,
+_gdu_ssh_bridge_connect (const gchar      *ssh_user_name,
                          const gchar      *ssh_address,
+                         GPid             *out_pid,
                          GError          **error)
 {
         BridgeData *data;
@@ -356,7 +355,7 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
         if (!g_spawn_async_with_pipes (NULL,
                                        ssh_argv,
                                        NULL,
-                                       G_SPAWN_SEARCH_PATH,
+                                       G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
                                        child_setup,
                                        NULL,
                                        &ssh_pid,
@@ -599,6 +598,11 @@ _gdu_ssh_bridge_connect (GduPool          *pool,
                 if (ssh_pid > 0) {
                         kill (ssh_pid, SIGTERM);
                 }
+                if (out_pid != NULL)
+                        *out_pid = 0;
+        } else {
+                if (out_pid != NULL)
+                        *out_pid = ssh_pid;
         }
 
         if (data != NULL)

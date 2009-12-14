@@ -144,10 +144,15 @@ _gdu_hub_new (GduPool        *pool,
         hub->priv->pool = g_object_ref (pool);
         hub->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
-        if (expander != NULL)
-                hub->priv->id = g_strdup (gdu_expander_get_native_path (hub->priv->expander));
-        else
-                hub->priv->id = g_strdup (gdu_adapter_get_native_path (hub->priv->adapter));
+        if (expander != NULL) {
+                hub->priv->id = g_strdup_printf ("%s__enclosed_by_%s",
+                                                 gdu_expander_get_native_path (hub->priv->expander),
+                                                 enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
+        } else {
+                hub->priv->id = g_strdup_printf ("%s__enclosed_by_%s",
+                                                 gdu_adapter_get_native_path (hub->priv->adapter),
+                                                 enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
+        }
         g_signal_connect (adapter, "changed", (GCallback) adapter_changed, hub);
         if (expander != NULL)
                 g_signal_connect (expander, "changed", (GCallback) expander_changed, hub);

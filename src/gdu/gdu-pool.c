@@ -85,6 +85,8 @@ struct _GduPoolPrivate
 {
         gboolean is_disconnected;
 
+        GduPresentable *machine;
+
         gchar *ssh_user_name;
         gchar *ssh_address;
         GPid ssh_pid;
@@ -137,6 +139,8 @@ gdu_pool_finalize (GduPool *pool)
                 kill (pool->priv->ssh_pid, SIGTERM);
                 pool->priv->ssh_pid = 0;
         }
+
+        g_object_unref (pool->priv->machine);
 
         if (G_OBJECT_CLASS (parent_class)->finalize)
                 (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (pool));
@@ -849,7 +853,6 @@ recompute_presentables (GduPool *pool)
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
         GHashTable *hash_map_from_adapter_objpath_to_hub;
         GHashTable *hash_map_from_expander_objpath_to_hub;
-        GduPresentable *machine;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
          * compute the complete set of presentables every time and diff it against the
@@ -864,8 +867,7 @@ recompute_presentables (GduPool *pool)
         new_presentables = NULL;
         new_partitioned_drives = NULL;
 
-        machine = GDU_PRESENTABLE (_gdu_machine_new (pool));
-        new_presentables = g_list_prepend (new_presentables, machine);
+        new_presentables = g_list_prepend (new_presentables, pool->priv->machine);
 
         hash_map_from_drive_to_extended_partition = g_hash_table_new_full ((GHashFunc) gdu_presentable_hash,
                                                                            (GEqualFunc) gdu_presentable_equals,
@@ -896,7 +898,7 @@ recompute_presentables (GduPool *pool)
                 hub = _gdu_hub_new (pool,
                                     adapter,
                                     NULL,      /* expander */
-                                    machine);  /* enclosing_presentable */
+                                    pool->priv->machine);  /* enclosing_presentable */
 
                 g_hash_table_insert (hash_map_from_adapter_objpath_to_hub,
                                      (gpointer) gdu_adapter_get_object_path (adapter),
@@ -982,7 +984,7 @@ recompute_presentables (GduPool *pool)
                                         uuid = NULL;
 
                                 /* TODO: Create transient GduHub object for all RAID arrays? */
-                                linux_md_parent = machine;
+                                linux_md_parent = pool->priv->machine;
 
                                 if (uuid != NULL) {
                                         drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
@@ -1039,7 +1041,7 @@ recompute_presentables (GduPool *pool)
                                          *
                                          *   - USB/Firewire/SDIO connected drives
                                          */
-                                        drive_parent = machine;
+                                        drive_parent = pool->priv->machine;
                                 }
 
                                 drive = _gdu_drive_new_from_device (pool, device, drive_parent);
@@ -1147,7 +1149,7 @@ recompute_presentables (GduPool *pool)
                                 GduPresentable *linux_md_parent;
 
                                 /* TODO: Create transient GduHub object for all RAID arrays? */
-                                linux_md_parent = machine;
+                                linux_md_parent = pool->priv->machine;
 
                                 drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
                                 new_presentables = g_list_prepend (new_presentables, drive);
@@ -1800,6 +1802,8 @@ gdu_pool_new_for_address (const gchar     *ssh_user_name,
                                                                     on_ssh_process_terminated,
                                                                     pool);
         }
+
+        pool->priv->machine = GDU_PRESENTABLE (_gdu_machine_new (pool));
 
         dbus_g_object_register_marshaller (
                 gdu_marshal_VOID__STRING_BOOLEAN_STRING_UINT_BOOLEAN_DOUBLE,

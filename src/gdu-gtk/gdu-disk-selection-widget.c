@@ -397,6 +397,7 @@ toggle_data_func (GtkCellLayout   *cell_layout,
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
         GduPresentable *p;
+        gboolean is_visible;
         gboolean is_toggled;
 
         gtk_tree_model_get (tree_model,
@@ -404,9 +405,15 @@ toggle_data_func (GtkCellLayout   *cell_layout,
                             GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                             -1);
 
-        is_toggled = drive_is_selected (widget, p);
+        is_visible = FALSE;
+        is_toggled = FALSE;
+        if (GDU_IS_DRIVE (p)) {
+                is_visible = TRUE;
+                is_toggled = drive_is_selected (widget, p);
+        }
 
         g_object_set (renderer,
+                      "visible", is_visible,
                       "active", is_toggled,
                       NULL);
 
@@ -484,7 +491,6 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
         GtkTreeSelection *tree_selection;
         gchar *name;
         gchar *vpd_name;
-        gchar *desc;
         gchar *markup;
         GtkStyle *style;
         GdkColor desc_gdk_color = {0};
@@ -497,7 +503,6 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
                             iter,
                             GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
                             GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, &vpd_name,
-                            GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, &desc,
                             -1);
 
         /* This color business shouldn't be this hard... */
@@ -524,11 +529,10 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
                                       (desc_gdk_color.blue >> 8));
 
         markup = g_strdup_printf ("<b>%s</b>\n"
-                                  "<span fgcolor=\"%s\"><small>%s\n%s</small></span>",
+                                  "<span fgcolor=\"%s\"><small>%s</small></span>",
                                   name,
                                   desc_color,
-                                  vpd_name,
-                                  desc);
+                                  vpd_name);
 
         g_object_set (renderer,
                       "markup", markup,
@@ -536,7 +540,6 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
 
         g_free (name);
         g_free (vpd_name);
-        g_free (desc);
         g_free (markup);
         g_free (desc_color);
 }
@@ -824,7 +827,7 @@ gdu_disk_selection_widget_constructed (GObject *object)
 
         column = gtk_tree_view_column_new ();
         /* Tranlators: this string is used for the column header */
-        gtk_tree_view_column_set_title (column, _("Use"));
+        gtk_tree_view_column_set_title (column, _("Storage Devices"));
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
         renderer = gtk_cell_renderer_toggle_new ();
@@ -843,12 +846,6 @@ gdu_disk_selection_widget_constructed (GObject *object)
                                             widget,
                                             NULL);
 
-        column = gtk_tree_view_column_new ();
-        /* Tranlators: this string is used for the column header */
-        gtk_tree_view_column_set_title (column, _("Disk"));
-        gtk_tree_view_column_set_expand (column, TRUE);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
         renderer = gtk_cell_renderer_pixbuf_new ();
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
         gtk_tree_view_column_set_attributes (column,
@@ -856,7 +853,7 @@ gdu_disk_selection_widget_constructed (GObject *object)
                                              "gicon", GDU_POOL_TREE_MODEL_COLUMN_ICON,
                                              NULL);
         g_object_set (renderer,
-                      "stock-size", GTK_ICON_SIZE_DIALOG,
+                      "stock-size", GTK_ICON_SIZE_MENU,
                       NULL);
 
         renderer = gtk_cell_renderer_text_new ();

@@ -472,7 +472,7 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 
         presentable = gdu_pool_tree_view_get_selected_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 
-        g_debug ("selected=%p - now_showing=%p", presentable, shell->priv->presentable_now_showing);
+        //g_debug ("selected=%p - now_showing=%p", presentable, shell->priv->presentable_now_showing);
 
         if (shell->priv->presentable_now_showing != NULL) {
                 g_signal_handlers_disconnect_by_func (shell->priv->presentable_now_showing,

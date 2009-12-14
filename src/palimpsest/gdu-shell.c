@@ -219,36 +219,26 @@ update_section (GtkWidget *section, gpointer callback_data)
 static GList *
 compute_sections_to_show (GduShell *shell)
 {
-        GduDevice *device;
         GList *sections_to_show;
 
         sections_to_show = NULL;
-        device = gdu_presentable_get_device (shell->priv->presentable_now_showing);
+        if (shell->priv->presentable_now_showing != NULL) {
+                if (GDU_IS_HUB (shell->priv->presentable_now_showing)) {
 
-        if (GDU_IS_HUB (shell->priv->presentable_now_showing)) {
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_HUB);
 
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_HUB);
+                } else if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
 
-        } else if (GDU_IS_LINUX_MD_DRIVE (shell->priv->presentable_now_showing)) {
-
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
 
 
-        } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing) && device != NULL) {
+                } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
 
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_DRIVE);
-                sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
-
-                if (gdu_device_is_removable (device) && !gdu_device_is_media_available (device)) {
-
-                        //sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_NO_MEDIA);
-
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_DRIVE);
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
                 }
         }
-
-        if (device != NULL)
-                g_object_unref (device);
 
         return sections_to_show;
 }
@@ -371,8 +361,15 @@ gdu_shell_update (GduShell *shell)
 
         update_title (shell);
 
-        reset_sections = (shell->priv->presentable_now_showing != last_presentable);
-
+        reset_sections = FALSE;
+        if (shell->priv->presentable_now_showing == NULL) {
+                reset_sections = TRUE;
+        } else if (last_presentable == NULL) {
+                reset_sections = TRUE;
+        } else if (g_strcmp0 (gdu_presentable_get_id (shell->priv->presentable_now_showing),
+                              gdu_presentable_get_id (last_presentable)) != 0) {
+                reset_sections = TRUE;
+        }
         last_presentable = shell->priv->presentable_now_showing;
 
         sections_to_show = compute_sections_to_show (shell);
@@ -475,17 +472,21 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
 
         presentable = gdu_pool_tree_view_get_selected_presentable (GDU_POOL_TREE_VIEW (shell->priv->tree_view));
 
+        g_debug ("selected=%p - now_showing=%p", presentable, shell->priv->presentable_now_showing);
+
+        if (shell->priv->presentable_now_showing != NULL) {
+                g_signal_handlers_disconnect_by_func (shell->priv->presentable_now_showing,
+                                                      (GCallback) presentable_changed,
+                                                      shell);
+                g_signal_handlers_disconnect_by_func (shell->priv->presentable_now_showing,
+                                                      (GCallback) presentable_job_changed,
+                                                      shell);
+                g_object_unref (shell->priv->presentable_now_showing);
+                shell->priv->presentable_now_showing = NULL;
+        }
+
         if (presentable != NULL) {
-
-                if (shell->priv->presentable_now_showing != NULL) {
-                        g_signal_handlers_disconnect_by_func (shell->priv->presentable_now_showing,
-                                                              (GCallback) presentable_changed,
-                                                              shell);
-                        g_signal_handlers_disconnect_by_func (shell->priv->presentable_now_showing,
-                                                              (GCallback) presentable_job_changed,
-                                                              shell);
-                }
-
+                /* steal the reference */
                 shell->priv->presentable_now_showing = presentable;
 
                 g_signal_connect (shell->priv->presentable_now_showing, "changed",
@@ -494,8 +495,8 @@ device_tree_changed (GtkTreeSelection *selection, gpointer user_data)
                                   (GCallback) presentable_job_changed, shell);
 
                 gdu_shell_update (shell);
-
-                g_object_unref (presentable);
+        } else {
+                g_warning ("No presentable currently selected");
         }
 }
 
@@ -512,7 +513,9 @@ presentable_removed (GduPool *pool, GduPresentable *presentable, gpointer user_d
         GduShell *shell = GDU_SHELL (user_data);
         GduPresentable *enclosing_presentable;
 
-        if (presentable == shell->priv->presentable_now_showing) {
+        if (shell->priv->presentable_now_showing != NULL &&
+            g_strcmp0 (gdu_presentable_get_id (presentable),
+                       gdu_presentable_get_id (shell->priv->presentable_now_showing)) == 0) {
 
                 /* Try going to the enclosing presentable if that one
                  * is available. Otherwise go to the first one.

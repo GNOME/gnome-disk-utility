@@ -357,7 +357,9 @@ _gdu_linux_md_drive_new (GduPool      *pool,
                 g_signal_connect (drive->priv->pool, "device-job-changed", G_CALLBACK (device_job_changed), drive);
                 prime_devices (drive);
         } else {
-                drive->priv->id = g_strdup_printf ("linux_md_%s", device_file);
+                drive->priv->id = g_strdup_printf ("linux_md_%s_enclosed_by_%s",
+                                                   device_file,
+                                                   enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
                 drive->priv->device = gdu_pool_get_by_device_file (pool, device_file);
         }
 

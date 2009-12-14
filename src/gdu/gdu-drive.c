@@ -482,7 +482,9 @@ _gdu_drive_new_from_device (GduPool *pool, GduDevice *device, GduPresentable *en
         drive->priv->pool = g_object_ref (pool);
         drive->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
-        drive->priv->id = g_strdup_printf ("drive_%s", gdu_device_get_device_file (drive->priv->device));
+        drive->priv->id = g_strdup_printf ("drive_%s_enclosed_by_%s",
+                                           gdu_device_get_device_file (drive->priv->device),
+                                           enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
 
         g_signal_connect (device, "changed", (GCallback) device_changed, drive);
         g_signal_connect (device, "job-changed", (GCallback) device_job_changed, drive);

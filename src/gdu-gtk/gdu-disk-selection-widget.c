@@ -771,13 +771,17 @@ model_visible_func (GtkTreeModel  *model,
                 guint64 largest_segment;
                 gboolean whole_disk_is_uninitialized;
 
-                if (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                     &whole_disk_is_uninitialized,
-                                                     &largest_segment,
-                                                     NULL)) {
-                        if (largest_segment >= widget->priv->component_size) {
-                                ret = TRUE;
+                if (GDU_IS_DRIVE (p)) {
+                        if (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
+                                                             &whole_disk_is_uninitialized,
+                                                             &largest_segment,
+                                                             NULL)) {
+                                if (largest_segment >= widget->priv->component_size) {
+                                        ret = TRUE;
+                                }
                         }
+                } else {
+                        ret = TRUE;
                 }
                 g_object_unref (p);
         }

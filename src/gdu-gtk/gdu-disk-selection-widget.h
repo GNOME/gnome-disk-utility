@@ -52,16 +52,18 @@ struct GduDiskSelectionWidgetClass
         void (*changed) (GduDiskSelectionWidget *widget);
 };
 
-GType       gdu_disk_selection_widget_get_type                 (void) G_GNUC_CONST;
-GtkWidget  *gdu_disk_selection_widget_new                      (GduPool                     *pool,
-                                                                GPtrArray                   *drives_to_ignore,
-                                                                GduDiskSelectionWidgetFlags  flags);
-GPtrArray  *gdu_disk_selection_widget_get_ignored_drives       (GduDiskSelectionWidget      *widget);
-GPtrArray  *gdu_disk_selection_widget_get_selected_drives      (GduDiskSelectionWidget      *widget);
-guint64     gdu_disk_selection_widget_get_component_size       (GduDiskSelectionWidget      *widget);
-void        gdu_disk_selection_widget_set_component_size       (GduDiskSelectionWidget      *widget,
-                                                                guint64                      component_size);
-guint64     gdu_disk_selection_widget_get_largest_free_segment (GduDiskSelectionWidget      *widget);
+GType       gdu_disk_selection_widget_get_type                         (void) G_GNUC_CONST;
+GtkWidget  *gdu_disk_selection_widget_new                              (GduPool                     *pool,
+                                                                        GPtrArray                   *drives_to_ignore,
+                                                                        GduDiskSelectionWidgetFlags  flags);
+GPtrArray  *gdu_disk_selection_widget_get_ignored_drives               (GduDiskSelectionWidget      *widget);
+GPtrArray  *gdu_disk_selection_widget_get_selected_drives              (GduDiskSelectionWidget      *widget);
+guint64     gdu_disk_selection_widget_get_component_size               (GduDiskSelectionWidget      *widget);
+void        gdu_disk_selection_widget_set_component_size               (GduDiskSelectionWidget      *widget,
+                                                                        guint64                      component_size);
+guint       gdu_disk_selection_widget_get_num_available_disks          (GduDiskSelectionWidget      *widget);
+guint64     gdu_disk_selection_widget_get_largest_segment_for_all      (GduDiskSelectionWidget      *widget);
+guint64     gdu_disk_selection_widget_get_largest_segment_for_selected (GduDiskSelectionWidget      *widget);
 
 G_END_DECLS
 

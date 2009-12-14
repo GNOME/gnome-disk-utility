@@ -71,6 +71,7 @@ static void device_changed (GduDevice *device, gpointer user_data);
 static gboolean gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                                                       gboolean        *out_whole_disk_is_unitialized,
                                                       guint64         *out_largest_segment,
+                                                      guint64         *out_total_free,
                                                       GduPresentable **out_presentable);
 
 static void
@@ -202,7 +203,8 @@ gdu_drive_deactivate (GduDrive                *drive,
  * gdu_drive_has_unallocated_space:
  * @drive: A #GduDrive.
  * @out_whole_disk_is_unitialized: Return location for whether @drive is uninitialized or %NULL.
- * @out_largest_segment: Return location biggest contigious free block of @drive or %NULL.
+ * @out_largest_segment: Return location for biggest contigious free block of @drive or %NULL.
+ * @out_total_free: Return location for total amount of free space on @drive or %NULL.
  * @out_presentable: Return location for the presentable that represents free space or %NULL. Free
  * with g_object_unref().
  *
@@ -234,6 +236,7 @@ gboolean
 gdu_drive_has_unallocated_space (GduDrive        *drive,
                                  gboolean        *out_whole_disk_is_unitialized,
                                  guint64         *out_largest_segment,
+                                 guint64         *out_total_free,
                                  GduPresentable **out_presentable)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
@@ -241,6 +244,7 @@ gdu_drive_has_unallocated_space (GduDrive        *drive,
         return klass->has_unallocated_space (drive,
                                              out_whole_disk_is_unitialized,
                                              out_largest_segment,
+                                             out_total_free,
                                              out_presentable);
 }
 
@@ -325,11 +329,13 @@ static gboolean
 gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                                       gboolean        *out_whole_disk_is_unitialized,
                                       guint64         *out_largest_segment,
+                                      guint64         *out_total_free,
                                       GduPresentable **out_presentable)
 {
         GduDevice *device;
         GduPool *pool;
         guint64 largest_segment;
+        guint64 total_free;
         gboolean whole_disk_uninitialized;
         GList *enclosed_presentables;
         GList *l;
@@ -339,6 +345,7 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         GduPresentable *pres;
 
         largest_segment = 0;
+        total_free = 0;
         whole_disk_uninitialized = FALSE;
         ret = FALSE;
         device = NULL;
@@ -365,6 +372,7 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         if (!gdu_device_is_partition_table (device) && strlen (gdu_device_id_get_usage (device)) == 0) {
                 whole_disk_uninitialized = TRUE;
                 largest_segment = gdu_device_get_size (device);
+                total_free = gdu_device_get_size (device);
                 ret = TRUE;
                 pres = GDU_PRESENTABLE (drive);
                 goto out;
@@ -385,6 +393,9 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                                 largest_segment = size;
                                 pres = ep;
                         }
+
+                        total_free += size;
+
                 } else if (GDU_IS_VOLUME (ep)) {
                         gint type;
                         GduDevice *ep_device;
@@ -409,6 +420,8 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                                                         largest_segment = size;
                                                         pres = lep;
                                                 }
+
+                                                total_free += size;
                                         }
                                 }
                                 g_list_foreach (logical_partitions, (GFunc) g_object_unref, NULL);
@@ -439,6 +452,9 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
 
         if (out_largest_segment != NULL)
                 *out_largest_segment = largest_segment;
+
+        if (out_total_free != NULL)
+                *out_total_free = total_free;
 
         if (out_whole_disk_is_unitialized != NULL)
                 *out_whole_disk_is_unitialized = whole_disk_uninitialized;

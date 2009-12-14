@@ -705,6 +705,7 @@ create_linux_md_do (CreateLinuxMdData *data)
                 g_warn_if_fail (gdu_drive_has_unallocated_space (drive,
                                                                  &whole_disk_is_uninitialized,
                                                                  &largest_segment,
+                                                                 NULL, /* total_free */
                                                                  &p));
                 g_assert (p != NULL);
 

@@ -94,12 +94,16 @@ typedef enum {
  * GduDiskSelectionWidgetFlags:
  * @GDU_DISK_SELECTION_WIDGET_FLAGS_NONE: No flags set.
  * @GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE: Allow multiple disks to be selected.
+ * @GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE: If set, disks with less
+ * space than #GduDiskSelectionWidget:component-size will be shown and eligible for selection.
+ * Otherwise they are hidden.
  *
  * Flags used when creating a #GduDiskSelectionWidget.
  */
 typedef enum {
         GDU_DISK_SELECTION_WIDGET_FLAGS_NONE = 0,
-        GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE = (1<<0)
+        GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE = (1<<0),
+        GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE = (1<<1)
 } GduDiskSelectionWidgetFlags;
 
 #endif /* GDU_GTK_ENUMS_H */

@@ -29,11 +29,11 @@
 
 #include "gdu-create-linux-md-dialog.h"
 #include "gdu-size-widget.h"
+#include "gdu-disk-selection-widget.h"
 
 struct GduCreateLinuxMdDialogPrivate
 {
         GduPool *pool;
-        GduPoolTreeModel *model;
 
         GtkWidget *level_combo_box;
         GtkWidget *level_desc_label;
@@ -43,10 +43,10 @@ struct GduCreateLinuxMdDialogPrivate
         GtkWidget *stripe_size_label;
         GtkWidget *stripe_size_combo_box;
 
-        GtkWidget *tree_view;
-
         GtkWidget *size_label;
         GtkWidget *size_widget;
+
+        GtkWidget *disk_selection_widget;
 
         GtkWidget *tip_container;
         GtkWidget *tip_image;
@@ -57,8 +57,6 @@ struct GduCreateLinuxMdDialogPrivate
         guint num_disks_needed;
         guint stripe_size;
 
-        /* A list of GduDrive objects to create the components on */
-        GList *selected_drives;
 };
 
 enum
@@ -77,30 +75,6 @@ static void gdu_create_linux_md_dialog_constructed (GObject *object);
 
 static void update (GduCreateLinuxMdDialog *dialog);
 
-static void on_presentable_added   (GduPool          *pool,
-                                    GduPresentable   *presentable,
-                                    gpointer          user_data);
-static void on_presentable_removed (GduPool          *pool,
-                                    GduPresentable   *presentable,
-                                    gpointer          user_data);
-static void on_presentable_changed (GduPool          *pool,
-                                    GduPresentable   *presentable,
-                                    gpointer          user_data);
-
-static void on_row_changed (GtkTreeModel *tree_model,
-                            GtkTreePath  *path,
-                            GtkTreeIter  *iter,
-                            gpointer      user_data);
-
-static void on_row_deleted (GtkTreeModel *tree_model,
-                            GtkTreePath  *path,
-                            gpointer      user_data);
-
-static void on_row_inserted (GtkTreeModel *tree_model,
-                             GtkTreePath  *path,
-                             GtkTreeIter  *iter,
-                             gpointer      user_data);
-
 static void get_sizes (GduCreateLinuxMdDialog *dialog,
                        guint                  *out_num_disks,
                        guint                  *out_num_available_disks,
@@ -116,19 +90,8 @@ gdu_create_linux_md_dialog_finalize (GObject *object)
 {
         GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (object);
 
-        g_signal_handlers_disconnect_by_func (dialog->priv->pool, on_presentable_added, dialog);
-        g_signal_handlers_disconnect_by_func (dialog->priv->pool, on_presentable_removed, dialog);
-        g_signal_handlers_disconnect_by_func (dialog->priv->pool, on_presentable_changed, dialog);
-        g_signal_handlers_disconnect_by_func (dialog->priv->model, on_row_changed, dialog);
-        g_signal_handlers_disconnect_by_func (dialog->priv->model, on_row_deleted, dialog);
-        g_signal_handlers_disconnect_by_func (dialog->priv->model, on_row_inserted, dialog);
-
         g_object_unref (dialog->priv->pool);
-        g_object_unref (dialog->priv->model);
         g_free (dialog->priv->level);
-
-        g_list_foreach (dialog->priv->selected_drives, (GFunc) g_object_unref, NULL);
-        g_list_free (dialog->priv->selected_drives);
 
         if (G_OBJECT_CLASS (gdu_create_linux_md_dialog_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_create_linux_md_dialog_parent_class)->finalize (object);
@@ -141,7 +104,6 @@ gdu_create_linux_md_dialog_get_property (GObject    *object,
                                          GParamSpec *pspec)
 {
         GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (object);
-        GPtrArray *p;
 
         switch (property_id) {
         case PROP_POOL:
@@ -169,9 +131,7 @@ gdu_create_linux_md_dialog_get_property (GObject    *object,
                 break;
 
         case PROP_DRIVES:
-                p = gdu_create_linux_md_dialog_get_drives (dialog);
-                g_value_set_boxed (value, p);
-                g_ptr_array_unref (p);
+                g_value_set_boxed (value, gdu_create_linux_md_dialog_get_drives (dialog));
                 break;
 
         default:
@@ -379,17 +339,9 @@ gdu_create_linux_md_dialog_get_stripe_size (GduCreateLinuxMdDialog  *dialog)
 GPtrArray *
 gdu_create_linux_md_dialog_get_drives (GduCreateLinuxMdDialog  *dialog)
 {
-        GPtrArray *p;
-        GList *l;
-
         g_return_val_if_fail (GDU_IS_CREATE_LINUX_MD_DIALOG (dialog), NULL);
 
-        p = g_ptr_array_new_with_free_func (g_object_unref);
-        for (l = dialog->priv->selected_drives; l != NULL; l = l->next) {
-                GduPresentable *drive = GDU_PRESENTABLE (l->data);
-                g_ptr_array_add (p, g_object_ref (drive));
-        }
-        return p;
+        return gdu_disk_selection_widget_get_selected_drives (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -496,369 +448,33 @@ on_name_entry_activated (GtkWidget *combo_box,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-drive_is_selected (GduCreateLinuxMdDialog *dialog,
-                   GduPresentable         *drive)
-{
-        return g_list_find (dialog->priv->selected_drives, drive) != NULL;
-}
-
-static void
-drive_remove (GduCreateLinuxMdDialog *dialog,
-              GduPresentable         *drive)
-{
-        GList *l;
-
-        l = g_list_find (dialog->priv->selected_drives, drive);
-        if (l != NULL) {
-                g_object_unref (l->data);
-                dialog->priv->selected_drives = g_list_delete_link (dialog->priv->selected_drives,
-                                                                    l);
-        }
-}
-
-static void
-drive_add (GduCreateLinuxMdDialog *dialog,
-           GduPresentable         *drive)
-{
-        g_return_if_fail (!drive_is_selected (dialog, drive));
-
-        dialog->priv->selected_drives = g_list_prepend (dialog->priv->selected_drives,
-                                                        g_object_ref (drive));
-}
-
-
-static void
-drive_toggle (GduCreateLinuxMdDialog *dialog,
-              GduPresentable         *drive)
-{
-        if (drive_is_selected (dialog, drive)) {
-                drive_remove (dialog, drive);
-        } else {
-                drive_add (dialog, drive);
-        }
-}
-
-
-static void
-toggle_data_func (GtkCellLayout   *cell_layout,
-                  GtkCellRenderer *renderer,
-                  GtkTreeModel    *tree_model,
-                  GtkTreeIter     *iter,
-                  gpointer         user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        GduPresentable *p;
-        gboolean is_toggled;
-
-        gtk_tree_model_get (tree_model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        is_toggled = drive_is_selected (dialog, p);
-
-        g_object_set (renderer,
-                      "active", is_toggled,
-                      NULL);
-
-        g_object_unref (p);
-}
-
-static void
-on_disk_toggled (GtkCellRendererToggle *renderer,
-                 const gchar           *path_string,
-                 gpointer               user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        GtkTreeIter iter;
-        GtkTreePath *path;
-        GduPresentable *p;
-
-        if (!gtk_tree_model_get_iter_from_string (GTK_TREE_MODEL (dialog->priv->model),
-                                                  &iter,
-                                                  path_string))
-                goto out;
-
-        gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->model),
-                            &iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        drive_toggle (dialog, p);
-
-        path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->priv->model),
-                                        &iter);
-        gtk_tree_model_row_changed (GTK_TREE_MODEL (dialog->priv->model),
-                                    path,
-                                    &iter);
-        gtk_tree_path_free (path);
-
-        g_object_unref (p);
-
-        update (dialog);
-
- out:
-        ;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-disk_name_data_func (GtkCellLayout   *cell_layout,
-                     GtkCellRenderer *renderer,
-                     GtkTreeModel    *tree_model,
-                     GtkTreeIter     *iter,
-                     gpointer         user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        GtkTreeSelection *tree_selection;
-        gchar *name;
-        gchar *vpd_name;
-        gchar *desc;
-        gchar *markup;
-        GtkStyle *style;
-        GdkColor desc_gdk_color = {0};
-        gchar *desc_color;
-        GtkStateType state;
-
-        tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->tree_view));
-
-        gtk_tree_model_get (tree_model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
-                            GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, &vpd_name,
-                            GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, &desc,
-                            -1);
-
-        /* This color business shouldn't be this hard... */
-        style = gtk_widget_get_style (GTK_WIDGET (dialog->priv->tree_view));
-        if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
-                if (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (dialog->priv->tree_view)))
-                        state = GTK_STATE_SELECTED;
-                else
-                        state = GTK_STATE_ACTIVE;
-        } else {
-                state = GTK_STATE_NORMAL;
-        }
-#define BLEND_FACTOR 0.7
-        desc_gdk_color.red   = style->text[state].red   * BLEND_FACTOR +
-                               style->base[state].red   * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.green = style->text[state].green * BLEND_FACTOR +
-                               style->base[state].green * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.blue  = style->text[state].blue  * BLEND_FACTOR +
-                               style->base[state].blue  * (1.0 - BLEND_FACTOR);
-#undef BLEND_FACTOR
-        desc_color = g_strdup_printf ("#%02x%02x%02x",
-                                      (desc_gdk_color.red >> 8),
-                                      (desc_gdk_color.green >> 8),
-                                      (desc_gdk_color.blue >> 8));
-
-        markup = g_strdup_printf ("<b>%s</b>\n"
-                                  "<span fgcolor=\"%s\"><small>%s\n%s</small></span>",
-                                  name,
-                                  desc_color,
-                                  vpd_name,
-                                  desc);
-
-        g_object_set (renderer,
-                      "markup", markup,
-                      NULL);
-
-        g_free (name);
-        g_free (vpd_name);
-        g_free (desc);
-        g_free (markup);
-        g_free (desc_color);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-notes_data_func (GtkCellLayout   *cell_layout,
-                 GtkCellRenderer *renderer,
-                 GtkTreeModel    *tree_model,
-                 GtkTreeIter     *iter,
-                 gpointer         user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        GduPresentable *p;
-        gchar *markup;
-        gchar *s;
-        gint width;
-
-        gtk_tree_model_get (tree_model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        if (GDU_IS_DRIVE (p)) {
-                GduDevice *d;
-                guint64 largest_segment;
-                gboolean whole_disk_is_uninitialized;
-                guint num_partitions;
-                gboolean is_partitioned;
-
-                d = gdu_presentable_get_device (p);
-
-                num_partitions = 0;
-                is_partitioned = FALSE;
-                if (gdu_device_is_partition_table (d)) {
-                        is_partitioned = TRUE;
-                        num_partitions = gdu_device_partition_table_get_count (d);
-                }
-
-                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                 &whole_disk_is_uninitialized,
-                                                                 &largest_segment,
-                                                                 NULL));
-
-
-                if (drive_is_selected (dialog, p)) {
-                        guint num_disks;
-                        guint num_available_disks;
-                        guint64 component_size;
-                        guint64 array_size;
-
-                        get_sizes (dialog,
-                                   &num_disks,
-                                   &num_available_disks,
-                                   &component_size,
-                                   &array_size,
-                                   NULL,  /* max_component_size */
-                                   NULL); /* max_array_size */
-
-
-                        if (array_size > 1000 * 1000) {
-                                gchar *strsize;
-                                strsize = gdu_util_get_size_for_display (component_size, FALSE, FALSE);
-
-                                if (whole_disk_is_uninitialized) {
-                                        /* Translators: This is shown in the Details column.
-                                         * %s is the component size e.g. '42 GB'.
-                                         */
-                                        markup = g_strdup_printf (_("The disk will be partitioned and a %s partition "
-                                                                    "will be created"),
-                                                                  strsize);
-                                } else {
-                                        /* Translators: This is shown in the Details column.
-                                         * %s is the component size e.g. '42 GB'.
-                                         */
-                                        markup = g_strdup_printf (_("A %s partition will be created"),
-                                                                  strsize);
-                                }
-                                g_free (strsize);
-                        } else {
-                                if (whole_disk_is_uninitialized) {
-                                        /* Translators: This is shown in the Details column. */
-                                        markup = g_strdup (_("The disk will be partitioned and a partition "
-                                                             "will be created"));
-                                } else {
-                                        /* Translators: This is shown in the Details column. */
-                                        markup = g_strdup (_("A partition will be created"));
-                                }
-                        }
-
-                } else {
-                        gchar *strsize;
-
-                        strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
-
-                        if (whole_disk_is_uninitialized) {
-                                /* Translators: This is shown in the Details column.
-                                 * %s is the component size e.g. '42 GB'.
-                                 */
-                                markup = g_strdup_printf (_("Whole disk is uninitialized. %s available for use"),
-                                                          strsize);
-                        } else {
-                                if (!is_partitioned) {
-                                        /* Translators: This is shown in the Details column.
-                                         * %s is the component size e.g. '42 GB'.
-                                         */
-                                        markup = g_strdup_printf (_("%s available for use"), strsize);
-                                } else {
-                                        if (num_partitions == 0) {
-                                                /* Translators: This is shown in the Details column.
-                                                 * %s is the component size e.g. '42 GB'.
-                                                 */
-                                                markup = g_strdup_printf (_("The disk has no partitions. "
-                                                                            "%s available for use"),
-                                                                          strsize);
-                                        } else {
-                                                s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                                "The disk has %d partition",
-                                                                                "The disk has %d partitions",
-                                                                                num_partitions),
-                                                                     num_partitions);
-                                                /* Translators: This is shown in the Details column.
-                                                 * First %s is the dngettext() result of "The disk has %d partitions.".
-                                                 * Second %s is the component size e.g. '42 GB'.
-                                                 */
-                                                markup = g_strdup_printf (_("%s. Largest contiguous free block is %s"),
-                                                                          s,
-                                                                          strsize);
-                                                g_free (s);
-                                        }
-                                }
-                        }
-
-                        g_free (strsize);
-                }
-
-                g_object_unref (d);
-        } else {
-                markup = g_strdup ("");
-        }
-
-
-        width = gtk_tree_view_column_get_fixed_width (GTK_TREE_VIEW_COLUMN (cell_layout));
-        g_warn_if_fail (width > 12);
-        width -= 12;
-
-        s = g_strconcat ("<small>",
-                         markup,
-                         "</small>",
-                         NULL);
-        g_object_set (renderer,
-                      "markup", s,
-                      "wrap-width", width,
-                      NULL);
-        g_free (s);
-
-        g_free (markup);
-        g_object_unref (p);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static void
 on_size_widget_changed (GduSizeWidget *size_widget,
                         gpointer       user_data)
 {
         GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        GList *l;
+        guint64 component_size;
+
+        get_sizes (dialog,
+                   NULL,
+                   NULL,
+                   &component_size,
+                   NULL,
+                   NULL,
+                   NULL);
+
+        gdu_disk_selection_widget_set_component_size (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget),
+                                                      component_size);
 
         update (dialog);
+}
 
-        /* need to trigger row-changed for the selected disks since
-         * component size is listed in the "Details" column
-         */
-        for (l = dialog->priv->selected_drives; l != NULL; l = l->next) {
-                GduPresentable *p = GDU_PRESENTABLE (l->data);
-                GtkTreePath *path;
-                GtkTreeIter iter;
-
-                gdu_pool_tree_model_get_iter_for_presentable (dialog->priv->model,
-                                                              p,
-                                                              &iter);
-
-                path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->priv->model),
-                                                &iter);
-                gtk_tree_model_row_changed (GTK_TREE_MODEL (dialog->priv->model),
-                                            path,
-                                            &iter);
-                gtk_tree_path_free (path);
-        }
+static void
+on_disk_selection_widget_changed (GduDiskSelectionWidget *widget,
+                                  gpointer                user_data)
+{
+        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
+        update (dialog);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -882,6 +498,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gboolean ret;
         GtkWidget *align;
         gchar *s;
+        GtkWidget *disk_selection_widget;
 
         ret = FALSE;
 
@@ -1057,156 +674,33 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 
         /* -------------------------------------------------------------------------------- */
 
-        /* Tree view for showing selected volumes */
-        GtkWidget *tree_view;
-        GtkWidget *scrolled_window;
-        GtkCellRenderer *renderer;
-        GtkTreeViewColumn *column;
-        GPtrArray *pools;
-
-        pools = g_ptr_array_new ();
-        g_ptr_array_add (pools, dialog->priv->pool);
-        dialog->priv->model = gdu_pool_tree_model_new (pools,
-                                                       NULL,
-                                                       GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES |
-                                                       GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES);
-        g_ptr_array_unref (pools);
-
-        tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->priv->model));
-        gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree_view), TRUE);
-        dialog->priv->tree_view = tree_view;
-
-        column = gtk_tree_view_column_new ();
-        /* Tranlators: this string is used for the column header */
-        gtk_tree_view_column_set_title (column, _("Use"));
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        renderer = gtk_cell_renderer_toggle_new ();
-        gtk_tree_view_column_pack_start (column,
-                                         renderer,
-                                         FALSE);
-        g_signal_connect (renderer,
-                          "toggled",
-                          G_CALLBACK (on_disk_toggled),
-                          dialog);
-        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
-                                            renderer,
-                                            toggle_data_func,
-                                            dialog,
-                                            NULL);
-
-
-        column = gtk_tree_view_column_new ();
-        /* Tranlators: this string is used for the column header */
-        gtk_tree_view_column_set_title (column, _("Disk"));
-        gtk_tree_view_column_set_expand (column, TRUE);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        renderer = gtk_cell_renderer_pixbuf_new ();
-        gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column,
-                                             renderer,
-                                             "gicon", GDU_POOL_TREE_MODEL_COLUMN_ICON,
-                                             NULL);
-        g_object_set (renderer,
-                      "stock-size", GTK_ICON_SIZE_DIALOG,
-                      NULL);
-
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_start (column, renderer, TRUE);
-        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
-                                            renderer,
-                                            disk_name_data_func,
-                                            dialog,
-                                            NULL);
-
-        column = gtk_tree_view_column_new ();
-        /* Tranlators: this string is used for the column header */
-        gtk_tree_view_column_set_title (column, _("Details"));
-        gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-        gtk_tree_view_column_set_min_width (column, 170);
-        gtk_tree_view_column_set_max_width (column, 170);
-        gtk_tree_view_column_set_fixed_width (column, 170);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-        renderer = gtk_cell_renderer_text_new ();
-        gtk_tree_view_column_pack_end (column, renderer, FALSE);
-        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
-                                            renderer,
-                                            notes_data_func,
-                                            dialog,
-                                            NULL);
-        g_object_set (renderer,
-                      "xalign", 0.0,
-                      "yalign", 0.0,
-                      "wrap-mode", PANGO_WRAP_WORD_CHAR,
-                      NULL);
-
-        gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree_view), FALSE);
-        gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (tree_view), 16);
-        gtk_tree_view_expand_all (GTK_TREE_VIEW (tree_view));
-
-
-        scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                        GTK_POLICY_NEVER,
-                                        GTK_POLICY_AUTOMATIC);
-        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                             GTK_SHADOW_IN);
-
-        gtk_container_add (GTK_CONTAINER (scrolled_window), tree_view);
+        disk_selection_widget = gdu_disk_selection_widget_new (dialog->priv->pool,
+                                                               NULL,
+                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE |
+                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE);
+        dialog->priv->disk_selection_widget = disk_selection_widget;
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        s = g_strconcat ("<b>", _("Disks"), "</b>", NULL);
-        gtk_label_set_markup (GTK_LABEL (label), s);
+        s = g_strconcat ("<b>", _("_Disks"), "</b>", NULL);
+        gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), s);
         g_free (s);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), disk_selection_widget);
 
         vbox2 = gtk_vbox_new (FALSE, 12);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 6, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
-
-        gtk_box_pack_start (GTK_BOX (vbox2), scrolled_window, TRUE, TRUE, 0);
-
-        /* -------------------------------------------------------------------------------- */
-
-
+        gtk_box_pack_start (GTK_BOX (vbox2), disk_selection_widget, TRUE, TRUE, 0);
 
         /* -------------------------------------------------------------------------------- */
 
         gtk_widget_grab_focus (dialog->priv->name_entry);
         gtk_editable_select_region (GTK_EDITABLE (dialog->priv->name_entry), 0, 1000);
 
-
         /* -------------------------------------------------------------------------------- */
-
-        g_signal_connect (dialog->priv->pool,
-                          "presentable-added",
-                          G_CALLBACK (on_presentable_added),
-                          dialog);
-        g_signal_connect (dialog->priv->pool,
-                          "presentable-removed",
-                          G_CALLBACK (on_presentable_removed),
-                          dialog);
-        g_signal_connect (dialog->priv->pool,
-                          "presentable-changed",
-                          G_CALLBACK (on_presentable_changed),
-                          dialog);
-        g_signal_connect (dialog->priv->model,
-                          "row-changed",
-                          G_CALLBACK (on_row_changed),
-                          dialog);
-        g_signal_connect (dialog->priv->model,
-                          "row-deleted",
-                          G_CALLBACK (on_row_deleted),
-                          dialog);
-        g_signal_connect (dialog->priv->model,
-                          "row-inserted",
-                          G_CALLBACK (on_row_inserted),
-                          dialog);
 
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
@@ -1233,95 +727,16 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gtk_widget_set_size_request (GTK_WIDGET (dialog), 500, 550);
         gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
+        g_signal_connect (disk_selection_widget,
+                          "changed",
+                          G_CALLBACK (on_disk_selection_widget_changed),
+                          dialog);
+
         if (G_OBJECT_CLASS (gdu_create_linux_md_dialog_parent_class)->constructed != NULL)
                 G_OBJECT_CLASS (gdu_create_linux_md_dialog_parent_class)->constructed (object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_presentable_added (GduPool          *pool,
-                      GduPresentable   *presentable,
-                      gpointer          user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        update (dialog);
-}
-
-static void
-on_presentable_removed (GduPool          *pool,
-                        GduPresentable   *presentable,
-                        gpointer          user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-
-        if (drive_is_selected (dialog, presentable))
-                drive_remove (dialog, presentable);
-
-        update (dialog);
-}
-
-static void
-on_presentable_changed (GduPool          *pool,
-                        GduPresentable   *presentable,
-                        gpointer          user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        update (dialog);
-}
-
-static void
-on_row_changed (GtkTreeModel *tree_model,
-                GtkTreePath  *path,
-                GtkTreeIter  *iter,
-                gpointer      user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        update (dialog);
-}
-
-static void
-on_row_deleted (GtkTreeModel *tree_model,
-                GtkTreePath  *path,
-                gpointer      user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        update (dialog);
-}
-
-static void
-on_row_inserted (GtkTreeModel *tree_model,
-                 GtkTreePath  *path,
-                 GtkTreeIter  *iter,
-                 gpointer      user_data)
-{
-        GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (user_data);
-        update (dialog);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static gboolean
-count_num_available_disks_func (GtkTreeModel *model,
-                                GtkTreePath  *path,
-                                GtkTreeIter  *iter,
-                                gpointer      data)
-{
-        GduPresentable *p;
-        guint *num_available_disks = data;
-
-        gtk_tree_model_get (model,
-                            iter,
-                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                            -1);
-
-        if (GDU_IS_DRIVE (p))
-                *num_available_disks = *num_available_disks + 1;
-
-        g_object_unref (p);
-
-        return FALSE;
-}
 
 static void
 get_sizes (GduCreateLinuxMdDialog *dialog,
@@ -1339,29 +754,17 @@ get_sizes (GduCreateLinuxMdDialog *dialog,
         guint64 max_component_size;
         guint64 max_array_size;
         gdouble factor;
-        GList *l;
+        GPtrArray *selected_disks;
 
-        num_disks = 0;
-        num_available_disks = 0;
-        max_component_size = G_MAXUINT64;
+        selected_disks = gdu_disk_selection_widget_get_selected_drives (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
 
-        for (l = dialog->priv->selected_drives; l != NULL; l = l->next) {
-                GduPresentable *p = GDU_PRESENTABLE (l->data);
-                guint64 largest_segment;
-                gboolean whole_disk_is_uninitialized;
+        num_disks = selected_disks->len;
+        num_available_disks = gdu_disk_selection_widget_get_num_available_disks (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
+        max_component_size = gdu_disk_selection_widget_get_largest_segment_for_selected (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
 
-                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                 &whole_disk_is_uninitialized,
-                                                                 &largest_segment,
-                                                                 NULL));
-
-                if (largest_segment < max_component_size)
-                        max_component_size = largest_segment;
-
-                num_disks++;
-        }
-        if (max_component_size == G_MAXUINT64)
-                max_component_size = 0;
+        //g_print ("num selected disks:           %d\n", num_disks);
+        //g_print ("num available disks:          %d\n", num_available_disks);
+        //g_print ("largest segment for selected: %" G_GUINT64_FORMAT "\n", max_component_size);
 
         factor = 0.0;
         if (num_disks > 1) {
@@ -1386,10 +789,6 @@ get_sizes (GduCreateLinuxMdDialog *dialog,
         else
                 component_size = 0;
 
-        gtk_tree_model_foreach (GTK_TREE_MODEL (dialog->priv->model),
-                                count_num_available_disks_func,
-                                &num_available_disks);
-
         if (out_num_disks != NULL)
                 *out_num_disks = num_disks;
 
@@ -1407,6 +806,8 @@ get_sizes (GduCreateLinuxMdDialog *dialog,
 
         if (out_max_array_size != NULL)
                 *out_max_array_size = max_array_size;
+
+        g_ptr_array_unref (selected_disks);
 }
 
 static void
@@ -1420,8 +821,11 @@ update (GduCreateLinuxMdDialog *dialog)
         guint64 max_array_size;
         gboolean can_create;
         gchar *level_str;
-        gboolean size_widget_was_sensitive;
         guint64 array_size;
+        guint64 old_size;
+        guint64 old_max_size;
+        gboolean was_at_max;
+        gboolean was_at_zero;
 
         tip_text = NULL;
         tip_stock_icon = NULL;
@@ -1437,17 +841,17 @@ update (GduCreateLinuxMdDialog *dialog)
 
         level_str = gdu_linux_md_get_raid_level_for_display (dialog->priv->level, FALSE);
 
-        size_widget_was_sensitive = gtk_widget_get_sensitive (dialog->priv->size_widget);
+        old_size = gdu_size_widget_get_size (GDU_SIZE_WIDGET (dialog->priv->size_widget));
+        old_max_size = gdu_size_widget_get_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget));
+        was_at_zero = (old_size == 0);
+        was_at_max = (old_size == old_max_size);
 
         if (num_available_disks < dialog->priv->num_disks_needed) {
                 gtk_widget_set_sensitive (dialog->priv->size_label, FALSE);
                 gtk_widget_set_sensitive (dialog->priv->size_widget, FALSE);
-                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              2000 * 1000);
-                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              1000 * 1000);
-                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                          1000 * 1000);
+                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 0);
+                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 0);
+                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 100);
 
                 if (tip_text == NULL) {
                         /* Translators: This is for the tip text shown in the dialog.
@@ -1462,12 +866,9 @@ update (GduCreateLinuxMdDialog *dialog)
 
                 gtk_widget_set_sensitive (dialog->priv->size_label, FALSE);
                 gtk_widget_set_sensitive (dialog->priv->size_widget, FALSE);
-                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              2000 * 1000);
-                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              1000 * 1000);
-                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                          1000 * 1000);
+                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 0);
+                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 0);
+                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 100);
 
                 if (tip_text == NULL) {
                         if (num_disks == 0) {
@@ -1489,16 +890,10 @@ update (GduCreateLinuxMdDialog *dialog)
                 }
 
         } else {
-
                 gtk_widget_set_sensitive (dialog->priv->size_label, TRUE);
                 gtk_widget_set_sensitive (dialog->priv->size_widget, TRUE);
-                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              max_array_size);
-                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                              1000 * 1000);
-                if (!size_widget_was_sensitive)
-                        gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
-                                                  max_array_size);
+                gdu_size_widget_set_min_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), 0);
+                gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), max_array_size);
 
                 if (tip_text == NULL) {
                         gchar *strsize;
@@ -1520,6 +915,15 @@ update (GduCreateLinuxMdDialog *dialog)
                         g_free (strsize);
                 }
         }
+
+        /* Always go to max size if
+         *
+         *  - we were at size 0
+         *  - we were at max and e.g. a disk was added
+         */
+        if (max_array_size > 0 &&
+            (max_array_size > old_max_size && (was_at_zero || was_at_max)))
+                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), max_array_size);
 
         if (g_strcmp0 (dialog->priv->level, "raid0") == 0 ||
             g_strcmp0 (dialog->priv->level, "raid5") == 0 ||

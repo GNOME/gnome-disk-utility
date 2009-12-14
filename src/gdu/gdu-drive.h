@@ -69,6 +69,7 @@ struct _GduDriveClass
         gboolean   (*has_unallocated_space) (GduDrive        *drive,
                                              gboolean        *out_whole_disk_is_unitialized,
                                              guint64         *out_largest_segment,
+                                             guint64         *out_total_free,
                                              GduPresentable **out_presentable);
 
 };
@@ -90,6 +91,7 @@ void        gdu_drive_deactivate            (GduDrive              *drive,
 gboolean    gdu_drive_has_unallocated_space (GduDrive        *drive,
                                              gboolean        *out_whole_disk_is_unitialized,
                                              guint64         *out_largest_segment,
+                                             guint64         *out_total_free,
                                              GduPresentable **out_presentable);
 
 gboolean    gdu_drive_count_mbr_partitions  (GduDrive        *drive,

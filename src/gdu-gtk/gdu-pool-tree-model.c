@@ -495,7 +495,7 @@ should_include_presentable (GduPoolTreeModel *model,
 
         if (GDU_IS_DRIVE (presentable)) {
                 if ((model->priv->flags & GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES) &&
-                    (!gdu_drive_has_unallocated_space (GDU_DRIVE (presentable), NULL, NULL, NULL)))
+                    (!gdu_drive_has_unallocated_space (GDU_DRIVE (presentable), NULL, NULL, NULL, NULL)))
                         goto out;
         }
 

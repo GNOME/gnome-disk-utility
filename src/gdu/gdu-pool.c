@@ -1795,7 +1795,7 @@ gdu_pool_new_for_address (const gchar     *ssh_user_name,
                 pool->priv->ssh_address  = g_strdup (ssh_address);
 
                 /* Watch the ssh process */
-                g_print ("pid is %d\n", pool->priv->ssh_pid);
+                //g_print ("pid is %d\n", pool->priv->ssh_pid);
                 pool->priv->ssh_child_watch_id = g_child_watch_add (pool->priv->ssh_pid,
                                                                     on_ssh_process_terminated,
                                                                     pool);

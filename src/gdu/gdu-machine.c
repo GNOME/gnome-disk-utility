@@ -49,6 +49,7 @@
 struct _GduMachinePrivate
 {
         GduPool *pool;
+        gchar *id;
 };
 
 static GObjectClass *parent_class = NULL;
@@ -63,6 +64,8 @@ static void
 gdu_machine_finalize (GObject *object)
 {
         GduMachine *machine = GDU_MACHINE (object);
+
+        g_free (machine->priv->id);
 
         if (machine->priv->pool != NULL)
                 g_object_unref (machine->priv->pool);
@@ -93,15 +96,34 @@ GduMachine *
 _gdu_machine_new (GduPool *pool)
 {
         GduMachine *machine;
+        const gchar *ssh_user_name;
+        const gchar *ssh_address;
+        static guint count = 0;
+
         machine = GDU_MACHINE (g_object_new (GDU_TYPE_MACHINE, NULL));
         machine->priv->pool = g_object_ref (pool);
+
+        ssh_user_name = gdu_pool_get_ssh_user_name (machine->priv->pool);
+        if (ssh_user_name == NULL)
+                ssh_user_name = g_get_user_name ();
+        ssh_address = gdu_pool_get_ssh_address (machine->priv->pool);
+
+        if (ssh_address != NULL) {
+                machine->priv->id = g_strdup_printf ("__machine_root_%d_for_%s@%s__",
+                                                     count++,
+                                                     ssh_user_name,
+                                                     ssh_address);
+        } else {
+                machine->priv->id = g_strdup_printf ("__machine_root_%d__", count++);
+        }
         return machine;
 }
 
 static const gchar *
 gdu_machine_get_id (GduPresentable *presentable)
 {
-        return "__root__"; /* TODO: include address? */
+        GduMachine *machine = GDU_MACHINE (presentable);
+        return machine->priv->id;
 }
 
 static GduDevice *
@@ -153,7 +175,6 @@ gdu_machine_get_vpd_name (GduPresentable *presentable)
         } else {
                 /* TODO: include IP address */
                 ret = g_strdup_printf ("%s@%s", ssh_user_name, ssh_address);
-
         }
 
         /* TODO: include udisks and OS version numbers? */

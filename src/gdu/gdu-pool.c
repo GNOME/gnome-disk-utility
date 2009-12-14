@@ -867,7 +867,7 @@ recompute_presentables (GduPool *pool)
         new_presentables = NULL;
         new_partitioned_drives = NULL;
 
-        new_presentables = g_list_prepend (new_presentables, pool->priv->machine);
+        new_presentables = g_list_prepend (new_presentables, g_object_ref (pool->priv->machine));
 
         hash_map_from_drive_to_extended_partition = g_hash_table_new_full ((GHashFunc) gdu_presentable_hash,
                                                                            (GEqualFunc) gdu_presentable_equals,

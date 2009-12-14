@@ -374,7 +374,7 @@ find_iter_by_presentable_foreach (GtkTreeModel *model,
                             iter,
                             GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &presentable,
                             -1);
-        if (presentable == fibd_data->presentable) {
+        if (g_strcmp0 (gdu_presentable_get_id (presentable), gdu_presentable_get_id (fibd_data->presentable)) == 0) {
                 fibd_data->found = TRUE;
                 fibd_data->iter = *iter;
                 ret = TRUE;

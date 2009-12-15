@@ -48,6 +48,8 @@ struct GduCreateLinuxMdDialogPrivate
 
         GtkWidget *disk_selection_widget;
 
+        GtkWidget *use_whole_disk_check_button;
+
         GtkWidget *tip_container;
         GtkWidget *tip_image;
         GtkWidget *tip_label;
@@ -499,6 +501,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         GtkWidget *align;
         gchar *s;
         GtkWidget *disk_selection_widget;
+        GtkWidget *check_button;
 
         ret = FALSE;
 
@@ -694,6 +697,13 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
         gtk_box_pack_start (GTK_BOX (vbox2), disk_selection_widget, TRUE, TRUE, 0);
+
+        /* -------------------------------------------------------------------------------- */
+
+        check_button = gtk_check_button_new_with_mnemonic (_("Use entire disks instead of _partitions"));
+        gtk_widget_set_tooltip_text (check_button, _("If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."));
+        dialog->priv->use_whole_disk_check_button = check_button;
+        gtk_box_pack_start (GTK_BOX (vbox2), check_button, FALSE, FALSE, 0);
 
         /* -------------------------------------------------------------------------------- */
 

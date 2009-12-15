@@ -30,6 +30,9 @@
 #include "gdu-disk-selection-widget.h"
 #include "gdu-size-widget.h"
 
+#define DETAILS_WIDTH 180
+#define DETAILS_MARGIN 12
+
 struct GduDiskSelectionWidgetPrivate
 {
         GduPool *pool;
@@ -585,6 +588,8 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
                                   vpd_name);
 
         g_object_set (renderer,
+                      "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                      "ellipsize-set", TRUE,
                       "markup", markup,
                       NULL);
 
@@ -683,7 +688,6 @@ notes_data_func (GtkCellLayout   *cell_layout,
         GduPresentable *p;
         gchar *markup;
         gchar *s;
-        gint width;
 
         gtk_tree_model_get (tree_model,
                             iter,
@@ -827,17 +831,13 @@ notes_data_func (GtkCellLayout   *cell_layout,
                 markup = g_strdup ("");
         }
 
-        width = gtk_tree_view_column_get_fixed_width (GTK_TREE_VIEW_COLUMN (cell_layout));
-        g_warn_if_fail (width > 12);
-        width -= 12;
-
         s = g_strconcat ("<small>",
                          markup,
                          "</small>",
                          NULL);
         g_object_set (renderer,
                       "markup", s,
-                      "wrap-width", width,
+                      "wrap-width", DETAILS_WIDTH - DETAILS_MARGIN,
                       NULL);
         g_free (s);
 
@@ -927,14 +927,14 @@ gdu_disk_selection_widget_constructed (GObject *object)
         column = gtk_tree_view_column_new ();
         /* Tranlators: this string is used for the column header */
         gtk_tree_view_column_set_title (column, _("Storage Devices"));
+        gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+        gtk_tree_view_column_set_expand (column, TRUE);
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
         renderer = gtk_cell_renderer_toggle_new ();
         if (! (widget->priv->flags & GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE))
                 gtk_cell_renderer_toggle_set_radio (GTK_CELL_RENDERER_TOGGLE (renderer), TRUE);
-        gtk_tree_view_column_pack_start (column,
-                                         renderer,
-                                         FALSE);
+        gtk_tree_view_column_pack_start (column, renderer, FALSE);
         g_signal_connect (renderer,
                           "toggled",
                           G_CALLBACK (on_disk_toggled),
@@ -967,9 +967,9 @@ gdu_disk_selection_widget_constructed (GObject *object)
         /* Tranlators: this string is used for the column header */
         gtk_tree_view_column_set_title (column, _("Details"));
         gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-        gtk_tree_view_column_set_min_width (column, 170);
-        gtk_tree_view_column_set_max_width (column, 170);
-        gtk_tree_view_column_set_fixed_width (column, 170);
+        gtk_tree_view_column_set_min_width (column, DETAILS_WIDTH);
+        gtk_tree_view_column_set_max_width (column, DETAILS_WIDTH);
+        gtk_tree_view_column_set_fixed_width (column, DETAILS_WIDTH);
         gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
         renderer = gtk_cell_renderer_text_new ();
@@ -986,6 +986,7 @@ gdu_disk_selection_widget_constructed (GObject *object)
                       NULL);
 
         gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree_view), FALSE);
+        gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (tree_view), TRUE);
         gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (tree_view), 16);
         gtk_tree_view_expand_all (GTK_TREE_VIEW (tree_view));
 

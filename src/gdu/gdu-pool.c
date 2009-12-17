@@ -1725,8 +1725,12 @@ gdu_pool_new (void)
         error = NULL;
         pool = gdu_pool_new_for_address (NULL, NULL, &error);
         if (pool == NULL) {
-                g_printerr ("Error constructing pool: %s\n", error->message);
-                g_error_free (error);
+                g_printerr ("======================================================================\n"
+                            "Error constructing GduPool: %s\n"
+                            "\n"
+                            "This error suggests there's a problem with your udisks or D-Bus installation.\n"
+                            "======================================================================\n",
+                            error->message);
         }
 
         return pool;
@@ -1980,6 +1984,12 @@ gdu_pool_new_for_address (const gchar     *ssh_user_name,
 
 error:
         g_object_unref (pool);
+        if (error != NULL && *error == NULL) {
+                g_set_error (error,
+                             GDU_ERROR,
+                             GDU_ERROR_FAILED,
+                             "(unspecified error)");
+        }
         return NULL;
 }
 

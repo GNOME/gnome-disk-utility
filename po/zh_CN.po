@@ -5,25 +5,27 @@
 # Hinker <hinkerliu@163.com>, 2009.
 # Aron Xu <happyaron.xu@gmail.com>, 2009.
 # Fujianwzh <fujianwzh@gmail.com>, 2009.
-#: ../src/gdu-gtk/gdu-error-dialog.c:172
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-12-07 20:29+0000\n"
-"PO-Revision-Date: 2009-11-30 20:15+0100\n"
-"Last-Translator: Tao Wei <weitao1979@gmail.com>\n"
+"POT-Creation-Date: 2009-12-17 19:02+0000\n"
+"PO-Revision-Date: 2009-12-25 17:36+0800\n"
+"Last-Translator: 苏运强 <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Poedit-Language: Chinese\n"
-"X-Poedit-Country: CHINA\n"
 
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:721
-#: ../src/palimpsest/gdu-shell.c:983
+#. Translators: Window title when no item is selected.
+#.
+#. Translators: Window title when the item representing the local machine is selected.
+#.
+#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:264
+#: ../src/palimpsest/gdu-shell.c:316 ../src/palimpsest/gdu-shell.c:891
+#: ../src/palimpsest/gdu-shell.c:1198
 msgid "Disk Utility"
 msgstr "磁盘实用工具"
 
@@ -71,8 +73,8 @@ msgstr "启动磁盘实用工具出错"
 msgid "Device to format"
 msgstr "要格式化的设备"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:123
-#: ../src/palimpsest/gdu-main.c:124
+#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:127
+#: ../src/palimpsest/gdu-main.c:128
 msgid "DEVICE"
 msgstr "设备"
 
@@ -162,707 +164,20 @@ msgstr "挂载卷错误"
 msgid "Error storing passphrase in keyring"
 msgstr "储存口令到钥匙圈时出错"
 
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
-#, fuzzy
-#| msgid "Maximum Size"
-msgid "Maximum Partition Size"
-msgstr "最大容量"
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
+#, c-format
+msgid "Add Component to %s"
+msgstr "添加组件到 %s"
 
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
-#, fuzzy
-#| msgid "The maximum size that can be selected"
-msgid "The maximum possible partition size"
-msgstr "可被选择的最大容量"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
-#, fuzzy
-#| msgid "Partitioned"
-msgid "Partition Size"
-msgstr "已分区"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
-#, fuzzy
-#| msgid "The requested stripe size of the array"
-msgid "The requested partition size"
-msgstr "被请求的阵列的条带大小"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
-msgid "C_reate"
-msgstr "创建(_R)"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
-msgid "_Size:"
-msgstr "大小(_S):"
-
-#. Translators: The %s is the name of the drive
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
-#, fuzzy, c-format
-#| msgid "Create partition"
-msgid "Create partition on %s"
-msgstr "创建分区"
-
-#: ../src/gdu-gtk/gdu-partition-dialog.c:100
-#, fuzzy
-#| msgid "MBR Partition Scheme"
-msgid "Partitioning Scheme"
-msgstr "MBR 分区方案"
-
-#: ../src/gdu-gtk/gdu-partition-dialog.c:101
-#, fuzzy
-#| msgid "The selected filesystem type"
-msgid "The selected partitioning scheme"
-msgstr "选定的文件系统类型"
-
-#. Translators: Format is a verb here. The %s is the name of the volume
-#: ../src/gdu-gtk/gdu-partition-dialog.c:208
-#: ../src/gdu-gtk/gdu-format-dialog.c:499
-#, fuzzy, c-format
-#| msgid "Format %s (%s)"
-msgid "Format %s"
-msgstr "格式化 %s (%s)"
-
-#. Translators: Format is used as a verb here
-#: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/gdu-gtk/gdu-format-dialog.c:238
-#: ../src/palimpsest/gdu-section-drive.c:588
-#: ../src/palimpsest/gdu-section-volumes.c:356
-msgid "_Format"
-msgstr "格式化(_F)"
-
-#. Translators: 'scheme' means 'partitioning scheme' here.
-#: ../src/gdu-gtk/gdu-partition-dialog.c:248
-msgid "_Scheme:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:214
-msgid "Pool"
-msgstr "池"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:215
-msgid "The pool of devices"
-msgstr "设备池"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
-msgid "RAID Level"
-msgstr "RAID 级别"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:231
-msgid "The selected RAID level"
-msgstr "选定的 RAID 级别"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
-msgid "Name"
-msgstr "名称"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
-msgid "The requested name for the array"
-msgstr "被请求的阵列的名称"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
-#: ../src/gdu-gtk/gdu-size-widget.c:256
-msgid "Size"
-msgstr "大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
-msgid "The requested size of the array"
-msgstr "被请求的阵列的大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:278
-msgid "Component Size"
-msgstr "组件大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:266
-msgid "The size of each component"
-msgstr "每个组件的大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
-msgid "Stripe Size"
-msgstr "条带大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
-msgid "The requested stripe size of the array"
-msgstr "被请求的阵列的条带大小"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
-msgid "Drives"
-msgstr "驱动器"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
-msgid "Array of drives to use for the array"
-msgstr "阵列包含的驱动器"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
+#. TODO: hate
+#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
+#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:740
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:671
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
 #, c-format
-msgid "The disk will be partitioned and a %s partition will be created"
-msgstr "磁盘将被分区并且一个 %s 的分区将创建"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:747
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:678
-#, c-format
-msgid "A %s partition will be created"
-msgstr "将创建一个 %s 分区"
-
-#. Translators: This is shown in the Details column.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:754
-msgid "The disk will be partitioned and a partition will be created"
-msgstr "磁盘将被分区并且一个分区将创建"
-
-#. Translators: This is shown in the Details column.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
-msgid "A partition will be created"
-msgstr "将创建一个分区"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:771
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:692
-#, c-format
-msgid "Whole disk is uninitialized. %s available for use"
-msgstr "整个磁盘未初始化。 %s 可用"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:778
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:699
-#, c-format
-msgid "%s available for use"
-msgstr "%s 可用"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:784
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:705
-#, c-format
-msgid "The disk has no partitions. %s available for use"
-msgstr "磁盘无分区。 %s 可用"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:789
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:710
-#, c-format
-msgid "The disk has %d partition"
-msgid_plural "The disk has %d partitions"
-msgstr[0] "磁盘有 %d 分区"
-
-#. Translators: This is shown in the Details column.
-#. * First %s is the dngettext() result of "The disk has %d partitions.".
-#. * Second %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:797
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:718
-#, c-format
-msgid "%s. Largest contiguous free block is %s"
-msgstr "%s 。最大的连续可用区块有 %s"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
-msgid "Create RAID Array"
-msgstr "创建磁盘阵列"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:913
-msgid "General"
-msgstr "常规"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:934
-msgid "RAID _Level:"
-msgstr "RAID 级别(_L)"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
-msgid "Array _Name:"
-msgstr "阵列名称(_N)："
-
-#. Translators: This is the default name to use for the new array.
-#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
-#. * 32 bytes since that's the on-disk-format limit.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:981
-msgid "New RAID Array"
-msgstr "新的 RAID 阵列"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
-msgid "Stripe S_ize:"
-msgstr "条带大小(_I): "
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
-msgid "4 KiB"
-msgstr "4 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1009
-msgid "8 KiB"
-msgstr "8 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1011
-msgid "16 KiB"
-msgstr "16 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1013
-msgid "32 KiB"
-msgstr "32 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1015
-msgid "64 KiB"
-msgstr "64 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1017
-msgid "128 KiB"
-msgstr "128 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1019
-msgid "256 KiB"
-msgstr "256 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1021
-msgid "512 KiB"
-msgstr "512 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1023
-msgid "1 MiB"
-msgstr "1 MiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
-msgid "Array _Size:"
-msgstr "阵列大小(_S)："
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1077
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:819
-msgid "Use"
-msgstr "使用"
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1097
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:840
-msgid "Disk"
-msgstr "磁盘"
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1121
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:864
-msgid "Details"
-msgstr "细节"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1157
-msgid "Disks"
-msgstr "磁盘"
-
-#. Translators: This is for the tip text shown in the dialog.
-#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1452
-#, c-format
-msgid "Insufficient number of disks to create a %s array."
-msgstr "没有足够数量的磁盘创建一个 %s 阵列。"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1471
-#, c-format
-msgid "To create a %s array, select a disk."
-msgid_plural "To create a %s array, select %d disks."
-msgstr[0] "要创建一个 %s 阵列，选择 %d 个磁盘。"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1478
-#, c-format
-msgid "To create a %s array, select one more disk."
-msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] "要创建一个 %s 阵列，选择 %d 个以上磁盘。"
-
-#. Translators: This is for the tip text shown in the dialog.
-#. * First %s is the size e.g. '42 GB'.
-#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
-#. * Third parameter is the number of disks to use (always greater than 1).
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1508
-#, c-format
-msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr "要在 %3$d 个磁盘上创建一个 %1$s %2$s 阵列，请按 “创建”"
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
-#, c-format
-msgid "This operation concerns the volume \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
-#, c-format
-msgid "This operation concerns the drive \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
-#, c-format
-msgid "This operation concerns \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:227
-#: ../src/gdu-gtk/gdu-format-dialog.c:166
-msgid "Flags"
-msgstr "标记"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:228
-#, fuzzy
-#| msgid "Flags for the element"
-msgid "Flags for the widget"
-msgstr "元件的标记"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
-msgid "Selected Drives"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
-msgid "Array of selected drives"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:252
-#, fuzzy
-#| msgid "Drives"
-msgid "Ignored Drives"
-msgstr "驱动器"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:253
-#, fuzzy
-#| msgid "Array of drives to use for the array"
-msgid "Array of drives to ignore"
-msgstr "阵列包含的驱动器"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:265
-msgid "Largest Free Segment"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:266
-msgid "The largest free segment on the available drives"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
-#, fuzzy
-#| msgid "The view to show details for"
-msgid "The size to use in the details header"
-msgstr "视图显示详情"
-
-#: ../src/gdu-gtk/gdu-gtk.c:172
-msgctxt "application name"
-msgid "Bourne Again Shell"
-msgstr "Bourne Again Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:177
-msgctxt "application name"
-msgid "Bourne Shell"
-msgstr "Bourne Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:182
-msgctxt "application name"
-msgid "C Shell"
-msgstr "C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:187
-msgctxt "application name"
-msgid "TENEX C Shell"
-msgstr "TENEX C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:192
-msgctxt "application name"
-msgid "Z Shell"
-msgstr "Z Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:197
-msgctxt "application name"
-msgid "Korn Shell"
-msgstr "Korn Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:201
-msgctxt "application name"
-msgid "Process Viewer (top)"
-msgstr "进程查看器 (top)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:205
-msgctxt "application name"
-msgid "Terminal Pager (less)"
-msgstr "终端阅读器 (less)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:217
-msgctxt "application name"
-msgid "Unknown"
-msgstr "未知"
-
-#: ../src/gdu-gtk/gdu-gtk.c:228
-#, c-format
-msgid "uid: %d  pid: %d  program: %s"
-msgstr "UID：%d  PID：%d  程序：%s"
-
-#: ../src/gdu-gtk/gdu-gtk.c:233
-#, c-format
-msgid "pid: %d  program: %s"
-msgstr "PID：%d  程序：%s"
-
-#. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:332 ../src/gdu-gtk/gdu-gtk.c:916
-#: ../src/gdu-gtk/gdu-gtk.c:1054
-#, c-format
-msgid "Partition %d on %s"
-msgstr "%2$s 上的分区 %1$d"
-
-#: ../src/gdu-gtk/gdu-gtk.c:368
-msgid "Cannot unmount volume"
-msgstr "无法卸载卷"
-
-#: ../src/gdu-gtk/gdu-gtk.c:378
 msgid ""
-"One or more applications are using the volume. Quit the applications, and "
-"then try unmounting again."
-msgstr "一个或多个程序正在使用该卷。请退出程序，并重试卸载。"
-
-#: ../src/gdu-gtk/gdu-gtk.c:419
-msgid "_Unmount"
-msgstr "卸载(_U)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:496
-msgid "Passphrases do not match"
-msgstr "口令不匹配"
-
-#: ../src/gdu-gtk/gdu-gtk.c:503
-msgid "Passphrases do not differ"
-msgstr "密码不一致"
-
-#: ../src/gdu-gtk/gdu-gtk.c:509
-msgid "Passphrase can't be empty"
-msgstr "密码不能为空"
-
-#: ../src/gdu-gtk/gdu-gtk.c:581
-msgid "Cr_eate"
-msgstr "创建(_E)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-section-volumes.c:1863
-msgid "Change _Passphrase"
-msgstr "更改密码(_P)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:585
-msgid "_Unlock"
-msgstr "解锁(_U)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:614
-msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr "要创建一个加密设备，请选择一个密码来保护它"
-
-#: ../src/gdu-gtk/gdu-gtk.c:617
-msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr "要更改密码，请输入当前密码和新密码"
-
-#: ../src/gdu-gtk/gdu-gtk.c:620
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase"
-msgstr "该设备上的数据以密码保护的加密方式存储"
-
-#: ../src/gdu-gtk/gdu-gtk.c:633
-msgid ""
-"Data on this device will be stored in an encrypted form protected by a "
-"passphrase."
-msgstr "该设备上的数据将会以密码保护的加密方式存储"
-
-#: ../src/gdu-gtk/gdu-gtk.c:636
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase."
-msgstr "该设备上的数据以密码保护的加密方式存储。"
-
-#: ../src/gdu-gtk/gdu-gtk.c:639
-msgid ""
-"To make the data available for use, enter the passphrase for the device."
-msgstr "要使该设备上的数据可用，请输入密码。"
-
-#: ../src/gdu-gtk/gdu-gtk.c:648
-msgid "Incorrect Passphrase. Try again."
-msgstr "密码错误，重试。"
-
-#: ../src/gdu-gtk/gdu-gtk.c:672
-msgid "C_urrent Passphrase:"
-msgstr "当前密码(_U)："
-
-#: ../src/gdu-gtk/gdu-gtk.c:686
-msgid "_New Passphrase:"
-msgstr "新密码(_N)："
-
-#: ../src/gdu-gtk/gdu-gtk.c:699
-msgid "_Verify Passphrase:"
-msgstr "校验密码(_V)："
-
-#: ../src/gdu-gtk/gdu-gtk.c:741
-msgid "_Passphrase:"
-msgstr "密码(_P)："
-
-#: ../src/gdu-gtk/gdu-gtk.c:756
-msgid "_Forget passphrase immediately"
-msgstr "立即忘记密码(_F)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:759
-msgid "Remember passphrase until you _log out"
-msgstr "记住密码直至你退出(_L)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:762
-msgid "_Remember forever"
-msgstr "永远记住(_R)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:823
-msgid "Enter Passphrase"
-msgstr "输入密码"
-
-#: ../src/gdu-gtk/gdu-gtk.c:948 ../src/gdu/gdu-util.c:824
-#, c-format
-msgid "LUKS Passphrase for UUID %s"
-msgstr "UUID %s 的 LUKS 口令"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1242
-msgid "Empty (don't create a file system)"
-msgstr "空白(不创建文件系统)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1263
-msgid "Empty"
-msgstr "空"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1271
-msgid "Extended Partition"
-msgstr "扩展分区"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1530
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
-#: ../src/palimpsest/gdu-section-drive.c:262
-msgid "Master Boot Record"
-msgstr "主引导记录"
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1535 ../src/gdu/gdu-linux-md-drive.c:553
-#: ../src/gdu/gdu-drive.c:793
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
-#: ../src/palimpsest/gdu-section-drive.c:264
-msgid "GUID Partition Table"
-msgstr "GUID 分区表"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1540
-msgid "Don't partition"
-msgstr "不分区"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1545 ../src/gdu/gdu-util.c:492
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
-#: ../src/palimpsest/gdu-section-drive.c:260
-msgid "Apple Partition Map"
-msgstr "Apple 分区映射"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:257
-msgid "The currently selected size"
-msgstr "当前选定的大小"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:270
-msgid "Minimum Size"
-msgstr "最小容量"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:271
-msgid "The minimum size that can be selected"
-msgstr "可被选择的最小容量"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:284
-msgid "Maximum Size"
-msgstr "最大容量"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:285
-msgid "The maximum size that can be selected"
-msgstr "可被选择的最大容量"
-
-#: ../src/gdu-gtk/gdu-time-label.c:71
-#, c-format
-msgid "Less than a minute ago"
-msgstr "不到一分钟前"
-
-#: ../src/gdu-gtk/gdu-time-label.c:75
-#, c-format
-msgid "%d minute ago"
-msgid_plural "%d minutes ago"
-msgstr[0] "%d 分钟前"
-
-#: ../src/gdu-gtk/gdu-time-label.c:82
-#, c-format
-msgid "%d hour ago"
-msgid_plural "%d hours ago"
-msgstr[0] "%d 小时前"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:212
-#, fuzzy
-#| msgid "The operation failed."
-msgid "The operation failed"
-msgstr "操作失败。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:215
-#, fuzzy
-#| msgid "The device is busy."
-msgid "The device is busy"
-msgstr "设备忙。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:218
-#, fuzzy
-#| msgid "The operation was canceled."
-msgid "The operation was canceled"
-msgstr "操作已被取消。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:221
-#, fuzzy
-#| msgid "The daemon is being inhibited."
-msgid "The daemon is being inhibited"
-msgstr "守护进程被禁止。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:224
-#, fuzzy
-#| msgid "An invalid option was passed."
-msgid "An invalid option was passed"
-msgstr "一个无效的选项被忽略。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:227
-#, fuzzy
-#| msgid "The operation is not supported."
-msgid "The operation is not supported"
-msgstr "不支持该操作。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:230
-#, fuzzy
-#| msgid "Getting ATA SMART data would wake up the device."
-msgid "Getting ATA SMART data would wake up the device"
-msgstr "获取 ATA SMART 数据将唤醒设备。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:233
-#, fuzzy
-#| msgid "Permission denied."
-msgid "Permission denied"
-msgstr "许可被拒绝。"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:236
-msgid "Filesystem driver not installed"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:239
-#, fuzzy
-#| msgid "Filesystem label"
-msgid "Filesystem tools not installed"
-msgstr "文件系统卷标"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:244 ../src/palimpsest/gdu-shell.c:872
-msgid "Unknown error"
-msgstr "未知错误"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:248
-#, c-format
-msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:259
-#, fuzzy
-#| msgid "_Details:"
-msgid "_Details"
-msgstr "细节(_D)："
+"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+msgstr "选择一个磁盘在其上为 RAID 阵列 \"%2$s\" 创建一个 %1$s 大的组件 (%3$s)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1503,17 +818,13 @@ msgid "Good"
 msgstr "良好"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
-#, fuzzy
-#| msgid "Error erasing data"
 msgid "Error reading SMART data"
-msgstr "擦除数据出错"
+msgstr "读取 SMART 数据出错"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
-#, fuzzy
-#| msgid "Running Short SMART Self-Test"
 msgid "Choose SMART Self-test"
-msgstr "正在运行简短式 S.M.A.R.T. 自检"
+msgstr "选择 SMART 自检"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1171
@@ -1542,20 +853,17 @@ msgstr "转运型(_O) (通常少于十分钟)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1194
-#, fuzzy
-#| msgid "Run self-test"
 msgid "_Run Self Test"
-msgstr "运行自检"
+msgstr "运行自检(_R)"
 
 #. Translators: The title of the SMART dialog.
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
-#, fuzzy, c-format
-#| msgid "SMART Data"
+#, c-format
 msgid "%s (%s) – SMART Data"
-msgstr "SMART 数据"
+msgstr "%s (%s) – SMART 数据"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
@@ -1591,17 +899,13 @@ msgstr "磁盘以往处于加电状态的时间总计"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1336
-#, fuzzy
-#| msgid "Power Cycle Count"
 msgid "Power Cycles:"
-msgstr "电源开关计数"
+msgstr "电源开关计数："
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
-#, fuzzy
-#| msgid "Total number of load cycles"
 msgid "The number of full disk power on/off cycles"
-msgstr "负载循环总数"
+msgstr "磁盘全部的电源开关循环次数"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1344
@@ -1647,41 +951,33 @@ msgstr "磁盘健康的全面评估"
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1386
 msgid "_Refresh"
-msgstr ""
+msgstr "刷新(_R)"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
-#, fuzzy
-#| msgid "Reads SMART data from the disk, waking it up if necessary"
 msgid "Reads SMART Data, waking up the disk"
-msgstr "从磁盘读取 SMART 数据，如果需要请唤醒它"
+msgstr "读取 SMART 数据，正在唤醒磁盘"
 
 #. TODO: better icon
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1398
-#, fuzzy
-#| msgid "Run self-test"
 msgid "Run _Self-test"
-msgstr "运行自检"
+msgstr "运行自检(_S)"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1400
 msgid "Test the disk surface for errors"
-msgstr ""
+msgstr "测试磁盘表面寻找错误"
 
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1410
-#, fuzzy
-#| msgid "Run self-test"
 msgid "_Cancel Self-test"
-msgstr "运行自检"
+msgstr "取消自检(_C)"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1412
-#, fuzzy
-#| msgid "Cancels the currently running test"
 msgid "Cancels the self-test"
-msgstr "取消当前运行的测试"
+msgstr "取消自检"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1430
@@ -1711,10 +1007,8 @@ msgstr "值"
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1540
-#, fuzzy
-#| msgid "Don't _warn me if the disk is failing"
 msgid "Don't _warn if the disk is failing"
-msgstr "如果磁盘发生故障，不要再提醒我(_W)"
+msgstr "如果磁盘发生故障，不要发出警告(_W)"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1542
@@ -1894,70 +1188,676 @@ msgstr[0] "%d 个坏扇区"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
 msgid "Completed OK"
-msgstr ""
+msgstr "成功完成"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
-#, fuzzy
-#| msgid "Cancel"
 msgid "Cancelled"
-msgstr "取消"
+msgstr "已取消"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2090
-#, fuzzy
-#| msgid "Last self-test was cancelled (with hard or soft reset)"
 msgid "Cancelled (with hard or soft reset)"
-msgstr "最后一次自检被取消 (硬复位或软复位)"
+msgstr "已取消(硬复位或软复位)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2094
-#, fuzzy
-#| msgid "Last self-test not completed (a fatal error might have occurred)"
 msgid "Not completed (a fatal error might have occurred)"
-msgstr "最后一次自检未完成(可能发生了一个致命的错误)"
+msgstr "未完成(可能发生了一个致命的错误)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2098
-#, fuzzy
-#| msgid "Last self-test FAILED (Electrical)"
 msgid "FAILED (Electrical)"
-msgstr "最后一次自检失败 (电子有关)"
+msgstr "失败(电子有关)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
-#, fuzzy
-#| msgid "Last self-test FAILED (Servo)"
 msgid "FAILED (Servo)"
-msgstr "最后一次自检失败 (伺服系统)"
+msgstr "失败(伺服系统)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2108
-#, fuzzy
-#| msgid "Last self-test FAILED (Read)"
 msgid "FAILED (Read)"
-msgstr "最后一次自检失败 (读取)"
+msgstr "失败(读取)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2113
 #, fuzzy
-#| msgid "Last self-test FAILED (Suspected of having handled damage)"
 msgid "FAILED (Suspected of having handled damage)"
-msgstr "最后一次自检失败 (怀疑是操作损坏)"
+msgstr "失败(怀疑是操作损坏)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2118
 msgid "In progress"
+msgstr "正在进行"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
+#, c-format
+msgid "This operation concerns the volume \"%s\" (%s)"
+msgstr "此操作涉及卷 \"%s\" (%s)"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
+#, c-format
+msgid "This operation concerns the drive \"%s\" (%s)"
+msgstr "此操作涉及驱动器 \"%s\" (%s)"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
+#, c-format
+msgid "This operation concerns \"%s\" (%s)"
+msgstr "此操作涉及 \"%s\" (%s) "
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
+msgid "User Name"
+msgstr "用户名"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:95
+msgid "The chosen user name"
+msgstr "选中的用户名"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:105
+msgid "Address"
+msgstr "地址"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:106
+msgid "The chosen address"
+msgstr "选中的地址"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:154
+msgid "Choose Server"
+msgstr "选择服务器"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:214
+msgid "Connect to Server"
+msgstr "连接到服务器"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:221
+msgid "_Browse..."
+msgstr "浏览(_B)..."
+
+#. Translators: this is the tooltip for the "Browse..." button
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:233
+msgid "Browse servers discovered via the DNS-SD protocol"
+msgstr "浏览通过 DNS-SD 协议发现的协议"
+
+#. Translators: This is the label explaining the dialog
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
+msgid ""
+"To manage storage devices on another machine, enter the address and press "
+"“Connect”. The connection will be made using the <i>Secure Shell</i> "
+"protocol."
 msgstr ""
+"要管理其它机器上的存储设备，输入地址并且按下 “连接”。此连接将使用 <i>Secure "
+"Shell</i> 协议创建。"
+
+#. Translators: This is the tooltip for the "Server Address" entry
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
+msgid "The hostname or address to connect to"
+msgstr "要连接到的主机名或地址"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
+msgid "Server _Address:"
+msgstr "服务器地址(_A)："
+
+#. Translators: This is the tooltip for the "User Name" entry
+#. * First %s is the UNIX user name e.g. 'davidz'.
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
+msgid "The user name to connect as"
+msgstr "连接时作为的用户名"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
+msgid "_User Name:"
+msgstr "用户名(_U)："
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
+msgid "Pool"
+msgstr "池"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
+msgid "The pool of devices"
+msgstr "设备池"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:192
+msgid "RAID Level"
+msgstr "RAID 级别"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:193
+msgid "The selected RAID level"
+msgstr "选定的 RAID 级别"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:203
+msgid "Name"
+msgstr "名称"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:204
+msgid "The requested name for the array"
+msgstr "被请求的阵列的名称"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
+#: ../src/gdu-gtk/gdu-size-widget.c:256
+msgid "Size"
+msgstr "大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:215
+msgid "The requested size of the array"
+msgstr "被请求的阵列的大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:331
+msgid "Component Size"
+msgstr "组件大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:228
+msgid "The size of each component"
+msgstr "每个组件的大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:240
+msgid "Stripe Size"
+msgstr "条带大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
+msgid "The requested stripe size of the array"
+msgstr "被请求的阵列的条带大小"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
+msgid "Drives"
+msgstr "驱动器"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:254
+msgid "Array of drives to use for the array"
+msgstr "阵列包含的驱动器"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
+msgid "Create RAID Array"
+msgstr "创建磁盘阵列"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "创建(_R)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
+msgid "General"
+msgstr "常规"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:554
+msgid "RAID _Level:"
+msgstr "RAID 级别(_L)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:593
+msgid "Array _Name:"
+msgstr "阵列名称(_N)："
+
+#. Translators: This is the default name to use for the new array.
+#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
+#. * 32 bytes since that's the on-disk-format limit.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:601
+msgid "New RAID Array"
+msgstr "新的 RAID 阵列"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:617
+msgid "Stripe S_ize:"
+msgstr "条带大小(_I): "
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:627
+msgid "4 KiB"
+msgstr "4 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
+msgid "8 KiB"
+msgstr "8 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
+msgid "16 KiB"
+msgstr "16 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
+msgid "32 KiB"
+msgstr "32 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
+msgid "64 KiB"
+msgstr "64 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
+msgid "128 KiB"
+msgstr "128 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
+msgid "256 KiB"
+msgstr "256 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
+msgid "512 KiB"
+msgstr "512 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
+msgid "1 MiB"
+msgstr "1 MiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:660
+msgid "Array _Size:"
+msgstr "阵列大小(_S)："
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
+msgid "_Disks"
+msgstr "磁盘(_D)"
+
+#. --------------------------------------------------------------------------------
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+msgid "Use entire disks instead of _partitions"
+msgstr "使用整个磁盘而不是分区(_P)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+msgid ""
+"If checked, the entirety of each selected disk will be used for the RAID "
+"array. Otherwise partitions will be created."
+msgstr "如果选中，每个选中的磁盘的整体将被用于 RAID 阵列。否则将创建分区。"
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:870
+#, c-format
+msgid "Insufficient number of disks to create a %s array."
+msgstr "没有足够数量的磁盘创建一个 %s 阵列。"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:886
+#, c-format
+msgid "To create a %s array, select a disk."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] "要创建一个 %s 阵列，选择 %d 个磁盘。"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:893
+#, c-format
+msgid "To create a %s array, select one more disk."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] "要创建一个 %s 阵列，选择 %d 个以上磁盘。"
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the size e.g. '42 GB'.
+#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
+#. * Third parameter is the number of disks to use (always greater than 1).
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:917
+#, c-format
+msgid "To create a %s %s array on %d disks, press \"Create\""
+msgstr "要在 %3$d 个磁盘上创建一个 %1$s %2$s 阵列，请按 “创建”"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
+msgid "Maximum Partition Size"
+msgstr "分区最大容量"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
+msgid "The maximum possible partition size"
+msgstr "可被选择的最大分区容量"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
+msgid "Partition Size"
+msgstr "分区容量"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
+msgid "The requested partition size"
+msgstr "请求的分区大小"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "大小(_S):"
+
+#. Translators: The %s is the name of the drive
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
+#, c-format
+msgid "Create partition on %s"
+msgstr "在 %s 创建分区"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:254
+#: ../src/gdu-gtk/gdu-format-dialog.c:166
+msgid "Flags"
+msgstr "标记"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:255
+#, fuzzy
+msgid "Flags for the widget"
+msgstr "元件的标记"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+msgid "Selected Drives"
+msgstr "选中的驱动器"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:269
+msgid "Array of selected drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
+msgid "Ignored Drives"
+msgstr "忽略的驱动器"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
+#, fuzzy
+msgid "Array of drives to ignore"
+msgstr "阵列包含的驱动器"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
+msgid "Number of available disks"
+msgstr "可用磁盘的数目"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
+msgid "Largest Segment For Selected"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
+msgid "The largest free segment for the selected drives"
+msgstr "选中驱动器上的最大空闲段"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
+msgid "Largest Segment For All"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
+msgid "The largest free segment for all the drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:332
+#, fuzzy
+msgid "The size to use in the details header"
+msgstr "视图显示详情"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
+msgid "The disk will be partitioned and a partition will be created"
+msgstr "磁盘将被分区并且一个分区将创建"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:740
+#, c-format
+msgid ""
+"The disk will be partitioned and a %s partition will be created. Afterwards "
+"no space will be available."
+msgstr "磁盘将被分区并且将创建一个 %s 的分区。之后，将无空间可用。"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:749
+#, c-format
+msgid ""
+"The disk will be partitioned and a %s partition will be created. Afterwards %"
+"s will be available."
+msgstr "磁盘将被分区并且将创建一个 %s 的分区。之后，将有 %s 可用。"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:759
+msgid "A partition will be created"
+msgstr "将创建一个分区"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:765
+#, c-format
+msgid "A %s partition will be created. Afterwards no space will be available."
+msgstr "将创建一个 %s 分区。之后，将无空间可用。"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:773
+#, c-format
+msgid "A %s partition will be created. Afterwards %s will be available."
+msgstr "将创建一个 %s 分区。之后，%s 将可用。"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:792
+#, c-format
+msgid "Whole disk is uninitialized. %s available for use"
+msgstr "整个磁盘未初始化。 %s 可用"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:799
+#, c-format
+msgid "%s available for use"
+msgstr "%s 可用"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:805
+#, c-format
+msgid "The disk has no partitions. %s available for use"
+msgstr "磁盘无分区。 %s 可用"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#, c-format
+msgid "The disk has %d partition"
+msgid_plural "The disk has %d partitions"
+msgstr[0] "磁盘有 %d 分区"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the dngettext() result of "The disk has %d partitions.".
+#. * Second %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:818
+#, c-format
+msgid "%s. Largest contiguous free block is %s"
+msgstr "%s 。最大的连续可用区块有 %s"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
+msgid "Storage Devices"
+msgstr "存储设备"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:968
+msgid "Details"
+msgstr "细节"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
+msgid "Error benchmarking drive"
+msgstr "测试驱动器性能出错"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
+msgid "Are you sure you want to start a read/write benchmark?"
+msgstr "你确定要启动读写性能测试吗？"
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
+#: ../src/palimpsest/gdu-section-drive.c:762
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+msgid "_Benchmark"
+msgstr "性能测试(_B)"
+
+#. Translators: The title of the benchmark dialog.
+#. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
+#. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
+#. * or "ATA WDC WD1001FALS-00J7B1").
+#.
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:685
+#, c-format
+msgid "%s (%s) – Benchmark"
+msgstr "%s (%s) – 性能测试"
+
+#. benchmark results
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
+msgid "Minimum Read Rate:"
+msgstr "最小读取速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
+msgid "Minimum Write Rate:"
+msgstr "最小写入速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
+msgid "Maximum Read Rate:"
+msgstr "最大读取速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
+msgid "Maximum Write Rate:"
+msgstr "最大写入速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
+msgid "Average Read Rate:"
+msgstr "平均读取速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
+msgid "Average Write Rate:"
+msgstr "平均写入速度："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
+msgid "Last Benchmark:"
+msgstr "最后一次性能测试："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
+msgid "Average Access Time:"
+msgstr "平均访问时间："
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+msgid "Start _Read-Only Benchmark"
+msgstr "开始只读测试(_R)"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
+msgid "Measure read rate and access time"
+msgstr "测量读取速度和访问时间"
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+msgid "Start Read/_Write Benchmark"
+msgstr "启动读写测试(_W)"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
+msgid "Measure read rate, write rate and access time"
+msgstr "测量读取速度，写入速度和访问时间"
+
+#. Translators: This is used in the benchmark graph - %d is megabytes per second
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:951
+#, c-format
+msgid "%d MB/s"
+msgstr "%d MB/s"
+
+#. Translators: This is used in the benchmark graph - %g is number of milliseconds
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:956
+#, c-format
+msgid "%3g ms"
+msgstr "%3g ms"
+
+#. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
+msgid "Never"
+msgstr "从不"
+
+#. Translators: Text used in the hyperlink in the status
+#. * table to cancel a self-test
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1308
+msgid "Cancel"
+msgstr "取消"
+
+#. Translators: Tooptip for the "Cancel" hyperlink
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
+msgid "Cancels the currently running benchmark"
+msgstr "取消当前运行的测试"
+
+#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
+#, c-format
+msgid "Edit Filesystem on %s"
+msgstr "编辑 %s 上的文件系统"
+
+#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
+#: ../src/palimpsest/gdu-section-volumes.c:1470
+msgid "Label:"
+msgstr "卷标："
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
+#, c-format
+msgid "Edit components on %s (%s)"
+msgstr "编辑 %s 上的组建 (%s)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
+msgid "C_omponents"
+msgstr "组件(_O)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
+msgid "Position"
+msgstr "位置"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
+msgid "Component"
+msgstr "组件"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
+msgid "State"
+msgstr "状态"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
+#: ../src/palimpsest/gdu-section-drive.c:693
+msgid "SMART Status:"
+msgstr "SMART 状态："
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
+msgid "Position:"
+msgstr "位置："
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
+msgid "State:"
+msgstr "状态："
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
+#: ../src/palimpsest/gdu-section-drive.c:669
+#: ../src/palimpsest/gdu-section-volumes.c:1446
+msgid "Device:"
+msgstr "设备："
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
+msgid "_New Component"
+msgstr "新建组件(_N)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
+msgid "Add a new component to the array"
+msgstr "向此阵列添加新组件"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
+msgid "_Attach Component"
+msgstr "附加上组件(_A)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
+msgid "Attach the component to the array"
+msgstr "附加此组件到此阵列"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
+msgid "_Remove Component"
+msgstr "删除组件(_R)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
+msgid "Remove the component from the array"
+msgstr "从阵列移除组件"
+
+#. Translators: Used when SMART is not supported on the RAID component
+#. Translators: This string is used when SMART is not supported
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
+#: ../src/palimpsest/gdu-section-drive.c:300
+msgid "Not Supported"
+msgstr "不支持"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
-#, fuzzy, c-format
-#| msgid "_Edit"
+#, c-format
 msgid "Edit %s"
-msgstr "编辑(_E)"
+msgstr "编辑 %s"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
 msgid "Part_ition Label:"
@@ -1979,132 +1879,63 @@ msgstr "可启动(_B)"
 msgid "Required / Firm_ware"
 msgstr "必需/固件(_W)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
-#, fuzzy, c-format
-#| msgid "%d Component (%s)"
-#| msgid_plural "%d Components (%s each)"
-msgid "Edit components on %s (%s)"
-msgstr "%d 组件 (%s)"
+#: ../src/gdu-gtk/gdu-error-dialog.c:217
+msgid "The operation failed"
+msgstr "此操作失败"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
-#, fuzzy
-#| msgid "Components:"
-msgid "C_omponents"
-msgstr "组件："
+#: ../src/gdu-gtk/gdu-error-dialog.c:220
+msgid "The device is busy"
+msgstr "设备忙"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
-#, fuzzy
-#| msgid "Partition"
-msgid "Position"
-msgstr "分区"
+#: ../src/gdu-gtk/gdu-error-dialog.c:223
+msgid "The operation was canceled"
+msgstr "操作已被取消"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
-#, fuzzy
-#| msgid "Components:"
-msgid "Component"
-msgstr "组件："
+#: ../src/gdu-gtk/gdu-error-dialog.c:226
+msgid "The daemon is being inhibited"
+msgstr "守护进程正被抑制"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
-msgid "State"
-msgstr "状态"
+#: ../src/gdu-gtk/gdu-error-dialog.c:229
+msgid "An invalid option was passed"
+msgstr "传递了一个无效的选项"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
-#: ../src/palimpsest/gdu-section-drive.c:693
-#, fuzzy
-#| msgid "SMART status: %s"
-msgid "SMART Status:"
-msgstr "S.M.A.R.T 状态：%s"
+#: ../src/gdu-gtk/gdu-error-dialog.c:232
+msgid "The operation is not supported"
+msgstr "不支持该操作"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
-#, fuzzy
-#| msgid "Partition"
-msgid "Position:"
-msgstr "分区"
+#: ../src/gdu-gtk/gdu-error-dialog.c:235
+msgid "Getting ATA SMART data would wake up the device"
+msgstr "获取 ATA SMART 数据将唤醒设备。"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1095
-msgid "State:"
-msgstr "状态："
+#: ../src/gdu-gtk/gdu-error-dialog.c:238
+msgid "Permission denied"
+msgstr "许可被拒绝"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
-#: ../src/palimpsest/gdu-section-drive.c:669
-#: ../src/palimpsest/gdu-section-volumes.c:1410
-msgid "Device:"
-msgstr "设备："
+#: ../src/gdu-gtk/gdu-error-dialog.c:241
+msgid "Filesystem driver not installed"
+msgstr "未安装文件系统驱动"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-#, fuzzy
-#| msgid "_Remove Component"
-msgid "_New Component"
-msgstr "删除组件(_R)"
+#: ../src/gdu-gtk/gdu-error-dialog.c:244
+msgid "Filesystem tools not installed"
+msgstr "文件系统工具未安装"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
-#, fuzzy
-#| msgid "Adding Component to RAID Array"
-msgid "Add a new component to the array"
-msgstr "添加组件到 RAID 阵列"
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:1042
+msgid "Unknown error"
+msgstr "未知错误"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
-#, fuzzy
-#| msgid "RAID Component"
-msgid "_Attach Component"
-msgstr "RAID 组件"
+#: ../src/gdu-gtk/gdu-error-dialog.c:257
+#, c-format
+msgid "An error occured while performing an operation on \"%s\" (%s): %s"
+msgstr "在 \"%s\" (%s) 上执行操作时发生错误：%s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
-#, fuzzy
-#| msgid "Are you sure you want to remove the component from the array ?"
-msgid "Attach the component to the array"
-msgstr "您确定要从阵列中移除该组件吗？"
+#: ../src/gdu-gtk/gdu-error-dialog.c:265
+#, c-format
+msgid "An error occured: %s"
+msgstr "发生一个错误：%s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
-msgid "_Remove Component"
-msgstr "删除组件(_R)"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
-#, fuzzy
-#| msgid "Removing Component from RAID Array"
-msgid "Remove the component from the array"
-msgstr "从 RAID 阵列移除组件"
-
-#. Translators: Used when SMART is not supported on the RAID component
-#. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
-#: ../src/palimpsest/gdu-section-drive.c:300
-#, fuzzy
-#| msgid "SMART not supported"
-msgid "Not Supported"
-msgstr "不支持 S.M.A.R.T."
-
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
-#, fuzzy, c-format
-#| msgid "%s Filesystem"
-msgid "Edit Filesystem on %s"
-msgstr "%s 文件系统"
-
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
-#: ../src/palimpsest/gdu-section-volumes.c:1434
-#, fuzzy
-#| msgid "_Label:"
-msgid "Label:"
-msgstr "卷标(_L)："
-
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
-#, fuzzy, c-format
-#| msgid "%d Component (%s)"
-#| msgid_plural "%d Components (%s each)"
-msgid "Add Component to %s"
-msgstr "%d 组件 (%s)"
-
-#. TODO: hate
-#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
-#.
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
-#, fuzzy, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
-msgid ""
-"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
-msgstr "选择一个卷作为阵列 \"%s\" 的组件"
+#: ../src/gdu-gtk/gdu-error-dialog.c:274
+msgid "_Details"
+msgstr "细节(_D)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:167
 msgid "Flags specifying the behavior of the dialog"
@@ -2127,16 +1958,12 @@ msgid "The requested filesystem label"
 msgstr "请求的文件系统卷标"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:202
-#, fuzzy
-#| msgid "Filesystem type"
 msgid "Filesystem options"
-msgstr "文件系统类型"
+msgstr "文件系统选项"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:203
-#, fuzzy
-#| msgid "Error creating filesystem"
 msgid "The options to use for creating the filesystem"
-msgstr "创建文件系统错误"
+msgstr "创建文件系统时使用此选项"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:213
 msgid "Encryption"
@@ -2151,10 +1978,8 @@ msgid "Take Ownership"
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:225
-#, fuzzy
-#| msgid "Whether the volume should be encrypted"
 msgid "Whether the filesystem should be owned by the user"
-msgstr "卷是否应被加密"
+msgstr "此文件系统是否应为此用户拥有"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:235
 msgid "Affirmative Button Mnemonic"
@@ -2163,6 +1988,21 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-format-dialog.c:236
 msgid "The mnemonic label for the affirmative button"
 msgstr ""
+
+#. Translators: Format is used as a verb here
+#: ../src/gdu-gtk/gdu-format-dialog.c:238
+#: ../src/gdu-gtk/gdu-partition-dialog.c:216
+#: ../src/palimpsest/gdu-section-drive.c:588
+#: ../src/palimpsest/gdu-section-volumes.c:356
+msgid "_Format"
+msgstr "格式化(_F)"
+
+#. Translators: Format is a verb here. The %s is the name of the volume
+#: ../src/gdu-gtk/gdu-format-dialog.c:499
+#: ../src/gdu-gtk/gdu-partition-dialog.c:208
+#, c-format
+msgid "Format %s"
+msgstr "格式化 %s"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:510
 msgid "Disk _Utility"
@@ -2187,10 +2027,8 @@ msgid "Compatible with Linux (ext2)"
 msgstr "与 Linux 兼容(ext2)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:562
-#, fuzzy
-#| msgid "Compatible with Linux (ext2)"
 msgid "Compatible with Linux (ext4)"
-msgstr "与 Linux 兼容(ext2)"
+msgstr "与 Linux 兼容(ext4)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:564
 msgid "Encrypted, compatible with Linux (FAT)"
@@ -2209,8 +2047,6 @@ msgid "New Volume"
 msgstr "新卷"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:632
-#, fuzzy
-#| msgid "T_ake ownership of file system"
 msgid "T_ake ownership of filesystem"
 msgstr "获取文件系统的所有权 (_A)"
 
@@ -2224,10 +2060,8 @@ msgstr ""
 "选中，只有超级用户可以访问该文件系统。"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:641
-#, fuzzy
-#| msgid "Encr_ypt underlying device"
 msgid "_Encrypt underlying device"
-msgstr "加密的底层设备 (_Y)"
+msgstr "加密底层设备(_E)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid ""
@@ -2242,29 +2076,281 @@ msgstr ""
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "警告：卷上的全部数据将丢失并且不可恢复。"
 
+#: ../src/gdu-gtk/gdu-gtk.c:172
+msgctxt "application name"
+msgid "Bourne Again Shell"
+msgstr "Bourne Again Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:177
+msgctxt "application name"
+msgid "Bourne Shell"
+msgstr "Bourne Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:182
+msgctxt "application name"
+msgid "C Shell"
+msgstr "C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:187
+msgctxt "application name"
+msgid "TENEX C Shell"
+msgstr "TENEX C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:192
+msgctxt "application name"
+msgid "Z Shell"
+msgstr "Z Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:197
+msgctxt "application name"
+msgid "Korn Shell"
+msgstr "Korn Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:201
+msgctxt "application name"
+msgid "Process Viewer (top)"
+msgstr "进程查看器 (top)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:205
+msgctxt "application name"
+msgid "Terminal Pager (less)"
+msgstr "终端阅读器 (less)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:217
+msgctxt "application name"
+msgid "Unknown"
+msgstr "未知"
+
+#: ../src/gdu-gtk/gdu-gtk.c:228
+#, c-format
+msgid "uid: %d  pid: %d  program: %s"
+msgstr "UID：%d  PID：%d  程序：%s"
+
+#: ../src/gdu-gtk/gdu-gtk.c:233
+#, c-format
+msgid "pid: %d  program: %s"
+msgstr "PID：%d  程序：%s"
+
+#. Translators: %d is the partition number, %s the name of the disk
+#: ../src/gdu-gtk/gdu-gtk.c:332 ../src/gdu-gtk/gdu-gtk.c:916
+#: ../src/gdu-gtk/gdu-gtk.c:1054
+#, c-format
+msgid "Partition %d on %s"
+msgstr "%2$s 上的分区 %1$d"
+
+#: ../src/gdu-gtk/gdu-gtk.c:368
+msgid "Cannot unmount volume"
+msgstr "无法卸载卷"
+
+#: ../src/gdu-gtk/gdu-gtk.c:378
+msgid ""
+"One or more applications are using the volume. Quit the applications, and "
+"then try unmounting again."
+msgstr "一个或多个程序正在使用该卷。请退出程序，并重试卸载。"
+
+#: ../src/gdu-gtk/gdu-gtk.c:419
+msgid "_Unmount"
+msgstr "卸载(_U)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:496
+msgid "Passphrases do not match"
+msgstr "口令不匹配"
+
+#: ../src/gdu-gtk/gdu-gtk.c:503
+msgid "Passphrases do not differ"
+msgstr "密码不一致"
+
+#: ../src/gdu-gtk/gdu-gtk.c:509
+msgid "Passphrase can't be empty"
+msgstr "密码不能为空"
+
+#: ../src/gdu-gtk/gdu-gtk.c:581
+msgid "Cr_eate"
+msgstr "创建(_E)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-section-volumes.c:1924
+msgid "Change _Passphrase"
+msgstr "更改密码(_P)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:585
+msgid "_Unlock"
+msgstr "解锁(_U)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:614
+msgid "To create an encrypted device, choose a passphrase to protect it"
+msgstr "要创建一个加密设备，请选择一个密码来保护它"
+
+#: ../src/gdu-gtk/gdu-gtk.c:617
+msgid "To change the passphrase, enter both the current and new passphrase"
+msgstr "要更改密码，请输入当前密码和新密码"
+
+#: ../src/gdu-gtk/gdu-gtk.c:620
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase"
+msgstr "该设备上的数据以密码保护的加密方式存储"
+
+#: ../src/gdu-gtk/gdu-gtk.c:633
+msgid ""
+"Data on this device will be stored in an encrypted form protected by a "
+"passphrase."
+msgstr "该设备上的数据将会以密码保护的加密方式存储"
+
+#: ../src/gdu-gtk/gdu-gtk.c:636
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase."
+msgstr "该设备上的数据以密码保护的加密方式存储。"
+
+#: ../src/gdu-gtk/gdu-gtk.c:639
+msgid ""
+"To make the data available for use, enter the passphrase for the device."
+msgstr "要使该设备上的数据可用，请输入密码。"
+
+#: ../src/gdu-gtk/gdu-gtk.c:648
+msgid "Incorrect Passphrase. Try again."
+msgstr "密码错误，重试。"
+
+#: ../src/gdu-gtk/gdu-gtk.c:672
+msgid "C_urrent Passphrase:"
+msgstr "当前密码(_U)："
+
+#: ../src/gdu-gtk/gdu-gtk.c:686
+msgid "_New Passphrase:"
+msgstr "新密码(_N)："
+
+#: ../src/gdu-gtk/gdu-gtk.c:699
+msgid "_Verify Passphrase:"
+msgstr "校验密码(_V)："
+
+#: ../src/gdu-gtk/gdu-gtk.c:741
+msgid "_Passphrase:"
+msgstr "密码(_P)："
+
+#: ../src/gdu-gtk/gdu-gtk.c:756
+msgid "_Forget passphrase immediately"
+msgstr "立即忘记密码(_F)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:759
+msgid "Remember passphrase until you _log out"
+msgstr "记住密码直至你退出(_L)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:762
+msgid "_Remember forever"
+msgstr "永远记住(_R)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:823
+msgid "Enter Passphrase"
+msgstr "输入密码"
+
+#: ../src/gdu-gtk/gdu-gtk.c:948 ../src/gdu/gdu-util.c:824
+#, c-format
+msgid "LUKS Passphrase for UUID %s"
+msgstr "UUID %s 的 LUKS 口令"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1242
+msgid "Empty (don't create a file system)"
+msgstr "空白(不创建文件系统)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1263
+msgid "Empty"
+msgstr "空"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1271
+msgid "Extended Partition"
+msgstr "扩展分区"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1530 ../src/palimpsest/gdu-section-drive.c:262
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
+msgid "Master Boot Record"
+msgstr "主引导记录"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu-gtk/gdu-gtk.c:1535 ../src/gdu/gdu-drive.c:811
+#: ../src/gdu/gdu-linux-md-drive.c:568
+#: ../src/palimpsest/gdu-section-drive.c:264
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
+msgid "GUID Partition Table"
+msgstr "GUID 分区表"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1540
+msgid "Don't partition"
+msgstr "不分区"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1545 ../src/gdu/gdu-util.c:492
+#: ../src/palimpsest/gdu-section-drive.c:260
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
+msgid "Apple Partition Map"
+msgstr "Apple 分区映射"
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:100
+msgid "Partitioning Scheme"
+msgstr "分区方案"
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:101
+msgid "The selected partitioning scheme"
+msgstr "选定的分区方案"
+
+#. Translators: 'scheme' means 'partitioning scheme' here.
+#: ../src/gdu-gtk/gdu-partition-dialog.c:248
+msgid "_Scheme:"
+msgstr "方案(_S)："
+
+#: ../src/gdu-gtk/gdu-size-widget.c:257
+msgid "The currently selected size"
+msgstr "当前选定的大小"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:270
+msgid "Minimum Size"
+msgstr "最小容量"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:271
+msgid "The minimum size that can be selected"
+msgstr "可被选择的最小容量"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:284
+msgid "Maximum Size"
+msgstr "最大容量"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:285
+msgid "The maximum size that can be selected"
+msgstr "可被选择的最大容量"
+
+#: ../src/gdu-gtk/gdu-time-label.c:71
+#, c-format
+msgid "Less than a minute ago"
+msgstr "不到一分钟前"
+
+#: ../src/gdu-gtk/gdu-time-label.c:75
+#, c-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "%d 分钟前"
+
+#: ../src/gdu-gtk/gdu-time-label.c:82
+#, c-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "%d 小时前"
+
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
 #: ../src/palimpsest/gdu-section-drive.c:634
-#, fuzzy
-#| msgid "Drives"
 msgid "Drive"
-msgstr "驱动器"
+msgstr "驱动"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:499
 #, fuzzy
-#| msgid "Drive to show"
 msgid "Drive to show volumes for"
 msgstr "要显示的驱动器"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
 #: ../src/gdu-gtk/gdu-volume-grid.c:1181
 msgid "RAID Array is not running"
-msgstr ""
+msgstr "RAID 阵列未运行"
 
 #. Translators: This is shown in the grid for a drive when no media has been detected
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:779
+#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:797
 #: ../src/palimpsest/gdu-section-drive.c:314
 #, c-format
 msgid "No Media Detected"
@@ -2285,130 +2371,6 @@ msgstr "加密"
 msgid "Free"
 msgstr "空闲"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#, fuzzy
-#| msgid "Error detaching device"
-msgid "Error benchmarking drive"
-msgstr "分离设备出错"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
-msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "你确定要擦除该设备吗？"
-
-#. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1188
-#: ../src/palimpsest/gdu-section-drive.c:762
-msgid "_Benchmark"
-msgstr ""
-
-#. Translators: The title of the benchmark dialog.
-#. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
-#. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
-#. * or "ATA WDC WD1001FALS-00J7B1").
-#.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:684
-#, c-format
-msgid "%s (%s) – Benchmark"
-msgstr ""
-
-#. benchmark results
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
-#, fuzzy
-#| msgid "Minimum Size"
-msgid "Minimum Read Rate:"
-msgstr "最小容量"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
-#, fuzzy
-#| msgid "Minimum Size"
-msgid "Minimum Write Rate:"
-msgstr "最小容量"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
-#, fuzzy
-#| msgid "Maximum Size"
-msgid "Maximum Read Rate:"
-msgstr "最大容量"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
-#, fuzzy
-#| msgid "Maximum Size"
-msgid "Maximum Write Rate:"
-msgstr "最大容量"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
-msgid "Average Read Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
-#, fuzzy
-#| msgid "Thermal Asperity Rate"
-msgid "Average Write Rate:"
-msgstr "温度过高率"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
-msgid "Last Benchmark:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
-#, fuzzy
-#| msgid "Overall Assessment:"
-msgid "Average Access Time:"
-msgstr "整体评估"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
-msgid "Start _Read-Only Benchmark"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
-msgid "Measure read rate and access time"
-msgstr ""
-
-#. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
-msgid "Start Read/_Write Benchmark"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
-msgid "Measure read rate, write rate and access time"
-msgstr ""
-
-#. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
-#, c-format
-msgid "%d MB/s"
-msgstr ""
-
-#. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
-#, fuzzy, c-format
-#| msgid "%s msec"
-msgid "%3g ms"
-msgstr "%s 微秒"
-
-#. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1233
-#, fuzzy
-#| msgid "_Revert"
-msgid "Never"
-msgstr "还原(_R)"
-
-#. Translators: Text used in the hyperlink in the status
-#. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1307
-msgid "Cancel"
-msgstr "取消"
-
-#. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1310
-#, fuzzy
-#| msgid "Cancels the currently running test"
-msgid "Cancels the currently running benchmark"
-msgstr "取消当前运行的测试"
-
 #. Translators: this is a verb
 #: ../src/nautilus-extension/nautilus-gdu.c:223
 msgid "_Format..."
@@ -2418,188 +2380,81 @@ msgstr "格式化(_F)..."
 msgid "Create new filesystem on the selected device"
 msgstr "在选定的设备上创建新的文件系统"
 
-#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
-#. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:523 ../src/gdu/gdu-linux-md-drive.c:606
-#, fuzzy, c-format
-#| msgid "%s %s Drive"
-msgid "%s %s Array"
-msgstr "%s %s 驱动器"
-
-#. Translators: %s is a RAID level, e.g. 'RAID-5'
-#. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:528 ../src/gdu/gdu-linux-md-drive.c:611
-#, fuzzy, c-format
-#| msgid "RAID Array"
-msgid "%s Array"
-msgstr "RAID 阵列"
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-linux-md-drive.c:550 ../src/gdu/gdu-drive.c:790
-msgid "MBR Partition Table"
-msgstr "MBR 分区表"
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-linux-md-drive.c:556 ../src/gdu/gdu-drive.c:796
-msgid "Apple Partition Table"
-msgstr "Apple 分区表"
-
-#. Translators: This string is used for conveying the partition table format when
-#. * the format is unknown
-#.
-#: ../src/gdu/gdu-linux-md-drive.c:561 ../src/gdu/gdu-drive.c:801
-msgid "Partitioned"
-msgstr "已分区"
-
-#. Translators: First %s is a device file such as /dev/sda4
-#. * second %s is the state of the device
-#.
-#: ../src/gdu/gdu-linux-md-drive.c:581
-#, fuzzy, c-format
-#| msgid "RAID Array"
-msgid "RAID Array %s (%s)"
-msgstr "RAID 阵列"
-
-#. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:588
-#, c-format
-msgid "RAID device %s"
-msgstr "RAID 设备 %s"
-
-#. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:594
-#, fuzzy
-#| msgctxt "RAID level"
-#| msgid "RAID"
-msgctxt "RAID Level fallback"
-msgid "RAID"
-msgstr "RAID"
-
-#: ../src/gdu/gdu-linux-md-drive.c:599
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
-msgid "RAID Array"
-msgstr "RAID 阵列"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1040
-#, fuzzy
-#| msgid "A_ttach"
-msgctxt "Linux MD slave state"
-msgid "Not Attached"
-msgstr "附加(_T)"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1043
-msgctxt "Linux MD slave state"
-msgid "Faulty"
-msgstr "有故障"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1048
-msgctxt "Linux MD slave state"
-msgid "Fully Synchronized"
-msgstr ""
-
-#: ../src/gdu/gdu-linux-md-drive.c:1050
-msgctxt "Linux MD slave state"
-msgid "Writemostly"
-msgstr "写入为主"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1052
-msgctxt "Linux MD slave state"
-msgid "Blocked"
-msgstr "已屏蔽"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1054
-msgctxt "Linux MD slave state"
-msgid "Spare"
-msgstr "备用的"
-
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#: ../src/gdu/gdu-volume-hole.c:151
-#, c-format
-msgid "%s Free"
-msgstr "%s 空闲"
-
-#: ../src/gdu/gdu-volume-hole.c:160
-#: ../src/palimpsest/gdu-section-volumes.c:1634
-msgid "Unallocated Space"
-msgstr "未分配空间"
-
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:542
+#: ../src/gdu/gdu-drive.c:560
 msgid "CompactFlash"
 msgstr "CF 卡"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:545
+#: ../src/gdu/gdu-drive.c:563
 msgid "MemoryStick"
 msgstr "记忆棒"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:548
+#: ../src/gdu/gdu-drive.c:566
 msgid "SmartMedia"
 msgstr "SM 卡"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:551
+#: ../src/gdu/gdu-drive.c:569
 msgid "SecureDigital"
 msgstr "SD 卡"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:554
+#: ../src/gdu/gdu-drive.c:572
 msgid "SD High Capacity"
 msgstr "SD 高密度卡"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:557
+#: ../src/gdu/gdu-drive.c:575
 msgid "Floppy"
 msgstr "软盘"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:560
+#: ../src/gdu/gdu-drive.c:578
 msgid "Zip"
 msgstr "Zip 驱动器"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:563
+#: ../src/gdu/gdu-drive.c:581
 msgid "Jaz"
 msgstr "Jaz 驱动器"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:566
+#: ../src/gdu/gdu-drive.c:584
 msgid "Flash"
 msgstr "闪存"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:589
+#: ../src/gdu/gdu-drive.c:607
 msgid "CD"
 msgstr "CD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:597
+#: ../src/gdu/gdu-drive.c:615
 msgid "DVD"
 msgstr "DVD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:605
+#: ../src/gdu/gdu-drive.c:623
 msgid "Blu-Ray"
 msgstr "蓝光"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:613
+#: ../src/gdu/gdu-drive.c:631
 msgid "HDDVD"
 msgstr "HD DVD"
 
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:662 ../src/gdu/gdu-drive.c:701
+#: ../src/gdu/gdu-drive.c:680 ../src/gdu/gdu-drive.c:719
 #, c-format
 msgid "%s Drive"
 msgstr "%s 驱动器"
@@ -2607,7 +2462,7 @@ msgstr "%s 驱动器"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:696
+#: ../src/gdu/gdu-drive.c:714
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s 驱动器"
@@ -2615,7 +2470,7 @@ msgstr "%s %s 驱动器"
 #. Translators: This string is used to describe a hard disk. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:712
+#: ../src/gdu/gdu-drive.c:730
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s 硬盘"
@@ -2623,14 +2478,14 @@ msgstr "%s 硬盘"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:718
+#: ../src/gdu/gdu-drive.c:736
 msgid "Hard Disk"
 msgstr "硬盘"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:725
+#: ../src/gdu/gdu-drive.c:743
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s SSD 固态磁盘"
@@ -2638,25 +2493,250 @@ msgstr "%s SSD 固态磁盘"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:731
+#: ../src/gdu/gdu-drive.c:749
 msgid "Solid-State Disk"
 msgstr "SSD 固态磁盘"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:772
+#: ../src/gdu/gdu-drive.c:790
 #, c-format
 msgid "%s Media"
 msgstr "%s 介质"
 
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:808 ../src/gdu/gdu-linux-md-drive.c:565
+msgid "MBR Partition Table"
+msgstr "MBR 分区表"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:814 ../src/gdu/gdu-linux-md-drive.c:571
+msgid "Apple Partition Table"
+msgstr "Apple 分区表"
+
+#. Translators: This string is used for conveying the partition table format when
+#. * the format is unknown
+#.
+#: ../src/gdu/gdu-drive.c:819 ../src/gdu/gdu-linux-md-drive.c:576
+msgid "Partitioned"
+msgstr "已分区"
+
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:806
+#: ../src/gdu/gdu-drive.c:824 ../src/palimpsest/gdu-section-drive.c:273
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:364
-#: ../src/palimpsest/gdu-section-drive.c:273
 msgid "Not Partitioned"
 msgstr "未分区"
+
+#: ../src/gdu/gdu-hub.c:197
+msgid "PATA Host Adapter"
+msgstr "PATA 主机适配器"
+
+#: ../src/gdu/gdu-hub.c:199
+msgid "SATA Host Adapter"
+msgstr "SATA 主机适配器"
+
+#: ../src/gdu/gdu-hub.c:201
+msgid "ATA Host Adapter"
+msgstr "ATA 主机适配器"
+
+#: ../src/gdu/gdu-hub.c:203
+msgid "SAS Host Adapter"
+msgstr "SAS 主机适配器"
+
+#: ../src/gdu/gdu-hub.c:205
+msgid "SCSI Host Adapter"
+msgstr "SCSI 主机适配器"
+
+#: ../src/gdu/gdu-hub.c:207
+msgid "Host Adapter"
+msgstr "主机适配器"
+
+#: ../src/gdu/gdu-hub.c:211
+msgid "SAS Expander"
+msgstr ""
+
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:621
+#, c-format
+msgid "%s %s Array"
+msgstr "%s %s 阵列"
+
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#. Translators: %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:626
+#, c-format
+msgid "%s Array"
+msgstr "%s 阵列"
+
+#. Translators: First %s is a device file such as /dev/sda4
+#. * second %s is the state of the device
+#.
+#: ../src/gdu/gdu-linux-md-drive.c:596
+#, c-format
+msgid "RAID Array %s (%s)"
+msgstr "RAID 阵列 %s (%s)"
+
+#. Translators: %s is a device file such as /dev/sda4
+#: ../src/gdu/gdu-linux-md-drive.c:603
+#, c-format
+msgid "RAID device %s"
+msgstr "RAID 设备 %s"
+
+#. Translators: fallback for level
+#: ../src/gdu/gdu-linux-md-drive.c:609
+msgctxt "RAID Level fallback"
+msgid "RAID"
+msgstr "RAID"
+
+#: ../src/gdu/gdu-linux-md-drive.c:614
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1066
+msgid "RAID Array"
+msgstr "RAID 阵列"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1083
+msgctxt "Linux MD slave state"
+msgid "Not Attached"
+msgstr "未附加"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1086
+msgctxt "Linux MD slave state"
+msgid "Faulty"
+msgstr "有故障"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1091
+msgctxt "Linux MD slave state"
+msgid "Fully Synchronized"
+msgstr "已完全同步"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1093
+msgctxt "Linux MD slave state"
+msgid "Writemostly"
+msgstr "写入为主"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1095
+msgctxt "Linux MD slave state"
+msgid "Blocked"
+msgstr "已屏蔽"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1097
+msgctxt "Linux MD slave state"
+msgid "Spare"
+msgstr "备用的"
+
+#: ../src/gdu/gdu-machine.c:151
+msgid "Local Storage"
+msgstr "本地存储"
+
+#. TODO: use display-hostname
+#: ../src/gdu/gdu-machine.c:154
+#, fuzzy, c-format
+msgid "Storage on %s"
+msgstr "正在分离设备"
+
+#: ../src/gdu/gdu-pool.c:1888
+#, c-format
+msgid "Error enumerating devices: %s"
+msgstr "列举设备出错：%s"
+
+#: ../src/gdu/gdu-pool.c:1914
+#, c-format
+msgid "Error enumerating adapters: %s"
+msgstr "列举适配器出错：%s"
+
+#: ../src/gdu/gdu-pool.c:1937
+#, c-format
+msgid "Error enumerating expanders: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-pool.c:1960
+#, c-format
+msgid "Error enumerating ports: %s"
+msgstr "列举接口出错：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:292
+#, c-format
+msgid "Error listening to address `localhost:%d': %s: %s\n"
+msgstr "监听地址 `localhost:%d' 出错： %s： %s\n"
+
+#: ../src/gdu/gdu-ssh-bridge.c:307
+#, c-format
+msgid ""
+"Error creating a local TCP server, tried binding to ports 9000-10000 on "
+"localhost"
+msgstr "创建本地 TCP 服务器出错，尝试绑定到 localhost 上的 9000-10000 端口。"
+
+#: ../src/gdu/gdu-ssh-bridge.c:322
+#, c-format
+msgid "Error setting auth mechanisms on local DBusServer\n"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:347
+#, c-format
+msgid "Unable to parse command-line `%s' (Malformed address?): %s"
+msgstr "无法解析命令行 `%s' (格式错误？)：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:369
+#, fuzzy, c-format
+msgid "Unable to spawn ssh program: %s"
+msgstr "不能格式化 '%s'"
+
+#: ../src/gdu/gdu-ssh-bridge.c:398 ../src/gdu/gdu-ssh-bridge.c:510
+#, c-format
+msgid "Error reading stderr output: %s"
+msgstr "读取标准出错输出出错：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:405
+msgid "Error reading stderr output: No content"
+msgstr "读取标准出错输出出错：无内容"
+
+#: ../src/gdu/gdu-ssh-bridge.c:471
+msgid "Error logging in"
+msgstr "登录出错"
+
+#: ../src/gdu/gdu-ssh-bridge.c:491
+#, c-format
+msgid "Error sending `%s': %s"
+msgstr "发送 %s 出错：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:519
+#, c-format
+msgid ""
+"Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
+"but got `%s'"
+msgstr ""
+"预期之外的标准错误输出 - 期望 `udisks-tcp-bridge: Waiting for secret' 但是得"
+"到了 `%s'"
+
+#: ../src/gdu/gdu-ssh-bridge.c:536
+#, c-format
+msgid "Error passing authorization secret: %s"
+msgstr "传递认证机密出错：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:557
+#, c-format
+msgid "Error reading stderr from: %s"
+msgstr "读取标准错误出错，从：%s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:566
+#, c-format
+msgid ""
+"Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
+"connect to port %d' but got `%s'"
+msgstr ""
+"预期之外的标准错误输出 - 期望 `udisks-tcp-bridge: Attempting to connect to "
+"port %d' 但是得到 `%s'"
+
+#: ../src/gdu/gdu-ssh-bridge.c:585
+#, c-format
+msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:592
+msgid "The udisks-tcp-bridge program failed to prove it was authorized"
+msgstr ""
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -2665,10 +2745,9 @@ msgstr "未分区"
 #. * the second %s is the size as a number e.g. '100,000 bytes'
 #.
 #: ../src/gdu/gdu-util.c:128 ../src/gdu/gdu-util.c:137
-#, fuzzy, c-format
-#| msgid "%s / %s / %s bytes"
+#, c-format
 msgid "%s (%s bytes)"
-msgstr "%s / %s / %s 字节"
+msgstr "%s (%s 字节)"
 
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:172
@@ -2725,17 +2804,15 @@ msgstr "LUKS"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:234
-#, fuzzy, c-format
-#| msgid "Linux Ext2 (version %s)"
+#, c-format
 msgid "Ext2 (version %s)"
-msgstr "Linux Ext2 (版本 %s)"
+msgstr "Ext2 (版本 %s)"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:237
-#, fuzzy, c-format
-#| msgid "ext2"
+#, c-format
 msgid "Ext2"
-msgstr "ext2"
+msgstr "Ext2"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:240
@@ -2744,17 +2821,15 @@ msgstr "ext2"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:246
-#, fuzzy, c-format
-#| msgid "Linux Ext3 (version %s)"
+#, c-format
 msgid "Ext3 (version %s)"
-msgstr "Linux Ext3 (版本 %s)"
+msgstr "Ext3 (版本 %s)"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:249
-#, fuzzy, c-format
-#| msgid "ext3"
+#, c-format
 msgid "Ext3"
-msgstr "ext3"
+msgstr "Ext3"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:252
@@ -2763,17 +2838,15 @@ msgstr "ext3"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:258
-#, fuzzy, c-format
-#| msgid "Journal for Linux ext3 (version %s)"
+#, c-format
 msgid "Journal for Ext3 (version %s)"
-msgstr "Journal for Linux ext3 (版本 %s)"
+msgstr "Journal for Ext3 (版本 %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:261
-#, fuzzy, c-format
-#| msgid "Journal for Linux ext3"
+#, c-format
 msgid "Journal for Ext3"
-msgstr "Journal for Linux ext3"
+msgstr "Journal for Ext3"
 
 #. Translators: jbd is a filesystem type
 #: ../src/gdu/gdu-util.c:264
@@ -2782,17 +2855,15 @@ msgstr "jbd"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:270
-#, fuzzy, c-format
-#| msgid "Linux Ext4 (version %s)"
+#, c-format
 msgid "Ext4 (version %s)"
-msgstr "Linux Ext4 (版本 %s)"
+msgstr "Ext4 (版本 %s)"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:273
-#, fuzzy, c-format
-#| msgid "ext4"
+#, c-format
 msgid "Ext4"
-msgstr "ext4"
+msgstr "Ext4"
 
 #. Translators: Ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:276
@@ -2801,17 +2872,15 @@ msgstr "ext4"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:282
-#, fuzzy, c-format
-#| msgid "NTFS (version %s)"
+#, c-format
 msgid "XFS (version %s)"
-msgstr "NTFS (版本 %s)"
+msgstr "XFS (版本 %s)"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:285
-#, fuzzy, c-format
-#| msgid "HFS"
+#, c-format
 msgid "XFS"
-msgstr "HFS"
+msgstr "XFS"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:288
@@ -2820,21 +2889,20 @@ msgstr "xfs"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:294
-#, fuzzy, c-format
-#| msgid "NTFS (version %s)"
+#, c-format
 msgid "ReiserFS (version %s)"
-msgstr "NTFS (版本 %s)"
+msgstr "ReiserFS (版本 %s)"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:297
 #, c-format
 msgid "ReiserFS"
-msgstr ""
+msgstr "ReiserFS"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:300
 msgid "reiserfs"
-msgstr ""
+msgstr "reiserfs"
 
 #. Translators: iso9660 is a filesystem type
 #: ../src/gdu/gdu-util.c:305
@@ -2856,7 +2924,7 @@ msgstr "通用磁盘格式(UDF)"
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:320 ../src/palimpsest/gdu-section-volumes.c:1616
+#: ../src/gdu/gdu-util.c:320 ../src/palimpsest/gdu-section-volumes.c:1677
 msgid "Swap Space"
 msgstr "交换空间"
 
@@ -2885,7 +2953,7 @@ msgstr "lvm2_pv"
 msgid "RAID Component (version %s)"
 msgstr "RAID 组件(版本 %s)"
 
-#: ../src/gdu/gdu-util.c:341 ../src/palimpsest/gdu-section-volumes.c:1620
+#: ../src/gdu/gdu-util.c:341 ../src/palimpsest/gdu-section-volumes.c:1681
 #, c-format
 msgid "RAID Component"
 msgstr "RAID 组件"
@@ -2898,12 +2966,12 @@ msgstr "raid"
 #. Translators: long filesystem type for minix
 #: ../src/gdu/gdu-util.c:349
 msgid "Minix"
-msgstr ""
+msgstr "Minix"
 
 #. Translators: filesystem type for minix
 #: ../src/gdu/gdu-util.c:352
 msgid "minix"
-msgstr ""
+msgstr "minix"
 
 #: ../src/gdu/gdu-util.c:366
 msgid "Creating File System"
@@ -3012,10 +3080,8 @@ msgstr "强制锁定 LUKS 设备"
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
 #: ../src/gdu/gdu-util.c:432
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Linux Basic Data Partition"
-msgstr "Basic 数据分区"
+msgstr "Linux Basic 数据分区"
 
 #. Same as MS BDP
 #: ../src/gdu/gdu-util.c:433
@@ -3044,10 +3110,8 @@ msgid "EFI System Partition"
 msgstr "EFI 系统分区"
 
 #: ../src/gdu/gdu-util.c:440
-#, fuzzy
-#| msgid "Not Partitioned"
 msgid "BIOS Boot Partition"
-msgstr "未分区"
+msgstr "BIOS 启动分区"
 
 #. Microsoft
 #: ../src/gdu/gdu-util.c:442
@@ -3056,156 +3120,112 @@ msgstr "Microsoft 保留分区"
 
 #: ../src/gdu/gdu-util.c:443
 #, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Microsoft Basic Data Partition"
 msgstr "Basic 数据分区"
 
 #. Same as Linux BDP
 #: ../src/gdu/gdu-util.c:444
 #, fuzzy
-#| msgid "LDM meta data Partition"
 msgid "Microsoft LDM Metadata Partition"
 msgstr "LDM 元数据分区"
 
 #: ../src/gdu/gdu-util.c:445
 #, fuzzy
-#| msgid "LDM data Partition"
 msgid "Microsoft LDM Data Partition"
 msgstr "LDM 数据分区"
 
 #: ../src/gdu/gdu-util.c:446
 msgid "Microsoft Windows Recovery Environment"
-msgstr ""
+msgstr "Microsoft Windows 恢复环境"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:448
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "HP-UX Data Partition"
-msgstr "Basic 数据分区"
+msgstr "HP-UX 数据分区"
 
 #: ../src/gdu/gdu-util.c:449
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "HP-UX Service Partition"
-msgstr "Driver 分区"
+msgstr "HP-UX 服务分区"
 
 #. FreeBSD
 #: ../src/gdu/gdu-util.c:451
-#, fuzzy
-#| msgid "Create Partition"
 msgid "FreeBSD Boot Partition"
-msgstr "创建分区"
+msgstr "FreeBSD 启动分区"
 
 #: ../src/gdu/gdu-util.c:452
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "FreeBSD Data Partition"
-msgstr "Basic 数据分区"
+msgstr "FreeBSD 数据分区"
 
 #: ../src/gdu/gdu-util.c:453
-#, fuzzy
-#| msgid "Linux Swap Partition"
 msgid "FreeBSD Swap Partition"
-msgstr "Linux 交换分区"
+msgstr "FreeBSD 交换分区"
 
 #: ../src/gdu/gdu-util.c:454
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "FreeBSD UFS Partition"
-msgstr "Apple UFS 分区"
+msgstr "FreeBSD UFS 分区"
 
 #: ../src/gdu/gdu-util.c:455
-#, fuzzy
-#| msgid "Deleting Partition"
 msgid "FreeBSD Vinum Partition"
-msgstr "正在删除分区"
+msgstr "FreeBSD Vinum 分区"
 
 #: ../src/gdu/gdu-util.c:456
-#, fuzzy
-#| msgid "Create Partition"
 msgid "FreeBSD ZFS Partition"
-msgstr "创建分区"
+msgstr "FreeBSD ZFS 分区"
 
 #. Solaris
 #: ../src/gdu/gdu-util.c:458
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Boot Partition"
-msgstr "Basic 数据分区"
+msgstr "Basic 启动分区"
 
 #: ../src/gdu/gdu-util.c:459
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Root Partition"
-msgstr "Basic 数据分区"
+msgstr "Solaris 根分区"
 
 #: ../src/gdu/gdu-util.c:460
-#, fuzzy
-#| msgid "Linux Swap Partition"
 msgid "Solaris Swap Partition"
-msgstr "Linux 交换分区"
+msgstr "Solaris 交换分区"
 
 #: ../src/gdu/gdu-util.c:461
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Backup Partition"
-msgstr "Basic 数据分区"
+msgstr "Solaris 备份分区"
 
 #: ../src/gdu/gdu-util.c:462
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /usr Partition"
-msgstr "Driver 分区"
+msgstr "Solaris /usr 分区"
 
 #. Same as Apple ZFS
 #: ../src/gdu/gdu-util.c:463
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /var Partition"
-msgstr "Driver 分区"
+msgstr "Solaris /var 分区"
 
 #: ../src/gdu/gdu-util.c:464
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /home Partition"
-msgstr "Driver 分区"
+msgstr "Solaris /home 分区"
 
 #: ../src/gdu/gdu-util.c:465
 #, fuzzy
-#| msgid "Create Partition"
 msgid "Solaris Alternate Sector Partition"
 msgstr "创建分区"
 
 #: ../src/gdu/gdu-util.c:466
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition"
-msgstr "Linux 保留分区"
+msgstr "Solaris 保留分区"
 
 #: ../src/gdu/gdu-util.c:467
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (2)"
-msgstr "Linux 保留分区"
+msgstr "Solaris 保留分区 (2)"
 
 #: ../src/gdu/gdu-util.c:468
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (3)"
-msgstr "Linux 保留分区"
+msgstr "Solaris 保留分区 (3)"
 
 #: ../src/gdu/gdu-util.c:469
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (4)"
-msgstr "Linux 保留分区"
+msgstr "Solaris 保留分区 (4)"
 
 #: ../src/gdu/gdu-util.c:470
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (5)"
-msgstr "Linux 保留分区"
+msgstr "Solaris 保留分区 (5)"
 
 #. Mac OS X
 #: ../src/gdu/gdu-util.c:472 ../src/gdu/gdu-util.c:491
@@ -3219,10 +3239,8 @@ msgid "Apple UFS Partition"
 msgstr "Apple UFS 分区"
 
 #: ../src/gdu/gdu-util.c:474
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple ZFS Partition"
-msgstr "Apple UFS 分区"
+msgstr "Apple ZFS 分区"
 
 #. Same as Solaris /usr
 #: ../src/gdu/gdu-util.c:475
@@ -3230,65 +3248,46 @@ msgid "Apple RAID Partition"
 msgstr "Apple RAID 分区"
 
 #: ../src/gdu/gdu-util.c:476
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "Apple RAID Partition (Offline)"
-msgstr "Apple RAID 分区"
+msgstr "Apple RAID 分区 (Offline)"
 
 #: ../src/gdu/gdu-util.c:477
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple Boot Partition"
-msgstr "Apple UFS 分区"
+msgstr "Apple 启动分区"
 
 #: ../src/gdu/gdu-util.c:478
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple Label Partition"
-msgstr "Apple UFS 分区"
+msgstr "Apple Label 分区"
 
 #: ../src/gdu/gdu-util.c:479
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "Apple TV Recovery Partition"
-msgstr "Apple RAID 分区"
+msgstr "Apple TV 恢复分区"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:481
-#, fuzzy
-#| msgid "Linux Swap Partition"
 msgid "NetBSD Swap Partition"
-msgstr "Linux 交换分区"
+msgstr "NetBSD 交换分区"
 
 #: ../src/gdu/gdu-util.c:482
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "NetBSD FFS Partition"
-msgstr "Apple UFS 分区"
+msgstr "NetBSD FFS 分区"
 
 #: ../src/gdu/gdu-util.c:483
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "NetBSD LFS Partition"
-msgstr "Apple UFS 分区"
+msgstr "NetBSD LFS 分区"
 
 #: ../src/gdu/gdu-util.c:484
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "NetBSD RAID Partition"
-msgstr "Apple RAID 分区"
+msgstr "NetBSD RAID 分区"
 
 #: ../src/gdu/gdu-util.c:485
 #, fuzzy
-#| msgid "Create Partition"
 msgid "NetBSD Concatenated  Partition"
 msgstr "创建分区"
 
 #: ../src/gdu/gdu-util.c:486
-#, fuzzy
-#| msgid "Extended Partition"
 msgid "NetBSD Encrypted Partition"
-msgstr "扩展分区"
+msgstr "NetBSD 加密分区"
 
 #: ../src/gdu/gdu-util.c:493
 msgid "Unused Partition"
@@ -3412,10 +3411,8 @@ msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:525
-#, fuzzy
-#| msgid "Linux (0x83)"
 msgid "Minix (0x81)"
-msgstr "Linux (0x83)"
+msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
 #: ../src/gdu/gdu-util.c:526
@@ -3526,9 +3523,6 @@ msgstr "原生的 Windows 文件系统。不能被 Windows 以外的操作系统
 
 #: ../src/gdu/gdu-util.c:600
 #, fuzzy
-#| msgid ""
-#| "The native Windows file system. Not widely compatible with other "
-#| "operating systems than Windows."
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with other operating systems than Linux and Minix."
@@ -3575,22 +3569,19 @@ msgstr ""
 "或者软盘 / Zip 磁盘。"
 
 #: ../src/gdu/gdu-util.c:853
-#, fuzzy, c-format
-#| msgid "%.1f kbit/s"
+#, c-format
 msgid "%.1f KB/s"
-msgstr "%.1f kbit/秒"
+msgstr "%.1f KB/s"
 
 #: ../src/gdu/gdu-util.c:856
-#, fuzzy, c-format
-#| msgid "%.1f Mbit/s"
+#, c-format
 msgid "%.1f MB/s"
-msgstr "%.1f Mbit/秒"
+msgstr "%.1f MB/s"
 
 #: ../src/gdu/gdu-util.c:859
-#, fuzzy, c-format
-#| msgid "%.1f Gbit/s"
+#, c-format
 msgid "%.1f GB/s"
-msgstr "%.1f Gbit/秒"
+msgstr "%.1f GB/s"
 
 #. Translators: interface name for serial ATA disks
 #: ../src/gdu/gdu-util.c:875
@@ -4031,20 +4022,17 @@ msgstr "RAID"
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
 #: ../src/gdu/gdu-volume.c:350 ../src/gdu/gdu-volume.c:361
-#, fuzzy, c-format
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
+#, c-format
 msgid "%s %s Component"
-msgstr "%d 组件"
+msgstr "%s %s 组件"
 
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #.
 #: ../src/gdu/gdu-volume.c:354
-#, fuzzy, c-format
-#| msgid "Part of \"%s\" %s array"
+#, c-format
 msgid "Part of \"%s\" array"
-msgstr "属于 “%s” 的 %s 阵列"
+msgstr "\"%s\" 阵列的部分"
 
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
@@ -4112,72 +4100,18 @@ msgstr "在 %s 上的全盘卷"
 msgid "Whole-disk volume"
 msgstr "全盘卷"
 
-#: ../src/gdu/gdu-pool.c:1792
-#, fuzzy, c-format
-#| msgid "Error ejecting device"
-msgid "Error enumerating devices: %s"
-msgstr "弹出设备出错"
-
-#: ../src/gdu/gdu-pool.c:1818
-#, fuzzy, c-format
-#| msgid "Error erasing data"
-msgid "Error enumerating adapters: %s"
-msgstr "擦除数据出错"
-
-#: ../src/gdu/gdu-pool.c:1841
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume-hole.c:151
 #, c-format
-msgid "Error enumerating expanders: %s"
-msgstr ""
+msgid "%s Free"
+msgstr "%s 空闲"
 
-#: ../src/gdu/gdu-pool.c:1864
-#, fuzzy, c-format
-#| msgid "Error deleting partition"
-msgid "Error enumerating ports: %s"
-msgstr "删除分区错误"
-
-#: ../src/gdu/gdu-hub.c:192
-msgid "PATA Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:194
-msgid "SATA Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:196
-msgid "ATA Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:198
-msgid "SAS Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:200
-msgid "SCSI Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:202
-msgid "Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:206
-msgid "SAS Expander"
-msgstr ""
-
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "一个或多个磁盘发生故障"
-
-#. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "一个硬盘可能发生故障"
-
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
-msgstr "一个或多个硬盘报告健康问题。单击图标获取更多信息。"
+#: ../src/gdu/gdu-volume-hole.c:160
+#: ../src/palimpsest/gdu-section-volumes.c:1695
+msgid "Unallocated Space"
+msgstr "未分配空间"
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
@@ -4197,6 +4131,196 @@ msgid ""
 "disconnecting the device."
 msgstr "为防止数据丢失，请在移除介质或断开设备连接之前，等待操作完成。"
 
+#: ../src/notification/notification-main.c:170
+msgid "One or more disks are failing"
+msgstr "一个或多个磁盘发生故障"
+
+#. Translators: This is used as the title of the notification
+#: ../src/notification/notification-main.c:535
+msgid "A hard disk may be failing"
+msgstr "一个硬盘可能发生故障"
+
+#. Translators: This is used as the text of the notification
+#: ../src/notification/notification-main.c:537
+msgid ""
+"One or more hard disks report health problems. Click the icon to get more "
+"information."
+msgstr "一个或多个硬盘报告健康问题。单击图标获取更多信息。"
+
+#: ../src/palimpsest/gdu-main.c:127
+msgid "Volume to show"
+msgstr "要显示的卷"
+
+#: ../src/palimpsest/gdu-main.c:128
+msgid "Drive to show"
+msgstr "要显示的驱动器"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a SAS Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SAS Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:167
+#, fuzzy, c-format
+msgid "PHY %d of %s"
+msgstr "%2$s 的分区 %1$d"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SATA Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:174
+#, fuzzy, c-format
+msgid "Port %d of %s"
+msgstr "%2$s 的分区 %1$d"
+
+#: ../src/palimpsest/gdu-section-drive.c:232
+msgctxt "Write Cache"
+msgid "Enabled"
+msgstr "启用"
+
+#: ../src/palimpsest/gdu-section-drive.c:234
+msgctxt "Write Cache"
+msgid "Disabled"
+msgstr "禁用"
+
+#. Translators: This is for the rotation rate of a hard
+#. * disk - RPM means rounds per minute
+#.
+#: ../src/palimpsest/gdu-section-drive.c:244
+#, c-format
+msgctxt "Rotation Rate"
+msgid "%d RPM"
+msgstr "%d RPM"
+
+#: ../src/palimpsest/gdu-section-drive.c:252
+msgctxt "Rotation Rate"
+msgid "Solid-State Disk"
+msgstr "固态磁盘"
+
+#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
+#: ../src/palimpsest/gdu-section-drive.c:267
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
+#, c-format
+msgid "Unknown Scheme: %s"
+msgstr "未知的方案：%s"
+
+#: ../src/palimpsest/gdu-section-drive.c:378
+#: ../src/palimpsest/gdu-section-drive.c:398
+msgid "Error launching Brasero"
+msgstr "启动 Brasero 出错"
+
+#: ../src/palimpsest/gdu-section-drive.c:379
+msgid "The application is not installed"
+msgstr "此应用程序未安装"
+
+#: ../src/palimpsest/gdu-section-drive.c:460
+msgid "Error ejecting media"
+msgstr "弹出媒体出错"
+
+#: ../src/palimpsest/gdu-section-drive.c:504
+msgid "Error detaching drive"
+msgstr "分离驱动器出错"
+
+#: ../src/palimpsest/gdu-section-drive.c:549
+msgid "Error formatting drive"
+msgstr "格式化驱动器出错"
+
+#: ../src/palimpsest/gdu-section-drive.c:587
+msgid "Are you sure you want to format the drive?"
+msgstr "是否确认要格式化此驱动器？"
+
+#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-hub.c:221
+msgid "Model:"
+msgstr "型号："
+
+#: ../src/palimpsest/gdu-section-drive.c:652
+msgid "Serial Number:"
+msgstr "序列号："
+
+#: ../src/palimpsest/gdu-section-drive.c:656
+msgid "Firmware Version:"
+msgstr "固件版本："
+
+#. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
+#: ../src/palimpsest/gdu-section-drive.c:661
+#, fuzzy
+msgid "World Wide Name:"
+msgstr "型号："
+
+#: ../src/palimpsest/gdu-section-drive.c:665
+msgid "Location:"
+msgstr "位置："
+
+#: ../src/palimpsest/gdu-section-drive.c:673
+msgid "Write Cache:"
+msgstr "写入缓存："
+
+#: ../src/palimpsest/gdu-section-drive.c:677
+msgid "Rotation Rate:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:681
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
+#: ../src/palimpsest/gdu-section-volumes.c:1460
+msgid "Capacity:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:685
+msgid "Connection:"
+msgstr "连接："
+
+#: ../src/palimpsest/gdu-section-drive.c:689
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
+msgid "Partitioning:"
+msgstr "分区："
+
+#: ../src/palimpsest/gdu-section-drive.c:712
+msgid "Open CD/_DVD Application"
+msgstr "打开 CD/_DVD 程序"
+
+#: ../src/palimpsest/gdu-section-drive.c:713
+msgid "Create and copy CDs and DVDs"
+msgstr "创建和复制光盘"
+
+#: ../src/palimpsest/gdu-section-drive.c:722
+msgid "Format _Drive"
+msgstr "格式化驱动器(_D)"
+
+#: ../src/palimpsest/gdu-section-drive.c:723
+msgid "Erase or partition the drive"
+msgstr "擦除或分区此驱动器"
+
+#: ../src/palimpsest/gdu-section-drive.c:732
+msgid "SM_ART Data"
+msgstr "SM_ART 数据"
+
+#: ../src/palimpsest/gdu-section-drive.c:733
+msgid "View SMART data and run self-tests"
+msgstr "查看 SMART 数据并且运行自检"
+
+#: ../src/palimpsest/gdu-section-drive.c:742
+msgid "_Eject"
+msgstr "弹出(_E)"
+
+#: ../src/palimpsest/gdu-section-drive.c:743
+msgid "Eject media from the drive"
+msgstr "从驱动器弹出媒体"
+
+#: ../src/palimpsest/gdu-section-drive.c:752
+msgid "Safe Rem_oval"
+msgstr "安全移除(_O)"
+
+#: ../src/palimpsest/gdu-section-drive.c:753
+msgid "Power down the drive so it can be removed"
+msgstr "关闭此驱动器电源以便移除它"
+
+#: ../src/palimpsest/gdu-section-drive.c:763
+msgid "Measure drive performance"
+msgstr "测量驱动器性能"
+
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
 #.
@@ -4208,11 +4332,11 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-hub.c:132
 msgid "Parallel ATA"
-msgstr ""
+msgstr "并行 ATA"
 
 #: ../src/palimpsest/gdu-section-hub.c:134
 msgid "Serial ATA"
-msgstr ""
+msgstr "串行 ATA"
 
 #: ../src/palimpsest/gdu-section-hub.c:138
 msgid "Serial Attached SCSI"
@@ -4220,178 +4344,38 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-hub.c:217
 msgid "Vendor:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-hub.c:221
-#: ../src/palimpsest/gdu-section-drive.c:648
-#, fuzzy
-#| msgid "Model Name:"
-msgid "Model:"
-msgstr "型号："
+msgstr "制造商："
 
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Revision:"
-msgstr ""
+msgstr "修订版本："
 
 #: ../src/palimpsest/gdu-section-hub.c:229
-#, fuzzy
-#| msgid "_Drive:"
 msgid "Driver:"
-msgstr "驱动器(_D)"
+msgstr "驱动器："
 
 #: ../src/palimpsest/gdu-section-hub.c:233
 msgid "Fabric:"
 msgstr ""
 
 #: ../src/palimpsest/gdu-section-hub.c:237
-#, fuzzy
-#| msgid "Number of ECC errors"
 msgid "Number of Ports:"
-msgstr "ECC 错误数"
-
-#: ../src/palimpsest/gdu-main.c:123
-msgid "Volume to show"
-msgstr "要显示的卷"
-
-#: ../src/palimpsest/gdu-main.c:124
-msgid "Drive to show"
-msgstr "要显示的驱动器"
-
-#: ../src/palimpsest/gdu-shell.c:458
-msgid "Error creating component for RAID array"
-msgstr "为 RAID 阵列创建组件出错"
-
-#: ../src/palimpsest/gdu-shell.c:485
-msgid "Error creating partition table for component for RAID array"
-msgstr "创建 RAID 阵列组件的分区表出错"
-
-#: ../src/palimpsest/gdu-shell.c:511
-msgid "Error creating RAID array"
-msgstr "创建 RAID 阵列出错"
-
-#: ../src/palimpsest/gdu-shell.c:726
-msgid "translator-credits"
-msgstr ""
-"Wei Mingzhi <weimingzhi@gmail.com>\n"
-"Aron Xu <happyaron.xu@gmail.com>\n"
-"FujianWzh <fujianwzh@gmail.com>"
-
-#: ../src/palimpsest/gdu-shell.c:751
-msgid "_File"
-msgstr "文件(_F)"
-
-#: ../src/palimpsest/gdu-shell.c:752
-msgid "Connect to _Server..."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:752
-msgid "Manage storage devices on another machine"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:753
-#, fuzzy
-#| msgid "Create"
-msgid "_Create"
-msgstr "创建"
-
-#: ../src/palimpsest/gdu-shell.c:754
-#, fuzzy
-#| msgid "RAID Array"
-msgid "_RAID Array..."
-msgstr "RAID 阵列"
-
-#: ../src/palimpsest/gdu-shell.c:754
-#, fuzzy
-#| msgid "Create RAID Array"
-msgid "Create a RAID array"
-msgstr "创建磁盘阵列"
-
-#: ../src/palimpsest/gdu-shell.c:755
-msgid "_Edit"
-msgstr "编辑(_E)"
-
-#: ../src/palimpsest/gdu-shell.c:756 ../src/palimpsest/gdu-shell.c:759
-msgid "_Help"
-msgstr "帮助(_H)"
-
-#: ../src/palimpsest/gdu-shell.c:758
-msgid "_Quit"
-msgstr "退出(_Q)"
-
-#: ../src/palimpsest/gdu-shell.c:758
-msgid "Quit"
-msgstr "退出"
-
-#: ../src/palimpsest/gdu-shell.c:759
-#, fuzzy
-#| msgid "Get Help on Palimpsest Disk Utility"
-msgid "Get Help on Disk Utility"
-msgstr "获取 Palimpsest 磁盘实用工具的帮助"
-
-#: ../src/palimpsest/gdu-shell.c:760
-msgid "_About"
-msgstr "关于(_A)"
-
-#: ../src/palimpsest/gdu-shell.c:839
-msgid "An error occured"
-msgstr "发生一个错误"
-
-#: ../src/palimpsest/gdu-shell.c:848
-msgid "The operation failed."
-msgstr "操作失败。"
-
-#: ../src/palimpsest/gdu-shell.c:851
-msgid "The device is busy."
-msgstr "设备忙。"
-
-#: ../src/palimpsest/gdu-shell.c:854
-msgid "The operation was canceled."
-msgstr "操作已被取消。"
-
-#: ../src/palimpsest/gdu-shell.c:857
-msgid "The daemon is being inhibited."
-msgstr "守护进程被禁止。"
-
-#: ../src/palimpsest/gdu-shell.c:860
-msgid "An invalid option was passed."
-msgstr "一个无效的选项被忽略。"
-
-#: ../src/palimpsest/gdu-shell.c:863
-msgid "The operation is not supported."
-msgstr "不支持该操作。"
-
-#: ../src/palimpsest/gdu-shell.c:866
-msgid "Getting ATA SMART data would wake up the device."
-msgstr "获取 ATA SMART 数据将唤醒设备。"
-
-#: ../src/palimpsest/gdu-shell.c:869
-msgid "Permission denied."
-msgstr "许可被拒绝。"
-
-#: ../src/palimpsest/gdu-shell.c:908
-msgid "_Details:"
-msgstr "细节(_D)："
-
-#: ../src/palimpsest/gdu-shell.c:1032
-#, fuzzy
-#| msgid "Detaching Device"
-msgid "_Storage Devices"
-msgstr "正在分离设备"
+msgstr "端口数："
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:86
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr "不在运行中，部分已组装"
+msgstr "未运行，部分已组装"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:94
 msgctxt "RAID status"
 msgid "Not running"
-msgstr "不在运行中"
+msgstr "未运行"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:96
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr "不在运行中，仅可降级启动"
+msgstr "未运行，仅可降级启动"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:98
 msgctxt "RAID status"
@@ -4410,40 +4394,27 @@ msgstr "正在运行"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:126
 #, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Reshaping"
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "正在重建"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:128
 #, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Resyncing"
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "正在重新同步"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:130
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Repairing"
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "正在修复"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:132
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Recovering"
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "正在恢复"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:134
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Checking"
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "正在检查"
@@ -4451,14 +4422,12 @@ msgstr "正在检查"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:139
 msgctxt "RAID action"
 msgid "Idle"
-msgstr ""
+msgstr "空闲"
 
 #. Translators: The text for the hyperlink of the component
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:241
-#, fuzzy
-#| msgid "Cannot unmount volume"
 msgid "Go to volume"
-msgstr "无法卸载卷"
+msgstr "转到卷"
 
 #. Translators: The text used to display the RAID component for an array that is running.
 #. * First %s is the VPD name.
@@ -4466,421 +4435,166 @@ msgstr "无法卸载卷"
 #. * Third %s is the "Go to volume" link.
 #.
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:251
-#, fuzzy, c-format
-#| msgid "%s %s (%s)"
+#, c-format
 msgctxt "RAID component label"
 msgid "%s (%s) – %s"
-msgstr "%s %s (%s)"
+msgstr "%s (%s) – %s"
 
 #. Translators: The text used to display the RAID component for an array that is not running.
 #. * First %s is the VPD name.
 #. * Second %s is the "Go to volume" link.
 #.
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:260
-#, fuzzy, c-format
-#| msgid "%s at %s"
+#, c-format
 msgctxt "RAID component label"
 msgid "%s – %s"
-msgstr "%s 速度 %s"
-
-#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
-#: ../src/palimpsest/gdu-section-drive.c:267
-#, c-format
-msgid "Unknown Scheme: %s"
-msgstr "未知的方案：%s"
+msgstr "%s – %s"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:415
-#, fuzzy
-#| msgid "Stopping RAID Array"
 msgid "Error stopping RAID Array"
-msgstr "正在停止 RAID 阵列"
+msgstr "停止 RAID 阵列出错"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:460
-#, fuzzy
-#| msgid "Error creating RAID array"
 msgid "Error starting RAID Array"
-msgstr "创建 RAID 阵列出错"
+msgstr "启动 RAID 阵列出错"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:490
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:493
-#, fuzzy, c-format
-#| msgctxt "RAID status"
-#| msgid "Not running, not enough components to start"
+#, c-format
 msgid "Not enough components available to start the RAID Array"
-msgstr "不在运行中，没有足够的组件以启动"
+msgstr "无启用此 RAID 阵列需要的足够组件可用"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:509
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "你确定要擦除该设备吗？"
+msgstr "你确定要降级此 RAID 阵列吗？"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:510
 msgid "_Start"
 msgstr "启动(_S)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:555
-#, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error deleting partition for component in RAID Array"
-msgstr "创建 RAID 阵列组件的分区表出错"
+msgstr ""
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:578
-#, fuzzy
-#| msgid "Removing Component from RAID Array"
 msgid "Error removing component from RAID Array"
-msgstr "从 RAID 阵列移除组件"
+msgstr "从 RAID 阵列移除组件出错"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:629
-#, fuzzy
-#| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Are you sure you want the remove the component?"
-msgstr "您确定要从阵列中移除该组件吗？"
+msgstr "您确定要移除该组件吗？"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:630
-#, fuzzy
-#| msgid "_Revert"
 msgid "_Remove"
-msgstr "还原(_R)"
+msgstr "移除(_R)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:666
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:739
-#, fuzzy
-#| msgid "Error creating component for RAID array"
 msgid "Error adding component to RAID Array"
-msgstr "为 RAID 阵列创建组件出错"
+msgstr "添加组件到 RAID 阵列出错"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:762
 #, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error creating partition for RAID component"
 msgstr "创建 RAID 阵列组件的分区表出错"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:797
 #, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error creating partition table for RAID component"
 msgstr "创建 RAID 阵列组件的分区表出错"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
-#, fuzzy
-#| msgid "Error creating RAID array"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 msgid "Error checking RAID Array"
-msgstr "创建 RAID 阵列出错"
+msgstr "检查 RAID 阵列出错"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
-#, fuzzy
-#| msgid "RAID _Level:"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1080
 msgid "Level:"
-msgstr "RAID 级别(_L)"
+msgstr "级别："
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1083
-#, fuzzy
-#| msgid "LDM meta data Partition"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
 msgid "Metadata Version:"
-msgstr "LDM 元数据分区"
+msgstr "元数据版本："
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1087
-#, fuzzy
-#| msgid "_Name:"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
 msgid "Name:"
-msgstr "名称(_N)："
+msgstr "名称："
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1091
-#: ../src/palimpsest/gdu-section-drive.c:689
-#, fuzzy
-#| msgid "Partition"
-msgid "Partitioning:"
-msgstr "分区"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
-#: ../src/palimpsest/gdu-section-drive.c:681
-#: ../src/palimpsest/gdu-section-volumes.c:1424
-#, fuzzy
-#| msgid "SD High Capacity"
-msgid "Capacity:"
-msgstr "SD 高密度卡"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
 msgid "Action:"
-msgstr ""
+msgstr "动作："
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1107
-#, fuzzy
-#| msgid "Components:"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
 msgid "Active Components:"
-msgstr "组件："
+msgstr "激活组件："
 
 #. Ensure this is in the last row and the first column
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1112
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
 msgid "Components:"
 msgstr "组件："
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1138
-#, fuzzy
-#| msgid "Starting RAID Array"
-msgid "St_art RAID Array"
-msgstr "正在启动 RAID 阵列"
-
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
-#, fuzzy
-#| msgid "Starting RAID Array"
-msgid "Bring up the RAID Array"
-msgstr "正在启动 RAID 阵列"
+msgid "St_art RAID Array"
+msgstr "启动 RAID 阵列(_A)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1148
-#, fuzzy
-#| msgid "Stopping RAID Array"
-msgid "St_op RAID Array"
-msgstr "正在停止 RAID 阵列"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
+msgid "Bring up the RAID Array"
+msgstr "创建 RAID 阵列"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
-#, fuzzy
-#| msgid "Create RAID Array"
-msgid "Tear down the RAID Array"
-msgstr "创建磁盘阵列"
+msgid "St_op RAID Array"
+msgstr "停止 RAID 阵列(_O)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1158
-#, fuzzy
-#| msgid "Create RAID Array"
-msgid "Format/Erase RAI_D Array"
-msgstr "创建磁盘阵列"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
+msgid "Tear down the RAID Array"
+msgstr "拆除磁盘阵列"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
-#, fuzzy
-#| msgid "Starts repairing the RAID array"
-msgid "Erase or partition the array"
-msgstr "开始修复 RAID 阵列"
+msgid "Format/Erase RAI_D Array"
+msgstr "格式化或擦除磁盘阵列(_D)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1168
-#, fuzzy
-#| msgid "Checking RAID Array"
-msgid "Chec_k Array"
-msgstr "正在修复 RAID 阵列"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1160
+msgid "Erase or partition the array"
+msgstr "擦除或分区 RAID 阵列"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
-#, fuzzy
-#| msgid "Starts repairing the RAID array"
-msgid "Check and repair the array"
-msgstr "开始修复 RAID 阵列"
+msgid "Chec_k Array"
+msgstr "检查阵列(_K)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1178
-#, fuzzy
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
-msgid "Edit Com_ponents"
-msgstr "%d 组件"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1170
+msgid "Check and repair the array"
+msgstr "检查并修复此阵列"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
-#, fuzzy
-#| msgid "Error removing component"
+msgid "Edit Com_ponents"
+msgstr "编辑组件(_P)"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1180
 msgid "Create and remove components"
-msgstr "删除组件出错"
+msgstr "创建和移除组件"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1190
 msgid "Measure RAID array performance"
-msgstr ""
-
-#. Translators: This is used in the "Location" element for a disk
-#. * connected to a SAS Adapter or Expander - The %d is the
-#. * PHY number (starts at 1) and the %s is the Adapter/Expander
-#. * name (e.g. "SAS Host Adapter").
-#.
-#: ../src/palimpsest/gdu-section-drive.c:167
-#, fuzzy, c-format
-#| msgid "Partition %d of %s"
-msgid "PHY %d of %s"
-msgstr "%2$s 的分区 %1$d"
-
-#. Translators: This is used in the "Location" element for a disk
-#. * connected to a Adapter or Expander - The %d is the
-#. * PHY number (starts at 1) and the %s is the Adapter/Expander
-#. * name (e.g. "SATA Host Adapter").
-#.
-#: ../src/palimpsest/gdu-section-drive.c:174
-#, fuzzy, c-format
-#| msgid "Partition %d of %s"
-msgid "Port %d of %s"
-msgstr "%2$s 的分区 %1$d"
-
-#: ../src/palimpsest/gdu-section-drive.c:232
-msgctxt "Write Cache"
-msgid "Enabled"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:234
-msgctxt "Write Cache"
-msgid "Disabled"
-msgstr ""
-
-#. Translators: This is for the rotation rate of a hard
-#. * disk - RPM means rounds per minute
-#.
-#: ../src/palimpsest/gdu-section-drive.c:244
-#, c-format
-msgctxt "Rotation Rate"
-msgid "%d RPM"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:252
-#, fuzzy
-#| msgid "Solid-State Disk"
-msgctxt "Rotation Rate"
-msgid "Solid-State Disk"
-msgstr "SSD 固态磁盘"
-
-#: ../src/palimpsest/gdu-section-drive.c:378
-#: ../src/palimpsest/gdu-section-drive.c:398
-#, fuzzy
-#| msgid "Error launching Disk Utility"
-msgid "Error launching Brasero"
-msgstr "启动磁盘实用工具出错"
-
-#: ../src/palimpsest/gdu-section-drive.c:379
-#, fuzzy
-#| msgid "The operation is not supported."
-msgid "The application is not installed"
-msgstr "不支持该操作。"
-
-#: ../src/palimpsest/gdu-section-drive.c:460
-#, fuzzy
-#| msgid "Error ejecting device"
-msgid "Error ejecting media"
-msgstr "弹出设备出错"
-
-#: ../src/palimpsest/gdu-section-drive.c:504
-#, fuzzy
-#| msgid "Error detaching device"
-msgid "Error detaching drive"
-msgstr "分离设备出错"
-
-#: ../src/palimpsest/gdu-section-drive.c:549
-#, fuzzy
-#| msgid "Error formatting volume"
-msgid "Error formatting drive"
-msgstr "格式化卷出错..."
-
-#: ../src/palimpsest/gdu-section-drive.c:587
-#, fuzzy
-#| msgid "Are you sure you want to format the volume?"
-msgid "Are you sure you want to format the drive?"
-msgstr "是否确认要格式化卷?"
-
-#: ../src/palimpsest/gdu-section-drive.c:652
-msgid "Serial Number:"
-msgstr "序列号："
-
-#: ../src/palimpsest/gdu-section-drive.c:656
-msgid "Firmware Version:"
-msgstr "固件版本："
-
-#. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:661
-#, fuzzy
-#| msgid "Model Name:"
-msgid "World Wide Name:"
-msgstr "型号："
-
-#: ../src/palimpsest/gdu-section-drive.c:665
-#, fuzzy
-#| msgid "Load Friction"
-msgid "Location:"
-msgstr "负载摩擦"
-
-#: ../src/palimpsest/gdu-section-drive.c:673
-msgid "Write Cache:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:677
-msgid "Rotation Rate:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:685
-msgid "Connection:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:712
-msgid "Open CD/_DVD Application"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:713
-msgid "Create and copy CDs and DVDs"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:722
-#, fuzzy
-#| msgid "_Format"
-msgid "Format _Drive"
-msgstr "格式化(_F)"
-
-#: ../src/palimpsest/gdu-section-drive.c:723
-#, fuzzy
-#| msgid "There was an error starting the drive \"%s\"."
-msgid "Erase or partition the drive"
-msgstr "启动驱动器 \"%s\" 时出现错误。"
-
-#: ../src/palimpsest/gdu-section-drive.c:732
-#, fuzzy
-#| msgid "SMART Data"
-msgid "SM_ART Data"
-msgstr "SMART 数据"
-
-#: ../src/palimpsest/gdu-section-drive.c:733
-msgid "View SMART data and run self-tests"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:742
-msgid "_Eject"
-msgstr "弹出(_E)"
-
-#: ../src/palimpsest/gdu-section-drive.c:743
-#, fuzzy
-#| msgid "Eject media from the device"
-msgid "Eject media from the drive"
-msgstr "从设备弹出媒体"
-
-#: ../src/palimpsest/gdu-section-drive.c:752
-msgid "Safe Rem_oval"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:753
-msgid "Power down the drive so it can be removed"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:763
-#, fuzzy
-#| msgid "Seek Timer Performance"
-msgid "Measure drive performance"
-msgstr "寻道性能"
+msgstr "测量 RAID 阵列性能"
 
 #: ../src/palimpsest/gdu-section-volumes.c:100
-#, fuzzy
-#| msgid "Error unmounting device"
 msgid "Error unmounting volume"
-msgstr "卸载设备出错"
+msgstr "卸载卷出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:156
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error mounting volume"
-msgstr "格式化卷出错..."
+msgstr "加载卷出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:213
 msgid "Error deleting partition"
 msgstr "删除分区错误"
 
 #: ../src/palimpsest/gdu-section-volumes.c:248
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the partition?"
-msgstr "你确定要擦除该设备吗？"
+msgstr "你确定要删除此分区吗？"
 
 #: ../src/palimpsest/gdu-section-volumes.c:249
-#, fuzzy
-#| msgid "_Detect Media"
 msgid "_Delete"
-msgstr "检测媒体(_D)"
+msgstr "删除(_D)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:302
 msgid "Error creating filesystem"
@@ -4895,48 +4609,35 @@ msgid "Error modifying partition"
 msgstr "修改分区错误"
 
 #: ../src/palimpsest/gdu-section-volumes.c:504
-#, fuzzy
-#| msgid "Are you sure you want to format the volume?"
 msgid "Are you sure you want to forget the passphrase?"
-msgstr "是否确认要格式化卷?"
+msgstr "是否确认要忘记此密码句?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:505
-#, fuzzy
-#| msgid "_Format"
 msgid "_Forget"
-msgstr "格式化(_F)"
+msgstr "忘记(_F)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:535
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error locking LUKS volume"
-msgstr "格式化卷出错..."
+msgstr "锁定 LUKS 卷出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:658
-#, fuzzy
-#| msgid "Error unlocking device"
 msgid "Error unlocking LUKS volume"
-msgstr "解锁设备出错"
+msgstr "解锁 LUKS 卷出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:954
 msgid "Error creating partition"
 msgstr "创建分区错误"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1125
-#, fuzzy
-#| msgid "Error creating partition table"
 msgid "Error changing label"
-msgstr "错误创建分区表"
+msgstr "更改卷标出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1199
-#, fuzzy
-#| msgid "Error checking file system on device"
 msgid "Error checking filesystem on volume"
-msgstr "检查设备上的文件系统时出错"
+msgstr "检查卷上的文件系统时出错"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1226
 #, fuzzy, c-format
-#| msgid "File system check on \"%s\" completed"
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "文件系统检查已经完成 “%s”"
 
@@ -4948,260 +4649,380 @@ msgstr "文件系统是干净的。"
 msgid "File system is <b>NOT</b> clean."
 msgstr "文件系统<b>不是</b>干净的。"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1403
-#, fuzzy
-#| msgid "Use"
+#: ../src/palimpsest/gdu-section-volumes.c:1345
+#, fuzzy, c-format
+msgid "Error spawning nautilus: %s"
+msgstr "擦除数据出错"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1439
 msgid "Usage:"
-msgstr "使用"
+msgstr "使用方法："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1413
-#, fuzzy
-#| msgid "Partitioned"
+#: ../src/palimpsest/gdu-section-volumes.c:1449
 msgid "Partition Type:"
-msgstr "已分区"
+msgstr "分区类型："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1417
-#, fuzzy
-#| msgid "Part_ition Label:"
+#: ../src/palimpsest/gdu-section-volumes.c:1453
 msgid "Partition Label:"
-msgstr "分区卷标(_I)："
+msgstr "分区卷标："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1420
-#, fuzzy
-#| msgid "Part_ition Label:"
+#: ../src/palimpsest/gdu-section-volumes.c:1456
 msgid "Partition Flags:"
-msgstr "分区卷标(_I)："
+msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:1428
-#, fuzzy
-#| msgid "_Type:"
+#: ../src/palimpsest/gdu-section-volumes.c:1464
 msgid "Type:"
-msgstr "类型(_T)："
+msgstr "类型："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1431
+#: ../src/palimpsest/gdu-section-volumes.c:1467
 msgid "Available:"
-msgstr ""
+msgstr "可用："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1437
+#: ../src/palimpsest/gdu-section-volumes.c:1473
 msgid "Mount Point:"
-msgstr ""
+msgstr "挂载点："
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1477
-#, fuzzy
-#| msgid "_Bootable"
+#: ../src/palimpsest/gdu-section-volumes.c:1517
 msgid "Bootable"
-msgstr "可启动(_B)"
+msgstr "可启动"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1480
+#: ../src/palimpsest/gdu-section-volumes.c:1520
 msgid "Required"
-msgstr ""
+msgstr "要求的"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1483
-#, fuzzy
-#| msgctxt "Linux MD slave state"
-#| msgid "Blocked"
+#: ../src/palimpsest/gdu-section-volumes.c:1523
 msgid "Allocated"
-msgstr "已屏蔽"
+msgstr "已分配"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1486
+#: ../src/palimpsest/gdu-section-volumes.c:1526
 msgid "Allow Read"
-msgstr ""
+msgstr "允许读"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1489
+#: ../src/palimpsest/gdu-section-volumes.c:1529
 msgid "Allow Write"
-msgstr ""
+msgstr "允许写"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1492
+#: ../src/palimpsest/gdu-section-volumes.c:1532
 msgid "Boot Code PIC"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:1561
-#, fuzzy
-#| msgid "%s Filesystem"
+#: ../src/palimpsest/gdu-section-volumes.c:1601
 msgid "Filesystem"
-msgstr "%s 文件系统"
+msgstr "文件系统"
+
+#. Translators: this the mount point hyperlink tooltip for a
+#. * remote server - it uses the sftp:// protocol
+#.
+#: ../src/palimpsest/gdu-section-volumes.c:1634
+msgid "View files on the volume using a SFTP network share"
+msgstr "使用 SFTP 网络共享查看此卷上的文件"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:1582
+#: ../src/palimpsest/gdu-section-volumes.c:1641
 msgid "View files on the volume"
-msgstr ""
+msgstr "查看此卷上的文件"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1588
-#, fuzzy, c-format
-#| msgid " mounted at "
+#: ../src/palimpsest/gdu-section-volumes.c:1648
+#, c-format
 msgid "Mounted at %s"
-msgstr "挂载在"
+msgstr "挂载到 %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1595
-#, fuzzy
-#| msgid "Not Partitioned"
+#: ../src/palimpsest/gdu-section-volumes.c:1656
 msgid "Not Mounted"
-msgstr "未分区"
+msgstr "未挂载"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1605
+#: ../src/palimpsest/gdu-section-volumes.c:1666
 msgid "Encrypted Volume (Locked)"
-msgstr ""
+msgstr "加密卷(已锁定)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1608
+#: ../src/palimpsest/gdu-section-volumes.c:1669
 msgid "Encrypted Volume (Unlocked)"
-msgstr ""
+msgstr "加密卷(未锁定)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1621
-#, fuzzy
-#| msgid "Stop the array"
+#: ../src/palimpsest/gdu-section-volumes.c:1682
 msgid "Go to array"
-msgstr "停止阵列"
+msgstr "转到阵列"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1629
-#, fuzzy
-#| msgid "Contains logical partitions"
+#: ../src/palimpsest/gdu-section-volumes.c:1690
 msgid "Container for Logical Partitions"
-msgstr "包含逻辑分区"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1711
-#, fuzzy
-#| msgid "Volume"
-msgid "_Volumes"
-msgstr "卷"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1751
-#, fuzzy
-#| msgid "Mounting volume..."
-msgid "_Mount Volume"
-msgstr "正在挂载卷..."
-
-#: ../src/palimpsest/gdu-section-volumes.c:1752
-#, fuzzy
-#| msgid "Mounting volume..."
-msgid "Mount the volume"
-msgstr "正在挂载卷..."
-
-#: ../src/palimpsest/gdu-section-volumes.c:1761
-#, fuzzy
-#| msgid "_Unmount"
-msgid "_Unmount Volume"
-msgstr "卸载(_U)"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1762
-#, fuzzy
-#| msgid "Unmount the filesystem"
-msgid "Unmount the volume"
-msgstr "卸载文件系统"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1771
-#, fuzzy
-#| msgid "Format %s Volume (%s)"
-msgid "Fo_rmat Volume"
-msgstr "格式化 %s 卷(%s)"
+msgstr "逻辑分区的容器"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1772
-#, fuzzy
-#| msgid "Error formatting volume"
-msgid "Erase or format the volume"
-msgstr "格式化卷出错..."
+msgid "_Volumes"
+msgstr "卷(_V)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1781
-#, fuzzy
-#| msgid "_Check File System"
+#: ../src/palimpsest/gdu-section-volumes.c:1812
+msgid "_Mount Volume"
+msgstr "挂载卷"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1813
+msgid "Mount the volume"
+msgstr "挂载此卷"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1822
+msgid "_Unmount Volume"
+msgstr "卸载卷"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1823
+msgid "Unmount the volume"
+msgstr "卸载此卷"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1832
+msgid "Fo_rmat Volume"
+msgstr "格式化卷(_R)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1833
+msgid "Erase or format the volume"
+msgstr "擦除或格式化卷"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1842
 msgid "_Check Filesystem"
 msgstr "检查文件系统(_C)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1782
-#, fuzzy
-#| msgid "Check the file system"
+#: ../src/palimpsest/gdu-section-volumes.c:1843
 msgid "Check and repair the filesystem"
-msgstr "检查文件系统"
+msgstr "检查并修复文件系统"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1792
-#, fuzzy
-#| msgid "_Label:"
+#: ../src/palimpsest/gdu-section-volumes.c:1853
 msgid "Edit _Label"
-msgstr "卷标(_L)："
+msgstr "编辑卷标(_L)："
 
-#: ../src/palimpsest/gdu-section-volumes.c:1793
+#: ../src/palimpsest/gdu-section-volumes.c:1854
 msgid "Change the label of the volume"
-msgstr ""
+msgstr "更改此卷的标签"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1802
-#, fuzzy
-#| msgid "Empty Partition"
+#: ../src/palimpsest/gdu-section-volumes.c:1863
 msgid "Ed_it Partition"
-msgstr "空分区"
+msgstr "编辑分区(_I)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1803
+#: ../src/palimpsest/gdu-section-volumes.c:1864
 msgid "Change partition type, label and flags"
-msgstr ""
+msgstr "更改分区类型、标签和 flags"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1812
-#, fuzzy
-#| msgid "_Delete Partition"
+#: ../src/palimpsest/gdu-section-volumes.c:1873
 msgid "D_elete Partition"
-msgstr "删除分区(_D)"
+msgstr "删除分区(_E)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1813
+#: ../src/palimpsest/gdu-section-volumes.c:1874
 msgid "Delete the partition"
 msgstr "删除分区"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1822
-#, fuzzy
-#| msgid "Create Partition"
+#: ../src/palimpsest/gdu-section-volumes.c:1883
 msgid "_Create Partition"
-msgstr "创建分区"
+msgstr "创建分区(_C)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1823
-#, fuzzy
-#| msgid "Create partition"
+#: ../src/palimpsest/gdu-section-volumes.c:1884
 msgid "Create a new partition"
-msgstr "创建分区"
+msgstr "创建新分区"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1832
-#, fuzzy
-#| msgid "Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:1893
 msgid "_Lock Volume"
-msgstr "卷"
+msgstr "锁定卷(_L)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1833
+#: ../src/palimpsest/gdu-section-volumes.c:1894
 #, fuzzy
-#| msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgid "Make encrypted data unavailable"
 msgstr "锁定加密的设备，使明文数据不可用"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1842
-#, fuzzy
-#| msgid "_Unlock"
+#: ../src/palimpsest/gdu-section-volumes.c:1903
 msgid "_Unlock Volume"
-msgstr "解锁(_U)"
+msgstr "解锁卷(_U)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1843
+#: ../src/palimpsest/gdu-section-volumes.c:1904
 msgid "Make encrypted data available"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:1852
-#, fuzzy
-#| msgid "F_orget Passphrase"
+#: ../src/palimpsest/gdu-section-volumes.c:1913
 msgid "Forge_t Passphrase"
-msgstr "忘记密码(_o)"
+msgstr "忘记密码(_T)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1853
+#: ../src/palimpsest/gdu-section-volumes.c:1914
 #, fuzzy
-#| msgid "Error storing passphrase in keyring"
 msgid "Delete passphrase from keyring"
 msgstr "储存口令到钥匙圈时出错"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1864
-#, fuzzy
-#| msgid "Change _Passphrase"
+#: ../src/palimpsest/gdu-section-volumes.c:1925
 msgid "Change passphrase"
-msgstr "更改密码(_P)"
+msgstr "更改密码"
+
+#. Translators: Window title when the item representing a remote machine is selected.
+#. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:285
+#, c-format
+msgid "%s — Disk Utility"
+msgstr "%s — 磁盘实用工具"
+
+#. Translators: Window title when an item on a remote machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#. * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:295
+#, c-format
+msgid "%s (%s) [%s] @ %s — Disk Utility"
+msgstr "%s (%s) [%s] @ %s — 磁盘实用工具"
+
+#. Translators: Window title when an item on a remote machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:306
+#, c-format
+msgid "%s (%s) @ %s — Disk Utility"
+msgstr "%s (%s) @ %s — 磁盘实用工具"
+
+#. Translators: Window title when an item on the local machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#.
+#: ../src/palimpsest/gdu-shell.c:324
+#, c-format
+msgid "%s (%s) [%s] — Disk Utility"
+msgstr "%s (%s) [%s] — 磁盘实用工具"
+
+#. Translators: Window title when an item on the local machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#.
+#: ../src/palimpsest/gdu-shell.c:333
+#, c-format
+msgid "%s (%s) — Disk Utility"
+msgstr "%s (%s) — 磁盘实用工具"
+
+#: ../src/palimpsest/gdu-shell.c:589
+msgid "Error creating component for RAID array"
+msgstr "为 RAID 阵列创建组件出错"
+
+#: ../src/palimpsest/gdu-shell.c:622
+msgid "Error creating partition table for component for RAID array"
+msgstr "创建 RAID 阵列组件的分区表出错"
+
+#: ../src/palimpsest/gdu-shell.c:648
+msgid "Error creating RAID array"
+msgstr "创建 RAID 阵列出错"
+
+#: ../src/palimpsest/gdu-shell.c:843
+#, c-format
+msgid "Error connecting to “%s”"
+msgstr "连接到“%s”出错"
+
+#: ../src/palimpsest/gdu-shell.c:896
+msgid "translator-credits"
+msgstr ""
+"Wei Mingzhi <weimingzhi@gmail.com>\n"
+"Aron Xu <happyaron.xu@gmail.com>\n"
+"FujianWzh <fujianwzh@gmail.com>"
+
+#: ../src/palimpsest/gdu-shell.c:921
+msgid "_File"
+msgstr "文件(_F)"
+
+#: ../src/palimpsest/gdu-shell.c:922
+msgid "Connect to _Server..."
+msgstr "连接到服务器(_S)..."
+
+#: ../src/palimpsest/gdu-shell.c:922
+msgid "Manage storage devices on another machine"
+msgstr "管理其它机器上的存储设备"
+
+#: ../src/palimpsest/gdu-shell.c:923
+msgid "_Create"
+msgstr "创建(_C)"
+
+#: ../src/palimpsest/gdu-shell.c:924
+msgid "_RAID Array..."
+msgstr "_RAID 阵列"
+
+#: ../src/palimpsest/gdu-shell.c:924
+msgid "Create a RAID array"
+msgstr "创建 RAID 阵列"
+
+#: ../src/palimpsest/gdu-shell.c:925
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+#: ../src/palimpsest/gdu-shell.c:926 ../src/palimpsest/gdu-shell.c:929
+msgid "_Help"
+msgstr "帮助(_H)"
+
+#: ../src/palimpsest/gdu-shell.c:928
+msgid "_Quit"
+msgstr "退出(_Q)"
+
+#: ../src/palimpsest/gdu-shell.c:928
+msgid "Quit"
+msgstr "退出"
+
+#: ../src/palimpsest/gdu-shell.c:929
+msgid "Get Help on Disk Utility"
+msgstr "获取磁盘实用工具的帮助"
+
+#: ../src/palimpsest/gdu-shell.c:930
+msgid "_About"
+msgstr "关于(_A)"
+
+#: ../src/palimpsest/gdu-shell.c:1009
+msgid "An error occured"
+msgstr "发生一个错误"
+
+#: ../src/palimpsest/gdu-shell.c:1018
+msgid "The operation failed."
+msgstr "操作失败。"
+
+#: ../src/palimpsest/gdu-shell.c:1021
+msgid "The device is busy."
+msgstr "设备忙。"
+
+#: ../src/palimpsest/gdu-shell.c:1024
+msgid "The operation was canceled."
+msgstr "操作已被取消。"
+
+#: ../src/palimpsest/gdu-shell.c:1027
+msgid "The daemon is being inhibited."
+msgstr "守护进程被禁止。"
+
+#: ../src/palimpsest/gdu-shell.c:1030
+msgid "An invalid option was passed."
+msgstr "一个无效的选项被忽略。"
+
+#: ../src/palimpsest/gdu-shell.c:1033
+msgid "The operation is not supported."
+msgstr "不支持该操作。"
+
+#: ../src/palimpsest/gdu-shell.c:1036
+msgid "Getting ATA SMART data would wake up the device."
+msgstr "获取 ATA SMART 数据将唤醒设备。"
+
+#: ../src/palimpsest/gdu-shell.c:1039
+msgid "Permission denied."
+msgstr "许可被拒绝。"
+
+#: ../src/palimpsest/gdu-shell.c:1078
+msgid "_Details:"
+msgstr "细节(_D)："
+
+#: ../src/palimpsest/gdu-shell.c:1247
+msgid "_Storage Devices"
+msgstr "存储设备(_S)"
+
+#~ msgid "Use"
+#~ msgstr "使用"
+
+#~ msgid "Disk"
+#~ msgstr "磁盘"
 
 #~ msgid "The volume to format"
 #~ msgstr "要格式化的卷"
@@ -5346,9 +5167,6 @@ msgstr "更改密码(_P)"
 
 #~ msgid "Change"
 #~ msgstr "更改"
-
-#~ msgid "Error adding component"
-#~ msgstr "添加组件出错"
 
 #~ msgid ""
 #~ "Only volumes of acceptable sizes can be selected. You may need to "

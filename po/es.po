@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-12-19 16:57+0000\n"
-"PO-Revision-Date: 2009-12-20 14:18+0100\n"
+"POT-Creation-Date: 2009-12-20 13:35+0000\n"
+"PO-Revision-Date: 2009-12-29 19:22+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1579,31 +1579,29 @@ msgstr "Conjunto de unidades que ignorar"
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Number of available disks"
-msgstr ""
+msgstr "Número de discos disponibles"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
 msgid "Largest Segment For Selected"
-msgstr ""
+msgstr "Segmento más grande para las seleccionadas"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
-#, fuzzy
 #| msgid "Create new filesystem on the selected device"
 msgid "The largest free segment for the selected drives"
-msgstr "Crear un sistema de archivos nuevo en el dispositivo seleccionado"
+msgstr "El segmento libre más grande para las unidades seleccionadas"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
 msgid "Largest Segment For All"
-msgstr ""
+msgstr "Segmento más grande para todas"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
 msgid "The largest free segment for all the drives"
-msgstr ""
+msgstr "El segmento más grande para todas las unidades"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:332
-#, fuzzy
 #| msgid "The view to show details for"
 msgid "The size to use in the details header"
-msgstr "La vista para la que mostrar los detalles"
+msgstr "El tamaño que usar en las cabeceras de detalle"
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
@@ -1699,7 +1697,6 @@ msgstr "%s. El bloque libre contiguo más grande es %s"
 
 #. Tranlators: this string is used for the column header
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
-#| msgid "Detaching Device"
 msgid "Storage Devices"
 msgstr "Dispositivos de almacenamiento"
 
@@ -1709,16 +1706,16 @@ msgid "Details"
 msgstr "Detalles"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#, fuzzy
 #| msgid "Error detaching device"
 msgid "Error benchmarking drive"
-msgstr "Error al desacoplar el dispositivo"
+msgstr "Error al hacer la prueba de rendimiento del dispositivo"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#, fuzzy
 #| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "¿Seguro que quiere borrar el dispositivo?"
+msgstr ""
+"¿Está seguro de que quiere iniciar una nueva prueba de rendimiento de "
+"lectura/escritura?"
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
@@ -1739,22 +1736,18 @@ msgstr "%s (%s) – Prueba de rendimiento"
 
 #. benchmark results
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
-#| msgid "Minimum Size"
 msgid "Minimum Read Rate:"
 msgstr "Tasa mínima de lectura:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
-#| msgid "Minimum Size"
 msgid "Minimum Write Rate:"
 msgstr "Tasa mínima de escritura:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
-#| msgid "Maximum Size"
 msgid "Maximum Read Rate:"
 msgstr "Tasa máxima de lectura:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
-#| msgid "Maximum Size"
 msgid "Maximum Write Rate:"
 msgstr "Tasa máxima de escritura:"
 
@@ -1763,7 +1756,6 @@ msgid "Average Read Rate:"
 msgstr "Tasa media de lectura:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
-#| msgid "Thermal Asperity Rate"
 msgid "Average Write Rate:"
 msgstr "Tasa media de escritura:"
 
@@ -1772,14 +1764,13 @@ msgid "Last Benchmark:"
 msgstr "Última prueba de rendimiento:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
-#, fuzzy
 #| msgid "Overall Assessment:"
 msgid "Average Access Time:"
-msgstr "Estimación general:"
+msgstr "Tiempo medio de acceso:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Start _Read-Only Benchmark"
-msgstr ""
+msgstr "Iniciar prueba de rendimiento de _sólo lectura"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
 msgid "Measure read rate and access time"
@@ -1803,13 +1794,11 @@ msgstr "%d MB/s"
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:956
 #, c-format
-#| msgid "%.3g mins"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
-#| msgid "_Revert"
 msgid "Never"
 msgstr "Nunca"
 
@@ -1827,40 +1816,36 @@ msgid "Cancels the currently running benchmark"
 msgstr "Cancela la comprobación actual en ejecución"
 
 #: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s Filesystem"
 msgid "Edit Filesystem on %s"
-msgstr "Sistema de archivos de %s"
+msgstr "Editar el sistema de archivos en %s"
 
 #: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
 #: ../src/palimpsest/gdu-section-volumes.c:1470
-#, fuzzy
 #| msgid "_Label:"
 msgid "Label:"
-msgstr "_Etiqueta"
+msgstr "Etiqueta:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
-#, fuzzy, c-format
+#, c-format
 #| msgid "%d Component (%s)"
 #| msgid_plural "%d Components (%s each)"
 msgid "Edit components on %s (%s)"
-msgstr "%d componente (%s)"
+msgstr "Editar componentes en %s (%s)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
-#| msgid "Components:"
 msgid "C_omponents"
 msgstr "C_omponentes"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
-#| msgid "Partition"
 msgid "Position"
 msgstr "Posición"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
-#, fuzzy
 #| msgid "Components:"
 msgid "Component"
-msgstr "Componentes:"
+msgstr "Componente"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
 msgid "State"
@@ -1868,16 +1853,14 @@ msgstr "Estado"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
 #: ../src/palimpsest/gdu-section-drive.c:693
-#, fuzzy
 #| msgid "SMART status: %s"
 msgid "SMART Status:"
-msgstr "Estado SMART: %s"
+msgstr "Estado SMART:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
-#, fuzzy
 #| msgid "Partition"
 msgid "Position:"
-msgstr "Partición"
+msgstr "Posición:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
@@ -1891,56 +1874,50 @@ msgid "Device:"
 msgstr "Dispositivo:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-#, fuzzy
 #| msgid "_Remove Component"
 msgid "_New Component"
-msgstr "_Quitar componente"
+msgstr "Componente _nuevo"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
-#, fuzzy
 #| msgid "Adding Component to RAID Array"
 msgid "Add a new component to the array"
-msgstr "Añadiendo un componente a un conjunto RAID"
+msgstr "Añadir un componente nuevo al conjunto"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
-#, fuzzy
 #| msgid "RAID Component"
 msgid "_Attach Component"
-msgstr "Componente RAID"
+msgstr "_Añadir componente"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
-#, fuzzy
 #| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Attach the component to the array"
-msgstr "¿Está seguro de que quiere quitar el componente del conjunto?"
+msgstr "Añadir el componente al conjunto"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
 msgid "_Remove Component"
 msgstr "_Quitar componente"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
-#, fuzzy
 #| msgid "Removing Component from RAID Array"
 msgid "Remove the component from the array"
-msgstr "Quitando un componente de un conjunto RAID"
+msgstr "Quitar el componente del conjunto"
 
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
 #: ../src/palimpsest/gdu-section-drive.c:300
-#, fuzzy
 #| msgid "SMART not supported"
 msgid "Not Supported"
-msgstr "SMART no está soportado"
+msgstr "No está soportado"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Edit"
 msgid "Edit %s"
-msgstr "_Editar"
+msgstr "Editar %s"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
 msgid "Part_ition Label:"
@@ -1963,16 +1940,14 @@ msgid "Required / Firm_ware"
 msgstr "Requerido / Firm_ware"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:217
-#, fuzzy
 #| msgid "The operation failed."
 msgid "The operation failed"
-msgstr "Falló la operación."
+msgstr "Falló la operación"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:220
-#, fuzzy
 #| msgid "The device is busy."
 msgid "The device is busy"
-msgstr "El dispositivo está ocupado."
+msgstr "El dispositivo está ocupado"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:223
 #, fuzzy

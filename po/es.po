@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
 "POT-Creation-Date: 2009-12-29 19:41+0000\n"
-"PO-Revision-Date: 2010-01-06 20:52+0100\n"
+"PO-Revision-Date: 2010-01-06 22:08+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2754,6 +2754,8 @@ msgid ""
 "Error creating a local TCP server, tried binding to ports 9000-10000 on "
 "localhost"
 msgstr ""
+"Error al crear un servidor TCP local, se intentó vincular los puertos 9000-"
+"10000 en el equipo local"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
@@ -2768,10 +2770,10 @@ msgstr ""
 "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unable to format '%s'"
 msgid "Unable to spawn ssh program: %s"
-msgstr "No se pudo formatear «%s»"
+msgstr "No se pudo iniciar el programa de SSH: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:398 ../src/gdu/gdu-ssh-bridge.c:510
 #, c-format
@@ -2799,6 +2801,8 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
 msgstr ""
+"Salida de stderr inesperada; se esperaba «udisks-tcp-bridge: esperando el "
+"secreto» pero se obtuvo «%s»"
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
@@ -2817,15 +2821,18 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
+"Salida de stderr inesperada; se esperaba «udisks-tcp-bridge: intentando "
+"conectarse con el puerto %d» pero se obtuvo «%s»"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
 msgstr ""
+"El programa udisks-tcp-bridge falló al probar que estaba autorizado: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:592
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-msgstr ""
+msgstr "El programa udisks-tcp-bridge falló al provar que estaba autorizado"
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -3664,7 +3671,6 @@ msgstr ""
 "sistemas operativos distintos a Windows."
 
 #: ../src/gdu/gdu-util.c:600
-#, fuzzy
 #| msgid ""
 #| "The native Windows file system. Not widely compatible with other "
 #| "operating systems than Windows."
@@ -3672,8 +3678,8 @@ msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with other operating systems than Linux and Minix."
 msgstr ""
-"El sistema de archivos nativo de Windows. No muy compatible con otros "
-"sistemas operativos distintos a Windows."
+"Sistema de archivos simple con baja sobrecarga y soporte de permisos UNIX. "
+"No muy compatible con otros sistemas operativos distintos a Linux y Minix."
 
 #: ../src/gdu/gdu-util.c:604
 msgid "No file system will be created."
@@ -4496,7 +4502,7 @@ msgstr "Expulsar el soporte de la unidad"
 
 #: ../src/palimpsest/gdu-section-drive.c:752
 msgid "Safe Rem_oval"
-msgstr ""
+msgstr "Quitar de forma :segura:"
 
 #: ../src/palimpsest/gdu-section-drive.c:753
 msgid "Power down the drive so it can be removed"
@@ -4633,22 +4639,22 @@ msgstr "Ir al volumen"
 #. * Third %s is the "Go to volume" link.
 #.
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:251
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s (%s)"
 msgctxt "RAID component label"
 msgid "%s (%s) – %s"
-msgstr "%s (%s)"
+msgstr "%s (%s): %s"
 
 #. Translators: The text used to display the RAID component for an array that is not running.
 #. * First %s is the VPD name.
 #. * Second %s is the "Go to volume" link.
 #.
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:260
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s at %s"
 msgctxt "RAID component label"
 msgid "%s – %s"
-msgstr "%s en %s"
+msgstr "%s: %s"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:415
 #| msgid "Stopping RAID Array"
@@ -4754,10 +4760,9 @@ msgid "St_art RAID Array"
 msgstr "I_niciar el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
-#, fuzzy
 #| msgid "Starting RAID Array"
 msgid "Bring up the RAID Array"
-msgstr "Iniciando el conjunto RAID"
+msgstr "Despertar el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
 #| msgid "Stopping RAID Array"
@@ -4765,10 +4770,9 @@ msgid "St_op RAID Array"
 msgstr "Pa_rar el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
-#, fuzzy
 #| msgid "Create RAID Array"
 msgid "Tear down the RAID Array"
-msgstr "Crear un conjunto RAID"
+msgstr "Dormir el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
 #| msgid "Create RAID Array"
@@ -4940,11 +4944,10 @@ msgstr "Requerido"
 
 #. Translators: This is for the 'allocated' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1523
-#, fuzzy
 #| msgctxt "Linux MD slave state"
 #| msgid "Blocked"
 msgid "Allocated"
-msgstr "Bloqueado"
+msgstr ""
 
 #. Translators: This is for the 'allow_read' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1526
@@ -4959,7 +4962,7 @@ msgstr "Permitir escritura"
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1532
 msgid "Boot Code PIC"
-msgstr ""
+msgstr "Código de arranque PIC"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1601
 #| msgid "%s Filesystem"
@@ -4971,7 +4974,7 @@ msgstr "Sistema de archivos"
 #.
 #: ../src/palimpsest/gdu-section-volumes.c:1634
 msgid "View files on the volume using a SFTP network share"
-msgstr ""
+msgstr "Ver los archivos en el volumen usando una compartición de red SFTP"
 
 #. Translators: this the mount point hyperlink tooltip
 #: ../src/palimpsest/gdu-section-volumes.c:1641
@@ -5119,7 +5122,7 @@ msgstr "_Olvidar contraseña"
 #: ../src/palimpsest/gdu-section-volumes.c:1914
 #| msgid "Error storing passphrase in keyring"
 msgid "Delete passphrase from keyring"
-msgstr ""
+msgstr "Eliminar la contraseña del depósito de claves"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1925
 #| msgid "Change _Passphrase"
@@ -5130,10 +5133,10 @@ msgstr "Cambiar la contraseña"
 #. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
 #: ../src/palimpsest/gdu-shell.c:285
-#, fuzzy, c-format
+#, c-format
 #| msgid "Disk Utility"
 msgid "%s — Disk Utility"
-msgstr "Utilidad de discos"
+msgstr "%s: Utilidad de discos"
 
 #. Translators: Window title when an item on a remote machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5144,7 +5147,7 @@ msgstr "Utilidad de discos"
 #: ../src/palimpsest/gdu-shell.c:295
 #, c-format
 msgid "%s (%s) [%s] @ %s — Disk Utility"
-msgstr ""
+msgstr "%s (%s) [en %s] @ %s: Disk Utility"
 
 #. Translators: Window title when an item on a remote machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5154,7 +5157,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-shell.c:306
 #, c-format
 msgid "%s (%s) @ %s — Disk Utility"
-msgstr ""
+msgstr "%s (%s) @ %s: utilidad de discos"
 
 #. Translators: Window title when an item on the local machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5164,17 +5167,17 @@ msgstr ""
 #: ../src/palimpsest/gdu-shell.c:324
 #, c-format
 msgid "%s (%s) [%s] — Disk Utility"
-msgstr ""
+msgstr "%s (%s) [%s]: utilidad de discos"
 
 #. Translators: Window title when an item on the local machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #.
 #: ../src/palimpsest/gdu-shell.c:333
-#, fuzzy, c-format
+#, c-format
 #| msgid "Disk Utility"
 msgid "%s (%s) — Disk Utility"
-msgstr "Utilidad de discos"
+msgstr "%s (%s): utilidad de discos"
 
 #: ../src/palimpsest/gdu-shell.c:589
 msgid "Error creating component for RAID array"
@@ -5209,22 +5212,19 @@ msgstr "Conectar con el _servidor…"
 
 #: ../src/palimpsest/gdu-shell.c:922
 msgid "Manage storage devices on another machine"
-msgstr ""
+msgstr "Gestionar los dispositivos en otra máquina"
 
 #: ../src/palimpsest/gdu-shell.c:923
-#, fuzzy
 #| msgid "Create"
 msgid "_Create"
-msgstr "Crear"
+msgstr "_Crear"
 
 #: ../src/palimpsest/gdu-shell.c:924
-#, fuzzy
 #| msgid "RAID Array"
 msgid "_RAID Array..."
-msgstr "Conjunto RAID"
+msgstr "Conjunto _RAID…"
 
 #: ../src/palimpsest/gdu-shell.c:924
-#, fuzzy
 #| msgid "Create RAID Array"
 msgid "Create a RAID array"
 msgstr "Crear un conjunto RAID"
@@ -5246,10 +5246,9 @@ msgid "Quit"
 msgstr "Salir"
 
 #: ../src/palimpsest/gdu-shell.c:929
-#, fuzzy
 #| msgid "Get Help on Palimpsest Disk Utility"
 msgid "Get Help on Disk Utility"
-msgstr "Obtener ayuda acerca de la Utilidad de discos Palimpsest"
+msgstr "Obtener ayuda acerca de la Utilidad de discos"
 
 #: ../src/palimpsest/gdu-shell.c:930
 msgid "_About"
@@ -5296,10 +5295,9 @@ msgid "_Details:"
 msgstr "_Detalles:"
 
 #: ../src/palimpsest/gdu-shell.c:1247
-#, fuzzy
 #| msgid "Detaching Device"
 msgid "_Storage Devices"
-msgstr "Desacoplando dispositivo"
+msgstr "Dispositivos de _almacenamiento"
 
 #~ msgid "The volume to format"
 #~ msgstr "El volumen para formatear"

@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
 "POT-Creation-Date: 2009-12-29 19:41+0000\n"
-"PO-Revision-Date: 2010-01-06 18:02+0100\n"
+"PO-Revision-Date: 2010-01-06 20:30+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2712,13 +2712,13 @@ msgstr "Repuesto"
 
 #: ../src/gdu/gdu-machine.c:151
 msgid "Local Storage"
-msgstr ""
+msgstr "Almacenamiento local"
 
 #. TODO: use display-hostname
 #: ../src/gdu/gdu-machine.c:154
 #, c-format
 msgid "Storage on %s"
-msgstr ""
+msgstr "Almacenamiento en %s"
 
 #: ../src/gdu/gdu-pool.c:1888
 #, c-format
@@ -2735,7 +2735,7 @@ msgstr "Error al enumerar los adaptadores: %s"
 #: ../src/gdu/gdu-pool.c:1937
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Error al enumerar los expansores: %s"
 
 #: ../src/gdu/gdu-pool.c:1960
 #, c-format
@@ -2746,7 +2746,7 @@ msgstr "Error al enumerar los puertos: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "Error al escuchar la dirección «localhost: %d»: %s: %s\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
@@ -2764,6 +2764,7 @@ msgstr ""
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
 msgstr ""
+"No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, fuzzy, c-format
@@ -2774,7 +2775,7 @@ msgstr "No se pudo formatear «%s»"
 #: ../src/gdu/gdu-ssh-bridge.c:398 ../src/gdu/gdu-ssh-bridge.c:510
 #, c-format
 msgid "Error reading stderr output: %s"
-msgstr ""
+msgstr "Error al leer la salida stderr: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
 #| msgid "Error adding component"
@@ -2782,10 +2783,9 @@ msgid "Error reading stderr output: No content"
 msgstr "Error al leer la salida stderr: sin contenido"
 
 #: ../src/gdu/gdu-ssh-bridge.c:471
-#, fuzzy
 #| msgid "Error unlocking device"
 msgid "Error logging in"
-msgstr "Error al desbloquear el dispositivo"
+msgstr "Error al iniciar sesión"
 
 #: ../src/gdu/gdu-ssh-bridge.c:491
 #, c-format
@@ -4422,16 +4422,14 @@ msgstr "Versión del firmware:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
 #: ../src/palimpsest/gdu-section-drive.c:661
-#, fuzzy
 #| msgid "Model Name:"
 msgid "World Wide Name:"
-msgstr "Nombre del modelo:"
+msgstr "Nombre a nivel mundial (WWN):"
 
 #: ../src/palimpsest/gdu-section-drive.c:665
-#, fuzzy
 #| msgid "Load Friction"
 msgid "Location:"
-msgstr "Fricción de carga"
+msgstr "Ubicación:"
 
 #: ../src/palimpsest/gdu-section-drive.c:673
 msgid "Write Cache:"
@@ -4444,63 +4442,56 @@ msgstr "Tasa de rotación:"
 #: ../src/palimpsest/gdu-section-drive.c:681
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
 #: ../src/palimpsest/gdu-section-volumes.c:1460
-#, fuzzy
 #| msgid "SD High Capacity"
 msgid "Capacity:"
-msgstr "SD de alta capacidad"
+msgstr "Capacidad:"
 
 #: ../src/palimpsest/gdu-section-drive.c:685
-#, fuzzy
 #| msgid "Description:"
 msgid "Connection:"
-msgstr "Descripción:"
+msgstr "Conexión:"
 
 #: ../src/palimpsest/gdu-section-drive.c:689
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
-#, fuzzy
 #| msgid "Partition"
 msgid "Partitioning:"
-msgstr "Partición"
+msgstr "Particionado:"
 
 #: ../src/palimpsest/gdu-section-drive.c:712
 msgid "Open CD/_DVD Application"
-msgstr ""
+msgstr "Abrir aplicación de CD/_DVD"
 
 #: ../src/palimpsest/gdu-section-drive.c:713
 msgid "Create and copy CDs and DVDs"
-msgstr ""
+msgstr "Crear y copiar CD y DVD"
 
 #: ../src/palimpsest/gdu-section-drive.c:722
-#, fuzzy
 #| msgid "_Format"
 msgid "Format _Drive"
-msgstr "_Formato"
+msgstr "Formatear _unidad"
 
 #: ../src/palimpsest/gdu-section-drive.c:723
-#, fuzzy
 #| msgid "There was an error starting the drive \"%s\"."
 msgid "Erase or partition the drive"
-msgstr "Hubo un error al iniciar la unidad «%s»."
+msgstr "Borrar o particionar la unidad"
 
 #: ../src/palimpsest/gdu-section-drive.c:732
-#, fuzzy
 #| msgid "SMART Data"
 msgid "SM_ART Data"
-msgstr "Datos SMART"
+msgstr "Datos SM_ART"
 
 #: ../src/palimpsest/gdu-section-drive.c:733
 msgid "View SMART data and run self-tests"
-msgstr ""
+msgstr "Ver los datos SMART y ejecutar autocomprobaciones"
 
 #: ../src/palimpsest/gdu-section-drive.c:742
 msgid "_Eject"
 msgstr "E_xpulsar"
 
 #: ../src/palimpsest/gdu-section-drive.c:743
-#, fuzzy
 #| msgid "Eject media from the device"
 msgid "Eject media from the drive"
-msgstr "Expulsar medio del dispositivo"
+msgstr "Expulsar el soporte de la unidad"
 
 #: ../src/palimpsest/gdu-section-drive.c:752
 msgid "Safe Rem_oval"
@@ -4511,10 +4502,9 @@ msgid "Power down the drive so it can be removed"
 msgstr ""
 
 #: ../src/palimpsest/gdu-section-drive.c:763
-#, fuzzy
 #| msgid "Seek Timer Performance"
 msgid "Measure drive performance"
-msgstr "Rendimiento del tiempo de búsqueda"
+msgstr "Medir el rendimiento de la unidad"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -4523,15 +4513,15 @@ msgstr "Rendimiento del tiempo de búsqueda"
 #: ../src/palimpsest/gdu-section-hub.c:156
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d PHY"
 
 #: ../src/palimpsest/gdu-section-hub.c:132
 msgid "Parallel ATA"
-msgstr ""
+msgstr "ATA en paralelo"
 
 #: ../src/palimpsest/gdu-section-hub.c:134
 msgid "Serial ATA"
-msgstr ""
+msgstr "ATA en serie"
 
 #: ../src/palimpsest/gdu-section-hub.c:138
 msgid "Serial Attached SCSI"
@@ -4539,27 +4529,25 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-hub.c:217
 msgid "Vendor:"
-msgstr ""
+msgstr "Fabricante:"
 
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Revision:"
-msgstr ""
+msgstr "Revisión:"
 
 #: ../src/palimpsest/gdu-section-hub.c:229
-#, fuzzy
 #| msgid "_Drive:"
 msgid "Driver:"
-msgstr "_Unidad:"
+msgstr "Controlador:"
 
 #: ../src/palimpsest/gdu-section-hub.c:233
 msgid "Fabric:"
 msgstr ""
 
 #: ../src/palimpsest/gdu-section-hub.c:237
-#, fuzzy
 #| msgid "Number of ECC errors"
 msgid "Number of Ports:"
-msgstr "Número de errores ECC"
+msgstr "Número de puertos:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:86
 msgctxt "RAID status"
@@ -4584,7 +4572,7 @@ msgstr "No está en ejecución, no hay suficientes componentes para iniciar"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:116
 msgctxt "RAID status"
 msgid "DEGRADED"
-msgstr ""
+msgstr "DEGRADADO"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:118
 msgctxt "RAID status"
@@ -4600,7 +4588,6 @@ msgid "Reshaping"
 msgstr "Reorganizándose"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:128
-#, fuzzy
 #| msgctxt "RAID status"
 #| msgid "Resyncing"
 msgctxt "RAID action"
@@ -4608,7 +4595,6 @@ msgid "Resyncing"
 msgstr "Resincronizando"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:130
-#, fuzzy
 #| msgctxt "RAID status"
 #| msgid "Repairing"
 msgctxt "RAID action"
@@ -4616,7 +4602,6 @@ msgid "Repairing"
 msgstr "Reparando"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:132
-#, fuzzy
 #| msgctxt "RAID status"
 #| msgid "Recovering"
 msgctxt "RAID action"
@@ -4624,7 +4609,6 @@ msgid "Recovering"
 msgstr "Recuperando"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:134
-#, fuzzy
 #| msgctxt "RAID status"
 #| msgid "Checking"
 msgctxt "RAID action"
@@ -4634,14 +4618,13 @@ msgstr "Comprobando"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:139
 msgctxt "RAID action"
 msgid "Idle"
-msgstr ""
+msgstr "Inactivo"
 
 #. Translators: The text for the hyperlink of the component
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:241
-#, fuzzy
 #| msgid "Cannot unmount volume"
 msgid "Go to volume"
-msgstr "No se puede desmontar el volumen"
+msgstr "Ir al volumen"
 
 #. Translators: The text used to display the RAID component for an array that is running.
 #. * First %s is the VPD name.
@@ -4667,16 +4650,14 @@ msgid "%s – %s"
 msgstr "%s en %s"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:415
-#, fuzzy
 #| msgid "Stopping RAID Array"
 msgid "Error stopping RAID Array"
-msgstr "Parando el conjunto RAID"
+msgstr "Error al parar el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:460
-#, fuzzy
 #| msgid "Error creating RAID array"
 msgid "Error starting RAID Array"
-msgstr "Error al crear el conjunto RAID"
+msgstr "Error al iniciar el conjunto RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:490
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:493
@@ -4976,11 +4957,11 @@ msgstr "Tipo:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1467
 msgid "Available:"
-msgstr ""
+msgstr "Disponibles:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1473
 msgid "Mount Point:"
-msgstr ""
+msgstr "Punto de montaje:"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1517
@@ -4992,7 +4973,7 @@ msgstr "_Arrancable"
 #. Translators: This is for the 'required' GPT partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1520
 msgid "Required"
-msgstr ""
+msgstr "Requerido"
 
 #. Translators: This is for the 'allocated' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1523
@@ -5005,7 +4986,7 @@ msgstr "Bloqueado"
 #. Translators: This is for the 'allow_read' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1526
 msgid "Allow Read"
-msgstr ""
+msgstr "Permitir lectura"
 
 #. Translators: This is for the 'allow_write' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:1529
@@ -5132,7 +5113,7 @@ msgstr "_Etiqueta"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1854
 msgid "Change the label of the volume"
-msgstr ""
+msgstr "Cambiar la etiqueta del volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1863
 #, fuzzy
@@ -5142,7 +5123,7 @@ msgstr "Partición vacía"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1864
 msgid "Change partition type, label and flags"
-msgstr ""
+msgstr "Cambiar el tipo de partición, la etiqueta y las opciones"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1873
 #, fuzzy
@@ -5161,37 +5142,30 @@ msgid "_Create Partition"
 msgstr "Crear partición"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1884
-#, fuzzy
 #| msgid "Create partition"
 msgid "Create a new partition"
-msgstr "Crear partición"
+msgstr "Crear una partición nueva"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1893
-#, fuzzy
 #| msgid "Volume"
 msgid "_Lock Volume"
-msgstr "Volumen"
+msgstr "_Bloquear volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1894
-#, fuzzy
 #| msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgid "Make encrypted data unavailable"
-msgstr ""
-"Bloquear el dispositivo cifrado, haciendo los datos en texto claro no estén "
-"disponibles"
+msgstr "Hacer que los datos cifrados no estén disponibles"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1903
-#, fuzzy
 #| msgid "_Unlock"
 msgid "_Unlock Volume"
-msgstr "_Desbloquear"
+msgstr "_Desbloquear volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1904
 msgid "Make encrypted data available"
-msgstr ""
+msgstr "Hacer que los datos cifrados estén disponibles"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1913
-#, fuzzy
 #| msgid "F_orget Passphrase"
 msgid "Forge_t Passphrase"
 msgstr "_Olvidar contraseña"
@@ -5273,7 +5247,7 @@ msgstr "Error al crear el conjunto RAID"
 #: ../src/palimpsest/gdu-shell.c:843
 #, c-format
 msgid "Error connecting to “%s”"
-msgstr ""
+msgstr "Error al conectar con «%s»"
 
 #: ../src/palimpsest/gdu-shell.c:896
 msgid "translator-credits"
@@ -5287,7 +5261,7 @@ msgstr "_Archivo"
 
 #: ../src/palimpsest/gdu-shell.c:922
 msgid "Connect to _Server..."
-msgstr ""
+msgstr "Conectar con el _servidor…"
 
 #: ../src/palimpsest/gdu-shell.c:922
 msgid "Manage storage devices on another machine"

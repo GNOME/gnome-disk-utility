@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Kjartan Maraas <kmaraas@gnome.org>, 2009.
 #
-#: ../src/gdu-gtk/gdu-error-dialog.c:172
+#: ../src/gdu-gtk/gdu-error-dialog.c:163
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 2.29.x\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2009-12-05 21:02+0100\n"
-"PO-Revision-Date: 2009-12-05 21:24+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-07 14:47+0100\n"
+"PO-Revision-Date: 2010-01-07 15:51+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -17,8 +17,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:1383
-#: ../src/palimpsest/gdu-shell.c:1679
+#. Translators: Window title when no item is selected.
+#.
+#. Translators: Window title when the item representing the local machine is selected.
+#.
+#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:264
+#: ../src/palimpsest/gdu-shell.c:316 ../src/palimpsest/gdu-shell.c:891
+#: ../src/palimpsest/gdu-shell.c:1198
 msgid "Disk Utility"
 msgstr "Diskverktøy"
 
@@ -58,32 +63,32 @@ msgstr "tekst"
 msgid "Text to show"
 msgstr "Tekst som skal vises"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:109
 msgid "Error launching Disk Utility"
 msgstr "Feil ved start av diskverktøy"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:129
 msgid "Device to format"
 msgstr "Enhet som skal formatteres"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:123
-#: ../src/palimpsest/gdu-main.c:124
+#: ../src/format-tool/gdu-format-tool.c:129 ../src/palimpsest/gdu-main.c:127
+#: ../src/palimpsest/gdu-main.c:128
 msgid "DEVICE"
 msgstr "ENHET"
 
-#: ../src/format-tool/gdu-format-tool.c:160
+#: ../src/format-tool/gdu-format-tool.c:159
 #, c-format
 msgid "Operation was canceled"
 msgstr "Operasjonen ble avbrutt"
 
-#: ../src/format-tool/gdu-format-tool.c:251
+#: ../src/format-tool/gdu-format-tool.c:250
 msgid "Gnome Disk Utility formatting tool"
 msgstr ""
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:300
+#: ../src/format-tool/gdu-format-tool.c:299
 #, c-format
 msgid "Format partition %d of %s (%s)"
 msgstr "Formater partisjon %d av %s (%s)"
@@ -91,744 +96,86 @@ msgstr "Formater partisjon %d av %s (%s)"
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:307
+#: ../src/format-tool/gdu-format-tool.c:306
 #, c-format
 msgid "Formatting partition %d of %s (%s)"
 msgstr "Formaterer partisjon %d av %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:313
+#: ../src/format-tool/gdu-format-tool.c:312
 #, c-format
 msgid "Format %s (%s)"
 msgstr "Formatter %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:317
+#: ../src/format-tool/gdu-format-tool.c:316
 #, c-format
 msgid "Formatting %s (%s)"
 msgstr "Formatterer %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:323
+#: ../src/format-tool/gdu-format-tool.c:322
 #, c-format
 msgid "Format %s Volume (%s)"
 msgstr "Format %s Volum (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:327
+#: ../src/format-tool/gdu-format-tool.c:326
 #, c-format
 msgid "Formatting %s Volume (%s)"
 msgstr "Formatterer %s volum (%s)"
 
-#: ../src/format-tool/gdu-format-tool.c:383
+#: ../src/format-tool/gdu-format-tool.c:382
 msgid "Preparing..."
 msgstr "Forbereder..."
 
-#: ../src/format-tool/gdu-format-tool.c:426
+#: ../src/format-tool/gdu-format-tool.c:425
 msgid "Unmounting..."
 msgstr "Avmonterer..."
 
-#: ../src/format-tool/gdu-format-tool.c:444
+#: ../src/format-tool/gdu-format-tool.c:443
 #, c-format
 msgid "Unable to format '%s'"
 msgstr "Kan ikke formattere «%s»"
 
-#: ../src/format-tool/gdu-format-tool.c:459
+#: ../src/format-tool/gdu-format-tool.c:458
 msgid "Formatting..."
 msgstr "Formatterer..."
 
-#: ../src/format-tool/gdu-format-tool.c:476
+#: ../src/format-tool/gdu-format-tool.c:475
 msgid "Cancelling..."
 msgstr "Avbryter..."
 
-#: ../src/format-tool/gdu-format-tool.c:486
+#: ../src/format-tool/gdu-format-tool.c:485
 msgid "Error formatting volume"
 msgstr "Feil under formattering av volum"
 
-#: ../src/format-tool/gdu-format-tool.c:497
+#: ../src/format-tool/gdu-format-tool.c:496
 msgid "Mounting volume..."
 msgstr "Monterer volum..."
 
-#: ../src/format-tool/gdu-format-tool.c:521 ../src/palimpsest/gdu-shell.c:508
+#: ../src/format-tool/gdu-format-tool.c:520
 msgid "Error mounting device"
 msgstr "Feil under montering av enhet"
 
-#: ../src/format-tool/gdu-format-tool.c:538
+#: ../src/format-tool/gdu-format-tool.c:537
 msgid "Error storing passphrase in keyring"
 msgstr "Feil under lagring av passord på nøkkelring"
 
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
-msgid "Maximum Partition Size"
-msgstr "Maksimal størrelse på partisjon"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
-msgid "The maximum possible partition size"
-msgstr "Maksimalt mulig partisjonsstørrelse"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
-msgid "Partition Size"
-msgstr "Partisjonsstørrelse"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
-msgid "The requested partition size"
-msgstr "Forespurt størrelse på partisjon"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
-msgid "C_reate"
-msgstr "Opp_rett"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
-msgid "_Size:"
-msgstr "_Størrelse:"
-
-#. Translators: The %s is the name of the drive
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
 #, c-format
-msgid "Create partition on %s"
-msgstr "Lag partisjon på %s"
+msgid "Add Component to %s"
+msgstr "Legg til komponent på %s"
 
-#: ../src/gdu-gtk/gdu-partition-dialog.c:100
-msgid "Partitioning Scheme"
-msgstr "Partisjoneringsutforming"
-
-#: ../src/gdu-gtk/gdu-partition-dialog.c:101
-msgid "The selected partitioning scheme"
-msgstr "Valgt utforming av partisjoner"
-
-#. Translators: Format is a verb here. The %s is the name of the volume
-#: ../src/gdu-gtk/gdu-partition-dialog.c:208
-#: ../src/gdu-gtk/gdu-format-dialog.c:499
-#, c-format
-msgid "Format %s"
-msgstr "Formater %s"
-
-#. Translators: Format is used as a verb here
-#: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/gdu-gtk/gdu-format-dialog.c:238
-#: ../src/palimpsest/gdu-section-drive.c:588
-#: ../src/palimpsest/gdu-section-volumes.c:356
-msgid "_Format"
-msgstr "_Formater"
-
-#. Translators: 'scheme' means 'partitioning scheme' here.
-#: ../src/gdu-gtk/gdu-partition-dialog.c:248
-msgid "_Scheme:"
-msgstr "_Utforming:"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:217
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:214
-msgid "Pool"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:218
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:215
-msgid "The pool of devices"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:230
-msgid "RAID Level"
-msgstr "RAID-nivå"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:231
-msgid "The selected RAID level"
-msgstr "Valgt RAID-nivå"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
-msgid "Name"
-msgstr "Navn"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:242
-#, fuzzy
-msgid "The requested name for the array"
-msgstr "Forespurt etikett for filsystem"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:252
-#: ../src/gdu-gtk/gdu-size-widget.c:256
-msgid "Size"
-msgstr "Størrelse"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
-#, fuzzy
-msgid "The requested size of the array"
-msgstr "Forespurt etikett for filsystem"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:265
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:278
-msgid "Component Size"
-msgstr "Størrelse på komponent"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:266
-msgid "The size of each component"
-msgstr "Størrelse på hver komponent"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:278
-msgid "Stripe Size"
-msgstr "Størrelse på stripe"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:279
-#, fuzzy
-msgid "The requested stripe size of the array"
-msgstr "Forespurt etikett for filsystem"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:291
-msgid "Drives"
-msgstr "Stasjoner"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:292
-msgid "Array of drives to use for the array"
-msgstr ""
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
+#. TODO: hate
+#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
+#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:740
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:671
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
 #, c-format
-msgid "The disk will be partitioned and a %s partition will be created"
-msgstr ""
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:747
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:678
-#, c-format
-msgid "A %s partition will be created"
-msgstr "En partisjon av type %s vil bli laget"
-
-#. Translators: This is shown in the Details column.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:754
-msgid "The disk will be partitioned and a partition will be created"
-msgstr ""
-
-#. Translators: This is shown in the Details column.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:758
-msgid "A partition will be created"
-msgstr "En partisjon vil bli opprettet"
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:771
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:692
-#, c-format
-msgid "Whole disk is uninitialized. %s available for use"
-msgstr ""
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:778
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:699
-#, c-format
-msgid "%s available for use"
-msgstr ""
-
-#. Translators: This is shown in the Details column.
-#. * %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:784
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:705
-#, c-format
-msgid "The disk has no partitions. %s available for use"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:789
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:710
-#, c-format
-msgid "The disk has %d partition"
-msgid_plural "The disk has %d partitions"
-msgstr[0] ""
-msgstr[1] ""
-
-#. Translators: This is shown in the Details column.
-#. * First %s is the dngettext() result of "The disk has %d partitions.".
-#. * Second %s is the component size e.g. '42 GB'.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:797
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:718
-#, c-format
-msgid "%s. Largest contiguous free block is %s"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:894
-msgid "Create RAID Array"
-msgstr "Lag RAID-sett"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:913
-msgid "General"
-msgstr "Generelt"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:934
-msgid "RAID _Level:"
-msgstr "RAID-_nivå:"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:973
-#, fuzzy
-msgid "Array _Name:"
-msgstr "Størrelse:"
-
-#. Translators: This is the default name to use for the new array.
-#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
-#. * 32 bytes since that's the on-disk-format limit.
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:981
-#, fuzzy
-msgid "New RAID Array"
-msgstr "Reparerer RAID"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:997
-msgid "Stripe S_ize:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1007
-msgid "4 KiB"
-msgstr "4 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1009
-msgid "8 KiB"
-msgstr "8 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1011
-msgid "16 KiB"
-msgstr "16 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1013
-msgid "32 KiB"
-msgstr "32 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1015
-msgid "64 KiB"
-msgstr "64 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1017
-msgid "128 KiB"
-msgstr "128 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1019
-msgid "256 KiB"
-msgstr "256 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1021
-msgid "512 KiB"
-msgstr "512 KiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1023
-msgid "1 MiB"
-msgstr "1 MiB"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1040
-#, fuzzy
-msgid "Array _Size:"
-msgstr "Størrelse:"
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1077
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:819
-msgid "Use"
-msgstr "Bruk"
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1097
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:840
-msgid "Disk"
-msgstr "Disk"
-
-#. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1121
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:864
-msgid "Details"
-msgstr "Detaljer"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1157
-msgid "Disks"
-msgstr "Disker"
-
-#. Translators: This is for the tip text shown in the dialog.
-#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1452
-#, c-format
-msgid "Insufficient number of disks to create a %s array."
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1471
-#, c-format
-msgid "To create a %s array, select a disk."
-msgid_plural "To create a %s array, select %d disks."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1478
-#, c-format
-msgid "To create a %s array, select one more disk."
-msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] ""
-msgstr[1] ""
-
-#. Translators: This is for the tip text shown in the dialog.
-#. * First %s is the size e.g. '42 GB'.
-#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
-#. * Third parameter is the number of disks to use (always greater than 1).
-#.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:1508
-#, c-format
-msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
-#, c-format
-msgid "This operation concerns the volume \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
-#, c-format
-msgid "This operation concerns the drive \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
-#, c-format
-msgid "This operation concerns \"%s\" (%s)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:227
-#: ../src/gdu-gtk/gdu-format-dialog.c:166
-msgid "Flags"
-msgstr "Flagg"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:228
-#, fuzzy
-msgid "Flags for the widget"
-msgstr "Flagg for elementet"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
-msgid "Selected Drives"
-msgstr "Valgte stasjoner"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
-msgid "Array of selected drives"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:252
-msgid "Ignored Drives"
-msgstr "Ignorerte stasjoner"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:253
-msgid "Array of drives to ignore"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:265
-msgid "Largest Free Segment"
-msgstr "Største ledige segment"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:266
-msgid "The largest free segment on the available drives"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
-#, fuzzy
-msgid "The size to use in the details header"
-msgstr "Visning det skal vises detaljer for"
-
-#: ../src/gdu-gtk/gdu-gtk.c:172
-msgctxt "application name"
-msgid "Bourne Again Shell"
-msgstr "Bourne Again Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:177
-msgctxt "application name"
-msgid "Bourne Shell"
-msgstr "Bourne Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:182
-msgctxt "application name"
-msgid "C Shell"
-msgstr "C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:187
-msgctxt "application name"
-msgid "TENEX C Shell"
-msgstr "TENEX C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:192
-msgctxt "application name"
-msgid "Z Shell"
-msgstr "Z Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:197
-msgctxt "application name"
-msgid "Korn Shell"
-msgstr "Korn Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:201
-msgctxt "application name"
-msgid "Process Viewer (top)"
-msgstr "Prosessvisning (top)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:205
-msgctxt "application name"
-msgid "Terminal Pager (less)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:217
-msgctxt "application name"
-msgid "Unknown"
-msgstr "Ukjent"
-
-#: ../src/gdu-gtk/gdu-gtk.c:228
-#, c-format
-msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:233
-#, c-format
-msgid "pid: %d  program: %s"
-msgstr ""
-
-#. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:332 ../src/gdu-gtk/gdu-gtk.c:916
-#: ../src/gdu-gtk/gdu-gtk.c:1054
-#, c-format
-msgid "Partition %d on %s"
-msgstr "Partisjon %d på %s"
-
-#: ../src/gdu-gtk/gdu-gtk.c:368
-msgid "Cannot unmount volume"
-msgstr "Kan ikke avmontere volum"
-
-#: ../src/gdu-gtk/gdu-gtk.c:378
 msgid ""
-"One or more applications are using the volume. Quit the applications, and "
-"then try unmounting again."
+"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
 msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:419 ../src/palimpsest/gdu-shell.c:1454
-msgid "_Unmount"
-msgstr "_Avmonter"
-
-#: ../src/gdu-gtk/gdu-gtk.c:496
-msgid "Passphrases do not match"
-msgstr "Passordene er ikke like"
-
-#: ../src/gdu-gtk/gdu-gtk.c:503
-msgid "Passphrases do not differ"
-msgstr "Passordene er ikke forskjellige"
-
-#: ../src/gdu-gtk/gdu-gtk.c:509
-msgid "Passphrase can't be empty"
-msgstr "Passordet kan ikke være tomt"
-
-#: ../src/gdu-gtk/gdu-gtk.c:581
-msgid "Cr_eate"
-msgstr "Oppr_ett"
-
-#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-section-volumes.c:1863
-msgid "Change _Passphrase"
-msgstr "Bytt _passord"
-
-#: ../src/gdu-gtk/gdu-gtk.c:585 ../src/palimpsest/gdu-shell.c:1457
-msgid "_Unlock"
-msgstr "Lås _opp"
-
-#: ../src/gdu-gtk/gdu-gtk.c:614
-msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:617
-msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:620
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:633
-msgid ""
-"Data on this device will be stored in an encrypted form protected by a "
-"passphrase."
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:636
-msgid ""
-"Data on this device is stored in an encrypted form protected by a passphrase."
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:639
-msgid ""
-"To make the data available for use, enter the passphrase for the device."
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:648
-msgid "Incorrect Passphrase. Try again."
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:672
-msgid "C_urrent Passphrase:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:686
-msgid "_New Passphrase:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:699
-msgid "_Verify Passphrase:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:741
-msgid "_Passphrase:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:756
-msgid "_Forget passphrase immediately"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:759
-msgid "Remember passphrase until you _log out"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:762
-msgid "_Remember forever"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:823
-msgid "Enter Passphrase"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:948 ../src/gdu/gdu-util.c:824
-#, c-format
-msgid "LUKS Passphrase for UUID %s"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:1242
-msgid "Empty (don't create a file system)"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:1263
-msgid "Empty"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-gtk.c:1271
-msgid "Extended Partition"
-msgstr "Utvidet partisjon"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1530
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
-#: ../src/palimpsest/gdu-section-drive.c:262
-msgid "Master Boot Record"
-msgstr ""
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1535 ../src/gdu/gdu-linux-md-drive.c:553
-#: ../src/gdu/gdu-drive.c:793
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
-#: ../src/palimpsest/gdu-section-drive.c:264
-msgid "GUID Partition Table"
-msgstr "GUID partisjonstabell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1540
-msgid "Don't partition"
-msgstr "Ikke partisjoner"
-
-#: ../src/gdu-gtk/gdu-gtk.c:1545 ../src/gdu/gdu-util.c:492
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
-#: ../src/palimpsest/gdu-section-drive.c:260
-msgid "Apple Partition Map"
-msgstr "Apple partisjonskart"
-
-#: ../src/gdu-gtk/gdu-size-widget.c:257
-msgid "The currently selected size"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-size-widget.c:270
-msgid "Minimum Size"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-size-widget.c:271
-msgid "The minimum size that can be selected"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-size-widget.c:284
-msgid "Maximum Size"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-size-widget.c:285
-msgid "The maximum size that can be selected"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-time-label.c:71
-#, c-format
-msgid "Less than a minute ago"
-msgstr "Mindre enn ett minutt siden"
-
-#: ../src/gdu-gtk/gdu-time-label.c:75
-#, c-format
-msgid "%d minute ago"
-msgid_plural "%d minutes ago"
-msgstr[0] "%d minutt siden"
-msgstr[1] "%d minutter siden"
-
-#: ../src/gdu-gtk/gdu-time-label.c:82
-#, c-format
-msgid "%d hour ago"
-msgid_plural "%d hours ago"
-msgstr[0] "%d time siden"
-msgstr[1] "%d timer siden"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:212
-msgid "The operation failed"
-msgstr "Operasjonen feilet"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:215
-msgid "The device is busy"
-msgstr "Enheten er opptatt"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:218
-msgid "The operation was canceled"
-msgstr "Operasjonen ble avbrutt"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:221
-msgid "The daemon is being inhibited"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:224
-msgid "An invalid option was passed"
-msgstr "Et ugyldig flagg ble gitt"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:227
-msgid "The operation is not supported"
-msgstr "Operasjonen er ikke støttet"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:230
-msgid "Getting ATA SMART data would wake up the device"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:233
-msgid "Permission denied"
-msgstr "Tilgang nektet"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:236
-msgid "Filesystem driver not installed"
-msgstr "Driver for filsystem ikke installert"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:239
-msgid "Filesystem tools not installed"
-msgstr "Verktøy for filsystem ikke installert"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:244 ../src/palimpsest/gdu-shell.c:1577
-msgid "Unknown error"
-msgstr "Ukjent feil"
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:248
-#, c-format
-msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-error-dialog.c:259
-msgid "_Details"
-msgstr "_Detaljer"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1764,14 +1111,14 @@ msgstr "SMART er ikke støttet"
 #. * when SMART is supported but data was never collected
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1965
 msgid "SMART data never collected"
-msgstr ""
+msgstr "SMART-data ble aldri hentet"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1972
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1978
 msgid "SMART data is malformed"
-msgstr ""
+msgstr "SMART-data er ikke korrekt utformet"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is unknown
@@ -1826,7 +1173,7 @@ msgstr[1] "%d dårlige sektorer"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
 msgid "Completed OK"
-msgstr ""
+msgstr "Fullført OK"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
@@ -1836,7 +1183,7 @@ msgstr "Avbrutt"
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2090
 msgid "Cancelled (with hard or soft reset)"
-msgstr ""
+msgstr "Avbrutt (med hard eller myk nullstilling)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2094
@@ -1846,17 +1193,17 @@ msgstr ""
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2098
 msgid "FAILED (Electrical)"
-msgstr ""
+msgstr "FEILET (elektrisk)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
 msgid "FAILED (Servo)"
-msgstr ""
+msgstr "FEILET (servo)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2108
 msgid "FAILED (Read)"
-msgstr ""
+msgstr "FEILET (les)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2113
@@ -1866,35 +1213,561 @@ msgstr ""
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2118
 msgid "In progress"
-msgstr ""
+msgstr "I gang"
 
-#. Translators: title of the dialog - first %s is the name of the volume
-#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
-#.
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
 #, c-format
-msgid "Edit %s"
-msgstr "Rediger %s"
+msgid "This operation concerns the volume \"%s\" (%s)"
+msgstr "Denne operasjonen angår volum «%s» (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
-msgid "Part_ition Label:"
-msgstr "Etikett for part_isjon:"
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
+#, c-format
+msgid "This operation concerns the drive \"%s\" (%s)"
+msgstr "Denne operasjonen angår stasjon «%s» (%s)"
 
-#. Translators: 'Type' means partition type here
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:338
-msgid "Ty_pe:"
-msgstr "Ty_pe:"
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
+#, c-format
+msgid "This operation concerns \"%s\" (%s)"
+msgstr "Denne operasjonen angår «%s» (%s)"
 
-#. ---
-#. flag used by mbr, apm
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:352
-msgid "_Bootable"
-msgstr "O_ppstartbar"
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
+msgid "User Name"
+msgstr "Brukernavn"
 
-#. flag used by gpt
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:360
-msgid "Required / Firm_ware"
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:95
+msgid "The chosen user name"
+msgstr "Valgt brukernavn"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:105
+msgid "Address"
+msgstr "Adresse"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:106
+msgid "The chosen address"
+msgstr "Valgt adresse"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:154
+msgid "Choose Server"
 msgstr ""
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:214
+msgid "Connect to Server"
+msgstr "Koble til tjener"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:221
+msgid "_Browse..."
+msgstr "_Bla gjennom..."
+
+#. Translators: this is the tooltip for the "Browse..." button
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:233
+msgid "Browse servers discovered via the DNS-SD protocol"
+msgstr "Bla gjennom tjenere som er oppdaget via DNS-SD-protokollen"
+
+#. Translators: This is the label explaining the dialog
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
+msgid ""
+"To manage storage devices on another machine, enter the address and press "
+"“Connect”. The connection will be made using the <i>Secure Shell</i> "
+"protocol."
+msgstr ""
+
+#. Translators: This is the tooltip for the "Server Address" entry
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
+msgid "The hostname or address to connect to"
+msgstr "Vertsnavn eller tjener å koble til"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
+msgid "Server _Address:"
+msgstr "Tjener_adresse:"
+
+#. Translators: This is the tooltip for the "User Name" entry
+#. * First %s is the UNIX user name e.g. 'davidz'.
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
+#, fuzzy
+msgid "The user name to connect as"
+msgstr "Forespurt etikett for filsystem"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
+msgid "_User Name:"
+msgstr "Br_ukernavn:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
+msgid "Pool"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
+msgid "The pool of devices"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:192
+msgid "RAID Level"
+msgstr "RAID-nivå"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:193
+msgid "The selected RAID level"
+msgstr "Valgt RAID-nivå"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:203
+msgid "Name"
+msgstr "Navn"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:204
+#, fuzzy
+msgid "The requested name for the array"
+msgstr "Forespurt navn på "
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
+#: ../src/gdu-gtk/gdu-size-widget.c:256
+msgid "Size"
+msgstr "Størrelse"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:215
+#, fuzzy
+msgid "The requested size of the array"
+msgstr "Forespurt etikett for filsystem"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:331
+msgid "Component Size"
+msgstr "Størrelse på komponent"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:228
+msgid "The size of each component"
+msgstr "Størrelse på hver komponent"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:240
+msgid "Stripe Size"
+msgstr "Størrelse på stripe"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
+#, fuzzy
+msgid "The requested stripe size of the array"
+msgstr "Forespurt etikett for filsystem"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
+msgid "Drives"
+msgstr "Stasjoner"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:254
+msgid "Array of drives to use for the array"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
+msgid "Create RAID Array"
+msgstr "Lag RAID-sett"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "Opp_rett"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
+msgid "General"
+msgstr "Generelt"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:554
+msgid "RAID _Level:"
+msgstr "RAID-_nivå:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:593
+#, fuzzy
+msgid "Array _Name:"
+msgstr "Størrelse:"
+
+#. Translators: This is the default name to use for the new array.
+#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
+#. * 32 bytes since that's the on-disk-format limit.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:601
+#, fuzzy
+msgid "New RAID Array"
+msgstr "Reparerer RAID"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:617
+msgid "Stripe S_ize:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:627
+msgid "4 KiB"
+msgstr "4 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
+msgid "8 KiB"
+msgstr "8 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
+msgid "16 KiB"
+msgstr "16 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
+msgid "32 KiB"
+msgstr "32 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
+msgid "64 KiB"
+msgstr "64 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
+msgid "128 KiB"
+msgstr "128 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
+msgid "256 KiB"
+msgstr "256 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
+msgid "512 KiB"
+msgstr "512 KiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
+msgid "1 MiB"
+msgstr "1 MiB"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:660
+#, fuzzy
+msgid "Array _Size:"
+msgstr "Størrelse:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
+msgid "_Disks"
+msgstr "_Disker"
+
+#. --------------------------------------------------------------------------------
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+msgid "Use entire disks instead of _partitions"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+msgid ""
+"If checked, the entirety of each selected disk will be used for the RAID "
+"array. Otherwise partitions will be created."
+msgstr ""
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:870
+#, c-format
+msgid "Insufficient number of disks to create a %s array."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:886
+#, c-format
+msgid "To create a %s array, select a disk."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:893
+#, c-format
+msgid "To create a %s array, select one more disk."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the size e.g. '42 GB'.
+#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
+#. * Third parameter is the number of disks to use (always greater than 1).
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:917
+#, c-format
+msgid "To create a %s %s array on %d disks, press \"Create\""
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
+msgid "Maximum Partition Size"
+msgstr "Maksimal størrelse på partisjon"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
+msgid "The maximum possible partition size"
+msgstr "Maksimalt mulig partisjonsstørrelse"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
+msgid "Partition Size"
+msgstr "Partisjonsstørrelse"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
+msgid "The requested partition size"
+msgstr "Forespurt størrelse på partisjon"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "_Størrelse:"
+
+#. Translators: The %s is the name of the drive
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
+#, c-format
+msgid "Create partition on %s"
+msgstr "Lag partisjon på %s"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:254
+#: ../src/gdu-gtk/gdu-format-dialog.c:166
+msgid "Flags"
+msgstr "Flagg"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:255
+msgid "Flags for the widget"
+msgstr "Flagg for komponent"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+msgid "Selected Drives"
+msgstr "Valgte stasjoner"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:269
+msgid "Array of selected drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
+msgid "Ignored Drives"
+msgstr "Ignorerte stasjoner"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
+msgid "Array of drives to ignore"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
+msgid "Number of available disks"
+msgstr "Antall tilgjengelige disker"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
+msgid "Largest Segment For Selected"
+msgstr "Største segment for utvalg"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
+msgid "The largest free segment for the selected drives"
+msgstr "Største ledige segment for valgte disker"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
+msgid "Largest Segment For All"
+msgstr "Største segment for alle"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
+msgid "The largest free segment for all the drives"
+msgstr "Største ledige segment for alle disker"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:332
+msgid "The size to use in the details header"
+msgstr "Størrelse som skal brukes i detaljtopptekst"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
+msgid "The disk will be partitioned and a partition will be created"
+msgstr "Disken vil bli partisjonert og en partisjon vil bli opprettet"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:740
+#, c-format
+msgid ""
+"The disk will be partitioned and a %s partition will be created. Afterwards "
+"no space will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:749
+#, c-format
+msgid ""
+"The disk will be partitioned and a %s partition will be created. Afterwards %"
+"s will be available."
+msgstr ""
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:759
+msgid "A partition will be created"
+msgstr "En partisjon vil bli opprettet"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:765
+#, c-format
+msgid "A %s partition will be created. Afterwards no space will be available."
+msgstr "En partisjon av type %s vil bli laget og det vil ikke være ledig plass etterpå."
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:773
+#, c-format
+msgid "A %s partition will be created. Afterwards %s will be available."
+msgstr "En partisjon av type %s vil bli laget. %s vil være tilgjengelig etterpå."
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:792
+#, c-format
+msgid "Whole disk is uninitialized. %s available for use"
+msgstr "Hele disken er uninitiert. %s tilgjengelig for bruk"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:799
+#, c-format
+msgid "%s available for use"
+msgstr "%s tilgjengelig for bruk"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:805
+#, c-format
+msgid "The disk has no partitions. %s available for use"
+msgstr "Disken har ingen partisjoner. %s tilgjengelig for bruk"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#, c-format
+msgid "The disk has %d partition"
+msgid_plural "The disk has %d partitions"
+msgstr[0] "Disken har %d partisjon"
+msgstr[1] "Disken har %d partisjoner"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the dngettext() result of "The disk has %d partitions.".
+#. * Second %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:818
+#, c-format
+msgid "%s. Largest contiguous free block is %s"
+msgstr "%s. Største sammenhengende ledige blokk er %s"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
+msgid "Storage Devices"
+msgstr "Lagringsenheter"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:968
+msgid "Details"
+msgstr "Detaljer"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
+msgid "Error benchmarking drive"
+msgstr "Feil under ytelsesmåling for stasjon"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
+#, fuzzy
+msgid "Are you sure you want to start a read/write benchmark?"
+msgstr "Er du sikker på at du vil slette enheten?"
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
+#: ../src/palimpsest/gdu-section-drive.c:762
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+msgid "_Benchmark"
+msgstr "_Ytelsesmåling"
+
+#. Translators: The title of the benchmark dialog.
+#. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
+#. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
+#. * or "ATA WDC WD1001FALS-00J7B1").
+#.
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:685
+#, c-format
+msgid "%s (%s) – Benchmark"
+msgstr "%s (%s) - Ytelsesmåling"
+
+#. benchmark results
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
+msgid "Minimum Read Rate:"
+msgstr "Minste lesehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
+msgid "Minimum Write Rate:"
+msgstr "Minste skrivehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
+msgid "Maximum Read Rate:"
+msgstr "Største lesehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
+msgid "Maximum Write Rate:"
+msgstr "Største skrivehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
+msgid "Average Read Rate:"
+msgstr "Gjennomsnittlig lesehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
+msgid "Average Write Rate:"
+msgstr "Gjennomsnittlig skrivehastighet:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
+msgid "Last Benchmark:"
+msgstr "Siste ytelsesmåling:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
+msgid "Average Access Time:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+msgid "Start _Read-Only Benchmark"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
+msgid "Measure read rate and access time"
+msgstr ""
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+msgid "Start Read/_Write Benchmark"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
+msgid "Measure read rate, write rate and access time"
+msgstr ""
+
+#. Translators: This is used in the benchmark graph - %d is megabytes per second
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:951
+#, c-format
+msgid "%d MB/s"
+msgstr "%d MB/s"
+
+#. Translators: This is used in the benchmark graph - %g is number of milliseconds
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:956
+#, c-format
+msgid "%3g ms"
+msgstr "%3g ms"
+
+#. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
+msgid "Never"
+msgstr "Aldri"
+
+#. Translators: Text used in the hyperlink in the status
+#. * table to cancel a self-test
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1308
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. Translators: Tooptip for the "Cancel" hyperlink
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
+msgid "Cancels the currently running benchmark"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
+#, c-format
+msgid "Edit Filesystem on %s"
+msgstr "Rediger filsystem på %s"
+
+#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
+#: ../src/palimpsest/gdu-section-volumes.c:1470
+msgid "Label:"
+msgstr "Etikett:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
 #, c-format
@@ -1927,13 +1800,13 @@ msgid "Position:"
 msgstr "Posisjon:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1095
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
 msgid "State:"
 msgstr "Tilstand:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
 #: ../src/palimpsest/gdu-section-drive.c:669
-#: ../src/palimpsest/gdu-section-volumes.c:1410
+#: ../src/palimpsest/gdu-section-volumes.c:1446
 msgid "Device:"
 msgstr "Enhet:"
 
@@ -1970,34 +1843,95 @@ msgstr "Er du sikker på at du vil slette %1?"
 msgid "Not Supported"
 msgstr "Ikke støttet"
 
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
-#, c-format
-msgid "Edit Filesystem on %s"
-msgstr "Rediger filsystem på %s"
-
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
-#: ../src/palimpsest/gdu-section-volumes.c:1434
-msgid "Label:"
-msgstr "Etikett:"
-
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
-#, c-format
-msgid "Add Component to %s"
-msgstr "Legg til komponent på %s"
-
-#. TODO: hate
-#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
+#. Translators: title of the dialog - first %s is the name of the volume
+#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
 #, c-format
-msgid ""
-"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+msgid "Edit %s"
+msgstr "Rediger %s"
+
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
+msgid "Part_ition Label:"
+msgstr "Etikett for part_isjon:"
+
+#. Translators: 'Type' means partition type here
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:338
+msgid "Ty_pe:"
+msgstr "Ty_pe:"
+
+#. ---
+#. flag used by mbr, apm
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:352
+msgid "_Bootable"
+msgstr "O_ppstartbar"
+
+#. flag used by gpt
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:360
+msgid "Required / Firm_ware"
 msgstr ""
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:217
+msgid "The operation failed"
+msgstr "Operasjonen feilet"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:220
+msgid "The device is busy"
+msgstr "Enheten er opptatt"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:223
+msgid "The operation was canceled"
+msgstr "Operasjonen ble avbrutt"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:226
+msgid "The daemon is being inhibited"
+msgstr "Tjenesten er hindret"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:229
+msgid "An invalid option was passed"
+msgstr "Et ugyldig flagg ble gitt"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:232
+msgid "The operation is not supported"
+msgstr "Operasjonen er ikke støttet"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:235
+msgid "Getting ATA SMART data would wake up the device"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:238
+msgid "Permission denied"
+msgstr "Tilgang nektet"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:241
+msgid "Filesystem driver not installed"
+msgstr "Driver for filsystem ikke installert"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:244
+msgid "Filesystem tools not installed"
+msgstr "Verktøy for filsystem ikke installert"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:1042
+msgid "Unknown error"
+msgstr "Ukjent feil"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:257
+#, c-format
+msgid "An error occured while performing an operation on \"%s\" (%s): %s"
+msgstr "En feil oppsto under utføring av operasjon på «%s» (%s): %s"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:265
+#, c-format
+msgid "An error occured: %s"
+msgstr "En feil oppsto: %s"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:274
+msgid "_Details"
+msgstr "_Detaljer"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:167
 msgid "Flags specifying the behavior of the dialog"
-msgstr ""
+msgstr "Flagg som spesifiserer oppførsel for dialogen"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:180
 msgid "Filesystem type"
@@ -2036,9 +1970,8 @@ msgid "Take Ownership"
 msgstr "Ta eierskap"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:225
-#, fuzzy
 msgid "Whether the filesystem should be owned by the user"
-msgstr "Om volumet skal være kryptert"
+msgstr "Om filsystemet skal eies av bruker"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:235
 msgid "Affirmative Button Mnemonic"
@@ -2047,6 +1980,21 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-format-dialog.c:236
 msgid "The mnemonic label for the affirmative button"
 msgstr ""
+
+#. Translators: Format is used as a verb here
+#: ../src/gdu-gtk/gdu-format-dialog.c:238
+#: ../src/gdu-gtk/gdu-partition-dialog.c:216
+#: ../src/palimpsest/gdu-section-drive.c:588
+#: ../src/palimpsest/gdu-section-volumes.c:356
+msgid "_Format"
+msgstr "_Formater"
+
+#. Translators: Format is a verb here. The %s is the name of the volume
+#: ../src/gdu-gtk/gdu-format-dialog.c:499
+#: ../src/gdu-gtk/gdu-partition-dialog.c:208
+#, c-format
+msgid "Format %s"
+msgstr "Formater %s"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:510
 msgid "Disk _Utility"
@@ -2102,9 +2050,8 @@ msgid ""
 msgstr ""
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:641
-#, fuzzy
 msgid "_Encrypt underlying device"
-msgstr "Feil under montering av enhet"
+msgstr "Krypt_er underliggende enhet"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid ""
@@ -2117,15 +2064,271 @@ msgstr ""
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr ""
 
+#: ../src/gdu-gtk/gdu-gtk.c:172
+msgctxt "application name"
+msgid "Bourne Again Shell"
+msgstr "Bourne Again Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:177
+msgctxt "application name"
+msgid "Bourne Shell"
+msgstr "Bourne Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:182
+msgctxt "application name"
+msgid "C Shell"
+msgstr "C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:187
+msgctxt "application name"
+msgid "TENEX C Shell"
+msgstr "TENEX C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:192
+msgctxt "application name"
+msgid "Z Shell"
+msgstr "Z Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:197
+msgctxt "application name"
+msgid "Korn Shell"
+msgstr "Korn Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:201
+msgctxt "application name"
+msgid "Process Viewer (top)"
+msgstr "Prosessvisning (top)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:205
+msgctxt "application name"
+msgid "Terminal Pager (less)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:217
+msgctxt "application name"
+msgid "Unknown"
+msgstr "Ukjent"
+
+#: ../src/gdu-gtk/gdu-gtk.c:228
+#, c-format
+msgid "uid: %d  pid: %d  program: %s"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:233
+#, c-format
+msgid "pid: %d  program: %s"
+msgstr ""
+
+#. Translators: %d is the partition number, %s the name of the disk
+#: ../src/gdu-gtk/gdu-gtk.c:332 ../src/gdu-gtk/gdu-gtk.c:916
+#: ../src/gdu-gtk/gdu-gtk.c:1054
+#, c-format
+msgid "Partition %d on %s"
+msgstr "Partisjon %d på %s"
+
+#: ../src/gdu-gtk/gdu-gtk.c:368
+msgid "Cannot unmount volume"
+msgstr "Kan ikke avmontere volum"
+
+#: ../src/gdu-gtk/gdu-gtk.c:378
+msgid ""
+"One or more applications are using the volume. Quit the applications, and "
+"then try unmounting again."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:419
+msgid "_Unmount"
+msgstr "_Avmonter"
+
+#: ../src/gdu-gtk/gdu-gtk.c:496
+msgid "Passphrases do not match"
+msgstr "Passordene er ikke like"
+
+#: ../src/gdu-gtk/gdu-gtk.c:503
+msgid "Passphrases do not differ"
+msgstr "Passordene er ikke forskjellige"
+
+#: ../src/gdu-gtk/gdu-gtk.c:509
+msgid "Passphrase can't be empty"
+msgstr "Passordet kan ikke være tomt"
+
+#: ../src/gdu-gtk/gdu-gtk.c:581
+msgid "Cr_eate"
+msgstr "Oppr_ett"
+
+#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-section-volumes.c:1924
+msgid "Change _Passphrase"
+msgstr "Bytt _passord"
+
+#: ../src/gdu-gtk/gdu-gtk.c:585
+msgid "_Unlock"
+msgstr "Lås _opp"
+
+#: ../src/gdu-gtk/gdu-gtk.c:614
+msgid "To create an encrypted device, choose a passphrase to protect it"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:617
+msgid "To change the passphrase, enter both the current and new passphrase"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:620
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:633
+msgid ""
+"Data on this device will be stored in an encrypted form protected by a "
+"passphrase."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:636
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:639
+msgid ""
+"To make the data available for use, enter the passphrase for the device."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:648
+msgid "Incorrect Passphrase. Try again."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:672
+msgid "C_urrent Passphrase:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:686
+msgid "_New Passphrase:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:699
+msgid "_Verify Passphrase:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:741
+msgid "_Passphrase:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:756
+msgid "_Forget passphrase immediately"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:759
+msgid "Remember passphrase until you _log out"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:762
+msgid "_Remember forever"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:823
+msgid "Enter Passphrase"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:948 ../src/gdu/gdu-util.c:824
+#, c-format
+msgid "LUKS Passphrase for UUID %s"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:1242
+msgid "Empty (don't create a file system)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:1263
+msgid "Empty"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:1271
+msgid "Extended Partition"
+msgstr "Utvidet partisjon"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1530 ../src/palimpsest/gdu-section-drive.c:262
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
+msgid "Master Boot Record"
+msgstr ""
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu-gtk/gdu-gtk.c:1535 ../src/gdu/gdu-drive.c:811
+#: ../src/gdu/gdu-linux-md-drive.c:568
+#: ../src/palimpsest/gdu-section-drive.c:264
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
+msgid "GUID Partition Table"
+msgstr "GUID partisjonstabell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1540
+msgid "Don't partition"
+msgstr "Ikke partisjoner"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1545 ../src/gdu/gdu-util.c:492
+#: ../src/palimpsest/gdu-section-drive.c:260
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
+msgid "Apple Partition Map"
+msgstr "Apple partisjonskart"
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:100
+msgid "Partitioning Scheme"
+msgstr "Partisjoneringsutforming"
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:101
+msgid "The selected partitioning scheme"
+msgstr "Valgt utforming av partisjoner"
+
+#. Translators: 'scheme' means 'partitioning scheme' here.
+#: ../src/gdu-gtk/gdu-partition-dialog.c:248
+msgid "_Scheme:"
+msgstr "_Utforming:"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:257
+msgid "The currently selected size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:270
+msgid "Minimum Size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:271
+msgid "The minimum size that can be selected"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:284
+msgid "Maximum Size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:285
+msgid "The maximum size that can be selected"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-time-label.c:71
+#, c-format
+msgid "Less than a minute ago"
+msgstr "Mindre enn ett minutt siden"
+
+#: ../src/gdu-gtk/gdu-time-label.c:75
+#, c-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "%d minutt siden"
+msgstr[1] "%d minutter siden"
+
+#: ../src/gdu-gtk/gdu-time-label.c:82
+#, c-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "%d time siden"
+msgstr[1] "%d timer siden"
+
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
 #: ../src/palimpsest/gdu-section-drive.c:634
 msgid "Drive"
 msgstr "Stasjon"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:499
-#, fuzzy
 msgid "Drive to show volumes for"
-msgstr "Stasjon som skal vises"
+msgstr "Vis volumer for stasjon"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
 #: ../src/gdu-gtk/gdu-volume-grid.c:1181
@@ -2136,7 +2339,7 @@ msgstr ""
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:779
+#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:797
 #: ../src/palimpsest/gdu-section-drive.c:314
 #, c-format
 msgid "No Media Detected"
@@ -2157,111 +2360,6 @@ msgstr "Kryptert"
 msgid "Free"
 msgstr "Ledig"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#, fuzzy
-msgid "Error benchmarking drive"
-msgstr "slett partisjon"
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#, fuzzy
-msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "Er du sikker på at du vil slette enheten?"
-
-#. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1188
-#: ../src/palimpsest/gdu-section-drive.c:762
-msgid "_Benchmark"
-msgstr ""
-
-#. Translators: The title of the benchmark dialog.
-#. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
-#. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
-#. * or "ATA WDC WD1001FALS-00J7B1").
-#.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:684
-#, c-format
-msgid "%s (%s) – Benchmark"
-msgstr ""
-
-#. benchmark results
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
-msgid "Minimum Read Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
-msgid "Minimum Write Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
-msgid "Maximum Read Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
-msgid "Maximum Write Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
-msgid "Average Read Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
-msgid "Average Write Rate:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
-msgid "Last Benchmark:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
-msgid "Average Access Time:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
-msgid "Start _Read-Only Benchmark"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
-msgid "Measure read rate and access time"
-msgstr ""
-
-#. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
-msgid "Start Read/_Write Benchmark"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
-msgid "Measure read rate, write rate and access time"
-msgstr ""
-
-#. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
-#, c-format
-msgid "%d MB/s"
-msgstr "%d MB/s"
-
-#. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
-#, c-format
-msgid "%3g ms"
-msgstr "%3g ms"
-
-#. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1233
-msgid "Never"
-msgstr "Aldri"
-
-#. Translators: Text used in the hyperlink in the status
-#. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1307
-msgid "Cancel"
-msgstr "Avbryt"
-
-#. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1310
-msgid "Cancels the currently running benchmark"
-msgstr ""
-
 #. Translators: this is a verb
 #: ../src/nautilus-extension/nautilus-gdu.c:223
 msgid "_Format..."
@@ -2269,182 +2367,83 @@ msgstr "_Formatter..."
 
 #: ../src/nautilus-extension/nautilus-gdu.c:224
 msgid "Create new filesystem on the selected device"
-msgstr ""
-
-#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
-#. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:523 ../src/gdu/gdu-linux-md-drive.c:606
-#, fuzzy, c-format
-msgid "%s %s Array"
-msgstr "%s %s enhet"
-
-#. Translators: %s is a RAID level, e.g. 'RAID-5'
-#. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:528 ../src/gdu/gdu-linux-md-drive.c:611
-#, fuzzy, c-format
-msgid "%s Array"
-msgstr "RAID-array"
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-linux-md-drive.c:550 ../src/gdu/gdu-drive.c:790
-msgid "MBR Partition Table"
-msgstr "MBR-partisjonstabell"
-
-#. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-linux-md-drive.c:556 ../src/gdu/gdu-drive.c:796
-msgid "Apple Partition Table"
-msgstr "Apple partisjonstabell"
-
-#. Translators: This string is used for conveying the partition table format when
-#. * the format is unknown
-#.
-#: ../src/gdu/gdu-linux-md-drive.c:561 ../src/gdu/gdu-drive.c:801
-msgid "Partitioned"
-msgstr "Partisjonert"
-
-#. Translators: First %s is a device file such as /dev/sda4
-#. * second %s is the state of the device
-#.
-#: ../src/gdu/gdu-linux-md-drive.c:581
-#, fuzzy, c-format
-msgid "RAID Array %s (%s)"
-msgstr "RAID-array"
-
-#. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:588
-#, c-format
-msgid "RAID device %s"
-msgstr "RAID-enhet %s"
-
-#. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:594
-msgctxt "RAID Level fallback"
-msgid "RAID"
-msgstr "RAID"
-
-#: ../src/gdu/gdu-linux-md-drive.c:599
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
-msgid "RAID Array"
-msgstr "RAID-array"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1040
-msgctxt "Linux MD slave state"
-msgid "Not Attached"
-msgstr ""
-
-#: ../src/gdu/gdu-linux-md-drive.c:1043
-msgctxt "Linux MD slave state"
-msgid "Faulty"
-msgstr ""
-
-#: ../src/gdu/gdu-linux-md-drive.c:1048
-msgctxt "Linux MD slave state"
-msgid "Fully Synchronized"
-msgstr ""
-
-#: ../src/gdu/gdu-linux-md-drive.c:1050
-msgctxt "Linux MD slave state"
-msgid "Writemostly"
-msgstr ""
-
-#: ../src/gdu/gdu-linux-md-drive.c:1052
-msgctxt "Linux MD slave state"
-msgid "Blocked"
-msgstr "Blokkert"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1054
-msgctxt "Linux MD slave state"
-msgid "Spare"
-msgstr ""
-
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#: ../src/gdu/gdu-volume-hole.c:151
-#, c-format
-msgid "%s Free"
-msgstr "%s ledig"
-
-#: ../src/gdu/gdu-volume-hole.c:160
-#: ../src/palimpsest/gdu-section-volumes.c:1634
-msgid "Unallocated Space"
-msgstr "Ikke allokert plass"
+msgstr "Opprett nytt filsystem på valgt enhet"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:542
+#: ../src/gdu/gdu-drive.c:560
 msgid "CompactFlash"
 msgstr "CompactFlash"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:545
+#: ../src/gdu/gdu-drive.c:563
 msgid "MemoryStick"
 msgstr "Minnepinne"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:548
+#: ../src/gdu/gdu-drive.c:566
 msgid "SmartMedia"
 msgstr "SmartMedia"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:551
+#: ../src/gdu/gdu-drive.c:569
 msgid "SecureDigital"
 msgstr "SecureDigital"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:554
+#: ../src/gdu/gdu-drive.c:572
 msgid "SD High Capacity"
 msgstr "SD høy kapasitet"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:557
+#: ../src/gdu/gdu-drive.c:575
 msgid "Floppy"
 msgstr "Diskett"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:560
+#: ../src/gdu/gdu-drive.c:578
 msgid "Zip"
 msgstr "Zip"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:563
+#: ../src/gdu/gdu-drive.c:581
 msgid "Jaz"
 msgstr "Jaz"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:566
+#: ../src/gdu/gdu-drive.c:584
 msgid "Flash"
 msgstr "Flash"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:589
+#: ../src/gdu/gdu-drive.c:607
 msgid "CD"
 msgstr "CD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:597
+#: ../src/gdu/gdu-drive.c:615
 msgid "DVD"
 msgstr "DVD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:605
+#: ../src/gdu/gdu-drive.c:623
 msgid "Blu-Ray"
 msgstr "Blu-Ray"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:613
+#: ../src/gdu/gdu-drive.c:631
 msgid "HDDVD"
 msgstr "HDDVD"
 
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:662 ../src/gdu/gdu-drive.c:701
+#: ../src/gdu/gdu-drive.c:680 ../src/gdu/gdu-drive.c:719
 #, c-format
 msgid "%s Drive"
 msgstr "%s-enhet"
@@ -2452,7 +2451,7 @@ msgstr "%s-enhet"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:696
+#: ../src/gdu/gdu-drive.c:714
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s enhet"
@@ -2460,7 +2459,7 @@ msgstr "%s %s enhet"
 #. Translators: This string is used to describe a hard disk. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:712
+#: ../src/gdu/gdu-drive.c:730
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s harddisk"
@@ -2468,14 +2467,14 @@ msgstr "%s harddisk"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:718
+#: ../src/gdu/gdu-drive.c:736
 msgid "Hard Disk"
 msgstr "Harddisk"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:725
+#: ../src/gdu/gdu-drive.c:743
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s Solid-State disk"
@@ -2483,25 +2482,248 @@ msgstr "%s Solid-State disk"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:731
+#: ../src/gdu/gdu-drive.c:749
 msgid "Solid-State Disk"
 msgstr "Solid-State disk"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:772
+#: ../src/gdu/gdu-drive.c:790
 #, c-format
 msgid "%s Media"
 msgstr "%s media"
 
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:808 ../src/gdu/gdu-linux-md-drive.c:565
+msgid "MBR Partition Table"
+msgstr "MBR-partisjonstabell"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:814 ../src/gdu/gdu-linux-md-drive.c:571
+msgid "Apple Partition Table"
+msgstr "Apple partisjonstabell"
+
+#. Translators: This string is used for conveying the partition table format when
+#. * the format is unknown
+#.
+#: ../src/gdu/gdu-drive.c:819 ../src/gdu/gdu-linux-md-drive.c:576
+msgid "Partitioned"
+msgstr "Partisjonert"
+
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:806
+#: ../src/gdu/gdu-drive.c:824 ../src/palimpsest/gdu-section-drive.c:273
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:364
-#: ../src/palimpsest/gdu-section-drive.c:273
 msgid "Not Partitioned"
 msgstr "Ikke partisjonert"
+
+#: ../src/gdu/gdu-hub.c:197
+msgid "PATA Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:199
+msgid "SATA Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:201
+msgid "ATA Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:203
+msgid "SAS Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:205
+msgid "SCSI Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:207
+msgid "Host Adapter"
+msgstr ""
+
+#: ../src/gdu/gdu-hub.c:211
+msgid "SAS Expander"
+msgstr "SAS-utvider"
+
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:621
+#, fuzzy, c-format
+msgid "%s %s Array"
+msgstr "%s %s enhet"
+
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#. Translators: %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:626
+#, fuzzy, c-format
+msgid "%s Array"
+msgstr "RAID-array"
+
+#. Translators: First %s is a device file such as /dev/sda4
+#. * second %s is the state of the device
+#.
+#: ../src/gdu/gdu-linux-md-drive.c:596
+#, fuzzy, c-format
+msgid "RAID Array %s (%s)"
+msgstr "RAID-array"
+
+#. Translators: %s is a device file such as /dev/sda4
+#: ../src/gdu/gdu-linux-md-drive.c:603
+#, c-format
+msgid "RAID device %s"
+msgstr "RAID-enhet %s"
+
+#. Translators: fallback for level
+#: ../src/gdu/gdu-linux-md-drive.c:609
+msgctxt "RAID Level fallback"
+msgid "RAID"
+msgstr "RAID"
+
+#: ../src/gdu/gdu-linux-md-drive.c:614
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1066
+msgid "RAID Array"
+msgstr "RAID-array"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1083
+msgctxt "Linux MD slave state"
+msgid "Not Attached"
+msgstr "Ikke tilkoblet"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1086
+msgctxt "Linux MD slave state"
+msgid "Faulty"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1091
+msgctxt "Linux MD slave state"
+msgid "Fully Synchronized"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1093
+msgctxt "Linux MD slave state"
+msgid "Writemostly"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1095
+msgctxt "Linux MD slave state"
+msgid "Blocked"
+msgstr "Blokkert"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1097
+msgctxt "Linux MD slave state"
+msgid "Spare"
+msgstr "Reserve"
+
+#: ../src/gdu/gdu-machine.c:151
+msgid "Local Storage"
+msgstr "Lokal lagring"
+
+#. TODO: use display-hostname
+#: ../src/gdu/gdu-machine.c:154
+#, c-format
+msgid "Storage on %s"
+msgstr "Lagring på %s"
+
+#: ../src/gdu/gdu-pool.c:1888
+#, fuzzy, c-format
+msgid "Error enumerating devices: %s"
+msgstr "Feil ved utløsing av enhet"
+
+#: ../src/gdu/gdu-pool.c:1914
+#, fuzzy, c-format
+msgid "Error enumerating adapters: %s"
+msgstr "Feil ved utløsing av medie"
+
+#: ../src/gdu/gdu-pool.c:1937
+#, c-format
+msgid "Error enumerating expanders: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-pool.c:1960
+#, fuzzy, c-format
+msgid "Error enumerating ports: %s"
+msgstr "Feil ved sletting av partisjon"
+
+#: ../src/gdu/gdu-ssh-bridge.c:292
+#, c-format
+msgid "Error listening to address `localhost:%d': %s: %s\n"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:307
+#, c-format
+msgid ""
+"Error creating a local TCP server, tried binding to ports 9000-10000 on "
+"localhost"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:322
+#, c-format
+msgid "Error setting auth mechanisms on local DBusServer\n"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:347
+#, c-format
+msgid "Unable to parse command-line `%s' (Malformed address?): %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:369
+#, c-format
+msgid "Unable to spawn ssh program: %s"
+msgstr "Kan ikke starte ssh-program: %s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:398 ../src/gdu/gdu-ssh-bridge.c:510
+#, c-format
+msgid "Error reading stderr output: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:405
+#, fuzzy
+msgid "Error reading stderr output: No content"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/gdu/gdu-ssh-bridge.c:471
+#, fuzzy
+msgid "Error logging in"
+msgstr "Feil ved sletting av partisjon"
+
+#: ../src/gdu/gdu-ssh-bridge.c:491
+#, c-format
+msgid "Error sending `%s': %s"
+msgstr "Feil ved sending av «%s»: %s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:519
+#, c-format
+msgid ""
+"Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
+"but got `%s'"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:536
+#, c-format
+msgid "Error passing authorization secret: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:557
+#, fuzzy, c-format
+msgid "Error reading stderr from: %s"
+msgstr "Feil ved oppretting av filsystem"
+
+#: ../src/gdu/gdu-ssh-bridge.c:566
+#, c-format
+msgid ""
+"Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
+"connect to port %d' but got `%s'"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:585
+#, c-format
+msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:592
+msgid "The udisks-tcp-bridge program failed to prove it was authorized"
+msgstr ""
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -2689,7 +2911,7 @@ msgstr ""
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:320 ../src/palimpsest/gdu-section-volumes.c:1616
+#: ../src/gdu/gdu-util.c:320 ../src/palimpsest/gdu-section-volumes.c:1677
 msgid "Swap Space"
 msgstr "Swap-område"
 
@@ -2718,7 +2940,7 @@ msgstr "lvm2_pv"
 msgid "RAID Component (version %s)"
 msgstr "RAID-komponent (versjon %s)"
 
-#: ../src/gdu/gdu-util.c:341 ../src/palimpsest/gdu-section-volumes.c:1620
+#: ../src/gdu/gdu-util.c:341 ../src/palimpsest/gdu-section-volumes.c:1681
 #, c-format
 msgid "RAID Component"
 msgstr "RAID-komponent"
@@ -3009,9 +3231,8 @@ msgid "Apple UFS Partition"
 msgstr "Apple UFS-partisjon"
 
 #: ../src/gdu/gdu-util.c:474
-#, fuzzy
 msgid "Apple ZFS Partition"
-msgstr "Apple UFS-partisjon"
+msgstr "Apple ZFS-partisjon"
 
 #. Same as Solaris /usr
 #: ../src/gdu/gdu-util.c:475
@@ -3019,14 +3240,12 @@ msgid "Apple RAID Partition"
 msgstr "Apple RAID-partisjon"
 
 #: ../src/gdu/gdu-util.c:476
-#, fuzzy
 msgid "Apple RAID Partition (Offline)"
-msgstr "Apple RAID-partisjon"
+msgstr "Apple RAID-partisjon (frakoblet)"
 
 #: ../src/gdu/gdu-util.c:477
-#, fuzzy
 msgid "Apple Boot Partition"
-msgstr "Apple UFS-partisjon"
+msgstr "Apple oppstartspartisjon"
 
 #: ../src/gdu/gdu-util.c:478
 #, fuzzy
@@ -3040,24 +3259,20 @@ msgstr "Apple RAID-partisjon"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:481
-#, fuzzy
 msgid "NetBSD Swap Partition"
-msgstr "Linux swap-partisjon"
+msgstr "NetBSD swap-partisjon"
 
 #: ../src/gdu/gdu-util.c:482
-#, fuzzy
 msgid "NetBSD FFS Partition"
-msgstr "Apple UFS-partisjon"
+msgstr "NetBSD FFS-partisjon"
 
 #: ../src/gdu/gdu-util.c:483
-#, fuzzy
 msgid "NetBSD LFS Partition"
-msgstr "Apple UFS-partisjon"
+msgstr "NetBSD LFS-partisjon"
 
 #: ../src/gdu/gdu-util.c:484
-#, fuzzy
 msgid "NetBSD RAID Partition"
-msgstr "Apple RAID-partisjon"
+msgstr "NetBSD RAID-partisjon"
 
 #: ../src/gdu/gdu-util.c:485
 #, fuzzy
@@ -3065,9 +3280,8 @@ msgid "NetBSD Concatenated  Partition"
 msgstr "Lag partisjon"
 
 #: ../src/gdu/gdu-util.c:486
-#, fuzzy
 msgid "NetBSD Encrypted Partition"
-msgstr "Utvidet partisjon"
+msgstr "NetBSD kryptert partisjon"
 
 #: ../src/gdu/gdu-util.c:493
 msgid "Unused Partition"
@@ -3192,9 +3406,8 @@ msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:525
-#, fuzzy
 msgid "Minix (0x81)"
-msgstr "Linux (0x83)"
+msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
 #: ../src/gdu/gdu-util.c:526
@@ -3341,19 +3554,19 @@ msgid ""
 msgstr ""
 
 #: ../src/gdu/gdu-util.c:853
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f KB/s"
-msgstr "%.1f kbit/s"
+msgstr "%.1f KB/s"
 
 #: ../src/gdu/gdu-util.c:856
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f MB/s"
-msgstr "%.1f Mbit/s"
+msgstr "%.1f MB/s"
 
 #: ../src/gdu/gdu-util.c:859
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB/s"
-msgstr "%.1f Gbit/s"
+msgstr "%.1f GB/s"
 
 #. Translators: interface name for serial ATA disks
 #: ../src/gdu/gdu-util.c:875
@@ -3782,9 +3995,9 @@ msgstr "RAID"
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
 #: ../src/gdu/gdu-volume.c:350 ../src/gdu/gdu-volume.c:361
-#, fuzzy, c-format
+#, c-format
 msgid "%s %s Component"
-msgstr "%d komponent"
+msgstr "%s %s komponent"
 
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
@@ -3860,49 +4073,18 @@ msgstr ""
 msgid "Whole-disk volume"
 msgstr ""
 
-#: ../src/gdu/gdu-hub.c:192
-msgid "PATA Host Adapter"
-msgstr ""
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume-hole.c:151
+#, c-format
+msgid "%s Free"
+msgstr "%s ledig"
 
-#: ../src/gdu/gdu-hub.c:194
-msgid "SATA Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:196
-msgid "ATA Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:198
-msgid "SAS Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:200
-msgid "SCSI Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:202
-msgid "Host Adapter"
-msgstr ""
-
-#: ../src/gdu/gdu-hub.c:206
-msgid "SAS Expander"
-msgstr ""
-
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "En eller flere disker feiler"
-
-#. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "En harddisk feiler muligvis"
-
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
-msgstr ""
+#: ../src/gdu/gdu-volume-hole.c:160
+#: ../src/palimpsest/gdu-section-volumes.c:1695
+msgid "Unallocated Space"
+msgstr "Ikke allokert plass"
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
@@ -3921,6 +4103,195 @@ msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
 msgstr ""
+
+#: ../src/notification/notification-main.c:170
+msgid "One or more disks are failing"
+msgstr "En eller flere disker feiler"
+
+#. Translators: This is used as the title of the notification
+#: ../src/notification/notification-main.c:535
+msgid "A hard disk may be failing"
+msgstr "En harddisk feiler muligvis"
+
+#. Translators: This is used as the text of the notification
+#: ../src/notification/notification-main.c:537
+msgid ""
+"One or more hard disks report health problems. Click the icon to get more "
+"information."
+msgstr ""
+
+#: ../src/palimpsest/gdu-main.c:127
+msgid "Volume to show"
+msgstr "Volum som skal vises"
+
+#: ../src/palimpsest/gdu-main.c:128
+msgid "Drive to show"
+msgstr "Stasjon som skal vises"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a SAS Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SAS Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:167
+#, fuzzy, c-format
+msgid "PHY %d of %s"
+msgstr "Partisjon %d av %s"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SATA Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:174
+#, c-format
+msgid "Port %d of %s"
+msgstr "Port %d av %s"
+
+#: ../src/palimpsest/gdu-section-drive.c:232
+msgctxt "Write Cache"
+msgid "Enabled"
+msgstr "Aktivert"
+
+#: ../src/palimpsest/gdu-section-drive.c:234
+msgctxt "Write Cache"
+msgid "Disabled"
+msgstr "Deaktivert"
+
+#. Translators: This is for the rotation rate of a hard
+#. * disk - RPM means rounds per minute
+#.
+#: ../src/palimpsest/gdu-section-drive.c:244
+#, c-format
+msgctxt "Rotation Rate"
+msgid "%d RPM"
+msgstr "%d RPM"
+
+#: ../src/palimpsest/gdu-section-drive.c:252
+msgctxt "Rotation Rate"
+msgid "Solid-State Disk"
+msgstr "Solid-State disk"
+
+#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
+#: ../src/palimpsest/gdu-section-drive.c:267
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
+#, c-format
+msgid "Unknown Scheme: %s"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:378
+#: ../src/palimpsest/gdu-section-drive.c:398
+msgid "Error launching Brasero"
+msgstr "Feil ved start av Brasero"
+
+#: ../src/palimpsest/gdu-section-drive.c:379
+msgid "The application is not installed"
+msgstr "Programmet er ikke installert"
+
+#: ../src/palimpsest/gdu-section-drive.c:460
+msgid "Error ejecting media"
+msgstr "Feil ved utløsing av medie"
+
+#: ../src/palimpsest/gdu-section-drive.c:504
+msgid "Error detaching drive"
+msgstr "Feil ved frakobling av stasjon"
+
+#: ../src/palimpsest/gdu-section-drive.c:549
+msgid "Error formatting drive"
+msgstr "Feil under formattering av stasjon"
+
+#: ../src/palimpsest/gdu-section-drive.c:587
+msgid "Are you sure you want to format the drive?"
+msgstr "Er du sikker på at du vil formatere stasjonen?"
+
+#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-hub.c:221
+msgid "Model:"
+msgstr "Modell:"
+
+#: ../src/palimpsest/gdu-section-drive.c:652
+msgid "Serial Number:"
+msgstr "Serienummer:"
+
+#: ../src/palimpsest/gdu-section-drive.c:656
+msgid "Firmware Version:"
+msgstr "Fastvareversjon:"
+
+#. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
+#: ../src/palimpsest/gdu-section-drive.c:661
+msgid "World Wide Name:"
+msgstr "World Wide Name:"
+
+#: ../src/palimpsest/gdu-section-drive.c:665
+msgid "Location:"
+msgstr "Lokasjon:"
+
+#: ../src/palimpsest/gdu-section-drive.c:673
+msgid "Write Cache:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:677
+msgid "Rotation Rate:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:681
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
+#: ../src/palimpsest/gdu-section-volumes.c:1460
+msgid "Capacity:"
+msgstr "Kapasitet:"
+
+#: ../src/palimpsest/gdu-section-drive.c:685
+msgid "Connection:"
+msgstr "Tilkobling:"
+
+#: ../src/palimpsest/gdu-section-drive.c:689
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
+msgid "Partitioning:"
+msgstr "Partisjonering:"
+
+#: ../src/palimpsest/gdu-section-drive.c:712
+msgid "Open CD/_DVD Application"
+msgstr "Åpne CD/_DVD-program"
+
+#: ../src/palimpsest/gdu-section-drive.c:713
+msgid "Create and copy CDs and DVDs"
+msgstr "Lag og kopier CDer og DVDer"
+
+#: ../src/palimpsest/gdu-section-drive.c:722
+msgid "Format _Drive"
+msgstr "Formater stas_jon"
+
+#: ../src/palimpsest/gdu-section-drive.c:723
+msgid "Erase or partition the drive"
+msgstr "Slett partisjonen på stasjonen"
+
+#: ../src/palimpsest/gdu-section-drive.c:732
+msgid "SM_ART Data"
+msgstr "SM_ART-data"
+
+#: ../src/palimpsest/gdu-section-drive.c:733
+msgid "View SMART data and run self-tests"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:742
+msgid "_Eject"
+msgstr "L_øs ut"
+
+#: ../src/palimpsest/gdu-section-drive.c:743
+msgid "Eject media from the drive"
+msgstr "Løs ut medie fra stasjonen"
+
+#: ../src/palimpsest/gdu-section-drive.c:752
+msgid "Safe Rem_oval"
+msgstr "Try_gg fjerning"
+
+#: ../src/palimpsest/gdu-section-drive.c:753
+msgid "Power down the drive so it can be removed"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:763
+msgid "Measure drive performance"
+msgstr "Mål ytelsen til stasjonen"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -3947,11 +4318,6 @@ msgstr "Serielltilkoblet SCSI"
 msgid "Vendor:"
 msgstr "Produsent:"
 
-#: ../src/palimpsest/gdu-section-hub.c:221
-#: ../src/palimpsest/gdu-section-drive.c:648
-msgid "Model:"
-msgstr "Modell:"
-
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Revision:"
 msgstr "Revisjon:"
@@ -3967,294 +4333,6 @@ msgstr "Fabric:"
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Number of Ports:"
 msgstr "Antall porter:"
-
-#: ../src/palimpsest/gdu-main.c:123
-msgid "Volume to show"
-msgstr "Volum som skal vises"
-
-#: ../src/palimpsest/gdu-main.c:124
-msgid "Drive to show"
-msgstr "Stasjon som skal vises"
-
-#: ../src/palimpsest/gdu-shell.c:441
-msgid "Error checking file system on device"
-msgstr "Feil under sjekking av filsystem på enhet"
-
-#: ../src/palimpsest/gdu-shell.c:456
-#, c-format
-msgid "File system check on \"%s\" completed"
-msgstr "Filsystemsjekk på «%s» fullført"
-
-#: ../src/palimpsest/gdu-shell.c:460
-#: ../src/palimpsest/gdu-section-volumes.c:1230
-msgid "File system is clean."
-msgstr "Filsystemet er rent."
-
-#: ../src/palimpsest/gdu-shell.c:463
-#: ../src/palimpsest/gdu-section-volumes.c:1233
-msgid "File system is <b>NOT</b> clean."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:549
-msgid "Error unmounting device"
-msgstr "Feil ved avmontering av enhet"
-
-#: ../src/palimpsest/gdu-shell.c:603
-msgid "Error ejecting device"
-msgstr "Feil ved utløsing av enhet"
-
-#: ../src/palimpsest/gdu-shell.c:634
-#, fuzzy
-msgid "Error detaching device"
-msgstr "slett partisjon"
-
-#: ../src/palimpsest/gdu-shell.c:731
-msgid "Error unlocking device"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:796
-msgid "Error locking encrypted device"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:833
-#, c-format
-msgid "There was an error starting the drive \"%s\"."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:887
-#, fuzzy, c-format
-msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-msgstr "Er du sikker på at du vil slette %1?"
-
-#: ../src/palimpsest/gdu-shell.c:891
-msgid ""
-"Starting a RAID array in degraded mode means that the RAID volume is no "
-"longer tolerant to drive failures. Data on the volume may be irrevocably "
-"lost if a drive fails."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:896
-msgid "_Start Array"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:924
-#, c-format
-msgid "There was an error stopping the drive \"%s\"."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:976
-msgid "Error erasing data"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1028
-msgid "Are you sure you want to erase the device ?"
-msgstr "Er du sikker på at du vil slette enheten?"
-
-#: ../src/palimpsest/gdu-shell.c:1032
-#, c-format
-msgid ""
-"All data on partition %d on the media in \"%s\" will be irrevocably erased. "
-"Make sure important data is backed up. This action cannot be undone."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1039
-#, c-format
-msgid ""
-"All data on partition %d of \"%s\" will be irrevocably erased. Make sure "
-"important data is backed up. This action cannot be undone."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1048
-#, c-format
-msgid ""
-"All data on the media in \"%s\" will be irrevocably erased. Make sure "
-"important data is backed up. This action cannot be undone."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1053
-#, c-format
-msgid ""
-"All data on the drive \"%s\" will be irrevocably erased. Make sure important "
-"data is backed up. This action cannot be undone."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1064 ../src/palimpsest/gdu-shell.c:1461
-msgid "_Erase"
-msgstr "Sl_ett"
-
-#: ../src/palimpsest/gdu-shell.c:1139
-msgid "Error creating component for RAID array"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1166
-#, fuzzy
-msgid "Error creating partition table for component for RAID array"
-msgstr "Feil under oppretting av partisjonstabell"
-
-#: ../src/palimpsest/gdu-shell.c:1192
-#, fuzzy
-msgid "Error creating RAID array"
-msgstr "Feil ved oppretting av partisjon"
-
-#: ../src/palimpsest/gdu-shell.c:1388
-msgid "translator-credits"
-msgstr "Kjartan Maraas <kmaraas@gnome.org>"
-
-#: ../src/palimpsest/gdu-shell.c:1446
-msgid "_File"
-msgstr "_Fil"
-
-#: ../src/palimpsest/gdu-shell.c:1447
-msgid "_New"
-msgstr "_Ny"
-
-#: ../src/palimpsest/gdu-shell.c:1448
-#, fuzzy
-msgid "Software _RAID Array"
-msgstr "Programvare-RAID-enhet"
-
-#: ../src/palimpsest/gdu-shell.c:1448
-msgid "Create a new Software RAID array"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1449
-msgid "_Edit"
-msgstr "R_ediger"
-
-#: ../src/palimpsest/gdu-shell.c:1450 ../src/palimpsest/gdu-shell.c:1464
-msgid "_Help"
-msgstr "_Hjelp"
-
-#: ../src/palimpsest/gdu-shell.c:1452
-msgid "_Check File System"
-msgstr "_Sjekk filsystem"
-
-#: ../src/palimpsest/gdu-shell.c:1452
-msgid "Check the file system"
-msgstr "Sjekk filsystemet"
-
-#: ../src/palimpsest/gdu-shell.c:1453
-msgid "_Mount"
-msgstr "_Monter"
-
-#: ../src/palimpsest/gdu-shell.c:1453
-msgid "Mount the filesystem on device"
-msgstr "Monter filsystemet på enhet"
-
-#: ../src/palimpsest/gdu-shell.c:1454
-msgid "Unmount the filesystem"
-msgstr "Avmonter filsystemet"
-
-#: ../src/palimpsest/gdu-shell.c:1455
-#: ../src/palimpsest/gdu-section-drive.c:742
-msgid "_Eject"
-msgstr "L_øs ut"
-
-#: ../src/palimpsest/gdu-shell.c:1455
-msgid "Eject media from the device"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1456
-msgid "_Detach"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1456
-msgid "Detach the device from the system, powering it off"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1457
-msgid "Unlock the encrypted device, making the data available in cleartext"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1458
-msgid "_Lock"
-msgstr "_Lås"
-
-#: ../src/palimpsest/gdu-shell.c:1458
-msgid "Lock the encrypted device, making the cleartext data unavailable"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1459
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:510
-msgid "_Start"
-msgstr "S_tart"
-
-#: ../src/palimpsest/gdu-shell.c:1459
-msgid "Start the array"
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1460
-msgid "_Stop"
-msgstr "_Stopp"
-
-#: ../src/palimpsest/gdu-shell.c:1460
-#, fuzzy
-msgid "Stop the array"
-msgstr "Stopp"
-
-#: ../src/palimpsest/gdu-shell.c:1461
-msgid "Erase the contents of the device"
-msgstr "Slett innholdet på enheten"
-
-#: ../src/palimpsest/gdu-shell.c:1463
-msgid "_Quit"
-msgstr "A_vslutt"
-
-#: ../src/palimpsest/gdu-shell.c:1463
-msgid "Quit"
-msgstr "Avslutt"
-
-#: ../src/palimpsest/gdu-shell.c:1464
-msgid "Get Help on Disk Utility"
-msgstr "Vis hjelp for diskverktøy"
-
-#: ../src/palimpsest/gdu-shell.c:1465
-msgid "_About"
-msgstr "_Om"
-
-#: ../src/palimpsest/gdu-shell.c:1544
-msgid "An error occured"
-msgstr "En feil oppsto"
-
-#: ../src/palimpsest/gdu-shell.c:1553
-msgid "The operation failed."
-msgstr "Operasjonen feilet."
-
-#: ../src/palimpsest/gdu-shell.c:1556
-msgid "The device is busy."
-msgstr "Enheten er opptatt."
-
-#: ../src/palimpsest/gdu-shell.c:1559
-msgid "The operation was canceled."
-msgstr "Operasjonen ble avbrutt."
-
-#: ../src/palimpsest/gdu-shell.c:1562
-msgid "The daemon is being inhibited."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1565
-msgid "An invalid option was passed."
-msgstr "Et ugyldig flagg ble gitt."
-
-#: ../src/palimpsest/gdu-shell.c:1568
-msgid "The operation is not supported."
-msgstr "Operasjonen er ikke støttet."
-
-#: ../src/palimpsest/gdu-shell.c:1571
-msgid "Getting ATA SMART data would wake up the device."
-msgstr ""
-
-#: ../src/palimpsest/gdu-shell.c:1574
-msgid "Permission denied."
-msgstr "Tilgang nektet."
-
-#: ../src/palimpsest/gdu-shell.c:1613
-msgid "_Details:"
-msgstr "_Detaljer:"
-
-#: ../src/palimpsest/gdu-shell.c:1728
-msgid "_Storage Devices"
-msgstr "_Lagringsenheter"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:86
 msgctxt "RAID status"
@@ -4279,7 +4357,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:116
 msgctxt "RAID status"
 msgid "DEGRADED"
-msgstr ""
+msgstr "NEDGRADERT"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:118
 msgctxt "RAID status"
@@ -4342,13 +4420,6 @@ msgctxt "RAID component label"
 msgid "%s – %s"
 msgstr "%s - %s"
 
-#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
-#: ../src/palimpsest/gdu-section-drive.c:267
-#, c-format
-msgid "Unknown Scheme: %s"
-msgstr ""
-
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:415
 #, fuzzy
 msgid "Error stopping RAID Array"
@@ -4369,6 +4440,10 @@ msgstr ""
 #, fuzzy
 msgid "Are you sure you want the RAID Array degraded?"
 msgstr "Er du sikker på at du vil slette enheten?"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:510
+msgid "_Start"
+msgstr "S_tart"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:555
 #, fuzzy
@@ -4404,235 +4479,84 @@ msgstr "Feil under oppretting av partisjonstabell"
 msgid "Error creating partition table for RAID component"
 msgstr "Feil under oppretting av partisjonstabell"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 #, fuzzy
 msgid "Error checking RAID Array"
 msgstr "Feil ved oppretting av partisjon"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1079
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1080
 msgid "Level:"
 msgstr "Nivå:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1083
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
 msgid "Metadata Version:"
 msgstr "Metadataversjon:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1087
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
 msgid "Name:"
 msgstr "Navn:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1091
-#: ../src/palimpsest/gdu-section-drive.c:689
-msgid "Partitioning:"
-msgstr "Partisjonering:"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1099
-#: ../src/palimpsest/gdu-section-drive.c:681
-#: ../src/palimpsest/gdu-section-volumes.c:1424
-msgid "Capacity:"
-msgstr "Kapasitet:"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1103
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
 msgid "Action:"
 msgstr "Handling:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1107
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
 msgid "Active Components:"
 msgstr "Aktive komponenter:"
 
 #. Ensure this is in the last row and the first column
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1112
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
 msgid "Components:"
 msgstr "Komponenter:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1138
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
 #, fuzzy
 msgid "St_art RAID Array"
 msgstr "Programvare-RAID-enhet"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
 #, fuzzy
 msgid "Bring up the RAID Array"
 msgstr "Lag RAID-sett"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1148
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
 #, fuzzy
 msgid "St_op RAID Array"
 msgstr "RAID-array"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
 #, fuzzy
 msgid "Tear down the RAID Array"
 msgstr "Lag RAID-sett"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1158
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
 #, fuzzy
 msgid "Format/Erase RAI_D Array"
 msgstr "Lag RAID-sett"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1160
 #, fuzzy
 msgid "Erase or partition the array"
 msgstr "Feil ved oppretting av partisjon"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1168
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
 msgid "Chec_k Array"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1170
 msgid "Check and repair the array"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1178
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
 msgid "Edit Com_ponents"
 msgstr "Rediger kom_ponenter"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1180
 msgid "Create and remove components"
 msgstr "Lag og fjern komponenter"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1190
 msgid "Measure RAID array performance"
-msgstr ""
-
-#. Translators: This is used in the "Location" element for a disk
-#. * connected to a SAS Adapter or Expander - The %d is the
-#. * PHY number (starts at 1) and the %s is the Adapter/Expander
-#. * name (e.g. "SAS Host Adapter").
-#.
-#: ../src/palimpsest/gdu-section-drive.c:167
-#, fuzzy, c-format
-msgid "PHY %d of %s"
-msgstr "Partisjon %d av %s"
-
-#. Translators: This is used in the "Location" element for a disk
-#. * connected to a Adapter or Expander - The %d is the
-#. * PHY number (starts at 1) and the %s is the Adapter/Expander
-#. * name (e.g. "SATA Host Adapter").
-#.
-#: ../src/palimpsest/gdu-section-drive.c:174
-#, c-format
-msgid "Port %d of %s"
-msgstr "Port %d av %s"
-
-#: ../src/palimpsest/gdu-section-drive.c:232
-msgctxt "Write Cache"
-msgid "Enabled"
-msgstr "Aktivert"
-
-#: ../src/palimpsest/gdu-section-drive.c:234
-msgctxt "Write Cache"
-msgid "Disabled"
-msgstr "Deaktivert"
-
-#. Translators: This is for the rotation rate of a hard
-#. * disk - RPM means rounds per minute
-#.
-#: ../src/palimpsest/gdu-section-drive.c:244
-#, c-format
-msgctxt "Rotation Rate"
-msgid "%d RPM"
-msgstr "%d RPM"
-
-#: ../src/palimpsest/gdu-section-drive.c:252
-msgctxt "Rotation Rate"
-msgid "Solid-State Disk"
-msgstr "Solid-State disk"
-
-#: ../src/palimpsest/gdu-section-drive.c:378
-#: ../src/palimpsest/gdu-section-drive.c:398
-msgid "Error launching Brasero"
-msgstr "Feil ved start av Brasero"
-
-#: ../src/palimpsest/gdu-section-drive.c:379
-msgid "The application is not installed"
-msgstr "Programmet er ikke installert"
-
-#: ../src/palimpsest/gdu-section-drive.c:460
-msgid "Error ejecting media"
-msgstr "Feil ved utløsing av medie"
-
-#: ../src/palimpsest/gdu-section-drive.c:504
-#, fuzzy
-msgid "Error detaching drive"
-msgstr "slett partisjon"
-
-#: ../src/palimpsest/gdu-section-drive.c:549
-msgid "Error formatting drive"
-msgstr "Feil under formattering av stasjon"
-
-#: ../src/palimpsest/gdu-section-drive.c:587
-msgid "Are you sure you want to format the drive?"
-msgstr "Er du sikker på at du vil formatere stasjonen?"
-
-#: ../src/palimpsest/gdu-section-drive.c:652
-msgid "Serial Number:"
-msgstr "Serienummer:"
-
-#: ../src/palimpsest/gdu-section-drive.c:656
-msgid "Firmware Version:"
-msgstr "Fastvareversjon:"
-
-#. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:661
-msgid "World Wide Name:"
-msgstr "World Wide Name:"
-
-#: ../src/palimpsest/gdu-section-drive.c:665
-msgid "Location:"
-msgstr "Lokasjon:"
-
-#: ../src/palimpsest/gdu-section-drive.c:673
-msgid "Write Cache:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:677
-msgid "Rotation Rate:"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:685
-msgid "Connection:"
-msgstr "Tilkobling:"
-
-#: ../src/palimpsest/gdu-section-drive.c:712
-msgid "Open CD/_DVD Application"
-msgstr "Åpne CD/_DVD-program"
-
-#: ../src/palimpsest/gdu-section-drive.c:713
-msgid "Create and copy CDs and DVDs"
-msgstr "Lag og kopier CDer og DVDer"
-
-#: ../src/palimpsest/gdu-section-drive.c:722
-msgid "Format _Drive"
-msgstr "Formater stas_jon"
-
-#: ../src/palimpsest/gdu-section-drive.c:723
-msgid "Erase or partition the drive"
-msgstr "Slett partisjonen på stasjonen"
-
-#: ../src/palimpsest/gdu-section-drive.c:732
-msgid "SM_ART Data"
-msgstr "SM_ART-data"
-
-#: ../src/palimpsest/gdu-section-drive.c:733
-msgid "View SMART data and run self-tests"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:743
-#, fuzzy
-msgid "Eject media from the drive"
-msgstr "Temperatur for stasjonen"
-
-#: ../src/palimpsest/gdu-section-drive.c:752
-msgid "Safe Rem_oval"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:753
-msgid "Power down the drive so it can be removed"
-msgstr ""
-
-#: ../src/palimpsest/gdu-section-drive.c:763
-msgid "Measure drive performance"
 msgstr ""
 
 #: ../src/palimpsest/gdu-section-volumes.c:100
@@ -4665,7 +4589,7 @@ msgstr "Er du sikker på at du vil formatere volumet?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:413
 msgid "Error modifying partition"
-msgstr ""
+msgstr "Feil under endring av partisjon"
 
 #: ../src/palimpsest/gdu-section-volumes.c:504
 msgid "Are you sure you want to forget the passphrase?"
@@ -4702,197 +4626,383 @@ msgstr "Feil under sjekking av filsystem på enhet"
 #: ../src/palimpsest/gdu-section-volumes.c:1226
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
-msgstr ""
+msgstr "Filsystemsjekk på «%s» (%s) fullført"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1403
+#: ../src/palimpsest/gdu-section-volumes.c:1230
+msgid "File system is clean."
+msgstr "Filsystemet er rent."
+
+#: ../src/palimpsest/gdu-section-volumes.c:1233
+msgid "File system is <b>NOT</b> clean."
+msgstr "Filsystemet er <b>IKKE</b> rent."
+
+#: ../src/palimpsest/gdu-section-volumes.c:1345
+#, c-format
+msgid "Error spawning nautilus: %s"
+msgstr "Feil under oppstart av nautilus: %s"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1439
 msgid "Usage:"
 msgstr "Bruk:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1413
+#: ../src/palimpsest/gdu-section-volumes.c:1449
 msgid "Partition Type:"
 msgstr "Type partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1417
+#: ../src/palimpsest/gdu-section-volumes.c:1453
 msgid "Partition Label:"
 msgstr "Etikett for partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1420
+#: ../src/palimpsest/gdu-section-volumes.c:1456
 msgid "Partition Flags:"
 msgstr "Flagg for partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1428
+#: ../src/palimpsest/gdu-section-volumes.c:1464
 msgid "Type:"
 msgstr "Type:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1431
+#: ../src/palimpsest/gdu-section-volumes.c:1467
 msgid "Available:"
 msgstr "Tilgjengelig:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1437
+#: ../src/palimpsest/gdu-section-volumes.c:1473
 msgid "Mount Point:"
 msgstr "Monteringspunkt:"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1477
+#: ../src/palimpsest/gdu-section-volumes.c:1517
 msgid "Bootable"
 msgstr "Oppstartbar"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1480
+#: ../src/palimpsest/gdu-section-volumes.c:1520
 msgid "Required"
 msgstr "Kreves"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1483
+#: ../src/palimpsest/gdu-section-volumes.c:1523
 msgid "Allocated"
 msgstr "Allokert"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1486
+#: ../src/palimpsest/gdu-section-volumes.c:1526
 msgid "Allow Read"
 msgstr "Tillat lesing"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1489
+#: ../src/palimpsest/gdu-section-volumes.c:1529
 msgid "Allow Write"
 msgstr "Tillat skriving"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1492
+#: ../src/palimpsest/gdu-section-volumes.c:1532
 msgid "Boot Code PIC"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:1561
+#: ../src/palimpsest/gdu-section-volumes.c:1601
 msgid "Filesystem"
 msgstr "Filsystem"
 
+#. Translators: this the mount point hyperlink tooltip for a
+#. * remote server - it uses the sftp:// protocol
+#.
+#: ../src/palimpsest/gdu-section-volumes.c:1634
+#, fuzzy
+msgid "View files on the volume using a SFTP network share"
+msgstr "Vis filer på volumet"
+
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:1582
+#: ../src/palimpsest/gdu-section-volumes.c:1641
 msgid "View files on the volume"
 msgstr "Vis filer på volumet"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1588
+#: ../src/palimpsest/gdu-section-volumes.c:1648
 #, c-format
 msgid "Mounted at %s"
 msgstr "Montert på %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1595
+#: ../src/palimpsest/gdu-section-volumes.c:1656
 msgid "Not Mounted"
 msgstr "Ikke montert"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1605
+#: ../src/palimpsest/gdu-section-volumes.c:1666
 msgid "Encrypted Volume (Locked)"
 msgstr "Kryptert volum (låst)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1608
+#: ../src/palimpsest/gdu-section-volumes.c:1669
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Kryptert volum (ikke låst)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1621
+#: ../src/palimpsest/gdu-section-volumes.c:1682
 #, fuzzy
 msgid "Go to array"
 msgstr "Stopp"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1629
+#: ../src/palimpsest/gdu-section-volumes.c:1690
 #, fuzzy
 msgid "Container for Logical Partitions"
 msgstr "Inneholder logiske partisjoner"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1711
+#: ../src/palimpsest/gdu-section-volumes.c:1772
 msgid "_Volumes"
 msgstr "_Volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1751
+#: ../src/palimpsest/gdu-section-volumes.c:1812
 msgid "_Mount Volume"
 msgstr "_Monter volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1752
+#: ../src/palimpsest/gdu-section-volumes.c:1813
 msgid "Mount the volume"
 msgstr "Monter volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1761
+#: ../src/palimpsest/gdu-section-volumes.c:1822
 msgid "_Unmount Volume"
 msgstr "_Avmonter volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1762
+#: ../src/palimpsest/gdu-section-volumes.c:1823
 msgid "Unmount the volume"
 msgstr "Avmonter volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1771
+#: ../src/palimpsest/gdu-section-volumes.c:1832
 msgid "Fo_rmat Volume"
 msgstr "Fo_rmater volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1772
+#: ../src/palimpsest/gdu-section-volumes.c:1833
 msgid "Erase or format the volume"
 msgstr "Slett eller formater volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1781
+#: ../src/palimpsest/gdu-section-volumes.c:1842
 msgid "_Check Filesystem"
 msgstr "_Sjekk filsystem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1782
+#: ../src/palimpsest/gdu-section-volumes.c:1843
 msgid "Check and repair the filesystem"
 msgstr "Sjekk og reparer filsystemet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1792
+#: ../src/palimpsest/gdu-section-volumes.c:1853
 msgid "Edit _Label"
 msgstr "Rediger e_tikett:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1793
+#: ../src/palimpsest/gdu-section-volumes.c:1854
 msgid "Change the label of the volume"
 msgstr "Bytt etikett på volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1802
+#: ../src/palimpsest/gdu-section-volumes.c:1863
 msgid "Ed_it Partition"
 msgstr "Red_iger partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1803
+#: ../src/palimpsest/gdu-section-volumes.c:1864
 msgid "Change partition type, label and flags"
 msgstr "Bytt partisjonstype, etikett og flagg"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1812
+#: ../src/palimpsest/gdu-section-volumes.c:1873
 msgid "D_elete Partition"
 msgstr "Sl_ett partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1813
+#: ../src/palimpsest/gdu-section-volumes.c:1874
 msgid "Delete the partition"
 msgstr "Slett partisjonen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1822
+#: ../src/palimpsest/gdu-section-volumes.c:1883
 msgid "_Create Partition"
 msgstr "_Lag partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1823
+#: ../src/palimpsest/gdu-section-volumes.c:1884
 msgid "Create a new partition"
 msgstr "Lag en ny partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1832
+#: ../src/palimpsest/gdu-section-volumes.c:1893
 msgid "_Lock Volume"
 msgstr "_Lås volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1833
+#: ../src/palimpsest/gdu-section-volumes.c:1894
 msgid "Make encrypted data unavailable"
-msgstr ""
+msgstr "Gjør krypterte data utilgjengelig"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1842
+#: ../src/palimpsest/gdu-section-volumes.c:1903
 msgid "_Unlock Volume"
 msgstr "Lås _opp volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1843
+#: ../src/palimpsest/gdu-section-volumes.c:1904
 msgid "Make encrypted data available"
-msgstr ""
+msgstr "Gjør krypterte data tilgjengelig"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1852
+#: ../src/palimpsest/gdu-section-volumes.c:1913
 msgid "Forge_t Passphrase"
 msgstr "Glem pass_ord"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1853
+#: ../src/palimpsest/gdu-section-volumes.c:1914
 msgid "Delete passphrase from keyring"
 msgstr "Slett passord fra nøkkelring"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1864
+#: ../src/palimpsest/gdu-section-volumes.c:1925
 msgid "Change passphrase"
 msgstr "Bytt passord"
+
+#. Translators: Window title when the item representing a remote machine is selected.
+#. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:285
+#, c-format
+msgid "%s — Disk Utility"
+msgstr "%s - Diskverktøy"
+
+#. Translators: Window title when an item on a remote machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#. * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:295
+#, c-format
+msgid "%s (%s) [%s] @ %s — Disk Utility"
+msgstr "%s (%s) [%s] @ %s - Diskverktøy"
+
+#. Translators: Window title when an item on a remote machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:306
+#, c-format
+msgid "%s (%s) @ %s — Disk Utility"
+msgstr "%s (%s) @ %s - Diskverktøy"
+
+#. Translators: Window title when an item on the local machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#.
+#: ../src/palimpsest/gdu-shell.c:324
+#, c-format
+msgid "%s (%s) [%s] — Disk Utility"
+msgstr "%s (%s) [%s] - Diskverktøy"
+
+#. Translators: Window title when an item on the local machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#.
+#: ../src/palimpsest/gdu-shell.c:333
+#, c-format
+msgid "%s (%s) — Disk Utility"
+msgstr "%s (%s) - Diskverktøy"
+
+#: ../src/palimpsest/gdu-shell.c:589
+msgid "Error creating component for RAID array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-shell.c:622
+#, fuzzy
+msgid "Error creating partition table for component for RAID array"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/palimpsest/gdu-shell.c:648
+#, fuzzy
+msgid "Error creating RAID array"
+msgstr "Feil ved oppretting av partisjon"
+
+#: ../src/palimpsest/gdu-shell.c:843
+#, c-format
+msgid "Error connecting to “%s”"
+msgstr "Feil ved tilkobling til «%s»"
+
+#: ../src/palimpsest/gdu-shell.c:896
+msgid "translator-credits"
+msgstr "Kjartan Maraas <kmaraas@gnome.org>"
+
+#: ../src/palimpsest/gdu-shell.c:921
+msgid "_File"
+msgstr "_Fil"
+
+#: ../src/palimpsest/gdu-shell.c:922
+msgid "Connect to _Server..."
+msgstr "Koble til _tjener..."
+
+#: ../src/palimpsest/gdu-shell.c:922
+msgid "Manage storage devices on another machine"
+msgstr "Håndter lagringsenheter på en annen maskin"
+
+#: ../src/palimpsest/gdu-shell.c:923
+msgid "_Create"
+msgstr "_Lag"
+
+#: ../src/palimpsest/gdu-shell.c:924
+#, fuzzy
+msgid "_RAID Array..."
+msgstr "_RAID-array..."
+
+#: ../src/palimpsest/gdu-shell.c:924
+#, fuzzy
+msgid "Create a RAID array"
+msgstr "Lag RAID-sett"
+
+#: ../src/palimpsest/gdu-shell.c:925
+msgid "_Edit"
+msgstr "R_ediger"
+
+#: ../src/palimpsest/gdu-shell.c:926 ../src/palimpsest/gdu-shell.c:929
+msgid "_Help"
+msgstr "_Hjelp"
+
+#: ../src/palimpsest/gdu-shell.c:928
+msgid "_Quit"
+msgstr "A_vslutt"
+
+#: ../src/palimpsest/gdu-shell.c:928
+msgid "Quit"
+msgstr "Avslutt"
+
+#: ../src/palimpsest/gdu-shell.c:929
+msgid "Get Help on Disk Utility"
+msgstr "Vis hjelp for diskverktøy"
+
+#: ../src/palimpsest/gdu-shell.c:930
+msgid "_About"
+msgstr "_Om"
+
+#: ../src/palimpsest/gdu-shell.c:1009
+msgid "An error occured"
+msgstr "En feil oppsto"
+
+#: ../src/palimpsest/gdu-shell.c:1018
+msgid "The operation failed."
+msgstr "Operasjonen feilet."
+
+#: ../src/palimpsest/gdu-shell.c:1021
+msgid "The device is busy."
+msgstr "Enheten er opptatt."
+
+#: ../src/palimpsest/gdu-shell.c:1024
+msgid "The operation was canceled."
+msgstr "Operasjonen ble avbrutt."
+
+#: ../src/palimpsest/gdu-shell.c:1027
+msgid "The daemon is being inhibited."
+msgstr "Tjenesten blir hindret."
+
+#: ../src/palimpsest/gdu-shell.c:1030
+msgid "An invalid option was passed."
+msgstr "Et ugyldig flagg ble gitt."
+
+#: ../src/palimpsest/gdu-shell.c:1033
+msgid "The operation is not supported."
+msgstr "Operasjonen er ikke støttet."
+
+#: ../src/palimpsest/gdu-shell.c:1036
+msgid "Getting ATA SMART data would wake up the device."
+msgstr ""
+
+#: ../src/palimpsest/gdu-shell.c:1039
+msgid "Permission denied."
+msgstr "Tilgang nektet."
+
+#: ../src/palimpsest/gdu-shell.c:1078
+msgid "_Details:"
+msgstr "_Detaljer:"
+
+#: ../src/palimpsest/gdu-shell.c:1247
+msgid "_Storage Devices"
+msgstr "_Lagringsenheter"

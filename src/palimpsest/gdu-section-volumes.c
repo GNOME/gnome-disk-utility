@@ -38,6 +38,10 @@ struct _GduSectionVolumesPrivate
         GtkWidget *details_table;
         GtkWidget *button_table;
 
+        /* elements for LVM2 Logical Volumes */
+        GduDetailsElement *lvm2_name_element;
+        GduDetailsElement *lvm2_state_element;
+
         /* shared between all volume types */
         GduDetailsElement *usage_element;
         GduDetailsElement *capacity_element;
@@ -64,6 +68,9 @@ struct _GduSectionVolumesPrivate
         GduButtonElement *luks_unlock_button;
         GduButtonElement *luks_forget_passphrase_button;
         GduButtonElement *luks_change_passphrase_button;
+        GduButtonElement *lvm2_create_lv_button;
+        GduButtonElement *lvm2_lv_start_button;
+        GduButtonElement *lvm2_lv_stop_button;
 };
 
 G_DEFINE_TYPE (GduSectionVolumes, gdu_section_volumes, GDU_TYPE_SECTION)
@@ -1357,6 +1364,125 @@ on_fs_mount_point_element_activated (GduDetailsElement *element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_lvm2_create_lv_button_clicked (GduButtonElement *button_element,
+                                  gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GtkWidget *dialog;
+        GError *error;
+
+        error = g_error_new (GDU_ERROR,
+                             GDU_ERROR_NOT_SUPPORTED,
+                             _("Not yet implemented"));
+        dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
+                                       gdu_section_get_presentable (GDU_SECTION (section)),
+                                       _("There was an error creating a Logical Volume"),
+                                       error);
+        gtk_widget_show_all (dialog);
+        gtk_window_present (GTK_WINDOW (dialog));
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+        g_error_free (error);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+lvm2_lv_stop_op_callback (GduDevice *device,
+                          GError    *error,
+                          gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                                          device,
+                                                          _("Error stopping Logical Volume"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_lvm2_lv_stop_button_clicked (GduButtonElement *button_element,
+                                gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduLinuxLvm2Volume *volume;
+        GduDevice *d;
+
+        volume = GDU_LINUX_LVM2_VOLUME (gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid)));
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
+        if (d == NULL)
+                goto out;
+
+        gdu_device_op_linux_lvm2_lv_stop (d,
+                                          lvm2_lv_stop_op_callback,
+                                          g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+lvm2_lv_start_op_callback (GduPool   *pool,
+                           GError    *error,
+                           gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                               NULL,
+                                               _("Error starting Logical Volume"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_lvm2_lv_start_button_clicked (GduButtonElement *button_element,
+                                 gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduLinuxLvm2Volume *volume;
+        GduPool *pool;
+        const gchar *group_uuid;
+        const gchar *uuid;
+
+        volume = GDU_LINUX_LVM2_VOLUME (gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid)));
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (volume));
+
+        group_uuid = gdu_linux_lvm2_volume_get_group_uuid (volume);
+        uuid = gdu_linux_lvm2_volume_get_uuid (volume);
+
+        gdu_pool_op_linux_lvm2_lv_start (pool,
+                                         group_uuid,
+                                         uuid,
+                                         lvm2_lv_start_op_callback,
+                                         g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+
+        g_object_unref (pool);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -1378,6 +1504,9 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_luks_unlock_button;
         gboolean show_luks_forget_passphrase_button;
         gboolean show_luks_change_passphrase_button;
+        gboolean show_lvm2_create_lv_button;
+        gboolean show_lvm2_lv_start_button;
+        gboolean show_lvm2_lv_stop_button;
         GduKnownFilesystem *kfs;
         GPtrArray *elements;
 
@@ -1398,6 +1527,9 @@ gdu_section_volumes_update (GduSection *_section)
         show_luks_unlock_button = FALSE;
         show_luks_forget_passphrase_button = FALSE;
         show_luks_change_passphrase_button = FALSE;
+        show_lvm2_create_lv_button = FALSE;
+        show_lvm2_lv_start_button = FALSE;
+        show_lvm2_lv_stop_button = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -1423,6 +1555,8 @@ gdu_section_volumes_update (GduSection *_section)
                 g_object_unref (section->priv->cur_volume);
         section->priv->cur_volume = v != NULL ? g_object_ref (v) : NULL;
 
+        section->priv->lvm2_name_element = NULL;
+        section->priv->lvm2_state_element = NULL;
         section->priv->usage_element = NULL;
         section->priv->capacity_element = NULL;
         section->priv->partition_type_element = NULL;
@@ -1435,6 +1569,13 @@ gdu_section_volumes_update (GduSection *_section)
         section->priv->fs_mount_point_element = NULL;
 
         elements = g_ptr_array_new_with_free_func (g_object_unref);
+
+        if (GDU_IS_LINUX_LVM2_VOLUME (v)) {
+                section->priv->lvm2_name_element = gdu_details_element_new (_("Volume Name:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->lvm2_name_element);
+                section->priv->lvm2_state_element = gdu_details_element_new (_("State:"), NULL, NULL);
+                g_ptr_array_add (elements, section->priv->lvm2_state_element);
+        }
 
         section->priv->usage_element = gdu_details_element_new (_("Usage:"), NULL, NULL);
         g_ptr_array_add (elements, section->priv->usage_element);
@@ -1483,6 +1624,21 @@ gdu_section_volumes_update (GduSection *_section)
 
         /* ---------------------------------------------------------------------------------------------------- */
         /* reset all elements */
+
+        if (GDU_IS_LINUX_LVM2_VOLUME (v)) {
+                gchar *lv_name;
+                lv_name = gdu_presentable_get_name (v);
+                gdu_details_element_set_text (section->priv->lvm2_name_element, lv_name);
+                g_free (lv_name);
+                gdu_details_element_set_text (section->priv->lvm2_state_element,
+                                              d != NULL ?
+                                              C_("LVM2 LV State", "Running") :
+                                              C_("LVM2 LV State", "Not Running"));
+                if (d != NULL)
+                        show_lvm2_lv_stop_button = TRUE;
+                else
+                        show_lvm2_lv_start_button = TRUE;
+        }
 
         if (section->priv->usage_element != NULL) {
                 gdu_details_element_set_text (section->priv->usage_element, "–");
@@ -1594,7 +1750,9 @@ gdu_section_volumes_update (GduSection *_section)
         /* ---------------------------------------------------------------------------------------------------- */
         /* populate according to usage */
 
-        show_format_button = TRUE;
+        if (d != NULL)
+                show_format_button = TRUE;
+
         if (g_strcmp0 (id_usage, "filesystem") == 0) {
                 const gchar *label;
 
@@ -1690,6 +1848,13 @@ gdu_section_volumes_update (GduSection *_section)
                 gdu_details_element_set_text (section->priv->usage_element, _("Container for Logical Partitions"));
 
                 show_format_button = FALSE;
+
+        } else if (GDU_IS_LINUX_LVM2_VOLUME_HOLE (v)) {
+                gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
+                gdu_details_element_set_text (section->priv->device_element, "–");
+                show_lvm2_create_lv_button = TRUE;
+                show_format_button = FALSE;
+
         } else if (GDU_IS_VOLUME_HOLE (v)) {
                 GduDevice *drive_device;
                 gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
@@ -1728,6 +1893,10 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->luks_unlock_button, show_luks_unlock_button);
         gdu_button_element_set_visible (section->priv->luks_forget_passphrase_button, show_luks_forget_passphrase_button);
         gdu_button_element_set_visible (section->priv->luks_change_passphrase_button, show_luks_change_passphrase_button);
+        gdu_button_element_set_visible (section->priv->lvm2_create_lv_button, show_lvm2_create_lv_button);
+        gdu_button_element_set_visible (section->priv->lvm2_lv_start_button, show_lvm2_lv_start_button);
+        gdu_button_element_set_visible (section->priv->lvm2_lv_stop_button, show_lvm2_lv_stop_button);
+
 
         if (d != NULL)
                 g_object_unref (d);
@@ -1754,6 +1923,7 @@ static void
 gdu_section_volumes_constructed (GObject *object)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (object);
+        GduPresentable *presentable;
         GPtrArray *button_elements;
         GduButtonElement *button_element;
         GtkWidget *grid;
@@ -1767,9 +1937,15 @@ gdu_section_volumes_constructed (GObject *object)
 
         /*------------------------------------- */
 
+        presentable = gdu_section_get_presentable (GDU_SECTION (section));
+
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        s = g_strconcat ("<b>", _("_Volumes"), "</b>", NULL);
+        if (GDU_IS_LINUX_LVM2_VOLUME_GROUP (presentable)) {
+                s = g_strconcat ("<b>", _("Logical _Volumes"), "</b>", NULL);
+        } else {
+                s = g_strconcat ("<b>", _("_Volumes"), "</b>", NULL);
+        }
         gtk_label_set_markup (GTK_LABEL (label), s);
         gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
         g_free (s);
@@ -1929,6 +2105,36 @@ gdu_section_volumes_constructed (GObject *object)
                           section);
         g_ptr_array_add (button_elements, button_element);
         section->priv->luks_change_passphrase_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_ADD,
+                                                 _("_Create Logical Volume"),
+                                                 _("Create a new logical volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_lvm2_create_lv_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->lvm2_create_lv_button = button_element;
+
+        button_element = gdu_button_element_new ("gdu-raid-array-start",
+                                                 _("S_tart Volume"),
+                                                 _("Activate the Logical Volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_lvm2_lv_start_button_clicked),
+                          section);
+        section->priv->lvm2_lv_start_button = button_element;
+        g_ptr_array_add (button_elements, button_element);
+
+        button_element = gdu_button_element_new ("gdu-raid-array-stop",
+                                                 _("Sto_p Volume"),
+                                                 _("Deactivate the Logical Volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_lvm2_lv_stop_button_clicked),
+                          section);
+        section->priv->lvm2_lv_stop_button = button_element;
+        g_ptr_array_add (button_elements, button_element);
 
         gdu_button_table_set_elements (GDU_BUTTON_TABLE (section->priv->button_table), button_elements);
         g_ptr_array_unref (button_elements);

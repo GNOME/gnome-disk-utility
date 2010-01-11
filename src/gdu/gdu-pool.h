@@ -133,6 +133,22 @@ void gdu_pool_op_linux_md_create (GduPool     *pool,
                                   GduPoolLinuxMdCreateCompletedFunc callback,
                                   gpointer user_data);
 
+void gdu_pool_op_linux_lvm2_vg_start (GduPool *pool,
+                                      const gchar *uuid,
+                                      GduPoolLinuxLvm2VGStartCompletedFunc callback,
+                                      gpointer user_data);
+
+void gdu_pool_op_linux_lvm2_vg_stop (GduPool *pool,
+                                     const gchar *uuid,
+                                     GduPoolLinuxLvm2VGStopCompletedFunc callback,
+                                     gpointer user_data);
+
+void gdu_pool_op_linux_lvm2_lv_start (GduPool *pool,
+                                      const gchar *group_uuid,
+                                      const gchar *uuid,
+                                      GduPoolLinuxLvm2VGStartCompletedFunc callback,
+                                      gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

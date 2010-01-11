@@ -8,6 +8,7 @@ palimpsest_SOURCES = 									\
 	gdu-shell.h				gdu-shell.c				\
 	gdu-section.h				gdu-section.c				\
 	gdu-section-linux-md-drive.h		gdu-section-linux-md-drive.c		\
+	gdu-section-linux-lvm2-volume-group.h	gdu-section-linux-lvm2-volume-group.c	\
 	gdu-section-drive.h			gdu-section-drive.c			\
 	gdu-section-volumes.h			gdu-section-volumes.c			\
 	gdu-section-hub.h			gdu-section-hub.c			\

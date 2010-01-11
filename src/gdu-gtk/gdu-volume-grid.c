@@ -1211,18 +1211,20 @@ render_element (GduVolumeGrid *grid,
                 cairo_show_text (cr, text);
 
         } else { /* render descriptive text + icons for the presentable */
-                gchar *s;
-                gchar *s1;
+                GString *str;
                 cairo_text_extents_t te;
-                cairo_text_extents_t te1;
                 GduDevice *d;
                 gdouble text_height;
+                gdouble y;
                 gboolean render_padlock_closed;
                 gboolean render_padlock_open;
                 gboolean render_job_in_progress;
                 GPtrArray *pixbufs_to_render;
                 guint icon_offset;
                 guint n;
+                guint64 size;
+                gchar *size_str;
+                gchar **lines;
 
                 render_padlock_closed = FALSE;
                 render_padlock_open = FALSE;
@@ -1233,37 +1235,47 @@ render_element (GduVolumeGrid *grid,
                 if (d != NULL && gdu_device_job_in_progress (d))
                         render_job_in_progress = TRUE;
 
-                s = NULL;
-                s1 = NULL;
+                str = g_string_new (NULL);
+
+                size = gdu_presentable_get_size (element->presentable);
+                size_str = gdu_util_get_size_for_display (size,
+                                                          FALSE,
+                                                          FALSE);
+
                 if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "filesystem") == 0) {
                         gchar *fstype_str;
                         gchar *size_str;
 
-                        s = g_strdup (gdu_device_id_get_label (d));
                         fstype_str = gdu_util_get_fstype_for_display (gdu_device_id_get_type (d),
                                                                       gdu_device_id_get_version (d),
                                                                       FALSE);
                         size_str = gdu_util_get_size_for_display (gdu_device_get_size (d),
                                                                   FALSE,
                                                                   FALSE);
-                        s1 = g_strdup_printf ("%s %s", size_str, fstype_str);
+
+                        g_string_append_printf (str, "%s\n", gdu_device_id_get_label (d));
+                        g_string_append_printf (str, "%s %s", size_str, fstype_str);
+
                         g_free (fstype_str);
-                        g_free (size_str);
                 } else if (d != NULL && gdu_device_is_partition (d) &&
                            (g_strcmp0 (gdu_device_partition_get_type (d), "0x05") == 0 ||
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x0f") == 0 ||
                             g_strcmp0 (gdu_device_partition_get_type (d), "0x85") == 0)) {
-                        /* Translators: shown in the grid for an extended MS-DOS partition */
-                        s = g_strdup (_("Extended"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
-                                                            FALSE,
-                                                            FALSE);
+
+                        g_string_append_printf (str,
+                                                "%s\n%s",
+                                                /* Translators: shown in the grid for an extended MS-DOS partition */
+                                                _("Extended"),
+                                                size_str);
+
                 } else if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "crypto") == 0) {
-                        /* Translators: shown in the grid for an encrypted LUKS volume */
-                        s = g_strdup (_("Encrypted"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
-                                                            FALSE,
-                                                            FALSE);
+
+                        g_string_append_printf (str,
+                                                "%s\n%s",
+                                                /* Translators: shown in the grid for an encrypted LUKS volume */
+                                                _("Encrypted"),
+                                                size_str);
+
                         if (g_strcmp0 (gdu_device_luks_get_holder (d), "/") == 0) {
                                 render_padlock_closed = TRUE;
                         } else {
@@ -1271,25 +1283,42 @@ render_element (GduVolumeGrid *grid,
                         }
                 } else if (d != NULL && g_strcmp0 (gdu_device_id_get_usage (d), "raid") == 0 &&
                            gdu_device_is_linux_md_component (d)) {
-                        s1 = g_strdup (gdu_device_linux_md_component_get_name (d));
-                } else if (!gdu_presentable_is_allocated (element->presentable)) {
-                        /* Translators: shown in the grid for space that is not claimed by any partition */
-                        s = g_strdup (_("Free"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
-                                                            FALSE,
-                                                            FALSE);
-                } else if (!gdu_presentable_is_recognized (element->presentable)) {
-                        /* Translators: shown in the grid when we don't know the purpose/usage of the partition */
-                        s = g_strdup (_("Unknown"));
-                        s1 = gdu_util_get_size_for_display (gdu_presentable_get_size (element->presentable),
-                                                            FALSE,
-                                                            FALSE);
-                }
 
-                if (s == NULL)
-                        s = gdu_presentable_get_name (element->presentable);
-                if (s1 == NULL)
-                        s1 = g_strdup ("");
+                        g_string_append_printf (str,
+                                                "%s\n%s",
+                                                /* Translators: shown in the grid for an RAID Component */
+                                                _("RAID Component"),
+                                                gdu_device_linux_md_component_get_name (d));
+
+                } else if (!gdu_presentable_is_allocated (element->presentable)) {
+
+                        g_string_append_printf (str,
+                                                "%s\n%s",
+                                                /* Translators: shown for free/unallocated space */
+                                                _("Free"),
+                                                size_str);
+
+                } else if (!gdu_presentable_is_recognized (element->presentable)) {
+
+                        g_string_append_printf (str,
+                                                "%s\n%s",
+                                                /* Translators: shown when we don't know contents of the volume */
+                                                _("Unknown"),
+                                                size_str);
+                } else {
+                        gchar *presentable_name;
+
+                        /* FALLBACK */
+                        presentable_name = gdu_presentable_get_name (element->presentable);
+                        if (size > 0) {
+                                g_string_append_printf (str, "%s\n%s", presentable_name, size_str);
+                        } else {
+                                g_string_append (str, presentable_name);
+                        }
+                        g_free (presentable_name);
+                }
+                g_free (size_str);
+
 
                 if (is_selected) {
                         if (is_grid_focused) {
@@ -1311,21 +1340,28 @@ render_element (GduVolumeGrid *grid,
                                         CAIRO_FONT_WEIGHT_NORMAL);
                 cairo_set_font_size (cr, 8.0);
 
-                cairo_text_extents (cr, s, &te);
-                cairo_text_extents (cr, s1, &te1);
+                lines = g_strsplit (str->str, "\n", 0);
+                g_string_free (str, TRUE);
+                text_height = 0.0;
+                for (n = 0; lines[n] != NULL; n++) {
+                        const gchar *line = lines[n];
+                        cairo_text_extents (cr, line, &te);
+                        text_height += te.height + 4;
+                }
 
-                text_height = te.height + te1.height;
+                y = element->y + element->height/2.0 - text_height/2.0;
+                for (n = 0; lines[n] != NULL; n++) {
+                        const gchar *line = lines[n];
+                        cairo_text_extents (cr, line, &te);
+                        cairo_move_to (cr,
+                                       ceil (element->x + element->width / 2 - te.width/2  - te.x_bearing),
+                                       ceil (y - te.y_bearing));
+                        cairo_show_text (cr, line);
 
-                cairo_move_to (cr,
-                               ceil (element->x + element->width / 2 - te.width/2  - te.x_bearing),
-                               ceil (element->y + element->height / 2 - 2 - text_height/2 - te.y_bearing));
-                cairo_show_text (cr, s);
-                cairo_move_to (cr,
-                               ceil (element->x + element->width / 2 - te1.width/2  - te1.x_bearing),
-                               ceil (element->y + element->height / 2 + 2 - te1.y_bearing));
-                cairo_show_text (cr, s1);
-                g_free (s);
-                g_free (s1);
+                        y += te.height + 4;
+                }
+
+                g_strfreev (lines);
 
                 /* OK, done with the text - now render spinner and icons */
                 icon_offset = 0;

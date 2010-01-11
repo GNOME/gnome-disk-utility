@@ -44,483 +44,550 @@
 
 typedef struct
 {
-        char *native_path;
+  char *native_path;
 
-        guint64  device_detection_time;
-        guint64  device_media_detection_time;
-        gint64   device_major;
-        gint64   device_minor;
-        char    *device_file;
-        char   **device_file_by_id;
-        char   **device_file_by_path;
-        gboolean device_is_system_internal;
-        gboolean device_is_partition;
-        gboolean device_is_partition_table;
-        gboolean device_is_removable;
-        gboolean device_is_media_available;
-        gboolean device_is_media_change_detected;
-        gboolean device_is_media_change_detection_polling;
-        gboolean device_is_media_change_detection_inhibitable;
-        gboolean device_is_media_change_detection_inhibited;
-        gboolean device_is_read_only;
-        gboolean device_is_drive;
-        gboolean device_is_optical_disc;
-        gboolean device_is_luks;
-        gboolean device_is_luks_cleartext;
-        gboolean device_is_mounted;
-        gboolean device_is_linux_md_component;
-        gboolean device_is_linux_md;
-        char   **device_mount_paths;
-        uid_t    device_mounted_by_uid;
-        gboolean device_presentation_hide;
-        gboolean device_presentation_nopolicy;
-        char    *device_presentation_name;
-        char    *device_presentation_icon_name;
-        guint64  device_size;
-        guint64  device_block_size;
+  guint64 device_detection_time;
+  guint64 device_media_detection_time;
+  gint64 device_major;
+  gint64 device_minor;
+  char *device_file;
+  char **device_file_by_id;
+  char **device_file_by_path;
+  gboolean device_is_system_internal;
+  gboolean device_is_partition;
+  gboolean device_is_partition_table;
+  gboolean device_is_removable;
+  gboolean device_is_media_available;
+  gboolean device_is_media_change_detected;
+  gboolean device_is_media_change_detection_polling;
+  gboolean device_is_media_change_detection_inhibitable;
+  gboolean device_is_media_change_detection_inhibited;
+  gboolean device_is_read_only;
+  gboolean device_is_drive;
+  gboolean device_is_optical_disc;
+  gboolean device_is_luks;
+  gboolean device_is_luks_cleartext;
+  gboolean device_is_mounted;
+  gboolean device_is_linux_md_component;
+  gboolean device_is_linux_md;
+  gboolean device_is_linux_lvm2_lv;
+  gboolean device_is_linux_lvm2_pv;
+  char **device_mount_paths;
+  uid_t device_mounted_by_uid;
+  gboolean device_presentation_hide;
+  gboolean device_presentation_nopolicy;
+  char *device_presentation_name;
+  char *device_presentation_icon_name;
+  guint64 device_size;
+  guint64 device_block_size;
 
-        gboolean job_in_progress;
-        char    *job_id;
-        uid_t    job_initiated_by_uid;
-        gboolean job_is_cancellable;
-        double   job_percentage;
+  gboolean job_in_progress;
+  char *job_id;
+  uid_t job_initiated_by_uid;
+  gboolean job_is_cancellable;
+  double job_percentage;
 
-        char    *id_usage;
-        char    *id_type;
-        char    *id_version;
-        char    *id_uuid;
-        char    *id_label;
+  char *id_usage;
+  char *id_type;
+  char *id_version;
+  char *id_uuid;
+  char *id_label;
 
-        char    *partition_slave;
-        char    *partition_scheme;
-        int      partition_number;
-        char    *partition_type;
-        char    *partition_label;
-        char    *partition_uuid;
-        char   **partition_flags;
-        guint64  partition_offset;
-        guint64  partition_size;
+  char *partition_slave;
+  char *partition_scheme;
+  int partition_number;
+  char *partition_type;
+  char *partition_label;
+  char *partition_uuid;
+  char **partition_flags;
+  guint64 partition_offset;
+  guint64 partition_size;
 
-        char    *partition_table_scheme;
-        int      partition_table_count;
+  char *partition_table_scheme;
+  int partition_table_count;
 
-        char    *luks_holder;
+  char *luks_holder;
 
-        char    *luks_cleartext_slave;
-        uid_t    luks_cleartext_unlocked_by_uid;
+  char *luks_cleartext_slave;
+  uid_t luks_cleartext_unlocked_by_uid;
 
-        char    *drive_vendor;
-        char    *drive_model;
-        char    *drive_revision;
-        char    *drive_serial;
-        char    *drive_wwn;
-        char    *drive_connection_interface;
-        guint64  drive_connection_speed;
-        char   **drive_media_compatibility;
-        char    *drive_media;
-        gboolean drive_is_media_ejectable;
-        gboolean drive_can_detach;
-        gboolean drive_can_spindown;
-        gboolean drive_is_rotational;
-        guint    drive_rotation_rate;
-        char    *drive_write_cache;
-        char    *drive_adapter;
-        char   **drive_ports;
+  char *drive_vendor;
+  char *drive_model;
+  char *drive_revision;
+  char *drive_serial;
+  char *drive_wwn;
+  char *drive_connection_interface;
+  guint64 drive_connection_speed;
+  char **drive_media_compatibility;
+  char *drive_media;
+  gboolean drive_is_media_ejectable;
+  gboolean drive_can_detach;
+  gboolean drive_can_spindown;
+  gboolean drive_is_rotational;
+  guint drive_rotation_rate;
+  char *drive_write_cache;
+  char *drive_adapter;
+  char **drive_ports;
 
-        gboolean optical_disc_is_blank;
-        gboolean optical_disc_is_appendable;
-        gboolean optical_disc_is_closed;
-        guint optical_disc_num_tracks;
-        guint optical_disc_num_audio_tracks;
-        guint optical_disc_num_sessions;
+  gboolean optical_disc_is_blank;
+  gboolean optical_disc_is_appendable;
+  gboolean optical_disc_is_closed;
+  guint optical_disc_num_tracks;
+  guint optical_disc_num_audio_tracks;
+  guint optical_disc_num_sessions;
 
-        gboolean drive_ata_smart_is_available;
-        guint64 drive_ata_smart_time_collected;
-        gchar *drive_ata_smart_status;
-        gchar *drive_ata_smart_blob;
-        gsize drive_ata_smart_blob_size;
+  gboolean drive_ata_smart_is_available;
+  guint64 drive_ata_smart_time_collected;
+  gchar *drive_ata_smart_status;
+  gchar *drive_ata_smart_blob;
+  gsize drive_ata_smart_blob_size;
 
-        char    *linux_md_component_level;
-        int      linux_md_component_position;
-        int      linux_md_component_num_raid_devices;
-        char    *linux_md_component_uuid;
-        char    *linux_md_component_home_host;
-        char    *linux_md_component_name;
-        char    *linux_md_component_version;
-        char    *linux_md_component_holder;
-        char   **linux_md_component_state;
+  char *linux_md_component_level;
+  int linux_md_component_position;
+  int linux_md_component_num_raid_devices;
+  char *linux_md_component_uuid;
+  char *linux_md_component_home_host;
+  char *linux_md_component_name;
+  char *linux_md_component_version;
+  char *linux_md_component_holder;
+  char **linux_md_component_state;
 
-        char    *linux_md_state;
-        char    *linux_md_level;
-        int      linux_md_num_raid_devices;
-        char    *linux_md_uuid;
-        char    *linux_md_home_host;
-        char    *linux_md_name;
-        char    *linux_md_version;
-        char   **linux_md_slaves;
-        gboolean linux_md_is_degraded;
-        char    *linux_md_sync_action;
-        double   linux_md_sync_percentage;
-        guint64  linux_md_sync_speed;
+  char *linux_md_state;
+  char *linux_md_level;
+  int linux_md_num_raid_devices;
+  char *linux_md_uuid;
+  char *linux_md_home_host;
+  char *linux_md_name;
+  char *linux_md_version;
+  char **linux_md_slaves;
+  gboolean linux_md_is_degraded;
+  char *linux_md_sync_action;
+  double linux_md_sync_percentage;
+  guint64 linux_md_sync_speed;
+
+  gchar *linux_lvm2_lv_name;
+  gchar *linux_lvm2_lv_uuid;
+  gchar *linux_lvm2_lv_group_name;
+  gchar *linux_lvm2_lv_group_uuid;
+
+  gchar *linux_lvm2_pv_uuid;
+  guint  linux_lvm2_pv_num_metadata_areas;
+  gchar *linux_lvm2_pv_group_name;
+  gchar *linux_lvm2_pv_group_uuid;
+  guint64 linux_lvm2_pv_group_size;
+  guint64 linux_lvm2_pv_group_unallocated_size;
+  guint64 linux_lvm2_pv_group_sequence_number;
+  guint64 linux_lvm2_pv_group_extent_size;
+  char **linux_lvm2_pv_group_physical_volumes;
+  char **linux_lvm2_pv_group_logical_volumes;
 } DeviceProperties;
 
 static void
-collect_props (const char *key, const GValue *value, DeviceProperties *props)
+collect_props (const char *key,
+               const GValue *value,
+               DeviceProperties *props)
 {
-        gboolean handled = TRUE;
+  gboolean handled = TRUE;
 
-        if (strcmp (key, "NativePath") == 0)
-                props->native_path = g_strdup (g_value_get_string (value));
+  if (strcmp (key, "NativePath") == 0)
+    props->native_path = g_strdup (g_value_get_string (value));
 
-        else if (strcmp (key, "DeviceDetectionTime") == 0)
-                props->device_detection_time = g_value_get_uint64 (value);
-        else if (strcmp (key, "DeviceMediaDetectionTime") == 0)
-                props->device_media_detection_time = g_value_get_uint64 (value);
-        else if (strcmp (key, "DeviceMajor") == 0)
-                props->device_major = g_value_get_int64 (value);
-        else if (strcmp (key, "DeviceMinor") == 0)
-                props->device_minor = g_value_get_int64 (value);
-        else if (strcmp (key, "DeviceFile") == 0)
-                props->device_file = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DeviceFileById") == 0)
-                props->device_file_by_id = g_strdupv (g_value_get_boxed (value));
-        else if (strcmp (key, "DeviceFileByPath") == 0)
-                props->device_file_by_path = g_strdupv (g_value_get_boxed (value));
-        else if (strcmp (key, "DeviceIsSystemInternal") == 0)
-                props->device_is_system_internal = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsPartition") == 0)
-                props->device_is_partition = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsPartitionTable") == 0)
-                props->device_is_partition_table = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsRemovable") == 0)
-                props->device_is_removable = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMediaAvailable") == 0)
-                props->device_is_media_available = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMediaChangeDetected") == 0)
-                props->device_is_media_change_detected = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMediaChangeDetectionPolling") == 0)
-                props->device_is_media_change_detection_polling = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMediaChangeDetectionInhibitable") == 0)
-                props->device_is_media_change_detection_inhibitable = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMediaChangeDetectionInhibited") == 0)
-                props->device_is_media_change_detection_inhibited = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsReadOnly") == 0)
-                props->device_is_read_only = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsDrive") == 0)
-                props->device_is_drive = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsOpticalDisc") == 0)
-                props->device_is_optical_disc = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsLuks") == 0)
-                props->device_is_luks = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsLuksCleartext") == 0)
-                props->device_is_luks_cleartext = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsLinuxMdComponent") == 0)
-                props->device_is_linux_md_component = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsLinuxMd") == 0)
-                props->device_is_linux_md = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceIsMounted") == 0)
-                props->device_is_mounted = g_value_get_boolean (value);
-        else if (strcmp (key, "DeviceMountPaths") == 0)
-                props->device_mount_paths = g_strdupv (g_value_get_boxed (value));
-        else if (strcmp (key, "DeviceMountedByUid") == 0)
-                props->device_mounted_by_uid = g_value_get_uint (value);
-        else if (strcmp (key, "DevicePresentationHide") == 0)
-                props->device_presentation_hide = g_value_get_boolean (value);
-        else if (strcmp (key, "DevicePresentationNopolicy") == 0)
-                props->device_presentation_nopolicy = g_value_get_boolean (value);
-        else if (strcmp (key, "DevicePresentationName") == 0)
-                props->device_presentation_name = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DevicePresentationIconName") == 0)
-                props->device_presentation_icon_name = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DeviceSize") == 0)
-                props->device_size = g_value_get_uint64 (value);
-        else if (strcmp (key, "DeviceBlockSize") == 0)
-                props->device_block_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "DeviceDetectionTime") == 0)
+    props->device_detection_time = g_value_get_uint64 (value);
+  else if (strcmp (key, "DeviceMediaDetectionTime") == 0)
+    props->device_media_detection_time = g_value_get_uint64 (value);
+  else if (strcmp (key, "DeviceMajor") == 0)
+    props->device_major = g_value_get_int64 (value);
+  else if (strcmp (key, "DeviceMinor") == 0)
+    props->device_minor = g_value_get_int64 (value);
+  else if (strcmp (key, "DeviceFile") == 0)
+    props->device_file = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DeviceFileById") == 0)
+    props->device_file_by_id = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "DeviceFileByPath") == 0)
+    props->device_file_by_path = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "DeviceIsSystemInternal") == 0)
+    props->device_is_system_internal = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsPartition") == 0)
+    props->device_is_partition = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsPartitionTable") == 0)
+    props->device_is_partition_table = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsRemovable") == 0)
+    props->device_is_removable = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMediaAvailable") == 0)
+    props->device_is_media_available = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMediaChangeDetected") == 0)
+    props->device_is_media_change_detected = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMediaChangeDetectionPolling") == 0)
+    props->device_is_media_change_detection_polling = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMediaChangeDetectionInhibitable") == 0)
+    props->device_is_media_change_detection_inhibitable = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMediaChangeDetectionInhibited") == 0)
+    props->device_is_media_change_detection_inhibited = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsReadOnly") == 0)
+    props->device_is_read_only = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsDrive") == 0)
+    props->device_is_drive = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsOpticalDisc") == 0)
+    props->device_is_optical_disc = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLuks") == 0)
+    props->device_is_luks = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLuksCleartext") == 0)
+    props->device_is_luks_cleartext = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxMdComponent") == 0)
+    props->device_is_linux_md_component = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxMd") == 0)
+    props->device_is_linux_md = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxLvm2LV") == 0)
+    props->device_is_linux_lvm2_lv = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxLvm2PV") == 0)
+    props->device_is_linux_lvm2_pv = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsMounted") == 0)
+    props->device_is_mounted = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceMountPaths") == 0)
+    props->device_mount_paths = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "DeviceMountedByUid") == 0)
+    props->device_mounted_by_uid = g_value_get_uint (value);
+  else if (strcmp (key, "DevicePresentationHide") == 0)
+    props->device_presentation_hide = g_value_get_boolean (value);
+  else if (strcmp (key, "DevicePresentationNopolicy") == 0)
+    props->device_presentation_nopolicy = g_value_get_boolean (value);
+  else if (strcmp (key, "DevicePresentationName") == 0)
+    props->device_presentation_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DevicePresentationIconName") == 0)
+    props->device_presentation_icon_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DeviceSize") == 0)
+    props->device_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "DeviceBlockSize") == 0)
+    props->device_block_size = g_value_get_uint64 (value);
 
-        else if (strcmp (key, "JobInProgress") == 0)
-                props->job_in_progress = g_value_get_boolean (value);
-        else if (strcmp (key, "JobId") == 0)
-                props->job_id = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "JobInitiatedByUid") == 0)
-                props->job_initiated_by_uid = g_value_get_uint (value);
-        else if (strcmp (key, "JobIsCancellable") == 0)
-                props->job_is_cancellable = g_value_get_boolean (value);
-        else if (strcmp (key, "JobPercentage") == 0)
-                props->job_percentage = g_value_get_double (value);
+  else if (strcmp (key, "JobInProgress") == 0)
+    props->job_in_progress = g_value_get_boolean (value);
+  else if (strcmp (key, "JobId") == 0)
+    props->job_id = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "JobInitiatedByUid") == 0)
+    props->job_initiated_by_uid = g_value_get_uint (value);
+  else if (strcmp (key, "JobIsCancellable") == 0)
+    props->job_is_cancellable = g_value_get_boolean (value);
+  else if (strcmp (key, "JobPercentage") == 0)
+    props->job_percentage = g_value_get_double (value);
 
-        else if (strcmp (key, "IdUsage") == 0)
-                props->id_usage = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "IdType") == 0)
-                props->id_type = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "IdVersion") == 0)
-                props->id_version = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "IdUuid") == 0)
-                props->id_uuid = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "IdLabel") == 0)
-                props->id_label = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "IdUsage") == 0)
+    props->id_usage = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "IdType") == 0)
+    props->id_type = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "IdVersion") == 0)
+    props->id_version = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "IdUuid") == 0)
+    props->id_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "IdLabel") == 0)
+    props->id_label = g_strdup (g_value_get_string (value));
 
-        else if (strcmp (key, "PartitionSlave") == 0)
-                props->partition_slave = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "PartitionScheme") == 0)
-                props->partition_scheme = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "PartitionNumber") == 0)
-                props->partition_number = g_value_get_int (value);
-        else if (strcmp (key, "PartitionType") == 0)
-                props->partition_type = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "PartitionLabel") == 0)
-                props->partition_label = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "PartitionUuid") == 0)
-                props->partition_uuid = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "PartitionFlags") == 0)
-                props->partition_flags = g_strdupv (g_value_get_boxed (value));
-        else if (strcmp (key, "PartitionOffset") == 0)
-                props->partition_offset = g_value_get_uint64 (value);
-        else if (strcmp (key, "PartitionSize") == 0)
-                props->partition_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "PartitionSlave") == 0)
+    props->partition_slave = g_strdup (g_value_get_boxed (value));
+  else if (strcmp (key, "PartitionScheme") == 0)
+    props->partition_scheme = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "PartitionNumber") == 0)
+    props->partition_number = g_value_get_int (value);
+  else if (strcmp (key, "PartitionType") == 0)
+    props->partition_type = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "PartitionLabel") == 0)
+    props->partition_label = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "PartitionUuid") == 0)
+    props->partition_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "PartitionFlags") == 0)
+    props->partition_flags = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "PartitionOffset") == 0)
+    props->partition_offset = g_value_get_uint64 (value);
+  else if (strcmp (key, "PartitionSize") == 0)
+    props->partition_size = g_value_get_uint64 (value);
 
-        else if (strcmp (key, "PartitionTableScheme") == 0)
-                props->partition_table_scheme = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "PartitionTableCount") == 0)
-                props->partition_table_count = g_value_get_int (value);
+  else if (strcmp (key, "PartitionTableScheme") == 0)
+    props->partition_table_scheme = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "PartitionTableCount") == 0)
+    props->partition_table_count = g_value_get_int (value);
 
-        else if (strcmp (key, "LuksHolder") == 0)
-                props->luks_holder = g_strdup (g_value_get_boxed (value));
+  else if (strcmp (key, "LuksHolder") == 0)
+    props->luks_holder = g_strdup (g_value_get_boxed (value));
 
-        else if (strcmp (key, "LuksCleartextSlave") == 0)
-                props->luks_cleartext_slave = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "LuksCleartextUnlockedByUid") == 0)
-                props->luks_cleartext_unlocked_by_uid = g_value_get_uint (value);
+  else if (strcmp (key, "LuksCleartextSlave") == 0)
+    props->luks_cleartext_slave = g_strdup (g_value_get_boxed (value));
+  else if (strcmp (key, "LuksCleartextUnlockedByUid") == 0)
+    props->luks_cleartext_unlocked_by_uid = g_value_get_uint (value);
 
-        else if (strcmp (key, "DriveVendor") == 0)
-                props->drive_vendor = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveModel") == 0)
-                props->drive_model = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveRevision") == 0)
-                props->drive_revision = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveSerial") == 0)
-                props->drive_serial = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveWwn") == 0)
-                props->drive_wwn = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveConnectionInterface") == 0)
-                props->drive_connection_interface = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveConnectionSpeed") == 0)
-                props->drive_connection_speed = g_value_get_uint64 (value);
-        else if (strcmp (key, "DriveMediaCompatibility") == 0)
-                props->drive_media_compatibility = g_strdupv (g_value_get_boxed (value));
-        else if (strcmp (key, "DriveMedia") == 0)
-                props->drive_media = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveIsMediaEjectable") == 0)
-                props->drive_is_media_ejectable = g_value_get_boolean (value);
-        else if (strcmp (key, "DriveCanDetach") == 0)
-                props->drive_can_detach = g_value_get_boolean (value);
-        else if (strcmp (key, "DriveCanSpindown") == 0)
-                props->drive_can_spindown = g_value_get_boolean (value);
-        else if (strcmp (key, "DriveIsRotational") == 0)
-                props->drive_is_rotational = g_value_get_boolean (value);
-        else if (strcmp (key, "DriveRotationRate") == 0)
-                props->drive_rotation_rate = g_value_get_uint (value);
-        else if (strcmp (key, "DriveWriteCache") == 0)
-                props->drive_write_cache = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveAdapter") == 0)
-                props->drive_adapter = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "DrivePorts") == 0) {
-                guint n;
-                GPtrArray *object_paths;
+  else if (strcmp (key, "DriveVendor") == 0)
+    props->drive_vendor = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveModel") == 0)
+    props->drive_model = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveRevision") == 0)
+    props->drive_revision = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveSerial") == 0)
+    props->drive_serial = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveWwn") == 0)
+    props->drive_wwn = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveConnectionInterface") == 0)
+    props->drive_connection_interface = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveConnectionSpeed") == 0)
+    props->drive_connection_speed = g_value_get_uint64 (value);
+  else if (strcmp (key, "DriveMediaCompatibility") == 0)
+    props->drive_media_compatibility = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "DriveMedia") == 0)
+    props->drive_media = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveIsMediaEjectable") == 0)
+    props->drive_is_media_ejectable = g_value_get_boolean (value);
+  else if (strcmp (key, "DriveCanDetach") == 0)
+    props->drive_can_detach = g_value_get_boolean (value);
+  else if (strcmp (key, "DriveCanSpindown") == 0)
+    props->drive_can_spindown = g_value_get_boolean (value);
+  else if (strcmp (key, "DriveIsRotational") == 0)
+    props->drive_is_rotational = g_value_get_boolean (value);
+  else if (strcmp (key, "DriveRotationRate") == 0)
+    props->drive_rotation_rate = g_value_get_uint (value);
+  else if (strcmp (key, "DriveWriteCache") == 0)
+    props->drive_write_cache = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveAdapter") == 0)
+    props->drive_adapter = g_strdup (g_value_get_boxed (value));
+  else if (strcmp (key, "DrivePorts") == 0)
+    {
+      guint n;
+      GPtrArray *object_paths;
 
-                object_paths = g_value_get_boxed (value);
+      object_paths = g_value_get_boxed (value);
 
-                props->drive_ports = g_new0 (char *, object_paths->len + 1);
-                for (n = 0; n < object_paths->len; n++)
-                        props->drive_ports[n] = g_strdup (object_paths->pdata[n]);
-                props->drive_ports[n] = NULL;
-        }
+      props->drive_ports = g_new0 (char *, object_paths->len + 1);
+      for (n = 0; n < object_paths->len; n++)
+        props->drive_ports[n] = g_strdup (object_paths->pdata[n]);
+      props->drive_ports[n] = NULL;
+    }
 
-        else if (strcmp (key, "OpticalDiscIsBlank") == 0)
-                props->optical_disc_is_blank = g_value_get_boolean (value);
-        else if (strcmp (key, "OpticalDiscIsAppendable") == 0)
-                props->optical_disc_is_appendable = g_value_get_boolean (value);
-        else if (strcmp (key, "OpticalDiscIsClosed") == 0)
-                props->optical_disc_is_closed = g_value_get_boolean (value);
-        else if (strcmp (key, "OpticalDiscNumTracks") == 0)
-                props->optical_disc_num_tracks = g_value_get_uint (value);
-        else if (strcmp (key, "OpticalDiscNumAudioTracks") == 0)
-                props->optical_disc_num_audio_tracks = g_value_get_uint (value);
-        else if (strcmp (key, "OpticalDiscNumSessions") == 0)
-                props->optical_disc_num_sessions = g_value_get_uint (value);
+  else if (strcmp (key, "OpticalDiscIsBlank") == 0)
+    props->optical_disc_is_blank = g_value_get_boolean (value);
+  else if (strcmp (key, "OpticalDiscIsAppendable") == 0)
+    props->optical_disc_is_appendable = g_value_get_boolean (value);
+  else if (strcmp (key, "OpticalDiscIsClosed") == 0)
+    props->optical_disc_is_closed = g_value_get_boolean (value);
+  else if (strcmp (key, "OpticalDiscNumTracks") == 0)
+    props->optical_disc_num_tracks = g_value_get_uint (value);
+  else if (strcmp (key, "OpticalDiscNumAudioTracks") == 0)
+    props->optical_disc_num_audio_tracks = g_value_get_uint (value);
+  else if (strcmp (key, "OpticalDiscNumSessions") == 0)
+    props->optical_disc_num_sessions = g_value_get_uint (value);
 
-        else if (strcmp (key, "DriveAtaSmartIsAvailable") == 0)
-                props->drive_ata_smart_is_available = g_value_get_boolean (value);
-        else if (strcmp (key, "DriveAtaSmartTimeCollected") == 0)
-                props->drive_ata_smart_time_collected = g_value_get_uint64 (value);
-        else if (strcmp (key, "DriveAtaSmartStatus") == 0)
-                props->drive_ata_smart_status = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "DriveAtaSmartBlob") == 0) {
-                GArray *a = g_value_get_boxed (value);
-                g_free (props->drive_ata_smart_blob);
-                props->drive_ata_smart_blob = g_memdup (a->data, a->len);
-                props->drive_ata_smart_blob_size = a->len;
-        }
+  else if (strcmp (key, "DriveAtaSmartIsAvailable") == 0)
+    props->drive_ata_smart_is_available = g_value_get_boolean (value);
+  else if (strcmp (key, "DriveAtaSmartTimeCollected") == 0)
+    props->drive_ata_smart_time_collected = g_value_get_uint64 (value);
+  else if (strcmp (key, "DriveAtaSmartStatus") == 0)
+    props->drive_ata_smart_status = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DriveAtaSmartBlob") == 0)
+    {
+      GArray *a = g_value_get_boxed (value);
+      g_free (props->drive_ata_smart_blob);
+      props->drive_ata_smart_blob = g_memdup (a->data, a->len);
+      props->drive_ata_smart_blob_size = a->len;
+    }
 
-        else if (strcmp (key, "LinuxMdComponentLevel") == 0)
-                props->linux_md_component_level = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdComponentPosition") == 0)
-                props->linux_md_component_position = g_value_get_int (value);
-        else if (strcmp (key, "LinuxMdComponentNumRaidDevices") == 0)
-                props->linux_md_component_num_raid_devices = g_value_get_int (value);
-        else if (strcmp (key, "LinuxMdComponentUuid") == 0)
-                props->linux_md_component_uuid = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdComponentHomeHost") == 0)
-                props->linux_md_component_home_host = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdComponentName") == 0)
-                props->linux_md_component_name = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdComponentVersion") == 0)
-                props->linux_md_component_version = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdComponentHolder") == 0)
-                props->linux_md_component_holder = g_strdup (g_value_get_boxed (value));
-        else if (strcmp (key, "LinuxMdComponentState") == 0)
-                props->linux_md_component_state = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "LinuxMdComponentLevel") == 0)
+    props->linux_md_component_level = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdComponentPosition") == 0)
+    props->linux_md_component_position = g_value_get_int (value);
+  else if (strcmp (key, "LinuxMdComponentNumRaidDevices") == 0)
+    props->linux_md_component_num_raid_devices = g_value_get_int (value);
+  else if (strcmp (key, "LinuxMdComponentUuid") == 0)
+    props->linux_md_component_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdComponentHomeHost") == 0)
+    props->linux_md_component_home_host = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdComponentName") == 0)
+    props->linux_md_component_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdComponentVersion") == 0)
+    props->linux_md_component_version = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdComponentHolder") == 0)
+    props->linux_md_component_holder = g_strdup (g_value_get_boxed (value));
+  else if (strcmp (key, "LinuxMdComponentState") == 0)
+    props->linux_md_component_state = g_strdupv (g_value_get_boxed (value));
 
-        else if (strcmp (key, "LinuxMdState") == 0)
-                props->linux_md_state = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdLevel") == 0)
-                props->linux_md_level = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdNumRaidDevices") == 0)
-                props->linux_md_num_raid_devices = g_value_get_int (value);
-        else if (strcmp (key, "LinuxMdUuid") == 0)
-                props->linux_md_uuid = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdHomeHost") == 0)
-                props->linux_md_home_host = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdName") == 0)
-                props->linux_md_name = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdVersion") == 0)
-                props->linux_md_version = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdSlaves") == 0) {
-                guint n;
-                GPtrArray *object_paths;
+  else if (strcmp (key, "LinuxMdState") == 0)
+    props->linux_md_state = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdLevel") == 0)
+    props->linux_md_level = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdNumRaidDevices") == 0)
+    props->linux_md_num_raid_devices = g_value_get_int (value);
+  else if (strcmp (key, "LinuxMdUuid") == 0)
+    props->linux_md_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdHomeHost") == 0)
+    props->linux_md_home_host = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdName") == 0)
+    props->linux_md_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdVersion") == 0)
+    props->linux_md_version = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdSlaves") == 0)
+    {
+      guint n;
+      GPtrArray *object_paths;
 
-                object_paths = g_value_get_boxed (value);
+      object_paths = g_value_get_boxed (value);
 
-                props->linux_md_slaves = g_new0 (char *, object_paths->len + 1);
-                for (n = 0; n < object_paths->len; n++)
-                        props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
-                props->linux_md_slaves[n] = NULL;
-        }
-        else if (strcmp (key, "LinuxMdIsDegraded") == 0)
-                props->linux_md_is_degraded = g_value_get_boolean (value);
-        else if (strcmp (key, "LinuxMdSyncAction") == 0)
-                props->linux_md_sync_action = g_strdup (g_value_get_string (value));
-        else if (strcmp (key, "LinuxMdSyncPercentage") == 0)
-                props->linux_md_sync_percentage = g_value_get_double (value);
-        else if (strcmp (key, "LinuxMdSyncSpeed") == 0)
-                props->linux_md_sync_speed = g_value_get_uint64 (value);
+      props->linux_md_slaves = g_new0 (char *, object_paths->len + 1);
+      for (n = 0; n < object_paths->len; n++)
+        props->linux_md_slaves[n] = g_strdup (object_paths->pdata[n]);
+      props->linux_md_slaves[n] = NULL;
+    }
+  else if (strcmp (key, "LinuxMdIsDegraded") == 0)
+    props->linux_md_is_degraded = g_value_get_boolean (value);
+  else if (strcmp (key, "LinuxMdSyncAction") == 0)
+    props->linux_md_sync_action = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxMdSyncPercentage") == 0)
+    props->linux_md_sync_percentage = g_value_get_double (value);
+  else if (strcmp (key, "LinuxMdSyncSpeed") == 0)
+    props->linux_md_sync_speed = g_value_get_uint64 (value);
 
-        else
-                handled = FALSE;
+  else if (strcmp (key, "LinuxLvm2LVName") == 0)
+    props->linux_lvm2_lv_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2LVUuid") == 0)
+    props->linux_lvm2_lv_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2LVGroupName") == 0)
+    props->linux_lvm2_lv_group_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2LVGroupUuid") == 0)
+    props->linux_lvm2_lv_group_uuid = g_strdup (g_value_get_string (value));
 
-        if (!handled)
-                g_debug ("unhandled property '%s'", key);
+  else if (strcmp (key, "LinuxLvm2PVUuid") == 0)
+    props->linux_lvm2_pv_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2PVNumMetadataAreas") == 0)
+    props->linux_lvm2_pv_num_metadata_areas = g_value_get_uint (value);
+  else if (strcmp (key, "LinuxLvm2PVGroupName") == 0)
+    props->linux_lvm2_pv_group_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2PVGroupUuid") == 0)
+    props->linux_lvm2_pv_group_uuid = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxLvm2PVGroupSize") == 0)
+    props->linux_lvm2_pv_group_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "LinuxLvm2PVGroupUnallocatedSize") == 0)
+    props->linux_lvm2_pv_group_unallocated_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "LinuxLvm2PVGroupSequenceNumber") == 0)
+    props->linux_lvm2_pv_group_sequence_number = g_value_get_uint64 (value);
+  else if (strcmp (key, "LinuxLvm2PVGroupExtentSize") == 0)
+    props->linux_lvm2_pv_group_extent_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "LinuxLvm2PVGroupPhysicalVolumes") == 0)
+    props->linux_lvm2_pv_group_physical_volumes = g_strdupv (g_value_get_boxed (value));
+  else if (strcmp (key, "LinuxLvm2PVGroupLogicalVolumes") == 0)
+    props->linux_lvm2_pv_group_logical_volumes = g_strdupv (g_value_get_boxed (value));
+
+  else
+    handled = FALSE;
+
+  if (!handled)
+    g_warning ("unhandled property '%s'", key);
 }
 
 static void
 device_properties_free (DeviceProperties *props)
 {
-        g_free (props->native_path);
-        g_free (props->device_file);
-        g_strfreev (props->device_file_by_id);
-        g_strfreev (props->device_file_by_path);
-        g_strfreev (props->device_mount_paths);
-        g_free (props->device_presentation_name);
-        g_free (props->device_presentation_icon_name);
-        g_free (props->job_id);
-        g_free (props->id_usage);
-        g_free (props->id_type);
-        g_free (props->id_version);
-        g_free (props->id_uuid);
-        g_free (props->id_label);
-        g_free (props->partition_slave);
-        g_free (props->partition_type);
-        g_free (props->partition_label);
-        g_free (props->partition_uuid);
-        g_strfreev (props->partition_flags);
-        g_free (props->partition_table_scheme);
-        g_free (props->luks_holder);
-        g_free (props->luks_cleartext_slave);
-        g_free (props->drive_model);
-        g_free (props->drive_vendor);
-        g_free (props->drive_revision);
-        g_free (props->drive_serial);
-        g_free (props->drive_wwn);
-        g_free (props->drive_connection_interface);
-        g_strfreev (props->drive_media_compatibility);
-        g_free (props->drive_media);
-        g_free (props->drive_write_cache);
-        g_free (props->drive_adapter);
-        g_strfreev (props->drive_ports);
+  g_free (props->native_path);
+  g_free (props->device_file);
+  g_strfreev (props->device_file_by_id);
+  g_strfreev (props->device_file_by_path);
+  g_strfreev (props->device_mount_paths);
+  g_free (props->device_presentation_name);
+  g_free (props->device_presentation_icon_name);
+  g_free (props->job_id);
+  g_free (props->id_usage);
+  g_free (props->id_type);
+  g_free (props->id_version);
+  g_free (props->id_uuid);
+  g_free (props->id_label);
+  g_free (props->partition_slave);
+  g_free (props->partition_type);
+  g_free (props->partition_label);
+  g_free (props->partition_uuid);
+  g_strfreev (props->partition_flags);
+  g_free (props->partition_table_scheme);
+  g_free (props->luks_holder);
+  g_free (props->luks_cleartext_slave);
+  g_free (props->drive_model);
+  g_free (props->drive_vendor);
+  g_free (props->drive_revision);
+  g_free (props->drive_serial);
+  g_free (props->drive_wwn);
+  g_free (props->drive_connection_interface);
+  g_strfreev (props->drive_media_compatibility);
+  g_free (props->drive_media);
+  g_free (props->drive_write_cache);
+  g_free (props->drive_adapter);
+  g_strfreev (props->drive_ports);
 
-        g_free (props->drive_ata_smart_status);
-        g_free (props->drive_ata_smart_blob);
+  g_free (props->drive_ata_smart_status);
+  g_free (props->drive_ata_smart_blob);
 
-        g_free (props->linux_md_component_level);
-        g_free (props->linux_md_component_uuid);
-        g_free (props->linux_md_component_home_host);
-        g_free (props->linux_md_component_name);
-        g_free (props->linux_md_component_version);
-        g_free (props->linux_md_component_holder);
-        g_strfreev (props->linux_md_component_state);
+  g_free (props->linux_md_component_level);
+  g_free (props->linux_md_component_uuid);
+  g_free (props->linux_md_component_home_host);
+  g_free (props->linux_md_component_name);
+  g_free (props->linux_md_component_version);
+  g_free (props->linux_md_component_holder);
+  g_strfreev (props->linux_md_component_state);
 
-        g_free (props->linux_md_state);
-        g_free (props->linux_md_level);
-        g_free (props->linux_md_uuid);
-        g_free (props->linux_md_home_host);
-        g_free (props->linux_md_name);
-        g_free (props->linux_md_version);
-        g_strfreev (props->linux_md_slaves);
-        g_free (props->linux_md_sync_action);
-        g_free (props);
+  g_free (props->linux_md_state);
+  g_free (props->linux_md_level);
+  g_free (props->linux_md_uuid);
+  g_free (props->linux_md_home_host);
+  g_free (props->linux_md_name);
+  g_free (props->linux_md_version);
+  g_strfreev (props->linux_md_slaves);
+  g_free (props->linux_md_sync_action);
+
+  g_free (props->linux_lvm2_lv_name);
+  g_free (props->linux_lvm2_lv_uuid);
+  g_free (props->linux_lvm2_lv_group_name);
+  g_free (props->linux_lvm2_lv_group_uuid);
+
+  g_free (props->linux_lvm2_pv_uuid);
+  g_free (props->linux_lvm2_pv_group_name);
+  g_free (props->linux_lvm2_pv_group_uuid);
+  g_strfreev (props->linux_lvm2_pv_group_physical_volumes);
+  g_strfreev (props->linux_lvm2_pv_group_logical_volumes);
+
+  g_free (props);
 }
 
 static DeviceProperties *
 device_properties_get (DBusGConnection *bus,
                        const char *object_path)
 {
-        DeviceProperties *props;
-        GError *error;
-        GHashTable *hash_table;
-        DBusGProxy *prop_proxy;
-        const char *ifname = "org.freedesktop.UDisks.Device";
+  DeviceProperties *props;
+  GError *error;
+  GHashTable *hash_table;
+  DBusGProxy *prop_proxy;
+  const char *ifname = "org.freedesktop.UDisks.Device";
 
-        props = g_new0 (DeviceProperties, 1);
+  props = g_new0 (DeviceProperties, 1);
 
-	prop_proxy = dbus_g_proxy_new_for_name (bus,
-                                                "org.freedesktop.UDisks",
-                                                object_path,
-                                                "org.freedesktop.DBus.Properties");
-        error = NULL;
-        if (!dbus_g_proxy_call (prop_proxy,
-                                "GetAll",
-                                &error,
-                                G_TYPE_STRING,
-                                ifname,
-                                G_TYPE_INVALID,
-                                dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
-                                &hash_table,
-                                G_TYPE_INVALID)) {
-                g_debug ("Error calling GetAll() when retrieving properties for %s: %s", object_path, error->message);
-                g_error_free (error);
+  prop_proxy
+    = dbus_g_proxy_new_for_name (bus, "org.freedesktop.UDisks", object_path, "org.freedesktop.DBus.Properties");
+  error = NULL;
+  if (!dbus_g_proxy_call (prop_proxy,
+                          "GetAll",
+                          &error,
+                          G_TYPE_STRING,
+                          ifname,
+                          G_TYPE_INVALID,
+                          dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),
+                          &hash_table,
+                          G_TYPE_INVALID))
+    {
+      g_warning ("Couldn't call GetAll() to get properties for %s: %s", object_path, error->message);
+      g_error_free (error);
 
-                device_properties_free (props);
-                props = NULL;
-                goto out;
-        }
-        g_debug ("yay, got props for %s", object_path);
+      device_properties_free (props);
+      props = NULL;
+      goto out;
+    }
 
-        g_hash_table_foreach (hash_table, (GHFunc) collect_props, props);
+  g_hash_table_foreach (hash_table, (GHFunc) collect_props, props);
 
-        g_hash_table_unref (hash_table);
+  g_hash_table_unref (hash_table);
 
-out:
-        g_object_unref (prop_proxy);
-        return props;
+ out:
+  g_object_unref (prop_proxy);
+  return props;
 }
 
 /* --- SUCKY CODE END --- */
@@ -846,6 +913,18 @@ gboolean
 gdu_device_is_linux_md (GduDevice *device)
 {
         return device->priv->props->device_is_linux_md;
+}
+
+gboolean
+gdu_device_is_linux_lvm2_lv (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_lvm2_lv;
+}
+
+gboolean
+gdu_device_is_linux_lvm2_pv (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_lvm2_pv;
 }
 
 gboolean
@@ -1301,6 +1380,92 @@ gdu_device_linux_md_get_sync_speed (GduDevice *device)
 {
         return device->priv->props->linux_md_sync_speed;
 }
+
+const char *
+gdu_device_linux_lvm2_lv_get_name (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_lv_name;
+}
+
+const char *
+gdu_device_linux_lvm2_lv_get_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_lv_uuid;
+}
+
+const char *
+gdu_device_linux_lvm2_lv_get_group_name (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_lv_group_name;
+}
+
+const char *
+gdu_device_linux_lvm2_lv_get_group_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_lv_group_uuid;
+}
+
+
+const char *
+gdu_device_linux_lvm2_pv_get_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_uuid;
+}
+
+guint
+gdu_device_linux_lvm2_pv_get_num_metadata_areas (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_num_metadata_areas;
+}
+
+const char *
+gdu_device_linux_lvm2_pv_get_group_name (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_name;
+}
+
+const char *
+gdu_device_linux_lvm2_pv_get_group_uuid (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_uuid;
+}
+
+guint64
+gdu_device_linux_lvm2_pv_get_group_size (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_size;
+}
+
+guint64
+gdu_device_linux_lvm2_pv_get_group_unallocated_size (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_unallocated_size;
+}
+
+guint64
+gdu_device_linux_lvm2_pv_get_group_extent_size (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_extent_size;
+}
+
+guint64
+gdu_device_linux_lvm2_pv_get_group_sequence_number (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_sequence_number;
+}
+
+gchar **
+gdu_device_linux_lvm2_pv_get_group_physical_volumes (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_physical_volumes;
+}
+
+gchar **
+gdu_device_linux_lvm2_pv_get_group_logical_volumes (GduDevice *device)
+{
+        return device->priv->props->linux_lvm2_pv_group_logical_volumes;
+}
+
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -2443,5 +2608,45 @@ void gdu_device_op_drive_benchmark (GduDevice                             *devic
                                                              data);
 }
 
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceLinuxLvm2LVStopCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2LVStopData;
+
+static void
+op_stop_linux_lvm2_lv_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2LVStopData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_linux_lvm2_lv_stop (GduDevice                             *device,
+                                  GduDeviceLinuxLvm2LVStopCompletedFunc  callback,
+                                  gpointer                               user_data)
+{
+        char *options[16];
+        LinuxLvm2LVStopData *data;
+
+        data = g_new0 (LinuxLvm2LVStopData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        options[0] = NULL;
+
+        org_freedesktop_UDisks_Device_linux_lvm2_lv_stop_async (device->priv->proxy,
+                                                                (const char **) options,
+                                                                op_stop_linux_lvm2_lv_array_cb,
+                                                                data);
+}
 
 /* -------------------------------------------------------------------------------- */

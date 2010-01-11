@@ -89,6 +89,8 @@ gboolean gdu_device_is_luks (GduDevice *device);
 gboolean gdu_device_is_luks_cleartext (GduDevice *device);
 gboolean gdu_device_is_linux_md_component (GduDevice *device);
 gboolean gdu_device_is_linux_md (GduDevice *device);
+gboolean gdu_device_is_linux_lvm2_lv (GduDevice *device);
+gboolean gdu_device_is_linux_lvm2_pv (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 char **gdu_device_get_mount_paths (GduDevice *device);
@@ -177,6 +179,21 @@ const char *gdu_device_linux_md_get_sync_action (GduDevice *device);
 double      gdu_device_linux_md_get_sync_percentage (GduDevice *device);
 guint64     gdu_device_linux_md_get_sync_speed (GduDevice *device);
 
+const char *gdu_device_linux_lvm2_lv_get_name (GduDevice *device);
+const char *gdu_device_linux_lvm2_lv_get_uuid (GduDevice *device);
+const char *gdu_device_linux_lvm2_lv_get_group_name (GduDevice *device);
+const char *gdu_device_linux_lvm2_lv_get_group_uuid (GduDevice *device);
+
+const char *gdu_device_linux_lvm2_pv_get_uuid (GduDevice *device);
+guint       gdu_device_linux_lvm2_pv_get_num_metadata_areas (GduDevice *device);
+const char *gdu_device_linux_lvm2_pv_get_group_name (GduDevice *device);
+const char *gdu_device_linux_lvm2_pv_get_group_uuid (GduDevice *device);
+guint64     gdu_device_linux_lvm2_pv_get_group_size (GduDevice *device);
+guint64     gdu_device_linux_lvm2_pv_get_group_unallocated_size (GduDevice *device);
+guint64     gdu_device_linux_lvm2_pv_get_group_extent_size (GduDevice *device);
+guint64     gdu_device_linux_lvm2_pv_get_group_sequence_number (GduDevice *device);
+gchar     **gdu_device_linux_lvm2_pv_get_group_physical_volumes (GduDevice *device);
+gchar     **gdu_device_linux_lvm2_pv_get_group_logical_volumes (GduDevice *device);
 
 gboolean      gdu_device_drive_ata_smart_get_is_available (GduDevice *device);
 guint64       gdu_device_drive_ata_smart_get_time_collected (GduDevice *device);
@@ -357,6 +374,12 @@ void gdu_device_op_drive_benchmark (GduDevice                             *devic
                                     const gchar* const *                   options,
                                     GduDeviceDriveBenchmarkCompletedFunc   callback,
                                     gpointer                               user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void gdu_device_op_linux_lvm2_lv_stop     (GduDevice                             *device,
+                                           GduDeviceLinuxLvm2LVStopCompletedFunc  callback,
+                                           gpointer                               user_data);
 
 G_END_DECLS
 

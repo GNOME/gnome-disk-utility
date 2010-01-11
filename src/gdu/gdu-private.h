@@ -123,6 +123,29 @@ gboolean    _gdu_port_changed               (GduPort   *port);
 
 GduMachine *_gdu_machine_new (GduPool *pool);
 
+GduLinuxLvm2VolumeGroup *
+_gdu_linux_lvm2_volume_group_new (GduPool        *pool,
+                                  const gchar    *vg_uuid,
+                                  GduPresentable *enclosing_presentable);
+
+void _gdu_linux_lvm2_volume_group_rewrite_enclosing_presentable (GduLinuxLvm2VolumeGroup *vg);
+
+GduLinuxLvm2Volume *_gdu_linux_lvm2_volume_new (GduPool        *pool,
+                                                const gchar    *name,
+                                                const gchar    *group_uuid,
+                                                const gchar    *uuid,
+                                                guint64         offset,
+                                                guint64         size,
+                                                GduPresentable *enclosing_presentable);
+
+void _gdu_linux_lvm2_volume_rewrite_enclosing_presentable (GduLinuxLvm2Volume *volume);
+
+GduLinuxLvm2VolumeHole *_gdu_linux_lvm2_volume_hole_new (GduPool        *pool,
+                                                         GduPresentable *enclosing_presentable);
+
+void _gdu_linux_lvm2_volume_hole_rewrite_enclosing_presentable (GduLinuxLvm2VolumeHole *volume_hole);
+
+
 void _gdu_hub_rewrite_enclosing_presentable (GduHub *hub);
 void _gdu_drive_rewrite_enclosing_presentable (GduDrive *drive);
 void _gdu_linux_md_drive_rewrite_enclosing_presentable (GduLinuxMdDrive *drive);

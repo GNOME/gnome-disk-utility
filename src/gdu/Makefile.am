@@ -43,6 +43,8 @@ libgduinclude_HEADERS =              			\
 	gdu-port.h					\
 	gdu-drive.h					\
 	gdu-linux-md-drive.h				\
+	gdu-linux-lvm2-volume-group.h			\
+	gdu-linux-lvm2-volume.h				\
 	gdu-error.h					\
 	gdu-known-filesystem.h				\
 	gdu-pool.h					\
@@ -67,6 +69,9 @@ libgdu_la_SOURCES =                                					\
 	gdu-port.c				gdu-port.h				\
 	gdu-drive.c				gdu-drive.h				\
 	gdu-linux-md-drive.c			gdu-linux-md-drive.h			\
+	gdu-linux-lvm2-volume-group.c		gdu-linux-lvm2-volume-group.h		\
+	gdu-linux-lvm2-volume.c			gdu-linux-lvm2-volume.h			\
+	gdu-linux-lvm2-volume-hole.c		gdu-linux-lvm2-volume-hole.h		\
 	gdu-volume.c				gdu-volume.h				\
 	gdu-presentable.c			gdu-presentable.h			\
 	gdu-volume-hole.c			gdu-volume-hole.h			\

@@ -147,6 +147,10 @@ typedef void (*GduDeviceDriveBenchmarkCompletedFunc) (GduDevice    *device,
                                                       GError       *error,
                                                       gpointer      user_data);
 
+typedef void (*GduDeviceLinuxLvm2LVStopCompletedFunc) (GduDevice  *device,
+                                                       GError     *error,
+                                                       gpointer    user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduPool */
 
@@ -160,6 +164,18 @@ typedef void (*GduPoolLinuxMdCreateCompletedFunc) (GduPool    *pool,
                                                    GError     *error,
                                                    gpointer    user_data);
 
+typedef void (*GduPoolLinuxLvm2VGStartCompletedFunc) (GduPool    *pool,
+                                                      GError     *error,
+                                                      gpointer    user_data);
+
+typedef void (*GduPoolLinuxLvm2VGStopCompletedFunc) (GduPool    *pool,
+                                                     GError     *error,
+                                                     gpointer    user_data);
+
+typedef void (*GduPoolLinuxLvm2LVStartCompletedFunc) (GduPool    *pool,
+                                                      GError     *error,
+                                                      gpointer    user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduDrive */
 
@@ -171,6 +187,7 @@ typedef void (*GduDriveActivateFunc) (GduDrive  *drive,
 typedef void (*GduDriveDeactivateFunc) (GduDrive  *drive,
                                         GError    *error,
                                         gpointer   user_data);
+
 
 /* ---------------------------------------------------------------------------------------------------- */
 

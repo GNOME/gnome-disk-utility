@@ -39,6 +39,9 @@
 #include "gdu-hub.h"
 #include "gdu-known-filesystem.h"
 #include "gdu-private.h"
+#include "gdu-linux-lvm2-volume-group.h"
+#include "gdu-linux-lvm2-volume.h"
+#include "gdu-linux-lvm2-volume-hole.h"
 
 #include "gdu-ssh-bridge.h"
 #include "gdu-error.h"
@@ -838,6 +841,7 @@ get_holes_for_drive (GduPool   *pool,
         return ret;
 }
 
+
 static void
 recompute_presentables (GduPool *pool)
 {
@@ -851,6 +855,7 @@ recompute_presentables (GduPool *pool)
         GList *removed_presentables;
         GHashTable *hash_map_from_drive_to_extended_partition;
         GHashTable *hash_map_from_linux_md_uuid_to_drive;
+        GHashTable *hash_map_from_linux_lvm2_group_uuid_to_vg;
         GHashTable *hash_map_from_adapter_objpath_to_hub;
         GHashTable *hash_map_from_expander_objpath_to_hub;
 
@@ -878,6 +883,11 @@ recompute_presentables (GduPool *pool)
                                                                       g_str_equal,
                                                                       NULL,
                                                                       NULL);
+
+        hash_map_from_linux_lvm2_group_uuid_to_vg = g_hash_table_new_full (g_str_hash,
+                                                                           g_str_equal,
+                                                                           NULL,
+                                                                           NULL);
 
         hash_map_from_adapter_objpath_to_hub = g_hash_table_new_full (g_str_hash,
                                                                       g_str_equal,
@@ -1135,11 +1145,100 @@ recompute_presentables (GduPool *pool)
                         volume = _gdu_volume_new_from_device (pool, device, enclosing_luks_device);
                         new_presentables = g_list_prepend (new_presentables, volume);
 
+                } else if (gdu_device_is_linux_lvm2_lv (device)) {
+
+                        /* Do nothing - this is handled when creating the Lvm2VolumeGroup object below */
+
                 } else {
-                        g_debug ("Don't know how to handle device %s", gdu_device_get_device_file (device));
+                        g_warning ("Don't know how to handle device %s", gdu_device_get_device_file (device));
                 }
 
-                /* Ensure we have a GduLinuxMdDrive for non-running arrays */
+                /* Ensure we have a GduLinuxLvm2VolumeGroup even if the volume group isn't running */
+                if (gdu_device_is_linux_lvm2_pv (device)) {
+                        GduLinuxLvm2VolumeGroup *vg;
+                        const gchar *vg_uuid;
+
+                        vg_uuid = gdu_device_linux_lvm2_pv_get_group_uuid (device);
+
+                        /* First, see if we have a volume group for this UUID already */
+                        vg = g_hash_table_lookup (hash_map_from_linux_lvm2_group_uuid_to_vg, vg_uuid);
+                        if (vg == NULL) {
+                                gchar **lvs;
+                                guint n;
+                                guint64 offset;
+                                guint64 unallocated_size;
+
+                                /* otherwise create one */
+                                vg = _gdu_linux_lvm2_volume_group_new (pool, vg_uuid, pool->priv->machine);
+                                g_hash_table_insert (hash_map_from_linux_lvm2_group_uuid_to_vg, (gpointer) vg_uuid, vg);
+                                new_presentables = g_list_prepend (new_presentables, vg);
+
+                                /* and create logical volume objects as well */
+                                lvs = gdu_device_linux_lvm2_pv_get_group_logical_volumes (device);
+                                offset = 0;
+                                for (n = 0; lvs != NULL && lvs[n] != NULL; n++) {
+                                        const gchar *lv_desc = lvs[n];
+                                        gchar **tokens;
+                                        gchar *name;
+                                        gchar *uuid;
+                                        guint64 size;
+                                        guint m;
+
+                                        tokens = g_strsplit (lv_desc, ";", 0);
+                                        for (m = 0; tokens[m] != NULL; m++) {
+                                                /* TODO: we need to unescape values */
+
+                                                if (g_str_has_prefix (tokens[m], "name="))
+                                                        name = g_strdup (tokens[m] + 5);
+                                                else if (g_str_has_prefix (tokens[m], "uuid="))
+                                                        uuid = g_strdup (tokens[m] + 5);
+                                                else if (g_str_has_prefix (tokens[m], "size="))
+                                                        size = g_ascii_strtoull (tokens[m] + 5, NULL, 10);
+                                        }
+
+                                        if (name != NULL && uuid != NULL && size > 0) {
+                                                GduLinuxLvm2Volume *volume;
+
+                                                volume = _gdu_linux_lvm2_volume_new (pool,
+                                                                                     name,
+                                                                                     vg_uuid,
+                                                                                     uuid,
+                                                                                     offset,
+                                                                                     size,
+                                                                                     GDU_PRESENTABLE (vg));
+                                                new_presentables = g_list_prepend (new_presentables, volume);
+
+                                                offset += size;
+
+                                        } else {
+                                                g_warning ("Malformed LMV2 LV in group with UUID %s: "
+                                                           "pos=%d name=%s uuid=%s size=%" G_GUINT64_FORMAT,
+                                                           vg_uuid,
+                                                           n,
+                                                           name,
+                                                           uuid,
+                                                           size);
+                                        }
+
+                                        g_free (name);
+                                        g_free (uuid);
+                                        g_strfreev (tokens);
+                                } /* foreach LV in VG */
+
+                                /* Create a GduLinuxLvm2VolumeHole for unallocated space - TODO: use 1% or
+                                 * something based on extent size... instead of 1MB
+                                 */
+                                unallocated_size = gdu_device_linux_lvm2_pv_get_group_unallocated_size (device);
+                                if (unallocated_size >= 1000 * 1000) {
+                                        GduLinuxLvm2VolumeHole *volume_hole;
+                                        volume_hole = _gdu_linux_lvm2_volume_hole_new (pool,
+                                                                                       GDU_PRESENTABLE (vg));
+                                        new_presentables = g_list_prepend (new_presentables, volume_hole);
+                                }
+                        }
+                }
+
+                /* Ensure we have a GduLinuxMdDrive for each non-running arrays */
                 if (gdu_device_is_linux_md_component (device)) {
                         const gchar *uuid;
 
@@ -1180,6 +1279,7 @@ recompute_presentables (GduPool *pool)
         g_list_free (new_partitioned_drives);
         g_hash_table_unref (hash_map_from_drive_to_extended_partition);
         g_hash_table_unref (hash_map_from_linux_md_uuid_to_drive);
+        g_hash_table_unref (hash_map_from_linux_lvm2_group_uuid_to_vg);
         g_hash_table_unref (hash_map_from_adapter_objpath_to_hub);
         g_hash_table_unref (hash_map_from_expander_objpath_to_hub);
 
@@ -1224,6 +1324,12 @@ recompute_presentables (GduPool *pool)
                         _gdu_volume_rewrite_enclosing_presentable (GDU_VOLUME (p));
                 else if (GDU_IS_VOLUME_HOLE (p))
                         _gdu_volume_hole_rewrite_enclosing_presentable (GDU_VOLUME_HOLE (p));
+                else if (GDU_IS_LINUX_LVM2_VOLUME_GROUP (p))
+                        _gdu_linux_lvm2_volume_group_rewrite_enclosing_presentable (GDU_LINUX_LVM2_VOLUME_GROUP (p));
+                else if (GDU_IS_LINUX_LVM2_VOLUME (p))
+                        _gdu_linux_lvm2_volume_rewrite_enclosing_presentable (GDU_LINUX_LVM2_VOLUME (p));
+                else if (GDU_IS_LINUX_LVM2_VOLUME_HOLE (p))
+                        _gdu_linux_lvm2_volume_hole_rewrite_enclosing_presentable (GDU_LINUX_LVM2_VOLUME_HOLE (p));
 
                 g_debug ("Added presentable %s %p", gdu_presentable_get_id (p), p);
 
@@ -2649,6 +2755,136 @@ gdu_pool_op_linux_md_create (GduPool *pool,
                                                       (const char **) options,
                                                       op_linux_md_create_cb,
                                                       data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2VGStartCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2VGStartData;
+
+static void
+op_linux_lvm2_vg_start_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2VGStartData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_vg_start (GduPool *pool,
+                                 const gchar *uuid,
+                                 GduPoolLinuxLvm2VGStartCompletedFunc callback,
+                                 gpointer user_data)
+{
+        LinuxLvm2VGStartData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2VGStartData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_vg_start_async (pool->priv->proxy,
+                                                          uuid,
+                                                          (const char **) options,
+                                                          op_linux_lvm2_vg_start_cb,
+                                                          data);
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2VGStopCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2VGStopData;
+
+static void
+op_linux_lvm2_vg_stop_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2VGStopData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_vg_stop (GduPool *pool,
+                                const gchar *uuid,
+                                GduPoolLinuxLvm2VGStopCompletedFunc callback,
+                                gpointer user_data)
+{
+        LinuxLvm2VGStopData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2VGStopData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_vg_stop_async (pool->priv->proxy,
+                                                          uuid,
+                                                          (const char **) options,
+                                                          op_linux_lvm2_vg_stop_cb,
+                                                          data);
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2LVStartCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2LVStartData;
+
+static void
+op_linux_lvm2_lv_start_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2LVStartData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_lv_start (GduPool *pool,
+                                 const gchar *group_uuid,
+                                 const gchar *uuid,
+                                 GduPoolLinuxLvm2LVStartCompletedFunc callback,
+                                 gpointer user_data)
+{
+        LinuxLvm2LVStartData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2LVStartData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_lv_start_async (pool->priv->proxy,
+                                                          group_uuid,
+                                                          uuid,
+                                                          (const char **) options,
+                                                          op_linux_lvm2_lv_start_cb,
+                                                          data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -1,0 +1,561 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
+/*
+ * Copyright (C) 2007-2010 David Zeuthen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ */
+
+#include "config.h"
+#include <glib/gi18n-lib.h>
+
+#include <string.h>
+#include <dbus/dbus-glib.h>
+
+#include "gdu-private.h"
+#include "gdu-util.h"
+#include "gdu-pool.h"
+#include "gdu-device.h"
+#include "gdu-linux-lvm2-volume-group.h"
+#include "gdu-linux-lvm2-volume.h"
+#include "gdu-presentable.h"
+
+struct _GduLinuxLvm2VolumeGroupPrivate
+{
+        GList *slaves;
+
+        GduPool *pool;
+
+        gchar *uuid;
+
+        /* list of PV GduDevice objects that makes up this VG */
+        GList *pv_devices;
+        /* the PV for which we get VG data from (highest seqnum) */
+        GduDevice *pv;
+
+        gchar *id;
+
+        GduPresentable *enclosing_presentable;
+};
+
+static GObjectClass *parent_class = NULL;
+
+static void gdu_linux_lvm2_volume_group_presentable_iface_init (GduPresentableIface *iface);
+
+static gboolean gdu_linux_lvm2_volume_group_is_active (GduDrive *drive);
+static gboolean gdu_linux_lvm2_volume_group_is_activatable (GduDrive *drive);
+static gboolean gdu_linux_lvm2_volume_group_can_deactivate (GduDrive *drive);
+static gboolean gdu_linux_lvm2_volume_group_can_activate (GduDrive *drive, gboolean *out_degraded);
+
+static void on_device_added (GduPool *pool, GduDevice *device, gpointer user_data);
+static void on_device_removed (GduPool *pool, GduDevice *device, gpointer user_data);
+static void on_device_changed (GduPool *pool, GduDevice *device, gpointer user_data);
+
+G_DEFINE_TYPE_WITH_CODE (GduLinuxLvm2VolumeGroup, gdu_linux_lvm2_volume_group, GDU_TYPE_DRIVE,
+                         G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
+                                                gdu_linux_lvm2_volume_group_presentable_iface_init))
+
+static void
+gdu_linux_lvm2_volume_group_finalize (GObject *object)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (object);
+
+        //g_debug ("##### finalized linux-lvm2 volume group '%s' %p", vg->priv->id, vg);
+
+        if (vg->priv->pool != NULL) {
+                g_signal_handlers_disconnect_by_func (vg->priv->pool, on_device_added, vg);
+                g_signal_handlers_disconnect_by_func (vg->priv->pool, on_device_removed, vg);
+                g_signal_handlers_disconnect_by_func (vg->priv->pool, on_device_changed, vg);
+                g_object_unref (vg->priv->pool);
+        }
+
+        g_free (vg->priv->id);
+        g_free (vg->priv->uuid);
+
+        if (vg->priv->enclosing_presentable != NULL)
+                g_object_unref (vg->priv->enclosing_presentable);
+
+        g_list_foreach (vg->priv->pv_devices, (GFunc) g_object_unref, NULL);
+        g_list_free (vg->priv->pv_devices);
+        if (vg->priv->pv != NULL)
+                g_object_unref (vg->priv->pv);
+
+        if (G_OBJECT_CLASS (parent_class)->finalize)
+                (* G_OBJECT_CLASS (parent_class)->finalize) (G_OBJECT (vg));
+}
+
+static void
+gdu_linux_lvm2_volume_group_class_init (GduLinuxLvm2VolumeGroupClass *klass)
+{
+        GObjectClass *gobject_class = (GObjectClass *) klass;
+        GduDriveClass *drive_class = (GduDriveClass *) klass;
+
+        parent_class = g_type_class_peek_parent (klass);
+
+        gobject_class->finalize = gdu_linux_lvm2_volume_group_finalize;
+
+        g_type_class_add_private (klass, sizeof (GduLinuxLvm2VolumeGroupPrivate));
+
+        drive_class->is_active             = gdu_linux_lvm2_volume_group_is_active;
+        drive_class->is_activatable        = gdu_linux_lvm2_volume_group_is_activatable;
+        drive_class->can_deactivate        = gdu_linux_lvm2_volume_group_can_deactivate;
+        drive_class->can_activate          = gdu_linux_lvm2_volume_group_can_activate;
+}
+
+static void
+gdu_linux_lvm2_volume_group_init (GduLinuxLvm2VolumeGroup *vg)
+{
+        vg->priv = G_TYPE_INSTANCE_GET_PRIVATE (vg, GDU_TYPE_LINUX_LVM2_VOLUME_GROUP, GduLinuxLvm2VolumeGroupPrivate);
+}
+
+static void
+emit_changed (GduLinuxLvm2VolumeGroup *vg)
+{
+        //g_debug ("emitting changed for uuid '%s'", vg->priv->uuid);
+        g_signal_emit_by_name (vg, "changed");
+        g_signal_emit_by_name (vg->priv->pool, "presentable-changed", vg);
+}
+
+static gboolean
+find_pvs (GduLinuxLvm2VolumeGroup *vg)
+{
+        GList *devices;
+        GList *l;
+        guint64 seq_num;
+        GduDevice *pv_to_use;
+        gboolean emitted_changed;
+
+        emitted_changed = FALSE;
+
+        /* TODO: do incremental list management instead of recomputing on
+         * each add/remove/change event
+         */
+
+        /* out with the old.. */
+        g_list_foreach (vg->priv->pv_devices, (GFunc) g_object_unref, NULL);
+        g_list_free (vg->priv->pv_devices);
+        vg->priv->pv_devices = NULL;
+
+        /* find all GduDevice objects for LVs that are part of this VG */
+        devices = gdu_pool_get_devices (vg->priv->pool);
+        for (l = devices; l != NULL; l = l->next) {
+                GduDevice *d = GDU_DEVICE (l->data);
+                if (gdu_device_is_linux_lvm2_pv (d) &&
+                    g_strcmp0 (gdu_device_linux_lvm2_pv_get_group_uuid (d), vg->priv->uuid) == 0) {
+                        vg->priv->pv_devices = g_list_prepend (vg->priv->pv_devices, g_object_ref (d));
+                }
+        }
+        g_list_foreach (devices, (GFunc) g_object_unref, NULL);
+        g_list_free (devices);
+
+        /* Find the PV with the highest sequence number and use that */
+        seq_num = 0;
+        pv_to_use = NULL;
+        for (l = vg->priv->pv_devices; l != NULL; l = l->next) {
+                GduDevice *d = GDU_DEVICE (l->data);
+                if (pv_to_use == NULL || gdu_device_linux_lvm2_pv_get_group_sequence_number (d) > seq_num) {
+                        pv_to_use = d;
+                }
+        }
+
+        if (pv_to_use == NULL) {
+                /* ok, switch to the new LV */
+                if (vg->priv->pv != NULL)
+                        g_object_unref (vg->priv->pv);
+                vg->priv->pv = NULL;
+
+                /* emit changed since data might have changed */
+                emit_changed (vg);
+                emitted_changed = TRUE;
+
+        } else if (vg->priv->pv == NULL ||
+            (gdu_device_linux_lvm2_pv_get_group_sequence_number (pv_to_use) >
+             gdu_device_linux_lvm2_pv_get_group_sequence_number (vg->priv->pv))) {
+                /* ok, switch to the new PV */
+                if (vg->priv->pv != NULL)
+                        g_object_unref (vg->priv->pv);
+                vg->priv->pv = g_object_ref (pv_to_use);
+
+                /* emit changed since data might have changed */
+                emit_changed (vg);
+                emitted_changed = TRUE;
+        }
+
+        return emitted_changed;
+}
+
+static void
+on_device_added (GduPool *pool, GduDevice *device, gpointer user_data)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (user_data);
+        find_pvs (vg);
+}
+
+static void
+on_device_removed (GduPool *pool, GduDevice *device, gpointer user_data)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (user_data);
+        find_pvs (vg);
+}
+
+static void
+on_device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (user_data);
+        gboolean emitted_changed;
+
+        emitted_changed = find_pvs (vg);
+
+        /* propagate change events from LVs and PVs as change events on the VG */
+        if (!emitted_changed) {
+                if ((gdu_device_is_linux_lvm2_pv (device) &&
+                     g_strcmp0 (gdu_device_linux_lvm2_pv_get_group_uuid (device), vg->priv->uuid) == 0) ||
+                    (gdu_device_is_linux_lvm2_lv (device) &&
+                     g_strcmp0 (gdu_device_linux_lvm2_lv_get_group_uuid (device), vg->priv->uuid) == 0)) {
+
+                        emit_changed (vg);
+                }
+        }
+}
+
+/**
+ * _gdu_linux_lvm2_volume_group_new:
+ * @pool: A #GduPool.
+ * @uuid: The UUID for the volume group.
+ * @enclosing_presentable: The enclosing presentable
+ *
+ * Creates a new #GduLinuxLvm2VolumeGroup. Note that only one of @uuid and
+ * @device_file may be %NULL.
+ */
+GduLinuxLvm2VolumeGroup *
+_gdu_linux_lvm2_volume_group_new (GduPool        *pool,
+                                  const gchar    *uuid,
+                                  GduPresentable *enclosing_presentable)
+{
+        GduLinuxLvm2VolumeGroup *vg;
+
+        vg = GDU_LINUX_LVM2_VOLUME_GROUP (g_object_new (GDU_TYPE_LINUX_LVM2_VOLUME_GROUP, NULL));
+        vg->priv->pool = g_object_ref (pool);
+        vg->priv->uuid = g_strdup (uuid);
+
+        vg->priv->id = g_strdup_printf ("linux_lvm2_volume_group_%s_enclosed_by_%s",
+                                        uuid,
+                                        enclosing_presentable != NULL ? gdu_presentable_get_id (enclosing_presentable) : "(none)");
+
+        vg->priv->enclosing_presentable =
+                enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
+
+        g_signal_connect (vg->priv->pool, "device-added", G_CALLBACK (on_device_added), vg);
+        g_signal_connect (vg->priv->pool, "device-removed", G_CALLBACK (on_device_removed), vg);
+        g_signal_connect (vg->priv->pool, "device-changed", G_CALLBACK (on_device_changed), vg);
+        find_pvs (vg);
+
+        return vg;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* GduPresentable methods */
+
+static const gchar *
+gdu_linux_lvm2_volume_group_get_id (GduPresentable *presentable)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (presentable);
+
+        return vg->priv->id;
+}
+
+static GduDevice *
+gdu_linux_lvm2_volume_group_get_device (GduPresentable *presentable)
+{
+        return NULL;
+}
+
+static GduPresentable *
+gdu_linux_lvm2_volume_group_get_enclosing_presentable (GduPresentable *presentable)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (presentable);
+        if (vg->priv->enclosing_presentable != NULL)
+                return g_object_ref (vg->priv->enclosing_presentable);
+        return NULL;
+}
+
+static gchar *
+get_names_and_desc (GduPresentable  *presentable,
+                    gchar          **out_vpd_name,
+                    gchar          **out_desc)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (presentable);
+        gchar *ret;
+        gchar *ret_desc;
+        gchar *ret_vpd;
+        guint64 size;
+        gchar *size_str;
+
+        ret = NULL;
+        ret_desc = NULL;
+        ret_vpd = NULL;
+        size = 0;
+        size_str = NULL;
+
+        if (vg->priv->pv != NULL) {
+                ret = g_strdup (gdu_device_linux_lvm2_pv_get_group_name (vg->priv->pv));
+                size = gdu_device_linux_lvm2_pv_get_group_size (vg->priv->pv);
+                size_str = gdu_util_get_size_for_display (size, FALSE, FALSE);
+        } else {
+                ret = g_strdup (_("Volume Group"));
+        }
+
+        /* Translators: Description */
+        ret_desc = g_strdup (_("Volume Group"));
+
+        if (size_str != NULL) {
+                /* Translators: VPD name - first %s is the size e.g. '45 GB' */
+                ret_vpd = g_strdup_printf (_("%s LVM2 Volume Group"), size_str);
+        } else {
+                /* Translators: VPD name when size is not known */
+                ret_vpd = g_strdup (_("LVM2 Volume Group"));
+        }
+
+        if (out_desc != NULL)
+                *out_desc = ret_desc;
+        else
+                g_free (ret_desc);
+
+        if (out_vpd_name != NULL)
+                *out_vpd_name = ret_vpd;
+        else
+                g_free (ret_vpd);
+
+        g_free (size_str);
+
+        return ret;
+}
+
+static char *
+gdu_linux_lvm2_volume_group_get_name (GduPresentable *presentable)
+{
+        return get_names_and_desc (presentable, NULL, NULL);
+}
+
+static gchar *
+gdu_linux_lvm2_volume_group_get_description (GduPresentable *presentable)
+{
+        gchar *desc;
+        gchar *name;
+
+        name = get_names_and_desc (presentable, NULL, &desc);
+        g_free (name);
+
+        return desc;
+}
+
+static gchar *
+gdu_linux_lvm2_volume_group_get_vpd_name (GduPresentable *presentable)
+{
+        gchar *vpd_name;
+        gchar *name;
+
+        name = get_names_and_desc (presentable, &vpd_name, NULL);
+        g_free (name);
+
+        return vpd_name;
+}
+
+static GIcon *
+gdu_linux_lvm2_volume_group_get_icon (GduPresentable *presentable)
+{
+        return g_themed_icon_new_with_default_fallbacks ("gdu-raid-array");
+}
+
+static guint64
+gdu_linux_lvm2_volume_group_get_offset (GduPresentable *presentable)
+{
+        return 0;
+}
+
+static guint64
+gdu_linux_lvm2_volume_group_get_size (GduPresentable *presentable)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (presentable);
+        guint64 ret;
+
+        if (vg->priv->pv != NULL) {
+                ret = gdu_device_linux_lvm2_pv_get_group_size (vg->priv->pv);
+        } else {
+                ret = 0;
+        }
+
+        return ret;
+}
+
+static GduPool *
+gdu_linux_lvm2_volume_group_get_pool (GduPresentable *presentable)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (presentable);
+        return g_object_ref (vg->priv->pool);
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_is_allocated (GduPresentable *presentable)
+{
+        return TRUE;
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_is_recognized (GduPresentable *presentable)
+{
+        /* TODO: maybe we need to return FALSE sometimes */
+        return TRUE;
+}
+
+static void
+gdu_linux_lvm2_volume_group_presentable_iface_init (GduPresentableIface *iface)
+{
+        iface->get_id                    = gdu_linux_lvm2_volume_group_get_id;
+        iface->get_device                = gdu_linux_lvm2_volume_group_get_device;
+        iface->get_enclosing_presentable = gdu_linux_lvm2_volume_group_get_enclosing_presentable;
+        iface->get_name                  = gdu_linux_lvm2_volume_group_get_name;
+        iface->get_description           = gdu_linux_lvm2_volume_group_get_description;
+        iface->get_vpd_name              = gdu_linux_lvm2_volume_group_get_vpd_name;
+        iface->get_icon                  = gdu_linux_lvm2_volume_group_get_icon;
+        iface->get_offset                = gdu_linux_lvm2_volume_group_get_offset;
+        iface->get_size                  = gdu_linux_lvm2_volume_group_get_size;
+        iface->get_pool                  = gdu_linux_lvm2_volume_group_get_pool;
+        iface->is_allocated              = gdu_linux_lvm2_volume_group_is_allocated;
+        iface->is_recognized             = gdu_linux_lvm2_volume_group_is_recognized;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+_gdu_linux_lvm2_volume_group_rewrite_enclosing_presentable (GduLinuxLvm2VolumeGroup *vg)
+{
+        if (vg->priv->enclosing_presentable != NULL) {
+                const gchar *enclosing_presentable_id;
+                GduPresentable *new_enclosing_presentable;
+
+                enclosing_presentable_id = gdu_presentable_get_id (vg->priv->enclosing_presentable);
+
+                new_enclosing_presentable = gdu_pool_get_presentable_by_id (vg->priv->pool,
+                                                                            enclosing_presentable_id);
+                if (new_enclosing_presentable == NULL) {
+                        g_warning ("Error rewriting enclosing_presentable for %s, no such id %s",
+                                   vg->priv->id,
+                                   enclosing_presentable_id);
+                        goto out;
+                }
+
+                g_object_unref (vg->priv->enclosing_presentable);
+                vg->priv->enclosing_presentable = new_enclosing_presentable;
+        }
+
+ out:
+        ;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* GduDrive virtual method overrides */
+
+static gboolean
+gdu_linux_lvm2_volume_group_is_active (GduDrive *drive)
+{
+        return TRUE;
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_is_activatable (GduDrive *drive)
+{
+        return FALSE;
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_can_deactivate (GduDrive *drive)
+{
+        return FALSE;
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_can_activate (GduDrive *drive,
+                                          gboolean *out_degraded)
+{
+        return FALSE;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * gdu_linux_lvm2_volume_group_get_lv_device:
+ * @vg: A #GduLinuxLvm2VolumeGroup.
+ *
+ * Returns a #GduDevice for a PV in @vg with the most up to date volume group info.
+ *
+ * Returns: A #GduDevice (free with g_object_unref()) or %NULL if not found.
+ */
+GduDevice *
+gdu_linux_lvm2_volume_group_get_pv_device (GduLinuxLvm2VolumeGroup *vg)
+{
+        if (vg->priv->pv != NULL) {
+                return g_object_ref (vg->priv->pv);
+        } else {
+                return NULL;
+        }
+}
+
+GduLinuxLvm2VolumeGroupState
+gdu_linux_lvm2_volume_group_get_state (GduLinuxLvm2VolumeGroup *vg)
+{
+        GList *lvs;
+        GList *l;
+        guint num_lvs;
+        guint num_running_lvs;
+        GduLinuxLvm2VolumeGroupState ret;
+
+        lvs = gdu_pool_get_enclosed_presentables (vg->priv->pool, GDU_PRESENTABLE (vg));
+        num_lvs = 0;
+        num_running_lvs = 0;
+        for (l = lvs; l != NULL; l = l->next) {
+                GduPresentable *p = GDU_PRESENTABLE (l->data);
+
+                if (GDU_IS_LINUX_LVM2_VOLUME (p)) {
+                        GduDevice *d;
+
+                        d = gdu_presentable_get_device (p);
+                        if (d != NULL) {
+                                num_running_lvs++;
+                                g_object_unref (d);
+                        }
+                        num_lvs++;
+                }
+        }
+        g_list_foreach (lvs, (GFunc) g_object_unref, NULL);
+        g_list_free (lvs);
+
+        if (num_running_lvs == 0)
+                ret = GDU_LINUX_LVM2_VOLUME_GROUP_STATE_NOT_RUNNING;
+        else if (num_running_lvs == num_lvs)
+                ret = GDU_LINUX_LVM2_VOLUME_GROUP_STATE_RUNNING;
+        else
+                ret = GDU_LINUX_LVM2_VOLUME_GROUP_STATE_PARTIALLY_RUNNING;
+
+        return ret;
+}
+
+const gchar *
+gdu_linux_lvm2_volume_group_get_uuid (GduLinuxLvm2VolumeGroup *vg)
+{
+        return vg->priv->uuid;
+}

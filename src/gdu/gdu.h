@@ -30,6 +30,9 @@
 
 #include <gdu/gdu-types.h>
 #include <gdu/gdu-linux-md-drive.h>
+#include <gdu/gdu-linux-lvm2-volume-group.h>
+#include <gdu/gdu-linux-lvm2-volume.h>
+#include <gdu/gdu-linux-lvm2-volume-hole.h>
 #include <gdu/gdu-device.h>
 #include <gdu/gdu-adapter.h>
 #include <gdu/gdu-expander.h>

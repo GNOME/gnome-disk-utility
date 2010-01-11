@@ -36,6 +36,7 @@
 #include "gdu-shell.h"
 
 #include "gdu-section-linux-md-drive.h"
+#include "gdu-section-linux-lvm2-volume-group.h"
 #include "gdu-section-drive.h"
 #include "gdu-section-volumes.h"
 #include "gdu-section-hub.h"
@@ -232,6 +233,10 @@ compute_sections_to_show (GduShell *shell)
                         sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_MD_DRIVE);
                         sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
 
+                } else if (GDU_IS_LINUX_LVM2_VOLUME_GROUP (shell->priv->presentable_now_showing)) {
+
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_LINUX_LVM2_VOLUME_GROUP);
+                        sections_to_show = g_list_append (sections_to_show, (gpointer) GDU_TYPE_SECTION_VOLUMES);
 
                 } else if (GDU_IS_DRIVE (shell->priv->presentable_now_showing)) {
 

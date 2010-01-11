@@ -43,8 +43,11 @@ typedef struct _GduPresentable            GduPresentable; /* Dummy typedef */
 
 typedef struct _GduDrive                  GduDrive;
 typedef struct _GduLinuxMdDrive           GduLinuxMdDrive;
+typedef struct _GduLinuxLvm2VolumeGroup   GduLinuxLvm2VolumeGroup;
 typedef struct _GduVolume                 GduVolume;
 typedef struct _GduVolumeHole             GduVolumeHole;
+typedef struct _GduLinuxLvm2Volume        GduLinuxLvm2Volume;
+typedef struct _GduLinuxLvm2VolumeHole    GduLinuxLvm2VolumeHole;
 typedef struct _GduHub                    GduHub;
 typedef struct _GduMachine                GduMachine;
 

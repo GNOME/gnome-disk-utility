@@ -24,8 +24,11 @@
 
 #include <glib-object.h>
 #include <string.h>
-#include <gnome-keyring.h>
 #include <dbus/dbus-glib.h>
+
+#ifdef HAVE_GNOME_KEYRING
+#include <gnome-keyring.h>
+#endif
 
 #include "gdu-util.h"
 #include "gdu-pool.h"
@@ -680,6 +683,7 @@ gdu_util_get_default_part_type_for_scheme_and_fstype (const char *scheme, const 
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#ifdef HAVE_GNOME_KEYRING
 static GnomeKeyringPasswordSchema encrypted_device_password_schema = {
         GNOME_KEYRING_ITEM_GENERIC_SECRET,
         {
@@ -839,6 +843,37 @@ out:
         g_free (name);
         return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+#else /* ifdef HAVE_GNOME_KEYRING */
+
+gboolean
+gdu_util_save_secret (GduDevice      *device,
+                      const char     *secret,
+                      gboolean        save_in_keyring_session)
+{
+        return FALSE;
+}
+
+gboolean
+gdu_util_delete_secret (GduDevice *device)
+{
+        return FALSE;
+}
+
+gboolean
+gdu_util_have_secret (GduDevice *device)
+{
+        return FALSE;
+}
+
+gchar *
+gdu_util_get_secret (GduDevice *device)
+{
+        return NULL;
+}
+
+#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 

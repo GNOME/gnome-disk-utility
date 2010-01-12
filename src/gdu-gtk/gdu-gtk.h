@@ -54,6 +54,7 @@
 #include <gdu-gtk/gdu-edit-linux-md-dialog.h>
 #include <gdu-gtk/gdu-drive-benchmark-dialog.h>
 #include <gdu-gtk/gdu-connect-to-server-dialog.h>
+#include <gdu-gtk/gdu-create-linux-lvm2-volume-dialog.h>
 #undef __GDU_GTK_INSIDE_GDU_GTK_H
 
 G_BEGIN_DECLS

@@ -144,7 +144,6 @@ PKG_CHECK_MODULES(GIO2, [gio-2.0 >= $GIO2_REQUIRED])
 PKG_CHECK_MODULES(GIO_UNIX2, [gio-unix-2.0 >= $GIO2_REQUIRED])
 PKG_CHECK_MODULES(GTHREAD2, [gthread-2.0 >= $GLIB2_REQUIRED])
 PKG_CHECK_MODULES(DBUS_GLIB, [dbus-glib-1 >= $DBUS_GLIB_REQUIRED])
-PKG_CHECK_MODULES(GNOME_KEYRING, [gnome-keyring-1 >= $GNOME_KEYRING_REQUIRED])
 PKG_CHECK_MODULES(GTK2, [gtk+-2.0 >= $GTK2_REQUIRED])
 PKG_CHECK_MODULES(UNIQUE, [unique-1.0 >= $UNIQUE_REQUIRED])
 PKG_CHECK_MODULES(LIBNOTIFY, [libnotify  >= $LIBNOTIFY_REQUIRED])
@@ -152,6 +151,26 @@ PKG_CHECK_MODULES(UDISKS, [udisks  >= $UDISKS_REQUIRED udisks < $UDISKS_NEXT_ABI
 PKG_CHECK_MODULES(X11, [x11])
 PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.14])
 PKG_CHECK_MODULES(AVAHI_UI, [avahi-ui >= $AVAHI_UI_REQUIRED])
+
+# *************
+# GNOME Keyring
+# *************
+
+have_gnome_keyring=no
+AC_ARG_ENABLE(gnome-keyring, AS_HELP_STRING([--disable-gnome-keyring], [disable use of GNOME Keyring]))
+
+if test "x$enable_gnome_keyring" != "xno"; then
+	PKG_CHECK_MODULES(GNOME_KEYRING, gnome-keyring-1 >= $GNOME_KEYRING_REQUIRED,
+			  [AC_DEFINE(HAVE_GNOME_KEYRING, 1, [Define if gnome-keyring is available])
+			  have_gnome_keyring=yes], have_gnome_keyring=no)
+	if test "x$have_gnome_keyring" = xno -a "x$enable_gnome_keyring" = xyes; then
+		AC_MSG_ERROR([gnome-keyring support requested but libraries not found])
+	fi
+fi
+
+AC_SUBST(GNOME_KEYRING_LIBS)
+AC_SUBST(GNOME_KEYRING_CFLAGS)
+AM_CONDITIONAL(ENABLE_GNOME_KEYRING, [test "$have_gnome_keyring" = "yes"])
 
 # *************
 # Documentation
@@ -163,7 +182,7 @@ if test x$SCROLLKEEPER_CONFIG = xno; then
 fi
 
 # ********************
-# Internationalisation
+# Internationalization
 # ********************
 
 IT_PROG_INTLTOOL([$INTLTOOL_REQUIRED])
@@ -249,4 +268,5 @@ echo "
         Maintainer mode:            ${USE_MAINTAINER_MODE}
         Building api docs:          ${enable_gtk_doc}
         Nautilus extension:         ${have_nautilus}
+        GNOME Keyring support:      ${have_gnome_keyring}
 "

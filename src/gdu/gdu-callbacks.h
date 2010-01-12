@@ -184,6 +184,10 @@ typedef void (*GduPoolLinuxLvm2LVSetNameCompletedFunc) (GduPool    *pool,
                                                         GError     *error,
                                                         gpointer    user_data);
 
+typedef void (*GduPoolLinuxLvm2LVRemoveCompletedFunc) (GduPool    *pool,
+                                                       GError     *error,
+                                                       gpointer    user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduDrive */
 

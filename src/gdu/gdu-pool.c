@@ -2921,7 +2921,6 @@ gdu_pool_op_linux_lvm2_vg_set_name (GduPool *pool,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-
 typedef struct {
         GduPool *pool;
         GduPoolLinuxLvm2LVSetNameCompletedFunc callback;
@@ -2960,6 +2959,50 @@ gdu_pool_op_linux_lvm2_lv_set_name (GduPool *pool,
                                                              new_name,
                                                              op_linux_lvm2_lv_set_name_cb,
                                                              data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2LVRemoveCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2LVRemoveData;
+
+static void
+op_linux_lvm2_lv_remove_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2LVRemoveData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
+                                  const gchar *group_uuid,
+                                  const gchar *uuid,
+                                  GduPoolLinuxLvm2LVSetNameCompletedFunc callback,
+                                  gpointer user_data)
+{
+        LinuxLvm2LVSetNameData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2LVSetNameData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_lv_remove_async (pool->priv->proxy,
+                                                           group_uuid,
+                                                           uuid,
+                                                           (const char **) options,
+                                                           op_linux_lvm2_lv_remove_cb,
+                                                           data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -162,6 +162,12 @@ void gdu_pool_op_linux_lvm2_lv_set_name (GduPool *pool,
                                          GduPoolLinuxLvm2LVSetNameCompletedFunc callback,
                                          gpointer user_data);
 
+void gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
+                                       const gchar *group_uuid,
+                                       const gchar *uuid,
+                                       GduPoolLinuxLvm2LVRemoveCompletedFunc callback,
+                                       gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

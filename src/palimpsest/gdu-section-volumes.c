@@ -72,6 +72,7 @@ struct _GduSectionVolumesPrivate
         GduButtonElement *lvm2_lv_start_button;
         GduButtonElement *lvm2_lv_stop_button;
         GduButtonElement *lvm2_lv_edit_name_button;
+        GduButtonElement *lvm2_lv_delete_button;
 };
 
 G_DEFINE_TYPE (GduSectionVolumes, gdu_section_volumes, GDU_TYPE_SECTION)
@@ -1510,7 +1511,6 @@ on_lvm2_lv_start_button_clicked (GduButtonElement *button_element,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-
 static void
 lvm2_lv_set_name_op_callback (GduPool   *pool,
                               GError    *error,
@@ -1585,6 +1585,68 @@ on_lvm2_lv_edit_name_button_clicked (GduButtonElement *button_element,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+lvm2_lv_remove_op_callback (GduPool   *pool,
+                            GError    *error,
+                            gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                               NULL,
+                                               _("Error deleting Logical Volume"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_lvm2_lv_delete_button_clicked (GduButtonElement *button_element,
+                                  gpointer          user_data)
+{
+        GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduLinuxLvm2Volume *volume;
+        GduPool *pool;
+        const gchar *group_uuid;
+        const gchar *uuid;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+
+        volume = GDU_LINUX_LVM2_VOLUME (gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid)));
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (volume));
+
+        group_uuid = gdu_linux_lvm2_volume_get_group_uuid (volume);
+        uuid = gdu_linux_lvm2_volume_get_uuid (volume);
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_confirmation_dialog_new (toplevel,
+                                              GDU_PRESENTABLE (volume),
+                                              _("Are you sure you want to delete the logical volume?"),
+                                              _("_Delete"));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == GTK_RESPONSE_OK) {
+                gdu_pool_op_linux_lvm2_lv_remove (pool,
+                                                  group_uuid,
+                                                  uuid,
+                                                  lvm2_lv_remove_op_callback,
+                                                  g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+        }
+        gtk_widget_destroy (dialog);
+
+        g_object_unref (pool);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_section_volumes_update (GduSection *_section)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
@@ -1610,6 +1672,7 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_lvm2_lv_start_button;
         gboolean show_lvm2_lv_stop_button;
         gboolean show_lvm2_lv_edit_name_button;
+        gboolean show_lvm2_lv_delete_button;
         GduKnownFilesystem *kfs;
         GPtrArray *elements;
 
@@ -1634,6 +1697,7 @@ gdu_section_volumes_update (GduSection *_section)
         show_lvm2_lv_start_button = FALSE;
         show_lvm2_lv_stop_button = FALSE;
         show_lvm2_lv_edit_name_button = FALSE;
+        show_lvm2_lv_delete_button = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -1743,6 +1807,7 @@ gdu_section_volumes_update (GduSection *_section)
                 else
                         show_lvm2_lv_start_button = TRUE;
                 show_lvm2_lv_edit_name_button = TRUE;
+                show_lvm2_lv_delete_button = TRUE;
         }
 
         if (section->priv->usage_element != NULL) {
@@ -2002,6 +2067,7 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->lvm2_lv_start_button, show_lvm2_lv_start_button);
         gdu_button_element_set_visible (section->priv->lvm2_lv_stop_button, show_lvm2_lv_stop_button);
         gdu_button_element_set_visible (section->priv->lvm2_lv_edit_name_button, show_lvm2_lv_edit_name_button);
+        gdu_button_element_set_visible (section->priv->lvm2_lv_delete_button, show_lvm2_lv_delete_button);
 
         if (d != NULL)
                 g_object_unref (d);
@@ -2241,6 +2307,16 @@ gdu_section_volumes_constructed (GObject *object)
                           section);
         g_ptr_array_add (button_elements, button_element);
         section->priv->lvm2_lv_edit_name_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_DELETE,
+                                                 _("D_elete Volume"),
+                                                 _("Delete the Logical Volume"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_lvm2_lv_delete_button_clicked),
+                          section);
+        g_ptr_array_add (button_elements, button_element);
+        section->priv->lvm2_lv_delete_button = button_element;
 
         button_element = gdu_button_element_new ("gdu-raid-array-stop",
                                                  _("Sto_p Volume"),

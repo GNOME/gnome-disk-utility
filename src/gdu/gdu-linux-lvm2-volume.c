@@ -28,6 +28,7 @@
 #include "gdu-util.h"
 #include "gdu-pool.h"
 #include "gdu-device.h"
+#include "gdu-linux-lvm2-volume-group.h"
 #include "gdu-linux-lvm2-volume.h"
 #include "gdu-presentable.h"
 
@@ -40,7 +41,7 @@ struct _GduLinuxLvm2VolumePrivate
         gchar *group_uuid;
         gchar *uuid;
 
-        guint64 offset;
+        guint position;
         guint64 size;
 
         /* the GduDevice for the LV / mapped device (if activated) */
@@ -58,6 +59,8 @@ static void gdu_linux_lvm2_volume_presentable_iface_init (GduPresentableIface *i
 static void on_device_added (GduPool *pool, GduDevice *device, gpointer user_data);
 static void on_device_removed (GduPool *pool, GduDevice *device, gpointer user_data);
 static void on_device_changed (GduPool *pool, GduDevice *device, gpointer user_data);
+
+static void on_presentable_changed (GduPresentable *presentable, gpointer user_data);
 
 G_DEFINE_TYPE_WITH_CODE (GduLinuxLvm2Volume, gdu_linux_lvm2_volume, GDU_TYPE_VOLUME,
                          G_IMPLEMENT_INTERFACE (GDU_TYPE_PRESENTABLE,
@@ -82,8 +85,12 @@ gdu_linux_lvm2_volume_finalize (GObject *object)
         g_free (volume->priv->group_uuid);
         g_free (volume->priv->uuid);
 
-        if (volume->priv->enclosing_presentable != NULL)
+        if (volume->priv->enclosing_presentable != NULL) {
+                g_signal_handlers_disconnect_by_func (volume->priv->enclosing_presentable,
+                                                      on_presentable_changed,
+                                                      volume);
                 g_object_unref (volume->priv->enclosing_presentable);
+        }
 
         if (volume->priv->lv != NULL)
                 g_object_unref (volume->priv->lv);
@@ -181,39 +188,72 @@ on_device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
                 emit_changed (volume);
 }
 
+static gboolean
+update_lv_info (GduLinuxLvm2Volume *volume)
+{
+        guint position;
+        gchar *name;
+        guint64 size;
+        gboolean changed;
+
+        changed = FALSE;
+
+        if (gdu_linux_lvm2_volume_group_get_lv_info (GDU_LINUX_LVM2_VOLUME_GROUP (volume->priv->enclosing_presentable),
+                                                     volume->priv->uuid,
+                                                     &position,
+                                                     &name,
+                                                     &size)) {
+                if (volume->priv->position != position) {
+                        volume->priv->position = position;
+                        changed = TRUE;
+                }
+                if (g_strcmp0 (volume->priv->name, name) != 0) {
+                        g_free (volume->priv->name);
+                        volume->priv->name = name;
+                        changed = TRUE;
+                }
+                if (volume->priv->size != size) {
+                        volume->priv->size = size;
+                        changed = TRUE;
+                }
+        }
+
+        return changed;
+}
+
+/* Called when the VG changes */
+static void
+on_presentable_changed (GduPresentable *presentable, gpointer user_data)
+{
+        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (user_data);
+
+        if (update_lv_info (volume)) {
+                g_signal_emit_by_name (volume, "changed");
+                g_signal_emit_by_name (volume->priv->pool, "presentable-changed", volume);
+        }
+}
+
 /**
  * _gdu_linux_lvm2_volume_new:
  * @pool: A #GduPool.
- * @name: The name of the logical volume.
  * @group_uuid: The UUID of the group that the logical volume belongs to.
  * @uuid: The UUID of the logical volume.
- * @offset: The offset of the logical volume.
- * @size: The size of the logical volume.
  * @enclosing_presentable: The enclosing presentable.
  *
  * Creates a new #GduLinuxLvm2Volume.
- *
- * Note that @offset is only used for laying out the volumes in e.g. a grid - it doesn't really
- * make sense to talk about the offset of a LV in LVM2.
  */
 GduLinuxLvm2Volume *
 _gdu_linux_lvm2_volume_new (GduPool        *pool,
-                            const gchar    *name,
                             const gchar    *group_uuid,
                             const gchar    *uuid,
-                            guint64         offset,
-                            guint64         size,
                             GduPresentable *enclosing_presentable)
 {
         GduLinuxLvm2Volume *volume;
 
         volume = GDU_LINUX_LVM2_VOLUME (g_object_new (GDU_TYPE_LINUX_LVM2_VOLUME, NULL));
         volume->priv->pool = g_object_ref (pool);
-        volume->priv->name = g_strdup (name);
         volume->priv->group_uuid = g_strdup (group_uuid);
         volume->priv->uuid = g_strdup (uuid);
-        volume->priv->offset = offset;
-        volume->priv->size = size;
 
         volume->priv->id = g_strdup_printf ("linux_lvm2_volume_%s_enclosed_by_%s",
                                         uuid,
@@ -221,6 +261,15 @@ _gdu_linux_lvm2_volume_new (GduPool        *pool,
 
         volume->priv->enclosing_presentable =
                 enclosing_presentable != NULL ? g_object_ref (enclosing_presentable) : NULL;
+
+        update_lv_info (volume);
+        /* Track the VG since we get the data like name and size from there */
+        if (volume->priv->enclosing_presentable != NULL) {
+                g_signal_connect (volume->priv->enclosing_presentable,
+                                  "changed",
+                                  G_CALLBACK (on_presentable_changed),
+                                  volume);
+        }
 
         g_signal_connect (volume->priv->pool, "device-added", G_CALLBACK (on_device_added), volume);
         g_signal_connect (volume->priv->pool, "device-removed", G_CALLBACK (on_device_removed), volume);
@@ -338,14 +387,13 @@ gdu_linux_lvm2_volume_get_offset (GduPresentable *presentable)
 {
         GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
 
-        return volume->priv->offset;
+        return volume->priv->position;
 }
 
 static guint64
 gdu_linux_lvm2_volume_get_size (GduPresentable *presentable)
 {
         GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
-
         return volume->priv->size;
 }
 

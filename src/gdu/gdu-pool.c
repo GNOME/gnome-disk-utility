@@ -1165,7 +1165,6 @@ recompute_presentables (GduPool *pool)
                         if (vg == NULL) {
                                 gchar **lvs;
                                 guint n;
-                                guint64 offset;
                                 guint64 unallocated_size;
 
                                 /* otherwise create one */
@@ -1175,7 +1174,6 @@ recompute_presentables (GduPool *pool)
 
                                 /* and create logical volume objects as well */
                                 lvs = gdu_device_linux_lvm2_pv_get_group_logical_volumes (device);
-                                offset = 0;
                                 for (n = 0; lvs != NULL && lvs[n] != NULL; n++) {
                                         const gchar *lv_desc = lvs[n];
                                         gchar **tokens;
@@ -1187,7 +1185,6 @@ recompute_presentables (GduPool *pool)
                                         tokens = g_strsplit (lv_desc, ";", 0);
                                         for (m = 0; tokens[m] != NULL; m++) {
                                                 /* TODO: we need to unescape values */
-
                                                 if (g_str_has_prefix (tokens[m], "name="))
                                                         name = g_strdup (tokens[m] + 5);
                                                 else if (g_str_has_prefix (tokens[m], "uuid="))
@@ -1200,15 +1197,10 @@ recompute_presentables (GduPool *pool)
                                                 GduLinuxLvm2Volume *volume;
 
                                                 volume = _gdu_linux_lvm2_volume_new (pool,
-                                                                                     name,
                                                                                      vg_uuid,
                                                                                      uuid,
-                                                                                     offset,
-                                                                                     size,
                                                                                      GDU_PRESENTABLE (vg));
                                                 new_presentables = g_list_prepend (new_presentables, volume);
-
-                                                offset += size;
 
                                         } else {
                                                 g_warning ("Malformed LMV2 LV in group with UUID %s: "

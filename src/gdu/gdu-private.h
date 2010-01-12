@@ -131,11 +131,8 @@ _gdu_linux_lvm2_volume_group_new (GduPool        *pool,
 void _gdu_linux_lvm2_volume_group_rewrite_enclosing_presentable (GduLinuxLvm2VolumeGroup *vg);
 
 GduLinuxLvm2Volume *_gdu_linux_lvm2_volume_new (GduPool        *pool,
-                                                const gchar    *name,
                                                 const gchar    *group_uuid,
                                                 const gchar    *uuid,
-                                                guint64         offset,
-                                                guint64         size,
                                                 GduPresentable *enclosing_presentable);
 
 void _gdu_linux_lvm2_volume_rewrite_enclosing_presentable (GduLinuxLvm2Volume *volume);

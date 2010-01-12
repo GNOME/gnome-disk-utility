@@ -559,3 +559,69 @@ gdu_linux_lvm2_volume_group_get_uuid (GduLinuxLvm2VolumeGroup *vg)
 {
         return vg->priv->uuid;
 }
+
+gboolean
+gdu_linux_lvm2_volume_group_get_lv_info (GduLinuxLvm2VolumeGroup  *vg,
+                                         const gchar              *lv_uuid,
+                                         guint                    *out_position,
+                                         gchar                   **out_name,
+                                         guint64                  *out_size)
+{
+        gchar **lvs;
+        gboolean ret;
+        guint position;
+        gchar *name;
+        guint64 size;
+        guint n;
+
+        position = G_MAXUINT;
+        name = NULL;
+        size = G_MAXUINT64;
+        ret = FALSE;
+
+        if (vg->priv->pv == NULL)
+                goto out;
+
+        lvs = gdu_device_linux_lvm2_pv_get_group_logical_volumes (vg->priv->pv);
+
+        for (n = 0; lvs != NULL && lvs[n] != NULL; n++) {
+                gchar **tokens;
+                guint m;
+
+                tokens = g_strsplit (lvs[n], ";", 0);
+
+                for (m = 0; tokens[m] != NULL; m++) {
+                        /* TODO: we need to unescape values */
+                        if (g_str_has_prefix (tokens[m], "uuid=") && g_strcmp0 (tokens[m] + 5, lv_uuid) == 0) {
+                                guint p;
+
+                                for (p = 0; tokens[p] != NULL; p++) {
+                                        /* TODO: we need to unescape values */
+                                        if (g_str_has_prefix (tokens[p], "name="))
+                                                name = g_strdup (tokens[p] + 5);
+                                        else if (g_str_has_prefix (tokens[p], "size="))
+                                                size = g_ascii_strtoull (tokens[p] + 5, NULL, 10);
+                                }
+                                position = n;
+
+                                g_strfreev (tokens);
+                                ret = TRUE;
+                                goto out;
+                        }
+                }
+                g_strfreev (tokens);
+        }
+
+ out:
+        if (ret) {
+                if (out_position != NULL)
+                        *out_position = position;
+                if (out_name != NULL)
+                        *out_name = name;
+                else
+                        g_free (name);
+                if (out_size != NULL)
+                        *out_size = size;
+        }
+        return ret;
+}

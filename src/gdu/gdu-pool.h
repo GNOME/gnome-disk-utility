@@ -149,6 +149,12 @@ void gdu_pool_op_linux_lvm2_lv_start (GduPool *pool,
                                       GduPoolLinuxLvm2VGStartCompletedFunc callback,
                                       gpointer user_data);
 
+void gdu_pool_op_linux_lvm2_vg_set_name (GduPool *pool,
+                                         const gchar *uuid,
+                                         const gchar *new_name,
+                                         GduPoolLinuxLvm2VGSetNameCompletedFunc callback,
+                                         gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

@@ -2834,7 +2834,6 @@ gdu_pool_op_linux_lvm2_vg_stop (GduPool *pool,
                                                           data);
 }
 
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct {
@@ -2877,6 +2876,47 @@ gdu_pool_op_linux_lvm2_lv_start (GduPool *pool,
                                                           (const char **) options,
                                                           op_linux_lvm2_lv_start_cb,
                                                           data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2VGStopCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2VGSetNameData;
+
+static void
+op_linux_lvm2_vg_set_name_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2VGSetNameData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_vg_set_name (GduPool *pool,
+                                    const gchar *uuid,
+                                    const gchar *new_name,
+                                    GduPoolLinuxLvm2VGSetNameCompletedFunc callback,
+                                    gpointer user_data)
+{
+        LinuxLvm2VGSetNameData *data;
+
+        data = g_new0 (LinuxLvm2VGSetNameData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_vg_set_name_async (pool->priv->proxy,
+                                                             uuid,
+                                                             new_name,
+                                                             op_linux_lvm2_vg_set_name_cb,
+                                                             data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

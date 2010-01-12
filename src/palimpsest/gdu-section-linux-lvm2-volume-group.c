@@ -44,6 +44,7 @@ struct _GduSectionLinuxLvm2VolumeGroupPrivate
 
         GduButtonElement *vg_start_button;
         GduButtonElement *vg_stop_button;
+        GduButtonElement *vg_edit_name_button;
 };
 
 G_DEFINE_TYPE (GduSectionLinuxLvm2VolumeGroup, gdu_section_linux_lvm2_volume_group, GDU_TYPE_SECTION)
@@ -149,6 +150,73 @@ on_lvm2_vg_stop_button_clicked (GduButtonElement *button_element,
                                         g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
 
         g_object_unref (pool);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+lvm2_vg_set_name_op_callback (GduPool   *pool,
+                              GError    *error,
+                              gpointer   user_data)
+{
+        GduShell *shell = GDU_SHELL (user_data);
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
+                                               NULL,
+                                               _("Error setting name for Volume Group"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+        g_object_unref (shell);
+}
+
+static void
+on_vg_edit_name_clicked (GduButtonElement *button_element,
+                         gpointer          user_data)
+{
+        GduSectionLinuxLvm2VolumeGroup *section = GDU_SECTION_LINUX_LVM2_VOLUME_GROUP (user_data);
+        GduLinuxLvm2VolumeGroup *vg;
+        GduPool *pool;
+        const gchar *uuid;
+        gchar *vg_name;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+
+        vg = GDU_LINUX_LVM2_VOLUME_GROUP (gdu_section_get_presentable (GDU_SECTION (section)));
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (vg));
+        uuid = gdu_linux_lvm2_volume_group_get_uuid (vg);
+        vg_name = gdu_presentable_get_name (GDU_PRESENTABLE (vg));
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_edit_name_dialog_new (toplevel,
+                                           GDU_PRESENTABLE (vg),
+                                           vg_name,
+                                           256,
+                                           _("Choose a new Volume Group name."),
+                                           _("_Name:"));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        if (response == GTK_RESPONSE_APPLY) {
+                gchar *new_name;
+                new_name = gdu_edit_name_dialog_get_name (GDU_EDIT_NAME_DIALOG (dialog));
+                gdu_pool_op_linux_lvm2_vg_set_name (pool,
+                                                    uuid,
+                                                    new_name,
+                                                    lvm2_vg_set_name_op_callback,
+                                                    g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+                g_free (new_name);
+        }
+        gtk_widget_destroy (dialog);
+
+        g_object_unref (pool);
+        g_free (vg_name);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -335,6 +403,18 @@ gdu_section_linux_lvm2_volume_group_constructed (GObject *object)
                           section);
         section->priv->vg_stop_button = button_element;
         g_ptr_array_add (elements, button_element);
+
+        /* TODO: better icon */
+        button_element = gdu_button_element_new (GTK_STOCK_BOLD,
+                                                 _("Edit _Name"),
+                                                 _("Change the Volume Group name"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_vg_edit_name_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->vg_edit_name_button = button_element;
+
 
         gdu_button_table_set_elements (GDU_BUTTON_TABLE (table), elements);
         g_ptr_array_unref (elements);

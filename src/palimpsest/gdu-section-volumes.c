@@ -1392,26 +1392,178 @@ on_fs_mount_point_element_activated (GduDetailsElement *element,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduShell *shell;
+        GduPresentable *presentable;
+        char *encrypt_passphrase;
+        gboolean save_in_keyring;
+        gboolean save_in_keyring_session;
+} CreateLinuxLvm2LVData;
+
+static void
+create_linux_lvm2_lv_data_free (CreateLinuxLvm2LVData *data)
+{
+        if (data->shell != NULL)
+                g_object_unref (data->shell);
+        if (data->presentable != NULL)
+                g_object_unref (data->presentable);
+        if (data->encrypt_passphrase != NULL) {
+                memset (data->encrypt_passphrase, '\0', strlen (data->encrypt_passphrase));
+                g_free (data->encrypt_passphrase);
+        }
+        g_free (data);
+}
+
+static void
+lvm2_lv_create_op_callback (GduPool    *pool,
+                            gchar      *created_device_object_path,
+                            GError     *error,
+                            gpointer    user_data)
+{
+        CreateLinuxLvm2LVData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                               data->presentable,
+                                               _("Error creating Logical Volume"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        } else {
+                if (data->encrypt_passphrase != NULL) {
+                        GduDevice *cleartext_device;
+
+                        cleartext_device = gdu_pool_get_by_object_path (pool, created_device_object_path);
+                        if (cleartext_device != NULL) {
+                                const gchar *cryptotext_device_object_path;
+
+                                cryptotext_device_object_path = gdu_device_luks_cleartext_get_slave (cleartext_device);
+                                if (cryptotext_device_object_path != NULL) {
+                                        GduDevice *cryptotext_device;
+
+                                        cryptotext_device = gdu_pool_get_by_object_path (pool,
+                                                                                         cryptotext_device_object_path);
+                                        if (cryptotext_device != NULL) {
+                                                /* now set the passphrase if requested */
+                                                if (data->save_in_keyring || data->save_in_keyring_session) {
+                                                        gdu_util_save_secret (cryptotext_device,
+                                                                              data->encrypt_passphrase,
+                                                                              data->save_in_keyring_session);
+                                                }
+                                                g_object_unref (cryptotext_device);
+                                        }
+                                }
+                                g_object_unref (cleartext_device);
+                        }
+                }
+                g_free (created_device_object_path);
+        }
+
+        if (data != NULL)
+                create_linux_lvm2_lv_data_free (data);
+}
+
 static void
 on_lvm2_create_lv_button_clicked (GduButtonElement *button_element,
                                   gpointer          user_data)
 {
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
+        GduPresentable *v;
+        GduPresentable *vg;
+        GduPool *pool;
+        GtkWindow *toplevel;
         GtkWidget *dialog;
-        GError *error;
+        gint response;
+        GduFormatDialogFlags flags;
+        const gchar *vg_uuid;
 
-        error = g_error_new (GDU_ERROR,
-                             GDU_ERROR_NOT_SUPPORTED,
-                             _("Not yet implemented"));
-        dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
-                                       gdu_section_get_presentable (GDU_SECTION (section)),
-                                       _("There was an error creating a Logical Volume"),
-                                       error);
+        v = NULL;
+        pool = NULL;
+        dialog = NULL;
+
+        v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
+        if (v == NULL || !GDU_IS_VOLUME_HOLE (v))
+                goto out;
+
+        vg = gdu_section_get_presentable (GDU_SECTION (section));
+        vg_uuid = gdu_linux_lvm2_volume_group_get_uuid (GDU_LINUX_LVM2_VOLUME_GROUP (vg));
+
+        pool = gdu_presentable_get_pool (v);
+
+        flags = GDU_FORMAT_DIALOG_FLAGS_NONE;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+        dialog = gdu_create_linux_lvm2_volume_dialog_new (toplevel,
+                                                          vg,
+                                                          gdu_presentable_get_size (v),
+                                                          flags);
         gtk_widget_show_all (dialog);
-        gtk_window_present (GTK_WINDOW (dialog));
-        gtk_dialog_run (GTK_DIALOG (dialog));
-        gtk_widget_destroy (dialog);
-        g_error_free (error);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response == GTK_RESPONSE_OK) {
+                CreateLinuxLvm2LVData *data;
+                gchar *volume_name;
+                gchar *fs_type;
+                gchar *fs_label;
+                gboolean fs_take_ownership;
+                guint64 size;
+
+                data = g_new0 (CreateLinuxLvm2LVData, 1);
+                data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+                data->presentable = g_object_ref (vg);
+
+                if (gdu_format_dialog_get_encrypt (GDU_FORMAT_DIALOG (dialog))) {
+                        data->encrypt_passphrase = gdu_util_dialog_ask_for_new_secret (GTK_WIDGET (toplevel),
+                                                                                       &data->save_in_keyring,
+                                                                                       &data->save_in_keyring_session);
+                        if (data->encrypt_passphrase == NULL) {
+                                create_linux_lvm2_lv_data_free (data);
+                                goto out;
+                        }
+                }
+
+                /* For now, just use a generic LV name - maybe we should include a GtkEntry widget in
+                 * the GduCreateLinuxLvm2LVDialog, maybe not.
+                 */
+                volume_name = gdu_linux_lvm2_volume_group_get_compute_new_lv_name (GDU_LINUX_LVM2_VOLUME_GROUP (vg));
+
+                fs_type = gdu_format_dialog_get_fs_type (GDU_FORMAT_DIALOG (dialog));
+                fs_label = gdu_format_dialog_get_fs_label (GDU_FORMAT_DIALOG (dialog));
+                fs_take_ownership = gdu_format_dialog_get_take_ownership (GDU_FORMAT_DIALOG (dialog));
+
+                size = gdu_create_linux_lvm2_volume_dialog_get_size (GDU_CREATE_LINUX_LVM2_VOLUME_DIALOG (dialog));
+
+                /* TODO: include widgets for configuring striping and mirroring */
+
+                gdu_pool_op_linux_lvm2_lv_create (pool,
+                                                  vg_uuid,
+                                                  volume_name,
+                                                  size,
+                                                  0, /* num_stripes */
+                                                  0, /* stripe_size */
+                                                  0, /* num_mirrors */
+                                                  fs_type,
+                                                  fs_label,
+                                                  data->encrypt_passphrase,
+                                                  fs_take_ownership,
+                                                  lvm2_lv_create_op_callback,
+                                                  data);
+
+                g_free (fs_type);
+                g_free (fs_label);
+                g_free (volume_name);
+        }
+ out:
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+        if (v != NULL)
+                g_object_unref (v);
+        if (pool != NULL)
+                g_object_unref (pool);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2166,7 +2318,7 @@ gdu_section_volumes_constructed (GObject *object)
         section->priv->fs_mount_button = button_element;
 
         button_element = gdu_button_element_new ("gdu-unmount",
-                                                 _("_Unmount Volume"),
+                                                 _("Un_mount Volume"),
                                                  _("Unmount the volume"));
         g_signal_connect (button_element,
                           "clicked",
@@ -2247,7 +2399,7 @@ gdu_section_volumes_constructed (GObject *object)
         section->priv->luks_lock_button = button_element;
 
         button_element = gdu_button_element_new ("gdu-encrypted-unlock",
-                                                 _("_Unlock Volume"),
+                                                 _("Un_lock Volume"),
                                                  _("Make encrypted data available"));
         g_signal_connect (button_element,
                           "clicked",

@@ -2984,15 +2984,15 @@ void
 gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
                                   const gchar *group_uuid,
                                   const gchar *uuid,
-                                  GduPoolLinuxLvm2LVSetNameCompletedFunc callback,
+                                  GduPoolLinuxLvm2LVRemoveCompletedFunc callback,
                                   gpointer user_data)
 {
-        LinuxLvm2LVSetNameData *data;
+        LinuxLvm2LVRemoveData *data;
         char *options[16];
 
         options[0] = NULL;
 
-        data = g_new0 (LinuxLvm2LVSetNameData, 1);
+        data = g_new0 (LinuxLvm2LVRemoveData, 1);
         data->pool = g_object_ref (pool);
         data->callback = callback;
         data->user_data = user_data;
@@ -3002,6 +3002,82 @@ gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
                                                            uuid,
                                                            (const char **) options,
                                                            op_linux_lvm2_lv_remove_cb,
+                                                           data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2LVCreateCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2LVCreateData;
+
+static void
+op_linux_lvm2_lv_create_cb (DBusGProxy *proxy,
+                            char       *create_logical_volume_object_path,
+                            GError *error,
+                            gpointer user_data)
+{
+        LinuxLvm2LVCreateData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, create_logical_volume_object_path, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_lv_create (GduPool *pool,
+                                  const gchar *group_uuid,
+                                  const gchar *name,
+                                  guint64 size,
+                                  guint num_stripes,
+                                  guint64 stripe_size,
+                                  guint num_mirrors,
+                                  const char                             *fstype,
+                                  const char                             *fslabel,
+                                  const char                             *encrypt_passphrase,
+                                  gboolean                                fs_take_ownership,
+                                  GduPoolLinuxLvm2LVCreateCompletedFunc callback,
+                                  gpointer user_data)
+{
+        LinuxLvm2LVCreateData *data;
+        char *options[16];
+        char *fsoptions[16];
+        guint n;
+
+        data = g_new0 (LinuxLvm2LVCreateData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        options[0] = NULL;
+
+        n = 0;
+        if (fslabel != NULL && strlen (fslabel) > 0) {
+                fsoptions[n++] = g_strdup_printf ("label=%s", fslabel);
+        }
+        if (encrypt_passphrase != NULL && strlen (encrypt_passphrase) > 0) {
+                fsoptions[n++] = g_strdup_printf ("luks_encrypt=%s", encrypt_passphrase);
+        }
+        if (fs_take_ownership) {
+                fsoptions[n++] = g_strdup_printf ("take_ownership_uid=%d", getuid ());
+                fsoptions[n++] = g_strdup_printf ("take_ownership_gid=%d", getgid ());
+        }
+        fsoptions[n] = NULL;
+
+        org_freedesktop_UDisks_linux_lvm2_lv_create_async (pool->priv->proxy,
+                                                           group_uuid,
+                                                           name,
+                                                           size,
+                                                           num_stripes,
+                                                           stripe_size,
+                                                           num_mirrors,
+                                                           (const char **) options,
+                                                           fstype,
+                                                           (const char **) fsoptions,
+                                                           op_linux_lvm2_lv_create_cb,
                                                            data);
 }
 

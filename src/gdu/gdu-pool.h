@@ -168,6 +168,20 @@ void gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
                                        GduPoolLinuxLvm2LVRemoveCompletedFunc callback,
                                        gpointer user_data);
 
+void gdu_pool_op_linux_lvm2_lv_create (GduPool *pool,
+                                       const gchar *group_uuid,
+                                       const gchar *name,
+                                       guint64 size,
+                                       guint num_stripes,
+                                       guint64 stripe_size,
+                                       guint num_mirrors,
+                                       const char                             *fstype,
+                                       const char                             *fslabel,
+                                       const char                             *encrypt_passphrase,
+                                       gboolean                                fs_take_ownership,
+                                       GduPoolLinuxLvm2LVCreateCompletedFunc callback,
+                                       gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

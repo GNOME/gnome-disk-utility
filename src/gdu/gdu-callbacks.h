@@ -188,6 +188,11 @@ typedef void (*GduPoolLinuxLvm2LVRemoveCompletedFunc) (GduPool    *pool,
                                                        GError     *error,
                                                        gpointer    user_data);
 
+typedef void (*GduPoolLinuxLvm2LVCreateCompletedFunc) (GduPool    *pool,
+                                                       char       *create_logical_volume_object_path,
+                                                       GError     *error,
+                                                       gpointer    user_data);
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* GduDrive */
 

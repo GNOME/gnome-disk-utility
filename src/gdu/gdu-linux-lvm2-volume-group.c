@@ -560,6 +560,26 @@ gdu_linux_lvm2_volume_group_get_uuid (GduLinuxLvm2VolumeGroup *vg)
         return vg->priv->uuid;
 }
 
+guint
+gdu_linux_lvm2_volume_group_get_num_lvs (GduLinuxLvm2VolumeGroup *vg)
+{
+        guint ret;
+        gchar **lvs;
+
+        ret = 0;
+
+        if (vg->priv->pv == NULL)
+                goto out;
+
+        lvs = gdu_device_linux_lvm2_pv_get_group_logical_volumes (vg->priv->pv);
+
+        if (lvs != NULL)
+                ret = g_strv_length (lvs);
+
+ out:
+        return ret;
+}
+
 gboolean
 gdu_linux_lvm2_volume_group_get_lv_info (GduLinuxLvm2VolumeGroup  *vg,
                                          const gchar              *lv_uuid,
@@ -624,4 +644,53 @@ gdu_linux_lvm2_volume_group_get_lv_info (GduLinuxLvm2VolumeGroup  *vg,
                         *out_size = size;
         }
         return ret;
+}
+
+static gboolean
+lv_name_exists (GduLinuxLvm2VolumeGroup *vg, const gchar *name)
+{
+        gboolean ret;
+        gchar **lvs;
+        guint n;
+
+        ret = FALSE;
+
+        if (vg->priv->pv == NULL)
+                goto out;
+
+        lvs = gdu_device_linux_lvm2_pv_get_group_logical_volumes (vg->priv->pv);
+        for (n = 0; lvs != NULL && lvs[n] != NULL; n++) {
+                gchar **tokens;
+                guint m;
+
+                tokens = g_strsplit (lvs[n], ";", 0);
+
+                for (m = 0; tokens[m] != NULL; m++) {
+                        /* TODO: we need to unescape values */
+                        if (g_str_has_prefix (tokens[m], "name=") && g_strcmp0 (tokens[m] + 5, name) == 0) {
+                                g_strfreev (tokens);
+                                ret = TRUE;
+                                goto out;
+                        }
+                }
+                g_strfreev (tokens);
+        }
+
+ out:
+        return ret;
+}
+
+/* Computes the next available Logical Volume name */
+gchar *
+gdu_linux_lvm2_volume_group_get_compute_new_lv_name (GduLinuxLvm2VolumeGroup *vg)
+{
+        GString *s;
+
+        s = g_string_new (NULL);
+        g_string_append_printf (s, "Logical_Volume_%02d", gdu_linux_lvm2_volume_group_get_num_lvs (vg));
+
+        while (lv_name_exists (vg, s->str))
+                g_string_append_c (s, '_');
+
+        return g_string_free (s, FALSE);
 }

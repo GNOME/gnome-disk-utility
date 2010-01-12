@@ -64,11 +64,13 @@ GType                         gdu_linux_lvm2_volume_group_get_type      (void);
 const gchar                  *gdu_linux_lvm2_volume_group_get_uuid      (GduLinuxLvm2VolumeGroup  *vg);
 GduLinuxLvm2VolumeGroupState  gdu_linux_lvm2_volume_group_get_state     (GduLinuxLvm2VolumeGroup  *vg);
 GduDevice                    *gdu_linux_lvm2_volume_group_get_pv_device (GduLinuxLvm2VolumeGroup  *vg);
+guint                         gdu_linux_lvm2_volume_group_get_num_lvs   (GduLinuxLvm2VolumeGroup  *vg);
 gboolean                      gdu_linux_lvm2_volume_group_get_lv_info   (GduLinuxLvm2VolumeGroup  *vg,
                                                                          const gchar              *lv_uuid,
                                                                          guint                    *out_position,
                                                                          gchar                   **out_name,
                                                                          guint64                  *out_size);
+gchar                        *gdu_linux_lvm2_volume_group_get_compute_new_lv_name (GduLinuxLvm2VolumeGroup  *vg);
 
 G_END_DECLS
 

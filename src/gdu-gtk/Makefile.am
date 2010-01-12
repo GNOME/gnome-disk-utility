@@ -49,7 +49,7 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-format-dialog.h						\
 	gdu-partition-dialog.h						\
 	gdu-create-partition-dialog.h					\
-	gdu-edit-filesystem-dialog.h					\
+	gdu-edit-name-dialog.h						\
 	gdu-disk-selection-widget.h					\
 	gdu-add-component-linux-md-dialog.h				\
 	gdu-edit-linux-md-dialog.h					\
@@ -81,7 +81,7 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-format-dialog.h			gdu-format-dialog.c			\
 	gdu-partition-dialog.h			gdu-partition-dialog.c			\
 	gdu-create-partition-dialog.h		gdu-create-partition-dialog.c		\
-	gdu-edit-filesystem-dialog.h		gdu-edit-filesystem-dialog.c		\
+	gdu-edit-name-dialog.h			gdu-edit-name-dialog.c			\
 	gdu-disk-selection-widget.h		gdu-disk-selection-widget.c		\
 	gdu-add-component-linux-md-dialog.h	gdu-add-component-linux-md-dialog.c	\
 	gdu-edit-linux-md-dialog.h		gdu-edit-linux-md-dialog.c		\

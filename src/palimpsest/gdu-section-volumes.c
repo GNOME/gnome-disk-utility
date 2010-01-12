@@ -1147,11 +1147,18 @@ on_fs_change_label_button_clicked (GduButtonElement *button_element,
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (user_data);
         GduPresentable *v;
         GduDevice *d;
+        GduPool *pool;
         GtkWindow *toplevel;
         GtkWidget *dialog;
         gint response;
+        GduKnownFilesystem *kfs;
+        const gchar *label;
+        guint label_max_bytes;
 
         v = NULL;
+        kfs = NULL;
+        pool = NULL;
+        d = NULL;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
         if (v == NULL)
@@ -1161,14 +1168,30 @@ on_fs_change_label_button_clicked (GduButtonElement *button_element,
         if (d == NULL)
                 goto out;
 
+        pool = gdu_device_get_pool (d);
+
+        kfs = gdu_pool_get_known_filesystem_by_id (pool, gdu_device_id_get_type (d));
+
+        label = gdu_device_id_get_label (d);
+        if (kfs != NULL) {
+                label_max_bytes = gdu_known_filesystem_get_max_label_len (kfs);
+        } else {
+                label_max_bytes = G_MAXUINT;
+        }
+
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
-        dialog = gdu_edit_filesystem_dialog_new (toplevel, v);
+        dialog = gdu_edit_name_dialog_new (toplevel,
+                                           v,
+                                           label,
+                                           label_max_bytes,
+                                           _("Choose a new filesystem label."),
+                                           _("_Label:"));
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         if (response == GTK_RESPONSE_APPLY) {
                 gchar *label;
 
-                label = gdu_edit_filesystem_dialog_get_label (GDU_EDIT_FILESYSTEM_DIALOG (dialog));
+                label = gdu_edit_name_dialog_get_name (GDU_EDIT_NAME_DIALOG (dialog));
 
                 gdu_device_op_filesystem_set_label (d,
                                                     label,
@@ -1184,6 +1207,10 @@ on_fs_change_label_button_clicked (GduButtonElement *button_element,
                 g_object_unref (d);
         if (v != NULL)
                 g_object_unref (v);
+        if (pool != NULL)
+                g_object_unref (pool);
+        if (kfs != NULL)
+                g_object_unref (kfs);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

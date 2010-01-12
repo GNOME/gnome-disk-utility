@@ -56,7 +56,7 @@ typedef struct GduEditPartitionDialog       GduEditPartitionDialog;
 typedef struct GduFormatDialog              GduFormatDialog;
 typedef struct GduPartitionDialog           GduPartitionDialog;
 typedef struct GduCreatePartitionDialog     GduCreatePartitionDialog;
-typedef struct GduEditFilesystemDialog      GduEditFilesystemDialog;
+typedef struct GduEditNameDialog            GduEditNameDialog;
 typedef struct GduDiskSelectionWidget       GduDiskSelectionWidget;
 typedef struct GduAddComponentLinuxMdDialog GduAddComponentLinuxMdDialog;
 typedef struct GduEditLinuxMdDialog         GduEditLinuxMdDialog;

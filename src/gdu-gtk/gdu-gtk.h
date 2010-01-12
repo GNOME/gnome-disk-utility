@@ -48,7 +48,7 @@
 #include <gdu-gtk/gdu-format-dialog.h>
 #include <gdu-gtk/gdu-partition-dialog.h>
 #include <gdu-gtk/gdu-create-partition-dialog.h>
-#include <gdu-gtk/gdu-edit-filesystem-dialog.h>
+#include <gdu-gtk/gdu-edit-name-dialog.h>
 #include <gdu-gtk/gdu-disk-selection-widget.h>
 #include <gdu-gtk/gdu-add-component-linux-md-dialog.h>
 #include <gdu-gtk/gdu-edit-linux-md-dialog.h>

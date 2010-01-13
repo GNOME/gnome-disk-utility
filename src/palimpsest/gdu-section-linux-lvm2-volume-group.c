@@ -45,6 +45,7 @@ struct _GduSectionLinuxLvm2VolumeGroupPrivate
         GduButtonElement *vg_start_button;
         GduButtonElement *vg_stop_button;
         GduButtonElement *vg_edit_name_button;
+        GduButtonElement *vg_edit_pvs_button;
 };
 
 G_DEFINE_TYPE (GduSectionLinuxLvm2VolumeGroup, gdu_section_linux_lvm2_volume_group, GDU_TYPE_SECTION)
@@ -217,6 +218,395 @@ on_vg_edit_name_clicked (GduButtonElement *button_element,
 
         g_object_unref (pool);
         g_free (vg_name);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduShell *shell;
+        GduLinuxLvm2VolumeGroup *vg;
+        GduDrive *drive_to_add_to;
+        guint64 size;
+} AddPvData;
+
+static void
+add_pv_data_free (AddPvData *data)
+{
+        if (data->shell != NULL)
+                g_object_unref (data->shell);
+        if (data->vg != NULL)
+                g_object_unref (data->vg);
+        if (data->drive_to_add_to != NULL)
+                g_object_unref (data->drive_to_add_to);
+        g_free (data);
+}
+
+static void
+add_pv_cb (GduPool    *pool,
+           GError     *error,
+           gpointer    user_data)
+{
+        AddPvData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                               GDU_PRESENTABLE (data->vg),
+                                               _("Error adding Physical Volume to Volume Group"),
+                                               error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+
+        if (data != NULL)
+                add_pv_data_free (data);
+}
+
+static void
+add_pv_create_part_cb (GduDevice  *device,
+                       gchar      *created_device_object_path,
+                       GError     *error,
+                       gpointer    user_data)
+{
+        AddPvData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error creating partition for RAID pv"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+
+        if (data != NULL)
+                add_pv_data_free (data);
+        } else {
+                GduPool *pool;
+                pool = gdu_device_get_pool (device);
+                gdu_pool_op_linux_lvm2_vg_add_pv (pool,
+                                                  gdu_linux_lvm2_volume_group_get_uuid (data->vg),
+                                                  created_device_object_path,
+                                                  add_pv_cb,
+                                                  data);
+                g_free (created_device_object_path);
+                g_object_unref (pool);
+        }
+}
+
+static void do_add_pv (AddPvData *data);
+
+static void
+add_pv_create_part_table_cb (GduDevice  *device,
+                                    GError     *error,
+                                    gpointer    user_data)
+{
+        AddPvData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error creating partition table for LVM2 PV"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+
+                add_pv_data_free (data);
+        } else {
+                do_add_pv (data);
+        }
+}
+
+static void
+do_add_pv (AddPvData *data)
+{
+        gboolean whole_disk_is_uninitialized;
+        guint64 largest_segment;
+        GduPresentable *p;
+        GduDevice *d;
+
+        p = NULL;
+        d = NULL;
+
+        g_warn_if_fail (gdu_drive_has_unallocated_space (data->drive_to_add_to,
+                                                         &whole_disk_is_uninitialized,
+                                                         &largest_segment,
+                                                         NULL, /* total_free */
+                                                         &p));
+        g_assert (p != NULL);
+        g_assert_cmpint (data->size, <=, largest_segment);
+
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (data->drive_to_add_to));
+
+        if (GDU_IS_VOLUME_HOLE (p)) {
+                guint64 offset;
+                const gchar *scheme;
+                const gchar *type;
+                gchar *name;
+                gchar *label;
+
+                offset = gdu_presentable_get_offset (p);
+
+                g_debug ("Creating partition for PV of "
+                         "size %" G_GUINT64_FORMAT " bytes at offset %" G_GUINT64_FORMAT " on %s",
+                         data->size,
+                         offset,
+                         gdu_device_get_device_file (d));
+
+                scheme = gdu_device_partition_table_get_scheme (d);
+                type = "";
+                label = NULL;
+                name = gdu_presentable_get_name (GDU_PRESENTABLE (data->vg));
+
+                if (g_strcmp0 (scheme, "mbr") == 0) {
+                        type = "0x8e";
+                } else if (g_strcmp0 (scheme, "gpt") == 0) {
+                        type = "E6D6D379-F507-44C2-A23C-238F2A3DF928";
+                        /* Limited to 36 UTF-16LE characters according to on-disk format..
+                         * Since a RAID array name is limited to 32 chars this should fit */
+                        if (name != NULL && strlen (name) > 0) {
+                                gchar cut_name[31 * 4 + 1];
+                                g_utf8_strncpy (cut_name, name, 31);
+                                label = g_strdup_printf ("LVM2: %s", cut_name);
+                        } else {
+                                label = g_strdup ("LVM2 Physical Volume");
+                        }
+                } else if (g_strcmp0 (scheme, "apt") == 0) {
+                        type = "Apple_Unix_SVR2";
+                        if (name != NULL && strlen (name) > 0)
+                                label = g_strdup_printf ("LVM2: %s", name);
+                        else
+                                label = g_strdup ("LVM2 Physical Volume");
+                }
+
+                gdu_device_op_partition_create (d,
+                                                offset,
+                                                data->size,
+                                                type,
+                                                label != NULL ? label : "",
+                                                NULL,
+                                                "",
+                                                "",
+                                                "",
+                                                FALSE,
+                                                add_pv_create_part_cb,
+                                                data);
+                g_free (label);
+                g_free (name);
+        } else {
+                /* otherwise the whole disk must be uninitialized... */
+                g_assert (whole_disk_is_uninitialized);
+
+                /* so create a partition table... */
+                gdu_device_op_partition_table_create (d,
+                                                      "mbr",
+                                                      add_pv_create_part_table_cb,
+                                                      data);
+        }
+
+        if (p != NULL)
+                g_object_unref (p);
+        if (d != NULL)
+                g_object_unref (d);
+}
+
+static void
+on_pvs_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
+                                  gpointer              user_data)
+{
+        GduSectionLinuxLvm2VolumeGroup *section = GDU_SECTION_LINUX_LVM2_VOLUME_GROUP (user_data);
+        GduLinuxLvm2VolumeGroup *vg;
+        GtkWidget *dialog;
+        gint response;
+        GtkWindow *toplevel;
+        AddPvData *data;
+
+        dialog = NULL;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+
+        vg = GDU_LINUX_LVM2_VOLUME_GROUP (gdu_section_get_presentable (GDU_SECTION (section)));
+
+        dialog = gdu_add_pv_linux_lvm2_dialog_new (toplevel, vg);
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        if (response != GTK_RESPONSE_APPLY)
+                goto out;
+
+        data = g_new0 (AddPvData, 1);
+        data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+        data->vg = g_object_ref (vg);
+        data->drive_to_add_to = gdu_add_pv_linux_lvm2_dialog_get_drive (GDU_ADD_PV_LINUX_LVM2_DIALOG (dialog));
+        data->size = gdu_add_pv_linux_lvm2_dialog_get_size (GDU_ADD_PV_LINUX_LVM2_DIALOG (dialog));
+
+        do_add_pv (data);
+
+ out:
+        if (dialog != NULL)
+                gtk_widget_destroy (dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduShell *shell;
+        GduLinuxLvm2VolumeGroup *vg;
+        GduDevice *pv;
+} RemovePvData;
+
+static void
+remove_pv_data_free (RemovePvData *data)
+{
+        g_object_unref (data->shell);
+        g_object_unref (data->vg);
+        g_object_unref (data->pv);
+        g_free (data);
+}
+
+static void
+remove_pv_delete_partition_op_callback (GduDevice  *device,
+                                        GError     *error,
+                                        gpointer    user_data)
+{
+        RemovePvData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error deleting partition for Physical Volume in Volume Group"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+        }
+
+        remove_pv_data_free (data);
+}
+
+static void
+remove_pv_op_callback (GduPool    *pool,
+                       GError     *error,
+                       gpointer    user_data)
+{
+        RemovePvData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                          data->pv,
+                                                          _("Error removing Physical Volume from Volume Group"),
+                                                          error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+
+                remove_pv_data_free (data);
+        } else {
+                /* if the device is a partition, also remove the partition */
+                if (gdu_device_is_partition (data->pv)) {
+                        gdu_device_op_partition_delete (data->pv,
+                                                        remove_pv_delete_partition_op_callback,
+                                                        data);
+                } else {
+                        remove_pv_data_free (data);
+                }
+        }
+}
+
+
+static void
+on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
+                                     GduDevice              *physical_volume,
+                                     gpointer                user_data)
+{
+        GduSectionLinuxLvm2VolumeGroup *section = GDU_SECTION_LINUX_LVM2_VOLUME_GROUP (user_data);
+        GduLinuxLvm2VolumeGroup *vg;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+        gint response;
+        RemovePvData *data;
+        GduPool *pool;
+
+        pool = NULL;
+
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+
+        vg = GDU_LINUX_LVM2_VOLUME_GROUP (gdu_section_get_presentable (GDU_SECTION (section)));
+
+        /* TODO: more details in this dialog - e.g. "The VG may degrade" etc etc */
+        dialog = gdu_confirmation_dialog_new_for_volume (toplevel,
+                                                         physical_volume,
+                                                         _("Are you sure you want the remove the Physical Volume?"),
+                                                         _("_Remove"));
+        gtk_widget_show_all (dialog);
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_hide (dialog);
+        gtk_widget_destroy (dialog);
+        if (response != GTK_RESPONSE_OK)
+                goto out;
+
+        data = g_new0 (RemovePvData, 1);
+        data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
+        data->vg = g_object_ref (vg);
+        data->pv = g_object_ref (physical_volume);
+
+        pool = gdu_device_get_pool (data->pv);
+        gdu_pool_op_linux_lvm2_vg_remove_pv (pool,
+                                             gdu_linux_lvm2_volume_group_get_uuid (data->vg),
+                                             gdu_device_get_object_path (physical_volume),
+                                             remove_pv_op_callback,
+                                             data);
+
+ out:
+        if (pool != NULL)
+                g_object_unref (pool);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_vg_edit_pvs_button_clicked (GduButtonElement *button_element,
+                               gpointer          user_data)
+{
+        GduSectionLinuxLvm2VolumeGroup *section = GDU_SECTION_LINUX_LVM2_VOLUME_GROUP (user_data);
+        GduPresentable *p;
+        GtkWindow *toplevel;
+        GtkWidget *dialog;
+
+        p = gdu_section_get_presentable (GDU_SECTION (section));
+        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+
+        dialog = gdu_edit_linux_lvm2_dialog_new (toplevel, GDU_LINUX_LVM2_VOLUME_GROUP (p));
+
+        g_signal_connect (dialog,
+                          "new-button-clicked",
+                          G_CALLBACK (on_pvs_dialog_new_button_clicked),
+                          section);
+        g_signal_connect (dialog,
+                          "remove-button-clicked",
+                          G_CALLBACK (on_pvs_dialog_remove_button_clicked),
+                          section);
+
+        gtk_widget_show_all (dialog);
+        gtk_window_present (GTK_WINDOW (dialog));
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -415,6 +805,15 @@ gdu_section_linux_lvm2_volume_group_constructed (GObject *object)
         g_ptr_array_add (elements, button_element);
         section->priv->vg_edit_name_button = button_element;
 
+        button_element = gdu_button_element_new (GTK_STOCK_EDIT,
+                                                 _("Edit Ph_ysical Volumes"),
+                                                 _("Create and remove PVs"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_vg_edit_pvs_button_clicked),
+                          section);
+        g_ptr_array_add (elements, button_element);
+        section->priv->vg_edit_pvs_button = button_element;
 
         gdu_button_table_set_elements (GDU_BUTTON_TABLE (table), elements);
         g_ptr_array_unref (elements);

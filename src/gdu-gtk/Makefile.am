@@ -53,7 +53,9 @@ libgdu_gtkinclude_HEADERS =              				\
 	gdu-edit-name-dialog.h						\
 	gdu-disk-selection-widget.h					\
 	gdu-add-component-linux-md-dialog.h				\
+	gdu-add-pv-linux-lvm2-dialog.h				\
 	gdu-edit-linux-md-dialog.h					\
+	gdu-edit-linux-lvm2-dialog.h					\
 	gdu-drive-benchmark-dialog.h					\
 	gdu-connect-to-server-dialog.h					\
 	$(NULL)
@@ -86,7 +88,9 @@ libgdu_gtk_la_SOURCES =                 	               				\
 	gdu-edit-name-dialog.h			gdu-edit-name-dialog.c			\
 	gdu-disk-selection-widget.h		gdu-disk-selection-widget.c		\
 	gdu-add-component-linux-md-dialog.h	gdu-add-component-linux-md-dialog.c	\
+	gdu-add-pv-linux-lvm2-dialog.h		gdu-add-pv-linux-lvm2-dialog.c		\
 	gdu-edit-linux-md-dialog.h		gdu-edit-linux-md-dialog.c		\
+	gdu-edit-linux-lvm2-dialog.h		gdu-edit-linux-lvm2-dialog.c		\
 	gdu-drive-benchmark-dialog.h		gdu-drive-benchmark-dialog.c		\
 	gdu-connect-to-server-dialog.h		gdu-connect-to-server-dialog.c		\
 	$(NULL)

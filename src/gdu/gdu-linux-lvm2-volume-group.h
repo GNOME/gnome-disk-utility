@@ -70,6 +70,11 @@ gboolean                      gdu_linux_lvm2_volume_group_get_lv_info   (GduLinu
                                                                          guint                    *out_position,
                                                                          gchar                   **out_name,
                                                                          guint64                  *out_size);
+gboolean                      gdu_linux_lvm2_volume_group_get_pv_info   (GduLinuxLvm2VolumeGroup  *vg,
+                                                                         const gchar              *pv_uuid,
+                                                                         guint                    *out_position,
+                                                                         guint64                  *out_size,
+                                                                         guint64                  *out_allocated_size);
 gchar                        *gdu_linux_lvm2_volume_group_get_compute_new_lv_name (GduLinuxLvm2VolumeGroup  *vg);
 
 G_END_DECLS

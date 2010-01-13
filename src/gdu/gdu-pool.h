@@ -182,6 +182,18 @@ void gdu_pool_op_linux_lvm2_lv_create (GduPool *pool,
                                        GduPoolLinuxLvm2LVCreateCompletedFunc callback,
                                        gpointer user_data);
 
+void gdu_pool_op_linux_lvm2_vg_add_pv (GduPool *pool,
+                                       const gchar *uuid,
+                                       const gchar *physical_volume_object_path,
+                                       GduPoolLinuxLvm2VGAddPVCompletedFunc callback,
+                                       gpointer user_data);
+
+void gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
+                                          const gchar *uuid,
+                                          const gchar *physical_volume_object_path,
+                                          GduPoolLinuxLvm2VGAddPVCompletedFunc callback,
+                                          gpointer user_data);
+
 G_END_DECLS
 
 #endif /* __GDU_POOL_H */

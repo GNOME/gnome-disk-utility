@@ -63,6 +63,8 @@ typedef struct GduAddComponentLinuxMdDialog   GduAddComponentLinuxMdDialog;
 typedef struct GduEditLinuxMdDialog           GduEditLinuxMdDialog;
 typedef struct GduDriveBenchmarkDialog        GduDriveBenchmarkDialog;
 typedef struct GduConnectToServerDialog       GduConnectToServerDialog;
+typedef struct GduEditLinuxLvm2Dialog         GduEditLinuxLvm2Dialog;
+typedef struct GduAddPvLinuxLvm2Dialog        GduAddPvLinuxLvm2Dialog;
 
 G_END_DECLS
 

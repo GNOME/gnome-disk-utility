@@ -3083,6 +3083,94 @@ gdu_pool_op_linux_lvm2_lv_create (GduPool *pool,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2VGAddPVCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2VGAddPVData;
+
+static void
+op_linux_lvm2_vg_add_pv_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2VGAddPVData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_vg_add_pv (GduPool *pool,
+                                  const gchar *uuid,
+                                  const gchar *physical_volume_object_path,
+                                  GduPoolLinuxLvm2VGAddPVCompletedFunc callback,
+                                  gpointer user_data)
+{
+        LinuxLvm2VGAddPVData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2VGAddPVData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_vg_add_pv_async (pool->priv->proxy,
+                                                           uuid,
+                                                           physical_volume_object_path,
+                                                           (const gchar **) options,
+                                                           op_linux_lvm2_vg_add_pv_cb,
+                                                           data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduPool *pool;
+        GduPoolLinuxLvm2VGRemovePVCompletedFunc callback;
+        gpointer user_data;
+} LinuxLvm2VGRemovePVData;
+
+static void
+op_linux_lvm2_vg_remove_pv_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxLvm2VGRemovePVData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->pool, error, data->user_data);
+        g_object_unref (data->pool);
+        g_free (data);
+}
+
+void
+gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
+                                  const gchar *uuid,
+                                  const gchar *physical_volume_object_path,
+                                  GduPoolLinuxLvm2VGRemovePVCompletedFunc callback,
+                                  gpointer user_data)
+{
+        LinuxLvm2VGRemovePVData *data;
+        char *options[16];
+
+        options[0] = NULL;
+
+        data = g_new0 (LinuxLvm2VGRemovePVData, 1);
+        data->pool = g_object_ref (pool);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        org_freedesktop_UDisks_linux_lvm2_vg_remove_pv_async (pool->priv->proxy,
+                                                              uuid,
+                                                              physical_volume_object_path,
+                                                              (const gchar **) options,
+                                                              op_linux_lvm2_vg_remove_pv_cb,
+                                                              data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 /**
  * gdu_pool_get_daemon_version:
  * @pool: A #GduPool.

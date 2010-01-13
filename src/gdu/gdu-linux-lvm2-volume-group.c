@@ -120,12 +120,24 @@ gdu_linux_lvm2_volume_group_init (GduLinuxLvm2VolumeGroup *vg)
         vg->priv = G_TYPE_INSTANCE_GET_PRIVATE (vg, GDU_TYPE_LINUX_LVM2_VOLUME_GROUP, GduLinuxLvm2VolumeGroupPrivate);
 }
 
-static void
-emit_changed (GduLinuxLvm2VolumeGroup *vg)
+static gboolean
+emit_changed_idle_cb (gpointer user_data)
 {
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (user_data);
         //g_debug ("emitting changed for uuid '%s'", vg->priv->uuid);
         g_signal_emit_by_name (vg, "changed");
         g_signal_emit_by_name (vg->priv->pool, "presentable-changed", vg);
+        g_object_unref (vg);
+        return FALSE; /* remove idle source */
+}
+
+static void
+emit_changed (GduLinuxLvm2VolumeGroup *vg)
+{
+        /* emit changed in idle so GduPool has a chance to build GduPresentable objects - this is
+         * needed for e.g. GduEditLinuxLvm2 where it wants a GduVolume for each PV
+         */
+        g_idle_add (emit_changed_idle_cb, g_object_ref (vg));
 }
 
 static gboolean
@@ -136,6 +148,8 @@ find_pvs (GduLinuxLvm2VolumeGroup *vg)
         guint64 seq_num;
         GduDevice *pv_to_use;
         gboolean emitted_changed;
+        gchar *old_pvs;
+        gchar *new_pvs;
 
         emitted_changed = FALSE;
 
@@ -170,6 +184,11 @@ find_pvs (GduLinuxLvm2VolumeGroup *vg)
                 }
         }
 
+        old_pvs = NULL;
+        if (vg->priv->pv != NULL) {
+                old_pvs = g_strjoinv (",", gdu_device_linux_lvm2_pv_get_group_physical_volumes (vg->priv->pv));
+        }
+
         if (pv_to_use == NULL) {
                 /* ok, switch to the new LV */
                 if (vg->priv->pv != NULL)
@@ -189,6 +208,20 @@ find_pvs (GduLinuxLvm2VolumeGroup *vg)
                 vg->priv->pv = g_object_ref (pv_to_use);
 
                 /* emit changed since data might have changed */
+                emit_changed (vg);
+                emitted_changed = TRUE;
+        }
+
+        new_pvs = NULL;
+        if (vg->priv->pv != NULL) {
+                new_pvs = g_strjoinv (",", gdu_device_linux_lvm2_pv_get_group_physical_volumes (vg->priv->pv));
+        }
+
+        g_free (old_pvs);
+        g_free (new_pvs);
+
+        /* If *anything* on the PVs changed - also emit ::changed ourselves */
+        if (g_strcmp0 (old_pvs, new_pvs) != 0) {
                 emit_changed (vg);
                 emitted_changed = TRUE;
         }
@@ -642,6 +675,71 @@ gdu_linux_lvm2_volume_group_get_lv_info (GduLinuxLvm2VolumeGroup  *vg,
                         g_free (name);
                 if (out_size != NULL)
                         *out_size = size;
+        }
+        return ret;
+}
+
+gboolean
+gdu_linux_lvm2_volume_group_get_pv_info (GduLinuxLvm2VolumeGroup  *vg,
+                                         const gchar              *pv_uuid,
+                                         guint                    *out_position,
+                                         guint64                  *out_size,
+                                         guint64                  *out_allocated_size)
+{
+        gchar **pvs;
+        gboolean ret;
+        guint position;
+        guint64 size;
+        guint64 allocated_size;
+        guint n;
+
+        position = G_MAXUINT;
+        size = G_MAXUINT64;
+        allocated_size = G_MAXUINT64;
+        ret = FALSE;
+
+        if (vg->priv->pv == NULL)
+                goto out;
+
+        pvs = gdu_device_linux_lvm2_pv_get_group_physical_volumes (vg->priv->pv);
+
+        for (n = 0; pvs != NULL && pvs[n] != NULL; n++) {
+                gchar **tokens;
+                guint m;
+
+                tokens = g_strsplit (pvs[n], ";", 0);
+
+                for (m = 0; tokens[m] != NULL; m++) {
+
+                        /* TODO: we need to unescape values */
+                        if (g_str_has_prefix (tokens[m], "uuid=") && g_strcmp0 (tokens[m] + 5, pv_uuid) == 0) {
+                                guint p;
+
+                                for (p = 0; tokens[p] != NULL; p++) {
+                                        /* TODO: we need to unescape values */
+                                        if (g_str_has_prefix (tokens[p], "size="))
+                                                size = g_ascii_strtoull (tokens[p] + 5, NULL, 10);
+                                        else if (g_str_has_prefix (tokens[p], "allocated_size="))
+                                                allocated_size = g_ascii_strtoull (tokens[p] + 15, NULL, 10);
+                                }
+                                position = n;
+
+                                g_strfreev (tokens);
+                                ret = TRUE;
+                                goto out;
+                        }
+                }
+                g_strfreev (tokens);
+        }
+
+ out:
+        if (ret) {
+                if (out_position != NULL)
+                        *out_position = position;
+                if (out_size != NULL)
+                        *out_size = size;
+                if (out_allocated_size != NULL)
+                        *out_allocated_size = allocated_size;
         }
         return ret;
 }

@@ -623,6 +623,39 @@ count_num_available_disks_func (GtkTreeModel *model,
         return FALSE;
 }
 
+static gboolean
+find_largest_segment_for_all_func (GtkTreeModel *model,
+                                   GtkTreePath  *path,
+                                   GtkTreeIter  *iter,
+                                   gpointer      data)
+{
+        GduPresentable *p;
+        guint64 *largest_segment_for_all = data;
+
+        gtk_tree_model_get (model,
+                            iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
+                            -1);
+
+        if (GDU_IS_DRIVE (p)) {
+                guint64 largest_segment;
+
+                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
+                                                                 NULL,
+                                                                 &largest_segment,
+                                                                 NULL, /* total_free */
+                                                                 NULL));
+
+                if (largest_segment > *largest_segment_for_all)
+                        *largest_segment_for_all = largest_segment;
+
+        }
+
+        g_object_unref (p);
+
+        return FALSE;
+}
+
 static void
 get_sizes (GduDiskSelectionWidget *widget,
            guint                  *out_num_disks,
@@ -639,7 +672,7 @@ get_sizes (GduDiskSelectionWidget *widget,
         num_disks = 0;
         num_available_disks = 0;
         largest_segment_for_selected = G_MAXUINT64;
-        largest_segment_for_all = G_MAXUINT64;
+        largest_segment_for_all = 0;
 
         for (l = widget->priv->selected_drives; l != NULL; l = l->next) {
                 GduPresentable *p = GDU_PRESENTABLE (l->data);
@@ -663,6 +696,10 @@ get_sizes (GduDiskSelectionWidget *widget,
         gtk_tree_model_foreach (widget->priv->model,
                                 count_num_available_disks_func,
                                 &num_available_disks);
+
+        gtk_tree_model_foreach (widget->priv->model,
+                                find_largest_segment_for_all_func,
+                                &largest_segment_for_all);
 
         if (out_num_disks != NULL)
                 *out_num_disks = num_disks;
@@ -1108,8 +1145,10 @@ gdu_disk_selection_widget_set_component_size (GduDiskSelectionWidget *widget,
                                               guint64                 component_size)
 {
         g_return_if_fail (GDU_IS_DISK_SELECTION_WIDGET (widget));
-        widget->priv->component_size = component_size;
-        gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (widget->priv->model));
+        if (widget->priv->component_size != component_size) {
+                widget->priv->component_size = component_size;
+                gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (widget->priv->model));
+        }
 }
 
 guint

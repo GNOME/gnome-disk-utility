@@ -449,7 +449,7 @@ gdu_edit_linux_lvm2_dialog_constructed (GObject *object)
         dialog->priv->pv_new_button = button_element;
 
         button_element = gdu_button_element_new (GTK_STOCK_DELETE,
-                                                 _("_Remove Physical Volumes"),
+                                                 _("_Remove Physical Volume"),
                                                  _("Remove the PV from the VG"));
         g_signal_connect (button_element,
                           "clicked",

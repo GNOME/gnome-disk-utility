@@ -543,7 +543,7 @@ add_presentable (GduPoolTreeModel *model,
         }
 
 
-        /*g_debug ("adding %s (%p)", gdu_presentable_get_id (presentable), presentable);*/
+        /* g_debug ("adding %s (%p)", gdu_presentable_get_id (presentable), presentable); */
 
         gtk_tree_store_append (GTK_TREE_STORE (model),
                                &iter,
@@ -568,6 +568,8 @@ on_presentable_added (GduPool          *pool,
 {
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (user_data);
 
+        /* g_debug ("on_added `%s' (%p)", gdu_presentable_get_id (presentable), presentable); */
+
         add_presentable (model, presentable, NULL);
 }
 
@@ -579,7 +581,10 @@ on_presentable_removed (GduPool          *pool,
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (user_data);
         GtkTreeIter iter;
 
+        /* g_debug ("on_removed `%s' (%p)", gdu_presentable_get_id (presentable), presentable); */
+
         if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, &iter)) {
+                /* g_debug ("removed row for `%s' (%p)", gdu_presentable_get_id (presentable), presentable); */
                 gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
         }
 }
@@ -592,14 +597,17 @@ on_presentable_changed (GduPool          *pool,
         GduPoolTreeModel *model = GDU_POOL_TREE_MODEL (user_data);
         GtkTreeIter iter;
 
-        /* will do NOP if presentable has already been added */
-        add_presentable (model, presentable, NULL);
+        if (gdu_pool_has_presentable (pool, presentable)) {
+                /* g_debug ("on_changed `%s' (%p)", gdu_presentable_get_id (presentable), presentable); */
 
-        /* update name and icon */
-        if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, &iter)) {
+                /* will do NOP if presentable has already been added */
+                add_presentable (model, presentable, NULL);
 
-                set_data_for_presentable (model,
-                                          &iter,
-                                          presentable);
+                /* update name and icon */
+                if (gdu_pool_tree_model_get_iter_for_presentable (model, presentable, &iter)) {
+                        set_data_for_presentable (model,
+                                                  &iter,
+                                                  presentable);
+                }
         }
 }

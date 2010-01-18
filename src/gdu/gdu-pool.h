@@ -102,6 +102,8 @@ GduLinuxMdDrive *gdu_pool_get_linux_md_drive_by_uuid (GduPool *pool, const gchar
 
 GduPresentable *gdu_pool_get_presentable_by_id     (GduPool *pool, const gchar *id);
 
+gboolean    gdu_pool_has_presentable (GduPool *pool, GduPresentable *presentable);
+
 
 GList      *gdu_pool_get_devices               (GduPool *pool);
 GList      *gdu_pool_get_presentables          (GduPool *pool);

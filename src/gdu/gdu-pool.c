@@ -2605,6 +2605,18 @@ gdu_pool_get_presentable_by_id (GduPool *pool, const gchar *id)
         return ret;
 }
 
+gboolean
+gdu_pool_has_presentable (GduPool *pool, GduPresentable *presentable)
+{
+        gboolean ret;
+
+        ret = (g_list_find (pool->priv->presentables, presentable) != NULL);
+
+        return ret;
+}
+
+
+
 GduPresentable *
 gdu_pool_get_hub_by_object_path (GduPool *pool, const gchar *object_path)
 {

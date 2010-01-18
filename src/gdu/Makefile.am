@@ -44,6 +44,7 @@ libgduinclude_HEADERS =              			\
 	gdu-drive.h					\
 	gdu-linux-md-drive.h				\
 	gdu-linux-lvm2-volume-group.h			\
+	gdu-linux-lvm2-volume-hole.h			\
 	gdu-linux-lvm2-volume.h				\
 	gdu-error.h					\
 	gdu-known-filesystem.h				\

@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
 "POT-Creation-Date: 2010-01-15 19:52+0000\n"
-"PO-Revision-Date: 2010-01-18 23:29+0100\n"
+"PO-Revision-Date: 2010-01-18 23:35+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1916,7 +1916,7 @@ msgstr "Volumen _físico nuevo"
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:443
 #| msgid "Add a new component to the array"
 msgid "Add a new PV to the VG"
-msgstr "Añadir un volumen físico nuevo al grupo de volúmenes"
+msgstr "Añadir un volumen físico nuevo al GV"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:452
 #| msgid "LVM2 Physical Volume"
@@ -1926,7 +1926,7 @@ msgstr "_Quitar volumen físico"
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:453
 #| msgid "Remove the component from the array"
 msgid "Remove the PV from the VG"
-msgstr "Quitar el volumen físico del grupo de volúmenes"
+msgstr "Quitar el volumen físico del GV"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
@@ -4606,40 +4606,36 @@ msgid "Choose a new Volume Group name."
 msgstr "Elegir un nombre nuevo para el grupo de volúmenes."
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
-#, fuzzy
 #| msgid "Error starting Logical Volume"
 msgid "Error adding Physical Volume to Volume Group"
-msgstr "Error al iniciar el volumen lógico"
+msgstr "Error al añadir el volumen físico al grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:280
-#, fuzzy
 #| msgid "Error creating partition for RAID component"
 msgid "Error creating partition for RAID pv"
-msgstr "Error al crear la partición para el componente RAID"
+msgstr "Error al crear la partición para el RAID del volumen físico"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:316
-#, fuzzy
 #| msgid "Error creating partition table for RAID component"
 msgid "Error creating partition table for LVM2 PV"
-msgstr "Error al crear la tabla de particiones para el componente RAID"
+msgstr "Error al crear la tabla de particiones para el volumen físico LVM2"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:488
-#, fuzzy
 #| msgid "Error deleting partition for component in RAID Array"
 msgid "Error deleting partition for Physical Volume in Volume Group"
-msgstr "Error al borrar la partición para el componente en el conjunto RAID"
+msgstr ""
+"Error al eliminar la partición para el volumen físico en el grupo de "
+"volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:511
-#, fuzzy
 #| msgid "Error removing component from RAID Array"
 msgid "Error removing Physical Volume from Volume Group"
-msgstr "Error al quitar el componente del conjunto RAID"
+msgstr "Error al quitar el volumen físico del grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:555
-#, fuzzy
 #| msgid "Are you sure you want the remove the component?"
 msgid "Are you sure you want the remove the Physical Volume?"
-msgstr "¿Está seguro de que quiere quitar el componente?"
+msgstr "¿Está seguro de que quiere quitar el volumen físico?"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:556
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:630
@@ -4676,10 +4672,9 @@ msgid "Name:"
 msgstr "Nombre:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:743
-#, fuzzy
 #| msgid "Percent Size"
 msgid "Extent Size:"
-msgstr "Porcentaje de tamaño"
+msgstr "Tamaño de extensión:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:747
 #| msgid "LVM2 Physical Volume"
@@ -5021,10 +5016,9 @@ msgid "Error spawning nautilus: %s"
 msgstr "Error al iniciar Nautilus: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1429
-#, fuzzy
 #| msgid "Error starting Logical Volume"
 msgid "Error creating Logical Volume"
-msgstr "Error al iniciar el volumen lógico"
+msgstr "Error al crear el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1582
 msgid "Error stopping Logical Volume"
@@ -5035,28 +5029,24 @@ msgid "Error starting Logical Volume"
 msgstr "Error al iniciar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1677
-#, fuzzy
 #| msgid "Error starting Logical Volume"
 msgid "Error setting name for Logical Volume"
-msgstr "Error al iniciar el volumen lógico"
+msgstr "Error al establecer el nombre para el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1716
-#, fuzzy
 #| msgid "Deactivate the Logical Volume"
 msgid "Choose a new name for the Logical Volume."
-msgstr "Desactivar el volumen lógico"
+msgstr "Elegir un nombre nuevo para el volumen lógico."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1750
-#, fuzzy
 #| msgid "Error stopping Logical Volume"
 msgid "Error deleting Logical Volume"
-msgstr "Error al parar el volumen lógico"
+msgstr "Error al eliminar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1783
-#, fuzzy
 #| msgid "Are you sure you want to format the volume?"
 msgid "Are you sure you want to delete the logical volume?"
-msgstr "¿Está seguro de que quiere formatear el volumen?"
+msgstr "¿Está seguro de que quiere eliminar el volumen lógico?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1894
 msgid "Volume Name:"
@@ -5195,7 +5185,6 @@ msgid "Mount the volume"
 msgstr "Montar el volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2321
-#, fuzzy
 #| msgid "_Unmount Volume"
 msgid "Un_mount Volume"
 msgstr "_Desmontar volumen"
@@ -5221,16 +5210,14 @@ msgid "Check and repair the filesystem"
 msgstr "Comprobar y reparar el sistema de archivos"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2352
-#, fuzzy
 #| msgid "Filesystem label"
 msgid "Edit Filesystem _Label"
-msgstr "Etiqueta del sistema de archivos"
+msgstr "Editar la _etiqueta del sistema de archivos"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2353
-#, fuzzy
 #| msgid "Change the label of the volume"
 msgid "Change the label of the filesystem"
-msgstr "Cambiar la etiqueta del volumen"
+msgstr "Cambiar la etiqueta del sistema de archivos"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2362
 msgid "Ed_it Partition"
@@ -5265,7 +5252,6 @@ msgid "Make encrypted data unavailable"
 msgstr "Hacer que los datos cifrados no estén disponibles"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2402
-#, fuzzy
 #| msgid "_Unlock Volume"
 msgid "Un_lock Volume"
 msgstr "_Desbloquear volumen"
@@ -5303,28 +5289,24 @@ msgid "Activate the Logical Volume"
 msgstr "Activar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2454
-#, fuzzy
 #| msgid "Volume Name:"
 msgid "Edit Vol_ume Name"
-msgstr "Nombre del volumen:"
+msgstr "Editar nombre del vol_umen:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2455
-#, fuzzy
 #| msgid "Change the label of the volume"
 msgid "Change the name of the volume"
-msgstr "Cambiar la etiqueta del volumen"
+msgstr "Cambiar el nombre del volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2464
-#, fuzzy
 #| msgid "New Volume"
 msgid "D_elete Volume"
-msgstr "Volumen nuevo"
+msgstr "_Eliminar volumen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2465
-#, fuzzy
 #| msgid "Deactivate the Logical Volume"
 msgid "Delete the Logical Volume"
-msgstr "Desactivar el volumen lógico"
+msgstr "Eliminar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2474
 msgid "Sto_p Volume"

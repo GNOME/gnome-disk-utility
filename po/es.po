@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
 "POT-Creation-Date: 2010-01-15 19:52+0000\n"
-"PO-Revision-Date: 2010-01-18 22:05+0100\n"
+"PO-Revision-Date: 2010-01-18 23:29+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1924,10 +1924,9 @@ msgid "_Remove Physical Volume"
 msgstr "_Quitar volumen físico"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:453
-#, fuzzy
 #| msgid "Remove the component from the array"
 msgid "Remove the PV from the VG"
-msgstr "Quitar el componente del conjunto"
+msgstr "Quitar el volumen físico del grupo de volúmenes"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
@@ -2721,38 +2720,35 @@ msgstr "Expansor SAS"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:331
-#, fuzzy
 #| msgid "Logical _Volumes"
 msgid "Logical Volume"
-msgstr "_Volúmenes lógicos"
+msgstr "Volumen lógico"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume.c:334
-#, fuzzy
 #| msgid "LVM2 Physical Volume"
 msgid "LVM2 Logical Volume"
-msgstr "Volumen físico LVM2"
+msgstr "Volumen lógico LVM2"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:351
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:355
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:725
-#, fuzzy
 #| msgid "Volume to show"
 msgid "Volume Group"
-msgstr "Volumen que mostrar"
+msgstr "Grupo de volúmenes"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:359
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s LVM2 Physical Volume"
 msgid "%s LVM2 Volume Group"
-msgstr "Volumen físico LVM2 de %s"
+msgstr "Grupo de volúmenes LVM2 %s"
 
 #. Translators: VPD name when size is not known
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:362
 msgid "LVM2 Volume Group"
-msgstr ""
+msgstr "Grupo de volúmenes LVM2"
 
 #. Translators: label for an unallocated space in a LVM2 volume group.
 #. * %s is the size, formatted like '45 GB'
@@ -2776,10 +2772,9 @@ msgstr "Espacio sin usar"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
-#, fuzzy
 #| msgid "Unallocated Space"
 msgid "LVM2 VG Unallocated Space"
-msgstr "Espacio sin usar"
+msgstr "Espacio sin asignar del grupo de volúmenes LVM2"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
@@ -4592,26 +4587,23 @@ msgid "Number of Ports:"
 msgstr "Número de puertos:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
-#, fuzzy
 #| msgid "Error starting Logical Volume"
 msgid "Error starting Volume Group"
-msgstr "Error al iniciar el volumen lógico"
+msgstr "Error al iniciar el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
-#, fuzzy
 #| msgid "Error stopping Logical Volume"
 msgid "Error stopping Volume Group"
-msgstr "Error al parar el volumen lógico"
+msgstr "Error al parar el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
-#, fuzzy
 #| msgid "Error starting Logical Volume"
 msgid "Error setting name for Volume Group"
-msgstr "Error al iniciar el volumen lógico"
+msgstr "Error al establecer el nombre para el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
 msgid "Choose a new Volume Group name."
-msgstr ""
+msgstr "Elegir un nombre nuevo para el grupo de volúmenes."
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
 #, fuzzy
@@ -4655,31 +4647,28 @@ msgid "_Remove"
 msgstr "_Quitar"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:669
-#, fuzzy
 #| msgctxt "LVM2 LV State"
 #| msgid "Not Running"
 msgid "Not Running"
 msgstr "No está en ejecución"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:673
-#, fuzzy
 #| msgctxt "LVM2 LV State"
 #| msgid "Not Running"
 msgid "Partially Running"
-msgstr "No está en ejecución"
+msgstr "Parcialmente en ejecución"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:678
-#, fuzzy
 #| msgctxt "RAID status"
 #| msgid "Running"
 msgid "Running"
 msgstr "Ejecutándose"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:682
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unknown (%s)"
 msgid "Unknown (%d)"
-msgstr "Desconocida (%s)"
+msgstr "Desconocido (%d)"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:739
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
@@ -4703,24 +4692,22 @@ msgid "Unallocated:"
 msgstr "Sin asignar:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
-#, fuzzy
 #| msgid "S_tart Volume"
 msgid "St_art Volume Group"
-msgstr "I_niciar volumen"
+msgstr "I_niciar grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:779
 msgid "Activate all LVs in the VG"
-msgstr ""
+msgstr "Activar todos los volúmenes lógicos en el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:788
-#, fuzzy
 #| msgid "Sto_p Volume"
 msgid "St_op Volume Group"
-msgstr "_Parar volumen"
+msgstr "_Parar grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:789
 msgid "Deactivate all LVs in the VG"
-msgstr ""
+msgstr "Desactivar todos los volúmenes lógicos en el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:799
 #| msgid "Edit _Label"
@@ -4728,22 +4715,19 @@ msgid "Edit _Name"
 msgstr "Editar _nombre"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:800
-#, fuzzy
 #| msgid "Change the label of the volume"
 msgid "Change the Volume Group name"
-msgstr "Cambiar la etiqueta del volumen"
+msgstr "Cambiar el nombre del grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:809
-#, fuzzy
 #| msgid "LVM2 Physical Volume"
 msgid "Edit Ph_ysical Volumes"
-msgstr "Volumen físico LVM2"
+msgstr "Editar los volúmenes _físicos"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:810
-#, fuzzy
 #| msgid "Create and remove components"
 msgid "Create and remove PVs"
-msgstr "Crear y quitar componentes"
+msgstr "Crear y quitar volúmenes físicos"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:86
 msgctxt "RAID status"
@@ -5010,10 +4994,9 @@ msgid "Choose a new filesystem label."
 msgstr "Elegir una etiqueta nueva para el sistema de archivos."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1190
-#, fuzzy
 #| msgid "Label:"
 msgid "_Label:"
-msgstr "Etiqueta:"
+msgstr "_Etiqueta:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1235
 msgid "Error checking filesystem on volume"

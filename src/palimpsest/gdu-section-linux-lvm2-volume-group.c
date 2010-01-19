@@ -462,7 +462,8 @@ on_pvs_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
 typedef struct {
         GduShell *shell;
         GduLinuxLvm2VolumeGroup *vg;
-        GduDevice *pv;
+        gchar *pv_uuid;
+        GduDevice *pv; /* may be NULL */
 } RemovePvData;
 
 static void
@@ -470,7 +471,9 @@ remove_pv_data_free (RemovePvData *data)
 {
         g_object_unref (data->shell);
         g_object_unref (data->vg);
-        g_object_unref (data->pv);
+        g_free (data->pv_uuid);
+        if (data->pv != NULL)
+                g_object_unref (data->pv);
         g_free (data);
 }
 
@@ -506,10 +509,10 @@ remove_pv_op_callback (GduPool    *pool,
 
         if (error != NULL) {
                 GtkWidget *dialog;
-                dialog = gdu_error_dialog_new_for_volume (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
-                                                          data->pv,
-                                                          _("Error removing Physical Volume from Volume Group"),
-                                                          error);
+                dialog = gdu_error_dialog_new (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                               GDU_PRESENTABLE (data->vg),
+                                               _("Error removing Physical Volume from Volume Group"),
+                                               error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
                 gtk_dialog_run (GTK_DIALOG (dialog));
@@ -519,7 +522,7 @@ remove_pv_op_callback (GduPool    *pool,
                 remove_pv_data_free (data);
         } else {
                 /* if the device is a partition, also remove the partition */
-                if (gdu_device_is_partition (data->pv)) {
+                if (data->pv != NULL && gdu_device_is_partition (data->pv)) {
                         gdu_device_op_partition_delete (data->pv,
                                                         remove_pv_delete_partition_op_callback,
                                                         data);
@@ -532,7 +535,7 @@ remove_pv_op_callback (GduPool    *pool,
 
 static void
 on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
-                                     GduDevice              *physical_volume,
+                                     const gchar            *pv_uuid,
                                      gpointer                user_data)
 {
         GduSectionLinuxLvm2VolumeGroup *section = GDU_SECTION_LINUX_LVM2_VOLUME_GROUP (user_data);
@@ -542,18 +545,20 @@ on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
         gint response;
         RemovePvData *data;
         GduPool *pool;
+        GduDevice *pv;
 
         pool = NULL;
+        pv = NULL;
 
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
 
         vg = GDU_LINUX_LVM2_VOLUME_GROUP (gdu_section_get_presentable (GDU_SECTION (section)));
 
         /* TODO: more details in this dialog - e.g. "The VG may degrade" etc etc */
-        dialog = gdu_confirmation_dialog_new_for_volume (toplevel,
-                                                         physical_volume,
-                                                         _("Are you sure you want the remove the Physical Volume?"),
-                                                         _("_Remove"));
+        dialog = gdu_confirmation_dialog_new (toplevel,
+                                              GDU_PRESENTABLE (vg),
+                                              _("Are you sure you want the remove the Physical Volume?"),
+                                              _("_Remove"));
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_hide (dialog);
@@ -561,21 +566,27 @@ on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
         if (response != GTK_RESPONSE_OK)
                 goto out;
 
+        /* TODO: find PV */
+
         data = g_new0 (RemovePvData, 1);
         data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
         data->vg = g_object_ref (vg);
-        data->pv = g_object_ref (physical_volume);
+        data->pv_uuid = g_strdup (pv_uuid);
 
-        pool = gdu_device_get_pool (data->pv);
+        data->pv = pv != NULL ? g_object_ref (pv) : NULL;
+
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (vg));
         gdu_pool_op_linux_lvm2_vg_remove_pv (pool,
                                              gdu_linux_lvm2_volume_group_get_uuid (data->vg),
-                                             gdu_device_get_object_path (physical_volume),
+                                             pv_uuid,
                                              remove_pv_op_callback,
                                              data);
 
  out:
         if (pool != NULL)
                 g_object_unref (pool);
+        if (pv != NULL)
+                g_object_unref (pv);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

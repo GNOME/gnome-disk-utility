@@ -71,6 +71,7 @@ static void update_tree (GduEditLinuxLvm2Dialog *dialog);
 static void update_details (GduEditLinuxLvm2Dialog *dialog);
 
 static GduDevice *get_selected_pv (GduEditLinuxLvm2Dialog *dialog);
+static gchar *get_selected_pv_uuid (GduEditLinuxLvm2Dialog *dialog);
 
 G_DEFINE_TYPE (GduEditLinuxLvm2Dialog, gdu_edit_linux_lvm2_dialog, GDU_TYPE_DIALOG)
 
@@ -120,10 +121,10 @@ gdu_edit_linux_lvm2_dialog_class_init (GduEditLinuxLvm2DialogClass *klass)
                               G_STRUCT_OFFSET (GduEditLinuxLvm2DialogClass, remove_button_clicked),
                               NULL,
                               NULL,
-                              g_cclosure_marshal_VOID__OBJECT,
+                              g_cclosure_marshal_VOID__STRING,
                               G_TYPE_NONE,
                               1,
-                              GDU_TYPE_DEVICE);
+                              G_TYPE_STRING);
 }
 
 static void
@@ -157,16 +158,17 @@ on_pv_new_button_clicked (GduButtonElement *button_element,
 
 static void
 on_pv_remove_button_clicked (GduButtonElement *button_element,
-                                    gpointer          user_data)
+                             gpointer          user_data)
 {
         GduEditLinuxLvm2Dialog *dialog = GDU_EDIT_LINUX_LVM2_DIALOG (user_data);
-        GduDevice *slave;
+        gchar *pv_uuid;
 
-        slave = get_selected_pv (dialog);
-        g_signal_emit (dialog, signals[REMOVE_BUTTON_CLICKED_SIGNAL], 0, slave);
-        g_object_unref (slave);
+        pv_uuid = get_selected_pv_uuid (dialog);
+        if (pv_uuid != NULL) {
+                g_signal_emit (dialog, signals[REMOVE_BUTTON_CLICKED_SIGNAL], 0, pv_uuid);
+                g_free (pv_uuid);
+        }
 }
-
 
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -552,6 +554,26 @@ get_selected_pv (GduEditLinuxLvm2Dialog *dialog)
         return pv;
 }
 
+static gchar *
+get_selected_pv_uuid (GduEditLinuxLvm2Dialog *dialog)
+{
+        gchar *pv_uuid;
+         GtkTreeSelection *tree_selection;
+        GtkTreeIter iter;
+
+        pv_uuid = NULL;
+
+        tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->pvs_tree_view));
+        if (gtk_tree_selection_get_selected (tree_selection, NULL, &iter)) {
+                gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->pvs_tree_store), &iter,
+                                    LINUX_LVM2_PV_UUID_COLUMN,
+                                    &pv_uuid,
+                                    -1);
+        }
+
+         return pv_uuid;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gint
@@ -882,7 +904,7 @@ update_details (GduEditLinuxLvm2Dialog *dialog)
         //GduLinuxLvm2DriveSlaveFlags slave_flags;
 
         show_pv_new_button = TRUE; /* It's always possible to add a PV */
-        show_pv_remove_button = FALSE;
+        show_pv_remove_button = TRUE; /* .. and it's always possible to remove a PV */
 
         slave_drive_device = NULL;
 

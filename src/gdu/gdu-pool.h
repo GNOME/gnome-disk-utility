@@ -191,9 +191,9 @@ void gdu_pool_op_linux_lvm2_vg_add_pv (GduPool *pool,
                                        gpointer user_data);
 
 void gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
-                                          const gchar *uuid,
-                                          const gchar *physical_volume_object_path,
-                                          GduPoolLinuxLvm2VGAddPVCompletedFunc callback,
+                                          const gchar *vg_uuid,
+                                          const gchar *pv_uuid,
+                                          GduPoolLinuxLvm2VGRemovePVCompletedFunc callback,
                                           gpointer user_data);
 
 G_END_DECLS

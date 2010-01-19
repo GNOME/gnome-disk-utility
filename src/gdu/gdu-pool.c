@@ -3158,10 +3158,10 @@ op_linux_lvm2_vg_remove_pv_cb (DBusGProxy *proxy, GError *error, gpointer user_d
 
 void
 gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
-                                  const gchar *uuid,
-                                  const gchar *physical_volume_object_path,
-                                  GduPoolLinuxLvm2VGRemovePVCompletedFunc callback,
-                                  gpointer user_data)
+                                     const gchar *vg_uuid,
+                                     const gchar *pv_uuid,
+                                     GduPoolLinuxLvm2VGRemovePVCompletedFunc callback,
+                                     gpointer user_data)
 {
         LinuxLvm2VGRemovePVData *data;
         char *options[16];
@@ -3174,8 +3174,8 @@ gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
         data->user_data = user_data;
 
         org_freedesktop_UDisks_linux_lvm2_vg_remove_pv_async (pool->priv->proxy,
-                                                              uuid,
-                                                              physical_volume_object_path,
+                                                              vg_uuid,
+                                                              pv_uuid,
                                                               (const gchar **) options,
                                                               op_linux_lvm2_vg_remove_pv_cb,
                                                               data);

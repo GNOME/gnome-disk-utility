@@ -51,7 +51,7 @@ struct GduEditLinuxLvm2DialogClass
 
         void (*new_button_clicked)    (GduEditLinuxLvm2Dialog *dialog);
         void (*remove_button_clicked) (GduEditLinuxLvm2Dialog *dialog,
-                                       GduDevice              *physical_volume);
+                                       const gchar            *pv_uuid);
 };
 
 GType       gdu_edit_linux_lvm2_dialog_get_type           (void) G_GNUC_CONST;

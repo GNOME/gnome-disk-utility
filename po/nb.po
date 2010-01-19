@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 2.29.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-13 20:30+0100\n"
-"PO-Revision-Date: 2010-01-13 20:45+0100\n"
+"POT-Creation-Date: 2010-01-19 19:08+0100\n"
+"PO-Revision-Date: 2010-01-19 19:21+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,9 @@ msgstr "Gir varsling relatert til disker"
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
-msgstr "Vent til operasjonen er fullført før du fjerner medie eller kobler fra enheten for å unngå korrupte data."
+msgstr ""
+"Vent til operasjonen er fullført før du fjerner medie eller kobler fra "
+"enheten for å unngå korrupte data."
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:286
@@ -172,10 +174,21 @@ msgstr "Legg til komponent på %s"
 #. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
 #.
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
 msgstr "Velg en disk "
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:195
+#, c-format
+msgid "Add Physical Volume to %s (%s)"
+msgstr "Legg til fysisk volum på %s (%s)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:211
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "_Størrelse:"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1296,6 +1309,35 @@ msgstr "Brukernavn å koble til som"
 msgid "_User Name:"
 msgstr "Br_ukernavn:"
 
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
+msgid "Maximum Logical Volume Size"
+msgstr "Maksimal størrelse på logisk volum"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
+msgid "The maximum possible logical volume size"
+msgstr "Maskimal størrelse på logisk volum"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
+msgid "Logical Volume Size"
+msgstr "Størrelse på logiske volumer"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
+msgid "The requested Logical Volume size"
+msgstr "Forespurt størrelse på logisk volum"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "Opp_rett"
+
+#. Translators: The %s is the name of the volume group
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
+#, c-format
+msgid "Create Logical Volume on %s"
+msgstr "Lag logisk volum på %s"
+
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
 msgid "Pool"
@@ -1362,12 +1404,6 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
 msgid "Create RAID Array"
 msgstr "Lag RAID-sett"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
-msgid "C_reate"
-msgstr "Opp_rett"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
 msgid "General"
@@ -1443,7 +1479,7 @@ msgstr "_Disker"
 #. --------------------------------------------------------------------------------
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
 msgid "Use entire disks instead of _partitions"
-msgstr ""
+msgstr "Bruk hele disker i stedet for _partisjoner"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid ""
@@ -1498,10 +1534,6 @@ msgstr "Partisjonsstørrelse"
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
 msgid "The requested partition size"
 msgstr "Forespurt størrelse på partisjon"
-
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
-msgid "_Size:"
-msgstr "_Størrelse:"
 
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
@@ -1560,14 +1592,14 @@ msgid "The size to use in the details header"
 msgstr "Størrelse som skal brukes i detaljtopptekst"
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:771
 msgid "The disk will be partitioned and a partition will be created"
 msgstr "Disken vil bli partisjonert og en partisjon vil bli opprettet"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:740
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:777
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
@@ -1578,7 +1610,7 @@ msgstr ""
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:749
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:786
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards %"
@@ -1586,14 +1618,14 @@ msgid ""
 msgstr ""
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:759
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:796
 msgid "A partition will be created"
 msgstr "En partisjon vil bli opprettet"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:765
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:802
 #, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
 msgstr ""
@@ -1604,7 +1636,7 @@ msgstr ""
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:773
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
 #, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
 msgstr ""
@@ -1613,7 +1645,7 @@ msgstr ""
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:792
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:829
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
 msgstr "Hele disken er uninitiert. %s tilgjengelig for bruk"
@@ -1621,7 +1653,7 @@ msgstr "Hele disken er uninitiert. %s tilgjengelig for bruk"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:799
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:836
 #, c-format
 msgid "%s available for use"
 msgstr "%s tilgjengelig for bruk"
@@ -1629,12 +1661,12 @@ msgstr "%s tilgjengelig for bruk"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:805
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:842
 #, c-format
 msgid "The disk has no partitions. %s available for use"
 msgstr "Disken har ingen partisjoner. %s tilgjengelig for bruk"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:847
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
@@ -1645,18 +1677,18 @@ msgstr[1] "Disken har %d partisjoner"
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
 #. * Second %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:818
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:855
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
 msgstr "%s. Største sammenhengende ledige blokk er %s"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:966
 msgid "Storage Devices"
 msgstr "Lagringsenheter"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:968
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1005
 msgid "Details"
 msgstr "Detaljer"
 
@@ -1716,7 +1748,7 @@ msgstr "Siste ytelsesmåling:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
 msgid "Average Access Time:"
-msgstr ""
+msgstr "Gjennomsnittlig aksesstid:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Start _Read-Only Benchmark"
@@ -1763,6 +1795,83 @@ msgstr "Avbryt"
 msgid "Cancels the currently running benchmark"
 msgstr ""
 
+#. Translators: title of the dialog - first %s is the name of the volume
+#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
+#.
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
+#, c-format
+msgid "Edit %s"
+msgstr "Rediger %s"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:234
+msgid "Missing Physical Volume"
+msgstr "Mangler fysisk volum"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:235
+#, c-format
+msgid "UUID: %s"
+msgstr "UUID: %s"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:345
+#, c-format
+msgid "Edit PVs on %s (%s)"
+msgstr "Rediger fysiske volum på %s (%s)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:356
+msgid "Physical _Volumes"
+msgstr "Fysiske _volum"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:386
+msgid "Physical Volume"
+msgstr "Fysisk volum"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:402
+msgid "Capacity"
+msgstr "Kapasitet"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
+msgid "Unallocated"
+msgstr "Ikke allokert"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:425
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
+#: ../src/palimpsest/gdu-section-drive.c:693
+msgid "SMART Status:"
+msgstr "SMART status:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
+#: ../src/palimpsest/gdu-section-drive.c:669
+#: ../src/palimpsest/gdu-section-volumes.c:1907
+msgid "Device:"
+msgstr "Enhet:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:442
+msgid "_New Physical Volume"
+msgstr "_Nytt fysisk volum"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:443
+msgid "Add a new PV to the VG"
+msgstr "Legg til nytt fysisk volum på volumgruppen"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:452
+msgid "_Remove Physical Volume"
+msgstr "Fje_rn fysisk volum"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:453
+msgid "Remove the PV from the VG"
+msgstr "Fjern fysisk volum fra volumgruppe"
+
+#. Translators: Used when SMART is not supported on the RAID pv
+#. Translators: Used when SMART is not supported on the RAID component
+#. Translators: This string is used when SMART is not supported
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:931
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
+#: ../src/palimpsest/gdu-section-drive.c:300
+msgid "Not Supported"
+msgstr "Ikke støttet"
+
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
 #, c-format
 msgid "Edit components on %s (%s)"
@@ -1784,26 +1893,16 @@ msgstr "Komponent"
 msgid "State"
 msgstr "Tilstand"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
-#: ../src/palimpsest/gdu-section-drive.c:693
-msgid "SMART Status:"
-msgstr "SMART status:"
-
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
 msgid "Position:"
 msgstr "Posisjon:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:755
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
 #: ../src/palimpsest/gdu-section-volumes.c:1896
 msgid "State:"
 msgstr "Tilstand:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
-#: ../src/palimpsest/gdu-section-drive.c:669
-#: ../src/palimpsest/gdu-section-volumes.c:1907
-msgid "Device:"
-msgstr "Enhet:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
 msgid "_New Component"
@@ -1830,21 +1929,6 @@ msgstr "Fje_rn komponent"
 #, fuzzy
 msgid "Remove the component from the array"
 msgstr "Er du sikker på at du vil slette %1?"
-
-#. Translators: Used when SMART is not supported on the RAID component
-#. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
-#: ../src/palimpsest/gdu-section-drive.c:300
-msgid "Not Supported"
-msgstr "Ikke støttet"
-
-#. Translators: title of the dialog - first %s is the name of the volume
-#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
-#.
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
-#, c-format
-msgid "Edit %s"
-msgstr "Rediger %s"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
 msgid "Part_ition Label:"
@@ -1950,7 +2034,7 @@ msgstr "Alternativer for filsystem"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:203
 msgid "The options to use for creating the filesystem"
-msgstr ""
+msgstr "Alternativer som skal brukes ved oppretting av filsystemet"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:213
 msgid "Encryption"
@@ -1998,7 +2082,7 @@ msgstr "Disk_verktøy"
 #. Translators: this is the tooltip for the "Disk Utility" button
 #: ../src/gdu-gtk/gdu-format-dialog.c:517
 msgid "Use Disk Utility to format volume"
-msgstr ""
+msgstr "Bruk diskverktøy til å formatere volum"
 
 #. Translators: 'type' means 'filesystem type' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:551
@@ -2023,6 +2107,7 @@ msgstr "Kryptert, kompatibel med Linux (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
 #: ../src/palimpsest/gdu-section-volumes.c:1717
 msgid "_Name:"
 msgstr "_Navn:"
@@ -2036,7 +2121,7 @@ msgstr "Nytt volum"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:632
 msgid "T_ake ownership of filesystem"
-msgstr ""
+msgstr "T_a eierskap av filsystemet"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:635
 msgid ""
@@ -2108,12 +2193,12 @@ msgstr "Ukjent"
 #: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
+msgstr "uid: %d  pid: %d  program: %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:236
 #, c-format
 msgid "pid: %d  program: %s"
-msgstr ""
+msgstr "pid: %d  program: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
 #: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:923
@@ -2232,11 +2317,11 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-gtk.c:1253
 msgid "Empty (don't create a file system)"
-msgstr ""
+msgstr "Tom (ikke lag et filsystem)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1274
 msgid "Empty"
-msgstr ""
+msgstr "Tom"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1282
 msgid "Extended Partition"
@@ -2284,7 +2369,7 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-size-widget.c:270
 msgid "Minimum Size"
-msgstr ""
+msgstr "Minimal størrelse"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:271
 msgid "The minimum size that can be selected"
@@ -2292,7 +2377,7 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-size-widget.c:284
 msgid "Maximum Size"
-msgstr ""
+msgstr "Maksimal størrelse"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:285
 msgid "The maximum size that can be selected"
@@ -2549,10 +2634,63 @@ msgstr ""
 msgid "SAS Expander"
 msgstr "SAS-utvider"
 
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+msgid "Logical Volume"
+msgstr "Logisk volum"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume.c:334
+msgid "LVM2 Logical Volume"
+msgstr "LVM2 logisk volum"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:351
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:355
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:725
+msgid "Volume Group"
+msgstr "Volumgruppe"
+
+#. Translators: VPD name - first %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:359
+#, c-format
+msgid "%s LVM2 Volume Group"
+msgstr "%s LVM2 volumgruppe"
+
+#. Translators: VPD name when size is not known
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:362
+msgid "LVM2 Volume Group"
+msgstr "LVM2 volumgruppe"
+
+#. Translators: label for an unallocated space in a LVM2 volume group.
+#. * %s is the size, formatted like '45 GB'
+#.
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:201
+#: ../src/gdu/gdu-volume-hole.c:152
+#, c-format
+msgid "%s Free"
+msgstr "%s ledig"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
+#: ../src/gdu/gdu-volume-hole.c:161
+#: ../src/palimpsest/gdu-section-volumes.c:2175
+#: ../src/palimpsest/gdu-section-volumes.c:2182
+msgid "Unallocated Space"
+msgstr "Ikke allokert plass"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
+msgid "LVM2 VG Unallocated Space"
+msgstr "Ikke allokert plass for LVM2 volumgruppe"
+
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:621
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "%s %s Array"
 msgstr "%s %s enhet"
 
@@ -3096,9 +3234,8 @@ msgid "EFI System Partition"
 msgstr "EFI systempartisjon"
 
 #: ../src/gdu/gdu-util.c:443
-#, fuzzy
 msgid "BIOS Boot Partition"
-msgstr "Ikke partisjonert"
+msgstr "BIOS-oppstartspartisjon"
 
 #. Microsoft
 #: ../src/gdu/gdu-util.c:445
@@ -3112,18 +3249,16 @@ msgstr "Vanlig datapartisjon"
 
 #. Same as Linux BDP
 #: ../src/gdu/gdu-util.c:447
-#, fuzzy
 msgid "Microsoft LDM Metadata Partition"
-msgstr "LDM-metadatapartisjon"
+msgstr "Microsoft LDM-metadatapartisjon"
 
 #: ../src/gdu/gdu-util.c:448
-#, fuzzy
 msgid "Microsoft LDM Data Partition"
-msgstr "LDM datapartisjon"
+msgstr "Microsoft LDM-datapartisjon"
 
 #: ../src/gdu/gdu-util.c:449
 msgid "Microsoft Windows Recovery Environment"
-msgstr ""
+msgstr "Microsoft Windows gjenopprettingsmiljø"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:451
@@ -3131,9 +3266,8 @@ msgid "HP-UX Data Partition"
 msgstr "HP-UX datapartisjon"
 
 #: ../src/gdu/gdu-util.c:452
-#, fuzzy
 msgid "HP-UX Service Partition"
-msgstr "Driverpartisjon"
+msgstr "HP-UX servicepartisjon"
 
 #. FreeBSD
 #: ../src/gdu/gdu-util.c:454
@@ -4069,20 +4203,6 @@ msgstr ""
 msgid "Whole-disk volume"
 msgstr ""
 
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#: ../src/gdu/gdu-volume-hole.c:152
-#, c-format
-msgid "%s Free"
-msgstr "%s ledig"
-
-#: ../src/gdu/gdu-volume-hole.c:161
-#: ../src/palimpsest/gdu-section-volumes.c:2175
-#: ../src/palimpsest/gdu-section-volumes.c:2182
-msgid "Unallocated Space"
-msgstr "Ikke allokert plass"
-
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
@@ -4232,6 +4352,7 @@ msgid "Rotation Rate:"
 msgstr ""
 
 #: ../src/palimpsest/gdu-section-drive.c:681
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:751
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
 #: ../src/palimpsest/gdu-section-volumes.c:1921
 msgid "Capacity:"
@@ -4330,6 +4451,123 @@ msgstr "Fabric:"
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Number of Ports:"
 msgstr "Antall porter:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
+msgid "Error starting Volume Group"
+msgstr "Feil under start av volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
+msgid "Error stopping Volume Group"
+msgstr "Feil under stopp av volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
+msgid "Error setting name for Volume Group"
+msgstr "Feil ved innlegging av navn for volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
+msgid "Choose a new Volume Group name."
+msgstr "Velg et nytt navn for volumgruppen."
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
+msgid "Error adding Physical Volume to Volume Group"
+msgstr "Feil ved innlegging av fysisk volum i volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:280
+#, fuzzy
+msgid "Error creating partition for RAID pv"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:316
+#, fuzzy
+msgid "Error creating partition table for LVM2 PV"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:488
+#, fuzzy
+msgid "Error deleting partition for Physical Volume in Volume Group"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:511
+#, fuzzy
+msgid "Error removing Physical Volume from Volume Group"
+msgstr "Feil under oppretting av partisjonstabell"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:555
+msgid "Are you sure you want the remove the Physical Volume?"
+msgstr "Er du sikker på at du vil fjerne det fysiske volumet?"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:556
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:630
+msgid "_Remove"
+msgstr "Fje_rn"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:669
+msgid "Not Running"
+msgstr "Kjører ikke"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:673
+msgid "Partially Running"
+msgstr "Kjører delvis"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:678
+msgid "Running"
+msgstr "Kjører"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:682
+#, c-format
+msgid "Unknown (%d)"
+msgstr "Ukjent (%d)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:739
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
+msgid "Name:"
+msgstr "Navn:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:743
+#, fuzzy
+msgid "Extent Size:"
+msgstr "Størrelse på str_ipe:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:747
+msgid "Physical Volumes:"
+msgstr "Fysiske volum:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:759
+msgid "Unallocated:"
+msgstr "Ikke allokert:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
+msgid "St_art Volume Group"
+msgstr "St_art volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:779
+msgid "Activate all LVs in the VG"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:788
+msgid "St_op Volume Group"
+msgstr "St_opp volumgruppe"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:789
+msgid "Deactivate all LVs in the VG"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:799
+msgid "Edit _Name"
+msgstr "Rediger _navn"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:800
+msgid "Change the Volume Group name"
+msgstr "Bytt navn på volumgruppen"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:809
+msgid "Edit Ph_ysical Volumes"
+msgstr "Rediger f_ysiske volum"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:810
+#, fuzzy
+msgid "Create and remove PVs"
+msgstr "Lag og fjern komponenter"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:86
 msgctxt "RAID status"
@@ -4456,10 +4694,6 @@ msgstr "Feil under oppretting av partisjonstabell"
 msgid "Are you sure you want the remove the component?"
 msgstr "Er du sikker på at du vil fjerne komponenten?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:630
-msgid "_Remove"
-msgstr "Fje_rn"
-
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:666
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:739
 #, fuzzy
@@ -4488,10 +4722,6 @@ msgstr "Nivå:"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
 msgid "Metadata Version:"
 msgstr "Metadataversjon:"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
-msgid "Name:"
-msgstr "Navn:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
 msgid "Action:"

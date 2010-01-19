@@ -29,12 +29,131 @@
 
 #include "gdu-size-widget.h"
 
+typedef enum {
+        GDU_UNIT_NOT_SET,
+        GDU_UNIT_KB,
+        GDU_UNIT_KIB,
+        GDU_UNIT_MB,
+        GDU_UNIT_MIB,
+        GDU_UNIT_GB,
+        GDU_UNIT_GIB,
+        GDU_UNIT_TB,
+        GDU_UNIT_TIB,
+} GduUnit;
+
+static gdouble
+gdu_unit_get_factor (GduUnit unit)
+{
+        gdouble ret;
+
+        switch (unit) {
+        case GDU_UNIT_KB:
+                ret = 1000.0;
+                break;
+        default:
+                g_warning ("Unknown unit %d", unit);
+                /* explicit fallthrough */
+        case GDU_UNIT_MB:
+                ret = 1000.0 * 1000.0;
+                break;
+        case GDU_UNIT_GB:
+                ret = 1000.0 * 1000.0 * 1000.0;
+                break;
+        case GDU_UNIT_TB:
+                ret = 1000.0 * 1000.0 * 1000.0 * 1000.0;
+                break;
+        case GDU_UNIT_KIB:
+                ret = 1024.0;
+                break;
+        case GDU_UNIT_MIB:
+                ret = 1024.0 * 1024.0;
+                break;
+        case GDU_UNIT_GIB:
+                ret = 1024.0 * 1024.0 * 1024.0;
+                break;
+        case GDU_UNIT_TIB:
+                ret = 1024.0 * 1024.0 * 1024.0 * 1024.0;
+                break;
+        }
+
+        return ret;
+}
+
+static const gchar *
+gdu_unit_get_name (GduUnit unit)
+{
+        const gchar *ret;
+
+        switch (unit) {
+        case GDU_UNIT_KB:
+                ret = _("KB");
+                break;
+        default:
+                g_warning ("Unknown unit %d", unit);
+                /* explicit fallthrough */
+        case GDU_UNIT_MB:
+                ret = _("MB");
+                break;
+        case GDU_UNIT_GB:
+                ret = _("GB");
+                break;
+        case GDU_UNIT_TB:
+                ret = _("TB");
+                break;
+        case GDU_UNIT_KIB:
+                ret = _("KiB");
+                break;
+        case GDU_UNIT_MIB:
+                ret = _("MiB");
+                break;
+        case GDU_UNIT_GIB:
+                ret = _("GiB");
+                break;
+        case GDU_UNIT_TIB:
+                ret = _("TiB");
+                break;
+        }
+
+        return ret;
+}
+
+static GduUnit
+gdu_unit_guess (const gchar *str)
+{
+        GduUnit ret;
+
+        ret = GDU_UNIT_NOT_SET;
+
+        if (strstr (str, "KB") != NULL) {
+                ret = GDU_UNIT_KB;
+        } else if (strstr (str, "MB") != NULL) {
+                ret = GDU_UNIT_MB;
+        } else if (strstr (str, "GB") != NULL) {
+                ret = GDU_UNIT_GB;
+        } else if (strstr (str, "TB") != NULL) {
+                ret = GDU_UNIT_TB;
+        } else if (strstr (str, "KiB") != NULL) {
+                ret = GDU_UNIT_KIB;
+        } else if (strstr (str, "MiB") != NULL) {
+                ret = GDU_UNIT_MIB;
+        } else if (strstr (str, "GiB") != NULL) {
+                ret = GDU_UNIT_GIB;
+        } else if (strstr (str, "TiB") != NULL) {
+                ret = GDU_UNIT_TIB;
+        }
+
+        return ret;
+}
+
 struct GduSizeWidgetPrivate
 {
         guint64 size;
         guint64 min_size;
         guint64 max_size;
         GtkWidget *hscale;
+        GtkWidget *spin_button;
+
+        GduUnit unit;
 };
 
 enum
@@ -143,6 +262,25 @@ on_hscale_value_changed (GtkRange  *range,
         widget->priv->size = (guint64) gtk_range_get_value (range);
 
         if (old_size != widget->priv->size) {
+
+                g_signal_emit (widget,
+                               signals[CHANGED_SIGNAL],
+                               0);
+                g_object_notify (G_OBJECT (widget), "size");
+        }
+}
+
+static void
+on_spin_button_value_changed (GtkSpinButton *spin_button,
+                              gpointer   user_data)
+{
+        GduSizeWidget *widget = GDU_SIZE_WIDGET (user_data);
+        guint64 old_size;
+
+        old_size = widget->priv->size;
+        widget->priv->size = (guint64) gtk_spin_button_get_value (spin_button);
+
+        if (old_size != widget->priv->size) {
                 g_signal_emit (widget,
                                signals[CHANGED_SIGNAL],
                                0);
@@ -177,6 +315,66 @@ on_query_tooltip (GtkWidget  *w,
         return TRUE;
 }
 
+static gboolean
+on_spin_button_output (GtkSpinButton *spin_button,
+                       gpointer       user_data)
+{
+        GduSizeWidget *widget = GDU_SIZE_WIDGET (user_data);
+        gdouble unit_factor;
+        const gchar *unit_name;
+        gchar *s;
+
+        unit_factor = gdu_unit_get_factor (widget->priv->unit);
+        unit_name = gdu_unit_get_name (widget->priv->unit);
+
+        s = g_strdup_printf ("%.3f %s",
+                             widget->priv->size / unit_factor,
+                             unit_name);
+
+        gtk_entry_set_text (GTK_ENTRY (widget->priv->spin_button), s);
+
+        g_free (s);
+
+        return TRUE;
+}
+
+static void
+set_unit (GduSizeWidget *widget,
+          GduUnit        unit)
+{
+        widget->priv->unit = unit;
+
+        update_stepping (widget);
+}
+
+static gint
+on_spin_button_input (GtkSpinButton *spin_button,
+                      gdouble       *out_new_val,
+                      gpointer       user_data)
+{
+        GduSizeWidget *widget = GDU_SIZE_WIDGET (user_data);
+        const gchar *entry_txt;
+        gdouble val;
+        GduUnit unit;
+        gint ret;
+
+        g_assert (out_new_val != NULL);
+        ret = GTK_INPUT_ERROR;
+
+        entry_txt = gtk_entry_get_text (GTK_ENTRY (spin_button));
+        if (sscanf (entry_txt, "%lf", &val) == 1) {
+                unit = gdu_unit_guess (entry_txt);
+                if (unit != GDU_UNIT_NOT_SET) {
+                        set_unit (widget, unit);
+                }
+
+                *out_new_val = val * gdu_unit_get_factor (widget->priv->unit);
+                ret = TRUE;
+        }
+
+        return ret;
+}
+
 static void
 gdu_size_widget_constructed (GObject *object)
 {
@@ -205,6 +403,29 @@ gdu_size_widget_constructed (GObject *object)
                           G_CALLBACK (on_query_tooltip),
                           widget);
 
+        /* ---------------------------------------------------------------------------------------------------- */
+
+        gtk_widget_show (widget->priv->spin_button);
+        gtk_box_pack_start (GTK_BOX (widget),
+                            widget->priv->spin_button,
+                            FALSE,
+                            FALSE,
+                            0);
+        g_signal_connect (widget->priv->spin_button,
+                          "output",
+                          G_CALLBACK (on_spin_button_output),
+                          widget);
+        g_signal_connect (widget->priv->spin_button,
+                          "input",
+                          G_CALLBACK (on_spin_button_input),
+                          widget);
+        g_signal_connect (widget->priv->spin_button,
+                          "value-changed",
+                          G_CALLBACK (on_spin_button_value_changed),
+                          widget);
+
+        /* ---------------------------------------------------------------------------------------------------- */
+
         update_stepping (widget);
 
         if (G_OBJECT_CLASS (gdu_size_widget_parent_class)->constructed != NULL)
@@ -214,6 +435,8 @@ gdu_size_widget_constructed (GObject *object)
 static void
 gdu_size_widget_init (GduSizeWidget *widget)
 {
+        GtkAdjustment *adjustment;
+
         widget->priv = G_TYPE_INSTANCE_GET_PRIVATE (widget,
                                                     GDU_TYPE_SIZE_WIDGET,
                                                     GduSizeWidgetPrivate);
@@ -222,6 +445,15 @@ gdu_size_widget_init (GduSizeWidget *widget)
                                                           10,
                                                           1);
         gtk_scale_set_draw_value (GTK_SCALE (widget->priv->hscale), TRUE);
+
+        adjustment = gtk_range_get_adjustment (GTK_RANGE (widget->priv->hscale));
+        widget->priv->spin_button = gtk_spin_button_new (adjustment,
+                                                         0,
+                                                         0);
+        gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (widget->priv->spin_button),
+                                           GTK_UPDATE_IF_VALID);
+
+        set_unit (widget, GDU_UNIT_GB);
 }
 
 static gboolean
@@ -325,7 +557,15 @@ update_stepping (GduSizeWidget *widget)
         /* set steps in hscale according to magnitude of extent und so weiter */
         if (extent > 0) {
                 gdouble increment;
-                increment = exp10 (floor (log10 (extent))) / 10.0;
+                gdouble shown_extent;
+                gdouble unit_factor;
+
+                unit_factor = gdu_unit_get_factor (widget->priv->unit);
+
+                shown_extent = extent / unit_factor;
+
+                increment = (exp10 (floor (log10 (shown_extent))) / 10.0) * unit_factor;
+
                 gtk_range_set_increments (GTK_RANGE (widget->priv->hscale),
                                           increment,
                                           increment * 10.0);

@@ -532,6 +532,33 @@ remove_pv_op_callback (GduPool    *pool,
         }
 }
 
+static GduDevice *
+find_pv_with_uuid (GduPool     *pool,
+                   const gchar *pv_uuid)
+{
+        GduDevice *ret;
+        GList *devices;
+        GList *l;
+
+        ret = NULL;
+        devices = gdu_pool_get_devices (pool);
+        for (l = devices; l != NULL; l = l->next) {
+                GduDevice *d = GDU_DEVICE (l->data);
+
+                if (gdu_device_is_linux_lvm2_pv (d) &&
+                    g_strcmp0 (gdu_device_linux_lvm2_pv_get_uuid (d), pv_uuid) == 0) {
+                        ret = g_object_ref (d);
+                        goto out;
+                }
+        }
+
+ out:
+        g_list_foreach (devices, (GFunc) g_object_unref, NULL);
+        g_list_free (devices);
+
+        return ret;
+}
+
 
 static void
 on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
@@ -566,7 +593,9 @@ on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
         if (response != GTK_RESPONSE_OK)
                 goto out;
 
-        /* TODO: find PV */
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (vg));
+
+        pv = find_pv_with_uuid (pool, pv_uuid);
 
         data = g_new0 (RemovePvData, 1);
         data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
@@ -575,7 +604,6 @@ on_pvs_dialog_remove_button_clicked (GduEditLinuxMdDialog   *_dialog,
 
         data->pv = pv != NULL ? g_object_ref (pv) : NULL;
 
-        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (vg));
         gdu_pool_op_linux_lvm2_vg_remove_pv (pool,
                                              gdu_linux_lvm2_volume_group_get_uuid (data->vg),
                                              pv_uuid,

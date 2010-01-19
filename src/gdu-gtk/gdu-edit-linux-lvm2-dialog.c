@@ -956,6 +956,9 @@ update_details (GduEditLinuxLvm2Dialog *dialog)
                 g_object_unref (icon);
         }
 
+        gdu_details_element_set_text (dialog->priv->pv_device_element,
+                                      gdu_device_get_device_file (pv));
+
  out:
         gdu_button_element_set_visible (dialog->priv->pv_new_button, show_pv_new_button);
         gdu_button_element_set_visible (dialog->priv->pv_remove_button, show_pv_remove_button);

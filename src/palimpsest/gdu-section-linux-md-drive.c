@@ -42,9 +42,7 @@ struct _GduSectionLinuxMdDrivePrivate
         GduDetailsElement *state_element;
         GduDetailsElement *capacity_element;
         GduDetailsElement *action_element;
-        GduDetailsElement *active_components_element;
-
-        GtkWidget *components_vbox;
+        GduDetailsElement *components_element;
 
         GduButtonElement *md_start_button;
         GduButtonElement *md_stop_button;
@@ -151,6 +149,7 @@ update_state_and_action_elements (GduSectionLinuxMdDrive *section)
                 g_object_unref (d);
 }
 
+#if 0
 static gboolean
 on_component_label_activate_link (GtkLabel    *label,
                                   const gchar *uri,
@@ -186,105 +185,7 @@ on_component_label_activate_link (GtkLabel    *label,
                 g_object_unref (device);
         return TRUE;
 }
-
-static void
-update_components_list (GduSectionLinuxMdDrive *section)
-{
-        GduPresentable *p;
-        GduPool *pool;
-        GList *children;
-        GList *slaves;
-        GList *l;
-        gboolean is_running;
-
-        p = gdu_section_get_presentable (GDU_SECTION (section));
-        pool = gdu_presentable_get_pool (p);
-        slaves = gdu_linux_md_drive_get_slaves (GDU_LINUX_MD_DRIVE (p));
-        is_running = gdu_drive_is_active (GDU_DRIVE (p));
-
-        /* out with the old */
-        children = gtk_container_get_children (GTK_CONTAINER (section->priv->components_vbox));
-        for (l = children; l != NULL; l = l->next) {
-                gtk_container_remove (GTK_CONTAINER (section->priv->components_vbox), GTK_WIDGET (l->data));
-        }
-        g_list_free (children);
-
-        /* and in with the new */
-        for (l = slaves; l != NULL; l = l->next) {
-                GduDevice *slave_device = GDU_DEVICE (l->data);
-                GtkWidget *hbox;
-                GtkWidget *image;
-                GtkWidget *label;
-                GduPresentable *volume;
-                gchar *vpd_name;
-                GIcon *icon;
-                gchar *s;
-                gchar *s2;
-                gchar *slave_state_str;
-
-                volume = gdu_pool_get_volume_by_device (pool, slave_device);
-                if (volume == NULL)
-                        continue;
-
-                hbox = gtk_hbox_new (FALSE, 4);
-                gtk_box_pack_start (GTK_BOX (section->priv->components_vbox), hbox, FALSE, FALSE, 0);
-
-                icon = gdu_presentable_get_icon (volume);
-                vpd_name = gdu_presentable_get_vpd_name (volume);
-
-                image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
-                gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-
-                s2 = g_strdup_printf ("<a href=\"%s\">%s</a>",
-                                      gdu_device_get_object_path (slave_device),
-                                      /* Translators: The text for the hyperlink of the component */
-                                      _("Go to volume"));
-
-                slave_state_str = gdu_linux_md_drive_get_slave_state_markup (GDU_LINUX_MD_DRIVE (p), slave_device);
-                if (slave_state_str != NULL) {
-
-                        /* Translators: The text used to display the RAID component for an array that is running.
-                         * First %s is the VPD name.
-                         * Second %s is the state of the component.
-                         * Third %s is the "Go to volume" link.
-                         */
-                        s = g_strdup_printf (C_("RAID component label", "%s (%s) – %s"),
-                                             vpd_name,
-                                             slave_state_str,
-                                             s2);
-                } else {
-                        /* Translators: The text used to display the RAID component for an array that is not running.
-                         * First %s is the VPD name.
-                         * Second %s is the "Go to volume" link.
-                         */
-                        s = g_strdup_printf (C_("RAID component label", "%s – %s"),
-                                             vpd_name,
-                                             s2);
-                }
-                g_free (s2);
-                label = gtk_label_new (NULL);
-                gtk_label_set_markup (GTK_LABEL (label), s);
-                gtk_label_set_track_visited_links (GTK_LABEL (label), FALSE);
-                g_free (s);
-                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-                gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-
-                g_signal_connect (label,
-                                  "activate-link",
-                                  G_CALLBACK (on_component_label_activate_link),
-                                  section);
-
-                g_free (vpd_name);
-                g_free (slave_state_str);
-                g_object_unref (icon);
-        }
-
-        gtk_widget_show_all (section->priv->components_vbox);
-
-        g_list_foreach (slaves, (GFunc) g_object_unref, NULL);
-        g_list_free (slaves);
-        g_object_unref (pool);
-}
+#endif
 
 static void
 gdu_section_linux_md_drive_update (GduSection *_section)
@@ -339,7 +240,7 @@ gdu_section_linux_md_drive_update (GduSection *_section)
                 gdu_details_element_set_text (section->priv->name_element, "–");
 
         s = g_strdup_printf ("%d", num_raid_devices);
-        gdu_details_element_set_text (section->priv->active_components_element, s);
+        gdu_details_element_set_text (section->priv->components_element, s);
         g_free (s);
 
         if (d != NULL) {
@@ -384,7 +285,6 @@ gdu_section_linux_md_drive_update (GduSection *_section)
 
  out:
         update_state_and_action_elements (section);
-        update_components_list (section);
 
         gdu_button_element_set_visible (section->priv->md_start_button, show_md_start_button);
         gdu_button_element_set_visible (section->priv->md_stop_button, show_md_stop_button);
@@ -1046,7 +946,6 @@ gdu_section_linux_md_drive_constructed (GObject *object)
         GtkWidget *label;
         GtkWidget *table;
         GtkWidget *vbox;
-        GtkWidget *vbox2;
         gchar *s;
         GduPresentable *p;
         GduDevice *d;
@@ -1105,27 +1004,13 @@ gdu_section_linux_md_drive_constructed (GObject *object)
         g_ptr_array_add (elements, element);
         section->priv->action_element = element;
 
-        element = gdu_details_element_new (_("Active Components:"), NULL, NULL);
-        g_ptr_array_add (elements, element);
-        section->priv->active_components_element = element;
-
-        /* Ensure this is in the last row and the first column */
         element = gdu_details_element_new (_("Components:"), NULL, NULL);
         g_ptr_array_add (elements, element);
+        section->priv->components_element = element;
 
         table = gdu_details_table_new (2, elements);
         g_ptr_array_unref (elements);
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-
-        /* -------------------------------------------------------------------------------- */
-
-        align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-        gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 6, 36, 0);
-        gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
-
-        vbox2 = gtk_vbox_new (TRUE, 4);
-        gtk_container_add (GTK_CONTAINER (align), vbox2);
-        section->priv->components_vbox = vbox2;
 
         /* -------------------------------------------------------------------------------- */
 

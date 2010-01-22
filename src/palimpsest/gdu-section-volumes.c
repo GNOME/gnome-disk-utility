@@ -2051,8 +2051,11 @@ gdu_section_volumes_update (GduSection *_section)
         }
         if (section->priv->device_element != NULL) {
                 if (d != NULL) {
-                        gdu_details_element_set_text (section->priv->device_element,
-                                                      gdu_device_get_device_file (d));
+                        const char *device_file;
+                        device_file = gdu_device_get_device_file_presentation (d);
+                        if (device_file == NULL || strlen (device_file) == 0)
+                                device_file = gdu_device_get_device_file (d);
+                        gdu_details_element_set_text (section->priv->device_element, device_file);
                 } else {
                         gdu_details_element_set_text (section->priv->device_element, "–");
                 }
@@ -2179,10 +2182,15 @@ gdu_section_volumes_update (GduSection *_section)
 
         } else if (GDU_IS_VOLUME_HOLE (v)) {
                 GduDevice *drive_device;
+                const char *device_file;
+
                 gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
                 drive_device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
-                gdu_details_element_set_text (section->priv->device_element,
-                                              gdu_device_get_device_file (drive_device));
+
+                device_file = gdu_device_get_device_file_presentation (drive_device);
+                if (device_file == NULL || strlen (device_file) == 0)
+                        device_file = gdu_device_get_device_file (drive_device);
+                gdu_details_element_set_text (section->priv->device_element, device_file);
                 g_object_unref (drive_device);
 
                 if (can_create_partition (section, GDU_VOLUME_HOLE (v), NULL))

@@ -646,20 +646,6 @@ out:
         icon = g_themed_icon_new_with_default_fallbacks (name);
 
         if (usage != NULL && strcmp (usage, "crypto") == 0) {
-                GEmblem *emblem;
-                GIcon *padlock;
-                GIcon *emblemed_icon;
-
-                padlock = g_themed_icon_new ("gdu-encrypted-lock");
-                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
-
-                emblemed_icon = g_emblemed_icon_new (icon, emblem);
-                g_object_unref (icon);
-                icon = emblemed_icon;
-
-                g_object_unref (padlock);
-                g_object_unref (emblem);
-
         }
 
         if (gdu_device_is_luks_cleartext (volume->priv->device)) {

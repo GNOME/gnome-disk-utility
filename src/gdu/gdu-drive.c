@@ -905,6 +905,7 @@ gdu_drive_get_icon (GduPresentable *presentable)
         const char *presentation_icon_name;
         gchar **drive_media_compat;
         gboolean is_removable;
+        GIcon *icon;
 
         connection_interface = gdu_device_drive_get_connection_interface (drive->priv->device);
         is_removable = gdu_device_is_removable (drive->priv->device);
@@ -984,7 +985,25 @@ gdu_drive_get_icon (GduPresentable *presentable)
                         name = "drive-harddisk";
         }
 
-        return g_themed_icon_new_with_default_fallbacks (name);
+        /* Attach a MP emblem if it's a multipathed device */
+        icon = g_themed_icon_new_with_default_fallbacks (name);
+        if (gdu_device_is_linux_dmmp (drive->priv->device)) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-emblem-mp");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+        }
+
+        return icon;
 }
 
 static guint64

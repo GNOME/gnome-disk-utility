@@ -71,6 +71,7 @@ dev_t gdu_device_get_dev (GduDevice *device);
 guint64 gdu_device_get_detection_time (GduDevice *device);
 guint64 gdu_device_get_media_detection_time (GduDevice *device);
 const char *gdu_device_get_device_file (GduDevice *device);
+const char *gdu_device_get_device_file_presentation (GduDevice *device);
 guint64 gdu_device_get_size (GduDevice *device);
 guint64 gdu_device_get_block_size (GduDevice *device);
 gboolean gdu_device_is_removable (GduDevice *device);
@@ -91,6 +92,8 @@ gboolean gdu_device_is_linux_md_component (GduDevice *device);
 gboolean gdu_device_is_linux_md (GduDevice *device);
 gboolean gdu_device_is_linux_lvm2_lv (GduDevice *device);
 gboolean gdu_device_is_linux_lvm2_pv (GduDevice *device);
+gboolean gdu_device_is_linux_dmmp (GduDevice *device);
+gboolean gdu_device_is_linux_dmmp_component (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 char **gdu_device_get_mount_paths (GduDevice *device);
@@ -194,6 +197,10 @@ guint64     gdu_device_linux_lvm2_pv_get_group_extent_size (GduDevice *device);
 guint64     gdu_device_linux_lvm2_pv_get_group_sequence_number (GduDevice *device);
 gchar     **gdu_device_linux_lvm2_pv_get_group_physical_volumes (GduDevice *device);
 gchar     **gdu_device_linux_lvm2_pv_get_group_logical_volumes (GduDevice *device);
+
+const char *gdu_device_linux_dmmp_component_get_holder (GduDevice *device);
+const char *gdu_device_linux_dmmp_get_name (GduDevice *device);
+char **gdu_device_linux_dmmp_get_slaves (GduDevice *device);
 
 gboolean      gdu_device_drive_ata_smart_get_is_available (GduDevice *device);
 guint64       gdu_device_drive_ata_smart_get_time_collected (GduDevice *device);

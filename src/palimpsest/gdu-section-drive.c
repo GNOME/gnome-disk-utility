@@ -113,6 +113,7 @@ gdu_section_drive_update (GduSection *_section)
         gboolean show_detach_button;
         gboolean show_smart_button;
         gboolean show_benchmark_button;
+        const gchar *device_file;
 
         show_cddvd_button = FALSE;
         show_format_button = FALSE;
@@ -188,7 +189,10 @@ gdu_section_drive_update (GduSection *_section)
         } else {
                 gdu_details_element_set_text (section->priv->location_element, "–");
         }
-        gdu_details_element_set_text (section->priv->device_element, gdu_device_get_device_file (d));
+        device_file = gdu_device_get_device_file_presentation (d);
+        if (device_file == NULL || strlen (device_file) == 0)
+                device_file = gdu_device_get_device_file (d);
+        gdu_details_element_set_text (section->priv->device_element, device_file);
 
         model = gdu_device_drive_get_model (d);
         vendor = gdu_device_drive_get_vendor (d);

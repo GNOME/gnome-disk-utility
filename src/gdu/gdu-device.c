@@ -51,6 +51,7 @@ typedef struct
   gint64 device_major;
   gint64 device_minor;
   char *device_file;
+  char *device_file_presentation;
   char **device_file_by_id;
   char **device_file_by_path;
   gboolean device_is_system_internal;
@@ -72,6 +73,8 @@ typedef struct
   gboolean device_is_linux_md;
   gboolean device_is_linux_lvm2_lv;
   gboolean device_is_linux_lvm2_pv;
+  gboolean device_is_linux_dmmp;
+  gboolean device_is_linux_dmmp_component;
   char **device_mount_paths;
   uid_t device_mounted_by_uid;
   gboolean device_presentation_hide;
@@ -180,6 +183,12 @@ typedef struct
   guint64 linux_lvm2_pv_group_extent_size;
   char **linux_lvm2_pv_group_physical_volumes;
   char **linux_lvm2_pv_group_logical_volumes;
+
+  gchar *linux_dmmp_component_holder;
+
+  gchar *linux_dmmp_name;
+  gchar **linux_dmmp_slaves;
+
 } DeviceProperties;
 
 static void
@@ -202,6 +211,8 @@ collect_props (const char *key,
     props->device_minor = g_value_get_int64 (value);
   else if (strcmp (key, "DeviceFile") == 0)
     props->device_file = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "DeviceFilePresentation") == 0)
+    props->device_file_presentation = g_strdup (g_value_get_string (value));
   else if (strcmp (key, "DeviceFileById") == 0)
     props->device_file_by_id = g_strdupv (g_value_get_boxed (value));
   else if (strcmp (key, "DeviceFileByPath") == 0)
@@ -242,6 +253,10 @@ collect_props (const char *key,
     props->device_is_linux_lvm2_lv = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceIsLinuxLvm2PV") == 0)
     props->device_is_linux_lvm2_pv = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxDmmp") == 0)
+    props->device_is_linux_dmmp = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxDmmpComponent") == 0)
+    props->device_is_linux_dmmp_component = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceIsMounted") == 0)
     props->device_is_mounted = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceMountPaths") == 0)
@@ -471,6 +486,24 @@ collect_props (const char *key,
   else if (strcmp (key, "LinuxLvm2PVGroupLogicalVolumes") == 0)
     props->linux_lvm2_pv_group_logical_volumes = g_strdupv (g_value_get_boxed (value));
 
+  else if (strcmp (key, "LinuxDmmpComponentHolder") == 0)
+    props->linux_dmmp_component_holder = g_strdup (g_value_get_boxed (value));
+
+  else if (strcmp (key, "LinuxDmmpName") == 0)
+    props->linux_dmmp_name = g_strdup (g_value_get_string (value));
+  else if (strcmp (key, "LinuxDmmpSlaves") == 0)
+    {
+      guint n;
+      GPtrArray *object_paths;
+
+      object_paths = g_value_get_boxed (value);
+
+      props->linux_dmmp_slaves = g_new0 (char *, object_paths->len + 1);
+      for (n = 0; n < object_paths->len; n++)
+        props->linux_dmmp_slaves[n] = g_strdup (object_paths->pdata[n]);
+      props->linux_dmmp_slaves[n] = NULL;
+    }
+
   else
     handled = FALSE;
 
@@ -483,6 +516,7 @@ device_properties_free (DeviceProperties *props)
 {
   g_free (props->native_path);
   g_free (props->device_file);
+  g_free (props->device_file_presentation);
   g_strfreev (props->device_file_by_id);
   g_strfreev (props->device_file_by_path);
   g_strfreev (props->device_mount_paths);
@@ -544,6 +578,11 @@ device_properties_free (DeviceProperties *props)
   g_free (props->linux_lvm2_pv_group_uuid);
   g_strfreev (props->linux_lvm2_pv_group_physical_volumes);
   g_strfreev (props->linux_lvm2_pv_group_logical_volumes);
+
+  g_free (props->linux_dmmp_component_holder);
+
+  g_free (props->linux_dmmp_name);
+  g_strfreev (props->linux_dmmp_slaves);
 
   g_free (props);
 }
@@ -819,6 +858,12 @@ gdu_device_get_device_file (GduDevice *device)
         return device->priv->props->device_file;
 }
 
+const char *
+gdu_device_get_device_file_presentation (GduDevice *device)
+{
+        return device->priv->props->device_file_presentation;
+}
+
 guint64
 gdu_device_get_size (GduDevice *device)
 {
@@ -925,6 +970,18 @@ gboolean
 gdu_device_is_linux_lvm2_pv (GduDevice *device)
 {
         return device->priv->props->device_is_linux_lvm2_pv;
+}
+
+gboolean
+gdu_device_is_linux_dmmp (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_dmmp;
+}
+
+gboolean
+gdu_device_is_linux_dmmp_component (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_dmmp_component;
 }
 
 gboolean
@@ -1466,6 +1523,25 @@ gdu_device_linux_lvm2_pv_get_group_logical_volumes (GduDevice *device)
         return device->priv->props->linux_lvm2_pv_group_logical_volumes;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+const char *
+gdu_device_linux_dmmp_component_get_holder (GduDevice *device)
+{
+        return device->priv->props->linux_dmmp_component_holder;
+}
+
+const char *
+gdu_device_linux_dmmp_get_name (GduDevice *device)
+{
+        return device->priv->props->linux_dmmp_name;
+}
+
+char **
+gdu_device_linux_dmmp_get_slaves (GduDevice *device)
+{
+        return device->priv->props->linux_dmmp_slaves;
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 

@@ -379,7 +379,7 @@ gdu_linux_lvm2_volume_get_vpd_name (GduPresentable *presentable)
 static GIcon *
 gdu_linux_lvm2_volume_get_icon (GduPresentable *presentable)
 {
-        return g_themed_icon_new_with_default_fallbacks ("gdu-raid-array");
+        return gdu_util_get_emblemed_icon ("gdu-raid-array", "gdu-emblem-lvm-lv");
 }
 
 static guint64

@@ -1130,3 +1130,31 @@ gdu_util_ata_smart_status_to_desc (const gchar  *status,
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+GIcon *
+gdu_util_get_emblemed_icon (const gchar *name,
+                            const gchar *emblem_name)
+{
+        GIcon *icon;
+        GIcon *icon_for_emblem;
+        GEmblem *emblem;
+        GIcon *emblemed_icon;
+
+        icon = g_themed_icon_new_with_default_fallbacks (name);
+        if (emblem_name == NULL) {
+                emblemed_icon = icon;
+                goto out;
+        }
+
+        icon_for_emblem = g_themed_icon_new (emblem_name);
+        emblem = g_emblem_new_with_origin (icon_for_emblem, G_EMBLEM_ORIGIN_DEVICE);
+        emblemed_icon = g_emblemed_icon_new (icon, emblem);
+        g_object_unref (icon);
+        g_object_unref (icon_for_emblem);
+        g_object_unref (emblem);
+
+ out:
+        return emblemed_icon;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

@@ -23,6 +23,17 @@ icon_DATA =				\
 	gdu-unmountable.svg		\
 	nautilus-gdu.svg		\
 	gdu-hba.svg			\
+	gdu-emblem-mp.svg		\
+	gdu-emblem-lvm-vg.svg		\
+	gdu-emblem-lvm-lv.svg		\
+	gdu-emblem-raid-linear.svg	\
+	gdu-emblem-raid0.svg		\
+	gdu-emblem-raid1.svg		\
+	gdu-emblem-raid3.svg		\
+	gdu-emblem-raid4.svg		\
+	gdu-emblem-raid5.svg		\
+	gdu-emblem-raid6.svg		\
+	gdu-emblem-raid10.svg		\
 	$(NULL)
 
 EXTRA_DIST = \

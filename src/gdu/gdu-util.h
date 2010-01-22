@@ -81,6 +81,11 @@ gboolean gdu_util_have_secret (GduDevice *device);
 
 gchar *gdu_util_get_secret (GduDevice *device);
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+GIcon *gdu_util_get_emblemed_icon (const gchar *name,
+                                   const gchar *emblem_name);
+
 G_END_DECLS
 
 #endif /* __GDU_UTIL_H */

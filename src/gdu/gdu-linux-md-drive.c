@@ -676,7 +676,36 @@ gdu_linux_md_drive_get_vpd_name (GduPresentable *presentable)
 static GIcon *
 gdu_linux_md_drive_get_icon (GduPresentable *presentable)
 {
-        return g_themed_icon_new_with_default_fallbacks ("gdu-raid-array");
+        GduLinuxMdDrive *drive = GDU_LINUX_MD_DRIVE (presentable);
+        const gchar *emblem_name;
+        const gchar *level;
+
+        level = NULL;
+        if (drive->priv->slaves != NULL) {
+                level = gdu_device_linux_md_component_get_level (GDU_DEVICE (drive->priv->slaves->data));
+        } else if (drive->priv->device != NULL) {
+                level = gdu_device_linux_md_get_level (drive->priv->device);
+        }
+
+        if (g_strcmp0 (level, "linear") == 0) {
+                emblem_name = "gdu-emblem-raid-linear";
+        } else if (g_strcmp0 (level, "raid0") == 0) {
+                emblem_name = "gdu-emblem-raid0";
+        } else if (g_strcmp0 (level, "raid1") == 0) {
+                emblem_name = "gdu-emblem-raid1";
+        } else if (g_strcmp0 (level, "raid4") == 0) {
+                emblem_name = "gdu-emblem-raid4";
+        } else if (g_strcmp0 (level, "raid5") == 0) {
+                emblem_name = "gdu-emblem-raid5";
+        } else if (g_strcmp0 (level, "raid6") == 0) {
+                emblem_name = "gdu-emblem-raid6";
+        } else if (g_strcmp0 (level, "raid10") == 0) {
+                emblem_name = "gdu-emblem-raid10";
+        } else {
+                g_warning ("Unknown level `%s'", level);
+        }
+
+        return gdu_util_get_emblemed_icon ("gdu-raid-array", emblem_name);
 }
 
 static guint64

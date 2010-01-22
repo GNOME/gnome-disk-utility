@@ -23,6 +23,17 @@ icon_DATA = 				\
 	gdu-unmountable.png		\
 	nautilus-gdu.png		\
 	gdu-hba.png			\
+	gdu-emblem-mp.png		\
+	gdu-emblem-lvm-vg.png		\
+	gdu-emblem-lvm-lv.png		\
+	gdu-emblem-raid-linear.png	\
+	gdu-emblem-raid0.png		\
+	gdu-emblem-raid1.png		\
+	gdu-emblem-raid3.png		\
+	gdu-emblem-raid4.png		\
+	gdu-emblem-raid5.png		\
+	gdu-emblem-raid6.png		\
+	gdu-emblem-raid10.png		\
 	$(NULL)
 
 EXTRA_DIST = \

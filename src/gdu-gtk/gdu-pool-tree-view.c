@@ -242,7 +242,7 @@ pixbuf_data_func (GtkCellLayout   *cell_layout,
 
         g_object_set (renderer,
                       "gicon", icon,
-                      "stock-size", GTK_ICON_SIZE_MENU,
+                      "stock-size", GTK_ICON_SIZE_LARGE_TOOLBAR,
                       NULL);
 
         g_object_unref (p);

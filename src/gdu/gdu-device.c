@@ -131,6 +131,7 @@ typedef struct
   char *drive_write_cache;
   char *drive_adapter;
   char **drive_ports;
+  char **drive_similar_devices;
 
   gboolean optical_disc_is_blank;
   gboolean optical_disc_is_appendable;
@@ -374,6 +375,18 @@ collect_props (const char *key,
         props->drive_ports[n] = g_strdup (object_paths->pdata[n]);
       props->drive_ports[n] = NULL;
     }
+  else if (strcmp (key, "DriveSimilarDevices") == 0)
+    {
+      guint n;
+      GPtrArray *object_paths;
+
+      object_paths = g_value_get_boxed (value);
+
+      props->drive_similar_devices = g_new0 (char *, object_paths->len + 1);
+      for (n = 0; n < object_paths->len; n++)
+        props->drive_similar_devices[n] = g_strdup (object_paths->pdata[n]);
+      props->drive_similar_devices[n] = NULL;
+    }
 
   else if (strcmp (key, "OpticalDiscIsBlank") == 0)
     props->optical_disc_is_blank = g_value_get_boolean (value);
@@ -547,6 +560,7 @@ device_properties_free (DeviceProperties *props)
   g_free (props->drive_write_cache);
   g_free (props->drive_adapter);
   g_strfreev (props->drive_ports);
+  g_strfreev (props->drive_similar_devices);
 
   g_free (props->drive_ata_smart_status);
   g_free (props->drive_ata_smart_blob);
@@ -1237,6 +1251,12 @@ char **
 gdu_device_drive_get_ports (GduDevice *device)
 {
         return device->priv->props->drive_ports;
+}
+
+char **
+gdu_device_drive_get_similar_devices (GduDevice *device)
+{
+        return device->priv->props->drive_similar_devices;
 }
 
 gboolean

@@ -33,6 +33,8 @@
 
 struct _GduSectionDrivePrivate
 {
+        GtkWidget *multipath_warning_info_bar;
+
         GduDetailsElement *model_element;
         GduDetailsElement *firmware_element;
         GduDetailsElement *serial_element;
@@ -114,6 +116,8 @@ gdu_section_drive_update (GduSection *_section)
         gboolean show_smart_button;
         gboolean show_benchmark_button;
         const gchar *device_file;
+        gchar **similar_devices;
+        gboolean show_multipath_warning_info_bar;
 
         show_cddvd_button = FALSE;
         show_format_button = FALSE;
@@ -121,6 +125,7 @@ gdu_section_drive_update (GduSection *_section)
         show_detach_button = FALSE;
         show_smart_button = FALSE;
         show_benchmark_button = FALSE;
+        show_multipath_warning_info_bar = FALSE;
 
         d = NULL;
         port = NULL;
@@ -344,6 +349,14 @@ gdu_section_drive_update (GduSection *_section)
                 show_format_button = TRUE;
         }
 
+        /* Show a warning if multipath isn't configured */
+        similar_devices = gdu_device_drive_get_similar_devices (d);
+        if (similar_devices != NULL && g_strv_length (similar_devices) > 0) {
+
+                if (!gdu_device_is_linux_dmmp (d) && !gdu_device_is_linux_dmmp_component (d))
+                        show_multipath_warning_info_bar = TRUE;
+        }
+
  out:
         gdu_button_element_set_visible (section->priv->cddvd_button, show_cddvd_button);
         gdu_button_element_set_visible (section->priv->format_button, show_format_button);
@@ -351,6 +364,11 @@ gdu_section_drive_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->detach_button, show_detach_button);
         gdu_button_element_set_visible (section->priv->smart_button, show_smart_button);
         gdu_button_element_set_visible (section->priv->benchmark_button, show_benchmark_button);
+
+        if (show_multipath_warning_info_bar)
+                gtk_widget_show_all (section->priv->multipath_warning_info_bar);
+        else
+                gtk_widget_hide_all (section->priv->multipath_warning_info_bar);
 
         if (d != NULL)
                 g_object_unref (d);
@@ -611,6 +629,89 @@ gdu_section_drive_on_format_button_clicked (GduButtonElement *button_element,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#if 0
+static gint
+pstrcmp0 (gconstpointer a, gconstpointer b)
+{
+        return g_strcmp0 (*((gchar **) a), *((gchar **) b));
+}
+
+static void
+on_multipath_warning_info_bar_next_path (GtkInfoBar *info_bar,
+                                         gint        response_id,
+                                         gpointer    user_data)
+{
+        GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
+        GPtrArray *p;
+        guint n;
+        gchar **similar_devices;
+        GduDevice *d;
+        const gchar *object_path;
+        const gchar *next_object_path;
+        GduPool *pool;
+        GduDevice *device_for_next_object_path;
+        GduPresentable *drive_for_next_object_path;
+
+        p = NULL;
+        pool = NULL;
+        device_for_next_object_path = NULL;
+        drive_for_next_object_path = NULL;
+
+        d = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
+        if (d == NULL) {
+                goto out;
+        }
+
+        object_path = gdu_device_get_object_path (d);
+
+        similar_devices = gdu_device_drive_get_similar_devices (d);
+        p = g_ptr_array_new ();
+        for (n = 0; similar_devices != NULL && similar_devices[n] != NULL; n++) {
+                g_ptr_array_add (p, similar_devices[n]);
+        }
+        g_ptr_array_add (p, (gpointer) object_path);
+        g_ptr_array_sort (p, pstrcmp0);
+
+        for (n = 0; n < p->len; n++) {
+                if (g_strcmp0 ((const gchar *) p->pdata[n], object_path) == 0) {
+                        break;
+                }
+        }
+        g_assert (n < p->len);
+
+        next_object_path = (const gchar *) p->pdata[(n + 1) % p->len];
+
+        pool = gdu_device_get_pool (d);
+
+        device_for_next_object_path = gdu_pool_get_by_object_path (pool, next_object_path);
+        if (device_for_next_object_path == NULL) {
+                g_warning ("No device for object path %s", next_object_path);
+                goto out;
+        }
+
+        drive_for_next_object_path = gdu_pool_get_drive_by_device (pool, device_for_next_object_path);
+        if (drive_for_next_object_path == NULL) {
+                g_warning ("No drive for object path %s", next_object_path);
+                goto out;
+        }
+
+        gdu_shell_select_presentable (gdu_section_get_shell (GDU_SECTION (section)),
+                                      drive_for_next_object_path);
+
+ out:
+        if (device_for_next_object_path != NULL)
+                g_object_unref (device_for_next_object_path);
+        if (drive_for_next_object_path != NULL)
+                g_object_unref (drive_for_next_object_path);
+        if (pool != NULL)
+                g_object_unref (pool);
+        if (p != NULL)
+                g_ptr_array_free (p, TRUE);
+}
+#endif
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 gdu_section_drive_constructed (GObject *object)
 {
@@ -619,17 +720,43 @@ gdu_section_drive_constructed (GObject *object)
         GtkWidget *label;
         GtkWidget *table;
         GtkWidget *vbox;
+        GtkWidget *hbox;
+        GtkWidget *image;
         gchar *s;
         GduPresentable *p;
         GduDevice *d;
         GPtrArray *elements;
         GduDetailsElement *element;
         GduButtonElement *button_element;
+        GtkWidget *info_bar;
 
         p = gdu_section_get_presentable (GDU_SECTION (section));
         d = gdu_presentable_get_device (p);
 
         gtk_box_set_spacing (GTK_BOX (section), 12);
+
+        /* -------------------------------------------------------------------------------- */
+
+        info_bar = gtk_info_bar_new ();
+        gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_WARNING);
+
+        hbox = gtk_hbox_new (FALSE, 6);
+
+        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_markup (GTK_LABEL (label),
+                              _("<b>WARNING:</b> Several paths to this drive has been detected but no "
+                                "corresponding multipath device was found. Your OS may be misconfigured."));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 70);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+        gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))), hbox);
+        gtk_box_pack_start (GTK_BOX (section), info_bar, FALSE, FALSE, 0);
+        section->priv->multipath_warning_info_bar = info_bar;
 
         /*------------------------------------- */
 
@@ -646,6 +773,8 @@ gdu_section_drive_constructed (GObject *object)
 
         vbox = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox);
+
+        /* -------------------------------------------------------------------------------- */
 
         elements = g_ptr_array_new_with_free_func (g_object_unref);
 

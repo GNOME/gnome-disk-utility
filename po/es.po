@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2010-01-15 19:52+0000\n"
-"PO-Revision-Date: 2010-01-20 00:01+0100\n"
+"POT-Creation-Date: 2010-01-23 02:32+0000\n"
+"PO-Revision-Date: 2010-01-25 19:56+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,7 +185,6 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:195
 #, c-format
-#| msgid "LVM2 Physical Volume (version %s)"
 msgid "Add Physical Volume to %s (%s)"
 msgstr "Añadir volumen físico a %s (%s)"
 
@@ -1360,22 +1359,18 @@ msgid "_User Name:"
 msgstr "Nombre de _usuario:"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
-#| msgid "_Create Logical Volume"
 msgid "Maximum Logical Volume Size"
 msgstr "Tamaño máximo del volumen lógico"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
-#| msgid "The maximum possible partition size"
 msgid "The maximum possible logical volume size"
 msgstr "El tamaño máximo posible del volumen lógico"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
-#| msgid "Logical _Volumes"
 msgid "Logical Volume Size"
 msgstr "Tamaño del volumen lógico"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
-#| msgid "_Create Logical Volume"
 msgid "The requested Logical Volume size"
 msgstr "El tamaño solicitado del volumen lógico"
 
@@ -1389,7 +1384,6 @@ msgstr "C_rear"
 #. Translators: The %s is the name of the volume group
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
 #, c-format
-#| msgid "_Create Logical Volume"
 msgid "Create Logical Volume on %s"
 msgstr "Crear volumen lógico en %s"
 
@@ -1420,7 +1414,7 @@ msgid "The requested name for the array"
 msgstr "El nombre solicitado del conjunto"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
-#: ../src/gdu-gtk/gdu-size-widget.c:256
+#: ../src/gdu-gtk/gdu-size-widget.c:488
 msgid "Size"
 msgstr "Tamaño"
 
@@ -1757,8 +1751,8 @@ msgstr ""
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-drive.c:762
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+#: ../src/palimpsest/gdu-section-drive.c:895
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1074
 msgid "_Benchmark"
 msgstr "_Prueba de rendimiento"
 
@@ -1859,81 +1853,71 @@ msgstr "Cancela la prueba de rendimiento actual en ejecución"
 msgid "Edit %s"
 msgstr "Editar %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:234
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:236
 msgid "Missing Physical Volume"
 msgstr "Falta un volumen físico"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:235
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:237
 #, c-format
 msgid "UUID: %s"
 msgstr "UUID: %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:345
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:347
 #, c-format
-#| msgid "Edit components on %s (%s)"
 msgid "Edit PVs on %s (%s)"
 msgstr "Editar los volúmenes físicos en %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:356
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:358
 msgid "Physical _Volumes"
 msgstr "_Volúmenes físicos"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:386
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
 msgid "Physical Volume"
 msgstr "Volumen físico"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:402
-#| msgid "Capacity:"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:404
 msgid "Capacity"
 msgstr "Capacidad"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
-#| msgid "Allocated"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
 msgid "Unallocated"
 msgstr "Sin asignar"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:425
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
-#: ../src/palimpsest/gdu-section-drive.c:693
+#: ../src/palimpsest/gdu-section-drive.c:826
 msgid "SMART Status:"
 msgstr "Estado SMART:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
-#: ../src/palimpsest/gdu-section-drive.c:669
+#: ../src/palimpsest/gdu-section-drive.c:802
 #: ../src/palimpsest/gdu-section-volumes.c:1907
 msgid "Device:"
 msgstr "Dispositivo:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:442
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:444
 msgid "_New Physical Volume"
 msgstr "Volumen _físico nuevo"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:443
-#| msgid "Add a new component to the array"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:445
 msgid "Add a new PV to the VG"
 msgstr "Añadir un volumen físico nuevo al GV"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:452
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:454
 msgid "_Remove Physical Volume"
 msgstr "_Quitar volumen físico"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:453
-#| msgid "Remove the component from the array"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:455
 msgid "Remove the PV from the VG"
 msgstr "Quitar el volumen físico del GV"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:931
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
-#: ../src/palimpsest/gdu-section-drive.c:300
+#: ../src/palimpsest/gdu-section-drive.c:309
 msgid "Not Supported"
 msgstr "No está soportado"
 
@@ -1963,8 +1947,8 @@ msgid "Position:"
 msgstr "Posición:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:755
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:794
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:995
 #: ../src/palimpsest/gdu-section-volumes.c:1896
 msgid "State:"
 msgstr "Estado:"
@@ -2127,7 +2111,7 @@ msgstr "La etiqueta nemotécnica para el botón afirmativo"
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/palimpsest/gdu-section-drive.c:588
+#: ../src/palimpsest/gdu-section-drive.c:610
 #: ../src/palimpsest/gdu-section-volumes.c:365
 msgid "_Format"
 msgstr "_Formato"
@@ -2310,7 +2294,7 @@ msgstr "La contraseña no puede estar vacía"
 msgid "Cr_eate"
 msgstr "Cr_ear"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2423
+#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2431
 msgid "Change _Passphrase"
 msgstr "Cambiar contrase_ña"
 
@@ -2411,16 +2395,16 @@ msgstr "Vacío"
 msgid "Extended Partition"
 msgstr "Partición extendida"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:262
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
+#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:271
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "Master Boot Record (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu-gtk/gdu-gtk.c:1546 ../src/gdu/gdu-drive.c:811
 #: ../src/gdu/gdu-linux-md-drive.c:568
-#: ../src/palimpsest/gdu-section-drive.c:264
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
+#: ../src/palimpsest/gdu-section-drive.c:273
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "Tabla de particiones GUID"
 
@@ -2429,8 +2413,8 @@ msgid "Don't partition"
 msgstr "No particionar"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/gdu/gdu-util.c:495
-#: ../src/palimpsest/gdu-section-drive.c:260
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
+#: ../src/palimpsest/gdu-section-drive.c:269
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
 msgstr "Mapa de particiones de Apple"
 
@@ -2447,23 +2431,57 @@ msgstr "El esquema de particionamiento seleccionado"
 msgid "_Scheme:"
 msgstr "_Esquema:"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:257
+#: ../src/gdu-gtk/gdu-size-widget.c:89
+msgid "KB"
+msgstr "KB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:95
+msgid "MB"
+msgstr "MB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:98
+msgid "GB"
+msgstr "GB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:101
+msgid "TB"
+msgstr "TB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:104
+#| msgid "4 KiB"
+msgid "KiB"
+msgstr "KiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:107
+#| msgid "MB"
+msgid "MiB"
+msgstr "MiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:110
+msgid "GiB"
+msgstr "GiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:113
+msgid "TiB"
+msgstr "TiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:489
 msgid "The currently selected size"
 msgstr "El tamaño actualmente seleccionado"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:270
+#: ../src/gdu-gtk/gdu-size-widget.c:502
 msgid "Minimum Size"
 msgstr "Tamaño mínimo"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:271
+#: ../src/gdu-gtk/gdu-size-widget.c:503
 msgid "The minimum size that can be selected"
 msgstr "El tamaño mínimo seleccionable"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:284
+#: ../src/gdu-gtk/gdu-size-widget.c:516
 msgid "Maximum Size"
 msgstr "Tamaño máximo"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:285
+#: ../src/gdu-gtk/gdu-size-widget.c:517
 msgid "The maximum size that can be selected"
 msgstr "El tamaño máximo seleccionable"
 
@@ -2487,7 +2505,7 @@ msgstr[0] "Hace %d hora"
 msgstr[1] "Hace %d horas"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
-#: ../src/palimpsest/gdu-section-drive.c:634
+#: ../src/palimpsest/gdu-section-drive.c:765
 msgid "Drive"
 msgstr "Unidad"
 
@@ -2505,7 +2523,7 @@ msgstr "El conjunto RAID no se está ejecutando"
 #. * been detected for a drive
 #.
 #: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:797
-#: ../src/palimpsest/gdu-section-drive.c:314
+#: ../src/palimpsest/gdu-section-drive.c:323
 #, c-format
 msgid "No Media Detected"
 msgstr "No se ha detectado ningún soporte"
@@ -2522,7 +2540,7 @@ msgstr "Cifrado"
 
 #. Translators: shown in the grid for an RAID Component
 #: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
-#: ../src/palimpsest/gdu-section-volumes.c:2161
+#: ../src/palimpsest/gdu-section-volumes.c:2164
 #, c-format
 msgid "RAID Component"
 msgstr "Componente RAID"
@@ -2685,8 +2703,8 @@ msgstr "Particionado"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:824 ../src/palimpsest/gdu-section-drive.c:273
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:364
+#: ../src/gdu/gdu-drive.c:824 ../src/palimpsest/gdu-section-drive.c:282
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "Sin particionar"
 
@@ -2720,28 +2738,24 @@ msgstr "Expansor SAS"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:331
-#| msgid "Logical _Volumes"
 msgid "Logical Volume"
 msgstr "Volumen lógico"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume.c:334
-#| msgid "LVM2 Physical Volume"
 msgid "LVM2 Logical Volume"
 msgstr "Volumen lógico LVM2"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:351
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:355
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:725
-#| msgid "Volume to show"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:764
 msgid "Volume Group"
 msgstr "Grupo de volúmenes"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:359
 #, c-format
-#| msgid "%s LVM2 Physical Volume"
 msgid "%s LVM2 Volume Group"
 msgstr "Grupo de volúmenes LVM2 %s"
 
@@ -2765,14 +2779,13 @@ msgstr "%s libre"
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
 #: ../src/gdu/gdu-volume-hole.c:161
-#: ../src/palimpsest/gdu-section-volumes.c:2175
-#: ../src/palimpsest/gdu-section-volumes.c:2182
+#: ../src/palimpsest/gdu-section-volumes.c:2178
+#: ../src/palimpsest/gdu-section-volumes.c:2187
 msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
-#| msgid "Unallocated Space"
 msgid "LVM2 VG Unallocated Space"
 msgstr "Espacio sin asignar del grupo de volúmenes LVM2"
 
@@ -2811,36 +2824,36 @@ msgid "RAID"
 msgstr "RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:614
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1066
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:965
 msgid "RAID Array"
 msgstr "Conjunto RAID"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1083
+#: ../src/gdu/gdu-linux-md-drive.c:1112
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "Sin acoplar"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1086
+#: ../src/gdu/gdu-linux-md-drive.c:1115
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr "Defectuoso"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1091
+#: ../src/gdu/gdu-linux-md-drive.c:1120
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
 msgstr "Completamente sincronizado"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1093
+#: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Escritura casi finalizada"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1095
+#: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Bloqueado"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1097
+#: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Repuesto"
@@ -3148,7 +3161,7 @@ msgstr "Formato de disco universal"
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2157
+#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2160
 msgid "Swap Space"
 msgstr "Espacio de intercambio"
 
@@ -4384,7 +4397,7 @@ msgstr "Unidad que mostrar"
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SAS Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:167
+#: ../src/palimpsest/gdu-section-drive.c:173
 #, c-format
 msgid "PHY %d of %s"
 msgstr "PHY %d de %s"
@@ -4394,17 +4407,17 @@ msgstr "PHY %d de %s"
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SATA Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:174
+#: ../src/palimpsest/gdu-section-drive.c:180
 #, c-format
 msgid "Port %d of %s"
 msgstr "Puerto %d de %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:232
+#: ../src/palimpsest/gdu-section-drive.c:241
 msgctxt "Write Cache"
 msgid "Enabled"
 msgstr "Activado"
 
-#: ../src/palimpsest/gdu-section-drive.c:234
+#: ../src/palimpsest/gdu-section-drive.c:243
 msgctxt "Write Cache"
 msgid "Disabled"
 msgstr "Desactivado"
@@ -4412,136 +4425,145 @@ msgstr "Desactivado"
 #. Translators: This is for the rotation rate of a hard
 #. * disk - RPM means rounds per minute
 #.
-#: ../src/palimpsest/gdu-section-drive.c:244
+#: ../src/palimpsest/gdu-section-drive.c:253
 #, c-format
 msgctxt "Rotation Rate"
 msgid "%d RPM"
 msgstr "%d RPM"
 
-#: ../src/palimpsest/gdu-section-drive.c:252
+#: ../src/palimpsest/gdu-section-drive.c:261
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
 msgstr "Disco de estado sólido"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-section-drive.c:267
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
+#: ../src/palimpsest/gdu-section-drive.c:276
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:259
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Esquema desconocido: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:378
-#: ../src/palimpsest/gdu-section-drive.c:398
+#: ../src/palimpsest/gdu-section-drive.c:400
+#: ../src/palimpsest/gdu-section-drive.c:420
 msgid "Error launching Brasero"
 msgstr "Error al lanzar Brasero"
 
-#: ../src/palimpsest/gdu-section-drive.c:379
+#: ../src/palimpsest/gdu-section-drive.c:401
 msgid "The application is not installed"
 msgstr "Esta aplicación no está instalada"
 
-#: ../src/palimpsest/gdu-section-drive.c:460
+#: ../src/palimpsest/gdu-section-drive.c:482
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: ../src/palimpsest/gdu-section-drive.c:504
+#: ../src/palimpsest/gdu-section-drive.c:526
 msgid "Error detaching drive"
 msgstr "Error al desacoplar la unidad"
 
-#: ../src/palimpsest/gdu-section-drive.c:549
+#: ../src/palimpsest/gdu-section-drive.c:571
 msgid "Error formatting drive"
 msgstr "Error al formatear la unidad"
 
-#: ../src/palimpsest/gdu-section-drive.c:587
+#: ../src/palimpsest/gdu-section-drive.c:609
 msgid "Are you sure you want to format the drive?"
 msgstr "¿Está seguro de que quiere formatear la unidad?"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-drive.c:750
+msgid ""
+"<b>WARNING:</b> Several paths to this drive has been detected but no "
+"corresponding multipath device was found. Your OS may be misconfigured."
+msgstr ""
+"<b>ADVERTENCIA:</b> se han detectado varias rutas a esta unidad pero se "
+"encontró ningún dispositivo multiruta correspondiente. Su Sistema Operativo "
+"puede estar mal configurado."
+
+#: ../src/palimpsest/gdu-section-drive.c:781
 #: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Model:"
 msgstr "Modelo:"
 
-#: ../src/palimpsest/gdu-section-drive.c:652
+#: ../src/palimpsest/gdu-section-drive.c:785
 msgid "Serial Number:"
 msgstr "Número de serie:"
 
-#: ../src/palimpsest/gdu-section-drive.c:656
+#: ../src/palimpsest/gdu-section-drive.c:789
 msgid "Firmware Version:"
 msgstr "Versión del firmware:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:661
+#: ../src/palimpsest/gdu-section-drive.c:794
 msgid "World Wide Name:"
 msgstr "Nombre a nivel mundial (WWN):"
 
-#: ../src/palimpsest/gdu-section-drive.c:665
+#: ../src/palimpsest/gdu-section-drive.c:798
 msgid "Location:"
 msgstr "Ubicación:"
 
-#: ../src/palimpsest/gdu-section-drive.c:673
+#: ../src/palimpsest/gdu-section-drive.c:806
 msgid "Write Cache:"
 msgstr "Caché de escritura:"
 
-#: ../src/palimpsest/gdu-section-drive.c:677
+#: ../src/palimpsest/gdu-section-drive.c:810
 msgid "Rotation Rate:"
 msgstr "Tasa de rotación:"
 
-#: ../src/palimpsest/gdu-section-drive.c:681
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:751
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
+#: ../src/palimpsest/gdu-section-drive.c:814
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:790
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:999
 #: ../src/palimpsest/gdu-section-volumes.c:1921
 msgid "Capacity:"
 msgstr "Capacidad:"
 
-#: ../src/palimpsest/gdu-section-drive.c:685
+#: ../src/palimpsest/gdu-section-drive.c:818
 msgid "Connection:"
 msgstr "Conexión:"
 
-#: ../src/palimpsest/gdu-section-drive.c:689
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
+#: ../src/palimpsest/gdu-section-drive.c:822
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:991
 msgid "Partitioning:"
 msgstr "Particionado:"
 
-#: ../src/palimpsest/gdu-section-drive.c:712
+#: ../src/palimpsest/gdu-section-drive.c:845
 msgid "Open CD/_DVD Application"
 msgstr "Abrir aplicación de CD/_DVD"
 
-#: ../src/palimpsest/gdu-section-drive.c:713
+#: ../src/palimpsest/gdu-section-drive.c:846
 msgid "Create and copy CDs and DVDs"
 msgstr "Crear y copiar CD y DVD"
 
-#: ../src/palimpsest/gdu-section-drive.c:722
+#: ../src/palimpsest/gdu-section-drive.c:855
 msgid "Format _Drive"
 msgstr "Formatear _unidad"
 
-#: ../src/palimpsest/gdu-section-drive.c:723
+#: ../src/palimpsest/gdu-section-drive.c:856
 msgid "Erase or partition the drive"
 msgstr "Borrar o particionar la unidad"
 
-#: ../src/palimpsest/gdu-section-drive.c:732
+#: ../src/palimpsest/gdu-section-drive.c:865
 msgid "SM_ART Data"
 msgstr "Datos SM_ART"
 
-#: ../src/palimpsest/gdu-section-drive.c:733
+#: ../src/palimpsest/gdu-section-drive.c:866
 msgid "View SMART data and run self-tests"
 msgstr "Ver los datos SMART y ejecutar autocomprobaciones"
 
-#: ../src/palimpsest/gdu-section-drive.c:742
+#: ../src/palimpsest/gdu-section-drive.c:875
 msgid "_Eject"
 msgstr "E_xpulsar"
 
-#: ../src/palimpsest/gdu-section-drive.c:743
+#: ../src/palimpsest/gdu-section-drive.c:876
 msgid "Eject media from the drive"
 msgstr "Expulsar el soporte de la unidad"
 
-#: ../src/palimpsest/gdu-section-drive.c:752
+#: ../src/palimpsest/gdu-section-drive.c:885
 msgid "Safe Rem_oval"
 msgstr "Quitar de forma :segura:"
 
-#: ../src/palimpsest/gdu-section-drive.c:753
+#: ../src/palimpsest/gdu-section-drive.c:886
 msgid "Power down the drive so it can be removed"
 msgstr "Apagar el dispositivo para que se pueda quitar"
 
-#: ../src/palimpsest/gdu-section-drive.c:763
+#: ../src/palimpsest/gdu-section-drive.c:896
 msgid "Measure drive performance"
 msgstr "Medir el rendimiento de la unidad"
 
@@ -4587,17 +4609,14 @@ msgid "Number of Ports:"
 msgstr "Número de puertos:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
-#| msgid "Error starting Logical Volume"
 msgid "Error starting Volume Group"
 msgstr "Error al iniciar el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
-#| msgid "Error stopping Logical Volume"
 msgid "Error stopping Volume Group"
 msgstr "Error al parar el grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
-#| msgid "Error starting Logical Volume"
 msgid "Error setting name for Volume Group"
 msgstr "Error al establecer el nombre para el grupo de volúmenes"
 
@@ -4606,323 +4625,270 @@ msgid "Choose a new Volume Group name."
 msgstr "Elegir un nombre nuevo para el grupo de volúmenes."
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
-#| msgid "Error starting Logical Volume"
 msgid "Error adding Physical Volume to Volume Group"
 msgstr "Error al añadir el volumen físico al grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:280
-#| msgid "Error creating partition for RAID component"
 msgid "Error creating partition for RAID pv"
 msgstr "Error al crear la partición para el RAID del volumen físico"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:316
-#| msgid "Error creating partition table for RAID component"
 msgid "Error creating partition table for LVM2 PV"
 msgstr "Error al crear la tabla de particiones para el volumen físico LVM2"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:488
-#| msgid "Error deleting partition for component in RAID Array"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:491
 msgid "Error deleting partition for Physical Volume in Volume Group"
 msgstr ""
 "Error al eliminar la partición para el volumen físico en el grupo de "
 "volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:511
-#| msgid "Error removing component from RAID Array"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:514
 msgid "Error removing Physical Volume from Volume Group"
 msgstr "Error al quitar el volumen físico del grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:555
-#| msgid "Are you sure you want the remove the component?"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:587
 msgid "Are you sure you want the remove the Physical Volume?"
 msgstr "¿Está seguro de que quiere quitar el volumen físico?"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:556
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:630
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:588
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:530
 msgid "_Remove"
 msgstr "_Quitar"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:669
-#| msgctxt "LVM2 LV State"
-#| msgid "Not Running"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:708
 msgid "Not Running"
 msgstr "No está en ejecución"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:673
-#| msgctxt "LVM2 LV State"
-#| msgid "Not Running"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:712
 msgid "Partially Running"
 msgstr "Parcialmente en ejecución"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:678
-#| msgctxt "RAID status"
-#| msgid "Running"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
 msgid "Running"
 msgstr "Ejecutándose"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:682
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:721
 #, c-format
-#| msgid "Unknown (%s)"
 msgid "Unknown (%d)"
 msgstr "Desconocido (%d)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:739
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:987
 msgid "Name:"
 msgstr "Nombre:"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:743
-#| msgid "Percent Size"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:782
 msgid "Extent Size:"
 msgstr "Tamaño de extensión:"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:747
-#| msgid "LVM2 Physical Volume"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:786
 msgid "Physical Volumes:"
 msgstr "Volúmenes físicos:"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:759
-#| msgid "Allocated"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:798
 msgid "Unallocated:"
 msgstr "Sin asignar:"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
-#| msgid "S_tart Volume"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:817
 msgid "St_art Volume Group"
 msgstr "I_niciar grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:779
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:818
 msgid "Activate all LVs in the VG"
 msgstr "Activar todos los volúmenes lógicos en el grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:788
-#| msgid "Sto_p Volume"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:827
 msgid "St_op Volume Group"
 msgstr "_Parar grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:789
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:828
 msgid "Deactivate all LVs in the VG"
 msgstr "Desactivar todos los volúmenes lógicos en el grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:799
-#| msgid "Edit _Label"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:838
 msgid "Edit _Name"
 msgstr "Editar _nombre"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:800
-#| msgid "Change the label of the volume"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:839
 msgid "Change the Volume Group name"
 msgstr "Cambiar el nombre del grupo de volúmenes"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:809
-#| msgid "LVM2 Physical Volume"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:848
 msgid "Edit Ph_ysical Volumes"
 msgstr "Editar los volúmenes _físicos"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:810
-#| msgid "Create and remove components"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:849
 msgid "Create and remove PVs"
 msgstr "Crear y quitar volúmenes físicos"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:86
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
 msgstr "No se puede iniciar, parcialmente ensamblado"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
 msgctxt "RAID status"
 msgid "Not running"
 msgstr "No está en ejecución"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
 msgstr "No está en ejecución, sólo se puede iniciar en modo degradado"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:98
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
 msgstr "No está en ejecución, no hay suficientes componentes para iniciar"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
 msgctxt "RAID status"
 msgid "DEGRADED"
 msgstr "DEGRADADO"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:118
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
 msgctxt "RAID status"
 msgid "Running"
 msgstr "Ejecutándose"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "Reorganizando"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "Resincronizando"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "Reparando"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "Recuperando"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:134
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "Comprobando"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
 msgctxt "RAID action"
 msgid "Idle"
 msgstr "Inactivo"
 
-#. Translators: The text for the hyperlink of the component
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:241
-msgid "Go to volume"
-msgstr "Ir al volumen"
-
-#. Translators: The text used to display the RAID component for an array that is running.
-#. * First %s is the VPD name.
-#. * Second %s is the state of the component.
-#. * Third %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:251
-#, c-format
-msgctxt "RAID component label"
-msgid "%s (%s) – %s"
-msgstr "%s (%s): %s"
-
-#. Translators: The text used to display the RAID component for an array that is not running.
-#. * First %s is the VPD name.
-#. * Second %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:260
-#, c-format
-msgctxt "RAID component label"
-msgid "%s – %s"
-msgstr "%s: %s"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:415
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:315
 msgid "Error stopping RAID Array"
 msgstr "Error al parar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:460
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:360
 msgid "Error starting RAID Array"
 msgstr "Error al iniciar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:490
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:493
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:390
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
 msgid "Not enough components available to start the RAID Array"
 msgstr "No hay suficientes componentes para iniciar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:509
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:409
 msgid "Are you sure you want the RAID Array degraded?"
 msgstr "¿Está seguro de que quiere el conjunto RAID degradado?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:510
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
 msgstr "_Iniciar"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:555
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:455
 msgid "Error deleting partition for component in RAID Array"
 msgstr "Error al borrar la partición para el componente en el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:578
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:478
 msgid "Error removing component from RAID Array"
 msgstr "Error al quitar el componente del conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:629
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:529
 msgid "Are you sure you want the remove the component?"
 msgstr "¿Está seguro de que quiere quitar el componente?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:666
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:739
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:566
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
 msgid "Error adding component to RAID Array"
 msgstr "Error al añadir el componente en el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:762
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:662
 msgid "Error creating partition for RAID component"
 msgstr "Error al crear la partición para el componente RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:797
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
 msgid "Error creating partition table for RAID component"
 msgstr "Error al crear la tabla de particiones para el componente RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:904
 msgid "Error checking RAID Array"
 msgstr "Error al comprobar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1080
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:979
 msgid "Level:"
 msgstr "Nivel:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:983
 msgid "Metadata Version:"
 msgstr "Versión de los metadatos:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "Action:"
 msgstr "Acción:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
-msgid "Active Components:"
-msgstr "Componentes activos:"
-
-#. Ensure this is in the last row and the first column
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1007
 msgid "Components:"
 msgstr "Componentes:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "St_art RAID Array"
 msgstr "I_niciar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1025
 msgid "Bring up the RAID Array"
 msgstr "Despertar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "St_op RAID Array"
 msgstr "Pa_rar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1035
 msgid "Tear down the RAID Array"
 msgstr "Dormir el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Format/Erase RAI_D Array"
 msgstr "Formatear/borrar el conjunto RAI_D"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1160
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1045
 msgid "Erase or partition the array"
 msgstr "Borrar o particionar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Chec_k Array"
 msgstr "Co_mprobar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1170
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1055
 msgid "Check and repair the array"
 msgstr "Comprobar y reparar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1064
 msgid "Edit Com_ponents"
 msgstr "Editar comp_onentes"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1180
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
 msgid "Create and remove components"
 msgstr "Crear y quitar componentes"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1190
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
 msgid "Measure RAID array performance"
 msgstr "Medir el rendimiento del conjunto RAID"
 
@@ -4984,12 +4950,10 @@ msgid "Error changing label"
 msgstr "Error al cambiar la etiqueta"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1189
-#| msgid "The requested filesystem label"
 msgid "Choose a new filesystem label."
 msgstr "Elegir una etiqueta nueva para el sistema de archivos."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1190
-#| msgid "Label:"
 msgid "_Label:"
 msgstr "_Etiqueta:"
 
@@ -5016,7 +4980,6 @@ msgid "Error spawning nautilus: %s"
 msgstr "Error al iniciar Nautilus: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1429
-#| msgid "Error starting Logical Volume"
 msgid "Error creating Logical Volume"
 msgstr "Error al crear el volumen lógico"
 
@@ -5029,22 +4992,18 @@ msgid "Error starting Logical Volume"
 msgstr "Error al iniciar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1677
-#| msgid "Error starting Logical Volume"
 msgid "Error setting name for Logical Volume"
 msgstr "Error al establecer el nombre para el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1716
-#| msgid "Deactivate the Logical Volume"
 msgid "Choose a new name for the Logical Volume."
 msgstr "Elegir un nombre nuevo para el volumen lógico."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1750
-#| msgid "Error stopping Logical Volume"
 msgid "Error deleting Logical Volume"
 msgstr "Error al eliminar el volumen lógico"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1783
-#| msgid "Are you sure you want to format the volume?"
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "¿Está seguro de que quiere eliminar el volumen lógico?"
 
@@ -5124,195 +5083,187 @@ msgstr "Permitir escritura"
 msgid "Boot Code PIC"
 msgstr "Código de arranque PIC"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2081
+#: ../src/palimpsest/gdu-section-volumes.c:2084
 msgid "Filesystem"
 msgstr "Sistema de archivos"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2114
+#: ../src/palimpsest/gdu-section-volumes.c:2117
 msgid "View files on the volume using a SFTP network share"
 msgstr "Ver los archivos en el volumen usando una compartición de red SFTP"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:2121
+#: ../src/palimpsest/gdu-section-volumes.c:2124
 msgid "View files on the volume"
 msgstr "Ver los archivos en el volumen"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2128
+#: ../src/palimpsest/gdu-section-volumes.c:2131
 #, c-format
 msgid "Mounted at %s"
 msgstr "Montado en %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2136
+#: ../src/palimpsest/gdu-section-volumes.c:2139
 msgid "Not Mounted"
 msgstr "Sin montar"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2146
+#: ../src/palimpsest/gdu-section-volumes.c:2149
 msgid "Encrypted Volume (Locked)"
 msgstr "Volumen cifrado (bloqueado)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2149
+#: ../src/palimpsest/gdu-section-volumes.c:2152
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Volumen cifrado (desbloqueado)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2162
+#: ../src/palimpsest/gdu-section-volumes.c:2165
 msgid "Go to array"
 msgstr "Ir al conjunto"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2170
+#: ../src/palimpsest/gdu-section-volumes.c:2173
 msgid "Container for Logical Partitions"
 msgstr "Contenedor para particiones lógicas"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2268
+#: ../src/palimpsest/gdu-section-volumes.c:2276
 msgid "Logical _Volumes"
 msgstr "_Volúmenes lógicos"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2270
+#: ../src/palimpsest/gdu-section-volumes.c:2278
 msgid "_Volumes"
 msgstr "_Volúmenes"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2311
+#: ../src/palimpsest/gdu-section-volumes.c:2319
 msgid "_Mount Volume"
 msgstr "_Montar volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2312
+#: ../src/palimpsest/gdu-section-volumes.c:2320
 msgid "Mount the volume"
 msgstr "Montar el volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2321
-#| msgid "_Unmount Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2329
 msgid "Un_mount Volume"
 msgstr "_Desmontar volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2322
+#: ../src/palimpsest/gdu-section-volumes.c:2330
 msgid "Unmount the volume"
 msgstr "Desmontar el volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2331
+#: ../src/palimpsest/gdu-section-volumes.c:2339
 msgid "Fo_rmat Volume"
 msgstr "Fo_rmatear volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2332
+#: ../src/palimpsest/gdu-section-volumes.c:2340
 msgid "Erase or format the volume"
 msgstr "Borrar o formatear el volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2341
+#: ../src/palimpsest/gdu-section-volumes.c:2349
 msgid "_Check Filesystem"
 msgstr "Compro_bar el sistema de archivos"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2342
+#: ../src/palimpsest/gdu-section-volumes.c:2350
 msgid "Check and repair the filesystem"
 msgstr "Comprobar y reparar el sistema de archivos"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2352
-#| msgid "Filesystem label"
+#: ../src/palimpsest/gdu-section-volumes.c:2360
 msgid "Edit Filesystem _Label"
 msgstr "Editar la _etiqueta del sistema de archivos"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2353
-#| msgid "Change the label of the volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2361
 msgid "Change the label of the filesystem"
 msgstr "Cambiar la etiqueta del sistema de archivos"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2362
+#: ../src/palimpsest/gdu-section-volumes.c:2370
 msgid "Ed_it Partition"
 msgstr "Ed_itar partición"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2363
+#: ../src/palimpsest/gdu-section-volumes.c:2371
 msgid "Change partition type, label and flags"
 msgstr "Cambiar el tipo de partición, la etiqueta y las opciones"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2372
+#: ../src/palimpsest/gdu-section-volumes.c:2380
 msgid "D_elete Partition"
 msgstr "_Eliminar partición"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2373
+#: ../src/palimpsest/gdu-section-volumes.c:2381
 msgid "Delete the partition"
 msgstr "Eliminar la partición"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2382
+#: ../src/palimpsest/gdu-section-volumes.c:2390
 msgid "_Create Partition"
 msgstr "_Crear partición"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2383
+#: ../src/palimpsest/gdu-section-volumes.c:2391
 msgid "Create a new partition"
 msgstr "Crear una partición nueva"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2392
+#: ../src/palimpsest/gdu-section-volumes.c:2400
 msgid "_Lock Volume"
 msgstr "Bl_oquear volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2393
+#: ../src/palimpsest/gdu-section-volumes.c:2401
 msgid "Make encrypted data unavailable"
 msgstr "Hacer que los datos cifrados no estén disponibles"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2402
-#| msgid "_Unlock Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2410
 msgid "Un_lock Volume"
 msgstr "Desb_loquear volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2403
+#: ../src/palimpsest/gdu-section-volumes.c:2411
 msgid "Make encrypted data available"
 msgstr "Hacer que los datos cifrados estén disponibles"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2412
+#: ../src/palimpsest/gdu-section-volumes.c:2420
 msgid "Forge_t Passphrase"
 msgstr "_Olvidar contraseña"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2413
+#: ../src/palimpsest/gdu-section-volumes.c:2421
 msgid "Delete passphrase from keyring"
 msgstr "Eliminar la contraseña del depósito de claves"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2424
+#: ../src/palimpsest/gdu-section-volumes.c:2432
 msgid "Change passphrase"
 msgstr "Cambiar la contraseña"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2433
+#: ../src/palimpsest/gdu-section-volumes.c:2441
 msgid "_Create Logical Volume"
 msgstr "_Crear volumen lógico"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2434
+#: ../src/palimpsest/gdu-section-volumes.c:2442
 msgid "Create a new logical volume"
 msgstr "Crear un volumen lógico nuevo"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2443
+#: ../src/palimpsest/gdu-section-volumes.c:2451
 msgid "S_tart Volume"
 msgstr "I_niciar volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2444
+#: ../src/palimpsest/gdu-section-volumes.c:2452
 msgid "Activate the Logical Volume"
 msgstr "Activar el volumen lógico"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2454
-#| msgid "Volume Name:"
+#: ../src/palimpsest/gdu-section-volumes.c:2462
 msgid "Edit Vol_ume Name"
 msgstr "Editar nombre del vol_umen:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2455
-#| msgid "Change the label of the volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2463
 msgid "Change the name of the volume"
 msgstr "Cambiar el nombre del volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2464
-#| msgid "New Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2472
 msgid "D_elete Volume"
 msgstr "_Eliminar volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2465
-#| msgid "Deactivate the Logical Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2473
 msgid "Delete the Logical Volume"
 msgstr "Eliminar el volumen lógico"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2474
+#: ../src/palimpsest/gdu-section-volumes.c:2482
 msgid "Sto_p Volume"
 msgstr "_Parar volumen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2475
+#: ../src/palimpsest/gdu-section-volumes.c:2483
 msgid "Deactivate the Logical Volume"
 msgstr "Desactivar el volumen lógico"
 
@@ -5478,6 +5429,20 @@ msgstr "_Detalles:"
 #: ../src/palimpsest/gdu-shell.c:1252
 msgid "_Storage Devices"
 msgstr "Dispositivos de _almacenamiento"
+
+#~ msgid "Go to volume"
+#~ msgstr "Ir al volumen"
+
+#~ msgctxt "RAID component label"
+#~ msgid "%s (%s) – %s"
+#~ msgstr "%s (%s): %s"
+
+#~ msgctxt "RAID component label"
+#~ msgid "%s – %s"
+#~ msgstr "%s: %s"
+
+#~ msgid "Active Components:"
+#~ msgstr "Componentes activos:"
 
 #~ msgid "Edit Filesystem on %s"
 #~ msgstr "Editar el sistema de archivos en %s"
@@ -5896,9 +5861,6 @@ msgstr "Dispositivos de _almacenamiento"
 #~ "Parar crear una partición nueva, seleccione el tamaño y si quiere crear "
 #~ "un sistema de archivos. El tipo de partición, la etiqueta y las opciones "
 #~ "se pueden cambiar después de crearla."
-
-#~ msgid "MB"
-#~ msgstr "MiB"
 
 #~ msgid ""
 #~ "Are you sure you want to create a new file system, deleting existing "

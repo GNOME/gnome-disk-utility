@@ -56,6 +56,7 @@ struct _GduHubClass
 GType        gdu_hub_get_type     (void);
 GduAdapter  *gdu_hub_get_adapter  (GduHub *hub);
 GduExpander *gdu_hub_get_expander (GduHub *hub);
+GduHubUsage  gdu_hub_get_usage    (GduHub *hub);
 
 G_END_DECLS
 

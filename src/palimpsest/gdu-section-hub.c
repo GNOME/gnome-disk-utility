@@ -85,24 +85,13 @@ gdu_section_hub_update (GduSection *_section)
         a = gdu_hub_get_adapter (GDU_HUB (p));
         e = gdu_hub_get_expander (GDU_HUB (p));
 
-        pool = gdu_adapter_get_pool (a);
-        if (pool == NULL)
-                goto out;
+        pool = gdu_presentable_get_pool (p);
 
-        if (e == NULL) {
-
-                vendor = gdu_adapter_get_vendor (a);
-                model = gdu_adapter_get_model (a);
-                driver = gdu_adapter_get_driver (a);
-                fabric = gdu_adapter_get_fabric (a);
-                num_ports = gdu_adapter_get_num_ports (a);
-
-                revision = "–";
-        } else {
+        fabric = "";
+        if (e != NULL) {
                 vendor = gdu_expander_get_vendor (e);
                 model = gdu_expander_get_model (e);
                 revision = gdu_expander_get_revision (e);
-                fabric = NULL;
                 if (a != NULL)
                         fabric = gdu_adapter_get_fabric (a);
                 num_ports = gdu_expander_get_num_ports (e);
@@ -126,6 +115,22 @@ gdu_section_hub_update (GduSection *_section)
                         revision = "–";
 
                 driver = "–";
+        } else if (a != NULL) {
+
+                vendor = gdu_adapter_get_vendor (a);
+                model = gdu_adapter_get_model (a);
+                driver = gdu_adapter_get_driver (a);
+                fabric = gdu_adapter_get_fabric (a);
+                num_ports = gdu_adapter_get_num_ports (a);
+
+                revision = "–";
+        } else {
+                vendor = "–";
+                model = "–";
+                driver = "–";
+                fabric = "–";
+                revision = "–";
+                num_ports = 0;
         }
 
         if (g_str_has_prefix (fabric, "ata_pata")) {
@@ -168,7 +173,6 @@ gdu_section_hub_update (GduSection *_section)
         gdu_details_element_set_text (section->priv->fabric_element, fabric_str);
         gdu_details_element_set_text (section->priv->num_ports_element, num_ports_str);
 
- out:
         g_free (num_ports_str);
         if (pool != NULL)
                 g_object_unref (pool);

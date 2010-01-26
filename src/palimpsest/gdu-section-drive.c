@@ -35,6 +35,8 @@ struct _GduSectionDrivePrivate
 {
         GtkWidget *multipath_warning_info_bar;
 
+        GtkWidget *drive_label;
+
         GduDetailsElement *model_element;
         GduDetailsElement *firmware_element;
         GduDetailsElement *serial_element;
@@ -136,6 +138,14 @@ gdu_section_drive_update (GduSection *_section)
         if (d == NULL)
                 goto out;
 
+        if (gdu_device_is_linux_dmmp (d)) {
+                s = g_strconcat ("<b>", _("Multipath Drive"), "</b>", NULL);
+        } else {
+                s = g_strconcat ("<b>", _("Drive"), "</b>", NULL);
+        }
+        gtk_label_set_markup (GTK_LABEL (section->priv->drive_label), s);
+        g_free (s);
+
         /* TODO: handle multiple ports */
         port_object_paths = gdu_device_drive_get_ports (d);
         if (port_object_paths != NULL && port_object_paths[0] != NULL) {
@@ -209,7 +219,11 @@ gdu_section_drive_update (GduSection *_section)
                              vendor != NULL ? vendor : "",
                              vendor != NULL ? " " : "",
                              model != NULL ? model : "");
-        gdu_details_element_set_text (section->priv->model_element, s);
+        if (strlen (s) == 0) {
+                gdu_details_element_set_text (section->priv->model_element, "–");
+        } else {
+                gdu_details_element_set_text (section->priv->model_element, s);
+        }
         g_free (s);
 
         firmware = gdu_device_drive_get_revision (d);
@@ -722,7 +736,6 @@ gdu_section_drive_constructed (GObject *object)
         GtkWidget *vbox;
         GtkWidget *hbox;
         GtkWidget *image;
-        gchar *s;
         GduPresentable *p;
         GduDevice *d;
         GPtrArray *elements;
@@ -762,10 +775,8 @@ gdu_section_drive_constructed (GObject *object)
 
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        s = g_strconcat ("<b>", _("Drive"), "</b>", NULL);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 0);
+        section->priv->drive_label = label;
 
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);

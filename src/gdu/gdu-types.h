@@ -31,6 +31,16 @@
 
 G_BEGIN_DECLS
 
+/* TODO: should have enum type files etc */
+
+typedef enum {
+        GDU_HUB_USAGE_ADAPTER,
+        GDU_HUB_USAGE_EXPANDER,
+        GDU_HUB_USAGE_MULTI_DISK_DEVICES,
+        GDU_HUB_USAGE_MULTI_PATH_DEVICES,
+} GduHubUsage;
+
+
 /* forward type definitions */
 
 typedef struct _GduPool                   GduPool;

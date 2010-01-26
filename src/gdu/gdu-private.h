@@ -114,8 +114,12 @@ GduExpander *_gdu_expander_new_from_object_path (GduPool *pool, const char *obje
 gboolean    _gdu_expander_changed               (GduExpander   *expander);
 
 GduHub     *_gdu_hub_new                        (GduPool        *pool,
+                                                 GduHubUsage     usage,
                                                  GduAdapter     *adapter,
                                                  GduExpander    *expander,
+                                                 const gchar    *name,
+                                                 const gchar    *vpd_name,
+                                                 GIcon          *icon,
                                                  GduPresentable *enclosing_presentable);
 
 GduPort    *_gdu_port_new_from_object_path (GduPool *pool, const char *object_path);

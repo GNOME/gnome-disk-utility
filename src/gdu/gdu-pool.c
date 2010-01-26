@@ -841,6 +841,73 @@ get_holes_for_drive (GduPool   *pool,
         return ret;
 }
 
+static GduPresentable *
+ensure_hub (GduPool *pool,
+            GduPresentable **hub,
+            GList **presentables,
+            const gchar *name,
+            const gchar *vpd_name,
+            const gchar *icon_name)
+{
+        GIcon *icon;
+        GduPresentable *ret;
+
+        g_assert (hub != NULL);
+        g_assert (presentables != NULL);
+
+        if (*hub != NULL)
+                goto out;
+
+        icon = g_themed_icon_new_with_default_fallbacks (icon_name);
+        ret = GDU_PRESENTABLE (_gdu_hub_new (pool,
+                                             GDU_HUB_USAGE_MULTI_DISK_DEVICES,
+                                             NULL,                    /* adapter */
+                                             NULL,                    /* expander */
+                                             name,
+                                             vpd_name,
+                                             icon,
+                                             pool->priv->machine));
+        g_object_unref (icon);
+
+        *presentables = g_list_prepend (*presentables, ret);
+
+        *hub = ret;
+ out:
+        return *hub;
+}
+
+static GduPresentable *
+ensure_hub_multipath (GduPool *pool,
+                      GduPresentable **hub,
+                      GList **presentables)
+{
+        return ensure_hub (pool, hub, presentables,
+                           _("Multipath Devices"),
+                           _("Drives with multiple I/O paths"),
+                           "gdu-hba");
+}
+
+static GduPresentable *
+ensure_hub_raid_lvm (GduPool *pool,
+                     GduPresentable **hub,
+                     GList **presentables)
+{
+        return ensure_hub (pool, hub, presentables,
+                           _("Multi-disk Devices"),
+                           _("RAID, LVM and other logical drives"),
+                           "gdu-hba");
+}
+
+static GduPresentable *
+ensure_hub_peripheral (GduPool *pool,
+                       GduPresentable **hub,
+                       GList **presentables)
+{
+        return ensure_hub (pool, hub, presentables,
+                           _("Peripheral Devices"),
+                           _("USB, Firewire and other peripherals"),
+                           "gdu-hba");
+}
 
 static void
 recompute_presentables (GduPool *pool)
@@ -858,6 +925,9 @@ recompute_presentables (GduPool *pool)
         GHashTable *hash_map_from_linux_lvm2_group_uuid_to_vg;
         GHashTable *hash_map_from_adapter_objpath_to_hub;
         GHashTable *hash_map_from_expander_objpath_to_hub;
+        GduPresentable *hub_raid_lvm;
+        GduPresentable *hub_multipath;
+        GduPresentable *hub_peripheral;
 
         /* The general strategy for (re-)computing presentables is rather brute force; we
          * compute the complete set of presentables every time and diff it against the
@@ -899,6 +969,10 @@ recompute_presentables (GduPool *pool)
                                                                        NULL,
                                                                        NULL);
 
+        hub_raid_lvm = NULL;
+        hub_multipath = NULL;
+        hub_peripheral = NULL;
+
         /* First add all HBAs as Hub objects */
         adapters = gdu_pool_get_adapters (pool);
         for (l = adapters; l != NULL; l = l->next) {
@@ -906,8 +980,12 @@ recompute_presentables (GduPool *pool)
                 GduHub *hub;
 
                 hub = _gdu_hub_new (pool,
+                                    GDU_HUB_USAGE_ADAPTER,
                                     adapter,
                                     NULL,      /* expander */
+                                    NULL,      /* name */
+                                    NULL,      /* vpd_name */
+                                    NULL,      /* icon */
                                     pool->priv->machine);  /* enclosing_presentable */
 
                 g_hash_table_insert (hash_map_from_adapter_objpath_to_hub,
@@ -952,7 +1030,14 @@ recompute_presentables (GduPool *pool)
                 g_warn_if_fail (expander_parent != NULL);
                 g_warn_if_fail (adapter != NULL);
 
-                hub = _gdu_hub_new (pool, adapter, expander, expander_parent);
+                hub = _gdu_hub_new (pool,
+                                    GDU_HUB_USAGE_EXPANDER,
+                                    adapter,
+                                    expander,
+                                    NULL,      /* name */
+                                    NULL,      /* vpd_name */
+                                    NULL,      /* icon */
+                                    expander_parent);
                 g_object_unref (adapter);
 
                 g_hash_table_insert (hash_map_from_expander_objpath_to_hub,
@@ -994,7 +1079,9 @@ recompute_presentables (GduPool *pool)
                                         uuid = NULL;
 
                                 /* TODO: Create transient GduHub object for all RAID arrays? */
-                                linux_md_parent = pool->priv->machine;
+                                linux_md_parent = ensure_hub_raid_lvm (pool,
+                                                                       &hub_raid_lvm,
+                                                                       &new_presentables);
 
                                 if (uuid != NULL) {
                                         drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
@@ -1046,12 +1133,24 @@ recompute_presentables (GduPool *pool)
                                         }
                                 }
 
+                                /* Group all Multipath devices in the virtual "Multi-path Devices" Hub */
+                                if (gdu_device_is_linux_dmmp (device)) {
+                                        g_warn_if_fail (drive_parent == NULL);
+                                        drive_parent = ensure_hub_multipath (pool,
+                                                                             &hub_multipath,
+                                                                             &new_presentables);
+                                }
+
+                                /* If there's no parent it could be because the device is connected via
+                                 * USB, Firewire or SDIO and udisks doesn't generate Adapter or Expander
+                                 * objects for it.
+                                 *
+                                 * We group these devices in the virtual "Peripheral Devices" Hub
+                                 */
                                 if (drive_parent == NULL) {
-                                        /* TODO: Create transient GduHub object for
-                                         *
-                                         *   - USB/Firewire/SDIO connected drives
-                                         */
-                                        drive_parent = pool->priv->machine;
+                                        drive_parent = ensure_hub_peripheral (pool,
+                                                                              &hub_peripheral,
+                                                                              &new_presentables);
                                 }
 
                                 drive = _gdu_drive_new_from_device (pool, device, drive_parent);
@@ -1168,7 +1267,11 @@ recompute_presentables (GduPool *pool)
                                 guint64 unallocated_size;
 
                                 /* otherwise create one */
-                                vg = _gdu_linux_lvm2_volume_group_new (pool, vg_uuid, pool->priv->machine);
+                                vg = _gdu_linux_lvm2_volume_group_new (pool,
+                                                                       vg_uuid,
+                                                                       ensure_hub_raid_lvm (pool,
+                                                                                            &hub_raid_lvm,
+                                                                                            &new_presentables));
                                 g_hash_table_insert (hash_map_from_linux_lvm2_group_uuid_to_vg, (gpointer) vg_uuid, vg);
                                 new_presentables = g_list_prepend (new_presentables, vg);
 
@@ -1239,8 +1342,9 @@ recompute_presentables (GduPool *pool)
                                 GduDrive *drive;
                                 GduPresentable *linux_md_parent;
 
-                                /* TODO: Create transient GduHub object for all RAID arrays? */
-                                linux_md_parent = pool->priv->machine;
+                                linux_md_parent = ensure_hub_raid_lvm (pool,
+                                                                       &hub_raid_lvm,
+                                                                       &new_presentables);
 
                                 drive = GDU_DRIVE (_gdu_linux_md_drive_new (pool, uuid, NULL, linux_md_parent));
                                 new_presentables = g_list_prepend (new_presentables, drive);

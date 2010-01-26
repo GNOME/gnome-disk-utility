@@ -724,11 +724,10 @@ gdu_drive_get_name (GduPresentable *presentable)
                 } else {
                         if (is_rotational) {
                                 if (strsize != NULL) {
-                                        /* Translators: This string is used to describe a hard disk. The first %s is
-                                         * the size of the drive e.g. '45 GB'.
+                                        /* Translators: This string is used to describe a hard disk.
+                                         * The first %s is the size of the drive e.g. '45 GB'.
                                          */
-                                        g_string_append_printf (result, _("%s Hard Disk"),
-                                                                strsize);
+                                        g_string_append_printf (result, _("%s Hard Disk"), strsize);
                                 } else {
                                         /* Translators: This string is used to describe a hard disk where the size
                                          * is not known.

@@ -1,13 +1,16 @@
+# Slovenian translation of gnome-disk-utility.
+# Copyright (C) 2009 gnome-disk-utility COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-disk-utility package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2009.
 # Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009.
+# Matej Urbančič <mateju@svn.gnome.org>, 2009 - 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2009-12-20 14:51+0000\n"
-"PO-Revision-Date: 2009-12-21 23:31+0100\n"
+"POT-Creation-Date: 2010-01-25 19:31+0000\n"
+"PO-Revision-Date: 2010-01-26 13:25+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -23,10 +26,10 @@ msgstr ""
 #. Translators: Window title when the item representing the local machine is selected.
 #.
 #: ../data/palimpsest.desktop.in.h:1
-#: ../src/palimpsest/gdu-shell.c:264
-#: ../src/palimpsest/gdu-shell.c:316
-#: ../src/palimpsest/gdu-shell.c:891
-#: ../src/palimpsest/gdu-shell.c:1198
+#: ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:896
+#: ../src/palimpsest/gdu-shell.c:1203
 msgid "Disk Utility"
 msgstr "Diskovna orodja"
 
@@ -174,9 +177,20 @@ msgstr "Dodaj element k %s"
 #. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
 #.
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
-msgstr "Izbor nosilca za uporabo kot enoto v polju \"%s\""
+msgstr "Izbor diska za ustvarjanje %s enote za RAID polje \"%s\" (%s)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:195
+#, c-format
+msgid "Add Physical Volume to %s (%s)"
+msgstr "Dodaj fizični nosilec v %s (%s)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:211
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "_Velikost:"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -785,9 +799,8 @@ msgstr "Napaka med branjem SMART podatkov"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
-#, fuzzy
 msgid "Choose SMART Self-test"
-msgstr "Zagnan hitri SMART preizkus"
+msgstr "Izbor SMART preizkusa"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1171
@@ -855,15 +868,13 @@ msgstr "Pretečeni čas diska v vklopljenem stanju"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1336
-#, fuzzy
 msgid "Power Cycles:"
-msgstr "Pretvornik napetosti"
+msgstr "Število priklopov:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
-#, fuzzy
 msgid "The number of full disk power on/off cycles"
-msgstr "Skupno število ponovitev obremenitve"
+msgstr "Skupno število priklopov in izklopov diska"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1344
@@ -913,7 +924,6 @@ msgstr "_Osveži"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
-#, fuzzy
 msgid "Reads SMART Data, waking up the disk"
 msgstr "Prebere SMART podatke z diska in ga po potrebi zbudi"
 
@@ -1110,7 +1120,7 @@ msgstr "SMART podatki nepravilno oblikovani"
 #. * the temperature of the disk
 #.
 #. Translators: Shown in the "Self-tests" item in the status table
-#. Translators: shown in the grid when we don't know the purpose/usage of the partition
+#. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2008
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2026
@@ -1118,8 +1128,8 @@ msgstr "SMART podatki nepravilno oblikovani"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2054
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2063
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2125
-#: ../src/gdu-gtk/gdu-volume-grid.c:1283
-#: ../src/gdu/gdu-util.c:1075
+#: ../src/gdu-gtk/gdu-volume-grid.c:1306
+#: ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Neznano"
 
@@ -1242,19 +1252,19 @@ msgstr "_Prebrskaj ..."
 #. Translators: this is the tooltip for the "Browse..." button
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:233
 msgid "Browse servers discovered via the DNS-SD protocol"
-msgstr ""
+msgstr "Brskanje med strežniki odkritimi preko DNS-DS protokola"
 
 #. Translators: This is the label explaining the dialog
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
 msgid "To manage storage devices on another machine, enter the address and press “Connect”. The connection will be made using the <i>Secure Shell</i> protocol."
-msgstr ""
+msgstr "Za upravljanje naprav na oddaljenem računalniku, vnesite naslov in pritisnite tipko “Poveži”. Povezava bo ustvarjena z uporabo protokola <i>varne lupine</i>."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
 msgid "The hostname or address to connect to"
-msgstr ""
+msgstr "Ime gostitelja oziroma naslov za povezavo"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
 msgid "Server _Address:"
@@ -1270,6 +1280,35 @@ msgstr "Uporabniško ime za povezavo"
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
 msgid "_User Name:"
 msgstr "_Uporabniško ime:"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
+msgid "Maximum Logical Volume Size"
+msgstr "Največja velikost logičnega razdelka"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
+msgid "The maximum possible logical volume size"
+msgstr "Največja mogoča velikost logičnega razdelka"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
+msgid "Logical Volume Size"
+msgstr "Velikost _logičnega razdelka"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
+msgid "The requested Logical Volume size"
+msgstr "Zahtevana velikost logičnega razdelka"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "Ustva_ri"
+
+#. Translators: The %s is the name of the volume group
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
+#, c-format
+msgid "Create Logical Volume on %s"
+msgstr "Ustvari logični razdelek na %s"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
@@ -1298,7 +1337,7 @@ msgid "The requested name for the array"
 msgstr "zahtevano ime za polje"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
-#: ../src/gdu-gtk/gdu-size-widget.c:256
+#: ../src/gdu-gtk/gdu-size-widget.c:488
 msgid "Size"
 msgstr "Velikost"
 
@@ -1334,12 +1373,6 @@ msgstr "Nabor pogonov uporabljen za polje"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
 msgid "Create RAID Array"
 msgstr "Ustvari RAID polje"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
-msgid "C_reate"
-msgstr "Ustva_ri"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
 msgid "General"
@@ -1412,11 +1445,11 @@ msgstr "_Diski"
 #. --------------------------------------------------------------------------------
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
 msgid "Use entire disks instead of _partitions"
-msgstr ""
+msgstr "Uporabi celoten disk namesto _razdelkov"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid "If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."
-msgstr ""
+msgstr "Izbrana možnost določa, da bo uporabljen celoten disk za RAID polje. V nasprotnem primeru bodo ustvarjeni razdelki."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
@@ -1470,10 +1503,6 @@ msgstr "Velikost razdelka"
 msgid "The requested partition size"
 msgstr "Zahtevana velikost razdelka"
 
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
-msgid "_Size:"
-msgstr "_Velikost:"
-
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
 #, c-format
@@ -1494,9 +1523,8 @@ msgid "Selected Drives"
 msgstr "Izbrani pogoni"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:269
-#, fuzzy
 msgid "Array of selected drives"
-msgstr "Prezrto polje pogonov"
+msgstr "Polje izbranih pogonov"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
 msgid "Ignored Drives"
@@ -1509,25 +1537,21 @@ msgstr "Prezrto polje pogonov"
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Number of available disks"
-msgstr ""
+msgstr "Število razpoložljivih diskov"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
-#, fuzzy
 msgid "Largest Segment For Selected"
-msgstr "Največji prosti odsek"
+msgstr "Največji odsek izbranega"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
-#, fuzzy
 msgid "The largest free segment for the selected drives"
-msgstr "Največji prosti odsek na razpoložljivih pogonih"
+msgstr "Največji prosti odsek na izbranih pogonih"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
-#, fuzzy
 msgid "Largest Segment For All"
-msgstr "Največji prosti odsek"
+msgstr "Največji odsek"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
-#, fuzzy
 msgid "The largest free segment for all the drives"
 msgstr "Največji prosti odsek na razpoložljivih pogonih"
 
@@ -1536,53 +1560,53 @@ msgid "The size to use in the details header"
 msgstr "Velikost uporabljena v podrobnostih glave"
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:771
 msgid "The disk will be partitioned and a partition will be created"
 msgstr "Disk bo razdeljen. Ustvarjen bo nov razdelek"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:740
-#, fuzzy, c-format
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:777
+#, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards no space will be available."
-msgstr "Disk bo razdeljen, ustvarjen pa bo %s razdelek"
+msgstr "Disk bo razdeljen, ustvarjen pa bo %s razdelek. Po ustvarjanju ne bo prostega prostora."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:749
-#, fuzzy, c-format
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:786
+#, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards %s will be available."
-msgstr "Disk bo razdeljen, ustvarjen pa bo %s razdelek"
+msgstr "Disk bo razdeljen, ustvarjen pa bo %s razdelek. Po ustvarjanju bo ostalo še %s prostora."
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:759
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:796
 msgid "A partition will be created"
 msgstr "Ustvarjen bo nov razdelek"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:765
-#, fuzzy, c-format
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:802
+#, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr "Ustvarjen bo %s razdelek"
+msgstr "Ustvarjen bo %s razdelek. Po ustvarjanju ne bo prostega prostora."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:773
-#, fuzzy, c-format
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
-msgstr "Ustvarjen bo %s razdelek"
+msgstr "Ustvarjen bo %s razdelek. Po ustvarjanju bo ostalo še %s prostora."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:792
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:829
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
 msgstr "Nepripravljen je celoten disk. Na voljo je %s za uporabo"
@@ -1590,7 +1614,7 @@ msgstr "Nepripravljen je celoten disk. Na voljo je %s za uporabo"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:799
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:836
 #, c-format
 msgid "%s available for use"
 msgstr "Za uporabo je na voljo %s"
@@ -1598,12 +1622,12 @@ msgstr "Za uporabo je na voljo %s"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:805
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:842
 #, c-format
 msgid "The disk has no partitions. %s available for use"
 msgstr "Disk je brez razdelkov. Na voljo je %s za uporabo"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:847
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
@@ -1616,18 +1640,18 @@ msgstr[3] "Disk ima %d razdelke"
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
 #. * Second %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:818
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:855
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
 msgstr "%s. Največji zvezni prosti blok je %s"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:966
 msgid "Storage Devices"
 msgstr "Naprave za shranjevanje"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:968
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1005
 msgid "Details"
 msgstr "Podrobnosti"
 
@@ -1641,8 +1665,8 @@ msgstr "Ali ste prepričani, da želite začeti z preizkusom branja in pisanja?"
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-drive.c:762
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+#: ../src/palimpsest/gdu-section-drive.c:895
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1074
 msgid "_Benchmark"
 msgstr "_Preizkusi"
 
@@ -1700,11 +1724,11 @@ msgstr "Merjenje hitrosti branja in časa dostopa"
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
 msgid "Start Read/_Write Benchmark"
-msgstr ""
+msgstr "Začni primerjalni preizkus branja in _pisanja"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
 msgid "Measure read rate, write rate and access time"
-msgstr ""
+msgstr "Merjenje hitrosti branja, pisanja in dostopa"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:951
@@ -1734,15 +1758,82 @@ msgstr "Prekliči"
 msgid "Cancels the currently running benchmark"
 msgstr "Prekliče trenutno dejaven preizkus"
 
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
+#. Translators: title of the dialog - first %s is the name of the volume
+#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
+#.
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
 #, c-format
-msgid "Edit Filesystem on %s"
-msgstr "Uredi datotečni sistem na %s"
+msgid "Edit %s"
+msgstr "Uredi %s"
 
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
-#: ../src/palimpsest/gdu-section-volumes.c:1470
-msgid "Label:"
-msgstr "Naziv:"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:236
+msgid "Missing Physical Volume"
+msgstr "Manjka fizični nosilec"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:237
+#, c-format
+msgid "UUID: %s"
+msgstr "UUID: %s"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:347
+#, c-format
+msgid "Edit PVs on %s (%s)"
+msgstr "Uredi fizični nosilec na %s (%s)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:358
+msgid "Physical _Volumes"
+msgstr "Fizični _nosilci"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
+msgid "Physical Volume"
+msgstr "Fizični nosilec"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:404
+msgid "Capacity"
+msgstr "Zmogljivost"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
+msgid "Unallocated"
+msgstr "Nedodeljeno"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
+#: ../src/palimpsest/gdu-section-drive.c:826
+msgid "SMART Status:"
+msgstr "Stanje SMART:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
+#: ../src/palimpsest/gdu-section-drive.c:802
+#: ../src/palimpsest/gdu-section-volumes.c:1907
+msgid "Device:"
+msgstr "Naprava:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:444
+msgid "_New Physical Volume"
+msgstr "_Nov fizični nosilec"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:445
+msgid "Add a new PV to the VG"
+msgstr "Dodaj nov fizični nosilec v skupino nosilcev"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:454
+msgid "_Remove Physical Volume"
+msgstr "_Odstrani fizični nosilec"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:455
+msgid "Remove the PV from the VG"
+msgstr "Odstrani fizični nosilec iz skupine nosilcev"
+
+#. Translators: Used when SMART is not supported on the RAID pv
+#. Translators: Used when SMART is not supported on the RAID component
+#. Translators: This string is used when SMART is not supported
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
+#: ../src/palimpsest/gdu-section-drive.c:309
+msgid "Not Supported"
+msgstr "Ni podprto"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
 #, c-format
@@ -1765,25 +1856,16 @@ msgstr "Enota"
 msgid "State"
 msgstr "Stanje"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
-#: ../src/palimpsest/gdu-section-drive.c:693
-msgid "SMART Status:"
-msgstr "Stanje SMART:"
-
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
 msgid "Position:"
 msgstr "Položaj:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:794
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:995
+#: ../src/palimpsest/gdu-section-volumes.c:1896
 msgid "State:"
 msgstr "Stanje:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
-#: ../src/palimpsest/gdu-section-drive.c:669
-#: ../src/palimpsest/gdu-section-volumes.c:1446
-msgid "Device:"
-msgstr "Naprava:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
 msgid "_New Component"
@@ -1808,21 +1890,6 @@ msgstr "_Odstrani enoto"
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
 msgid "Remove the component from the array"
 msgstr "Odstrani element iz RAID polja"
-
-#. Translators: Used when SMART is not supported on the RAID component
-#. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
-#: ../src/palimpsest/gdu-section-drive.c:300
-msgid "Not Supported"
-msgstr "Ni podprto"
-
-#. Translators: title of the dialog - first %s is the name of the volume
-#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
-#.
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
-#, c-format
-msgid "Edit %s"
-msgstr "Uredi %s"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
 msgid "Part_ition Label:"
@@ -1885,14 +1952,14 @@ msgid "Filesystem tools not installed"
 msgstr "Orodja datotečnega sistema niso nameščena"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:249
-#: ../src/palimpsest/gdu-shell.c:1042
+#: ../src/palimpsest/gdu-shell.c:1047
 msgid "Unknown error"
 msgstr "Neznana napaka"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
 #, c-format
 msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr ""
+msgstr "Prišlo je do napake med izvajanjem opravila na \"%s\" (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
 #, c-format
@@ -1905,7 +1972,7 @@ msgstr "_Podrobnosti"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:167
 msgid "Flags specifying the behavior of the dialog"
-msgstr ""
+msgstr "Zastavice, ki določajo obnašanje pogovornega okna"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:180
 msgid "Filesystem type"
@@ -1929,7 +1996,7 @@ msgstr "Možnosti datotečnega sistema"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:203
 msgid "The options to use for creating the filesystem"
-msgstr ""
+msgstr "Možnosti za uporabo med ustvarjanjem datotečnega sistema."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:213
 msgid "Encryption"
@@ -1958,8 +2025,8 @@ msgstr "Oznaka potrditvenega gumba"
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/palimpsest/gdu-section-drive.c:588
-#: ../src/palimpsest/gdu-section-volumes.c:356
+#: ../src/palimpsest/gdu-section-drive.c:610
+#: ../src/palimpsest/gdu-section-volumes.c:365
 msgid "_Format"
 msgstr "_Formatiraj"
 
@@ -2002,6 +2069,8 @@ msgstr "Šifrirano, skladno z Linux sistemom (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
+#: ../src/palimpsest/gdu-section-volumes.c:1717
 msgid "_Name:"
 msgstr "_Naziv:"
 
@@ -2032,209 +2101,209 @@ msgstr "Šifriranje zaščiti vaše podatke, saj za uporabo datotečnega sistema
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "Opozorilo: vsi podatki na nosilcu bodo nepovratno izgubljeni."
 
-#: ../src/gdu-gtk/gdu-gtk.c:172
+#: ../src/gdu-gtk/gdu-gtk.c:175
 msgctxt "application name"
 msgid "Bourne Again Shell"
 msgstr "Bourne Again lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:177
+#: ../src/gdu-gtk/gdu-gtk.c:180
 msgctxt "application name"
 msgid "Bourne Shell"
 msgstr "Bourne lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:182
+#: ../src/gdu-gtk/gdu-gtk.c:185
 msgctxt "application name"
 msgid "C Shell"
 msgstr "C lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:187
+#: ../src/gdu-gtk/gdu-gtk.c:190
 msgctxt "application name"
 msgid "TENEX C Shell"
 msgstr "TENEX C lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:192
+#: ../src/gdu-gtk/gdu-gtk.c:195
 msgctxt "application name"
 msgid "Z Shell"
 msgstr "Z lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:197
+#: ../src/gdu-gtk/gdu-gtk.c:200
 msgctxt "application name"
 msgid "Korn Shell"
 msgstr "Korn lupina"
 
-#: ../src/gdu-gtk/gdu-gtk.c:201
+#: ../src/gdu-gtk/gdu-gtk.c:204
 msgctxt "application name"
 msgid "Process Viewer (top)"
 msgstr "Pregledovalnik procesov (top)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:205
+#: ../src/gdu-gtk/gdu-gtk.c:208
 msgctxt "application name"
 msgid "Terminal Pager (less)"
 msgstr "Pozivnik terminala (less)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:217
+#: ../src/gdu-gtk/gdu-gtk.c:220
 msgctxt "application name"
 msgid "Unknown"
 msgstr "Neznano"
 
-#: ../src/gdu-gtk/gdu-gtk.c:228
+#: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
 msgstr "uid: %d  pid: %d  program: %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:233
+#: ../src/gdu-gtk/gdu-gtk.c:236
 #, c-format
 msgid "pid: %d  program: %s"
 msgstr "pid: %d  program: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:332
-#: ../src/gdu-gtk/gdu-gtk.c:916
-#: ../src/gdu-gtk/gdu-gtk.c:1054
+#: ../src/gdu-gtk/gdu-gtk.c:335
+#: ../src/gdu-gtk/gdu-gtk.c:923
+#: ../src/gdu-gtk/gdu-gtk.c:1065
 #, c-format
 msgid "Partition %d on %s"
 msgstr "Razdelek %d na %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:368
+#: ../src/gdu-gtk/gdu-gtk.c:371
 msgid "Cannot unmount volume"
 msgstr "Nosilca ni mogoče odklopiti"
 
-#: ../src/gdu-gtk/gdu-gtk.c:378
+#: ../src/gdu-gtk/gdu-gtk.c:381
 msgid "One or more applications are using the volume. Quit the applications, and then try unmounting again."
 msgstr "En ali več programov uporabljajo nosilec. Končajte programe in ponovno poskusite z odklopom."
 
-#: ../src/gdu-gtk/gdu-gtk.c:419
+#: ../src/gdu-gtk/gdu-gtk.c:422
 msgid "_Unmount"
 msgstr "_Odklopi"
 
-#: ../src/gdu-gtk/gdu-gtk.c:496
+#: ../src/gdu-gtk/gdu-gtk.c:499
 msgid "Passphrases do not match"
 msgstr "Šifrirni gesli se ne skladata"
 
-#: ../src/gdu-gtk/gdu-gtk.c:503
+#: ../src/gdu-gtk/gdu-gtk.c:506
 msgid "Passphrases do not differ"
 msgstr "Šifrirni gesli se ne razlikujeta"
 
-#: ../src/gdu-gtk/gdu-gtk.c:509
+#: ../src/gdu-gtk/gdu-gtk.c:512
 msgid "Passphrase can't be empty"
 msgstr "Šifrirno geslo mora biti izbrano"
 
-#: ../src/gdu-gtk/gdu-gtk.c:581
+#: ../src/gdu-gtk/gdu-gtk.c:584
 msgid "Cr_eate"
 msgstr "_Ustvari"
 
-#: ../src/gdu-gtk/gdu-gtk.c:583
-#: ../src/palimpsest/gdu-section-volumes.c:1924
+#: ../src/gdu-gtk/gdu-gtk.c:586
+#: ../src/palimpsest/gdu-section-volumes.c:2431
 msgid "Change _Passphrase"
 msgstr "Spremeni _šifrirno geslo"
 
-#: ../src/gdu-gtk/gdu-gtk.c:585
+#: ../src/gdu-gtk/gdu-gtk.c:588
 msgid "_Unlock"
 msgstr "_Odkleni"
 
-#: ../src/gdu-gtk/gdu-gtk.c:614
+#: ../src/gdu-gtk/gdu-gtk.c:617
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr "Za ustvarjanje šifrirane naprave izberite geslo za zaščito"
 
-#: ../src/gdu-gtk/gdu-gtk.c:617
+#: ../src/gdu-gtk/gdu-gtk.c:620
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr "Za spremembo šifrirna gesla, vnesite trenutno in novo šifrirno geslo"
 
-#: ../src/gdu-gtk/gdu-gtk.c:620
+#: ../src/gdu-gtk/gdu-gtk.c:623
 msgid "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr "Podatki na napravi so shranjeni v šifrirani obliki zaščiteni s šifrirnim geslom"
 
-#: ../src/gdu-gtk/gdu-gtk.c:633
+#: ../src/gdu-gtk/gdu-gtk.c:636
 msgid "Data on this device will be stored in an encrypted form protected by a passphrase."
 msgstr "Podatki na tej napravi bodo shranjeni v šifrirani obliki zaščiteni s šifrirno geslo."
 
-#: ../src/gdu-gtk/gdu-gtk.c:636
+#: ../src/gdu-gtk/gdu-gtk.c:639
 msgid "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr "Podatki na tej napravi so shranjeni v šifrirani obliki zaščiteni s šifrirnim geslom."
 
-#: ../src/gdu-gtk/gdu-gtk.c:639
+#: ../src/gdu-gtk/gdu-gtk.c:642
 msgid "To make the data available for use, enter the passphrase for the device."
 msgstr "Za dostop do podatkov vnesite šifrirno geslo za napravo."
 
-#: ../src/gdu-gtk/gdu-gtk.c:648
+#: ../src/gdu-gtk/gdu-gtk.c:651
 msgid "Incorrect Passphrase. Try again."
 msgstr "Nepravilno šifrirno geslo. Poskusite znova."
 
-#: ../src/gdu-gtk/gdu-gtk.c:672
+#: ../src/gdu-gtk/gdu-gtk.c:675
 msgid "C_urrent Passphrase:"
 msgstr "_Trenutno šifrirno geslo:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:686
+#: ../src/gdu-gtk/gdu-gtk.c:689
 msgid "_New Passphrase:"
 msgstr "_Novo šifrirno geslo:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:699
+#: ../src/gdu-gtk/gdu-gtk.c:702
 msgid "_Verify Passphrase:"
 msgstr "_Overi šifrirno geslo:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:741
+#: ../src/gdu-gtk/gdu-gtk.c:744
 msgid "_Passphrase:"
 msgstr "_Šifrirno geslo:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:756
+#: ../src/gdu-gtk/gdu-gtk.c:759
 msgid "_Forget passphrase immediately"
 msgstr "_Pozabi šifrirno gesloo"
 
-#: ../src/gdu-gtk/gdu-gtk.c:759
+#: ../src/gdu-gtk/gdu-gtk.c:762
 msgid "Remember passphrase until you _log out"
 msgstr "Zapomni si šifrirno geslo do odjave"
 
-#: ../src/gdu-gtk/gdu-gtk.c:762
+#: ../src/gdu-gtk/gdu-gtk.c:765
 msgid "_Remember forever"
 msgstr "_Zapomni si"
 
-#: ../src/gdu-gtk/gdu-gtk.c:823
+#: ../src/gdu-gtk/gdu-gtk.c:828
 msgid "Enter Passphrase"
 msgstr "Vnesite šifrirno geslo"
 
-#: ../src/gdu-gtk/gdu-gtk.c:948
-#: ../src/gdu/gdu-util.c:824
+#: ../src/gdu-gtk/gdu-gtk.c:956
+#: ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "Šifrirno geslo LUKS za UUID %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1242
+#: ../src/gdu-gtk/gdu-gtk.c:1253
 msgid "Empty (don't create a file system)"
 msgstr "Prazno (ne vsebuje datotečnega sistema)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1263
+#: ../src/gdu-gtk/gdu-gtk.c:1274
 msgid "Empty"
 msgstr "Empty"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1271
+#: ../src/gdu-gtk/gdu-gtk.c:1282
 msgid "Extended Partition"
 msgstr "Razširjeni razdelek"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1530
-#: ../src/palimpsest/gdu-section-drive.c:262
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
+#: ../src/gdu-gtk/gdu-gtk.c:1541
+#: ../src/palimpsest/gdu-section-drive.c:271
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "Prvi sektor (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1535
+#: ../src/gdu-gtk/gdu-gtk.c:1546
 #: ../src/gdu/gdu-drive.c:811
 #: ../src/gdu/gdu-linux-md-drive.c:568
-#: ../src/palimpsest/gdu-section-drive.c:264
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
+#: ../src/palimpsest/gdu-section-drive.c:273
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
-msgstr "GUID razpredelnica razdelkov"
+msgstr "GUID preglednica razdelkov"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1540
+#: ../src/gdu-gtk/gdu-gtk.c:1551
 msgid "Don't partition"
 msgstr "Ne razdeli"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1545
-#: ../src/gdu/gdu-util.c:492
-#: ../src/palimpsest/gdu-section-drive.c:260
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
+#: ../src/gdu-gtk/gdu-gtk.c:1556
+#: ../src/gdu/gdu-util.c:495
+#: ../src/palimpsest/gdu-section-drive.c:269
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
-msgstr "Apple razpredelnica razdelekov"
+msgstr "Apple preglednica razdelekov"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:100
 msgid "Partitioning Scheme"
@@ -2249,23 +2318,55 @@ msgstr "Izbrana shema razdelkov"
 msgid "_Scheme:"
 msgstr "_Shema:"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:257
+#: ../src/gdu-gtk/gdu-size-widget.c:89
+msgid "KB"
+msgstr "KB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:95
+msgid "MB"
+msgstr "MB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:98
+msgid "GB"
+msgstr "GB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:101
+msgid "TB"
+msgstr "TB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:104
+msgid "KiB"
+msgstr "KiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:107
+msgid "MiB"
+msgstr "MiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:110
+msgid "GiB"
+msgstr "GiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:113
+msgid "TiB"
+msgstr "TiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:489
 msgid "The currently selected size"
 msgstr "Trenutno izbrana velikost"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:270
+#: ../src/gdu-gtk/gdu-size-widget.c:502
 msgid "Minimum Size"
 msgstr "Najmanjša velikost"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:271
+#: ../src/gdu-gtk/gdu-size-widget.c:503
 msgid "The minimum size that can be selected"
 msgstr "Najmanjša velikost, ki jo je mogoče izbrati"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:284
+#: ../src/gdu-gtk/gdu-size-widget.c:516
 msgid "Maximum Size"
 msgstr "Največja velikost"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:285
+#: ../src/gdu-gtk/gdu-size-widget.c:517
 msgid "The maximum size that can be selected"
 msgstr "Največja velikost, ki jo je mogoče izbrati"
 
@@ -2293,7 +2394,7 @@ msgstr[2] "Pred %d urama"
 msgstr[3] "Pred %d urami"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
-#: ../src/palimpsest/gdu-section-drive.c:634
+#: ../src/palimpsest/gdu-section-drive.c:765
 msgid "Drive"
 msgstr "Pogon"
 
@@ -2312,23 +2413,31 @@ msgstr "Polje RAID ni zagnano"
 #.
 #: ../src/gdu-gtk/gdu-volume-grid.c:1184
 #: ../src/gdu/gdu-drive.c:797
-#: ../src/palimpsest/gdu-section-drive.c:314
+#: ../src/palimpsest/gdu-section-drive.c:323
 #, c-format
 msgid "No Media Detected"
 msgstr "Ni zaznanega nosilca"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1257
+#: ../src/gdu-gtk/gdu-volume-grid.c:1268
 msgid "Extended"
 msgstr "Razširjeno"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1263
+#: ../src/gdu-gtk/gdu-volume-grid.c:1276
 msgid "Encrypted"
 msgstr "Šifrirano"
 
-#. Translators: shown in the grid for space that is not claimed by any partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1277
+#. Translators: shown in the grid for an RAID Component
+#: ../src/gdu-gtk/gdu-volume-grid.c:1290
+#: ../src/gdu/gdu-util.c:344
+#: ../src/palimpsest/gdu-section-volumes.c:2164
+#, c-format
+msgid "RAID Component"
+msgstr "RAID enota"
+
+#. Translators: shown for free/unallocated space
+#: ../src/gdu-gtk/gdu-volume-grid.c:1298
 msgid "Free"
 msgstr "Prost"
 
@@ -2471,13 +2580,13 @@ msgstr "%s nosilec"
 #: ../src/gdu/gdu-drive.c:808
 #: ../src/gdu/gdu-linux-md-drive.c:565
 msgid "MBR Partition Table"
-msgstr "MBR razpredelnica razdelkov"
+msgstr "MBR preglednica razdelkov"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu/gdu-drive.c:814
 #: ../src/gdu/gdu-linux-md-drive.c:571
 msgid "Apple Partition Table"
-msgstr "Applova razpredelnica razdelkov"
+msgstr "Applova preglednica razdelkov"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
@@ -2490,8 +2599,8 @@ msgstr "Razdeljeno"
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
 #: ../src/gdu/gdu-drive.c:824
-#: ../src/palimpsest/gdu-section-drive.c:273
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:364
+#: ../src/palimpsest/gdu-section-drive.c:282
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "Nerazdeljeno"
 
@@ -2522,6 +2631,59 @@ msgstr "Vmesnik"
 #: ../src/gdu/gdu-hub.c:211
 msgid "SAS Expander"
 msgstr "SAS razširjevalnik"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+msgid "Logical Volume"
+msgstr "Logični razdelek"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume.c:334
+msgid "LVM2 Logical Volume"
+msgstr "LVM2 logični razdelek"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:351
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:355
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:764
+msgid "Volume Group"
+msgstr "Skupina razdelkov"
+
+#. Translators: VPD name - first %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:359
+#, c-format
+msgid "%s LVM2 Volume Group"
+msgstr "%s LVM2 skupina nosilcev"
+
+#. Translators: VPD name when size is not known
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:362
+msgid "LVM2 Volume Group"
+msgstr "Skupina nosilcev LVM2"
+
+#. Translators: label for an unallocated space in a LVM2 volume group.
+#. * %s is the size, formatted like '45 GB'
+#.
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:201
+#: ../src/gdu/gdu-volume-hole.c:152
+#, c-format
+msgid "%s Free"
+msgstr "%s prosto"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
+#: ../src/gdu/gdu-volume-hole.c:161
+#: ../src/palimpsest/gdu-section-volumes.c:2178
+#: ../src/palimpsest/gdu-section-volumes.c:2187
+msgid "Unallocated Space"
+msgstr "Nerazvrščeni prostor"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
+msgid "LVM2 VG Unallocated Space"
+msgstr "Nedodeljen prostor LVM2 skupine nosilcev"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
@@ -2560,36 +2722,36 @@ msgid "RAID"
 msgstr "RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:614
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1066
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:965
 msgid "RAID Array"
 msgstr "RAID polje"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1083
+#: ../src/gdu/gdu-linux-md-drive.c:1112
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "Ni pripeto"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1086
+#: ../src/gdu/gdu-linux-md-drive.c:1115
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr "Pomanjkljivo"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1091
+#: ../src/gdu/gdu-linux-md-drive.c:1120
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
 msgstr "Končano usklajevanje"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1093
+#: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Večinoma zapisljivo"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1095
+#: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Zavrnjeno"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1097
+#: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Nadomestno"
@@ -2604,22 +2766,22 @@ msgstr "Krajevna shramba"
 msgid "Storage on %s"
 msgstr "Shramba na %s"
 
-#: ../src/gdu/gdu-pool.c:1888
+#: ../src/gdu/gdu-pool.c:1986
 #, c-format
 msgid "Error enumerating devices: %s"
 msgstr "Napaka med številčenjem naprav: %s"
 
-#: ../src/gdu/gdu-pool.c:1914
+#: ../src/gdu/gdu-pool.c:2012
 #, c-format
 msgid "Error enumerating adapters: %s"
 msgstr "Napaka med številčenjem prilagodilnikov: %s"
 
-#: ../src/gdu/gdu-pool.c:1937
+#: ../src/gdu/gdu-pool.c:2035
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Napaka med številčenjem razširjevalnikov: %s"
 
-#: ../src/gdu/gdu-pool.c:1960
+#: ../src/gdu/gdu-pool.c:2058
 #, c-format
 msgid "Error enumerating ports: %s"
 msgstr "Napaka med številčenjem vrat: %s"
@@ -2627,27 +2789,27 @@ msgstr "Napaka med številčenjem vrat: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "Napaka med poslušanjem naslova `localhost:%d': %s: %s\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
 msgid "Error creating a local TCP server, tried binding to ports 9000-10000 on localhost"
-msgstr ""
+msgstr "Napaka med ustvarjanjem krajevnega strežnika TCP; neuspešno povezovanje preko vrat med 9000-10000 na localhost"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
-msgstr ""
+msgstr "Napaka med določanjem mehanizma na krajevnem strežniku DBusServer\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:347
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
-msgstr ""
+msgstr "Ni mogoče razčleniti ukazne vrstice `%s' (Ali je naslov pravilno oblikovan?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to spawn ssh program: %s"
-msgstr "Ni mogoče zagnati ssh programa: %s"
+msgstr "Ni mogoče oživiti ssh programa: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:398
 #: ../src/gdu/gdu-ssh-bridge.c:510
@@ -2676,7 +2838,7 @@ msgstr ""
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "Napaka med podajanjem ključa pooblastitve: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
@@ -2703,871 +2865,864 @@ msgstr ""
 #. Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
 #. * the second %s is the size as a number e.g. '100,000 bytes'
 #.
-#: ../src/gdu/gdu-util.c:128
-#: ../src/gdu/gdu-util.c:137
+#: ../src/gdu/gdu-util.c:131
+#: ../src/gdu/gdu-util.c:140
 #, c-format
 msgid "%s (%s bytes)"
 msgstr "%s (%s bajtov)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:172
+#: ../src/gdu/gdu-util.c:175
 msgid "FAT (12-bit version)"
 msgstr "FAT (12-bitna različica)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:175
-#: ../src/gdu/gdu-util.c:182
-#: ../src/gdu/gdu-util.c:189
-#: ../src/gdu/gdu-util.c:193
-#: ../src/gdu/gdu-util.c:195
+#: ../src/gdu/gdu-util.c:178
+#: ../src/gdu/gdu-util.c:185
+#: ../src/gdu/gdu-util.c:192
+#: ../src/gdu/gdu-util.c:196
+#: ../src/gdu/gdu-util.c:198
 msgid "FAT"
 msgstr "FAT"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:180
+#: ../src/gdu/gdu-util.c:183
 msgid "FAT (16-bit version)"
 msgstr "FAT (16-bitna različica)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:187
+#: ../src/gdu/gdu-util.c:190
 msgid "FAT (32-bit version)"
 msgstr "FAT (32-bitna različica)"
 
 #. Translators: NTFS is a filesystem type
-#: ../src/gdu/gdu-util.c:202
+#: ../src/gdu/gdu-util.c:205
 #, c-format
 msgid "NTFS (version %s)"
 msgstr "NTFS (različica %s)"
 
 #. Translators: NTFS is a filesystem type
-#: ../src/gdu/gdu-util.c:205
-#: ../src/gdu/gdu-util.c:207
+#: ../src/gdu/gdu-util.c:208
+#: ../src/gdu/gdu-util.c:210
 #, c-format
 msgid "NTFS"
 msgstr "NTFS"
 
 #. Translators: HFS is a filesystem type
-#: ../src/gdu/gdu-util.c:212
-#: ../src/gdu/gdu-util.c:214
+#: ../src/gdu/gdu-util.c:215
+#: ../src/gdu/gdu-util.c:217
 msgid "HFS"
 msgstr "HFS"
 
 #. Translators: HFS+ is a filesystem type
-#: ../src/gdu/gdu-util.c:219
-#: ../src/gdu/gdu-util.c:221
+#: ../src/gdu/gdu-util.c:222
+#: ../src/gdu/gdu-util.c:224
 msgid "HFS+"
 msgstr "HFS+"
 
-#: ../src/gdu/gdu-util.c:225
+#: ../src/gdu/gdu-util.c:228
 msgid "Linux Unified Key Setup"
 msgstr "Linux Unified Key nastavitev"
 
 #. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
-#: ../src/gdu/gdu-util.c:228
+#: ../src/gdu/gdu-util.c:231
 msgid "LUKS"
 msgstr "LUKS"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:234
+#: ../src/gdu/gdu-util.c:237
 #, c-format
 msgid "Ext2 (version %s)"
 msgstr "Ext2 (različica %s)"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:237
+#: ../src/gdu/gdu-util.c:240
 #, c-format
 msgid "Ext2"
 msgstr "Ext2"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:240
+#: ../src/gdu/gdu-util.c:243
 msgid "ext2"
 msgstr "ext2"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:246
+#: ../src/gdu/gdu-util.c:249
 #, c-format
 msgid "Ext3 (version %s)"
 msgstr "Ext3 (različica %s)"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:249
+#: ../src/gdu/gdu-util.c:252
 #, c-format
 msgid "Ext3"
 msgstr "Ext3"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:252
+#: ../src/gdu/gdu-util.c:255
 msgid "ext3"
 msgstr "ext3"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#: ../src/gdu/gdu-util.c:258
+#: ../src/gdu/gdu-util.c:261
 #, c-format
 msgid "Journal for Ext3 (version %s)"
 msgstr "Journal za Ext3 (različica %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#: ../src/gdu/gdu-util.c:261
+#: ../src/gdu/gdu-util.c:264
 #, c-format
 msgid "Journal for Ext3"
 msgstr "Journal za Ext3"
 
 #. Translators: jbd is a filesystem type
-#: ../src/gdu/gdu-util.c:264
+#: ../src/gdu/gdu-util.c:267
 msgid "jbd"
 msgstr "jbd"
 
 #. Translators: ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:270
+#: ../src/gdu/gdu-util.c:273
 #, c-format
 msgid "Ext4 (version %s)"
 msgstr "Ext4 (različica %s)"
 
 #. Translators: ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:273
+#: ../src/gdu/gdu-util.c:276
 #, c-format
 msgid "Ext4"
 msgstr "Ext4"
 
 #. Translators: Ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:276
+#: ../src/gdu/gdu-util.c:279
 msgid "ext4"
 msgstr "ext4"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:282
+#: ../src/gdu/gdu-util.c:285
 #, c-format
 msgid "XFS (version %s)"
 msgstr "XFS (različica %s)"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:285
+#: ../src/gdu/gdu-util.c:288
 #, c-format
 msgid "XFS"
 msgstr "XFS"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:288
+#: ../src/gdu/gdu-util.c:291
 msgid "xfs"
 msgstr "xfs"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:294
+#: ../src/gdu/gdu-util.c:297
 #, c-format
 msgid "ReiserFS (version %s)"
 msgstr "RaiserFS (različica %s)"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:297
+#: ../src/gdu/gdu-util.c:300
 #, c-format
 msgid "ReiserFS"
 msgstr "ReiserFS"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:300
+#: ../src/gdu/gdu-util.c:303
 msgid "reiserfs"
 msgstr "reiserfs"
 
 #. Translators: iso9660 is a filesystem type
-#: ../src/gdu/gdu-util.c:305
+#: ../src/gdu/gdu-util.c:308
 msgid "ISO 9660"
 msgstr "ISO 9660"
 
 #. Translators: iso9660 is a filesystem type
-#: ../src/gdu/gdu-util.c:308
+#: ../src/gdu/gdu-util.c:311
 msgid "iso9660"
 msgstr "iso9660"
 
 #. Translators: udf is a filesystem type
-#: ../src/gdu/gdu-util.c:313
+#: ../src/gdu/gdu-util.c:316
 msgid "Universal Disk Format"
 msgstr "Splošni zapis UDF"
 
 #. Translators: udf is a filesystem type
-#: ../src/gdu/gdu-util.c:316
+#: ../src/gdu/gdu-util.c:319
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:320
-#: ../src/palimpsest/gdu-section-volumes.c:1677
+#: ../src/gdu/gdu-util.c:323
+#: ../src/palimpsest/gdu-section-volumes.c:2160
 msgid "Swap Space"
 msgstr "Izmenjevalni prostor"
 
 #. Translators: filesystem type for swap space
-#: ../src/gdu/gdu-util.c:323
+#: ../src/gdu/gdu-util.c:326
 msgid "swap"
 msgstr "izmenjalni razdelek"
 
-#: ../src/gdu/gdu-util.c:328
+#: ../src/gdu/gdu-util.c:331
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
-msgstr "LVM2 nosilec (različica %s)"
+msgstr "LVM2 fizični nosilec (različica %s)"
 
-#: ../src/gdu/gdu-util.c:330
+#: ../src/gdu/gdu-util.c:333
 #, c-format
 msgid "LVM2 Physical Volume"
-msgstr "LVM2 nosilec"
+msgstr "LVM2 fizični nosilec"
 
 #. Translators: short name for LVM2 Physical Volume
-#: ../src/gdu/gdu-util.c:333
+#: ../src/gdu/gdu-util.c:336
 msgid "lvm2_pv"
 msgstr "lvm2_pv"
 
-#: ../src/gdu/gdu-util.c:339
+#: ../src/gdu/gdu-util.c:342
 #, c-format
 msgid "RAID Component (version %s)"
 msgstr "RAID enota (različica %s)"
 
-#: ../src/gdu/gdu-util.c:341
-#: ../src/palimpsest/gdu-section-volumes.c:1681
-#, c-format
-msgid "RAID Component"
-msgstr "RAID enota"
-
 #. Translators: short name for 'RAID Component'
-#: ../src/gdu/gdu-util.c:344
+#: ../src/gdu/gdu-util.c:347
 msgid "raid"
 msgstr "raid"
 
 #. Translators: long filesystem type for minix
-#: ../src/gdu/gdu-util.c:349
+#: ../src/gdu/gdu-util.c:352
 msgid "Minix"
 msgstr "Minix"
 
 #. Translators: filesystem type for minix
-#: ../src/gdu/gdu-util.c:352
+#: ../src/gdu/gdu-util.c:355
 msgid "minix"
 msgstr "minix"
 
-#: ../src/gdu/gdu-util.c:366
+#: ../src/gdu/gdu-util.c:369
 msgid "Creating File System"
 msgstr "Ustvarjanje datotečnega sistema"
 
-#: ../src/gdu/gdu-util.c:368
+#: ../src/gdu/gdu-util.c:371
 msgid "Mounting File System"
 msgstr "Priklapljanje datotečnega sistema"
 
-#: ../src/gdu/gdu-util.c:370
+#: ../src/gdu/gdu-util.c:373
 msgid "Unmounting File System"
 msgstr "Odklapljanje datotečnega sistema"
 
-#: ../src/gdu/gdu-util.c:372
+#: ../src/gdu/gdu-util.c:375
 msgid "Checking File System"
 msgstr "Preverjanje datotečnega sistema"
 
-#: ../src/gdu/gdu-util.c:374
+#: ../src/gdu/gdu-util.c:377
 msgid "Creating LUKS Device"
 msgstr "Ustvarjanje LUKS naprave"
 
-#: ../src/gdu/gdu-util.c:376
+#: ../src/gdu/gdu-util.c:379
 msgid "Unlocking LUKS Device"
 msgstr "Odklepanje LUKS naprave"
 
-#: ../src/gdu/gdu-util.c:378
+#: ../src/gdu/gdu-util.c:381
 msgid "Locking LUKS Device"
 msgstr "Zaklepanje LUKS naprave"
 
-#: ../src/gdu/gdu-util.c:380
+#: ../src/gdu/gdu-util.c:383
 msgid "Creating Partition Table"
-msgstr "Ustvarjanje razpredelnice razdelka"
+msgstr "Ustvarjanje preglednice razdelka"
 
-#: ../src/gdu/gdu-util.c:382
+#: ../src/gdu/gdu-util.c:385
 msgid "Deleting Partition"
 msgstr "Brisanje razdelka"
 
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:387
 msgid "Creating Partition"
 msgstr "Ustvarjanje razdelka"
 
-#: ../src/gdu/gdu-util.c:386
+#: ../src/gdu/gdu-util.c:389
 msgid "Modifying Partition"
 msgstr "Spreminjanje razdelka"
 
-#: ../src/gdu/gdu-util.c:388
+#: ../src/gdu/gdu-util.c:391
 msgid "Setting Label for Device"
 msgstr "Določevanje naziva naprave"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:393
 msgid "Changing Passphrase for Encrypted LUKS Device"
 msgstr "Spreminjanje šifrirnega gesla za šifrirano LUKS napravo"
 
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:395
 msgid "Adding Component to RAID Array"
 msgstr "Dodajanje elementa v RAID polje"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:397
 msgid "Removing Component from RAID Array"
 msgstr "Odstranjevanje elementa iz RAID polja"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:399
 msgid "Stopping RAID Array"
 msgstr "Zaustavljanje RAID polja"
 
-#: ../src/gdu/gdu-util.c:398
+#: ../src/gdu/gdu-util.c:401
 msgid "Starting RAID Array"
 msgstr "Zaganjanje RAID polja"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:403
 msgid "Checking RAID Array"
 msgstr "Preverjanje RAID polja"
 
-#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:405
 msgid "Repairing RAID Array"
 msgstr "Popravljanje RAID polja"
 
-#: ../src/gdu/gdu-util.c:404
+#: ../src/gdu/gdu-util.c:407
 msgid "Running Short SMART Self-Test"
 msgstr "Zagnan hitri SMART preizkus"
 
-#: ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:409
 msgid "Running Extended SMART Self-Test"
 msgstr "Zagnan razširjeni SMART preizkus"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:411
 msgid "Running Conveyance SMART Self-Test"
 msgstr "Zagnan SMART preizkus prenosa "
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
-msgstr "Izvrževanje nosilca"
+msgstr "Vračanje nosilca"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:415
 msgid "Detaching Device"
 msgstr "Odpenjanje naprave"
 
-#: ../src/gdu/gdu-util.c:414
+#: ../src/gdu/gdu-util.c:417
 msgid "Forcibly Unmounting Filesystem"
 msgstr "Vsiljeno odklopljen datotečni sistem"
 
-#: ../src/gdu/gdu-util.c:416
+#: ../src/gdu/gdu-util.c:419
 msgid "Forcibly Locking LUKS device"
 msgstr "Vsiljeno zaklenjena LUKS naprava"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
-#: ../src/gdu/gdu-util.c:432
+#: ../src/gdu/gdu-util.c:435
 msgid "Linux Basic Data Partition"
 msgstr "Osnovni Linux podatkovni razdelek"
 
 #. Same as MS BDP
-#: ../src/gdu/gdu-util.c:433
+#: ../src/gdu/gdu-util.c:436
 msgid "Linux RAID Partition"
 msgstr "Linux RAID razdelek"
 
-#: ../src/gdu/gdu-util.c:434
+#: ../src/gdu/gdu-util.c:437
 msgid "Linux Swap Partition"
 msgstr "Linux izmenjalni razdelek"
 
-#: ../src/gdu/gdu-util.c:435
+#: ../src/gdu/gdu-util.c:438
 msgid "Linux LVM Partition"
 msgstr "Linux LVM razdelek"
 
-#: ../src/gdu/gdu-util.c:436
+#: ../src/gdu/gdu-util.c:439
 msgid "Linux Reserved Partition"
 msgstr "Linux rezervirani razdelek"
 
 #. Not associated with any OS
-#: ../src/gdu/gdu-util.c:438
+#: ../src/gdu/gdu-util.c:441
 msgid "MBR Partition Scheme"
 msgstr "MBR shema razdelkov"
 
-#: ../src/gdu/gdu-util.c:439
+#: ../src/gdu/gdu-util.c:442
 msgid "EFI System Partition"
 msgstr "EFI sistemski razdelek"
 
-#: ../src/gdu/gdu-util.c:440
+#: ../src/gdu/gdu-util.c:443
 msgid "BIOS Boot Partition"
 msgstr "Zagonljivi BIOS razdelek"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:442
+#: ../src/gdu/gdu-util.c:445
 msgid "Microsoft Reserved Partition"
 msgstr "Microsoftov rezervirani razdelek"
 
-#: ../src/gdu/gdu-util.c:443
+#: ../src/gdu/gdu-util.c:446
 msgid "Microsoft Basic Data Partition"
 msgstr "Osnovni Microsoft podatkovni razdelek"
 
 #. Same as Linux BDP
-#: ../src/gdu/gdu-util.c:444
+#: ../src/gdu/gdu-util.c:447
 msgid "Microsoft LDM Metadata Partition"
 msgstr "Microsoft LDM metapodatkovni razdelek"
 
-#: ../src/gdu/gdu-util.c:445
+#: ../src/gdu/gdu-util.c:448
 msgid "Microsoft LDM Data Partition"
 msgstr "Microsoft LDM podatkovni razdelek"
 
-#: ../src/gdu/gdu-util.c:446
+#: ../src/gdu/gdu-util.c:449
 msgid "Microsoft Windows Recovery Environment"
-msgstr ""
+msgstr "Microsoft Windows okolje za obnavljanje sistema"
 
 #. HP-UX
-#: ../src/gdu/gdu-util.c:448
+#: ../src/gdu/gdu-util.c:451
 msgid "HP-UX Data Partition"
 msgstr "HP-UX podatkovni razdelek"
 
-#: ../src/gdu/gdu-util.c:449
+#: ../src/gdu/gdu-util.c:452
 msgid "HP-UX Service Partition"
 msgstr "HP-UX storitveni razdelek"
 
 #. FreeBSD
-#: ../src/gdu/gdu-util.c:451
+#: ../src/gdu/gdu-util.c:454
 msgid "FreeBSD Boot Partition"
 msgstr "FreeBSD zagonljivi razdelek"
 
-#: ../src/gdu/gdu-util.c:452
+#: ../src/gdu/gdu-util.c:455
 msgid "FreeBSD Data Partition"
 msgstr "FreeBSD podatkovni razdelek"
 
-#: ../src/gdu/gdu-util.c:453
+#: ../src/gdu/gdu-util.c:456
 msgid "FreeBSD Swap Partition"
 msgstr "FreeBSD izmenjalni razdelek"
 
-#: ../src/gdu/gdu-util.c:454
+#: ../src/gdu/gdu-util.c:457
 msgid "FreeBSD UFS Partition"
 msgstr "FreeBSD UFS razdelek"
 
-#: ../src/gdu/gdu-util.c:455
+#: ../src/gdu/gdu-util.c:458
 msgid "FreeBSD Vinum Partition"
 msgstr "FreeBSD Vinum razdelek"
 
-#: ../src/gdu/gdu-util.c:456
+#: ../src/gdu/gdu-util.c:459
 msgid "FreeBSD ZFS Partition"
 msgstr "FreeBSD ZFS razdelek"
 
 #. Solaris
-#: ../src/gdu/gdu-util.c:458
+#: ../src/gdu/gdu-util.c:461
 msgid "Solaris Boot Partition"
 msgstr "Solaris zagonljivi razdelek"
 
-#: ../src/gdu/gdu-util.c:459
+#: ../src/gdu/gdu-util.c:462
 msgid "Solaris Root Partition"
 msgstr "Solaris skrbniški razdelek"
 
-#: ../src/gdu/gdu-util.c:460
+#: ../src/gdu/gdu-util.c:463
 msgid "Solaris Swap Partition"
 msgstr "Solaris izmenjalni razdelek"
 
-#: ../src/gdu/gdu-util.c:461
+#: ../src/gdu/gdu-util.c:464
 msgid "Solaris Backup Partition"
 msgstr "Solaris varnostni razdelek"
 
-#: ../src/gdu/gdu-util.c:462
+#: ../src/gdu/gdu-util.c:465
 msgid "Solaris /usr Partition"
 msgstr "Solaris /usr razdelek"
 
 #. Same as Apple ZFS
-#: ../src/gdu/gdu-util.c:463
+#: ../src/gdu/gdu-util.c:466
 msgid "Solaris /var Partition"
 msgstr "Solaris /var razdelek"
 
-#: ../src/gdu/gdu-util.c:464
+#: ../src/gdu/gdu-util.c:467
 msgid "Solaris /home Partition"
 msgstr "Solaris /home razdelek"
 
-#: ../src/gdu/gdu-util.c:465
-#, fuzzy
+#: ../src/gdu/gdu-util.c:468
 msgid "Solaris Alternate Sector Partition"
-msgstr "Ustvari razdelek"
+msgstr "Solaris izmenjevalni sektorski razdelek"
 
-#: ../src/gdu/gdu-util.c:466
+#: ../src/gdu/gdu-util.c:469
 msgid "Solaris Reserved Partition"
 msgstr "Solaris rezervirani razdelek"
 
-#: ../src/gdu/gdu-util.c:467
+#: ../src/gdu/gdu-util.c:470
 msgid "Solaris Reserved Partition (2)"
 msgstr "Solaris rezervirani razdelek (2)"
 
-#: ../src/gdu/gdu-util.c:468
+#: ../src/gdu/gdu-util.c:471
 msgid "Solaris Reserved Partition (3)"
 msgstr "Solaris rezervirani razdelek (3)"
 
-#: ../src/gdu/gdu-util.c:469
+#: ../src/gdu/gdu-util.c:472
 msgid "Solaris Reserved Partition (4)"
 msgstr "Solaris rezervirani razdelek (4)"
 
-#: ../src/gdu/gdu-util.c:470
+#: ../src/gdu/gdu-util.c:473
 msgid "Solaris Reserved Partition (5)"
 msgstr "Solaris rezervirani razdelek (5)"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:472
-#: ../src/gdu/gdu-util.c:491
+#: ../src/gdu/gdu-util.c:475
+#: ../src/gdu/gdu-util.c:494
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Apple HFS/HFS+ razdelek"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:473
-#: ../src/gdu/gdu-util.c:490
+#: ../src/gdu/gdu-util.c:476
+#: ../src/gdu/gdu-util.c:493
 msgid "Apple UFS Partition"
 msgstr "Apple UFS razdelek"
 
-#: ../src/gdu/gdu-util.c:474
+#: ../src/gdu/gdu-util.c:477
 msgid "Apple ZFS Partition"
 msgstr "Apple ZFS razdelek"
 
 #. Same as Solaris /usr
-#: ../src/gdu/gdu-util.c:475
+#: ../src/gdu/gdu-util.c:478
 msgid "Apple RAID Partition"
 msgstr "Apple RAID razdelek"
 
-#: ../src/gdu/gdu-util.c:476
+#: ../src/gdu/gdu-util.c:479
 msgid "Apple RAID Partition (Offline)"
 msgstr "Apple RAID razdelek (nepovezan)"
 
-#: ../src/gdu/gdu-util.c:477
+#: ../src/gdu/gdu-util.c:480
 msgid "Apple Boot Partition"
 msgstr "Apple zagonljivi razdelek"
 
-#: ../src/gdu/gdu-util.c:478
+#: ../src/gdu/gdu-util.c:481
 msgid "Apple Label Partition"
 msgstr "Applov nazivni razdelek"
 
-#: ../src/gdu/gdu-util.c:479
+#: ../src/gdu/gdu-util.c:482
 msgid "Apple TV Recovery Partition"
 msgstr "Apple TV obnovitveni razdelek"
 
 #. NetBSD
-#: ../src/gdu/gdu-util.c:481
+#: ../src/gdu/gdu-util.c:484
 msgid "NetBSD Swap Partition"
 msgstr "NetBSD izmenjalni razdelek"
 
-#: ../src/gdu/gdu-util.c:482
+#: ../src/gdu/gdu-util.c:485
 msgid "NetBSD FFS Partition"
 msgstr "NetBSD FFS razdelek"
 
-#: ../src/gdu/gdu-util.c:483
+#: ../src/gdu/gdu-util.c:486
 msgid "NetBSD LFS Partition"
 msgstr "NetBSD LFS razdelek"
 
-#: ../src/gdu/gdu-util.c:484
+#: ../src/gdu/gdu-util.c:487
 msgid "NetBSD RAID Partition"
 msgstr "NetBSD RAID razdelek"
 
-#: ../src/gdu/gdu-util.c:485
+#: ../src/gdu/gdu-util.c:488
 msgid "NetBSD Concatenated  Partition"
 msgstr "NetBSD združen razdelek"
 
-#: ../src/gdu/gdu-util.c:486
+#: ../src/gdu/gdu-util.c:489
 msgid "NetBSD Encrypted Partition"
 msgstr "NetBSD šifriran razdelek"
 
-#: ../src/gdu/gdu-util.c:493
+#: ../src/gdu/gdu-util.c:496
 msgid "Unused Partition"
 msgstr "Neuporabljeni razdelek"
 
-#: ../src/gdu/gdu-util.c:494
+#: ../src/gdu/gdu-util.c:497
 msgid "Empty Partition"
 msgstr "Prazni razdelek"
 
-#: ../src/gdu/gdu-util.c:495
+#: ../src/gdu/gdu-util.c:498
 msgid "Driver Partition"
 msgstr "Gonilniški razdelek"
 
-#: ../src/gdu/gdu-util.c:496
+#: ../src/gdu/gdu-util.c:499
 msgid "Driver 4.3 Partition"
 msgstr "Gonilniški 4.3 razdelek"
 
-#: ../src/gdu/gdu-util.c:497
+#: ../src/gdu/gdu-util.c:500
 msgid "ProDOS file system"
 msgstr "ProDOS datotečni sistem"
 
-#: ../src/gdu/gdu-util.c:498
+#: ../src/gdu/gdu-util.c:501
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:499
+#: ../src/gdu/gdu-util.c:502
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:500
+#: ../src/gdu/gdu-util.c:503
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:501
+#: ../src/gdu/gdu-util.c:504
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:502
+#: ../src/gdu/gdu-util.c:505
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:505
+#: ../src/gdu/gdu-util.c:508
 msgid "Empty (0x00)"
 msgstr "Prazna (0x00)"
 
-#: ../src/gdu/gdu-util.c:506
+#: ../src/gdu/gdu-util.c:509
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:507
+#: ../src/gdu/gdu-util.c:510
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:508
+#: ../src/gdu/gdu-util.c:511
 msgid "Extended (0x05)"
 msgstr "Razširjena (0x05)"
 
-#: ../src/gdu/gdu-util.c:509
+#: ../src/gdu/gdu-util.c:512
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:510
+#: ../src/gdu/gdu-util.c:513
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:511
+#: ../src/gdu/gdu-util.c:514
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:512
+#: ../src/gdu/gdu-util.c:515
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:513
+#: ../src/gdu/gdu-util.c:516
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:514
+#: ../src/gdu/gdu-util.c:517
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 Ext d (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:515
+#: ../src/gdu/gdu-util.c:518
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:516
+#: ../src/gdu/gdu-util.c:519
 msgid "Hidden FAT12 (0x11)"
 msgstr "Skriti FAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:517
+#: ../src/gdu/gdu-util.c:520
 msgid "Compaq diagnostics (0x12)"
 msgstr "Compaq diagnostični (0x12)"
 
-#: ../src/gdu/gdu-util.c:518
+#: ../src/gdu/gdu-util.c:521
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "Skriti FAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:519
+#: ../src/gdu/gdu-util.c:522
 msgid "Hidden FAT16 (0x16)"
 msgstr "Skriti FAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:520
+#: ../src/gdu/gdu-util.c:523
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "Skriti HPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:521
+#: ../src/gdu/gdu-util.c:524
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "Skriti W95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:522
+#: ../src/gdu/gdu-util.c:525
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "Skriti W95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:523
+#: ../src/gdu/gdu-util.c:526
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "Skriti W95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:524
+#: ../src/gdu/gdu-util.c:527
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#: ../src/gdu/gdu-util.c:525
+#: ../src/gdu/gdu-util.c:528
 msgid "Minix (0x81)"
 msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
-#: ../src/gdu/gdu-util.c:526
+#: ../src/gdu/gdu-util.c:529
 msgid "Linux swap (0x82)"
 msgstr "Linux izmenjalni (0x82)"
 
-#: ../src/gdu/gdu-util.c:527
+#: ../src/gdu/gdu-util.c:530
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:528
+#: ../src/gdu/gdu-util.c:531
 msgid "Hibernation (0x84)"
 msgstr "Hibernirani (0x84)"
 
-#: ../src/gdu/gdu-util.c:529
+#: ../src/gdu/gdu-util.c:532
 msgid "Linux Extended (0x85)"
 msgstr "Linux razširjeni (0x85)"
 
-#: ../src/gdu/gdu-util.c:530
+#: ../src/gdu/gdu-util.c:533
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:531
+#: ../src/gdu/gdu-util.c:534
 msgid "Hibernation (0xa0)"
 msgstr "Hibernirani (0xa0)"
 
-#: ../src/gdu/gdu-util.c:532
+#: ../src/gdu/gdu-util.c:535
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:533
+#: ../src/gdu/gdu-util.c:536
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:534
+#: ../src/gdu/gdu-util.c:537
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:535
+#: ../src/gdu/gdu-util.c:538
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:536
+#: ../src/gdu/gdu-util.c:539
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris boot (0xbe)"
 
-#: ../src/gdu/gdu-util.c:537
+#: ../src/gdu/gdu-util.c:540
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:538
+#: ../src/gdu/gdu-util.c:541
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:539
+#: ../src/gdu/gdu-util.c:542
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:540
+#: ../src/gdu/gdu-util.c:543
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:541
+#: ../src/gdu/gdu-util.c:544
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:542
+#: ../src/gdu/gdu-util.c:545
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Linux RAID samodejno zaznani (0xfd)"
 
 #. Translators: Shown for unknown partition types.
 #. * %s is the partition type name
 #.
-#: ../src/gdu/gdu-util.c:569
+#: ../src/gdu/gdu-util.c:572
 #, c-format
 msgid "Unknown (%s)"
 msgstr "Neznano (%s)"
 
-#: ../src/gdu/gdu-util.c:579
+#: ../src/gdu/gdu-util.c:582
 msgid "A popular format compatible with almost any device or system, typically used for file exchange."
 msgstr "Priljubljena oblika zapisa združljiva s skoraj vsako napravo ali sistemom, običajno uporabljena za izmenjavo datotek."
 
-#: ../src/gdu/gdu-util.c:583
+#: ../src/gdu/gdu-util.c:586
 msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support. This file system does not use a journal."
 msgstr "Datotečni sistem je združljiv le z Linux sistemi in zagotavlja podporo običajnim UNIX dovoljenjem. Ta datotečni sistem ne uporablja dnevnika."
 
-#: ../src/gdu/gdu-util.c:589
+#: ../src/gdu/gdu-util.c:592
 msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support."
 msgstr "Datotečni sistem je združljiv le z Linux sistemi in zagotavlja podporo običajnim UNIX dovoljenjem. "
 
-#: ../src/gdu/gdu-util.c:593
+#: ../src/gdu/gdu-util.c:596
 msgid "Swap area used by the operating system for virtual memory."
 msgstr "Izmenjevalni prostor, ki ga operacijski sistem uporablja kot navidezni pomnilnik."
 
-#: ../src/gdu/gdu-util.c:596
+#: ../src/gdu/gdu-util.c:599
 msgid "The native Windows file system. Not widely compatible with other operating systems than Windows."
 msgstr "Lastni datotečni sistem Oken. Ni široko združljiv z drugimi operacijskimi sistemi."
 
-#: ../src/gdu/gdu-util.c:600
+#: ../src/gdu/gdu-util.c:603
 msgid "Simple filesystem with low overhead and UNIX permissions support. Not widely compatible with other operating systems than Linux and Minix."
 msgstr "Enostavni datotečni s podporo UNIX dovoljenj. Ni široko združljiv z drugimi operacijskimi sistemi razen Linux in Minix."
 
-#: ../src/gdu/gdu-util.c:604
+#: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
 msgstr "Datotečni sistem ne bo ustvarjen."
 
-#: ../src/gdu/gdu-util.c:607
+#: ../src/gdu/gdu-util.c:610
 msgid "Create an Extended Partition for logical partitions."
 msgstr "Ustvari razširjen razdelek za logične razdelke."
 
-#: ../src/gdu/gdu-util.c:620
+#: ../src/gdu/gdu-util.c:623
 msgid "The Master Boot Record scheme is compatible with almost any device or system but has a number of limitations with respect to disk size and number of partitions."
 msgstr "Shema glavnega zagonskega sektorja (MBR) je združljiva s skoraj vsemi napravami in sistemi, vendar je omejen z velikostjo diska in številom razdelkov na njem."
 
-#: ../src/gdu/gdu-util.c:625
+#: ../src/gdu/gdu-util.c:628
 msgid "A legacy scheme that is incompatible with most systems except Apple systems and most Linux systems. Not recommended for removable media."
 msgstr "Stara shema, ki je združljiva le z Apple in z večino Linux sistemov. Uporaba sheme ni priporočljiva za odstranljive medije."
 
-#: ../src/gdu/gdu-util.c:630
+#: ../src/gdu/gdu-util.c:633
 msgid "The GUID scheme is compatible with most modern systems but may be incompatible with some devices and legacy systems."
 msgstr "GUID shema je združljiva z večino novejših sistemov, ni pa združljiva z nekaterimi napravami in starejšimi sistemi."
 
-#: ../src/gdu/gdu-util.c:634
+#: ../src/gdu/gdu-util.c:637
 msgid "Marks the entire disk as unused. Use this option only if you want to avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr "Označi celoten disk kot neuporabljen. Uporabite to možnost v primeru, da se želite izogniti razdeljevanju diska kot na primer pri disketah in zip diskih."
 
-#: ../src/gdu/gdu-util.c:853
+#: ../src/gdu/gdu-util.c:888
 #, c-format
 msgid "%.1f KB/s"
 msgstr "%.1f KB/s"
 
-#: ../src/gdu/gdu-util.c:856
+#: ../src/gdu/gdu-util.c:891
 #, c-format
 msgid "%.1f MB/s"
 msgstr "%.1f MB/s"
 
-#: ../src/gdu/gdu-util.c:859
+#: ../src/gdu/gdu-util.c:894
 #, c-format
 msgid "%.1f GB/s"
 msgstr "%.1f GB/s"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:875
+#: ../src/gdu/gdu-util.c:910
 msgid "SATA"
 msgstr "SATA"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:878
+#: ../src/gdu/gdu-util.c:913
 msgid "eSATA"
 msgstr "eSATA"
 
 #. Translators: interface name for parallel ATA disks
-#: ../src/gdu/gdu-util.c:881
+#: ../src/gdu/gdu-util.c:916
 msgid "PATA"
 msgstr "PATA"
 
 #. Translators: interface name for ATA disks
-#: ../src/gdu/gdu-util.c:884
+#: ../src/gdu/gdu-util.c:919
 #: ../src/palimpsest/gdu-section-hub.c:136
 msgid "ATA"
 msgstr "ATA"
 
 #. Translators: interface name for SCSI disks
-#: ../src/gdu/gdu-util.c:887
+#: ../src/gdu/gdu-util.c:922
 #: ../src/palimpsest/gdu-section-hub.c:140
 msgid "SCSI"
 msgstr "SCSI"
 
 #. Translators: interface name for USB disks
-#: ../src/gdu/gdu-util.c:890
+#: ../src/gdu/gdu-util.c:925
 msgid "USB"
 msgstr "USB"
 
 #. Translators: interface name for firewire disks
-#: ../src/gdu/gdu-util.c:893
+#: ../src/gdu/gdu-util.c:928
 msgid "Firewire"
 msgstr "Firewire"
 
 #. Translators: interface name for SDIO disks
-#: ../src/gdu/gdu-util.c:896
+#: ../src/gdu/gdu-util.c:931
 msgid "SDIO"
 msgstr "SDIO"
 
 #. Translators: interface name for virtual disks
-#: ../src/gdu/gdu-util.c:899
+#: ../src/gdu/gdu-util.c:934
 msgid "Virtual"
 msgstr "Navidezno"
 
 #. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:905
+#: ../src/gdu/gdu-util.c:940
 msgctxt "connection name"
 msgid "Unknown"
 msgstr "Neznano"
@@ -3576,146 +3731,146 @@ msgstr "Neznano"
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
 #.
-#: ../src/gdu/gdu-util.c:915
+#: ../src/gdu/gdu-util.c:950
 #, c-format
 msgid "%s at %s"
 msgstr "%s pri %s"
 
-#: ../src/gdu/gdu-util.c:934
+#: ../src/gdu/gdu-util.c:969
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
 msgstr "Stezno polje (RAID-0)"
 
-#: ../src/gdu/gdu-util.c:936
+#: ../src/gdu/gdu-util.c:971
 msgctxt "RAID level"
 msgid "RAID-0"
 msgstr "RAID-0"
 
-#: ../src/gdu/gdu-util.c:939
+#: ../src/gdu/gdu-util.c:974
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
 msgstr "Zrcalno polje (RAID-1)"
 
-#: ../src/gdu/gdu-util.c:941
+#: ../src/gdu/gdu-util.c:976
 msgctxt "RAID level"
 msgid "RAID-1"
 msgstr "RAID-1"
 
-#: ../src/gdu/gdu-util.c:944
+#: ../src/gdu/gdu-util.c:979
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
 msgstr "Parnostno polje (RAID-4)"
 
-#: ../src/gdu/gdu-util.c:946
+#: ../src/gdu/gdu-util.c:981
 msgctxt "RAID level"
 msgid "RAID-4"
 msgstr "RAID-4"
 
-#: ../src/gdu/gdu-util.c:949
+#: ../src/gdu/gdu-util.c:984
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
 msgstr "Porazdeljeno parnostno polje (RAID-5)"
 
-#: ../src/gdu/gdu-util.c:951
+#: ../src/gdu/gdu-util.c:986
 msgctxt "RAID level"
 msgid "RAID-5"
 msgstr "RAID-5"
 
-#: ../src/gdu/gdu-util.c:954
+#: ../src/gdu/gdu-util.c:989
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
 msgstr "Dvojno porazdeljeni parnostni disk (RAID-5"
 
-#: ../src/gdu/gdu-util.c:956
+#: ../src/gdu/gdu-util.c:991
 msgctxt "RAID level"
 msgid "RAID-6"
 msgstr "RAID-6"
 
-#: ../src/gdu/gdu-util.c:959
+#: ../src/gdu/gdu-util.c:994
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
 msgstr "Stezna zrcalnih diskov (RAID-10)"
 
-#: ../src/gdu/gdu-util.c:961
+#: ../src/gdu/gdu-util.c:996
 msgctxt "RAID level"
 msgid "RAID-10"
 msgstr "RAID-10"
 
-#: ../src/gdu/gdu-util.c:964
+#: ../src/gdu/gdu-util.c:999
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
 msgstr "Strnjeno (linijsko)"
 
-#: ../src/gdu/gdu-util.c:966
+#: ../src/gdu/gdu-util.c:1001
 msgctxt "RAID level"
 msgid "Linear"
 msgstr "Linearno"
 
-#: ../src/gdu/gdu-util.c:980
+#: ../src/gdu/gdu-util.c:1015
 msgid "Striped set without parity. Provides improved performance but no fault tolerance. If a single disk in the array fails, the entire RAID-0 array fails."
 msgstr "Stezno polje diskov brez parnosti. Zagotavlja izboljšano izvajanje, vendar brez odpornosti na napake. Odpoved enega diska se odraža kot odpoved celotnega steznega polja."
 
-#: ../src/gdu/gdu-util.c:984
+#: ../src/gdu/gdu-util.c:1019
 msgid "Mirrored set without parity. Provides fault tolerance and improved performance for reading. RAID-1 arrays can sustain all but one disk failing."
 msgstr "Zrcalno polje diskov brez parnosti. Zagotavlja izboljšano branje odporno na napake. Zrcalno polje prenese odpoved vseh diskov razen enega."
 
-#: ../src/gdu/gdu-util.c:988
+#: ../src/gdu/gdu-util.c:1023
 msgid "Striped set with parity on a single disk. Provides improved performance and fault tolerance. RAID-4 arrays can sustain a single disk failure."
 msgstr "Parnostno stezno polje diskov. Zagotavlja izboljšano zmogljivost odporno na napake. Diskovno polje RAID-4 prenese odpoved enega diska v polju."
 
-#: ../src/gdu/gdu-util.c:992
+#: ../src/gdu/gdu-util.c:1027
 msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-5 arrays can sustain a single disk failure."
 msgstr "Porazdeljeno parnostno stezno polje diskov. Zagotavlja izboljšano zmogljivost odporno na napake. Diskovno polje RAID-5 prenese odpoved enega diska v polju."
 
-#: ../src/gdu/gdu-util.c:996
+#: ../src/gdu/gdu-util.c:1031
 msgid "Striped set with dual distributed parity. Provides improved performance and fault tolerance. RAID-6 arrays can sustain two disk failures."
 msgstr "Dvojno porazdeljeno parnostno stezno polje diskov. Zagotavlja izboljšano zmogljivost odporno na napake. Diskovno polje RAID-6 prenese odpoved dveh diskov v polju."
 
-#: ../src/gdu/gdu-util.c:1000
+#: ../src/gdu/gdu-util.c:1035
 msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-10 arrays can sustain multiple drive losses so long as no mirror loses all its drives."
 msgstr "Porazdeljeno parnostno stezno polje diskov. Zagotavlja izboljšano zmogljivost odporno na napake. Diskovno polje RAID-10 prenese odpoved več pogonov dokler nobeno zrcalno polje ne izgubi vseh pogonov."
 
-#: ../src/gdu/gdu-util.c:1006
+#: ../src/gdu/gdu-util.c:1041
 #, c-format
 msgid "Unknown RAID level %s."
 msgstr "Neznana RAID raven %s."
 
 #. Translators: Overall description of the GOOD status
-#: ../src/gdu/gdu-util.c:1042
+#: ../src/gdu/gdu-util.c:1077
 msgid "Disk is healthy"
 msgstr "Disk deluje brezhibno"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
-#: ../src/gdu/gdu-util.c:1046
+#: ../src/gdu/gdu-util.c:1081
 msgid "Disk was used outside of design parameters in the past"
 msgstr "Disk je bil v preteklosti uporabljan zunaj načrtovanih parametrov"
 
 #. Translators: Overall description of the BAD_SECTOR status
-#: ../src/gdu/gdu-util.c:1050
+#: ../src/gdu/gdu-util.c:1085
 msgid "Disk has a few bad sectors"
 msgstr "Disk ima nekaj slabih sektorjev"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
-#: ../src/gdu/gdu-util.c:1054
+#: ../src/gdu/gdu-util.c:1089
 msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
 msgstr "DISK DELUJE ZUNAJ NAČRTOVANIH PARAMETROV"
 
 #. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
 #. Translators: Suggested action for the BAD_SECTOR_MANY status
 #. Translators: Suggested action for the BAD_STATUS status
-#: ../src/gdu/gdu-util.c:1056
-#: ../src/gdu/gdu-util.c:1064
-#: ../src/gdu/gdu-util.c:1070
+#: ../src/gdu/gdu-util.c:1091
+#: ../src/gdu/gdu-util.c:1099
+#: ../src/gdu/gdu-util.c:1105
 msgid "Backup all data and replace the disk"
 msgstr "Naredite varnostno kopijo vseh podatkov in zamenjajte disk"
 
 #. Translators: Overall description of the BAD_SECTOR_MANY status
-#: ../src/gdu/gdu-util.c:1061
+#: ../src/gdu/gdu-util.c:1096
 msgid "DISK HAS MANY BAD SECTORS"
 msgstr "DISK IMA VELIKO SLABIH SEKTORJEV"
 
 #. Translators: Overall description of the BAD_STATUS status
-#: ../src/gdu/gdu-util.c:1068
+#: ../src/gdu/gdu-util.c:1103
 msgid "DISK FAILURE IS IMMINENT"
 msgstr "OKVARA DISKA JE NEIZBEŽNA"
 
@@ -3916,7 +4071,7 @@ msgstr "%s datotečni sistem"
 #: ../src/gdu/gdu-volume.c:324
 #, c-format
 msgid "%s Partition Table"
-msgstr "%s razpredelnica razdelkov"
+msgstr "%s preglednica razdelkov"
 
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
@@ -3924,7 +4079,7 @@ msgstr "%s razpredelnica razdelkov"
 #: ../src/gdu/gdu-volume.c:330
 #, c-format
 msgid "%s LVM2 Physical Volume"
-msgstr "%s LVM2 nosilec"
+msgstr "%s LVM2 fizični nosilec"
 
 #. Translators: Used if no specific RAID level could be determined
 #: ../src/gdu/gdu-volume.c:343
@@ -4018,19 +4173,6 @@ msgstr "Nosilec celotnega diska na %s"
 msgid "Whole-disk volume"
 msgstr "Nosilec celotnega diska"
 
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#: ../src/gdu/gdu-volume-hole.c:151
-#, c-format
-msgid "%s Free"
-msgstr "%s prosto"
-
-#: ../src/gdu/gdu-volume-hole.c:160
-#: ../src/palimpsest/gdu-section-volumes.c:1695
-msgid "Unallocated Space"
-msgstr "Nerazvrščeni prostor"
-
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
@@ -4074,27 +4216,27 @@ msgstr "Pogon za prikaz"
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SAS Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:167
-#, fuzzy, c-format
+#: ../src/palimpsest/gdu-section-drive.c:173
+#, c-format
 msgid "PHY %d of %s"
-msgstr "Razdelek %d od %s"
+msgstr ""
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a Adapter or Expander - The %d is the
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SATA Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:174
+#: ../src/palimpsest/gdu-section-drive.c:180
 #, c-format
 msgid "Port %d of %s"
 msgstr "Vrata %d od %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:232
+#: ../src/palimpsest/gdu-section-drive.c:241
 msgctxt "Write Cache"
 msgid "Enabled"
 msgstr "Omogočeno"
 
-#: ../src/palimpsest/gdu-section-drive.c:234
+#: ../src/palimpsest/gdu-section-drive.c:243
 msgctxt "Write Cache"
 msgid "Disabled"
 msgstr "Onemogočeno"
@@ -4102,142 +4244,142 @@ msgstr "Onemogočeno"
 #. Translators: This is for the rotation rate of a hard
 #. * disk - RPM means rounds per minute
 #.
-#: ../src/palimpsest/gdu-section-drive.c:244
+#: ../src/palimpsest/gdu-section-drive.c:253
 #, c-format
 msgctxt "Rotation Rate"
 msgid "%d RPM"
 msgstr "%d RPM"
 
-#: ../src/palimpsest/gdu-section-drive.c:252
+#: ../src/palimpsest/gdu-section-drive.c:261
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
 msgstr "Negibljivi disk"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-section-drive.c:267
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
+#: ../src/palimpsest/gdu-section-drive.c:276
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:259
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "Neznana shema: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:378
-#: ../src/palimpsest/gdu-section-drive.c:398
+#: ../src/palimpsest/gdu-section-drive.c:400
+#: ../src/palimpsest/gdu-section-drive.c:420
 msgid "Error launching Brasero"
 msgstr "Napaka med zaganjanjem programa Brasero"
 
-#: ../src/palimpsest/gdu-section-drive.c:379
+#: ../src/palimpsest/gdu-section-drive.c:401
 msgid "The application is not installed"
 msgstr "Program ni nameščen"
 
-#: ../src/palimpsest/gdu-section-drive.c:460
+#: ../src/palimpsest/gdu-section-drive.c:482
 msgid "Error ejecting media"
-msgstr "Napaka med izvrževanjem nosilca"
+msgstr "Napaka med vračanjem nosilca"
 
-#: ../src/palimpsest/gdu-section-drive.c:504
+#: ../src/palimpsest/gdu-section-drive.c:526
 msgid "Error detaching drive"
 msgstr "Napaka med odklapljanjem pogona"
 
-#: ../src/palimpsest/gdu-section-drive.c:549
+#: ../src/palimpsest/gdu-section-drive.c:571
 msgid "Error formatting drive"
 msgstr "Napaka med formatiranjem pogona"
 
-#: ../src/palimpsest/gdu-section-drive.c:587
+#: ../src/palimpsest/gdu-section-drive.c:609
 msgid "Are you sure you want to format the drive?"
 msgstr "Ali ste prepričani, da želite formatirati pogon?"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-drive.c:750
+msgid "<b>WARNING:</b> Several paths to this drive has been detected but no corresponding multipath device was found. Your OS may be misconfigured."
+msgstr "<b>OOZORILO:</b> zaznanih je več poti do pogona, vendar pa ni mogoče najti naprave za večpotno usmerjanje. Operacijski sistem ni pravilno nastavljen."
+
+#: ../src/palimpsest/gdu-section-drive.c:781
 #: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Model:"
 msgstr "Model:"
 
-#: ../src/palimpsest/gdu-section-drive.c:652
+#: ../src/palimpsest/gdu-section-drive.c:785
 msgid "Serial Number:"
 msgstr "Serijska številka:"
 
-#: ../src/palimpsest/gdu-section-drive.c:656
+#: ../src/palimpsest/gdu-section-drive.c:789
 msgid "Firmware Version:"
 msgstr "Različica programske strojne opreme:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:661
-#, fuzzy
+#: ../src/palimpsest/gdu-section-drive.c:794
 msgid "World Wide Name:"
-msgstr "Svetovni splet"
+msgstr "Svetovno ime (WWN):"
 
-#: ../src/palimpsest/gdu-section-drive.c:665
+#: ../src/palimpsest/gdu-section-drive.c:798
 msgid "Location:"
 msgstr "Mesto:"
 
-#: ../src/palimpsest/gdu-section-drive.c:673
-#, fuzzy
+#: ../src/palimpsest/gdu-section-drive.c:806
 msgid "Write Cache:"
-msgstr "Obidi pre_dpomnilnik"
+msgstr "Predpomnilnik pisanja:"
 
-#: ../src/palimpsest/gdu-section-drive.c:677
+#: ../src/palimpsest/gdu-section-drive.c:810
 msgid "Rotation Rate:"
 msgstr "Vrtilna hitrost:"
 
-#: ../src/palimpsest/gdu-section-drive.c:681
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
-#: ../src/palimpsest/gdu-section-volumes.c:1460
+#: ../src/palimpsest/gdu-section-drive.c:814
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:790
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:999
+#: ../src/palimpsest/gdu-section-volumes.c:1921
 msgid "Capacity:"
 msgstr "Zmogljivost:"
 
-#: ../src/palimpsest/gdu-section-drive.c:685
+#: ../src/palimpsest/gdu-section-drive.c:818
 msgid "Connection:"
 msgstr "Povezava:"
 
-#: ../src/palimpsest/gdu-section-drive.c:689
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
+#: ../src/palimpsest/gdu-section-drive.c:822
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:991
 msgid "Partitioning:"
 msgstr "Razdeljevanje:"
 
-#: ../src/palimpsest/gdu-section-drive.c:712
+#: ../src/palimpsest/gdu-section-drive.c:845
 msgid "Open CD/_DVD Application"
 msgstr "Odpri CD/_DVD program"
 
-#: ../src/palimpsest/gdu-section-drive.c:713
+#: ../src/palimpsest/gdu-section-drive.c:846
 msgid "Create and copy CDs and DVDs"
 msgstr "Ustvarjanje in kopiranje CD in DVD nosilcev"
 
-#: ../src/palimpsest/gdu-section-drive.c:722
+#: ../src/palimpsest/gdu-section-drive.c:855
 msgid "Format _Drive"
 msgstr "Formatiraj _pogon"
 
-#: ../src/palimpsest/gdu-section-drive.c:723
-#, fuzzy
+#: ../src/palimpsest/gdu-section-drive.c:856
 msgid "Erase or partition the drive"
-msgstr "Prišlo je do napake med zaganjanjem pogona \"%s\"."
+msgstr "Izbriši ali razdeli pogon"
 
-#: ../src/palimpsest/gdu-section-drive.c:732
+#: ../src/palimpsest/gdu-section-drive.c:865
 msgid "SM_ART Data"
 msgstr "SM_ART podatki"
 
-#: ../src/palimpsest/gdu-section-drive.c:733
+#: ../src/palimpsest/gdu-section-drive.c:866
 msgid "View SMART data and run self-tests"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-drive.c:742
+#: ../src/palimpsest/gdu-section-drive.c:875
 msgid "_Eject"
 msgstr "_Izvrzi"
 
-#: ../src/palimpsest/gdu-section-drive.c:743
-#, fuzzy
+#: ../src/palimpsest/gdu-section-drive.c:876
 msgid "Eject media from the drive"
-msgstr "Izvrzi medij iz naprave"
+msgstr "Vrni medij iz naprave"
 
-#: ../src/palimpsest/gdu-section-drive.c:752
+#: ../src/palimpsest/gdu-section-drive.c:885
 msgid "Safe Rem_oval"
 msgstr "_Varno odstrani"
 
-#: ../src/palimpsest/gdu-section-drive.c:753
+#: ../src/palimpsest/gdu-section-drive.c:886
 msgid "Power down the drive so it can be removed"
-msgstr ""
+msgstr "Izklopite pogon, da ga bo mogoče odstraniti"
 
-#: ../src/palimpsest/gdu-section-drive.c:763
-#, fuzzy
+#: ../src/palimpsest/gdu-section-drive.c:896
 msgid "Measure drive performance"
-msgstr "Zmogljivost merilca časa"
+msgstr "Izmeri zmogljivost pogona"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -4280,504 +4422,667 @@ msgstr ""
 msgid "Number of Ports:"
 msgstr "Število vrat:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:86
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
+msgid "Error starting Volume Group"
+msgstr "Napaka med ustvarjanjem skupine nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
+msgid "Error stopping Volume Group"
+msgstr "Napaka med zaustavljanjem skupine nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
+msgid "Error setting name for Volume Group"
+msgstr "Napaka med poimenovanjem skupine nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
+msgid "Choose a new Volume Group name."
+msgstr "Izbor novega imena skupine nosilcev."
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
+msgid "Error adding Physical Volume to Volume Group"
+msgstr "Napaka med dodajanjem fizičnega nosilca v skupino nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:280
+msgid "Error creating partition for RAID pv"
+msgstr "Napaka med ustvarjanjem razdelka RAID fizičnega nosilca"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:316
+msgid "Error creating partition table for LVM2 PV"
+msgstr "Napaka med ustvarjanjem preglednice razdelkov za LVM2 fizični nosilec"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:491
+msgid "Error deleting partition for Physical Volume in Volume Group"
+msgstr "Napaka med brisanjem fizičnega nosilca v skupini nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:514
+msgid "Error removing Physical Volume from Volume Group"
+msgstr "Napaka med odstranjevanjem fizičnega nosilce iz skupine nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:587
+msgid "Are you sure you want the remove the Physical Volume?"
+msgstr "Ali ste prepričani, da želite odstraniti fizični nosilec?"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:588
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:530
+msgid "_Remove"
+msgstr "_Odstrani"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:708
+msgid "Not Running"
+msgstr "Ni zagnano"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:712
+msgid "Partially Running"
+msgstr "Delno zagnano"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
+msgid "Running"
+msgstr "Zagnano"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:721
+#, c-format
+msgid "Unknown (%d)"
+msgstr "Neznano (%d)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:987
+msgid "Name:"
+msgstr "Ime:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:782
+msgid "Extent Size:"
+msgstr "Obseg velikosti:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:786
+msgid "Physical Volumes:"
+msgstr "Fizični nosilci:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:798
+msgid "Unallocated:"
+msgstr "Nedodeljeno:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:817
+msgid "St_art Volume Group"
+msgstr "Za_čni skupino nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:818
+msgid "Activate all LVs in the VG"
+msgstr "Omogoči vse logične razdelke v skupini nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:827
+msgid "St_op Volume Group"
+msgstr "Za_ustavi skupino nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:828
+msgid "Deactivate all LVs in the VG"
+msgstr "Onemogoči vse logične razdelke v skupini nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:838
+msgid "Edit _Name"
+msgstr "Uredi _naziv"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:839
+msgid "Change the Volume Group name"
+msgstr "Spremeni naziv skupine nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:848
+msgid "Edit Ph_ysical Volumes"
+msgstr "Uredi _fizične nosilce"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:849
+msgid "Create and remove PVs"
+msgstr "Ustvarjanje in odstranjevanje fizičnih nosilcev"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
 msgstr "Ne teče, delno sestavljen"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
 msgctxt "RAID status"
 msgid "Not running"
-msgstr "Ne teče"
+msgstr "Ni zagnano"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
 msgstr "Ne teče, zagnano je lahko le v odstavljenem načinu"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:98
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
 msgstr "Ne teče, ni dovolj enot za začetek"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
 msgctxt "RAID status"
 msgid "DEGRADED"
 msgstr "Odstavljeno "
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:118
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
 msgctxt "RAID status"
 msgid "Running"
 msgstr "Začeto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "Preoblikovanje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "Ponovno usklajevanje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "Popravljanje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "Obnavljanje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:134
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "Preverjanje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
 msgctxt "RAID action"
 msgid "Idle"
 msgstr "Nedejavno"
 
-#. Translators: The text for the hyperlink of the component
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:241
-msgid "Go to volume"
-msgstr "Pojdi na nosilec"
-
-#. Translators: The text used to display the RAID component for an array that is running.
-#. * First %s is the VPD name.
-#. * Second %s is the state of the component.
-#. * Third %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:251
-#, c-format
-msgctxt "RAID component label"
-msgid "%s (%s) – %s"
-msgstr "%s (%s) – %s"
-
-#. Translators: The text used to display the RAID component for an array that is not running.
-#. * First %s is the VPD name.
-#. * Second %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:260
-#, c-format
-msgctxt "RAID component label"
-msgid "%s – %s"
-msgstr "%s – %s"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:415
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:315
 msgid "Error stopping RAID Array"
 msgstr "Napaka med zaustavljanjem RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:460
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:360
 msgid "Error starting RAID Array"
 msgstr "Napaka med zaganjanjem RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:490
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:493
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:390
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
 msgid "Not enough components available to start the RAID Array"
 msgstr "Ni dovolj razpoložljivih enot za zagon RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:509
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:409
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "Ali ste prepričani, da želite izbrisati napravo?"
+msgstr "Ali ste prepričani, da želite odstaviti RAID polje?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:510
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
 msgstr "_Začni"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:555
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:455
 msgid "Error deleting partition for component in RAID Array"
-msgstr "Napaka med ustvarjanjem razpredelnice razdelkov za enote RAID polja"
+msgstr "Napaka med izbrisanjem enote RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:578
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:478
 msgid "Error removing component from RAID Array"
-msgstr "Odstranjevanje elementa iz RAID polja"
+msgstr "Napaka med odstranjevanjem enote iz RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:629
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:529
 msgid "Are you sure you want the remove the component?"
-msgstr "Ali zares želite odstraniti '%1'?"
+msgstr "Ali res želite odstraniti enoto?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:630
-msgid "_Remove"
-msgstr "_Odstrani"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:666
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:739
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:566
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
 msgid "Error adding component to RAID Array"
-msgstr "Napaka med ustvarjanjem enote RAID polja"
+msgstr "Napaka med dodajanjem enote v RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:762
-#, fuzzy
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:662
 msgid "Error creating partition for RAID component"
-msgstr "Napaka med ustvarjanjem enote RAID polja"
+msgstr "Napaka med ustvarjanjem razdelka RAID enote"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:797
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
 msgid "Error creating partition table for RAID component"
-msgstr "Napaka med ustvarjanjem razpredelnice razdelkov za enote RAID polja"
+msgstr "Napaka med ustvarjanjem preglednice razdelkov za enote RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:904
 msgid "Error checking RAID Array"
 msgstr "Napaka med preverjanjem RAID polja"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1080
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:979
 msgid "Level:"
 msgstr "Raven:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:983
 msgid "Metadata Version:"
 msgstr "Različica metapodatkov:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
-msgid "Name:"
-msgstr "Ime:"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "Action:"
 msgstr "Dejanje:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
-msgid "Active Components:"
-msgstr "Dejavne enote:"
-
-#. Ensure this is in the last row and the first column
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1007
 msgid "Components:"
 msgstr "Elementi:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "St_art RAID Array"
 msgstr "Zaženi RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1025
 msgid "Bring up the RAID Array"
 msgstr "Postavi RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "St_op RAID Array"
 msgstr "Zaustavi RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1035
 msgid "Tear down the RAID Array"
 msgstr "Prekini RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Format/Erase RAI_D Array"
 msgstr "Formatiraj/izbriši RAID polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1160
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1045
 msgid "Erase or partition the array"
 msgstr "Izbriši ali razdeli polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Chec_k Array"
 msgstr "Preveri _polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1170
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1055
 msgid "Check and repair the array"
 msgstr "Preveri in popravi polje"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1064
 msgid "Edit Com_ponents"
 msgstr "Urejanje _elementov"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1180
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
 msgid "Create and remove components"
 msgstr "Ustvarjanje in odstranjevanje enot"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1190
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
 msgid "Measure RAID array performance"
-msgstr ""
+msgstr "Izmeri zmogljivost RAID polja"
 
-#: ../src/palimpsest/gdu-section-volumes.c:100
+#: ../src/palimpsest/gdu-section-volumes.c:109
 msgid "Error unmounting volume"
 msgstr "Napaka med odklapljanjem nosilca"
 
-#: ../src/palimpsest/gdu-section-volumes.c:156
+#: ../src/palimpsest/gdu-section-volumes.c:165
 msgid "Error mounting volume"
 msgstr "Napaka med priklapljanjem nosilca"
 
-#: ../src/palimpsest/gdu-section-volumes.c:213
+#: ../src/palimpsest/gdu-section-volumes.c:222
 msgid "Error deleting partition"
 msgstr "Napaka med brisanjem razdelka"
 
-#: ../src/palimpsest/gdu-section-volumes.c:248
+#: ../src/palimpsest/gdu-section-volumes.c:257
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ali ste prepričani, da želite izbrisati razdelek?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:249
+#: ../src/palimpsest/gdu-section-volumes.c:258
+#: ../src/palimpsest/gdu-section-volumes.c:1784
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: ../src/palimpsest/gdu-section-volumes.c:302
+#: ../src/palimpsest/gdu-section-volumes.c:311
 msgid "Error creating filesystem"
 msgstr "Napaka med ustvarjanjem datotečnega sistema"
 
-#: ../src/palimpsest/gdu-section-volumes.c:355
+#: ../src/palimpsest/gdu-section-volumes.c:364
 msgid "Are you sure you want to format the volume?"
 msgstr "Ali ste prepričani, da želite formatirati nosilec?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:413
+#: ../src/palimpsest/gdu-section-volumes.c:422
 msgid "Error modifying partition"
 msgstr "Napaka med spreminjanjem razdelka"
 
-#: ../src/palimpsest/gdu-section-volumes.c:504
+#: ../src/palimpsest/gdu-section-volumes.c:513
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "Ali ste prepričani, da želite pozabiti šifrirno frazo?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:505
+#: ../src/palimpsest/gdu-section-volumes.c:514
 msgid "_Forget"
 msgstr "_Pozabi"
 
-#: ../src/palimpsest/gdu-section-volumes.c:535
+#: ../src/palimpsest/gdu-section-volumes.c:544
 msgid "Error locking LUKS volume"
 msgstr "Napaka med zaklepanjem LUKS nosilca"
 
-#: ../src/palimpsest/gdu-section-volumes.c:658
+#: ../src/palimpsest/gdu-section-volumes.c:667
 msgid "Error unlocking LUKS volume"
 msgstr "Napaka med odklepanjem LUKS nosilca"
 
-#: ../src/palimpsest/gdu-section-volumes.c:954
+#: ../src/palimpsest/gdu-section-volumes.c:963
 msgid "Error creating partition"
 msgstr "Napaka med ustvarjanjem razdelka"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1125
+#: ../src/palimpsest/gdu-section-volumes.c:1134
 msgid "Error changing label"
 msgstr "Napaka med spreminjanjem naziva"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1199
+#: ../src/palimpsest/gdu-section-volumes.c:1189
+msgid "Choose a new filesystem label."
+msgstr "Izbor novega naziva datotečnega sistema"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1190
+msgid "_Label:"
+msgstr "_Naziv:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1235
 msgid "Error checking filesystem on volume"
 msgstr "Napaka med preverjanjem datotečnega sistema na nosilcu"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1226
+#: ../src/palimpsest/gdu-section-volumes.c:1262
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "Preverjanje datotečnega sistema na \"%s\" (%s) je končano"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1230
+#: ../src/palimpsest/gdu-section-volumes.c:1266
 msgid "File system is clean."
 msgstr "Datotečni sistem je čist"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1233
+#: ../src/palimpsest/gdu-section-volumes.c:1269
 msgid "File system is <b>NOT</b> clean."
 msgstr "Datotečni sistem <b>NI </b> čist."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1345
+#: ../src/palimpsest/gdu-section-volumes.c:1381
 #, c-format
 msgid "Error spawning nautilus: %s"
-msgstr "Napaka ob zaganjanju programa Nautilus: %s"
+msgstr "Napaka ob oživljanju programa nautilus: %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1439
+#: ../src/palimpsest/gdu-section-volumes.c:1429
+msgid "Error creating Logical Volume"
+msgstr "Napaka med ustvarjanjem logičnega razdelka"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1582
+msgid "Error stopping Logical Volume"
+msgstr "Napaka med zaustavljanjem logičnega razdelka"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1628
+msgid "Error starting Logical Volume"
+msgstr "Napaka med zaganjanjem logičnega razdelka"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1677
+msgid "Error setting name for Logical Volume"
+msgstr "Napaka med poimenovanjem logičnega razdelka"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1716
+msgid "Choose a new name for the Logical Volume."
+msgstr "Izbor imena za nov logični razdelek."
+
+#: ../src/palimpsest/gdu-section-volumes.c:1750
+msgid "Error deleting Logical Volume"
+msgstr "Napaka med brisanjem logičnega razdelka"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1783
+msgid "Are you sure you want to delete the logical volume?"
+msgstr "Ali ste prepričani, da želite izbrisati logični razdelek?"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1894
+msgid "Volume Name:"
+msgstr "Ime nosilca:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1900
 msgid "Usage:"
 msgstr "Uporaba:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1449
+#: ../src/palimpsest/gdu-section-volumes.c:1910
 msgid "Partition Type:"
 msgstr "Vrsta razdelka:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1453
+#: ../src/palimpsest/gdu-section-volumes.c:1914
 msgid "Partition Label:"
 msgstr "Naziv razdelka:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1456
+#: ../src/palimpsest/gdu-section-volumes.c:1917
 msgid "Partition Flags:"
 msgstr "Zastavice razdelka:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1464
+#: ../src/palimpsest/gdu-section-volumes.c:1925
 msgid "Type:"
 msgstr "Vrsta:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1467
+#: ../src/palimpsest/gdu-section-volumes.c:1928
 msgid "Available:"
 msgstr "Razpoložljivo"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1473
+#: ../src/palimpsest/gdu-section-volumes.c:1931
+msgid "Label:"
+msgstr "Naziv:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1934
 msgid "Mount Point:"
 msgstr "Priklopna točka:"
 
+#: ../src/palimpsest/gdu-section-volumes.c:1955
+msgctxt "LVM2 LV State"
+msgid "Running"
+msgstr "Zagnano"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1956
+msgctxt "LVM2 LV State"
+msgid "Not Running"
+msgstr "Ni zagnano"
+
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1517
+#: ../src/palimpsest/gdu-section-volumes.c:1995
 msgid "Bootable"
 msgstr "Zagonljivo"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1520
+#: ../src/palimpsest/gdu-section-volumes.c:1998
 msgid "Required"
 msgstr "Zahtevano"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1523
+#: ../src/palimpsest/gdu-section-volumes.c:2001
 msgid "Allocated"
 msgstr "Dodeljeno"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1526
+#: ../src/palimpsest/gdu-section-volumes.c:2004
 msgid "Allow Read"
 msgstr "Dovoli branje"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1529
+#: ../src/palimpsest/gdu-section-volumes.c:2007
 msgid "Allow Write"
 msgstr "Dovoli pisanje"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1532
+#: ../src/palimpsest/gdu-section-volumes.c:2010
 msgid "Boot Code PIC"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:1601
+#: ../src/palimpsest/gdu-section-volumes.c:2084
 msgid "Filesystem"
 msgstr "Datotečni sistem"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1634
+#: ../src/palimpsest/gdu-section-volumes.c:2117
 msgid "View files on the volume using a SFTP network share"
 msgstr "Pogled datotek na nosilcu z SFTP omrežno souporabo"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:1641
+#: ../src/palimpsest/gdu-section-volumes.c:2124
 msgid "View files on the volume"
 msgstr "Pogled datotek na nosilcu"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1648
+#: ../src/palimpsest/gdu-section-volumes.c:2131
 #, c-format
 msgid "Mounted at %s"
 msgstr "Priklopljeno na %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1656
+#: ../src/palimpsest/gdu-section-volumes.c:2139
 msgid "Not Mounted"
 msgstr "Ni priklopljeno"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1666
+#: ../src/palimpsest/gdu-section-volumes.c:2149
 msgid "Encrypted Volume (Locked)"
 msgstr "Šifriran nosilec (zaklenjen)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1669
+#: ../src/palimpsest/gdu-section-volumes.c:2152
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Šifriran nosilec (odklenjen)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1682
+#: ../src/palimpsest/gdu-section-volumes.c:2165
 msgid "Go to array"
 msgstr "Pojdi na polje"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1690
+#: ../src/palimpsest/gdu-section-volumes.c:2173
 msgid "Container for Logical Partitions"
 msgstr "Vsebovalnik logičnih razdelkov"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1772
+#: ../src/palimpsest/gdu-section-volumes.c:2276
+msgid "Logical _Volumes"
+msgstr "_Logični razdelki"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2278
 msgid "_Volumes"
 msgstr "_Nosilci"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1812
+#: ../src/palimpsest/gdu-section-volumes.c:2319
 msgid "_Mount Volume"
 msgstr "Priklopi _nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1813
+#: ../src/palimpsest/gdu-section-volumes.c:2320
 msgid "Mount the volume"
 msgstr "Priklopi nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1822
-msgid "_Unmount Volume"
-msgstr "_Odklopi napravo"
+#: ../src/palimpsest/gdu-section-volumes.c:2329
+msgid "Un_mount Volume"
+msgstr "_Odklopi nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1823
+#: ../src/palimpsest/gdu-section-volumes.c:2330
 msgid "Unmount the volume"
 msgstr "Odklopo napravo"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1832
+#: ../src/palimpsest/gdu-section-volumes.c:2339
 msgid "Fo_rmat Volume"
 msgstr "_Formatiraj nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1833
+#: ../src/palimpsest/gdu-section-volumes.c:2340
 msgid "Erase or format the volume"
 msgstr "Izbriši ali formatiraj nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1842
+#: ../src/palimpsest/gdu-section-volumes.c:2349
 msgid "_Check Filesystem"
 msgstr "_Preveri datotečni sistem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1843
+#: ../src/palimpsest/gdu-section-volumes.c:2350
 msgid "Check and repair the filesystem"
 msgstr "Preveri in popravi datotečni sistem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1853
-msgid "Edit _Label"
-msgstr "Uredi _naziv"
+#: ../src/palimpsest/gdu-section-volumes.c:2360
+msgid "Edit Filesystem _Label"
+msgstr "Uredi _naziv datotečnega sistema"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1854
-msgid "Change the label of the volume"
-msgstr "Spremeni naziv nosilca"
+#: ../src/palimpsest/gdu-section-volumes.c:2361
+msgid "Change the label of the filesystem"
+msgstr "Spremeni naziv datotečnega sistema"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1863
+#: ../src/palimpsest/gdu-section-volumes.c:2370
 msgid "Ed_it Partition"
 msgstr "_Uredi razdelek"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1864
+#: ../src/palimpsest/gdu-section-volumes.c:2371
 msgid "Change partition type, label and flags"
 msgstr "Spremeni vrsto razdelka, naziv in zastavice"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1873
+#: ../src/palimpsest/gdu-section-volumes.c:2380
 msgid "D_elete Partition"
 msgstr "_Izbriši razdelek"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1874
+#: ../src/palimpsest/gdu-section-volumes.c:2381
 msgid "Delete the partition"
 msgstr "Izbriši razdelek"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1883
+#: ../src/palimpsest/gdu-section-volumes.c:2390
 msgid "_Create Partition"
 msgstr "_Ustvari razdelek"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1884
+#: ../src/palimpsest/gdu-section-volumes.c:2391
 msgid "Create a new partition"
 msgstr "Ustvari nov razdelek"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1893
+#: ../src/palimpsest/gdu-section-volumes.c:2400
 msgid "_Lock Volume"
 msgstr "_Zakleni nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1894
+#: ../src/palimpsest/gdu-section-volumes.c:2401
 msgid "Make encrypted data unavailable"
 msgstr "Onemogoči dostop do šifriranih podatkov"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1903
-msgid "_Unlock Volume"
+#: ../src/palimpsest/gdu-section-volumes.c:2410
+msgid "Un_lock Volume"
 msgstr "_Odkleni nosilec"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1904
+#: ../src/palimpsest/gdu-section-volumes.c:2411
 msgid "Make encrypted data available"
 msgstr "Omogoči dostop do šifriranih podatkov"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1913
+#: ../src/palimpsest/gdu-section-volumes.c:2420
 msgid "Forge_t Passphrase"
 msgstr "_Pozabi šifrirno frazo"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1914
+#: ../src/palimpsest/gdu-section-volumes.c:2421
 msgid "Delete passphrase from keyring"
 msgstr "Izbriši šifrirno geslo iz zbirke ključev"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1925
+#: ../src/palimpsest/gdu-section-volumes.c:2432
 msgid "Change passphrase"
 msgstr "Spremeni šifrirno geslo"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2441
+msgid "_Create Logical Volume"
+msgstr "_Ustvari logični razdelek"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2442
+msgid "Create a new logical volume"
+msgstr "Ustvari nov logični razdelek"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2451
+msgid "S_tart Volume"
+msgstr "Za_čni nosilec"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2452
+msgid "Activate the Logical Volume"
+msgstr "Omogoči logični razdelek"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2462
+msgid "Edit Vol_ume Name"
+msgstr "Uredi ime _nosilca"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2463
+msgid "Change the name of the volume"
+msgstr "Spremeni naziv nosilca"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2472
+msgid "D_elete Volume"
+msgstr "Izbriši _nosilec"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2473
+msgid "Delete the Logical Volume"
+msgstr "Izbriši logični razdelek"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2482
+msgid "Sto_p Volume"
+msgstr "Zaustavi _nosilec"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2483
+msgid "Deactivate the Logical Volume"
+msgstr "Onemogoči logični razdelek"
 
 #. Translators: Window title when the item representing a remote machine is selected.
 #. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:285
+#: ../src/palimpsest/gdu-shell.c:290
 #, c-format
 msgid "%s — Disk Utility"
 msgstr "%s — Diskovna orodja"
@@ -4788,7 +5093,7 @@ msgstr "%s — Diskovna orodja"
 #. * Third is the device file (e.g. '/dev/sda')
 #. * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:295
+#: ../src/palimpsest/gdu-shell.c:300
 #, c-format
 msgid "%s (%s) [%s] @ %s — Disk Utility"
 msgstr "%s (%s) [%s] @ %s — Diskovna orodja"
@@ -4798,7 +5103,7 @@ msgstr "%s (%s) [%s] @ %s — Diskovna orodja"
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #. * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:306
+#: ../src/palimpsest/gdu-shell.c:311
 #, c-format
 msgid "%s (%s) @ %s — Disk Utility"
 msgstr "%s (%s) @ %s — Diskovna orodja"
@@ -4808,7 +5113,7 @@ msgstr "%s (%s) @ %s — Diskovna orodja"
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #. * Third is the device file (e.g. '/dev/sda')
 #.
-#: ../src/palimpsest/gdu-shell.c:324
+#: ../src/palimpsest/gdu-shell.c:329
 #, c-format
 msgid "%s (%s) [%s] — Disk Utility"
 msgstr "%s (%s) [%s] — Diskovna orodja"
@@ -4817,125 +5122,137 @@ msgstr "%s (%s) [%s] — Diskovna orodja"
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #.
-#: ../src/palimpsest/gdu-shell.c:333
+#: ../src/palimpsest/gdu-shell.c:338
 #, c-format
 msgid "%s (%s) — Disk Utility"
 msgstr "%s (%s) — Diskovna orodja"
 
-#: ../src/palimpsest/gdu-shell.c:589
+#: ../src/palimpsest/gdu-shell.c:594
 msgid "Error creating component for RAID array"
 msgstr "Napaka med ustvarjanjem enote RAID polja"
 
-#: ../src/palimpsest/gdu-shell.c:622
+#: ../src/palimpsest/gdu-shell.c:627
 msgid "Error creating partition table for component for RAID array"
-msgstr "Napaka med ustvarjanjem razpredelnice razdelkov za enote RAID polja"
+msgstr "Napaka med ustvarjanjem preglednice razdelkov za enote RAID polja"
 
-#: ../src/palimpsest/gdu-shell.c:648
+#: ../src/palimpsest/gdu-shell.c:653
 msgid "Error creating RAID array"
 msgstr "Napaka med ustvarjanjem RAID diskovnega polja"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:848
 #, c-format
 msgid "Error connecting to “%s”"
 msgstr "Napaka med povezovanjem s “%s”"
 
-#: ../src/palimpsest/gdu-shell.c:896
+#: ../src/palimpsest/gdu-shell.c:901
 msgid "translator-credits"
 msgstr "Matej Urbančič <mateju@svn@gnome.org>"
 
-#: ../src/palimpsest/gdu-shell.c:921
+#: ../src/palimpsest/gdu-shell.c:926
 msgid "_File"
 msgstr "_Datoteka"
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:927
 msgid "Connect to _Server..."
 msgstr "Povezava s _strežnikom ..."
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:927
 msgid "Manage storage devices on another machine"
-msgstr ""
+msgstr "Upravljanje naprav na drugem računalniku"
 
-#: ../src/palimpsest/gdu-shell.c:923
+#: ../src/palimpsest/gdu-shell.c:928
 msgid "_Create"
 msgstr "_Ustvari"
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:929
 msgid "_RAID Array..."
 msgstr "_RAID polje ..."
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:929
 msgid "Create a RAID array"
 msgstr "Ustvari RAID polje"
 
-#: ../src/palimpsest/gdu-shell.c:925
+#: ../src/palimpsest/gdu-shell.c:930
 msgid "_Edit"
 msgstr "_Uredi"
 
-#: ../src/palimpsest/gdu-shell.c:926
-#: ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:931
+#: ../src/palimpsest/gdu-shell.c:934
 msgid "_Help"
 msgstr "_Pomoč"
 
-#: ../src/palimpsest/gdu-shell.c:928
+#: ../src/palimpsest/gdu-shell.c:933
 msgid "_Quit"
 msgstr "_Končaj"
 
-#: ../src/palimpsest/gdu-shell.c:928
+#: ../src/palimpsest/gdu-shell.c:933
 msgid "Quit"
 msgstr "Končaj"
 
-#: ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:934
 msgid "Get Help on Disk Utility"
 msgstr "Poiščite pomoč za diskovni pripomoček"
 
-#: ../src/palimpsest/gdu-shell.c:930
+#: ../src/palimpsest/gdu-shell.c:935
 msgid "_About"
 msgstr "_O Programu"
 
-#: ../src/palimpsest/gdu-shell.c:1009
+#: ../src/palimpsest/gdu-shell.c:1014
 msgid "An error occured"
 msgstr "Prišlo je do napake"
 
-#: ../src/palimpsest/gdu-shell.c:1018
+#: ../src/palimpsest/gdu-shell.c:1023
 msgid "The operation failed."
 msgstr "Dejanje ni uspelo."
 
-#: ../src/palimpsest/gdu-shell.c:1021
+#: ../src/palimpsest/gdu-shell.c:1026
 msgid "The device is busy."
 msgstr "Naprava je zasedena."
 
-#: ../src/palimpsest/gdu-shell.c:1024
+#: ../src/palimpsest/gdu-shell.c:1029
 msgid "The operation was canceled."
 msgstr "Dejanje je bilo preklicano."
 
-#: ../src/palimpsest/gdu-shell.c:1027
+#: ../src/palimpsest/gdu-shell.c:1032
 msgid "The daemon is being inhibited."
 msgstr "Ozadnji program je zavrt."
 
-#: ../src/palimpsest/gdu-shell.c:1030
+#: ../src/palimpsest/gdu-shell.c:1035
 msgid "An invalid option was passed."
 msgstr "Poslana je bila neveljavna možnost."
 
-#: ../src/palimpsest/gdu-shell.c:1033
+#: ../src/palimpsest/gdu-shell.c:1038
 msgid "The operation is not supported."
 msgstr "Dejanje ni podprto"
 
-#: ../src/palimpsest/gdu-shell.c:1036
+#: ../src/palimpsest/gdu-shell.c:1041
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "Pridobivanje ATA SMART podatkov bi zbudilo napravo."
 
-#: ../src/palimpsest/gdu-shell.c:1039
+#: ../src/palimpsest/gdu-shell.c:1044
 msgid "Permission denied."
 msgstr "Ni ustreznih dovoljenj."
 
-#: ../src/palimpsest/gdu-shell.c:1078
+#: ../src/palimpsest/gdu-shell.c:1083
 msgid "_Details:"
 msgstr "_Podrobnosti:"
 
-#: ../src/palimpsest/gdu-shell.c:1247
+#: ../src/palimpsest/gdu-shell.c:1252
 msgid "_Storage Devices"
 msgstr "_Shranjevalne naprave"
 
+#~ msgid "Go to volume"
+#~ msgstr "Pojdi na nosilec"
+#~ msgctxt "RAID component label"
+#~ msgid "%s (%s) – %s"
+#~ msgstr "%s (%s) – %s"
+#~ msgctxt "RAID component label"
+#~ msgid "%s – %s"
+#~ msgstr "%s – %s"
+#~ msgid "Active Components:"
+#~ msgstr "Dejavne enote:"
+#~ msgid "Edit Filesystem on %s"
+#~ msgstr "Uredi datotečni sistem na %s"
 #~ msgid "Use"
 #~ msgstr "Uporabi"
 #~ msgid "Disk"
@@ -5103,12 +5420,12 @@ msgstr "_Shranjevalne naprave"
 #~ "Ali ste prepričani, da želite formatirati disk in izbrisati obstoječe "
 #~ "podatke?"
 #~ msgid "Create Partition Table"
-#~ msgstr "Ustvari razpredelnico razdelkov"
+#~ msgstr "Ustvari preglednico razdelkov"
 #~ msgid ""
 #~ "To create a new partition table, select the partition table type and then "
 #~ "press \"Create\". All existing data will be lost."
 #~ msgstr ""
-#~ "Za ustvarjanje nove razpredelnice razdelkov izberite vrsto razpredelnice "
+#~ "Za ustvarjanje nove preglednice razdelkov izberite vrsto preglednice "
 #~ "razdelkov in pritisnite \"Ustvari\". Vsi obstoječi podatki bodo "
 #~ "izgubljeni."
 #~ msgid ""
@@ -5329,8 +5646,6 @@ msgstr "_Shranjevalne naprave"
 #~ "Za ustvarjanje novega razdelka izberite velikost in ali naj bo ustvarjen "
 #~ "nov datotečni sistem. Vrsta razdelka, naziv in zastavice lahko spremenite "
 #~ "kasneje."
-#~ msgid "MB"
-#~ msgstr "MB"
 #~ msgid ""
 #~ "Are you sure you want to create a new file system, deleting existing "
 #~ "data ?"
@@ -5361,8 +5676,6 @@ msgstr "_Shranjevalne naprave"
 #~ msgstr "Več podrobnosti"
 #~ msgid "%s (Read Only)"
 #~ msgstr "%s (samo za branje)"
-#~ msgid "Not running"
-#~ msgstr "Ni zagnano"
 #~ msgid "%s File System"
 #~ msgstr "%s datotečni sistem"
 #~ msgid "Encrypted LUKS Device"
@@ -5389,8 +5702,6 @@ msgstr "_Shranjevalne naprave"
 #~ msgstr "Predstavljivo ali NULL v primeru, da predstavlja odsotnost nosilca"
 #~ msgid "The minimum size of the element"
 #~ msgstr "Najmanjša velikost predmeta"
-#~ msgid "Percent Size"
-#~ msgstr "Odstotna velikost"
 #~ msgid ""
 #~ "The size in percent that this element should claim or 0 to always claim "
 #~ "the specified minimum size"

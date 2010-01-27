@@ -37,6 +37,7 @@ struct _GduSectionDrivePrivate
         GtkWidget *multipath_component_info_bar;
 
         GtkWidget *drive_label;
+        GtkWidget *main_vbox;
 
         GduDetailsElement *model_element;
         GduDetailsElement *firmware_element;
@@ -122,6 +123,7 @@ gdu_section_drive_update (GduSection *_section)
         gchar **similar_devices;
         gboolean show_multipath_component_warning_info_bar;
         gboolean show_multipath_component_info_bar;
+        gboolean make_insensitive;
 
         show_cddvd_button = FALSE;
         show_format_button = FALSE;
@@ -131,6 +133,7 @@ gdu_section_drive_update (GduSection *_section)
         show_benchmark_button = FALSE;
         show_multipath_component_warning_info_bar = FALSE;
         show_multipath_component_info_bar = FALSE;
+        make_insensitive = FALSE;
 
         d = NULL;
         port = NULL;
@@ -375,9 +378,12 @@ gdu_section_drive_update (GduSection *_section)
                 }
         }
 
-        /* Show an informational cluebar if multipath is configured and the selected object is just a single path */
+        /* Show an informational cluebar if multipath is configured and the selected object
+         * is just a single path. Also make the whole section insensitive.
+         */
         if (gdu_device_is_linux_dmmp_component (d)) {
                 show_multipath_component_info_bar = TRUE;
+                make_insensitive = TRUE;
         }
 
  out:
@@ -388,15 +394,20 @@ gdu_section_drive_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->smart_button, show_smart_button);
         gdu_button_element_set_visible (section->priv->benchmark_button, show_benchmark_button);
 
-        if (show_multipath_component_warning_info_bar)
+        if (show_multipath_component_warning_info_bar) {
                 gtk_widget_show_all (section->priv->multipath_component_warning_info_bar);
-        else
+        } else {
                 gtk_widget_hide_all (section->priv->multipath_component_warning_info_bar);
+        }
 
-        if (show_multipath_component_info_bar)
+        if (show_multipath_component_info_bar) {
                 gtk_widget_show_all (section->priv->multipath_component_info_bar);
-        else
+        } else {
                 gtk_widget_hide_all (section->priv->multipath_component_info_bar);
+        }
+
+        gtk_widget_set_sensitive (section->priv->drive_label, !make_insensitive);
+        gtk_widget_set_sensitive (section->priv->main_vbox, !make_insensitive);
 
         if (d != NULL)
                 g_object_unref (d);
@@ -870,6 +881,7 @@ gdu_section_drive_constructed (GObject *object)
 
         vbox = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox);
+        section->priv->main_vbox = vbox;
 
         /* -------------------------------------------------------------------------------- */
 

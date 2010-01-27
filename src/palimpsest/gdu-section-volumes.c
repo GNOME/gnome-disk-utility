@@ -34,6 +34,9 @@ struct _GduSectionVolumesPrivate
 {
         GduPresentable *cur_volume;
 
+        GtkWidget *main_label;
+        GtkWidget *main_vbox;
+
         GtkWidget *grid;
         GtkWidget *details_table;
         GtkWidget *button_table;
@@ -1804,6 +1807,7 @@ gdu_section_volumes_update (GduSection *_section)
         GduSectionVolumes *section = GDU_SECTION_VOLUMES (_section);
         GduPresentable *v;
         GduDevice *d;
+        GduDevice *drive_d;
         gchar *s;
         gchar *s2;
         const gchar *id_usage;
@@ -1827,9 +1831,11 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_lvm2_lv_delete_button;
         GduKnownFilesystem *kfs;
         GPtrArray *elements;
+        gboolean make_insensitive;
 
         v = NULL;
         d = NULL;
+        drive_d = NULL;
         kfs = NULL;
         id_usage = "";
         id_type = "";
@@ -1850,6 +1856,7 @@ gdu_section_volumes_update (GduSection *_section)
         show_lvm2_lv_stop_button = FALSE;
         show_lvm2_lv_edit_name_button = FALSE;
         show_lvm2_lv_delete_button = FALSE;
+        make_insensitive = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
 
@@ -1867,6 +1874,8 @@ gdu_section_volumes_update (GduSection *_section)
                         g_object_unref (pool);
                 }
         }
+
+        drive_d = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
 
         /* ---------------------------------------------------------------------------------------------------- */
         /* rebuild table  */
@@ -2181,17 +2190,13 @@ gdu_section_volumes_update (GduSection *_section)
                 show_format_button = FALSE;
 
         } else if (GDU_IS_VOLUME_HOLE (v)) {
-                GduDevice *drive_device;
                 const char *device_file;
 
                 gdu_details_element_set_text (section->priv->usage_element, _("Unallocated Space"));
-                drive_device = gdu_presentable_get_device (gdu_section_get_presentable (GDU_SECTION (section)));
-
-                device_file = gdu_device_get_device_file_presentation (drive_device);
+                device_file = gdu_device_get_device_file_presentation (drive_d);
                 if (device_file == NULL || strlen (device_file) == 0)
-                        device_file = gdu_device_get_device_file (drive_device);
+                        device_file = gdu_device_get_device_file (drive_d);
                 gdu_details_element_set_text (section->priv->device_element, device_file);
-                g_object_unref (drive_device);
 
                 if (can_create_partition (section, GDU_VOLUME_HOLE (v), NULL))
                         show_partition_create_button = TRUE;
@@ -2208,6 +2213,10 @@ gdu_section_volumes_update (GduSection *_section)
                                 show_fs_change_label_button = TRUE;
                         }
                 }
+        }
+
+        if (drive_d != NULL && gdu_device_is_linux_dmmp_component (drive_d)) {
+                make_insensitive = TRUE;
         }
 
  out:
@@ -2229,8 +2238,13 @@ gdu_section_volumes_update (GduSection *_section)
         gdu_button_element_set_visible (section->priv->lvm2_lv_edit_name_button, show_lvm2_lv_edit_name_button);
         gdu_button_element_set_visible (section->priv->lvm2_lv_delete_button, show_lvm2_lv_delete_button);
 
+        gtk_widget_set_sensitive (section->priv->main_label, !make_insensitive);
+        gtk_widget_set_sensitive (section->priv->main_vbox, !make_insensitive);
+
         if (d != NULL)
                 g_object_unref (d);
+        if (drive_d != NULL)
+                g_object_unref (drive_d);
         if (v != NULL)
                 g_object_unref (v);
         if (kfs != NULL)
@@ -2281,6 +2295,7 @@ gdu_section_volumes_constructed (GObject *object)
         gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
         g_free (s);
         gtk_box_pack_start (GTK_BOX (section), label, FALSE, FALSE, 0);
+        section->priv->main_label = label;
 
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
@@ -2288,6 +2303,7 @@ gdu_section_volumes_constructed (GObject *object)
 
         vbox2 = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
+        section->priv->main_vbox = vbox2;
 
         grid = gdu_volume_grid_new (GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), grid);

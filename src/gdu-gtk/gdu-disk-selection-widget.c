@@ -581,8 +581,8 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
                                       (desc_gdk_color.green >> 8),
                                       (desc_gdk_color.blue >> 8));
 
-        markup = g_strdup_printf ("<b>%s</b>\n"
-                                  "<span fgcolor=\"%s\"><small>%s</small></span>",
+        markup = g_strdup_printf ("<small><b>%s</b>\n"
+                                  "<span fgcolor=\"%s\">%s</span></small>",
                                   name,
                                   desc_color,
                                   vpd_name);

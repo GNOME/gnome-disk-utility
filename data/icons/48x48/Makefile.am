@@ -24,6 +24,7 @@ icon_DATA = 				\
 	nautilus-gdu.png		\
 	gdu-hba.png			\
 	gdu-emblem-mp.png		\
+	gdu-emblem-mp-component.png	\
 	gdu-emblem-lvm-vg.png		\
 	gdu-emblem-lvm-lv.png		\
 	gdu-emblem-raid-linear.png	\

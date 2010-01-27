@@ -984,7 +984,7 @@ gdu_drive_get_icon (GduPresentable *presentable)
                         name = "drive-harddisk";
         }
 
-        /* Attach a MP emblem if it's a multipathed device */
+        /* Attach a MP emblem if it's a multipathed device or a path for a multipathed device */
         icon = g_themed_icon_new_with_default_fallbacks (name);
         if (gdu_device_is_linux_dmmp (drive->priv->device)) {
                 GEmblem *emblem;
@@ -992,6 +992,20 @@ gdu_drive_get_icon (GduPresentable *presentable)
                 GIcon *emblemed_icon;
 
                 padlock = g_themed_icon_new ("gdu-emblem-mp");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+        } else if (gdu_device_is_linux_dmmp_component (drive->priv->device)) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-emblem-mp-component");
                 emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
 
                 emblemed_icon = g_emblemed_icon_new (icon, emblem);

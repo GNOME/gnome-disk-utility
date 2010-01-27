@@ -202,6 +202,7 @@ gchar     **gdu_device_linux_lvm2_pv_get_group_logical_volumes (GduDevice *devic
 const char *gdu_device_linux_dmmp_component_get_holder (GduDevice *device);
 const char *gdu_device_linux_dmmp_get_name (GduDevice *device);
 char **gdu_device_linux_dmmp_get_slaves (GduDevice *device);
+const char *gdu_device_linux_dmmp_get_parameters (GduDevice *device);
 
 gboolean      gdu_device_drive_ata_smart_get_is_available (GduDevice *device);
 guint64       gdu_device_drive_ata_smart_get_time_collected (GduDevice *device);

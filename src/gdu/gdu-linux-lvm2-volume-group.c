@@ -410,7 +410,7 @@ gdu_linux_lvm2_volume_group_get_vpd_name (GduPresentable *presentable)
 static GIcon *
 gdu_linux_lvm2_volume_group_get_icon (GduPresentable *presentable)
 {
-        return gdu_util_get_emblemed_icon ("gdu-raid-array", "gdu-emblem-lvm-vg");
+        return gdu_util_get_emblemed_icon ("gdu-multidisk-drive", "gdu-emblem-lvm-vg");
 }
 
 static guint64

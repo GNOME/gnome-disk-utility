@@ -253,7 +253,7 @@ gdu_linux_lvm2_volume_hole_get_vpd_name (GduPresentable *presentable)
 static GIcon *
 gdu_linux_lvm2_volume_hole_get_icon (GduPresentable *presentable)
 {
-        return g_themed_icon_new_with_default_fallbacks ("gdu-raid-array");
+        return g_themed_icon_new_with_default_fallbacks ("gdu-multidisk-drive");
 }
 
 static guint64

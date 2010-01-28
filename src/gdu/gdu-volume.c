@@ -541,7 +541,7 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 goto out;
 
         if (GDU_IS_LINUX_MD_DRIVE (p)) {
-                name = "gdu-raid-array";
+                name = "gdu-multidisk-drive";
                 goto out;
         }
 

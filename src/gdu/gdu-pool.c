@@ -884,7 +884,7 @@ ensure_hub_multipath (GduPool *pool,
         return ensure_hub (pool, hub, presentables,
                            _("Multipath Devices"),
                            _("Drives with multiple I/O paths"),
-                           "gdu-hba");
+                           "gdu-category-multipath");
 }
 
 static GduPresentable *
@@ -895,7 +895,7 @@ ensure_hub_raid_lvm (GduPool *pool,
         return ensure_hub (pool, hub, presentables,
                            _("Multi-disk Devices"),
                            _("RAID, LVM and other logical drives"),
-                           "gdu-hba");
+                           "gdu-category-multidisk");
 }
 
 static GduPresentable *
@@ -906,7 +906,7 @@ ensure_hub_peripheral (GduPool *pool,
         return ensure_hub (pool, hub, presentables,
                            _("Peripheral Devices"),
                            _("USB, Firewire and other peripherals"),
-                           "gdu-hba");
+                           "gdu-category-peripheral");
 }
 
 static void

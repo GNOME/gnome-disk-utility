@@ -705,7 +705,7 @@ gdu_linux_md_drive_get_icon (GduPresentable *presentable)
                 g_warning ("Unknown level `%s'", level);
         }
 
-        return gdu_util_get_emblemed_icon ("gdu-raid-array", emblem_name);
+        return gdu_util_get_emblemed_icon ("gdu-multidisk-drive", emblem_name);
 }
 
 static guint64

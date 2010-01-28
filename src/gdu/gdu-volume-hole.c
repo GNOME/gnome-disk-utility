@@ -209,7 +209,7 @@ gdu_volume_hole_get_icon (GduPresentable *presentable)
 
         /* Linux MD devices can be partitioned */
         if (GDU_IS_LINUX_MD_DRIVE (p)) {
-                name = "gdu-raid-array";
+                name = "gdu-multidisk-drive";
         }
 
         /* first try the media */

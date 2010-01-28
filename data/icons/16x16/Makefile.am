@@ -22,7 +22,12 @@ icon_DATA =				\
 	gdu-warning.png			\
 	gdu-unmountable.png		\
 	nautilus-gdu.png		\
+	gdu-multidisk-drive.png		\
 	gdu-hba.png			\
+	gdu-expander.png		\
+	gdu-category-multidisk.png	\
+	gdu-category-multipath.png	\
+	gdu-category-peripheral.png	\
 	gdu-emblem-mp.png		\
 	gdu-emblem-mp-component.png	\
 	gdu-emblem-lvm-vg.png		\

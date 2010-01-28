@@ -287,7 +287,10 @@ gdu_hub_get_icon (GduPresentable *presentable)
         if (hub->priv->given_icon != NULL) {
                 icon = g_object_ref (hub->priv->given_icon);
         } else {
-                icon = g_themed_icon_new_with_default_fallbacks ("gdu-hba"); /* TODO */
+                if (hub->priv->usage == GDU_HUB_USAGE_EXPANDER)
+                        icon = g_themed_icon_new_with_default_fallbacks ("gdu-expander");
+                else
+                        icon = g_themed_icon_new_with_default_fallbacks ("gdu-hba");
         }
 
         return icon;

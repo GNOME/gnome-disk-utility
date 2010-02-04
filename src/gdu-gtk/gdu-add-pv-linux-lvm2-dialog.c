@@ -36,6 +36,8 @@ struct GduAddPvLinuxLvm2DialogPrivate
 {
         GtkWidget *size_widget;
         GtkWidget *disk_selection_widget;
+
+        gchar *currently_selected_id;
 };
 
 enum {
@@ -49,7 +51,9 @@ G_DEFINE_TYPE (GduAddPvLinuxLvm2Dialog, gdu_add_pv_linux_lvm2_dialog, GDU_TYPE_D
 static void
 gdu_add_pv_linux_lvm2_dialog_finalize (GObject *object)
 {
-        /*GduAddPvLinuxLvm2Dialog *dialog = GDU_ADD_PV_LINUX_LVM2_DIALOG (object);*/
+        GduAddPvLinuxLvm2Dialog *dialog = GDU_ADD_PV_LINUX_LVM2_DIALOG (object);
+
+        g_free (dialog->priv->currently_selected_id);
 
         if (G_OBJECT_CLASS (gdu_add_pv_linux_lvm2_dialog_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_add_pv_linux_lvm2_dialog_parent_class)->finalize (object);
@@ -99,6 +103,9 @@ static void
 update (GduAddPvLinuxLvm2Dialog *dialog)
 {
         guint64 largest_segment;
+        gchar *old_selected_id;
+        gboolean selection_changed;
+        GPtrArray *currently_selected_drives;
 
         largest_segment = gdu_disk_selection_widget_get_largest_segment_for_selected (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
 
@@ -108,6 +115,26 @@ update (GduAddPvLinuxLvm2Dialog *dialog)
         gdu_size_widget_set_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget), largest_segment);
 
         update_add_sensitivity (dialog);
+
+        /* has the selection changed? */
+        selection_changed = FALSE;
+        old_selected_id = dialog->priv->currently_selected_id;
+        currently_selected_drives = gdu_disk_selection_widget_get_selected_drives (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
+        if (currently_selected_drives->len > 0)
+                dialog->priv->currently_selected_id = g_strdup (gdu_presentable_get_id (GDU_PRESENTABLE (currently_selected_drives->pdata[0])));
+        else
+                dialog->priv->currently_selected_id = NULL;
+        g_ptr_array_unref (currently_selected_drives);
+        if (g_strcmp0 (old_selected_id, dialog->priv->currently_selected_id) != 0) {
+                selection_changed = TRUE;
+        }
+        g_free (old_selected_id);
+
+        /* if so, select maximum size */
+        if (selection_changed) {
+                gdu_size_widget_set_size (GDU_SIZE_WIDGET (dialog->priv->size_widget),
+                                          gdu_size_widget_get_max_size (GDU_SIZE_WIDGET (dialog->priv->size_widget)));
+        }
 }
 
 
@@ -136,6 +163,34 @@ on_size_widget_changed (GduSizeWidget *size_widget,
                                                       chosen_size);
 
         update (dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gchar *
+on_is_drive_ignored (GduDiskSelectionWidget *widget,
+                     GduDrive               *drive,
+                     gpointer                user_data)
+{
+        GduAddPvLinuxLvm2Dialog *dialog = GDU_ADD_PV_LINUX_LVM2_DIALOG (user_data);
+        gchar *ignored_reason;
+        GduLinuxLvm2VolumeGroup *vg;
+
+        ignored_reason = NULL;
+
+        vg = GDU_LINUX_LVM2_VOLUME_GROUP (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+
+        if (GDU_PRESENTABLE (drive) == GDU_PRESENTABLE (vg)) {
+                ignored_reason = g_strdup (_("The VG to add a PV to."));
+                goto out;
+        }
+
+        /* TODO: check if drive has one or more PVs for our VG - if so, return something like
+         * "Device is already part of the VG".
+         */
+
+ out:
+        return ignored_reason;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -205,7 +260,7 @@ gdu_add_pv_linux_lvm2_dialog_constructed (GObject *object)
         gtk_table_set_row_spacings (GTK_TABLE (table), 6);
         gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-        /*  Array size  */
+        /*  PV size  */
         label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Size:"));
@@ -231,8 +286,11 @@ gdu_add_pv_linux_lvm2_dialog_constructed (GObject *object)
         /* --- */
 
         disk_selection_widget = gdu_disk_selection_widget_new (pool,
-                                                               NULL, /* TODO: ignored_drives */
-                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE);
+                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_DISKS_WITH_INSUFFICIENT_SPACE);
+        g_signal_connect (disk_selection_widget,
+                          "is-drive-ignored",
+                          G_CALLBACK (on_is_drive_ignored),
+                          dialog);
         dialog->priv->disk_selection_widget = disk_selection_widget;
         gtk_box_pack_start (GTK_BOX (vbox), disk_selection_widget, TRUE, TRUE, 0);
 

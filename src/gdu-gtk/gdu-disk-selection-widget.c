@@ -27,6 +27,8 @@
 
 #include <math.h>
 
+#include <gdu/gdu-marshal.h>
+
 #include "gdu-disk-selection-widget.h"
 #include "gdu-size-widget.h"
 
@@ -47,9 +49,6 @@ struct GduDiskSelectionWidgetPrivate
 
         /* A list of GduDrive objects that are selected */
         GList *selected_drives;
-
-        /* A list of GduDrive objects that are ignored */
-        GPtrArray *ignored_drives;
 };
 
 enum
@@ -58,7 +57,6 @@ enum
         PROP_POOL,
         PROP_FLAGS,
         PROP_SELECTED_DRIVES,
-        PROP_IGNORED_DRIVES,
         PROP_COMPONENT_SIZE,
         PROP_NUM_AVAILABLE_DISKS,
         PROP_LARGEST_SEGMENT_FOR_SELECTED,
@@ -68,6 +66,7 @@ enum
 enum
 {
         CHANGED_SIGNAL,
+        IS_DRIVE_IGNORED_SIGNAL,
         LAST_SIGNAL
 };
 
@@ -75,7 +74,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 static void gdu_disk_selection_widget_constructed (GObject *object);
 
-static void update (GduDiskSelectionWidget *widget);
+static void emit_changed (GduDiskSelectionWidget *widget);
 
 static void on_presentable_added   (GduPool          *pool,
                                     GduPresentable   *presentable,
@@ -121,9 +120,6 @@ gdu_disk_selection_widget_finalize (GObject *object)
         g_list_foreach (widget->priv->selected_drives, (GFunc) g_object_unref, NULL);
         g_list_free (widget->priv->selected_drives);
 
-        if (widget->priv->ignored_drives != NULL)
-                g_ptr_array_unref (widget->priv->ignored_drives);
-
         if (G_OBJECT_CLASS (gdu_disk_selection_widget_parent_class)->finalize != NULL)
                 G_OBJECT_CLASS (gdu_disk_selection_widget_parent_class)->finalize (object);
 }
@@ -148,12 +144,6 @@ gdu_disk_selection_widget_get_property (GObject    *object,
 
         case PROP_SELECTED_DRIVES:
                 p = gdu_disk_selection_widget_get_selected_drives (widget);
-                g_value_set_boxed (value, p);
-                g_ptr_array_unref (p);
-                break;
-
-        case PROP_IGNORED_DRIVES:
-                p = gdu_disk_selection_widget_get_ignored_drives (widget);
                 g_value_set_boxed (value, p);
                 g_ptr_array_unref (p);
                 break;
@@ -195,10 +185,6 @@ gdu_disk_selection_widget_set_property (GObject      *object,
 
         case PROP_FLAGS:
                 widget->priv->flags = g_value_get_flags (value);
-                break;
-
-        case PROP_IGNORED_DRIVES:
-                widget->priv->ignored_drives = g_value_dup_boxed (value);
                 break;
 
         case PROP_COMPONENT_SIZE:
@@ -276,19 +262,6 @@ gdu_disk_selection_widget_class_init (GduDiskSelectionWidgetClass *klass)
                                                              G_PARAM_STATIC_BLURB));
 
         g_object_class_install_property (gobject_class,
-                                         PROP_IGNORED_DRIVES,
-                                         g_param_spec_boxed ("ignored-drives",
-                                                             _("Ignored Drives"),
-                                                             _("Array of drives to ignore"),
-                                                             G_TYPE_PTR_ARRAY,
-                                                             G_PARAM_READABLE |
-                                                             G_PARAM_WRITABLE |
-                                                             G_PARAM_CONSTRUCT_ONLY |
-                                                             G_PARAM_STATIC_NAME |
-                                                             G_PARAM_STATIC_NICK |
-                                                             G_PARAM_STATIC_BLURB));
-
-        g_object_class_install_property (gobject_class,
                                          PROP_NUM_AVAILABLE_DISKS,
                                          g_param_spec_uint ("num-available-disks",
                                                             _("Number of available disks"),
@@ -351,6 +324,29 @@ gdu_disk_selection_widget_class_init (GduDiskSelectionWidgetClass *klass)
                                                 G_TYPE_NONE,
                                                 0);
 
+        /**
+         * GduDiskSelectionWidget::is-drive-ignored:
+         * @widget: A #GduDiskSelectionWidget.
+         * @drive: A #GduDrive.
+         *
+         * Emitted when @widget needs to determine whether @drive is
+         * ignored or not.
+         *
+         * Returns: %NULL if @drive is not ignored, otherwise an allocated localized string
+         * containing the reason why @drive is ignored.  The recipient of the signal will free
+         * the string.
+         */
+        signals[IS_DRIVE_IGNORED_SIGNAL] = g_signal_new ("is-drive-ignored",
+                                                         G_TYPE_FROM_CLASS (klass),
+                                                         G_SIGNAL_RUN_LAST,
+                                                         G_STRUCT_OFFSET (GduDiskSelectionWidgetClass, is_drive_ignored),
+                                                         NULL, /* accumulator function */
+                                                         NULL, /* user_data for accumulator function */
+                                                         gdu_marshal_STRING__OBJECT,
+                                                         G_TYPE_STRING,
+                                                         1,
+                                                         GDU_TYPE_DRIVE);
+
 }
 
 static void
@@ -362,13 +358,11 @@ gdu_disk_selection_widget_init (GduDiskSelectionWidget *widget)
 }
 
 GtkWidget *
-gdu_disk_selection_widget_new (GduPool                    *pool,
-                               GPtrArray                  *drives_to_ignore,
-                               GduDiskSelectionWidgetFlags flags)
+gdu_disk_selection_widget_new (GduPool                     *pool,
+                               GduDiskSelectionWidgetFlags  flags)
 {
         return GTK_WIDGET (g_object_new (GDU_TYPE_DISK_SELECTION_WIDGET,
                                          "pool", pool,
-                                         "ignored-drives", drives_to_ignore,
                                          "flags", flags,
                                          NULL));
 }
@@ -391,38 +385,36 @@ gdu_disk_selection_widget_get_selected_drives (GduDiskSelectionWidget  *widget)
         return p;
 }
 
-GPtrArray *
-gdu_disk_selection_widget_get_ignored_drives (GduDiskSelectionWidget  *widget)
-{
-        return widget->priv->ignored_drives != NULL ? g_ptr_array_ref (widget->priv->ignored_drives) : NULL;
-}
-
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef enum {
-        REASON_INSUFFICIENT_SPACE,
-        REASON_MULTIPATH_COMPONENT,
-} Reason;
 
 static gboolean
 is_drive_selectable (GduDiskSelectionWidget *widget,
                      GduDrive               *drive,
-                     Reason                 *out_reason)
+                     gchar                 **out_reason)
 {
         gboolean ret;
         guint64 largest_segment;
         gboolean whole_disk_is_uninitialized;
-        Reason reason;
         GduDevice *d;
+        gchar *reason;
 
         ret = FALSE;
         d = NULL;
-        reason = REASON_INSUFFICIENT_SPACE;
+        reason = NULL;
+
+        g_signal_emit (widget,
+                       signals[IS_DRIVE_IGNORED_SIGNAL],
+                       0, /* detail */
+                       drive,
+                       &reason);
+        if (reason != NULL) {
+                goto out;
+        }
 
         d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
         if (d != NULL && gdu_device_is_linux_dmmp_component (d)) {
-                ret = FALSE;
-                reason = REASON_MULTIPATH_COMPONENT;
+                reason = g_strdup (_("Cannot select multipath component"));
                 goto out;
         }
 
@@ -431,26 +423,54 @@ is_drive_selectable (GduDiskSelectionWidget *widget,
                                          &largest_segment,
                                          NULL, /* total_free */
                                          NULL)) {
-                if (largest_segment >= widget->priv->component_size) {
+                if (widget->priv->flags & GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_DISKS_WITH_INSUFFICIENT_SPACE) {
+                        /* size is not enforced */
                         ret = TRUE;
+                } else {
+                        /* do enforce size */
+                        if (largest_segment >= widget->priv->component_size) {
+                                ret = TRUE;
+                        } else {
+                                if (largest_segment < SIZE_EPSILON) {
+                                        reason = g_strdup (_("No free space."));
+                                } else {
+                                       gchar *s1;
+                                       gchar *s2;
+                                       s1 = gdu_util_get_size_for_display (widget->priv->component_size, FALSE, FALSE);
+                                       s2 = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
+                                       /* Translators: Shown when device is unselectable because not enough space is available.
+                                        * First %s (e.g. '10 GB') is how much space is needed.
+                                        * Second %s (e.g. '5 GB') is how much space is available.
+                                        */
+                                       reason = g_strdup_printf (_("Insufficient space: %s is needed but largest contiguous free block is %s."),
+                                                                 s1,
+                                                                 s2);
+                                       g_free (s1);
+                                       g_free (s2);
+                                }
+                                goto out;
+                        }
                 }
+        } else {
+                reason = g_strdup (_("No free space."));
         }
 
  out:
-#if 0
-        g_debug ("is_drive_selectable (%s): %d %" G_GUINT64_FORMAT " (%d %d) ...",
-                 d != NULL ? gdu_device_get_device_file (d) : "(not set)",
-                 whole_disk_is_uninitialized,
-                 largest_segment,
-                 reason,
-                 ret);
-#endif
 
         if (d != NULL)
                 g_object_unref (d);
 
-        if (out_reason != NULL)
+        if (ret)
+                g_assert (reason == NULL);
+        else
+                g_assert (reason != NULL);
+
+        if (out_reason != NULL) {
                 *out_reason = reason;
+        } else {
+                g_free (reason);
+        }
+
         return ret;
 }
 
@@ -584,7 +604,7 @@ on_disk_toggled (GtkCellRendererToggle *renderer,
         }
 
         g_object_unref (p);
-        update (widget);
+        emit_changed (widget);
 
  out:
         ;
@@ -855,13 +875,14 @@ notes_data_func (GtkCellLayout   *cell_layout,
         guint64 total_free;
         guint64 remaining_size;
         gboolean is_selectable;
-        Reason reason;
+        gchar *reason;
         gchar *strsize;
         gchar *rem_strsize;
 
         d = NULL;
         markup = NULL;
         sensitive = TRUE;
+        reason = NULL;
 
         gtk_tree_model_get (tree_model,
                             iter,
@@ -899,32 +920,8 @@ notes_data_func (GtkCellLayout   *cell_layout,
 
         /* handle when the drive is not selectable */
         if (!is_selectable) {
-                switch (reason) {
-                case REASON_INSUFFICIENT_SPACE:
-                        if (largest_segment < SIZE_EPSILON) {
-                                /* Translators: Shown when the device is not selectable because
-                                 * there is no free space.
-                                 */
-                                markup = g_strdup_printf (_("No free space."));
-                        } else {
-                                strsize = gdu_util_get_size_for_display (widget->priv->component_size, FALSE, FALSE);
-                                rem_strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
-                                /* Translators: Shown when device is unselectable because not enough space is available.
-                                 * First %s (e.g. '10 GB') is how much space is needed.
-                                 * Second %s (e.g. '5 GB') is how much space is available.
-                                 */
-                                markup = g_strdup_printf (_("Insufficient space: %s is needed but largest contiguous free block is %s."),
-                                                          strsize,
-                                                          rem_strsize);
-                                g_free (strsize);
-                                g_free (rem_strsize);
-                        }
-                        break;
-                case REASON_MULTIPATH_COMPONENT:
-                        /* Translators: Shown when the device is unselectable because it is a multipath component. */
-                        markup = g_strdup_printf (_("Cannot select multipath component"));
-                        break;
-                }
+                markup = reason; /* steal string */
+                reason = NULL;
                 goto out;
         }
 
@@ -1071,46 +1068,11 @@ notes_data_func (GtkCellLayout   *cell_layout,
 
         g_free (markup);
         g_object_unref (p);
+        g_free (reason);
 
         if (d != NULL)
                 g_object_unref (d);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-#if 0
-static gboolean
-model_visible_func (GtkTreeModel  *model,
-                    GtkTreeIter   *iter,
-                    gpointer       user_data)
-{
-        GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        GduPresentable *p;
-        gboolean ret;
-
-        ret = FALSE;
-
-        /* Only show a drive if it has enough free space */
-        if (widget->priv->flags & GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE) {
-                ret = TRUE;
-        } else {
-                gtk_tree_model_get (model,
-                                    iter,
-                                    GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
-                                    -1);
-                if (p != NULL) {
-                        if (GDU_IS_DRIVE (p)) {
-                                ret = is_drive_selectable (widget, GDU_DRIVE (p));
-                        } else {
-                                ret = TRUE;
-                        }
-                        g_object_unref (p);
-                }
-        }
-
-        return ret;
-}
-#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -1262,7 +1224,7 @@ on_presentable_added (GduPool          *pool,
                       gpointer          user_data)
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        update (widget);
+        emit_changed (widget);
 }
 
 static void
@@ -1275,7 +1237,7 @@ on_presentable_removed (GduPool          *pool,
         if (drive_is_selected (widget, presentable))
                 drive_remove (widget, presentable);
 
-        update (widget);
+        emit_changed (widget);
 }
 
 static void
@@ -1284,7 +1246,7 @@ on_presentable_changed (GduPool          *pool,
                         gpointer          user_data)
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        update (widget);
+        emit_changed (widget);
 }
 
 static void
@@ -1294,7 +1256,7 @@ on_row_changed (GtkTreeModel *tree_model,
                 gpointer      user_data)
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        update (widget);
+        emit_changed (widget);
 }
 
 static void
@@ -1303,7 +1265,7 @@ on_row_deleted (GtkTreeModel *tree_model,
                 gpointer      user_data)
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        update (widget);
+        emit_changed (widget);
 }
 
 static void
@@ -1313,7 +1275,7 @@ on_row_inserted (GtkTreeModel *tree_model,
                  gpointer      user_data)
 {
         GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
-        update (widget);
+        emit_changed (widget);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1385,7 +1347,7 @@ gdu_disk_selection_widget_get_largest_segment_for_all (GduDiskSelectionWidget *w
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update (GduDiskSelectionWidget *widget)
+emit_changed (GduDiskSelectionWidget *widget)
 {
         g_signal_emit (widget, signals[CHANGED_SIGNAL], 0);
 }

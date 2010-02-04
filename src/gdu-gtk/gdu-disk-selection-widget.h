@@ -50,13 +50,14 @@ struct GduDiskSelectionWidgetClass
         GtkVBoxClass parent_class;
 
         void (*changed) (GduDiskSelectionWidget *widget);
+
+        gchar *(*is_drive_ignored) (GduDiskSelectionWidget *widget,
+                                    GduDrive               *drive);
 };
 
 GType       gdu_disk_selection_widget_get_type                         (void) G_GNUC_CONST;
 GtkWidget  *gdu_disk_selection_widget_new                              (GduPool                     *pool,
-                                                                        GPtrArray                   *drives_to_ignore,
                                                                         GduDiskSelectionWidgetFlags  flags);
-GPtrArray  *gdu_disk_selection_widget_get_ignored_drives               (GduDiskSelectionWidget      *widget);
 GPtrArray  *gdu_disk_selection_widget_get_selected_drives              (GduDiskSelectionWidget      *widget);
 guint64     gdu_disk_selection_widget_get_component_size               (GduDiskSelectionWidget      *widget);
 void        gdu_disk_selection_widget_set_component_size               (GduDiskSelectionWidget      *widget,

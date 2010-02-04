@@ -678,9 +678,8 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         /* -------------------------------------------------------------------------------- */
 
         disk_selection_widget = gdu_disk_selection_widget_new (dialog->priv->pool,
-                                                               NULL,
                                                                GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE |
-                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_SHOW_DISKS_WITH_INSUFFICIENT_SPACE);
+                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_DISKS_WITH_INSUFFICIENT_SPACE);
         dialog->priv->disk_selection_widget = disk_selection_widget;
 
         label = gtk_label_new (NULL);

@@ -113,6 +113,34 @@ on_disk_selection_widget_changed (GduDiskSelectionWidget *widget,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gchar *
+on_is_drive_ignored (GduDiskSelectionWidget *widget,
+                     GduDrive               *drive,
+                     gpointer                user_data)
+{
+        GduAddComponentLinuxMdDialog *dialog = GDU_ADD_COMPONENT_LINUX_MD_DIALOG (user_data);
+        gchar *ignored_reason;
+        GduLinuxMdDrive *md_drive;
+
+        ignored_reason = NULL;
+
+        md_drive = GDU_LINUX_MD_DRIVE (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
+
+        if (GDU_PRESENTABLE (drive) == GDU_PRESENTABLE (md_drive)) {
+                ignored_reason = g_strdup (_("The RAID Array to add a component to."));
+                goto out;
+        }
+
+        /* TODO: check if drive has one or more components for our array - if so, return something
+         * like "Device is already part of the array".
+         */
+
+ out:
+        return ignored_reason;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 gdu_add_component_linux_md_dialog_constructed (GObject *object)
 {
@@ -196,8 +224,11 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         /* --- */
 
         disk_selection_widget = gdu_disk_selection_widget_new (pool,
-                                                               NULL, /* TODO: ignored_drives */
                                                                GDU_DISK_SELECTION_WIDGET_FLAGS_NONE);
+        g_signal_connect (disk_selection_widget,
+                          "is-drive-ignored",
+                          G_CALLBACK (on_is_drive_ignored),
+                          dialog);
         gdu_disk_selection_widget_set_component_size (GDU_DISK_SELECTION_WIDGET (disk_selection_widget),
                                                       component_size);
         dialog->priv->disk_selection_widget = disk_selection_widget;

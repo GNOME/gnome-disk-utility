@@ -580,61 +580,35 @@ create_linux_md_data_free (CreateLinuxMdData *data)
 static void create_linux_md_do (CreateLinuxMdData *data);
 
 static void
-new_linux_md_create_part_cb (GduDevice  *device,
-                             gchar      *created_device_object_path,
-                             GError     *error,
-                             gpointer    user_data)
+md_raid_create_volume_cb (GduDrive     *drive,
+                          GAsyncResult *res,
+                          gpointer      user_data)
 {
         CreateLinuxMdData *data = user_data;
+        GduVolume *volume;
+        GError *error;
 
-        if (error != NULL) {
+        error = NULL;
+        volume = gdu_drive_create_volume_finish (drive,
+                                                 res,
+                                                 &error);
+        if (volume == NULL) {
                 gdu_shell_raise_error (data->shell,
                                        NULL,
                                        error,
                                        _("Error creating component for RAID array"));
                 g_error_free (error);
-
-                //g_debug ("Error creating component");
         } else {
                 GduDevice *d;
-                GduPool *pool;
 
-                pool = gdu_device_get_pool (device);
-
-                d = gdu_pool_get_by_object_path (pool, created_device_object_path);
+                d = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
                 g_ptr_array_add (data->components, d);
-
-                //g_debug ("Done creating component");
+                g_object_unref (volume);
 
                 /* now that we have a component... carry on... */
                 create_linux_md_do (data);
-
-                g_object_unref (pool);
         }
-}
 
-static void
-new_linux_md_create_part_table_cb (GduDevice  *device,
-                                   GError     *error,
-                                   gpointer    user_data)
-{
-        CreateLinuxMdData *data = user_data;
-
-        if (error != NULL) {
-                gdu_shell_raise_error (data->shell,
-                                       NULL,
-                                       error,
-                                       _("Error creating partition table for component for RAID array"));
-                g_error_free (error);
-
-                //g_debug ("Error creating partition table");
-        } else {
-
-                //g_debug ("Done creating partition table");
-
-                /* now that we have a partition table... carry on... */
-                create_linux_md_do (data);
-        }
 }
 
 static void
@@ -699,82 +673,16 @@ create_linux_md_do (CreateLinuxMdData *data)
         } else {
                 GduDrive *drive;
                 guint num_component;
-                GduPresentable *p;
-                GduDevice *d;
-                guint64 largest_segment;
-                gboolean whole_disk_is_uninitialized;
 
                 num_component = data->components->len;
                 drive = GDU_DRIVE (data->drives->pdata[num_component]);
 
-                g_warn_if_fail (gdu_drive_has_unallocated_space (drive,
-                                                                 &whole_disk_is_uninitialized,
-                                                                 &largest_segment,
-                                                                 NULL, /* total_free */
-                                                                 &p));
-                g_assert (p != NULL);
-
-                d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
-
-                if (GDU_IS_VOLUME_HOLE (p)) {
-                        guint64 offset;
-                        guint64 size;
-                        const gchar *scheme;
-                        const gchar *type;
-                        gchar *label;
-
-                        offset = gdu_presentable_get_offset (p);
-                        size = data->component_size;
-
-                        //g_debug ("Creating component %d/%d of size %" G_GUINT64_FORMAT " bytes",
-                        //         num_component + 1,
-                        //         data->drives->len,
-                        //         size);
-
-                        scheme = gdu_device_partition_table_get_scheme (d);
-                        type = "";
-                        label = NULL;
-                        if (g_strcmp0 (scheme, "mbr") == 0) {
-                                type = "0xfd";
-                        } else if (g_strcmp0 (scheme, "gpt") == 0) {
-                                type = "A19D880F-05FC-4D3B-A006-743F0F84911E";
-                                /* Limited to 36 UTF-16LE characters according to on-disk format..
-                                 * Since a RAID array name is limited to 32 chars this should fit */
-                                label = g_strdup_printf ("RAID: %s", data->name);
-                        } else if (g_strcmp0 (scheme, "apt") == 0) {
-                                type = "Apple_Unix_SVR2";
-                                label = g_strdup_printf ("RAID: %s", data->name);
-                        }
-
-                        gdu_device_op_partition_create (d,
-                                                        offset,
-                                                        size,
-                                                        type,
-                                                        label != NULL ? label : "",
-                                                        NULL,
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        FALSE,
-                                                        new_linux_md_create_part_cb,
-                                                        data);
-                        g_free (label);
-
-                } else {
-
-                        /* otherwise the whole disk must be uninitialized... */
-                        g_assert (whole_disk_is_uninitialized);
-
-                        /* so create a partition table... */
-                        gdu_device_op_partition_table_create (d,
-                                                              "mbr",
-                                                              new_linux_md_create_part_table_cb,
-                                                              data);
-                }
-
-                g_object_unref (d);
-                g_object_unref (p);
-
+                gdu_drive_create_volume (drive,
+                                         data->component_size,
+                                         data->name,
+                                         GDU_CREATE_VOLUME_FLAGS_LINUX_MD,
+                                         (GAsyncReadyCallback) md_raid_create_volume_cb,
+                                         data);
         }
 }
 

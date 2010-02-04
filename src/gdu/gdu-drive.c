@@ -68,11 +68,22 @@ G_DEFINE_TYPE_WITH_CODE (GduDrive, gdu_drive, G_TYPE_OBJECT,
 static void device_job_changed (GduDevice *device, gpointer user_data);
 static void device_changed (GduDevice *device, gpointer user_data);
 
-static gboolean gdu_drive_has_unallocated_space_real (GduDrive        *drive,
-                                                      gboolean        *out_whole_disk_is_unitialized,
-                                                      guint64         *out_largest_segment,
-                                                      guint64         *out_total_free,
-                                                      GduPresentable **out_presentable);
+static gboolean gdu_drive_can_create_volume_real (GduDrive        *drive,
+                                                  gboolean        *out_is_uninitialized,
+                                                  guint64         *out_largest_contiguous_free_segment,
+                                                  guint64         *out_total_free,
+                                                  GduPresentable **out_presentable);
+
+static void gdu_drive_create_volume_real (GduDrive              *drive,
+                                          guint64                size,
+                                          const gchar           *name,
+                                          GduCreateVolumeFlags   flags,
+                                          GAsyncReadyCallback    callback,
+                                          gpointer               user_data);
+
+static GduVolume *gdu_drive_create_volume_finish_real (GduDrive              *drive,
+                                                       GAsyncResult          *res,
+                                                       GError               **error);
 
 static void
 gdu_drive_finalize (GduDrive *drive)
@@ -106,7 +117,9 @@ gdu_drive_class_init (GduDriveClass *klass)
 
         obj_class->finalize = (GObjectFinalizeFunc) gdu_drive_finalize;
 
-        klass->has_unallocated_space = gdu_drive_has_unallocated_space_real;
+        klass->can_create_volume = gdu_drive_can_create_volume_real;
+        klass->create_volume = gdu_drive_create_volume_real;
+        klass->create_volume_finish = gdu_drive_create_volume_finish_real;
 
         g_type_class_add_private (klass, sizeof (GduDrivePrivate));
 }
@@ -200,26 +213,25 @@ gdu_drive_deactivate (GduDrive                *drive,
 }
 
 /**
- * gdu_drive_has_unallocated_space:
+ * gdu_drive_can_create_volume:
  * @drive: A #GduDrive.
- * @out_whole_disk_is_unitialized: Return location for whether @drive is uninitialized or %NULL.
+ * @out_is_uninitialized: Return location for whether @drive is uninitialized or %NULL.
  * @out_largest_segment: Return location for biggest contigious free block of @drive or %NULL.
  * @out_total_free: Return location for total amount of free space on @drive or %NULL.
  * @out_presentable: Return location for the presentable that represents free space or %NULL. Free
  * with g_object_unref().
  *
- * This method computes the largest contigious free block of
- * unallocated space on @drive.
+ * This method checks if a new volume can be created on @drive.
  *
  * If @drive uses removable media and there is no media inserted,
  * %FALSE is returned.
  *
  * If @drive appears to be completely uninitialized (such as a hard
- * disk full of zeros), @out_whole_disk_is_unitialized is set to
- * %TRUE, the size of the media/disk is returned in
- * @out_largest_segment and %TRUE is returned. Note that this can
- * also happen if @drive contains signatures unknown to the operating system
- * so be careful.
+ * disk full of zeros), @out_is_unitialized is set to %TRUE, the size
+ * of the media/disk is returned in @out_largest_segment and %TRUE is
+ * returned. Note that this can also happen if @drive contains
+ * signatures unknown to the operating system so be careful and always
+ * prompt the user.
  *
  * If the disk is partitioned and unallocated space exists but no more
  * partitions can be created (due to e.g. four primary partitions on a
@@ -230,22 +242,23 @@ gdu_drive_deactivate (GduDrive                *drive,
  * #GduVolumeHole (if the disk is partitioned and has free space) or
  * the #GduDrive (if the disk is uninitialized).
  *
+ * You can use gdu_drive_create_volume() to create a volume.
+ *
  * Returns: %TRUE if @drive has unallocated space, %FALSE otherwise.
  */
 gboolean
-gdu_drive_has_unallocated_space (GduDrive        *drive,
-                                 gboolean        *out_whole_disk_is_unitialized,
-                                 guint64         *out_largest_segment,
-                                 guint64         *out_total_free,
-                                 GduPresentable **out_presentable)
+gdu_drive_can_create_volume (GduDrive        *drive,
+                             gboolean        *out_is_uninitialized,
+                             guint64         *out_largest_contiguous_free_segment,
+                             guint64         *out_total_free,
+                             GduPresentable **out_presentable)
 {
         GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
-
-        return klass->has_unallocated_space (drive,
-                                             out_whole_disk_is_unitialized,
-                                             out_largest_segment,
-                                             out_total_free,
-                                             out_presentable);
+        return klass->can_create_volume (drive,
+                                         out_is_uninitialized,
+                                         out_largest_contiguous_free_segment,
+                                         out_total_free,
+                                         out_presentable);
 }
 
 /**
@@ -326,15 +339,15 @@ gdu_drive_count_mbr_partitions (GduDrive  *drive,
 
 
 static gboolean
-gdu_drive_has_unallocated_space_real (GduDrive        *drive,
-                                      gboolean        *out_whole_disk_is_unitialized,
-                                      guint64         *out_largest_segment,
-                                      guint64         *out_total_free,
-                                      GduPresentable **out_presentable)
+gdu_drive_can_create_volume_real (GduDrive        *drive,
+                                  gboolean        *out_is_unitialized,
+                                  guint64         *out_largest_contiguous_free_segment,
+                                  guint64         *out_total_free,
+                                  GduPresentable **out_presentable)
 {
         GduDevice *device;
         GduPool *pool;
-        guint64 largest_segment;
+        guint64 largest_contiguous_free_segment;
         guint64 total_free;
         gboolean whole_disk_uninitialized;
         GList *enclosed_presentables;
@@ -344,7 +357,7 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         guint64 size;
         GduPresentable *pres;
 
-        largest_segment = 0;
+        largest_contiguous_free_segment = 0;
         total_free = 0;
         whole_disk_uninitialized = FALSE;
         ret = FALSE;
@@ -371,7 +384,7 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
          */
         if (!gdu_device_is_partition_table (device) && strlen (gdu_device_id_get_usage (device)) == 0) {
                 whole_disk_uninitialized = TRUE;
-                largest_segment = gdu_device_get_size (device);
+                largest_contiguous_free_segment = gdu_device_get_size (device);
                 total_free = gdu_device_get_size (device);
                 ret = TRUE;
                 pres = GDU_PRESENTABLE (drive);
@@ -389,8 +402,8 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
                 if (GDU_IS_VOLUME_HOLE (ep)) {
                         size = gdu_presentable_get_size (ep);
 
-                        if (size > largest_segment) {
-                                largest_segment = size;
+                        if (size > largest_contiguous_free_segment) {
+                                largest_contiguous_free_segment = size;
                                 pres = ep;
                         }
 
@@ -416,8 +429,8 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
 
                                         if (GDU_IS_VOLUME_HOLE (lep)) {
                                                 size = gdu_presentable_get_size (lep);
-                                                if (size > largest_segment) {
-                                                        largest_segment = size;
+                                                if (size > largest_contiguous_free_segment) {
+                                                        largest_contiguous_free_segment = size;
                                                         pres = lep;
                                                 }
 
@@ -433,10 +446,10 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
         g_list_free (enclosed_presentables);
 
-        ret = (largest_segment > 0);
+        ret = (largest_contiguous_free_segment > 0);
 
         /* Now igure out if the partition table is full (e.g. four primary partitions already) and
-         * return %FALSE and non-zero @out_largest_segment
+         * return %FALSE and non-zero @out_largest_contiguous_free_segment
          */
         if (g_strcmp0 (gdu_device_partition_table_get_scheme (device), "mbr") == 0 &&
             gdu_device_partition_table_get_count (device) == 4 &&
@@ -450,14 +463,14 @@ gdu_drive_has_unallocated_space_real (GduDrive        *drive,
         if (pool != NULL)
                 g_object_unref (pool);
 
-        if (out_largest_segment != NULL)
-                *out_largest_segment = largest_segment;
+        if (out_largest_contiguous_free_segment != NULL)
+                *out_largest_contiguous_free_segment = largest_contiguous_free_segment;
 
         if (out_total_free != NULL)
                 *out_total_free = total_free;
 
-        if (out_whole_disk_is_unitialized != NULL)
-                *out_whole_disk_is_unitialized = whole_disk_uninitialized;
+        if (out_is_unitialized != NULL)
+                *out_is_unitialized = whole_disk_uninitialized;
 
         if (out_presentable != NULL) {
                 *out_presentable = (pres != NULL ? g_object_ref (pres) : NULL);
@@ -1094,3 +1107,309 @@ _gdu_drive_rewrite_enclosing_presentable (GduDrive *drive)
  out:
         ;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+create_volume_partition_create_cb (GduDevice  *device,
+                                   gchar      *created_device_object_path,
+                                   GError     *error,
+                                   gpointer    user_data)
+{
+        GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+
+        if (error != NULL) {
+                g_simple_async_result_set_from_error (simple, error);
+                g_error_free (error);
+        } else {
+                GduDevice *d;
+                GduPool *pool;
+                GduPresentable *volume;
+
+                pool = gdu_device_get_pool (device);
+                d = gdu_pool_get_by_object_path (pool, created_device_object_path);
+                g_assert (d != NULL);
+
+                volume = gdu_pool_get_volume_by_device (pool, d);
+                g_assert (volume != NULL);
+
+                g_simple_async_result_set_op_res_gpointer (simple, volume, g_object_unref);
+
+                g_object_unref (pool);
+                g_object_unref (d);
+        }
+        g_simple_async_result_complete_in_idle (simple);
+}
+
+static void
+gdu_drive_create_volume_real_internal (GduDrive              *drive,
+                                       guint64                size,
+                                       const gchar           *name,
+                                       GduCreateVolumeFlags   flags,
+                                       GSimpleAsyncResult    *simple);
+
+static void
+create_volume_partition_table_create_cb (GduDevice  *device,
+                                         GError     *error,
+                                         gpointer    user_data)
+{
+        GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+
+        if (error != NULL) {
+                g_simple_async_result_set_from_error (simple, error);
+                g_simple_async_result_complete_in_idle (simple);
+                g_error_free (error);
+        } else {
+                GduDrive              *drive;
+                guint64                size;
+                const gchar           *name;
+                GduCreateVolumeFlags   flags;
+
+                drive = GDU_DRIVE (g_async_result_get_source_object (G_ASYNC_RESULT (simple)));
+                size = (* ((guint64 *) g_object_get_data (G_OBJECT (simple), "gdu-size")));
+                name = g_object_get_data (G_OBJECT (simple), "gdu-name");
+                flags = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (simple), "gdu-flags"));
+
+                /* now that we have a partition table... try creating the volume again */
+                gdu_drive_create_volume_real_internal (drive,
+                                                       size,
+                                                       name,
+                                                       flags,
+                                                       simple);
+
+                g_object_unref (drive);
+        }
+}
+
+static void
+gdu_drive_create_volume_real (GduDrive              *drive,
+                              guint64                size,
+                              const gchar           *name,
+                              GduCreateVolumeFlags   flags,
+                              GAsyncReadyCallback    callback,
+                              gpointer               user_data)
+{
+        GSimpleAsyncResult *simple;
+
+        g_return_if_fail (GDU_IS_DRIVE (drive));
+
+        simple = g_simple_async_result_new (G_OBJECT (drive),
+                                            callback,
+                                            user_data,
+                                            gdu_drive_create_volume);
+
+        g_object_set_data_full (G_OBJECT (simple), "gdu-size", g_memdup (&size, sizeof (guint64)), g_free);
+        g_object_set_data_full (G_OBJECT (simple), "gdu-name", g_strdup (name), g_free);
+        g_object_set_data (G_OBJECT (simple), "gdu-flags", GINT_TO_POINTER (flags));
+
+        gdu_drive_create_volume_real_internal (drive,
+                                               size,
+                                               name,
+                                               flags,
+                                               simple);
+}
+
+static void
+gdu_drive_create_volume_real_internal (GduDrive              *drive,
+                                       guint64                size,
+                                       const gchar           *name,
+                                       GduCreateVolumeFlags   flags,
+                                       GSimpleAsyncResult    *simple)
+{
+        GduPresentable *p;
+        GduDevice *d;
+        gboolean whole_disk_is_uninitialized;
+        guint64 largest_segment;
+
+        if (!gdu_drive_can_create_volume (drive,
+                                          &whole_disk_is_uninitialized,
+                                          &largest_segment,
+                                          NULL, /* total_free */
+                                          &p)) {
+                g_simple_async_result_set_error (simple,
+                                                 GDU_ERROR,
+                                                 GDU_ERROR_FAILED,
+                                                 "Insufficient space");
+                g_simple_async_result_complete_in_idle (simple);
+                g_object_unref (simple);
+                goto out;
+        }
+
+        g_assert (p != NULL);
+
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+
+        if (GDU_IS_VOLUME_HOLE (p)) {
+                guint64 offset;
+                const gchar *scheme;
+                const gchar *type;
+                gchar *label;
+
+                offset = gdu_presentable_get_offset (p);
+
+                scheme = gdu_device_partition_table_get_scheme (d);
+                type = "";
+                label = NULL;
+                if (g_strcmp0 (scheme, "mbr") == 0) {
+                        if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_MD) {
+                                type = "0xfd";
+                        } else if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2) {
+                                type = "0x8e";
+                        }
+                } else if (g_strcmp0 (scheme, "gpt") == 0) {
+                        if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_MD) {
+                                type = "A19D880F-05FC-4D3B-A006-743F0F84911E";
+                                /* Limited to 36 UTF-16LE characters according to on-disk format..
+                                 * Since a RAID array name is limited to 32 chars this should fit */
+                                if (name != NULL)
+                                        label = g_strdup_printf ("RAID: %s", name);
+                                else
+                                        label = g_strdup_printf ("RAID component");
+                        } else if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2) {
+                                type = "E6D6D379-F507-44C2-A23C-238F2A3DF928";
+                                /* Limited to 36 UTF-16LE characters according to on-disk format..
+                                 * TODO: ensure name is shorter than or equal to 32 characters */
+                                if (name != NULL)
+                                        label = g_strdup_printf ("LVM2: %s", name);
+                                else
+                                        label = g_strdup_printf ("LVM2 component");
+                        }
+                } else if (g_strcmp0 (scheme, "apt") == 0) {
+                        type = "Apple_Unix_SVR2";
+                        if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_MD) {
+                                if (name != NULL)
+                                        label = g_strdup_printf ("RAID: %s", name);
+                                else
+                                        label = g_strdup_printf ("RAID component");
+                        } else if (flags & GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2) {
+                                if (name != NULL)
+                                        label = g_strdup_printf ("LVM2: %s", name);
+                                else
+                                        label = g_strdup_printf ("LVM2 component");
+                        }
+                }
+
+                gdu_device_op_partition_create (d,
+                                                offset,
+                                                size,
+                                                type,
+                                                label != NULL ? label : "",
+                                                NULL,
+                                                "",
+                                                "",
+                                                "",
+                                                FALSE,
+                                                create_volume_partition_create_cb,
+                                                simple);
+                g_free (label);
+
+        } else {
+
+                /* otherwise the whole disk must be uninitialized... */
+                g_assert (whole_disk_is_uninitialized);
+
+                /* so create a partition table...
+                 * (TODO: take a flag to determine what kind of partition table to create)
+                 */
+                gdu_device_op_partition_table_create (d,
+                                                      "mbr",
+                                                      create_volume_partition_table_create_cb,
+                                                      simple);
+        }
+
+ out:
+        if (d != NULL)
+                g_object_unref (d);
+        if (p != NULL)
+                g_object_unref (p);
+}
+
+static GduVolume *
+gdu_drive_create_volume_finish_real (GduDrive              *drive,
+                                     GAsyncResult          *res,
+                                     GError               **error)
+{
+        GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+        GduVolume *ret;
+
+        g_return_val_if_fail (GDU_IS_DRIVE (drive), NULL);
+        g_return_val_if_fail (res != NULL, NULL);
+
+        g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_drive_create_volume);
+
+        ret = NULL;
+        if (g_simple_async_result_propagate_error (simple, error))
+                goto out;
+
+        ret = GDU_VOLUME (g_simple_async_result_get_op_res_gpointer (simple));
+
+ out:
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/**
+ * gdu_drive_create_volume:
+ * @drive: A #GduDrive.
+ * @size: The size of the volume to create.
+ * @name: A name for the volume.
+ * @flags: Flags describing what kind of volume to create
+ * @callback: Function to call when the result is ready.
+ * @user_data: User data to pass to @callback.
+ *
+ * High-level method for creating a new volume on @drive of size @size
+ * using @name and @flags as influential hints.
+ *
+ * Depending on the actual type of @drive, different things may happen
+ * - if @drive represents a partitioned drive, then a new partition
+ * will be created (and if the partitioning scheme supports partition
+ * labels @name will be used as the label). If @drive is completely
+ * uninitialized, it may (or may not) be partitioned.
+ *
+ * If @drive represents a LVM2 volume group, a logical volume may be
+ * created (with @name being used as LV name).
+ *
+ * This is an asynchronous operation. When the result of the operation
+ * is ready, @callback will be invoked.
+ */
+void
+gdu_drive_create_volume (GduDrive              *drive,
+                         guint64                size,
+                         const gchar           *name,
+                         GduCreateVolumeFlags   flags,
+                         GAsyncReadyCallback    callback,
+                         gpointer               user_data)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        klass->create_volume (drive,
+                              size,
+                              name,
+                              flags,
+                              callback,
+                              user_data);
+}
+
+/**
+ * gdu_drive_create_volume_finish:
+ * @drive: A #GduDrive.
+ * @res: A #GAsyncResult.
+ * @error: A #GError or %NULL.
+ *
+ * Finishes an operation started with gdu_drive_create_volume().
+ *
+ * Returns: A #GduVolume for the created volume or %NULL if @error is
+ * set. The returned object must be freed with g_object_unref().
+ */
+GduVolume *
+gdu_drive_create_volume_finish (GduDrive              *drive,
+                                GAsyncResult          *res,
+                                GError               **error)
+{
+        GduDriveClass *klass = GDU_DRIVE_GET_CLASS (drive);
+        return klass->create_volume_finish (drive,
+                                            res,
+                                            error);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

@@ -40,6 +40,21 @@ G_BEGIN_DECLS
 typedef struct _GduDriveClass    GduDriveClass;
 typedef struct _GduDrivePrivate  GduDrivePrivate;
 
+/* TODO: move to gdu-enums.h */
+/**
+ * GduCreateVolumeFlags:
+ * @GDU_CREATE_VOLUME_FLAGS_NONE: No flags are set.
+ * @GDU_CREATE_VOLUME_FLAGS_LINUX_MD: The volume is to be used for Linux MD RAID.
+ * @GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2: The volume is to be used for Linux LVM2.
+ *
+ * Flags used in gdu_drive_create_volume().
+ */
+typedef enum {
+        GDU_CREATE_VOLUME_FLAGS_NONE = 0x00,
+        GDU_CREATE_VOLUME_FLAGS_LINUX_MD = (1<<0),
+        GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2 = (1<<1)
+} GduCreateVolumeFlags;
+
 struct _GduDrive
 {
         GObject parent;
@@ -66,12 +81,22 @@ struct _GduDriveClass
                                               GduDriveDeactivateFunc callback,
                                               gpointer               user_data);
 
-        gboolean   (*has_unallocated_space) (GduDrive        *drive,
-                                             gboolean        *out_whole_disk_is_unitialized,
-                                             guint64         *out_largest_segment,
+        gboolean   (*can_create_volume)     (GduDrive        *drive,
+                                             gboolean        *out_is_uninitialized,
+                                             guint64         *out_largest_contiguous_free_segment,
                                              guint64         *out_total_free,
                                              GduPresentable **out_presentable);
 
+        void       (*create_volume)         (GduDrive              *drive,
+                                             guint64                size,
+                                             const gchar           *name,
+                                             GduCreateVolumeFlags   flags,
+                                             GAsyncReadyCallback    callback,
+                                             gpointer               user_data);
+
+        GduVolume *(*create_volume_finish) (GduDrive              *drive,
+                                            GAsyncResult          *res,
+                                            GError               **error);
 };
 
 GType       gdu_drive_get_type           (void);
@@ -88,11 +113,23 @@ void        gdu_drive_deactivate            (GduDrive              *drive,
                                              GduDriveDeactivateFunc callback,
                                              gpointer               user_data);
 
-gboolean    gdu_drive_has_unallocated_space (GduDrive        *drive,
-                                             gboolean        *out_whole_disk_is_unitialized,
-                                             guint64         *out_largest_segment,
+
+gboolean    gdu_drive_can_create_volume     (GduDrive        *drive,
+                                             gboolean        *out_is_uninitialized,
+                                             guint64         *out_largest_contiguous_free_segment,
                                              guint64         *out_total_free,
                                              GduPresentable **out_presentable);
+
+void        gdu_drive_create_volume         (GduDrive              *drive,
+                                             guint64                size,
+                                             const gchar           *name,
+                                             GduCreateVolumeFlags   flags,
+                                             GAsyncReadyCallback    callback,
+                                             gpointer               user_data);
+
+GduVolume  *gdu_drive_create_volume_finish  (GduDrive              *drive,
+                                             GAsyncResult          *res,
+                                             GError               **error);
 
 gboolean    gdu_drive_count_mbr_partitions  (GduDrive        *drive,
                                              guint           *out_num_primary_partitions,

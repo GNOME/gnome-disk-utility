@@ -338,11 +338,11 @@ do_add_pv (AddPvData *data)
         p = NULL;
         d = NULL;
 
-        g_warn_if_fail (gdu_drive_has_unallocated_space (data->drive_to_add_to,
-                                                         &whole_disk_is_uninitialized,
-                                                         &largest_segment,
-                                                         NULL, /* total_free */
-                                                         &p));
+        g_warn_if_fail (gdu_drive_can_create_volume (data->drive_to_add_to,
+                                                     &whole_disk_is_uninitialized,
+                                                     &largest_segment,
+                                                     NULL, /* total_free */
+                                                     &p));
         g_assert (p != NULL);
         g_assert_cmpint (data->size, <=, largest_segment);
 

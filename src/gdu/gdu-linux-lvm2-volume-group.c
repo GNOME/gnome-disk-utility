@@ -31,6 +31,7 @@
 #include "gdu-linux-lvm2-volume-group.h"
 #include "gdu-linux-lvm2-volume.h"
 #include "gdu-presentable.h"
+#include "gdu-volume-hole.h"
 
 struct _GduLinuxLvm2VolumeGroupPrivate
 {
@@ -58,6 +59,23 @@ static gboolean gdu_linux_lvm2_volume_group_is_active (GduDrive *drive);
 static gboolean gdu_linux_lvm2_volume_group_is_activatable (GduDrive *drive);
 static gboolean gdu_linux_lvm2_volume_group_can_deactivate (GduDrive *drive);
 static gboolean gdu_linux_lvm2_volume_group_can_activate (GduDrive *drive, gboolean *out_degraded);
+
+static gboolean gdu_linux_lvm2_volume_group_can_create_volume (GduDrive        *drive,
+                                                               gboolean        *out_is_uninitialized,
+                                                               guint64         *out_largest_contiguous_free_segment,
+                                                               guint64         *out_total_free,
+                                                               GduPresentable **out_presentable);
+
+static void gdu_linux_lvm2_volume_group_create_volume (GduDrive              *drive,
+                                                       guint64                size,
+                                                       const gchar           *name,
+                                                       GduCreateVolumeFlags   flags,
+                                                       GAsyncReadyCallback    callback,
+                                                       gpointer               user_data);
+
+static GduVolume *gdu_linux_lvm2_volume_group_create_volume_finish (GduDrive              *drive,
+                                                                    GAsyncResult          *res,
+                                                                    GError               **error);
 
 static void on_device_added (GduPool *pool, GduDevice *device, gpointer user_data);
 static void on_device_removed (GduPool *pool, GduDevice *device, gpointer user_data);
@@ -112,6 +130,9 @@ gdu_linux_lvm2_volume_group_class_init (GduLinuxLvm2VolumeGroupClass *klass)
         drive_class->is_activatable        = gdu_linux_lvm2_volume_group_is_activatable;
         drive_class->can_deactivate        = gdu_linux_lvm2_volume_group_can_deactivate;
         drive_class->can_activate          = gdu_linux_lvm2_volume_group_can_activate;
+        drive_class->can_create_volume     = gdu_linux_lvm2_volume_group_can_create_volume;
+        drive_class->create_volume         = gdu_linux_lvm2_volume_group_create_volume;
+        drive_class->create_volume_finish  = gdu_linux_lvm2_volume_group_create_volume_finish;
 }
 
 static void
@@ -526,6 +547,157 @@ gdu_linux_lvm2_volume_group_can_activate (GduDrive *drive,
                                           gboolean *out_degraded)
 {
         return FALSE;
+}
+
+static gboolean
+gdu_linux_lvm2_volume_group_can_create_volume (GduDrive        *drive,
+                                               gboolean        *out_is_uninitialized,
+                                               guint64         *out_largest_contiguous_free_segment,
+                                               guint64         *out_total_free,
+                                               GduPresentable **out_presentable)
+{
+        GList *enclosed_presentables;
+        GList *l;
+        guint64 largest_contiguous_free_segment;
+        guint64 total_free;
+        GduPresentable *pres;
+        gboolean ret;
+        GduPool *pool;
+
+        largest_contiguous_free_segment = 0;
+        total_free = 0;
+        pres = NULL;
+        ret = FALSE;
+
+        pool = gdu_presentable_get_pool (GDU_PRESENTABLE (drive));
+
+        enclosed_presentables = gdu_pool_get_enclosed_presentables (pool, GDU_PRESENTABLE (drive));
+        for (l = enclosed_presentables; l != NULL; l = l->next) {
+                GduPresentable *ep = GDU_PRESENTABLE (l->data);
+
+                if (GDU_IS_VOLUME_HOLE (ep)) {
+                        guint64 size;
+
+                        size = gdu_presentable_get_size (ep);
+
+                        if (size > largest_contiguous_free_segment) {
+                                largest_contiguous_free_segment = size;
+                                pres = ep;
+                        }
+
+                        total_free += size;
+
+                }
+        }
+        g_list_foreach (enclosed_presentables, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed_presentables);
+
+        if (out_largest_contiguous_free_segment != NULL)
+                *out_largest_contiguous_free_segment = largest_contiguous_free_segment;
+
+        if (out_total_free != NULL)
+                *out_total_free = total_free;
+
+        if (out_is_uninitialized != NULL)
+                *out_is_uninitialized = FALSE;
+
+        if (out_presentable != NULL) {
+                *out_presentable = (pres != NULL ? g_object_ref (pres) : NULL);
+        }
+
+        ret = (largest_contiguous_free_segment > 0);
+
+        g_object_unref (pool);
+
+        return ret;
+}
+
+static void
+lvm2_lv_create_op_callback (GduPool    *pool,
+                            gchar      *created_device_object_path,
+                            GError     *error,
+                            gpointer    user_data)
+{
+        GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (user_data);
+
+        if (error != NULL) {
+                g_simple_async_result_set_from_error (simple, error);
+                g_error_free (error);
+        } else {
+                GduDevice *d;
+                GduPresentable *volume;
+
+                d = gdu_pool_get_by_object_path (pool, created_device_object_path);
+                g_assert (d != NULL);
+
+                volume = gdu_pool_get_volume_by_device (pool, d);
+                g_assert (volume != NULL);
+
+                g_simple_async_result_set_op_res_gpointer (simple, volume, g_object_unref);
+
+                g_object_unref (d);
+        }
+        g_simple_async_result_complete_in_idle (simple);
+}
+
+static void
+gdu_linux_lvm2_volume_group_create_volume (GduDrive              *drive,
+                                           guint64                size,
+                                           const gchar           *name,
+                                           GduCreateVolumeFlags   flags,
+                                           GAsyncReadyCallback    callback,
+                                           gpointer               user_data)
+{
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (drive);
+        GSimpleAsyncResult *simple;
+        gchar *volume_name;
+
+        g_return_if_fail (GDU_IS_DRIVE (drive));
+
+        simple = g_simple_async_result_new (G_OBJECT (drive),
+                                            callback,
+                                            user_data,
+                                            gdu_linux_lvm2_volume_group_create_volume);
+
+        /* For now, just use a generic LV name - TODO: include RAID/LVM etc */
+        volume_name = gdu_linux_lvm2_volume_group_get_compute_new_lv_name (vg);
+
+        gdu_pool_op_linux_lvm2_lv_create (vg->priv->pool,
+                                          vg->priv->uuid,
+                                          volume_name,
+                                          size,
+                                          0, /* num_stripes */
+                                          0, /* stripe_size */
+                                          0, /* num_mirrors */
+                                          "", /* fs_type */
+                                          "", /* fs_label */
+                                          "", /* encrypt_passphrase */
+                                          FALSE, /* fs_take_ownership */
+                                          lvm2_lv_create_op_callback,
+                                          simple);
+}
+
+static GduVolume *
+gdu_linux_lvm2_volume_group_create_volume_finish (GduDrive              *drive,
+                                                  GAsyncResult          *res,
+                                                  GError               **error)
+{
+        GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+        GduVolume *ret;
+
+        g_return_val_if_fail (GDU_IS_DRIVE (drive), NULL);
+        g_return_val_if_fail (res != NULL, NULL);
+
+        g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_linux_lvm2_volume_group_create_volume);
+
+        ret = NULL;
+        if (g_simple_async_result_propagate_error (simple, error))
+                goto out;
+
+        ret = GDU_VOLUME (g_simple_async_result_get_op_res_gpointer (simple));
+
+ out:
+        return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

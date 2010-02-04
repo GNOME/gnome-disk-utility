@@ -597,10 +597,9 @@ get_names_and_desc (GduPresentable  *presentable,
                                        gdu_device_get_device_file (drive->priv->device),
                                        gdu_device_linux_md_get_state (drive->priv->device));
         } else {
-                g_warn_if_fail (drive->priv->device_file != NULL);
-
                 /* Translators: %s is a device file such as /dev/sda4 */
-                ret = g_strdup_printf (_("RAID device %s"), drive->priv->device_file);
+                ret = g_strdup_printf (_("RAID device %s"),
+                                       drive->priv->device_file != NULL ? drive->priv->device_file : "(unknown)");
         }
 
         /* Fallback for level_str */
@@ -687,6 +686,7 @@ gdu_linux_md_drive_get_icon (GduPresentable *presentable)
                 level = gdu_device_linux_md_get_level (drive->priv->device);
         }
 
+        emblem_name = NULL;
         if (g_strcmp0 (level, "linear") == 0) {
                 emblem_name = "gdu-emblem-raid-linear";
         } else if (g_strcmp0 (level, "raid0") == 0) {
@@ -701,8 +701,6 @@ gdu_linux_md_drive_get_icon (GduPresentable *presentable)
                 emblem_name = "gdu-emblem-raid6";
         } else if (g_strcmp0 (level, "raid10") == 0) {
                 emblem_name = "gdu-emblem-raid10";
-        } else {
-                g_warning ("Unknown level `%s'", level);
         }
 
         return gdu_util_get_emblemed_icon ("gdu-multidisk-drive", emblem_name);

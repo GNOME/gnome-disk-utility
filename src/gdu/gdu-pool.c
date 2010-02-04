@@ -1303,6 +1303,7 @@ recompute_presentables (GduPool *pool)
                                                                                      vg_uuid,
                                                                                      uuid,
                                                                                      GDU_PRESENTABLE (vg));
+
                                                 new_presentables = g_list_prepend (new_presentables, volume);
 
                                         } else {

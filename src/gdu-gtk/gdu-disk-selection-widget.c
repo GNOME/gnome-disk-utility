@@ -33,6 +33,8 @@
 #define DETAILS_WIDTH 180
 #define DETAILS_MARGIN 12
 
+#define SIZE_EPSILON 1000
+
 struct GduDiskSelectionWidgetPrivate
 {
         GduPool *pool;
@@ -397,6 +399,63 @@ gdu_disk_selection_widget_get_ignored_drives (GduDiskSelectionWidget  *widget)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef enum {
+        REASON_INSUFFICIENT_SPACE,
+        REASON_MULTIPATH_COMPONENT,
+} Reason;
+
+static gboolean
+is_drive_selectable (GduDiskSelectionWidget *widget,
+                     GduDrive               *drive,
+                     Reason                 *out_reason)
+{
+        gboolean ret;
+        guint64 largest_segment;
+        gboolean whole_disk_is_uninitialized;
+        Reason reason;
+        GduDevice *d;
+
+        ret = FALSE;
+        d = NULL;
+        reason = REASON_INSUFFICIENT_SPACE;
+
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
+        if (d != NULL && gdu_device_is_linux_dmmp_component (d)) {
+                ret = FALSE;
+                reason = REASON_MULTIPATH_COMPONENT;
+                goto out;
+        }
+
+        if (gdu_drive_can_create_volume (drive,
+                                         &whole_disk_is_uninitialized,
+                                         &largest_segment,
+                                         NULL, /* total_free */
+                                         NULL)) {
+                if (largest_segment >= widget->priv->component_size) {
+                        ret = TRUE;
+                }
+        }
+
+ out:
+#if 0
+        g_debug ("is_drive_selectable (%s): %d %" G_GUINT64_FORMAT " (%d %d) ...",
+                 d != NULL ? gdu_device_get_device_file (d) : "(not set)",
+                 whole_disk_is_uninitialized,
+                 largest_segment,
+                 reason,
+                 ret);
+#endif
+
+        if (d != NULL)
+                g_object_unref (d);
+
+        if (out_reason != NULL)
+                *out_reason = reason;
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 drive_is_selected (GduDiskSelectionWidget *widget,
                    GduPresentable         *drive)
@@ -461,7 +520,7 @@ toggle_data_func (GtkCellLayout   *cell_layout,
         is_visible = FALSE;
         is_toggled = FALSE;
         if (GDU_IS_DRIVE (p)) {
-                is_visible = TRUE;
+                is_visible = is_drive_selectable (widget, GDU_DRIVE (p), NULL);
                 is_toggled = drive_is_selected (widget, p);
         }
 
@@ -534,6 +593,41 @@ on_disk_toggled (GtkCellRendererToggle *renderer,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+icon_data_func (GtkCellLayout   *cell_layout,
+                GtkCellRenderer *renderer,
+                GtkTreeModel    *tree_model,
+                GtkTreeIter     *iter,
+                gpointer         user_data)
+{
+        GduDiskSelectionWidget *widget = GDU_DISK_SELECTION_WIDGET (user_data);
+        GduPresentable *p;
+        GIcon *icon;
+        gboolean sensitive;
+
+        gtk_tree_model_get (tree_model,
+                            iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
+                            GDU_POOL_TREE_MODEL_COLUMN_ICON, &icon,
+                            -1);
+
+        sensitive = TRUE;
+        if (p != NULL && GDU_IS_DRIVE (p))
+                sensitive = is_drive_selectable (widget, GDU_DRIVE (p), NULL);
+
+        g_object_set (renderer,
+                      "gicon", icon,
+                      "sensitive", sensitive,
+                      NULL);
+
+        if (icon != NULL)
+                g_object_unref (icon);
+        if (p != NULL)
+                g_object_unref (p);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 disk_name_data_func (GtkCellLayout   *cell_layout,
                      GtkCellRenderer *renderer,
                      GtkTreeModel    *tree_model,
@@ -549,14 +643,20 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
         GdkColor desc_gdk_color = {0};
         gchar *desc_color;
         GtkStateType state;
+        gboolean sensitive;
+        GduPresentable *p;
 
         tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget->priv->tree_view));
 
         gtk_tree_model_get (tree_model,
                             iter,
+                            GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                             GDU_POOL_TREE_MODEL_COLUMN_NAME, &name,
                             GDU_POOL_TREE_MODEL_COLUMN_VPD_NAME, &vpd_name,
                             -1);
+        sensitive = TRUE;
+        if (p != NULL && GDU_IS_DRIVE (p))
+                sensitive = is_drive_selectable (widget, GDU_DRIVE (p), NULL);
 
         /* This color business shouldn't be this hard... */
         style = gtk_widget_get_style (GTK_WIDGET (widget->priv->tree_view));
@@ -581,42 +681,61 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
                                       (desc_gdk_color.green >> 8),
                                       (desc_gdk_color.blue >> 8));
 
-        markup = g_strdup_printf ("<small><b>%s</b>\n"
-                                  "<span fgcolor=\"%s\">%s</span></small>",
-                                  name,
-                                  desc_color,
-                                  vpd_name);
+        if (sensitive) {
+                markup = g_strdup_printf ("<small><b>%s</b>\n"
+                                          "<span fgcolor=\"%s\">%s</span></small>",
+                                          name,
+                                          desc_color,
+                                          vpd_name);
+        } else {
+                markup = g_strdup_printf ("<small><b>%s</b>\n"
+                                          "%s</small>",
+                                          name,
+                                          vpd_name);
+        }
 
         g_object_set (renderer,
                       "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
                       "ellipsize-set", TRUE,
                       "markup", markup,
+                      "sensitive", sensitive,
                       NULL);
 
         g_free (name);
         g_free (vpd_name);
         g_free (markup);
         g_free (desc_color);
+
+        if (p != NULL)
+                g_object_unref (p);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDiskSelectionWidget *widget;
+        guint num_available_disks;
+        guint64 largest_segment_for_all;
+} CountData;
 
 static gboolean
 count_num_available_disks_func (GtkTreeModel *model,
                                 GtkTreePath  *path,
                                 GtkTreeIter  *iter,
-                                gpointer      data)
+                                gpointer      user_data)
 {
         GduPresentable *p;
-        guint *num_available_disks = data;
+        CountData *data = user_data;
 
         gtk_tree_model_get (model,
                             iter,
                             GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                             -1);
 
-        if (GDU_IS_DRIVE (p))
-                *num_available_disks = *num_available_disks + 1;
+        if (GDU_IS_DRIVE (p)) {
+                if (is_drive_selectable (data->widget, GDU_DRIVE (p), NULL))
+                        data->num_available_disks = data->num_available_disks + 1;
+        }
 
         g_object_unref (p);
 
@@ -627,10 +746,10 @@ static gboolean
 find_largest_segment_for_all_func (GtkTreeModel *model,
                                    GtkTreePath  *path,
                                    GtkTreeIter  *iter,
-                                   gpointer      data)
+                                   gpointer      user_data)
 {
         GduPresentable *p;
-        guint64 *largest_segment_for_all = data;
+        CountData *data = user_data;
 
         gtk_tree_model_get (model,
                             iter,
@@ -640,14 +759,14 @@ find_largest_segment_for_all_func (GtkTreeModel *model,
         if (GDU_IS_DRIVE (p)) {
                 guint64 largest_segment;
 
-                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                 NULL,
-                                                                 &largest_segment,
-                                                                 NULL, /* total_free */
-                                                                 NULL));
-
-                if (largest_segment > *largest_segment_for_all)
-                        *largest_segment_for_all = largest_segment;
+                if (gdu_drive_can_create_volume (GDU_DRIVE (p),
+                                                 NULL,
+                                                 &largest_segment,
+                                                 NULL, /* total_free */
+                                                 NULL)) {
+                        if (largest_segment > data->largest_segment_for_all)
+                                data->largest_segment_for_all = largest_segment;
+                }
 
         }
 
@@ -664,54 +783,54 @@ get_sizes (GduDiskSelectionWidget *widget,
            guint64                *out_largest_segment_for_all)
 {
         guint num_disks;
-        guint num_available_disks;
+        CountData data;
         guint64 largest_segment_for_selected;
-        guint64 largest_segment_for_all;
         GList *l;
 
         num_disks = 0;
-        num_available_disks = 0;
         largest_segment_for_selected = G_MAXUINT64;
-        largest_segment_for_all = 0;
+        data.widget = widget;
+        data.num_available_disks = 0;
+        data.largest_segment_for_all = 0;
 
         for (l = widget->priv->selected_drives; l != NULL; l = l->next) {
                 GduPresentable *p = GDU_PRESENTABLE (l->data);
                 guint64 largest_segment;
                 gboolean whole_disk_is_uninitialized;
 
-                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                 &whole_disk_is_uninitialized,
-                                                                 &largest_segment,
-                                                                 NULL, /* total_free */
-                                                                 NULL));
+                if (gdu_drive_can_create_volume (GDU_DRIVE (p),
+                                                 &whole_disk_is_uninitialized,
+                                                 &largest_segment,
+                                                 NULL, /* total_free */
+                                                 NULL)) {
+                        if (largest_segment < largest_segment_for_selected)
+                                largest_segment_for_selected = largest_segment;
 
-                if (largest_segment < largest_segment_for_selected)
-                        largest_segment_for_selected = largest_segment;
-
-                num_disks++;
+                        num_disks++;
+                }
         }
         if (largest_segment_for_selected == G_MAXUINT64)
                 largest_segment_for_selected = 0;
 
         gtk_tree_model_foreach (widget->priv->model,
                                 count_num_available_disks_func,
-                                &num_available_disks);
+                                &data);
 
         gtk_tree_model_foreach (widget->priv->model,
                                 find_largest_segment_for_all_func,
-                                &largest_segment_for_all);
+                                &data);
 
         if (out_num_disks != NULL)
                 *out_num_disks = num_disks;
 
         if (out_num_available_disks != NULL)
-                *out_num_available_disks = num_available_disks;
+                *out_num_available_disks = data.num_available_disks;
 
         if (out_largest_segment_for_selected != NULL)
                 *out_largest_segment_for_selected = largest_segment_for_selected;
 
         if (out_largest_segment_for_all != NULL)
-                *out_largest_segment_for_all = largest_segment_for_all;
+                *out_largest_segment_for_all = data.largest_segment_for_all;
 }
 
 static void
@@ -725,77 +844,132 @@ notes_data_func (GtkCellLayout   *cell_layout,
         GduPresentable *p;
         gchar *markup;
         gchar *s;
+        gboolean sensitive;
+        GduDevice *d;
+        gboolean can_create_volume;
+        guint64 largest_segment;
+        gboolean whole_disk_is_uninitialized;
+        guint num_partitions;
+        gboolean is_partitionable;
+        gboolean is_partitioned;
+        guint64 total_free;
+        guint64 remaining_size;
+        gboolean is_selectable;
+        Reason reason;
+        gchar *strsize;
+        gchar *rem_strsize;
+
+        d = NULL;
+        markup = NULL;
+        sensitive = TRUE;
 
         gtk_tree_model_get (tree_model,
                             iter,
                             GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                             -1);
 
-        if (GDU_IS_DRIVE (p)) {
-                GduDevice *d;
-                guint64 largest_segment;
-                gboolean whole_disk_is_uninitialized;
-                guint num_partitions;
-                gboolean is_partitioned;
-                guint64 total_free;
-                guint64 remaining_size;
+        if (!GDU_IS_DRIVE (p))
+                goto out;
 
-                d = gdu_presentable_get_device (p);
+        d = gdu_presentable_get_device (p);
 
-                num_partitions = 0;
-                is_partitioned = FALSE;
-                remaining_size = 0;
-                if (gdu_device_is_partition_table (d)) {
-                        is_partitioned = TRUE;
-                        num_partitions = gdu_device_partition_table_get_count (d);
-                }
+        num_partitions = 0;
+        is_partitioned = FALSE;
+        is_partitionable = TRUE;
+        remaining_size = 0;
+        if (d != NULL && gdu_device_is_partition_table (d)) {
+                is_partitioned = TRUE;
+                num_partitions = gdu_device_partition_table_get_count (d);
+        }
 
-                g_warn_if_fail (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                 &whole_disk_is_uninitialized,
-                                                                 &largest_segment,
-                                                                 &total_free,
-                                                                 NULL));
+        /* TODO: probably want a vfunc for this */
+        if (GDU_IS_LINUX_LVM2_VOLUME_GROUP (p))
+                is_partitionable = FALSE;
 
-                remaining_size = total_free - widget->priv->component_size;
+        can_create_volume = gdu_drive_can_create_volume (GDU_DRIVE (p),
+                                                         &whole_disk_is_uninitialized,
+                                                         &largest_segment,
+                                                         &total_free,
+                                                         NULL);
 
-                if (drive_is_selected (widget, p)) {
-                        gchar *strsize;
-                        gchar *rem_strsize;
+        is_selectable = is_drive_selectable (widget, GDU_DRIVE (p), &reason);
+        sensitive = is_selectable;
 
-                        strsize = gdu_util_get_size_for_display (widget->priv->component_size, FALSE, FALSE);
-                        rem_strsize = gdu_util_get_size_for_display (remaining_size, FALSE, FALSE);
+        remaining_size = total_free - widget->priv->component_size;
 
-                        if (whole_disk_is_uninitialized) {
-                                if (widget->priv->component_size == 0) {
-                                        /* Translators: This is shown in the details column */
-                                        markup = g_strdup (_("The disk will be partitioned and a partition will be created"));
-                                } else {
-                                        if (remaining_size == 0) {
-                                                /* Translators: This is shown in the Details column.
-                                                 * First %s is the component size e.g. '42 GB'.
-                                                 */
-                                                markup = g_strdup_printf (_("The disk will be partitioned and a %s partition "
-                                                                            "will be created. "
-                                                                            "Afterwards no space will be available."),
-                                                                          strsize);
-                                        } else {
-                                                /* Translators: This is shown in the Details column.
-                                                 * First %s is the component size e.g. '42 GB'.
-                                                 * Second %s is the remaining free space after the operation.
-                                                 */
-                                                markup = g_strdup_printf (_("The disk will be partitioned and a %s partition "
-                                                                            "will be created. "
-                                                                            "Afterwards %s will be available."),
-                                                                          strsize,
-                                                                          rem_strsize);
-                                        }
-                                }
+        /* handle when the drive is not selectable */
+        if (!is_selectable) {
+                switch (reason) {
+                case REASON_INSUFFICIENT_SPACE:
+                        if (largest_segment < SIZE_EPSILON) {
+                                /* Translators: Shown when the device is not selectable because
+                                 * there is no free space.
+                                 */
+                                markup = g_strdup_printf (_("No free space."));
                         } else {
-                                if (widget->priv->component_size == 0) {
+                                strsize = gdu_util_get_size_for_display (widget->priv->component_size, FALSE, FALSE);
+                                rem_strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
+                                /* Translators: Shown when device is unselectable because not enough space is available.
+                                 * First %s (e.g. '10 GB') is how much space is needed.
+                                 * Second %s (e.g. '5 GB') is how much space is available.
+                                 */
+                                markup = g_strdup_printf (_("Insufficient space: %s is needed but largest contiguous free block is %s."),
+                                                          strsize,
+                                                          rem_strsize);
+                                g_free (strsize);
+                                g_free (rem_strsize);
+                        }
+                        break;
+                case REASON_MULTIPATH_COMPONENT:
+                        /* Translators: Shown when the device is unselectable because it is a multipath component. */
+                        markup = g_strdup_printf (_("Cannot select multipath component"));
+                        break;
+                }
+                goto out;
+        }
+
+        /* drive is selectable */
+        if (drive_is_selected (widget, p)) {
+                strsize = gdu_util_get_size_for_display (widget->priv->component_size, FALSE, FALSE);
+                rem_strsize = gdu_util_get_size_for_display (remaining_size, FALSE, FALSE);
+
+                if (whole_disk_is_uninitialized) {
+                        if (widget->priv->component_size < SIZE_EPSILON) {
+                                /* Translators: This is shown in the details column */
+                                markup = g_strdup (_("The disk will be partitioned and a partition will be created"));
+                        } else {
+                                if (remaining_size < SIZE_EPSILON) {
+                                        /* Translators: This is shown in the Details column.
+                                         * First %s is the component size e.g. '42 GB'.
+                                         */
+                                        markup = g_strdup_printf (_("The disk will be partitioned and a %s partition "
+                                                                    "will be created. "
+                                                                    "Afterwards no space will be available."),
+                                                                  strsize);
+                                } else {
+                                        /* Translators: This is shown in the Details column.
+                                         * First %s is the component size e.g. '42 GB'.
+                                         * Second %s is the remaining free space after the operation.
+                                         */
+                                        markup = g_strdup_printf (_("The disk will be partitioned and a %s partition "
+                                                                    "will be created. "
+                                                                    "Afterwards %s will be available."),
+                                                                  strsize,
+                                                                  rem_strsize);
+                                }
+                        }
+                } else {
+                        if (widget->priv->component_size < SIZE_EPSILON) {
+                                if (is_partitionable) {
                                         /* Translators: This is shown in the details column */
                                         markup = g_strdup (_("A partition will be created"));
                                 } else {
-                                        if (remaining_size == 0) {
+                                        /* Translators: This is shown in the details column */
+                                        markup = g_strdup (_("A volume will be created"));
+                                }
+                        } else {
+                                if (remaining_size < SIZE_EPSILON) {
+                                        if (is_partitionable) {
                                                 /* Translators: This is shown in the Details column.
                                                  * First %s is the component size e.g. '42 GB'.
                                                  */
@@ -805,69 +979,85 @@ notes_data_func (GtkCellLayout   *cell_layout,
                                         } else {
                                                 /* Translators: This is shown in the Details column.
                                                  * First %s is the component size e.g. '42 GB'.
+                                                 */
+                                                markup = g_strdup_printf (_("A %s volume will be created. "
+                                                                            "Afterwards no space will be available."),
+                                                                          strsize);
+                                        }
+                                } else {
+                                        if (is_partitionable) {
+                                                /* Translators: This is shown in the Details column.
+                                                 * First %s is the component size e.g. '42 GB'.
                                                  * Second %s is the remaining free space after the operation.
                                                  */
                                                 markup = g_strdup_printf (_("A %s partition will be created. "
                                                                             "Afterwards %s will be available."),
                                                                           strsize,
                                                                           rem_strsize);
+                                        } else {
+                                                /* Translators: This is shown in the Details column.
+                                                 * First %s is the component size e.g. '42 GB'.
+                                                 * Second %s is the remaining free space after the operation.
+                                                 */
+                                                markup = g_strdup_printf (_("A %s volume will be created. "
+                                                                            "Afterwards %s will be available."),
+                                                                          strsize,
+                                                                          rem_strsize);
                                         }
                                 }
                         }
-                        g_free (strsize);
-                        g_free (rem_strsize);
+                }
+                g_free (strsize);
+                g_free (rem_strsize);
+        } else {
+                gchar *strsize;
 
+                /* Drive is not selected */
+
+                strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
+                if (whole_disk_is_uninitialized) {
+                        /* Translators: This is shown in the Details column.
+                         * %s is the component size e.g. '42 GB'.
+                         */
+                        markup = g_strdup_printf (_("Whole disk is uninitialized. %s available for use"),
+                                                  strsize);
                 } else {
-                        gchar *strsize;
-
-                        strsize = gdu_util_get_size_for_display (largest_segment, FALSE, FALSE);
-
-                        if (whole_disk_is_uninitialized) {
+                        if (!is_partitioned) {
                                 /* Translators: This is shown in the Details column.
                                  * %s is the component size e.g. '42 GB'.
                                  */
-                                markup = g_strdup_printf (_("Whole disk is uninitialized. %s available for use"),
-                                                          strsize);
+                                markup = g_strdup_printf (_("%s available for use"), strsize);
                         } else {
-                                if (!is_partitioned) {
+                                if (num_partitions == 0) {
                                         /* Translators: This is shown in the Details column.
                                          * %s is the component size e.g. '42 GB'.
                                          */
-                                        markup = g_strdup_printf (_("%s available for use"), strsize);
+                                        markup = g_strdup_printf (_("The disk has no partitions. "
+                                                                    "%s available for use"),
+                                                                  strsize);
                                 } else {
-                                        if (num_partitions == 0) {
-                                                /* Translators: This is shown in the Details column.
-                                                 * %s is the component size e.g. '42 GB'.
-                                                 */
-                                                markup = g_strdup_printf (_("The disk has no partitions. "
-                                                                            "%s available for use"),
-                                                                          strsize);
-                                        } else {
-                                                s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                                                                "The disk has %d partition",
-                                                                                "The disk has %d partitions",
-                                                                                num_partitions),
-                                                                     num_partitions);
-                                                /* Translators: This is shown in the Details column.
-                                                 * First %s is the dngettext() result of "The disk has %d partitions.".
-                                                 * Second %s is the component size e.g. '42 GB'.
-                                                 */
-                                                markup = g_strdup_printf (_("%s. Largest contiguous free block is %s"),
-                                                                          s,
-                                                                          strsize);
-                                                g_free (s);
-                                        }
+                                        s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                                                        "The disk has %d partition",
+                                                                        "The disk has %d partitions",
+                                                                        num_partitions),
+                                                             num_partitions);
+                                        /* Translators: This is shown in the Details column.
+                                         * First %s is the dngettext() result of "The disk has %d partitions.".
+                                         * Second %s is the component size e.g. '42 GB'.
+                                         */
+                                        markup = g_strdup_printf (_("%s. Largest contiguous free block is %s"),
+                                                                  s,
+                                                                  strsize);
+                                        g_free (s);
                                 }
                         }
-
-                        g_free (strsize);
                 }
-
-                g_object_unref (d);
-        } else {
-                markup = g_strdup ("");
+                g_free (strsize);
         }
 
+ out:
+        if (markup == NULL)
+                markup = g_strdup ("");
         s = g_strconcat ("<small>",
                          markup,
                          "</small>",
@@ -875,15 +1065,20 @@ notes_data_func (GtkCellLayout   *cell_layout,
         g_object_set (renderer,
                       "markup", s,
                       "wrap-width", DETAILS_WIDTH - DETAILS_MARGIN,
+                      "sensitive", sensitive,
                       NULL);
         g_free (s);
 
         g_free (markup);
         g_object_unref (p);
+
+        if (d != NULL)
+                g_object_unref (d);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#if 0
 static gboolean
 model_visible_func (GtkTreeModel  *model,
                     GtkTreeIter   *iter,
@@ -903,21 +1098,9 @@ model_visible_func (GtkTreeModel  *model,
                                     iter,
                                     GDU_POOL_TREE_MODEL_COLUMN_PRESENTABLE, &p,
                                     -1);
-
                 if (p != NULL) {
                         if (GDU_IS_DRIVE (p)) {
-                                guint64 largest_segment;
-                                gboolean whole_disk_is_uninitialized;
-
-                                if (gdu_drive_has_unallocated_space (GDU_DRIVE (p),
-                                                                     &whole_disk_is_uninitialized,
-                                                                     &largest_segment,
-                                                                     NULL, /* total_free */
-                                                                     NULL)) {
-                                        if (largest_segment >= widget->priv->component_size) {
-                                                ret = TRUE;
-                                        }
-                                }
+                                ret = is_drive_selectable (widget, GDU_DRIVE (p));
                         } else {
                                 ret = TRUE;
                         }
@@ -927,7 +1110,7 @@ model_visible_func (GtkTreeModel  *model,
 
         return ret;
 }
-
+#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -946,16 +1129,17 @@ gdu_disk_selection_widget_constructed (GObject *object)
         g_ptr_array_add (pools, widget->priv->pool);
         model = GTK_TREE_MODEL (gdu_pool_tree_model_new (pools,
                                                          NULL,
-                                                         GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES |
-                                                         GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES));
+                                                         GDU_POOL_TREE_MODEL_FLAGS_NO_VOLUMES /* | GDU_POOL_TREE_MODEL_FLAGS_NO_UNALLOCATABLE_DRIVES */));
         g_ptr_array_unref (pools);
 
         widget->priv->model = gtk_tree_model_filter_new (model, NULL);
         g_object_unref (model);
+#if 0
         gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER (widget->priv->model),
                                                 model_visible_func,
                                                 widget,
                                                 NULL);
+#endif
 
         tree_view = gtk_tree_view_new_with_model (widget->priv->model);
         gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (tree_view), TRUE);
@@ -984,10 +1168,11 @@ gdu_disk_selection_widget_constructed (GObject *object)
 
         renderer = gtk_cell_renderer_pixbuf_new ();
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
-        gtk_tree_view_column_set_attributes (column,
-                                             renderer,
-                                             "gicon", GDU_POOL_TREE_MODEL_COLUMN_ICON,
-                                             NULL);
+        gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
+                                            renderer,
+                                            icon_data_func,
+                                            widget,
+                                            NULL);
         g_object_set (renderer,
                       "stock-size", GTK_ICON_SIZE_MENU,
                       NULL);
@@ -1156,10 +1341,11 @@ gdu_disk_selection_widget_get_num_available_disks (GduDiskSelectionWidget *widge
 {
         guint num_available_disks;
 
-        num_available_disks = 0;
-        gtk_tree_model_foreach (widget->priv->model,
-                                count_num_available_disks_func,
-                                &num_available_disks);
+        get_sizes (widget,
+                   NULL,
+                   &num_available_disks,
+                   NULL,
+                   NULL);
 
         return num_available_disks;
 }

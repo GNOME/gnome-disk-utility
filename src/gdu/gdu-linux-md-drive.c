@@ -1120,8 +1120,14 @@ gdu_linux_md_drive_get_slave_state_markup (GduLinuxMdDrive  *drive,
                         g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Writemostly")));
                 if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_BLOCKED)
                         g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Blocked")));
-                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE)
-                        g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Spare")));
+                if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_SPARE) {
+                        if (gdu_device_linux_md_component_get_position (slave) >= 0) {
+                                g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state",
+                                                                           "Partially Synchronized")));
+                        } else {
+                                g_ptr_array_add (slave_state, g_strdup (C_("Linux MD slave state", "Spare")));
+                        }
+                }
                 g_ptr_array_add (slave_state, NULL);
                 slave_state_str = g_strjoinv (", ", (gchar **) slave_state->pdata);
                 g_ptr_array_free (slave_state, TRUE);

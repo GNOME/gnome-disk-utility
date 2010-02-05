@@ -266,158 +266,42 @@ add_pv_cb (GduPool    *pool,
 }
 
 static void
-add_pv_create_part_cb (GduDevice  *device,
-                       gchar      *created_device_object_path,
-                       GError     *error,
-                       gpointer    user_data)
+new_pv_create_volume_cb (GduDrive     *drive,
+                         GAsyncResult *res,
+                         gpointer      user_data)
 {
         AddPvData *data = user_data;
+        GduVolume *volume;
+        GError *error;
 
-        if (error != NULL) {
-                GtkWidget *dialog;
-                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
-                                                         device,
-                                                         _("Error creating partition for RAID pv"),
-                                                         error);
-                gtk_widget_show_all (dialog);
-                gtk_window_present (GTK_WINDOW (dialog));
-                gtk_dialog_run (GTK_DIALOG (dialog));
-                gtk_widget_destroy (dialog);
+        error = NULL;
+        volume = gdu_drive_create_volume_finish (drive,
+                                                 res,
+                                                 &error);
+        if (volume == NULL) {
+                gdu_shell_raise_error (data->shell,
+                                       NULL,
+                                       error,
+                                       _("Error creating PV for VG"));
                 g_error_free (error);
-
-        if (data != NULL)
                 add_pv_data_free (data);
         } else {
                 GduPool *pool;
-                pool = gdu_device_get_pool (device);
+                GduDevice *pv_device;
+
+                pv_device = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
+                pool = gdu_device_get_pool (pv_device);
+
                 gdu_pool_op_linux_lvm2_vg_add_pv (pool,
                                                   gdu_linux_lvm2_volume_group_get_uuid (data->vg),
-                                                  created_device_object_path,
+                                                  gdu_device_get_object_path (pv_device),
                                                   add_pv_cb,
                                                   data);
-                g_free (created_device_object_path);
+
                 g_object_unref (pool);
+                g_object_unref (pv_device);
+                g_object_unref (volume);
         }
-}
-
-static void do_add_pv (AddPvData *data);
-
-static void
-add_pv_create_part_table_cb (GduDevice  *device,
-                                    GError     *error,
-                                    gpointer    user_data)
-{
-        AddPvData *data = user_data;
-
-        if (error != NULL) {
-                GtkWidget *dialog;
-                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
-                                                         device,
-                                                         _("Error creating partition table for LVM2 PV"),
-                                                         error);
-                gtk_widget_show_all (dialog);
-                gtk_window_present (GTK_WINDOW (dialog));
-                gtk_dialog_run (GTK_DIALOG (dialog));
-                gtk_widget_destroy (dialog);
-                g_error_free (error);
-
-                add_pv_data_free (data);
-        } else {
-                do_add_pv (data);
-        }
-}
-
-static void
-do_add_pv (AddPvData *data)
-{
-        gboolean whole_disk_is_uninitialized;
-        guint64 largest_segment;
-        GduPresentable *p;
-        GduDevice *d;
-
-        p = NULL;
-        d = NULL;
-
-        g_warn_if_fail (gdu_drive_can_create_volume (data->drive_to_add_to,
-                                                     &whole_disk_is_uninitialized,
-                                                     &largest_segment,
-                                                     NULL, /* total_free */
-                                                     &p));
-        g_assert (p != NULL);
-        g_assert_cmpint (data->size, <=, largest_segment);
-
-        d = gdu_presentable_get_device (GDU_PRESENTABLE (data->drive_to_add_to));
-
-        if (GDU_IS_VOLUME_HOLE (p)) {
-                guint64 offset;
-                const gchar *scheme;
-                const gchar *type;
-                gchar *name;
-                gchar *label;
-
-                offset = gdu_presentable_get_offset (p);
-
-                g_debug ("Creating partition for PV of "
-                         "size %" G_GUINT64_FORMAT " bytes at offset %" G_GUINT64_FORMAT " on %s",
-                         data->size,
-                         offset,
-                         gdu_device_get_device_file (d));
-
-                scheme = gdu_device_partition_table_get_scheme (d);
-                type = "";
-                label = NULL;
-                name = gdu_presentable_get_name (GDU_PRESENTABLE (data->vg));
-
-                if (g_strcmp0 (scheme, "mbr") == 0) {
-                        type = "0x8e";
-                } else if (g_strcmp0 (scheme, "gpt") == 0) {
-                        type = "E6D6D379-F507-44C2-A23C-238F2A3DF928";
-                        /* Limited to 36 UTF-16LE characters according to on-disk format..
-                         * Since a RAID array name is limited to 32 chars this should fit */
-                        if (name != NULL && strlen (name) > 0) {
-                                gchar cut_name[31 * 4 + 1];
-                                g_utf8_strncpy (cut_name, name, 31);
-                                label = g_strdup_printf ("LVM2: %s", cut_name);
-                        } else {
-                                label = g_strdup ("LVM2 Physical Volume");
-                        }
-                } else if (g_strcmp0 (scheme, "apt") == 0) {
-                        type = "Apple_Unix_SVR2";
-                        if (name != NULL && strlen (name) > 0)
-                                label = g_strdup_printf ("LVM2: %s", name);
-                        else
-                                label = g_strdup ("LVM2 Physical Volume");
-                }
-
-                gdu_device_op_partition_create (d,
-                                                offset,
-                                                data->size,
-                                                type,
-                                                label != NULL ? label : "",
-                                                NULL,
-                                                "",
-                                                "",
-                                                "",
-                                                FALSE,
-                                                add_pv_create_part_cb,
-                                                data);
-                g_free (label);
-                g_free (name);
-        } else {
-                /* otherwise the whole disk must be uninitialized... */
-                g_assert (whole_disk_is_uninitialized);
-
-                /* so create a partition table... */
-                gdu_device_op_partition_table_create (d,
-                                                      "mbr",
-                                                      add_pv_create_part_table_cb,
-                                                      data);
-        }
-
-        if (p != NULL)
-                g_object_unref (p);
-        if (d != NULL)
-                g_object_unref (d);
 }
 
 static void
@@ -450,7 +334,12 @@ on_pvs_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
         data->drive_to_add_to = gdu_add_pv_linux_lvm2_dialog_get_drive (GDU_ADD_PV_LINUX_LVM2_DIALOG (dialog));
         data->size = gdu_add_pv_linux_lvm2_dialog_get_size (GDU_ADD_PV_LINUX_LVM2_DIALOG (dialog));
 
-        do_add_pv (data);
+        gdu_drive_create_volume (data->drive_to_add_to,
+                                 data->size,
+                                 gdu_linux_lvm2_volume_group_get_uuid (vg), /* TODO: name */
+                                 GDU_CREATE_VOLUME_FLAGS_LINUX_LVM2,
+                                 (GAsyncReadyCallback) new_pv_create_volume_cb,
+                                 data);
 
  out:
         if (dialog != NULL)

@@ -52,11 +52,12 @@ struct GduAddComponentLinuxMdDialogClass
         GduDialogClass parent_class;
 };
 
-GType         gdu_add_component_linux_md_dialog_get_type  (void) G_GNUC_CONST;
-GtkWidget    *gdu_add_component_linux_md_dialog_new       (GtkWindow                    *parent,
-                                                           GduLinuxMdDrive              *linux_md_drive);
-GduDrive     *gdu_add_component_linux_md_dialog_get_drive (GduAddComponentLinuxMdDialog *dialog);
-guint64       gdu_add_component_linux_md_dialog_get_size  (GduAddComponentLinuxMdDialog *dialog);
+GType         gdu_add_component_linux_md_dialog_get_type   (void) G_GNUC_CONST;
+GtkWidget    *gdu_add_component_linux_md_dialog_new        (GtkWindow                    *parent,
+                                                            GduAddComponentLinuxMdFlags   flags,
+                                                            GduLinuxMdDrive              *linux_md_drive);
+GPtrArray    *gdu_add_component_linux_md_dialog_get_drives (GduAddComponentLinuxMdDialog *dialog);
+guint64       gdu_add_component_linux_md_dialog_get_size   (GduAddComponentLinuxMdDialog *dialog);
 
 G_END_DECLS
 

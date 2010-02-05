@@ -35,12 +35,14 @@
 struct GduAddComponentLinuxMdDialogPrivate
 {
         GtkWidget *disk_selection_widget;
+        GduAddComponentLinuxMdFlags flags;
 };
 
 enum {
         PROP_0,
-        PROP_DRIVE,
-        PROP_SIZE
+        PROP_DRIVES,
+        PROP_SIZE,
+        PROP_FLAGS,
 };
 
 G_DEFINE_TYPE (GduAddComponentLinuxMdDialog, gdu_add_component_linux_md_dialog, GDU_TYPE_DIALOG)
@@ -55,6 +57,26 @@ gdu_add_component_linux_md_dialog_finalize (GObject *object)
 }
 
 static void
+gdu_add_component_linux_md_dialog_set_property (GObject          *object,
+                                                guint             property_id,
+                                                const GValue     *value,
+                                                GParamSpec       *pspec)
+{
+        GduAddComponentLinuxMdDialog *dialog = GDU_ADD_COMPONENT_LINUX_MD_DIALOG (object);
+
+        switch (property_id) {
+
+        case PROP_FLAGS:
+                dialog->priv->flags = g_value_get_flags (value);
+                break;
+
+        default:
+                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+                break;
+        }
+}
+
+static void
 gdu_add_component_linux_md_dialog_get_property (GObject    *object,
                                                 guint       property_id,
                                                 GValue     *value,
@@ -63,12 +85,16 @@ gdu_add_component_linux_md_dialog_get_property (GObject    *object,
         GduAddComponentLinuxMdDialog *dialog = GDU_ADD_COMPONENT_LINUX_MD_DIALOG (object);
 
         switch (property_id) {
-        case PROP_DRIVE:
-                g_value_take_object (value, gdu_add_component_linux_md_dialog_get_drive (dialog));
+        case PROP_DRIVES:
+                g_value_take_boxed (value, gdu_add_component_linux_md_dialog_get_drives (dialog));
                 break;
 
         case PROP_SIZE:
                 g_value_set_uint64 (value, gdu_add_component_linux_md_dialog_get_size (dialog));
+                break;
+
+        case PROP_FLAGS:
+                g_value_set_flags (value, dialog->priv->flags);
                 break;
 
         default:
@@ -151,6 +177,7 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         GtkWidget *image;
         GtkWidget *label;
         gchar *s;
+        gchar *s2;
         GIcon *icon;
         GduPresentable *p;
         GduDevice *d;
@@ -162,6 +189,7 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         gchar *component_size_str;
         gchar *array_name;
         gchar *array_name_vpd;
+        GduDiskSelectionWidgetFlags flags;
 
         slaves = gdu_linux_md_drive_get_slaves (GDU_LINUX_MD_DRIVE (gdu_dialog_get_presentable (GDU_DIALOG (dialog))));
         slave = GDU_DEVICE (slaves->data);
@@ -177,10 +205,6 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         gtk_dialog_add_button (GTK_DIALOG (dialog),
                                GTK_STOCK_CANCEL,
                                GTK_RESPONSE_CANCEL);
-
-        gtk_dialog_add_button (GTK_DIALOG (dialog),
-                               GTK_STOCK_ADD,
-                               GTK_RESPONSE_APPLY);
 
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
@@ -200,7 +224,29 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         d = gdu_presentable_get_device (p);
         pool = gdu_presentable_get_pool (p);
 
-        s = g_strdup_printf (_("Add Component to %s"), array_name);
+        flags = GDU_DISK_SELECTION_WIDGET_FLAGS_NONE;
+        if (dialog->priv->flags & GDU_ADD_COMPONENT_LINUX_MD_FLAGS_SPARE) {
+                s = g_strdup_printf (_("Add spare to %s"), array_name);
+                s2 = g_strdup_printf (_("Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"),
+                                     component_size_str,
+                                     array_name,
+                                     array_name_vpd);
+                gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                       GTK_STOCK_ADD,
+                                       GTK_RESPONSE_APPLY);
+        } else if (dialog->priv->flags & GDU_ADD_COMPONENT_LINUX_MD_FLAGS_EXPANSION) {
+                s = g_strdup_printf (_("Expand %s"), array_name);
+                s2 = g_strdup_printf (_("Select one or more devices to use %s on for expanding the RAID Array \"%s\" (%s)"),
+                                     component_size_str,
+                                     array_name,
+                                     array_name_vpd);
+                flags |= GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_MULTIPLE;
+                gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                       _("_Expand"),
+                                       GTK_RESPONSE_APPLY);
+        } else {
+                g_assert_not_reached ();
+        }
         gtk_window_set_title (GTK_WINDOW (dialog), s);
         g_free (s);
 
@@ -210,21 +256,13 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_label_set_width_chars (GTK_LABEL (label), 70); /* TODO: hate */
-        /* Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-         * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
-         */
-        s = g_strdup_printf (_("Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"),
-                             component_size_str,
-                             array_name,
-                             array_name_vpd);
-        gtk_label_set_markup (GTK_LABEL (label), s);
-        g_free (s);
+        gtk_label_set_markup (GTK_LABEL (label), s2);
+        g_free (s2);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
         /* --- */
 
-        disk_selection_widget = gdu_disk_selection_widget_new (pool,
-                                                               GDU_DISK_SELECTION_WIDGET_FLAGS_NONE);
+        disk_selection_widget = gdu_disk_selection_widget_new (pool, flags);
         g_signal_connect (disk_selection_widget,
                           "is-drive-ignored",
                           G_CALLBACK (on_is_drive_ignored),
@@ -269,17 +307,18 @@ gdu_add_component_linux_md_dialog_class_init (GduAddComponentLinuxMdDialogClass 
 
         g_type_class_add_private (klass, sizeof (GduAddComponentLinuxMdDialogPrivate));
 
+        object_class->set_property = gdu_add_component_linux_md_dialog_set_property;
         object_class->get_property = gdu_add_component_linux_md_dialog_get_property;
         object_class->constructed  = gdu_add_component_linux_md_dialog_constructed;
         object_class->finalize     = gdu_add_component_linux_md_dialog_finalize;
 
         g_object_class_install_property (object_class,
-                                         PROP_DRIVE,
-                                         g_param_spec_object ("drive",
-                                                              NULL,
-                                                              NULL,
-                                                              GDU_TYPE_DRIVE,
-                                                              G_PARAM_READABLE));
+                                         PROP_DRIVES,
+                                         g_param_spec_boxed ("drives",
+                                                             NULL,
+                                                             NULL,
+                                                             G_TYPE_PTR_ARRAY,
+                                                             G_PARAM_READABLE));
 
         g_object_class_install_property (object_class,
                                          PROP_SIZE,
@@ -290,6 +329,17 @@ gdu_add_component_linux_md_dialog_class_init (GduAddComponentLinuxMdDialogClass 
                                                               G_MAXUINT64,
                                                               0,
                                                               G_PARAM_READABLE));
+
+        g_object_class_install_property (object_class,
+                                         PROP_FLAGS,
+                                         g_param_spec_flags ("flags",
+                                                             NULL,
+                                                             NULL,
+                                                             GDU_TYPE_ADD_COMPONENT_LINUX_MD_FLAGS,
+                                                             GDU_ADD_COMPONENT_LINUX_MD_FLAGS_NONE,
+                                                             G_PARAM_READABLE|
+                                                             G_PARAM_WRITABLE|
+                                                             G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -301,31 +351,28 @@ gdu_add_component_linux_md_dialog_init (GduAddComponentLinuxMdDialog *dialog)
 }
 
 GtkWidget *
-gdu_add_component_linux_md_dialog_new (GtkWindow       *parent,
-                                       GduLinuxMdDrive *linux_md_drive)
+gdu_add_component_linux_md_dialog_new (GtkWindow                    *parent,
+                                       GduAddComponentLinuxMdFlags   flags,
+                                       GduLinuxMdDrive              *linux_md_drive)
 {
         g_return_val_if_fail (GDU_IS_LINUX_MD_DRIVE (linux_md_drive), NULL);
         return GTK_WIDGET (g_object_new (GDU_TYPE_ADD_COMPONENT_LINUX_MD_DIALOG,
                                          "transient-for", parent,
                                          "presentable", linux_md_drive,
+                                         "flags", flags,
                                          NULL));
 }
 
-GduDrive *
-gdu_add_component_linux_md_dialog_get_drive (GduAddComponentLinuxMdDialog *dialog)
+GPtrArray *
+gdu_add_component_linux_md_dialog_get_drives (GduAddComponentLinuxMdDialog *dialog)
 {
         GPtrArray *drives;
-        GduDrive *ret;
 
         g_return_val_if_fail (GDU_IS_ADD_COMPONENT_LINUX_MD_DIALOG (dialog), NULL);
 
-        ret = NULL;
         drives = gdu_disk_selection_widget_get_selected_drives (GDU_DISK_SELECTION_WIDGET (dialog->priv->disk_selection_widget));
-        if (drives->len > 0)
-                ret = g_object_ref (GDU_DRIVE (drives->pdata[0]));
-        g_ptr_array_unref (drives);
 
-        return ret;
+        return drives;
 }
 
 guint64

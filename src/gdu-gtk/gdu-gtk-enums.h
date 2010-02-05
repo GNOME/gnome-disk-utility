@@ -105,4 +105,18 @@ typedef enum {
         GDU_DISK_SELECTION_WIDGET_FLAGS_ALLOW_DISKS_WITH_INSUFFICIENT_SPACE = (1<<1)
 } GduDiskSelectionWidgetFlags;
 
+/**
+ * GduAddComponentLinuxMdFlags:
+ * @GDU_ADD_COMPONENT_LINUX_MD_FLAGS_NONE: No flags set.
+ * @GDU_ADD_COMPONENT_LINUX_MD_FLAGS_SPARE: The dialog is for selecting a spare.
+ * @GDU_ADD_COMPONENT_LINUX_MD_FLAGS_EXPANSION: The dialog is for selecting a device used for expansion.
+ *
+ * Flags used when creating a #GduAddComponentLinuxMdDialog.
+ */
+typedef enum {
+        GDU_ADD_COMPONENT_LINUX_MD_FLAGS_NONE = 0,
+        GDU_ADD_COMPONENT_LINUX_MD_FLAGS_SPARE = (1<<0),
+        GDU_ADD_COMPONENT_LINUX_MD_FLAGS_EXPANSION = (1<<1)
+} GduAddComponentLinuxMdFlags;
+
 #endif /* GDU_GTK_ENUMS_H */

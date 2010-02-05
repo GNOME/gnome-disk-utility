@@ -306,10 +306,17 @@ void gdu_device_op_linux_md_check    (GduDevice                           *devic
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-void gdu_device_op_linux_md_add_component (GduDevice                                 *device,
-                                           const char                                *component_objpath,
-                                           GduDeviceLinuxMdAddComponentCompletedFunc  callback,
-                                           gpointer                                   user_data);
+void gdu_device_op_linux_md_add_spare (GduDevice                             *device,
+                                       const char                            *component_objpath,
+                                       GduDeviceLinuxMdAddSpareCompletedFunc  callback,
+                                       gpointer                               user_data);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void gdu_device_op_linux_md_expand (GduDevice                           *device,
+                                    GPtrArray                           *component_objpaths,
+                                    GduDeviceLinuxMdExpandCompletedFunc  callback,
+                                    gpointer                             user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 

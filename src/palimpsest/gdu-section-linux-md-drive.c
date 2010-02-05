@@ -593,10 +593,10 @@ on_components_dialog_attach_button_clicked (GduEditLinuxMdDialog *_dialog,
 
         slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, slave_device);
         if (slave_flags & GDU_LINUX_MD_DRIVE_SLAVE_FLAGS_NOT_ATTACHED) {
-                gdu_device_op_linux_md_add_component (device,
-                                                      gdu_device_get_object_path (slave_device),
-                                                      attach_component_op_callback,
-                                                      g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
+                gdu_device_op_linux_md_add_spare (device,
+                                                  gdu_device_get_object_path (slave_device),
+                                                  attach_component_op_callback,
+                                                  g_object_ref (gdu_section_get_shell (GDU_SECTION (section))));
         }
 
  out:
@@ -609,8 +609,13 @@ on_components_dialog_attach_button_clicked (GduEditLinuxMdDialog *_dialog,
 typedef struct {
         GduShell *shell;
         GduLinuxMdDrive *linux_md_drive;
-        GduDrive *drive_to_add_to;
+        GduDevice *linux_md_drive_device;
+        GPtrArray *drives_to_add_to;
+        GPtrArray *created_components_object_paths;
+        guint next_volume_number;
+        gboolean failed;
         guint64 size;
+        gboolean is_expansion;
 } AddComponentData;
 
 static void
@@ -620,10 +625,16 @@ add_component_data_free (AddComponentData *data)
                 g_object_unref (data->shell);
         if (data->linux_md_drive != NULL)
                 g_object_unref (data->linux_md_drive);
-        if (data->drive_to_add_to != NULL)
-                g_object_unref (data->drive_to_add_to);
+        if (data->linux_md_drive_device != NULL)
+                g_object_unref (data->linux_md_drive_device);
+        if (data->drives_to_add_to != NULL)
+                g_ptr_array_unref (data->drives_to_add_to);
+        if (data->created_components_object_paths != NULL)
+                g_ptr_array_unref (data->created_components_object_paths);
         g_free (data);
 }
+
+static void do_create_volumes (AddComponentData *data);
 
 static void
 add_component_cb (GduDevice  *device,
@@ -643,9 +654,13 @@ add_component_cb (GduDevice  *device,
                 gtk_dialog_run (GTK_DIALOG (dialog));
                 gtk_widget_destroy (dialog);
                 g_error_free (error);
+                data->failed = TRUE;
+        } else {
+                /* Onwards to the next one */
+                data->next_volume_number++;
         }
 
-        add_component_data_free (data);
+        do_create_volumes (data);
 }
 
 static void
@@ -667,30 +682,89 @@ new_component_create_volume_cb (GduDrive     *drive,
                                        error,
                                        _("Error creating component for RAID array"));
                 g_error_free (error);
-                add_component_data_free (data);
+                data->failed = TRUE;
+                do_create_volumes (data);
         } else {
                 GduDevice *component_device;
-                GduDevice *array_device;
 
                 component_device = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
-                array_device = gdu_presentable_get_device (GDU_PRESENTABLE (data->linux_md_drive));
 
-                gdu_device_op_linux_md_add_component (array_device,
-                                                      gdu_device_get_object_path (component_device),
-                                                      add_component_cb,
-                                                      data);
+                if (data->is_expansion) {
+                        /* If expanding, just queue up object paths ... */
+                        g_ptr_array_add (data->created_components_object_paths,
+                                         g_strdup (gdu_device_get_object_path (component_device)));
+                        /* ... and continue onwards to the next volume */
+                        data->next_volume_number++;
+                        do_create_volumes (data);
+                } else {
+                        gdu_device_op_linux_md_add_spare (data->linux_md_drive_device,
+                                                          gdu_device_get_object_path (component_device),
+                                                          add_component_cb,
+                                                          data);
+                }
 
-                g_object_unref (array_device);
                 g_object_unref (component_device);
                 g_object_unref (volume);
         }
 }
 
 static void
-on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
-                                         gpointer              user_data)
+expand_md_cb (GduDevice  *device,
+              GError     *error,
+              gpointer    user_data)
 {
-        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        AddComponentData *data = user_data;
+
+        if (error != NULL) {
+                GtkWidget *dialog;
+                dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (data->shell)),
+                                                         device,
+                                                         _("Error expanding RAID Array"),
+                                                         error);
+                gtk_widget_show_all (dialog);
+                gtk_window_present (GTK_WINDOW (dialog));
+                gtk_dialog_run (GTK_DIALOG (dialog));
+                gtk_widget_destroy (dialog);
+                g_error_free (error);
+                data->failed = TRUE;
+        }
+
+        add_component_data_free (data);
+}
+
+static void
+do_create_volumes (AddComponentData *data)
+{
+        if (data->failed) {
+                /* Failed - already shown dialogs */
+                add_component_data_free (data);
+        } else if (data->next_volume_number == data->drives_to_add_to->len) {
+                /* Done! */
+
+                if (data->is_expansion) {
+                        gdu_device_op_linux_md_expand (data->linux_md_drive_device,
+                                                       data->created_components_object_paths,
+                                                       expand_md_cb,
+                                                       data);
+                } else {
+                        add_component_data_free (data);
+                }
+        } else {
+                GduDrive *drive;
+                drive = data->drives_to_add_to->pdata[data->next_volume_number];
+                gdu_drive_create_volume (drive,
+                                         data->size,
+                                         gdu_device_linux_md_get_name (data->linux_md_drive_device),
+                                         GDU_CREATE_VOLUME_FLAGS_LINUX_MD,
+                                         (GAsyncReadyCallback) new_component_create_volume_cb,
+                                         data);
+        }
+}
+
+static void
+generic_add_component (GduSectionLinuxMdDrive *section,
+                       gboolean is_expansion)
+{
         GduLinuxMdDrive *linux_md_drive;
         GduDevice *device;
         GtkWidget *dialog;
@@ -708,7 +782,11 @@ on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
         if (device == NULL)
                 goto out;
 
-        dialog = gdu_add_component_linux_md_dialog_new (toplevel, linux_md_drive);
+        dialog = gdu_add_component_linux_md_dialog_new (toplevel,
+                                                        is_expansion ?
+                                                          GDU_ADD_COMPONENT_LINUX_MD_FLAGS_EXPANSION :
+                                                          GDU_ADD_COMPONENT_LINUX_MD_FLAGS_SPARE,
+                                                        linux_md_drive);
         gtk_widget_show_all (dialog);
         response = gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_hide (dialog);
@@ -718,21 +796,35 @@ on_components_dialog_new_button_clicked (GduEditLinuxMdDialog *_dialog,
         data = g_new0 (AddComponentData, 1);
         data->shell = g_object_ref (gdu_section_get_shell (GDU_SECTION (section)));
         data->linux_md_drive = g_object_ref (linux_md_drive);
-        data->drive_to_add_to = gdu_add_component_linux_md_dialog_get_drive (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
+        data->linux_md_drive_device = g_object_ref (device);
+        data->drives_to_add_to = gdu_add_component_linux_md_dialog_get_drives (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
         data->size = gdu_add_component_linux_md_dialog_get_size (GDU_ADD_COMPONENT_LINUX_MD_DIALOG (dialog));
+        data->is_expansion = is_expansion;
+        data->created_components_object_paths = g_ptr_array_new_with_free_func (g_free);
 
-        gdu_drive_create_volume (data->drive_to_add_to,
-                                 data->size,
-                                 gdu_device_linux_md_get_name (device),
-                                 GDU_CREATE_VOLUME_FLAGS_LINUX_MD,
-                                 (GAsyncReadyCallback) new_component_create_volume_cb,
-                                 data);
+        do_create_volumes (data);
 
  out:
         if (dialog != NULL)
                 gtk_widget_destroy (dialog);
         if (device != NULL)
                 g_object_unref (device);
+}
+
+static void
+on_components_dialog_expand_button_clicked (GduEditLinuxMdDialog *dialog,
+                                            gpointer              user_data)
+{
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        generic_add_component (section, TRUE);
+}
+
+static void
+on_components_dialog_add_spare_button_clicked (GduEditLinuxMdDialog *dialog,
+                                               gpointer              user_data)
+{
+        GduSectionLinuxMdDrive *section = GDU_SECTION_LINUX_MD_DRIVE (user_data);
+        generic_add_component (section, FALSE);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -752,8 +844,12 @@ on_edit_components_button_clicked (GduButtonElement *button_element,
         dialog = gdu_edit_linux_md_dialog_new (toplevel, GDU_LINUX_MD_DRIVE (p));
 
         g_signal_connect (dialog,
-                          "new-button-clicked",
-                          G_CALLBACK (on_components_dialog_new_button_clicked),
+                          "add-spare-button-clicked",
+                          G_CALLBACK (on_components_dialog_add_spare_button_clicked),
+                          section);
+        g_signal_connect (dialog,
+                          "expand-button-clicked",
+                          G_CALLBACK (on_components_dialog_expand_button_clicked),
                           section);
         g_signal_connect (dialog,
                           "attach-button-clicked",

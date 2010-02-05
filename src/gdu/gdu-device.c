@@ -2430,14 +2430,14 @@ gdu_device_op_linux_md_check (GduDevice                           *device,
 
 typedef struct {
         GduDevice *device;
-        GduDeviceLinuxMdAddComponentCompletedFunc callback;
+        GduDeviceLinuxMdAddSpareCompletedFunc callback;
         gpointer user_data;
-} LinuxMdAddComponentData;
+} LinuxMdAddSpareData;
 
 static void
-op_add_component_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+op_add_spare_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
 {
-        LinuxMdAddComponentData *data = user_data;
+        LinuxMdAddSpareData *data = user_data;
         _gdu_error_fixup (error);
         if (data->callback != NULL)
                 data->callback (data->device, error, data->user_data);
@@ -2446,26 +2446,68 @@ op_add_component_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointe
 }
 
 void
-gdu_device_op_linux_md_add_component (GduDevice                                 *device,
-                                      const char                                *component_objpath,
-                                      GduDeviceLinuxMdAddComponentCompletedFunc  callback,
-                                      gpointer                                   user_data)
+gdu_device_op_linux_md_add_spare (GduDevice                                 *device,
+                                  const char                                *component_objpath,
+                                  GduDeviceLinuxMdAddSpareCompletedFunc  callback,
+                                  gpointer                                   user_data)
 {
         char *options[16];
-        LinuxMdAddComponentData *data;
+        LinuxMdAddSpareData *data;
 
-        data = g_new0 (LinuxMdAddComponentData, 1);
+        data = g_new0 (LinuxMdAddSpareData, 1);
         data->device = g_object_ref (device);
         data->callback = callback;
         data->user_data = user_data;
 
         options[0] = NULL;
 
-        org_freedesktop_UDisks_Device_linux_md_add_component_async (device->priv->proxy,
-                                                                    component_objpath,
-                                                                    (const char **) options,
-                                                                    op_add_component_to_linux_md_array_cb,
-                                                                    data);
+        org_freedesktop_UDisks_Device_linux_md_add_spare_async (device->priv->proxy,
+                                                                component_objpath,
+                                                                (const char **) options,
+                                                                op_add_spare_to_linux_md_array_cb,
+                                                                data);
+}
+
+/* -------------------------------------------------------------------------------- */
+
+typedef struct {
+        GduDevice *device;
+        GduDeviceLinuxMdExpandCompletedFunc callback;
+        gpointer user_data;
+} LinuxMdExpandData;
+
+static void
+op_expand_to_linux_md_array_cb (DBusGProxy *proxy, GError *error, gpointer user_data)
+{
+        LinuxMdExpandData *data = user_data;
+        _gdu_error_fixup (error);
+        if (data->callback != NULL)
+                data->callback (data->device, error, data->user_data);
+        g_object_unref (data->device);
+        g_free (data);
+}
+
+void
+gdu_device_op_linux_md_expand (GduDevice                            *device,
+                               GPtrArray                            *component_objpaths,
+                               GduDeviceLinuxMdExpandCompletedFunc   callback,
+                               gpointer                              user_data)
+{
+        char *options[16];
+        LinuxMdExpandData *data;
+
+        data = g_new0 (LinuxMdExpandData, 1);
+        data->device = g_object_ref (device);
+        data->callback = callback;
+        data->user_data = user_data;
+
+        options[0] = NULL;
+
+        org_freedesktop_UDisks_Device_linux_md_expand_async (device->priv->proxy,
+                                                             component_objpaths,
+                                                             (const char **) options,
+                                                             op_expand_to_linux_md_array_cb,
+                                                             data);
 }
 
 /* -------------------------------------------------------------------------------- */

@@ -49,7 +49,9 @@ struct GduEditLinuxMdDialogClass
 {
         GduDialogClass parent_class;
 
-        void (*new_button_clicked)    (GduEditLinuxMdDialog *dialog);
+        void (*add_spare_button_clicked) (GduEditLinuxMdDialog *dialog);
+        void (*expand_button_clicked)    (GduEditLinuxMdDialog *dialog);
+
         void (*attach_button_clicked) (GduEditLinuxMdDialog *dialog,
                                        GduDevice            *slave);
         void (*remove_button_clicked) (GduEditLinuxMdDialog *dialog,

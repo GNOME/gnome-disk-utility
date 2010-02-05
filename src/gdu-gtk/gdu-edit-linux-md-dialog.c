@@ -43,14 +43,16 @@ struct GduEditLinuxMdDialogPrivate
         GduDetailsElement *component_state_element;
         GduDetailsElement *component_device_element;
 
-        GduButtonElement *component_new_button;
+        GduButtonElement *add_spare_button;
+        GduButtonElement *expand_button;
         GduButtonElement *component_attach_button;
         GduButtonElement *component_remove_button;
 
 };
 
 enum {
-        NEW_BUTTON_CLICKED_SIGNAL,
+        ADD_SPARE_BUTTON_CLICKED_SIGNAL,
+        EXPAND_BUTTON_CLICKED_SIGNAL,
         ATTACH_BUTTON_CLICKED_SIGNAL,
         REMOVE_BUTTON_CLICKED_SIGNAL,
         LAST_SIGNAL
@@ -106,11 +108,22 @@ gdu_edit_linux_md_dialog_class_init (GduEditLinuxMdDialogClass *klass)
         object_class->constructed  = gdu_edit_linux_md_dialog_constructed;
         object_class->finalize     = gdu_edit_linux_md_dialog_finalize;
 
-        signals[NEW_BUTTON_CLICKED_SIGNAL] =
-                g_signal_new ("new-button-clicked",
+        signals[ADD_SPARE_BUTTON_CLICKED_SIGNAL] =
+                g_signal_new ("add-spare-button-clicked",
                               G_TYPE_FROM_CLASS (klass),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GduEditLinuxMdDialogClass, new_button_clicked),
+                              G_STRUCT_OFFSET (GduEditLinuxMdDialogClass, add_spare_button_clicked),
+                              NULL,
+                              NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
+
+        signals[EXPAND_BUTTON_CLICKED_SIGNAL] =
+                g_signal_new ("expand-button-clicked",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GduEditLinuxMdDialogClass, expand_button_clicked),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__VOID,
@@ -164,11 +177,19 @@ gdu_edit_linux_md_dialog_new (GtkWindow        *parent,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_component_new_button_clicked (GduButtonElement *button_element,
+on_add_spare_button_clicked (GduButtonElement *button_element,
                                  gpointer          user_data)
 {
         GduEditLinuxMdDialog *dialog = GDU_EDIT_LINUX_MD_DIALOG (user_data);
-        g_signal_emit (dialog, signals[NEW_BUTTON_CLICKED_SIGNAL], 0);
+        g_signal_emit (dialog, signals[ADD_SPARE_BUTTON_CLICKED_SIGNAL], 0);
+}
+
+static void
+on_expand_button_clicked (GduButtonElement *button_element,
+                          gpointer          user_data)
+{
+        GduEditLinuxMdDialog *dialog = GDU_EDIT_LINUX_MD_DIALOG (user_data);
+        g_signal_emit (dialog, signals[EXPAND_BUTTON_CLICKED_SIGNAL], 0);
 }
 
 static void
@@ -466,14 +487,24 @@ gdu_edit_linux_md_dialog_constructed (GObject *object)
         elements = g_ptr_array_new_with_free_func (g_object_unref);
 
         button_element = gdu_button_element_new (GTK_STOCK_NEW,
-                                                 _("_New Component"),
-                                                 _("Add a new component to the array"));
+                                                 _("Add _Spare"),
+                                                 _("Add a spare to the array"));
         g_signal_connect (button_element,
                           "clicked",
-                          G_CALLBACK (on_component_new_button_clicked),
+                          G_CALLBACK (on_add_spare_button_clicked),
                           dialog);
         g_ptr_array_add (elements, button_element);
-        dialog->priv->component_attach_button = button_element;
+        dialog->priv->add_spare_button = button_element;
+
+        button_element = gdu_button_element_new (GTK_STOCK_NEW,
+                                                 _("_Expand Array"),
+                                                 _("Increase the capacity of the array"));
+        g_signal_connect (button_element,
+                          "clicked",
+                          G_CALLBACK (on_expand_button_clicked),
+                          dialog);
+        g_ptr_array_add (elements, button_element);
+        dialog->priv->expand_button = button_element;
 
         button_element = gdu_button_element_new (GTK_STOCK_ADD,
                                                  _("_Attach Component"),

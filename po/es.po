@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2010-02-05 00:17+0000\n"
-"PO-Revision-Date: 2010-02-05 08:06+0100\n"
+"POT-Creation-Date: 2010-02-05 22:16+0000\n"
+"PO-Revision-Date: 2010-02-06 11:32+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -166,26 +166,45 @@ msgstr "Error al montar el volumen"
 msgid "Error storing passphrase in keyring"
 msgstr "Error al almacenar la contraseña en el depósito de claves"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:130
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
 msgid "The RAID Array to add a component to."
 msgstr "El conjunto RAID en el que añadir un componente."
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:203
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, c-format
-msgid "Add Component to %s"
-msgstr "Añadir componente a %s"
+#| msgid "Add Component to %s"
+msgid "Add spare to %s"
+msgstr "Añadir repuesto a %s"
 
-#. TODO: hate
-#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
-#.
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:216
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
 #, c-format
-msgid ""
-"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+#| msgid ""
+#| "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 msgstr ""
-"Seleccionar un disco para crear el componente %s para el conjunto RAID «%s» (%"
-"s)"
+"Seleccionar un disco para crear el repuesto %s para el conjunto RAID «%s» (%s)"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#, c-format
+#| msgid "Edit %s"
+msgid "Expand %s"
+msgstr "Expandir %s"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
+#, c-format
+#| msgid ""
+#| "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+msgid ""
+"Select one or more devices to use %s on for expanding the RAID Array \"%s"
+"\" (%s)"
+msgstr ""
+"Seleccionar un o más dispositivos donde usar %s para expandir el conjunto "
+"RAID «%s» (%s)"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
+#| msgid "SAS Expander"
+msgid "_Expand"
+msgstr "_Expandir"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
@@ -468,7 +487,7 @@ msgid ""
 msgstr ""
 "Número de operaciones de reasignación. El valor crudo de este atributo "
 "muestra el número total de intentos (con y sin éxito) de transferir datos "
-"desde sectores reubicados a un área reservada"
+"desde sectores reubicados a un área libre."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1651,7 +1670,6 @@ msgstr "No queda espacio libre."
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
 #, c-format
-#| msgid "%s. Largest contiguous free block is %s"
 msgid ""
 "Insufficient space: %s is needed but largest contiguous free block is %s."
 msgstr ""
@@ -1695,7 +1713,6 @@ msgstr "Se creará una partición"
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:965
-#| msgid "A partition will be created"
 msgid "A volume will be created"
 msgstr "Se creará un volumen"
 
@@ -1713,8 +1730,6 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:980
 #, c-format
-#| msgid ""
-#| "A %s partition will be created. Afterwards no space will be available."
 msgid "A %s volume will be created. Afterwards no space will be available."
 msgstr ""
 "Se creará un volumen de %s. Después no quedará espacio libre disponible."
@@ -1734,7 +1749,6 @@ msgstr "Se creará una partición de %s. Después quedarán %s disponibles."
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:999
 #, c-format
-#| msgid "A %s partition will be created. Afterwards %s will be available."
 msgid "A %s volume will be created. Afterwards %s will be available."
 msgstr "Se creará un volumen de %s. Después quedarán %s disponibles."
 
@@ -1801,7 +1815,7 @@ msgstr ""
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 #: ../src/palimpsest/gdu-section-drive.c:1004
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:957
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
 msgstr "_Prueba de rendimiento"
 
@@ -1933,13 +1947,13 @@ msgid "Unallocated"
 msgstr "Sin asignar"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:465
 #: ../src/palimpsest/gdu-section-drive.c:935
 msgid "SMART Status:"
 msgstr "Estado SMART:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
 #: ../src/palimpsest/gdu-section-drive.c:911
 #: ../src/palimpsest/gdu-section-volumes.c:1916
 msgid "Device:"
@@ -1965,64 +1979,77 @@ msgstr "Quitar el volumen físico del GV"
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:857
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "No está soportado"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:385
 #, c-format
 msgid "Edit components on %s (%s)"
 msgstr "Editar componentes en %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:396
 msgid "C_omponents"
 msgstr "C_omponentes"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:426
 msgid "Position"
 msgstr "Posición"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
 msgid "Component"
 msgstr "Componente"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:451
 msgid "State"
 msgstr "Estado"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
 msgid "Position:"
 msgstr "Posición:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:473
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:878
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 #: ../src/palimpsest/gdu-section-volumes.c:1905
 msgid "State:"
 msgstr "Estado:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-msgid "_New Component"
-msgstr "Componente _nuevo"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
+#| msgctxt "Linux MD slave state"
+#| msgid "Spare"
+msgid "Add _Spare"
+msgstr "Añadir _repuesto"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
-msgid "Add a new component to the array"
-msgstr "Añadir un componente nuevo al conjunto"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:491
+#| msgid "Add a new component to the array"
+msgid "Add a spare to the array"
+msgstr "Añadir un repuesto al conjunto"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:500
+#| msgid "_Start Array"
+msgid "_Expand Array"
+msgstr "_Expandir el conjunto"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:501
+#| msgid "Erase or partition the array"
+msgid "Increase the capacity of the array"
+msgstr "Aumentar la capacidad del conjunto"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:510
 msgid "_Attach Component"
 msgstr "_Añadir componente"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:511
 msgid "Attach the component to the array"
 msgstr "Añadir el componente al conjunto"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:520
 msgid "_Remove Component"
 msgstr "_Quitar componente"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:521
 msgid "Remove the component from the array"
 msgstr "Quitar el componente del conjunto"
 
@@ -2872,7 +2899,7 @@ msgid "RAID"
 msgstr "RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:613
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:848
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "Conjunto RAID"
 
@@ -2901,7 +2928,14 @@ msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Bloqueado"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1124
+#: ../src/gdu/gdu-linux-md-drive.c:1126
+#| msgctxt "Linux MD slave state"
+#| msgid "Fully Synchronized"
+msgctxt "Linux MD slave state"
+msgid "Partially Synchronized"
+msgstr "Parcialmente sincronizado"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1128
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Repuesto"
@@ -4598,7 +4632,7 @@ msgstr "Tasa de rotación:"
 
 #: ../src/palimpsest/gdu-section-drive.c:923
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:882
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1930
 msgid "Capacity:"
 msgstr "Capacidad:"
@@ -4608,7 +4642,7 @@ msgid "Connection:"
 msgstr "Conexión:"
 
 #: ../src/palimpsest/gdu-section-drive.c:931
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:874
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
 msgstr "Particionado:"
 
@@ -4718,7 +4752,6 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "Error al añadir el volumen físico al grupo de volúmenes"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#| msgid "Error creating RAID array"
 msgid "Error creating PV for VG"
 msgstr "Error al crear el volumen físico para el grupo de volúmenes"
 
@@ -4759,7 +4792,7 @@ msgid "Unknown (%d)"
 msgstr "Desconocido (%d)"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:870
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:966
 msgid "Name:"
 msgstr "Nombre:"
 
@@ -4902,76 +4935,81 @@ msgid "Are you sure you want the remove the component?"
 msgstr "¿Está seguro de que quiere quitar el componente?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
 msgid "Error adding component to RAID Array"
 msgstr "Error al añadir el componente en el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:668
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:683
 #: ../src/palimpsest/gdu-shell.c:599
 msgid "Error creating component for RAID array"
 msgstr "Error al crear el componente para el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:787
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+#| msgid "Error stopping RAID Array"
+msgid "Error expanding RAID Array"
+msgstr "Error al expandir el conjunto RAID"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"
 msgstr "Error al comprobar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:862
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Level:"
 msgstr "Nivel:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:866
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:962
 msgid "Metadata Version:"
 msgstr "Versión de los metadatos:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:886
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:982
 msgid "Action:"
 msgstr "Acción:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:890
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:986
 msgid "Components:"
 msgstr "Componentes:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:907
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "St_art RAID Array"
 msgstr "I_niciar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:908
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 msgid "Bring up the RAID Array"
 msgstr "Despertar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:917
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
 msgid "St_op RAID Array"
 msgstr "Pa_rar el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:918
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
 msgid "Tear down the RAID Array"
 msgstr "Dormir el conjunto RAID"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:927
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
 msgid "Format/Erase RAI_D Array"
 msgstr "Formatear/borrar el conjunto RAI_D"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:928
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
 msgstr "Borrar o particionar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:937
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
 msgid "Chec_k Array"
 msgstr "Co_mprobar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:938
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "Check and repair the array"
 msgstr "Comprobar y reparar el conjunto"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:947
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
 msgid "Edit Com_ponents"
 msgstr "Editar comp_onentes"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:948
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Create and remove components"
 msgstr "Crear y quitar componentes"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Measure RAID array performance"
 msgstr "Medir el rendimiento del conjunto RAID"
 
@@ -5504,6 +5542,9 @@ msgstr "_Detalles:"
 #: ../src/palimpsest/gdu-shell.c:1160
 msgid "_Storage Devices"
 msgstr "Dispositivos de _almacenamiento"
+
+#~ msgid "_New Component"
+#~ msgstr "Componente _nuevo"
 
 #~ msgid "Ignored Drives"
 #~ msgstr "Unidades ignoradas"
@@ -6053,9 +6094,6 @@ msgstr "Dispositivos de _almacenamiento"
 #~ "Iniciar el conjunto RAID en un modo degradado significa que el volumen "
 #~ "RAID no es tolerante a fallos de las unidades. Los datos en el volumen se "
 #~ "pueden perder de forma irrevocable si una unidad falla."
-
-#~ msgid "_Start Array"
-#~ msgstr "_Iniciar el conjunto"
 
 #~ msgid "_Erase"
 #~ msgstr "_Borrar"

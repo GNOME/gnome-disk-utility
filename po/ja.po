@@ -1,7 +1,7 @@
 # Japanese translation for gnome-disk-utility.
-# Copyright (C) 2009 gnome-disk-utility's COPYRIGHT HOLDER
+# Copyright (C) 2009-2010 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Shushi Kurose <md81bird@hitaki.net>, 2009.
+# Shushi Kurose <md81bird@hitaki.net>, 2009-2010.
 #
 #: ../src/gdu-gtk/gdu-error-dialog.c:163
 msgid ""
@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-12-20 23:45+0900\n"
-"PO-Revision-Date: 2009-12-20 21:34+0900\n"
+"POT-Creation-Date: 2010-02-08 21:16+0000\n"
+"PO-Revision-Date: 2010-02-06 19:51+0900\n"
 "Last-Translator: Shushi Kurose <md81bird@hitaki.net>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -22,9 +22,9 @@ msgstr ""
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:264
-#: ../src/palimpsest/gdu-shell.c:316 ../src/palimpsest/gdu-shell.c:891
-#: ../src/palimpsest/gdu-shell.c:1198
+#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:804
+#: ../src/palimpsest/gdu-shell.c:1111
 msgid "Disk Utility"
 msgstr "ディスク・ユーティリティ"
 
@@ -165,22 +165,54 @@ msgstr "デバイスのマウント中にエラーが発生しました"
 msgid "Error storing passphrase in keyring"
 msgstr "キーリングにパスフレーズを格納中にエラーが発生しました"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
-#, c-format
-msgid "Add Component to %s"
-msgstr "%s にコンポーネントを追加"
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
+msgid "The RAID Array to add a component to."
+msgstr "コンポーネントを追加する RAID アレイ"
 
-#. TODO: hate
-#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
-#.
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
+#, c-format
+msgid "Add spare to %s"
+msgstr "%s にスペアを追加"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
+#, c-format
+msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
+msgstr ""
+"RAIDアレイ \"%2$s\" (%3$s) に %1$s のスペアを作成するデバイスを選択してくださ"
+"い"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#, c-format
+msgid "Expand %s"
+msgstr "拡張領域 %s"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
 #, c-format
 msgid ""
-"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+"Select one or more devices to use %s on for expanding the RAID Array \"%s"
+"\" (%s)"
 msgstr ""
-"RAIDアレイ \"%2$s\" (%3$s) に %1$s のコンポーネントを作成するディスクを選択し"
+"RAIDアレイ \"%2$s\" (%3$s) を拡張して %1$s を利用するデバイスを1つ以上選択し"
 "てください"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
+msgid "_Expand"
+msgstr "拡張領域(_E)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
+msgid "The VG to add a PV to."
+msgstr "物理ボリュームを追加するボリュームグループ"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
+#, c-format
+msgid "Add Physical Volume to %s (%s)"
+msgstr "物理ボリュームを %s (%s) に追加"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:266
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "サイズ(_S):"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -921,12 +953,12 @@ msgstr "ディスクが power-up 状態（電源On）になってからの経過
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1336
 msgid "Power Cycles:"
-msgstr ""
+msgstr "電源投入回数:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
 msgid "The number of full disk power on/off cycles"
-msgstr ""
+msgstr "ディスク全体の電源 ON/OFF 回数です"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1344
@@ -1170,7 +1202,7 @@ msgstr "SMART データがフォーマットに従っていません"
 #. * the temperature of the disk
 #.
 #. Translators: Shown in the "Self-tests" item in the status table
-#. Translators: shown in the grid when we don't know the purpose/usage of the partition
+#. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2008
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2026
@@ -1178,7 +1210,7 @@ msgstr "SMART データがフォーマットに従っていません"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2054
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2063
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2125
-#: ../src/gdu-gtk/gdu-volume-grid.c:1283 ../src/gdu/gdu-util.c:1075
+#: ../src/gdu-gtk/gdu-volume-grid.c:1306 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "不明"
 
@@ -1309,6 +1341,8 @@ msgid ""
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 "protocol."
 msgstr ""
+"他のマシンのストレージデバイスを管理するには、アドレスを入力して \"接続\" を"
+"押してください。<i>セキュア・シェル</i> プロトコルを使って接続します。"
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
@@ -1331,13 +1365,42 @@ msgstr "接続の際のユーザ名"
 msgid "_User Name:"
 msgstr "ユーザ名(_U):"
 
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
+msgid "Maximum Logical Volume Size"
+msgstr "最大の論理ボリュームサイズ"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
+msgid "The maximum possible logical volume size"
+msgstr "利用可能な最大の論理ボリュームサイズ"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
+msgid "Logical Volume Size"
+msgstr "論理ボリュームサイズ"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
+msgid "The requested Logical Volume size"
+msgstr "要求された論理ボリュームサイズ"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "作成(_R)"
+
+#. Translators: The %s is the name of the volume group
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
+#, c-format
+msgid "Create Logical Volume on %s"
+msgstr "%s に論理ボリュームを作成"
+
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
 msgid "Pool"
 msgstr "プール"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
 msgid "The pool of devices"
 msgstr "デバイスプール"
 
@@ -1358,7 +1421,7 @@ msgid "The requested name for the array"
 msgstr "要求されたアレイの名前です"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
-#: ../src/gdu-gtk/gdu-size-widget.c:256
+#: ../src/gdu-gtk/gdu-size-widget.c:488
 msgid "Size"
 msgstr "サイズ"
 
@@ -1367,7 +1430,7 @@ msgid "The requested size of the array"
 msgstr "要求されたアレイのサイズです"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:331
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
 msgid "Component Size"
 msgstr "コンポーネントのサイズ"
 
@@ -1394,12 +1457,6 @@ msgstr "アレイに使用するドライブ"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
 msgid "Create RAID Array"
 msgstr "RAID アレイを作成"
-
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
-msgid "C_reate"
-msgstr "作成(_R)"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
 msgid "General"
@@ -1465,16 +1522,16 @@ msgstr "1 MiB"
 msgid "Array _Size:"
 msgstr "アレイサイズ(_S):"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:687
 msgid "_Disks"
 msgstr "ディスク(_D)"
 
 #. --------------------------------------------------------------------------------
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:702
 msgid "Use entire disks instead of _partitions"
 msgstr "パーティションの代わりにディスク全体を使用する(_P)"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1485,18 +1542,18 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:870
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:869
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr "%s アレイを作成するためのディスクの数が足りません"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:886
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:885
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "%s アレイを構築するために、%d 個のディスクを選んでください。"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:893
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1507,7 +1564,7 @@ msgstr[0] "%s アレイを構築するために、あと %d 個のディスク�
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:917
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:916
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr ""
@@ -1530,75 +1587,84 @@ msgstr "パーティションサイズ"
 msgid "The requested partition size"
 msgstr "要求されたパーティションサイズです"
 
-#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
-msgid "_Size:"
-msgstr "サイズ(_S):"
-
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
 #, c-format
 msgid "Create partition on %s"
 msgstr "%s にパーティションを作成"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:254
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
 #: ../src/gdu-gtk/gdu-format-dialog.c:166
 msgid "Flags"
 msgstr "フラグ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:255
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
 msgid "Flags for the widget"
 msgstr "ウィジェットのフラグ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:256
 msgid "Selected Drives"
 msgstr "選択されたドライブ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:269
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:257
 msgid "Array of selected drives"
 msgstr "選択されたドライブのアレイ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
-msgid "Ignored Drives"
-msgstr "無視したドライブ"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
-msgid "Array of drives to ignore"
-msgstr "無視するアレイのドライブ"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:267
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
 msgid "Number of available disks"
 msgstr "利用可能なディスクの数"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
 msgid "Largest Segment For Selected"
-msgstr ""
+msgstr "選択された中での最大セグメント"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
 msgid "The largest free segment for the selected drives"
-msgstr ""
+msgstr "選択されたドライブでの最大未使用領域"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Largest Segment For All"
-msgstr ""
+msgstr "全体での最大セグメント"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:294
 msgid "The largest free segment for all the drives"
-msgstr ""
+msgstr "全てのドライブでの最大未使用領域"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:332
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
 msgid "The size to use in the details header"
 msgstr "詳細ヘッダで利用するサイズ"
 
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
+msgid "Cannot select multipath component"
+msgstr "マルチパスのコンポーネントを選択できません"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
+msgid "No free space."
+msgstr "未使用領域がありません。"
+
+#. Translators: Shown when device is unselectable because not enough space is available.
+#. * First %s (e.g. '10 GB') is how much space is needed.
+#. * Second %s (e.g. '5 GB') is how much space is available.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
+#, c-format
+msgid ""
+"Insufficient space: %s is needed but largest contiguous free block is %s."
+msgstr ""
+"空き領域が不足しています: %s が必要ですが、連続した最大空きブロックは %s で"
+"す。"
+
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:734
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:936
 msgid "The disk will be partitioned and a partition will be created"
 msgstr "ディスクを分割してパーティションを作成します"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:740
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:942
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
@@ -1611,7 +1677,7 @@ msgstr ""
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:749
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:951
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards %"
@@ -1621,31 +1687,53 @@ msgstr ""
 "利用可能になります。"
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:759
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:962
 msgid "A partition will be created"
 msgstr "パーティションを作成します"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:965
+msgid "A volume will be created"
+msgstr "ボリュームを作成します"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:765
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:973
 #, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
 msgstr "%s のパーティションを作成します。後で利用可能な領域はありません。"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:980
+#, c-format
+msgid "A %s volume will be created. Afterwards no space will be available."
+msgstr "ボリューム %s を作成します。後で利用可能な領域はありません。"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:773
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:990
 #, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
 msgstr "%s のパーティションを作成します。後で %s が利用可能になります。"
 
 #. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:999
+#, c-format
+msgid "A %s volume will be created. Afterwards %s will be available."
+msgstr "ボリューム %s を作成します。後で %s が利用可能になります。"
+
+#. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:792
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1019
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
 msgstr "ディスク全体が初期化されていません。 %s が利用できます。"
@@ -1653,7 +1741,7 @@ msgstr "ディスク全体が初期化されていません。 %s が利用で�
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:799
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1026
 #, c-format
 msgid "%s available for use"
 msgstr "%s が利用できます"
@@ -1661,12 +1749,12 @@ msgstr "%s が利用できます"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:805
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1032
 #, c-format
 msgid "The disk has no partitions. %s available for use"
 msgstr "ディスクにパーティションがありません。%s が利用できます。"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1037
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
@@ -1676,18 +1764,18 @@ msgstr[0] "ディスクに %d パーティションあります"
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
 #. * Second %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:818
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1045
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
 msgstr "%s 最大の連続空きブロックは %s です。"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:929
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1112
 msgid "Storage Devices"
 msgstr "ストレージ・デバイス"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:968
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1152
 msgid "Details"
 msgstr "詳細"
 
@@ -1701,8 +1789,8 @@ msgstr "本当に読み込み/書き込みベンチマークを開始します�
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-drive.c:762
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1189
+#: ../src/palimpsest/gdu-section-drive.c:1004
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
 msgstr "ベンチマーク(_B)"
 
@@ -1781,7 +1869,7 @@ msgstr "%3g ms"
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
 msgid "Never"
-msgstr ""
+msgstr "なし"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
@@ -1794,95 +1882,146 @@ msgstr "キャンセル"
 msgid "Cancels the currently running benchmark"
 msgstr "現在実行中のベンチマークをキャンセルします"
 
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:171
-#, c-format
-msgid "Edit Filesystem on %s"
-msgstr "%s のファイルシステムを編集"
-
-#: ../src/gdu-gtk/gdu-edit-filesystem-dialog.c:186
-#: ../src/palimpsest/gdu-section-volumes.c:1470
-msgid "Label:"
-msgstr "ラベル:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
-#, c-format
-msgid "Edit components on %s (%s)"
-msgstr "%s (%s) のコンポーネントを編集"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
-msgid "C_omponents"
-msgstr "コンポーネント(_O):"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
-msgid "Position"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
-msgid "Component"
-msgstr "コンポーネント"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
-msgid "State"
-msgstr "状態"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
-#: ../src/palimpsest/gdu-section-drive.c:693
-msgid "SMART Status:"
-msgstr "SMART 状態:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
-msgid "Position:"
-msgstr ""
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1096
-msgid "State:"
-msgstr "状態:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
-#: ../src/palimpsest/gdu-section-drive.c:669
-#: ../src/palimpsest/gdu-section-volumes.c:1446
-msgid "Device:"
-msgstr "デバイス:"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-msgid "_New Component"
-msgstr "新規コンポーネント(_N)"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
-msgid "Add a new component to the array"
-msgstr "RAID アレイにコンポーネントを追加"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
-msgid "_Attach Component"
-msgstr "コンポーネントを接続"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
-msgid "Attach the component to the array"
-msgstr "アレイにコンポーネントを接続"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
-msgid "_Remove Component"
-msgstr "コンポーネントの取り外し(_R)"
-
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
-msgid "Remove the component from the array"
-msgstr "アレイからコンポーネントを取り外す"
-
-#. Translators: Used when SMART is not supported on the RAID component
-#. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
-#: ../src/palimpsest/gdu-section-drive.c:300
-msgid "Not Supported"
-msgstr "サポートされていません"
-
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
 #, c-format
 msgid "Edit %s"
 msgstr "%s を編集"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:236
+msgid "Missing Physical Volume"
+msgstr "物理ボリュームが見つかりません"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:237
+#, c-format
+msgid "UUID: %s"
+msgstr "UUID: %s"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:347
+#, c-format
+msgid "Edit PVs on %s (%s)"
+msgstr "%s (%s) の物理ボリュームを編集"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:358
+msgid "Physical _Volumes"
+msgstr "物理ボリューム(_V)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
+msgid "Physical Volume"
+msgstr "物理ボリューム"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:404
+msgid "Capacity"
+msgstr "容量"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
+msgid "Unallocated"
+msgstr "未割り当て"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:465
+#: ../src/palimpsest/gdu-section-drive.c:935
+msgid "SMART Status:"
+msgstr "SMART 状態:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
+#: ../src/palimpsest/gdu-section-drive.c:911
+#: ../src/palimpsest/gdu-section-volumes.c:1916
+msgid "Device:"
+msgstr "デバイス:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:444
+msgid "_New Physical Volume"
+msgstr "新規物理ボリューム(_N)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:445
+msgid "Add a new PV to the VG"
+msgstr "ボリュームグループに新規物理ボリュームを追加"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:454
+msgid "_Remove Physical Volume"
+msgstr "物理ボリュームを削除(_R)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:455
+msgid "Remove the PV from the VG"
+msgstr "ボリュームグループから物理ボリュームを削除"
+
+#. Translators: Used when SMART is not supported on the RAID pv
+#. Translators: Used when SMART is not supported on the RAID component
+#. Translators: This string is used when SMART is not supported
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:857
+#: ../src/palimpsest/gdu-section-drive.c:329
+msgid "Not Supported"
+msgstr "サポートされていません"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:385
+#, c-format
+msgid "Edit components on %s (%s)"
+msgstr "%s (%s) のコンポーネントを編集"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:396
+msgid "C_omponents"
+msgstr "コンポーネント(_O):"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:426
+msgid "Position"
+msgstr "位置"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
+msgid "Component"
+msgstr "コンポーネント"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:451
+msgid "State"
+msgstr "状態"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
+msgid "Position:"
+msgstr "位置:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:473
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
+#: ../src/palimpsest/gdu-section-volumes.c:1905
+msgid "State:"
+msgstr "状態:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
+msgid "Add _Spare"
+msgstr "スペアを追加(_S)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:491
+msgid "Add a spare to the array"
+msgstr "アレイにスペアを追加"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:500
+msgid "_Expand Array"
+msgstr "アレイを拡張(_E)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:501
+msgid "Increase the capacity of the array"
+msgstr "アレイの容量を増加"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:510
+msgid "_Attach Component"
+msgstr "コンポーネントを接続"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:511
+msgid "Attach the component to the array"
+msgstr "アレイにコンポーネントを接続"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:520
+msgid "_Remove Component"
+msgstr "コンポーネントの取り外し(_R)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:521
+msgid "Remove the component from the array"
+msgstr "アレイからコンポーネントを取り外す"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
 msgid "Part_ition Label:"
@@ -1944,14 +2083,14 @@ msgstr "ファイルシステムのドライバがインストールされてい
 msgid "Filesystem tools not installed"
 msgstr "ファイルシステムのツールがインストールされていません"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:1042
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:955
 msgid "Unknown error"
 msgstr "不明なエラー"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
 #, c-format
 msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr ""
+msgstr "\"%s\" (%s) の操作の実行中にエラーが発生しました: %s "
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
 #, c-format
@@ -1964,7 +2103,7 @@ msgstr "詳細(_D)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:167
 msgid "Flags specifying the behavior of the dialog"
-msgstr ""
+msgstr "ダイアログの振る舞いを指定するフラグ"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:180
 msgid "Filesystem type"
@@ -2007,18 +2146,20 @@ msgid "Whether the filesystem should be owned by the user"
 msgstr "ファイルシステムの所有権をユーザが持つかどうか"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:235
+#, fuzzy
 msgid "Affirmative Button Mnemonic"
-msgstr ""
+msgstr "確認ボタンのニーモニック"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:236
+#, fuzzy
 msgid "The mnemonic label for the affirmative button"
-msgstr ""
+msgstr "確認ボタンのニーモニックラベル"
 
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/palimpsest/gdu-section-drive.c:588
-#: ../src/palimpsest/gdu-section-volumes.c:356
+#: ../src/palimpsest/gdu-section-drive.c:649
+#: ../src/palimpsest/gdu-section-volumes.c:368
 msgid "_Format"
 msgstr "フォーマット(_F)"
 
@@ -2061,6 +2202,8 @@ msgstr "暗号化/Linux互換 (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
+#: ../src/palimpsest/gdu-section-volumes.c:1720
 msgid "_Name:"
 msgstr "名前(_N):"
 
@@ -2103,73 +2246,73 @@ msgstr ""
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "警告: ボリュームの全データは失われます。元に戻すことはできません。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:172
+#: ../src/gdu-gtk/gdu-gtk.c:175
 msgctxt "application name"
 msgid "Bourne Again Shell"
 msgstr "Bourne Again シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:177
+#: ../src/gdu-gtk/gdu-gtk.c:180
 msgctxt "application name"
 msgid "Bourne Shell"
 msgstr "Bourne シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:182
+#: ../src/gdu-gtk/gdu-gtk.c:185
 msgctxt "application name"
 msgid "C Shell"
 msgstr "C シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:187
+#: ../src/gdu-gtk/gdu-gtk.c:190
 msgctxt "application name"
 msgid "TENEX C Shell"
 msgstr "TENEX C シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:192
+#: ../src/gdu-gtk/gdu-gtk.c:195
 msgctxt "application name"
 msgid "Z Shell"
 msgstr "Z シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:197
+#: ../src/gdu-gtk/gdu-gtk.c:200
 msgctxt "application name"
 msgid "Korn Shell"
 msgstr "Korn シェル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:201
+#: ../src/gdu-gtk/gdu-gtk.c:204
 msgctxt "application name"
 msgid "Process Viewer (top)"
 msgstr "プロセスビューワ (top)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:205
+#: ../src/gdu-gtk/gdu-gtk.c:208
 msgctxt "application name"
 msgid "Terminal Pager (less)"
 msgstr "ターミナル・ページャ (less)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:217
+#: ../src/gdu-gtk/gdu-gtk.c:220
 msgctxt "application name"
 msgid "Unknown"
 msgstr "不明"
 
-#: ../src/gdu-gtk/gdu-gtk.c:228
+#: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
 msgstr "uid: %d  pid: %d  プログラム: %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:233
+#: ../src/gdu-gtk/gdu-gtk.c:236
 #, c-format
 msgid "pid: %d  program: %s"
 msgstr "pid: %d  プログラム: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:332 ../src/gdu-gtk/gdu-gtk.c:916
-#: ../src/gdu-gtk/gdu-gtk.c:1054
+#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:923
+#: ../src/gdu-gtk/gdu-gtk.c:1065
 #, c-format
 msgid "Partition %d on %s"
 msgstr "%2$s のパーティション %1$d"
 
-#: ../src/gdu-gtk/gdu-gtk.c:368
+#: ../src/gdu-gtk/gdu-gtk.c:371
 msgid "Cannot unmount volume"
 msgstr "ボリュームをアンマウントできません"
 
-#: ../src/gdu-gtk/gdu-gtk.c:378
+#: ../src/gdu-gtk/gdu-gtk.c:381
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
@@ -2177,145 +2320,145 @@ msgstr ""
 "1つまたはそれ以上のアプリケーションがボリュームを利用しています。アプリケー"
 "ションを終了させ、再度アンマウントを試してください。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:419
+#: ../src/gdu-gtk/gdu-gtk.c:422
 msgid "_Unmount"
 msgstr "アンマウント(_U)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:496
+#: ../src/gdu-gtk/gdu-gtk.c:499
 msgid "Passphrases do not match"
 msgstr "パスフレーズが一致しません"
 
-#: ../src/gdu-gtk/gdu-gtk.c:503
+#: ../src/gdu-gtk/gdu-gtk.c:506
 msgid "Passphrases do not differ"
 msgstr "パスフレーズが変わっていません"
 
-#: ../src/gdu-gtk/gdu-gtk.c:509
+#: ../src/gdu-gtk/gdu-gtk.c:512
 msgid "Passphrase can't be empty"
 msgstr "パスフレーズは空にできません"
 
-#: ../src/gdu-gtk/gdu-gtk.c:581
+#: ../src/gdu-gtk/gdu-gtk.c:584
 msgid "Cr_eate"
 msgstr "作成(_E)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:583 ../src/palimpsest/gdu-section-volumes.c:1924
+#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2447
 msgid "Change _Passphrase"
 msgstr "パスフレーズの変更(_P)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:585
+#: ../src/gdu-gtk/gdu-gtk.c:588
 msgid "_Unlock"
 msgstr "ロック解除(_U)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:614
+#: ../src/gdu-gtk/gdu-gtk.c:617
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr ""
 "暗号化デバイスを作成するには、保護するためのパスフレーズを選択してください。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:617
+#: ../src/gdu-gtk/gdu-gtk.c:620
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr ""
 "パスフレーズを変更するには、現在のものと新しいパスフレーズの両方を入力してく"
 "ださい。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:620
+#: ../src/gdu-gtk/gdu-gtk.c:623
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
 "このデバイス上のデータは、パスフレーズで保護された暗号化形式で保存されていま"
 "す。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:633
+#: ../src/gdu-gtk/gdu-gtk.c:636
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr ""
 "このデバイス上のデータは、パスフレーズで保護された暗号化形式で保存されます。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:636
+#: ../src/gdu-gtk/gdu-gtk.c:639
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
 "このデバイス上のデータは、パスフレーズで保護された暗号化形式で保存されていま"
 "す。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:639
+#: ../src/gdu-gtk/gdu-gtk.c:642
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
 msgstr ""
 "データを利用可能な状態にするには、デバイスのパスフレーズを入力してください。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:648
+#: ../src/gdu-gtk/gdu-gtk.c:651
 msgid "Incorrect Passphrase. Try again."
 msgstr "パスフレーズが間違っています。もう一度試してください。"
 
-#: ../src/gdu-gtk/gdu-gtk.c:672
+#: ../src/gdu-gtk/gdu-gtk.c:675
 msgid "C_urrent Passphrase:"
 msgstr "現在のパスフレーズ(_U):"
 
-#: ../src/gdu-gtk/gdu-gtk.c:686
+#: ../src/gdu-gtk/gdu-gtk.c:689
 msgid "_New Passphrase:"
 msgstr "新しいパスフレーズ(_N):"
 
-#: ../src/gdu-gtk/gdu-gtk.c:699
+#: ../src/gdu-gtk/gdu-gtk.c:702
 msgid "_Verify Passphrase:"
 msgstr "パスフレーズの確認(_V):"
 
-#: ../src/gdu-gtk/gdu-gtk.c:741
+#: ../src/gdu-gtk/gdu-gtk.c:744
 msgid "_Passphrase:"
 msgstr "パスフレーズ(_P):"
 
-#: ../src/gdu-gtk/gdu-gtk.c:756
+#: ../src/gdu-gtk/gdu-gtk.c:759
 msgid "_Forget passphrase immediately"
 msgstr "すぐにパスフレーズを忘れる(_F)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:759
+#: ../src/gdu-gtk/gdu-gtk.c:762
 msgid "Remember passphrase until you _log out"
 msgstr "ログアウトするまでパスワードを記憶する(_L)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:762
+#: ../src/gdu-gtk/gdu-gtk.c:765
 msgid "_Remember forever"
 msgstr "永久に記憶する(_R)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:823
+#: ../src/gdu-gtk/gdu-gtk.c:828
 msgid "Enter Passphrase"
 msgstr "パスフレーズの入力"
 
-#: ../src/gdu-gtk/gdu-gtk.c:948 ../src/gdu/gdu-util.c:824
+#: ../src/gdu-gtk/gdu-gtk.c:956 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "UUID %s の LUKS パスフレーズ"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1242
+#: ../src/gdu-gtk/gdu-gtk.c:1253
 msgid "Empty (don't create a file system)"
 msgstr "空です (ファイルシステムを作成しません)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1263
+#: ../src/gdu-gtk/gdu-gtk.c:1274
 msgid "Empty"
 msgstr "空"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1271
+#: ../src/gdu-gtk/gdu-gtk.c:1282
 msgid "Extended Partition"
 msgstr "拡張パーティション"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1530 ../src/palimpsest/gdu-section-drive.c:262
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:353
+#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "マスターブートレコード"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1535 ../src/gdu/gdu-drive.c:811
+#: ../src/gdu-gtk/gdu-gtk.c:1546 ../src/gdu/gdu-drive.c:823
 #: ../src/gdu/gdu-linux-md-drive.c:568
-#: ../src/palimpsest/gdu-section-drive.c:264
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:355
+#: ../src/palimpsest/gdu-section-drive.c:293
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "GUID パーティションテーブル"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1540
+#: ../src/gdu-gtk/gdu-gtk.c:1551
 msgid "Don't partition"
 msgstr "パーティション分割しない"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1545 ../src/gdu/gdu-util.c:492
-#: ../src/palimpsest/gdu-section-drive.c:260
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:351
+#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/gdu/gdu-util.c:495
+#: ../src/palimpsest/gdu-section-drive.c:289
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
 msgstr "Apple パーティションマップ"
 
@@ -2332,23 +2475,55 @@ msgstr "選択されたパーティションスキーム"
 msgid "_Scheme:"
 msgstr "スキーム(_S):"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:257
+#: ../src/gdu-gtk/gdu-size-widget.c:89
+msgid "KB"
+msgstr "KB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:95
+msgid "MB"
+msgstr "MB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:98
+msgid "GB"
+msgstr "GB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:101
+msgid "TB"
+msgstr "TB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:104
+msgid "KiB"
+msgstr "KiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:107
+msgid "MiB"
+msgstr "MiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:110
+msgid "GiB"
+msgstr "GiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:113
+msgid "TiB"
+msgstr "TiB"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:489
 msgid "The currently selected size"
 msgstr "現在選択されているもののサイズ"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:270
+#: ../src/gdu-gtk/gdu-size-widget.c:502
 msgid "Minimum Size"
 msgstr "最小サイズ"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:271
+#: ../src/gdu-gtk/gdu-size-widget.c:503
 msgid "The minimum size that can be selected"
 msgstr "選択可能な最小サイズ"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:284
+#: ../src/gdu-gtk/gdu-size-widget.c:516
 msgid "Maximum Size"
 msgstr "最大サイズ"
 
-#: ../src/gdu-gtk/gdu-size-widget.c:285
+#: ../src/gdu-gtk/gdu-size-widget.c:517
 msgid "The maximum size that can be selected"
 msgstr "選択可能な最大サイズ"
 
@@ -2370,7 +2545,7 @@ msgid_plural "%d hours ago"
 msgstr[0] "%d 時間前"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
-#: ../src/palimpsest/gdu-section-drive.c:634
+#: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
 msgstr "ドライブ"
 
@@ -2387,24 +2562,31 @@ msgstr "RAID アレイは停止中です"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:797
-#: ../src/palimpsest/gdu-section-drive.c:314
+#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:809
+#: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "メディアは検出されていません"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1257
+#: ../src/gdu-gtk/gdu-volume-grid.c:1268
 msgid "Extended"
 msgstr "拡張"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1263
+#: ../src/gdu-gtk/gdu-volume-grid.c:1276
 msgid "Encrypted"
 msgstr "暗号化済み"
 
-#. Translators: shown in the grid for space that is not claimed by any partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1277
+#. Translators: shown in the grid for an RAID Component
+#: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
+#: ../src/palimpsest/gdu-section-volumes.c:2173
+#, c-format
+msgid "RAID Component"
+msgstr "RAID コンポーネント"
+
+#. Translators: shown for free/unallocated space
+#: ../src/gdu-gtk/gdu-volume-grid.c:1298
 msgid "Free"
 msgstr "未使用領域"
 
@@ -2418,80 +2600,80 @@ msgid "Create new filesystem on the selected device"
 msgstr "選択したデバイスに新しいファイルシステムを作成"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:560
+#: ../src/gdu/gdu-drive.c:573
 msgid "CompactFlash"
 msgstr "コンパクトフラッシュ"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:563
+#: ../src/gdu/gdu-drive.c:576
 msgid "MemoryStick"
 msgstr "メモリースティック"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:566
+#: ../src/gdu/gdu-drive.c:579
 msgid "SmartMedia"
 msgstr "スマートメディア"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:569
+#: ../src/gdu/gdu-drive.c:582
 msgid "SecureDigital"
 msgstr "SD メモリカード"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:572
+#: ../src/gdu/gdu-drive.c:585
 msgid "SD High Capacity"
 msgstr "SDHC メモリカード"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:575
+#: ../src/gdu/gdu-drive.c:588
 msgid "Floppy"
 msgstr "フロッピー"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:578
+#: ../src/gdu/gdu-drive.c:591
 msgid "Zip"
 msgstr "Zip"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:581
+#: ../src/gdu/gdu-drive.c:594
 msgid "Jaz"
 msgstr "Jaz"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:584
+#: ../src/gdu/gdu-drive.c:597
 msgid "Flash"
 msgstr "フラッシュメモリ"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:607
+#: ../src/gdu/gdu-drive.c:620
 msgid "CD"
 msgstr "CD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:615
+#: ../src/gdu/gdu-drive.c:628
 msgid "DVD"
 msgstr "DVD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:623
+#: ../src/gdu/gdu-drive.c:636
 msgid "Blu-Ray"
 msgstr "Blu-Ray"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:631
+#: ../src/gdu/gdu-drive.c:644
 msgid "HDDVD"
 msgstr "HDDVD"
 
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:680 ../src/gdu/gdu-drive.c:719
+#: ../src/gdu/gdu-drive.c:693 ../src/gdu/gdu-drive.c:732
 #, c-format
 msgid "%s Drive"
 msgstr "%s ドライブ"
@@ -2499,15 +2681,15 @@ msgstr "%s ドライブ"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:714
+#: ../src/gdu/gdu-drive.c:727
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s ドライブ"
 
-#. Translators: This string is used to describe a hard disk. The first %s is
-#. * the size of the drive e.g. '45 GB'.
+#. Translators: This string is used to describe a hard disk.
+#. * The first %s is the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:730
+#: ../src/gdu/gdu-drive.c:743
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s ハードディスク"
@@ -2515,14 +2697,14 @@ msgstr "%s ハードディスク"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:736
+#: ../src/gdu/gdu-drive.c:748
 msgid "Hard Disk"
 msgstr "ハードディスク"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:743
+#: ../src/gdu/gdu-drive.c:755
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s SSD"
@@ -2530,80 +2712,134 @@ msgstr "%s SSD"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:749
+#: ../src/gdu/gdu-drive.c:761
 msgid "Solid-State Disk"
 msgstr "SSD"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:790
+#: ../src/gdu/gdu-drive.c:802
 #, c-format
 msgid "%s Media"
 msgstr "%s メディア"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:808 ../src/gdu/gdu-linux-md-drive.c:565
+#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:565
 msgid "MBR Partition Table"
 msgstr "MBR パーティションテーブル"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:814 ../src/gdu/gdu-linux-md-drive.c:571
+#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:571
 msgid "Apple Partition Table"
 msgstr "Apple パーティションテーブル"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:819 ../src/gdu/gdu-linux-md-drive.c:576
+#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:576
 msgid "Partitioned"
 msgstr "パーティション分けされています"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:824 ../src/palimpsest/gdu-section-drive.c:273
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:364
+#: ../src/gdu/gdu-drive.c:836 ../src/palimpsest/gdu-section-drive.c:302
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "パーティション分けされていません"
 
-#: ../src/gdu/gdu-hub.c:197
+#. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
+#: ../src/gdu/gdu-hub.c:222
+msgid "SAS Expander"
+msgstr "SAS エキスパンダ"
+
+#: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
 msgstr "PATA ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:199
+#: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
 msgstr "SATA ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:201
+#: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
 msgstr "ATA ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:203
+#: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
 msgstr "SAS ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:205
+#: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
 msgstr "SCSI ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:207
+#: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
 msgstr "ホストアダプタ"
 
-#: ../src/gdu/gdu-hub.c:211
-msgid "SAS Expander"
-msgstr "SAS エクスパンダ"
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+msgid "Logical Volume"
+msgstr "論理ボリューム"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume.c:334
+msgid "LVM2 Logical Volume"
+msgstr "LVM2 論理ボリューム"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:372
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:376
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
+msgid "Volume Group"
+msgstr "ボリュームグループ"
+
+#. Translators: VPD name - first %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:380
+#, c-format
+msgid "%s LVM2 Volume Group"
+msgstr "LVM2 ボリュームグループ %s"
+
+#. Translators: VPD name when size is not known
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:383
+msgid "LVM2 Volume Group"
+msgstr "LVM2 ボリュームグループ"
+
+#. Translators: label for an unallocated space in a LVM2 volume group.
+#. * %s is the size, formatted like '45 GB'
+#.
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:201
+#: ../src/gdu/gdu-volume-hole.c:152
+#, c-format
+msgid "%s Free"
+msgstr "%s 未使用"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
+#: ../src/gdu/gdu-volume-hole.c:161
+#: ../src/palimpsest/gdu-section-volumes.c:2187
+#: ../src/palimpsest/gdu-section-volumes.c:2195
+msgid "Unallocated Space"
+msgstr "未割り当て領域"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
+msgid "LVM2 VG Unallocated Space"
+msgstr "LVM2 ボリュームグループ未割り当て領域"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:621
+#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:620
 #, c-format
 msgid "%s %s Array"
 msgstr "%s %s アレイ"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:626
+#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:625
 #, c-format
 msgid "%s Array"
 msgstr "%s アレイ"
@@ -2617,48 +2853,53 @@ msgid "RAID Array %s (%s)"
 msgstr "RAID アレイ %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:603
+#: ../src/gdu/gdu-linux-md-drive.c:601
 #, c-format
 msgid "RAID device %s"
 msgstr "RAID デバイス %s"
 
 #. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:609
+#: ../src/gdu/gdu-linux-md-drive.c:608
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
 
-#: ../src/gdu/gdu-linux-md-drive.c:614
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1066
+#: ../src/gdu/gdu-linux-md-drive.c:613
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID アレイ"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1083
+#: ../src/gdu/gdu-linux-md-drive.c:1110
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "接続されていません"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1086
+#: ../src/gdu/gdu-linux-md-drive.c:1113
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr "故障（Faulty）"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1091
+#: ../src/gdu/gdu-linux-md-drive.c:1118
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
 msgstr "完全に同期しています"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1093
+#: ../src/gdu/gdu-linux-md-drive.c:1120
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Write-mostlyモード"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1095
+#: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "ブロック（Blocked）"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1097
+#: ../src/gdu/gdu-linux-md-drive.c:1126
+msgctxt "Linux MD slave state"
+msgid "Partially Synchronized"
+msgstr "部分的に同期しています"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1128
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "スペア（Spare）"
@@ -2673,22 +2914,46 @@ msgstr "ローカルストレージ"
 msgid "Storage on %s"
 msgstr "%s のストレージ"
 
-#: ../src/gdu/gdu-pool.c:1888
+#: ../src/gdu/gdu-pool.c:885
+msgid "Multipath Devices"
+msgstr "マルチパスデバイス"
+
+#: ../src/gdu/gdu-pool.c:886
+msgid "Drives with multiple I/O paths"
+msgstr "マルチプル I/O パスのドライブ"
+
+#: ../src/gdu/gdu-pool.c:896
+msgid "Multi-disk Devices"
+msgstr "マルチディスクデバイス"
+
+#: ../src/gdu/gdu-pool.c:897
+msgid "RAID, LVM and other logical drives"
+msgstr "RAIDやLVMや他の論理ドライブ"
+
+#: ../src/gdu/gdu-pool.c:907
+msgid "Peripheral Devices"
+msgstr "周辺機器"
+
+#: ../src/gdu/gdu-pool.c:908
+msgid "USB, Firewire and other peripherals"
+msgstr "USBやFirewireや他の周辺機器"
+
+#: ../src/gdu/gdu-pool.c:2091
 #, c-format
 msgid "Error enumerating devices: %s"
 msgstr "デバイスの一覧を作成する際にエラー: %s"
 
-#: ../src/gdu/gdu-pool.c:1914
+#: ../src/gdu/gdu-pool.c:2117
 #, c-format
 msgid "Error enumerating adapters: %s"
 msgstr "アダプタの一覧を作成する際にエラー: %s"
 
-#: ../src/gdu/gdu-pool.c:1937
+#: ../src/gdu/gdu-pool.c:2140
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "エキスパンダの列挙中にエラーが発生しました: %s"
 
-#: ../src/gdu/gdu-pool.c:1960
+#: ../src/gdu/gdu-pool.c:2163
 #, c-format
 msgid "Error enumerating ports: %s"
 msgstr "ポートの一覧を作成する際にエラー: %s"
@@ -2696,7 +2961,7 @@ msgstr "ポートの一覧を作成する際にエラー: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "アドレス `localhost:%d' をlistenする際にエラーが発生しました: %s: %s\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
@@ -2704,16 +2969,18 @@ msgid ""
 "Error creating a local TCP server, tried binding to ports 9000-10000 on "
 "localhost"
 msgstr ""
+"ローカル TCP サーバの作成時にエラーが発生しました。localhost の 9000-10000 番"
+"ポートでのバインドを試してください。"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
-msgstr ""
+msgstr "ローカルのDBusServer上での認証の設定中にエラーが発生しました\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:347
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
-msgstr ""
+msgstr "コマンドライン `%s' のパースに失敗しました (アドレス間違い?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, c-format
@@ -2744,11 +3011,13 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
 msgstr ""
+"予期せぬ標準エラー出力 - `udisks-tcp-bridge: Waiting for secret' を予期してい"
+"ましたが `%s' でした。"
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "認証用の秘密鍵の受け渡しでエラーが発生しました: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
@@ -2761,15 +3030,18 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
+"予期せぬ標準エラー出力 - `udisks-tcp-bridge: Attempting to connect to port %"
+"d' を予期していましたが `%s' でした。"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
 msgstr ""
+"プログラム udisks-tcp-bridge が認証されているかの確認に失敗しました: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:592
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-msgstr ""
+msgstr "プログラム udisks-tcp-bridge が認証されているかの確認に失敗しました"
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -2777,749 +3049,744 @@ msgstr ""
 #. Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
 #. * the second %s is the size as a number e.g. '100,000 bytes'
 #.
-#: ../src/gdu/gdu-util.c:128 ../src/gdu/gdu-util.c:137
+#: ../src/gdu/gdu-util.c:131 ../src/gdu/gdu-util.c:140
 #, c-format
 msgid "%s (%s bytes)"
 msgstr "%s (%s バイト)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:172
+#: ../src/gdu/gdu-util.c:175
 msgid "FAT (12-bit version)"
 msgstr "FAT (12ビット)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:175 ../src/gdu/gdu-util.c:182
-#: ../src/gdu/gdu-util.c:189 ../src/gdu/gdu-util.c:193
-#: ../src/gdu/gdu-util.c:195
+#: ../src/gdu/gdu-util.c:178 ../src/gdu/gdu-util.c:185
+#: ../src/gdu/gdu-util.c:192 ../src/gdu/gdu-util.c:196
+#: ../src/gdu/gdu-util.c:198
 msgid "FAT"
 msgstr "FAT"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:180
+#: ../src/gdu/gdu-util.c:183
 msgid "FAT (16-bit version)"
 msgstr "FAT (16ビット)"
 
 #. Translators: FAT is a filesystem type
-#: ../src/gdu/gdu-util.c:187
+#: ../src/gdu/gdu-util.c:190
 msgid "FAT (32-bit version)"
 msgstr "FAT (32ビット)"
 
 #. Translators: NTFS is a filesystem type
-#: ../src/gdu/gdu-util.c:202
+#: ../src/gdu/gdu-util.c:205
 #, c-format
 msgid "NTFS (version %s)"
 msgstr "NTFS (バージョン %s)"
 
 #. Translators: NTFS is a filesystem type
-#: ../src/gdu/gdu-util.c:205 ../src/gdu/gdu-util.c:207
+#: ../src/gdu/gdu-util.c:208 ../src/gdu/gdu-util.c:210
 #, c-format
 msgid "NTFS"
 msgstr "NTFS"
 
 #. Translators: HFS is a filesystem type
-#: ../src/gdu/gdu-util.c:212 ../src/gdu/gdu-util.c:214
+#: ../src/gdu/gdu-util.c:215 ../src/gdu/gdu-util.c:217
 msgid "HFS"
 msgstr "HFS"
 
 #. Translators: HFS+ is a filesystem type
-#: ../src/gdu/gdu-util.c:219 ../src/gdu/gdu-util.c:221
+#: ../src/gdu/gdu-util.c:222 ../src/gdu/gdu-util.c:224
 msgid "HFS+"
 msgstr "HFS+"
 
-#: ../src/gdu/gdu-util.c:225
+#: ../src/gdu/gdu-util.c:228
 msgid "Linux Unified Key Setup"
 msgstr "Linux Unified Key Setup"
 
 #. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
-#: ../src/gdu/gdu-util.c:228
+#: ../src/gdu/gdu-util.c:231
 msgid "LUKS"
 msgstr "LUKS"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:234
+#: ../src/gdu/gdu-util.c:237
 #, c-format
 msgid "Ext2 (version %s)"
 msgstr "Ext2 (バージョン %s)"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:237
+#: ../src/gdu/gdu-util.c:240
 #, c-format
 msgid "Ext2"
 msgstr "Ext2"
 
 #. Translators: Ext2 is a filesystem type
-#: ../src/gdu/gdu-util.c:240
+#: ../src/gdu/gdu-util.c:243
 msgid "ext2"
 msgstr "ext2"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:246
+#: ../src/gdu/gdu-util.c:249
 #, c-format
 msgid "Ext3 (version %s)"
 msgstr "Ext3 (バージョン %s)"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:249
+#: ../src/gdu/gdu-util.c:252
 #, c-format
 msgid "Ext3"
 msgstr "Ext3"
 
 #. Translators: Ext3 is a filesystem type
-#: ../src/gdu/gdu-util.c:252
+#: ../src/gdu/gdu-util.c:255
 msgid "ext3"
 msgstr "ext3"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#: ../src/gdu/gdu-util.c:258
+#: ../src/gdu/gdu-util.c:261
 #, c-format
 msgid "Journal for Ext3 (version %s)"
 msgstr "Ext3 ジャーナリング (バージョン %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#: ../src/gdu/gdu-util.c:261
+#: ../src/gdu/gdu-util.c:264
 #, c-format
 msgid "Journal for Ext3"
 msgstr "Ext3 ジャーナリング"
 
 #. Translators: jbd is a filesystem type
-#: ../src/gdu/gdu-util.c:264
+#: ../src/gdu/gdu-util.c:267
 msgid "jbd"
 msgstr "jbd"
 
 #. Translators: ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:270
+#: ../src/gdu/gdu-util.c:273
 #, c-format
 msgid "Ext4 (version %s)"
 msgstr "Ext4 (バージョン %s)"
 
 #. Translators: ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:273
+#: ../src/gdu/gdu-util.c:276
 #, c-format
 msgid "Ext4"
 msgstr "Ext4"
 
 #. Translators: Ext4 is a filesystem type
-#: ../src/gdu/gdu-util.c:276
+#: ../src/gdu/gdu-util.c:279
 msgid "ext4"
 msgstr "ext4"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:282
+#: ../src/gdu/gdu-util.c:285
 #, c-format
 msgid "XFS (version %s)"
 msgstr "XFS (バージョン %s)"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:285
+#: ../src/gdu/gdu-util.c:288
 #, c-format
 msgid "XFS"
 msgstr "XFS"
 
 #. Translators: xfs is a filesystem type
-#: ../src/gdu/gdu-util.c:288
+#: ../src/gdu/gdu-util.c:291
 msgid "xfs"
 msgstr "xfs"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:294
+#: ../src/gdu/gdu-util.c:297
 #, c-format
 msgid "ReiserFS (version %s)"
 msgstr "ReiserFS (バージョン %s)"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:297
+#: ../src/gdu/gdu-util.c:300
 #, c-format
 msgid "ReiserFS"
 msgstr "ReiserFS"
 
 #. Translators: reiserfs is a filesystem type
-#: ../src/gdu/gdu-util.c:300
+#: ../src/gdu/gdu-util.c:303
 msgid "reiserfs"
 msgstr "reiserfs"
 
 #. Translators: iso9660 is a filesystem type
-#: ../src/gdu/gdu-util.c:305
+#: ../src/gdu/gdu-util.c:308
 msgid "ISO 9660"
 msgstr "ISO 9660"
 
 #. Translators: iso9660 is a filesystem type
-#: ../src/gdu/gdu-util.c:308
+#: ../src/gdu/gdu-util.c:311
 msgid "iso9660"
 msgstr "iso9660"
 
 #. Translators: udf is a filesystem type
-#: ../src/gdu/gdu-util.c:313
+#: ../src/gdu/gdu-util.c:316
 msgid "Universal Disk Format"
 msgstr "Universal Disk Format"
 
 #. Translators: udf is a filesystem type
-#: ../src/gdu/gdu-util.c:316
+#: ../src/gdu/gdu-util.c:319
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:320 ../src/palimpsest/gdu-section-volumes.c:1677
+#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2169
 msgid "Swap Space"
 msgstr "スワップ領域"
 
 #. Translators: filesystem type for swap space
-#: ../src/gdu/gdu-util.c:323
+#: ../src/gdu/gdu-util.c:326
 msgid "swap"
 msgstr "スワップ"
 
-#: ../src/gdu/gdu-util.c:328
+#: ../src/gdu/gdu-util.c:331
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
 msgstr "LVM2 物理ボリューム (バージョン %s)"
 
-#: ../src/gdu/gdu-util.c:330
+#: ../src/gdu/gdu-util.c:333
 #, c-format
 msgid "LVM2 Physical Volume"
 msgstr "LVM2 物理ボリューム"
 
 #. Translators: short name for LVM2 Physical Volume
-#: ../src/gdu/gdu-util.c:333
+#: ../src/gdu/gdu-util.c:336
 msgid "lvm2_pv"
 msgstr "lvm2_pv"
 
-#: ../src/gdu/gdu-util.c:339
+#: ../src/gdu/gdu-util.c:342
 #, c-format
 msgid "RAID Component (version %s)"
 msgstr "RAID コンポーネント (バージョン %s)"
 
-#: ../src/gdu/gdu-util.c:341 ../src/palimpsest/gdu-section-volumes.c:1681
-#, c-format
-msgid "RAID Component"
-msgstr "RAID コンポーネント"
-
 #. Translators: short name for 'RAID Component'
-#: ../src/gdu/gdu-util.c:344
+#: ../src/gdu/gdu-util.c:347
 msgid "raid"
 msgstr "raid"
 
 #. Translators: long filesystem type for minix
-#: ../src/gdu/gdu-util.c:349
+#: ../src/gdu/gdu-util.c:352
 msgid "Minix"
 msgstr "Minix"
 
 #. Translators: filesystem type for minix
-#: ../src/gdu/gdu-util.c:352
+#: ../src/gdu/gdu-util.c:355
 msgid "minix"
 msgstr "minix"
 
-#: ../src/gdu/gdu-util.c:366
+#: ../src/gdu/gdu-util.c:369
 msgid "Creating File System"
 msgstr "ファイルシステムを作成中"
 
-#: ../src/gdu/gdu-util.c:368
+#: ../src/gdu/gdu-util.c:371
 msgid "Mounting File System"
 msgstr "ファイルシステムをマウント中"
 
-#: ../src/gdu/gdu-util.c:370
+#: ../src/gdu/gdu-util.c:373
 msgid "Unmounting File System"
 msgstr "ファイルシステムをアンマウント中"
 
-#: ../src/gdu/gdu-util.c:372
+#: ../src/gdu/gdu-util.c:375
 msgid "Checking File System"
 msgstr "ファイルシステムをチェック中"
 
-#: ../src/gdu/gdu-util.c:374
+#: ../src/gdu/gdu-util.c:377
 msgid "Creating LUKS Device"
 msgstr "LUKS デバイスを作成中"
 
-#: ../src/gdu/gdu-util.c:376
+#: ../src/gdu/gdu-util.c:379
 msgid "Unlocking LUKS Device"
 msgstr "LUKS デバイスをロック解除中"
 
-#: ../src/gdu/gdu-util.c:378
+#: ../src/gdu/gdu-util.c:381
 msgid "Locking LUKS Device"
 msgstr "LUKS デバイスをロック中"
 
-#: ../src/gdu/gdu-util.c:380
+#: ../src/gdu/gdu-util.c:383
 msgid "Creating Partition Table"
 msgstr "パーティションテーブルを作成中"
 
-#: ../src/gdu/gdu-util.c:382
+#: ../src/gdu/gdu-util.c:385
 msgid "Deleting Partition"
 msgstr "パーティションを削除中"
 
-#: ../src/gdu/gdu-util.c:384
+#: ../src/gdu/gdu-util.c:387
 msgid "Creating Partition"
 msgstr "パーティションを作成中"
 
-#: ../src/gdu/gdu-util.c:386
+#: ../src/gdu/gdu-util.c:389
 msgid "Modifying Partition"
 msgstr "パーティションを変更中"
 
-#: ../src/gdu/gdu-util.c:388
+#: ../src/gdu/gdu-util.c:391
 msgid "Setting Label for Device"
 msgstr "デバイスのラベルを設定中"
 
-#: ../src/gdu/gdu-util.c:390
+#: ../src/gdu/gdu-util.c:393
 msgid "Changing Passphrase for Encrypted LUKS Device"
 msgstr "暗号化 LUKS デバイスのパスフレーズを変更中"
 
-#: ../src/gdu/gdu-util.c:392
+#: ../src/gdu/gdu-util.c:395
 msgid "Adding Component to RAID Array"
 msgstr "RAID アレイにコンポーネントを追加中"
 
-#: ../src/gdu/gdu-util.c:394
+#: ../src/gdu/gdu-util.c:397
 msgid "Removing Component from RAID Array"
 msgstr "RAID アレイからコンポーネントを取り外し中"
 
-#: ../src/gdu/gdu-util.c:396
+#: ../src/gdu/gdu-util.c:399
 msgid "Stopping RAID Array"
 msgstr "RAID アレイを停止中"
 
-#: ../src/gdu/gdu-util.c:398
+#: ../src/gdu/gdu-util.c:401
 msgid "Starting RAID Array"
 msgstr "RAID アレイを開始中"
 
-#: ../src/gdu/gdu-util.c:400
+#: ../src/gdu/gdu-util.c:403
 msgid "Checking RAID Array"
 msgstr "RAID アレイをチェック中"
 
-#: ../src/gdu/gdu-util.c:402
+#: ../src/gdu/gdu-util.c:405
 msgid "Repairing RAID Array"
 msgstr "RAID アレイを修復中"
 
-#: ../src/gdu/gdu-util.c:404
+#: ../src/gdu/gdu-util.c:407
 msgid "Running Short SMART Self-Test"
 msgstr "短時間 SMART セルフテストを実行中"
 
-#: ../src/gdu/gdu-util.c:406
+#: ../src/gdu/gdu-util.c:409
 msgid "Running Extended SMART Self-Test"
 msgstr "詳細 SMART セルフテストを実行中"
 
-#: ../src/gdu/gdu-util.c:408
+#: ../src/gdu/gdu-util.c:411
 msgid "Running Conveyance SMART Self-Test"
 msgstr "Conveyance SMART セルフテストを実行中"
 
-#: ../src/gdu/gdu-util.c:410
+#: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
 msgstr "メディアを取り出し中"
 
-#: ../src/gdu/gdu-util.c:412
+#: ../src/gdu/gdu-util.c:415
 msgid "Detaching Device"
 msgstr "デバイスを取り外し中"
 
-#: ../src/gdu/gdu-util.c:414
+#: ../src/gdu/gdu-util.c:417
 msgid "Forcibly Unmounting Filesystem"
 msgstr "強制的にファイルシステムをアンマウント中"
 
-#: ../src/gdu/gdu-util.c:416
+#: ../src/gdu/gdu-util.c:419
 msgid "Forcibly Locking LUKS device"
 msgstr "強制的に LUKS デバイスをロック中"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
-#: ../src/gdu/gdu-util.c:432
+#: ../src/gdu/gdu-util.c:435
 msgid "Linux Basic Data Partition"
 msgstr "Linux 基本データパーティション"
 
 #. Same as MS BDP
-#: ../src/gdu/gdu-util.c:433
+#: ../src/gdu/gdu-util.c:436
 msgid "Linux RAID Partition"
 msgstr "Linux RAID パーティション"
 
-#: ../src/gdu/gdu-util.c:434
+#: ../src/gdu/gdu-util.c:437
 msgid "Linux Swap Partition"
 msgstr "Linux スワップ・パーティション"
 
-#: ../src/gdu/gdu-util.c:435
+#: ../src/gdu/gdu-util.c:438
 msgid "Linux LVM Partition"
 msgstr "Linux LVM パーティション"
 
-#: ../src/gdu/gdu-util.c:436
+#: ../src/gdu/gdu-util.c:439
 msgid "Linux Reserved Partition"
 msgstr "Linux 予約パーティション"
 
 #. Not associated with any OS
-#: ../src/gdu/gdu-util.c:438
+#: ../src/gdu/gdu-util.c:441
 msgid "MBR Partition Scheme"
 msgstr "MBR パーティションスキーム"
 
-#: ../src/gdu/gdu-util.c:439
+#: ../src/gdu/gdu-util.c:442
 msgid "EFI System Partition"
 msgstr "EFI システムパーティション"
 
-#: ../src/gdu/gdu-util.c:440
+#: ../src/gdu/gdu-util.c:443
 msgid "BIOS Boot Partition"
 msgstr "BIOS 起動パーティション"
 
 #. Microsoft
-#: ../src/gdu/gdu-util.c:442
+#: ../src/gdu/gdu-util.c:445
 msgid "Microsoft Reserved Partition"
 msgstr "Microsoft 予約パーティション"
 
-#: ../src/gdu/gdu-util.c:443
+#: ../src/gdu/gdu-util.c:446
 msgid "Microsoft Basic Data Partition"
 msgstr "Microsoft 基本データパーティション"
 
 #. Same as Linux BDP
-#: ../src/gdu/gdu-util.c:444
+#: ../src/gdu/gdu-util.c:447
 msgid "Microsoft LDM Metadata Partition"
 msgstr "Microsoft LDM メタデータパーティション"
 
-#: ../src/gdu/gdu-util.c:445
+#: ../src/gdu/gdu-util.c:448
 msgid "Microsoft LDM Data Partition"
 msgstr "Microsoft LDM データパーティション"
 
-#: ../src/gdu/gdu-util.c:446
+#: ../src/gdu/gdu-util.c:449
 msgid "Microsoft Windows Recovery Environment"
 msgstr "Microsoft Windows リカバリ環境"
 
 #. HP-UX
-#: ../src/gdu/gdu-util.c:448
+#: ../src/gdu/gdu-util.c:451
 msgid "HP-UX Data Partition"
 msgstr "HP-UX データパーティション"
 
-#: ../src/gdu/gdu-util.c:449
+#: ../src/gdu/gdu-util.c:452
 msgid "HP-UX Service Partition"
 msgstr "HP-UX サービスパーティション"
 
 #. FreeBSD
-#: ../src/gdu/gdu-util.c:451
+#: ../src/gdu/gdu-util.c:454
 msgid "FreeBSD Boot Partition"
 msgstr "FreeBSD ブート・パーティション"
 
-#: ../src/gdu/gdu-util.c:452
+#: ../src/gdu/gdu-util.c:455
 msgid "FreeBSD Data Partition"
 msgstr "FreeBSD データパーティション"
 
-#: ../src/gdu/gdu-util.c:453
+#: ../src/gdu/gdu-util.c:456
 msgid "FreeBSD Swap Partition"
 msgstr "FreeBSD スワップ・パーティション"
 
-#: ../src/gdu/gdu-util.c:454
+#: ../src/gdu/gdu-util.c:457
 msgid "FreeBSD UFS Partition"
 msgstr "FreeBSD UFS パーティション"
 
-#: ../src/gdu/gdu-util.c:455
+#: ../src/gdu/gdu-util.c:458
 msgid "FreeBSD Vinum Partition"
 msgstr "FreeBSD Vinum パーティション"
 
-#: ../src/gdu/gdu-util.c:456
+#: ../src/gdu/gdu-util.c:459
 msgid "FreeBSD ZFS Partition"
 msgstr "FreeBSD ZFS パーティション"
 
 #. Solaris
-#: ../src/gdu/gdu-util.c:458
+#: ../src/gdu/gdu-util.c:461
 msgid "Solaris Boot Partition"
 msgstr "Solaris 起動パーティション"
 
-#: ../src/gdu/gdu-util.c:459
+#: ../src/gdu/gdu-util.c:462
 msgid "Solaris Root Partition"
 msgstr "Solaris ルートパーティション"
 
-#: ../src/gdu/gdu-util.c:460
+#: ../src/gdu/gdu-util.c:463
 msgid "Solaris Swap Partition"
 msgstr "Solaris スワップ・パーティション"
 
-#: ../src/gdu/gdu-util.c:461
+#: ../src/gdu/gdu-util.c:464
 msgid "Solaris Backup Partition"
 msgstr "Solaris バックアップ・パーティション"
 
-#: ../src/gdu/gdu-util.c:462
+#: ../src/gdu/gdu-util.c:465
 msgid "Solaris /usr Partition"
 msgstr "Solaris /usr パーティション"
 
 #. Same as Apple ZFS
-#: ../src/gdu/gdu-util.c:463
+#: ../src/gdu/gdu-util.c:466
 msgid "Solaris /var Partition"
 msgstr "Solaris /var パーティション"
 
-#: ../src/gdu/gdu-util.c:464
+#: ../src/gdu/gdu-util.c:467
 msgid "Solaris /home Partition"
 msgstr "Solaris /home パーティション"
 
-#: ../src/gdu/gdu-util.c:465
+#: ../src/gdu/gdu-util.c:468
 msgid "Solaris Alternate Sector Partition"
 msgstr "Solaris 代替セクタ パーティション"
 
-#: ../src/gdu/gdu-util.c:466
+#: ../src/gdu/gdu-util.c:469
 msgid "Solaris Reserved Partition"
 msgstr "Solaris 予約パーティション"
 
-#: ../src/gdu/gdu-util.c:467
+#: ../src/gdu/gdu-util.c:470
 msgid "Solaris Reserved Partition (2)"
 msgstr "Solaris 予約パーティション (2)"
 
-#: ../src/gdu/gdu-util.c:468
+#: ../src/gdu/gdu-util.c:471
 msgid "Solaris Reserved Partition (3)"
 msgstr "Solaris 予約パーティション (3)"
 
-#: ../src/gdu/gdu-util.c:469
+#: ../src/gdu/gdu-util.c:472
 msgid "Solaris Reserved Partition (4)"
 msgstr "Solaris 予約パーティション (4)"
 
-#: ../src/gdu/gdu-util.c:470
+#: ../src/gdu/gdu-util.c:473
 msgid "Solaris Reserved Partition (5)"
 msgstr "Solaris 予約パーティション (5)"
 
 #. Mac OS X
-#: ../src/gdu/gdu-util.c:472 ../src/gdu/gdu-util.c:491
+#: ../src/gdu/gdu-util.c:475 ../src/gdu/gdu-util.c:494
 msgid "Apple HFS/HFS+ Partition"
 msgstr "Apple HFS/HFS+ パーティション"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
-#: ../src/gdu/gdu-util.c:473 ../src/gdu/gdu-util.c:490
+#: ../src/gdu/gdu-util.c:476 ../src/gdu/gdu-util.c:493
 msgid "Apple UFS Partition"
 msgstr "Apple UFS パーティション"
 
-#: ../src/gdu/gdu-util.c:474
+#: ../src/gdu/gdu-util.c:477
 msgid "Apple ZFS Partition"
 msgstr "Apple ZFS パーティション"
 
 #. Same as Solaris /usr
-#: ../src/gdu/gdu-util.c:475
+#: ../src/gdu/gdu-util.c:478
 msgid "Apple RAID Partition"
 msgstr "Apple RAID パーティション"
 
-#: ../src/gdu/gdu-util.c:476
+#: ../src/gdu/gdu-util.c:479
 msgid "Apple RAID Partition (Offline)"
 msgstr "Apple RAID パーティション (オフライン)"
 
-#: ../src/gdu/gdu-util.c:477
+#: ../src/gdu/gdu-util.c:480
 msgid "Apple Boot Partition"
 msgstr "Apple 起動パーティション"
 
-#: ../src/gdu/gdu-util.c:478
+#: ../src/gdu/gdu-util.c:481
 msgid "Apple Label Partition"
 msgstr "Apple ラベル・パーティション"
 
-#: ../src/gdu/gdu-util.c:479
+#: ../src/gdu/gdu-util.c:482
 msgid "Apple TV Recovery Partition"
 msgstr "Apple TV リカバリパーティション"
 
 #. NetBSD
-#: ../src/gdu/gdu-util.c:481
+#: ../src/gdu/gdu-util.c:484
 msgid "NetBSD Swap Partition"
 msgstr "NetBSD スワップ・パーティション"
 
-#: ../src/gdu/gdu-util.c:482
+#: ../src/gdu/gdu-util.c:485
 msgid "NetBSD FFS Partition"
 msgstr "NetBSD EFS パーティション"
 
-#: ../src/gdu/gdu-util.c:483
+#: ../src/gdu/gdu-util.c:486
 msgid "NetBSD LFS Partition"
 msgstr "NetBSD LFS パーティション"
 
-#: ../src/gdu/gdu-util.c:484
+#: ../src/gdu/gdu-util.c:487
 msgid "NetBSD RAID Partition"
 msgstr "NetBSD RAID パーティション"
 
-#: ../src/gdu/gdu-util.c:485
+#: ../src/gdu/gdu-util.c:488
 msgid "NetBSD Concatenated  Partition"
 msgstr "NetBSD Concatenated パーティション"
 
-#: ../src/gdu/gdu-util.c:486
+#: ../src/gdu/gdu-util.c:489
 msgid "NetBSD Encrypted Partition"
 msgstr "NetBSD 暗号化パーティション"
 
-#: ../src/gdu/gdu-util.c:493
+#: ../src/gdu/gdu-util.c:496
 msgid "Unused Partition"
 msgstr "未使用パーティション"
 
-#: ../src/gdu/gdu-util.c:494
+#: ../src/gdu/gdu-util.c:497
 msgid "Empty Partition"
 msgstr "空のパーティション"
 
-#: ../src/gdu/gdu-util.c:495
+#: ../src/gdu/gdu-util.c:498
 msgid "Driver Partition"
 msgstr "ドライバ用パーティション"
 
-#: ../src/gdu/gdu-util.c:496
+#: ../src/gdu/gdu-util.c:499
 msgid "Driver 4.3 Partition"
 msgstr "ドライバ 4.3 パーティション"
 
-#: ../src/gdu/gdu-util.c:497
+#: ../src/gdu/gdu-util.c:500
 msgid "ProDOS file system"
 msgstr "ProDOS ファイルシステム"
 
-#: ../src/gdu/gdu-util.c:498
+#: ../src/gdu/gdu-util.c:501
 msgid "FAT 12"
 msgstr "FAT 12"
 
-#: ../src/gdu/gdu-util.c:499
+#: ../src/gdu/gdu-util.c:502
 msgid "FAT 16"
 msgstr "FAT 16"
 
-#: ../src/gdu/gdu-util.c:500
+#: ../src/gdu/gdu-util.c:503
 msgid "FAT 32"
 msgstr "FAT 32"
 
-#: ../src/gdu/gdu-util.c:501
+#: ../src/gdu/gdu-util.c:504
 msgid "FAT 16 (Windows)"
 msgstr "FAT 16 (Windows)"
 
-#: ../src/gdu/gdu-util.c:502
+#: ../src/gdu/gdu-util.c:505
 msgid "FAT 32 (Windows)"
 msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
-#: ../src/gdu/gdu-util.c:505
+#: ../src/gdu/gdu-util.c:508
 msgid "Empty (0x00)"
 msgstr "Empty (0x00)"
 
-#: ../src/gdu/gdu-util.c:506
+#: ../src/gdu/gdu-util.c:509
 msgid "FAT12 (0x01)"
 msgstr "FAT12 (0x01)"
 
-#: ../src/gdu/gdu-util.c:507
+#: ../src/gdu/gdu-util.c:510
 msgid "FAT16 <32M (0x04)"
 msgstr "FAT16 <32M (0x04)"
 
-#: ../src/gdu/gdu-util.c:508
+#: ../src/gdu/gdu-util.c:511
 msgid "Extended (0x05)"
 msgstr "拡張 (0x05)"
 
-#: ../src/gdu/gdu-util.c:509
+#: ../src/gdu/gdu-util.c:512
 msgid "FAT16 (0x06)"
 msgstr "FAT16 (0x06)"
 
-#: ../src/gdu/gdu-util.c:510
+#: ../src/gdu/gdu-util.c:513
 msgid "HPFS/NTFS (0x07)"
 msgstr "HPFS/NTFS (0x07)"
 
-#: ../src/gdu/gdu-util.c:511
+#: ../src/gdu/gdu-util.c:514
 msgid "W95 FAT32 (0x0b)"
 msgstr "W95 FAT32 (0x0b)"
 
-#: ../src/gdu/gdu-util.c:512
+#: ../src/gdu/gdu-util.c:515
 msgid "W95 FAT32 (LBA) (0x0c)"
 msgstr "W95 FAT32 (LBA) (0x0c)"
 
-#: ../src/gdu/gdu-util.c:513
+#: ../src/gdu/gdu-util.c:516
 msgid "W95 FAT16 (LBA) (0x0e)"
 msgstr "W95 FAT16 (LBA) (0x0e)"
 
-#: ../src/gdu/gdu-util.c:514
+#: ../src/gdu/gdu-util.c:517
 msgid "W95 Ext d (LBA) (0x0f)"
 msgstr "W95 拡張 (LBA) (0x0f)"
 
-#: ../src/gdu/gdu-util.c:515
+#: ../src/gdu/gdu-util.c:518
 msgid "OPUS (0x10)"
 msgstr "OPUS (0x10)"
 
-#: ../src/gdu/gdu-util.c:516
+#: ../src/gdu/gdu-util.c:519
 msgid "Hidden FAT12 (0x11)"
 msgstr "隠し属性付きFAT12 (0x11)"
 
-#: ../src/gdu/gdu-util.c:517
+#: ../src/gdu/gdu-util.c:520
 msgid "Compaq diagnostics (0x12)"
 msgstr "Compaq diagnostics (0x12)"
 
-#: ../src/gdu/gdu-util.c:518
+#: ../src/gdu/gdu-util.c:521
 msgid "Hidden FAT16 <32M (0x14)"
 msgstr "隠し属性付きFAT16 <32M (0x14)"
 
-#: ../src/gdu/gdu-util.c:519
+#: ../src/gdu/gdu-util.c:522
 msgid "Hidden FAT16 (0x16)"
 msgstr "隠し属性付きFAT16 (0x16)"
 
-#: ../src/gdu/gdu-util.c:520
+#: ../src/gdu/gdu-util.c:523
 msgid "Hidden HPFS/NTFS (0x17)"
 msgstr "隠し属性付きHPFS/NTFS (0x17)"
 
-#: ../src/gdu/gdu-util.c:521
+#: ../src/gdu/gdu-util.c:524
 msgid "Hidden W95 FAT32 (0x1b)"
 msgstr "隠し属性付きW95 FAT32 (0x1b)"
 
-#: ../src/gdu/gdu-util.c:522
+#: ../src/gdu/gdu-util.c:525
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
 msgstr "隠し属性付きW95 FAT32 (LBA) (0x1c)"
 
-#: ../src/gdu/gdu-util.c:523
+#: ../src/gdu/gdu-util.c:526
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
 msgstr "隠し属性付きW95 FAT16 (LBA) (0x1e)"
 
-#: ../src/gdu/gdu-util.c:524
+#: ../src/gdu/gdu-util.c:527
 msgid "PartitionMagic (0x3c)"
 msgstr "パーティションマジック (0x3c)"
 
-#: ../src/gdu/gdu-util.c:525
+#: ../src/gdu/gdu-util.c:528
 msgid "Minix (0x81)"
 msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
-#: ../src/gdu/gdu-util.c:526
+#: ../src/gdu/gdu-util.c:529
 msgid "Linux swap (0x82)"
 msgstr "Linux スワップ (0x82)"
 
-#: ../src/gdu/gdu-util.c:527
+#: ../src/gdu/gdu-util.c:530
 msgid "Linux (0x83)"
 msgstr "Linux (0x83)"
 
-#: ../src/gdu/gdu-util.c:528
+#: ../src/gdu/gdu-util.c:531
 msgid "Hibernation (0x84)"
 msgstr "ハイバネーション (0x84)"
 
-#: ../src/gdu/gdu-util.c:529
+#: ../src/gdu/gdu-util.c:532
 msgid "Linux Extended (0x85)"
 msgstr "Linux 拡張領域 (0x85)"
 
-#: ../src/gdu/gdu-util.c:530
+#: ../src/gdu/gdu-util.c:533
 msgid "Linux LVM (0x8e)"
 msgstr "Linux LVM (0x8e)"
 
-#: ../src/gdu/gdu-util.c:531
+#: ../src/gdu/gdu-util.c:534
 msgid "Hibernation (0xa0)"
 msgstr "ハイバネーション (0xa0)"
 
-#: ../src/gdu/gdu-util.c:532
+#: ../src/gdu/gdu-util.c:535
 msgid "FreeBSD (0xa5)"
 msgstr "FreeBSD (0xa5)"
 
-#: ../src/gdu/gdu-util.c:533
+#: ../src/gdu/gdu-util.c:536
 msgid "OpenBSD (0xa6)"
 msgstr "OpenBSD (0xa6)"
 
-#: ../src/gdu/gdu-util.c:534
+#: ../src/gdu/gdu-util.c:537
 msgid "Mac OS X (0xa8)"
 msgstr "Mac OS X (0xa8)"
 
-#: ../src/gdu/gdu-util.c:535
+#: ../src/gdu/gdu-util.c:538
 msgid "Mac OS X (0xaf)"
 msgstr "Mac OS X (0xaf)"
 
-#: ../src/gdu/gdu-util.c:536
+#: ../src/gdu/gdu-util.c:539
 msgid "Solaris boot (0xbe)"
 msgstr "Solaris ブート (0xbe)"
 
-#: ../src/gdu/gdu-util.c:537
+#: ../src/gdu/gdu-util.c:540
 msgid "Solaris (0xbf)"
 msgstr "Solaris (0xbf)"
 
-#: ../src/gdu/gdu-util.c:538
+#: ../src/gdu/gdu-util.c:541
 msgid "BeOS BFS (0xeb)"
 msgstr "BeOS BFS (0xeb)"
 
-#: ../src/gdu/gdu-util.c:539
+#: ../src/gdu/gdu-util.c:542
 msgid "SkyOS SkyFS (0xec)"
 msgstr "SkyOS SkyFS (0xec)"
 
-#: ../src/gdu/gdu-util.c:540
+#: ../src/gdu/gdu-util.c:543
 msgid "EFI GPT (0xee)"
 msgstr "EFI GPT (0xee)"
 
-#: ../src/gdu/gdu-util.c:541
+#: ../src/gdu/gdu-util.c:544
 msgid "EFI (FAT-12/16/32 (0xef)"
 msgstr "EFI (FAT-12/16/32 (0xef)"
 
-#: ../src/gdu/gdu-util.c:542
+#: ../src/gdu/gdu-util.c:545
 msgid "Linux RAID autodetect (0xfd)"
 msgstr "Linux RAID 自動認識 (0xfd)"
 
 #. Translators: Shown for unknown partition types.
 #. * %s is the partition type name
 #.
-#: ../src/gdu/gdu-util.c:569
+#: ../src/gdu/gdu-util.c:572
 #, c-format
 msgid "Unknown (%s)"
 msgstr "不明 (%s)"
 
-#: ../src/gdu/gdu-util.c:579
+#: ../src/gdu/gdu-util.c:582
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
@@ -3527,7 +3794,7 @@ msgstr ""
 "ほとんど全てのデバイスまたはシステムで互換性があり、特にファイル交換に使われ"
 "る人気のあるフォーマットです。"
 
-#: ../src/gdu/gdu-util.c:583
+#: ../src/gdu/gdu-util.c:586
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
@@ -3536,7 +3803,7 @@ msgstr ""
 "パーミッションをサポートしています。このファイルシステムはジャーナルを使用し"
 "ていません。"
 
-#: ../src/gdu/gdu-util.c:589
+#: ../src/gdu/gdu-util.c:592
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
@@ -3544,11 +3811,11 @@ msgstr ""
 "このファイルシステムは Linux とのみ互換性があり、古典的な UNIX ファイルパー"
 "ミッションをサポートしています。"
 
-#: ../src/gdu/gdu-util.c:593
+#: ../src/gdu/gdu-util.c:596
 msgid "Swap area used by the operating system for virtual memory."
 msgstr "仮想メモリ用にオペレーティングシステムで使用されるスワップ領域です。"
 
-#: ../src/gdu/gdu-util.c:596
+#: ../src/gdu/gdu-util.c:599
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
@@ -3556,7 +3823,7 @@ msgstr ""
 "Windows ネイティブのファイルシステムです。Windows 以外のオペレーティングシス"
 "テムではあまり互換性がありません。"
 
-#: ../src/gdu/gdu-util.c:600
+#: ../src/gdu/gdu-util.c:603
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with other operating systems than Linux and Minix."
@@ -3565,15 +3832,15 @@ msgstr ""
 "システムです。Linux と Minix 以外の他のオペレーティングシステムとは、あまり互"
 "換性はありません。"
 
-#: ../src/gdu/gdu-util.c:604
+#: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
 msgstr "ファイルシステムを作成しません。"
 
-#: ../src/gdu/gdu-util.c:607
+#: ../src/gdu/gdu-util.c:610
 msgid "Create an Extended Partition for logical partitions."
 msgstr "論理パーティションに拡張パーティションを作成します"
 
-#: ../src/gdu/gdu-util.c:620
+#: ../src/gdu/gdu-util.c:623
 msgid ""
 "The Master Boot Record scheme is compatible with almost any device or system "
 "but has a number of limitations with respect to disk size and number of "
@@ -3582,7 +3849,7 @@ msgstr ""
 "マスターブートレコード方式はほぼ全てのデバイスやシステムと互換性があります"
 "が、ディスクサイズやパーティション数に関していくつかの制限があります。"
 
-#: ../src/gdu/gdu-util.c:625
+#: ../src/gdu/gdu-util.c:628
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
@@ -3590,7 +3857,7 @@ msgstr ""
 "Legacy方式は、Apple システムや Linux システムを除いたほとんどのシステムで互換"
 "性がありません。リムーバブルメディアに使用するのはお薦めしません。"
 
-#: ../src/gdu/gdu-util.c:630
+#: ../src/gdu/gdu-util.c:633
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
@@ -3598,7 +3865,7 @@ msgstr ""
 "GUID方式は、最近のほとんどのシステムでは互換性がありますが、一部のデバイスや"
 "古いシステムでは互換性がない可能性があります。"
 
-#: ../src/gdu/gdu-util.c:634
+#: ../src/gdu/gdu-util.c:637
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
@@ -3607,68 +3874,68 @@ msgstr ""
 "合やフロッピー/Zip ディスクのように、ディスクをパーティション分けしたくない場"
 "合のみ、このオプションを使用してください。"
 
-#: ../src/gdu/gdu-util.c:853
+#: ../src/gdu/gdu-util.c:888
 #, c-format
 msgid "%.1f KB/s"
 msgstr "%.1f KB/s"
 
-#: ../src/gdu/gdu-util.c:856
+#: ../src/gdu/gdu-util.c:891
 #, c-format
 msgid "%.1f MB/s"
 msgstr "%.1f MB/s"
 
-#: ../src/gdu/gdu-util.c:859
+#: ../src/gdu/gdu-util.c:894
 #, c-format
 msgid "%.1f GB/s"
 msgstr "%.1f GB/s"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:875
+#: ../src/gdu/gdu-util.c:910
 msgid "SATA"
 msgstr "SATA"
 
 #. Translators: interface name for serial ATA disks
-#: ../src/gdu/gdu-util.c:878
+#: ../src/gdu/gdu-util.c:913
 msgid "eSATA"
 msgstr "eSATA"
 
 #. Translators: interface name for parallel ATA disks
-#: ../src/gdu/gdu-util.c:881
+#: ../src/gdu/gdu-util.c:916
 msgid "PATA"
 msgstr "PATA"
 
 #. Translators: interface name for ATA disks
-#: ../src/gdu/gdu-util.c:884 ../src/palimpsest/gdu-section-hub.c:136
+#: ../src/gdu/gdu-util.c:919 ../src/palimpsest/gdu-section-hub.c:141
 msgid "ATA"
 msgstr "ATA"
 
 #. Translators: interface name for SCSI disks
-#: ../src/gdu/gdu-util.c:887 ../src/palimpsest/gdu-section-hub.c:140
+#: ../src/gdu/gdu-util.c:922 ../src/palimpsest/gdu-section-hub.c:145
 msgid "SCSI"
 msgstr "SCSI"
 
 #. Translators: interface name for USB disks
-#: ../src/gdu/gdu-util.c:890
+#: ../src/gdu/gdu-util.c:925
 msgid "USB"
 msgstr "USB"
 
 #. Translators: interface name for firewire disks
-#: ../src/gdu/gdu-util.c:893
+#: ../src/gdu/gdu-util.c:928
 msgid "Firewire"
 msgstr "Firewire"
 
 #. Translators: interface name for SDIO disks
-#: ../src/gdu/gdu-util.c:896
+#: ../src/gdu/gdu-util.c:931
 msgid "SDIO"
 msgstr "SDIO"
 
 #. Translators: interface name for virtual disks
-#: ../src/gdu/gdu-util.c:899
+#: ../src/gdu/gdu-util.c:934
 msgid "Virtual"
 msgstr "仮想"
 
 #. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:905
+#: ../src/gdu/gdu-util.c:940
 msgctxt "connection name"
 msgid "Unknown"
 msgstr "不明"
@@ -3677,82 +3944,82 @@ msgstr "不明"
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
 #.
-#: ../src/gdu/gdu-util.c:915
+#: ../src/gdu/gdu-util.c:950
 #, c-format
 msgid "%s at %s"
 msgstr "%s %s"
 
-#: ../src/gdu/gdu-util.c:934
+#: ../src/gdu/gdu-util.c:969
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
 msgstr "ストライピング (RAID-0)"
 
-#: ../src/gdu/gdu-util.c:936
+#: ../src/gdu/gdu-util.c:971
 msgctxt "RAID level"
 msgid "RAID-0"
 msgstr "RAID-0"
 
-#: ../src/gdu/gdu-util.c:939
+#: ../src/gdu/gdu-util.c:974
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
 msgstr "ミラーリング (RAID-1)"
 
-#: ../src/gdu/gdu-util.c:941
+#: ../src/gdu/gdu-util.c:976
 msgctxt "RAID level"
 msgid "RAID-1"
 msgstr "RAID-1"
 
-#: ../src/gdu/gdu-util.c:944
+#: ../src/gdu/gdu-util.c:979
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
 msgstr "パリティディスク (RAID-4)"
 
-#: ../src/gdu/gdu-util.c:946
+#: ../src/gdu/gdu-util.c:981
 msgctxt "RAID level"
 msgid "RAID-4"
 msgstr "RAID-4"
 
-#: ../src/gdu/gdu-util.c:949
+#: ../src/gdu/gdu-util.c:984
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
 msgstr "分散パリティ (RAID-5)"
 
-#: ../src/gdu/gdu-util.c:951
+#: ../src/gdu/gdu-util.c:986
 msgctxt "RAID level"
 msgid "RAID-5"
 msgstr "RAID-5"
 
-#: ../src/gdu/gdu-util.c:954
+#: ../src/gdu/gdu-util.c:989
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
 msgstr "二重分散パリティ (RAID-6)"
 
-#: ../src/gdu/gdu-util.c:956
+#: ../src/gdu/gdu-util.c:991
 msgctxt "RAID level"
 msgid "RAID-6"
 msgstr "RAID-6"
 
-#: ../src/gdu/gdu-util.c:959
+#: ../src/gdu/gdu-util.c:994
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
 msgstr "ミラーのストライプ (RAID-10)"
 
-#: ../src/gdu/gdu-util.c:961
+#: ../src/gdu/gdu-util.c:996
 msgctxt "RAID level"
 msgid "RAID-10"
 msgstr "RAID-10"
 
-#: ../src/gdu/gdu-util.c:964
+#: ../src/gdu/gdu-util.c:999
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
 msgstr "連結 (リニア)"
 
-#: ../src/gdu/gdu-util.c:966
+#: ../src/gdu/gdu-util.c:1001
 msgctxt "RAID level"
 msgid "Linear"
 msgstr "リニア"
 
-#: ../src/gdu/gdu-util.c:980
+#: ../src/gdu/gdu-util.c:1015
 msgid ""
 "Striped set without parity. Provides improved performance but no fault "
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
@@ -3761,7 +4028,7 @@ msgstr ""
 "パリティなしでストライピングを行います。性能は良いですが、耐障害性がありませ"
 "ん。アレイ中の片方のディスクが故障した場合、RAID-0 アレイ全体が破損します。"
 
-#: ../src/gdu/gdu-util.c:984
+#: ../src/gdu/gdu-util.c:1019
 msgid ""
 "Mirrored set without parity. Provides fault tolerance and improved "
 "performance for reading. RAID-1 arrays can sustain all but one disk failing."
@@ -3769,7 +4036,7 @@ msgstr ""
 "パリティなしでミラーリングを行います。耐障害性があり読み込み性能に優れていま"
 "す。RAID-1 アレイは片方のディスクが故障しても維持することができます。"
 
-#: ../src/gdu/gdu-util.c:988
+#: ../src/gdu/gdu-util.c:1023
 msgid ""
 "Striped set with parity on a single disk. Provides improved performance and "
 "fault tolerance. RAID-4 arrays can sustain a single disk failure."
@@ -3778,7 +4045,7 @@ msgstr ""
 "耐障害性があります。RAID-4 アレイは1台のディスクが故障してもデータが失われま"
 "せん。"
 
-#: ../src/gdu/gdu-util.c:992
+#: ../src/gdu/gdu-util.c:1027
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
@@ -3786,7 +4053,7 @@ msgstr ""
 "分散パリティ方式でのストライプセットです。パフォーマンスが向上し耐障害性があ"
 "ります。RAID-5 アレイでは1台のディスクが故障してもデータが失われません。"
 
-#: ../src/gdu/gdu-util.c:996
+#: ../src/gdu/gdu-util.c:1031
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
@@ -3794,7 +4061,7 @@ msgstr ""
 "二重分散パリティ方式でのストライプセットです。パフォーマンスが向上し耐障害性"
 "があります。RAID-6 アレイでは2台のディスクが故障してもデータが失われません。"
 
-#: ../src/gdu/gdu-util.c:1000
+#: ../src/gdu/gdu-util.c:1035
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
@@ -3804,46 +4071,46 @@ msgstr ""
 "ます。RAID-10 アレイではミラーを構成する全ドライブが故障しない限り、複数のド"
 "ライブの故障に耐えられます。"
 
-#: ../src/gdu/gdu-util.c:1006
+#: ../src/gdu/gdu-util.c:1041
 #, c-format
 msgid "Unknown RAID level %s."
 msgstr "不明な RAID レベル %s"
 
 #. Translators: Overall description of the GOOD status
-#: ../src/gdu/gdu-util.c:1042
+#: ../src/gdu/gdu-util.c:1077
 msgid "Disk is healthy"
 msgstr "ディスクは正常です"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
-#: ../src/gdu/gdu-util.c:1046
+#: ../src/gdu/gdu-util.c:1081
 msgid "Disk was used outside of design parameters in the past"
 msgstr "ディスクは過去に設計値を超過して使用されたことがあります"
 
 #. Translators: Overall description of the BAD_SECTOR status
-#: ../src/gdu/gdu-util.c:1050
+#: ../src/gdu/gdu-util.c:1085
 msgid "Disk has a few bad sectors"
 msgstr "ディスクにはほんの数個のバッドセクタがあります"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
-#: ../src/gdu/gdu-util.c:1054
+#: ../src/gdu/gdu-util.c:1089
 msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
 msgstr "ディスクは設計値を超過して酷使されています"
 
 #. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
 #. Translators: Suggested action for the BAD_SECTOR_MANY status
 #. Translators: Suggested action for the BAD_STATUS status
-#: ../src/gdu/gdu-util.c:1056 ../src/gdu/gdu-util.c:1064
-#: ../src/gdu/gdu-util.c:1070
+#: ../src/gdu/gdu-util.c:1091 ../src/gdu/gdu-util.c:1099
+#: ../src/gdu/gdu-util.c:1105
 msgid "Backup all data and replace the disk"
 msgstr "すべてのデータをバックアップし、ディスクを交換してください"
 
 #. Translators: Overall description of the BAD_SECTOR_MANY status
-#: ../src/gdu/gdu-util.c:1061
+#: ../src/gdu/gdu-util.c:1096
 msgid "DISK HAS MANY BAD SECTORS"
 msgstr "ディスクに多くのバッドセクタがあります"
 
 #. Translators: Overall description of the BAD_STATUS status
-#: ../src/gdu/gdu-util.c:1068
+#: ../src/gdu/gdu-util.c:1103
 msgid "DISK FAILURE IS IMMINENT"
 msgstr "ディスクが故障しかけています"
 
@@ -4010,7 +4277,7 @@ msgstr "空の光学ディスク"
 #: ../src/gdu/gdu-volume.c:286
 #, c-format
 msgid "%s Extended"
-msgstr ""
+msgstr "%s 拡張領域"
 
 #: ../src/gdu/gdu-volume.c:287
 msgid "Contains logical partitions"
@@ -4141,19 +4408,6 @@ msgstr "%s の全ディスクボリューム"
 msgid "Whole-disk volume"
 msgstr "全ディスクボリューム"
 
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#: ../src/gdu/gdu-volume-hole.c:151
-#, c-format
-msgid "%s Free"
-msgstr ""
-
-#: ../src/gdu/gdu-volume-hole.c:160
-#: ../src/palimpsest/gdu-section-volumes.c:1695
-msgid "Unallocated Space"
-msgstr "未割り当て領域"
-
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
@@ -4200,12 +4454,16 @@ msgstr "表示するボリューム"
 msgid "Drive to show"
 msgstr "表示するドライブ"
 
+#: ../src/palimpsest/gdu-section-drive.c:148
+msgid "Multipath Drive"
+msgstr "マルチパスドライブ"
+
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SAS Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:167
+#: ../src/palimpsest/gdu-section-drive.c:189
 #, c-format
 msgid "PHY %d of %s"
 msgstr "%2$s の PHY %1$d"
@@ -4215,17 +4473,17 @@ msgstr "%2$s の PHY %1$d"
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SATA Host Adapter").
 #.
-#: ../src/palimpsest/gdu-section-drive.c:174
+#: ../src/palimpsest/gdu-section-drive.c:196
 #, c-format
 msgid "Port %d of %s"
 msgstr "%2$s の ポート %1$d"
 
-#: ../src/palimpsest/gdu-section-drive.c:232
+#: ../src/palimpsest/gdu-section-drive.c:261
 msgctxt "Write Cache"
 msgid "Enabled"
 msgstr "有効"
 
-#: ../src/palimpsest/gdu-section-drive.c:234
+#: ../src/palimpsest/gdu-section-drive.c:263
 msgctxt "Write Cache"
 msgid "Disabled"
 msgstr "無効"
@@ -4233,671 +4491,863 @@ msgstr "無効"
 #. Translators: This is for the rotation rate of a hard
 #. * disk - RPM means rounds per minute
 #.
-#: ../src/palimpsest/gdu-section-drive.c:244
+#: ../src/palimpsest/gdu-section-drive.c:273
 #, c-format
 msgctxt "Rotation Rate"
 msgid "%d RPM"
 msgstr "%d RPM"
 
-#: ../src/palimpsest/gdu-section-drive.c:252
+#: ../src/palimpsest/gdu-section-drive.c:281
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
 msgstr "SSD"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
-#: ../src/palimpsest/gdu-section-drive.c:267
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:358
+#: ../src/palimpsest/gdu-section-drive.c:296
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:259
 #, c-format
 msgid "Unknown Scheme: %s"
 msgstr "不明なスキーム: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:378
-#: ../src/palimpsest/gdu-section-drive.c:398
+#: ../src/palimpsest/gdu-section-drive.c:439
+#: ../src/palimpsest/gdu-section-drive.c:459
 msgid "Error launching Brasero"
 msgstr "Brasero の起動時にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-drive.c:379
+#: ../src/palimpsest/gdu-section-drive.c:440
 msgid "The application is not installed"
 msgstr "アプリケーションがインストールされていません"
 
-#: ../src/palimpsest/gdu-section-drive.c:460
+#: ../src/palimpsest/gdu-section-drive.c:521
 msgid "Error ejecting media"
 msgstr "メディアの取り出し中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-drive.c:504
+#: ../src/palimpsest/gdu-section-drive.c:565
 msgid "Error detaching drive"
 msgstr "ドライブの取り外し中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-drive.c:549
+#: ../src/palimpsest/gdu-section-drive.c:610
 msgid "Error formatting drive"
 msgstr "ドライブのフォーマット中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-drive.c:587
+#: ../src/palimpsest/gdu-section-drive.c:648
 msgid "Are you sure you want to format the drive?"
 msgstr "本当にドライブをフォーマットしますか?"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
-#: ../src/palimpsest/gdu-section-hub.c:221
+#: ../src/palimpsest/gdu-section-drive.c:835
+msgid ""
+"<b>WARNING:</b> Several paths to this drive has been detected but no "
+"corresponding multipath device was found. Your OS may be misconfigured."
+msgstr ""
+"<b>警告:</b> このドライブに対するいくつかのパスが検知されましたが、該当するマ"
+"ルチパスデバイスが見つかりません。OS の設定が間違っている可能性があります。"
+
+#: ../src/palimpsest/gdu-section-drive.c:850
+msgid "Go to Multipath Device"
+msgstr "マルチパスドライブに移動"
+
+#: ../src/palimpsest/gdu-section-drive.c:861
+msgid ""
+"<b>NOTE:</b> This object represents one of several paths to the drive. To "
+"perform operations on the drive, use the corresponding multipath object."
+msgstr ""
+"<b>注意:</b> このオブジェクトはドライブのいくつかのパスのうちの一つです。ドラ"
+"イブに対して操作を実行するには、該当するマルチパスオブジェクトを利用してくだ"
+"さい。"
+
+#: ../src/palimpsest/gdu-section-drive.c:890
+#: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Model:"
 msgstr "モデル名:"
 
-#: ../src/palimpsest/gdu-section-drive.c:652
+#: ../src/palimpsest/gdu-section-drive.c:894
 msgid "Serial Number:"
 msgstr "シリアルナンバー:"
 
-#: ../src/palimpsest/gdu-section-drive.c:656
+#: ../src/palimpsest/gdu-section-drive.c:898
 msgid "Firmware Version:"
 msgstr "ファームウェアバージョン:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:661
+#: ../src/palimpsest/gdu-section-drive.c:903
 msgid "World Wide Name:"
 msgstr "World Wide Name:"
 
-#: ../src/palimpsest/gdu-section-drive.c:665
+#: ../src/palimpsest/gdu-section-drive.c:907
 msgid "Location:"
-msgstr ""
+msgstr "位置:"
 
-#: ../src/palimpsest/gdu-section-drive.c:673
+#: ../src/palimpsest/gdu-section-drive.c:915
 msgid "Write Cache:"
 msgstr "書き込みキャッシュ:"
 
-#: ../src/palimpsest/gdu-section-drive.c:677
+#: ../src/palimpsest/gdu-section-drive.c:919
 msgid "Rotation Rate:"
 msgstr "回転速度:"
 
-#: ../src/palimpsest/gdu-section-drive.c:681
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1100
-#: ../src/palimpsest/gdu-section-volumes.c:1460
+#: ../src/palimpsest/gdu-section-drive.c:923
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:978
+#: ../src/palimpsest/gdu-section-volumes.c:1930
 msgid "Capacity:"
 msgstr "容量:"
 
-#: ../src/palimpsest/gdu-section-drive.c:685
+#: ../src/palimpsest/gdu-section-drive.c:927
 msgid "Connection:"
 msgstr "接続:"
 
-#: ../src/palimpsest/gdu-section-drive.c:689
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1092
+#: ../src/palimpsest/gdu-section-drive.c:931
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
 msgstr "パーティション:"
 
-#: ../src/palimpsest/gdu-section-drive.c:712
+#: ../src/palimpsest/gdu-section-drive.c:954
 msgid "Open CD/_DVD Application"
 msgstr "CD/DVD アプリケーションを開く(_D)"
 
-#: ../src/palimpsest/gdu-section-drive.c:713
+#: ../src/palimpsest/gdu-section-drive.c:955
 msgid "Create and copy CDs and DVDs"
 msgstr "CDやDVDを作成しコピーする"
 
-#: ../src/palimpsest/gdu-section-drive.c:722
+#: ../src/palimpsest/gdu-section-drive.c:964
 msgid "Format _Drive"
 msgstr "ドライブをフォーマット(_D)"
 
-#: ../src/palimpsest/gdu-section-drive.c:723
+#: ../src/palimpsest/gdu-section-drive.c:965
 msgid "Erase or partition the drive"
 msgstr "ドライブを消去するかパーティション分けする"
 
-#: ../src/palimpsest/gdu-section-drive.c:732
+#: ../src/palimpsest/gdu-section-drive.c:974
 msgid "SM_ART Data"
 msgstr "SMART データ(_A)"
 
-#: ../src/palimpsest/gdu-section-drive.c:733
+#: ../src/palimpsest/gdu-section-drive.c:975
 msgid "View SMART data and run self-tests"
 msgstr "SMART データの表示とセルフテストを実行"
 
-#: ../src/palimpsest/gdu-section-drive.c:742
+#: ../src/palimpsest/gdu-section-drive.c:984
 msgid "_Eject"
 msgstr "取り出し(_E)"
 
-#: ../src/palimpsest/gdu-section-drive.c:743
+#: ../src/palimpsest/gdu-section-drive.c:985
 msgid "Eject media from the drive"
 msgstr "ドライブからメディアを取り出す"
 
-#: ../src/palimpsest/gdu-section-drive.c:752
+#: ../src/palimpsest/gdu-section-drive.c:994
 msgid "Safe Rem_oval"
 msgstr "安全に削除する(_O)"
 
-#: ../src/palimpsest/gdu-section-drive.c:753
+#: ../src/palimpsest/gdu-section-drive.c:995
 msgid "Power down the drive so it can be removed"
 msgstr "ドライブの電源を切ったので取り外せます"
 
-#: ../src/palimpsest/gdu-section-drive.c:763
+#: ../src/palimpsest/gdu-section-drive.c:1005
 msgid "Measure drive performance"
 msgstr "ドライブのパフォーマンスを計測"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
 #.
-#: ../src/palimpsest/gdu-section-hub.c:117
-#: ../src/palimpsest/gdu-section-hub.c:156
+#: ../src/palimpsest/gdu-section-hub.c:106
+#: ../src/palimpsest/gdu-section-hub.c:161
 #, c-format
 msgid "%d PHYs"
 msgstr "%d PHY"
 
-#: ../src/palimpsest/gdu-section-hub.c:132
+#: ../src/palimpsest/gdu-section-hub.c:137
 msgid "Parallel ATA"
 msgstr "パラレル ATA"
 
-#: ../src/palimpsest/gdu-section-hub.c:134
+#: ../src/palimpsest/gdu-section-hub.c:139
 msgid "Serial ATA"
 msgstr "シリアル ATA"
 
-#: ../src/palimpsest/gdu-section-hub.c:138
+#: ../src/palimpsest/gdu-section-hub.c:143
 msgid "Serial Attached SCSI"
-msgstr "Serial Attached SCSI"
+msgstr "シリアルアタッチド SCSI (SAS)"
 
-#: ../src/palimpsest/gdu-section-hub.c:217
+#: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Vendor:"
 msgstr "ベンダ:"
 
-#: ../src/palimpsest/gdu-section-hub.c:225
+#: ../src/palimpsest/gdu-section-hub.c:229
 msgid "Revision:"
 msgstr "リビジョン:"
 
-#: ../src/palimpsest/gdu-section-hub.c:229
+#: ../src/palimpsest/gdu-section-hub.c:233
 msgid "Driver:"
 msgstr "ドライバ:"
 
-#: ../src/palimpsest/gdu-section-hub.c:233
-msgid "Fabric:"
-msgstr ""
-
 #: ../src/palimpsest/gdu-section-hub.c:237
+#, fuzzy
+msgid "Fabric:"
+msgstr "Fabric:"
+
+#: ../src/palimpsest/gdu-section-hub.c:241
 msgid "Number of Ports:"
 msgstr "ポート数:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:86
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
+msgid "Error starting Volume Group"
+msgstr "ボリュームグループの開始中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
+msgid "Error stopping Volume Group"
+msgstr "ボリュームグループの停止中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
+msgid "Error setting name for Volume Group"
+msgstr "ボリュームグループ名の設定中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
+msgid "Choose a new Volume Group name."
+msgstr "新規ボリュームグループ名を入力してください。"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
+msgid "Error adding Physical Volume to Volume Group"
+msgstr "論理グループに物理ボリュームを追加する際にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
+msgid "Error creating PV for VG"
+msgstr "ボリュームグループで物理ボリュームの作成中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
+msgid "Error deleting partition for Physical Volume in Volume Group"
+msgstr ""
+"ボリュームグループにある物理ボリュームのパーティションの削除中にエラーが発生"
+"しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
+msgid "Error removing Physical Volume from Volume Group"
+msgstr "ボリュームグループから物理ボリュームを削除する際にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
+msgid "Are you sure you want the remove the Physical Volume?"
+msgstr "本当に物理ボリュームを削除しますか?"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:530
+msgid "_Remove"
+msgstr "削除(_R)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
+msgid "Not Running"
+msgstr "停止中"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:601
+msgid "Partially Running"
+msgstr "部分的に実行中"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:606
+msgid "Running"
+msgstr "実行中"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
+#, c-format
+msgid "Unknown (%d)"
+msgstr "不明 (%d)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:966
+msgid "Name:"
+msgstr "名前:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
+msgid "Extent Size:"
+msgstr "拡張領域のサイズ:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
+msgid "Physical Volumes:"
+msgstr "物理ボリューム:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
+msgid "Unallocated:"
+msgstr "未割り当て:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:706
+msgid "St_art Volume Group"
+msgstr "ボリュームグループを開始(_A)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:707
+msgid "Activate all LVs in the VG"
+msgstr "ボリュームグループにあるすべての論理ボリュームを開始"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
+msgid "St_op Volume Group"
+msgstr "ボリュームグループを呈し(_O)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
+msgid "Deactivate all LVs in the VG"
+msgstr "ボリュームグループにあるすべての論理ボリュームを停止"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
+msgid "Edit _Name"
+msgstr "名前を編集(_N)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:728
+msgid "Change the Volume Group name"
+msgstr "ボリュームグループ名を変更"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
+msgid "Edit Ph_ysical Volumes"
+msgstr "物理ボリュームを編集(_Y)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
+msgid "Create and remove PVs"
+msgstr "物理ボリュームの作成と削除"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
 msgstr "停止中です。部分的に構築されています。"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
 msgctxt "RAID status"
 msgid "Not running"
 msgstr "停止中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
 msgstr "停止中です。デグレード状態でなら始めることができます。"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:98
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
 msgstr "停止中です。起動するにはコンポーネントが足りません"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
 msgctxt "RAID status"
 msgid "DEGRADED"
 msgstr "デグレード状態"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:118
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
 msgctxt "RAID status"
 msgid "Running"
 msgstr "実行中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "再構築中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "リシンク中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "修復中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "リカバリ中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:134
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "チェック中"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
 msgctxt "RAID action"
 msgid "Idle"
 msgstr "アイドル"
 
-#. Translators: The text for the hyperlink of the component
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:241
-msgid "Go to volume"
-msgstr "ボリュームに移動"
-
-#. Translators: The text used to display the RAID component for an array that is running.
-#. * First %s is the VPD name.
-#. * Second %s is the state of the component.
-#. * Third %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:251
-#, c-format
-msgctxt "RAID component label"
-msgid "%s (%s) – %s"
-msgstr "%s (%s) – %s"
-
-#. Translators: The text used to display the RAID component for an array that is not running.
-#. * First %s is the VPD name.
-#. * Second %s is the "Go to volume" link.
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:260
-#, c-format
-msgctxt "RAID component label"
-msgid "%s – %s"
-msgstr "%s – %s"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:415
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:315
 msgid "Error stopping RAID Array"
 msgstr "RAID アレイの停止中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:460
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:360
 msgid "Error starting RAID Array"
 msgstr "RAID アレイの開始中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:490
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:493
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:390
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
 msgid "Not enough components available to start the RAID Array"
 msgstr "RAID アレイを開始するには利用可能なコンポーネントが足りません"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:509
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:409
 msgid "Are you sure you want the RAID Array degraded?"
 msgstr "本当に RAID アレイをデグレードモードにしますか?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:510
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
 msgstr "開始(_S)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:555
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:455
 msgid "Error deleting partition for component in RAID Array"
 msgstr ""
 "RAID アレイのコンポーネントでパーティションを削除中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:578
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:478
 msgid "Error removing component from RAID Array"
 msgstr "RAID アレイからコンポーネントを取り外す際にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:629
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:529
 msgid "Are you sure you want the remove the component?"
 msgstr "本当にアレイからコンポーネントを取り外しますか?"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:630
-msgid "_Remove"
-msgstr "削除(_R)"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:666
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:739
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:566
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
 msgid "Error adding component to RAID Array"
 msgstr "RAID アレイにコンポーネントの追加中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:762
-msgid "Error creating partition for RAID component"
-msgstr "RAID コンポーネントにパーティションを作成中にエラーが発生しました"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:683
+#: ../src/palimpsest/gdu-shell.c:599
+msgid "Error creating component for RAID array"
+msgstr "RAID アレイでコンポーネントの作成中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:797
-msgid "Error creating partition table for RAID component"
-msgstr ""
-"RAID コンポーネントのテーブルにパーティションを作成中にエラーが発生しました"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+msgid "Error expanding RAID Array"
+msgstr "RAID アレイの拡張中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"
 msgstr "RAID アレイのチェック中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1080
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Level:"
 msgstr "レベル:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1084
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:962
 msgid "Metadata Version:"
 msgstr "メタデータのバージョン:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1088
-msgid "Name:"
-msgstr "名前:"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1104
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:982
 msgid "Action:"
 msgstr "アクション:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1108
-msgid "Active Components:"
-msgstr "有効なコンポーネント:"
-
-#. Ensure this is in the last row and the first column
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1113
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:986
 msgid "Components:"
 msgstr "コンポーネント:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1139
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "St_art RAID Array"
 msgstr "RAID アレイを開始(_A)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1140
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 msgid "Bring up the RAID Array"
 msgstr "RAID アレイを開始"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1149
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
 msgid "St_op RAID Array"
 msgstr "RAID アレイを停止(_O)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1150
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
 msgid "Tear down the RAID Array"
 msgstr "Tear down the RAID Array"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1159
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
 msgid "Format/Erase RAI_D Array"
 msgstr "RAID アレイをフォーマット/消去(_D)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1160
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
 msgstr "RAID アレイの削除またはパーティション分け"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1169
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
 msgid "Chec_k Array"
 msgstr "アレイのチェック(_K)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1170
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "Check and repair the array"
 msgstr "アレイのチェックと修復"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1179
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
 msgid "Edit Com_ponents"
 msgstr "%d 個のコンポーネントを編集(_P)"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1180
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Create and remove components"
 msgstr "コンポーネントの作成と削除"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1190
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Measure RAID array performance"
 msgstr "RAID アレイのパフォーマンスを測定"
 
-#: ../src/palimpsest/gdu-section-volumes.c:100
+#: ../src/palimpsest/gdu-section-volumes.c:112
 msgid "Error unmounting volume"
 msgstr "ボリュームのアンマウント中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:156
+#: ../src/palimpsest/gdu-section-volumes.c:168
 msgid "Error mounting volume"
 msgstr "ボリュームのマウント中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:213
+#: ../src/palimpsest/gdu-section-volumes.c:225
 msgid "Error deleting partition"
 msgstr "パーティションの削除中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:248
+#: ../src/palimpsest/gdu-section-volumes.c:260
 msgid "Are you sure you want to delete the partition?"
 msgstr "本当にパーティションを削除しますか?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:249
+#: ../src/palimpsest/gdu-section-volumes.c:261
+#: ../src/palimpsest/gdu-section-volumes.c:1787
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:302
+#: ../src/palimpsest/gdu-section-volumes.c:314
 msgid "Error creating filesystem"
 msgstr "ファイルシステムの作成中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:355
+#: ../src/palimpsest/gdu-section-volumes.c:367
 msgid "Are you sure you want to format the volume?"
 msgstr "本当にボリュームをフォーマットしますか?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:413
+#: ../src/palimpsest/gdu-section-volumes.c:425
 msgid "Error modifying partition"
 msgstr "パーティションの変更中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:504
+#: ../src/palimpsest/gdu-section-volumes.c:516
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "本当にパスフレーズを忘れさせますか?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:505
+#: ../src/palimpsest/gdu-section-volumes.c:517
 msgid "_Forget"
 msgstr "忘れる(_F)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:535
+#: ../src/palimpsest/gdu-section-volumes.c:547
 msgid "Error locking LUKS volume"
 msgstr "LUKS ボリュームのロック中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:658
+#: ../src/palimpsest/gdu-section-volumes.c:670
 msgid "Error unlocking LUKS volume"
 msgstr "LUKS ボリュームのロック解除中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:954
+#: ../src/palimpsest/gdu-section-volumes.c:966
 msgid "Error creating partition"
 msgstr "パーティションの作成中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1125
+#: ../src/palimpsest/gdu-section-volumes.c:1137
 msgid "Error changing label"
 msgstr "ラベルの変更中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1199
+#: ../src/palimpsest/gdu-section-volumes.c:1192
+msgid "Choose a new filesystem label."
+msgstr "新しいファイルシステムのラベルを入力してください。"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1193
+msgid "_Label:"
+msgstr "ラベル(_L):"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1238
 msgid "Error checking filesystem on volume"
 msgstr "ボリュームにあるファイルシステムのチェック中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1226
+#: ../src/palimpsest/gdu-section-volumes.c:1265
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "\"%s\" (%s) のファイルシステムのチェックが完了しました"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1230
+#: ../src/palimpsest/gdu-section-volumes.c:1269
 msgid "File system is clean."
 msgstr "ファイルシステムは正常です。"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1233
+#: ../src/palimpsest/gdu-section-volumes.c:1272
 msgid "File system is <b>NOT</b> clean."
 msgstr "ファイルシステムは正常では<b>ありません</b>。"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1345
+#: ../src/palimpsest/gdu-section-volumes.c:1384
 #, c-format
 msgid "Error spawning nautilus: %s"
 msgstr "Nautilus の起動中にエラー: %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1439
+#: ../src/palimpsest/gdu-section-volumes.c:1432
+msgid "Error creating Logical Volume"
+msgstr "論理ボリュームの作成中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1585
+msgid "Error stopping Logical Volume"
+msgstr "論理ボリュームの停止中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1631
+msgid "Error starting Logical Volume"
+msgstr "論理ボリュームの開始中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1680
+msgid "Error setting name for Logical Volume"
+msgstr "論理ボリューム名の設定中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1719
+msgid "Choose a new name for the Logical Volume."
+msgstr "新しい論理ボリューム名を入力してください。"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1753
+msgid "Error deleting Logical Volume"
+msgstr "論理ボリュームの削除中にエラーが発生しました"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1786
+msgid "Are you sure you want to delete the logical volume?"
+msgstr "本当に論理ボリュームを削除しますか?"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1903
+msgid "Volume Name:"
+msgstr "ボリューム名:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1909
 msgid "Usage:"
 msgstr "利用方法:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1449
+#: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Partition Type:"
 msgstr "パーティション・タイプ:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1453
+#: ../src/palimpsest/gdu-section-volumes.c:1923
 msgid "Partition Label:"
 msgstr "パーティション・ラベル:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1456
+#: ../src/palimpsest/gdu-section-volumes.c:1926
 msgid "Partition Flags:"
 msgstr "パーティション・フラグ:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1464
+#: ../src/palimpsest/gdu-section-volumes.c:1934
 msgid "Type:"
 msgstr "タイプ:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1467
+#: ../src/palimpsest/gdu-section-volumes.c:1937
 msgid "Available:"
 msgstr "利用可能:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1473
+#: ../src/palimpsest/gdu-section-volumes.c:1940
+msgid "Label:"
+msgstr "ラベル:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1943
 msgid "Mount Point:"
 msgstr "マウントポイント:"
 
+#: ../src/palimpsest/gdu-section-volumes.c:1964
+msgctxt "LVM2 LV State"
+msgid "Running"
+msgstr "実行中"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1965
+msgctxt "LVM2 LV State"
+msgid "Not Running"
+msgstr "停止中"
+
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1517
+#: ../src/palimpsest/gdu-section-volumes.c:2004
 msgid "Bootable"
 msgstr "ブート可能"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1520
+#: ../src/palimpsest/gdu-section-volumes.c:2007
 msgid "Required"
-msgstr ""
+msgstr "必要"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1523
+#: ../src/palimpsest/gdu-section-volumes.c:2010
 msgid "Allocated"
-msgstr ""
+msgstr "割り当て済"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1526
+#: ../src/palimpsest/gdu-section-volumes.c:2013
 msgid "Allow Read"
 msgstr "読み込み許可"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1529
+#: ../src/palimpsest/gdu-section-volumes.c:2016
 msgid "Allow Write"
 msgstr "書き込み許可"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:1532
+#: ../src/palimpsest/gdu-section-volumes.c:2019
 msgid "Boot Code PIC"
 msgstr "ブートコード PIC"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1601
+#: ../src/palimpsest/gdu-section-volumes.c:2093
 msgid "Filesystem"
 msgstr "ファイルシステム"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1634
+#: ../src/palimpsest/gdu-section-volumes.c:2126
 msgid "View files on the volume using a SFTP network share"
 msgstr "SFTPネットワーク共有を利用してボリュームにあるファイルを表示"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:1641
+#: ../src/palimpsest/gdu-section-volumes.c:2133
 msgid "View files on the volume"
 msgstr "ボリュームにあるファイルを表示"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:1648
+#: ../src/palimpsest/gdu-section-volumes.c:2140
 #, c-format
 msgid "Mounted at %s"
 msgstr "%s は以下でマウント"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1656
+#: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "Not Mounted"
 msgstr "マウントされていません"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1666
+#: ../src/palimpsest/gdu-section-volumes.c:2158
 msgid "Encrypted Volume (Locked)"
 msgstr "暗号化ボリューム(ロック)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1669
+#: ../src/palimpsest/gdu-section-volumes.c:2161
 msgid "Encrypted Volume (Unlocked)"
 msgstr "暗号化ボリューム(ロック解除)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1682
+#: ../src/palimpsest/gdu-section-volumes.c:2174
 msgid "Go to array"
 msgstr "アレイに移動"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1690
+#: ../src/palimpsest/gdu-section-volumes.c:2182
 msgid "Container for Logical Partitions"
 msgstr "論理パーティションのコンテナ"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1772
+#: ../src/palimpsest/gdu-section-volumes.c:2290
+msgid "Logical _Volumes"
+msgstr "論理ボリューム(_V)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2292
 msgid "_Volumes"
 msgstr "ボリューム(_V)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1812
+#: ../src/palimpsest/gdu-section-volumes.c:2335
 msgid "_Mount Volume"
 msgstr "ボリュームをマウント(_M)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1813
+#: ../src/palimpsest/gdu-section-volumes.c:2336
 msgid "Mount the volume"
 msgstr "ボリュームをマウント"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1822
-msgid "_Unmount Volume"
-msgstr "ボリュームをアンマウント(_U)"
+#: ../src/palimpsest/gdu-section-volumes.c:2345
+msgid "Un_mount Volume"
+msgstr "ボリュームをアンマウント(_M)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1823
+#: ../src/palimpsest/gdu-section-volumes.c:2346
 msgid "Unmount the volume"
 msgstr "ボリュームをアンマウント"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1832
+#: ../src/palimpsest/gdu-section-volumes.c:2355
 msgid "Fo_rmat Volume"
 msgstr "ボリュームをフォーマット(_R)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1833
+#: ../src/palimpsest/gdu-section-volumes.c:2356
 msgid "Erase or format the volume"
 msgstr "ボリュームの消去またはフォーマット"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1842
+#: ../src/palimpsest/gdu-section-volumes.c:2365
 msgid "_Check Filesystem"
 msgstr "ファイルシステムをチェック(_C)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1843
+#: ../src/palimpsest/gdu-section-volumes.c:2366
 msgid "Check and repair the filesystem"
 msgstr "ファイルシステムのチェックと修復"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1853
-msgid "Edit _Label"
-msgstr "ラベルを編集(_L)"
+#: ../src/palimpsest/gdu-section-volumes.c:2376
+msgid "Edit Filesystem _Label"
+msgstr "ファイルシステムのラベルを編集(_L)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1854
-msgid "Change the label of the volume"
-msgstr "ボリュームのラベルを変更"
+#: ../src/palimpsest/gdu-section-volumes.c:2377
+msgid "Change the label of the filesystem"
+msgstr "ファイルシステムのラベルを変更"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1863
+#: ../src/palimpsest/gdu-section-volumes.c:2386
 msgid "Ed_it Partition"
 msgstr "パーティションを編集(_I)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1864
+#: ../src/palimpsest/gdu-section-volumes.c:2387
 msgid "Change partition type, label and flags"
 msgstr "パーティション・タイプやラベルやフラグを変更"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1873
+#: ../src/palimpsest/gdu-section-volumes.c:2396
 msgid "D_elete Partition"
 msgstr "パーティションを削除(_E)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1874
+#: ../src/palimpsest/gdu-section-volumes.c:2397
 msgid "Delete the partition"
 msgstr "パーティションを削除"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1883
+#: ../src/palimpsest/gdu-section-volumes.c:2406
 msgid "_Create Partition"
 msgstr "パーティションを作成(_C)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1884
+#: ../src/palimpsest/gdu-section-volumes.c:2407
 msgid "Create a new partition"
 msgstr "新規パーティションを作成"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1893
+#: ../src/palimpsest/gdu-section-volumes.c:2416
 msgid "_Lock Volume"
 msgstr "ボリュームをロック(_L)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1894
+#: ../src/palimpsest/gdu-section-volumes.c:2417
 msgid "Make encrypted data unavailable"
 msgstr "暗号化データを利用不可にする"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1903
-msgid "_Unlock Volume"
-msgstr "ボリュームのロック解除(_U)"
+#: ../src/palimpsest/gdu-section-volumes.c:2426
+msgid "Un_lock Volume"
+msgstr "ボリュームのロック解除(_L)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1904
+#: ../src/palimpsest/gdu-section-volumes.c:2427
 msgid "Make encrypted data available"
 msgstr "暗号化データを利用可能にする"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1913
+#: ../src/palimpsest/gdu-section-volumes.c:2436
 msgid "Forge_t Passphrase"
 msgstr "パスフレーズを忘れる(_T)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1914
+#: ../src/palimpsest/gdu-section-volumes.c:2437
 msgid "Delete passphrase from keyring"
 msgstr "キーリングからパスフレーズを削除"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1925
+#: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "Change passphrase"
 msgstr "パスフレーズを変更"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2457
+msgid "_Create Logical Volume"
+msgstr "論理ボリュームを作成(_C)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2458
+msgid "Create a new logical volume"
+msgstr "新規論理ボリュームを作成"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2467
+msgid "S_tart Volume"
+msgstr "ボリュームを開始(_T)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2468
+msgid "Activate the Logical Volume"
+msgstr "論理ボリュームを開始"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2478
+msgid "Edit Vol_ume Name"
+msgstr "ボリューム名を編集(_U)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2479
+msgid "Change the name of the volume"
+msgstr "ボリューム名を変更"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2488
+msgid "D_elete Volume"
+msgstr "ボリュームを削除(_E)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2489
+msgid "Delete the Logical Volume"
+msgstr "論理ボリュームを削除"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2498
+msgid "Sto_p Volume"
+msgstr "ボリュームを停止(_P)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2499
+msgid "Deactivate the Logical Volume"
+msgstr "論理ボリュームを停止"
 
 #. Translators: Window title when the item representing a remote machine is selected.
 #. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:285
+#: ../src/palimpsest/gdu-shell.c:290
 #, c-format
 msgid "%s — Disk Utility"
 msgstr "%s — ディスク・ユーティリティ"
@@ -4908,7 +5358,7 @@ msgstr "%s — ディスク・ユーティリティ"
 #. * Third is the device file (e.g. '/dev/sda')
 #. * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:295
+#: ../src/palimpsest/gdu-shell.c:300
 #, c-format
 msgid "%s (%s) [%s] @ %s — Disk Utility"
 msgstr "%s (%s) [%s] @ %s — ディスク・ユーティリティ"
@@ -4918,7 +5368,7 @@ msgstr "%s (%s) [%s] @ %s — ディスク・ユーティリティ"
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #. * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
-#: ../src/palimpsest/gdu-shell.c:306
+#: ../src/palimpsest/gdu-shell.c:311
 #, c-format
 msgid "%s (%s) @ %s — Disk Utility"
 msgstr "%s (%s) @ %s — ディスク・ユーティリティ"
@@ -4928,7 +5378,7 @@ msgstr "%s (%s) @ %s — ディスク・ユーティリティ"
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #. * Third is the device file (e.g. '/dev/sda')
 #.
-#: ../src/palimpsest/gdu-shell.c:324
+#: ../src/palimpsest/gdu-shell.c:329
 #, c-format
 msgid "%s (%s) [%s] — Disk Utility"
 msgstr "%s (%s) [%s] — ディスク・ユーティリティ"
@@ -4937,31 +5387,21 @@ msgstr "%s (%s) [%s] — ディスク・ユーティリティ"
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
 #. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
 #.
-#: ../src/palimpsest/gdu-shell.c:333
+#: ../src/palimpsest/gdu-shell.c:338
 #, c-format
 msgid "%s (%s) — Disk Utility"
 msgstr "%s (%s) — ディスク・ユーティリティ"
 
-#: ../src/palimpsest/gdu-shell.c:589
-msgid "Error creating component for RAID array"
-msgstr "RAID アレイでコンポーネントの作成中にエラーが発生しました"
-
-#: ../src/palimpsest/gdu-shell.c:622
-msgid "Error creating partition table for component for RAID array"
-msgstr ""
-"RAID アレイのコンポーネントでパーティションテーブルの作成中にエラーが発生しま"
-"した"
-
-#: ../src/palimpsest/gdu-shell.c:648
+#: ../src/palimpsest/gdu-shell.c:627
 msgid "Error creating RAID array"
 msgstr "RAID アレイの作成中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:756
 #, c-format
 msgid "Error connecting to “%s”"
 msgstr "“%s” に接続中にエラーが発生しました"
 
-#: ../src/palimpsest/gdu-shell.c:896
+#: ../src/palimpsest/gdu-shell.c:809
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
@@ -4970,97 +5410,136 @@ msgstr ""
 "  Mitsuya Shibata https://launchpad.net/~cosmos-door\n"
 "  Shushi Kurose https://launchpad.net/~kurokuro"
 
-#: ../src/palimpsest/gdu-shell.c:921
+#: ../src/palimpsest/gdu-shell.c:834
 msgid "_File"
 msgstr "ファイル(_F)"
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:835
 msgid "Connect to _Server..."
 msgstr "サーバに接続(_S)..."
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:835
 msgid "Manage storage devices on another machine"
 msgstr "他のマシンにあるストレージデバイスを管理"
 
-#: ../src/palimpsest/gdu-shell.c:923
+#: ../src/palimpsest/gdu-shell.c:836
 msgid "_Create"
 msgstr "作成(_C)"
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "_RAID Array..."
 msgstr "RAID アレイ(_R)..."
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "Create a RAID array"
 msgstr "RAID アレイを作成"
 
-#: ../src/palimpsest/gdu-shell.c:925
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: ../src/palimpsest/gdu-shell.c:926 ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:839 ../src/palimpsest/gdu-shell.c:842
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../src/palimpsest/gdu-shell.c:928
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "_Quit"
 msgstr "終了(_Q)"
 
-#: ../src/palimpsest/gdu-shell.c:928
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "Quit"
 msgstr "終了"
 
-#: ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:842
 msgid "Get Help on Disk Utility"
 msgstr "ディスク・ユーティリティのヘルプを参照"
 
-#: ../src/palimpsest/gdu-shell.c:930
+#: ../src/palimpsest/gdu-shell.c:843
 msgid "_About"
 msgstr "情報(_A)"
 
-#: ../src/palimpsest/gdu-shell.c:1009
+#: ../src/palimpsest/gdu-shell.c:922
 msgid "An error occured"
 msgstr "エラーが発生しました"
 
-#: ../src/palimpsest/gdu-shell.c:1018
+#: ../src/palimpsest/gdu-shell.c:931
 msgid "The operation failed."
 msgstr "操作に失敗しました。"
 
-#: ../src/palimpsest/gdu-shell.c:1021
+#: ../src/palimpsest/gdu-shell.c:934
 msgid "The device is busy."
 msgstr "デバイスがビジー状態です。"
 
-#: ../src/palimpsest/gdu-shell.c:1024
+#: ../src/palimpsest/gdu-shell.c:937
 msgid "The operation was canceled."
 msgstr "操作をキャンセルしました。"
 
-#: ../src/palimpsest/gdu-shell.c:1027
+#: ../src/palimpsest/gdu-shell.c:940
 msgid "The daemon is being inhibited."
 msgstr "デーモンとして動作できません。"
 
-#: ../src/palimpsest/gdu-shell.c:1030
+#: ../src/palimpsest/gdu-shell.c:943
 msgid "An invalid option was passed."
 msgstr "無効なオプションが渡されました。"
 
-#: ../src/palimpsest/gdu-shell.c:1033
+#: ../src/palimpsest/gdu-shell.c:946
 msgid "The operation is not supported."
 msgstr "その操作はサポートされていません。"
 
-#: ../src/palimpsest/gdu-shell.c:1036
+#: ../src/palimpsest/gdu-shell.c:949
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "ATA SMART データを取得するとデバイスをウェイクアップします。"
 
-#: ../src/palimpsest/gdu-shell.c:1039
+#: ../src/palimpsest/gdu-shell.c:952
 msgid "Permission denied."
 msgstr "アクセス許可がありません。"
 
-#: ../src/palimpsest/gdu-shell.c:1078
+#: ../src/palimpsest/gdu-shell.c:991
 msgid "_Details:"
 msgstr "詳細(_D):"
 
-#: ../src/palimpsest/gdu-shell.c:1247
+#: ../src/palimpsest/gdu-shell.c:1160
 msgid "_Storage Devices"
 msgstr "ストレージ・デバイス(_S)"
+
+#~ msgid "Ignored Drives"
+#~ msgstr "無視したドライブ"
+
+#~ msgid "Array of drives to ignore"
+#~ msgstr "無視するアレイのドライブ"
+
+#~ msgid "Edit Filesystem on %s"
+#~ msgstr "%s のファイルシステムを編集"
+
+#~ msgid "_New Component"
+#~ msgstr "新規コンポーネント(_N)"
+
+#~ msgid "Go to volume"
+#~ msgstr "ボリュームに移動"
+
+#~ msgctxt "RAID component label"
+#~ msgid "%s (%s) – %s"
+#~ msgstr "%s (%s) – %s"
+
+#~ msgctxt "RAID component label"
+#~ msgid "%s – %s"
+#~ msgstr "%s – %s"
+
+#~ msgid "Error creating partition for RAID component"
+#~ msgstr "RAID コンポーネントにパーティションを作成中にエラーが発生しました"
+
+#~ msgid "Error creating partition table for RAID component"
+#~ msgstr ""
+#~ "RAID コンポーネントのテーブルにパーティションを作成中にエラーが発生しまし"
+#~ "た"
+
+#~ msgid "Active Components:"
+#~ msgstr "有効なコンポーネント:"
+
+#~ msgid "Error creating partition table for component for RAID array"
+#~ msgstr ""
+#~ "RAID アレイのコンポーネントでパーティションテーブルの作成中にエラーが発生"
+#~ "しました"
 
 #~ msgid "The volume to format"
 #~ msgstr "フォーマットするボリュームです"
@@ -5235,9 +5714,6 @@ msgstr "ストレージ・デバイス(_S)"
 #~ "択してください。パーティションタイプ/ラベル/フラグ は作成後に変更すること"
 #~ "もできます。"
 
-#~ msgid "MB"
-#~ msgstr "MB"
-
 #~ msgid "Create File System"
 #~ msgstr "ファイルシステムを作成"
 
@@ -5263,9 +5739,6 @@ msgstr "ストレージ・デバイス(_S)"
 #~ msgid "%s (Read Only)"
 #~ msgstr "%s (読み取り専用)"
 
-#~ msgid "Not running"
-#~ msgstr "停止中"
-
 #~ msgid "%s File System"
 #~ msgstr "%s ファイルシステム"
 
@@ -5280,9 +5753,6 @@ msgstr "ストレージ・デバイス(_S)"
 
 #~ msgid "Error locking encrypted device"
 #~ msgstr "暗号化デバイスのロック中にエラーが発生しました"
-
-#~ msgid "_Start Array"
-#~ msgstr "アレイを開始(_S)"
 
 #~ msgid "There was an error stopping the drive \"%s\"."
 #~ msgstr "ドライブ \"%s\" の停止中にエラーが発生しました。"

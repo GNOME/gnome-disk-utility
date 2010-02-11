@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2009-12-15 20:00+0000\n"
-"PO-Revision-Date: 2009-12-29 10:05+0300\n"
+"POT-Creation-Date: 2010-01-31 20:34+0000\n"
+"PO-Revision-Date: 2010-02-11 16:20+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -138,17 +138,23 @@ msgstr "Viga parooli salvestamisel võtmerõngasse"
 
 #, c-format
 msgid "Add Component to %s"
-msgstr ""
+msgstr "Komponendi lisamine %s-le"
 
 #. TODO: hate
 #. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
 #. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
 #.
-#, fuzzy, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
+#, c-format
 msgid ""
 "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
-msgstr "Vali köide, mida kasutada massiivi \"%s\" komponendina"
+msgstr "Vali ketas RAID-massiivi \"%s$2\" (%s$3) komponendi %s$1 loomiseks"
+
+#, c-format
+msgid "Add Physical Volume to %s (%s)"
+msgstr "Füüsilise köite lisamine %s-le (%s)"
+
+msgid "_Size:"
+msgstr "_Suurus:"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -681,15 +687,12 @@ msgstr "Hoiatus"
 msgid "Good"
 msgstr "Hea"
 
-#| msgid "Error erasing data"
 msgid "Error reading SMART data"
 msgstr "Viga SMART-andmete lugemisel"
 
 #. Translators: Shown in the "Run self-test" dialog
-#, fuzzy
-#| msgid "Running Short SMART Self-Test"
 msgid "Choose SMART Self-test"
-msgstr "Lühikese SMART-enesetesti jooksutamine"
+msgstr "Vali SMART-enesetest"
 
 #. Translators: Shown in the "Run self-test" dialog
 msgid ""
@@ -713,7 +716,6 @@ msgid "C_onveyance (usually less than ten minutes)"
 msgstr "_Edastus (tavaliselt alla kümne minuti)"
 
 #. Translators: Button in "Run self-test dialog"
-#| msgid "Run self-test"
 msgid "_Run Self Test"
 msgstr "Käivita _enesetest"
 
@@ -799,31 +801,25 @@ msgid "_Refresh"
 msgstr "_Värskenda"
 
 #. Translators: Button details
-#, fuzzy
-#| msgid "Reads SMART data from the disk, waking it up if necessary"
 msgid "Reads SMART Data, waking up the disk"
-msgstr "SMART-andmete lugemine kettalt, vajadusel ketas äratatakse"
+msgstr "SMART-andmete lugemine, ketas äratatakse"
 
 #. TODO: better icon
 #. Translators: Button name
-#, fuzzy
-#| msgid "Run self-test"
 msgid "Run _Self-test"
-msgstr "Käivita enesetest"
+msgstr "Käivita _enesetest"
 
 #. Translators: Button details
 msgid "Test the disk surface for errors"
-msgstr ""
+msgstr "Kettapinna vigade kontrollimine"
 
 #. Translators: Button name
 msgid "_Cancel Self-test"
 msgstr "_Katkesta enesetest"
 
 #. Translators: Button details
-#, fuzzy
-#| msgid "Cancels the currently running test"
 msgid "Cancels the self-test"
-msgstr "Paregu käimasoleva testi katkestamine"
+msgstr "Katkestab enesetesti"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 msgid "_Attributes"
@@ -847,8 +843,6 @@ msgstr "Väärtus"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#, fuzzy
-#| msgid "Don't _warn me if the disk is failing"
 msgid "Don't _warn if the disk is failing"
 msgstr "Ketta riknemisest ei _hoiatata"
 
@@ -972,7 +966,7 @@ msgstr "SMART-andmed on väärvormistatud"
 #. * the temperature of the disk
 #.
 #. Translators: Shown in the "Self-tests" item in the status table
-#. Translators: shown in the grid when we don't know the purpose/usage of the partition
+#. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
 msgid "Unknown"
 msgstr "Tundmatu"
@@ -1001,7 +995,7 @@ msgstr[1] "%d vigast sektorit"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 msgid "Completed OK"
-msgstr ""
+msgstr "Lõpetati edukalt"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 msgid "Cancelled"
@@ -1037,40 +1031,40 @@ msgstr "Hetkel toimumas"
 
 #, c-format
 msgid "This operation concerns the volume \"%s\" (%s)"
-msgstr ""
+msgstr "See operatsioon puudutab köidet \"%s\" (%s)"
 
 #, c-format
 msgid "This operation concerns the drive \"%s\" (%s)"
-msgstr ""
+msgstr "See operatsioon puudutab ketast \"%s\" (%s)"
 
 #, c-format
 msgid "This operation concerns \"%s\" (%s)"
-msgstr ""
+msgstr "See operatsioon puudutab \"%s\"-d (%s)"
 
 msgid "User Name"
 msgstr "Kasutaja nimi"
 
 msgid "The chosen user name"
-msgstr ""
+msgstr "Valitud kasutajanimi"
 
 msgid "Address"
 msgstr "Aadress"
 
 msgid "The chosen address"
-msgstr ""
+msgstr "Valitud aadress"
 
 msgid "Choose Server"
-msgstr ""
+msgstr "Serveri valimine"
 
 msgid "Connect to Server"
-msgstr ""
+msgstr "Serveriga ühendumine"
 
 msgid "_Browse..."
-msgstr ""
+msgstr "_Sirvi..."
 
 #. Translators: this is the tooltip for the "Browse..." button
 msgid "Browse servers discovered via the DNS-SD protocol"
-msgstr ""
+msgstr "DNS-SD protokolli kaudu tuvastatud serverite sirvimine"
 
 #. Translators: This is the label explaining the dialog
 #.
@@ -1079,27 +1073,46 @@ msgid ""
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 "protocol."
 msgstr ""
+"Teise arvutiga ühendatud kettaseadmete haldamiseks sisesta aadress ja vajuta "
+"nupule \"Ühenda\". Ühendus luuakse kasutades protokolli <i>Turvaline kest "
+"(secure shell)</i>."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
 msgid "The hostname or address to connect to"
-msgstr ""
+msgstr "Hostinimi või aadress, kuhu ühenduda"
 
 msgid "Server _Address:"
-msgstr ""
+msgstr "Serveri _aadress:"
 
 #. Translators: This is the tooltip for the "User Name" entry
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
-#, fuzzy
-#| msgid "The requested name for the array"
 msgid "The user name to connect as"
-msgstr "Massiivi soovitud nimi"
+msgstr "Ühendutakse kasutajana"
 
-#, fuzzy
-#| msgid "_Name:"
 msgid "_User Name:"
-msgstr "_Nimi:"
+msgstr "_Kasutajanimi:"
+
+msgid "Maximum Logical Volume Size"
+msgstr "Suurim loogilise köite suurus"
+
+msgid "The maximum possible logical volume size"
+msgstr "Loogilise köite suurim võimalik maht"
+
+msgid "Logical Volume Size"
+msgstr "Loogilise köite suurus"
+
+msgid "The requested Logical Volume size"
+msgstr "Loogilise köite nõutud suurus"
+
+msgid "C_reate"
+msgstr "_Loo"
+
+#. Translators: The %s is the name of the volume group
+#, c-format
+msgid "Create Logical Volume on %s"
+msgstr "Loogilise köite loomine seadmele %s"
 
 msgid "Pool"
 msgstr "Kogum"
@@ -1145,9 +1158,6 @@ msgstr "Massiivis kasutatavate ketaste massiiv"
 
 msgid "Create RAID Array"
 msgstr "RAID-massiivi loomine"
-
-msgid "C_reate"
-msgstr "_Loo"
 
 msgid "General"
 msgstr "Üldine"
@@ -1203,12 +1213,14 @@ msgstr "_Kettad"
 
 #. --------------------------------------------------------------------------------
 msgid "Use entire disks instead of _partitions"
-msgstr ""
+msgstr "_Partitsioonide asemel kasutatakse kogu ketast"
 
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
 msgstr ""
+"Kui märgitud, kasutatakse valitud kettaid RAID-massiivi jaoks kogu mahus. "
+"Muul juhul luuakse partitsioonid."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
@@ -1238,78 +1250,58 @@ msgstr[1] "%s massiivi loomiseks vali veel %d ketast."
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr "%s %s massiivi loomiseks %d kettal vajuta nupul \"Loo\""
 
-#, fuzzy
-#| msgid "Maximum Size"
 msgid "Maximum Partition Size"
-msgstr "Suurim suurus"
+msgstr "Partitsiooni suurim suurus"
 
-#, fuzzy
-#| msgid "The maximum size that can be selected"
 msgid "The maximum possible partition size"
-msgstr "Suurim suurus, mida on võimalik valida"
+msgstr "Partitsiooni suurim võimalik suurus"
 
-#, fuzzy
-#| msgid "Partitioned"
 msgid "Partition Size"
-msgstr "Partitsioneeritud"
+msgstr "Partitsiooni suurus"
 
-#, fuzzy
-#| msgid "The requested stripe size of the array"
 msgid "The requested partition size"
-msgstr "Massiivi riba suurus"
-
-msgid "_Size:"
-msgstr "_Suurus:"
+msgstr "Partitsiooni nõutud suurus"
 
 #. Translators: The %s is the name of the drive
-#, fuzzy, c-format
-#| msgid "Create partition"
+#, c-format
 msgid "Create partition on %s"
-msgstr "Partitsiooni loomine"
+msgstr "Partitsiooni loomine seadmele %s"
 
 msgid "Flags"
 msgstr "Lipud"
 
-#, fuzzy
-#| msgid "Flags for the element"
 msgid "Flags for the widget"
-msgstr "Elemendi lipud"
+msgstr "Vidina lipud"
 
 msgid "Selected Drives"
-msgstr ""
+msgstr "Valitud kettad"
 
 msgid "Array of selected drives"
-msgstr ""
+msgstr "Valitud ketaste massiiv"
 
 msgid "Ignored Drives"
 msgstr "Eiratavad kettad"
 
-#, fuzzy
-#| msgid "Array of drives to use for the array"
 msgid "Array of drives to ignore"
-msgstr "Massiivis kasutatavate ketaste massiiv"
+msgstr "Ignoreeritavate ketaste massiiv"
 
 msgid "Number of available disks"
-msgstr ""
+msgstr "Saadaolevate ketaste arv"
 
 msgid "Largest Segment For Selected"
-msgstr ""
+msgstr "Valitutest suurim segment"
 
-#, fuzzy
-#| msgid "Create new filesystem on the selected device"
 msgid "The largest free segment for the selected drives"
-msgstr "Uue failisüsteemi loomine valitud seadmele"
+msgstr "Suurim vaba lõik valitud ketastel"
 
 msgid "Largest Segment For All"
-msgstr ""
+msgstr "Kõigi seast suurim segment"
 
 msgid "The largest free segment for all the drives"
-msgstr ""
+msgstr "Kõigilt ketastelt suurim vaba segment"
 
-#, fuzzy
-#| msgid "The view to show details for"
 msgid "The size to use in the details header"
-msgstr "Vaade, millele üksikasju kuvada"
+msgstr "Suurus, mida kasutada üksikasjade päises"
 
 #. Translators: This is shown in the details column
 msgid "The disk will be partitioned and a partition will be created"
@@ -1318,23 +1310,25 @@ msgstr "Ketas partitsioneeritakse ja luuakse uus partitsioon"
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#, fuzzy, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
+#, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
 "no space will be available."
-msgstr "Ketas partitsioneeritakse ja luuakse uus %s partitsioon"
+msgstr ""
+"Ketas partitsioneeritakse ja luuakse uus %s partitsioon. Pärast seda vaba "
+"ruumi ei jää."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#, fuzzy, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
+#, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards %"
 "s will be available."
-msgstr "Ketas partitsioneeritakse ja luuakse uus %s partitsioon"
+msgstr ""
+"Ketas partitsioneeritakse ja luuakse uus %s partitsioon. Pärast seda jääb %s "
+"saadavale."
 
 #. Translators: This is shown in the details column
 msgid "A partition will be created"
@@ -1343,19 +1337,17 @@ msgstr "Luuakse üks partitsioon"
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#, fuzzy, c-format
-#| msgid "A %s partition will be created"
+#, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr "Luuakse %s partitsioon"
+msgstr "Luuakse %s partitsioon. Pärast seda vaba ruumi ei jää."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#, fuzzy, c-format
-#| msgid "A %s partition will be created"
+#, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
-msgstr "Luuakse %s partitsioon"
+msgstr "Luuakse %s partitsioon. Pärast seda on %s saadaval."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1394,27 +1386,22 @@ msgstr "%s. Suurim järjestikune vaba plokk on %s"
 
 #. Tranlators: this string is used for the column header
 #, fuzzy
-#| msgid "Detaching Device"
 msgid "Storage Devices"
-msgstr "Seadme eraldamine"
+msgstr "Mahuseadmed"
 
 #. Tranlators: this string is used for the column header
 msgid "Details"
 msgstr "Üksikasjad"
 
-#, fuzzy
-#| msgid "Error detaching device"
 msgid "Error benchmarking drive"
-msgstr "Viga seadme lahutamisel"
+msgstr "Viga ketta jõudlustesti sooritamisel"
 
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgstr "Kas oled kindel, et tahad alustada lugemise/kirjutamise jõudlustesti?"
 
 #. TODO: better icon
 msgid "_Benchmark"
-msgstr ""
+msgstr "_Jõudlustest"
 
 #. Translators: The title of the benchmark dialog.
 #. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
@@ -1423,72 +1410,59 @@ msgstr ""
 #.
 #, c-format
 msgid "%s (%s) – Benchmark"
-msgstr ""
+msgstr "%s (%s) – jõudlustest"
 
 #. benchmark results
-#, fuzzy
-#| msgid "Minimum Size"
 msgid "Minimum Read Rate:"
-msgstr "Vähim suurus"
+msgstr "Vähim lugemiskiirus:"
 
-#, fuzzy
-#| msgid "Minimum Size"
 msgid "Minimum Write Rate:"
-msgstr "Vähim suurus"
+msgstr "Vähim kirjutamiskiirus:"
 
-#, fuzzy
-#| msgid "Maximum Size"
 msgid "Maximum Read Rate:"
-msgstr "Suurim suurus"
+msgstr "Suurim lugemiskiirus:"
 
-#, fuzzy
-#| msgid "Maximum Size"
 msgid "Maximum Write Rate:"
-msgstr "Suurim suurus"
+msgstr "Suurim kirjutamiskiirus:"
 
 msgid "Average Read Rate:"
-msgstr ""
+msgstr "Keskmine lugemiskiirus:"
 
-#, fuzzy
-#| msgid "Thermal Asperity Rate"
 msgid "Average Write Rate:"
-msgstr "Termokriipimise määr."
+msgstr "Keskmine kirjutamiskiirus:"
 
 msgid "Last Benchmark:"
-msgstr ""
+msgstr "Viimane jõudlustest:"
 
-#, fuzzy
-#| msgid "Overall Assessment:"
 msgid "Average Access Time:"
-msgstr "Üldine hinnang:"
+msgstr "Keskmine ligipääsuaeg:"
 
 msgid "Start _Read-Only Benchmark"
-msgstr ""
+msgstr "Käivita _lugemise jõudlustest"
 
 msgid "Measure read rate and access time"
-msgstr ""
+msgstr "Lugemiskiiruse ning ligipääsuaegade mõõtmine"
 
 #. TODO: better icon
 msgid "Start Read/_Write Benchmark"
-msgstr ""
+msgstr "Käivita lugemise/_kirjutamise jõudlustest"
 
 msgid "Measure read rate, write rate and access time"
-msgstr ""
+msgstr "Lugemis- ja kirjutamiskiiruse ning ligipääsuaegade mõõtmine"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
 #, c-format
 msgid "%d MB/s"
-msgstr ""
+msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#, fuzzy, c-format
-#| msgid "%s msec"
+#, c-format
 msgid "%3g ms"
-msgstr "%s msek"
+msgstr "%3g msek"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 msgid "Never"
-msgstr ""
+msgstr "Mitte kunagi"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
@@ -1496,99 +1470,102 @@ msgid "Cancel"
 msgstr "Katkesta"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
-#, fuzzy
-#| msgid "Cancels the currently running test"
 msgid "Cancels the currently running benchmark"
-msgstr "Paregu käimasoleva testi katkestamine"
+msgstr "Praegu käimasoleva jõudlustesti katkestamine"
 
-#, fuzzy, c-format
-#| msgid "%s Filesystem"
-msgid "Edit Filesystem on %s"
-msgstr "%s failisüsteem"
+#. Translators: title of the dialog - first %s is the name of the volume
+#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
+#.
+#, c-format
+msgid "Edit %s"
+msgstr "%s muutmine"
 
-#, fuzzy
-#| msgid "_Label:"
-msgid "Label:"
-msgstr "_Pealdis:"
+msgid "Missing Physical Volume"
+msgstr "Puuduv füüsiline köide"
 
-#, fuzzy, c-format
-#| msgid "%d Component (%s)"
-#| msgid_plural "%d Components (%s each)"
-msgid "Edit components on %s (%s)"
-msgstr "%d komponent (%s)"
+#, c-format
+msgid "UUID: %s"
+msgstr "UUID: %s"
 
-#, fuzzy
-#| msgid "Components:"
-msgid "C_omponents"
-msgstr "Komponendid:"
+#, c-format
+msgid "Edit PVs on %s (%s)"
+msgstr "Seadme %s FK muutmine (%s)"
 
-msgid "Position"
-msgstr ""
+msgid "Physical _Volumes"
+msgstr "Füüsilised _köited"
 
-#, fuzzy
-#| msgid "Components:"
-msgid "Component"
-msgstr "Komponendid:"
+msgid "Physical Volume"
+msgstr "Füüsiline köide"
 
-msgid "State"
-msgstr "Olek"
+msgid "Capacity"
+msgstr "Mahutavus"
 
-#, fuzzy
-#| msgid "SMART status: %s"
+msgid "Unallocated"
+msgstr "Allutamata"
+
 msgid "SMART Status:"
-msgstr "SMART'i olek: %s"
-
-#, fuzzy
-#| msgid "Partition"
-msgid "Position:"
-msgstr "Partitsioon"
-
-msgid "State:"
-msgstr "Olek"
+msgstr "SMART'i olek:"
 
 msgid "Device:"
 msgstr "Seade:"
 
-#, fuzzy
-#| msgid "_Remove Component"
-msgid "_New Component"
-msgstr "_Eemalda komponent"
+msgid "_New Physical Volume"
+msgstr "_Uus füüsiline köide"
 
-#, fuzzy
-#| msgid "Adding Component to RAID Array"
-msgid "Add a new component to the array"
-msgstr "Komponendi lisamine RAID-massiivi"
+msgid "Add a new PV to the VG"
+msgstr "Füüsilise köite lisamine köitegruppi"
 
-#, fuzzy
-#| msgid "RAID Component"
-msgid "_Attach Component"
-msgstr "RAID-komponent"
+msgid "_Remove Physical Volume"
+msgstr "_Eemalda füüsiline köide"
 
-#, fuzzy
-#| msgid "Are you sure you want to remove the component from the array ?"
-msgid "Attach the component to the array"
-msgstr "Kas sa oled kindel, et tahad komponendi massiivist eemaldada?"
+msgid "Remove the PV from the VG"
+msgstr "Füüsilise köite eemaldamine köitegrupist"
 
-msgid "_Remove Component"
-msgstr "_Eemalda komponent"
-
-#, fuzzy
-#| msgid "Removing Component from RAID Array"
-msgid "Remove the component from the array"
-msgstr "Komponendi eemaldamine RAID-massiivist"
-
+#. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
 msgid "Not Supported"
 msgstr "Pole toetatud"
 
-#. Translators: title of the dialog - first %s is the name of the volume
-#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
-#.
-#, fuzzy, c-format
-#| msgid "_Edit"
-msgid "Edit %s"
-msgstr "_Redaktor"
+#, c-format
+msgid "Edit components on %s (%s)"
+msgstr "Seadme %s komponentide muutmine (%s)"
+
+msgid "C_omponents"
+msgstr "K_omponendid"
+
+msgid "Position"
+msgstr "Asukoht"
+
+msgid "Component"
+msgstr "Komponent"
+
+msgid "State"
+msgstr "Olek"
+
+msgid "Position:"
+msgstr "Asukoht:"
+
+msgid "State:"
+msgstr "Olek"
+
+msgid "_New Component"
+msgstr "_Uus komponent"
+
+msgid "Add a new component to the array"
+msgstr "Uue komponendi lisamine massiivi"
+
+msgid "_Attach Component"
+msgstr "_Ühenda komponent"
+
+msgid "Attach the component to the array"
+msgstr "Komponendi ühendamine massiivi"
+
+msgid "_Remove Component"
+msgstr "_Eemalda komponent"
+
+msgid "Remove the component from the array"
+msgstr "Komponendi eemaldamine massiivist"
 
 msgid "Part_ition Label:"
 msgstr "_Partitsiooni pealdis:"
@@ -1606,73 +1583,52 @@ msgstr "_Alglaaditav"
 msgid "Required / Firm_ware"
 msgstr "Nõutud / _Püsivara"
 
-#, fuzzy
-#| msgid "The operation failed."
 msgid "The operation failed"
-msgstr "Operatsioon nurjus."
+msgstr "Operatsioon nurjus"
 
-#, fuzzy
-#| msgid "The device is busy."
 msgid "The device is busy"
-msgstr "Seade on hõivatud."
+msgstr "Seade on hõivatud"
 
-#, fuzzy
-#| msgid "The operation was canceled."
 msgid "The operation was canceled"
-msgstr "Operatsioon katkestati."
+msgstr "Operatsioon katkestati"
 
-#, fuzzy
-#| msgid "The daemon is being inhibited."
 msgid "The daemon is being inhibited"
-msgstr "Deemonit piiratakse väljastpoolt."
+msgstr "Deemonit piiratakse väljastpoolt"
 
-#, fuzzy
-#| msgid "An invalid option was passed."
 msgid "An invalid option was passed"
-msgstr "Edastati sobimatu valik."
+msgstr "Edastati sobimatu valik"
 
-#, fuzzy
-#| msgid "The operation is not supported."
 msgid "The operation is not supported"
-msgstr "Operatsioon pole toetatud."
+msgstr "Operatsioon pole toetatud"
 
-#, fuzzy
-#| msgid "Getting ATA SMART data would wake up the device."
 msgid "Getting ATA SMART data would wake up the device"
-msgstr "ATA SMART'i andmete hankimine ärataks seadme."
+msgstr "ATA SMART'i andmete hankimine ärataks seadme"
 
-#, fuzzy
-#| msgid "Permission denied."
 msgid "Permission denied"
-msgstr "Õigused puuduvad."
+msgstr "Õigused puuduvad"
 
 msgid "Filesystem driver not installed"
-msgstr ""
+msgstr "Failisüsteemi draiver pole paigaldatud"
 
-#, fuzzy
-#| msgid "Filesystem label"
 msgid "Filesystem tools not installed"
-msgstr "Failisüsteemi pealdis"
+msgstr "Failisüsteemi tööriistad pole paigaldatud"
 
 msgid "Unknown error"
 msgstr "Tundmatu viga"
 
 #, c-format
 msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr ""
+msgstr "\"%s\"-l (%s) operatsiooni teostamisel esines viga: %s"
 
-#, fuzzy, c-format
-#| msgid "An error occured"
+#, c-format
 msgid "An error occured: %s"
-msgstr "Esines viga"
+msgstr "Esines viga: %s"
 
-#, fuzzy
-#| msgid "_Details:"
 msgid "_Details"
-msgstr "_Üksikasjad:"
+msgstr "_Üksikasjad"
 
 msgid "Flags specifying the behavior of the dialog"
-msgstr ""
+msgstr "Lipud, mis määravad dialoogide käitumise"
 
 msgid "Filesystem type"
 msgstr "Failisüsteemi tüüp"
@@ -1686,13 +1642,11 @@ msgstr "Failisüsteemi pealdis"
 msgid "The requested filesystem label"
 msgstr "Nõutud failisüsteemi pealdis"
 
-#, fuzzy
-#| msgid "Filesystem type"
 msgid "Filesystem options"
-msgstr "Failisüsteemi tüüp"
+msgstr "Failisüsteemi valikud"
 
 msgid "The options to use for creating the filesystem"
-msgstr ""
+msgstr "Valikud, mida kasutada failisüsteemi loomisel"
 
 msgid "Encryption"
 msgstr "Krüpteering"
@@ -1701,12 +1655,10 @@ msgid "Whether the volume should be encrypted"
 msgstr "Kas köide tuleks krüpteerida"
 
 msgid "Take Ownership"
-msgstr ""
+msgstr "Omandisse võtmine"
 
-#, fuzzy
-#| msgid "Whether the volume should be encrypted"
 msgid "Whether the filesystem should be owned by the user"
-msgstr "Kas köide tuleks krüpteerida"
+msgstr "Kas failisüsteem peaks kuuluma kasutajale"
 
 msgid "Affirmative Button Mnemonic"
 msgstr ""
@@ -1719,10 +1671,9 @@ msgid "_Format"
 msgstr "_Vorminda"
 
 #. Translators: Format is a verb here. The %s is the name of the volume
-#, fuzzy, c-format
-#| msgid "Format %s (%s)"
+#, c-format
 msgid "Format %s"
-msgstr "%s vormindamine (%s)"
+msgstr "Vorminda %s"
 
 msgid "Disk _Utility"
 msgstr "Ketta_utiliit"
@@ -1741,10 +1692,8 @@ msgstr "Ühilduv kõigi süsteemidega (FAT)"
 msgid "Compatible with Linux (ext2)"
 msgstr "Ühilduv Linuxiga (ext2)"
 
-#, fuzzy
-#| msgid "Compatible with Linux (ext2)"
 msgid "Compatible with Linux (ext4)"
-msgstr "Ühilduv Linuxiga (ext2)"
+msgstr "Ühilduv Linuxiga (ext4)"
 
 msgid "Encrypted, compatible with Linux (FAT)"
 msgstr "Krüpteeritud, ühilduv Linuxiga (FAT)"
@@ -1759,8 +1708,6 @@ msgstr "_Nimi:"
 msgid "New Volume"
 msgstr "Uus köide"
 
-#, fuzzy
-#| msgid "T_ake ownership of file system"
 msgid "T_ake ownership of filesystem"
 msgstr "_Hakka selle failisüsteemi omanikuks"
 
@@ -1773,8 +1720,6 @@ msgstr ""
 "loodav failisüsteem sulle. Kui mitte, pääseb ainult juurkasutaja sellele "
 "failisüsteemile ligi."
 
-#, fuzzy
-#| msgid "Encr_ypt underlying device"
 msgid "_Encrypt underlying device"
 msgstr "Alusseadme _krüpteerimine"
 
@@ -1949,19 +1894,39 @@ msgstr "Ära partitsioneeri"
 msgid "Apple Partition Map"
 msgstr "Apple partitsioonikaart"
 
-#, fuzzy
-#| msgid "MBR Partition Scheme"
 msgid "Partitioning Scheme"
-msgstr "MBR partitsiooniskeem"
+msgstr "Partitsiooniskeem"
 
-#, fuzzy
-#| msgid "The selected filesystem type"
 msgid "The selected partitioning scheme"
-msgstr "Valitud failisüsteemi tüüp"
+msgstr "Valitud partitsiooniskeem"
 
 #. Translators: 'scheme' means 'partitioning scheme' here.
 msgid "_Scheme:"
-msgstr ""
+msgstr "_Skeem:"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "TB"
+msgstr "TB"
+
+msgid "KiB"
+msgstr "KiB"
+
+msgid "MiB"
+msgstr "MiB"
+
+msgid "GiB"
+msgstr "GiB"
+
+msgid "TiB"
+msgstr "TiB"
 
 msgid "The currently selected size"
 msgstr "Praegu valitud seade"
@@ -1980,7 +1945,7 @@ msgstr "Suurim suurus, mida on võimalik valida"
 
 #, c-format
 msgid "Less than a minute ago"
-msgstr "Vähem kui minuti tagasi"
+msgstr "Vähem kui minuti eest"
 
 #, c-format
 msgid "%d minute ago"
@@ -1994,19 +1959,15 @@ msgid_plural "%d hours ago"
 msgstr[0] "%d tund tagasi"
 msgstr[1] "%d tundi tagasi"
 
-#, fuzzy
-#| msgid "Drives"
 msgid "Drive"
-msgstr "Kettad"
+msgstr "Ketas"
 
-#, fuzzy
-#| msgid "Drive to show"
 msgid "Drive to show volumes for"
-msgstr "Ketas, mida näidata"
+msgstr "Ketas, mille köiteid näidata"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
 msgid "RAID Array is not running"
-msgstr ""
+msgstr "RAID-massiiv ei tööta"
 
 #. Translators: This is shown in the grid for a drive when no media has been detected
 #. Translators: This string is used as a description text when no media has
@@ -2024,7 +1985,12 @@ msgstr "Laiendatud"
 msgid "Encrypted"
 msgstr "Krüpteeritud"
 
-#. Translators: shown in the grid for space that is not claimed by any partition
+#. Translators: shown in the grid for an RAID Component
+#, c-format
+msgid "RAID Component"
+msgstr "RAID-komponent"
+
+#. Translators: shown for free/unallocated space
 msgid "Free"
 msgstr "Vaba"
 
@@ -2107,8 +2073,8 @@ msgstr "%s ketas"
 msgid "%s %s Drive"
 msgstr "%s %s ketas"
 
-#. Translators: This string is used to describe a hard disk. The first %s is
-#. * the size of the drive e.g. '45 GB'.
+#. Translators: This string is used to describe a hard disk.
+#. * The first %s is the size of the drive e.g. '45 GB'.
 #.
 #, c-format
 msgid "%s Hard Disk"
@@ -2159,48 +2125,85 @@ msgstr "Partitsioneeritud"
 msgid "Not Partitioned"
 msgstr "Partitsioneerimata"
 
+#. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
+msgid "SAS Expander"
+msgstr "SAS-laiendus"
+
 msgid "PATA Host Adapter"
-msgstr ""
+msgstr "PATA-hosti adapter"
 
 msgid "SATA Host Adapter"
-msgstr ""
+msgstr "SATA-hosti adapter"
 
 msgid "ATA Host Adapter"
-msgstr ""
+msgstr "ATA-hosti adapter"
 
 msgid "SAS Host Adapter"
-msgstr ""
+msgstr "SAS-hosti adapter"
 
 msgid "SCSI Host Adapter"
-msgstr ""
+msgstr "SCSI-hosti adapter"
 
 msgid "Host Adapter"
-msgstr ""
+msgstr "Hosti adapter"
 
-msgid "SAS Expander"
-msgstr ""
+#. Translators: Description
+msgid "Logical Volume"
+msgstr "Loogiline köide"
+
+#. Translators: VPD name
+msgid "LVM2 Logical Volume"
+msgstr "LVM2 loogiline köide"
+
+#. Translators: Description
+msgid "Volume Group"
+msgstr "Köitegrupp"
+
+#. Translators: VPD name - first %s is the size e.g. '45 GB'
+#, c-format
+msgid "%s LVM2 Volume Group"
+msgstr "%s LVM2 köitegrupp"
+
+#. Translators: VPD name when size is not known
+msgid "LVM2 Volume Group"
+msgstr "LVM2 köitegrupp"
+
+#. Translators: label for an unallocated space in a LVM2 volume group.
+#. * %s is the size, formatted like '45 GB'
+#.
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#, c-format
+msgid "%s Free"
+msgstr "%s vaba"
+
+#. Translators: Description
+msgid "Unallocated Space"
+msgstr "Allutamata ruum"
+
+#. Translators: VPD name
+msgid "LVM2 VG Unallocated Space"
+msgstr "LVM2 VG allutamata ruum"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#, fuzzy, c-format
-#| msgid "%s %s Drive"
+#, c-format
 msgid "%s %s Array"
-msgstr "%s %s ketas"
+msgstr "%s %s massiiv"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
-#, fuzzy, c-format
-#| msgid "RAID Array"
+#, c-format
 msgid "%s Array"
-msgstr "RAID-massiiv"
+msgstr "%s massiiv"
 
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
 #.
-#, fuzzy, c-format
-#| msgid "RAID Array"
+#, c-format
 msgid "RAID Array %s (%s)"
-msgstr "RAID-massiiv"
+msgstr "RAID-massiiv %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
 #, c-format
@@ -2208,9 +2211,6 @@ msgid "RAID device %s"
 msgstr "RAID-seade %s"
 
 #. Translators: fallback for level
-#, fuzzy
-#| msgctxt "RAID level"
-#| msgid "RAID"
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
@@ -2218,11 +2218,9 @@ msgstr "RAID"
 msgid "RAID Array"
 msgstr "RAID-massiiv"
 
-#, fuzzy
-#| msgid "A_ttach"
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
-msgstr "_Ühenda"
+msgstr "Pole ühendatud"
 
 msgctxt "Linux MD slave state"
 msgid "Faulty"
@@ -2230,7 +2228,7 @@ msgstr "Vigane"
 
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
-msgstr ""
+msgstr "Täielikult sünkroniseeritud"
 
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
@@ -2244,100 +2242,118 @@ msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Varu"
 
+#, fuzzy
 msgid "Local Storage"
-msgstr ""
+msgstr "Kohalik mahuseade"
 
 #. TODO: use display-hostname
-#, c-format
+#, fuzzy, c-format
 msgid "Storage on %s"
-msgstr ""
+msgstr "Mahuseade aadressil %s"
 
-#, fuzzy, c-format
-#| msgid "Error ejecting device"
+#, fuzzy
+msgid "Multipath Devices"
+msgstr "Mitmerajaseadmed"
+
+msgid "Drives with multiple I/O paths"
+msgstr "Kettad mitme S/V asukohaga"
+
+msgid "Multi-disk Devices"
+msgstr "Mitme kettaga seadmed"
+
+msgid "RAID, LVM and other logical drives"
+msgstr "RAID, LVM ja teised loogilised kettad"
+
+msgid "Peripheral Devices"
+msgstr "Välised seadmed"
+
+msgid "USB, Firewire and other peripherals"
+msgstr "USB, Firewire ja teised välised kettad"
+
+#, c-format
 msgid "Error enumerating devices: %s"
-msgstr "Viga seadme väljastamisel"
+msgstr "Tõrge seadmete nummerdamisel: %s"
 
-#, fuzzy, c-format
-#| msgid "Error erasing data"
+#, c-format
 msgid "Error enumerating adapters: %s"
-msgstr "Viga andmete kustutamisel"
+msgstr "Tõrge adapterite nummerdamisel: %s"
 
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Viga laienduste nummerdamisel: %s"
 
-#, fuzzy, c-format
-#| msgid "Error deleting partition"
+#, c-format
 msgid "Error enumerating ports: %s"
-msgstr "Viga partitsiooni kustutamisel"
+msgstr "Tõrge portide nummerdamisel: %s"
 
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "Tõrge aadressi `localhost kuulamisel:%d': %s: %s\n"
 
 #, c-format
 msgid ""
 "Error creating a local TCP server, tried binding to ports 9000-10000 on "
 "localhost"
 msgstr ""
+"Tõrge kohaliku TCP-serveri loomisel, prooviti localhosti portide 9000-10000 "
+"kasutamist"
 
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
-msgstr ""
+msgstr "Tõrge kohaliku DBusServeri autentimismeetodite määramisel\n"
 
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
-msgstr ""
+msgstr "Käsurea '%s' analüüsimine pole võimalik (rikutud aadress?): %s"
 
-#, fuzzy, c-format
-#| msgid "Unable to format '%s'"
+#, c-format
 msgid "Unable to spawn ssh program: %s"
-msgstr "'%s' pole võimalik vormindada"
+msgstr "ssh programmi pole võimalik käivitada: %s"
 
 #, c-format
 msgid "Error reading stderr output: %s"
-msgstr ""
+msgstr "Tõrge stderr väljundi lugemisel: %s"
 
-#, fuzzy
-#| msgid "Error adding component"
 msgid "Error reading stderr output: No content"
-msgstr "Viga komponendi lisamisel"
+msgstr "Tõrge stderr väljundi lugemisel: puudub sisu"
 
-#, fuzzy
-#| msgid "Error unlocking device"
 msgid "Error logging in"
-msgstr "Viga seadme luku avamisel"
+msgstr "Viga sisselogimisel"
 
 #, c-format
 msgid "Error sending `%s': %s"
-msgstr ""
+msgstr "Tõrge `%s' saatmisel: %s"
 
 #, c-format
 msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
 msgstr ""
+"Ootamatu stderr väljund - oodati `udisks-tcp-bridge: Parooli ootamine, aga "
+"saadi `%s'"
 
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "Tõrge autoriseerimisparooli edasiandmisel: %s"
 
 #, c-format
 msgid "Error reading stderr from: %s"
-msgstr ""
+msgstr "Tõrge stderr lugemisel kohast: %s"
 
 #, c-format
 msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
+"Ootamatu stderr väljund - oodati `udisks-tcp-bridge: Ühendumise katse "
+"pordile %d', aga saadi `%s'"
 
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
-msgstr ""
+msgstr "Rakendus udisks-tcp-bridge ei suutnud autenditust tõestada: %s"
 
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-msgstr ""
+msgstr "Rakendus udisks-tcp-bridge ei suutnud enda autoriseerimist tõestada"
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -2345,10 +2361,9 @@ msgstr ""
 #. Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
 #. * the second %s is the size as a number e.g. '100,000 bytes'
 #.
-#, fuzzy, c-format
-#| msgid "%s / %s / %s bytes"
+#, c-format
 msgid "%s (%s bytes)"
-msgstr "%s / %s / %s baiti"
+msgstr "%s (%s baiti)"
 
 #. Translators: FAT is a filesystem type
 msgid "FAT (12-bit version)"
@@ -2392,99 +2407,88 @@ msgid "LUKS"
 msgstr "LUKS"
 
 #. Translators: Ext2 is a filesystem type
-#, fuzzy, c-format
-#| msgid "Linux Ext2 (version %s)"
+#, c-format
 msgid "Ext2 (version %s)"
-msgstr "Linux Ext2 (versioon %s)"
+msgstr "Ext2 (versioon %s)"
 
 #. Translators: Ext2 is a filesystem type
-#, fuzzy, c-format
-#| msgid "ext2"
+#, c-format
 msgid "Ext2"
-msgstr "ext2"
+msgstr "Ext2"
 
 #. Translators: Ext2 is a filesystem type
 msgid "ext2"
 msgstr "ext2"
 
 #. Translators: Ext3 is a filesystem type
-#, fuzzy, c-format
-#| msgid "Linux Ext3 (version %s)"
+#, c-format
 msgid "Ext3 (version %s)"
-msgstr "Linux Ext3 (versioon %s)"
+msgstr "Ext3 (versioon %s)"
 
 #. Translators: Ext3 is a filesystem type
-#, fuzzy, c-format
-#| msgid "ext3"
+#, c-format
 msgid "Ext3"
-msgstr "ext3"
+msgstr "Ext3"
 
 #. Translators: Ext3 is a filesystem type
 msgid "ext3"
 msgstr "ext3"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#, fuzzy, c-format
-#| msgid "Journal for Linux ext3 (version %s)"
+#, c-format
 msgid "Journal for Ext3 (version %s)"
-msgstr "Linuxi ext3 ajalogi (versioon %s)"
+msgstr "Žurnaaliv Ext3 (versioon %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
-#, fuzzy, c-format
-#| msgid "Journal for Linux ext3"
+#, c-format
 msgid "Journal for Ext3"
-msgstr "Žurnaaliv Linuxi ext3"
+msgstr "Žurnaaliv Ext3"
 
 #. Translators: jbd is a filesystem type
 msgid "jbd"
 msgstr "jbd"
 
 #. Translators: ext4 is a filesystem type
-#, fuzzy, c-format
-#| msgid "Linux Ext4 (version %s)"
+#, c-format
 msgid "Ext4 (version %s)"
-msgstr "Linux Ext4 (versioon %s)"
+msgstr "Ext4 (versioon %s)"
 
 #. Translators: ext4 is a filesystem type
-#, fuzzy, c-format
-#| msgid "ext4"
+#, c-format
 msgid "Ext4"
-msgstr "ext4"
+msgstr "Ext4"
 
 #. Translators: Ext4 is a filesystem type
 msgid "ext4"
 msgstr "ext4"
 
 #. Translators: xfs is a filesystem type
-#, fuzzy, c-format
-#| msgid "NTFS (version %s)"
+#, c-format
 msgid "XFS (version %s)"
-msgstr "NTFS (versioon %s)"
+msgstr "XFS (versioon %s)"
 
 #. Translators: xfs is a filesystem type
-#, fuzzy, c-format
-#| msgid "HFS"
+#, c-format
 msgid "XFS"
-msgstr "HFS"
+msgstr "XFS"
 
 #. Translators: xfs is a filesystem type
 msgid "xfs"
 msgstr "xfs"
 
 #. Translators: reiserfs is a filesystem type
-#, fuzzy, c-format
-#| msgid "NTFS (version %s)"
+#, c-format
 msgid "ReiserFS (version %s)"
-msgstr "NTFS (versioon %s)"
+msgstr "ReiserFS (versioon %s)"
 
 #. Translators: reiserfs is a filesystem type
 #, c-format
 msgid "ReiserFS"
-msgstr ""
+msgstr "ReiserFS"
 
 #. Translators: reiserfs is a filesystem type
 msgid "reiserfs"
-msgstr ""
+msgstr "reiserfs"
 
 #. Translators: iso9660 is a filesystem type
 msgid "ISO 9660"
@@ -2525,21 +2529,17 @@ msgstr "lvm2_pv"
 msgid "RAID Component (version %s)"
 msgstr "RAID-komponent (versioon %s)"
 
-#, c-format
-msgid "RAID Component"
-msgstr "RAID-komponent"
-
 #. Translators: short name for 'RAID Component'
 msgid "raid"
 msgstr "RAID"
 
 #. Translators: long filesystem type for minix
 msgid "Minix"
-msgstr ""
+msgstr "Minix"
 
 #. Translators: filesystem type for minix
 msgid "minix"
-msgstr ""
+msgstr "minix"
 
 msgid "Creating File System"
 msgstr "Failisüsteemi loomine"
@@ -2621,10 +2621,8 @@ msgstr "LUKS-seadme sundlukustamine"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Linux Basic Data Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "Linuxi lihtne andmepartitsioon"
 
 #. Same as MS BDP
 msgid "Linux RAID Partition"
@@ -2646,138 +2644,93 @@ msgstr "MBR partitsiooniskeem"
 msgid "EFI System Partition"
 msgstr "EFI süsteemipartitsioon"
 
-#, fuzzy
-#| msgid "Not Partitioned"
 msgid "BIOS Boot Partition"
-msgstr "Partitsioneerimata"
+msgstr "BIOS-i alglaadimispartitsioon"
 
 #. Microsoft
 msgid "Microsoft Reserved Partition"
 msgstr "Microsofti partitsioonireserveering"
 
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Microsoft Basic Data Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "Microsofti lihtne andmepartitsioon"
 
 #. Same as Linux BDP
-#, fuzzy
-#| msgid "LDM meta data Partition"
 msgid "Microsoft LDM Metadata Partition"
-msgstr "LDM metaandmete partitsioon"
+msgstr "Microsofti LDM metaandmete partitsioon"
 
-#, fuzzy
-#| msgid "LDM data Partition"
 msgid "Microsoft LDM Data Partition"
-msgstr "LDM andmete partitsioon"
+msgstr "Microsofti LDM andmete partitsioon"
 
 msgid "Microsoft Windows Recovery Environment"
-msgstr ""
+msgstr "Microsoft Windows taastamiskeskkond"
 
 #. HP-UX
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "HP-UX Data Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "HP-UX andmepartitsioon"
 
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "HP-UX Service Partition"
-msgstr "Driver-partitsioon"
+msgstr "HP-UX teeninduspartitsioon"
 
 #. FreeBSD
-#, fuzzy
-#| msgid "Create Partition"
 msgid "FreeBSD Boot Partition"
-msgstr "Partitsiooni loomine"
+msgstr "FreeBSD alglaadimispartitsioon"
 
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "FreeBSD Data Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "FreeBSD andmepartitsioon"
 
 msgid "FreeBSD Swap Partition"
 msgstr "FreeBSD saalepartitsioon"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "FreeBSD UFS Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "FreeBSD UFS-partitsioon"
 
-#, fuzzy
-#| msgid "Deleting Partition"
 msgid "FreeBSD Vinum Partition"
-msgstr "Partitsiooni kustutamine"
+msgstr "FreeBSD Vinum-partitsioon"
 
-#, fuzzy
-#| msgid "Create Partition"
 msgid "FreeBSD ZFS Partition"
-msgstr "Partitsiooni loomine"
+msgstr "FreeBSD ZFS-partitsioon"
 
 #. Solaris
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Boot Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "Solarise alglaadimispartitsioon"
 
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Root Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "Solarise juurpartitsioon"
 
 msgid "Solaris Swap Partition"
 msgstr "Solarise saalepartitsioon"
 
-#, fuzzy
-#| msgid "Basic Data Partition"
 msgid "Solaris Backup Partition"
-msgstr "Lihtne andmepartitsioon"
+msgstr "Solarise varunduspartitsioon"
 
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /usr Partition"
-msgstr "Driver-partitsioon"
+msgstr "Solarise /usr partitsioon"
 
 #. Same as Apple ZFS
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /var Partition"
-msgstr "Driver-partitsioon"
+msgstr "Solarise /var partitsioon"
 
-#, fuzzy
-#| msgid "Driver Partition"
 msgid "Solaris /home Partition"
-msgstr "Driver-partitsioon"
+msgstr "Solarise /home partitsioon"
 
 #, fuzzy
-#| msgid "Create Partition"
 msgid "Solaris Alternate Sector Partition"
-msgstr "Partitsiooni loomine"
+msgstr "Solarise alternatiivsektoritega partitsioon"
 
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition"
-msgstr "Linuxi partitsiooni reserveering"
+msgstr "Solarise partitsiooni reserveering"
 
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (2)"
-msgstr "Linuxi partitsiooni reserveering"
+msgstr "Solarise partitsiooni reserveering (2)"
 
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (3)"
-msgstr "Linuxi partitsiooni reserveering"
+msgstr "Solarise partitsiooni reserveering (3)"
 
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (4)"
-msgstr "Linuxi partitsiooni reserveering"
+msgstr "Solarise partitsiooni reserveering (4)"
 
-#, fuzzy
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (5)"
-msgstr "Linuxi partitsiooni reserveering"
+msgstr "Solarise partitsiooni reserveering (5)"
 
 #. Mac OS X
 msgid "Apple HFS/HFS+ Partition"
@@ -2788,63 +2741,43 @@ msgstr "Apple HFS/HFS+ partitsioon"
 msgid "Apple UFS Partition"
 msgstr "Apple UFS partitsioon"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple ZFS Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "Apple ZFS partitsioon"
 
 #. Same as Solaris /usr
 msgid "Apple RAID Partition"
 msgstr "Apple'i RAID-partitsioon"
 
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "Apple RAID Partition (Offline)"
-msgstr "Apple'i RAID-partitsioon"
+msgstr "Apple'i RAID-partitsioon (pole liinil)"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple Boot Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "Apple alglaadimispartitsioon"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "Apple Label Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "Apple sildipartitsioon"
 
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "Apple TV Recovery Partition"
-msgstr "Apple'i RAID-partitsioon"
+msgstr "Apple TV taastuspartitsioon"
 
 #. NetBSD
 msgid "NetBSD Swap Partition"
 msgstr "NetBSD saalepartitsioon"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "NetBSD FFS Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "NetBSD FFS partitsioon"
 
-#, fuzzy
-#| msgid "Apple UFS Partition"
 msgid "NetBSD LFS Partition"
-msgstr "Apple UFS partitsioon"
+msgstr "NetBSD LFS partitsioon"
 
-#, fuzzy
-#| msgid "Apple RAID Partition"
 msgid "NetBSD RAID Partition"
-msgstr "Apple'i RAID-partitsioon"
+msgstr "NetBSD RAID-partitsioon"
 
-#, fuzzy
-#| msgid "Create Partition"
 msgid "NetBSD Concatenated  Partition"
-msgstr "Partitsiooni loomine"
+msgstr "NetBSD ühendatud partitsioon"
 
-#, fuzzy
-#| msgid "Extended Partition"
 msgid "NetBSD Encrypted Partition"
-msgstr "Laiendatud partitsioon"
+msgstr "NetBSD krüpteeritud partitsioon"
 
 msgid "Unused Partition"
 msgstr "Kasutamata partitsioon"
@@ -2937,10 +2870,8 @@ msgstr "Peidetud W95 FAT16 (LBA) (0x1e)"
 msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
-#, fuzzy
-#| msgid "Linux (0x83)"
 msgid "Minix (0x81)"
-msgstr "Linux (0x83)"
+msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
 msgid "Linux swap (0x82)"
@@ -3033,16 +2964,12 @@ msgstr ""
 "Windowsi natiivne failisüsteem. Pole laialt ühilduv teiste "
 "operatsioonisüsteemidega peale Windowsi."
 
-#, fuzzy
-#| msgid ""
-#| "The native Windows file system. Not widely compatible with other "
-#| "operating systems than Windows."
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with other operating systems than Linux and Minix."
 msgstr ""
-"Windowsi natiivne failisüsteem. Pole laialt ühilduv teiste "
-"operatsioonisüsteemidega peale Windowsi."
+"Lihtne failisüsteem väikese ülekulu ja UNIX-i failiõiguste toega. Ei ole "
+"laialdaselt ühilduv teiste operatsioonisüsteemidega peale Linuxi ja Minixi."
 
 msgid "No file system will be created."
 msgstr "Ühtegi failisüsteemi ei looda."
@@ -3446,19 +3373,16 @@ msgstr "RAID"
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
-#, fuzzy, c-format
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
+#, c-format
 msgid "%s %s Component"
-msgstr "%d komponent"
+msgstr "%s %s komponent"
 
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #.
-#, fuzzy, c-format
-#| msgid "Part of \"%s\" %s array"
+#, c-format
 msgid "Part of \"%s\" array"
-msgstr "\"%s\" %s-massiivi osa"
+msgstr "\"%s\" massiivi osa"
 
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
@@ -3517,16 +3441,6 @@ msgstr "Kogu-ketta köide seadmel %s"
 msgid "Whole-disk volume"
 msgstr "Kogu-ketta köide"
 
-#. Translators: label for an unallocated space on a disk
-#. * %s is the size, formatted like '45 GB'
-#.
-#, c-format
-msgid "%s Free"
-msgstr "%s vaba"
-
-msgid "Unallocated Space"
-msgstr "Allutamata ruum"
-
 #. Translators: %s is the name of the device
 #, c-format
 msgid "It's now safe to remove \"%s\"."
@@ -3565,33 +3479,35 @@ msgstr "Köide, mida näidata"
 msgid "Drive to show"
 msgstr "Ketas, mida näidata"
 
+#, fuzzy
+msgid "Multipath Drive"
+msgstr "Mitmerajaketas"
+
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SAS Host Adapter").
 #.
-#, fuzzy, c-format
-#| msgid "Partition %d of %s"
+#, c-format
 msgid "PHY %d of %s"
-msgstr "Partitsioon %d %s-st"
+msgstr "PHY %d %s-st"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a Adapter or Expander - The %d is the
 #. * PHY number (starts at 1) and the %s is the Adapter/Expander
 #. * name (e.g. "SATA Host Adapter").
 #.
-#, fuzzy, c-format
-#| msgid "Partition %d of %s"
+#, c-format
 msgid "Port %d of %s"
-msgstr "Partitsioon %d %s-st"
+msgstr "Port %d %s-st"
 
 msgctxt "Write Cache"
 msgid "Enabled"
-msgstr ""
+msgstr "Lubatud"
 
 msgctxt "Write Cache"
 msgid "Disabled"
-msgstr ""
+msgstr "Keelatud"
 
 #. Translators: This is for the rotation rate of a hard
 #. * disk - RPM means rounds per minute
@@ -3599,10 +3515,8 @@ msgstr ""
 #, c-format
 msgctxt "Rotation Rate"
 msgid "%d RPM"
-msgstr ""
+msgstr "%d RPM"
 
-#, fuzzy
-#| msgid "Solid-State Disk"
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
 msgstr "Pooljuhtketas (SSD)"
@@ -3612,35 +3526,44 @@ msgstr "Pooljuhtketas (SSD)"
 msgid "Unknown Scheme: %s"
 msgstr "Tundmatu skeem: %s"
 
-#, fuzzy
-#| msgid "Error launching Disk Utility"
 msgid "Error launching Brasero"
-msgstr "Viga kettautiliidi käivitamisel"
+msgstr "Tõrge Brasero käivitamisel"
 
-#, fuzzy
-#| msgid "The operation is not supported."
 msgid "The application is not installed"
-msgstr "Operatsioon pole toetatud."
+msgstr "Rakendus pole paigaldatud"
 
-#, fuzzy
-#| msgid "Error ejecting device"
 msgid "Error ejecting media"
-msgstr "Viga seadme väljastamisel"
+msgstr "Tõrge andmekandja väljastamisel"
 
-#, fuzzy
-#| msgid "Error detaching device"
 msgid "Error detaching drive"
-msgstr "Viga seadme lahutamisel"
+msgstr "Tõrge ketta lahutamisel"
 
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error formatting drive"
-msgstr "Viga köite vormindamisel"
+msgstr "Tõrge ketta vormindamisel"
+
+msgid "Are you sure you want to format the drive?"
+msgstr "Kas oled kindel, et tahad ketta vormindada?"
 
 #, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
-msgid "Are you sure you want to format the drive?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgid ""
+"<b>WARNING:</b> Several paths to this drive has been detected but no "
+"corresponding multipath device was found. Your OS may be misconfigured."
+msgstr ""
+"<b>HOIATUS:</b> sellele kettale viitavad mitu asukohta, kuid vastavad "
+"mitmeraja seadet ei leitud. Sinu operatsioonisüsteem võib olla valesti "
+"seadistatud."
+
+#, fuzzy
+msgid "Go to Multipath Device"
+msgstr "Mitmerajaseadme juurde liikumine"
+
+#, fuzzy
+msgid ""
+"<b>NOTE:</b> This object represents one of several paths to the drive. To "
+"perform operations on the drive, use the corresponding multipath object."
+msgstr ""
+"<b>MÄRKUS:</b> see objekt esindab ketta ühte võimalikku asukohta mitmest "
+"võimalikust. Kettaga opereerimiseks kasuta vastavat mitmeseadme objekti."
 
 msgid "Model:"
 msgstr "Mudel:"
@@ -3659,10 +3582,10 @@ msgid "Location:"
 msgstr "Asukoht:"
 
 msgid "Write Cache:"
-msgstr ""
+msgstr "Kirjutamispuhver:"
 
 msgid "Rotation Rate:"
-msgstr ""
+msgstr "Pöörlemiskiirus:"
 
 msgid "Capacity:"
 msgstr "Mahtuvus:"
@@ -3671,79 +3594,156 @@ msgid "Connection:"
 msgstr "Ühendus:"
 
 msgid "Partitioning:"
-msgstr ""
+msgstr "Partitsioneerimine:"
 
 msgid "Open CD/_DVD Application"
-msgstr ""
+msgstr "Ava CD/_DVD rakendus"
 
 msgid "Create and copy CDs and DVDs"
-msgstr ""
+msgstr "CD- ja DVD-plaatide loomine ja kopeerimine"
 
-#, fuzzy
-#| msgid "_Format"
 msgid "Format _Drive"
-msgstr "_Vorminda"
+msgstr "Vorminda _ketas"
 
-#, fuzzy
-#| msgid "There was an error starting the drive \"%s\"."
 msgid "Erase or partition the drive"
-msgstr "Ketta \"%s\" käivitamisel esines viga."
+msgstr "Ketta kustutamine või partitsioneerimine"
 
 msgid "SM_ART Data"
 msgstr "SM_ART-andmed"
 
 msgid "View SMART data and run self-tests"
-msgstr ""
+msgstr "SMART andmete kuvamine ja enesetestide käivitamine"
 
 msgid "_Eject"
 msgstr "_Väljasta"
 
-#, fuzzy
-#| msgid "Eject media from the device"
 msgid "Eject media from the drive"
-msgstr "Väljasta andmekandja seadmest"
+msgstr "Andmekandja väljastamine seadmest"
 
 msgid "Safe Rem_oval"
-msgstr ""
+msgstr "Turvaline _eemaldamine"
 
 msgid "Power down the drive so it can be removed"
-msgstr ""
+msgstr "Ketta väljalülitamine, et selle saaks eemaldada"
 
-#, fuzzy
-#| msgid "Seek Timer Performance"
 msgid "Measure drive performance"
-msgstr "Otsijõudlus"
+msgstr "Ketta jõudluse mõõtmine"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
 #.
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d PHYd"
 
 msgid "Parallel ATA"
-msgstr ""
+msgstr "Paralleel-ATA (PATA)"
 
 msgid "Serial ATA"
-msgstr ""
+msgstr "Järjestik-ATA (SATA)"
 
 msgid "Serial Attached SCSI"
-msgstr ""
+msgstr "Jadamisi ühendatud SCSI"
 
 msgid "Vendor:"
 msgstr "Tootja:"
 
+#, fuzzy
 msgid "Revision:"
-msgstr ""
+msgstr "Redaktsioon:"
 
 msgid "Driver:"
-msgstr ""
+msgstr "Draiver:"
 
+#, fuzzy
 msgid "Fabric:"
-msgstr ""
+msgstr "Toodang:"
 
 msgid "Number of Ports:"
 msgstr "Portide arv:"
+
+msgid "Error starting Volume Group"
+msgstr "Tõrge köitegrupi käivitamisel"
+
+msgid "Error stopping Volume Group"
+msgstr "Tõrge köitegrupi peatamisel"
+
+msgid "Error setting name for Volume Group"
+msgstr "Tõrge köitegrupi nime määramisel"
+
+msgid "Choose a new Volume Group name."
+msgstr "Vali köitegrupile uus nimi."
+
+msgid "Error adding Physical Volume to Volume Group"
+msgstr "Trõge füüsilise köite lisamisel köitegruppi"
+
+msgid "Error creating partition for RAID pv"
+msgstr "Tõrge RAID-massiivi füüsilise köite jaoks partitsiooni loomisel"
+
+msgid "Error creating partition table for LVM2 PV"
+msgstr "Tõrge LVM2 füüsilise köite jaoks partitsioonitabeli loomisel"
+
+msgid "Error deleting partition for Physical Volume in Volume Group"
+msgstr "Tõrge partitsiooni kustutamisel, mis on köitegrupi füüsiline köide"
+
+msgid "Error removing Physical Volume from Volume Group"
+msgstr "Tõrge füüsilise köite eemaldamisel köitegrupist"
+
+msgid "Are you sure you want the remove the Physical Volume?"
+msgstr "Kas oled kindel, et tahad füüsilise köite eemaldada?"
+
+msgid "_Remove"
+msgstr "_Eemalda"
+
+msgid "Not Running"
+msgstr "Ei tööta"
+
+msgid "Partially Running"
+msgstr "Osaliselt töötav"
+
+msgid "Running"
+msgstr "Töötab"
+
+#, c-format
+msgid "Unknown (%d)"
+msgstr "Tundmatu (%d)"
+
+msgid "Name:"
+msgstr "Nimi:"
+
+#, fuzzy
+msgid "Extent Size:"
+msgstr "Ülesuurus:"
+
+msgid "Physical Volumes:"
+msgstr "Füüsilised köited:"
+
+msgid "Unallocated:"
+msgstr "Allutamata:"
+
+msgid "St_art Volume Group"
+msgstr "_Käivita köitegrupp"
+
+msgid "Activate all LVs in the VG"
+msgstr "Kõigi loogiliste köidete aktiveerimine selles köitegrupis"
+
+msgid "St_op Volume Group"
+msgstr "_Peata köitegrupp"
+
+msgid "Deactivate all LVs in the VG"
+msgstr "Kõigi loogiliste köidete deaktiveerimine selles köitegrupis"
+
+msgid "Edit _Name"
+msgstr "Muuda _nime"
+
+msgid "Change the Volume Group name"
+msgstr "Köitegrupi nime muutmine"
+
+msgid "Edit Ph_ysical Volumes"
+msgstr "Muuda _füüsilisi köiteid"
+
+msgid "Create and remove PVs"
+msgstr "Füüsiliste köidete lisamine ja eemaldamine"
 
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
@@ -3763,289 +3763,172 @@ msgstr "Ei tööta, käivitamiseks pole piisavalt komponente"
 
 msgctxt "RAID status"
 msgid "DEGRADED"
-msgstr ""
+msgstr "VÄÄRTUST KAOTANUD"
 
 msgctxt "RAID status"
 msgid "Running"
 msgstr "Töötab"
 
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Reshaping"
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "Ümberkujundamine"
 
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Resyncing"
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "Sünkroniseerimine"
 
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Repairing"
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "Parandamine"
 
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Recovering"
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "Taastamine"
 
-#, fuzzy
-#| msgctxt "RAID status"
-#| msgid "Checking"
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "Kontrollimine"
 
 msgctxt "RAID action"
 msgid "Idle"
-msgstr ""
+msgstr "Jõude"
 
-#. Translators: The text for the hyperlink of the component
-#, fuzzy
-#| msgid "Cannot unmount volume"
-msgid "Go to volume"
-msgstr "Köite lahtihaakimine pole võimalik"
-
-#. Translators: The text used to display the RAID component for an array that is running.
-#. * First %s is the VPD name.
-#. * Second %s is the state of the component.
-#. * Third %s is the "Go to volume" link.
-#.
-#, c-format
-msgctxt "RAID component label"
-msgid "%s (%s) – %s"
-msgstr ""
-
-#. Translators: The text used to display the RAID component for an array that is not running.
-#. * First %s is the VPD name.
-#. * Second %s is the "Go to volume" link.
-#.
-#, fuzzy, c-format
-#| msgid "%s at %s"
-msgctxt "RAID component label"
-msgid "%s – %s"
-msgstr "%s kiirusega %s"
-
-#, fuzzy
-#| msgid "Stopping RAID Array"
 msgid "Error stopping RAID Array"
-msgstr "RAID-massiivi peatamine"
+msgstr "Tõrge RAID-massiivi peatamisel"
 
-#, fuzzy
-#| msgid "Error creating RAID array"
 msgid "Error starting RAID Array"
-msgstr "Viga RAID-massiivi loomisel"
+msgstr "Tõrge RAID-massiivi käivitamisel"
 
-#, fuzzy, c-format
-#| msgctxt "RAID status"
-#| msgid "Not running, not enough components to start"
+#, c-format
 msgid "Not enough components available to start the RAID Array"
-msgstr "Ei tööta, käivitamiseks pole piisavalt komponente"
+msgstr "RAID-massiivi käivitamiseks pole piisavalt komponente saadaval"
 
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgstr "Kas oled kindel, et tahad RAID-massiivi käivitada väärtust kaotanult?"
 
 msgid "_Start"
 msgstr "_Käivita"
 
-#, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error deleting partition for component in RAID Array"
-msgstr "Viga partitsioonitabeli loomisel RAID-massiivi komponendiks"
+msgstr "Tõrge RAID-massiivi komponendiks oleva partitsiooni kustutamisel"
 
-#, fuzzy
-#| msgid "Removing Component from RAID Array"
 msgid "Error removing component from RAID Array"
-msgstr "Komponendi eemaldamine RAID-massiivist"
+msgstr "Tõrge komponendi eemaldamisel RAID-massiivist"
 
-#, fuzzy
-#| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Are you sure you want the remove the component?"
-msgstr "Kas sa oled kindel, et tahad komponendi massiivist eemaldada?"
+msgstr "Kas oled kindel, et tahad komponendi eemaldada?"
 
-msgid "_Remove"
-msgstr ""
-
-#, fuzzy
-#| msgid "Error creating component for RAID array"
 msgid "Error adding component to RAID Array"
-msgstr "Viga RAID-massiivi jaoks komponendi loomisel"
+msgstr "Tõrge komponendi lisamisel RAID-massiivi"
 
-#, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error creating partition for RAID component"
-msgstr "Viga partitsioonitabeli loomisel RAID-massiivi komponendiks"
+msgstr "Tõrge partitsiooni loomisel RAID-massiivi komponendiks"
 
-#, fuzzy
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error creating partition table for RAID component"
-msgstr "Viga partitsioonitabeli loomisel RAID-massiivi komponendiks"
+msgstr "Tõrge partitsioonitabeli loomisel RAID-massiivi komponendi jaoks"
 
-#, fuzzy
-#| msgid "Error creating RAID array"
 msgid "Error checking RAID Array"
-msgstr "Viga RAID-massiivi loomisel"
+msgstr "Tõrge RAID-massiivi kontrollil"
 
-#, fuzzy
-#| msgid "RAID _Level:"
 msgid "Level:"
-msgstr "RAID-i _tase:"
+msgstr "Tase:"
 
-#, fuzzy
-#| msgid "LDM meta data Partition"
 msgid "Metadata Version:"
-msgstr "LDM metaandmete partitsioon"
-
-msgid "Name:"
-msgstr "Nimi:"
+msgstr "Metaandmete versioon:"
 
 msgid "Action:"
 msgstr "Tegevus:"
 
-msgid "Active Components:"
-msgstr "Aktiivsed komponendid:"
-
-#. Ensure this is in the last row and the first column
 msgid "Components:"
 msgstr "Komponendid:"
 
-#, fuzzy
-#| msgid "Starting RAID Array"
 msgid "St_art RAID Array"
-msgstr "RAID-massiivi käivitamine"
+msgstr "_Käivita RAID-massiiv"
 
-#, fuzzy
-#| msgid "Starting RAID Array"
 msgid "Bring up the RAID Array"
 msgstr "RAID-massiivi käivitamine"
 
-#, fuzzy
-#| msgid "Stopping RAID Array"
 msgid "St_op RAID Array"
+msgstr "_Peata RAID-massiiv"
+
+msgid "Tear down the RAID Array"
 msgstr "RAID-massiivi peatamine"
 
-#, fuzzy
-#| msgid "Create RAID Array"
-msgid "Tear down the RAID Array"
-msgstr "RAID-massiivi loomine"
-
-#, fuzzy
-#| msgid "Create RAID Array"
 msgid "Format/Erase RAI_D Array"
-msgstr "RAID-massiivi loomine"
+msgstr "_Vorminda/kustuta RAID-massiiv"
 
-#, fuzzy
-#| msgid "Starts repairing the RAID array"
 msgid "Erase or partition the array"
-msgstr "Alustab RAID-massiivi parandamist"
+msgstr "Massiivi kustutamine või partitsioneerimine"
 
-#, fuzzy
-#| msgid "Checking RAID Array"
 msgid "Chec_k Array"
-msgstr "RAID-massiivi kontroll"
+msgstr "_Kontrolli RAID-massiivi"
 
-#, fuzzy
-#| msgid "Starts repairing the RAID array"
 msgid "Check and repair the array"
-msgstr "Alustab RAID-massiivi parandamist"
+msgstr "RAID-massiivi kontrollimine ja parandamine"
 
-#, fuzzy
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
 msgid "Edit Com_ponents"
-msgstr "%d komponent"
+msgstr "_Muuda komponente"
 
-#, fuzzy
-#| msgid "Error removing component"
 msgid "Create and remove components"
-msgstr "Viga komponendi eemaldamisel"
+msgstr "Komponentide lisamine ja eemaldamine"
 
 msgid "Measure RAID array performance"
-msgstr ""
+msgstr "RAID-massiivi jõudluse mõõtmine"
 
-#, fuzzy
-#| msgid "Error unmounting device"
 msgid "Error unmounting volume"
-msgstr "Viga seadme lahtihaakimisel"
+msgstr "Tõrge köite lahtihaakimisel"
 
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error mounting volume"
-msgstr "Viga köite vormindamisel"
+msgstr "Tõrge köite haakimisel"
 
 msgid "Error deleting partition"
 msgstr "Viga partitsiooni kustutamisel"
 
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the partition?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgstr "Kas oled kindel, et tahad partitsiooni kustutada?"
 
-#, fuzzy
-#| msgid "_Detect Media"
 msgid "_Delete"
-msgstr "_Tuvasta andmekandja"
+msgstr "_Kustuta"
 
-#, fuzzy
-#| msgid "Error setting file system label"
 msgid "Error creating filesystem"
-msgstr "Viga failisüsteemi pealdise määramisel"
+msgstr "Tõrge failisüsteemi loomisel"
 
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to format the volume?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgstr "Kas oled kindel, et tahad köite vormindada?"
 
 msgid "Error modifying partition"
 msgstr "Viga partitsiooni muutmisel"
 
-#, fuzzy
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to forget the passphrase?"
-msgstr "Kas sa oled kindel, et tahad kustutada seadme?"
+msgstr "Kas oled kindel, et tahad parooli unustada?"
 
-#, fuzzy
-#| msgid "_Format"
 msgid "_Forget"
-msgstr "_Vorminda"
+msgstr "_Unusta"
 
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error locking LUKS volume"
-msgstr "Viga köite vormindamisel"
+msgstr "Tõrge LUKS-köite lukustamisel"
 
-#, fuzzy
-#| msgid "Error unlocking device"
 msgid "Error unlocking LUKS volume"
-msgstr "Viga seadme luku avamisel"
+msgstr "Tõrge LUKS-köite luku avamisel"
 
 msgid "Error creating partition"
 msgstr "Viga partitsiooni loomisel."
 
-#, fuzzy
-#| msgid "Error creating partition table"
 msgid "Error changing label"
-msgstr "Viga partitsioonitabeli loomisel"
+msgstr "Tõrge pealdise muutmisel"
 
-#, fuzzy
-#| msgid "Error checking file system on device"
+msgid "Choose a new filesystem label."
+msgstr "Vali uus failisüsteemi pealdis."
+
+msgid "_Label:"
+msgstr "_Pealdis:"
+
 msgid "Error checking filesystem on volume"
-msgstr "Viga seadme failisüsteemi kontrollimisel"
+msgstr "Viga köitel asuva failisüsteemi kontrollimisel"
 
-#, fuzzy, c-format
-#| msgid "File system check on \"%s\" completed"
+#, c-format
 msgid "File system check on \"%s\" (%s) completed"
-msgstr "Failisüsteemi kontroll seadmel \"%s\" lõpetatud"
+msgstr "Failisüsteemi kontroll seadmel \"%s\" (%s) lõpetatud"
 
 msgid "File system is clean."
 msgstr "Failisüsteem on puhas."
@@ -4055,32 +3938,63 @@ msgstr "Failisüsteem <b>EI OLE</b> puhas."
 
 #, c-format
 msgid "Error spawning nautilus: %s"
-msgstr ""
+msgstr "Tõrge nautiluse käivitamisel: %s"
+
+msgid "Error creating Logical Volume"
+msgstr "Viga loogilise köite loomisel"
+
+msgid "Error stopping Logical Volume"
+msgstr "Viga loogilise köite peatamisel"
+
+msgid "Error starting Logical Volume"
+msgstr "Viga loogilise köite käivitamisel"
+
+msgid "Error setting name for Logical Volume"
+msgstr "Tõrge loogilise köite nime määramisel"
+
+msgid "Choose a new name for the Logical Volume."
+msgstr "Vali loogilisele köitele uus nimi."
+
+msgid "Error deleting Logical Volume"
+msgstr "Viga loogilise köite kustutamisel"
+
+msgid "Are you sure you want to delete the logical volume?"
+msgstr "Kas oled kindel, et tahad loogilise köite kustutada?"
+
+msgid "Volume Name:"
+msgstr "Köite nimi:"
 
 msgid "Usage:"
 msgstr "Kasutamine:"
 
 msgid "Partition Type:"
-msgstr ""
+msgstr "Partitsiooni tüüp:"
 
-#, fuzzy
-#| msgid "Part_ition Label:"
 msgid "Partition Label:"
-msgstr "_Partitsiooni pealdis:"
+msgstr "Partitsiooni pealdis:"
 
-#, fuzzy
-#| msgid "Part_ition Label:"
 msgid "Partition Flags:"
-msgstr "_Partitsiooni pealdis:"
+msgstr "Partitsiooni lipud:"
 
 msgid "Type:"
 msgstr "Liik:"
 
 msgid "Available:"
-msgstr ""
+msgstr "Saadaval:"
+
+msgid "Label:"
+msgstr "Pealdis:"
 
 msgid "Mount Point:"
 msgstr "Ühenduskoht:"
+
+msgctxt "LVM2 LV State"
+msgid "Running"
+msgstr "Töötab"
+
+msgctxt "LVM2 LV State"
+msgid "Not Running"
+msgstr "Ei tööta"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
 msgid "Bootable"
@@ -4088,26 +4002,24 @@ msgstr "Alglaaditav"
 
 #. Translators: This is for the 'required' GPT partition flag
 msgid "Required"
-msgstr ""
+msgstr "Nõutud"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#, fuzzy
-#| msgctxt "Linux MD slave state"
-#| msgid "Blocked"
 msgid "Allocated"
-msgstr "Blokeeritud"
+msgstr "Allutatud"
 
 #. Translators: This is for the 'allow_read' APM partition flag
 msgid "Allow Read"
-msgstr ""
+msgstr "Lugemine lubatud"
 
 #. Translators: This is for the 'allow_write' APM partition flag
 msgid "Allow Write"
-msgstr ""
+msgstr "Kirjutamine lubatud"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
+#, fuzzy
 msgid "Boot Code PIC"
-msgstr ""
+msgstr "Alglaadimiskoodi PIC"
 
 msgid "Filesystem"
 msgstr "Failisüsteem"
@@ -4116,158 +4028,143 @@ msgstr "Failisüsteem"
 #. * remote server - it uses the sftp:// protocol
 #.
 msgid "View files on the volume using a SFTP network share"
-msgstr ""
+msgstr "Köitel asuvate failide kuvamine SFTP jagatud võrguressursi kaudu"
 
 #. Translators: this the mount point hyperlink tooltip
 msgid "View files on the volume"
-msgstr ""
+msgstr "Köitel asuvate failide kuvamine"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#, fuzzy, c-format
-#| msgid " mounted at "
+#, c-format
 msgid "Mounted at %s"
-msgstr " haagitud asukohale "
+msgstr "Haagitud kohale %s"
 
-#, fuzzy
-#| msgid "Not Partitioned"
 msgid "Not Mounted"
-msgstr "Partitsioneerimata"
+msgstr "Pole haagitud"
 
 msgid "Encrypted Volume (Locked)"
-msgstr ""
+msgstr "Krüpteeritud köide (lukus)"
 
 msgid "Encrypted Volume (Unlocked)"
-msgstr ""
+msgstr "Krüpteeritud köide (lukust lahti)"
 
-#, fuzzy
-#| msgid "Stop the array"
 msgid "Go to array"
-msgstr "Massiivi peatamine"
+msgstr "Massiivile liikumine"
 
-#, fuzzy
-#| msgid "Contains logical partitions"
 msgid "Container for Logical Partitions"
 msgstr "Sisaldab loogilisi partitsioone"
 
-#, fuzzy
-#| msgid "Volume"
+msgid "Logical _Volumes"
+msgstr "Loogilised _köited"
+
 msgid "_Volumes"
-msgstr "Köide"
+msgstr "_Köited"
 
-#, fuzzy
-#| msgid "Mounting volume..."
 msgid "_Mount Volume"
-msgstr "Köite haakimine..."
+msgstr "_Haagi köide"
 
-#, fuzzy
-#| msgid "Mounting volume..."
 msgid "Mount the volume"
-msgstr "Köite haakimine..."
+msgstr "Köite haakimine"
 
-#, fuzzy
-#| msgid "_Unmount"
-msgid "_Unmount Volume"
-msgstr "_Haagi lahti"
+msgid "Un_mount Volume"
+msgstr "_Haagi köide lahti"
 
-#, fuzzy
-#| msgid "Unmount the filesystem"
 msgid "Unmount the volume"
-msgstr "Haagi failisüsteem lahti"
+msgstr "Köite lahtihaakimine"
 
-#, fuzzy
-#| msgid "Format %s Volume (%s)"
 msgid "Fo_rmat Volume"
-msgstr "%s köite vormindamine (%s)"
+msgstr "_Vorminda köide"
 
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Erase or format the volume"
-msgstr "Viga köite vormindamisel"
+msgstr "Köite kustutamine või vormindamine"
 
-#, fuzzy
-#| msgid "_Check File System"
 msgid "_Check Filesystem"
 msgstr "_Kontrolli failisüsteemi"
 
-#, fuzzy
-#| msgid "Check the file system"
 msgid "Check and repair the filesystem"
-msgstr "Failisüsteemi kontroll"
+msgstr "Failisüsteemi kontroll ja parandus"
 
-#, fuzzy
-#| msgid "_Label:"
-msgid "Edit _Label"
-msgstr "_Pealdis:"
+msgid "Edit Filesystem _Label"
+msgstr "Muuda failisüsteemi _pealdist"
 
-msgid "Change the label of the volume"
-msgstr ""
+msgid "Change the label of the filesystem"
+msgstr "Failisüsteemi pealdise muutmine"
 
-#, fuzzy
-#| msgid "Empty Partition"
 msgid "Ed_it Partition"
-msgstr "Tühi partitsioon"
+msgstr "_Muuda partitsiooni"
 
 msgid "Change partition type, label and flags"
-msgstr ""
+msgstr "Partitsiooni liigi, pealdise ja lippude muutmine"
 
-#, fuzzy
-#| msgid "_Delete Partition"
 msgid "D_elete Partition"
 msgstr "_Kustuta partitsioon"
 
 msgid "Delete the partition"
 msgstr "Partitsiooni kustutamine"
 
-#, fuzzy
-#| msgid "Create Partition"
 msgid "_Create Partition"
-msgstr "Partitsiooni loomine"
+msgstr "_Loo partitsioon"
 
-#, fuzzy
-#| msgid "Create partition"
 msgid "Create a new partition"
-msgstr "Partitsiooni loomine"
+msgstr "Uue partitsiooni loomine"
 
-#, fuzzy
-#| msgid "Volume"
 msgid "_Lock Volume"
-msgstr "Köide"
+msgstr "_Lukusta köide"
 
-#, fuzzy
-#| msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgid "Make encrypted data unavailable"
-msgstr ""
-"Krüpteeritud seadme lukustamine, muutes lihtekstilised andmed kättesaamatuks"
+msgstr "Krüpteeritud andmete kättesaamatuks muutmine"
 
-#, fuzzy
-#| msgid "_Unlock"
-msgid "_Unlock Volume"
-msgstr "_Võta lukust lahti"
+msgid "Un_lock Volume"
+msgstr "_Võta köide lukust lahti"
 
 msgid "Make encrypted data available"
-msgstr ""
+msgstr "Krüpteeritud andmete kättesaadavaks tegemine"
 
-#, fuzzy
-#| msgid "F_orget Passphrase"
 msgid "Forge_t Passphrase"
 msgstr "_Unusta prool"
 
-#, fuzzy
-#| msgid "Error storing passphrase in keyring"
 msgid "Delete passphrase from keyring"
-msgstr "Viga parooli salvestamisel võtmerõngasse"
+msgstr "Parooli kustutamine võtmerõngast"
 
-#| msgid "Change _Passphrase"
 msgid "Change passphrase"
 msgstr "Parooli muutmine"
+
+msgid "_Create Logical Volume"
+msgstr "_Loo uus loogiline köide"
+
+msgid "Create a new logical volume"
+msgstr "Uue loogilise köite loomine"
+
+msgid "S_tart Volume"
+msgstr "_Käivita köide"
+
+msgid "Activate the Logical Volume"
+msgstr "Loogilise köite aktiveerimine"
+
+msgid "Edit Vol_ume Name"
+msgstr "Muuda _köite nime"
+
+msgid "Change the name of the volume"
+msgstr "Muuda köite nime"
+
+msgid "D_elete Volume"
+msgstr "_Kustuta köide"
+
+msgid "Delete the Logical Volume"
+msgstr "Loogilise köite kustutamine"
+
+msgid "Sto_p Volume"
+msgstr "_Peata köide"
+
+msgid "Deactivate the Logical Volume"
+msgstr "Loogilise köite deaktiveerimine"
 
 #. Translators: Window title when the item representing a remote machine is selected.
 #. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
 #.
 #, c-format
-#| msgid "Disk Utility"
 msgid "%s — Disk Utility"
 msgstr "%s — Kettautiliit"
 
@@ -4279,7 +4176,7 @@ msgstr "%s — Kettautiliit"
 #.
 #, c-format
 msgid "%s (%s) [%s] @ %s — Disk Utility"
-msgstr ""
+msgstr "%s (%s) [%s] @ %s — Kettautiliit"
 
 #. Translators: Window title when an item on a remote machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -4288,7 +4185,7 @@ msgstr ""
 #.
 #, c-format
 msgid "%s (%s) @ %s — Disk Utility"
-msgstr ""
+msgstr "%s (%s) @ %s — Kettautiliit"
 
 #. Translators: Window title when an item on the local machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -4297,7 +4194,7 @@ msgstr ""
 #.
 #, c-format
 msgid "%s (%s) [%s] — Disk Utility"
-msgstr ""
+msgstr "%s (%s) [%s] — Kettautiliit"
 
 #. Translators: Window title when an item on the local machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -4318,7 +4215,7 @@ msgstr "Viga RAID-massiivi loomisel"
 
 #, c-format
 msgid "Error connecting to “%s”"
-msgstr ""
+msgstr "Tõrge serveriga “%s” ühendumisel"
 
 msgid "translator-credits"
 msgstr ""
@@ -4329,20 +4226,18 @@ msgid "_File"
 msgstr "_Fail"
 
 msgid "Connect to _Server..."
-msgstr ""
+msgstr "Ühendu _serveriga..."
 
+#, fuzzy
 msgid "Manage storage devices on another machine"
-msgstr ""
+msgstr "Teise masina mahuseadmete haldamine"
 
-#| msgid "Create"
 msgid "_Create"
 msgstr "_Loo"
 
-#| msgid "RAID Array"
 msgid "_RAID Array..."
 msgstr "_RAID-massiiv..."
 
-#| msgid "Create RAID Array"
 msgid "Create a RAID array"
 msgstr "RAID-massiivi loomine"
 
@@ -4358,7 +4253,6 @@ msgstr "_Lõpeta"
 msgid "Quit"
 msgstr "Lõpeta"
 
-#| msgid "Get Help on Palimpsest Disk Utility"
 msgid "Get Help on Disk Utility"
 msgstr "Hangi abi kettautiliidi kasutamisel"
 
@@ -4396,566 +4290,5 @@ msgid "_Details:"
 msgstr "_Üksikasjad:"
 
 #, fuzzy
-#| msgid "Detaching Device"
 msgid "_Storage Devices"
-msgstr "Seadme eraldamine"
-
-#~ msgid "The volume to format"
-#~ msgstr "Köide, mida vormindada"
-
-#~ msgid "Compatible with Linux (ext3)"
-#~ msgstr "Ühilduv Linuxiga (ext3)"
-
-#~ msgid "RAID device %s (%s)"
-#~ msgstr "RAID-seade %s (%s)"
-
-#~ msgid "%s Software RAID"
-#~ msgstr "%s tarkvaraline RAID"
-
-#~ msgid "Software RAID"
-#~ msgstr "Tarkvaraline RAID"
-
-#~ msgid "Linux Ext2"
-#~ msgstr "Linux Ext2"
-
-#~ msgid "Linux Ext3"
-#~ msgstr "Linux Ext3"
-
-#~ msgid "Linux Ext4"
-#~ msgstr "Linux Ext4"
-
-#~ msgid "Linux XFS (version %s)"
-#~ msgstr "Linux XFS (versioon %s)"
-
-#~ msgid "Linux XFS"
-#~ msgstr "Linux XFS"
-
-#~ msgid "%s RAID Component"
-#~ msgstr "%s RAID-i komponent"
-
-#~ msgid "Select what SMART self test to run"
-#~ msgstr "Vali, millist SMART enesetesti jooksutada"
-
-#~ msgid "_Initiate Self Test"
-#~ msgstr "_Käivita enesetest"
-
-#~ msgid "Health status is unknown"
-#~ msgstr "Tervislik olukord pole teada"
-
-#~ msgid "SMART is not enabled"
-#~ msgstr "SMART pole lubatud"
-
-#~ msgid "SMART is not available"
-#~ msgstr "SMART pole saadaval"
-
-#~ msgid "Status"
-#~ msgstr "Olek"
-
-#~ msgid "Updating..."
-#~ msgstr "Uuendamine..."
-
-#~ msgid "Update now"
-#~ msgstr "Uuenda kohe"
-
-#~ msgid "Initiates a self-test on the drive"
-#~ msgstr "Käivitab ketta enesetesti"
-
-#~ msgid "The name of the model of the disk"
-#~ msgstr "Kettamudeli nimi"
-
-#~ msgid "The firmware version of the disk"
-#~ msgstr "Ketta püsivara versioon"
-
-#~ msgid "The serial number of the disk"
-#~ msgstr "Ketta seerianumber"
-
-#~ msgid "Last self-test completed OK"
-#~ msgstr "Viimane enesetest lõpetati edukalt"
-
-#~ msgid "Last self-test was cancelled"
-#~ msgstr "Viimane enesetest katkestati"
-
-#~ msgid "Self-test is in progress"
-#~ msgstr "Enesetest töös"
-
-#~ msgid "Short self-test in progress: "
-#~ msgstr "Lühikene enesetest töös:"
-
-#~ msgid "Extended self-test in progress: "
-#~ msgstr "Pikendatud enesetest töös:"
-
-#~ msgid "Conveyance self-test in progress: "
-#~ msgstr "Edastuse enesetest töös:"
-
-#~ msgid "Disk"
-#~ msgstr "Ketas"
-
-#~ msgid "Are you sure you want to format the disk, deleting existing data ?"
-#~ msgstr ""
-#~ "Kas sa oled kindel, et tahad selle ketta vormindada, teades et sellega "
-#~ "kustuvad kõik andmed?"
-
-#~ msgid ""
-#~ "All data on the media in \"%s\" will be irrevocably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed andmekandjal seadmes \"%s\" kustutatakse pöördumatult. "
-#~ "Veendu, et kõik olulised andmed on varundatud. Seda tegevust pole "
-#~ "võimalik tagasi võtta."
-
-#~ msgid ""
-#~ "All data on the drive \"%s\" will be irrevocably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed kettal \"%s\" kustutatakse pöördumatult. Veendu, et olulised "
-#~ "andmed on varundatud. Seda tegevust pole võimalik tagasi võtta."
-
-#~ msgid "Create Partition Table"
-#~ msgstr "Partitsioonitabeli loomine"
-
-#~ msgid ""
-#~ "To create a new partition table, select the partition table type and then "
-#~ "press \"Create\". All existing data will be lost."
-#~ msgstr ""
-#~ "Uue partitsioonitabeli loomiseks vali partitsioonitabeli tüüp ja klõpsa "
-#~ "nupul \"Loo\". Kõik andmed lähevad kaotsi."
-
-#~ msgid ""
-#~ "The volume contains encrypted data that can be unlocked with a "
-#~ "passphrase. The passphrase can optionally be stored in the keyring."
-#~ msgstr ""
-#~ "Köide sisaldab krüpteeritud andmeid, mis on lukustatud parooliga. Parooli "
-#~ "võib salvestada ka võtmerõngasse."
-
-#~ msgid "Change Pa_ssphrase..."
-#~ msgstr "Muuda _parooli..."
-
-#~ msgid "Mountable Filesystem"
-#~ msgstr "Haagitav failisüsteem"
-
-#~ msgid "The volume contains a mountable filesystem."
-#~ msgstr "See köide sisaldab haagitavat failisüsteemi."
-
-#~ msgid "_Change"
-#~ msgstr "_Muuda"
-
-#~ msgid "Change"
-#~ msgstr "Muda"
-
-#~ msgid ""
-#~ "Only volumes of acceptable sizes can be selected. You may need to "
-#~ "manually create new volumes of acceptable sizes."
-#~ msgstr ""
-#~ "Ainult vastuvõetava suurusega köiteid saab valida. Võib-olla pead käsitsi "
-#~ "looma uued sobiva suurusega köited."
-
-#~ msgid "Add _Volume"
-#~ msgstr "Lisa _köide"
-
-#~ msgid ""
-#~ "The data on component \"%s\" of the RAID Array \"%s\" will be irrevocably "
-#~ "erased and the RAID Array might be degraded. Make sure important data is "
-#~ "backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Andmed RAID-massiivi \"%s$2\" komponendil \"%s$1\" kustutatakse "
-#~ "pöördumatult ning RAID-massiiv võib kaotada väärtust. Veendu, et olulised "
-#~ "andmed on varundatud. Seda tegevust pole võimalik tagasi võtta."
-
-#~ msgctxt "RAID component type"
-#~ msgid "Striped (RAID-0)"
-#~ msgstr "Triipudega (RAID-0)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Mirrored (RAID-1)"
-#~ msgstr "Peegeldatud (RAID-1)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-4"
-#~ msgstr "RAID-4"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-5"
-#~ msgstr "RAID-5"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-6"
-#~ msgstr "RAID-6"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Linear (Just a Bunch Of Disks)"
-#~ msgstr "Lineaarne (lihtstalt kettamassiiv)"
-
-#~ msgctxt "RAID status"
-#~ msgid "Degraded"
-#~ msgstr "Kaotatud väärtus"
-
-#~ msgctxt "RAID status"
-#~ msgid " @ %3.01f%% (%s)"
-#~ msgstr " - %3.01f%% (%s)"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "In Sync"
-#~ msgstr "Sünkroonis"
-
-#~ msgid "Array Name:"
-#~ msgstr "Massiivi nimi:"
-
-#~ msgid "Home Host:"
-#~ msgstr "Koduhost:"
-
-#~ msgid "Array Size:"
-#~ msgstr "Massiivi suurus:"
-
-#~ msgid "RAID Type:"
-#~ msgstr "RAID-i tüüp:"
-
-#~ msgid ""
-#~ "Attaches the stale component to the RAID array. After attachment, data "
-#~ "from the array will be synchronized on the component."
-#~ msgstr ""
-#~ "Ühendab seisma jäänud komponendi RAID-massiivi. Pärast liitmist "
-#~ "sünkroniseeritakse massiivi andmed komponendile."
-
-#~ msgid "_Detach"
-#~ msgstr "_Ühenda lahti"
-
-#~ msgid ""
-#~ "Detaches the running component from the RAID array. Data on the component "
-#~ "will be erased and the component will be ready for other use."
-#~ msgstr ""
-#~ "Lahutab töötava komponendi RAID-massiivist. Komponendil olevad andmed "
-#~ "kustutatakse ning see jääb vabaks muuks otstarbeks."
-
-#~ msgid "_Add..."
-#~ msgstr "_Lisa..."
-
-#~ msgid ""
-#~ "Adds a new component to the running RAID array. Use this when replacing a "
-#~ "failed component or adding a hot spare."
-#~ msgstr ""
-#~ "Lisab uue komponendi töötavasse RAID-massiivi. Kasuta seda vigase "
-#~ "komponendi väljavahetamiseks või varuruumi lisamiseks."
-
-#~ msgid "Chec_k"
-#~ msgstr "_Kontrolli"
-
-#~ msgid "Starts checking the RAID array for redundancy"
-#~ msgstr "Alustab RAID-massiivi liiasuste kontrollimist"
-
-#~ msgid "_Repair"
-#~ msgstr "_Paranda"
-
-#~ msgid ""
-#~ "To format or edit media, insert it into the drive and wait a few seconds."
-#~ msgstr ""
-#~ "Andmekandja vormindamiseks või muutmiseks sisesta see lugejasse ja oota "
-#~ "mõni sekund."
-
-#~ msgid ""
-#~ "Are you sure you want to remove the partition, deleting existing data ?"
-#~ msgstr ""
-#~ "Kas sa oled kindel, et tahad eemaldada partitsiooni ja kustutada sellelt "
-#~ "andmed?"
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-#~ "partitions contained in this extended partition will be irrevocably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d nimega \"%s\" andmekandjal lugejas \"%s\" ja "
-#~ "kõik partitsioonid, mis sisalduvad sellel laiendatud partitsioonil, "
-#~ "kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-#~ "irrevocably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d nimega \"%s\" andmekandjal lugejas \"%s\" "
-#~ "kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" and all partitions "
-#~ "contained in this extended partition will be irrevocably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d andmekandjal lugejas \"%s\" ja kõik "
-#~ "partitsioonid, mis sisalduvad sellel laiendatud partitsioonil, "
-#~ "kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrevocably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d andmekandjal lugejas \"%s\" kustutatakse "
-#~ "pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
-#~ "contained in this extended partition will be irrevocably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d nimega \"%s\", \"%s\"-tüüpi, ja kõik "
-#~ "partitsioonid, mis sisalduvad sellel laiendatud partitsioonil, "
-#~ "kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" of \"%s\" will be irrevocably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d nimega \"%s\", \"%s\"-tüüpi, kustutatakse "
-#~ "pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" and all partitions contained in this "
-#~ "extended partition will be irrevocably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d, \"%s\"-tüüpi, ja kõik partitsioonid, mis "
-#~ "sisalduvad sellel laiendatud partitsioonil, kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" will be irrevocably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d, \"%s\"-tüüpi, kustutatakse pöördumatult.\n"
-#~ "\n"
-#~ "Veendu, et olulised andmed on varundatud. Seda tegevust pole võimalik "
-#~ "tagasi võtta."
-
-#~ msgid ""
-#~ "The attributes of the partition can be edited. The partition can also be "
-#~ "deleted to make room for other data."
-#~ msgstr ""
-#~ "Partitsiooni atribuute saab muuta. Partitsiooni saab ka kustutada, et "
-#~ "teistele andmetele ruumi teha."
-
-#~ msgid "Apply the changes made"
-#~ msgstr "Tehtud muudatuste rakendamine"
-
-#~ msgid ""
-#~ "This is the last primary partition that can be created. If you need more "
-#~ "partitions, you can create an Extended Partition."
-#~ msgstr ""
-#~ "See on viimane primaarne partitsioon, mida saab luua. Kui sul on vaja "
-#~ "rohkem partitsioone, võid teha laiendatud partitsiooni."
-
-#~ msgid ""
-#~ "No more partitions can be created. You may want to delete an existing "
-#~ "partition and then create an Extended Partition."
-#~ msgstr ""
-#~ "Rohkem partitsioone pole võimalik luua. Sa võid kustutada ühe olemasoleva "
-#~ "partitsiooni ja luua selle asemel laiendatud partitsiooni."
-
-#~ msgid ""
-#~ "To create a new partition, select the size and whether to create a file "
-#~ "system. The partition type, label and flags can be changed after creation."
-#~ msgstr ""
-#~ "Uue partitsiooni loomiseks vali suurus ja kas luua uus failisüsteem. "
-#~ "Partitsiooni tüüpi, pealdist ja lippe saab muuta ka pärast partitsiooni "
-#~ "loomist."
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid ""
-#~ "Are you sure you want to create a new file system, deleting existing "
-#~ "data ?"
-#~ msgstr ""
-#~ "Kas oled kindel, et tahad luua uue failisüsteemi kustutades olemasolevad "
-#~ "andmed?"
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrevocably "
-#~ "erased. Make sure important data is backed up. This action cannot be "
-#~ "undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d andmekandjal \"%s\" lähevad pöördumatult "
-#~ "kaotsi. Veendu, et kõik olulised andmed on varundatud. Seda tegevust pole "
-#~ "võimalik tagasi võtta."
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" will be irrevocably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "Kõik andmed partitsioonil %d (%s} lähevad pöördumatult kaotsi. Veendu, et "
-#~ "kõik olulised andmed on varundatud. Seda tegevust pole võimalik tagasi "
-#~ "võtta."
-
-#~ msgid "Create File System"
-#~ msgstr "Failisüsteemi loomine"
-
-#~ msgid ""
-#~ "To create a new file system on the device, select the type and label and "
-#~ "then press \"Create\". All existing data will be lost."
-#~ msgstr ""
-#~ "Seadmele uue failisüsteemi loomiseks vali tüüp, pealdis ja klõpsa nupul "
-#~ "\"Loo\". Kõik praegused andmed lähevad kaotsi."
-
-#~ msgid "Unknown Size"
-#~ msgstr "Tundmatu suurus"
-
-#~ msgid "Partitioned Media (%s)"
-#~ msgstr "Partitsioneeritud andmekandja (%s)"
-
-#~ msgid "Unpartitioned Media"
-#~ msgstr "Partitsioneerimata andmekandja"
-
-#~ msgid "Unrecognized"
-#~ msgstr "Tundmatu"
-
-#~ msgid "Linux Software RAID"
-#~ msgstr "Linuxi tarkvaraline RAID"
-
-#~ msgid "View details about SMART for this disk"
-#~ msgstr "Kuva üksikasju selle ketta SMART'i kohta"
-
-#~ msgid "More Information"
-#~ msgstr "Veel andmeid"
-
-#~ msgid "%s (Read Only)"
-#~ msgstr "%s (kirjutuskaitsega)"
-
-#~ msgid "Not running"
-#~ msgstr "Ei tööta"
-
-#~ msgid "%s File System"
-#~ msgstr "%s failisüsteem"
-
-#~ msgid "Encrypted LUKS Device"
-#~ msgstr "Krüpteeritud LUKS-seade"
-
-#~ msgid "Data"
-#~ msgstr "Andmed"
-
-#~ msgid "Cleartext LUKS Device"
-#~ msgstr "Lihtteksti LUKS-seade"
-
-#~ msgid "Partition %d (%s)"
-#~ msgstr "Partitsioon %d (%s)"
-
-#~ msgid "Error locking encrypted device"
-#~ msgstr "Viga krüpteeritud seadme lukustamisel"
-
-#~ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-#~ msgstr ""
-#~ "Kas sa oled kindel, et tahad käivitada ketta \"%s\" allakäinud režiimis?"
-
-#~ msgid ""
-#~ "Starting a RAID array in degraded mode means that the RAID volume is no "
-#~ "longer tolerant to drive failures. Data on the volume may be irrevocably "
-#~ "lost if a drive fails."
-#~ msgstr ""
-#~ "RAID-massiivi käivitamine väheväärtuslikuna tähendab, et RAID-andmeruum "
-#~ "ei talu enam kettatõrkeid. Kui ketas tõrgub, lähevad andmed pöördumatult "
-#~ "kaotsi."
-
-#~ msgid "_Start Array"
-#~ msgstr "_Käivita massiiv"
-
-#~ msgid "There was an error stopping the drive \"%s\"."
-#~ msgstr "Ketta \"%s\" peatamisel esines viga."
-
-#~ msgid "_Erase"
-#~ msgstr "_Kustuta"
-
-#~ msgid "Palimpsest Disk Utility"
-#~ msgstr "Palimpsest, kettautiliit"
-
-#~ msgid "_New"
-#~ msgstr "_Uus"
-
-#~ msgid "Software _RAID Array"
-#~ msgstr "Tarkvaraline _RAID-massiiv"
-
-#~ msgid "Create a new Software RAID array"
-#~ msgstr "Uue tarkvaralise RAID-massiivi loomine"
-
-#~ msgid "_Mount"
-#~ msgstr "_Haagi"
-
-#~ msgid "Mount the filesystem on device"
-#~ msgstr "Seadmel oleva failisüsteemi haakimine"
-
-#~ msgid "Detach the device from the system, powering it off"
-#~ msgstr "Lahuta seade süsteemist seda välja lülitades"
-
-#~ msgid "Unlock the encrypted device, making the data available in cleartext"
-#~ msgstr ""
-#~ "Võta krüpteeritud seade lukust lahti, tehes andmed lihtkujul saadavaks"
-
-#~ msgid "_Lock"
-#~ msgstr "_Lukusta"
-
-#~ msgid "Start the array"
-#~ msgstr "Massiivi käivitamine"
-
-#~ msgid "_Stop"
-#~ msgstr "_Peata"
-
-#~ msgid "Erase the contents of the device"
-#~ msgstr "Seadme sisu kustutamine"
-
-#~ msgid "View"
-#~ msgstr "Vaade"
-
-#~ msgid "The GduGridView object that the element is associated with"
-#~ msgstr "GduGridView'i objekt, millega element on seotud"
-
-#~ msgid "Presentable"
-#~ msgstr "Näidatav"
-
-#~ msgid ""
-#~ "The presentable shown or NULL if this is a element representing lack of "
-#~ "media"
-#~ msgstr ""
-#~ "Teade 'näidatav' või NULL käib elemendi kohta, mis esindab andmekandja "
-#~ "puudumist lugejas"
-
-#~ msgid "The minimum size of the element"
-#~ msgstr "Elemendi vähim suurus"
-
-#~ msgid "Percent Size"
-#~ msgstr "Suurus protsentides"
-
-#~ msgid ""
-#~ "The size in percent that this element should claim or 0 to always claim "
-#~ "the specified minimum size"
-#~ msgstr ""
-#~ "Suurus protsentides, mis see element peaks haarama, või 0, et alati "
-#~ "haarata määratud miinimumsuurus"
-
-#~ msgid "The pool of devices to show"
-#~ msgstr "Seadmete kogum, mida näidata"
+msgstr "_Mahuseadmed"

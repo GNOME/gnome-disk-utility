@@ -239,6 +239,7 @@ data/gdu-notification-daemon.desktop.in.in
 data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile
+data/icons/24x24/Makefile
 data/icons/48x48/Makefile
 data/icons/scalable/Makefile
 help/Makefile

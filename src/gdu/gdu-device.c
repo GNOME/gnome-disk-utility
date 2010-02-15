@@ -105,6 +105,7 @@ typedef struct
   char **partition_flags;
   guint64 partition_offset;
   guint64 partition_size;
+  guint64 partition_alignment_offset;
 
   char *partition_table_scheme;
   int partition_table_count;
@@ -318,6 +319,8 @@ collect_props (const char *key,
     props->partition_offset = g_value_get_uint64 (value);
   else if (strcmp (key, "PartitionSize") == 0)
     props->partition_size = g_value_get_uint64 (value);
+  else if (strcmp (key, "PartitionAlignmentOffset") == 0)
+    props->partition_alignment_offset = g_value_get_uint64 (value);
 
   else if (strcmp (key, "PartitionTableScheme") == 0)
     props->partition_table_scheme = g_strdup (g_value_get_string (value));
@@ -1140,6 +1143,11 @@ gdu_device_partition_get_size (GduDevice *device)
         return device->priv->props->partition_size;
 }
 
+guint64
+gdu_device_partition_get_alignment_offset (GduDevice *device)
+{
+        return device->priv->props->partition_alignment_offset;
+}
 
 
 const char *

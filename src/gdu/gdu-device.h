@@ -124,6 +124,7 @@ char **gdu_device_partition_get_flags (GduDevice *device);
 int gdu_device_partition_get_number (GduDevice *device);
 guint64 gdu_device_partition_get_offset (GduDevice *device);
 guint64 gdu_device_partition_get_size (GduDevice *device);
+guint64 gdu_device_partition_get_alignment_offset (GduDevice *device);
 
 const char *gdu_device_partition_table_get_scheme (GduDevice *device);
 int         gdu_device_partition_table_get_count (GduDevice *device);

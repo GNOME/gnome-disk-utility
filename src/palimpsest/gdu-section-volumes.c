@@ -32,6 +32,9 @@
 
 struct _GduSectionVolumesPrivate
 {
+        GtkWidget *misaligned_warning_info_bar;
+        GtkWidget *misaligned_warning_label;
+
         GduPresentable *cur_volume;
 
         GtkWidget *main_label;
@@ -1829,6 +1832,7 @@ gdu_section_volumes_update (GduSection *_section)
         gboolean show_lvm2_lv_stop_button;
         gboolean show_lvm2_lv_edit_name_button;
         gboolean show_lvm2_lv_delete_button;
+        gboolean show_misaligned_warning_info_bar;
         GduKnownFilesystem *kfs;
         GPtrArray *elements;
         gboolean make_insensitive;
@@ -1856,6 +1860,7 @@ gdu_section_volumes_update (GduSection *_section)
         show_lvm2_lv_stop_button = FALSE;
         show_lvm2_lv_edit_name_button = FALSE;
         show_lvm2_lv_delete_button = FALSE;
+        show_misaligned_warning_info_bar = FALSE;
         make_insensitive = FALSE;
 
         v = gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid));
@@ -1920,11 +1925,30 @@ gdu_section_volumes_update (GduSection *_section)
         g_ptr_array_add (elements, section->priv->partition_type_element);
 
         if (d != NULL && gdu_device_is_partition (d)) {
+                guint64 alignment_offset;
+
                 section->priv->partition_label_element = gdu_details_element_new (_("Partition Label:"), NULL, NULL);
                 g_ptr_array_add (elements, section->priv->partition_label_element);
 
                 section->priv->partition_flags_element = gdu_details_element_new (_("Partition Flags:"), NULL, NULL);
                 g_ptr_array_add (elements, section->priv->partition_flags_element);
+
+                alignment_offset = gdu_device_partition_get_alignment_offset (d);
+                if (alignment_offset != 0) {
+                        /* Translators: this is the text for an infobar that shown if a partition is misaligned.
+                         * First %d is number of bytes.
+                         * Also see
+                         * http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=blob;f=Documentation/ABI/testing/sysfs-block;h=d2f90334bb93f90af2986e96d3cfd9710180eca7;hb=HEAD#l75
+                         */
+                        s = g_strdup_printf ("<b>WARNING:</b> The partition is misaligned by %d bytes. "
+                                             "This may result in very poor performance. "
+                                             "Repartitioning is suggested.",
+                                             (gint) alignment_offset);
+                        gtk_label_set_markup (GTK_LABEL (section->priv->misaligned_warning_label), s);
+                        g_free (s);
+
+                        show_misaligned_warning_info_bar = TRUE;
+                }
         }
 
         section->priv->capacity_element = gdu_details_element_new (_("Capacity:"), NULL, NULL);
@@ -2241,6 +2265,12 @@ gdu_section_volumes_update (GduSection *_section)
         gtk_widget_set_sensitive (section->priv->main_label, !make_insensitive);
         gtk_widget_set_sensitive (section->priv->main_vbox, !make_insensitive);
 
+        if (show_misaligned_warning_info_bar) {
+                gtk_widget_show_all (section->priv->misaligned_warning_info_bar);
+        } else {
+                gtk_widget_hide_all (section->priv->misaligned_warning_info_bar);
+        }
+
         if (d != NULL)
                 g_object_unref (d);
         if (drive_d != NULL)
@@ -2276,6 +2306,9 @@ gdu_section_volumes_constructed (GObject *object)
         GtkWidget *label;
         GtkWidget *vbox2;
         GtkWidget *table;
+        GtkWidget *info_bar;
+        GtkWidget *hbox;
+        GtkWidget *image;
         gchar *s;
 
         gtk_box_set_spacing (GTK_BOX (section), 12);
@@ -2305,6 +2338,8 @@ gdu_section_volumes_constructed (GObject *object)
         gtk_container_add (GTK_CONTAINER (align), vbox2);
         section->priv->main_vbox = vbox2;
 
+        /*------------------------------------- */
+
         grid = gdu_volume_grid_new (GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), grid);
         section->priv->grid = grid;
@@ -2317,6 +2352,25 @@ gdu_section_volumes_constructed (GObject *object)
                           "changed",
                           G_CALLBACK (on_grid_changed),
                           section);
+
+        /*------------------------------------- */
+
+        info_bar = gtk_info_bar_new ();
+        gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_WARNING);
+        hbox = gtk_hbox_new (FALSE, 6);
+        image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_MENU);
+        gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+        label = gtk_label_new (NULL);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_width_chars (GTK_LABEL (label), 80);
+        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+        section->priv->misaligned_warning_label = label;
+        gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))), hbox);
+        gtk_box_pack_start (GTK_BOX (vbox2), info_bar, FALSE, FALSE, 0);
+        section->priv->misaligned_warning_info_bar = info_bar;
+
+        /*------------------------------------- */
 
         table = gdu_details_table_new (2, NULL);
         section->priv->details_table = table;

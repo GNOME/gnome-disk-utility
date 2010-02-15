@@ -1942,6 +1942,7 @@ gdu_pool_new (void)
 DBusGConnection *
 _gdu_pool_get_connection (GduPool *pool)
 {
+        g_assert (pool != NULL);
         return pool->priv->bus;
 }
 
@@ -2211,6 +2212,8 @@ gdu_pool_get_by_object_path (GduPool *pool, const char *object_path)
 {
         GduDevice *ret;
 
+        g_assert (pool != NULL);
+
         ret = g_hash_table_lookup (pool->priv->object_path_to_device, object_path);
         if (ret != NULL) {
                 g_object_ref (ret);
@@ -2232,6 +2235,8 @@ GduAdapter *
 gdu_pool_get_adapter_by_object_path (GduPool *pool, const char *object_path)
 {
         GduAdapter *ret;
+
+        g_assert (pool != NULL);
 
         ret = g_hash_table_lookup (pool->priv->object_path_to_adapter, object_path);
         if (ret != NULL) {
@@ -2255,6 +2260,8 @@ gdu_pool_get_expander_by_object_path (GduPool *pool, const char *object_path)
 {
         GduExpander *ret;
 
+        g_assert (pool != NULL);
+
         ret = g_hash_table_lookup (pool->priv->object_path_to_expander, object_path);
         if (ret != NULL) {
                 g_object_ref (ret);
@@ -2276,6 +2283,8 @@ GduPort *
 gdu_pool_get_port_by_object_path (GduPool *pool, const char *object_path)
 {
         GduPort *ret;
+
+        g_assert (pool != NULL);
 
         ret = g_hash_table_lookup (pool->priv->object_path_to_port, object_path);
         if (ret != NULL) {
@@ -2300,6 +2309,8 @@ gdu_pool_get_by_device_file (GduPool *pool, const char *device_file)
         GHashTableIter iter;
         GduDevice *device;
         GduDevice *ret;
+
+        g_assert (pool != NULL);
 
         ret = NULL;
 
@@ -2445,6 +2456,8 @@ gdu_pool_get_devices (GduPool *pool)
         GList *ret;
         GList *l;
 
+        g_assert (pool != NULL);
+
         ret = NULL;
 
         list = g_hash_table_get_values (pool->priv->object_path_to_device);
@@ -2480,6 +2493,8 @@ gdu_pool_get_adapters (GduPool *pool)
 {
         GList *ret;
 
+        g_assert (pool != NULL);
+
         ret = NULL;
 
         ret = g_hash_table_get_values (pool->priv->object_path_to_adapter);
@@ -2500,6 +2515,8 @@ GList *
 gdu_pool_get_expanders (GduPool *pool)
 {
         GList *ret;
+
+        g_assert (pool != NULL);
 
         ret = NULL;
 
@@ -2522,6 +2539,8 @@ gdu_pool_get_ports (GduPool *pool)
 {
         GList *ret;
 
+        g_assert (pool != NULL);
+
         ret = NULL;
 
         ret = g_hash_table_get_values (pool->priv->object_path_to_port);
@@ -2543,6 +2562,8 @@ GList *
 gdu_pool_get_presentables (GduPool *pool)
 {
         GList *ret;
+        g_assert (pool != NULL);
+
         ret = g_list_copy (pool->priv->presentables);
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
@@ -2553,6 +2574,8 @@ gdu_pool_get_enclosed_presentables (GduPool *pool, GduPresentable *presentable)
 {
         GList *l;
         GList *ret;
+
+        g_assert (pool != NULL);
 
         ret = NULL;
         for (l = pool->priv->presentables; l != NULL; l = l->next) {
@@ -2586,6 +2609,8 @@ gdu_pool_get_volume_by_device (GduPool *pool, GduDevice *device)
 {
         GduPresentable *ret;
         GList *l;
+
+        g_assert (pool != NULL);
 
         /* TODO: use lookaside hash table */
 
@@ -2632,6 +2657,8 @@ gdu_pool_get_drive_by_device (GduPool *pool, GduDevice *device)
         GduPresentable *ret;
         GList *l;
 
+        g_assert (pool != NULL);
+
         /* TODO: use lookaside hash table */
 
         ret = NULL;
@@ -2667,6 +2694,8 @@ gdu_pool_get_linux_md_drive_by_uuid (GduPool *pool, const gchar *uuid)
         GduLinuxMdDrive *ret;
         GList *l;
 
+        g_assert (pool != NULL);
+
         /* TODO: use lookaside hash table */
 
         ret = NULL;
@@ -2693,6 +2722,8 @@ gdu_pool_get_presentable_by_id (GduPool *pool, const gchar *id)
         GduPresentable *ret;
         GList *l;
 
+        g_assert (pool != NULL);
+
         /* TODO: use lookaside hash table */
 
         ret = NULL;
@@ -2715,6 +2746,8 @@ gdu_pool_has_presentable (GduPool *pool, GduPresentable *presentable)
 {
         gboolean ret;
 
+        g_assert (pool != NULL);
+
         ret = (g_list_find (pool->priv->presentables, presentable) != NULL);
 
         return ret;
@@ -2727,6 +2760,8 @@ gdu_pool_get_hub_by_object_path (GduPool *pool, const gchar *object_path)
 {
         GduPresentable *ret;
         GList *l;
+
+        g_assert (pool != NULL);
 
         /* TODO: use lookaside hash table */
 
@@ -2793,6 +2828,8 @@ gdu_pool_op_linux_md_start (GduPool *pool,
         LinuxMdStartData *data;
         char *options[16];
 
+        g_assert (pool != NULL);
+
         options[0] = NULL;
 
         data = g_new0 (LinuxMdStartData, 1);
@@ -2849,6 +2886,8 @@ gdu_pool_op_linux_md_create (GduPool *pool,
         LinuxMdCreateData *data;
         char *options[16];
 
+        g_assert (pool != NULL);
+
         options[0] = NULL;
 
         data = g_new0 (LinuxMdCreateData, 1);
@@ -2894,6 +2933,8 @@ gdu_pool_op_linux_lvm2_vg_start (GduPool *pool,
         LinuxLvm2VGStartData *data;
         char *options[16];
 
+        g_assert (pool != NULL);
+
         options[0] = NULL;
 
         data = g_new0 (LinuxLvm2VGStartData, 1);
@@ -2937,6 +2978,8 @@ gdu_pool_op_linux_lvm2_vg_stop (GduPool *pool,
         LinuxLvm2VGStopData *data;
         char *options[16];
 
+        g_assert (pool != NULL);
+
         options[0] = NULL;
 
         data = g_new0 (LinuxLvm2VGStopData, 1);
@@ -2979,6 +3022,8 @@ gdu_pool_op_linux_lvm2_lv_start (GduPool *pool,
 {
         LinuxLvm2LVStartData *data;
         char *options[16];
+
+        g_assert (pool != NULL);
 
         options[0] = NULL;
 
@@ -3024,6 +3069,8 @@ gdu_pool_op_linux_lvm2_vg_set_name (GduPool *pool,
 {
         LinuxLvm2VGSetNameData *data;
 
+        g_assert (pool != NULL);
+
         data = g_new0 (LinuxLvm2VGSetNameData, 1);
         data->pool = g_object_ref (pool);
         data->callback = callback;
@@ -3064,6 +3111,8 @@ gdu_pool_op_linux_lvm2_lv_set_name (GduPool *pool,
                                     gpointer user_data)
 {
         LinuxLvm2LVSetNameData *data;
+
+        g_assert (pool != NULL);
 
         data = g_new0 (LinuxLvm2LVSetNameData, 1);
         data->pool = g_object_ref (pool);
@@ -3106,6 +3155,8 @@ gdu_pool_op_linux_lvm2_lv_remove (GduPool *pool,
 {
         LinuxLvm2LVRemoveData *data;
         char *options[16];
+
+        g_assert (pool != NULL);
 
         options[0] = NULL;
 
@@ -3163,6 +3214,8 @@ gdu_pool_op_linux_lvm2_lv_create (GduPool *pool,
         char *options[16];
         char *fsoptions[16];
         guint n;
+
+        g_assert (pool != NULL);
 
         data = g_new0 (LinuxLvm2LVCreateData, 1);
         data->pool = g_object_ref (pool);
@@ -3227,6 +3280,8 @@ gdu_pool_op_linux_lvm2_vg_add_pv (GduPool *pool,
         LinuxLvm2VGAddPVData *data;
         char *options[16];
 
+        g_assert (pool != NULL);
+
         options[0] = NULL;
 
         data = g_new0 (LinuxLvm2VGAddPVData, 1);
@@ -3270,6 +3325,8 @@ gdu_pool_op_linux_lvm2_vg_remove_pv (GduPool *pool,
 {
         LinuxLvm2VGRemovePVData *data;
         char *options[16];
+
+        g_assert (pool != NULL);
 
         options[0] = NULL;
 
@@ -3319,6 +3376,8 @@ gdu_pool_is_daemon_inhibited (GduPool *pool)
         GError *error;
         GValue value = {0};
 
+        g_assert (pool != NULL);
+
         /* TODO: this is a currently a synchronous call; when we port to EggDBus this will be fixed */
 
         ret = TRUE;
@@ -3366,6 +3425,8 @@ GList *
 gdu_pool_get_known_filesystems (GduPool *pool)
 {
         GList *ret;
+        g_assert (pool != NULL);
+
         ret = g_list_copy (pool->priv->known_filesystems);
         g_list_foreach (ret, (GFunc) g_object_ref, NULL);
         return ret;
@@ -3387,6 +3448,8 @@ gdu_pool_get_known_filesystem_by_id (GduPool *pool, const char *id)
 {
         GList *l;
         GduKnownFilesystem *ret;
+        g_assert (pool != NULL);
+
 
         ret = NULL;
         for (l = pool->priv->known_filesystems; l != NULL; l = l->next) {
@@ -3412,18 +3475,21 @@ out:
 gboolean
 gdu_pool_supports_luks_devices (GduPool *pool)
 {
+        g_assert (pool != NULL);
         return pool->priv->supports_luks_devices;
 }
 
 const gchar *
 gdu_pool_get_ssh_user_name (GduPool *pool)
 {
+        g_assert (pool != NULL);
         return pool->priv->ssh_user_name;
 }
 
 const gchar *
 gdu_pool_get_ssh_address (GduPool *pool)
 {
+        g_assert (pool != NULL);
         return pool->priv->ssh_address;
 }
 
@@ -3460,6 +3526,7 @@ remove_all_objects_and_dbus_proxies (GduPool *pool)
 static void
 _gdu_pool_disconnect (GduPool *pool)
 {
+        g_assert (pool != NULL);
         g_return_if_fail (!pool->priv->is_disconnected);
 
         remove_all_objects_and_dbus_proxies (pool);

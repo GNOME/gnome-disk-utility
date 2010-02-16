@@ -898,10 +898,11 @@ gdu_util_dialog_ask_for_secret (GtkWidget      *parent_window,
 
         if (!bypass_keyring) {
 #ifdef HAVE_GNOME_KEYRING
+                password = NULL;
                 if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
                                                       &password,
                                                       "luks-device-uuid", uuid,
-                                                      NULL) == GNOME_KEYRING_RESULT_OK) {
+                                                      NULL) == GNOME_KEYRING_RESULT_OK && password != NULL) {
                         /* By contract, the caller is responsible for scrubbing the password
                          * so dupping the string into pageable memory is "fine". Or not?
                          */
@@ -1041,10 +1042,11 @@ gdu_util_dialog_change_secret (GtkWidget       *parent_window,
 
 #ifdef HAVE_GNOME_KEYRING
         if (!bypass_keyring) {
+                password = NULL;
                 if (gnome_keyring_find_password_sync (&encrypted_device_password_schema,
                                                       &password,
                                                       "luks-device-uuid", uuid,
-                                                      NULL) == GNOME_KEYRING_RESULT_OK) {
+                                                      NULL) == GNOME_KEYRING_RESULT_OK && password != NULL) {
                         /* By contract, the caller is responsible for scrubbing the password
                          * so dupping the string into pageable memory "fine". Or not?
                          */

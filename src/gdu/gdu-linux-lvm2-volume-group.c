@@ -521,32 +521,37 @@ _gdu_linux_lvm2_volume_group_rewrite_enclosing_presentable (GduLinuxLvm2VolumeGr
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
-
 /* GduDrive virtual method overrides */
 
 static gboolean
 gdu_linux_lvm2_volume_group_is_active (GduDrive *drive)
 {
-        return TRUE;
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (drive);
+        return gdu_linux_lvm2_volume_group_get_state (vg) != GDU_LINUX_LVM2_VOLUME_GROUP_STATE_NOT_RUNNING;
 }
 
 static gboolean
 gdu_linux_lvm2_volume_group_is_activatable (GduDrive *drive)
 {
-        return FALSE;
+        return TRUE;
 }
 
 static gboolean
 gdu_linux_lvm2_volume_group_can_deactivate (GduDrive *drive)
 {
-        return FALSE;
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (drive);
+        return gdu_linux_lvm2_volume_group_get_state (vg) != GDU_LINUX_LVM2_VOLUME_GROUP_STATE_NOT_RUNNING;
 }
 
 static gboolean
 gdu_linux_lvm2_volume_group_can_activate (GduDrive *drive,
                                           gboolean *out_degraded)
 {
-        return FALSE;
+        GduLinuxLvm2VolumeGroup *vg = GDU_LINUX_LVM2_VOLUME_GROUP (drive);
+        /* TODO: actually compute out_degraded and also return FALSE in case we can't even start in degraded mode */
+        if (out_degraded != NULL)
+                *out_degraded = FALSE;
+        return gdu_linux_lvm2_volume_group_get_state (vg) != GDU_LINUX_LVM2_VOLUME_GROUP_STATE_RUNNING;
 }
 
 static gboolean

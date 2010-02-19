@@ -54,8 +54,9 @@ struct _GduLinuxLvm2VolumeClass
         GduVolumeClass parent_class;
 };
 
-GType        gdu_linux_lvm2_volume_get_type (void);
-const gchar *gdu_linux_lvm2_volume_get_uuid (GduLinuxLvm2Volume *volume);
+GType        gdu_linux_lvm2_volume_get_type       (void);
+const gchar *gdu_linux_lvm2_volume_get_name       (GduLinuxLvm2Volume *volume);
+const gchar *gdu_linux_lvm2_volume_get_uuid       (GduLinuxLvm2Volume *volume);
 const gchar *gdu_linux_lvm2_volume_get_group_uuid (GduLinuxLvm2Volume *volume);
 
 G_END_DECLS

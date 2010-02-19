@@ -1700,7 +1700,7 @@ on_lvm2_lv_edit_name_button_clicked (GduButtonElement *button_element,
         GduPool *pool;
         const gchar *group_uuid;
         const gchar *uuid;
-        gchar *lv_name;
+        const gchar *lv_name;
         GtkWindow *toplevel;
         GtkWidget *dialog;
         gint response;
@@ -1709,10 +1709,9 @@ on_lvm2_lv_edit_name_button_clicked (GduButtonElement *button_element,
         volume = GDU_LINUX_LVM2_VOLUME (gdu_volume_grid_get_selected (GDU_VOLUME_GRID (section->priv->grid)));
         pool = gdu_presentable_get_pool (GDU_PRESENTABLE (volume));
 
+        lv_name = gdu_linux_lvm2_volume_get_name (volume);
         group_uuid = gdu_linux_lvm2_volume_get_group_uuid (volume);
         uuid = gdu_linux_lvm2_volume_get_uuid (volume);
-
-        lv_name = gdu_presentable_get_name (GDU_PRESENTABLE (volume));
 
         toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
         dialog = gdu_edit_name_dialog_new (toplevel,
@@ -1737,7 +1736,6 @@ on_lvm2_lv_edit_name_button_clicked (GduButtonElement *button_element,
         gtk_widget_destroy (dialog);
 
         g_object_unref (pool);
-        g_free (lv_name);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1979,10 +1977,10 @@ gdu_section_volumes_update (GduSection *_section)
         /* reset all elements */
 
         if (GDU_IS_LINUX_LVM2_VOLUME (v)) {
-                gchar *lv_name;
-                lv_name = gdu_presentable_get_name (v);
+                const gchar *lv_name;
+                lv_name = gdu_linux_lvm2_volume_get_name (GDU_LINUX_LVM2_VOLUME (v));
                 gdu_details_element_set_text (section->priv->lvm2_name_element, lv_name);
-                g_free (lv_name);
+
                 gdu_details_element_set_text (section->priv->lvm2_state_element,
                                               d != NULL ?
                                               C_("LVM2 LV State", "Running") :

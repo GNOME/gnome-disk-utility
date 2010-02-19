@@ -505,6 +505,12 @@ _gdu_linux_lvm2_volume_rewrite_enclosing_presentable (GduLinuxLvm2Volume *volume
 /* ---------------------------------------------------------------------------------------------------- */
 
 const gchar *
+gdu_linux_lvm2_volume_get_name (GduLinuxLvm2Volume *volume)
+{
+        return volume->priv->name;
+}
+
+const gchar *
 gdu_linux_lvm2_volume_get_uuid (GduLinuxLvm2Volume *volume)
 {
         return volume->priv->uuid;

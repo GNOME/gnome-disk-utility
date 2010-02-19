@@ -525,6 +525,29 @@ gdu_volume_get_icon (GduPresentable *presentable)
         d = NULL;
         name = NULL;
         is_removable = FALSE;
+        usage = NULL;
+        icon = NULL;
+
+        if (gdu_device_is_luks_cleartext (volume->priv->device)) {
+                GduPresentable *enclosing_cryptotext_volume;
+                GIcon *enclosing_cryptotext_icon;
+                GEmblem *emblem;
+                GIcon *padlock;
+
+                enclosing_cryptotext_volume = gdu_presentable_get_enclosing_presentable (presentable);
+                g_warn_if_fail (GDU_IS_VOLUME (enclosing_cryptotext_volume));
+                enclosing_cryptotext_icon = gdu_presentable_get_icon (enclosing_cryptotext_volume);
+                g_object_unref (enclosing_cryptotext_volume);
+
+                padlock = g_themed_icon_new ("gdu-encrypted-unlock");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+                icon = g_emblemed_icon_new (enclosing_cryptotext_icon, emblem);
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+                g_object_unref (enclosing_cryptotext_icon);
+                goto out;
+        }
 
         usage = gdu_device_id_get_usage (volume->priv->device);
 
@@ -638,31 +661,23 @@ gdu_volume_get_icon (GduPresentable *presentable)
                 }
         }
 
+        if (name != NULL) {
+                icon = g_themed_icon_new_with_default_fallbacks (name);
+        }
+
 out:
         if (p != NULL)
                 g_object_unref (p);
         if (d != NULL)
                 g_object_unref (d);
 
-        /* ultimate fallback */
-        if (name == NULL) {
-                if (is_removable)
-                        name = "drive-removable-media";
-                else
-                        name = "drive-harddisk";
-        }
-
-        icon = g_themed_icon_new_with_default_fallbacks (name);
-
+#if 0
         if (usage != NULL && strcmp (usage, "crypto") == 0) {
-        }
-
-        if (gdu_device_is_luks_cleartext (volume->priv->device)) {
                 GEmblem *emblem;
                 GIcon *padlock;
                 GIcon *emblemed_icon;
 
-                padlock = g_themed_icon_new ("gdu-encrypted-unlock");
+                padlock = g_themed_icon_new ("gdu-encrypted-lock");
                 emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
 
                 emblemed_icon = g_emblemed_icon_new (icon, emblem);
@@ -671,6 +686,16 @@ out:
 
                 g_object_unref (padlock);
                 g_object_unref (emblem);
+        }
+#endif
+
+        /* ultimate fallback */
+        if (icon == NULL) {
+                if (is_removable)
+                        name = "drive-removable-media";
+                else
+                        name = "drive-harddisk";
+                icon = g_themed_icon_new_with_default_fallbacks (name);
         }
 
         return icon;

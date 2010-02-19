@@ -135,6 +135,8 @@ gboolean    gdu_drive_count_mbr_partitions  (GduDrive        *drive,
                                              guint           *out_num_primary_partitions,
                                              gboolean        *out_has_extended_partition);
 
+GList      *gdu_drive_get_volumes           (GduDrive  *drive);
+
 G_END_DECLS
 
 #endif /* __GDU_DRIVE_H */

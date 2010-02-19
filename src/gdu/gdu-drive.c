@@ -1413,3 +1413,56 @@ gdu_drive_create_volume_finish (GduDrive              *drive,
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void
+get_volumes_add_enclosed (GduPresentable  *p,
+                          GList          **ret)
+{
+        GList *enclosed;
+        GList *l;
+        GduPool *pool;
+
+        pool = gdu_presentable_get_pool (p);
+        enclosed = gdu_pool_get_enclosed_presentables (pool, p);
+
+        for (l = enclosed; l != NULL; l = l->next) {
+                GduPresentable *ep = GDU_PRESENTABLE (l->data);
+
+                if (!GDU_IS_VOLUME (ep))
+                        continue;
+
+                get_volumes_add_enclosed (ep, ret);
+
+                *ret = g_list_prepend (*ret, g_object_ref (p));
+        }
+
+        g_list_foreach (enclosed, (GFunc) g_object_unref, NULL);
+        g_list_free (enclosed);
+        g_object_unref (pool);
+}
+
+/**
+ * gdu_drive_get_volumes:
+ * @drive: A #GduDrive
+ *
+ * Returns a list of all #GduVolume<!-- -->s for @drive.
+ *
+ * Returns: A #GList of #GduVolume objects. The caller must free the list and each element.
+ */
+GList *
+gdu_drive_get_volumes (GduDrive *drive)
+{
+        GList *ret;
+
+        /* TODO: do we need a vfunc for this? */
+
+        ret = NULL;
+
+        get_volumes_add_enclosed (GDU_PRESENTABLE (drive), &ret);
+
+        ret = g_list_reverse (ret);
+
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

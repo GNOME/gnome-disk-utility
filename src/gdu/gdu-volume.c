@@ -64,6 +64,10 @@ G_DEFINE_TYPE_WITH_CODE (GduVolume, gdu_volume, G_TYPE_OBJECT,
 static void device_job_changed (GduDevice *device, gpointer user_data);
 static void device_changed (GduDevice *device, gpointer user_data);
 
+static gboolean        gdu_volume_is_allocated_real  (GduVolume *volume);
+static gboolean        gdu_volume_is_recognized_real (GduVolume *volume);
+static GduVolumeFlags  gdu_volume_get_flags_real     (GduVolume *volume);
+
 static const struct
 {
         const char *disc_type;
@@ -128,6 +132,10 @@ gdu_volume_class_init (GduVolumeClass *klass)
         parent_class = g_type_class_peek_parent (klass);
 
         obj_class->finalize = gdu_volume_finalize;
+
+        klass->is_allocated   = gdu_volume_is_allocated_real;
+        klass->is_recognized  = gdu_volume_is_recognized_real;
+        klass->get_flags      = gdu_volume_get_flags_real;
 
         g_type_class_add_private (klass, sizeof (GduVolumePrivate));
 }
@@ -728,13 +736,13 @@ gdu_volume_get_pool (GduPresentable *presentable)
 
 
 static gboolean
-gdu_volume_is_allocated (GduPresentable *presentable)
+gdu_volume_presentable_is_allocated (GduPresentable *presentable)
 {
         return TRUE;
 }
 
 static gboolean
-gdu_volume_is_recognized (GduPresentable *presentable)
+gdu_volume_presentable_is_recognized (GduPresentable *presentable)
 {
         GduVolume *volume = GDU_VOLUME (presentable);
         gboolean is_extended_partition;
@@ -767,8 +775,8 @@ gdu_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_offset                = gdu_volume_get_offset;
         iface->get_size                  = gdu_volume_get_size;
         iface->get_pool                  = gdu_volume_get_pool;
-        iface->is_allocated              = gdu_volume_is_allocated;
-        iface->is_recognized             = gdu_volume_is_recognized;
+        iface->is_allocated              = gdu_volume_presentable_is_allocated;
+        iface->is_recognized             = gdu_volume_presentable_is_recognized;
 }
 
 void
@@ -796,3 +804,138 @@ _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume)
  out:
         ;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+gdu_volume_is_allocated (GduVolume *volume)
+{
+        GduVolumeClass *klass = GDU_VOLUME_GET_CLASS (volume);
+        return klass->is_allocated (volume);
+}
+
+gboolean
+gdu_volume_is_recognized (GduVolume *volume)
+{
+        GduVolumeClass *klass = GDU_VOLUME_GET_CLASS (volume);
+        return klass->is_recognized (volume);
+}
+
+GduVolumeFlags
+gdu_volume_get_flags (GduVolume *volume)
+{
+        GduVolumeClass *klass = GDU_VOLUME_GET_CLASS (volume);
+        return klass->get_flags (volume);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+gdu_volume_is_allocated_real (GduVolume *volume)
+{
+        GduDevice *d;
+        gboolean ret;
+
+        ret = FALSE;
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
+        if (d != NULL) {
+                ret = TRUE;
+                g_object_unref (d);
+        }
+
+        return ret;
+}
+
+static gboolean
+gdu_volume_is_recognized_real (GduVolume *volume)
+{
+        GduDevice *d;
+        gboolean ret;
+
+        ret = FALSE;
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
+        if (d != NULL) {
+                gboolean is_extended_partition;
+                is_extended_partition = FALSE;
+                if (gdu_device_is_partition (d) && g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0) {
+                        gint type;
+                        type = strtol (gdu_device_partition_get_type (d), NULL, 0);
+                        if (type == 0x05 || type == 0x0f || type == 0x85) {
+                                is_extended_partition = TRUE;
+                        }
+                }
+
+                if (is_extended_partition)
+                        ret = TRUE;
+                else if (strlen (gdu_device_id_get_usage (volume->priv->device)) > 0)
+                        ret = TRUE;
+
+                g_object_unref (d);
+        }
+
+        return ret;
+}
+
+static GduVolumeFlags
+gdu_volume_get_flags_real (GduVolume *volume)
+{
+        GduVolumeFlags ret;
+        GduDevice *d;
+
+        ret = GDU_VOLUME_FLAGS_NONE;
+
+        d = gdu_presentable_get_device (GDU_PRESENTABLE (volume));
+        if (d != NULL) {
+                if (gdu_device_is_partition (d)) {
+                        ret |= GDU_VOLUME_FLAGS_PARTITION;
+                }
+
+                if (g_strcmp0 (gdu_device_partition_get_scheme (d), "mbr") == 0) {
+                        gint type;
+
+                        type = strtol (gdu_device_partition_get_type (volume->priv->device), NULL, 0);
+                        if (type == 0x05 || type == 0x0f || type == 0x85) {
+                                ret |= GDU_VOLUME_FLAGS_PARTITION_MBR_EXTENDED;
+                        }
+
+                        if (gdu_device_partition_get_number (d) >= 5)
+                                ret |= GDU_VOLUME_FLAGS_PARTITION_MBR_LOGICAL;
+                }
+                g_object_unref (d);
+        }
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+GduDrive *
+gdu_volume_get_drive (GduVolume *volume)
+{
+        GduDrive *ret;
+        GduPresentable *p;
+
+        ret = NULL;
+
+        p = GDU_PRESENTABLE (volume);
+        do {
+                GduPresentable *enclosing;
+
+                enclosing = gdu_presentable_get_enclosing_presentable (p);
+                if (enclosing == NULL)
+                        goto out;
+
+                if (GDU_IS_DRIVE (enclosing)) {
+                        ret = GDU_DRIVE (enclosing);
+                        goto out;
+                }
+
+                g_object_unref (enclosing);
+                p = enclosing;
+
+        } while (TRUE);
+
+ out:
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

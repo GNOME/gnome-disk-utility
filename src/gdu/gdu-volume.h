@@ -30,6 +30,22 @@
 
 G_BEGIN_DECLS
 
+/**
+ * GduVolumeFlags:
+ * @GDU_VOLUME_FLAGS_NONE: No flags set
+ * @GDU_VOLUME_FLAGS_PARTITION: The volume is a partition.
+ * @GDU_VOLUME_FLAGS_PARTITION_MBR_LOGICAL: The volume is a Logical Partition in the MBR partitioning scheme.
+ * @GDU_VOLUME_FLAGS_PARTITION_MBR_EXTENDED: The volume is an Extended Partition in the MBR partitioning scheme.
+ *
+ * Various flags for describing a volume.
+ */
+typedef enum {
+        GDU_VOLUME_FLAGS_NONE                   = 0x0000,
+        GDU_VOLUME_FLAGS_PARTITION              = (1<<0),
+        GDU_VOLUME_FLAGS_PARTITION_MBR_LOGICAL  = (1<<1),
+        GDU_VOLUME_FLAGS_PARTITION_MBR_EXTENDED = (1<<2)
+} GduVolumeFlags;
+
 #define GDU_TYPE_VOLUME           (gdu_volume_get_type ())
 #define GDU_VOLUME(o)             (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_VOLUME, GduVolume))
 #define GDU_VOLUME_CLASS(k)       (G_TYPE_CHECK_CLASS_CAST ((k), GDU_VOLUME,  GduVolumeClass))
@@ -44,16 +60,25 @@ struct _GduVolume
 {
         GObject parent;
 
-        /* private */
+        /*< private >*/
         GduVolumePrivate *priv;
 };
 
 struct _GduVolumeClass
 {
         GObjectClass parent_class;
+
+        gboolean        (*is_allocated)    (GduVolume *volume);
+        gboolean        (*is_recognized)   (GduVolume *volume);
+        GduVolumeFlags  (*get_flags)       (GduVolume *volume);
 };
 
-GType        gdu_volume_get_type              (void);
+GType           gdu_volume_get_type        (void);
+gboolean        gdu_volume_is_allocated    (GduVolume *volume);
+gboolean        gdu_volume_is_recognized   (GduVolume *volume);
+GduVolumeFlags  gdu_volume_get_flags       (GduVolume *volume);
+GduDrive       *gdu_volume_get_drive       (GduVolume *volume);
+
 
 G_END_DECLS
 

@@ -312,11 +312,10 @@ gdu_linux_lvm2_volume_get_enclosing_presentable (GduPresentable *presentable)
 }
 
 static gchar *
-get_names_and_desc (GduPresentable  *presentable,
-                    gchar          **out_vpd_name,
-                    gchar          **out_desc)
+get_names_and_desc (GduLinuxLvm2Volume  *volume,
+                    gchar              **out_vpd_name,
+                    gchar              **out_desc)
 {
-        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
         gchar *ret;
         gchar *ret_desc;
         gchar *ret_vpd;
@@ -347,18 +346,27 @@ get_names_and_desc (GduPresentable  *presentable,
 }
 
 static char *
-gdu_linux_lvm2_volume_get_name (GduPresentable *presentable)
+_gdu_linux_lvm2_volume_get_name (GduPresentable *presentable)
 {
-        return get_names_and_desc (presentable, NULL, NULL);
+        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
+
+        if (volume->priv->lv != NULL)
+                return _gdu_volume_get_names_and_desc (presentable, NULL, NULL);
+        else
+                return get_names_and_desc (volume, NULL, NULL);
 }
 
 static gchar *
 gdu_linux_lvm2_volume_get_description (GduPresentable *presentable)
 {
+        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
         gchar *desc;
         gchar *name;
 
-        name = get_names_and_desc (presentable, NULL, &desc);
+        if (volume->priv->lv != NULL)
+                name = _gdu_volume_get_names_and_desc (presentable, NULL, &desc);
+        else
+                name = get_names_and_desc (volume, NULL, &desc);
         g_free (name);
 
         return desc;
@@ -367,10 +375,14 @@ gdu_linux_lvm2_volume_get_description (GduPresentable *presentable)
 static gchar *
 gdu_linux_lvm2_volume_get_vpd_name (GduPresentable *presentable)
 {
+        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
         gchar *vpd_name;
         gchar *name;
 
-        name = get_names_and_desc (presentable, &vpd_name, NULL);
+        if (volume->priv->lv != NULL)
+                name = _gdu_volume_get_names_and_desc (presentable, &vpd_name, NULL);
+        else
+                name = get_names_and_desc (volume, &vpd_name, NULL);
         g_free (name);
 
         return vpd_name;
@@ -379,7 +391,35 @@ gdu_linux_lvm2_volume_get_vpd_name (GduPresentable *presentable)
 static GIcon *
 gdu_linux_lvm2_volume_get_icon (GduPresentable *presentable)
 {
-        return gdu_util_get_emblemed_icon ("gdu-multidisk-drive", "gdu-emblem-lvm-lv");
+        GIcon *icon;
+
+        icon = gdu_util_get_emblemed_icon ("gdu-multidisk-drive", "gdu-emblem-lvm-lv");
+
+#if 0
+        GduLinuxLvm2Volume *volume = GDU_LINUX_LVM2_VOLUME (presentable);
+        if (volume->priv->lv != NULL) {
+                const gchar *usage;
+
+                usage = gdu_device_id_get_usage (volume->priv->lv);
+                if (usage != NULL && strcmp (usage, "crypto") == 0) {
+                        GEmblem *emblem;
+                        GIcon *padlock;
+                        GIcon *emblemed_icon;
+
+                        padlock = g_themed_icon_new ("gdu-encrypted-lock");
+                        emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                        emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                        g_object_unref (icon);
+                        icon = emblemed_icon;
+
+                        g_object_unref (padlock);
+                        g_object_unref (emblem);
+                }
+        }
+#endif
+
+        return icon;
 }
 
 static guint64
@@ -423,7 +463,7 @@ gdu_linux_lvm2_volume_presentable_iface_init (GduPresentableIface *iface)
         iface->get_id                    = gdu_linux_lvm2_volume_get_id;
         iface->get_device                = gdu_linux_lvm2_volume_get_device;
         iface->get_enclosing_presentable = gdu_linux_lvm2_volume_get_enclosing_presentable;
-        iface->get_name                  = gdu_linux_lvm2_volume_get_name;
+        iface->get_name                  = _gdu_linux_lvm2_volume_get_name;
         iface->get_description           = gdu_linux_lvm2_volume_get_description;
         iface->get_vpd_name              = gdu_linux_lvm2_volume_get_vpd_name;
         iface->get_icon                  = gdu_linux_lvm2_volume_get_icon;

@@ -153,4 +153,8 @@ void _gdu_linux_md_drive_rewrite_enclosing_presentable (GduLinuxMdDrive *drive);
 void _gdu_volume_rewrite_enclosing_presentable (GduVolume *volume);
 void _gdu_volume_hole_rewrite_enclosing_presentable (GduVolumeHole *volume_hole);
 
+gchar *_gdu_volume_get_names_and_desc (GduPresentable  *presentable,
+                                       gchar          **out_vpd_name,
+                                       gchar          **out_desc);
+
 #endif /* __GDU_PRIVATE_H */

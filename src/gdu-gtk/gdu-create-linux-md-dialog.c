@@ -699,10 +699,13 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 
         /* -------------------------------------------------------------------------------- */
 
+        /* TODO: Actually make this work */
         check_button = gtk_check_button_new_with_mnemonic (_("Use entire disks instead of _partitions"));
         gtk_widget_set_tooltip_text (check_button, _("If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."));
         dialog->priv->use_whole_disk_check_button = check_button;
+#if 0
         gtk_box_pack_start (GTK_BOX (vbox2), check_button, FALSE, FALSE, 0);
+#endif
 
         /* -------------------------------------------------------------------------------- */
 

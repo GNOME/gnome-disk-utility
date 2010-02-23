@@ -1170,7 +1170,7 @@ gdu_disk_selection_widget_constructed (GObject *object)
                       NULL);
 
         gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (tree_view), FALSE);
-        gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (tree_view), TRUE);
+        /*gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (tree_view), TRUE);*/
         gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (tree_view), 16);
         gtk_tree_view_expand_all (GTK_TREE_VIEW (tree_view));
 

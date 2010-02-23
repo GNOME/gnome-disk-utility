@@ -306,7 +306,7 @@ gdu_pool_tree_view_constructed (GObject *object)
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
         gtk_tree_view_set_show_expanders (GTK_TREE_VIEW (view), FALSE);
-        gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (view), TRUE);
+        /*gtk_tree_view_set_enable_tree_lines (GTK_TREE_VIEW (view), TRUE);*/
         gtk_tree_view_set_level_indentation (GTK_TREE_VIEW (view), 16);
         gtk_tree_view_expand_all (GTK_TREE_VIEW (view));
 

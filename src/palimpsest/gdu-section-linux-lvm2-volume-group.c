@@ -734,7 +734,7 @@ gdu_section_linux_lvm2_volume_group_constructed (GObject *object)
         section->priv->vg_edit_name_button = button_element;
 
         button_element = gdu_button_element_new (GTK_STOCK_EDIT,
-                                                 _("Edit Ph_ysical Volumes"),
+                                                 _("Edit _Physical Volumes"),
                                                  _("Create and remove PVs"));
         g_signal_connect (button_element,
                           "clicked",

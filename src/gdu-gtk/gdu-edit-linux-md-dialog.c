@@ -697,6 +697,9 @@ update_tree (GduEditLinuxMdDialog *dialog)
                 gint position;
                 gchar *slave_state_str;
 
+                if (gdu_device_should_ignore (sd))
+                        continue;
+
                 pool = gdu_device_get_pool (sd);
                 volume_for_slave = gdu_pool_get_volume_by_device (pool, sd);
                 g_object_unref (pool);

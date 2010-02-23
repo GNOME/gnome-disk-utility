@@ -817,7 +817,9 @@ static const gchar *ui =
         "<ui>"
         "  <menubar>"
         "    <menu action='file'>"
+#if HAVE_REMOTE_ACCESS
         "      <menuitem action='file-connect'/>"
+#endif
         "      <menu action='file-create'>"
         "        <menuitem action='file-create-linux-md-array'/>"
         "      </menu>"

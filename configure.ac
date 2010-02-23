@@ -153,6 +153,17 @@ PKG_CHECK_MODULES(LIBATASMART, [libatasmart >= 0.14])
 PKG_CHECK_MODULES(AVAHI_UI, [avahi-ui >= $AVAHI_UI_REQUIRED])
 
 # *************
+# Remote Access
+# *************
+have_remote_access=no
+AC_ARG_ENABLE(remote_access, AS_HELP_STRING([--disable-remote-access], [disable access to remote udisks daemons]))
+if test "x$enable_remote_access" != "xno"; then
+   AC_DEFINE(HAVE_REMOTE_ACCESS, 1, [Defined if remote access is enabled])
+   have_remote_access=yes
+fi
+AM_CONDITIONAL(HAVE_REMOTE_ACCESS, [test "have_remote_access" = "yes"])
+
+# *************
 # GNOME Keyring
 # *************
 
@@ -269,5 +280,7 @@ echo "
         Maintainer mode:            ${USE_MAINTAINER_MODE}
         Building api docs:          ${enable_gtk_doc}
         Nautilus extension:         ${have_nautilus}
+
         GNOME Keyring support:      ${have_gnome_keyring}
+        Remote Access:              ${have_remote_access}
 "

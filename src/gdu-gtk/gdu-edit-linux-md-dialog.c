@@ -796,6 +796,7 @@ update_details (GduEditLinuxMdDialog *dialog)
         GduLinuxMdDrive *linux_md_drive;
         GduDevice *slave_device;
         GduDevice *slave_drive_device;
+        const gchar *slave_device_file;
         gchar *s;
         gchar *s2;
         GIcon *icon;
@@ -875,8 +876,11 @@ update_details (GduEditLinuxMdDialog *dialog)
         }
         gdu_details_element_set_text (dialog->priv->component_position_element, s);
         g_free (s);
-        gdu_details_element_set_text (dialog->priv->component_device_element,
-                                      gdu_device_get_device_file (slave_device));
+
+        slave_device_file = gdu_device_get_device_file_presentation (slave_device);
+        if (slave_device_file == NULL || strlen (slave_device_file) == 0)
+                slave_device_file = gdu_device_get_device_file (slave_device);
+        gdu_details_element_set_text (dialog->priv->component_device_element, slave_device_file);
 
         if (gdu_drive_is_active (GDU_DRIVE (linux_md_drive))) {
                 slave_flags = gdu_linux_md_drive_get_slave_flags (linux_md_drive, slave_device);

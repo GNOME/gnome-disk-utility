@@ -504,6 +504,9 @@ find_pv_by_uuid (GduPool     *pool,
         for (l = devices; l != NULL; l = l->next) {
                 GduDevice *d = GDU_DEVICE (l->data);
 
+                if (gdu_device_should_ignore (d))
+                        continue;
+
                 if (gdu_device_is_linux_lvm2_pv (d) && g_strcmp0 (gdu_device_linux_lvm2_pv_get_uuid (d), uuid) == 0) {
                         ret = g_object_ref (d);
                         goto out;

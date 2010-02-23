@@ -674,11 +674,6 @@ gdu_volume_get_icon (GduPresentable *presentable)
         }
 
 out:
-        if (p != NULL)
-                g_object_unref (p);
-        if (d != NULL)
-                g_object_unref (d);
-
 #if 0
         if (usage != NULL && strcmp (usage, "crypto") == 0) {
                 GEmblem *emblem;
@@ -705,6 +700,42 @@ out:
                         name = "drive-harddisk";
                 icon = g_themed_icon_new_with_default_fallbacks (name);
         }
+
+        /* Attach a MP emblem if it's a multipathed device or a path for a multipathed device */
+        if (d != NULL && gdu_device_is_linux_dmmp (d)) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-emblem-mp");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+        } else if (d != NULL && gdu_device_is_linux_dmmp_component (d)) {
+                GEmblem *emblem;
+                GIcon *padlock;
+                GIcon *emblemed_icon;
+
+                padlock = g_themed_icon_new ("gdu-emblem-mp-component");
+                emblem = g_emblem_new_with_origin (padlock, G_EMBLEM_ORIGIN_DEVICE);
+
+                emblemed_icon = g_emblemed_icon_new (icon, emblem);
+                g_object_unref (icon);
+                icon = emblemed_icon;
+
+                g_object_unref (padlock);
+                g_object_unref (emblem);
+        }
+
+        if (p != NULL)
+                g_object_unref (p);
+        if (d != NULL)
+                g_object_unref (d);
 
         return icon;
 }

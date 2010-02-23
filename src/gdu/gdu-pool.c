@@ -1253,7 +1253,7 @@ recompute_presentables (GduPool *pool)
                 }
 
                 /* Ensure we have a GduLinuxLvm2VolumeGroup even if the volume group isn't running */
-                if (gdu_device_is_linux_lvm2_pv (device)) {
+                if (gdu_device_is_linux_lvm2_pv (device) && !gdu_device_should_ignore (device)) {
                         GduLinuxLvm2VolumeGroup *vg;
                         const gchar *vg_uuid;
 
@@ -1335,7 +1335,7 @@ recompute_presentables (GduPool *pool)
                 }
 
                 /* Ensure we have a GduLinuxMdDrive for each non-running arrays */
-                if (gdu_device_is_linux_md_component (device)) {
+                if (gdu_device_is_linux_md_component (device) && !gdu_device_should_ignore (device)) {
                         const gchar *uuid;
 
                         uuid = gdu_device_linux_md_component_get_uuid (device);

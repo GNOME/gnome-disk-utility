@@ -826,6 +826,42 @@ gdu_device_get_object_path (GduDevice *device)
         return device->priv->object_path;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* TODO:
+ *
+ *  - for now this is a local method - we might want it to be a D-Bus property instead
+ *  - we might want to convey the reason why the device should be ignored (see current call-sites)
+ */
+gboolean
+gdu_device_should_ignore (GduDevice *device)
+{
+        gboolean ret;
+
+        ret = FALSE;
+
+        if (device->priv->props->device_is_drive) {
+                if (device->priv->props->device_is_linux_dmmp_component) {
+                        ret = TRUE;
+                } else if (g_strv_length (device->priv->props->drive_similar_devices) > 0 &&
+                           !device->priv->props->device_is_linux_dmmp) {
+                        ret = TRUE;
+                }
+        } else if (device->priv->props->device_is_partition) {
+                GduDevice *drive_device;
+                drive_device = gdu_pool_get_by_object_path (device->priv->pool, device->priv->props->partition_slave);
+                if (drive_device != NULL) {
+                        ret = gdu_device_should_ignore (drive_device);
+                        g_object_unref (drive_device);
+                }
+        }
+
+        return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+
 /**
  * gdu_device_find_parent:
  * @device: the device

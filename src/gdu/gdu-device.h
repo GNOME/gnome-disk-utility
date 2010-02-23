@@ -212,6 +212,10 @@ gconstpointer gdu_device_drive_ata_smart_get_blob (GduDevice *device, gsize *out
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+gboolean gdu_device_should_ignore (GduDevice *device);
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 void gdu_device_op_filesystem_mount                   (GduDevice                             *device,
                                                        gchar                                **options,
                                                        GduDeviceFilesystemMountCompletedFunc  callback,

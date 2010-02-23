@@ -905,7 +905,7 @@ ensure_hub_peripheral (GduPool *pool,
 {
         return ensure_hub (pool, hub, presentables,
                            _("Peripheral Devices"),
-                           _("USB, Firewire and other peripherals"),
+                           _("USB, FireWire and other peripherals"),
                            "gdu-category-peripheral");
 }
 

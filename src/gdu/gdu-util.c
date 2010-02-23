@@ -485,7 +485,7 @@ static struct {
         {"gpt", "49F48D5A-B10E-11DC-B99B-0019D1879648", N_("NetBSD FFS Partition")},
         {"gpt", "49F48D82-B10E-11DC-B99B-0019D1879648", N_("NetBSD LFS Partition")},
         {"gpt", "49F48DAA-B10E-11DC-B99B-0019D1879648", N_("NetBSD RAID Partition")},
-        {"gpt", "2DB519C4-B10F-11DC-B99B-0019D1879648", N_("NetBSD Concatenated  Partition")},
+        {"gpt", "2DB519C4-B10F-11DC-B99B-0019D1879648", N_("NetBSD Concatenated Partition")},
         {"gpt", "2DB519EC-B10F-11DC-B99B-0019D1879648", N_("NetBSD Encrypted Partition")},
 
         /* see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
@@ -601,7 +601,7 @@ gdu_util_fstype_get_description (char *fstype)
 
         else if (strcmp (fstype, "minix") == 0)
                 return g_strdup (_("Simple filesystem with low overhead and UNIX permissions support. "
-                                   "Not widely compatible with other operating systems than Linux and Minix."));
+                                   "Not widely compatible with operating systems other than Linux and Minix."));
 
         else if (strcmp (fstype, "empty") == 0)
                 return g_strdup (_("No file system will be created."));

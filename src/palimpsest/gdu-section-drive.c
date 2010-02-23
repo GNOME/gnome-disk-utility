@@ -518,7 +518,7 @@ eject_op_callback (GduDevice *device,
                 GtkWidget *dialog;
                 dialog = gdu_error_dialog_new_for_drive (GTK_WINDOW (gdu_shell_get_toplevel (shell)),
                                                          device,
-                                                         _("Error ejecting media"),
+                                                         _("Error ejecting medium"),
                                                          error);
                 gtk_widget_show_all (dialog);
                 gtk_window_present (GTK_WINDOW (dialog));
@@ -982,7 +982,7 @@ gdu_section_drive_constructed (GObject *object)
 
         button_element = gdu_button_element_new ("gdu-eject",
                                                  _("_Eject"),
-                                                 _("Eject media from the drive"));
+                                                 _("Eject medium from the drive"));
         g_signal_connect (button_element,
                           "clicked",
                           G_CALLBACK (on_eject_button_clicked),

@@ -254,7 +254,7 @@ gdu_error_dialog_constructed (GObject *object)
 
                 name = gdu_presentable_get_name (presentable);
                 vpd_name = gdu_presentable_get_vpd_name (presentable);
-                s = g_strdup_printf (_("An error occured while performing an operation on \"%s\" (%s): %s"),
+                s = g_strdup_printf (_("An error occurred while performing an operation on \"%s\" (%s): %s"),
                                      name,
                                      vpd_name,
                                      error_msg);
@@ -262,7 +262,7 @@ gdu_error_dialog_constructed (GObject *object)
                 g_free (name);
                 g_free (vpd_name);
         } else {
-                s = g_strdup_printf (_("An error occured: %s"), error_msg);
+                s = g_strdup_printf (_("An error occurred: %s"), error_msg);
         }
 
         label = gtk_label_new (s);

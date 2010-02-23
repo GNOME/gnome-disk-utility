@@ -413,7 +413,7 @@ is_drive_selectable (GduDiskSelectionWidget *widget,
         }
 
         d = gdu_presentable_get_device (GDU_PRESENTABLE (drive));
-        if (d != NULL && gdu_device_is_linux_dmmp_component (d)) {
+        if (d != NULL && gdu_device_should_ignore (d)) {
                 reason = g_strdup (_("Cannot select multipath component"));
                 goto out;
         }

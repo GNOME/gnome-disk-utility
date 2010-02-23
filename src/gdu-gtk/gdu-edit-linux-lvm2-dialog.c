@@ -899,6 +899,7 @@ update_details (GduEditLinuxLvm2Dialog *dialog)
         GduLinuxLvm2VolumeGroup *vg;
         GduDevice *pv;
         GduDevice *slave_drive_device;
+        const gchar *pv_device_file;
         gchar *s;
         gchar *s2;
         GIcon *icon;
@@ -959,8 +960,10 @@ update_details (GduEditLinuxLvm2Dialog *dialog)
                 g_object_unref (icon);
         }
 
-        gdu_details_element_set_text (dialog->priv->pv_device_element,
-                                      gdu_device_get_device_file (pv));
+        pv_device_file = gdu_device_get_device_file_presentation (pv);
+        if (pv_device_file == NULL || strlen (pv_device_file) == 0)
+                pv_device_file = gdu_device_get_device_file (pv);
+        gdu_details_element_set_text (dialog->priv->pv_device_element, pv_device_file);
 
  out:
         gdu_button_element_set_visible (dialog->priv->pv_new_button, show_pv_new_button);

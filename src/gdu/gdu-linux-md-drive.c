@@ -171,7 +171,8 @@ prime_devices (GduLinuxMdDrive *drive)
                 }
 
                 if (gdu_device_is_linux_md_component (device) &&
-                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0 &&
+                    !gdu_device_should_ignore (device)) {
                         drive->priv->slaves = g_list_prepend (drive->priv->slaves, g_object_ref (device));
                 }
 
@@ -215,7 +216,8 @@ device_added (GduPool *pool, GduDevice *device, gpointer user_data)
         }
 
         if (gdu_device_is_linux_md_component (device) &&
-            g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+            g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0 &&
+            !gdu_device_should_ignore (device)) {
                 GList *l;
 
                 for (l = drive->priv->slaves; l != NULL; l = l->next) {
@@ -276,7 +278,8 @@ device_changed (GduPool *pool, GduDevice *device, gpointer user_data)
         } else {
                 /* handle when device is joining the array */
                 if (gdu_device_is_linux_md_component (device) &&
-                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0 &&
+                    !gdu_device_should_ignore (device)) {
                         emit_signal = TRUE;
                         drive->priv->slaves = g_list_prepend (drive->priv->slaves, g_object_ref (device));
                 }
@@ -313,7 +316,8 @@ device_job_changed (GduPool *pool, GduDevice *device, gpointer user_data)
         } else {
                 /* handle when device is joining the array */
                 if (gdu_device_is_linux_md_component (device) &&
-                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0) {
+                    g_strcmp0 (gdu_device_linux_md_component_get_uuid (device), drive->priv->uuid) == 0 &&
+                    !gdu_device_should_ignore (device)) {
                         emit_signal = TRUE;
                         drive->priv->slaves = g_list_prepend (drive->priv->slaves, g_object_ref (device));
                 }

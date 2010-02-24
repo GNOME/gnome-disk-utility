@@ -161,7 +161,7 @@ if test "x$enable_remote_access" != "xno"; then
    AC_DEFINE(HAVE_REMOTE_ACCESS, 1, [Defined if remote access is enabled])
    have_remote_access=yes
 fi
-AM_CONDITIONAL(HAVE_REMOTE_ACCESS, [test "have_remote_access" = "yes"])
+AM_CONDITIONAL(HAVE_REMOTE_ACCESS, [test "$have_remote_access" = "yes"])
 
 # *************
 # GNOME Keyring

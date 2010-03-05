@@ -4,13 +4,12 @@
 # Ivaylo Valkov <ivaylo@e-valkov.org>, 2009, 2010.
 # Alexander Shopov <ash@contact.bg>, 2009.
 #
-#: ../src/gdu-gtk/gdu-error-dialog.c:163
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-06 11:18+0200\n"
-"PO-Revision-Date: 2010-02-02 15:29+0200\n"
+"POT-Creation-Date: 2010-03-05 07:16+0200\n"
+"PO-Revision-Date: 2010-03-05 07:16+0200\n"
 "Last-Translator: Ivaylo Valkov <ivaylo@e-valkov.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +23,7 @@ msgstr ""
 #.
 #: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
 #: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:804
-#: ../src/palimpsest/gdu-shell.c:1111
+#: ../src/palimpsest/gdu-shell.c:1113
 msgid "Disk Utility"
 msgstr "Инструмент за дискове"
 
@@ -167,7 +166,7 @@ msgstr "Грешка при съхраняване на паролата в кл
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
 msgid "The RAID Array to add a component to."
-msgstr ""
+msgstr "RAID масивът, към който да се добави компонент."
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, fuzzy, c-format
@@ -182,9 +181,9 @@ msgstr ""
 "s“ (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
-#, fuzzy, c-format
+#, c-format
 msgid "Expand %s"
-msgstr "Редактиране на %s"
+msgstr "Разширяване на %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
 #, fuzzy, c-format
@@ -197,11 +196,11 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
 msgid "_Expand"
-msgstr ""
+msgstr "_Разширяване"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
-msgstr ""
+msgstr "Групата, към която да се добави физически том."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
@@ -1016,7 +1015,7 @@ msgstr "Пълна оценка на състоянието на диска"
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1386
 msgid "_Refresh"
-msgstr ""
+msgstr "_Обновяване"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
@@ -1543,11 +1542,12 @@ msgid "_Disks"
 msgstr "_Устройства"
 
 #. --------------------------------------------------------------------------------
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:702
+#. TODO: Actually make this work
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
 msgid "Use entire disks instead of _partitions"
 msgstr "Да се използва целия диск вместо да се създават _дялове"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1558,19 +1558,19 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:869
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:872
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr "Недостатъчен брой устройства за създаване на %s масив."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:885
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:888
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "За да създадете %s масив, изберете устройство."
 msgstr[1] "За да създадете %s масив, изберете %d устройства."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:895
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1582,7 +1582,7 @@ msgstr[1] "За да създадете %s масив, изберете още %
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:916
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:919
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr ""
@@ -1656,12 +1656,12 @@ msgstr "Размерът, който да се използва в заглав�
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
 msgid "Cannot select multipath component"
-msgstr ""
+msgstr "Устройството с множествен достъп не може да бъде избрано"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
 msgid "No free space."
-msgstr ""
+msgstr "Свободното място свърши."
 
 #. Translators: Shown when device is unselectable because not enough space is available.
 #. * First %s (e.g. '10 GB') is how much space is needed.
@@ -1947,9 +1947,8 @@ msgid "Capacity"
 msgstr "Обем"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
-#, fuzzy
 msgid "Unallocated"
-msgstr "Блокиран"
+msgstr "Незаделени"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:465
@@ -1960,7 +1959,7 @@ msgstr "Състояние на самодиагностиката (S.M.A.R.T.):
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
 #: ../src/palimpsest/gdu-section-drive.c:911
-#: ../src/palimpsest/gdu-section-volumes.c:1916
+#: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Устройство:"
 
@@ -1983,8 +1982,8 @@ msgstr "Премахване на физически том от групата 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:857
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:957
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:861
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "Не се поддържа"
@@ -2019,7 +2018,7 @@ msgstr "Позиция/местоположение/положени:"
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:473
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
-#: ../src/palimpsest/gdu-section-volumes.c:1905
+#: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "Състояние:"
 
@@ -2035,12 +2034,11 @@ msgstr "Добавяне на нов елемент в масива"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:500
 msgid "_Expand Array"
-msgstr ""
+msgstr "_Разширяване на масив"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:501
-#, fuzzy
 msgid "Increase the capacity of the array"
-msgstr "Изтриване или разделяне на масива"
+msgstr "Увеличаване на обема на масив."
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:510
 msgid "_Attach Component"
@@ -2118,18 +2116,18 @@ msgstr "Не е инсталиран  драйвер за файловата с�
 msgid "Filesystem tools not installed"
 msgstr "Не са инсталирани инструменти за файловата система"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:955
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:957
 msgid "Unknown error"
 msgstr "Неизвестна грешка"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
-#, c-format
-msgid "An error occured while performing an operation on \"%s\" (%s): %s"
+#, fuzzy, c-format
+msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
 msgstr "Възникна грешка при извършване на действие на „%s“ (%s): %s "
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
-#, c-format
-msgid "An error occured: %s"
+#, fuzzy, c-format
+msgid "An error occurred: %s"
 msgstr "Възникна грешка: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:274
@@ -2193,7 +2191,7 @@ msgstr "Мнемоничният етикет за потвърдителния 
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
 #: ../src/palimpsest/gdu-section-drive.c:649
-#: ../src/palimpsest/gdu-section-volumes.c:368
+#: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_Форматиране"
 
@@ -2237,7 +2235,7 @@ msgstr "Шифрирана, съвместима със системи изпо�
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
-#: ../src/palimpsest/gdu-section-volumes.c:1720
+#: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
 msgstr "_Име:"
 
@@ -2337,8 +2335,8 @@ msgid "pid: %d  program: %s"
 msgstr "ид. проц.: %d  програма: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:923
-#: ../src/gdu-gtk/gdu-gtk.c:1065
+#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:924
+#: ../src/gdu-gtk/gdu-gtk.c:1067
 #, c-format
 msgid "Partition %d on %s"
 msgstr "Дял %d от устройство %s"
@@ -2375,7 +2373,7 @@ msgstr "Паролата не може да бъде празен низ"
 msgid "Cr_eate"
 msgstr "_Създаване"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2447
+#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
 msgstr "Смяна на _паролата"
 
@@ -2456,41 +2454,41 @@ msgstr "_Запомняне завинаги"
 msgid "Enter Passphrase"
 msgstr "Въведете парола"
 
-#: ../src/gdu-gtk/gdu-gtk.c:956 ../src/gdu/gdu-util.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:957 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "Парола на LUKS за UUID %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1253
+#: ../src/gdu-gtk/gdu-gtk.c:1255
 msgid "Empty (don't create a file system)"
 msgstr "Без (да не се създава файлова система)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1274
+#: ../src/gdu-gtk/gdu-gtk.c:1276
 msgid "Empty"
 msgstr "Без"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1282
+#: ../src/gdu-gtk/gdu-gtk.c:1284
 msgid "Extended Partition"
 msgstr "Разширен дял"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/gdu-gtk/gdu-gtk.c:1543 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "Главен запис за начално зареждане (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1546 ../src/gdu/gdu-drive.c:823
-#: ../src/gdu/gdu-linux-md-drive.c:568
+#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:823
+#: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "Таблица с дялове (GUID)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1551
+#: ../src/gdu-gtk/gdu-gtk.c:1553
 msgid "Don't partition"
 msgstr "Без разделяне"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/gdu/gdu-util.c:495
+#: ../src/gdu-gtk/gdu-gtk.c:1558 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
@@ -2617,7 +2615,7 @@ msgstr "Шифриран дял"
 
 #. Translators: shown in the grid for an RAID Component
 #: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
-#: ../src/palimpsest/gdu-section-volumes.c:2173
+#: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "Елемент от RAID"
@@ -2762,19 +2760,19 @@ msgid "%s Media"
 msgstr "Носител с размер %s"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:565
+#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "Таблица с дялове (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:571
+#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Таблица с дялове (Apple)"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:576
+#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "Таблица с дялове (неизвестен вид)"
 
@@ -2788,58 +2786,57 @@ msgstr "Неразделен"
 #. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
 #: ../src/gdu/gdu-hub.c:222
 msgid "SAS Expander"
-msgstr ""
+msgstr "Разширител за SAS"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
-msgstr ""
+msgstr "Контролер за PATA"
 
 #: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
-msgstr ""
+msgstr "Контролер за SATA"
 
 #: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
-msgstr ""
+msgstr "Контролер за ATA"
 
 #: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
-msgstr ""
+msgstr "Контролер за SAS"
 
 #: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
-msgstr ""
+msgstr "Контролер за SCSI"
 
 #: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
-msgstr ""
+msgstr "Контролер"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+#: ../src/gdu/gdu-linux-lvm2-volume.c:330
 msgid "Logical Volume"
 msgstr "Логически том"
 
 #. Translators: VPD name
-#: ../src/gdu/gdu-linux-lvm2-volume.c:334
-#, fuzzy
+#: ../src/gdu/gdu-linux-lvm2-volume.c:333
 msgid "LVM2 Logical Volume"
 msgstr "Логически том  – LVM2"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:372
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:376
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
 msgid "Volume Group"
 msgstr "Група от томове"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:380
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
 msgid "%s LVM2 Volume Group"
 msgstr "Група от LVM2 томове  – %s"
 
 #. Translators: VPD name when size is not known
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:383
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:393
 msgid "LVM2 Volume Group"
 msgstr "Група от LVM2 томове"
 
@@ -2858,8 +2855,8 @@ msgstr "Свободно пространство (%s)"
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
 #: ../src/gdu/gdu-volume-hole.c:161
-#: ../src/palimpsest/gdu-section-volumes.c:2187
-#: ../src/palimpsest/gdu-section-volumes.c:2195
+#: ../src/palimpsest/gdu-section-volumes.c:2209
+#: ../src/palimpsest/gdu-section-volumes.c:2217
 msgid "Unallocated Space"
 msgstr "Незаделено пространство"
 
@@ -2870,14 +2867,14 @@ msgstr "Незаделено пространство в група от LVM2 т
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:620
+#: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
 #, c-format
 msgid "%s %s Array"
 msgstr "%2s масив с размер %1s"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:625
+#: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, c-format
 msgid "%s Array"
 msgstr "%s масив"
@@ -2885,61 +2882,61 @@ msgstr "%s масив"
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
 #.
-#: ../src/gdu/gdu-linux-md-drive.c:596
+#: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
 msgid "RAID Array %s (%s)"
 msgstr "RAID масив %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:601
+#: ../src/gdu/gdu-linux-md-drive.c:605
 #, c-format
 msgid "RAID device %s"
 msgstr "Устройство в RAID %s"
 
 #. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:608
+#: ../src/gdu/gdu-linux-md-drive.c:612
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
 
-#: ../src/gdu/gdu-linux-md-drive.c:613
+#: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID масив"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1110
+#: ../src/gdu/gdu-linux-md-drive.c:1114
 #, fuzzy
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "Не е прикрепен"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1113
+#: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr "Дефектирал"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1118
+#: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
 msgstr "Пълно синхронизиране"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1120
+#: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Предимно писане"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1122
+#: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Блокиран"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1126
+#: ../src/gdu/gdu-linux-md-drive.c:1130
 #, fuzzy
 msgctxt "Linux MD slave state"
 msgid "Partially Synchronized"
 msgstr "Пълно синхронизиране"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1128
+#: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Резервен"
@@ -2956,15 +2953,15 @@ msgstr "Съхранение на %s"
 
 #: ../src/gdu/gdu-pool.c:885
 msgid "Multipath Devices"
-msgstr ""
+msgstr "Устройства с много пътища"
 
 #: ../src/gdu/gdu-pool.c:886
 msgid "Drives with multiple I/O paths"
-msgstr ""
+msgstr "Устройства с много пътища за вх./изх."
 
 #: ../src/gdu/gdu-pool.c:896
 msgid "Multi-disk Devices"
-msgstr ""
+msgstr "Многодискови устройства"
 
 #: ../src/gdu/gdu-pool.c:897
 msgid "RAID, LVM and other logical drives"
@@ -2975,25 +2972,26 @@ msgid "Peripheral Devices"
 msgstr "Периферни устройства"
 
 #: ../src/gdu/gdu-pool.c:908
-msgid "USB, Firewire and other peripherals"
+#, fuzzy
+msgid "USB, FireWire and other peripherals"
 msgstr "USB, Firewire и друга периферия"
 
-#: ../src/gdu/gdu-pool.c:2091
+#: ../src/gdu/gdu-pool.c:2092
 #, fuzzy, c-format
 msgid "Error enumerating devices: %s"
 msgstr "Грешка при изброяване на устройства: %s"
 
-#: ../src/gdu/gdu-pool.c:2117
+#: ../src/gdu/gdu-pool.c:2118
 #, fuzzy, c-format
 msgid "Error enumerating adapters: %s"
 msgstr "Грешка при изброяване на адаптери: %s"
 
-#: ../src/gdu/gdu-pool.c:2140
+#: ../src/gdu/gdu-pool.c:2141
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Грешка при изброяването на разширителите: %s"
 
-#: ../src/gdu/gdu-pool.c:2163
+#: ../src/gdu/gdu-pool.c:2164
 #, fuzzy, c-format
 msgid "Error enumerating ports: %s"
 msgstr "Грешка при изброяване на портове: %s"
@@ -3001,7 +2999,7 @@ msgstr "Грешка при изброяване на портове: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "Грешка при слушанео на адрес „localhost:%d“: %s: %s\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
@@ -3016,6 +3014,8 @@ msgstr ""
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
 msgstr ""
+"Грешка при задаването на механизмите за идентификация пред локалния сървър "
+"за DBus\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:347
 #, c-format
@@ -3059,7 +3059,7 @@ msgstr ""
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "Грешка при предаване на тайния низа за идентификация: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
@@ -3271,7 +3271,7 @@ msgstr "Файлова система  „Универсален дисков ф
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2169
+#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2191
 msgid "Swap Space"
 msgstr "Виртуална памет"
 
@@ -3622,7 +3622,7 @@ msgstr "RAID дял на NetBSD"
 
 #: ../src/gdu/gdu-util.c:488
 #, fuzzy
-msgid "NetBSD Concatenated  Partition"
+msgid "NetBSD Concatenated Partition"
 msgstr "Съединен дял на NetBSD"
 
 #: ../src/gdu/gdu-util.c:489
@@ -3869,9 +3869,10 @@ msgstr ""
 "операционни системи."
 
 #: ../src/gdu/gdu-util.c:603
+#, fuzzy
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
-"compatible with other operating systems than Linux and Minix."
+"compatible with operating systems other than Linux and Minix."
 msgstr ""
 "Изчистена файлова система с поддръжка на файлови права по класическия начин  "
 "за Юникс, изискваща малко ресурси. Съвместима е основно с Minix и "
@@ -4166,190 +4167,190 @@ msgid "DISK FAILURE IS IMMINENT"
 msgstr "ПРЕДСТОИ ПОВРЕДА НА ДИСКА"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "CD-ROM Disc"
 msgstr "CD-ROM диск"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "Blank CD-ROM Disc"
 msgstr "Празен CD-ROM диск"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "CD-R Disc"
 msgstr "CD-R диск"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "Blank CD-R Disc"
 msgstr "Празен CD-R диск"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "CD-RW Disc"
 msgstr "CD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "Blank CD-RW Disc"
 msgstr "Празен CD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "DVD-ROM Disc"
 msgstr "DVD-ROM диск"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD-ROM Disc"
 msgstr "Празен DVD-ROM диск"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "DVD-RW Disc"
 msgstr "DVD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD-RW Disc"
 msgstr "Празен DVD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "DVD-RAM Disc"
 msgstr "DVD-RAM диск"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blank DVD-RAM Disc"
 msgstr "Празен DVD-RAM диск"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "DVD+R Disc"
 msgstr "DVD+R диск"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blank DVD+R Disc"
 msgstr "Празен DVD+R диск"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "DVD+RW Disc"
 msgstr "DVD+RW диск"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blank DVD+RW Disc"
 msgstr "Празен DVD+RW диск"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "DVD+R DL Disc"
 msgstr "Двуслоен DVD+R диск"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "Blank DVD+R DL Disc"
 msgstr "Празен двуслоен DVD+R диск"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "DVD+RW DL Disc"
 msgstr "Двуслоен DVD+RW диск"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "Blank DVD+RW DL Disc"
 msgstr "Празен двуслоен DVD+RW диск"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blu-Ray Disc"
 msgstr "Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blank Blu-Ray Disc"
 msgstr "Празен Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blu-Ray R Disc"
 msgstr "Записваем Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blank Blu-Ray R Disc"
 msgstr "Празен записваем Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blu-Ray RW Disc"
 msgstr "Презаписваем Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blank Blu-Ray RW Disc"
 msgstr "Празен презаписваем Blu-Ray диск"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "HD DVD Disc"
 msgstr "HD DVD диск"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "Blank HD DVD Disc"
 msgstr "Празен HD DVD диск"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "HD DVD-R Disc"
 msgstr "HD DVD-R диск"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "Blank HD DVD-R Disc"
 msgstr "Празен HD DVD-R диск"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "HD DVD-RW Disc"
 msgstr "HD DVD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "Blank HD DVD-RW Disc"
 msgstr "Празен HD DVD-RW диск"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "MO Disc"
 msgstr "MO диск"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "Blank MO Disc"
 msgstr "Празен MO диск"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "MRW Disc"
 msgstr "MRW диск"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "Blank MRW Disc"
 msgstr "Празен MRW диск"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "MRW/W Disc"
 msgstr "MRW/W диск"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "Blank MRW/W Disc"
 msgstr "Празен MRW/W диск"
 
-#: ../src/gdu/gdu-volume.c:276
+#: ../src/gdu/gdu-volume.c:294
 msgid "Blank Optical Disc"
 msgstr "Празен оптичен диск"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:286
+#: ../src/gdu/gdu-volume.c:304
 #, c-format
 msgid "%s Extended"
 msgstr "Разширен дял (%s)"
 
-#: ../src/gdu/gdu-volume.c:287
+#: ../src/gdu/gdu-volume.c:305
 msgid "Contains logical partitions"
 msgstr "Съдържа логически дялове"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:302
+#: ../src/gdu/gdu-volume.c:320
 #, c-format
 msgid "%s Encrypted"
 msgstr "Шифриран дял (%s)"
 
-#: ../src/gdu/gdu-volume.c:312
+#: ../src/gdu/gdu-volume.c:330
 msgid "Optical Disc"
 msgstr "Оптичен диск"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:318
+#: ../src/gdu/gdu-volume.c:336
 #, c-format
 msgid "%s Filesystem"
 msgstr "Файлова система (%s)"
@@ -4357,7 +4358,7 @@ msgstr "Файлова система (%s)"
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:324
+#: ../src/gdu/gdu-volume.c:342
 #, c-format
 msgid "%s Partition Table"
 msgstr "Таблица с дялове (%s)"
@@ -4365,13 +4366,13 @@ msgstr "Таблица с дялове (%s)"
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:330
+#: ../src/gdu/gdu-volume.c:348
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr "Физически том LVM2 (%s)"
 
 #. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:343
+#: ../src/gdu/gdu-volume.c:361
 msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
@@ -4380,7 +4381,7 @@ msgstr "RAID"
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
-#: ../src/gdu/gdu-volume.c:350 ../src/gdu/gdu-volume.c:361
+#: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
 msgid "%s %s Component"
 msgstr "%s %s елемент"
@@ -4388,7 +4389,7 @@ msgstr "%s %s елемент"
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #.
-#: ../src/gdu/gdu-volume.c:354
+#: ../src/gdu/gdu-volume.c:372
 #, c-format
 msgid "Part of \"%s\" array"
 msgstr "Част от масива „%s“"
@@ -4396,7 +4397,7 @@ msgstr "Част от масива „%s“"
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:372
+#: ../src/gdu/gdu-volume.c:390
 #, c-format
 msgid "%s Swap Space"
 msgstr "Виртуална памет (%s)"
@@ -4404,7 +4405,7 @@ msgstr "Виртуална памет (%s)"
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:377
+#: ../src/gdu/gdu-volume.c:395
 #, c-format
 msgid "%s Data"
 msgstr "Дял с данни (%s)"
@@ -4412,20 +4413,20 @@ msgstr "Дял с данни (%s)"
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:383 ../src/gdu/gdu-volume.c:399
+#: ../src/gdu/gdu-volume.c:401 ../src/gdu/gdu-volume.c:417
 #, c-format
 msgid "%s Unrecognized"
 msgstr "Неразпознат дял (%s)"
 
 #. Translators: description for a volume of unrecognized use
-#: ../src/gdu/gdu-volume.c:385
+#: ../src/gdu/gdu-volume.c:403
 msgid "Unknown or Unused"
 msgstr "Неизвестен или неизползван"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:392 ../src/gdu/gdu-volume.c:394
+#: ../src/gdu/gdu-volume.c:410 ../src/gdu/gdu-volume.c:412
 #, c-format
 msgid "%s Partition"
 msgstr "Дял (%s)"
@@ -4433,14 +4434,14 @@ msgstr "Дял (%s)"
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:430
+#: ../src/gdu/gdu-volume.c:447
 #, c-format
 msgid "Partition %d of %s"
 msgstr "Дял %d от устройство %s"
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
-#: ../src/gdu/gdu-volume.c:436
+#: ../src/gdu/gdu-volume.c:453
 #, c-format
 msgid "Partition %d"
 msgstr "Дял %d"
@@ -4448,14 +4449,14 @@ msgstr "Дял %d"
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:444
+#: ../src/gdu/gdu-volume.c:461
 #, c-format
 msgid "Whole-disk volume on %s"
 msgstr "Том заемащ целия %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
-#: ../src/gdu/gdu-volume.c:449
+#: ../src/gdu/gdu-volume.c:466
 msgid "Whole-disk volume"
 msgstr "Том заемащ целия диск"
 
@@ -4507,7 +4508,7 @@ msgstr "Устройството, което да се показва"
 
 #: ../src/palimpsest/gdu-section-drive.c:148
 msgid "Multipath Drive"
-msgstr ""
+msgstr "Устройство с много пътища"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
@@ -4570,7 +4571,8 @@ msgid "The application is not installed"
 msgstr "Програмата не е инсталирана"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-msgid "Error ejecting media"
+#, fuzzy
+msgid "Error ejecting medium"
 msgstr "Грешка при изваждане на носителя"
 
 #: ../src/palimpsest/gdu-section-drive.c:565
@@ -4586,26 +4588,33 @@ msgid "Are you sure you want to format the drive?"
 msgstr "Сигурни ли сте, че искате да форматирате устройството?"
 
 #: ../src/palimpsest/gdu-section-drive.c:835
+#, fuzzy
 msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
 msgstr ""
+"<b>ПРЕДУПРЕЖДЕНИЕ:</b> Открити са няколко пътя за достъп до устройство, но "
+"те не сочат към съответстващо устройство с множество пътища. Вероятно "
+"операционната ви система не е настроена правилно."
 
 #: ../src/palimpsest/gdu-section-drive.c:850
+#, fuzzy
 msgid "Go to Multipath Device"
-msgstr ""
+msgstr "Отиване към устройство по много пътища"
 
 #: ../src/palimpsest/gdu-section-drive.c:861
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
 msgstr ""
+"<b>БЕЛЕЖКА:</b> Този обект представлява един от няколкото пътя до "
+"устройството. За да извършвате действия с устройството, използвайте обекта с "
+"множество пътища."
 
 #: ../src/palimpsest/gdu-section-drive.c:890
 #: ../src/palimpsest/gdu-section-hub.c:225
-#, fuzzy
 msgid "Model:"
-msgstr "Модела:"
+msgstr "Модел:"
 
 #: ../src/palimpsest/gdu-section-drive.c:894
 msgid "Serial Number:"
@@ -4635,7 +4644,7 @@ msgstr "Скорост на въртене:"
 #: ../src/palimpsest/gdu-section-drive.c:923
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
-#: ../src/palimpsest/gdu-section-volumes.c:1930
+#: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "Обем:"
 
@@ -4677,7 +4686,8 @@ msgid "_Eject"
 msgstr "_Изваждане"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-msgid "Eject media from the drive"
+#, fuzzy
+msgid "Eject medium from the drive"
 msgstr "Изваждане на носителя от устройството"
 
 #: ../src/palimpsest/gdu-section-drive.c:994
@@ -4699,19 +4709,19 @@ msgstr "Измерване на производителността на уст
 #: ../src/palimpsest/gdu-section-hub.c:161
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d физически"
 
 #: ../src/palimpsest/gdu-section-hub.c:137
 msgid "Parallel ATA"
-msgstr ""
+msgstr "Паралелна ATA"
 
 #: ../src/palimpsest/gdu-section-hub.c:139
 msgid "Serial ATA"
-msgstr ""
+msgstr "Серийна ATA"
 
 #: ../src/palimpsest/gdu-section-hub.c:143
 msgid "Serial Attached SCSI"
-msgstr ""
+msgstr "Серийна, свързана SCSI"
 
 #: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Vendor:"
@@ -4728,7 +4738,7 @@ msgstr "Драйвер:"
 
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Fabric:"
-msgstr ""
+msgstr "Топология:"
 
 #: ../src/palimpsest/gdu-section-hub.c:241
 msgid "Number of Ports:"
@@ -4755,9 +4765,8 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "Грешка при добавяне на физически том към групата от томове"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#, fuzzy
 msgid "Error creating PV for VG"
-msgstr "Грешка при създаване на RAID масив"
+msgstr "Грешка при създаване на физически том в група"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
 msgid "Error deleting partition for Physical Volume in Volume Group"
@@ -4799,18 +4808,16 @@ msgid "Name:"
 msgstr "Наименование:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
-#, fuzzy
 msgid "Extent Size:"
-msgstr "_Размер на отсека:"
+msgstr "Размер на отсека:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
 msgid "Physical Volumes:"
 msgstr "Физически томове:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
-#, fuzzy
 msgid "Unallocated:"
-msgstr "Блокиран"
+msgstr "Незаделени:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:706
 msgid "St_art Volume Group"
@@ -4837,7 +4844,7 @@ msgid "Change the Volume Group name"
 msgstr "Промяна на наименованието на групата от томове"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
-msgid "Edit Ph_ysical Volumes"
+msgid "Edit _Physical Volumes"
 msgstr "Редактиране на фи_зически томове"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
@@ -4949,9 +4956,8 @@ msgid "Error creating component for RAID array"
 msgstr "Грешка при създаване на елемент за RAID масив"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
-#, fuzzy
 msgid "Error expanding RAID Array"
-msgstr "Грешка при спиране на RAID масив"
+msgstr "Грешка при разширяване на RAID масив"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"
@@ -5017,385 +5023,378 @@ msgstr "Създаване и премахване на елементи"
 msgid "Measure RAID array performance"
 msgstr "Измерване на производителността на RAID масив"
 
-#: ../src/palimpsest/gdu-section-volumes.c:112
+#: ../src/palimpsest/gdu-section-volumes.c:115
 msgid "Error unmounting volume"
 msgstr "Грешка при демонтиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:168
+#: ../src/palimpsest/gdu-section-volumes.c:171
 msgid "Error mounting volume"
 msgstr "Грешка при монтиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:225
+#: ../src/palimpsest/gdu-section-volumes.c:228
 msgid "Error deleting partition"
 msgstr "Грешка при изтриване на дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:260
+#: ../src/palimpsest/gdu-section-volumes.c:263
 msgid "Are you sure you want to delete the partition?"
 msgstr "Сигурни ли сте, че искате да изтриете дяла?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:261
-#: ../src/palimpsest/gdu-section-volumes.c:1787
+#: ../src/palimpsest/gdu-section-volumes.c:264
+#: ../src/palimpsest/gdu-section-volumes.c:1788
 msgid "_Delete"
 msgstr "_Изтриване"
 
-#: ../src/palimpsest/gdu-section-volumes.c:314
+#: ../src/palimpsest/gdu-section-volumes.c:317
 msgid "Error creating filesystem"
 msgstr "Грешка при задаване на файлова система"
 
-#: ../src/palimpsest/gdu-section-volumes.c:367
+#: ../src/palimpsest/gdu-section-volumes.c:370
 msgid "Are you sure you want to format the volume?"
 msgstr "Сигурни ли сте, че искате да форматирате тома?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:425
+#: ../src/palimpsest/gdu-section-volumes.c:428
 msgid "Error modifying partition"
 msgstr "Грешка при промяна на дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:516
+#: ../src/palimpsest/gdu-section-volumes.c:519
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "Сигурни ли сте, че искате паролата да бъде забравена?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:517
+#: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
 msgstr "_Забравяне"
 
-#: ../src/palimpsest/gdu-section-volumes.c:547
+#: ../src/palimpsest/gdu-section-volumes.c:550
 msgid "Error locking LUKS volume"
 msgstr "Грешка при заключване на LUKS том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:670
+#: ../src/palimpsest/gdu-section-volumes.c:673
 msgid "Error unlocking LUKS volume"
 msgstr "Грешка при отключване на LUKS том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:966
+#: ../src/palimpsest/gdu-section-volumes.c:969
 msgid "Error creating partition"
 msgstr "Грешка при създаване на дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1137
+#: ../src/palimpsest/gdu-section-volumes.c:1140
 msgid "Error changing label"
 msgstr "Грешка при промяна на етикет"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1192
+#: ../src/palimpsest/gdu-section-volumes.c:1195
 msgid "Choose a new filesystem label."
 msgstr "Избор на нов етикет за файловата система."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1193
+#: ../src/palimpsest/gdu-section-volumes.c:1196
 msgid "_Label:"
 msgstr "_Етикет:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1238
+#: ../src/palimpsest/gdu-section-volumes.c:1241
 msgid "Error checking filesystem on volume"
 msgstr "Грешка при проверка на файловата система на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1265
+#: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "Завърши проверката на файловата система на „%s“ (%s)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1269
+#: ../src/palimpsest/gdu-section-volumes.c:1272
 msgid "File system is clean."
 msgstr "Файловата система е в добро състояние."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1272
+#: ../src/palimpsest/gdu-section-volumes.c:1275
 msgid "File system is <b>NOT</b> clean."
 msgstr "Файловата система <b>НЕ</b> е в добро състояние."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1384
+#: ../src/palimpsest/gdu-section-volumes.c:1387
 #, c-format
 msgid "Error spawning nautilus: %s"
 msgstr "Грешка при пораждане на nautilus: %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1432
+#: ../src/palimpsest/gdu-section-volumes.c:1435
 msgid "Error creating Logical Volume"
 msgstr "Грешка при създаване на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1585
+#: ../src/palimpsest/gdu-section-volumes.c:1588
 msgid "Error stopping Logical Volume"
 msgstr "Грешка при спиране на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1631
+#: ../src/palimpsest/gdu-section-volumes.c:1634
 msgid "Error starting Logical Volume"
 msgstr "Грешка при стартиране на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1680
+#: ../src/palimpsest/gdu-section-volumes.c:1683
 msgid "Error setting name for Logical Volume"
 msgstr "Грешка при задаване на наименование на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1719
+#: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
 msgstr "Изберете ново наименование за логическия том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1753
+#: ../src/palimpsest/gdu-section-volumes.c:1754
 msgid "Error deleting Logical Volume"
 msgstr "Грешка при изтриване на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1786
+#: ../src/palimpsest/gdu-section-volumes.c:1787
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "Сигурни ли сте, че искате да изтриете логическия том?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1903
+#: ../src/palimpsest/gdu-section-volumes.c:1906
 msgid "Volume Name:"
 msgstr "Наименование на тома:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1909
+#: ../src/palimpsest/gdu-section-volumes.c:1912
 msgid "Usage:"
 msgstr "Употреба:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1919
+#: ../src/palimpsest/gdu-section-volumes.c:1922
 msgid "Partition Type:"
 msgstr "Таблица с дялове:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1923
+#: ../src/palimpsest/gdu-section-volumes.c:1928
 msgid "Partition Label:"
 msgstr "Етикет за дяла:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1926
+#: ../src/palimpsest/gdu-section-volumes.c:1931
 msgid "Partition Flags:"
 msgstr "Флагове за дяла:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1934
+#: ../src/palimpsest/gdu-section-volumes.c:1956
 msgid "Type:"
 msgstr "Вид:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1937
+#: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
 msgstr "Наличен:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1940
+#: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
 msgstr "Етикет:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1943
+#: ../src/palimpsest/gdu-section-volumes.c:1965
 msgid "Mount Point:"
 msgstr "Точка на монтиране:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1964
+#: ../src/palimpsest/gdu-section-volumes.c:1986
 msgctxt "LVM2 LV State"
 msgid "Running"
 msgstr "Работи"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1965
+#: ../src/palimpsest/gdu-section-volumes.c:1987
 msgctxt "LVM2 LV State"
 msgid "Not Running"
 msgstr "Не работи"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2004
+#: ../src/palimpsest/gdu-section-volumes.c:2026
 msgid "Bootable"
 msgstr "С възможност за стартиране"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2007
+#: ../src/palimpsest/gdu-section-volumes.c:2029
 msgid "Required"
 msgstr "Задължителен"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2010
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2032
 msgid "Allocated"
-msgstr "Блокиран"
+msgstr "Заделени"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2013
+#: ../src/palimpsest/gdu-section-volumes.c:2035
 msgid "Allow Read"
 msgstr "Разрешване на четене"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2016
+#: ../src/palimpsest/gdu-section-volumes.c:2038
 msgid "Allow Write"
 msgstr "Разрешаване на запис"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2019
+#: ../src/palimpsest/gdu-section-volumes.c:2041
 msgid "Boot Code PIC"
-msgstr ""
+msgstr "Код за стартиране от програмируем контролер"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2093
+#: ../src/palimpsest/gdu-section-volumes.c:2115
 msgid "Filesystem"
 msgstr "Файлова система"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2126
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "View files on the volume using a SFTP network share"
-msgstr "Преглед на файлове на тома чрез мрежов протокол SFTP"
+msgstr "Преглед на файлове на тома чрез споделяне по мрежата със SFTP"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:2133
+#: ../src/palimpsest/gdu-section-volumes.c:2155
 msgid "View files on the volume"
 msgstr "Показване на файловете в тома"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2140
+#: ../src/palimpsest/gdu-section-volumes.c:2162
 #, c-format
 msgid "Mounted at %s"
 msgstr "Монтирано в %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2148
+#: ../src/palimpsest/gdu-section-volumes.c:2170
 msgid "Not Mounted"
 msgstr "Не е монтирано"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2158
+#: ../src/palimpsest/gdu-section-volumes.c:2180
 msgid "Encrypted Volume (Locked)"
 msgstr "Шифриран том (заключен)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2161
+#: ../src/palimpsest/gdu-section-volumes.c:2183
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Шифриран том (отключен)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2174
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2196
 msgid "Go to array"
-msgstr "Показване на масива"
+msgstr "Към масива"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2182
+#: ../src/palimpsest/gdu-section-volumes.c:2204
 msgid "Container for Logical Partitions"
 msgstr "Контейнер за логически дялове"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2290
+#: ../src/palimpsest/gdu-section-volumes.c:2321
 msgid "Logical _Volumes"
 msgstr "Логически т_омове"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2292
+#: ../src/palimpsest/gdu-section-volumes.c:2323
 msgid "_Volumes"
 msgstr "_Томове"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2335
+#: ../src/palimpsest/gdu-section-volumes.c:2387
 msgid "_Mount Volume"
 msgstr "_Монтиране тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2336
+#: ../src/palimpsest/gdu-section-volumes.c:2388
 msgid "Mount the volume"
 msgstr "Монтиране тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2345
+#: ../src/palimpsest/gdu-section-volumes.c:2397
 msgid "Un_mount Volume"
 msgstr "_Демонтиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2346
+#: ../src/palimpsest/gdu-section-volumes.c:2398
 msgid "Unmount the volume"
 msgstr "Демонтиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2355
+#: ../src/palimpsest/gdu-section-volumes.c:2407
 msgid "Fo_rmat Volume"
 msgstr "Фо_рматиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2356
+#: ../src/palimpsest/gdu-section-volumes.c:2408
 msgid "Erase or format the volume"
 msgstr "Изтриване или форматиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2365
+#: ../src/palimpsest/gdu-section-volumes.c:2417
 msgid "_Check Filesystem"
 msgstr "_Проверка на файловата система"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2366
+#: ../src/palimpsest/gdu-section-volumes.c:2418
 msgid "Check and repair the filesystem"
 msgstr "Проверка и поправка на файловата система"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2376
+#: ../src/palimpsest/gdu-section-volumes.c:2428
 msgid "Edit Filesystem _Label"
 msgstr "Редактиране на _етикета за файловата система"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2377
+#: ../src/palimpsest/gdu-section-volumes.c:2429
 msgid "Change the label of the filesystem"
 msgstr "Промяна на етикета на файловата система"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2386
+#: ../src/palimpsest/gdu-section-volumes.c:2438
 msgid "Ed_it Partition"
 msgstr "_Редактиране на дяла"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2387
+#: ../src/palimpsest/gdu-section-volumes.c:2439
 msgid "Change partition type, label and flags"
 msgstr "Промяна на вида, етикета и флаговете на дяла"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2396
+#: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "D_elete Partition"
 msgstr "_Изтриване на дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2397
+#: ../src/palimpsest/gdu-section-volumes.c:2449
 msgid "Delete the partition"
 msgstr "Изтриване на дяла"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2406
+#: ../src/palimpsest/gdu-section-volumes.c:2458
 msgid "_Create Partition"
 msgstr "_Създаване на дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2407
+#: ../src/palimpsest/gdu-section-volumes.c:2459
 msgid "Create a new partition"
 msgstr "Създаване на нов дял"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2416
+#: ../src/palimpsest/gdu-section-volumes.c:2468
 msgid "_Lock Volume"
 msgstr "_Заключване на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2417
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2469
 msgid "Make encrypted data unavailable"
-msgstr "Заключване на шифрираното устройство, което прави данните недостъпни"
+msgstr "Шифрираните данните да са недостъпни"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2426
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2478
 msgid "Un_lock Volume"
 msgstr "_Отключване на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2427
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2479
 msgid "Make encrypted data available"
-msgstr "Отключване на шифрираното устройство, което прави данните достъпни"
+msgstr "Шифрираните данните да са достъпни"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2436
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2488
 msgid "Forge_t Passphrase"
 msgstr "_Забравяне на паролата"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2437
+#: ../src/palimpsest/gdu-section-volumes.c:2489
 msgid "Delete passphrase from keyring"
 msgstr "Изтриване на паролата от ключодържателя"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2448
+#: ../src/palimpsest/gdu-section-volumes.c:2500
 msgid "Change passphrase"
 msgstr "Смяна на паролата"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2457
+#: ../src/palimpsest/gdu-section-volumes.c:2509
 msgid "_Create Logical Volume"
 msgstr "_Създаване на логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2458
+#: ../src/palimpsest/gdu-section-volumes.c:2510
 msgid "Create a new logical volume"
 msgstr "Създаване на нов логически том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2467
+#: ../src/palimpsest/gdu-section-volumes.c:2519
 msgid "S_tart Volume"
 msgstr "С_тартиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2468
+#: ../src/palimpsest/gdu-section-volumes.c:2520
 msgid "Activate the Logical Volume"
 msgstr "Активиране на логическия том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2478
+#: ../src/palimpsest/gdu-section-volumes.c:2530
 msgid "Edit Vol_ume Name"
 msgstr "Редактиране на наименованието на т_ома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2479
+#: ../src/palimpsest/gdu-section-volumes.c:2531
 msgid "Change the name of the volume"
 msgstr "Промяна на наименованието на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2488
+#: ../src/palimpsest/gdu-section-volumes.c:2540
 msgid "D_elete Volume"
 msgstr "_Премахване на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2489
+#: ../src/palimpsest/gdu-section-volumes.c:2541
 msgid "Delete the Logical Volume"
 msgstr "Премахване на логическия том"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2498
+#: ../src/palimpsest/gdu-section-volumes.c:2550
 msgid "Sto_p Volume"
 msgstr "_Спиране на тома"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2499
+#: ../src/palimpsest/gdu-section-volumes.c:2551
 msgid "Deactivate the Logical Volume"
 msgstr "Спиране на логическия том"
 
@@ -5466,121 +5465,94 @@ msgstr ""
 "Научете повече за нас на http://gnome.cult.bg\n"
 "Докладвайте за грешки на http://gnome.cult.bg/bugs"
 
-#: ../src/palimpsest/gdu-shell.c:834
+#: ../src/palimpsest/gdu-shell.c:836
 msgid "_File"
 msgstr "_Файл"
 
-#: ../src/palimpsest/gdu-shell.c:835
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "Connect to _Server..."
 msgstr "Свързване към _сървър…"
 
-#: ../src/palimpsest/gdu-shell.c:835
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "Manage storage devices on another machine"
 msgstr "Управление на устройства за съхранение на данни на друга машина"
 
-#: ../src/palimpsest/gdu-shell.c:836
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "_Create"
 msgstr "_Създаване"
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "_RAID Array..."
 msgstr "_RAID масив…"
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "Create a RAID array"
 msgstr "Създаване на RAID масив"
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_Edit"
 msgstr "_Редактиране"
 
-#: ../src/palimpsest/gdu-shell.c:839 ../src/palimpsest/gdu-shell.c:842
+#: ../src/palimpsest/gdu-shell.c:841 ../src/palimpsest/gdu-shell.c:844
 msgid "_Help"
 msgstr "Помо_щ"
 
-#: ../src/palimpsest/gdu-shell.c:841
+#: ../src/palimpsest/gdu-shell.c:843
 msgid "_Quit"
 msgstr "_Спиране на програмата"
 
-#: ../src/palimpsest/gdu-shell.c:841
+#: ../src/palimpsest/gdu-shell.c:843
 msgid "Quit"
 msgstr "Спиране на програмата"
 
-#: ../src/palimpsest/gdu-shell.c:842
-#, fuzzy
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "Get Help on Disk Utility"
 msgstr "Показване на помощта за Инструмента за дискове"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "_About"
 msgstr "_Относно"
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:924
 msgid "An error occured"
 msgstr "Възникна грешка"
 
-#: ../src/palimpsest/gdu-shell.c:931
+#: ../src/palimpsest/gdu-shell.c:933
 msgid "The operation failed."
 msgstr "Действието приключи неуспешно."
 
-#: ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:936
 msgid "The device is busy."
 msgstr "Устройството е заето."
 
-#: ../src/palimpsest/gdu-shell.c:937
+#: ../src/palimpsest/gdu-shell.c:939
 msgid "The operation was canceled."
 msgstr "Действието беше отменено."
 
-#: ../src/palimpsest/gdu-shell.c:940
+#: ../src/palimpsest/gdu-shell.c:942
 msgid "The daemon is being inhibited."
 msgstr "Демонът не е пуснат."
 
-#: ../src/palimpsest/gdu-shell.c:943
+#: ../src/palimpsest/gdu-shell.c:945
 msgid "An invalid option was passed."
 msgstr "Беше зададена неправилна опция."
 
-#: ../src/palimpsest/gdu-shell.c:946
+#: ../src/palimpsest/gdu-shell.c:948
 msgid "The operation is not supported."
 msgstr "Неподдържано действие."
 
-#: ../src/palimpsest/gdu-shell.c:949
+#: ../src/palimpsest/gdu-shell.c:951
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "Извличането на данните ATA S.M.A.R.T. ще събуди устройството."
 
-#: ../src/palimpsest/gdu-shell.c:952
+#: ../src/palimpsest/gdu-shell.c:954
 msgid "Permission denied."
 msgstr "Липсват права."
 
-#: ../src/palimpsest/gdu-shell.c:991
+#: ../src/palimpsest/gdu-shell.c:993
 msgid "_Details:"
 msgstr "_Подробности:"
 
-#: ../src/palimpsest/gdu-shell.c:1160
+#: ../src/palimpsest/gdu-shell.c:1162
 msgid "_Storage Devices"
 msgstr "_Устройства за съхранение на данни"
-
-#~ msgid "Ignored Drives"
-#~ msgstr "Пренебрегнати устройства"
-
-#~ msgid "Array of drives to ignore"
-#~ msgstr "Списък с устройства, които да бъдат пренебрегнати"
-
-#~ msgid "_New Component"
-#~ msgstr "_Нов елемент"
-
-#, fuzzy
-#~ msgid "Error creating partition for RAID pv"
-#~ msgstr "Грешка при създаване на дял за елемент във физически том за RAID "
-
-#, fuzzy
-#~ msgid "Error creating partition table for LVM2 PV"
-#~ msgstr "Грешка при създаване на таблицата с дялове за физически том LVM2"
-
-#~ msgid "Error creating partition for RAID component"
-#~ msgstr "Грешка при създаване на дял за елемент в RAID масив"
-
-#~ msgid "Error creating partition table for RAID component"
-#~ msgstr "Грешка при създаване на таблицата с дялове за елемент в RAID масив"
-
-#~ msgid "Error creating partition table for component for RAID array"
-#~ msgstr "Грешка при създаване на таблицата с дялове за елемент за RAID масив"

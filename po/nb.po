@@ -3,13 +3,12 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Kjartan Maraas <kmaraas@gnome.org>, 2009-2010.
 #
-#: ../src/gdu-gtk/gdu-error-dialog.c:163
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 2.29.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-11 19:19+0100\n"
-"PO-Revision-Date: 2010-02-11 19:23+0100\n"
+"POT-Creation-Date: 2010-03-05 20:11+0100\n"
+"PO-Revision-Date: 2010-03-06 14:23+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmal <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +22,7 @@ msgstr ""
 #.
 #: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
 #: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:804
-#: ../src/palimpsest/gdu-shell.c:1111
+#: ../src/palimpsest/gdu-shell.c:1113
 msgid "Disk Utility"
 msgstr "Diskverktøy"
 
@@ -196,7 +195,7 @@ msgstr "_Utvid"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
-msgstr ""
+msgstr "Volumgruppe fysisk volum skal legges til i."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
@@ -1496,11 +1495,12 @@ msgid "_Disks"
 msgstr "_Disker"
 
 #. --------------------------------------------------------------------------------
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:702
+#. TODO: Actually make this work
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
 msgid "Use entire disks instead of _partitions"
 msgstr "Bruk hele disker i stedet for _partisjoner"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1509,19 +1509,19 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:869
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:872
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr ""
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:885
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:888
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:895
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1533,7 +1533,7 @@ msgstr[1] ""
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:916
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:919
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr ""
@@ -1619,7 +1619,8 @@ msgstr ""
 #, c-format
 msgid ""
 "Insufficient space: %s is needed but largest contiguous free block is %s."
-msgstr "Ikke nok plass: %s kreves men største sammenhengende ledige blokk er %s."
+msgstr ""
+"Ikke nok plass: %s kreves men største sammenhengende ledige blokk er %s."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:936
@@ -1671,11 +1672,9 @@ msgstr ""
 #. * First %s is the component size e.g. '42 GB'.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:980
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
-msgstr ""
-"En partisjon av type %s vil bli laget og det vil ikke være ledig plass "
-"etterpå."
+msgstr "Et volum av type %s vil bli laget. Det vil ikke være ledig plass etterpå."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1692,10 +1691,9 @@ msgstr ""
 #. * Second %s is the remaining free space after the operation.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:999
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
-msgstr ""
-"En partisjon av type %s vil bli laget. %s vil være tilgjengelig etterpå."
+msgstr "Et volum av type %s vil bli laget. %s vil være tilgjengelig etterpå."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1898,7 +1896,7 @@ msgstr "SMART status:"
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
 #: ../src/palimpsest/gdu-section-drive.c:911
-#: ../src/palimpsest/gdu-section-volumes.c:1916
+#: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Enhet:"
 
@@ -1921,8 +1919,8 @@ msgstr "Fjern fysisk volum fra volumgruppe"
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:857
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:957
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:861
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "Ikke støttet"
@@ -1955,7 +1953,7 @@ msgstr "Posisjon:"
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:473
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
-#: ../src/palimpsest/gdu-section-volumes.c:1905
+#: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "Tilstand:"
 
@@ -2055,18 +2053,18 @@ msgstr "Driver for filsystem ikke installert"
 msgid "Filesystem tools not installed"
 msgstr "Verktøy for filsystem ikke installert"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:955
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:957
 msgid "Unknown error"
 msgstr "Ukjent feil"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
 #, c-format
-msgid "An error occured while performing an operation on \"%s\" (%s): %s"
+msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
 msgstr "En feil oppsto under utføring av operasjon på «%s» (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
 #, c-format
-msgid "An error occured: %s"
+msgid "An error occurred: %s"
 msgstr "En feil oppsto: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:274
@@ -2129,7 +2127,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
 #: ../src/palimpsest/gdu-section-drive.c:649
-#: ../src/palimpsest/gdu-section-volumes.c:368
+#: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_Formater"
 
@@ -2173,7 +2171,7 @@ msgstr "Kryptert, kompatibel med Linux (FAT)"
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
-#: ../src/palimpsest/gdu-section-volumes.c:1720
+#: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
 msgstr "_Navn:"
 
@@ -2266,8 +2264,8 @@ msgid "pid: %d  program: %s"
 msgstr "pid: %d  program: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:923
-#: ../src/gdu-gtk/gdu-gtk.c:1065
+#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:924
+#: ../src/gdu-gtk/gdu-gtk.c:1067
 #, c-format
 msgid "Partition %d on %s"
 msgstr "Partisjon %d på %s"
@@ -2302,7 +2300,7 @@ msgstr "Passordet kan ikke være tomt"
 msgid "Cr_eate"
 msgstr "Oppr_ett"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2447
+#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
 msgstr "Bytt _passord"
 
@@ -2369,47 +2367,47 @@ msgstr ""
 
 #: ../src/gdu-gtk/gdu-gtk.c:765
 msgid "_Remember forever"
-msgstr ""
+msgstr "Husk fo_r alltid"
 
 #: ../src/gdu-gtk/gdu-gtk.c:828
 msgid "Enter Passphrase"
 msgstr ""
 
-#: ../src/gdu-gtk/gdu-gtk.c:956 ../src/gdu/gdu-util.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:957 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr ""
 
-#: ../src/gdu-gtk/gdu-gtk.c:1253
+#: ../src/gdu-gtk/gdu-gtk.c:1255
 msgid "Empty (don't create a file system)"
 msgstr "Tom (ikke lag et filsystem)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1274
+#: ../src/gdu-gtk/gdu-gtk.c:1276
 msgid "Empty"
 msgstr "Tom"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1282
+#: ../src/gdu-gtk/gdu-gtk.c:1284
 msgid "Extended Partition"
 msgstr "Utvidet partisjon"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/gdu-gtk/gdu-gtk.c:1543 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr ""
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1546 ../src/gdu/gdu-drive.c:823
-#: ../src/gdu/gdu-linux-md-drive.c:568
+#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:823
+#: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "GUID partisjonstabell"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1551
+#: ../src/gdu-gtk/gdu-gtk.c:1553
 msgid "Don't partition"
 msgstr "Ikke partisjoner"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/gdu/gdu-util.c:495
+#: ../src/gdu-gtk/gdu-gtk.c:1558 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
@@ -2430,19 +2428,19 @@ msgstr "_Utforming:"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:89
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:95
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:98
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:101
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:104
 msgid "KiB"
@@ -2535,7 +2533,7 @@ msgstr "Kryptert"
 
 #. Translators: shown in the grid for an RAID Component
 #: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
-#: ../src/palimpsest/gdu-section-volumes.c:2173
+#: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID-komponent"
@@ -2680,19 +2678,19 @@ msgid "%s Media"
 msgstr "%s media"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:565
+#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "MBR-partisjonstabell"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:571
+#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Apple partisjonstabell"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:576
+#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "Partisjonert"
 
@@ -2710,53 +2708,53 @@ msgstr "SAS-utvider"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
-msgstr ""
+msgstr "PATA vertsadapter"
 
 #: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
-msgstr ""
+msgstr "SATA vertsadapter"
 
 #: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
-msgstr ""
+msgstr "ATA vertsadapter"
 
 #: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
-msgstr ""
+msgstr "SAS vertsadapter"
 
 #: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
-msgstr ""
+msgstr "SCSI vertsadapter"
 
 #: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
-msgstr ""
+msgstr "Vertsadapter"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+#: ../src/gdu/gdu-linux-lvm2-volume.c:330
 msgid "Logical Volume"
 msgstr "Logisk volum"
 
 #. Translators: VPD name
-#: ../src/gdu/gdu-linux-lvm2-volume.c:334
+#: ../src/gdu/gdu-linux-lvm2-volume.c:333
 msgid "LVM2 Logical Volume"
 msgstr "LVM2 logisk volum"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:372
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:376
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
 msgid "Volume Group"
 msgstr "Volumgruppe"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:380
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
 msgid "%s LVM2 Volume Group"
 msgstr "%s LVM2 volumgruppe"
 
 #. Translators: VPD name when size is not known
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:383
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:393
 msgid "LVM2 Volume Group"
 msgstr "LVM2 volumgruppe"
 
@@ -2775,8 +2773,8 @@ msgstr "%s ledig"
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
 #: ../src/gdu/gdu-volume-hole.c:161
-#: ../src/palimpsest/gdu-section-volumes.c:2187
-#: ../src/palimpsest/gdu-section-volumes.c:2195
+#: ../src/palimpsest/gdu-section-volumes.c:2209
+#: ../src/palimpsest/gdu-section-volumes.c:2217
 msgid "Unallocated Space"
 msgstr "Ikke allokert plass"
 
@@ -2787,14 +2785,14 @@ msgstr "Ikke allokert plass for LVM2 volumgruppe"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:620
-#, c-format, fuzzy
+#: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
+#, fuzzy, c-format
 msgid "%s %s Array"
 msgstr "%s %s enhet"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:625
+#: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, fuzzy, c-format
 msgid "%s Array"
 msgstr "RAID-array"
@@ -2802,59 +2800,59 @@ msgstr "RAID-array"
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
 #.
-#: ../src/gdu/gdu-linux-md-drive.c:596
+#: ../src/gdu/gdu-linux-md-drive.c:600
 #, fuzzy, c-format
 msgid "RAID Array %s (%s)"
 msgstr "RAID-array"
 
 #. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:601
+#: ../src/gdu/gdu-linux-md-drive.c:605
 #, c-format
 msgid "RAID device %s"
 msgstr "RAID-enhet %s"
 
 #. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:608
+#: ../src/gdu/gdu-linux-md-drive.c:612
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
 
-#: ../src/gdu/gdu-linux-md-drive.c:613
+#: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID-array"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1110
+#: ../src/gdu/gdu-linux-md-drive.c:1114
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "Ikke tilkoblet"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1113
+#: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
 msgid "Faulty"
 msgstr ""
 
-#: ../src/gdu/gdu-linux-md-drive.c:1118
+#: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
 msgstr ""
 
-#: ../src/gdu/gdu-linux-md-drive.c:1120
+#: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr ""
 
-#: ../src/gdu/gdu-linux-md-drive.c:1122
+#: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "Blokkert"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1126
+#: ../src/gdu/gdu-linux-md-drive.c:1130
 msgctxt "Linux MD slave state"
 msgid "Partially Synchronized"
 msgstr "Delvis synkronisert"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1128
+#: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Reserve"
@@ -2890,25 +2888,25 @@ msgid "Peripheral Devices"
 msgstr "Eksterne enheter"
 
 #: ../src/gdu/gdu-pool.c:908
-msgid "USB, Firewire and other peripherals"
-msgstr "USB, Firewire og andre eksterne enheter"
+msgid "USB, FireWire and other peripherals"
+msgstr "USB, FireWire og andre eksterne enheter"
 
-#: ../src/gdu/gdu-pool.c:2091
+#: ../src/gdu/gdu-pool.c:2092
 #, c-format
 msgid "Error enumerating devices: %s"
 msgstr "Feil ved opplisting av enheter: %s"
 
-#: ../src/gdu/gdu-pool.c:2117
-#, c-format, fuzzy
+#: ../src/gdu/gdu-pool.c:2118
+#, c-format
 msgid "Error enumerating adapters: %s"
-msgstr "Feil ved opplisting av"
+msgstr "Feil ved opplisting av adaptere: %s"
 
-#: ../src/gdu/gdu-pool.c:2140
+#: ../src/gdu/gdu-pool.c:2141
 #, c-format
 msgid "Error enumerating expanders: %s"
 msgstr "Feil ved opplisting av utvidere: %s"
 
-#: ../src/gdu/gdu-pool.c:2163
+#: ../src/gdu/gdu-pool.c:2164
 #, c-format
 msgid "Error enumerating ports: %s"
 msgstr "Feil ved opplisting av porter: %s"
@@ -3049,7 +3047,7 @@ msgstr "HFS+"
 
 #: ../src/gdu/gdu-util.c:228
 msgid "Linux Unified Key Setup"
-msgstr ""
+msgstr "Linux Unified Key Setup"
 
 #. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
 #: ../src/gdu/gdu-util.c:231
@@ -3171,14 +3169,14 @@ msgstr "iso9660"
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:316
 msgid "Universal Disk Format"
-msgstr ""
+msgstr "Universal Disk Format"
 
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:319
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2169
+#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2191
 msgid "Swap Space"
 msgstr "Swap-område"
 
@@ -3215,12 +3213,12 @@ msgstr "raid"
 #. Translators: long filesystem type for minix
 #: ../src/gdu/gdu-util.c:352
 msgid "Minix"
-msgstr ""
+msgstr "Minix"
 
 #. Translators: filesystem type for minix
 #: ../src/gdu/gdu-util.c:355
 msgid "minix"
-msgstr ""
+msgstr "minix"
 
 #: ../src/gdu/gdu-util.c:369
 msgid "Creating File System"
@@ -3307,9 +3305,8 @@ msgid "Running Extended SMART Self-Test"
 msgstr "Kjører utvidet SMART-selvtest"
 
 #: ../src/gdu/gdu-util.c:411
-#, fuzzy
 msgid "Running Conveyance SMART Self-Test"
-msgstr "Kjører S.M.A.R.T. selvtest"
+msgstr "Kjører Conveyance SMART-selvtest"
 
 #: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
@@ -3533,7 +3530,7 @@ msgstr "NetBSD RAID-partisjon"
 
 #: ../src/gdu/gdu-util.c:488
 #, fuzzy
-msgid "NetBSD Concatenated  Partition"
+msgid "NetBSD Concatenated Partition"
 msgstr "Lag partisjon"
 
 #: ../src/gdu/gdu-util.c:489
@@ -3774,7 +3771,7 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:603
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
-"compatible with other operating systems than Linux and Minix."
+"compatible with operating systems other than Linux and Minix."
 msgstr ""
 
 #: ../src/gdu/gdu-util.c:607
@@ -4037,190 +4034,190 @@ msgid "DISK FAILURE IS IMMINENT"
 msgstr "DISKEN ER I FERD MED Å FEILE"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "CD-ROM Disc"
 msgstr "CD-ROM plate"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "Blank CD-ROM Disc"
 msgstr "Tom CD-ROM plate"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "CD-R Disc"
 msgstr "CD-R plate"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "Blank CD-R Disc"
 msgstr "Tom CD-R plate"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "CD-RW Disc"
 msgstr "CD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "Blank CD-RW Disc"
 msgstr "Tom CD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "DVD-ROM Disc"
 msgstr "DVD-ROM plate"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD-ROM Disc"
 msgstr "Tom DVD-ROM plate"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "DVD-RW Disc"
 msgstr "DVD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD-RW Disc"
 msgstr "Tom DVD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "DVD-RAM Disc"
 msgstr "DVD-RAM plate"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blank DVD-RAM Disc"
 msgstr "Tom DVD-RAM plate"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "DVD+R Disc"
 msgstr "DVD+R plate"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blank DVD+R Disc"
 msgstr "Tom DVD+R plate"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "DVD+RW Disc"
 msgstr "DVD+RW plate"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blank DVD+RW Disc"
 msgstr "Tom DVD+RW plate"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "DVD+R DL Disc"
 msgstr "DVD+R DL plate"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "Blank DVD+R DL Disc"
 msgstr "Tom DVD+R DL plate"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "DVD+RW DL Disc"
 msgstr "DVD+RW DL plate"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "Blank DVD+RW DL Disc"
 msgstr "Tom DVD+RW DL plate"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blu-Ray Disc"
 msgstr "Blu-Ray plate"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blank Blu-Ray Disc"
 msgstr "Tom Blu-Ray plate"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blu-Ray R Disc"
 msgstr "Blu-Ray R plate"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blank Blu-Ray R Disc"
 msgstr "Tom Blu-Ray R plate"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blu-Ray RW Disc"
 msgstr "Blu-Ray RW plate"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blank Blu-Ray RW Disc"
 msgstr "Tom Blu-Ray RW plate"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "HD DVD Disc"
 msgstr "HD DVD plate"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "Blank HD DVD Disc"
 msgstr "Tom HD DVD plate"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "HD DVD-R Disc"
 msgstr "HD DVD-R plate"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "Blank HD DVD-R Disc"
 msgstr "Tom HD DVD-R plate"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "HD DVD-RW Disc"
 msgstr "HD DVD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "Blank HD DVD-RW Disc"
 msgstr "Tom HD DVD-RW plate"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "MO Disc"
 msgstr "MO plate"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "Blank MO Disc"
 msgstr "Tom MO plate"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "MRW Disc"
 msgstr "MRW plate"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "Blank MRW Disc"
 msgstr "Tom MRW plate"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "MRW/W Disc"
 msgstr "MRW/W plate"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "Blank MRW/W Disc"
 msgstr "Tom MRW/W plate"
 
-#: ../src/gdu/gdu-volume.c:276
+#: ../src/gdu/gdu-volume.c:294
 msgid "Blank Optical Disc"
 msgstr "Tom optisk plate"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:286
+#: ../src/gdu/gdu-volume.c:304
 #, c-format
 msgid "%s Extended"
 msgstr "%s utvidet"
 
-#: ../src/gdu/gdu-volume.c:287
+#: ../src/gdu/gdu-volume.c:305
 msgid "Contains logical partitions"
 msgstr "Inneholder logiske partisjoner"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:302
+#: ../src/gdu/gdu-volume.c:320
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s kryptert"
 
-#: ../src/gdu/gdu-volume.c:312
+#: ../src/gdu/gdu-volume.c:330
 msgid "Optical Disc"
 msgstr "Optisk plate"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:318
+#: ../src/gdu/gdu-volume.c:336
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s filsystem"
@@ -4228,7 +4225,7 @@ msgstr "%s filsystem"
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:324
+#: ../src/gdu/gdu-volume.c:342
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s partisjonstabell"
@@ -4236,13 +4233,13 @@ msgstr "%s partisjonstabell"
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:330
+#: ../src/gdu/gdu-volume.c:348
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr ""
 
 #. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:343
+#: ../src/gdu/gdu-volume.c:361
 msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
@@ -4251,7 +4248,7 @@ msgstr "RAID"
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
-#: ../src/gdu/gdu-volume.c:350 ../src/gdu/gdu-volume.c:361
+#: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
 msgid "%s %s Component"
 msgstr "%s %s komponent"
@@ -4259,7 +4256,7 @@ msgstr "%s %s komponent"
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #.
-#: ../src/gdu/gdu-volume.c:354
+#: ../src/gdu/gdu-volume.c:372
 #, c-format
 msgid "Part of \"%s\" array"
 msgstr ""
@@ -4267,7 +4264,7 @@ msgstr ""
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:372
+#: ../src/gdu/gdu-volume.c:390
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s swapområde"
@@ -4275,7 +4272,7 @@ msgstr "%s swapområde"
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:377
+#: ../src/gdu/gdu-volume.c:395
 #, c-format
 msgid "%s Data"
 msgstr "%s data"
@@ -4283,20 +4280,20 @@ msgstr "%s data"
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:383 ../src/gdu/gdu-volume.c:399
+#: ../src/gdu/gdu-volume.c:401 ../src/gdu/gdu-volume.c:417
 #, c-format
 msgid "%s Unrecognized"
 msgstr "%s ikke gjenkjent"
 
 #. Translators: description for a volume of unrecognized use
-#: ../src/gdu/gdu-volume.c:385
+#: ../src/gdu/gdu-volume.c:403
 msgid "Unknown or Unused"
 msgstr "Ukjent eller ubrukt"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:392 ../src/gdu/gdu-volume.c:394
+#: ../src/gdu/gdu-volume.c:410 ../src/gdu/gdu-volume.c:412
 #, c-format
 msgid "%s Partition"
 msgstr "%s partisjon"
@@ -4304,14 +4301,14 @@ msgstr "%s partisjon"
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:430
+#: ../src/gdu/gdu-volume.c:447
 #, c-format
 msgid "Partition %d of %s"
 msgstr "Partisjon %d av %s"
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
-#: ../src/gdu/gdu-volume.c:436
+#: ../src/gdu/gdu-volume.c:453
 #, c-format
 msgid "Partition %d"
 msgstr "Partisjon %d"
@@ -4319,14 +4316,14 @@ msgstr "Partisjon %d"
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:444
+#: ../src/gdu/gdu-volume.c:461
 #, c-format
 msgid "Whole-disk volume on %s"
 msgstr ""
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
-#: ../src/gdu/gdu-volume.c:449
+#: ../src/gdu/gdu-volume.c:466
 msgid "Whole-disk volume"
 msgstr ""
 
@@ -4382,9 +4379,9 @@ msgstr ""
 #. * name (e.g. "SAS Host Adapter").
 #.
 #: ../src/palimpsest/gdu-section-drive.c:189
-#, fuzzy, c-format
+#, c-format
 msgid "PHY %d of %s"
-msgstr "Partisjon %d av %s"
+msgstr "PHY %d av %s"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a Adapter or Expander - The %d is the
@@ -4437,7 +4434,7 @@ msgid "The application is not installed"
 msgstr "Programmet er ikke installert"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-msgid "Error ejecting media"
+msgid "Error ejecting medium"
 msgstr "Feil ved utløsing av medie"
 
 #: ../src/palimpsest/gdu-section-drive.c:565
@@ -4501,7 +4498,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:923
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
-#: ../src/palimpsest/gdu-section-volumes.c:1930
+#: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "Kapasitet:"
 
@@ -4536,14 +4533,14 @@ msgstr "SM_ART-data"
 
 #: ../src/palimpsest/gdu-section-drive.c:975
 msgid "View SMART data and run self-tests"
-msgstr ""
+msgstr "Vis SMART-data og kjør selvtester"
 
 #: ../src/palimpsest/gdu-section-drive.c:984
 msgid "_Eject"
 msgstr "L_øs ut"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-msgid "Eject media from the drive"
+msgid "Eject medium from the drive"
 msgstr "Løs ut medie fra stasjonen"
 
 #: ../src/palimpsest/gdu-section-drive.c:994
@@ -4552,7 +4549,7 @@ msgstr "Try_gg fjerning"
 
 #: ../src/palimpsest/gdu-section-drive.c:995
 msgid "Power down the drive so it can be removed"
-msgstr ""
+msgstr "Slå av stasjonen slik at den kan fjernes"
 
 #: ../src/palimpsest/gdu-section-drive.c:1005
 msgid "Measure drive performance"
@@ -4565,7 +4562,7 @@ msgstr "Mål ytelsen til stasjonen"
 #: ../src/palimpsest/gdu-section-hub.c:161
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d PHYer"
 
 #: ../src/palimpsest/gdu-section-hub.c:137
 msgid "Parallel ATA"
@@ -4620,19 +4617,16 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "Feil ved innlegging av fysisk volum i volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#, fuzzy
 msgid "Error creating PV for VG"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Feil ved oppretting av fysisk volum for volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
-#, fuzzy
 msgid "Error deleting partition for Physical Volume in Volume Group"
-msgstr "Feil under oppretting av partisjonstabell"
+msgstr "Feil under sletting av partisjon for fysisk volum i volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
-#, fuzzy
 msgid "Error removing Physical Volume from Volume Group"
-msgstr "Feil under oppretting av partisjonstabell"
+msgstr "Feil under fjerning av fysisk volum fra volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
 msgid "Are you sure you want the remove the Physical Volume?"
@@ -4684,7 +4678,7 @@ msgstr "St_art volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:707
 msgid "Activate all LVs in the VG"
-msgstr ""
+msgstr "Aktiver alle logiske volum i volumgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
 msgid "St_op Volume Group"
@@ -4692,7 +4686,7 @@ msgstr "St_opp volumgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
 msgid "Deactivate all LVs in the VG"
-msgstr ""
+msgstr "Deaktiver alle logiske volum i volumgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
 msgid "Edit _Name"
@@ -4703,18 +4697,17 @@ msgid "Change the Volume Group name"
 msgstr "Bytt navn på volumgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
-msgid "Edit Ph_ysical Volumes"
-msgstr "Rediger f_ysiske volum"
+msgid "Edit _Physical Volumes"
+msgstr "Rediger _fysiske volum"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
-#, fuzzy
 msgid "Create and remove PVs"
-msgstr "Lag og fjern komponenter"
+msgstr "Lag og fjern fysiske volumer"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:84
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr ""
+msgstr "Kjører ikke. Delvis sammensatt"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:92
 msgctxt "RAID status"
@@ -4724,12 +4717,12 @@ msgstr "Kjører ikke"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:94
 msgctxt "RAID status"
 msgid "Not running, can only start degraded"
-msgstr ""
+msgstr "Kjører ikke. Kan kun starte i nedgradert modus"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:96
 msgctxt "RAID status"
 msgid "Not running, not enough components to start"
-msgstr ""
+msgstr "Kjører ikke. Ikke nok komponenter til å starte"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:114
 msgctxt "RAID status"
@@ -4897,380 +4890,379 @@ msgstr "Lag og fjern komponenter"
 msgid "Measure RAID array performance"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:112
+#: ../src/palimpsest/gdu-section-volumes.c:115
 msgid "Error unmounting volume"
 msgstr "Feil ved avmontering av volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:168
+#: ../src/palimpsest/gdu-section-volumes.c:171
 msgid "Error mounting volume"
 msgstr "Feil ved montering av volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:225
+#: ../src/palimpsest/gdu-section-volumes.c:228
 msgid "Error deleting partition"
 msgstr "Feil ved sletting av partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:260
+#: ../src/palimpsest/gdu-section-volumes.c:263
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på at du vil slette partisjonen?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:261
-#: ../src/palimpsest/gdu-section-volumes.c:1787
+#: ../src/palimpsest/gdu-section-volumes.c:264
+#: ../src/palimpsest/gdu-section-volumes.c:1788
 msgid "_Delete"
 msgstr "_Slett"
 
-#: ../src/palimpsest/gdu-section-volumes.c:314
+#: ../src/palimpsest/gdu-section-volumes.c:317
 msgid "Error creating filesystem"
 msgstr "Feil ved oppretting av filsystem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:367
+#: ../src/palimpsest/gdu-section-volumes.c:370
 msgid "Are you sure you want to format the volume?"
 msgstr "Er du sikker på at du vil formatere volumet?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:425
+#: ../src/palimpsest/gdu-section-volumes.c:428
 msgid "Error modifying partition"
 msgstr "Feil under endring av partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:516
+#: ../src/palimpsest/gdu-section-volumes.c:519
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "Er du sikker på at du vil glemme passordet?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:517
+#: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
 msgstr "_Glem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:547
+#: ../src/palimpsest/gdu-section-volumes.c:550
 msgid "Error locking LUKS volume"
 msgstr "Feil under låsing av LUKS-volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:670
+#: ../src/palimpsest/gdu-section-volumes.c:673
 msgid "Error unlocking LUKS volume"
 msgstr "Feil under opplåsing av LUKS-volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:966
+#: ../src/palimpsest/gdu-section-volumes.c:969
 msgid "Error creating partition"
 msgstr "Feil ved oppretting av partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1137
+#: ../src/palimpsest/gdu-section-volumes.c:1140
 msgid "Error changing label"
 msgstr "Feil under endring av etikett"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1192
+#: ../src/palimpsest/gdu-section-volumes.c:1195
 msgid "Choose a new filesystem label."
 msgstr "Velg en ny etikett for filsystemet."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1193
+#: ../src/palimpsest/gdu-section-volumes.c:1196
 msgid "_Label:"
 msgstr "_Etikett:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1238
+#: ../src/palimpsest/gdu-section-volumes.c:1241
 msgid "Error checking filesystem on volume"
 msgstr "Feil under sjekking av filsystem på volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1265
+#: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "Filsystemsjekk på «%s» (%s) fullført"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1269
+#: ../src/palimpsest/gdu-section-volumes.c:1272
 msgid "File system is clean."
 msgstr "Filsystemet er rent."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1272
+#: ../src/palimpsest/gdu-section-volumes.c:1275
 msgid "File system is <b>NOT</b> clean."
 msgstr "Filsystemet er <b>IKKE</b> rent."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1384
+#: ../src/palimpsest/gdu-section-volumes.c:1387
 #, c-format
 msgid "Error spawning nautilus: %s"
 msgstr "Feil under oppstart av nautilus: %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1432
+#: ../src/palimpsest/gdu-section-volumes.c:1435
 msgid "Error creating Logical Volume"
 msgstr "Feil under oppretting av logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1585
+#: ../src/palimpsest/gdu-section-volumes.c:1588
 msgid "Error stopping Logical Volume"
 msgstr "Feil under stopp av logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1631
+#: ../src/palimpsest/gdu-section-volumes.c:1634
 msgid "Error starting Logical Volume"
 msgstr "Feil under start av logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1680
+#: ../src/palimpsest/gdu-section-volumes.c:1683
 msgid "Error setting name for Logical Volume"
 msgstr "Feil ved innlegging av navn for logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1719
+#: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
 msgstr "Velg et nytt navn for det logiske volumet."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1753
+#: ../src/palimpsest/gdu-section-volumes.c:1754
 msgid "Error deleting Logical Volume"
 msgstr "Feil under sletting av logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1786
+#: ../src/palimpsest/gdu-section-volumes.c:1787
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "Er du sikker på at du vil slette det logiske volumet?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1903
+#: ../src/palimpsest/gdu-section-volumes.c:1906
 msgid "Volume Name:"
 msgstr "Navn på volum:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1909
+#: ../src/palimpsest/gdu-section-volumes.c:1912
 msgid "Usage:"
 msgstr "Bruk:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1919
+#: ../src/palimpsest/gdu-section-volumes.c:1922
 msgid "Partition Type:"
 msgstr "Type partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1923
+#: ../src/palimpsest/gdu-section-volumes.c:1928
 msgid "Partition Label:"
 msgstr "Etikett for partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1926
+#: ../src/palimpsest/gdu-section-volumes.c:1931
 msgid "Partition Flags:"
 msgstr "Flagg for partisjon:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1934
+#: ../src/palimpsest/gdu-section-volumes.c:1956
 msgid "Type:"
 msgstr "Type:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1937
+#: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
 msgstr "Tilgjengelig:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1940
+#: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
 msgstr "Etikett:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1943
+#: ../src/palimpsest/gdu-section-volumes.c:1965
 msgid "Mount Point:"
 msgstr "Monteringspunkt:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1964
+#: ../src/palimpsest/gdu-section-volumes.c:1986
 msgctxt "LVM2 LV State"
 msgid "Running"
 msgstr "Kjører"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1965
+#: ../src/palimpsest/gdu-section-volumes.c:1987
 msgctxt "LVM2 LV State"
 msgid "Not Running"
 msgstr "Kjører ikke"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2004
+#: ../src/palimpsest/gdu-section-volumes.c:2026
 msgid "Bootable"
 msgstr "Oppstartbar"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2007
+#: ../src/palimpsest/gdu-section-volumes.c:2029
 msgid "Required"
 msgstr "Kreves"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2010
+#: ../src/palimpsest/gdu-section-volumes.c:2032
 msgid "Allocated"
 msgstr "Allokert"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2013
+#: ../src/palimpsest/gdu-section-volumes.c:2035
 msgid "Allow Read"
 msgstr "Tillat lesing"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2016
+#: ../src/palimpsest/gdu-section-volumes.c:2038
 msgid "Allow Write"
 msgstr "Tillat skriving"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2019
+#: ../src/palimpsest/gdu-section-volumes.c:2041
 msgid "Boot Code PIC"
 msgstr ""
 
-#: ../src/palimpsest/gdu-section-volumes.c:2093
+#: ../src/palimpsest/gdu-section-volumes.c:2115
 msgid "Filesystem"
 msgstr "Filsystem"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2126
+#: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "View files on the volume using a SFTP network share"
 msgstr "Vis filer på volumet via en delt SFTP-ressurs"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:2133
+#: ../src/palimpsest/gdu-section-volumes.c:2155
 msgid "View files on the volume"
 msgstr "Vis filer på volumet"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2140
+#: ../src/palimpsest/gdu-section-volumes.c:2162
 #, c-format
 msgid "Mounted at %s"
 msgstr "Montert på %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2148
+#: ../src/palimpsest/gdu-section-volumes.c:2170
 msgid "Not Mounted"
 msgstr "Ikke montert"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2158
+#: ../src/palimpsest/gdu-section-volumes.c:2180
 msgid "Encrypted Volume (Locked)"
 msgstr "Kryptert volum (låst)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2161
+#: ../src/palimpsest/gdu-section-volumes.c:2183
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Kryptert volum (ikke låst)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2174
+#: ../src/palimpsest/gdu-section-volumes.c:2196
 #, fuzzy
 msgid "Go to array"
 msgstr "Stopp"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2182
-#, fuzzy
+#: ../src/palimpsest/gdu-section-volumes.c:2204
 msgid "Container for Logical Partitions"
-msgstr "Inneholder logiske partisjoner"
+msgstr "Kontainer for logiske partisjoner"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2290
+#: ../src/palimpsest/gdu-section-volumes.c:2321
 msgid "Logical _Volumes"
 msgstr "Logiske _volumer"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2292
+#: ../src/palimpsest/gdu-section-volumes.c:2323
 msgid "_Volumes"
 msgstr "_Volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2335
+#: ../src/palimpsest/gdu-section-volumes.c:2387
 msgid "_Mount Volume"
 msgstr "_Monter volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2336
+#: ../src/palimpsest/gdu-section-volumes.c:2388
 msgid "Mount the volume"
 msgstr "Monter volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2345
+#: ../src/palimpsest/gdu-section-volumes.c:2397
 msgid "Un_mount Volume"
 msgstr "Av_monter volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2346
+#: ../src/palimpsest/gdu-section-volumes.c:2398
 msgid "Unmount the volume"
 msgstr "Avmonter volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2355
+#: ../src/palimpsest/gdu-section-volumes.c:2407
 msgid "Fo_rmat Volume"
 msgstr "Fo_rmater volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2356
+#: ../src/palimpsest/gdu-section-volumes.c:2408
 msgid "Erase or format the volume"
 msgstr "Slett eller formater volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2365
+#: ../src/palimpsest/gdu-section-volumes.c:2417
 msgid "_Check Filesystem"
 msgstr "_Sjekk filsystem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2366
+#: ../src/palimpsest/gdu-section-volumes.c:2418
 msgid "Check and repair the filesystem"
 msgstr "Sjekk og reparer filsystemet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2376
+#: ../src/palimpsest/gdu-section-volumes.c:2428
 msgid "Edit Filesystem _Label"
 msgstr "Rediger etikett for fi_lsystem"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2377
+#: ../src/palimpsest/gdu-section-volumes.c:2429
 msgid "Change the label of the filesystem"
 msgstr "Bytt etikett på filsystemet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2386
+#: ../src/palimpsest/gdu-section-volumes.c:2438
 msgid "Ed_it Partition"
 msgstr "Red_iger partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2387
+#: ../src/palimpsest/gdu-section-volumes.c:2439
 msgid "Change partition type, label and flags"
 msgstr "Bytt partisjonstype, etikett og flagg"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2396
+#: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "D_elete Partition"
 msgstr "Sl_ett partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2397
+#: ../src/palimpsest/gdu-section-volumes.c:2449
 msgid "Delete the partition"
 msgstr "Slett partisjonen"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2406
+#: ../src/palimpsest/gdu-section-volumes.c:2458
 msgid "_Create Partition"
 msgstr "_Lag partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2407
+#: ../src/palimpsest/gdu-section-volumes.c:2459
 msgid "Create a new partition"
 msgstr "Lag en ny partisjon"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2416
+#: ../src/palimpsest/gdu-section-volumes.c:2468
 msgid "_Lock Volume"
 msgstr "_Lås volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2417
+#: ../src/palimpsest/gdu-section-volumes.c:2469
 msgid "Make encrypted data unavailable"
 msgstr "Gjør krypterte data utilgjengelig"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2426
+#: ../src/palimpsest/gdu-section-volumes.c:2478
 msgid "Un_lock Volume"
 msgstr "_Lås opp volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2427
+#: ../src/palimpsest/gdu-section-volumes.c:2479
 msgid "Make encrypted data available"
 msgstr "Gjør krypterte data tilgjengelig"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2436
+#: ../src/palimpsest/gdu-section-volumes.c:2488
 msgid "Forge_t Passphrase"
 msgstr "Glem pass_ord"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2437
+#: ../src/palimpsest/gdu-section-volumes.c:2489
 msgid "Delete passphrase from keyring"
 msgstr "Slett passord fra nøkkelring"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2448
+#: ../src/palimpsest/gdu-section-volumes.c:2500
 msgid "Change passphrase"
 msgstr "Bytt passord"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2457
+#: ../src/palimpsest/gdu-section-volumes.c:2509
 msgid "_Create Logical Volume"
 msgstr "_Lag logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2458
+#: ../src/palimpsest/gdu-section-volumes.c:2510
 msgid "Create a new logical volume"
 msgstr "Lag et nytt logisk volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2467
+#: ../src/palimpsest/gdu-section-volumes.c:2519
 msgid "S_tart Volume"
 msgstr "S_tart volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2468
+#: ../src/palimpsest/gdu-section-volumes.c:2520
 msgid "Activate the Logical Volume"
 msgstr "Aktiver det logiske volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2478
+#: ../src/palimpsest/gdu-section-volumes.c:2530
 msgid "Edit Vol_ume Name"
 msgstr "Rediger navn på vol_um"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2479
+#: ../src/palimpsest/gdu-section-volumes.c:2531
 msgid "Change the name of the volume"
 msgstr "Bytt navn på volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2488
+#: ../src/palimpsest/gdu-section-volumes.c:2540
 msgid "D_elete Volume"
 msgstr "Sl_ett volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2489
+#: ../src/palimpsest/gdu-section-volumes.c:2541
 msgid "Delete the Logical Volume"
 msgstr "Slett det logiske volumet"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2498
+#: ../src/palimpsest/gdu-section-volumes.c:2550
 msgid "Sto_p Volume"
 msgstr "Sto_pp volum"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2499
+#: ../src/palimpsest/gdu-section-volumes.c:2551
 msgid "Deactivate the Logical Volume"
 msgstr "Slå av det logiske volumet"
 
@@ -5336,96 +5328,96 @@ msgstr "Feil ved tilkobling til «%s»"
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: ../src/palimpsest/gdu-shell.c:834
+#: ../src/palimpsest/gdu-shell.c:836
 msgid "_File"
 msgstr "_Fil"
 
-#: ../src/palimpsest/gdu-shell.c:835
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "Connect to _Server..."
 msgstr "Koble til _tjener..."
 
-#: ../src/palimpsest/gdu-shell.c:835
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "Manage storage devices on another machine"
 msgstr "Håndter lagringsenheter på en annen maskin"
 
-#: ../src/palimpsest/gdu-shell.c:836
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "_Create"
 msgstr "_Lag"
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:839
 #, fuzzy
 msgid "_RAID Array..."
 msgstr "_RAID-array..."
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:839
 #, fuzzy
 msgid "Create a RAID array"
 msgstr "Lag RAID-sett"
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: ../src/palimpsest/gdu-shell.c:839 ../src/palimpsest/gdu-shell.c:842
+#: ../src/palimpsest/gdu-shell.c:841 ../src/palimpsest/gdu-shell.c:844
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: ../src/palimpsest/gdu-shell.c:841
+#: ../src/palimpsest/gdu-shell.c:843
 msgid "_Quit"
 msgstr "A_vslutt"
 
-#: ../src/palimpsest/gdu-shell.c:841
+#: ../src/palimpsest/gdu-shell.c:843
 msgid "Quit"
 msgstr "Avslutt"
 
-#: ../src/palimpsest/gdu-shell.c:842
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "Get Help on Disk Utility"
 msgstr "Vis hjelp for diskverktøy"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "_About"
 msgstr "_Om"
 
-#: ../src/palimpsest/gdu-shell.c:922
+#: ../src/palimpsest/gdu-shell.c:924
 msgid "An error occured"
 msgstr "En feil oppsto"
 
-#: ../src/palimpsest/gdu-shell.c:931
+#: ../src/palimpsest/gdu-shell.c:933
 msgid "The operation failed."
 msgstr "Operasjonen feilet."
 
-#: ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:936
 msgid "The device is busy."
 msgstr "Enheten er opptatt."
 
-#: ../src/palimpsest/gdu-shell.c:937
+#: ../src/palimpsest/gdu-shell.c:939
 msgid "The operation was canceled."
 msgstr "Operasjonen ble avbrutt."
 
-#: ../src/palimpsest/gdu-shell.c:940
+#: ../src/palimpsest/gdu-shell.c:942
 msgid "The daemon is being inhibited."
 msgstr "Tjenesten blir hindret."
 
-#: ../src/palimpsest/gdu-shell.c:943
+#: ../src/palimpsest/gdu-shell.c:945
 msgid "An invalid option was passed."
 msgstr "Et ugyldig flagg ble gitt."
 
-#: ../src/palimpsest/gdu-shell.c:946
+#: ../src/palimpsest/gdu-shell.c:948
 msgid "The operation is not supported."
 msgstr "Operasjonen er ikke støttet."
 
-#: ../src/palimpsest/gdu-shell.c:949
+#: ../src/palimpsest/gdu-shell.c:951
 msgid "Getting ATA SMART data would wake up the device."
 msgstr ""
 
-#: ../src/palimpsest/gdu-shell.c:952
+#: ../src/palimpsest/gdu-shell.c:954
 msgid "Permission denied."
 msgstr "Tilgang nektet."
 
-#: ../src/palimpsest/gdu-shell.c:991
+#: ../src/palimpsest/gdu-shell.c:993
 msgid "_Details:"
 msgstr "_Detaljer:"
 
-#: ../src/palimpsest/gdu-shell.c:1160
+#: ../src/palimpsest/gdu-shell.c:1162
 msgid "_Storage Devices"
 msgstr "_Lagringsenheter"

@@ -94,6 +94,7 @@ gboolean gdu_device_is_linux_lvm2_lv (GduDevice *device);
 gboolean gdu_device_is_linux_lvm2_pv (GduDevice *device);
 gboolean gdu_device_is_linux_dmmp (GduDevice *device);
 gboolean gdu_device_is_linux_dmmp_component (GduDevice *device);
+gboolean gdu_device_is_linux_loop (GduDevice *device);
 gboolean gdu_device_is_mounted (GduDevice *device);
 const char *gdu_device_get_mount_path (GduDevice *device);
 char **gdu_device_get_mount_paths (GduDevice *device);
@@ -204,6 +205,8 @@ const char *gdu_device_linux_dmmp_component_get_holder (GduDevice *device);
 const char *gdu_device_linux_dmmp_get_name (GduDevice *device);
 char **gdu_device_linux_dmmp_get_slaves (GduDevice *device);
 const char *gdu_device_linux_dmmp_get_parameters (GduDevice *device);
+
+const char *gdu_device_linux_loop_get_filename (GduDevice *device);
 
 gboolean      gdu_device_drive_ata_smart_get_is_available (GduDevice *device);
 guint64       gdu_device_drive_ata_smart_get_time_collected (GduDevice *device);

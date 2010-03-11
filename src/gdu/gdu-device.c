@@ -75,6 +75,7 @@ typedef struct
   gboolean device_is_linux_lvm2_pv;
   gboolean device_is_linux_dmmp;
   gboolean device_is_linux_dmmp_component;
+  gboolean device_is_linux_loop;
   char **device_mount_paths;
   uid_t device_mounted_by_uid;
   gboolean device_presentation_hide;
@@ -192,6 +193,8 @@ typedef struct
   gchar **linux_dmmp_slaves;
   gchar *linux_dmmp_parameters;
 
+  gchar *linux_loop_filename;
+
 } DeviceProperties;
 
 static void
@@ -260,6 +263,8 @@ collect_props (const char *key,
     props->device_is_linux_dmmp = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceIsLinuxDmmpComponent") == 0)
     props->device_is_linux_dmmp_component = g_value_get_boolean (value);
+  else if (strcmp (key, "DeviceIsLinuxLoop") == 0)
+    props->device_is_linux_loop = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceIsMounted") == 0)
     props->device_is_mounted = g_value_get_boolean (value);
   else if (strcmp (key, "DeviceMountPaths") == 0)
@@ -523,6 +528,9 @@ collect_props (const char *key,
   else if (strcmp (key, "LinuxDmmpParameters") == 0)
     props->linux_dmmp_parameters = g_strdup (g_value_get_string (value));
 
+  else if (strcmp (key, "LinuxLoopFilename") == 0)
+    props->linux_loop_filename = g_strdup (g_value_get_string (value));
+
   else
     handled = FALSE;
 
@@ -604,6 +612,8 @@ device_properties_free (DeviceProperties *props)
   g_free (props->linux_dmmp_name);
   g_strfreev (props->linux_dmmp_slaves);
   g_free (props->linux_dmmp_parameters);
+
+  g_free (props->linux_loop_filename);
 
   g_free (props);
 }
@@ -1039,6 +1049,12 @@ gboolean
 gdu_device_is_linux_dmmp_component (GduDevice *device)
 {
         return device->priv->props->device_is_linux_dmmp_component;
+}
+
+gboolean
+gdu_device_is_linux_loop (GduDevice *device)
+{
+        return device->priv->props->device_is_linux_loop;
 }
 
 gboolean
@@ -1615,6 +1631,12 @@ const char *
 gdu_device_linux_dmmp_get_parameters (GduDevice *device)
 {
         return device->priv->props->linux_dmmp_parameters;
+}
+
+const char *
+gdu_device_linux_loop_get_filename (GduDevice *device)
+{
+        return device->priv->props->linux_loop_filename;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

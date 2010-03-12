@@ -545,7 +545,6 @@ help_contents_action_callback (GtkAction *action, gpointer user_data)
         //gnome_help_display ("gnome-disk-utility.xml", NULL, NULL);
         g_warning ("TODO: launch help");
 }
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct {
@@ -826,7 +825,9 @@ static const gchar *ui =
         "      <menuitem action='quit'/>"
         "    </menu>"
         "    <menu action='help'>"
+#if 0
         "      <menuitem action='contents'/>"
+#endif
         "      <menuitem action='about'/>"
         "    </menu>"
         "  </menubar>"

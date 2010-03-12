@@ -1032,45 +1032,51 @@ render_element (GduVolumeGrid *grid,
         gdouble text_selected_not_focused_red;
         gdouble text_selected_not_focused_green;
         gdouble text_selected_not_focused_blue;
+        GtkStyle *style;
 
         need_animation_timeout = FALSE;
 
-        fill_red     = 1;
-        fill_green   = 1;
-        fill_blue    = 1;
-        fill_selected_red     = 0.40;
-        fill_selected_green   = 0.60;
-        fill_selected_blue    = 0.80;
-        fill_selected_not_focused_red     = 0.60;
-        fill_selected_not_focused_green   = 0.60;
-        fill_selected_not_focused_blue    = 0.60;
-        focus_rect_red     = 0.75;
-        focus_rect_green   = 0.75;
-        focus_rect_blue    = 0.75;
-        focus_rect_selected_red     = 0.70;
-        focus_rect_selected_green   = 0.70;
-        focus_rect_selected_blue    = 0.80;
-        focus_rect_selected_not_focused_red     = 0.70;
-        focus_rect_selected_not_focused_green   = 0.70;
-        focus_rect_selected_not_focused_blue    = 0.70;
-        stroke_red   = 0.75;
-        stroke_green = 0.75;
-        stroke_blue  = 0.75;
-        stroke_selected_red   = 0.3;
-        stroke_selected_green = 0.45;
-        stroke_selected_blue  = 0.6;
-        stroke_selected_not_focused_red   = 0.45;
-        stroke_selected_not_focused_green = 0.45;
-        stroke_selected_not_focused_blue  = 0.45;
-        text_red     = 0;
-        text_green   = 0;
-        text_blue    = 0;
-        text_selected_red     = 1;
-        text_selected_green   = 1;
-        text_selected_blue    = 1;
-        text_selected_not_focused_red     = 1;
-        text_selected_not_focused_green   = 1;
-        text_selected_not_focused_blue    = 1;
+        style = gtk_widget_get_style (GTK_WIDGET (grid));
+
+        fill_red   = style->base[GTK_STATE_NORMAL].red   / 65535.0;
+        fill_green = style->base[GTK_STATE_NORMAL].green / 65535.0;
+        fill_blue  = style->base[GTK_STATE_NORMAL].blue  / 65535.0;
+        fill_selected_red   = style->base[GTK_STATE_SELECTED].red   / 65535.0;
+        fill_selected_green = style->base[GTK_STATE_SELECTED].green / 65535.0;
+        fill_selected_blue  = style->base[GTK_STATE_SELECTED].blue  / 65535.0;
+        fill_selected_not_focused_red   = style->base[GTK_STATE_ACTIVE].red   / 65535.0;
+        fill_selected_not_focused_green = style->base[GTK_STATE_ACTIVE].green / 65535.0;
+        fill_selected_not_focused_blue  = style->base[GTK_STATE_ACTIVE].blue  / 65535.0;
+
+        stroke_red   = fill_red   * 0.75;
+        stroke_green = fill_green * 0.75;
+        stroke_blue  = fill_blue  * 0.75;
+        stroke_selected_red   = fill_selected_red   * 0.75;
+        stroke_selected_green = fill_selected_green * 0.75;
+        stroke_selected_blue  = fill_selected_blue  * 0.75;
+        stroke_selected_not_focused_red   = fill_selected_not_focused_red   * 0.75;
+        stroke_selected_not_focused_green = fill_selected_not_focused_green * 0.75;
+        stroke_selected_not_focused_blue  = fill_selected_not_focused_blue  * 0.75;
+
+        focus_rect_red   = style->text_aa[GTK_STATE_NORMAL].red   / 65535.0;
+        focus_rect_green = style->text_aa[GTK_STATE_NORMAL].green / 65535.0;
+        focus_rect_blue  = style->text_aa[GTK_STATE_NORMAL].blue  / 65535.0;
+        focus_rect_selected_red   = style->text_aa[GTK_STATE_SELECTED].red   / 65535.0;
+        focus_rect_selected_green = style->text_aa[GTK_STATE_SELECTED].green / 65535.0;
+        focus_rect_selected_blue  = style->text_aa[GTK_STATE_SELECTED].blue  / 65535.0;
+        focus_rect_selected_not_focused_red   = style->text_aa[GTK_STATE_ACTIVE].red   / 65535.0;
+        focus_rect_selected_not_focused_green = style->text_aa[GTK_STATE_ACTIVE].green / 65535.0;
+        focus_rect_selected_not_focused_blue  = style->text_aa[GTK_STATE_ACTIVE].blue  / 65535.0;
+
+        text_red   = style->fg[GTK_STATE_NORMAL].red   / 65535.0;
+        text_green = style->fg[GTK_STATE_NORMAL].green / 65535.0;
+        text_blue  = style->fg[GTK_STATE_NORMAL].blue  / 65535.0;
+        text_selected_red   = style->fg[GTK_STATE_SELECTED].red   / 65535.0;
+        text_selected_green = style->fg[GTK_STATE_SELECTED].green / 65535.0;
+        text_selected_blue  = style->fg[GTK_STATE_SELECTED].blue  / 65535.0;
+        text_selected_not_focused_red   = style->fg[GTK_STATE_ACTIVE].red   / 65535.0;
+        text_selected_not_focused_green = style->fg[GTK_STATE_ACTIVE].green / 65535.0;
+        text_selected_not_focused_blue  = style->fg[GTK_STATE_ACTIVE].blue  / 65535.0;
 
 #if 0
         g_debug ("rendering element: x=%d w=%d",

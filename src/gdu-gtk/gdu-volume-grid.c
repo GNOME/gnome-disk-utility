@@ -1447,7 +1447,7 @@ render_slice (GduVolumeGrid *grid,
 
                 is_selected = FALSE;
                 is_focused = FALSE;
-                is_grid_focused = GTK_WIDGET_HAS_FOCUS (grid);
+                is_grid_focused = gtk_widget_has_focus (GTK_WIDGET (grid));
 
                 if (element == grid->priv->selected)
                         is_selected = TRUE;

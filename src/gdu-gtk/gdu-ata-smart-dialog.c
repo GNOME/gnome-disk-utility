@@ -680,7 +680,7 @@ get_grey_color (GtkTreeView *tree_view,
         tree_selection = gtk_tree_view_get_selection (tree_view);
         style = gtk_widget_get_style (GTK_WIDGET (tree_view));
         if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
-                if (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (tree_view)))
+                if (gtk_widget_has_focus (GTK_WIDGET (tree_view)))
                         state = GTK_STATE_SELECTED;
                 else
                         state = GTK_STATE_ACTIVE;

@@ -681,7 +681,7 @@ disk_name_data_func (GtkCellLayout   *cell_layout,
         /* This color business shouldn't be this hard... */
         style = gtk_widget_get_style (GTK_WIDGET (widget->priv->tree_view));
         if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
-                if (GTK_WIDGET_HAS_FOCUS (GTK_WIDGET (widget->priv->tree_view)))
+                if (gtk_widget_has_focus (GTK_WIDGET (widget->priv->tree_view)))
                         state = GTK_STATE_SELECTED;
                 else
                         state = GTK_STATE_ACTIVE;

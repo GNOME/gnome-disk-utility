@@ -641,7 +641,8 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
                                    _("512 KiB"));
         gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
                                    _("1 MiB"));
-        dialog->priv->stripe_size = 64 * 1024;
+        /* keep in sync with gtk_combo_box_set_active() on stripe_size_combo_box below */
+        dialog->priv->stripe_size = 512 * 1024;
         g_signal_connect (combo_box,
                           "changed",
                           G_CALLBACK (on_stripe_size_combo_box_changed),
@@ -733,7 +734,8 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 
         /* Calls on_level_combo_box_changed() which calls update() */
         gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->priv->level_combo_box), 0);
-        gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->priv->stripe_size_combo_box), 4);
+        /* keep in sync with "..stripe_size = 512 * 1024;" above */
+        gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->priv->stripe_size_combo_box), 7);
 
         /* select a sane size for the dialog and allow resizing */
         gtk_widget_set_size_request (GTK_WIDGET (dialog), 500, 550);

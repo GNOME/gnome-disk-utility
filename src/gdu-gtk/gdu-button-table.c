@@ -252,100 +252,6 @@ on_button_element_changed (GduButtonElement *element,
                            ElementData       *data)
 {
         do_relayout (data->table);
-#if 0
-        gchar *s;
-        GIcon *icon;
-        const gchar *text;
-        const gchar *action_text;
-        const gchar *action_uri;
-        const gchar *action_tooltip;
-        guint64 time;
-        gdouble progress;
-
-        s = g_strdup_printf ("<span fgcolor='#404040'>%s</span>",
-                             gdu_button_element_get_heading (element));
-        gtk_label_set_markup (GTK_LABEL (data->heading_label), s);
-        g_free (s);
-
-        text = gdu_button_element_get_text (element);
-        if (text != NULL) {
-                gtk_label_set_markup (GTK_LABEL (data->label), text);
-                gtk_widget_set_no_show_all (data->label, FALSE);
-                gtk_widget_show (data->label);
-        } else {
-                gtk_widget_set_no_show_all (data->label, TRUE);
-                gtk_widget_hide (data->label);
-        }
-
-        time = gdu_button_element_get_time (element);
-        if (time > 0) {
-                GTimeVal time_val;
-                time_val.tv_sec = time;
-                time_val.tv_usec = 0;
-                gdu_time_label_set_time (GDU_TIME_LABEL (data->time_label), &time_val);
-                gtk_widget_set_no_show_all (data->time_label, FALSE);
-                gtk_widget_show (data->time_label);
-        } else {
-                gtk_widget_set_no_show_all (data->time_label, TRUE);
-                gtk_widget_hide (data->time_label);
-        }
-
-        icon = gdu_button_element_get_icon (element);
-        if (icon != NULL) {
-                gtk_image_set_from_gicon (GTK_IMAGE (data->image),
-                                          icon,
-                                          GTK_ICON_SIZE_MENU);
-                gtk_widget_set_no_show_all (data->image, FALSE);
-                gtk_widget_show (data->image);
-                g_object_unref (icon);
-        } else {
-                gtk_widget_set_no_show_all (data->image, TRUE);
-                gtk_widget_hide (data->image);
-        }
-
-        action_text = gdu_button_element_get_action_text (element);
-        action_uri = gdu_button_element_get_action_uri (element);
-        action_tooltip = gdu_button_element_get_action_tooltip (element);
-
-        if (action_text != NULL) {
-                s = g_strdup_printf ("<a href=\"%s\" title=\"%s\">%s</a>",
-                                     action_uri != NULL ? action_uri : "",
-                                     action_tooltip != NULL ? action_tooltip : "",
-                                     action_text);
-                gtk_label_set_markup (GTK_LABEL (data->action_label), s);
-                g_free (s);
-                gtk_widget_set_no_show_all (data->action_label, FALSE);
-                gtk_widget_set_no_show_all (data->action_hyphen_label, FALSE);
-                gtk_widget_show (data->action_label);
-                gtk_widget_show (data->action_hyphen_label);
-        } else {
-                gtk_widget_set_no_show_all (data->action_label, TRUE);
-                gtk_widget_set_no_show_all (data->action_hyphen_label, TRUE);
-                gtk_widget_hide (data->action_label);
-                gtk_widget_hide (data->action_hyphen_label);
-        }
-
-        if (gdu_button_element_get_is_spinning (element)) {
-                gdu_spinner_start (GDU_SPINNER (data->spinner));
-                gtk_widget_set_no_show_all (data->spinner, FALSE);
-                gtk_widget_show (data->spinner);
-        } else {
-                gdu_spinner_stop (GDU_SPINNER (data->spinner));
-                gtk_widget_set_no_show_all (data->spinner, TRUE);
-                gtk_widget_hide (data->spinner);
-        }
-
-        progress = gdu_button_element_get_progress (element);
-        if (progress >= 0.0) {
-                gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->progress_bar),
-                                               progress);
-                gtk_widget_set_no_show_all (data->progress_bar, FALSE);
-                gtk_widget_show (data->progress_bar);
-        } else {
-                gtk_widget_set_no_show_all (data->progress_bar, TRUE);
-                gtk_widget_hide (data->progress_bar);
-        }
-#endif
 }
 
 static void
@@ -357,7 +263,8 @@ on_button_clicked (GtkButton  *button,
 }
 
 static GtkWidget *
-create_button (const gchar *icon_name,
+create_button (GtkWidget   *widget,
+               const gchar *icon_name,
                const gchar *button_primary,
                const gchar *button_secondary)
 {
@@ -366,6 +273,9 @@ create_button (const gchar *icon_name,
         GtkWidget *image;
         GtkWidget *button;
         gchar *s;
+        gchar color[16];
+
+        gdu_util_get_mix_color (widget, GTK_STATE_NORMAL, color, sizeof (color));
 
         image = gtk_image_new_from_icon_name (icon_name,
                                               GTK_ICON_SIZE_BUTTON);
@@ -377,8 +287,9 @@ create_button (const gchar *icon_name,
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_label_set_single_line_mode (GTK_LABEL (label), FALSE);
         s = g_strdup_printf ("%s\n"
-                             "<span fgcolor='#404040'><small>%s</small></span>",
+                             "<span fgcolor='%s'><small>%s</small></span>",
                              button_primary,
+                             color,
                              button_secondary);
         gtk_label_set_markup (GTK_LABEL (label), s);
         gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
@@ -466,7 +377,8 @@ do_relayout (GduButtonTable *table)
                 column_table = table->priv->column_tables->pdata[column_table_number];
                 m++;
 
-                data->button = create_button (gdu_button_element_get_icon_name (element),
+                data->button = create_button (GTK_WIDGET (table),
+                                              gdu_button_element_get_icon_name (element),
                                               gdu_button_element_get_primary_text (element),
                                               gdu_button_element_get_secondary_text (element));
                 gtk_widget_show (data->button);

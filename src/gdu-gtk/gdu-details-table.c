@@ -266,8 +266,12 @@ on_details_element_changed (GduDetailsElement *element,
         guint64 time;
         gdouble progress;
         GtkWidget *widget;
+        gchar color[16];
 
-        s = g_strdup_printf ("<span fgcolor='#404040'>%s</span>",
+        gdu_util_get_mix_color (data->heading_label, GTK_STATE_NORMAL, color, sizeof (color));
+
+        s = g_strdup_printf ("<span fgcolor='%s'>%s</span>",
+                             color,
                              gdu_details_element_get_heading (element));
         gtk_label_set_markup (GTK_LABEL (data->heading_label), s);
         g_free (s);

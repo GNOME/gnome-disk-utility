@@ -124,6 +124,11 @@ GdkPixbuf *gdu_util_get_pixbuf_for_presentable (GduPresentable *presentable, Gtk
 
 GdkPixbuf *gdu_util_get_pixbuf_for_presentable_at_pixel_size (GduPresentable *presentable, gint pixel_size);
 
+void       gdu_util_get_mix_color (GtkWidget    *widget,
+                                   GtkStateType  state,
+                                   gchar        *color_buf,
+                                   gsize         color_buf_size);
+
 
 G_END_DECLS
 

@@ -1728,3 +1728,33 @@ gdu_util_get_pixbuf_for_presentable_at_pixel_size (GduPresentable *presentable, 
         return pixbuf;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_util_get_mix_color (GtkWidget    *widget,
+                        GtkStateType  state,
+                        gchar        *color_buf,
+                        gsize         color_buf_size)
+{
+        GtkStyle *style;
+        GdkColor color = {0};
+
+        g_return_if_fail (GTK_IS_WIDGET (widget));
+        g_return_if_fail (color_buf != NULL);
+
+        /* This color business shouldn't be this hard... */
+        style = gtk_widget_get_style (widget);
+#define BLEND_FACTOR 0.7
+        color.red   = style->text[state].red   * BLEND_FACTOR +
+                      style->base[state].red   * (1.0 - BLEND_FACTOR);
+        color.green = style->text[state].green * BLEND_FACTOR +
+                      style->base[state].green * (1.0 - BLEND_FACTOR);
+        color.blue  = style->text[state].blue  * BLEND_FACTOR +
+                      style->base[state].blue  * (1.0 - BLEND_FACTOR);
+#undef BLEND_FACTOR
+        snprintf (color_buf,
+                  color_buf_size, "#%02x%02x%02x",
+                  (color.red >> 8),
+                  (color.green >> 8),
+                  (color.blue >> 8));
+}

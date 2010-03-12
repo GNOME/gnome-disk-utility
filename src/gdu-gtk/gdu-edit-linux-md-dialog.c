@@ -234,9 +234,7 @@ format_markup (GtkCellLayout   *cell_layout,
         GduPresentable *volume_for_slave;
         GduPresentable *drive_for_slave;
         gchar *markup;
-        GtkStyle *style;
-        GdkColor desc_gdk_color = {0};
-        gchar *desc_color;
+        gchar color[16];
         GtkStateType state;
 
         tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->components_tree_view));
@@ -247,8 +245,6 @@ format_markup (GtkCellLayout   *cell_layout,
                             MD_LINUX_SLAVE_DRIVE_COLUMN, &drive_for_slave,
                             -1);
 
-        /* This color business shouldn't be this hard... */
-        style = gtk_widget_get_style (GTK_WIDGET (dialog->priv->components_tree_view));
         if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
                 if (gtk_widget_has_focus (GTK_WIDGET (dialog->priv->components_tree_view)))
                         state = GTK_STATE_SELECTED;
@@ -257,18 +253,7 @@ format_markup (GtkCellLayout   *cell_layout,
         } else {
                 state = GTK_STATE_NORMAL;
         }
-#define BLEND_FACTOR 0.7
-        desc_gdk_color.red   = style->text[state].red   * BLEND_FACTOR +
-                               style->base[state].red   * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.green = style->text[state].green * BLEND_FACTOR +
-                               style->base[state].green * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.blue  = style->text[state].blue  * BLEND_FACTOR +
-                               style->base[state].blue  * (1.0 - BLEND_FACTOR);
-#undef BLEND_FACTOR
-        desc_color = g_strdup_printf ("#%02x%02x%02x",
-                                      (desc_gdk_color.red >> 8),
-                                      (desc_gdk_color.green >> 8),
-                                      (desc_gdk_color.blue >> 8));
+        gdu_util_get_mix_color (GTK_WIDGET (dialog->priv->components_tree_view), state, color, sizeof (color));
 
         name = gdu_presentable_get_vpd_name (volume_for_slave);
         if (drive_for_slave != NULL) {
@@ -280,7 +265,7 @@ format_markup (GtkCellLayout   *cell_layout,
         markup = g_strdup_printf ("<b>%s</b>\n"
                                   "<span fgcolor=\"%s\"><small>%s</small></span>",
                                   name,
-                                  desc_color,
+                                  color,
                                   drive_name);
 
         g_object_set (renderer,
@@ -290,7 +275,6 @@ format_markup (GtkCellLayout   *cell_layout,
         g_free (name);
         g_free (drive_name);
         g_free (markup);
-        g_free (desc_color);
         g_object_unref (volume_for_slave);
         if (drive_for_slave != NULL)
                 g_object_unref (drive_for_slave);

@@ -25,6 +25,7 @@
 
 #include <string.h>
 
+#include "gdu-gtk.h"
 #include "gdu-pool-tree-view.h"
 #include "gdu-pool-tree-model.h"
 #include "gdu-gtk-enumtypes.h"
@@ -152,9 +153,7 @@ format_markup (GtkCellLayout   *cell_layout,
         gchar *desc;
         GduPresentable *p;
         gchar *markup;
-        GtkStyle *style;
-        GdkColor desc_gdk_color = {0};
-        gchar *desc_color;
+        gchar color[16];
         GtkStateType state;
 
         tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
@@ -167,8 +166,6 @@ format_markup (GtkCellLayout   *cell_layout,
                             GDU_POOL_TREE_MODEL_COLUMN_DESCRIPTION, &desc,
                             -1);
 
-        /* This color business shouldn't be this hard... */
-        style = gtk_widget_get_style (GTK_WIDGET (view));
         if (gtk_tree_selection_iter_is_selected (tree_selection, iter)) {
                 if (gtk_widget_has_focus (GTK_WIDGET (view)))
                         state = GTK_STATE_SELECTED;
@@ -177,18 +174,7 @@ format_markup (GtkCellLayout   *cell_layout,
         } else {
                 state = GTK_STATE_NORMAL;
         }
-#define BLEND_FACTOR 0.7
-        desc_gdk_color.red   = style->text[state].red   * BLEND_FACTOR +
-                               style->base[state].red   * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.green = style->text[state].green * BLEND_FACTOR +
-                               style->base[state].green * (1.0 - BLEND_FACTOR);
-        desc_gdk_color.blue  = style->text[state].blue  * BLEND_FACTOR +
-                               style->base[state].blue  * (1.0 - BLEND_FACTOR);
-#undef BLEND_FACTOR
-        desc_color = g_strdup_printf ("#%02x%02x%02x",
-                                      (desc_gdk_color.red >> 8),
-                                      (desc_gdk_color.green >> 8),
-                                      (desc_gdk_color.blue >> 8));
+        gdu_util_get_mix_color (GTK_WIDGET (view), state, color, sizeof (color));
 
         /* Only include VPD name for drives */
         if (GDU_IS_DRIVE (p)) {
@@ -197,7 +183,7 @@ format_markup (GtkCellLayout   *cell_layout,
                                           "<span fgcolor=\"%s\">%s</span>"
                                           "</small>",
                                           name,
-                                          desc_color,
+                                          color,
                                           vpd_name);
         } else {
                 markup = g_strdup_printf ("<small>"
@@ -205,7 +191,7 @@ format_markup (GtkCellLayout   *cell_layout,
                                           "<span fgcolor=\"%s\">%s</span>"
                                           "</small>",
                                           name,
-                                          desc_color,
+                                          color,
                                           desc);
         }
 
@@ -219,7 +205,6 @@ format_markup (GtkCellLayout   *cell_layout,
         g_free (desc);
         g_free (vpd_name);
         g_free (markup);
-        g_free (desc_color);
         g_object_unref (p);
 }
 

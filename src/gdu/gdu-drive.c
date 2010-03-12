@@ -680,6 +680,12 @@ gdu_drive_get_name (GduPresentable *presentable)
                 strsize = gdu_util_get_size_for_display (size, FALSE, FALSE);
         }
 
+        if (gdu_device_is_linux_loop (drive->priv->device)) {
+                /* TODO: mark for translation */
+                g_string_append_printf (result, "%s File", strsize);
+                goto out;
+        }
+
         if (is_removable) {
 
                 get_drive_name_from_media_compat (drive->priv->device, result);
@@ -851,6 +857,14 @@ gdu_drive_get_vpd_name (GduPresentable *presentable)
 
         result = g_string_new (NULL);
 
+        if (gdu_device_is_linux_loop (drive->priv->device)) {
+                gchar *s;
+                s = g_path_get_basename (gdu_device_linux_loop_get_filename (drive->priv->device));
+                g_string_append (result, s);
+                g_free (s);
+                goto out;
+        }
+
         vendor = gdu_device_drive_get_vendor (drive->priv->device);
         model = gdu_device_drive_get_model (drive->priv->device);
 
@@ -866,6 +880,7 @@ gdu_drive_get_vpd_name (GduPresentable *presentable)
                                 vendor != NULL ? " " : "",
                                 model != NULL ? model : "");
 
+ out:
         return g_string_free (result, FALSE);
 }
 
@@ -929,6 +944,11 @@ gdu_drive_get_icon (GduPresentable *presentable)
         presentation_icon_name = gdu_device_get_presentation_icon_name (drive->priv->device);
         if (presentation_icon_name != NULL && strlen (presentation_icon_name) > 0) {
                 name = presentation_icon_name;
+                goto out;
+        }
+
+        if (gdu_device_is_linux_loop (drive->priv->device)) {
+                name = "drive-removable-media-file";
                 goto out;
         }
 

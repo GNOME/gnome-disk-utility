@@ -600,6 +600,12 @@ gdu_volume_get_icon (GduPresentable *presentable)
         if (!gdu_device_is_drive (d))
                 goto out;
 
+
+        if (gdu_device_is_linux_loop (d)) {
+                name = "drive-removable-media-file";
+                goto out;
+        }
+
         connection_interface = gdu_device_drive_get_connection_interface (d);
         if (connection_interface == NULL)
                 goto out;
@@ -694,10 +700,12 @@ out:
 
         /* ultimate fallback */
         if (icon == NULL) {
-                if (is_removable)
-                        name = "drive-removable-media";
-                else
-                        name = "drive-harddisk";
+                if (name == NULL) {
+                        if (is_removable)
+                                name = "drive-removable-media";
+                        else
+                                name = "drive-harddisk";
+                }
                 icon = g_themed_icon_new_with_default_fallbacks (name);
         }
 

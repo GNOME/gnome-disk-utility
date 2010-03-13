@@ -24,14 +24,17 @@
  */
 
 #include "config.h"
-#include <glib/gi18n.h>
 
+#include "gdu/gdu.h"
+#include "gdu-gtk/gdu-gtk.h"
+
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <glib-object.h>
-#include <glib/gthread.h>
 #include <gio/gio.h>
-#include <gdu/gdu.h>
-#include <gdu-gtk/gdu-gtk.h>
+
 #include <gtk/gtk.h>
+
 #include <stdlib.h>
 
 #include "gdu-format-progress-dialog.h"

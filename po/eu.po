@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2010-02-24 16:36+0000\n"
-"PO-Revision-Date: 2010-03-11 19:33+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-16 18:22+0100\n"
+"PO-Revision-Date: 2010-03-16 18:23+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,8 +22,8 @@ msgstr ""
 #. Translators: Window title when the item representing the local machine is selected.
 #.
 #: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:804
-#: ../src/palimpsest/gdu-shell.c:1113
+#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
+#: ../src/palimpsest/gdu-shell.c:1114
 msgid "Disk Utility"
 msgstr "Diskoen tresna"
 
@@ -175,7 +175,6 @@ msgstr "Gehitu ordezkoa %s(e)ri"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
 #, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 msgstr "Hautatu gailu bat %s ordezkoa sortzeko \"%s\" (%s) RAID array-an"
 
@@ -186,11 +185,12 @@ msgstr "Zabaldu %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
 #, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
 "\" (%s)"
-msgstr "Hautatu gailu bat edo gehiago %s erabiltzeko \"%s\" (%s) RAID array-a zabaltzean"
+msgstr ""
+"Hautatu gailu bat edo gehiago %s erabiltzeko \"%s\" (%s) RAID array-a "
+"zabaltzean"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
 msgid "_Expand"
@@ -202,7 +202,6 @@ msgstr "Bolumen taldea bolumen fisikoari gehitzeko."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
-#| msgid "LVM2 Physical Volume (version %s)"
 msgid "Add Physical Volume to %s (%s)"
 msgstr "Gehitu bolumen fisikoa honi: %s (%s)"
 
@@ -269,10 +268,6 @@ msgid "Reallocated Sector Count"
 msgstr "Berriro esleitutako sektore kopurua"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
-#| msgid ""
-#| "Count of remapped sectors. When the hard drive finds a read/write/"
-#| "verification error, it mark the sector as \"reallocated\" and transfers "
-#| "data to a special reserved area (spare area)"
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as \"reallocated\" and transfers "
@@ -313,7 +308,6 @@ msgid "Seek Timer Performance"
 msgstr "Bilaketaren denboraren errendimendua"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:193
-#| msgid "Average efficiency of operatings while positioning"
 msgid "Average efficiency of operations while positioning"
 msgstr "Eragiketen eraginkortasunaren batez bestekoa posizioan kokatzean"
 
@@ -697,7 +691,6 @@ msgid "Load Friction"
 msgstr "Kargaren frikzioa"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
-#| msgid "Load on drive cause by friction in mechanical parts of the store"
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Unitatean kargatzea biltegiaren zati mekanikoen frikzioak eragiten du"
 
@@ -812,28 +805,28 @@ msgstr "Errore kopurua diskotik irakurtzean"
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:738
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:700
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Ez dago %d atributuaren azalpenik"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:815
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:790
 msgid "Normalized:"
 msgstr "Normalizatuta:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:817
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:792
 msgid "Worst:"
 msgstr "Txarrena:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:819
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:794
 msgid "Threshold:"
 msgstr "Atalasa:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:821
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:796
 msgid "Value:"
 msgstr "Balioa:"
 
@@ -842,48 +835,46 @@ msgstr "Balioa:"
 #. Translators: Shown in the treeview for an attribute we don't know the status about
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:871
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:879
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:887
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:983
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1661
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:846
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1636
 msgid "N/A"
 msgstr "E/E"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:965
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:940
 msgid "Failing"
 msgstr "Hutsegitea"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:943
 msgid "Failed in the past"
 msgstr "Huts egin zuen iraganean"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:972
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:980
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:947
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:955
 msgid "Warning"
 msgstr "Abisua"
 
 #. Translators: Shown in the treeview for an attribute that is good
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:975
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:950
 msgid "Good"
 msgstr "Ongi"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
-#| msgid "Error erasing data"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
 msgid "Error reading SMART data"
 msgstr "Errorea SMART datuak irakurtzean"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
-#| msgid "Running Short SMART Self-Test"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1135
 msgid "Choose SMART Self-test"
 msgstr "Aukeratu SMART proba automatikoa"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1171
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1146
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
@@ -894,23 +885,22 @@ msgstr ""
 "bitartean."
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1180
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1155
 msgid "_Short (usually less than ten minutes)"
 msgstr "_Laburra (10 minutu baino gutxiago)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1183
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1158
 msgid "_Extended (usually tens of minutes)"
 msgstr "_Hedatua (10 minutu inguru)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1186
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
 msgid "C_onveyance (usually less than ten minutes)"
 msgstr "_Transferentzia (10 minutu baino gutxiago)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1194
-#| msgid "Run self-test"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1169
 msgid "_Run Self Test"
 msgstr "_Exekutatu auto-proba"
 
@@ -918,19 +908,18 @@ msgstr "_Exekutatu auto-proba"
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1264
 #, c-format
-#| msgid "SMART Data"
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) - SMART datuak"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1286
 msgid "Updated:"
 msgstr "Eguneratuta:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
@@ -939,195 +928,186 @@ msgstr ""
 "minuturo eguneratzen dira, diskoa lotan ez badago bederen."
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1320
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1295
 msgid "Self-tests:"
 msgstr "Auto-probak:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1323
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "The result of the last self-test that ran on the disk"
 msgstr "Diskoan exekutatu den azken auto-probaren emaitza"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1328
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1303
 msgid "Powered On:"
 msgstr "Piztuta:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1331
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "Diskoa piztuta egoeran igaro duen denbora kopurua"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1336
-#| msgid "Power Cycle Count"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
 msgid "Power Cycles:"
 msgstr "Piztutako zikloak:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
-#| msgid "Total number of load cycles"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "The number of full disk power on/off cycles"
 msgstr "Diskoa piztu/itzali ziklo osoen kopurua"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1344
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1319
 msgid "Temperature:"
 msgstr "Tenperatura:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "The temperature of the disk"
 msgstr "Diskoaren tenperatura"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1352
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1327
 msgid "Bad Sectors:"
 msgstr "Sektore txarrak:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1355
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "The sum of pending and reallocated bad sectors"
 msgstr "Birresleitutako eta falta diren sektore txarren batura"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1360
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1335
 msgid "Self Assessment:"
 msgstr "Bere estimazioa:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "The assessment from the disk itself whether it is about to fail"
 msgstr "Disko berak duen estimazioa, noiz hutsegingo duen buruzkoa"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1368
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
 msgid "Overall Assessment:"
 msgstr "Estimazio orokorra:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1372
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
 msgid "An overall assessment of the health of the disk"
 msgstr "Diskoaren osasunaren estimazio orokorra"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1386
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1361
 msgid "_Refresh"
 msgstr "_Freskatu"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
-#| msgid "Reads SMART data from the disk, waking it up if necessary"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
 msgid "Reads SMART Data, waking up the disk"
 msgstr "SMART datuak irakurtzen ditu, diskoa esnatuz"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1398
-#| msgid "Run self-test"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1373
 msgid "Run _Self-test"
 msgstr "Exekutatu _auto-proba"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1400
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1375
 msgid "Test the disk surface for errors"
 msgstr "Probatu diskoaren gainazala erroreak aurkitzeko"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1410
-#| msgid "Run self-test"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1385
 msgid "_Cancel Self-test"
 msgstr "_Utzi auto-proba"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1412
-#| msgid "Cancels the currently running test"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1387
 msgid "Cancels the self-test"
 msgstr "Bertan behera utzi proba automatikoa"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1430
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1405
 msgid "_Attributes"
 msgstr "_Atributuak"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1464
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1439
 msgid "ID"
 msgstr "IDa"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1476
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1451
 msgid "Attribute"
 msgstr "Atributua"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1493
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1468
 msgid "Assessment"
 msgstr "Estimazioa"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1512
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1487
 msgid "Value"
 msgstr "Balioa"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1540
-#| msgid "Don't _warn me if the disk is failing"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1515
 msgid "Don't _warn if the disk is failing"
 msgstr "_Ez abisatu diskoak hutsegiten badu"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1542
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1517
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr "Utzi aktibatu gabe diskoa hutsegiten hastean jakinarazteko"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1582
 #, c-format
 msgid "%.1f years"
 msgstr "%.1f urte"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1611
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f egun"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1615
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f ordu"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1619
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f minutu"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1623
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f segundo"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1629
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1604
 #, c-format
-#| msgid "%d sector"
-#| msgid_plural "%d sectors"
 msgid "%s msec"
 msgstr "%s mseg."
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1638
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1613
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1137,32 +1117,32 @@ msgstr[1] "%d sektore"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1650
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1625
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1693
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "Hutsegitea berehalako diskoaren hutsegitearen adierazgarri da (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1722
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "Hutsegitea zahartzaroaren adierazgarri da (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1728
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1703
 msgid "Every time data is collected (Online)"
 msgstr "Datuak jasotzen diren bakoitzean (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1732
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
 msgid "Only during off-line activities (Not Online)"
 msgstr "Soilik lineaz kanpoko jardueretan (Not Online)"
 
@@ -1171,7 +1151,7 @@ msgstr "Soilik lineaz kanpoko jardueretan (Not Online)"
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1740
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1715
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1184,26 +1164,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1925
 msgid "No drive selected"
 msgstr "Ez da unitaterik hautatu"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1932
 msgid "SMART not supported"
 msgstr "SMART ez dago onartuta"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1965
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1940
 msgid "SMART data never collected"
 msgstr "Inoiz ez dira SMART daturik eskuratu"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1972
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1978
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1947
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1953
 msgid "SMART data is malformed"
 msgstr "SMART datuak gaizki osatuta daude"
 
@@ -1221,36 +1201,36 @@ msgstr "SMART datuak gaizki osatuta daude"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2008
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2026
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2046
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2054
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2063
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2125
-#: ../src/gdu-gtk/gdu-volume-grid.c:1306 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1983
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2001
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2021
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
+#: ../src/gdu-gtk/gdu-volume-grid.c:1312 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2013
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
 msgid "Passed"
 msgstr "EGINDA"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2019
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1994
 msgid "FAILING"
 msgstr "HUTSEGINDA"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2031
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2006
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2011
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
@@ -1258,54 +1238,47 @@ msgstr[0] "Sektore %d txarra"
 msgstr[1] "%d sektore txarrak"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2057
 msgid "Completed OK"
 msgstr "Ongi burututa"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
-#| msgid "Cancel"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
 msgid "Cancelled"
 msgstr "Bertan behera utzita"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2090
-#| msgid "Last self-test was cancelled (with hard or soft reset)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
 msgid "Cancelled (with hard or soft reset)"
 msgstr "Bertan behera utzita (berrabiarazte gogor edo bigunarekin)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2094
-#| msgid "Last self-test not completed (a fatal error might have occured)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "Burutu gabe (errore larri bat gerta zitekeen)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2098
-#| msgid "Last self-test FAILED (Electrical)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
 msgid "FAILED (Electrical)"
 msgstr "HUTS EGIN DU (elektrikoa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
-#| msgid "Last self-test FAILED (Servo)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2078
 msgid "FAILED (Servo)"
 msgstr "HUTS EGIN DU (serboa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2108
-#| msgid "Last self-test FAILED (Read)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2083
 msgid "FAILED (Read)"
 msgstr "HUTS EGIN DU (irakurketa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2113
-#| msgid "Last self-test FAILED (Suspected of having handled damage)"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2088
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "HUTS EGIN DU (kalteak jaso dituenaren susmoa dago)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2118
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2093
 msgid "In progress"
 msgstr "Egiten ari da"
 
@@ -1325,7 +1298,6 @@ msgid "This operation concerns \"%s\" (%s)"
 msgstr "Eragiketa hau honi dagokio: \"%s\" (%s)"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
-#| msgid "Name"
 msgid "User Name"
 msgstr "Erabiltzaile-izena"
 
@@ -1367,8 +1339,8 @@ msgid ""
 "protocol."
 msgstr ""
 "Biltegien gailuak beste ordenagailu batean kudeatzeko, sartu helbidea eta "
-"sakatu \"Konektatu\" botoia. Konexioa sortuko da <i>Shell Segurua (SSH)</i> protokoloa "
-"erabiliz."
+"sakatu \"Konektatu\" botoia. Konexioa sortuko da <i>Shell Segurua (SSH)</i> "
+"protokoloa erabiliz."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
@@ -1384,17 +1356,14 @@ msgstr "Zerbitzariaren _helbidea:"
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
-#| msgid "The requested name for the array"
 msgid "The user name to connect as"
 msgstr "Erabiltzaile-izena konektatzeko"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
-#| msgid "_Name:"
 msgid "_User Name:"
 msgstr "_Erabiltzaile-izena:"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
-#| msgid "Maximum Size"
 msgid "Maximum Logical Volume Size"
 msgstr "Bolumen logikoaren gehienezko tamaina"
 
@@ -1403,12 +1372,10 @@ msgid "The maximum possible logical volume size"
 msgstr "Bolumen logikoak eduki dezakeen gehienezko tamaina"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
-#| msgid "LVM2 Physical Volume"
 msgid "Logical Volume Size"
 msgstr "Bolumen logikoaren tamaina"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
-#| msgid "The requested filesystem label"
 msgid "The requested Logical Volume size"
 msgstr "Eskatutako bolumen logikoaren tamaina"
 
@@ -1422,7 +1389,6 @@ msgstr "_Sortu"
 #. Translators: The %s is the name of the volume group
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
 #, c-format
-#| msgid "LVM2 Physical Volume (version %s)"
 msgid "Create Logical Volume on %s"
 msgstr "Sortu bolumen logikoa hemen: %s"
 
@@ -1550,22 +1516,21 @@ msgstr "512 KiB"
 msgid "1 MiB"
 msgstr "1 MiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:660
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:661
 msgid "Array _Size:"
 msgstr "Array-_tamaina:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:687
-#| msgid "Disks"
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
 msgid "_Disks"
 msgstr "_Diskoak"
 
 #. --------------------------------------------------------------------------------
 #. TODO: Actually make this work
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid "Use entire disks instead of _partitions"
 msgstr "Erabili disko osoak _partizioen ordez"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:705
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1576,25 +1541,20 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:872
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:874
 #, c-format
-#| msgid "Insufficient number disks to create a %s array."
 msgid "Insufficient number of disks to create a %s array."
 msgstr "Ez dago nahikoa diskorik %s array-a sortzeko."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:888
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:890
 #, c-format
-#| msgid "To create a %s array, select %d disks."
-#| msgid_plural "To create a %s array, select %d disks."
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "%s array bat sortzeko, hautatu disko bat."
 msgstr[1] "%s array bat sortzeko, hautatu %d disko."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:895
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:897
 #, c-format
-#| msgid "To create a %s array, select %d more disks."
-#| msgid_plural "To create a %s array, select %d more disks."
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
 msgstr[0] "%s array bat sortzeko, hautatu disko bat gehiago."
@@ -1605,7 +1565,7 @@ msgstr[1] "%s array bat sortzeko, hautatu %d disko gehiago."
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:919
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:921
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr ""
@@ -1613,29 +1573,24 @@ msgstr ""
 "botoian"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
-#| msgid "Maximum Size"
 msgid "Maximum Partition Size"
 msgstr "Partizioaren gehienezko tamaina"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
-#| msgid "The maximum size that can be selected"
 msgid "The maximum possible partition size"
 msgstr "Partizioak eduki dezakeen gehienezko tamaina"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
-#| msgid "Partitioned"
 msgid "Partition Size"
 msgstr "Partizioaren tamaina"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
-#| msgid "The requested stripe size of the array"
 msgid "The requested partition size"
 msgstr "Eskatutako partizioaren tamaina"
 
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
 #, c-format
-#| msgid "Create partition"
 msgid "Create partition on %s"
 msgstr "Sortu partizioa hemen: %s"
 
@@ -1645,7 +1600,6 @@ msgid "Flags"
 msgstr "Banderak"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
-#| msgid "Flags for the element"
 msgid "Flags for the widget"
 msgstr "Trepetaren banderak"
 
@@ -1667,7 +1621,6 @@ msgid "Largest Segment For Selected"
 msgstr "Hautapenaren segmentu handiena"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
-#| msgid "Create new filesystem on the selected device"
 msgid "The largest free segment for the selected drives"
 msgstr "Hautatutako unitateen libre dagoen segmenturik handiena"
 
@@ -1680,7 +1633,6 @@ msgid "The largest free segment for all the drives"
 msgstr "Unitate guztietako libre dagoen segmenturik handiena"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
-#| msgid "The view to show details for"
 msgid "The size to use in the details header"
 msgstr "Tamaina xehetasunen goiburuan erabiltzeko"
 
@@ -1699,66 +1651,63 @@ msgstr "Ez dago nahikoa leku librerik."
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
 #, c-format
-#| msgid "%s. Largest contiguous free block is %s"
 msgid "Insufficient space: %s is needed but largest contiguous free block is %s."
 msgstr "Lekurik ez: %s. behar da, baina jarraiko bloke libre handiena %s da."
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:936
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
 msgid "The disk will be partitioned and a partition will be created"
 msgstr "Diskoan zatitu egingo dira eta partizio bat sortuko da"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:942
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
 #, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
 "no space will be available."
 msgstr ""
-"Diskoa zatitu egingo da eta %s-eko partizioa sortuko da. Ondoren, ez da "
-"leku librerik egongo erabilgarri."
+"Diskoa zatitu egingo da eta %s-eko partizioa sortuko da. Ondoren, ez da leku "
+"librerik egongo erabilgarri."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:951
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
 #, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards %"
 "s will be available."
 msgstr ""
-"Diskoa zatitu egingo da eta %s-eko partizioa sortuko da. Ondoren, %s "
-"egongo dira erabilgarri."
+"Diskoa zatitu egingo da eta %s-eko partizioa sortuko da. Ondoren, %s egongo "
+"dira erabilgarri."
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:962
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
 msgid "A partition will be created"
 msgstr "Partizio bat sortuko da"
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:965
-#| msgid "A partition will be created"
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
 msgid "A volume will be created"
 msgstr "Bolumen bat sortuko da"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:973
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
 #, c-format
-#| msgid "A %s partition will be created"
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr "%s(e)ko partizioa sortuko da. Ondoren, ez da leku librerik egongo erabilgarri."
+msgstr ""
+"%s(e)ko partizioa sortuko da. Ondoren, ez da leku librerik egongo "
+"erabilgarri."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:980
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
 #, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
 msgstr "%s(e)ko bolumena sortuko da. Ondoren, ez da leku librerik egongo erabilgarri."
@@ -1767,9 +1716,8 @@ msgstr "%s(e)ko bolumena sortuko da. Ondoren, ez da leku librerik egongo erabilg
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:990
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
 #, c-format
-#| msgid "A %s partition will be created"
 msgid "A %s partition will be created. Afterwards %s will be available."
 msgstr "%s(e)ko partizioa sortuko da. Ondoren, %s egongo dira erabilgarri."
 
@@ -1777,7 +1725,7 @@ msgstr "%s(e)ko partizioa sortuko da. Ondoren, %s egongo dira erabilgarri."
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:999
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
 #, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
 msgstr "%s(e)ko bolumena sortuko da. Ondoren, %s egongo dira erabilgarri."
@@ -1785,7 +1733,7 @@ msgstr "%s(e)ko bolumena sortuko da. Ondoren, %s egongo dira erabilgarri."
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1019
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1003
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
 msgstr "Disko osoa hasieratu gabe dago. %s erabilgarri dago"
@@ -1793,7 +1741,7 @@ msgstr "Disko osoa hasieratu gabe dago. %s erabilgarri dago"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1026
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1010
 #, c-format
 msgid "%s available for use"
 msgstr "%s erabilgarri dago"
@@ -1801,12 +1749,12 @@ msgstr "%s erabilgarri dago"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1032
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1016
 #, c-format
 msgid "The disk has no partitions. %s available for use"
 msgstr "Diskoak ez du partiziorik. %s erabilgarri dago"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1037
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1021
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
@@ -1817,29 +1765,26 @@ msgstr[1] "Diskoak %d partizio ditu"
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
 #. * Second %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1045
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1029
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
 msgstr "%s. Jarraiko bloke libre handiena %s da"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1112
-#| msgid "Detaching Device"
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1096
 msgid "Storage Devices"
 msgstr "Biltegien gailuak"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1152
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1136
 msgid "Details"
 msgstr "Xehetasunak"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#| msgid "Error detaching device"
 msgid "Error benchmarking drive"
 msgstr "Errorea unitatearen proba-bankua lantzean"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to start a read/write benchmark?"
 msgstr "Ziur zaude irakurketa/idazketaren proba-banku bat hastea nahi duzula?"
 
@@ -1862,22 +1807,18 @@ msgstr "%s (%s) – Proba-bankua"
 
 #. benchmark results
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
-#| msgid "Minimum Size"
 msgid "Minimum Read Rate:"
 msgstr "Gutxieneko irakurketa-emaria:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
-#| msgid "Minimum Size"
 msgid "Minimum Write Rate:"
 msgstr "Gutxieneko idazketa-emaria:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
-#| msgid "Maximum Size"
 msgid "Maximum Read Rate:"
 msgstr "Gehienezko irakurketa-emaria:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
-#| msgid "Maximum Size"
 msgid "Maximum Write Rate:"
 msgstr "Gehienezko idazketa-emaria:"
 
@@ -1886,7 +1827,6 @@ msgid "Average Read Rate:"
 msgstr "Batez besteko irakurketa-emaria:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
-#| msgid "Thermal Asperity Rate"
 msgid "Average Write Rate:"
 msgstr "Batez besteko idazketa-emaria:"
 
@@ -1895,7 +1835,6 @@ msgid "Last Benchmark:"
 msgstr "Azken proba-bankua:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
-#| msgid "Overall Assessment:"
 msgid "Average Access Time:"
 msgstr "Batez besteko atzipen-denbora:"
 
@@ -1930,7 +1869,6 @@ msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
-#| msgid "_Revert"
 msgid "Never"
 msgstr "Inoiz ere ez"
 
@@ -1942,7 +1880,6 @@ msgstr "Utzi"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
-#| msgid "Cancels the currently running test"
 msgid "Cancels the currently running benchmark"
 msgstr "Bertan behera utzi unean exekutatzen ari den proba"
 
@@ -1952,163 +1889,138 @@ msgstr "Bertan behera utzi unean exekutatzen ari den proba"
 #: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
 #, c-format
-#| msgid "_Edit"
 msgid "Edit %s"
 msgstr "Editatu %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:236
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
 msgid "Missing Physical Volume"
 msgstr "Bolumen fisikoa falta da"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:237
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:222
 #, c-format
 msgid "UUID: %s"
 msgstr "UUIDa: %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:347
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
 #, c-format
-#| msgid "Partition %d (%s)"
 msgid "Edit PVs on %s (%s)"
 msgstr "Editatu bol. fisikoa %s(e)n (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:358
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
 msgid "Physical _Volumes"
 msgstr "Bolumen _fisikoak"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:372
 msgid "Physical Volume"
 msgstr "Bolumen fisikoak"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:404
-#| msgid "SD High Capacity"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
 msgid "Capacity"
 msgstr "Edukiera"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
-#| msgid "Unallocated Space"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:397
 msgid "Unallocated"
 msgstr "Esleitu gabea"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:465
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:449
 #: ../src/palimpsest/gdu-section-drive.c:935
-#| msgid "SMART status: %s"
 msgid "SMART Status:"
 msgstr "SMARTen egoera:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:415
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:461
 #: ../src/palimpsest/gdu-section-drive.c:911
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Gailua:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:444
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:428
 msgid "_New Physical Volume"
 msgstr "Bolumen fisiko _berria"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:445
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
 msgid "Add a new PV to the VG"
 msgstr "Gehitu bol. fisikoa bol. taldeari"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:454
-#| msgid "LVM2 Physical Volume"
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
 msgid "_Remove Physical Volume"
 msgstr "_Kendu bolumen fisikoa"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:455
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "Remove the PV from the VG"
 msgstr "Kendu bol. fisikoa bol. taldetik"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:957
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:861
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:941
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:845
 #: ../src/palimpsest/gdu-section-drive.c:329
-#| msgid "SMART not supported"
 msgid "Not Supported"
 msgstr "Ez dago onartuta"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:385
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:369
 #, c-format
-#| msgid "%d Component (%s)"
-#| msgid_plural "%d Components (%s each)"
 msgid "Edit components on %s (%s)"
 msgstr "Editatu osagaiak %s(e)n (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:396
-#| msgid "Components:"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:380
 msgid "C_omponents"
 msgstr "_Osagaiak"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:426
-#| msgid "Partition"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:410
 msgid "Position"
 msgstr "Posizioa"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
-#| msgid "Components:"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:419
 msgid "Component"
 msgstr "Osagaia"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:451
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
 msgid "State"
 msgstr "Egoera"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-#| msgid "Partition"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:453
 msgid "Position:"
 msgstr "Posizioa:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:473
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:457
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 #: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "Egoera:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
-#| msgctxt "Linux MD slave state"
-#| msgid "Spare"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
 msgid "Add _Spare"
 msgstr "Gehitu _ordezkoa"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:491
-#| msgid "Start the array"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
 msgid "Add a spare to the array"
 msgstr "Gehitu ordezko bat array-ari"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:500
-#| msgid "_Start Array"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
 msgid "_Expand Array"
 msgstr "_Zabaldu array-a"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:501
-#| msgid "The requested size of the array"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "Increase the capacity of the array"
 msgstr "Handiagotu array-aren edukiera"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:510
-#| msgid "RAID Component"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
 msgid "_Attach Component"
 msgstr "_Erantsi osagaia"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:511
-#| msgid "Are you sure you want to remove the component from the array ?"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "Attach the component to the array"
 msgstr "Erantsi osagaia array-ari"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:520
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:504
 msgid "_Remove Component"
 msgstr "_Kendu osagaia"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:521
-#| msgid "Removing Component from RAID Array"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "Remove the component from the array"
 msgstr "Kendu osagaia array-tik"
 
@@ -2133,42 +2045,34 @@ msgid "Required / Firm_ware"
 msgstr "Beharrezkoa / _Firmwarea"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:217
-#| msgid "The operation failed."
 msgid "The operation failed"
 msgstr "Eragiketak huts egin du"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:220
-#| msgid "The device is busy."
 msgid "The device is busy"
 msgstr "Gailua lanpetuta dago"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:223
-#| msgid "The operation was canceled."
 msgid "The operation was canceled"
 msgstr "Eragiketa bertan behera utzi da"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:226
-#| msgid "The daemon is being inhibited."
 msgid "The daemon is being inhibited"
 msgstr "Daemona galarazten dago"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:229
-#| msgid "An invalid option was passed."
 msgid "An invalid option was passed"
 msgstr "Aukera baliogabe bat eman zaio"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:232
-#| msgid "The operation is not supported."
 msgid "The operation is not supported"
 msgstr "Eragiketa ez dago onartuta"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:235
-#| msgid "Getting ATA SMART data would wake up the device."
 msgid "Getting ATA SMART data would wake up the device"
 msgstr "ATA SMART datuak lortzean gailua esna daiteke"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:238
-#| msgid "Permission denied."
 msgid "Permission denied"
 msgstr "Baimena ukatuta"
 
@@ -2177,11 +2081,10 @@ msgid "Filesystem driver not installed"
 msgstr "Fitxategi-sistemaren kontrolatzailea ez dago instalatuta"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:244
-#| msgid "Filesystem label"
 msgid "Filesystem tools not installed"
 msgstr "Fitxategi-sistemaren tresnak ez daude instalatuta"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:957
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:958
 msgid "Unknown error"
 msgstr "Errore ezezaguna"
 
@@ -2192,12 +2095,10 @@ msgstr "Errorea gertatu da eragiketa bat lantzean \"%s\"(e)n (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
 #, c-format
-#| msgid "An error occured"
 msgid "An error occurred: %s"
 msgstr "Errore bat gertatu da: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:274
-#| msgid "_Details:"
 msgid "_Details"
 msgstr "_Xehetasunak"
 
@@ -2222,7 +2123,6 @@ msgid "The requested filesystem label"
 msgstr "Eskatutako fitxategi-sistemaren etiketa"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:202
-#| msgid "Filesystem type"
 msgid "Filesystem options"
 msgstr "Fitxategi-sistemaren aukerak"
 
@@ -2243,7 +2143,6 @@ msgid "Take Ownership"
 msgstr "Hartu jabetza"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:225
-#| msgid "Whether the volume should be encrypted"
 msgid "Whether the filesystem should be owned by the user"
 msgstr "Fitxategi-sistemaren jabetza erabiltzaileak hartu dezakeen edo ez"
 
@@ -2267,7 +2166,6 @@ msgstr "_Formateatu"
 #: ../src/gdu-gtk/gdu-format-dialog.c:499
 #: ../src/gdu-gtk/gdu-partition-dialog.c:208
 #, c-format
-#| msgid "Format %s (%s)"
 msgid "Format %s"
 msgstr "Formateatu %s"
 
@@ -2294,7 +2192,6 @@ msgid "Compatible with Linux (ext2)"
 msgstr "Linux-ekin bateragarria (ext2)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:562
-#| msgid "Compatible with Linux (ext2)"
 msgid "Compatible with Linux (ext4)"
 msgstr "Linux-ekin bateragarria (ext4)"
 
@@ -2317,7 +2214,6 @@ msgid "New Volume"
 msgstr "Bolumen berria"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:632
-#| msgid "T_ake ownership of file system"
 msgid "T_ake ownership of filesystem"
 msgstr "_Hartu fitxategi-sistemaren jabetza"
 
@@ -2332,7 +2228,6 @@ msgstr ""
 "bada aktibatzen, supererabiltzaileak soilik atzi dezake fitxategi-sistema."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:641
-#| msgid "Encr_ypt underlying device"
 msgid "_Encrypt underlying device"
 msgstr "_Enkriptatu azpiko gailua"
 
@@ -2349,51 +2244,6 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-format-dialog.c:676
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "Abisua: bolumeneko datu guztiak betirako galdu egingo dira."
-
-#: ../src/gdu-gtk/gdu-gtk.c:175
-msgctxt "application name"
-msgid "Bourne Again Shell"
-msgstr "Bourne Again Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:180
-msgctxt "application name"
-msgid "Bourne Shell"
-msgstr "Bourne Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:185
-msgctxt "application name"
-msgid "C Shell"
-msgstr "C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:190
-msgctxt "application name"
-msgid "TENEX C Shell"
-msgstr "TENEX C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:195
-msgctxt "application name"
-msgid "Z Shell"
-msgstr "Z Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:200
-msgctxt "application name"
-msgid "Korn Shell"
-msgstr "Korn Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:204
-msgctxt "application name"
-msgid "Process Viewer (top)"
-msgstr "Prozesuen ikustailea (top)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:208
-msgctxt "application name"
-msgid "Terminal Pager (less)"
-msgstr "Terminaleko orrikatzailea (less)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:220
-msgctxt "application name"
-msgid "Unknown"
-msgstr "Ezezaguna"
 
 #: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
@@ -2543,7 +2393,7 @@ msgid "Master Boot Record"
 msgstr "Abioko Erregistro Maisua (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:823
+#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:833
 #: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
@@ -2561,12 +2411,10 @@ msgid "Apple Partition Map"
 msgstr "Apple-ren partizio-mapa"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:100
-#| msgid "MBR Partition Scheme"
 msgid "Partitioning Scheme"
 msgstr "Partizio-eskema"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:101
-#| msgid "The selected filesystem type"
 msgid "The selected partitioning scheme"
 msgstr "Hautatutako partizio-eskema"
 
@@ -2592,12 +2440,10 @@ msgid "TB"
 msgstr "TB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:104
-#| msgid "4 KiB"
 msgid "KiB"
 msgstr "KiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:107
-#| msgid "MB"
 msgid "MiB"
 msgstr "MiB"
 
@@ -2650,17 +2496,15 @@ msgstr[1] "Duela %d ordu"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
 #: ../src/palimpsest/gdu-section-drive.c:150
-#| msgid "Drives"
 msgid "Drive"
 msgstr "Unitatea"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:499
-#| msgid "Drive to show"
 msgid "Drive to show volumes for"
 msgstr "Unitatea (haren bolumenak erakusteko)"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1181
+#: ../src/gdu-gtk/gdu-volume-grid.c:1187
 msgid "RAID Array is not running"
 msgstr "RAID array-a ez da exekutatzen ari"
 
@@ -2668,31 +2512,31 @@ msgstr "RAID array-a ez da exekutatzen ari"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:809
+#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "Ez da euskarririk detektatu"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1268
+#: ../src/gdu-gtk/gdu-volume-grid.c:1274
 msgid "Extended"
 msgstr "Hedatuta"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1276
+#: ../src/gdu-gtk/gdu-volume-grid.c:1282
 msgid "Encrypted"
 msgstr "Enkriptatuta"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1296 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID osagaia"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1298
+#: ../src/gdu-gtk/gdu-volume-grid.c:1304
 msgid "Free"
 msgstr "Libre"
 
@@ -2778,8 +2622,18 @@ msgstr "Blu-Ray"
 msgid "HDDVD"
 msgstr "HDDVD"
 
+#. Translators: This is the name of a "Drive" backed by a file.
+#. * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+#. *
+#. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
+#.
+#: ../src/gdu/gdu-drive.c:689
+#, c-format
+msgid "%s File"
+msgstr "%s fitxategia"
+
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:693 ../src/gdu/gdu-drive.c:732
+#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-drive.c:742
 #, c-format
 msgid "%s Drive"
 msgstr "%s unitatea"
@@ -2787,7 +2641,7 @@ msgstr "%s unitatea"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:727
+#: ../src/gdu/gdu-drive.c:737
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s unitatea"
@@ -2795,7 +2649,7 @@ msgstr "%s %s unitatea"
 #. Translators: This string is used to describe a hard disk.
 #. * The first %s is the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:743
+#: ../src/gdu/gdu-drive.c:753
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s disko gogorra"
@@ -2803,14 +2657,14 @@ msgstr "%s disko gogorra"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:748
+#: ../src/gdu/gdu-drive.c:758
 msgid "Hard Disk"
 msgstr "Disko gogorra"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:755
+#: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s egoera solidoko diskoa (SSD)"
@@ -2818,38 +2672,38 @@ msgstr "%s egoera solidoko diskoa (SSD)"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:761
+#: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
 msgstr "Solid-State Diskoa"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:802
+#: ../src/gdu/gdu-drive.c:812
 #, c-format
 msgid "%s Media"
 msgstr "%s euskarria"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:820 ../src/gdu/gdu-linux-md-drive.c:569
+#: ../src/gdu/gdu-drive.c:830 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "MBR partizio-taula"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:575
+#: ../src/gdu/gdu-drive.c:836 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Apple partizio-taula"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:831 ../src/gdu/gdu-linux-md-drive.c:580
+#: ../src/gdu/gdu-drive.c:841 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "Partizioduna"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:836 ../src/palimpsest/gdu-section-drive.c:302
+#: ../src/gdu/gdu-drive.c:846 ../src/palimpsest/gdu-section-drive.c:302
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "Partiziorik gabea"
@@ -2885,13 +2739,11 @@ msgstr "Ostalari-moldagailua"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:330
-#| msgid "LVM2 Physical Volume"
 msgid "Logical Volume"
 msgstr "Bolumen logikoa"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume.c:333
-#| msgid "LVM2 Physical Volume"
 msgid "LVM2 Logical Volume"
 msgstr "LVM2 bolumen logikoa"
 
@@ -2899,14 +2751,12 @@ msgstr "LVM2 bolumen logikoa"
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
-#| msgid "Volume"
 msgid "Volume Group"
 msgstr "Bolumen taldea"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
-#| msgid "%s LVM2 Physical Volume"
 msgid "%s LVM2 Volume Group"
 msgstr "%s LVM2 bolumen taldea"
 
@@ -2937,7 +2787,6 @@ msgstr "Esleitu gabeko lekua"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
-#| msgid "Unallocated Space"
 msgid "LVM2 VG Unallocated Space"
 msgstr "LVM2 bol. taldea, esleitu gabeko lekua"
 
@@ -2945,7 +2794,6 @@ msgstr "LVM2 bol. taldea, esleitu gabeko lekua"
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
 #, c-format
-#| msgid "%s %s Drive"
 msgid "%s %s Array"
 msgstr "%s %s array-a"
 
@@ -2953,7 +2801,6 @@ msgstr "%s %s array-a"
 #. Translators: %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, c-format
-#| msgid "RAID Array"
 msgid "%s Array"
 msgstr "%s array-a"
 
@@ -2962,7 +2809,6 @@ msgstr "%s array-a"
 #.
 #: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
-#| msgid "RAID Array"
 msgid "RAID Array %s (%s)"
 msgstr "RAID array-a %s (%s)"
 
@@ -2972,54 +2818,10 @@ msgstr "RAID array-a %s (%s)"
 msgid "RAID device %s"
 msgstr "%s RAID gailua"
 
-#. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:612
-#| msgctxt "RAID level"
-#| msgid "RAID"
-msgctxt "RAID Level fallback"
-msgid "RAID"
-msgstr "RAID"
-
 #: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID array-a"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1114
-#| msgid "A_ttach"
-msgctxt "Linux MD slave state"
-msgid "Not Attached"
-msgstr "Erantsi gabea"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1117
-msgctxt "Linux MD slave state"
-msgid "Faulty"
-msgstr "Akastuna"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1122
-msgctxt "Linux MD slave state"
-msgid "Fully Synchronized"
-msgstr "Erabat sinkronizatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1124
-msgctxt "Linux MD slave state"
-msgid "Writemostly"
-msgstr "Idazketa ia amaituta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1126
-msgctxt "Linux MD slave state"
-msgid "Blocked"
-msgstr "Blokeatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1130
-msgctxt "Linux MD slave state"
-msgid "Partially Synchronized"
-msgstr "Partzialki sinkronizatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1132
-msgctxt "Linux MD slave state"
-msgid "Spare"
-msgstr "Ordezkoa"
 
 #: ../src/gdu/gdu-machine.c:151
 msgid "Local Storage"
@@ -3032,7 +2834,6 @@ msgid "Storage on %s"
 msgstr "Biltegia %s(e)n"
 
 #: ../src/gdu/gdu-pool.c:885
-#| msgid "Detaching Device"
 msgid "Multipath Devices"
 msgstr "Bide-izen anitzeko gailuak"
 
@@ -3058,13 +2859,11 @@ msgstr "USB, FireWire eta beste periferikoak"
 
 #: ../src/gdu/gdu-pool.c:2092
 #, c-format
-#| msgid "Error ejecting device"
 msgid "Error enumerating devices: %s"
 msgstr "Errorea gailuak zenbatzean: %s"
 
 #: ../src/gdu/gdu-pool.c:2118
 #, c-format
-#| msgid "Error erasing data"
 msgid "Error enumerating adapters: %s"
 msgstr "Errorea moldagailuak zenbatzean: %s"
 
@@ -3075,7 +2874,6 @@ msgstr "Errorea zabaltzaileak zenbatzean: %s"
 
 #: ../src/gdu/gdu-pool.c:2164
 #, c-format
-#| msgid "Error deleting partition"
 msgid "Error enumerating ports: %s"
 msgstr "Errorea atakak zenbatzean: %s"
 
@@ -3105,7 +2903,6 @@ msgstr "Ezin da '%s' komando-lerroa analizatu (gaizki osatutako helbidea?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, c-format
-#| msgid "Unable to format '%s'"
 msgid "Unable to spawn ssh program: %s"
 msgstr "Ezin da ssh programa abiarazi: %s"
 
@@ -3115,12 +2912,10 @@ msgid "Error reading stderr output: %s"
 msgstr "Errorea stderr-en irteera irakurtzean: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
-#| msgid "Error adding component"
 msgid "Error reading stderr output: No content"
 msgstr "Errorea stderr-en irteera irakurtzean: edukirik ez"
 
 #: ../src/gdu/gdu-ssh-bridge.c:471
-#| msgid "Error unlocking device"
 msgid "Error logging in"
 msgstr "Errorea saioa hastean"
 
@@ -3135,8 +2930,8 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
 msgstr ""
-"Ustekabeko stderr-ren irteera - 'udisks-tcp-bridge: Waiting for secret' espero zen, baina "
-"'%s' lortu da"
+"Ustekabeko stderr-ren irteera - 'udisks-tcp-bridge: Waiting for secret' "
+"espero zen, baina '%s' lortu da"
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
@@ -3154,8 +2949,8 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
-"Ustekabeko stderr-ren irteera  - 'udisks-tcp-bridge: Attempting to "
-"connect to port %d' espero zen, baina '%s' lortu da"
+"Ustekabeko stderr-ren irteera  - 'udisks-tcp-bridge: Attempting to connect "
+"to port %d' espero zen, baina '%s' lortu da"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
@@ -3174,7 +2969,6 @@ msgstr "udisks-tcp-bridge programak huts egin du autorizazioa zuela frogatzean"
 #.
 #: ../src/gdu/gdu-util.c:131 ../src/gdu/gdu-util.c:140
 #, c-format
-#| msgid "%s / %s / %s bytes"
 msgid "%s (%s bytes)"
 msgstr "%s (%s byte)"
 
@@ -3234,14 +3028,12 @@ msgstr "LUKS"
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:237
 #, c-format
-#| msgid "Linux Ext2 (version %s)"
 msgid "Ext2 (version %s)"
 msgstr "Ext2 (%s bertsioa)"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:240
 #, c-format
-#| msgid "ext2"
 msgid "Ext2"
 msgstr "Ext2"
 
@@ -3253,14 +3045,12 @@ msgstr "ext2"
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:249
 #, c-format
-#| msgid "Linux Ext3 (version %s)"
 msgid "Ext3 (version %s)"
 msgstr "Ext3 (%s bertsioa)"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:252
 #, c-format
-#| msgid "ext3"
 msgid "Ext3"
 msgstr "Ext3"
 
@@ -3272,14 +3062,12 @@ msgstr "ext3"
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:261
 #, c-format
-#| msgid "Journal for Linux ext3 (version %s)"
 msgid "Journal for Ext3 (version %s)"
 msgstr "Ext3-ren egunkaria (%s bertsioa)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:264
 #, c-format
-#| msgid "Journal for Linux ext3"
 msgid "Journal for Ext3"
 msgstr "Ext3-ren egunkaria"
 
@@ -3291,14 +3079,12 @@ msgstr "jbd"
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:273
 #, c-format
-#| msgid "Linux Ext4 (version %s)"
 msgid "Ext4 (version %s)"
 msgstr "Ext4 (%s bertsioa)"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:276
 #, c-format
-#| msgid "ext4"
 msgid "Ext4"
 msgstr "Ext4"
 
@@ -3310,14 +3096,12 @@ msgstr "ext4"
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:285
 #, c-format
-#| msgid "NTFS (version %s)"
 msgid "XFS (version %s)"
 msgstr "XFS (%s bertsioa)"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:288
 #, c-format
-#| msgid "HFS"
 msgid "XFS"
 msgstr "XFS"
 
@@ -3329,7 +3113,6 @@ msgstr "xfs"
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:297
 #, c-format
-#| msgid "NTFS (version %s)"
 msgid "ReiserFS (version %s)"
 msgstr "ReiserFS (%s bertsioa)"
 
@@ -3515,7 +3298,6 @@ msgstr "LUKS gailua derrigortuta blokeatzen"
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
 #: ../src/gdu/gdu-util.c:435
-#| msgid "Basic Data Partition"
 msgid "Linux Basic Data Partition"
 msgstr "Linux-en oinarrizko datuen partizioa"
 
@@ -3546,7 +3328,6 @@ msgid "EFI System Partition"
 msgstr "EFI sistemaren partizioa"
 
 #: ../src/gdu/gdu-util.c:443
-#| msgid "Not Partitioned"
 msgid "BIOS Boot Partition"
 msgstr "BIOS-en abioko partizioa"
 
@@ -3556,18 +3337,15 @@ msgid "Microsoft Reserved Partition"
 msgstr "Gordetako Microsoft partizioa"
 
 #: ../src/gdu/gdu-util.c:446
-#| msgid "Basic Data Partition"
 msgid "Microsoft Basic Data Partition"
 msgstr "Microsoft-en oinarrizko datuen partizioa"
 
 #. Same as Linux BDP
 #: ../src/gdu/gdu-util.c:447
-#| msgid "LDM meta data Partition"
 msgid "Microsoft LDM Metadata Partition"
 msgstr "Microsoft LDM meta-datuen partizioa"
 
 #: ../src/gdu/gdu-util.c:448
-#| msgid "LDM data Partition"
 msgid "Microsoft LDM Data Partition"
 msgstr "Microsoft LDM datuen partizioa"
 
@@ -3577,110 +3355,89 @@ msgstr "Microsoft Windows berreskuratze-ingurunea"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:451
-#| msgid "Basic Data Partition"
 msgid "HP-UX Data Partition"
 msgstr "HP-UX datuen partizioa"
 
 #: ../src/gdu/gdu-util.c:452
-#| msgid "Driver Partition"
 msgid "HP-UX Service Partition"
 msgstr "HP-UX zerbitzuen partizioa"
 
 #. FreeBSD
 #: ../src/gdu/gdu-util.c:454
-#| msgid "Create Partition"
 msgid "FreeBSD Boot Partition"
 msgstr "FreeBSD abioko partizioa"
 
 #: ../src/gdu/gdu-util.c:455
-#| msgid "Basic Data Partition"
 msgid "FreeBSD Data Partition"
 msgstr "FreeBSD datuen partizioa"
 
 #: ../src/gdu/gdu-util.c:456
-#| msgid "Linux Swap Partition"
 msgid "FreeBSD Swap Partition"
 msgstr "FreeBSD Swap partizioa"
 
 #: ../src/gdu/gdu-util.c:457
-#| msgid "Apple UFS Partition"
 msgid "FreeBSD UFS Partition"
 msgstr "FreeBSD UFS partizioa"
 
 #: ../src/gdu/gdu-util.c:458
-#| msgid "Deleting Partition"
 msgid "FreeBSD Vinum Partition"
 msgstr "FreeBSD Vinum Partition"
 
 #: ../src/gdu/gdu-util.c:459
-#| msgid "Create Partition"
 msgid "FreeBSD ZFS Partition"
 msgstr "FreeBSD-ren ZFS partizioa"
 
 #. Solaris
 #: ../src/gdu/gdu-util.c:461
-#| msgid "Basic Data Partition"
 msgid "Solaris Boot Partition"
 msgstr "Solaris abioko partizioa"
 
 #: ../src/gdu/gdu-util.c:462
-#| msgid "Basic Data Partition"
 msgid "Solaris Root Partition"
 msgstr "Solaris erroko partizioa"
 
 #: ../src/gdu/gdu-util.c:463
-#| msgid "Linux Swap Partition"
 msgid "Solaris Swap Partition"
 msgstr "Solaris Swap partizioa"
 
 #: ../src/gdu/gdu-util.c:464
-#| msgid "Basic Data Partition"
 msgid "Solaris Backup Partition"
 msgstr "Solaris babeskopiaren partizioa"
 
 #: ../src/gdu/gdu-util.c:465
-#| msgid "Driver Partition"
 msgid "Solaris /usr Partition"
 msgstr "Solaris /usr partizioa"
 
 #. Same as Apple ZFS
 #: ../src/gdu/gdu-util.c:466
-#| msgid "Driver Partition"
 msgid "Solaris /var Partition"
 msgstr "Solaris /var partizioa"
 
 #: ../src/gdu/gdu-util.c:467
-#| msgid "Driver Partition"
 msgid "Solaris /home Partition"
 msgstr "Solaris /home partizioa"
 
 #: ../src/gdu/gdu-util.c:468
-#| msgid "Create Partition"
 msgid "Solaris Alternate Sector Partition"
 msgstr "Solaris-en 2. mailako sektorearen partizioa"
 
 #: ../src/gdu/gdu-util.c:469
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition"
 msgstr "Gordetako Solaris partizioa"
 
 #: ../src/gdu/gdu-util.c:470
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (2)"
 msgstr "Gordetako Solaris partizioa (2)"
 
 #: ../src/gdu/gdu-util.c:471
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (3)"
 msgstr "Gordetako Solaris partizioa (3)"
 
 #: ../src/gdu/gdu-util.c:472
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (4)"
 msgstr "Gordetako Solaris partizioa (4)"
 
 #: ../src/gdu/gdu-util.c:473
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (5)"
 msgstr "Gordetako Solaris partizioa (5)"
 
@@ -3696,7 +3453,6 @@ msgid "Apple UFS Partition"
 msgstr "Apple UFS partizioa"
 
 #: ../src/gdu/gdu-util.c:477
-#| msgid "Apple UFS Partition"
 msgid "Apple ZFS Partition"
 msgstr "Apple ZFS partizioa"
 
@@ -3706,53 +3462,43 @@ msgid "Apple RAID Partition"
 msgstr "Apple RAID partizioa"
 
 #: ../src/gdu/gdu-util.c:479
-#| msgid "Apple RAID Partition"
 msgid "Apple RAID Partition (Offline)"
 msgstr "Apple RAID partizioa (lineaz kanpo)"
 
 #: ../src/gdu/gdu-util.c:480
-#| msgid "Apple UFS Partition"
 msgid "Apple Boot Partition"
 msgstr "Apple abioko partizioa"
 
 #: ../src/gdu/gdu-util.c:481
-#| msgid "Apple UFS Partition"
 msgid "Apple Label Partition"
 msgstr "Apple Label partizioa"
 
 #: ../src/gdu/gdu-util.c:482
-#| msgid "Apple RAID Partition"
 msgid "Apple TV Recovery Partition"
 msgstr "Apple TB berreskuratzeko partizioa"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:484
-#| msgid "Linux Swap Partition"
 msgid "NetBSD Swap Partition"
 msgstr "NetBSD Swap partizioa"
 
 #: ../src/gdu/gdu-util.c:485
-#| msgid "Apple UFS Partition"
 msgid "NetBSD FFS Partition"
 msgstr "NetBSD FFS partizioa"
 
 #: ../src/gdu/gdu-util.c:486
-#| msgid "Apple UFS Partition"
 msgid "NetBSD LFS Partition"
 msgstr "NetBSD LFS partizioa"
 
 #: ../src/gdu/gdu-util.c:487
-#| msgid "Apple RAID Partition"
 msgid "NetBSD RAID Partition"
 msgstr "NetBSD RAID partizioa"
 
 #: ../src/gdu/gdu-util.c:488
-#| msgid "Create Partition"
 msgid "NetBSD Concatenated Partition"
 msgstr "NetBSD kateatutako partizioa"
 
 #: ../src/gdu/gdu-util.c:489
-#| msgid "Extended Partition"
 msgid "NetBSD Encrypted Partition"
 msgstr "NetBSD enkriptatutako partizioa"
 
@@ -3878,7 +3624,6 @@ msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:528
-#| msgid "Linux (0x83)"
 msgid "Minix (0x81)"
 msgstr "Minix (0x81)"
 
@@ -4049,19 +3794,16 @@ msgstr ""
 
 #: ../src/gdu/gdu-util.c:888
 #, c-format
-#| msgid "%.1f kbit/s"
 msgid "%.1f KB/s"
 msgstr "%.1f KB/s"
 
 #: ../src/gdu/gdu-util.c:891
 #, c-format
-#| msgid "%.1f Mbit/s"
 msgid "%.1f MB/s"
 msgstr "%.1f MB/s"
 
 #: ../src/gdu/gdu-util.c:894
 #, c-format
-#| msgid "%.1f Gbit/s"
 msgid "%.1f GB/s"
 msgstr "%.1f GB/s"
 
@@ -4110,12 +3852,6 @@ msgstr "SDIO"
 msgid "Virtual"
 msgstr "Birtuala"
 
-#. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:940
-msgctxt "connection name"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
@@ -4124,76 +3860,6 @@ msgstr "Ezezaguna"
 #, c-format
 msgid "%s at %s"
 msgstr "%s (%s)"
-
-#: ../src/gdu/gdu-util.c:969
-msgctxt "RAID level"
-msgid "Stripe (RAID-0)"
-msgstr "Zatitua (RAID-0)"
-
-#: ../src/gdu/gdu-util.c:971
-msgctxt "RAID level"
-msgid "RAID-0"
-msgstr "RAID-0"
-
-#: ../src/gdu/gdu-util.c:974
-msgctxt "RAID level"
-msgid "Mirror (RAID-1)"
-msgstr "Ispilua (RAID-1)"
-
-#: ../src/gdu/gdu-util.c:976
-msgctxt "RAID level"
-msgid "RAID-1"
-msgstr "RAID-1"
-
-#: ../src/gdu/gdu-util.c:979
-msgctxt "RAID level"
-msgid "Parity Disk (RAID-4)"
-msgstr "Paritate diskoa (RAID-4)"
-
-#: ../src/gdu/gdu-util.c:981
-msgctxt "RAID level"
-msgid "RAID-4"
-msgstr "RAID-4"
-
-#: ../src/gdu/gdu-util.c:984
-msgctxt "RAID level"
-msgid "Distributed Parity (RAID-5)"
-msgstr "Banatutako paritatea (RAID-5)"
-
-#: ../src/gdu/gdu-util.c:986
-msgctxt "RAID level"
-msgid "RAID-5"
-msgstr "RAID-5"
-
-#: ../src/gdu/gdu-util.c:989
-msgctxt "RAID level"
-msgid "Dual Distributed Parity (RAID-6)"
-msgstr "Banatutako paritate bikoitza (RAID-6)"
-
-#: ../src/gdu/gdu-util.c:991
-msgctxt "RAID level"
-msgid "RAID-6"
-msgstr "RAID-6"
-
-#: ../src/gdu/gdu-util.c:994
-msgctxt "RAID level"
-msgid "Stripe of Mirrors (RAID-10)"
-msgstr "Ispiluen zatia (RAID-10)"
-
-#: ../src/gdu/gdu-util.c:996
-msgctxt "RAID level"
-msgid "RAID-10"
-msgstr "RAID-10"
-
-#: ../src/gdu/gdu-util.c:999
-msgctxt "RAID level"
-msgid "Concatenated (Linear)"
-msgstr "Kateatuta (lineala)"
-
-#: ../src/gdu/gdu-util.c:1001
-msgctxt "RAID level"
-msgid "Linear"
-msgstr "Lineala"
 
 #: ../src/gdu/gdu-util.c:1015
 msgid ""
@@ -4500,20 +4166,12 @@ msgstr "%s partizio-taula"
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 bolumen fisikoa"
 
-#. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:361
-msgctxt "RAID level"
-msgid "RAID"
-msgstr "RAID"
-
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
 #: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
 msgid "%s %s Component"
 msgstr "%s %s osagaia"
 
@@ -4522,7 +4180,6 @@ msgstr "%s %s osagaia"
 #.
 #: ../src/gdu/gdu-volume.c:372
 #, c-format
-#| msgid "Part of \"%s\" %s array"
 msgid "Part of \"%s\" array"
 msgstr "\"%s\" array-aren zatia"
 
@@ -4649,7 +4306,6 @@ msgstr "Bide-izen anitzeko unitatea"
 #.
 #: ../src/palimpsest/gdu-section-drive.c:189
 #, c-format
-#| msgid "Partition %d of %s"
 msgid "PHY %d of %s"
 msgstr "%d. PHY - %s"
 
@@ -4660,34 +4316,8 @@ msgstr "%d. PHY - %s"
 #.
 #: ../src/palimpsest/gdu-section-drive.c:196
 #, c-format
-#| msgid "Partition %d of %s"
 msgid "Port %d of %s"
 msgstr "%d. ataka - %s"
-
-#: ../src/palimpsest/gdu-section-drive.c:261
-msgctxt "Write Cache"
-msgid "Enabled"
-msgstr "Gaituta"
-
-#: ../src/palimpsest/gdu-section-drive.c:263
-msgctxt "Write Cache"
-msgid "Disabled"
-msgstr "Desgaituta"
-
-#. Translators: This is for the rotation rate of a hard
-#. * disk - RPM means rounds per minute
-#.
-#: ../src/palimpsest/gdu-section-drive.c:273
-#, c-format
-msgctxt "Rotation Rate"
-msgid "%d RPM"
-msgstr "%d b/min"
-
-#: ../src/palimpsest/gdu-section-drive.c:281
-#| msgid "Solid-State Disk"
-msgctxt "Rotation Rate"
-msgid "Solid-State Disk"
-msgstr "Solid-State Diskoa"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
 #: ../src/palimpsest/gdu-section-drive.c:296
@@ -4698,32 +4328,26 @@ msgstr "Eskema ezezaguna: %s"
 
 #: ../src/palimpsest/gdu-section-drive.c:439
 #: ../src/palimpsest/gdu-section-drive.c:459
-#| msgid "Error launching Disk Utility"
 msgid "Error launching Brasero"
 msgstr "Errorea Brasero abiaraztean"
 
 #: ../src/palimpsest/gdu-section-drive.c:440
-#| msgid "The operation is not supported."
 msgid "The application is not installed"
 msgstr "Aplikazioa ez dago instalatuta"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-#| msgid "Error ejecting device"
 msgid "Error ejecting medium"
 msgstr "Errorea euskarria egoztean"
 
 #: ../src/palimpsest/gdu-section-drive.c:565
-#| msgid "Error detaching device"
 msgid "Error detaching drive"
 msgstr "Errorea unitatea askatzean"
 
 #: ../src/palimpsest/gdu-section-drive.c:610
-#| msgid "Error formatting volume"
 msgid "Error formatting drive"
 msgstr "Errorea unitatea formateatzean"
 
 #: ../src/palimpsest/gdu-section-drive.c:648
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to format the drive?"
 msgstr "Ziur zaude unitatea formateatzea nahi duzula?"
 
@@ -4733,8 +4357,8 @@ msgid ""
 "corresponding multipath device was found. Your OS may be misconfigured."
 msgstr ""
 "<b>Abisua:</b> unitate honetan hainbat bide-izen atzeman dira, baina ez da "
-"bat datorren bide-izen anitzeko gailurik aurkitu. Sist. Erag. gaizki konfiguratuta "
-"egon daiteke."
+"bat datorren bide-izen anitzeko gailurik aurkitu. Sist. Erag. gaizki "
+"konfiguratuta egon daiteke."
 
 #: ../src/palimpsest/gdu-section-drive.c:850
 msgid "Go to Multipath Device"
@@ -4750,7 +4374,6 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-drive.c:890
 #: ../src/palimpsest/gdu-section-hub.c:225
-#| msgid "Model Name:"
 msgid "Model:"
 msgstr "Modeloa:"
 
@@ -4764,12 +4387,10 @@ msgstr "Firmware-aren bertsioa:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
 #: ../src/palimpsest/gdu-section-drive.c:903
-#| msgid "Model Name:"
 msgid "World Wide Name:"
 msgstr "Mundu zabaleko izena (WWN):"
 
 #: ../src/palimpsest/gdu-section-drive.c:907
-#| msgid "Load Friction"
 msgid "Location:"
 msgstr "Kokalekua:"
 
@@ -4785,7 +4406,6 @@ msgstr "Biratze-emaria:"
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
-#| msgid "SD High Capacity"
 msgid "Capacity:"
 msgstr "Edukiera:"
 
@@ -4795,7 +4415,6 @@ msgstr "Konexioa:"
 
 #: ../src/palimpsest/gdu-section-drive.c:931
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
-#| msgid "Partition"
 msgid "Partitioning:"
 msgstr "Partizioa egitea:"
 
@@ -4808,17 +4427,14 @@ msgid "Create and copy CDs and DVDs"
 msgstr "Sortu eta kopiatu CD eta DVDak"
 
 #: ../src/palimpsest/gdu-section-drive.c:964
-#| msgid "_Format"
 msgid "Format _Drive"
 msgstr "_Formateatu unitatea"
 
 #: ../src/palimpsest/gdu-section-drive.c:965
-#| msgid "There was an error starting the drive \"%s\"."
 msgid "Erase or partition the drive"
 msgstr "Ezabatu edo sortu partizioa unitatean"
 
 #: ../src/palimpsest/gdu-section-drive.c:974
-#| msgid "SMART Data"
 msgid "SM_ART Data"
 msgstr "_SMART datuak"
 
@@ -4831,7 +4447,6 @@ msgid "_Eject"
 msgstr "_Egotzi"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-#| msgid "Eject media from the device"
 msgid "Eject medium from the drive"
 msgstr "Egotzi euskarria unitatetik"
 
@@ -4844,7 +4459,6 @@ msgid "Power down the drive so it can be removed"
 msgstr "Itzali unitatea kendu ahal izateko"
 
 #: ../src/palimpsest/gdu-section-drive.c:1005
-#| msgid "Seek Timer Performance"
 msgid "Measure drive performance"
 msgstr "Neurtu unitatearen errendimendua"
 
@@ -4878,7 +4492,6 @@ msgid "Revision:"
 msgstr "Berrikuspena:"
 
 #: ../src/palimpsest/gdu-section-hub.c:233
-#| msgid "_Drive:"
 msgid "Driver:"
 msgstr "Kontrolatzailea:"
 
@@ -4887,17 +4500,14 @@ msgid "Fabric:"
 msgstr "Lantegia:"
 
 #: ../src/palimpsest/gdu-section-hub.c:241
-#| msgid "Number of ECC errors"
 msgid "Number of Ports:"
 msgstr "Ataka kopurua:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
-#| msgid "Error formatting volume"
 msgid "Error starting Volume Group"
 msgstr "Errorea bolumen taldea abiaraztean"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
-#| msgid "Error formatting volume"
 msgid "Error stopping Volume Group"
 msgstr "Errorea bolumen taldea gelditzean"
 
@@ -4914,7 +4524,6 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "Errorea bolumen fisikoa bolumen taldeari gehitzean"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#| msgid "Error creating RAID array"
 msgid "Error creating PV for VG"
 msgstr "Errorea bol. fisikoa sortzean bol. taldearentzako"
 
@@ -4927,18 +4536,15 @@ msgid "Error removing Physical Volume from Volume Group"
 msgstr "Errorea bol. fisikoa kentzean bol. taldetik"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the remove the Physical Volume?"
 msgstr "Ziur zaude bol. fisikoa kentzea nahi duzula?"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
-#| msgid "_Revert"
 msgid "_Remove"
 msgstr "_Kendu"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
-#| msgid "Not running"
 msgid "Not Running"
 msgstr "Ez da exekutatzen ari"
 
@@ -4947,35 +4553,28 @@ msgid "Partially Running"
 msgstr "Partzialki exekutatzen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:606
-#| msgctxt "RAID status"
-#| msgid "Running"
 msgid "Running"
 msgstr "Exekutatzen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
 #, c-format
-#| msgid "Unknown (%s)"
 msgid "Unknown (%d)"
 msgstr "Ezezaguna (%d)"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:966
-#| msgid "_Name:"
 msgid "Name:"
 msgstr "Izena:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
-#| msgid "Percent Size"
 msgid "Extent Size:"
 msgstr "Hedaduraren tamaina:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
-#| msgid "LVM2 Physical Volume"
 msgid "Physical Volumes:"
 msgstr "Bolumen fisikoak:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
-#| msgid "Unallocated Space"
 msgid "Unallocated:"
 msgstr "Esleitu gabekoak:"
 
@@ -4996,7 +4595,6 @@ msgid "Deactivate all LVs in the VG"
 msgstr "Desaktibatu bol. taldeko bol. log. guztiak"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
-#| msgid "_Name:"
 msgid "Edit _Name"
 msgstr "Editatu _izena"
 
@@ -5005,7 +4603,6 @@ msgid "Change the Volume Group name"
 msgstr "Aldatu bolumen taldearen izena"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
-#| msgid "LVM2 Physical Volume"
 msgid "Edit _Physical Volumes"
 msgstr "Editatu bolumen _fisikoak"
 
@@ -5013,96 +4610,21 @@ msgstr "Editatu bolumen _fisikoak"
 msgid "Create and remove PVs"
 msgstr "Sortu eta kendu bol. fisikoak"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
-msgctxt "RAID status"
-msgid "Not running, partially assembled"
-msgstr "Ez da exekutatzen ari, zati batean elkartuta"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
-msgctxt "RAID status"
-msgid "Not running"
-msgstr "Ez da exekutatzen ari"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
-msgctxt "RAID status"
-msgid "Not running, can only start degraded"
-msgstr "Ez da exekutatzen ari, degradatuta soilik abiaraz daiteke"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
-msgctxt "RAID status"
-msgid "Not running, not enough components to start"
-msgstr "Ez da exekutatzen ari, ez dago nahikoa osagairik abiarazteko"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
-msgctxt "RAID status"
-msgid "DEGRADED"
-msgstr "DEGRADATUTA"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
-msgctxt "RAID status"
-msgid "Running"
-msgstr "Exekutatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
-#| msgctxt "RAID status"
-#| msgid "Reshaping"
-msgctxt "RAID action"
-msgid "Reshaping"
-msgstr "Birmoldaketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
-#| msgctxt "RAID status"
-#| msgid "Resyncing"
-msgctxt "RAID action"
-msgid "Resyncing"
-msgstr "Birsinkronizazioa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
-#| msgctxt "RAID status"
-#| msgid "Repairing"
-msgctxt "RAID action"
-msgid "Repairing"
-msgstr "Konponketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
-#| msgctxt "RAID status"
-#| msgid "Recovering"
-msgctxt "RAID action"
-msgid "Recovering"
-msgstr "Berreskuraketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
-#| msgctxt "RAID status"
-#| msgid "Checking"
-msgctxt "RAID action"
-msgid "Checking"
-msgstr "Egiaztaketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
-msgctxt "RAID action"
-msgid "Idle"
-msgstr "Inaktibo"
-
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
-#| msgid "Stopping RAID Array"
 msgid "Error stopping RAID Array"
 msgstr "Errorea RAID array-a gelditzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:360
-#| msgid "Error creating RAID array"
 msgid "Error starting RAID Array"
 msgstr "Errorea RAID array-a abiaraztean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:390
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
-#| msgctxt "RAID status"
-#| msgid "Not running, not enough components to start"
 msgid "Not enough components available to start the RAID Array"
 msgstr "Ez daude nahiko osagairik RAID array-a abiarazteko"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:409
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the RAID Array degraded?"
 msgstr "Ziur zaude RAID array-a degradatzea nahi duzula?"
 
@@ -5111,48 +4633,40 @@ msgid "_Start"
 msgstr "_Abiatu"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:455
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error deleting partition for component in RAID Array"
 msgstr "Errorea RAID array-ko osagaiaren partizioa ezabatzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:478
-#| msgid "Removing Component from RAID Array"
 msgid "Error removing component from RAID Array"
 msgstr "Errorea RAID array-ko osagaia kentzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:529
-#| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Are you sure you want the remove the component?"
 msgstr "Ziur zaude osagaia kentzea nahi duzula?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:650
-#| msgid "Error creating component for RAID array"
 msgid "Error adding component to RAID Array"
 msgstr "Errorea osagaia gehitzean RAID array-ari"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:683
-#: ../src/palimpsest/gdu-shell.c:599
+#: ../src/palimpsest/gdu-shell.c:598
 msgid "Error creating component for RAID array"
 msgstr "Errorea RAID array-ko osagaia sortzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
-#| msgid "Error creating RAID array"
 msgid "Error expanding RAID Array"
 msgstr "Errorea RAID array-a zabaltzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
-#| msgid "Error creating RAID array"
 msgid "Error checking RAID Array"
 msgstr "Errorea RAID array-a egiaztatzean"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
-#| msgid "RAID _Level:"
 msgid "Level:"
 msgstr "_Maila:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:962
-#| msgid "LDM meta data Partition"
 msgid "Metadata Version:"
 msgstr "Meta-datuen bertsioa:"
 
@@ -5165,53 +4679,42 @@ msgid "Components:"
 msgstr "Osagaiak:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
-#| msgid "Starting RAID Array"
 msgid "St_art RAID Array"
 msgstr "_Abiarazi RAID array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
-#| msgid "Starting RAID Array"
 msgid "Bring up the RAID Array"
 msgstr "Muntatu RAID array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
-#| msgid "Stopping RAID Array"
 msgid "St_op RAID Array"
 msgstr "_Gelditu RAID array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
-#| msgid "Create RAID Array"
 msgid "Tear down the RAID Array"
 msgstr "Desmuntatu RAID array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
-#| msgid "Create RAID Array"
 msgid "Format/Erase RAI_D Array"
 msgstr "Formateatu/Ezabatu _RAID array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
-#| msgid "Starts repairing the RAID array"
 msgid "Erase or partition the array"
 msgstr "Ezabatu edo array-aren partizioa egin"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
-#| msgid "Checking RAID Array"
 msgid "Chec_k Array"
 msgstr "_Egiaztatu array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
-#| msgid "Starts repairing the RAID array"
 msgid "Check and repair the array"
 msgstr "Egiaztatu eta konpondu array-a"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
 msgid "Edit Com_ponents"
 msgstr "Editatu _osagaiak"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
-#| msgid "Error removing component"
 msgid "Create and remove components"
 msgstr "Sortu eta kendu osagaiak"
 
@@ -5220,12 +4723,10 @@ msgid "Measure RAID array performance"
 msgstr "Neurtu RAID array-aren errendimendua"
 
 #: ../src/palimpsest/gdu-section-volumes.c:115
-#| msgid "Error unmounting device"
 msgid "Error unmounting volume"
 msgstr "Errorea bolumena desmuntatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:171
-#| msgid "Error formatting volume"
 msgid "Error mounting volume"
 msgstr "Errorea bolumena muntatzean"
 
@@ -5234,23 +4735,19 @@ msgid "Error deleting partition"
 msgstr "Errorea partizioa ezabatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:263
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ziur zaude partizioa ezabatzea nahi duzula?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:264
 #: ../src/palimpsest/gdu-section-volumes.c:1788
-#| msgid "_Detect Media"
 msgid "_Delete"
 msgstr "_Ezabatu"
 
 #: ../src/palimpsest/gdu-section-volumes.c:317
-#| msgid "Error setting file system label"
 msgid "Error creating filesystem"
 msgstr "Errorea fitxategi-sistema sortzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:370
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to format the volume?"
 msgstr "Ziur zaude bolumena formateatzea nahi duzula?"
 
@@ -5259,22 +4756,18 @@ msgid "Error modifying partition"
 msgstr "Errorea partizioa eraldatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:519
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "Ziur zaude pasaesaldia ahaztea nahi duzula?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:520
-#| msgid "_Format"
 msgid "_Forget"
 msgstr "_Ahaztu"
 
 #: ../src/palimpsest/gdu-section-volumes.c:550
-#| msgid "Error formatting volume"
 msgid "Error locking LUKS volume"
 msgstr "Errorea LUKS bolumena blokeatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:673
-#| msgid "Error unlocking device"
 msgid "Error unlocking LUKS volume"
 msgstr "Errorea LUKS bolumena desblokeatzean"
 
@@ -5283,12 +4776,10 @@ msgid "Error creating partition"
 msgstr "Errorea partizioa sortzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1140
-#| msgid "Error creating partition table"
 msgid "Error changing label"
 msgstr "Errorea etiketa aldatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1195
-#| msgid "The requested filesystem label"
 msgid "Choose a new filesystem label."
 msgstr "Aukeratu fitxategi-sistemaren etiketa berria."
 
@@ -5297,13 +4788,11 @@ msgid "_Label:"
 msgstr "_Etiketa:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1241
-#| msgid "Error checking file system on device"
 msgid "Error checking filesystem on volume"
 msgstr "Errorea bolumeneko fitxategi-sistema egiaztatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
-#| msgid "File system check on \"%s\" completed"
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "\"%s\"(r)en (%s) fitxategi-sistemaren egiaztaketa burutu da."
 
@@ -5321,17 +4810,14 @@ msgid "Error spawning nautilus: %s"
 msgstr "Errorea nautilus abiaraztean: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1435
-#| msgid "Error formatting volume"
 msgid "Error creating Logical Volume"
 msgstr "Errorea bolumen logikoa sortzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1588
-#| msgid "Error formatting volume"
 msgid "Error stopping Logical Volume"
 msgstr "Errorea bolumen logikoa gelditzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1634
-#| msgid "Error formatting volume"
 msgid "Error starting Logical Volume"
 msgstr "Errorea bolumen logikoa abiaraztean"
 
@@ -5344,42 +4830,34 @@ msgid "Choose a new name for the Logical Volume."
 msgstr "Aukeratu bolumen logikoaren izen berria."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1754
-#| msgid "Error deleting partition"
 msgid "Error deleting Logical Volume"
 msgstr "Errorea bolumen logikoa ezabatzean"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1787
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "Ziur zaude bolumen logikoa ezabatzea nahi duzula?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1906
-#| msgid "Model Name:"
 msgid "Volume Name:"
 msgstr "Bolumenaren izena:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1912
-#| msgid "Use"
 msgid "Usage:"
 msgstr "Erabilera:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1922
-#| msgid "Partitioned"
 msgid "Partition Type:"
 msgstr "Partizio mota:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1928
-#| msgid "Part_ition Label:"
 msgid "Partition Label:"
 msgstr "Partizioaren etiketa:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1931
-#| msgid "Part_ition Label:"
 msgid "Partition Flags:"
 msgstr "Partizioaren bandera:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1956
-#| msgid "_Type:"
 msgid "Type:"
 msgstr "Mota:"
 
@@ -5388,7 +4866,6 @@ msgid "Available:"
 msgstr "Erabilgarri:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1962
-#| msgid "_Label:"
 msgid "Label:"
 msgstr "Etiketa:"
 
@@ -5396,22 +4873,8 @@ msgstr "Etiketa:"
 msgid "Mount Point:"
 msgstr "Muntatze-puntua:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1986
-#| msgctxt "RAID status"
-#| msgid "Running"
-msgctxt "LVM2 LV State"
-msgid "Running"
-msgstr "Exekutatzen"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1987
-#| msgid "Not running"
-msgctxt "LVM2 LV State"
-msgid "Not Running"
-msgstr "Ez da exekutatzen ari"
-
 #. Translators: This is for the 'boot' MBR/APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2026
-#| msgid "_Bootable"
 msgid "Bootable"
 msgstr "Abiarazgarria"
 
@@ -5422,8 +4885,6 @@ msgstr "Beharrezkoa"
 
 #. Translators: This is for the 'allocated' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2032
-#| msgctxt "Linux MD slave state"
-#| msgid "Blocked"
 msgid "Allocated"
 msgstr "Esleituta"
 
@@ -5443,7 +4904,6 @@ msgid "Boot Code PIC"
 msgstr "Abioko PIC kodea"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2115
-#| msgid "%s Filesystem"
 msgid "Filesystem"
 msgstr "Fitxategi-sistema"
 
@@ -5468,7 +4928,6 @@ msgid "Mounted at %s"
 msgstr "%s(e)n muntatuta"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2170
-#| msgid "Not Partitioned"
 msgid "Not Mounted"
 msgstr "Muntatu gabe"
 
@@ -5481,77 +4940,62 @@ msgid "Encrypted Volume (Unlocked)"
 msgstr "Enkriptatutako bolumena (desblokeatuta)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2196
-#| msgid "Stop the array"
 msgid "Go to array"
 msgstr "Joan array-ra"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2204
-#| msgid "Contains logical partitions"
 msgid "Container for Logical Partitions"
 msgstr "Partizio logikoen ontzia"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2321
-#| msgid "LVM2 Physical Volume"
 msgid "Logical _Volumes"
 msgstr "Bolumen _logikoak"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2323
-#| msgid "Volume"
 msgid "_Volumes"
 msgstr "_Bolumenak"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2387
-#| msgid "Mounting volume..."
 msgid "_Mount Volume"
 msgstr "_Muntatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2388
-#| msgid "Mounting volume..."
 msgid "Mount the volume"
 msgstr "Muntatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2397
-#| msgid "Cannot unmount volume"
 msgid "Un_mount Volume"
 msgstr "_Desmuntatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2398
-#| msgid "Unmount the filesystem"
 msgid "Unmount the volume"
 msgstr "Desmuntatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2407
-#| msgid "Format %s Volume (%s)"
 msgid "Fo_rmat Volume"
 msgstr "_Formateatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2408
-#| msgid "Error formatting volume"
 msgid "Erase or format the volume"
 msgstr "Ezabatu edo formatua eman bolumenari"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2417
-#| msgid "_Check File System"
 msgid "_Check Filesystem"
 msgstr "_Egiaztatu fitxategi-sistema"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2418
-#| msgid "Check the file system"
 msgid "Check and repair the filesystem"
 msgstr "Egiaztatu eta konpondu fitxategi-sistema"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2428
-#| msgid "Filesystem label"
 msgid "Edit Filesystem _Label"
 msgstr "Editatu fitxategi-sistemaren _etiketa"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2429
-#| msgid "Check the file system"
 msgid "Change the label of the filesystem"
 msgstr "Aldatu fitxategi-sistemaren etiketa"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2438
-#| msgid "Empty Partition"
 msgid "Ed_it Partition"
 msgstr "Editatu _partizioa"
 
@@ -5560,7 +5004,6 @@ msgid "Change partition type, label and flags"
 msgstr "Aldatu partizio mota, etiketa eta banderak"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2448
-#| msgid "_Delete Partition"
 msgid "D_elete Partition"
 msgstr "E_zabatu partizioa"
 
@@ -5569,27 +5012,22 @@ msgid "Delete the partition"
 msgstr "Ezabatu partizioa"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2458
-#| msgid "Create Partition"
 msgid "_Create Partition"
 msgstr "_Sortu partizioa"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2459
-#| msgid "Create partition"
 msgid "Create a new partition"
 msgstr "Sortu partizio berria"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2468
-#| msgid "Volume"
 msgid "_Lock Volume"
 msgstr "_Blokeatu bolumena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2469
-#| msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgid "Make encrypted data unavailable"
 msgstr "Egin enkriptatutako datuak eskurakaitzak"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2478
-#| msgid "Volume"
 msgid "Un_lock Volume"
 msgstr "_Desblokeatu bolumena"
 
@@ -5598,17 +5036,14 @@ msgid "Make encrypted data available"
 msgstr "Egin enkriptatutako datuak eskuragarri"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2488
-#| msgid "F_orget Passphrase"
 msgid "Forge_t Passphrase"
 msgstr "A_haztu pasaesaldia"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2489
-#| msgid "Error storing passphrase in keyring"
 msgid "Delete passphrase from keyring"
 msgstr "Ezabatu pasaesaldia gako-sortatik"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2500
-#| msgid "Change _Passphrase"
 msgid "Change passphrase"
 msgstr "Aldatu pasaesaldia"
 
@@ -5621,7 +5056,6 @@ msgid "Create a new logical volume"
 msgstr "Sortu bolumen logiko berria"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2519
-#| msgid "Volume"
 msgid "S_tart Volume"
 msgstr "_Abiarazi bolumena"
 
@@ -5634,12 +5068,10 @@ msgid "Edit Vol_ume Name"
 msgstr "Editatu _bolumenaren izena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2531
-#| msgid "Cannot unmount volume"
 msgid "Change the name of the volume"
 msgstr "Aldatu bolumenaren izena"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2540
-#| msgid "New Volume"
 msgid "D_elete Volume"
 msgstr "_Ezabatu bolumena"
 
@@ -5648,7 +5080,6 @@ msgid "Delete the Logical Volume"
 msgstr "Ezabatu bolumen logikoa"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2550
-#| msgid "Volume"
 msgid "Sto_p Volume"
 msgstr "_Gelditu bolumena"
 
@@ -5661,7 +5092,6 @@ msgstr "Desaktibatu bolumen logikoa"
 #.
 #: ../src/palimpsest/gdu-shell.c:290
 #, c-format
-#| msgid "Disk Utility"
 msgid "%s — Disk Utility"
 msgstr "%s — Diskoen tresna"
 
@@ -5702,117 +5132,111 @@ msgstr "%s (%s) [%s] — Diskoen tresna"
 #.
 #: ../src/palimpsest/gdu-shell.c:338
 #, c-format
-#| msgid "Disk Utility"
 msgid "%s (%s) — Disk Utility"
 msgstr "%s (%s) — Diskoen tresna"
 
-#: ../src/palimpsest/gdu-shell.c:627
+#: ../src/palimpsest/gdu-shell.c:626
 msgid "Error creating RAID array"
 msgstr "Errorea RAID array-a sortzean"
 
-#: ../src/palimpsest/gdu-shell.c:756
+#: ../src/palimpsest/gdu-shell.c:755
 #, c-format
 msgid "Error connecting to “%s”"
 msgstr "Errorea '%s'(r)ekin konektatzean"
 
-#: ../src/palimpsest/gdu-shell.c:809
+#: ../src/palimpsest/gdu-shell.c:808
 msgid "translator-credits"
 msgstr "Iñaki Larrañaga Murgoitio <dooteo@zundan.com>"
 
-#: ../src/palimpsest/gdu-shell.c:836
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "_File"
 msgstr "_Fitxategia"
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "Connect to _Server..."
 msgstr "Konektatu _zerbitzarira..."
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "Manage storage devices on another machine"
 msgstr "Kudeatu biltegien gailuak beste ordenagailuan"
 
-#: ../src/palimpsest/gdu-shell.c:838
-#| msgid "Create"
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "_Create"
 msgstr "_Sortu"
 
-#: ../src/palimpsest/gdu-shell.c:839
-#| msgid "RAID Array"
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_RAID Array..."
 msgstr "_RAID array-a..."
 
-#: ../src/palimpsest/gdu-shell.c:839
-#| msgid "Create RAID Array"
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "Create a RAID array"
 msgstr "Sortu RAID array-a"
 
-#: ../src/palimpsest/gdu-shell.c:840
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: ../src/palimpsest/gdu-shell.c:841 ../src/palimpsest/gdu-shell.c:844
+#: ../src/palimpsest/gdu-shell.c:842 ../src/palimpsest/gdu-shell.c:845
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "_Quit"
 msgstr "Irte_n"
 
-#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "Quit"
 msgstr "Irten"
 
-#: ../src/palimpsest/gdu-shell.c:844
-#| msgid "Get Help on Palimpsest Disk Utility"
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "Get Help on Disk Utility"
 msgstr "Diskoen tresnaren laguntza eskuratu"
 
-#: ../src/palimpsest/gdu-shell.c:845
+#: ../src/palimpsest/gdu-shell.c:846
 msgid "_About"
 msgstr "Honi _buruz"
 
-#: ../src/palimpsest/gdu-shell.c:924
+#: ../src/palimpsest/gdu-shell.c:925
 msgid "An error occured"
 msgstr "Errore bat gertatu da"
 
-#: ../src/palimpsest/gdu-shell.c:933
+#: ../src/palimpsest/gdu-shell.c:934
 msgid "The operation failed."
 msgstr "Eragiketak huts egin du."
 
-#: ../src/palimpsest/gdu-shell.c:936
+#: ../src/palimpsest/gdu-shell.c:937
 msgid "The device is busy."
 msgstr "Gailua lanpetuta dago."
 
-#: ../src/palimpsest/gdu-shell.c:939
+#: ../src/palimpsest/gdu-shell.c:940
 msgid "The operation was canceled."
 msgstr "Eragiketa bertan behera utzi da."
 
-#: ../src/palimpsest/gdu-shell.c:942
+#: ../src/palimpsest/gdu-shell.c:943
 msgid "The daemon is being inhibited."
 msgstr "Daemona galarazten dago."
 
-#: ../src/palimpsest/gdu-shell.c:945
+#: ../src/palimpsest/gdu-shell.c:946
 msgid "An invalid option was passed."
 msgstr "Aukera baliogabe bat eman zaio."
 
-#: ../src/palimpsest/gdu-shell.c:948
+#: ../src/palimpsest/gdu-shell.c:949
 msgid "The operation is not supported."
 msgstr "Eragiketa ez dago onartuta."
 
-#: ../src/palimpsest/gdu-shell.c:951
+#: ../src/palimpsest/gdu-shell.c:952
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "ATA SMART datuak lortzean gailua esna daiteke."
 
-#: ../src/palimpsest/gdu-shell.c:954
+#: ../src/palimpsest/gdu-shell.c:955
 msgid "Permission denied."
 msgstr "Baimena ukatuta."
 
-#: ../src/palimpsest/gdu-shell.c:993
+#: ../src/palimpsest/gdu-shell.c:994
 msgid "_Details:"
 msgstr "_Xehetasunak:"
 
-#: ../src/palimpsest/gdu-shell.c:1162
-#| msgid "Detaching Device"
+#: ../src/palimpsest/gdu-shell.c:1163
 msgid "_Storage Devices"
 msgstr "_Biltegien gailuak"
 

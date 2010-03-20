@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility gnome-2-28\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 00:42+0100\n"
-"PO-Revision-Date: 2010-03-03 22:40+0100\n"
+"POT-Creation-Date: 2010-03-21 00:22+0100\n"
+"PO-Revision-Date: 2010-03-19 06:56+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2457,7 +2457,7 @@ msgid "Master Boot Record"
 msgstr "Hlavní zaváděcí záznam MBR"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:829
+#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:833
 #: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
@@ -2578,7 +2578,7 @@ msgstr "Diskové pole RAID neběží"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:815
+#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
@@ -2688,8 +2688,18 @@ msgstr "Blu-Ray"
 msgid "HDDVD"
 msgstr "HDDVD"
 
+#. Translators: This is the name of a "Drive" backed by a file.
+#. * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+#. *
+#. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
+#.
+#: ../src/gdu/gdu-drive.c:689
+#, c-format
+msgid "%s File"
+msgstr "Soubor %s"
+
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:699 ../src/gdu/gdu-drive.c:738
+#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-drive.c:742
 #, c-format
 msgid "%s Drive"
 msgstr "Disk %s"
@@ -2697,7 +2707,7 @@ msgstr "Disk %s"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:733
+#: ../src/gdu/gdu-drive.c:737
 #, c-format
 msgid "%s %s Drive"
 msgstr "Disk %s %s"
@@ -2705,7 +2715,7 @@ msgstr "Disk %s %s"
 #. Translators: This string is used to describe a hard disk.
 #. * The first %s is the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:749
+#: ../src/gdu/gdu-drive.c:753
 #, c-format
 msgid "%s Hard Disk"
 msgstr "Pevný disk %s"
@@ -2713,14 +2723,14 @@ msgstr "Pevný disk %s"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:754
+#: ../src/gdu/gdu-drive.c:758
 msgid "Hard Disk"
 msgstr "Pevný disk"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:761
+#: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "Disk SSD %s"
@@ -2728,38 +2738,38 @@ msgstr "Disk SSD %s"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:767
+#: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
 msgstr "Disk SSD"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:808
+#: ../src/gdu/gdu-drive.c:812
 #, c-format
 msgid "%s Media"
 msgstr "Médium %s"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:826 ../src/gdu/gdu-linux-md-drive.c:569
+#: ../src/gdu/gdu-drive.c:830 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "Tabulka rozdělení disku MBR"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:832 ../src/gdu/gdu-linux-md-drive.c:575
+#: ../src/gdu/gdu-drive.c:836 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Tabulka rozdělení disku Apple"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:837 ../src/gdu/gdu-linux-md-drive.c:580
+#: ../src/gdu/gdu-drive.c:841 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "Rozděleno"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:842 ../src/palimpsest/gdu-section-drive.c:302
+#: ../src/gdu/gdu-drive.c:846 ../src/palimpsest/gdu-section-drive.c:302
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "Nerozděleno"

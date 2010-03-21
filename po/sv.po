@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-19 23:11+0100\n"
-"PO-Revision-Date: 2010-03-20 09:08+0100\n"
+"POT-Creation-Date: 2010-03-21 22:47+0100\n"
+"PO-Revision-Date: 2010-03-21 23:03+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -167,14 +167,14 @@ msgid "The RAID Array to add a component to."
 msgstr "RAID-kedjan att lägga till en komponent till."
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Add spare to %s"
-msgstr "Lägg till komponent till %s"
+msgstr "Lägg till reserv till %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
-#, fuzzy, c-format
+#, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
-msgstr "Välj en volym att använda som komponent i kedjan \"%s\""
+msgstr "Välj en enhet för att skapa en %s-reserv för RAID-kedjan \"%s\" (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
@@ -182,9 +182,9 @@ msgid "Expand %s"
 msgstr "Expandera %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Select one or more devices to use %s on for expanding the RAID Array \"%s\" (%s)"
-msgstr "Välj en volym att använda som komponent i kedjan \"%s\""
+msgstr "Välj en eller flera enheter för att använda %s på för att expandera RAID-kedjan \"%s\" (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
 msgid "_Expand"
@@ -258,7 +258,7 @@ msgstr "Reallokerat antal sektorer"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
 msgid "Count of remapped sectors. When the hard drive finds a read/write/verification error, it marks the sector as \"reallocated\" and transfers data to a special reserved area (spare area)"
-msgstr "Antal omallokerade sektorer. När hårddisken hittar ett läs-/skriv-/verifieringsfel så markeras sektorn som \"reallocated\" och överför data till ett speciellt reserverat område (spare area)"
+msgstr "Antal omallokerade sektorer. När hårddisken hittar ett läs-/skriv-/verifieringsfel så markeras sektorn som \"reallocated\" och överför data till ett speciellt reserverat område (reservområde)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -938,9 +938,8 @@ msgstr "_Uppdatera"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
-#, fuzzy
 msgid "Reads SMART Data, waking up the disk"
-msgstr "Läser SMART-data från disken, väcker upp den om det behövs"
+msgstr "Läser SMART-data, väcker upp disken"
 
 #. TODO: better icon
 #. Translators: Button name
@@ -1269,7 +1268,7 @@ msgstr "Bläddra efter servrar som upptäckts via protokollet DNS-SD"
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
 msgid "To manage storage devices on another machine, enter the address and press “Connect”. The connection will be made using the <i>Secure Shell</i> protocol."
-msgstr ""
+msgstr "För att hantera lagringsenheter på en annan dator, ange adressen och tryck på \"Anslut\". Anslutningen kommer att göras med <i>Secure Shell</i>-protokollet."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
@@ -1461,7 +1460,7 @@ msgstr "Använd hela diskar istället för _partitioner"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:705
 msgid "If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."
-msgstr ""
+msgstr "Om kryssad kommer allt utrymme på varje markerad disk att användas för RAID-kedjan. Om inte kommer partitioner att skapas."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
@@ -1575,9 +1574,9 @@ msgstr "Inget ledigt utrymme."
 #. * Second %s (e.g. '5 GB') is how much space is available.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Insufficient space: %s is needed but largest contiguous free block is %s."
-msgstr "%s. Största oavbrutna lediga block är %s"
+msgstr "Otillräckligt utrymme: %s behövs men största oavbrutna lediga block är %s."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
@@ -1588,18 +1587,18 @@ msgstr "Disken kommer att partitioneras och en partition kommer att skapas"
 #. * First %s is the component size e.g. '42 GB'.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
-#, fuzzy, c-format
+#, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards no space will be available."
-msgstr "Disken kommer att partitioneras och en %s-partition kommer att skapas"
+msgstr "Disken kommer att partitioneras och en %s-partition kommer att skapas. Efteråt kommer inget utrymme att finnas tillgängligt."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
-#, fuzzy, c-format
+#, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards %s will be available."
-msgstr "Disken kommer att partitioneras och en %s-partition kommer att skapas"
+msgstr "Disken kommer att partitioneras och en %s-partition kommer att skapas. Efteråt kommer %s att finnas tillgängligt."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
@@ -1615,35 +1614,35 @@ msgstr "En volym kommer att skapas"
 #. * First %s is the component size e.g. '42 GB'.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
-#, fuzzy, c-format
+#, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr "En %s-partition kommer att skapas"
+msgstr "En %s-partition kommer att skapas. Efteråt kommer inget utrymme att finnas tillgängligt."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
-msgstr "En %s-partition kommer att skapas"
+msgstr "En %s-volym kommer att skapas. Efteråt kommer inget utrymme att finnas tillgängligt."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
-#, fuzzy, c-format
+#, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
-msgstr "En %s-partition kommer att skapas"
+msgstr "En %s-partition kommer att skapas. Efteråt kommer %s att finnas tillgängligt."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
-msgstr "En %s-partition kommer att skapas"
+msgstr "En %s-volym kommer att skapas. Efteråt kommer %s att finnas tillgängligt."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1696,14 +1695,12 @@ msgid "Details"
 msgstr "Detaljer"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#, fuzzy
 msgid "Error benchmarking drive"
-msgstr "Fel vid frånkoppling av enheten"
+msgstr "Fel vid prestandatest av enheten"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#, fuzzy
 msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "Är du säker på att du vill radera enheten?"
+msgstr "Är du säker på att du vill starta ett prestandatest för läsning/skrivning?"
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
@@ -1797,9 +1794,8 @@ msgstr "Avbryt"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
-#, fuzzy
 msgid "Cancels the currently running benchmark"
-msgstr "Avbryter det körande testet"
+msgstr "Avbryter det körande prestandatestet"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
@@ -1911,14 +1907,12 @@ msgid "State:"
 msgstr "Tillstånd:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
-#, fuzzy
 msgid "Add _Spare"
-msgstr "Reserv"
+msgstr "Lägg till _reserv"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
-#, fuzzy
 msgid "Add a spare to the array"
-msgstr "Lägg till en ny komponent till kedjan"
+msgstr "Lägg till en reserv till kedjan"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
 msgid "_Expand Array"
@@ -2843,7 +2837,7 @@ msgstr ""
 
 #: ../src/gdu/gdu-pool.c:896
 msgid "Multi-disk Devices"
-msgstr ""
+msgstr "Flerdiskenheter"
 
 #: ../src/gdu/gdu-pool.c:897
 msgid "RAID, LVM and other logical drives"
@@ -2858,14 +2852,14 @@ msgid "USB, FireWire and other peripherals"
 msgstr "USB, FireWire och annan kringutrustning"
 
 #: ../src/gdu/gdu-pool.c:2092
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating devices: %s"
-msgstr "Fel vid utmatning av enheten"
+msgstr "Fel vid uppräkning av enheter: %s"
 
 #: ../src/gdu/gdu-pool.c:2118
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating adapters: %s"
-msgstr "Fel vid radering av data"
+msgstr "Fel vid uppräkning av adaptrar: %s"
 
 #: ../src/gdu/gdu-pool.c:2141
 #, c-format
@@ -2873,9 +2867,9 @@ msgid "Error enumerating expanders: %s"
 msgstr "Fel vid uppräkning av expanderare: %s"
 
 #: ../src/gdu/gdu-pool.c:2164
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating ports: %s"
-msgstr "Fel vid borttagning av partition"
+msgstr "Fel vid uppräkning av portar: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
@@ -2909,9 +2903,8 @@ msgid "Error reading stderr output: %s"
 msgstr "Fel vid läsning av utdata på standard fel: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
-#, fuzzy
 msgid "Error reading stderr output: No content"
-msgstr "Fel när komponenten lades till"
+msgstr "Fel vid läsning av utdata på standard fel: Inget innehåll"
 
 #: ../src/gdu/gdu-ssh-bridge.c:471
 msgid "Error logging in"
@@ -2925,7 +2918,7 @@ msgstr "Fel vid sändning av \"%s\": %s"
 #: ../src/gdu/gdu-ssh-bridge.c:519
 #, c-format
 msgid "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"
-msgstr ""
+msgstr "Oväntat utdata på standard fel - förväntade \"udisks-tcp-bridge: Waiting for secret\" men fick \"%s\""
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
@@ -2940,16 +2933,16 @@ msgstr "Fel vid läsning av standard fel från: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:566
 #, c-format
 msgid "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"
-msgstr ""
+msgstr "Oväntat utdata på standard fel - förväntade \"udisks-tcp-bridge: Attempting to connect to port %d\" men fick \"%s\""
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
-msgstr ""
+msgstr "Programmet udisks-tcp-bridge misslyckades med att bevisa att det hade behörighet: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:592
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-msgstr ""
+msgstr "Programmet udisks-tcp-bridge misslyckades med att bevisa att det hade behörighet"
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -3725,9 +3718,8 @@ msgid "The native Windows file system. Not widely compatible with other operatin
 msgstr "Det inbyggda filsystemet i Windows. Inte helt kompatibelt med andra operativsystem än Windows."
 
 #: ../src/gdu/gdu-util.c:603
-#, fuzzy
 msgid "Simple filesystem with low overhead and UNIX permissions support. Not widely compatible with operating systems other than Linux and Minix."
-msgstr "Det inbyggda filsystemet i Windows. Inte helt kompatibelt med andra operativsystem än Windows."
+msgstr "Enkelt filsystem med låg overhead och stöd för UNIX-rättigheter. Inte helt kompatibelt med andra operativsystem än Linux och Minix."
 
 #: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
@@ -4495,7 +4487,7 @@ msgstr "Mät enhetsprestanda"
 #: ../src/palimpsest/gdu-section-hub.c:161
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d PHY:er"
 
 #: ../src/palimpsest/gdu-section-hub.c:137
 msgid "Parallel ATA"
@@ -4530,18 +4522,16 @@ msgid "Number of Ports:"
 msgstr "Antal portar:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
-#, fuzzy
 msgid "Error starting Volume Group"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid start av volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
-#, fuzzy
 msgid "Error stopping Volume Group"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid stopp av volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
 msgid "Error setting name for Volume Group"
-msgstr ""
+msgstr "Fel vid inställning av namn för volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
 msgid "Choose a new Volume Group name."
@@ -4549,27 +4539,23 @@ msgstr "Välj en nytt namn för volymgrupp."
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
 msgid "Error adding Physical Volume to Volume Group"
-msgstr ""
+msgstr "Fel när fysisk volym lades till i volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#, fuzzy
 msgid "Error creating PV for VG"
-msgstr "Fel vid skapande av RAID-kedja"
+msgstr "Fel vid skapande av fysisk volym för volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
-#, fuzzy
 msgid "Error deleting partition for Physical Volume in Volume Group"
-msgstr "Fel vid skapande av partitionstabell för komponent för RAID-kedja"
+msgstr "Fel vid borttagning av partition för fysisk volym i volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
-#, fuzzy
 msgid "Error removing Physical Volume from Volume Group"
-msgstr "Tar bort komponent från RAID-kedja"
+msgstr "Fel vid borttagning av fysisk volym från volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
-#, fuzzy
 msgid "Are you sure you want the remove the Physical Volume?"
-msgstr "Är du säker på att du vill ta bort komponenten från kedjan?"
+msgstr "Är du säker på att du vill ta bort den fysiska volymen?"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
@@ -4704,44 +4690,38 @@ msgid "Idle"
 msgstr "Overksam"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
-#, fuzzy
 msgid "Error stopping RAID Array"
-msgstr "Stoppar RAID-kedja"
+msgstr "Fel vid stoppandet av RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:360
-#, fuzzy
 msgid "Error starting RAID Array"
-msgstr "Fel vid skapande av RAID-kedja"
+msgstr "Fel vid startandet av RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:390
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:393
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough components available to start the RAID Array"
-msgstr "Kör inte, inte tillräckligt många komponenter för att starta"
+msgstr "Inte tillräckligt många komponenter tillgängliga för att starta RAID-kedjan"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:409
-#, fuzzy
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "Är du säker på att du vill radera enheten?"
+msgstr "Är du säker på att du vill degradera RAID-kedjan?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
 msgstr "_Starta"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:455
-#, fuzzy
 msgid "Error deleting partition for component in RAID Array"
-msgstr "Fel vid skapande av partitionstabell för komponent för RAID-kedja"
+msgstr "Fel vid borttagning av partition för komponent i RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:478
-#, fuzzy
 msgid "Error removing component from RAID Array"
-msgstr "Tar bort komponent från RAID-kedja"
+msgstr "Fel vid borttagning av komponent från RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:529
-#, fuzzy
 msgid "Are you sure you want the remove the component?"
-msgstr "Är du säker på att du vill ta bort komponenten från kedjan?"
+msgstr "Är du säker på att du vill ta bort komponenten?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:650
@@ -4755,23 +4735,20 @@ msgid "Error creating component for RAID array"
 msgstr "Fel vid skapande av komponent för RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
-#, fuzzy
 msgid "Error expanding RAID Array"
-msgstr "Stoppar RAID-kedja"
+msgstr "Fel vid expandering av RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
-#, fuzzy
 msgid "Error checking RAID Array"
-msgstr "Fel vid skapande av RAID-kedja"
+msgstr "Fel vid kontroll av RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Level:"
 msgstr "Nivå:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:962
-#, fuzzy
 msgid "Metadata Version:"
-msgstr "LDM metadata-partition"
+msgstr "Metadata-version:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:982
 msgid "Action:"
@@ -4800,9 +4777,8 @@ msgid "Tear down the RAID Array"
 msgstr "Skapa RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
-#, fuzzy
 msgid "Format/Erase RAI_D Array"
-msgstr "Skapa RAID-kedja"
+msgstr "Formatera/Radera RAI_D-kedja"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
@@ -4862,9 +4838,8 @@ msgid "Error modifying partition"
 msgstr "Fel vid ändring av partitionen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:519
-#, fuzzy
 msgid "Are you sure you want to forget the passphrase?"
-msgstr "Är du säker på att du vill radera enheten?"
+msgstr "Är du säker på att du vill glömma lösenfrasen?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
@@ -4917,32 +4892,28 @@ msgid "Error spawning nautilus: %s"
 msgstr "Fel vid start av nautilus: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1435
-#, fuzzy
 msgid "Error creating Logical Volume"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid skapandet av logiska volymen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1588
-#, fuzzy
 msgid "Error stopping Logical Volume"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid stopp av logiska volymen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1634
-#, fuzzy
 msgid "Error starting Logical Volume"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid start av logiska volymen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1683
 msgid "Error setting name for Logical Volume"
-msgstr ""
+msgstr "Fel vid inställning av namn för logiska volymen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
 msgstr "Välj ett nytt namn för den logiska volymen."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1754
-#, fuzzy
 msgid "Error deleting Logical Volume"
-msgstr "Fel vid formatering av volymen"
+msgstr "Fel vid borttagning av logiska volymen"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1787
 msgid "Are you sure you want to delete the logical volume?"
@@ -5033,7 +5004,7 @@ msgstr "Filsystem"
 #.
 #: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "View files on the volume using a SFTP network share"
-msgstr ""
+msgstr "Visa filer på volymen med en SFTP-nätverksutdelning"
 
 #. Translators: this the mount point hyperlink tooltip
 #: ../src/palimpsest/gdu-section-volumes.c:2155

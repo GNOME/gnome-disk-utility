@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-14 02:18+0100\n"
-"PO-Revision-Date: 2010-03-14 02:34+0100\n"
+"POT-Creation-Date: 2010-03-19 23:11+0100\n"
+"PO-Revision-Date: 2010-03-20 09:08+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "_Expandera"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
-msgstr ""
+msgstr "Volymgruppen att lägga till en fysisk volym till."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
@@ -1541,7 +1541,7 @@ msgstr "Antal tillgängliga diskar"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
 msgid "Largest Segment For Selected"
-msgstr ""
+msgstr "Största segmentet för markerade"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
 #, fuzzy
@@ -1550,11 +1550,11 @@ msgstr "Skapa nytt filsystem på den markerade enheten"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Largest Segment For All"
-msgstr ""
+msgstr "Största segmentet för alla"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:294
 msgid "The largest free segment for all the drives"
-msgstr ""
+msgstr "Största lediga segmentet för alla enheterna"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
 #, fuzzy
@@ -1724,42 +1724,36 @@ msgstr "%s (%s) – Prestandatest"
 
 #. benchmark results
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
-#, fuzzy
 msgid "Minimum Read Rate:"
-msgstr "Minsta storlek"
+msgstr "Minsta läsfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
-#, fuzzy
 msgid "Minimum Write Rate:"
-msgstr "Minsta storlek"
+msgstr "Minsta skrivfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
-#, fuzzy
 msgid "Maximum Read Rate:"
-msgstr "Största storlek"
+msgstr "Högsta läsfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
-#, fuzzy
 msgid "Maximum Write Rate:"
-msgstr "Största storlek"
+msgstr "Högsta skrivfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
 msgid "Average Read Rate:"
-msgstr ""
+msgstr "Genomsnittlig läsfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
-#, fuzzy
 msgid "Average Write Rate:"
-msgstr "Fel som resultat av hög temperatur"
+msgstr "Genomsnittlig skrivfrekvens:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
 msgid "Last Benchmark:"
 msgstr "Senast prestandatest:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
-#, fuzzy
 msgid "Average Access Time:"
-msgstr "Övergripande bedömning:"
+msgstr "Genomsnittlig åtkomsttid:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Start _Read-Only Benchmark"
@@ -1817,9 +1811,8 @@ msgid "Edit %s"
 msgstr "Redigera %s"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
-#, fuzzy
 msgid "Missing Physical Volume"
-msgstr "Fysisk LVM2-volym"
+msgstr "Saknar fysisk volym"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:222
 #, c-format
@@ -1827,9 +1820,9 @@ msgid "UUID: %s"
 msgstr "UUID: %s"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
-#, fuzzy, c-format
+#, c-format
 msgid "Edit PVs on %s (%s)"
-msgstr "%d komponent (%s)"
+msgstr "Redigera fysiska volymer på %s (%s)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
 msgid "Physical _Volumes"
@@ -1865,18 +1858,16 @@ msgid "_New Physical Volume"
 msgstr "_Ny fysisk volym"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
-#, fuzzy
 msgid "Add a new PV to the VG"
-msgstr "Lägger till komponent till RAID-kedja"
+msgstr "Lägg till en ny fysisk volym till volymgruppen"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
 msgid "_Remove Physical Volume"
 msgstr "_Ta bort fysisk volym"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
-#, fuzzy
 msgid "Remove the PV from the VG"
-msgstr "Tar bort komponent från RAID-kedja"
+msgstr "Ta bort fysiska volymen från volymgruppen"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
@@ -2349,7 +2340,7 @@ msgstr "Huvudstartsektor"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu-gtk/gdu-gtk.c:1548
-#: ../src/gdu/gdu-drive.c:829
+#: ../src/gdu/gdu-drive.c:833
 #: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
@@ -2470,7 +2461,7 @@ msgstr "RAID-kedjan körs inte"
 #. * been detected for a drive
 #.
 #: ../src/gdu-gtk/gdu-volume-grid.c:1190
-#: ../src/gdu/gdu-drive.c:815
+#: ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
@@ -2581,9 +2572,19 @@ msgstr "Blu-Ray"
 msgid "HDDVD"
 msgstr "HDDVD"
 
+#. Translators: This is the name of a "Drive" backed by a file.
+#. * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+#. *
+#. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
+#.
+#: ../src/gdu/gdu-drive.c:689
+#, c-format
+msgid "%s File"
+msgstr "%s-fil"
+
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:699
-#: ../src/gdu/gdu-drive.c:738
+#: ../src/gdu/gdu-drive.c:703
+#: ../src/gdu/gdu-drive.c:742
 #, c-format
 msgid "%s Drive"
 msgstr "%s-enhet"
@@ -2591,7 +2592,7 @@ msgstr "%s-enhet"
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:733
+#: ../src/gdu/gdu-drive.c:737
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s-enhet"
@@ -2599,7 +2600,7 @@ msgstr "%s %s-enhet"
 #. Translators: This string is used to describe a hard disk.
 #. * The first %s is the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:749
+#: ../src/gdu/gdu-drive.c:753
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s-hårddisk"
@@ -2607,14 +2608,14 @@ msgstr "%s-hårddisk"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:754
+#: ../src/gdu/gdu-drive.c:758
 msgid "Hard Disk"
 msgstr "Hårddisk"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:761
+#: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s Solid-State Disk"
@@ -2622,26 +2623,26 @@ msgstr "%s Solid-State Disk"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:767
+#: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
 msgstr "Solid-State Disk"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:808
+#: ../src/gdu/gdu-drive.c:812
 #, c-format
 msgid "%s Media"
 msgstr "%s-media"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:826
+#: ../src/gdu/gdu-drive.c:830
 #: ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "MBR-partitionstabell"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:832
+#: ../src/gdu/gdu-drive.c:836
 #: ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Apple-partitionstabell"
@@ -2649,14 +2650,14 @@ msgstr "Apple-partitionstabell"
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:837
+#: ../src/gdu/gdu-drive.c:841
 #: ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "Partitionerad"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:842
+#: ../src/gdu/gdu-drive.c:846
 #: ../src/palimpsest/gdu-section-drive.c:302
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
@@ -2665,7 +2666,7 @@ msgstr "Inte partitionerad"
 #. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
 #: ../src/gdu/gdu-hub.c:222
 msgid "SAS Expander"
-msgstr ""
+msgstr "SAS-expanderare"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
@@ -2850,7 +2851,7 @@ msgstr "RAID, LVM och andra logiska enheter"
 
 #: ../src/gdu/gdu-pool.c:907
 msgid "Peripheral Devices"
-msgstr ""
+msgstr "Kringutrustningsenheter"
 
 #: ../src/gdu/gdu-pool.c:908
 msgid "USB, FireWire and other peripherals"
@@ -2869,7 +2870,7 @@ msgstr "Fel vid radering av data"
 #: ../src/gdu/gdu-pool.c:2141
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Fel vid uppräkning av expanderare: %s"
 
 #: ../src/gdu/gdu-pool.c:2164
 #, fuzzy, c-format
@@ -2884,17 +2885,17 @@ msgstr "Fel vid lyssning på adressen \"localhost:%d\": %s: %s\n"
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
 msgid "Error creating a local TCP server, tried binding to ports 9000-10000 on localhost"
-msgstr ""
+msgstr "Fel vid skapandet av en lokal TCP-server, försökte binda till portarna 9000-10000 på localhost"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
-msgstr ""
+msgstr "Fel vid inställning av autentiseringsmekanismer på lokal DBusServer\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:347
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
-msgstr ""
+msgstr "Kunde inte tolka kommandoraden \"%s\" (Felformulerad adress?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, c-format
@@ -2905,7 +2906,7 @@ msgstr "Kunde inte starta ssh-programmet: %s"
 #: ../src/gdu/gdu-ssh-bridge.c:510
 #, c-format
 msgid "Error reading stderr output: %s"
-msgstr ""
+msgstr "Fel vid läsning av utdata på standard fel: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
 #, fuzzy
@@ -2934,7 +2935,7 @@ msgstr ""
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
 msgid "Error reading stderr from: %s"
-msgstr ""
+msgstr "Fel vid läsning av standard fel från: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:566
 #, c-format
@@ -4484,9 +4485,8 @@ msgid "Power down the drive so it can be removed"
 msgstr "Stäng av enheten så att den kan kopplas från"
 
 #: ../src/palimpsest/gdu-section-drive.c:1005
-#, fuzzy
 msgid "Measure drive performance"
-msgstr "Prestanda för söktid"
+msgstr "Mät enhetsprestanda"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -4507,7 +4507,7 @@ msgstr "Seriell ATA"
 
 #: ../src/palimpsest/gdu-section-hub.c:143
 msgid "Serial Attached SCSI"
-msgstr ""
+msgstr "Serial Attached SCSI"
 
 #: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Vendor:"
@@ -4617,7 +4617,7 @@ msgstr "St_arta volymgrupp"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:707
 msgid "Activate all LVs in the VG"
-msgstr ""
+msgstr "Aktivera alla logiska volymer i volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
 msgid "St_op Volume Group"
@@ -4625,7 +4625,7 @@ msgstr "St_oppa volymgrupp"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
 msgid "Deactivate all LVs in the VG"
-msgstr ""
+msgstr "Inaktivera alla logiska volymer i volymgruppen"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
 msgid "Edit _Name"
@@ -4640,9 +4640,8 @@ msgid "Edit _Physical Volumes"
 msgstr "Redigera f_ysiska volymer"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
-#, fuzzy
 msgid "Create and remove PVs"
-msgstr "Fel vid borttagning av komponent"
+msgstr "Skapa och ta bort fysiska volymer"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:84
 msgctxt "RAID status"
@@ -4827,7 +4826,7 @@ msgstr "Skapa och ta bort komponenter"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Measure RAID array performance"
-msgstr ""
+msgstr "Mät prestanda för RAID-kedja"
 
 #: ../src/palimpsest/gdu-section-volumes.c:115
 msgid "Error unmounting volume"
@@ -4915,7 +4914,7 @@ msgstr "Filsystemet är <b>INTE</b> bra."
 #: ../src/palimpsest/gdu-section-volumes.c:1387
 #, c-format
 msgid "Error spawning nautilus: %s"
-msgstr ""
+msgstr "Fel vid start av nautilus: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1435
 #, fuzzy
@@ -4938,7 +4937,7 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
-msgstr ""
+msgstr "Välj ett nytt namn för den logiska volymen."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1754
 #, fuzzy

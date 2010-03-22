@@ -2777,13 +2777,14 @@ gdu_pool_get_hub_by_object_path (GduPool *pool, const gchar *object_path)
                 a = gdu_hub_get_adapter (GDU_HUB (p));
                 e = gdu_hub_get_expander (GDU_HUB (p));
 
-                if (g_strcmp0 (gdu_adapter_get_object_path (a), object_path) == 0) {
+                if (a != NULL && g_strcmp0 (gdu_adapter_get_object_path (a), object_path) == 0) {
                         ret = g_object_ref (p);
                 } else if (e != NULL && g_strcmp0 (gdu_expander_get_object_path (e), object_path) == 0) {
                         ret = g_object_ref (p);
                 }
 
-                g_object_unref (a);
+                if (a != NULL)
+                        g_object_unref (a);
                 if (e != NULL)
                         g_object_unref (e);
         }

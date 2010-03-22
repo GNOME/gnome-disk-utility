@@ -1033,6 +1033,9 @@ render_element (GduVolumeGrid *grid,
         gdouble text_selected_not_focused_green;
         gdouble text_selected_not_focused_blue;
         GtkStyle *style;
+        PangoLayout *layout;
+        PangoFontDescription *desc;
+        gint width, height;
 
         need_animation_timeout = FALSE;
 
@@ -1179,7 +1182,6 @@ render_element (GduVolumeGrid *grid,
         }
 
         if (element->presentable == NULL) { /* no media available */
-                cairo_text_extents_t te;
                 const gchar *text;
 
                 if (GDU_IS_LINUX_MD_DRIVE (grid->priv->drive)) {
@@ -1205,23 +1207,24 @@ render_element (GduVolumeGrid *grid,
                 } else {
                         cairo_set_source_rgb (cr, text_red, text_green, text_blue);
                 }
-                cairo_select_font_face (cr, "sans",
-                                        CAIRO_FONT_SLANT_NORMAL,
-                                        CAIRO_FONT_WEIGHT_NORMAL);
-                cairo_set_font_size (cr, 8.0);
-
-                cairo_text_extents (cr, text, &te);
+                layout = pango_cairo_create_layout (cr);
+                pango_layout_set_text (layout, text, -1);
+                desc = pango_font_description_from_string ("Sans 7.0");
+                pango_layout_set_font_description (layout, desc);
+                pango_font_description_free (desc);
+                pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
+                pango_layout_set_width (layout, pango_units_from_double (element->width));
+                pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
+                pango_layout_get_size (layout, &width, &height);
                 cairo_move_to (cr,
-                               ceil (element->x + element->width / 2 - te.width/2  - te.x_bearing),
-                               ceil (element->y + element->height / 2 - 2 - te.height/2 - te.y_bearing));
-                cairo_show_text (cr, text);
+                               ceil(element->x),
+                               ceil (element->y + element->height / 2 - pango_units_to_double (height) / 2));
+                pango_cairo_show_layout (cr, layout);
+                g_object_unref (layout);
 
         } else { /* render descriptive text + icons for the presentable */
                 GString *str;
-                cairo_text_extents_t te;
                 GduDevice *d;
-                gdouble text_height;
-                gdouble y;
                 gboolean render_padlock_closed;
                 gboolean render_padlock_open;
                 gboolean render_job_in_progress;
@@ -1230,7 +1233,6 @@ render_element (GduVolumeGrid *grid,
                 guint n;
                 guint64 size;
                 gchar *size_str;
-                gchar **lines;
 
                 render_padlock_closed = FALSE;
                 render_padlock_open = FALSE;
@@ -1259,7 +1261,8 @@ render_element (GduVolumeGrid *grid,
                                                                   FALSE,
                                                                   FALSE);
 
-                        g_string_append_printf (str, "%s\n", gdu_device_id_get_label (d));
+                        if (strlen (gdu_device_id_get_label (d)) > 0)
+                                g_string_append_printf (str, "%s\n", gdu_device_id_get_label (d));
                         g_string_append_printf (str, "%s %s", size_str, fstype_str);
 
                         g_free (fstype_str);
@@ -1341,33 +1344,21 @@ render_element (GduVolumeGrid *grid,
                 } else {
                         cairo_set_source_rgb (cr, text_red, text_green, text_blue);
                 }
-                cairo_select_font_face (cr, "sans",
-                                        CAIRO_FONT_SLANT_NORMAL,
-                                        CAIRO_FONT_WEIGHT_NORMAL);
-                cairo_set_font_size (cr, 8.0);
 
-                lines = g_strsplit (str->str, "\n", 0);
-                g_string_free (str, TRUE);
-                text_height = 0.0;
-                for (n = 0; lines[n] != NULL; n++) {
-                        const gchar *line = lines[n];
-                        cairo_text_extents (cr, line, &te);
-                        text_height += te.height + 4;
-                }
-
-                y = element->y + element->height/2.0 - text_height/2.0;
-                for (n = 0; lines[n] != NULL; n++) {
-                        const gchar *line = lines[n];
-                        cairo_text_extents (cr, line, &te);
-                        cairo_move_to (cr,
-                                       ceil (element->x + element->width / 2 - te.width/2  - te.x_bearing),
-                                       ceil (y - te.y_bearing));
-                        cairo_show_text (cr, line);
-
-                        y += te.height + 4;
-                }
-
-                g_strfreev (lines);
+                layout = pango_cairo_create_layout (cr);
+                pango_layout_set_text (layout, str->str, -1);
+                desc = pango_font_description_from_string ("Sans 7");
+                pango_layout_set_font_description (layout, desc);
+                pango_font_description_free (desc);
+                pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
+                pango_layout_set_width (layout, pango_units_from_double (element->width));
+                pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
+                pango_layout_get_size (layout, &width, &height);
+                cairo_move_to (cr,
+                               ceil (element->x),
+                               ceil (element->y + element->height / 2 - pango_units_to_double (height) / 2));
+                pango_cairo_show_layout (cr, layout);
+                g_object_unref (layout);
 
                 /* OK, done with the text - now render spinner and icons */
                 icon_offset = 0;

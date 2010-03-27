@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 23:57+0100\n"
-"PO-Revision-Date: 2010-03-15 02:05+0100\n"
+"POT-Creation-Date: 2010-03-27 16:16+0100\n"
+"PO-Revision-Date: 2010-03-26 00:00+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -177,40 +177,40 @@ msgstr "Fejl under lagring af adgangsfrase i nøglering"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
 msgid "The RAID Array to add a component to."
-msgstr ""
+msgstr "RAID-rækken, som en komponent skal føjes til."
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Add spare to %s"
-msgstr "Føj komponent til %s"
+msgstr "Tilføj reserve til %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
-#, fuzzy, c-format
+#, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 msgstr ""
-"Vælg en disk, der skal oprettes en %s-komponent på, i RAID-rækken \"%s\" (%s)"
+"Vælg en disk, der skal oprettes en %s-reserve på, i RAID-rækken \"%s\" (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
-#, fuzzy, c-format
+#, c-format
 msgid "Expand %s"
-msgstr "Redigér %s"
+msgstr "Udvid %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
 "\" (%s)"
 msgstr ""
-"Vælg en disk, der skal oprettes en %s-komponent på, i RAID-rækken \"%s\" (%s)"
+"Vælg en eller flere enheder, hvorpå %s skal bruges til at udvide RAID-rækken "
+"\"%s\" (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
-#, fuzzy
 msgid "_Expand"
-msgstr "SAS-udvider"
+msgstr "_Udvid"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
-msgstr ""
+msgstr "VG'en som en PV skal føjes til."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
@@ -1229,7 +1229,7 @@ msgstr "SMART-data forkert struktureret"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
-#: ../src/gdu-gtk/gdu-volume-grid.c:1312 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-volume-grid.c:1315 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -1660,22 +1660,24 @@ msgstr "Størrelsen, der skal bruges i detalje-headeren"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
 msgid "Cannot select multipath component"
-msgstr ""
+msgstr "Kan ikke vælge multipath-komponent"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
 msgid "No free space."
-msgstr ""
+msgstr "Ingen fri plads."
 
 #. Translators: Shown when device is unselectable because not enough space is available.
 #. * First %s (e.g. '10 GB') is how much space is needed.
 #. * Second %s (e.g. '5 GB') is how much space is available.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Insufficient space: %s is needed but largest contiguous free block is %s."
-msgstr "%s. Største sammenhængende frie blok er %s"
+msgstr ""
+"Utilstrækkelig plads: der kræves %s, men største sammenhængende frie blok er "
+"%s."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
@@ -1714,9 +1716,8 @@ msgstr "En partition vil blive oprettet"
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
-#, fuzzy
 msgid "A volume will be created"
-msgstr "En partition vil blive oprettet"
+msgstr "Der vil blive oprettet en diskenhed"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1732,10 +1733,10 @@ msgstr ""
 #. * First %s is the component size e.g. '42 GB'.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
 msgstr ""
-"Der vil blive oprettet en %s-partition. Derefter vil ingen plads være "
+"Der vil blive oprettet en %s-diskenhed. Derefter vil ingen plads være "
 "tilgængelig."
 
 #. Translators: This is shown in the Details column.
@@ -1753,10 +1754,10 @@ msgstr ""
 #. * Second %s is the remaining free space after the operation.
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
-#, fuzzy, c-format
+#, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
 msgstr ""
-"Der vil blive oprettet en %s-partition. Derefter vil %s være tilgængelig."
+"Der vil blive oprettet en %s-diskenhed. Derefter vil %s være tilgængelig."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -2021,24 +2022,20 @@ msgid "State:"
 msgstr "Tilstand:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
-#, fuzzy
 msgid "Add _Spare"
-msgstr "Spare"
+msgstr "Tilføj _reserve"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
-#, fuzzy
 msgid "Add a spare to the array"
-msgstr "Tilføj en ny komponent til rækken"
+msgstr "Tilføj reserve til rækken"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
-#, fuzzy
 msgid "_Expand Array"
-msgstr "_Start række"
+msgstr "_Udvid række"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
-#, fuzzy
 msgid "Increase the capacity of the array"
-msgstr "Slet eller partitionér rækken"
+msgstr "Øg rækkens kapacitet"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
 msgid "_Attach Component"
@@ -2121,12 +2118,12 @@ msgid "Unknown error"
 msgstr "Ukendt fejl"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
-#, fuzzy, c-format
+#, c-format
 msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
-msgstr "Der opstod en fejl ved udførselse af en operation på \"%s\" (%s): %s"
+msgstr "Der opstod en fejl ved udførelse af en operation på \"%s\" (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "An error occurred: %s"
 msgstr "Der opstod en fejl: %s"
 
@@ -2587,7 +2584,7 @@ msgid "Drive to show volumes for"
 msgstr "Drev, hvis diskenheder skal vises"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1187
+#: ../src/gdu-gtk/gdu-volume-grid.c:1189
 msgid "RAID Array is not running"
 msgstr "RAID-rækken kører ikke"
 
@@ -2595,31 +2592,31 @@ msgstr "RAID-rækken kører ikke"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1192 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "Intet medie fundet"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1274
+#: ../src/gdu-gtk/gdu-volume-grid.c:1277
 msgid "Extended"
 msgstr "Udvidet"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1282
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285
 msgid "Encrypted"
 msgstr "Krypteret"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1296 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1299 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID-komponent"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1304
+#: ../src/gdu-gtk/gdu-volume-grid.c:1307
 msgid "Free"
 msgstr "Fri"
 
@@ -2711,9 +2708,9 @@ msgstr "HD dvd"
 #. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
 #.
 #: ../src/gdu/gdu-drive.c:689
-#, fuzzy, c-format
+#, c-format
 msgid "%s File"
-msgstr "%s fri"
+msgstr "%s-fil"
 
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
 #: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-drive.c:742
@@ -2939,10 +2936,9 @@ msgid "Blocked"
 msgstr "Blokeret"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1130
-#, fuzzy
 msgctxt "Linux MD slave state"
 msgid "Partially Synchronized"
-msgstr "Fuldt synkroniseret"
+msgstr "Delvist synkroniseret"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
@@ -2960,30 +2956,28 @@ msgid "Storage on %s"
 msgstr "Lager på %s"
 
 #: ../src/gdu/gdu-pool.c:885
-#, fuzzy
 msgid "Multipath Devices"
-msgstr "Lagerenheder"
+msgstr "Multipath-enheder"
 
 #: ../src/gdu/gdu-pool.c:886
 msgid "Drives with multiple I/O paths"
-msgstr ""
+msgstr "Drev med flere I/O-stier"
 
 #: ../src/gdu/gdu-pool.c:896
 msgid "Multi-disk Devices"
-msgstr ""
+msgstr "Fler-diskenheder"
 
 #: ../src/gdu/gdu-pool.c:897
 msgid "RAID, LVM and other logical drives"
-msgstr ""
+msgstr "RAID, LVM og andre logiske drev"
 
 #: ../src/gdu/gdu-pool.c:907
-#, fuzzy
 msgid "Peripheral Devices"
-msgstr "Lagerenheder"
+msgstr "Ydre enheder"
 
 #: ../src/gdu/gdu-pool.c:908
 msgid "USB, FireWire and other peripherals"
-msgstr ""
+msgstr "USB, FireWire og andre ydre enheder"
 
 #: ../src/gdu/gdu-pool.c:2092
 #, c-format
@@ -3630,7 +3624,6 @@ msgid "NetBSD RAID Partition"
 msgstr "NetBSD RAID-partition"
 
 #: ../src/gdu/gdu-util.c:488
-#, fuzzy
 msgid "NetBSD Concatenated Partition"
 msgstr "Sammensat NetBSD-partition"
 
@@ -3877,7 +3870,6 @@ msgstr ""
 "operativsystemer end Windows."
 
 #: ../src/gdu/gdu-util.c:603
-#, fuzzy
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with operating systems other than Linux and Minix."
@@ -4509,7 +4501,7 @@ msgstr "Drev som skal vises"
 
 #: ../src/palimpsest/gdu-section-drive.c:148
 msgid "Multipath Drive"
-msgstr ""
+msgstr "Multipath-drev"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
@@ -4572,7 +4564,6 @@ msgid "The application is not installed"
 msgstr "Programmet er ikke installeret"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-#, fuzzy
 msgid "Error ejecting medium"
 msgstr "Kunne ikke skubbe medie ud"
 
@@ -4598,13 +4589,15 @@ msgstr ""
 
 #: ../src/palimpsest/gdu-section-drive.c:850
 msgid "Go to Multipath Device"
-msgstr ""
+msgstr "Hop til multipath-enhed"
 
 #: ../src/palimpsest/gdu-section-drive.c:861
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
 msgstr ""
+"<b>BEMÆRK:</b> Dette objekt repræsenterer en af flere stier til drevet. Brug "
+"det tilsvarende multipath-objekt for at udføre operationer på drevet."
 
 #: ../src/palimpsest/gdu-section-drive.c:890
 #: ../src/palimpsest/gdu-section-hub.c:225
@@ -4681,7 +4674,6 @@ msgid "_Eject"
 msgstr "_Skub ud"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-#, fuzzy
 msgid "Eject medium from the drive"
 msgstr "Skub medie ud fra drevet"
 
@@ -4760,9 +4752,8 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "Fejl ved tilføjelse af fysisk diskenhed til diskenhedsgruppe"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#, fuzzy
 msgid "Error creating PV for VG"
-msgstr "Fejl under oprettelse af RAID-række"
+msgstr "Fejl under oprettelse af PV til VG"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
 msgid "Error deleting partition for Physical Volume in Volume Group"
@@ -4840,7 +4831,6 @@ msgid "Change the Volume Group name"
 msgstr "Ændr diskenhedsgruppens navn"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
-#, fuzzy
 msgid "Edit _Physical Volumes"
 msgstr "Redigér f_ysiske diskenheder"
 
@@ -4954,9 +4944,8 @@ msgid "Error creating component for RAID array"
 msgstr "Fejl under oprettelse af komponent i RAID-række"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
-#, fuzzy
 msgid "Error expanding RAID Array"
-msgstr "Fejl ved standsning af RAID-række"
+msgstr "Fejl ved udvidning af RAID-række"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"

@@ -4,16 +4,16 @@
 # Runa Bhattacharjee <runab@redhat.com>, 2009.
 # Saad M Niamatullah <saadmniamatullah@gmail.com>, 2009.
 # Loba Yeasmeen <loba@ankur.org.bd>, 2010.
+# Israt Jahan <israt@ankur.org.bd>, 2010.
 #
-#: ../src/gdu-gtk/gdu-error-dialog.c:163
 msgid ""
 msgstr ""
 "Project-Id-Version: bn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2010-01-28 09:46+0000\n"
-"PO-Revision-Date: 2010-01-28 13:16+0600\n"
-"Last-Translator: Loba Yeasmeen <loba@ankur.org.bd>\n"
+"POT-Creation-Date: 2010-03-16 07:40+0000\n"
+"PO-Revision-Date: 2010-03-28 13:16+0600\n"
+"Last-Translator: Israt Jahan <israt@ankur.org.bd>\n"
 "Language-Team: Bengali <ankur-bd-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,8 +26,8 @@ msgstr ""
 #. Translators: Window title when the item representing the local machine is selected.
 #.
 #: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:896
-#: ../src/palimpsest/gdu-shell.c:1203
+#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
+#: ../src/palimpsest/gdu-shell.c:1114
 msgid "Disk Utility"
 msgstr "ডিস্ক ইউটিলিটি"
 
@@ -166,27 +166,50 @@ msgstr "ডিভাইস মাউন্ট করতে সমস্যা"
 msgid "Error storing passphrase in keyring"
 msgstr "'passphrase'-টি 'keyring'-এ সংরক্ষণ করতে সমস্যা"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:175
-#, c-format
-msgid "Add Component to %s"
-msgstr "RAID কম্পোনেন্ট (সংস্করণ %s)"
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
+msgid "The RAID Array to add a component to."
+msgstr "RAID অ্যারে একটি কম্পোনেন্ট যোগ করে।"
 
-#. TODO: hate
-#. Translators: The first %s is the size (e.g. "42 GB") and the two following %s are the
-#. * name and vpd_name of the array (e.g. "Saturn" and "6 TB RAID-6")
-#.
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:188
-#, c-format
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
+#| msgid "Add Component to %s"
+msgid "Add spare to %s"
+msgstr "%s তে স্পেয়ার যোগ"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
+#| msgid ""
+#| "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
+msgstr "RAID অ্যারে \"%s\" (%s) এর উপর %s অর্পিত করতে একটি ডিভাইস তৈরি করুন"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#| msgid "Edit %s"
+msgid "Expand %s"
+msgstr "প্রসারিত %s"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
+#| msgid ""
+#| "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
 msgid ""
-"Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
-msgstr "%s\"%s\" (%s) অ্যারের একটি অংশ রূপে ব্যবহারের জন্য একটি ভলিউম নির্বাচন করুন"
+"Select one or more devices to use %s on for expanding the RAID Array \"%s"
+"\" (%s)"
+msgstr ""
+"%s, \"%s\" (%s) অ্যারের একটি অংশ রূপে ব্যবহারের জন্য একটি ভলিউম নির্বাচন করুন"
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:195
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
+#| msgid "SAS Expander"
+msgid "_Expand"
+msgstr "প্রসারিত (_E)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
+msgid "The VG to add a PV to."
+msgstr "VG তে PV যোগ করা হবে।"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
 msgid "Add Physical Volume to %s (%s)"
 msgstr "LVM2 প্রকৃত ভলিউম %s(সংস্করণ %s)"
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:211
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:266
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
 msgid "_Size:"
@@ -787,28 +810,28 @@ msgstr "একটি ডিক্স থেকে রিড করার সম�
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:738
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:700
 #, c-format
 msgid "No description for attribute %d"
 msgstr "%d বৈশিষ্ট্যের কোনো বিবরণ উপস্থিত নেই"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:815
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:790
 msgid "Normalized:"
 msgstr "নর্মালাইজ্ড:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:817
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:792
 msgid "Worst:"
 msgstr "সবচেয়ে থারাপ: "
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:819
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:794
 msgid "Threshold:"
 msgstr "থ্রেশহোল্ড"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:821
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:796
 msgid "Value:"
 msgstr "মান: "
 
@@ -817,46 +840,46 @@ msgstr "মান: "
 #. Translators: Shown in the treeview for an attribute we don't know the status about
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:871
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:879
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:887
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:983
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1661
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:846
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1636
 msgid "N/A"
 msgstr "প্র/ন"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:965
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:940
 msgid "Failing"
 msgstr "ব্যর্থ হচ্ছে"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:968
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:943
 msgid "Failed in the past"
 msgstr "অতীতে ব্যর্থ হয়েছে"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:972
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:980
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:947
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:955
 msgid "Warning"
 msgstr "সতর্কবাণী "
 
 #. Translators: Shown in the treeview for an attribute that is good
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:975
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:950
 msgid "Good"
 msgstr "ভালো"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1046
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
 msgid "Error reading SMART data"
 msgstr "তথ্য মুছে ফেলতে সমস্যা হয়েছে"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1135
 msgid "Choose SMART Self-test"
 msgstr "সংক্ষিপ্ত SMART স্বপরীক্ষা চালানো হচ্ছে"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1171
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1146
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
@@ -866,22 +889,22 @@ msgstr ""
 "নির্ভর করে। পরীক্ষা সঞ্চালনকালে সিস্টেমের ব্যবহার অবিঘ্নিত রাখা যাবে।"
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1180
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1155
 msgid "_Short (usually less than ten minutes)"
 msgstr "ছোট (সাধারণত দশ মিনিটের কম) (_S)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1183
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1158
 msgid "_Extended (usually tens of minutes)"
 msgstr "বিসৃত (সাধারণত কয়েক দশ মিনিট) (_E)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1186
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
 msgid "C_onveyance (usually less than ten minutes)"
 msgstr "কন্ভেয়ান্স (সাধারণত দশ মিনিটের কম) (_o)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1194
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1169
 msgid "_Run Self Test"
 msgstr "সেল্ফ-পরিক্খা চালাও"
 
@@ -889,18 +912,18 @@ msgstr "সেল্ফ-পরিক্খা চালাও"
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1264
 #, c-format
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) – SMART তথ্য"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1286
 msgid "Updated:"
 msgstr "পরিবর্তন করা হয়েছিল: "
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
@@ -909,189 +932,189 @@ msgstr ""
 "প্রতি ২০ মিনিট অন্তর পড়া হয়"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1320
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1295
 msgid "Self-tests:"
 msgstr "সেল্ফ-পরিক্খা:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1323
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "The result of the last self-test that ran on the disk"
 msgstr "ডিস্কের মধ্যে চালিত সর্বশেষ স্বপরীক্ষণের ফলাফল"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1328
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1303
 msgid "Powered On:"
 msgstr "বৈদ্যুতিক সংযোগ স্থাপন করা হয়েছে"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1331
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "ডিস্কটি সক্রিয় অবস্থায় স্থাপিত হওয়ার পরে অতিবাহিত সময়ের পরিমাণ"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1336
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
 msgid "Power Cycles:"
 msgstr "পাওয়ার সাইকেল সংখ্যা"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "The number of full disk power on/off cycles"
 msgstr "লোড সাইকেলের মোট সংখ্যা"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1344
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1319
 msgid "Temperature:"
 msgstr "তাপমাত্রা: "
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "The temperature of the disk"
 msgstr "ডিস্কের তাপমাত্রা"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1352
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1327
 msgid "Bad Sectors:"
 msgstr "ত্রুটিপূর্ণ সেক্টর:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1355
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "The sum of pending and reallocated bad sectors"
 msgstr "ব্যবস্থা না করা ও পুনরায় বরাদ্দ করা ক্ষতিগ্রস্ত সেক্টরের সম্পূর্ণ পরিমাণ"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1360
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1335
 msgid "Self Assessment:"
 msgstr "স্ব-নিরূপন:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "The assessment from the disk itself whether it is about to fail"
 msgstr ""
 "ডিস্কটি বিপর্যের পথে এগিয়ে চলেছে কিনা তা নির্ধারণের জন্য ডিস্ক দ্বারা করা নিজস্ব "
 "বিশ্লেষণ"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1368
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
 msgid "Overall Assessment:"
 msgstr "সম্পূর্ণ নিরূপন:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1372
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
 msgid "An overall assessment of the health of the disk"
 msgstr "ডিস্কের অবস্থা সম্পর্কে সম্পূর্ণ বিশ্লেষণ"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1386
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1361
 msgid "_Refresh"
 msgstr "রিফ্রেশ (_R)"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
 msgid "Reads SMART Data, waking up the disk"
 msgstr ""
 "ডিস্ক থেকে SMART তথ্য পড়া হয়, প্রয়োজনে ডিস্কটিকে নিদ্রিত অবস্থা থেকে সক্রিয় করা হয়"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1398
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1373
 msgid "Run _Self-test"
 msgstr "স্বপরীক্ষণ চালাও (_S)"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1400
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1375
 msgid "Test the disk surface for errors"
 msgstr "ডিস্কে ত্রুটি আছে কিনা তা পরীক্ষা করুন"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1410
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1385
 msgid "_Cancel Self-test"
 msgstr "স্বপরীক্ষণ বাতিল করা হবে (_C)"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1412
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1387
 msgid "Cancels the self-test"
 msgstr "স্বপরীক্ষণ বাতিল করা হবে"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1430
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1405
 msgid "_Attributes"
 msgstr "বৈশিষ্ট্য (_A)"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1464
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1439
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1476
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1451
 msgid "Attribute"
 msgstr "বৈশিষ্ট্য"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1493
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1468
 msgid "Assessment"
 msgstr "নিরূপন"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1512
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1487
 msgid "Value"
 msgstr "মান"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1540
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1515
 msgid "Don't _warn if the disk is failing"
 msgstr "ডিস্ক চালাতে ব্যর্থ হলে সতর্ক করা হবে না (_w)"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1542
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1517
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr "ডিস্কের বিপর্যয় আরম্ভ হওয়ার সময় সূচনাপ্রাপ্তির জন্য চেক চিহ্ন দেবেন না"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1582
 #, c-format
 msgid "%.1f years"
 msgstr "%.1f বছর"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1611
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f দিন"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1615
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f ঘন্টা"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1619
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f মিনিট"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1623
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f সেকেন্ড"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1629
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1604
 #, c-format
 msgid "%s msec"
 msgstr "%s msec"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1638
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1613
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1101,32 +1124,32 @@ msgstr[1] "%d টি সেক্টর"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1650
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1625
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1693
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "ডিস্কের বিপর্যয়ের সম্ভাবনার একটি নিশ্চিত সংকেত হলে বিফলতা (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1722
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "পুরোনো হয়ে যাওয়ার একটি সংকেত হল বিফলতা (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1728
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1703
 msgid "Every time data is collected (Online)"
 msgstr "প্রতিবার তথ্য সংগ্রহের সময় (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1732
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
 msgid "Only during off-line activities (Not Online)"
 msgstr "শুধুমাত্র অফ-লাইন অবস্থার কর্ম (Not Online)"
 
@@ -1135,7 +1158,7 @@ msgstr "শুধুমাত্র অফ-লাইন অবস্থার �
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1740
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1715
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1148,26 +1171,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1925
 msgid "No drive selected"
 msgstr "কোন ড্রাইভ নির্বাচন করা হয়নি"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1932
 msgid "SMART not supported"
 msgstr "SMART সমর্থিত নয়"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1965
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1940
 msgid "SMART data never collected"
 msgstr "SMART তথ্য সংগ্রহ করা হয়নি"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1972
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1978
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1947
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1953
 msgid "SMART data is malformed"
 msgstr "SMART তথ্য তে ত্রুটি অাছে"
 
@@ -1185,36 +1208,36 @@ msgstr "SMART তথ্য তে ত্রুটি অাছে"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2008
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2026
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2046
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2054
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2063
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2125
-#: ../src/gdu-gtk/gdu-volume-grid.c:1306 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1983
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2001
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2021
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
+#: ../src/gdu-gtk/gdu-volume-grid.c:1312 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "অজানা"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2013
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
 msgid "Passed"
 msgstr "পাস করেছে"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2019
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1994
 msgid "FAILING"
 msgstr "ব্যর্থ হচ্ছে"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2031
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2006
 msgid "None"
 msgstr "কিছু না"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2036
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2011
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
@@ -1222,47 +1245,47 @@ msgstr[0] "%d চি ত্রুটিপূর্ণ সেক্টর"
 msgstr[1] "%d চি ত্রুটিপূর্ণ সেক্টর"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2057
 msgid "Completed OK"
 msgstr "সমপন্ন OK"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
 msgid "Cancelled"
 msgstr "বাতিল"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2090
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
 msgid "Cancelled (with hard or soft reset)"
 msgstr "বাতিল করা হয়েছে (হার্ড অথবা সফ্ট রিসেটের মাধ্যমে)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2094
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "সম্পন্ন নয় (একটি মারাত্মক ত্রুটি সংঘটিত হতে পারে)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2098
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
 msgid "FAILED (Electrical)"
 msgstr "FAILED (বৈদ্যুতিক)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2078
 msgid "FAILED (Servo)"
 msgstr "FAILED (সার্ভো)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2108
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2083
 msgid "FAILED (Read)"
 msgstr "FAILED (রিড)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2113
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2088
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "FAILED (হ্যান্ডেকৃত ক্ষতি হওয়ার সম্ভাবনা রয়েছে)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2118
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2093
 msgid "In progress"
 msgstr "অগ্রসর হচ্ছে"
 
@@ -1330,7 +1353,7 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
 msgid "The hostname or address to connect to"
-msgstr "The hostname or address to connect to"
+msgstr "যেখানে সংযুক্ত করা হবে তার হোস্ট নাম বা ঠিকানা"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
 msgid "Server _Address:"
@@ -1377,12 +1400,12 @@ msgid "Create Logical Volume on %s"
 msgstr "LVM2 প্রকৃত ভলিউম (সংস্করণ %s)"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:241
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
 msgid "Pool"
 msgstr "পুল"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
 msgid "The pool of devices"
 msgstr "ডিভাইসের পুল (সমষ্টি)"
 
@@ -1412,7 +1435,7 @@ msgid "The requested size of the array"
 msgstr "আ্যারের জন্য অনুরোধকৃত আকৃতি"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:331
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
 msgid "Component Size"
 msgstr "কম্পোনেন্টের  মাপ"
 
@@ -1500,7 +1523,7 @@ msgstr "512 KiB"
 msgid "1 MiB"
 msgstr "1 MiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:660
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:661
 msgid "Array _Size:"
 msgstr "অ্যারের মাপ(_S): "
 
@@ -1509,11 +1532,12 @@ msgid "_Disks"
 msgstr "ডিস্ক (_D)"
 
 #. --------------------------------------------------------------------------------
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:703
+#. TODO: Actually make this work
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
 msgid "Use entire disks instead of _partitions"
 msgstr "পার্টিশনের পরিবর্তে সম্পূর্ণ ডিস্ক ব্যবহার করুন"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:705
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1524,19 +1548,19 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:870
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:874
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr "%s অ্যারে তৈরি করার জন্য যথেষ্ট ডিস্ক নেই"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:886
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:890
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "একটি %s অ্যারে তৈরি করার জন্য, ডিস্ক নির্বাচন করুন"
 msgstr[1] "একটি %s অ্যারে তৈরি করার জন্য, %d ডিস্ক নির্বাচন করুন"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:893
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:897
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1548,7 +1572,7 @@ msgstr[1] "একটি %s অ্যারে তৈরি করার জন�
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:917
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:921
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr "%s %s অ্যারে, %d ডিস্কের মধ্যে নির্মাণের জন্য\"Create\" টিপুন"
@@ -1575,65 +1599,76 @@ msgstr "পার্টিশন তৈরি কর"
 msgid "Create partition on %s"
 msgstr "%s পার্টিশন তৈরি কর"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:254
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
 #: ../src/gdu-gtk/gdu-format-dialog.c:166
 msgid "Flags"
 msgstr " ফ্ল্যাগ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:255
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
 msgid "Flags for the widget"
 msgstr "উপাদানের ফ্ল্যাগ "
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:256
 msgid "Selected Drives"
-msgstr "Selected Drives"
+msgstr "নির্বাচিত ড্রাইভ"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:269
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:257
 msgid "Array of selected drives"
-msgstr "Array of selected drives"
+msgstr "নির্বাচিত ড্রাইভের অ্যারে"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:279
-msgid "Ignored Drives"
-msgstr "ড্রাইভ"
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:267
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+msgid "Number of available disks"
+msgstr "বিদ্যমান ডিস্কের সংখ্যা"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
-msgid "Array of drives to ignore"
-msgstr "Array of drives to ignore"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:292
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
-msgid "Number of available disks"
-msgstr "Number of available disks"
-
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:305
 msgid "Largest Segment For Selected"
-msgstr "Largest Segment For Selected"
+msgstr "নির্বাচিতর জন্য সর্ববৃহৎ সেগমেন্ট"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
 msgid "The largest free segment for the selected drives"
 msgstr "নির্বাচিত ডিভাইসে নতুন ফাইল সিস্টেম তৈরি কর"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:318
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Largest Segment For All"
-msgstr "Largest Segment For All"
+msgstr "সবকিছুর জন্য সর্ববৃহৎ সেগমেন্ট"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:319
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:294
 msgid "The largest free segment for all the drives"
-msgstr "The largest free segment for all the drives"
+msgstr "সব ড্রাইভের জন্য সর্ববৃহৎ সেগমেন্ট"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:332
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
 msgid "The size to use in the details header"
 msgstr "জে প্রদর্শনের জন্য বিসৃত তথ্য দেখানো হবে"
 
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
+msgid "Cannot select multipath component"
+msgstr "মাল্টিপাথ কম্পোনেন্ট নির্বাচন করতে পারেনা"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
+msgid "No free space."
+msgstr "কোনো ফাঁকা জায়গা নেই।"
+
+#. Translators: Shown when device is unselectable because not enough space is available.
+#. * First %s (e.g. '10 GB') is how much space is needed.
+#. * Second %s (e.g. '5 GB') is how much space is available.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
+#| msgid "%s. Largest contiguous free block is %s"
+msgid ""
+"Insufficient space: %s is needed but largest contiguous free block is %s."
+msgstr "অপরিমিত জায়গা: %s সর্বাধিক বড় অব্যবহৃত ব্লকের সারি হল %s।"
+
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:771
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
 msgid "The disk will be partitioned and a partition will be created"
 msgstr "ডিস্কটি পার্টিশন করা হবে ও একটি পার্টিশন নির্মাণ করা হবে"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:777
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
@@ -1644,7 +1679,7 @@ msgstr "ডিস্কটি পার্টিশন করা হবে ও �
 #. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:786
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
 #, c-format
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards %"
@@ -1652,31 +1687,55 @@ msgid ""
 msgstr "%s ডিস্কটি পার্টিশন করা হবে ও একটি %s পার্টিশন নির্মাণ করা হবে"
 
 #. Translators: This is shown in the details column
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:796
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
 msgid "A partition will be created"
 msgstr "এতটি পার্টিশন তৈরি করা হবে"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
+#| msgid "A partition will be created"
+msgid "A volume will be created"
+msgstr "একটি ভলিউম তৈরি করা হবে"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:802
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
 #, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
 msgstr "এতটি %s পার্টিশন তৈরি করা হবে"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
+#| msgid ""
+#| "A %s partition will be created. Afterwards no space will be available."
+msgid "A %s volume will be created. Afterwards no space will be available."
+msgstr "এতটি %s পার্টিশন তৈরি করা হবে। এরপর আর কোনো জায়গা পাওয়া যাবে না।"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
 #. * Second %s is the remaining free space after the operation.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:810
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
 #, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
 msgstr "এতটি %s পার্টিশন তৈরি করা হবে %s"
 
 #. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
+#| msgid "A %s partition will be created. Afterwards %s will be available."
+msgid "A %s volume will be created. Afterwards %s will be available."
+msgstr "এতটি %s ভলিউম তৈরি করা হবে। এরপর শুধু %s পাওয়া যাবে।"
+
+#. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:829
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1003
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
 msgstr ""
@@ -1685,7 +1744,7 @@ msgstr ""
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:836
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1010
 #, c-format
 msgid "%s available for use"
 msgstr "%s ব্যবহারযোগ্য"
@@ -1693,12 +1752,12 @@ msgstr "%s ব্যবহারযোগ্য"
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:842
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1016
 #, c-format
 msgid "The disk has no partitions. %s available for use"
 msgstr "এই ডিস্ত টির কোন পার্টিশন নেই. %s ব্যবহারযোগ্য"
 
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:847
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1021
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
@@ -1709,18 +1768,18 @@ msgstr[1] "ডিস্কটির  %d পার্টিশন অাছে"
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
 #. * Second %s is the component size e.g. '42 GB'.
 #.
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:855
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1029
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
 msgstr "%s. সর্বাধিক বড় অব্যবহৃত ব্লকের সারি হল %s"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:966
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1096
 msgid "Storage Devices"
 msgstr "ডিভাইস বিচ্ছিন্ন করা হচ্ছে"
 
 #. Tranlators: this string is used for the column header
-#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1005
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1136
 msgid "Details"
 msgstr "বিস্তারিত"
 
@@ -1735,9 +1794,9 @@ msgstr "আপনি কি নিশ্চিতরূপে ডিভাইস
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 #: ../src/palimpsest/gdu-section-drive.c:1004
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1074
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
-msgstr "_Benchmark"
+msgstr "বেঞ্চমার্ক (_b)"
 
 #. Translators: The title of the benchmark dialog.
 #. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
@@ -1768,7 +1827,7 @@ msgstr "সর্বোচ্চ মাপ"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
 msgid "Average Read Rate:"
-msgstr "Average Read Rate:"
+msgstr "গড় পড়ার হার:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
 msgid "Average Write Rate:"
@@ -1776,11 +1835,11 @@ msgstr "থার্মাল অ্যস্পারিটী রেট"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
 msgid "Last Benchmark:"
-msgstr "Last Benchmark:"
+msgstr "শেষ বেঞ্চমার্ক:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
 msgid "Average Access Time:"
-msgstr "Average Access Time:"
+msgstr "গড় পড়া সময়:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Start _Read-Only Benchmark"
@@ -1836,127 +1895,140 @@ msgstr "সেল্ফ-পরিক্খা বাতিল কর"
 msgid "Edit %s"
 msgstr "সম্পাদন %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:236
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
 msgid "Missing Physical Volume"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:237
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:222
 #, c-format
 msgid "UUID: %s"
 msgstr "UUID: %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:347
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
 #, c-format
 msgid "Edit PVs on %s (%s)"
 msgstr "পার্টিশন %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:358
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
 msgid "Physical _Volumes"
 msgstr "LVM2 প্রকৃত ভলিউম (_V)\" "
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:372
 msgid "Physical Volume"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:404
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
 msgid "Capacity"
 msgstr "ধারণক্ষমতা"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:413
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:397
 msgid "Unallocated"
 msgstr "অব্যবহৃত জায়গা"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:427
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:444
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:449
 #: ../src/palimpsest/gdu-section-drive.c:935
 msgid "SMART Status:"
 msgstr "SMART অবস্থা:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:431
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:456
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:415
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:461
 #: ../src/palimpsest/gdu-section-drive.c:911
-#: ../src/palimpsest/gdu-section-volumes.c:1916
+#: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "ডিভাইস"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:444
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:428
 msgid "_New Physical Volume"
 msgstr "নতুন প্রকৃত ভলিউম (_N)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:445
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
 msgid "Add a new PV to the VG"
 msgstr "Add a new PV to the VG"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:454
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
 msgid "_Remove Physical Volume"
 msgstr "প্রকৃত ভলিউম অপসারণ (_R)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:455
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "Remove the PV from the VG"
 msgstr "Remove the PV from the VG"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:953
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:826
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:941
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:845
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "সমর্থিত নয়"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:364
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:369
 #, c-format
 msgid "Edit components on %s (%s)"
 msgstr "RAID কম্পোনেন্ট %s (সংস্করণ %s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:375
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:380
 msgid "C_omponents"
 msgstr "কম্পোনেন্ট: (_o)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:405
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:410
 msgid "Position"
 msgstr "অবস্থান"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:414
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:419
 msgid "Component"
 msgstr "কম্পোনেন্ট: "
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:430
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
 msgid "State"
 msgstr "অবস্থা"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:448
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:453
 msgid "Position:"
 msgstr "অবস্থান"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:452
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:794
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:995
-#: ../src/palimpsest/gdu-section-volumes.c:1905
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:457
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
+#: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "অবস্থা:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:469
-msgid "_New Component"
-msgstr "কম্পোনেন্ট মুছে ফেল(_R)"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
+#| msgctxt "Linux MD slave state"
+#| msgid "Spare"
+msgid "Add _Spare"
+msgstr "স্পেয়ার যোগ করুন (_S)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:470
-msgid "Add a new component to the array"
-msgstr "RAID অ্যারে - তে কম্পোনেন্ট যোগ করা হচ্ছে"
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
+#| msgid "Add a new component to the array"
+msgid "Add a spare to the array"
+msgstr "অ্যারেতে একটি স্পেয়ার যোগ করুন"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:479
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
+#| msgid "_Start Array"
+msgid "_Expand Array"
+msgstr "অ্যারে প্রসারিত করুন (_E)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
+#| msgid "Erase or partition the array"
+msgid "Increase the capacity of the array"
+msgstr "অ্যারেটির ধারণ ক্ষমতা বাড়ানো হবে"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
 msgid "_Attach Component"
 msgstr "RAID কম্পোনেন্ট"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:480
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "Attach the component to the array"
 msgstr "RAID অ্যারে - তে কম্পোনেন্ট যোগ করা হচ্ছে"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:489
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:504
 msgid "_Remove Component"
 msgstr "কম্পোনেন্ট মুছে ফেল(_R)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:490
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "Remove the component from the array"
 msgstr "RAID অ্যারে - থেকে কম্পোনেন্ট মুছে ফেলা হচ্ছে"
 
@@ -2020,19 +2092,19 @@ msgstr "Filesystem driver not installed"
 msgid "Filesystem tools not installed"
 msgstr "ফাইল-সিস্টেমের লেবেল"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:1047
+#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:958
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:257
-#, c-format
-msgid "An error occured while performing an operation on \"%s\" (%s): %s"
-msgstr "An error occured while performing an operation on \"%s\" (%s): %s"
+#| msgid "An error occured while performing an operation on \"%s\" (%s): %s"
+msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
+msgstr "\"%s\" (%s) এর উপর কাজ করার সময় একটি ত্রুটি হয়েছে: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
-#, c-format
-msgid "An error occured: %s"
-msgstr "এতটি সমস্যা হয়েছে: %s"
+#| msgid "An error occured: %s"
+msgid "An error occurred: %s"
+msgstr "একটি সমস্যা হয়েছে: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:274
 msgid "_Details"
@@ -2094,7 +2166,7 @@ msgstr "The mnemonic label for the affirmative button"
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:216
 #: ../src/palimpsest/gdu-section-drive.c:649
-#: ../src/palimpsest/gdu-section-volumes.c:368
+#: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "ফরম্যাট করুন (_F)"
 
@@ -2138,7 +2210,7 @@ msgstr "এনক্রিপ্ট করা, Linux-র সাথে সুস�
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:607
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
-#: ../src/palimpsest/gdu-section-volumes.c:1720
+#: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
 msgstr "নাম: (_N)"
 
@@ -2240,8 +2312,8 @@ msgid "pid: %d  program: %s"
 msgstr "pid: %d  প্রোগ্রাম: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:923
-#: ../src/gdu-gtk/gdu-gtk.c:1065
+#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:924
+#: ../src/gdu-gtk/gdu-gtk.c:1067
 #, c-format
 msgid "Partition %d on %s"
 msgstr "পার্টিশন %d, %s-র উপর স্থাপিত"
@@ -2278,7 +2350,7 @@ msgstr "পরিচয়-পংক্তি ফাঁকা নেই"
 msgid "Cr_eate"
 msgstr "তৈরি কর (_e)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2447
+#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
 msgstr "পরিচয়-পংক্তি পরিবর্তন করুন (_P)"
 
@@ -2361,41 +2433,41 @@ msgstr "সর্বদা মনে রাখা হবে (_R)"
 msgid "Enter Passphrase"
 msgstr "পরিচয়-পংক্তি লিখুন"
 
-#: ../src/gdu-gtk/gdu-gtk.c:956 ../src/gdu/gdu-util.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:957 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "UUID %s -এর জন্য LUKS Passphrase"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1253
+#: ../src/gdu-gtk/gdu-gtk.c:1255
 msgid "Empty (don't create a file system)"
 msgstr "ফাঁকা (ফাইল সিস্টেম তৈরি কর না)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1274
+#: ../src/gdu-gtk/gdu-gtk.c:1276
 msgid "Empty"
 msgstr "ফাঁকা"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1282
+#: ../src/gdu-gtk/gdu-gtk.c:1284
 msgid "Extended Partition"
 msgstr "এক্সটেন্ডেড পার্টিশন"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1541 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/gdu-gtk/gdu-gtk.c:1543 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "মাস্টার বুট রেকর্ড (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1546 ../src/gdu/gdu-drive.c:810
-#: ../src/gdu/gdu-linux-md-drive.c:568
+#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:833
+#: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "GUID পার্টিশন টেবিল"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1551
+#: ../src/gdu-gtk/gdu-gtk.c:1553
 msgid "Don't partition"
 msgstr "পার্টিশন কর না"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/gdu/gdu-util.c:495
+#: ../src/gdu-gtk/gdu-gtk.c:1558 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
@@ -2416,7 +2488,7 @@ msgstr "_Scheme:"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:89
 msgid "KB"
-msgstr ""
+msgstr "কিলোবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:95
 msgid "MB"
@@ -2424,29 +2496,27 @@ msgstr "শণ"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:98
 msgid "GB"
-msgstr ""
+msgstr "গিগাবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:101
 msgid "TB"
-msgstr ""
+msgstr "টেরাবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:104
-#, fuzzy
 msgid "KiB"
-msgstr "4 KiB"
+msgstr "কিবিবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:107
-#, fuzzy
 msgid "MiB"
-msgstr "শণ"
+msgstr "মেবিবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:110
 msgid "GiB"
-msgstr ""
+msgstr "গিবিবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:113
 msgid "TiB"
-msgstr ""
+msgstr "টেবিবাইট"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:489
 msgid "The currently selected size"
@@ -2497,39 +2567,39 @@ msgid "Drive to show volumes for"
 msgstr "কোন ড্রাইভ দেথানো হবে"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1181
+#: ../src/gdu-gtk/gdu-volume-grid.c:1187
 msgid "RAID Array is not running"
-msgstr "RAID Array is not running"
+msgstr "RAID অ্যারে কাজ করছে না"
 
 #. Translators: This is shown in the grid for a drive when no media has been detected
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1184 ../src/gdu/gdu-drive.c:796
+#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "কোনো মিডিয়া পাওয়া যায়নি"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1268
+#: ../src/gdu-gtk/gdu-volume-grid.c:1274
 msgid "Extended"
 msgstr "বিসৃত"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1276
+#: ../src/gdu-gtk/gdu-volume-grid.c:1282
 msgid "Encrypted"
 msgstr "এন্ক্রিপ্ট করা"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1290 ../src/gdu/gdu-util.c:344
-#: ../src/palimpsest/gdu-section-volumes.c:2173
+#: ../src/gdu-gtk/gdu-volume-grid.c:1296 ../src/gdu/gdu-util.c:344
+#: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID কম্পোনেন্ট"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1298
+#: ../src/gdu-gtk/gdu-volume-grid.c:1304
 msgid "Free"
 msgstr "ফাঁকা"
 
@@ -2543,88 +2613,97 @@ msgid "Create new filesystem on the selected device"
 msgstr "নির্বাচিত ডিভাইসে নতুন ফাইল সিস্টেম তৈরি কর"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:560
+#: ../src/gdu/gdu-drive.c:573
 msgid "CompactFlash"
 msgstr "CompactFlash"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:563
+#: ../src/gdu/gdu-drive.c:576
 msgid "MemoryStick"
 msgstr "MemoryStick"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:566
+#: ../src/gdu/gdu-drive.c:579
 msgid "SmartMedia"
 msgstr "SmartMedia"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:569
+#: ../src/gdu/gdu-drive.c:582
 msgid "SecureDigital"
 msgstr "SecureDigital"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:572
+#: ../src/gdu/gdu-drive.c:585
 msgid "SD High Capacity"
-msgstr "SD High Capacity"
+msgstr "SD হাই ক্যাপাসিটি"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:575
+#: ../src/gdu/gdu-drive.c:588
 msgid "Floppy"
 msgstr "ফ্লপি"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:578
+#: ../src/gdu/gdu-drive.c:591
 msgid "Zip"
 msgstr "জিপ"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:581
+#: ../src/gdu/gdu-drive.c:594
 msgid "Jaz"
 msgstr "জ্যাজ"
 
 #. Translators: This word is used to describe the media inserted into a device
-#: ../src/gdu/gdu-drive.c:584
+#: ../src/gdu/gdu-drive.c:597
 msgid "Flash"
 msgstr "ফ্ল্যাশ"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:607
+#: ../src/gdu/gdu-drive.c:620
 msgid "CD"
 msgstr "CD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:615
+#: ../src/gdu/gdu-drive.c:628
 msgid "DVD"
 msgstr "DVD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:623
+#: ../src/gdu/gdu-drive.c:636
 msgid "Blu-Ray"
 msgstr "Blu-Ray"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
-#: ../src/gdu/gdu-drive.c:631
+#: ../src/gdu/gdu-drive.c:644
 msgid "HDDVD"
 msgstr "HDDVD"
 
+#. Translators: This is the name of a "Drive" backed by a file.
+#. * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+#. *
+#. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
+#.
+#: ../src/gdu/gdu-drive.c:689
+#| msgid "%s Free"
+msgid "%s File"
+msgstr "%s ফাইল"
+
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
-#: ../src/gdu/gdu-drive.c:680 ../src/gdu/gdu-drive.c:719
-#, c-format
+#: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-drive.c:742
 msgid "%s Drive"
 msgstr "%s ড্রাইভ"
 
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
-#: ../src/gdu/gdu-drive.c:714
+#: ../src/gdu/gdu-drive.c:737
 #, c-format
 msgid "%s %s Drive"
 msgstr "%s %s ড্রাইভ"
@@ -2632,7 +2711,7 @@ msgstr "%s %s ড্রাইভ"
 #. Translators: This string is used to describe a hard disk.
 #. * The first %s is the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:730
+#: ../src/gdu/gdu-drive.c:753
 #, c-format
 msgid "%s Hard Disk"
 msgstr "%s হার্ড-ডিস্ক"
@@ -2640,14 +2719,14 @@ msgstr "%s হার্ড-ডিস্ক"
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:735
+#: ../src/gdu/gdu-drive.c:758
 msgid "Hard Disk"
 msgstr "হার্ড-ডিস্ক"
 
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:742
+#: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
 msgstr "%s সলিড-স্টেট ডিস্ক"
@@ -2655,38 +2734,38 @@ msgstr "%s সলিড-স্টেট ডিস্ক"
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
-#: ../src/gdu/gdu-drive.c:748
+#: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
 msgstr "সলিড-স্টেট ডিস্ক"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
 #.
-#: ../src/gdu/gdu-drive.c:789
+#: ../src/gdu/gdu-drive.c:812
 #, c-format
 msgid "%s Media"
 msgstr "%s মিডিয়া"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:807 ../src/gdu/gdu-linux-md-drive.c:565
+#: ../src/gdu/gdu-drive.c:830 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
 msgstr "MBR পার্টিশন টেবিল"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu/gdu-drive.c:813 ../src/gdu/gdu-linux-md-drive.c:571
+#: ../src/gdu/gdu-drive.c:836 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
 msgstr "Apple পার্টিশন টেবিল"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
-#: ../src/gdu/gdu-drive.c:818 ../src/gdu/gdu-linux-md-drive.c:576
+#: ../src/gdu/gdu-drive.c:841 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
 msgstr "পার্টিশন করা হয়েছে"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
-#: ../src/gdu/gdu-drive.c:823 ../src/palimpsest/gdu-section-drive.c:302
+#: ../src/gdu/gdu-drive.c:846 ../src/palimpsest/gdu-section-drive.c:302
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
 msgstr "পার্টিশন করা হয়নি"
@@ -2694,59 +2773,59 @@ msgstr "পার্টিশন করা হয়নি"
 #. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
 #: ../src/gdu/gdu-hub.c:222
 msgid "SAS Expander"
-msgstr "SAS Expander"
+msgstr "SAS এক্সপান্ডার"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
-msgstr "PATA Host Adapter"
+msgstr "PATA হোস্ট অ্যাডাপ্টার"
 
 #: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
-msgstr "SATA Host Adapter"
+msgstr "SATA হোস্ট অ্যাডাপ্টার"
 
 #: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
-msgstr "ATA Host Adapter"
+msgstr "ATA হোস্ট অ্যাডাপ্টার"
 
 #: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
-msgstr "SAS Host Adapter"
+msgstr "SAS হোস্ট অ্যাডাপ্টার"
 
 #: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
-msgstr "SCSI Host Adapter"
+msgstr "SCSI হোস্ট অ্যাডাপ্টার"
 
 #: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
-msgstr "Host Adapter"
+msgstr "হোস্ট অ্যাডাপ্টার"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume.c:331
+#: ../src/gdu/gdu-linux-lvm2-volume.c:330
 msgid "Logical Volume"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
 #. Translators: VPD name
-#: ../src/gdu/gdu-linux-lvm2-volume.c:334
+#: ../src/gdu/gdu-linux-lvm2-volume.c:333
 msgid "LVM2 Logical Volume"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
 #. Translators: Description
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:351
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:355
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:764
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
 msgid "Volume Group"
-msgstr "ভলিউম"
+msgstr "ভলিউম গ্রুপ"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:359
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
 msgid "%s LVM2 Volume Group"
 msgstr "%s LVM2 প্রকৃত ভলিউম"
 
 #. Translators: VPD name when size is not known
-#: ../src/gdu/gdu-linux-lvm2-volume-group.c:362
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:393
 msgid "LVM2 Volume Group"
-msgstr "LVM2 Volume Group"
+msgstr "LVM2 ভলিউম গ্রুপ"
 
 #. Translators: label for an unallocated space in a LVM2 volume group.
 #. * %s is the size, formatted like '45 GB'
@@ -2763,8 +2842,8 @@ msgstr "%s অব্যবহৃত"
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
 #: ../src/gdu/gdu-volume-hole.c:161
-#: ../src/palimpsest/gdu-section-volumes.c:2187
-#: ../src/palimpsest/gdu-section-volumes.c:2195
+#: ../src/palimpsest/gdu-section-volumes.c:2209
+#: ../src/palimpsest/gdu-section-volumes.c:2217
 msgid "Unallocated Space"
 msgstr "অব্যবহৃত জায়গা"
 
@@ -2775,14 +2854,14 @@ msgstr "LVM2 VG অব্যবহৃত জায়গা"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:538 ../src/gdu/gdu-linux-md-drive.c:621
+#: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
 #, c-format
 msgid "%s %s Array"
 msgstr "%s %s অ্যারে"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
-#: ../src/gdu/gdu-linux-md-drive.c:543 ../src/gdu/gdu-linux-md-drive.c:626
+#: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, c-format
 msgid "%s Array"
 msgstr "%s অ্যারে"
@@ -2790,110 +2869,115 @@ msgstr "%s অ্যারে"
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
 #.
-#: ../src/gdu/gdu-linux-md-drive.c:596
+#: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
 msgid "RAID Array %s (%s)"
 msgstr "RAID অ্যারে %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
-#: ../src/gdu/gdu-linux-md-drive.c:603
+#: ../src/gdu/gdu-linux-md-drive.c:605
 #, c-format
 msgid "RAID device %s"
 msgstr "RAID ডিভাইস %s"
 
 #. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:609
+#: ../src/gdu/gdu-linux-md-drive.c:612
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
 
-#: ../src/gdu/gdu-linux-md-drive.c:614
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:965
+#: ../src/gdu/gdu-linux-md-drive.c:617
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID অ্যারে"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1112
+#: ../src/gdu/gdu-linux-md-drive.c:1114
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
-msgstr "Not Attached"
+msgstr "সংযুক্ত করা হয়নি"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1115
+#: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr "Faulty"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1120
-msgctxt "Linux MD slave state"
-msgid "Fully Synchronized"
-msgstr "Fully Synchronized"
+msgstr "ত্রুটিযুক্ত"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1122
+msgctxt "Linux MD slave state"
+msgid "Fully Synchronized"
+msgstr "সম্পূর্ণ সিনক্রোনাইজ করা"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
 msgstr "Writemostly"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1124
+#: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Blocked"
 msgstr "ব্লক করা"
 
-#: ../src/gdu/gdu-linux-md-drive.c:1126
+#: ../src/gdu/gdu-linux-md-drive.c:1130
+#| msgctxt "Linux MD slave state"
+#| msgid "Fully Synchronized"
+msgctxt "Linux MD slave state"
+msgid "Partially Synchronized"
+msgstr "অংশিকভাবে সিনক্রোনাইজ করা"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
 msgid "Spare"
 msgstr "Spare"
 
 #: ../src/gdu/gdu-machine.c:151
 msgid "Local Storage"
-msgstr "Local Storage"
+msgstr "লোকাল স্টোরেজ"
 
 #. TODO: use display-hostname
 #: ../src/gdu/gdu-machine.c:154
 #, c-format
 msgid "Storage on %s"
-msgstr "Storage on %s"
+msgstr "%s তে স্টোরেজ"
 
 #: ../src/gdu/gdu-pool.c:885
-#, fuzzy
 msgid "Multipath Devices"
-msgstr "ডিভাইস বিচ্ছিন্ন করা হচ্ছে"
+msgstr "মাল্টিপাথ ডিভাইস"
 
 #: ../src/gdu/gdu-pool.c:886
 msgid "Drives with multiple I/O paths"
-msgstr ""
+msgstr "একাধিক I/O পাথসহ ড্রাইভ"
 
 #: ../src/gdu/gdu-pool.c:896
 msgid "Multi-disk Devices"
-msgstr ""
+msgstr "মাল্টি-ডিস্ক ডিভাইস"
 
 #: ../src/gdu/gdu-pool.c:897
 msgid "RAID, LVM and other logical drives"
-msgstr ""
+msgstr "RAID, LVM এবং অন্যান্য লজিক্যাল ড্রাইভ"
 
 #: ../src/gdu/gdu-pool.c:907
-#, fuzzy
 msgid "Peripheral Devices"
-msgstr "ডিভাইস বিচ্ছিন্ন করা হচ্ছে"
+msgstr "পেরিফেরাল ডিভাইস"
 
 #: ../src/gdu/gdu-pool.c:908
-msgid "USB, Firewire and other peripherals"
-msgstr ""
+msgid "USB, FireWire and other peripherals"
+msgstr "ইউএসবি, ফায়ারওয়্যার এবং অন্যান্য পেরিফেরাল"
 
-#: ../src/gdu/gdu-pool.c:2090
+#: ../src/gdu/gdu-pool.c:2092
 #, c-format
 msgid "Error enumerating devices: %s"
 msgstr "ডিভাইস ইজেক্ট করতে সমস্যা %s"
 
-#: ../src/gdu/gdu-pool.c:2116
+#: ../src/gdu/gdu-pool.c:2118
 #, c-format
 msgid "Error enumerating adapters: %s"
 msgstr "তথ্য মুছে ফেলতে সমস্যা হয়েছে %s"
 
-#: ../src/gdu/gdu-pool.c:2139
+#: ../src/gdu/gdu-pool.c:2141
 #, c-format
 msgid "Error enumerating expanders: %s"
 msgstr "Error enumerating expanders: %s"
 
-#: ../src/gdu/gdu-pool.c:2162
+#: ../src/gdu/gdu-pool.c:2164
 #, c-format
 msgid "Error enumerating ports: %s"
 msgstr "পার্টিশন মুছে ফেলতে সমস্যা %s"
@@ -3168,7 +3252,7 @@ msgstr "Universal Disk Format"
 msgid "udf"
 msgstr "udf"
 
-#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2169
+#: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2191
 msgid "Swap Space"
 msgstr "Swap Space"
 
@@ -3516,8 +3600,9 @@ msgid "NetBSD RAID Partition"
 msgstr "Apple RAID পার্টিশন"
 
 #: ../src/gdu/gdu-util.c:488
-msgid "NetBSD Concatenated  Partition"
-msgstr "পার্টিশন তৈরি কর"
+#| msgid "NetBSD Concatenated  Partition"
+msgid "NetBSD Concatenated Partition"
+msgstr "NetBSD কনক্যাটেনেটেড পার্টিশন"
 
 #: ../src/gdu/gdu-util.c:489
 msgid "NetBSD Encrypted Partition"
@@ -3762,12 +3847,15 @@ msgstr ""
 "সিস্টেমের সাথে সুসংগত নয়"
 
 #: ../src/gdu/gdu-util.c:603
+#| msgid ""
+#| "Simple filesystem with low overhead and UNIX permissions support. Not "
+#| "widely compatible with other operating systems than Linux and Minix."
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
-"compatible with other operating systems than Linux and Minix."
+"compatible with operating systems other than Linux and Minix."
 msgstr ""
-"এটি একটি স্বাভাবিক Windows ফাইল সিস্টেম। এটি Windows ছাড়া অধিকাংশ অপারেটিং "
-"সিস্টেমের সাথে সুসংগত নয়"
+"নিম্ন ওভারহেড এবং UNIX অনুমোদন সমর্থন সহ সাধারণ ফাইল সিস্টেম। লিনাক্স এবং "
+"মিনিক্স এর মত একই ধরণের অপারেটিং সিস্টেম নয়।"
 
 #: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
@@ -4041,190 +4129,190 @@ msgid "DISK FAILURE IS IMMINENT"
 msgstr "ডিস্কটি অখনি নষ্ট হয়ে যাবে"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "CD-ROM Disc"
 msgstr "CD-ROM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:75
+#: ../src/gdu/gdu-volume.c:79
 msgid "Blank CD-ROM Disc"
 msgstr "ফাঁকা CD-ROM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "CD-R Disc"
 msgstr "CD-R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:76
+#: ../src/gdu/gdu-volume.c:80
 msgid "Blank CD-R Disc"
 msgstr "ফাঁকা CD-R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "CD-RW Disc"
 msgstr "CD-RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:77
+#: ../src/gdu/gdu-volume.c:81
 msgid "Blank CD-RW Disc"
 msgstr "ফাঁকা CD-RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "DVD-ROM Disc"
 msgstr "DVD-ROM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:78 ../src/gdu/gdu-volume.c:79
+#: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD-ROM Disc"
 msgstr "ফাঁকা DVD-ROM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "DVD-RW Disc"
 msgstr "DVD-RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:80
+#: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD-RW Disc"
 msgstr "ফাঁকা DVD-ROM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "DVD-RAM Disc"
 msgstr "DVD-RAM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:81
+#: ../src/gdu/gdu-volume.c:85
 msgid "Blank DVD-RAM Disc"
 msgstr "ফাঁকা DVD-RAM ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "DVD+R Disc"
 msgstr "DVD+R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:86
 msgid "Blank DVD+R Disc"
 msgstr "ফাঁকা DVD+R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "DVD+RW Disc"
 msgstr "DVD+RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:83
+#: ../src/gdu/gdu-volume.c:87
 msgid "Blank DVD+RW Disc"
 msgstr "ফাঁকা DVD+RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "DVD+R DL Disc"
 msgstr "DVD+R DL ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:84
+#: ../src/gdu/gdu-volume.c:88
 msgid "Blank DVD+R DL Disc"
 msgstr "ফাঁকা DVD+R DL ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "DVD+RW DL Disc"
 msgstr "DVD+RW DL ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:85
+#: ../src/gdu/gdu-volume.c:89
 msgid "Blank DVD+RW DL Disc"
 msgstr "ফাঁকা DVD+RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blu-Ray Disc"
 msgstr "Blu-Ray ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:86
+#: ../src/gdu/gdu-volume.c:90
 msgid "Blank Blu-Ray Disc"
 msgstr "ফাঁকা Blu-Ray ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blu-Ray R Disc"
 msgstr "Blu-Ray R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:87
+#: ../src/gdu/gdu-volume.c:91
 msgid "Blank Blu-Ray R Disc"
 msgstr "ফাঁকা Blu-Ray R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blu-Ray RW Disc"
 msgstr "Blu-Ray RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:88
+#: ../src/gdu/gdu-volume.c:92
 msgid "Blank Blu-Ray RW Disc"
 msgstr "ফাঁকা Blu-Ray RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "HD DVD Disc"
 msgstr "HD DVD ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:89
+#: ../src/gdu/gdu-volume.c:93
 msgid "Blank HD DVD Disc"
 msgstr "ফাঁকা HD DVD ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "HD DVD-R Disc"
 msgstr "HD DVD-R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:90
+#: ../src/gdu/gdu-volume.c:94
 msgid "Blank HD DVD-R Disc"
 msgstr "ফাঁকা HD DVD-R ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "HD DVD-RW Disc"
 msgstr "HD DVD-RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:91
+#: ../src/gdu/gdu-volume.c:95
 msgid "Blank HD DVD-RW Disc"
 msgstr "ফাঁকা HD DVD-RW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "MO Disc"
 msgstr "MO ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:92
+#: ../src/gdu/gdu-volume.c:96
 msgid "Blank MO Disc"
 msgstr "ফাঁকা MO ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "MRW Disc"
 msgstr "MRW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:93
+#: ../src/gdu/gdu-volume.c:97
 msgid "Blank MRW Disc"
 msgstr "ফাঁকা MRW ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "MRW/W Disc"
 msgstr "MRW/W ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:94
+#: ../src/gdu/gdu-volume.c:98
 msgid "Blank MRW/W Disc"
 msgstr "ফাঁকা MRW/W ডিস্ক"
 
-#: ../src/gdu/gdu-volume.c:276
+#: ../src/gdu/gdu-volume.c:294
 msgid "Blank Optical Disc"
 msgstr "ফাঁকা Optical ডিস্ক"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:286
+#: ../src/gdu/gdu-volume.c:304
 #, c-format
 msgid "%s Extended"
 msgstr "%s বিসৃত"
 
-#: ../src/gdu/gdu-volume.c:287
+#: ../src/gdu/gdu-volume.c:305
 msgid "Contains logical partitions"
 msgstr "লজিকাল পার্টিশনের ধারণ করে "
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:302
+#: ../src/gdu/gdu-volume.c:320
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s এনক্রিপ্ট করা"
 
-#: ../src/gdu/gdu-volume.c:312
+#: ../src/gdu/gdu-volume.c:330
 msgid "Optical Disc"
 msgstr "Optical ডিস্ক"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:318
+#: ../src/gdu/gdu-volume.c:336
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s ফাইল-সিস্টেম"
@@ -4232,7 +4320,7 @@ msgstr "%s ফাইল-সিস্টেম"
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:324
+#: ../src/gdu/gdu-volume.c:342
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s পার্টিশন টেবিল"
@@ -4240,13 +4328,13 @@ msgstr "%s পার্টিশন টেবিল"
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:330
+#: ../src/gdu/gdu-volume.c:348
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 প্রকৃত ভলিউম"
 
 #. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:343
+#: ../src/gdu/gdu-volume.c:361
 msgctxt "RAID level"
 msgid "RAID"
 msgstr "RAID"
@@ -4255,7 +4343,7 @@ msgstr "RAID"
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
 #.
-#: ../src/gdu/gdu-volume.c:350 ../src/gdu/gdu-volume.c:361
+#: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
 msgid "%s %s Component"
 msgstr "%s %s কম্পোনেন্ট "
@@ -4263,7 +4351,7 @@ msgstr "%s %s কম্পোনেন্ট "
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #.
-#: ../src/gdu/gdu-volume.c:354
+#: ../src/gdu/gdu-volume.c:372
 #, c-format
 msgid "Part of \"%s\" array"
 msgstr "\"%s\" অ্যারে -এর অংশ"
@@ -4271,7 +4359,7 @@ msgstr "\"%s\" অ্যারে -এর অংশ"
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:372
+#: ../src/gdu/gdu-volume.c:390
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s Swap জায়গা"
@@ -4279,7 +4367,7 @@ msgstr "%s Swap জায়গা"
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:377
+#: ../src/gdu/gdu-volume.c:395
 #, c-format
 msgid "%s Data"
 msgstr "%s তথ্য"
@@ -4287,20 +4375,20 @@ msgstr "%s তথ্য"
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:383 ../src/gdu/gdu-volume.c:399
+#: ../src/gdu/gdu-volume.c:401 ../src/gdu/gdu-volume.c:417
 #, c-format
 msgid "%s Unrecognized"
 msgstr "%s অজানা "
 
 #. Translators: description for a volume of unrecognized use
-#: ../src/gdu/gdu-volume.c:385
+#: ../src/gdu/gdu-volume.c:403
 msgid "Unknown or Unused"
 msgstr "অজানা অথবা অব্যবহৃত"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:392 ../src/gdu/gdu-volume.c:394
+#: ../src/gdu/gdu-volume.c:410 ../src/gdu/gdu-volume.c:412
 #, c-format
 msgid "%s Partition"
 msgstr "%s পার্টিশন"
@@ -4308,14 +4396,14 @@ msgstr "%s পার্টিশন"
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:430
+#: ../src/gdu/gdu-volume.c:447
 #, c-format
 msgid "Partition %d of %s"
 msgstr "পার্টিশন %d -এর %s নম্বর "
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
-#: ../src/gdu/gdu-volume.c:436
+#: ../src/gdu/gdu-volume.c:453
 #, c-format
 msgid "Partition %d"
 msgstr "পার্টিশন %d"
@@ -4323,14 +4411,14 @@ msgstr "পার্টিশন %d"
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:444
+#: ../src/gdu/gdu-volume.c:461
 #, c-format
 msgid "Whole-disk volume on %s"
 msgstr "পুরো-ডিস্ক ভলিউম %s -এ"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
-#: ../src/gdu/gdu-volume.c:449
+#: ../src/gdu/gdu-volume.c:466
 msgid "Whole-disk volume"
 msgstr "পুরো-ডিস্ক ভলিউম"
 
@@ -4382,7 +4470,7 @@ msgstr "কোন ড্রাইভ দেথানো হবে"
 
 #: ../src/palimpsest/gdu-section-drive.c:148
 msgid "Multipath Drive"
-msgstr ""
+msgstr "মাল্টিপাথ ড্রাইভ"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
@@ -4445,8 +4533,9 @@ msgid "The application is not installed"
 msgstr "এই অপারেশনটি সমর্থিত নয়"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-msgid "Error ejecting media"
-msgstr "ডিভাইস ইজেক্ট করতে সমস্যা"
+#| msgid "Error ejecting media"
+msgid "Error ejecting medium"
+msgstr "মিডিয়াম বের করতে সমস্যা"
 
 #: ../src/palimpsest/gdu-section-drive.c:565
 msgid "Error detaching drive"
@@ -4465,16 +4554,21 @@ msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
 msgstr ""
+"<b>সতর্কবানী:</b> এই ড্রাইভের জন্য বেশ কয়েকটি পাথ পাওয়া গেছে কিন্তু এর "
+"সম্পর্কিত মাল্টিপাথ ডিভাইস পাওয়া যায়নি। আপনার অপারেটিং সিস্টেম সম্ভবত "
+"ভুলভাবে কনফিগার করা হয়েছে।"
 
 #: ../src/palimpsest/gdu-section-drive.c:850
 msgid "Go to Multipath Device"
-msgstr ""
+msgstr "মাল্টিপাথ ডিভাইসে যাওয়া হবে"
 
 #: ../src/palimpsest/gdu-section-drive.c:861
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
 msgstr ""
+"<b>নোট:</b> এই অবজেক্টটি ড্রাইভে একাধিক পাথ প্রদর্চন করে। ড্রাইভে কাজ করতে "
+"সম্পর্কিত বহুপাথ ব্যবহার করুন।"
 
 #: ../src/palimpsest/gdu-section-drive.c:890
 #: ../src/palimpsest/gdu-section-hub.c:225
@@ -4507,9 +4601,9 @@ msgid "Rotation Rate:"
 msgstr "Rotation Rate:"
 
 #: ../src/palimpsest/gdu-section-drive.c:923
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:790
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:999
-#: ../src/palimpsest/gdu-section-volumes.c:1930
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:978
+#: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "SD High Capacity"
 
@@ -4518,7 +4612,7 @@ msgid "Connection:"
 msgstr "Connection:"
 
 #: ../src/palimpsest/gdu-section-drive.c:931
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:991
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
 msgstr "পার্টিশন"
 
@@ -4551,8 +4645,9 @@ msgid "_Eject"
 msgstr "বের করে দাও (_E)"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-msgid "Eject media from the drive"
-msgstr "ডিভইসটি থেকে মিডিয়া বের করে দাও"
+#| msgid "Eject media from the drive"
+msgid "Eject medium from the drive"
+msgstr "ড্রাইভ থেকে মিডিয়াম বের করা হবে"
 
 #: ../src/palimpsest/gdu-section-drive.c:994
 msgid "Safe Rem_oval"
@@ -4627,94 +4722,92 @@ msgstr "Choose a new Volume Group name."
 msgid "Error adding Physical Volume to Volume Group"
 msgstr "Error adding Physical Volume to Volume Group"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:280
-msgid "Error creating partition for RAID pv"
-msgstr "পার্টিশন তৈরি করতে সমস্যা"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
+#| msgid "Error creating RAID array"
+msgid "Error creating PV for VG"
+msgstr "VG এর জন্য PV  তৈরিতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:316
-msgid "Error creating partition table for LVM2 PV"
-msgstr "পার্টিশন টেবিল তৈরি করতে ব্যর্থ"
-
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:491
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
 msgid "Error deleting partition for Physical Volume in Volume Group"
 msgstr "Error deleting partition for Physical Volume in Volume Group"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:514
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
 msgid "Error removing Physical Volume from Volume Group"
 msgstr "Error removing Physical Volume from Volume Group"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:587
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
 msgid "Are you sure you want the remove the Physical Volume?"
 msgstr "আপনি কি নিশ্চিতরূপে ডিভাইসটি মুছে ফেলতে ইচ্ছুক?"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:588
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
 msgid "_Remove"
 msgstr "অপসারণ (_R)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:708
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
 msgid "Not Running"
 msgstr "চল্ছে না"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:712
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:601
 msgid "Partially Running"
 msgstr "Partially Running"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:606
 msgid "Running"
 msgstr "চলছে"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:721
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
 #, c-format
 msgid "Unknown (%d)"
 msgstr "অজানা (%d)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:778
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:987
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:966
 msgid "Name:"
 msgstr "নাম: (_N)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:782
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
 msgid "Extent Size:"
 msgstr "শতকরা মাপ"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:786
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
 msgid "Physical Volumes:"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:798
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
 msgid "Unallocated:"
 msgstr "অব্যবহৃত জায়গা"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:817
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:706
 msgid "St_art Volume Group"
 msgstr "St_art Volume Group"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:818
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:707
 msgid "Activate all LVs in the VG"
 msgstr "Activate all LVs in the VG"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:827
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
 msgid "St_op Volume Group"
 msgstr "St_op Volume Group"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:828
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
 msgid "Deactivate all LVs in the VG"
 msgstr "Deactivate all LVs in the VG"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:838
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
 msgid "Edit _Name"
 msgstr "নাম: (_N)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:839
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:728
 msgid "Change the Volume Group name"
 msgstr "Change the Volume Group name"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:848
-msgid "Edit Ph_ysical Volumes"
-msgstr "LVM2 প্রকৃত ভলিউম"
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
+#| msgid "Edit Ph_ysical Volumes"
+msgid "Edit _Physical Volumes"
+msgstr "ফিজিক্যাল ভলিউম সম্পাদনা করুন (_P)"
 
-#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:849
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
 msgid "Create and remove PVs"
 msgstr "Create and remove PVs"
 
@@ -4813,454 +4906,456 @@ msgid "Are you sure you want the remove the component?"
 msgstr "আপনি কি নিশ্চিতরূপে অ্যারে থেকে এই অংশটি মুছে ফেলতে ইচ্ছুক?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:639
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
 msgid "Error adding component to RAID Array"
 msgstr "RAID অ্যারের জন্য কম্পোনেন্ট তৈরি করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:662
-msgid "Error creating partition for RAID component"
-msgstr "পার্টিশন তৈরি করতে সমস্যা"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:683
+#: ../src/palimpsest/gdu-shell.c:598
+msgid "Error creating component for RAID array"
+msgstr "RAID অ্যারের জন্য কম্পোনেন্ট তৈরি করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
-msgid "Error creating partition table for RAID component"
-msgstr "পার্টিশন টেবিল তৈরি করতে ব্যর্থ"
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+#| msgid "Error stopping RAID Array"
+msgid "Error expanding RAID Array"
+msgstr "RAID অ্যারে প্রসারনে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:904
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"
 msgstr "RAID অ্যারে তৈরি করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:979
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Level:"
 msgstr "RAID লেভেল (_L): "
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:983
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:962
 msgid "Metadata Version:"
 msgstr "LDM মিটা-ডাটা পার্টিশন"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:982
 msgid "Action:"
 msgstr "Action:"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1007
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:986
 msgid "Components:"
 msgstr "কম্পোনেন্ট: "
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "St_art RAID Array"
 msgstr "RAID অ্যারে আরম্ভ করা হচ্ছে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1025
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 msgid "Bring up the RAID Array"
 msgstr "RAID অ্যারে আরম্ভ করা হচ্ছে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
 msgid "St_op RAID Array"
 msgstr "RAID অ্যারে বন্ধ করা হচ্ছে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1035
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
 msgid "Tear down the RAID Array"
 msgstr "RAID অ্যারে তৈরি কর"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
 msgid "Format/Erase RAI_D Array"
 msgstr "RAID অ্যারে তৈরি কর"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1045
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
 msgstr "RAID অ্যারেটি কে মেরামত করা শুরু করে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
 msgid "Chec_k Array"
 msgstr "RAID অ্যারে পরীক্ষা করা হচ্ছে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1055
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "Check and repair the array"
 msgstr "RAID অ্যারেটি কে মেরামত করা শুরু করে"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1064
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
 msgid "Edit Com_ponents"
 msgstr "কম্পোনেন্ট: "
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1065
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Create and remove components"
 msgstr "কম্পোনেন্ট মুছে ফেলতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:1075
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Measure RAID array performance"
 msgstr "Measure RAID array performance"
 
-#: ../src/palimpsest/gdu-section-volumes.c:112
+#: ../src/palimpsest/gdu-section-volumes.c:115
 msgid "Error unmounting volume"
 msgstr "ডিভাইস অান্মাউন্ট করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:168
+#: ../src/palimpsest/gdu-section-volumes.c:171
 msgid "Error mounting volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:225
+#: ../src/palimpsest/gdu-section-volumes.c:228
 msgid "Error deleting partition"
 msgstr "পার্টিশন মুছে ফেলতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:260
+#: ../src/palimpsest/gdu-section-volumes.c:263
 msgid "Are you sure you want to delete the partition?"
 msgstr "আপনি কি নিশ্চিতরূপে ডিভাইসটি মুছে ফেলতে ইচ্ছুক ?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:261
-#: ../src/palimpsest/gdu-section-volumes.c:1787
+#: ../src/palimpsest/gdu-section-volumes.c:264
+#: ../src/palimpsest/gdu-section-volumes.c:1788
 msgid "_Delete"
 msgstr "মিডিয়া খোঁজা(_D)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:314
+#: ../src/palimpsest/gdu-section-volumes.c:317
 msgid "Error creating filesystem"
 msgstr "ডিভাইসে ফাইল সীস্টেম পরীক্ষা করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:367
+#: ../src/palimpsest/gdu-section-volumes.c:370
 msgid "Are you sure you want to format the volume?"
 msgstr "আপনি কি নিশ্চিতরূপে ডিভাইসটি মুছে ফেলতে ইচ্ছুক?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:425
+#: ../src/palimpsest/gdu-section-volumes.c:428
 msgid "Error modifying partition"
 msgstr "পার্টিশন পরিবর্তন করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:516
+#: ../src/palimpsest/gdu-section-volumes.c:519
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "আপনি কি নিশ্চিতরূপে ডিভাইসটি মুছে ফেলতে ইচ্ছুক?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:517
+#: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
 msgstr "ফরম্যাট করুন (_F)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:547
+#: ../src/palimpsest/gdu-section-volumes.c:550
 msgid "Error locking LUKS volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:670
+#: ../src/palimpsest/gdu-section-volumes.c:673
 msgid "Error unlocking LUKS volume"
 msgstr "ডিভাইসটি কে অান্লক কর্তে সমস্যা হয়েছে"
 
-#: ../src/palimpsest/gdu-section-volumes.c:966
+#: ../src/palimpsest/gdu-section-volumes.c:969
 msgid "Error creating partition"
 msgstr "পার্টিশন তৈরি করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1137
+#: ../src/palimpsest/gdu-section-volumes.c:1140
 msgid "Error changing label"
 msgstr "পার্টিশন টেবিল তৈরি করতে ব্যর্থ"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1192
+#: ../src/palimpsest/gdu-section-volumes.c:1195
 msgid "Choose a new filesystem label."
 msgstr "অনুরোধ করা ফাইল-সিস্টেম লেবেল"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1193
+#: ../src/palimpsest/gdu-section-volumes.c:1196
 msgid "_Label:"
 msgstr "লেবেল(_L):"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1238
+#: ../src/palimpsest/gdu-section-volumes.c:1241
 msgid "Error checking filesystem on volume"
 msgstr "ডিভাইসে ফাইল সীস্টেম পরীক্ষা করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1265
+#: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "\"%s\" (%s)-র জন্য ফাইল-সিস্টেম পরীক্ষা সমাপ্ত করা হয়েছে।"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1269
+#: ../src/palimpsest/gdu-section-volumes.c:1272
 msgid "File system is clean."
 msgstr "ফাইল সীস্টেম ঠীক অাছে।"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1272
+#: ../src/palimpsest/gdu-section-volumes.c:1275
 msgid "File system is <b>NOT</b> clean."
 msgstr "ফাইল সীস্টেম ঠীক <b>নেই</b>।"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1384
+#: ../src/palimpsest/gdu-section-volumes.c:1387
 #, c-format
 msgid "Error spawning nautilus: %s"
 msgstr "Error spawning nautilus: %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1432
+#: ../src/palimpsest/gdu-section-volumes.c:1435
 msgid "Error creating Logical Volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1585
+#: ../src/palimpsest/gdu-section-volumes.c:1588
 msgid "Error stopping Logical Volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1631
+#: ../src/palimpsest/gdu-section-volumes.c:1634
 msgid "Error starting Logical Volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1680
+#: ../src/palimpsest/gdu-section-volumes.c:1683
 msgid "Error setting name for Logical Volume"
 msgstr "Error setting name for Logical Volume"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1719
+#: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
 msgstr "Choose a new name for the Logical Volume."
 
-#: ../src/palimpsest/gdu-section-volumes.c:1753
+#: ../src/palimpsest/gdu-section-volumes.c:1754
 msgid "Error deleting Logical Volume"
 msgstr "পার্টিশন মুছে ফেলতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1786
+#: ../src/palimpsest/gdu-section-volumes.c:1787
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "আপনি কি নিশ্চিতরূপে ডিভাইসটি মুছে ফেলতে ইচ্ছুক?"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1903
+#: ../src/palimpsest/gdu-section-volumes.c:1906
 msgid "Volume Name:"
 msgstr "মডেল নাম: "
 
-#: ../src/palimpsest/gdu-section-volumes.c:1909
+#: ../src/palimpsest/gdu-section-volumes.c:1912
 msgid "Usage:"
 msgstr "Usage:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1919
+#: ../src/palimpsest/gdu-section-volumes.c:1922
 msgid "Partition Type:"
 msgstr "পার্টিশন করা হয়েছে"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1923
+#: ../src/palimpsest/gdu-section-volumes.c:1928
 msgid "Partition Label:"
 msgstr "পার্টিশন লেবেল্(_i): "
 
-#: ../src/palimpsest/gdu-section-volumes.c:1926
+#: ../src/palimpsest/gdu-section-volumes.c:1931
 msgid "Partition Flags:"
 msgstr "পার্টিশন লেবেল্(_i): "
 
-#: ../src/palimpsest/gdu-section-volumes.c:1934
+#: ../src/palimpsest/gdu-section-volumes.c:1956
 msgid "Type:"
 msgstr "ধরন: (_T)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1937
+#: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
 msgstr "Available:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1940
+#: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
 msgstr "লেবেল(_L):"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1943
+#: ../src/palimpsest/gdu-section-volumes.c:1965
 msgid "Mount Point:"
 msgstr "Mount Point:"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1964
+#: ../src/palimpsest/gdu-section-volumes.c:1986
 msgctxt "LVM2 LV State"
 msgid "Running"
 msgstr "চলছে"
 
-#: ../src/palimpsest/gdu-section-volumes.c:1965
+#: ../src/palimpsest/gdu-section-volumes.c:1987
 msgctxt "LVM2 LV State"
 msgid "Not Running"
 msgstr "চল্ছে না"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2004
+#: ../src/palimpsest/gdu-section-volumes.c:2026
 msgid "Bootable"
 msgstr "বুটেবল্(_B)"
 
 #. Translators: This is for the 'required' GPT partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2007
+#: ../src/palimpsest/gdu-section-volumes.c:2029
 msgid "Required"
 msgstr "Required"
 
 #. Translators: This is for the 'allocated' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2010
+#: ../src/palimpsest/gdu-section-volumes.c:2032
 msgid "Allocated"
 msgstr "ব্লক করা"
 
 #. Translators: This is for the 'allow_read' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2013
+#: ../src/palimpsest/gdu-section-volumes.c:2035
 msgid "Allow Read"
 msgstr "Allow Read"
 
 #. Translators: This is for the 'allow_write' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2016
+#: ../src/palimpsest/gdu-section-volumes.c:2038
 msgid "Allow Write"
 msgstr "Allow Write"
 
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
-#: ../src/palimpsest/gdu-section-volumes.c:2019
+#: ../src/palimpsest/gdu-section-volumes.c:2041
 msgid "Boot Code PIC"
 msgstr "Boot Code PIC"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2093
+#: ../src/palimpsest/gdu-section-volumes.c:2115
 msgid "Filesystem"
 msgstr "%s ফাইল-সিস্টেম"
 
 #. Translators: this the mount point hyperlink tooltip for a
 #. * remote server - it uses the sftp:// protocol
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2126
+#: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "View files on the volume using a SFTP network share"
 msgstr "View files on the volume using a SFTP network share"
 
 #. Translators: this the mount point hyperlink tooltip
-#: ../src/palimpsest/gdu-section-volumes.c:2133
+#: ../src/palimpsest/gdu-section-volumes.c:2155
 msgid "View files on the volume"
 msgstr "View files on the volume"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
 #.
-#: ../src/palimpsest/gdu-section-volumes.c:2140
+#: ../src/palimpsest/gdu-section-volumes.c:2162
 #, c-format
 msgid "Mounted at %s"
 msgstr "Mounted at %s"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2148
+#: ../src/palimpsest/gdu-section-volumes.c:2170
 msgid "Not Mounted"
 msgstr "পার্টিশন করা হয়নি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2158
+#: ../src/palimpsest/gdu-section-volumes.c:2180
 msgid "Encrypted Volume (Locked)"
 msgstr "Encrypted Volume (Locked)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2161
+#: ../src/palimpsest/gdu-section-volumes.c:2183
 msgid "Encrypted Volume (Unlocked)"
 msgstr "Encrypted Volume (Unlocked)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2174
+#: ../src/palimpsest/gdu-section-volumes.c:2196
 msgid "Go to array"
 msgstr "অ্যারে টি থামাও"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2182
+#: ../src/palimpsest/gdu-section-volumes.c:2204
 msgid "Container for Logical Partitions"
 msgstr "লজিকাল পার্টিশনের ধারণ করে "
 
-#: ../src/palimpsest/gdu-section-volumes.c:2290
+#: ../src/palimpsest/gdu-section-volumes.c:2321
 msgid "Logical _Volumes"
 msgstr "LVM2 প্রকৃত ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2292
+#: ../src/palimpsest/gdu-section-volumes.c:2323
 msgid "_Volumes"
 msgstr "ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2335
+#: ../src/palimpsest/gdu-section-volumes.c:2387
 msgid "_Mount Volume"
 msgstr "ভলিউম মাউন্ট করা হচ্ছে..."
 
-#: ../src/palimpsest/gdu-section-volumes.c:2336
+#: ../src/palimpsest/gdu-section-volumes.c:2388
 msgid "Mount the volume"
 msgstr "ভলিউম মাউন্ট করা হচ্ছে..."
 
-#: ../src/palimpsest/gdu-section-volumes.c:2345
+#: ../src/palimpsest/gdu-section-volumes.c:2397
 msgid "Un_mount Volume"
 msgstr "ভলিউম অান্মাউন্ট করা যাচ্ছে না"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2346
+#: ../src/palimpsest/gdu-section-volumes.c:2398
 msgid "Unmount the volume"
 msgstr "ফাইল সিস্টেম টি অান্মাউন্ট কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2355
+#: ../src/palimpsest/gdu-section-volumes.c:2407
 msgid "Fo_rmat Volume"
 msgstr "%s ভলিউম ফরম্যাট করা হচ্ছে (%s)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2356
+#: ../src/palimpsest/gdu-section-volumes.c:2408
 msgid "Erase or format the volume"
 msgstr "ভলিউম ফরম্যাট করতে ত্রুটি"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2365
+#: ../src/palimpsest/gdu-section-volumes.c:2417
 msgid "_Check Filesystem"
 msgstr "ফাইল সিস্টেমটি পরীক্ষা কর (_C)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2366
+#: ../src/palimpsest/gdu-section-volumes.c:2418
 msgid "Check and repair the filesystem"
 msgstr "ফাইল সিস্টেমটি পরীক্ষা কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2376
+#: ../src/palimpsest/gdu-section-volumes.c:2428
 msgid "Edit Filesystem _Label"
 msgstr "ফাইল-সিস্টেমের লেবেল"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2377
+#: ../src/palimpsest/gdu-section-volumes.c:2429
 msgid "Change the label of the filesystem"
 msgstr "ফাইল সিস্টেমটি পরীক্ষা কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2386
+#: ../src/palimpsest/gdu-section-volumes.c:2438
 msgid "Ed_it Partition"
 msgstr "ফাঁকা পার্টিশন"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2387
+#: ../src/palimpsest/gdu-section-volumes.c:2439
 msgid "Change partition type, label and flags"
 msgstr "Change partition type, label and flags"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2396
+#: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "D_elete Partition"
 msgstr "পার্টিশন মুছে ফেলো(_D)"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2397
+#: ../src/palimpsest/gdu-section-volumes.c:2449
 msgid "Delete the partition"
 msgstr "পার্টিশন মুছে ফেলো"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2406
+#: ../src/palimpsest/gdu-section-volumes.c:2458
 msgid "_Create Partition"
 msgstr "পার্টিশন তৈরি কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2407
+#: ../src/palimpsest/gdu-section-volumes.c:2459
 msgid "Create a new partition"
 msgstr "পার্টিশন তৈরি কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2416
+#: ../src/palimpsest/gdu-section-volumes.c:2468
 msgid "_Lock Volume"
 msgstr "ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2417
+#: ../src/palimpsest/gdu-section-volumes.c:2469
 msgid "Make encrypted data unavailable"
 msgstr "এন্ক্রিপ্ট করা ডিভাইসটি কে তালাবদ্ধ কর"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2426
+#: ../src/palimpsest/gdu-section-volumes.c:2478
 msgid "Un_lock Volume"
 msgstr "ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2427
+#: ../src/palimpsest/gdu-section-volumes.c:2479
 msgid "Make encrypted data available"
 msgstr "Make encrypted data available"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2436
+#: ../src/palimpsest/gdu-section-volumes.c:2488
 msgid "Forge_t Passphrase"
 msgstr "Forge_t Passphrase"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2437
+#: ../src/palimpsest/gdu-section-volumes.c:2489
 msgid "Delete passphrase from keyring"
 msgstr "'passphrase'-টি 'keyring'-এ সংরক্ষণ করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2448
+#: ../src/palimpsest/gdu-section-volumes.c:2500
 msgid "Change passphrase"
 msgstr "Change passphrase"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2457
+#: ../src/palimpsest/gdu-section-volumes.c:2509
 msgid "_Create Logical Volume"
 msgstr "_Create Logical Volume"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2458
+#: ../src/palimpsest/gdu-section-volumes.c:2510
 msgid "Create a new logical volume"
 msgstr "Create a new logical volume"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2467
+#: ../src/palimpsest/gdu-section-volumes.c:2519
 msgid "S_tart Volume"
 msgstr "ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2468
+#: ../src/palimpsest/gdu-section-volumes.c:2520
 msgid "Activate the Logical Volume"
 msgstr "Activate the Logical Volume"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2478
+#: ../src/palimpsest/gdu-section-volumes.c:2530
 msgid "Edit Vol_ume Name"
 msgstr "Edit Vol_ume Name"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2479
+#: ../src/palimpsest/gdu-section-volumes.c:2531
 msgid "Change the name of the volume"
-msgstr "ভলিউম অান্মাউন্ট করা যাচ্ছে না"
+msgstr "ভলিউম আন্মাউন্ট করা যাচ্ছে না"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2488
+#: ../src/palimpsest/gdu-section-volumes.c:2540
 msgid "D_elete Volume"
 msgstr "নতুন ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2489
+#: ../src/palimpsest/gdu-section-volumes.c:2541
 msgid "Delete the Logical Volume"
 msgstr "Delete the Logical Volume"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2498
+#: ../src/palimpsest/gdu-section-volumes.c:2550
 msgid "Sto_p Volume"
 msgstr "ভলিউম"
 
-#: ../src/palimpsest/gdu-section-volumes.c:2499
+#: ../src/palimpsest/gdu-section-volumes.c:2551
 msgid "Deactivate the Logical Volume"
 msgstr "Deactivate the Logical Volume"
 
@@ -5270,7 +5365,7 @@ msgstr "Deactivate the Logical Volume"
 #: ../src/palimpsest/gdu-shell.c:290
 #, c-format
 msgid "%s — Disk Utility"
-msgstr "%s ডিস্ক ইউটিলিটি"
+msgstr "%s — ডিস্ক ইউটিলিটি"
 
 #. Translators: Window title when an item on a remote machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5310,328 +5405,137 @@ msgstr "%s (%s) [%s] — ডিস্ক ইউটিলিটি"
 #: ../src/palimpsest/gdu-shell.c:338
 #, c-format
 msgid "%s (%s) — Disk Utility"
-msgstr "%s (%s) ডিস্ক ইউটিলিটি"
+msgstr "%s (%s) — ডিস্ক ইউটিলিটি"
 
-#: ../src/palimpsest/gdu-shell.c:594
-msgid "Error creating component for RAID array"
-msgstr "RAID অ্যারের জন্য কম্পোনেন্ট তৈরি করতে সমস্যা"
-
-#: ../src/palimpsest/gdu-shell.c:627
-msgid "Error creating partition table for component for RAID array"
-msgstr "RAID অ্যারের অংশের জন্য পার্টিশন টেবিল নির্মাণ করতে ত্রুটি"
-
-#: ../src/palimpsest/gdu-shell.c:653
+#: ../src/palimpsest/gdu-shell.c:626
 msgid "Error creating RAID array"
 msgstr "RAID অ্যারে তৈরি করতে সমস্যা"
 
-#: ../src/palimpsest/gdu-shell.c:848
+#: ../src/palimpsest/gdu-shell.c:755
 #, c-format
 msgid "Error connecting to “%s”"
-msgstr "Error connecting to “%s”"
+msgstr "“%s” সংযোগে সমস্যা"
 
-#: ../src/palimpsest/gdu-shell.c:901
+#: ../src/palimpsest/gdu-shell.c:808
 msgid "translator-credits"
-msgstr "লোবা ইয়াসমীন <loba@ankur.org.bd>"
+msgstr ""
+"অঙ্কুর প্রকল্পের পক্ষে, রুণা ভট্টাচার্য্য (runabh@gmail.com)\n"
+"সাদ এম নিয়ামতুল্লাহ <saadmniamatullah@gmail.com>\n"
+"লোবা ইয়াসমীন <loba@ankur.org.bd>‌\n"
+"ইসরাত জাহান <israt@ankur.org.bd>"
 
-#: ../src/palimpsest/gdu-shell.c:926
+#: ../src/palimpsest/gdu-shell.c:837
 msgid "_File"
 msgstr "ফাইল (_F)"
 
-#: ../src/palimpsest/gdu-shell.c:927
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "Connect to _Server..."
-msgstr "Connect to _Server..."
+msgstr "সার্ভারে সংযোগ (_S)..."
 
-#: ../src/palimpsest/gdu-shell.c:927
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "Manage storage devices on another machine"
 msgstr "Manage storage devices on another machine"
 
-#: ../src/palimpsest/gdu-shell.c:928
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "_Create"
 msgstr "তৈরি কর"
 
-#: ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_RAID Array..."
 msgstr "RAID অ্যারে"
 
-#: ../src/palimpsest/gdu-shell.c:929
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "Create a RAID array"
 msgstr "RAID অ্যারে তৈরি কর"
 
-#: ../src/palimpsest/gdu-shell.c:930
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "_Edit"
 msgstr "সম্পাদন (_E)"
 
-#: ../src/palimpsest/gdu-shell.c:931 ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:842 ../src/palimpsest/gdu-shell.c:845
 msgid "_Help"
 msgstr "সহায়ক তথ্য (_H)"
 
-#: ../src/palimpsest/gdu-shell.c:933
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "_Quit"
 msgstr "প্রস্থান (_Q)"
 
-#: ../src/palimpsest/gdu-shell.c:933
+#: ../src/palimpsest/gdu-shell.c:844
 msgid "Quit"
 msgstr "প্রস্থান"
 
-#: ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "Get Help on Disk Utility"
 msgstr "প্যালিম্পসেস্ট ডিস্ক ইউটিলিটি নিয়ে সহায়ক তথ্য দেখুন"
 
-#: ../src/palimpsest/gdu-shell.c:935
+#: ../src/palimpsest/gdu-shell.c:846
 msgid "_About"
 msgstr "পরিচিতি (_A)"
 
-#: ../src/palimpsest/gdu-shell.c:1014
+#: ../src/palimpsest/gdu-shell.c:925
 msgid "An error occured"
 msgstr "এতটি সমস্যা হয়েছে"
 
-#: ../src/palimpsest/gdu-shell.c:1023
+#: ../src/palimpsest/gdu-shell.c:934
 msgid "The operation failed."
 msgstr "অপারেশনটি সফল হয়নি"
 
-#: ../src/palimpsest/gdu-shell.c:1026
+#: ../src/palimpsest/gdu-shell.c:937
 msgid "The device is busy."
 msgstr "ডিভাইস টি ব্যস্ত অাছে "
 
-#: ../src/palimpsest/gdu-shell.c:1029
+#: ../src/palimpsest/gdu-shell.c:940
 msgid "The operation was canceled."
 msgstr "অপারেশনটি কে বাতিল করা হয়েছে"
 
-#: ../src/palimpsest/gdu-shell.c:1032
+#: ../src/palimpsest/gdu-shell.c:943
 msgid "The daemon is being inhibited."
 msgstr "ডিমন টি বাধাগ্রস্ত হচ্ছে"
 
-#: ../src/palimpsest/gdu-shell.c:1035
+#: ../src/palimpsest/gdu-shell.c:946
 msgid "An invalid option was passed."
 msgstr "এতটি অবৈধ অপশন দেওয়া হয়েছে"
 
-#: ../src/palimpsest/gdu-shell.c:1038
+#: ../src/palimpsest/gdu-shell.c:949
 msgid "The operation is not supported."
 msgstr "এই অপারেশনটি সমর্থিত নয়"
 
-#: ../src/palimpsest/gdu-shell.c:1041
+#: ../src/palimpsest/gdu-shell.c:952
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "ATA SMART তথ্য অনুরোধ করলে ডিভাইস টি জেগে যাবে"
 
-#: ../src/palimpsest/gdu-shell.c:1044
+#: ../src/palimpsest/gdu-shell.c:955
 msgid "Permission denied."
 msgstr "অনুমতি দেওয়া হয়নী"
 
-#: ../src/palimpsest/gdu-shell.c:1083
+#: ../src/palimpsest/gdu-shell.c:994
 msgid "_Details:"
 msgstr "বিসৃত তথ্য (_D)"
 
-#: ../src/palimpsest/gdu-shell.c:1252
+#: ../src/palimpsest/gdu-shell.c:1163
 msgid "_Storage Devices"
 msgstr "ডিভাইস বিচ্ছিন্ন করা হচ্ছে"
 
-#~| msgid "Cannot unmount volume"
-#~ msgid "Go to volume"
-#~ msgstr "ভলিউম অান্মাউন্ট করা যাচ্ছে না"
+#~ msgid "Ignored Drives"
+#~ msgstr "ড্রাইভ"
 
-#~ msgctxt "RAID component label"
-#~ msgid "%s (%s) – %s"
-#~ msgstr "%s (%s) – %s"
+#~ msgid "Array of drives to ignore"
+#~ msgstr "Array of drives to ignore"
 
-#~| msgid "%s at %s"
-#~ msgctxt "RAID component label"
-#~ msgid "%s – %s"
-#~ msgstr "%s, %s"
+#~ msgid "_New Component"
+#~ msgstr "কম্পোনেন্ট মুছে ফেল(_R)"
 
-#~| msgid "Components:"
-#~ msgid "Active Components:"
-#~ msgstr "কম্পোনেন্ট: "
+#~ msgid "Error creating partition for RAID pv"
+#~ msgstr "পার্টিশন তৈরি করতে সমস্যা"
 
-#~ msgid "The volume to format"
-#~ msgstr "ফরম্যাট করার জন্য চিহ্নিত ভলিউম"
+#~ msgid "Error creating partition table for LVM2 PV"
+#~ msgstr "পার্টিশন টেবিল তৈরি করতে ব্যর্থ"
 
-#~ msgid "Compatible with Linux (ext3)"
-#~ msgstr "Linux-র সাথে সুসংগত (ext3)"
+#~ msgid "Error creating partition for RAID component"
+#~ msgstr "পার্টিশন তৈরি করতে সমস্যা"
 
-#~ msgid "RAID device %s (%s)"
-#~ msgstr "RAID ডিভাইস %s (%s)"
+#~ msgid "Error creating partition table for RAID component"
+#~ msgstr "পার্টিশন টেবিল তৈরি করতে ব্যর্থ"
 
-#~ msgid "%s Software RAID"
-#~ msgstr "%s সফ্টওয়্যার RAID"
-
-#~ msgid "Software RAID"
-#~ msgstr "সফ্টওয়্যার RAID"
-
-#~ msgid "Linux Ext2"
-#~ msgstr "Linux Ext2"
-
-#~ msgid "Linux Ext3"
-#~ msgstr "Linux Ext3"
-
-#~ msgid "Linux Ext4"
-#~ msgstr "Linux Ext4"
-
-#~ msgid "Linux XFS (version %s)"
-#~ msgstr "Linux XFS (সংস্করণ %s)"
-
-#~ msgid "Linux XFS"
-#~ msgstr "Linux XFS"
-
-#, fuzzy
-#~ msgid "Select what SMART self test to run"
-#~ msgstr "SMART সেল্ফ-পরিক্খা নির্বাচন করুন"
-
-#~ msgid "_Initiate Self Test"
-#~ msgstr "সেল্ফ টেস্ট শুরু কর"
-
-#~ msgid "Health status is unknown"
-#~ msgstr "স্বাস্থ্য অজানা"
-
-#~ msgid "SMART is not enabled"
-#~ msgstr "SMART সক্রিয় নয়"
-
-#~ msgid "SMART is not available"
-#~ msgstr "SMART উপস্থিত নয়"
-
-#~ msgid "Status"
-#~ msgstr "অবস্থা "
-
-#~ msgid "Updating..."
-#~ msgstr "পরিবর্তন করা হচ্ছে"
-
-#~ msgid "Update now"
-#~ msgstr "অখন পরিবর্তন কর"
-
-#~ msgid "The name of the model of the disk"
-#~ msgstr "ডিস্কের মডেলের নাম"
-
-#~ msgid "The firmware version of the disk"
-#~ msgstr "ডিস্কের ফার্মওয়্যার সংস্করণ"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "Disk"
-#~ msgstr "ডিস্ক"
-
-#~ msgid "Create Partition Table"
-#~ msgstr "পার্টিশন টেবিল তৈরি কর"
-
-#~ msgid "Mountable Filesystem"
-#~ msgstr "মাউন্টেবল্ ফাইল সিস্টেম"
-
-#~ msgid "Change"
-#~ msgstr "পরিবর্তন কর"
-
-#~ msgid "Add _Volume"
-#~ msgstr "ভলিউম যোগ কর(_V)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Striped (RAID-0)"
-#~ msgstr "স্ট্রাইপ্ড (RAID-0)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Mirrored (RAID-1)"
-#~ msgstr "মিরার্ড (RAID-1)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-4"
-#~ msgstr "RAID-4"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-5"
-#~ msgstr "RAID-5"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-6"
-#~ msgstr "RAID-6"
-
-#~ msgid "Array Name:"
-#~ msgstr "অ্যারের নাম:"
-
-#~ msgid "Array Size:"
-#~ msgstr "অ্যারের মাপ:"
-
-#~ msgid "RAID Type:"
-#~ msgstr "RAID ধরন:"
-
-#~ msgid "_Add..."
-#~ msgstr "যোগ কর(_A)..."
-
-#~ msgid "Chec_k"
-#~ msgstr "পরীক্খা কর(_k)"
-
-#~ msgid "Unknown Size"
-#~ msgstr "অজানা মাপ"
-
-#~ msgid "Partitioned Media (%s)"
-#~ msgstr "পার্টিশন করা মিডিয়া (%s)"
-
-#~ msgid "Unrecognized"
-#~ msgstr "অচেনা"
-
-#~ msgid "Linux Software RAID"
-#~ msgstr "Linux সফ্টওয়্যার RAID"
-
-#~ msgid "More Information"
-#~ msgstr "অারো তথ্য দেখাও"
-
-#~ msgid "%s (Read Only)"
-#~ msgstr "%s (রিড ওন্লী)"
-
-#~ msgid "%s File System"
-#~ msgstr "%s ফাইল সীস্টেম"
-
-#~ msgid "Encrypted LUKS Device"
-#~ msgstr "এন্ক্রিপ্ট করা LUKS ডিভাইস"
-
-#~ msgid "Data"
-#~ msgstr "তথ্য"
-
-#~ msgid "Error locking encrypted device"
-#~ msgstr "এন্ত্রিপ্ট করা ডিভাইসটি কে লক কর্তে সমস্যা হয়েছে"
-
-#~ msgid "_Start Array"
-#~ msgstr "অ্যারে শুরু কর (_S)"
-
-#~ msgid "_Erase"
-#~ msgstr "মুছে ফেলো (_E)"
-
-#~ msgid "Palimpsest Disk Utility"
-#~ msgstr "প্যালিম্পসেস্ট ডিস্ক ইউটিলিটি"
-
-#~ msgid "_New"
-#~ msgstr "নতুন (_N)"
-
-#~ msgid "Software _RAID Array"
-#~ msgstr "সফ্টওয়্যার RAID অ্যারে (_R)"
-
-#~ msgid "Create a new Software RAID array"
-#~ msgstr "নতুন একটি সফ্টওয়্যার RAID অ্যারে তৈরি কর"
-
-#~ msgid "_Mount"
-#~ msgstr "মাউন্ট কর (_M)"
-
-#~ msgid "Mount the filesystem on device"
-#~ msgstr "ডিভইসটির ভেতরে ফাইল সিস্টেমটি মাউন্ট কর"
-
-#, fuzzy
-#~ msgid "Unlock the encrypted device, making the data available in cleartext"
-#~ msgstr "এন্ক্রিপ্ট করা ডিভাইসটি থেকে তালা থোলো"
-
-#~ msgid "_Lock"
-#~ msgstr "তালাবদ্ধ কর (_L)"
-
-#~ msgid "Start the array"
-#~ msgstr "অ্যারে টি শুরু কর"
-
-#~ msgid "_Stop"
-#~ msgstr "থামো (S)"
-
-#~ msgid "<small>_Cancel</small>"
-#~ msgstr "<small>বাতিল (_C)</small>"
-
-#~ msgid "View"
-#~ msgstr "প্রদর্শন "
-
-#~ msgid "The minimum size of the element"
-#~ msgstr "উপাদানের ন্যুনতম মাপ"
-
-#, fuzzy
-#~ msgid "The pool of devices to show"
-#~ msgstr "জে ডিভাইস গুলো দেথানো হবে"
+#~ msgid "Error creating partition table for component for RAID array"
+#~ msgstr "RAID অ্যারের অংশের জন্য পার্টিশন টেবিল নির্মাণ করতে ত্রুটি"

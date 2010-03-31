@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-31 14:48+0200\n"
-"PO-Revision-Date: 2010-03-31 14:53+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
+"POT-Creation-Date: 2010-03-31 12:47+0000\n"
+"PO-Revision-Date: 2010-03-31 15:58+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1157,6 +1157,13 @@ msgstr "SDIO"
 msgid "Virtual"
 msgstr "Birtuala"
 
+#. Translators: name shown for unknown disk connection interfaces
+#: ../src/gdu/gdu-util.c:812
+#| msgid "Unknown"
+msgctxt "connection name"
+msgid "Unknown"
+msgstr "Ezezaguna"
+
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
@@ -1165,6 +1172,77 @@ msgstr "Birtuala"
 #, c-format
 msgid "%s at %s"
 msgstr "%s (%s)"
+
+#: ../src/gdu/gdu-util.c:841
+#| msgid "Software RAID"
+msgctxt "RAID level"
+msgid "Stripe (RAID-0)"
+msgstr "Zatitua (RAID-0)"
+
+#: ../src/gdu/gdu-util.c:843
+msgctxt "RAID level"
+msgid "RAID-0"
+msgstr "RAID-0"
+
+#: ../src/gdu/gdu-util.c:846
+msgctxt "RAID level"
+msgid "Mirror (RAID-1)"
+msgstr "Ispilua (RAID-1)"
+
+#: ../src/gdu/gdu-util.c:848
+msgctxt "RAID level"
+msgid "RAID-1"
+msgstr "RAID-1"
+
+#: ../src/gdu/gdu-util.c:851
+msgctxt "RAID level"
+msgid "Parity Disk (RAID-4)"
+msgstr "Disko paritatea (RAID-4)"
+
+#: ../src/gdu/gdu-util.c:853
+msgctxt "RAID level"
+msgid "RAID-4"
+msgstr "RAID-4"
+
+#: ../src/gdu/gdu-util.c:856
+msgctxt "RAID level"
+msgid "Distributed Parity (RAID-5)"
+msgstr "Banatutako paritatea (RAID-5)"
+
+#: ../src/gdu/gdu-util.c:858
+msgctxt "RAID level"
+msgid "RAID-5"
+msgstr "RAID-5"
+
+#: ../src/gdu/gdu-util.c:861
+msgctxt "RAID level"
+msgid "Dual Distributed Parity (RAID-6)"
+msgstr "Banatutako paritate bikoitza (RAID-6)"
+
+#: ../src/gdu/gdu-util.c:863
+msgctxt "RAID level"
+msgid "RAID-6"
+msgstr "RAID-6"
+
+#: ../src/gdu/gdu-util.c:866
+msgctxt "RAID level"
+msgid "Stripe of Mirrors (RAID-10)"
+msgstr "Ispilu zatituak (RAID-10)"
+
+#: ../src/gdu/gdu-util.c:868
+msgctxt "RAID level"
+msgid "RAID-10"
+msgstr "RAID-10"
+
+#: ../src/gdu/gdu-util.c:871
+msgctxt "RAID level"
+msgid "Concatenated (Linear)"
+msgstr "Kateatuta (lineala)"
+
+#: ../src/gdu/gdu-util.c:873
+msgctxt "RAID level"
+msgid "Linear"
+msgstr "Lineala"
 
 #: ../src/gdu/gdu-util.c:887
 msgid ""
@@ -1491,6 +1569,13 @@ msgstr "%s partizio-taula"
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 bolumen fisikoa"
 
+#. Translators: Used if no specific RAID level could be determined
+#: ../src/gdu/gdu-volume.c:342
+#| msgid "ID"
+msgctxt "RAID level"
+msgid "RAID"
+msgstr "RAID"
+
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
 #.
@@ -1649,8 +1734,8 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "Birmapatutako sektore kopurua. Disko gogor batek irakurketako/idazketako/"
-"egiaztaketako errore bat aurkitzen duenean, sektorea \"birresleituta\" bezala "
-"markatzen du eta datuak babeseko area berezi batera (area librea) "
+"egiaztaketako errore bat aurkitzen duenean, sektorea \"birresleituta\" "
+"bezala markatzen du eta datuak babeseko area berezi batera (area librea) "
 "transferitzen dira."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -2959,6 +3044,52 @@ msgstr ""
 "%3$d diskotan %1$s tamainako %2$s array bat sortzeko, egin klik \"Sortu\" "
 "botoian"
 
+#: ../src/gdu-gtk/gdu-gtk.c:171
+msgctxt "application name"
+msgid "Bourne Again Shell"
+msgstr "Bourne Again Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:176
+msgctxt "application name"
+msgid "Bourne Shell"
+msgstr "Bourne Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:181
+msgctxt "application name"
+msgid "C Shell"
+msgstr "C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:186
+msgctxt "application name"
+msgid "TENEX C Shell"
+msgstr "TENEX C Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:191
+msgctxt "application name"
+msgid "Z Shell"
+msgstr "Z Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:196
+msgctxt "application name"
+msgid "Korn Shell"
+msgstr "Korn Shell"
+
+#: ../src/gdu-gtk/gdu-gtk.c:200
+msgctxt "application name"
+msgid "Process Viewer (top)"
+msgstr "Prozesu-ikustailea (top)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:204
+msgctxt "application name"
+msgid "Terminal Pager (less)"
+msgstr "Terminaleko orrikatzailea (less)"
+
+#: ../src/gdu-gtk/gdu-gtk.c:216
+#| msgid "Unknown"
+msgctxt "application name"
+msgid "Unknown"
+msgstr "Ezezaguna"
+
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
@@ -3341,6 +3472,37 @@ msgstr ""
 msgid "_Remove Component"
 msgstr "_Kendu osagaia"
 
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:695
+#| msgid "Software RAID"
+msgctxt "RAID component type"
+msgid "Striped (RAID-0)"
+msgstr "Zatitua (RAID-0)"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
+msgctxt "RAID component type"
+msgid "Mirrored (RAID-1)"
+msgstr "Ispilua (RAID-1)"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:699
+msgctxt "RAID component type"
+msgid "RAID-4"
+msgstr "RAID-4"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:701
+msgctxt "RAID component type"
+msgid "RAID-5"
+msgstr "RAID-5"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:703
+msgctxt "RAID component type"
+msgid "RAID-6"
+msgstr "RAID-6"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:705
+msgctxt "RAID component type"
+msgid "Linear (Just a Bunch Of Disks)"
+msgstr "Lineala (JBOD)"
+
 #. Translators: %d is the number of components in the RAID
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:713
 #, c-format
@@ -3358,6 +3520,101 @@ msgid "%d Component (%s)"
 msgid_plural "%d Components (%s each)"
 msgstr[0] "Osagai %d (%s)"
 msgstr[1] "%d osagai (%s bakoitzak)"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:730
+msgctxt "RAID status"
+msgid "Not running, partially assembled"
+msgstr "Ez da exekutatzen ari, partzialki mihiztatua"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:738
+#| msgid "Not running"
+msgctxt "RAID status"
+msgid "Not running"
+msgstr "Ez da exekutatzen ari"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:740
+msgctxt "RAID status"
+msgid "Not running, can only start degraded"
+msgstr "Ez da exekutatzen ari, degradatuta soilik abiaraz daiteke"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:742
+msgctxt "RAID status"
+msgid "Not running, not enough components to start"
+msgstr "Ez da exekutatzen ari, ez dago nahikoa osagairik abiarazteko"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:761
+msgctxt "RAID status"
+msgid "Degraded"
+msgstr "Degradatuta"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:765
+#| msgid "Not running"
+msgctxt "RAID status"
+msgid "Running"
+msgstr "Exekutatzen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:770
+msgctxt "RAID status"
+msgid "Reshaping"
+msgstr "Berrantolatzen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:773
+msgctxt "RAID status"
+msgid "Resyncing"
+msgstr "Birsinkronizatzen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:776
+#| msgid "_Repair"
+msgctxt "RAID status"
+msgid "Repairing"
+msgstr "Konpontzen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:779
+msgctxt "RAID status"
+msgid "Recovering"
+msgstr "Berreskuratzen"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:782
+#| msgid "Chec_k"
+msgctxt "RAID status"
+msgid "Checking"
+msgstr "Egiaztatzen"
+
+#. Translators: this string tells about an ongoing synchronization.
+#. * %3.01f is replaced by the percentage of completion
+#. * %s is replaced by the speed of the operation
+#.
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:790
+#, c-format
+msgctxt "RAID status"
+msgid " @ %3.01f%% (%s)"
+msgstr " @ %% %3.01f (%s)"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:856
+msgctxt "Linux MD slave state"
+msgid "Faulty"
+msgstr "Akastuna"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:861
+msgctxt "Linux MD slave state"
+msgid "In Sync"
+msgstr "Sinkronizatuta"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:863
+msgctxt "Linux MD slave state"
+msgid "Writemostly"
+msgstr "Gehienbat idatzita"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:865
+msgctxt "Linux MD slave state"
+msgid "Blocked"
+msgstr "Blokeatuta"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:867
+#| msgid "State"
+msgctxt "Linux MD slave state"
+msgid "Spare"
+msgstr "Ordezkoa"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"

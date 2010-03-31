@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2009-09-08 05:51+0000\n"
-"PO-Revision-Date: 2010-03-23 12:49+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-31 14:48+0200\n"
+"PO-Revision-Date: 2010-03-31 14:53+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Diskoen jakinarazpenak"
 
 #: ../data/gdu-notification-daemon.desktop.in.in.in.h:2
 msgid "Provides notifications related to disks"
-msgstr "Diskoekin zerikusia duten jakinarazpenak emanten ditu"
+msgstr "Diskoekin zerikusia duten jakinarazpenak ematen ditu"
 
 #: ../src/format-tool/gdu-format-dialog.c:135
 msgid "Volume"
@@ -1026,7 +1026,7 @@ msgid ""
 "UNIX file permissions support. This file system does not use a journal."
 msgstr ""
 "Fitxategi-sistema hau Linux sistemekin bateragarria da eta UNIXeko "
-"fitxategien baimenen euskarri klasikoa eskaintzen du. Fitxtaegi-sistema "
+"fitxategien baimenen euskarri klasikoa eskaintzen du. Fitxategi-sistema "
 "honek ez du egunkaririk erabiltzen."
 
 #: ../src/gdu/gdu-util.c:507
@@ -1157,12 +1157,6 @@ msgstr "SDIO"
 msgid "Virtual"
 msgstr "Birtuala"
 
-#. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:812
-msgctxt "connection name"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
@@ -1171,76 +1165,6 @@ msgstr "Ezezaguna"
 #, c-format
 msgid "%s at %s"
 msgstr "%s (%s)"
-
-#: ../src/gdu/gdu-util.c:841
-msgctxt "RAID level"
-msgid "Stripe (RAID-0)"
-msgstr "Zatitua (RAID-0)"
-
-#: ../src/gdu/gdu-util.c:843
-msgctxt "RAID level"
-msgid "RAID-0"
-msgstr "RAID-0"
-
-#: ../src/gdu/gdu-util.c:846
-msgctxt "RAID level"
-msgid "Mirror (RAID-1)"
-msgstr "Ispilua (RAID-1)"
-
-#: ../src/gdu/gdu-util.c:848
-msgctxt "RAID level"
-msgid "RAID-1"
-msgstr "RAID-1"
-
-#: ../src/gdu/gdu-util.c:851
-msgctxt "RAID level"
-msgid "Parity Disk (RAID-4)"
-msgstr "Paritate diskoa (RAID-4)"
-
-#: ../src/gdu/gdu-util.c:853
-msgctxt "RAID level"
-msgid "RAID-4"
-msgstr "RAID-4"
-
-#: ../src/gdu/gdu-util.c:856
-msgctxt "RAID level"
-msgid "Distributed Parity (RAID-5)"
-msgstr "Banatutako paritatea (RAID-5)"
-
-#: ../src/gdu/gdu-util.c:858
-msgctxt "RAID level"
-msgid "RAID-5"
-msgstr "RAID-5"
-
-#: ../src/gdu/gdu-util.c:861
-msgctxt "RAID level"
-msgid "Dual Distributed Parity (RAID-6)"
-msgstr "Banatutako paritate bikoitza (RAID-6)"
-
-#: ../src/gdu/gdu-util.c:863
-msgctxt "RAID level"
-msgid "RAID-6"
-msgstr "RAID-6"
-
-#: ../src/gdu/gdu-util.c:866
-msgctxt "RAID level"
-msgid "Stripe of Mirrors (RAID-10)"
-msgstr "Ispiluen zatia (RAID-10)"
-
-#: ../src/gdu/gdu-util.c:868
-msgctxt "RAID level"
-msgid "RAID-10"
-msgstr "RAID-10"
-
-#: ../src/gdu/gdu-util.c:871
-msgctxt "RAID level"
-msgid "Concatenated (Linear)"
-msgstr "Kateatuta (lineala)"
-
-#: ../src/gdu/gdu-util.c:873
-msgctxt "RAID level"
-msgid "Linear"
-msgstr "Lineala"
 
 #: ../src/gdu/gdu-util.c:887
 msgid ""
@@ -1515,38 +1439,38 @@ msgstr "MRW/W diskoa"
 msgid "Blank MRW/W Disc"
 msgstr "MRW/W disko hutsa"
 
-#: ../src/gdu/gdu-volume.c:274
+#: ../src/gdu/gdu-volume.c:275
 msgid "Blank Optical Disc"
 msgstr "Disko optiko hutsa"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:284
+#: ../src/gdu/gdu-volume.c:285
 #, c-format
 msgid "%s Extended"
 msgstr "%s hedatua"
 
-#: ../src/gdu/gdu-volume.c:285
+#: ../src/gdu/gdu-volume.c:286
 msgid "Contains logical partitions"
 msgstr "Partizio logikoak ditu"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:300
+#: ../src/gdu/gdu-volume.c:301
 #, c-format
 msgid "%s Encrypted"
 msgstr "%s enkriptatuta"
 
-#: ../src/gdu/gdu-volume.c:310
+#: ../src/gdu/gdu-volume.c:311
 msgid "Optical Disc"
 msgstr "Disko optikoa"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:316
+#: ../src/gdu/gdu-volume.c:317
 #, c-format
 msgid "%s Filesystem"
 msgstr "%s fitxategi-sistema"
@@ -1554,7 +1478,7 @@ msgstr "%s fitxategi-sistema"
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:322
+#: ../src/gdu/gdu-volume.c:323
 #, c-format
 msgid "%s Partition Table"
 msgstr "%s partizio-taula"
@@ -1562,21 +1486,15 @@ msgstr "%s partizio-taula"
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:328
+#: ../src/gdu/gdu-volume.c:329
 #, c-format
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 bolumen fisikoa"
 
-#. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:341
-msgctxt "RAID level"
-msgid "RAID"
-msgstr "RAID"
-
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:347 ../src/gdu/gdu-volume.c:359
+#: ../src/gdu/gdu-volume.c:348 ../src/gdu/gdu-volume.c:360
 #, c-format
 msgid "%s RAID Component"
 msgstr "%s RAID osagaia"
@@ -1585,7 +1503,7 @@ msgstr "%s RAID osagaia"
 #. * First %s is the array name, e.g. 'My Photos RAID',
 #. * second %s is the RAID level string, e.g 'RAID-5'
 #.
-#: ../src/gdu/gdu-volume.c:352
+#: ../src/gdu/gdu-volume.c:353
 #, c-format
 msgid "Part of \"%s\" %s array"
 msgstr "\"%s\"(r)en zatia - %s array-a"
@@ -1593,7 +1511,7 @@ msgstr "\"%s\"(r)en zatia - %s array-a"
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:370
+#: ../src/gdu/gdu-volume.c:371
 #, c-format
 msgid "%s Swap Space"
 msgstr "%s swap lekua"
@@ -1601,7 +1519,7 @@ msgstr "%s swap lekua"
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:375
+#: ../src/gdu/gdu-volume.c:376
 #, c-format
 msgid "%s Data"
 msgstr "%s datuak"
@@ -1609,20 +1527,20 @@ msgstr "%s datuak"
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:381 ../src/gdu/gdu-volume.c:397
+#: ../src/gdu/gdu-volume.c:382 ../src/gdu/gdu-volume.c:398
 #, c-format
 msgid "%s Unrecognized"
 msgstr "%s ezezaguna"
 
 #. Translators: description for a volume of unrecognized use
-#: ../src/gdu/gdu-volume.c:383
+#: ../src/gdu/gdu-volume.c:384
 msgid "Unknown or Unused"
 msgstr "Ezezaguna edo erabili gabea"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
 #.
-#: ../src/gdu/gdu-volume.c:390 ../src/gdu/gdu-volume.c:392
+#: ../src/gdu/gdu-volume.c:391 ../src/gdu/gdu-volume.c:393
 #, c-format
 msgid "%s Partition"
 msgstr "%s partizioa"
@@ -1630,14 +1548,14 @@ msgstr "%s partizioa"
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:424
+#: ../src/gdu/gdu-volume.c:425
 #, c-format
 msgid "Partition %d of %s"
 msgstr "%d. partizioa - %s"
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
-#: ../src/gdu/gdu-volume.c:430
+#: ../src/gdu/gdu-volume.c:431
 #, c-format
 msgid "Partition %d"
 msgstr "%d. partizioa"
@@ -1645,14 +1563,14 @@ msgstr "%d. partizioa"
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
 #.
-#: ../src/gdu/gdu-volume.c:438
+#: ../src/gdu/gdu-volume.c:439
 #, c-format
 msgid "Whole-disk volume on %s"
 msgstr "Disko osoaren bolumena - %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
-#: ../src/gdu/gdu-volume.c:443
+#: ../src/gdu/gdu-volume.c:444
 msgid "Whole-disk volume"
 msgstr "Disko osoaren bolumena"
 
@@ -1731,7 +1649,7 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "Birmapatutako sektore kopurua. Disko gogor batek irakurketako/idazketako/"
-"egiaztaketako errore bat aurkiten duenean, sektorea \"birresleituta\" bezala "
+"egiaztaketako errore bat aurkitzen duenean, sektorea \"birresleituta\" bezala "
 "markatzen du eta datuak babeseko area berezi batera (area librea) "
 "transferitzen dira."
 
@@ -1740,7 +1658,7 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
-msgstr "Irakurii kanalaren marjina"
+msgstr "Irakurri kanalaren marjina"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
@@ -1967,7 +1885,7 @@ msgid ""
 "and/or problems in the mechanical subsystem"
 msgstr ""
 "Zuzendu ezin daitezkeen erroreen kopurua sektore bat irakurtzean edo "
-"idaztean. Atributu hone balioa handitzeak diskoko gainazalean hondakinak "
+"idaztean. Atributu honen balioa handitzeak diskoko gainazalean hondakinak "
 "edota azpisistema mekanikoko arazoak daudela adierazten du."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -2089,7 +2007,7 @@ msgstr "Burrunbada errutinen kopurua unitatea abiarazteko"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:429
 msgid "Offline Seek Performance"
-msgstr "Linez kanpoko bilaketaren errendimendua"
+msgstr "Lineaz kanpoko bilaketaren errendimendua"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:430
 msgid "Drive's seek performance during offline operations"
@@ -2171,7 +2089,7 @@ msgstr "Unitate batean kargatzeko denbora orokorra"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:495
 msgid "Torque Amplification Count"
-msgstr "Momentuaren anplikazio kopurua"
+msgstr "Momentuaren aplikazio kopurua"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:496
 msgid "Quantity efforts of the rotating moment of a drive"
@@ -2190,7 +2108,7 @@ msgstr "GMR buru-anplitudea"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:512
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
-msgstr "Buruen dardarren anplitudea (GMR burua) exekuzio moduan"
+msgstr "Buruen dardaren anplitudea (GMR burua) exekuzio moduan"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:520
 msgid "Temperature of the drive"
@@ -3041,51 +2959,6 @@ msgstr ""
 "%3$d diskotan %1$s tamainako %2$s array bat sortzeko, egin klik \"Sortu\" "
 "botoian"
 
-#: ../src/gdu-gtk/gdu-gtk.c:171
-msgctxt "application name"
-msgid "Bourne Again Shell"
-msgstr "Bourne Again Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:176
-msgctxt "application name"
-msgid "Bourne Shell"
-msgstr "Bourne Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:181
-msgctxt "application name"
-msgid "C Shell"
-msgstr "C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:186
-msgctxt "application name"
-msgid "TENEX C Shell"
-msgstr "TENEX C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:191
-msgctxt "application name"
-msgid "Z Shell"
-msgstr "Z Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:196
-msgctxt "application name"
-msgid "Korn Shell"
-msgstr "Korn Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:200
-msgctxt "application name"
-msgid "Process Viewer (top)"
-msgstr "Prozesuen ikustailea (top)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:204
-msgctxt "application name"
-msgid "Terminal Pager (less)"
-msgstr "Terminaleko orrikatzailea (less)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:216
-msgctxt "application name"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
 #: ../src/gdu-gtk/gdu-gtk.c:227
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
@@ -3415,6 +3288,10 @@ msgstr "Bolumenak fitxategi-sistema muntagarria dauka."
 msgid "_Label:"
 msgstr "_Etiketa:"
 
+#: ../src/palimpsest/gdu-section-filesystem.c:245
+msgid "_Change"
+msgstr "_Aldatu"
+
 #: ../src/palimpsest/gdu-section-filesystem.c:246
 msgid "Change"
 msgstr "Aldatu"
@@ -3434,7 +3311,7 @@ msgid ""
 "create new volumes of acceptable sizes."
 msgstr ""
 "Tamaina onargarriko bolumenak soilik hauta daitezke. Eskuz sortu beharko "
-"dituzu tamaina orangarriko bolumen berriak."
+"dituzu tamaina onargarriko bolumen berriak."
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:182
 msgid "Add _Volume"
@@ -3464,36 +3341,6 @@ msgstr ""
 msgid "_Remove Component"
 msgstr "_Kendu osagaia"
 
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:695
-msgctxt "RAID component type"
-msgid "Striped (RAID-0)"
-msgstr "Zatitua (RAID-0)"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:697
-msgctxt "RAID component type"
-msgid "Mirrored (RAID-1)"
-msgstr "Ispilatua (RAID-1)"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:699
-msgctxt "RAID component type"
-msgid "RAID-4"
-msgstr "RAID-4"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:701
-msgctxt "RAID component type"
-msgid "RAID-5"
-msgstr "RAID-5"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:703
-msgctxt "RAID component type"
-msgid "RAID-6"
-msgstr "RAID-6"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:705
-msgctxt "RAID component type"
-msgid "Linear (Just a Bunch Of Disks)"
-msgstr "Lineala (diskoen kateatzea, JBOD)"
-
 #. Translators: %d is the number of components in the RAID
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:713
 #, c-format
@@ -3511,96 +3358,6 @@ msgid "%d Component (%s)"
 msgid_plural "%d Components (%s each)"
 msgstr[0] "Osagai %d (%s)"
 msgstr[1] "%d osagai (%s bakoitzak)"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:730
-msgctxt "RAID status"
-msgid "Not running, partially assembled"
-msgstr "Ez da exekutatzen ari, zati batean elkartuta"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:738
-msgctxt "RAID status"
-msgid "Not running"
-msgstr "Ez da exekutatzen ari"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:740
-msgctxt "RAID status"
-msgid "Not running, can only start degraded"
-msgstr "Ez da exekutatzen ari, degradatuta soilik abiaraz daiteke"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:742
-msgctxt "RAID status"
-msgid "Not running, not enough components to start"
-msgstr "Ez da exekutatzen ari, ez dago nahikoa osagairik abiarazteko"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:761
-msgctxt "RAID status"
-msgid "Degraded"
-msgstr "Degradatuta"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:765
-msgctxt "RAID status"
-msgid "Running"
-msgstr "Exekutatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:770
-msgctxt "RAID status"
-msgid "Reshaping"
-msgstr "Birmoldaketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:773
-msgctxt "RAID status"
-msgid "Resyncing"
-msgstr "Birsinkronizazioa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:776
-msgctxt "RAID status"
-msgid "Repairing"
-msgstr "Konponketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:779
-msgctxt "RAID status"
-msgid "Recovering"
-msgstr "Berreskuraketa"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:782
-msgctxt "RAID status"
-msgid "Checking"
-msgstr "Egiaztaketa"
-
-#. Translators: this string tells about an ongoing synchronization.
-#. * %3.01f is replaced by the percentage of completion
-#. * %s is replaced by the speed of the operation
-#.
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:790
-#, c-format
-msgctxt "RAID status"
-msgid " @ %3.01f%% (%s)"
-msgstr " @ %% %3.01f (%s)"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:856
-msgctxt "Linux MD slave state"
-msgid "Faulty"
-msgstr "Akastuna"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:861
-msgctxt "Linux MD slave state"
-msgid "In Sync"
-msgstr "Sinkronizazioan"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:863
-msgctxt "Linux MD slave state"
-msgid "Writemostly"
-msgstr "Idazketa ia amaituta"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:865
-msgctxt "Linux MD slave state"
-msgid "Blocked"
-msgstr "Blokeatuta"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:867
-msgctxt "Linux MD slave state"
-msgid "Spare"
-msgstr "Ordezkoa"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Array Name:"
@@ -3851,10 +3608,6 @@ msgstr "Beharrezkoa / _Firmwarea"
 msgid "Delete the partition"
 msgstr "Ezabatu partizioa"
 
-#: ../src/palimpsest/gdu-section-partition.c:611
-msgid "_Revert"
-msgstr "_Leheneratu"
-
 #: ../src/palimpsest/gdu-section-partition.c:616
 msgid "Apply the changes made"
 msgstr "Aplikatu egindako aldaketak"
@@ -3919,7 +3672,7 @@ msgid ""
 "created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
-"Hautatutako fitxategi-sistema fitxategiaren jabetzaren konzeptua dauka. "
+"Hautatutako fitxategi-sistema fitxategiaren jabetzaren kontzeptua dauka. "
 "Aktibatzen bada, sortutako fitxategi-sistemaren jabea zu zeu izango zara. Ez "
 "bada aktibatzen, supererabiltzaileak soilik atzi dezake fitxategi-sistema."
 
@@ -4061,6 +3814,10 @@ msgstr "Testu garbiko LUKS gailua"
 #, c-format
 msgid "Partition %d (%s)"
 msgstr "%d. partizioa (%s)"
+
+#: ../src/palimpsest/gdu-shell.c:399
+msgid " mounted at "
+msgstr " hemen muntatuta: "
 
 #: ../src/palimpsest/gdu-shell.c:928
 msgid "Error checking file system on device"

@@ -195,6 +195,11 @@ gdu_edit_name_dialog_constructed (GObject *object)
                                GTK_STOCK_APPLY,
                                GTK_RESPONSE_APPLY);
 
+        gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                         GTK_RESPONSE_APPLY);
+        gtk_entry_set_activates_default (GTK_ENTRY (dialog->priv->name_entry),
+                                         TRUE);
+
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
         icon = gdu_presentable_get_icon (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));

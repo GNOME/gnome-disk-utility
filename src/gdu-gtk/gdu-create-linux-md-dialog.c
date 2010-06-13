@@ -486,6 +486,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 {
         GduCreateLinuxMdDialog *dialog = GDU_CREATE_LINUX_MD_DIALOG (object);
         GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *button;
         GtkWidget *label;
         GtkWidget *hbox;
@@ -505,11 +506,14 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 
         ret = FALSE;
 
+        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
+
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 0);
-        gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_box_set_spacing (GTK_BOX (content_area), 0);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 
         gtk_window_set_title (GTK_WINDOW (dialog), _("Create RAID Array"));
         gtk_window_set_icon_name (GTK_WINDOW (dialog), "gdu-raid-array");
@@ -520,7 +524,6 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
                                         GTK_RESPONSE_OK);
         gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
         vbox = content_area;

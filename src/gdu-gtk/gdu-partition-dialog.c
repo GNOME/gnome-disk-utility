@@ -177,6 +177,7 @@ gdu_partition_dialog_constructed (GObject *object)
 {
         GduPartitionDialog *dialog = GDU_PARTITION_DIALOG (object);
         GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *label;
         GtkWidget *hbox;
         GtkWidget *image;
@@ -195,11 +196,14 @@ gdu_partition_dialog_constructed (GObject *object)
         pixbuf = gdu_util_get_pixbuf_for_presentable (gdu_dialog_get_presentable (GDU_DIALOG (dialog)),
                                                       GTK_ICON_SIZE_DIALOG);
 
+        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
+
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 0);
-        gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_box_set_spacing (GTK_BOX (content_area), 0);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 
         gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -216,7 +220,6 @@ gdu_partition_dialog_constructed (GObject *object)
                                _("_Format"),
                                GTK_RESPONSE_OK);
 
-        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
         /*  icon and text labels  */

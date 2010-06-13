@@ -290,6 +290,8 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
         char *window_title;
         GIcon *window_icon;
         GtkWidget *dialog;
+        GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *hbox;
         GtkWidget *main_vbox;
         GtkWidget *label;
@@ -345,18 +347,20 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
                                               GTK_WINDOW (parent_window),
                                               GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
                                               NULL);
+        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
 
-	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+        gtk_box_set_spacing (GTK_BOX (content_area), 2);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
         // TODO: no support for GIcon in GtkWindow
         //gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
 	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
@@ -551,6 +555,8 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         int response;
         char *secret;
         GtkWidget *dialog;
+        GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *image;
 	GtkWidget *hbox;
         GtkWidget *main_vbox;
@@ -589,10 +595,13 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         }
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), 0);
 
+        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
+
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_box_set_spacing (GTK_BOX (content_area), 2);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
         // TODO: no support for GIcon in GtkWindow
         //if (window_icon != NULL)
@@ -602,7 +611,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
 	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_AUTHENTICATION, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
@@ -1141,6 +1150,8 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
         gboolean ret;
         gint response;
         GtkWidget *dialog;
+        GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *hbox;
         GtkWidget *image;
         GtkWidget *main_vbox;
@@ -1152,16 +1163,18 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
                                               GTK_WINDOW (parent_window),
                                               GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
                                               NULL);
+        content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_box_set_spacing (GTK_BOX (content_area), 2);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
 	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);

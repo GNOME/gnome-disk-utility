@@ -283,6 +283,7 @@ gdu_edit_linux_lvm2_dialog_constructed (GObject *object)
         GduEditLinuxLvm2Dialog *dialog = GDU_EDIT_LINUX_LVM2_DIALOG (object);
         GduLinuxLvm2VolumeGroup *vg;
         GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *vbox;
         GtkWidget *vbox2;
         GtkWidget *hbox;
@@ -320,11 +321,12 @@ gdu_edit_linux_lvm2_dialog_constructed (GObject *object)
         vbox = gtk_vbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
+        action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
         gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 0);
-        gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 5);
-        gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->action_area), 6);
+        gtk_box_set_spacing (GTK_BOX (content_area), 0);
+        gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+        gtk_box_set_spacing (GTK_BOX (action_area), 6);
 
         name = gdu_presentable_get_name (GDU_PRESENTABLE (vg));
         vpd_name = gdu_presentable_get_vpd_name (GDU_PRESENTABLE (vg));

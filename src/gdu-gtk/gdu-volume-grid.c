@@ -407,15 +407,18 @@ static void
 gdu_volume_grid_realize (GtkWidget *widget)
 {
         GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+        GdkWindow *window;
         GdkWindowAttr attributes;
         gint attributes_mask;
+        GtkAllocation allocation;
 
-        GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+        gtk_widget_set_realized (widget, TRUE);
+        gtk_widget_get_allocation (widget, &allocation);
 
-        attributes.x = widget->allocation.x;
-        attributes.y = widget->allocation.y;
-        attributes.width = widget->allocation.width;
-        attributes.height = widget->allocation.height;
+        attributes.x = allocation.x;
+        attributes.y = allocation.y;
+        attributes.width = allocation.width;
+        attributes.height = allocation.height;
         attributes.wclass = GDK_INPUT_OUTPUT;
         attributes.window_type = GDK_WINDOW_CHILD;
         attributes.event_mask = gtk_widget_get_events (widget) |
@@ -430,17 +433,20 @@ gdu_volume_grid_realize (GtkWidget *widget)
 
         attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
 
-        widget->window = gtk_widget_get_parent_window (widget);
-        g_object_ref (widget->window);
+        window = gtk_widget_get_parent_window (widget);
+        gtk_widget_set_window (widget, window);
+        g_object_ref (window);
 
-        widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-                                         &attributes,
-                                         attributes_mask);
-        gdk_window_set_user_data (widget->window, grid);
+        window = gdk_window_new (gtk_widget_get_parent_window (widget),
+                                 &attributes,
+                                 attributes_mask);
+        gtk_widget_set_window (widget, window);
+        gdk_window_set_user_data (window, grid);
 
-        widget->style = gtk_style_attach (widget->style, widget->window);
-
-        gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
+        gtk_widget_style_attach (widget);
+        gtk_style_set_background (gtk_widget_get_style (widget),
+                                  window,
+                                  GTK_STATE_NORMAL);
 }
 
 static guint
@@ -518,7 +524,7 @@ gdu_volume_grid_init (GduVolumeGrid *grid)
 {
         grid->priv = G_TYPE_INSTANCE_GET_PRIVATE (grid, GDU_TYPE_VOLUME_GRID, GduVolumeGridPrivate);
 
-        GTK_WIDGET_SET_FLAGS (grid, GTK_CAN_FOCUS);
+        gtk_widget_set_can_focus (GTK_WIDGET (grid), TRUE);
 }
 
 GtkWidget *
@@ -1474,19 +1480,21 @@ gdu_volume_grid_expose_event (GtkWidget           *widget,
                               GdkEventExpose      *event)
 {
         GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+        GtkAllocation allocation;
         cairo_t *cr;
         gdouble width;
         gdouble height;
         gboolean need_animation_timeout;
 
-        width = widget->allocation.width;
-        height = widget->allocation.height;
+        gtk_widget_get_allocation (widget, &allocation);
+        width = allocation.width;
+        height = allocation.height;
 
         recompute_size (grid,
                         width - 1,
                         height -1);
 
-        cr = gdk_cairo_create (widget->window);
+        cr = gdk_cairo_create (gtk_widget_get_window (widget));
         cairo_rectangle (cr,
                          event->area.x, event->area.y,
                          event->area.width, event->area.height);

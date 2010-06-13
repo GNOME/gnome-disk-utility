@@ -517,6 +517,7 @@ benchmark_cb (GduDevice    *device,
 {
         GduDriveBenchmarkDialog *dialog = GDU_DRIVE_BENCHMARK_DIALOG (user_data);
         GError *local_error;
+        GtkAllocation allocation;
 
         if (error != NULL) {
                 if (!(error->domain == GDU_ERROR && error->code == GDU_ERROR_CANCELLED)) {
@@ -556,11 +557,12 @@ benchmark_cb (GduDevice    *device,
  out:
         if (!dialog->priv->deleted) {
                 update_dialog (dialog);
+                gtk_widget_get_allocation (dialog->priv->drawing_area, &allocation);
                 gtk_widget_queue_draw_area (dialog->priv->drawing_area,
                                             0,
                                             0,
-                                            dialog->priv->drawing_area->allocation.width,
-                                            dialog->priv->drawing_area->allocation.height);
+                                            allocation.width,
+                                            allocation.height);
         }
         g_object_unref (dialog);
 }
@@ -869,6 +871,7 @@ on_drawing_area_expose_event (GtkWidget      *widget,
                               gpointer        user_data)
 {
         GduDriveBenchmarkDialog *dialog = GDU_DRIVE_BENCHMARK_DIALOG (user_data);
+        GtkAllocation allocation;
         cairo_t *cr;
         gdouble width, height;
         gdouble gx, gy, gw, gh;
@@ -963,10 +966,11 @@ on_drawing_area_expose_event (GtkWidget      *widget,
 
         size = gdu_device_get_size (gdu_dialog_get_device (GDU_DIALOG (dialog)));
 
-        width = widget->allocation.width;
-        height = widget->allocation.height;
+        gtk_widget_get_allocation (widget, &allocation);
+        width = allocation.width;
+        height = allocation.height;
 
-        cr = gdk_cairo_create (widget->window);
+        cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
         cairo_select_font_face (cr, "sans",
                                 CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);

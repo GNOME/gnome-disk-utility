@@ -1090,6 +1090,8 @@ on_self_test_button_clicked (GduButtonElement *button_element,
 {
         GduAtaSmartDialog *dialog = GDU_ATA_SMART_DIALOG (user_data);
         GtkWidget *test_dialog;
+        GtkWidget *content_area;
+        GtkWidget *action_area;
         GtkWidget *hbox;
         GtkWidget *image;
         GtkWidget *main_vbox;
@@ -1112,15 +1114,19 @@ on_self_test_button_clicked (GduButtonElement *button_element,
                                                    NULL);
         gtk_window_set_title (GTK_WINDOW (test_dialog), "");
 
+
+	content_area = gtk_dialog_get_content_area (GTK_DIALOG (test_dialog));
+	action_area = gtk_dialog_get_action_area (GTK_DIALOG (test_dialog));
+
 	gtk_container_set_border_width (GTK_CONTAINER (test_dialog), 6);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (test_dialog)->vbox), 2);
-	gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (test_dialog)->action_area), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (test_dialog)->action_area), 6);
+	gtk_box_set_spacing (GTK_BOX (content_area), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);
+	gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (test_dialog), FALSE);
 
 	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (test_dialog)->vbox), hbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
 	image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_QUESTION, GTK_ICON_SIZE_DIALOG);
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);

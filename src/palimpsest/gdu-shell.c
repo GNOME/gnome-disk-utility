@@ -1096,6 +1096,7 @@ create_window (GduShell *shell)
         GtkAccelGroup *accel_group;
         GtkWidget *hpane;
         GtkWidget *tree_view_scrolled_window;
+        GtkWidget *hpane_right_scrolled_window;
         GtkTreeSelection *select;
         GtkWidget *label;
         GtkTreeViewColumn *column;
@@ -1153,7 +1154,11 @@ create_window (GduShell *shell)
 
         shell->priv->sections_vbox = gtk_vbox_new (FALSE, 12);
         gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 6);
-        gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, TRUE, TRUE, 0);
+        hpane_right_scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (hpane_right_scrolled_window), 
+                                        GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+        gtk_scrolled_window_add_with_viewport(hpane_right_scrolled_window, shell->priv->sections_vbox);
+        gtk_box_pack_start (GTK_BOX (vbox2), hpane_right_scrolled_window, TRUE, TRUE, 0);
 
         /* setup and add horizontal pane */
         hpane = gtk_hpaned_new ();

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 2.30.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-24 19:52+0800\n"
-"PO-Revision-Date: 2010-07-24 19:52+0800\n"
+"POT-Creation-Date: 2010-08-24 19:42+0800\n"
+"PO-Revision-Date: 2010-08-24 19:46+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #.
 #: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
 #: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
-#: ../src/palimpsest/gdu-shell.c:1114
+#: ../src/palimpsest/gdu-shell.c:1115
 msgid "Disk Utility"
 msgstr "磁碟公用程式"
 
@@ -166,17 +166,14 @@ msgid "The RAID Array to add a component to."
 msgstr "要加入元件的 RAID 陣列。"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
-#, fuzzy, c-format
-#| msgid "Add Component to %s"
+#, c-format
 msgid "Add spare to %s"
-msgstr "加入至專案"
+msgstr "加入備用碟至 %s"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
-#, fuzzy, c-format
-#| msgid ""
-#| "Select a disk to create a %s component on for the RAID Array \"%s\" (%s)"
+#, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
-msgstr "選擇磁碟以便在 RAID 陣列「%2$s」(%3$s) 上建立 %1$s 元件"
+msgstr "選擇磁碟以便在 RAID 陣列「%2$s」(%3$s) 上建立 %1$s 備用碟"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
@@ -380,7 +377,7 @@ msgstr "高飛行寫入"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:249
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
-msgstr ""
+msgstr "讀寫磁頭飛行超過正常操作範圍時的次數"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -668,26 +665,23 @@ msgstr "由操作的各種循環造成的磁碟載入，像是讀取、記錄、
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
-#, fuzzy
 msgid "Load Friction"
-msgstr "載入圖片"
+msgstr "負載摩擦"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
 msgid "Load on drive caused by friction in mechanical parts of the store"
-msgstr ""
+msgstr "儲存裝置機械部分摩擦造成磁碟機上的阻力"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:468
-#, fuzzy
 msgid "Total number of load cycles"
-msgstr "主軸馬達啟動/停止循環數"
+msgstr "負載循環數"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
-#, fuzzy
 msgid "Load-in Time"
-msgstr "插入日期及時間(_S)..."
+msgstr "磁頭導入時間"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:476
 msgid "General time for loading in a drive"
@@ -697,9 +691,8 @@ msgstr "載入磁碟的一般時間"
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
-#, fuzzy
 msgid "Torque Amplification Count"
-msgstr "顯示項目總數(_N):"
+msgstr "扭轉增幅總數"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:484
 msgid "Quantity efforts of the rotating moment of a drive"
@@ -735,7 +728,7 @@ msgstr "剩餘耐久度"
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
-msgstr ""
+msgstr "以百分比表示磁碟機剩餘最大物理消除循環與目前已完成循環的數量"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1235,9 +1228,8 @@ msgstr "未完成（可能遇到嚴重的錯誤）"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2079
-#, fuzzy
 msgid "FAILED (Electrical)"
-msgstr "execvp 已失敗"
+msgstr "錯誤 (電子)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2084
@@ -1247,9 +1239,8 @@ msgstr "execvp 已失敗"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2089
-#, fuzzy
 msgid "FAILED (Read)"
-msgstr "無法讀取"
+msgstr "錯誤 (讀取)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2094
@@ -1371,7 +1362,7 @@ msgstr "在 %s 建立邏輯儲存區"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
 msgid "Pool"
-msgstr ""
+msgstr "池"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
@@ -1960,17 +1951,12 @@ msgid "State:"
 msgstr "狀態："
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
-#, fuzzy
-#| msgctxt "Linux MD slave state"
-#| msgid "Spare"
 msgid "Add _Spare"
-msgstr "新增監看"
+msgstr "加入備用碟(_S)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:477
-#, fuzzy
-#| msgid "Add a new component to the array"
 msgid "Add a spare to the array"
-msgstr "將元件附加到陣列"
+msgstr "將備用碟附加到陣列"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
 msgid "_Expand Array"
@@ -2119,14 +2105,12 @@ msgid "Whether the filesystem should be owned by the user"
 msgstr "此檔案系統的擁有者是否屬於使用者"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:235
-#, fuzzy
 msgid "Affirmative Button Mnemonic"
-msgstr "工具列按鈕標籤:"
+msgstr "確定鍵按鈕助記符"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:236
-#, fuzzy
 msgid "The mnemonic label for the affirmative button"
-msgstr "本文字標籤的速記快捷鍵"
+msgstr "確定鍵按鈕的助記標籤"
 
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
@@ -2855,7 +2839,7 @@ msgstr "已完整同步"
 #: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "寫入為主"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
@@ -2907,24 +2891,24 @@ msgid "USB, FireWire and other peripherals"
 msgstr "USB、FireWire 和其他週邊"
 
 #: ../src/gdu/gdu-pool.c:2092
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating devices: %s"
-msgstr "裝置 - 網絡工具"
+msgstr "列舉裝置時發生錯誤：%s"
 
 #: ../src/gdu/gdu-pool.c:2118
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating adapters: %s"
-msgstr "沒有介面卡可用"
+msgstr "列舉控制器時發生錯誤：%s"
 
 #: ../src/gdu/gdu-pool.c:2141
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating expanders: %s"
-msgstr "檢視含有展開器"
+msgstr "列舉展開器時發生錯誤：%s"
 
 #: ../src/gdu/gdu-pool.c:2164
-#, fuzzy, c-format
+#, c-format
 msgid "Error enumerating ports: %s"
-msgstr "關閉專案時錯誤：%s"
+msgstr "列舉連接埠時發生錯誤：%s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
@@ -3312,16 +3296,15 @@ msgstr "正在修復 RAID 陣列"
 
 #: ../src/gdu/gdu-util.c:407
 msgid "Running Short SMART Self-Test"
-msgstr "正在執行短 S.M.A.R.T. 自我測試"
+msgstr "正在執行短 SMART 自我測試"
 
 #: ../src/gdu/gdu-util.c:409
 msgid "Running Extended SMART Self-Test"
-msgstr "正在執行延伸 S.M.A.R.T. 自我測試"
+msgstr "正在執行延伸 SMART 自我測試"
 
 #: ../src/gdu/gdu-util.c:411
-#, fuzzy
 msgid "Running Conveyance SMART Self-Test"
-msgstr "正在執行短 S.M.A.R.T. 自我測試"
+msgstr "正在執行運轉 SMART 自我測試"
 
 #: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
@@ -3911,10 +3894,9 @@ msgid "RAID-1"
 msgstr "RAID-1"
 
 #: ../src/gdu/gdu-util.c:979
-#, fuzzy
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
-msgstr "軟件 RAID 陣列"
+msgstr "校驗式磁碟 (RAID-4)"
 
 #: ../src/gdu/gdu-util.c:981
 msgctxt "RAID level"
@@ -3922,10 +3904,9 @@ msgid "RAID-4"
 msgstr "RAID-4"
 
 #: ../src/gdu/gdu-util.c:984
-#, fuzzy
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
-msgstr "軟件 RAID 陣列"
+msgstr "分布式校驗 (RAID-5)"
 
 #: ../src/gdu/gdu-util.c:986
 msgctxt "RAID level"
@@ -3935,7 +3916,7 @@ msgstr "RAID-5"
 #: ../src/gdu/gdu-util.c:989
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
-msgstr ""
+msgstr "雙重分布式校驗 (RAID-6)"
 
 #: ../src/gdu/gdu-util.c:991
 msgctxt "RAID level"
@@ -3943,10 +3924,9 @@ msgid "RAID-6"
 msgstr "RAID-6"
 
 #: ../src/gdu/gdu-util.c:994
-#, fuzzy
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
-msgstr "帶狀式 (RAID-0)"
+msgstr "鏡射的帶狀式 (RAID-10)"
 
 #: ../src/gdu/gdu-util.c:996
 msgctxt "RAID level"
@@ -3968,38 +3948,38 @@ msgid ""
 "Striped set without parity. Provides improved performance but no fault "
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
 "fails."
-msgstr ""
+msgstr "沒有校驗的帶狀式設定。提供加強的效能，但是沒有容錯能力。如果陣列中的一個磁碟損壞，整個 RAID-0 陣列都會損壞。"
 
 #: ../src/gdu/gdu-util.c:1019
 msgid ""
 "Mirrored set without parity. Provides fault tolerance and improved "
 "performance for reading. RAID-1 arrays can sustain all but one disk failing."
-msgstr ""
+msgstr "沒有校驗的鏡射式設定。提供容錯能力並加強讀取的效能。RAID-1 陣列可以容許一個磁碟損壞。"
 
 #: ../src/gdu/gdu-util.c:1023
 msgid ""
 "Striped set with parity on a single disk. Provides improved performance and "
 "fault tolerance. RAID-4 arrays can sustain a single disk failure."
-msgstr ""
+msgstr "具有校驗的帶狀式單一磁碟設定。提供加強的效能與容錯能力。RAID-4 陣列可以容許一個磁碟損壞。"
 
 #: ../src/gdu/gdu-util.c:1027
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
-msgstr ""
+msgstr "具有分布式校驗的帶狀式設定。提供加強的效能與容錯能力。RAID-5 陣列可以容許一個磁碟損壞。"
 
 #: ../src/gdu/gdu-util.c:1031
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
-msgstr ""
+msgstr "具有雙重分布式校驗的帶狀式設定。提供加強的效能與容錯能力。RAID-6 陣列可以容許兩個磁碟損壞。"
 
 #: ../src/gdu/gdu-util.c:1035
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
 "mirror loses all its drives."
-msgstr ""
+msgstr "具有分布式校驗的帶狀式設定。提供加強的效能與容錯能力。RAID-10 陣列可以容許多個磁碟損壞，只要不是所有鏡射硬碟都損壞。"
 
 #: ../src/gdu/gdu-util.c:1041
 #, c-format
@@ -4207,7 +4187,7 @@ msgstr "空白光學碟片"
 #: ../src/gdu/gdu-volume.c:304
 #, c-format
 msgid "%s Extended"
-msgstr "%s 擴展"
+msgstr "%s 延伸"
 
 #: ../src/gdu/gdu-volume.c:305
 msgid "Contains logical partitions"
@@ -4601,7 +4581,7 @@ msgstr "磁碟機："
 
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Fabric:"
-msgstr ""
+msgstr "結構："
 
 #: ../src/palimpsest/gdu-section-hub.c:241
 msgid "Number of Ports:"
@@ -4715,10 +4695,9 @@ msgid "Create and remove PVs"
 msgstr "建立和移除實體儲存區"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:84
-#, fuzzy
 msgctxt "RAID status"
 msgid "Not running, partially assembled"
-msgstr "--- Tasque 尚未執行 ---"
+msgstr "尚未執行，部分已組合"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:92
 msgctxt "RAID status"
@@ -4856,9 +4835,8 @@ msgid "St_op RAID Array"
 msgstr "停止 RAID 陣列(_O)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
-#, fuzzy
 msgid "Tear down the RAID Array"
-msgstr "停止 RAID 陣列時發生錯誤"
+msgstr "解除 RAID 陣列"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
 msgid "Format/Erase RAI_D Array"
@@ -5415,520 +5393,6 @@ msgstr "權限被拒絕。"
 msgid "_Details:"
 msgstr "詳細資料(_D):"
 
-#: ../src/palimpsest/gdu-shell.c:1163
+#: ../src/palimpsest/gdu-shell.c:1168
 msgid "_Storage Devices"
 msgstr "儲存裝置(_S)"
-
-#~ msgid "Ignored Drives"
-#~ msgstr "忽略的磁碟機"
-
-#~ msgid "Array of drives to ignore"
-#~ msgstr "要忽略的磁碟機陣列"
-
-#~ msgid "_New Component"
-#~ msgstr "新增元件(_N)"
-
-#~ msgid "Error creating partition for RAID pv"
-#~ msgstr "建立 RAID 實體儲存區分割區時發生錯誤"
-
-#~ msgid "Error creating partition table for LVM2 PV"
-#~ msgstr "建立 LVM2 實體儲存區分割表時發生錯誤"
-
-#~ msgid "Error creating partition for RAID component"
-#~ msgstr "建立 RAID 元件的分割區時發生錯誤"
-
-#~ msgid "Error creating partition table for RAID component"
-#~ msgstr "建立 RAID 元件的分割表時發生錯誤"
-
-#~ msgid "Error creating partition table for component for RAID array"
-#~ msgstr "建立 RAID 陣列元件的分割表時發生錯誤"
-
-#~| msgid "Cannot unmount volume"
-#~ msgid "Go to volume"
-#~ msgstr "移至儲存區"
-
-#~ msgctxt "RAID component label"
-#~ msgid "%s (%s) – %s"
-#~ msgstr "%s (%s) – %s"
-
-#~| msgid "%s at %s"
-#~ msgctxt "RAID component label"
-#~ msgid "%s – %s"
-#~ msgstr "%s – %s"
-
-#~| msgid "Components:"
-#~ msgid "Active Components:"
-#~ msgstr "使用中元件："
-
-#~ msgid "The volume to format"
-#~ msgstr "準備格式化的儲存區"
-
-#~ msgid "Compatible with Linux (ext3)"
-#~ msgstr "相容於 Linux (ext3)"
-
-#~ msgid "RAID device %s (%s)"
-#~ msgstr "RAID 裝置 %s (%s)"
-
-#~ msgid "%s Software RAID"
-#~ msgstr "%s 軟體 RAID"
-
-#~ msgid "Software RAID"
-#~ msgstr "軟體 RAID"
-
-#~ msgid "Linux Ext2"
-#~ msgstr "Linux Ext2"
-
-#~ msgid "Linux Ext3"
-#~ msgstr "Linux Ext3"
-
-#~ msgid "Linux Ext4"
-#~ msgstr "Linux Ext4"
-
-#~ msgid "Linux XFS (version %s)"
-#~ msgstr "Linux XFS (版本 %s)"
-
-#~ msgid "Linux XFS"
-#~ msgstr "Linux XFS"
-
-#~ msgid "%s RAID Component"
-#~ msgstr "%s RAID 元件"
-
-#~ msgid "Select what SMART self test to run"
-#~ msgstr "選擇要執行何種 SMART 自我測試"
-
-#~ msgid "_Initiate Self Test"
-#~ msgstr "初始化自我測試(_I)"
-
-#~ msgid "Health status is unknown"
-#~ msgstr "健康狀況不明"
-
-#~ msgid "SMART is not enabled"
-#~ msgstr "SMART 並未啟用"
-
-#~ msgid "SMART is not available"
-#~ msgstr "SMART 無法使用"
-
-#~ msgid "Status"
-#~ msgstr "狀態"
-
-#~ msgid "Updating..."
-#~ msgstr "更新中..."
-
-#~ msgid "Update now"
-#~ msgstr "立即更新"
-
-#~ msgid "Initiates a self-test on the drive"
-#~ msgstr "在此磁碟機上初始化自我測試"
-
-#~ msgid "The name of the model of the disk"
-#~ msgstr "這個磁碟機的型號名稱"
-
-#~ msgid "The firmware version of the disk"
-#~ msgstr "這個磁碟機的韌體版本"
-
-#~ msgid "The serial number of the disk"
-#~ msgstr "這個磁碟機的序號"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "Last self-test completed OK"
-#~ msgstr "上次自我測試完全沒問題"
-
-#~ msgid "Last self-test was cancelled"
-#~ msgstr "上一次自我測試已被取消"
-
-#~ msgid "Self-test is in progress"
-#~ msgstr "自我測試進行中"
-
-#~ msgid "Short self-test in progress: "
-#~ msgstr "簡短自我測試進行中："
-
-#~ msgid "Disk"
-#~ msgstr "磁碟"
-
-#~ msgid "Are you sure you want to format the disk, deleting existing data ?"
-#~ msgstr "確定要格式化這個磁碟，並刪除所有既存的資料？"
-
-#~ msgid ""
-#~ "All data on the media in \"%s\" will be irrecovably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%s」中媒體裡的所有資料都會被完全抹除。請確定重要的資料已經備份。這個動"
-#~ "作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on the drive \"%s\" will be irrecovably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在磁碟機「%s」中的所有資料都會被完全抹除。請確定重要的資料已經備份。這個動"
-#~ "作是無法復原的。"
-
-#~ msgid "Create Partition Table"
-#~ msgstr "建立分割表"
-
-#~ msgid ""
-#~ "To create a new partition table, select the partition table type and then "
-#~ "press \"Create\". All existing data will be lost."
-#~ msgstr ""
-#~ "要建立新的分割表，請選擇分割表類型然後按「建立」。所有既存的資料都會消失。"
-
-#~ msgid ""
-#~ "The volume contains encrypted data that can be unlocked with a "
-#~ "passphrase. The passphrase can optionally be stored in the keyring."
-#~ msgstr ""
-#~ "此儲存區包含加密的資料，可以使用密語來解除鎖定。這個密語可以依需要儲存於鑰"
-#~ "匙圈中。"
-
-#~ msgid "Change Pa_ssphrase..."
-#~ msgstr "更改密語(_S)..."
-
-#~ msgid "Mountable Filesystem"
-#~ msgstr "可掛載的檔案系統"
-
-#~ msgid "The volume contains a mountable filesystem."
-#~ msgstr "該儲存區包含可掛載的檔案系統。"
-
-#~ msgid "Change"
-#~ msgstr "變更"
-
-#~ msgid ""
-#~ "Only volumes of acceptable sizes can be selected. You may need to "
-#~ "manually create new volumes of acceptable sizes."
-#~ msgstr ""
-#~ "只能選擇合適大小的儲存區。您可能需要手動建立一個大小合適的新儲存區。"
-
-#~ msgid "Add _Volume"
-#~ msgstr "加入儲存區(_V)"
-
-#~ msgid ""
-#~ "The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
-#~ "erased and the RAID Array might be degraded. Make sure important data is "
-#~ "backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在 RAID 陣列「%2$s」的元件「%1$s」中的資料都會被完全抹除。請確定重要的資料"
-#~ "已經備份。這個動作是無法復原的。"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Striped (RAID-0)"
-#~ msgstr "帶狀式 (RAID-0)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Mirrored (RAID-1)"
-#~ msgstr "鏡射式 (RAID-1)"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-4"
-#~ msgstr "RAID-4"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-5"
-#~ msgstr "RAID-5"
-
-#~ msgctxt "RAID component type"
-#~ msgid "RAID-6"
-#~ msgstr "RAID-6"
-
-#~ msgctxt "RAID component type"
-#~ msgid "Linear (Just a Bunch Of Disks)"
-#~ msgstr "線性 (Just a Bunch Of Disks)"
-
-#~ msgctxt "RAID status"
-#~ msgid "Degraded"
-#~ msgstr "降級的"
-
-#~ msgctxt "RAID status"
-#~ msgid " @ %3.01f%% (%s)"
-#~ msgstr " @ %3.01f%% (%s)"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "In Sync"
-#~ msgstr "同步中"
-
-#~ msgid "Array Name:"
-#~ msgstr "陣列名稱："
-
-#~ msgid "Home Host:"
-#~ msgstr "家主機："
-
-#~ msgid "Array Size:"
-#~ msgstr "陣列大小："
-
-#~ msgid "RAID Type:"
-#~ msgstr "RAID 類型："
-
-#~ msgid "_Detach"
-#~ msgstr "分離(_D)"
-
-#~ msgid ""
-#~ "Detaches the running component from the RAID array. Data on the component "
-#~ "will be erased and the component will be ready for other use."
-#~ msgstr ""
-#~ "將運作中的元件自 RAID 陣列分離。該元件中的資料會被抹除，並準備作其他用途。"
-
-#~ msgid "_Add..."
-#~ msgstr "加入(_A)..."
-
-#~ msgid "Chec_k"
-#~ msgstr "檢查(_K)"
-
-#~ msgid "_Repair"
-#~ msgstr "修復(_R)"
-
-#~ msgid ""
-#~ "To format or edit media, insert it into the drive and wait a few seconds."
-#~ msgstr "要格式化或編輯媒體，請將它插入機器中並等候幾秒鐘。"
-
-#~ msgid ""
-#~ "Are you sure you want to remove the partition, deleting existing data ?"
-#~ msgstr "確定要移除分割區並刪除現存的資料嗎？"
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-#~ "partitions contained in this extended partition will be irrecovably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在媒體「%3$s」裡名為「%2$s」的分割區 %1$d 的所有資料和包含在這個延伸分割區"
-#~ "裡的所有分割區都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" on the media in \"%s\" will be "
-#~ "irrecovably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在媒體「%3$s」裡名為「%2$s」的分割區 %1$d 的所有資料都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" and all partitions "
-#~ "contained in this extended partition will be irrecovably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%2$s」的媒體裡的分割區 %1$d 的所有資料和包含在這個延伸分割區裡的所有分"
-#~ "割區都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrecovably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%2$s」的媒體裡的分割區 %1$d 的所有資料都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" of \"%s\" and all partitions "
-#~ "contained in this extended partition will be irrecovably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%3$s」名為「%2$s」的分割區 %1$d 的所有資料和包含在這個延伸分割區裡的所"
-#~ "有分割區都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d with name \"%s\" of \"%s\" will be irrecovably "
-#~ "erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%3$s」名為「%2$s」的分割區 %1$d 的所有資料都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" and all partitions contained in this "
-#~ "extended partition will be irrecovably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%2$s」的分割區 %1$d 的所有資料和包含在這個延伸分割區裡的所有分割區都會"
-#~ "被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" will be irrecovably erased.\n"
-#~ "\n"
-#~ "Make sure important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%2$s」的分割區 %1$d 的所有資料都會被完全抹除。\n"
-#~ "\n"
-#~ "請確定重要的資料已經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "The attributes of the partition can be edited. The partition can also be "
-#~ "deleted to make room for other data."
-#~ msgstr "可編輯分割區的屬性。該分割區也可以被刪除以空出更多的空間。"
-
-#~ msgid "Apply the changes made"
-#~ msgstr "套用所做的變更"
-
-#~ msgid "The volume contains swap space."
-#~ msgstr "該儲存區包含置換空間。"
-
-#~ msgid ""
-#~ "This is the last primary partition that can be created. If you need more "
-#~ "partitions, you can create an Extended Partition."
-#~ msgstr ""
-#~ "這是最後一個可以建立的主要分割區。如果您需要更多分割區，可以建立延伸分割"
-#~ "區。"
-
-#~ msgid ""
-#~ "No more partitions can be created. You may want to delete an existing "
-#~ "partition and then create an Extended Partition."
-#~ msgstr ""
-#~ "不能再建立其他分割區了。您可能得刪除一個現存的分割區，然後建立延伸分割區。"
-
-#~ msgid ""
-#~ "To create a new partition, select the size and whether to create a file "
-#~ "system. The partition type, label and flags can be changed after creation."
-#~ msgstr ""
-#~ "要建立新的分割區，請選擇其大小和是否要建立檔案系統。分割區類型、標籤和旗標"
-#~ "都可以在建立後更改。"
-
-#~ msgid ""
-#~ "Are you sure you want to create a new file system, deleting existing "
-#~ "data ?"
-#~ msgstr "確定要建立新的檔案系統，並刪除現存的資料？"
-
-#~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrecovably "
-#~ "erased. Make sure important data is backed up. This action cannot be "
-#~ "undone."
-#~ msgstr ""
-#~ "在「%2$s」的媒體中分割區 %1$d 的所有資料都會被完全抹除。請確定重要的資料已"
-#~ "經備份。這個動作是無法復原的。"
-
-#~ msgid ""
-#~ "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
-#~ "important data is backed up. This action cannot be undone."
-#~ msgstr ""
-#~ "在「%2$s」的分割區 %1$d 的所有資料都會被完全抹除。請確定重要的資料已經備"
-#~ "份。這個動作是無法復原的。"
-
-#~ msgid "Create File System"
-#~ msgstr "建立檔案系統"
-
-#~ msgid ""
-#~ "To create a new file system on the device, select the type and label and "
-#~ "then press \"Create\". All existing data will be lost."
-#~ msgstr ""
-#~ "要在此裝置上建立新的檔案系統，請選擇類型和標籤後按「建立」。所有現存的資料"
-#~ "都會消失。"
-
-#~ msgid "Unknown Size"
-#~ msgstr "容量不明"
-
-#~ msgid "Partitioned Media (%s)"
-#~ msgstr "已分割的媒體 (%s)"
-
-#~ msgid "Unpartitioned Media"
-#~ msgstr "未分割的媒體"
-
-#~ msgid "Unrecognized"
-#~ msgstr "無法辨識"
-
-#~ msgid "Linux Software RAID"
-#~ msgstr "Linux 軟體 RAID"
-
-#~ msgid "View details about SMART for this disk"
-#~ msgstr "檢視這個磁碟的 SMART 詳細資料"
-
-#~ msgid "More Information"
-#~ msgstr "更多資訊"
-
-#~ msgid "%s (Read Only)"
-#~ msgstr "%s (唯讀)"
-
-#~ msgid "%s File System"
-#~ msgstr "%s 檔案系統"
-
-#~ msgid "Encrypted LUKS Device"
-#~ msgstr "加密的 LUKS 裝置"
-
-#~ msgid "Data"
-#~ msgstr "資料"
-
-#~ msgid "Cleartext LUKS Device"
-#~ msgstr "明文 LUKS 裝置"
-
-#~ msgid "Error locking encrypted device"
-#~ msgstr "鎖定加密的裝置時發生錯誤"
-
-#~ msgid "There was an error stopping the drive \"%s\"."
-#~ msgstr "停止磁碟機「%s」時發生錯誤。"
-
-#~ msgid "_Erase"
-#~ msgstr "消除(_E)"
-
-#~ msgid "Palimpsest Disk Utility"
-#~ msgstr "Palimpsest 磁碟機公用程式"
-
-#~ msgid "_New"
-#~ msgstr "新增(_N)"
-
-#~ msgid "Software _RAID Array"
-#~ msgstr "軟體 _RAID 陣列"
-
-#~ msgid "Create a new Software RAID array"
-#~ msgstr "建立新的軟體 RAID 陣列"
-
-#~ msgid "_Mount"
-#~ msgstr "掛載(_M)"
-
-#~ msgid "Mount the filesystem on device"
-#~ msgstr "掛載裝置上的檔案系統"
-
-#~ msgid "Detach the device from the system, powering it off"
-#~ msgstr "將裝置自系統中分離，關閉其電源"
-
-#~ msgid "Unlock the encrypted device, making the data available in cleartext"
-#~ msgstr "解除鎖定加密的裝置，讓資料回到明文的狀態"
-
-#~ msgid "_Lock"
-#~ msgstr "鎖定(_L)"
-
-#~ msgid "Start the array"
-#~ msgstr "啟動陣列"
-
-#~ msgid "_Stop"
-#~ msgstr "停止(_S)"
-
-#~ msgid "Erase the contents of the device"
-#~ msgstr "消除此裝置的內容"
-
-#~ msgid "<small>_Cancel</small>"
-#~ msgstr "<small>取消(_C)</small>"
-
-#~ msgid "View"
-#~ msgstr "檢視"
-
-#~ msgid "The GduGridView object that the element is associated with"
-#~ msgstr "此元件關聯的 GduGridView 物件"
-
-#~ msgid "Presentable"
-#~ msgstr "可展示的"
-
-#~ msgid "The minimum size of the element"
-#~ msgstr "元素最小的大小"
-
-#~ msgid ""
-#~ "The size in percent that this element should claim or 0 to always claim "
-#~ "the specified minimum size"
-#~ msgstr "這個元件宣告的百分比大小，或設為 0 則為指定的最小大小"
-
-#, fuzzy
-#~ msgid "The pool of devices to show"
-#~ msgstr "側面窗格顯示的頁次"

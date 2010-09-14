@@ -509,7 +509,6 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
         gtk_box_set_spacing (GTK_BOX (content_area), 0);
         gtk_container_set_border_width (GTK_CONTAINER (action_area), 5);

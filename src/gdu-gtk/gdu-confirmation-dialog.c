@@ -128,7 +128,6 @@ gdu_confirmation_dialog_constructed (GObject *object)
         vpd_name = NULL;
 
         gtk_window_set_title (GTK_WINDOW (dialog), "");
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),

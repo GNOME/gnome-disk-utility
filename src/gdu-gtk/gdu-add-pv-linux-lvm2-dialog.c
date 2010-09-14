@@ -219,7 +219,6 @@ gdu_add_pv_linux_lvm2_dialog_constructed (GObject *object)
         vg_name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         vg_name_vpd = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),

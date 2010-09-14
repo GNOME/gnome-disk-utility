@@ -208,7 +208,6 @@ gdu_connect_to_server_dialog_constructed (GObject *object)
         gint row;
         gchar *s;
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
 
         gtk_window_set_title (GTK_WINDOW (dialog), _("Connect to Server"));

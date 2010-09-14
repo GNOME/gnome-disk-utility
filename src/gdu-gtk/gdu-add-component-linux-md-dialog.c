@@ -199,7 +199,6 @@ gdu_add_component_linux_md_dialog_constructed (GObject *object)
         array_name = gdu_presentable_get_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
         array_name_vpd = gdu_presentable_get_vpd_name (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),

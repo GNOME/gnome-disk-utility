@@ -184,7 +184,6 @@ gdu_edit_name_dialog_constructed (GObject *object)
         GtkWidget *table;
         gint row;
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
         gtk_container_set_border_width (GTK_CONTAINER (dialog), 12);
 
         gtk_dialog_add_button (GTK_DIALOG (dialog),

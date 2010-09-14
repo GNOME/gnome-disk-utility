@@ -690,8 +690,6 @@ gdu_drive_benchmark_dialog_constructed (GObject *object)
         g_free (vpd_name);
         g_free (name);
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);

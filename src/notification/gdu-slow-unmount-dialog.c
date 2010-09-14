@@ -210,8 +210,6 @@ gdu_slow_unmount_dialog_constructed (GObject *object)
         gchar *s;
 
 
-        gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
         gtk_window_set_title (GTK_WINDOW (dialog), dialog->priv->device_name);
         pixbuf = gdu_util_get_pixbuf_for_presentable (dialog->priv->presentable, GTK_ICON_SIZE_MENU);
         gtk_window_set_icon (GTK_WINDOW (dialog), pixbuf);

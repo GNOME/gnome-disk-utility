@@ -9,10 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2010-03-16 07:40+0000\n"
-"PO-Revision-Date: 2010-03-27 16:11+0900\n"
+"POT-Creation-Date: 2010-10-09 04:36+0900\n"
+"PO-Revision-Date: 2010-10-09 04:41+0900\n"
 "Last-Translator: Namhyung Kim <namhyung@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
+"Language: Korean\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -176,9 +177,9 @@ msgstr "%s에 예비 디스크(space) 추가"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
 #, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
-msgstr "\"%2$s\" RAID 배열 (%3$s)에 대한 %1$s 예비 디스크를 만들 장치를 선택하십시오"
+msgstr ""
+"\"%2$s\" RAID 배열 (%3$s)에 대한 %1$s 예비 디스크를 만들 장치를 선택하십시오"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
@@ -187,11 +188,12 @@ msgstr "%s 확장"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
 #, c-format
-#| msgid "Select a volume to use as component in the array \"%s\""
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
 "\" (%s)"
-msgstr "\"%2$s\" RAID 배열 (%3$s)을 확장하기 위해 사용할 하나 이상의 장치 (%1$s)를 선택하십시오"
+msgstr ""
+"\"%2$s\" RAID 배열 (%3$s)을 확장하기 위해 사용할 하나 이상의 장치 (%1$s)를 선"
+"택하십시오"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
 msgid "_Expand"
@@ -203,7 +205,6 @@ msgstr "PV를 추가할 VG."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
 #, c-format
-#| msgid "LVM2 Physical Volume (version %s)"
 msgid "Add Physical Volume to %s (%s)"
 msgstr "%s (%s)에 물리 볼륨 추가"
 
@@ -269,15 +270,14 @@ msgid "Reallocated Sector Count"
 msgstr "재할당된 섹터 개수"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
-#| msgid ""
-#| "Count of remapped sectors. When the hard drive finds a read/write/"
-#| "verification error, it mark the sector as \"reallocated\" and transfers "
-#| "data to a special reserved area (spare area)"
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as \"reallocated\" and transfers "
 "data to a special reserved area (spare area)"
-msgstr "다시 매핑된(remapped) 섹터의 수. 하드 드라이브가 읽기/쓰기/확인 오류를 감지하면, 해당 섹터를 \"재할당\"되었다고 표시하고 데이터를 특별히 예약된 영역 (예비 영역)으로 이동시킵니다"
+msgstr ""
+"다시 매핑된(remapped) 섹터의 수. 하드 드라이브가 읽기/쓰기/확인 오류를 감지하"
+"면, 해당 섹터를 \"재할당\"되었다고 표시하고 데이터를 특별히 예약된 영역 (예"
+"비 영역)으로 이동시킵니다"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -309,7 +309,6 @@ msgid "Seek Timer Performance"
 msgstr "탐색 타이머 성능"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:193
-#| msgid "Average efficiency of operatings while positioning"
 msgid "Average efficiency of operations while positioning"
 msgstr "위치 이동 시 동작의 평균 효율"
 
@@ -691,7 +690,6 @@ msgid "Load Friction"
 msgstr "로드 마찰"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
-#| msgid "Load on drive cause by friction in mechanical parts of the store"
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "저장 시 기계적인 부분의 마찰로 인해 드라이브에 로드"
 
@@ -719,7 +717,7 @@ msgstr "토크 증폭 횟수"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:484
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "드라이브 회전 관성에 들어간 크기"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:492
 msgid "Number of power-off retract events"
@@ -864,13 +862,11 @@ msgid "Good"
 msgstr "정상"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
-#| msgid "Error erasing data"
 msgid "Error reading SMART data"
 msgstr "SMART 데이터를 읽는 중 오류 발생"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1135
-#| msgid "Running Short SMART Self-Test"
 msgid "Choose SMART Self-test"
 msgstr "SMART 셀프 테스트 선택"
 
@@ -901,7 +897,6 @@ msgstr "C_onveyance (보통 10분 내에 완료됨)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1169
-#| msgid "Run self-test"
 msgid "_Run Self Test"
 msgstr "셀프 테스트 실행(_R)"
 
@@ -911,7 +906,6 @@ msgstr "셀프 테스트 실행(_R)"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1264
 #, c-format
-#| msgid "SMART Data"
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) - SMART 데이터"
 
@@ -951,13 +945,11 @@ msgstr "디스크가 전원이 켜진 상태로 있었던 시간"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
-#| msgid "Power Cycle Count"
 msgid "Power Cycles:"
 msgstr "전원 사이클:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
-#| msgid "Total number of load cycles"
 msgid "The number of full disk power on/off cycles"
 msgstr "전체 디스크 전원 on/off 사이클 수"
 
@@ -1009,14 +1001,12 @@ msgstr "새로 고침(_R)"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
-#| msgid "Reads SMART data from the disk, waking it up if necessary"
 msgid "Reads SMART Data, waking up the disk"
 msgstr "SMART 데이터를 읽고, 디스크를 깨웁니다"
 
 #. TODO: better icon
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1373
-#| msgid "Run self-test"
 msgid "Run _Self-test"
 msgstr "셀프 테스트 실행(_S)"
 
@@ -1027,13 +1017,11 @@ msgstr "오류가 있는지 디스크 (surface)를 검사합니다"
 
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1385
-#| msgid "Run self-test"
 msgid "_Cancel Self-test"
 msgstr "셀프 테스트 취소(_C)"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1387
-#| msgid "Cancels the currently running test"
 msgid "Cancels the self-test"
 msgstr "셀프 테스트를 취소합니다"
 
@@ -1065,7 +1053,6 @@ msgstr "값"
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1515
-#| msgid "Don't _warn me if the disk is failing"
 msgid "Don't _warn if the disk is failing"
 msgstr "디스크 실패 시 경고하지 않음(_W)"
 
@@ -1113,8 +1100,6 @@ msgstr "%.1f 초"
 #. * for a time-based unit that is counted in milliseconds
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1604
 #, c-format
-#| msgid "%d sector"
-#| msgid_plural "%d sectors"
 msgid "%s msec"
 msgstr "%s 밀리초"
 
@@ -1217,7 +1202,7 @@ msgstr "SMART 데이터가 손상됨"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
-#: ../src/gdu-gtk/gdu-volume-grid.c:1312 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-volume-grid.c:1315 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "알 수 없음"
 
@@ -1253,43 +1238,36 @@ msgstr "완료됨 (OK)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
-#| msgid "Cancel"
 msgid "Cancelled"
 msgstr "취소됨"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
-#| msgid "Last self-test was cancelled (with hard or soft reset)"
 msgid "Cancelled (with hard or soft reset)"
 msgstr "취소됨 (하드/소프트 리셋)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
-#| msgid "Last self-test not completed (a fatal error might have occured)"
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "완료되지 않음 (치명적 오류가 발생했을 수 있음)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
-#| msgid "Last self-test FAILED (Electrical)"
 msgid "FAILED (Electrical)"
 msgstr "실패 (전기적 원인)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2078
-#| msgid "Last self-test FAILED (Servo)"
 msgid "FAILED (Servo)"
 msgstr "실패 (Servo)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2083
-#| msgid "Last self-test FAILED (Read)"
 msgid "FAILED (Read)"
 msgstr "실패 (읽기)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2088
-#| msgid "Last self-test FAILED (Suspected of having handled damage)"
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "실패 (Suspected of having handled damage)"
 
@@ -1314,7 +1292,6 @@ msgid "This operation concerns \"%s\" (%s)"
 msgstr "이 동작은 \"%s\" (%s)에 대해 수행됩니다"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
-#| msgid "Name"
 msgid "User Name"
 msgstr "사용자 이름"
 
@@ -1354,7 +1331,9 @@ msgid ""
 "To manage storage devices on another machine, enter the address and press "
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 "protocol."
-msgstr "다른 머신 상의 저장 장치를 관리하려면 주소를 입력한 후 \"연결\"를 누릅니다. 연결은 <i>Secure Shell</i> 프로토콜을 통해 이루어집니다."
+msgstr ""
+"다른 머신 상의 저장 장치를 관리하려면 주소를 입력한 후 \"연결\"를 누릅니다. "
+"연결은 <i>Secure Shell</i> 프로토콜을 통해 이루어집니다."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
@@ -1370,17 +1349,14 @@ msgstr "서버 주소(_A):"
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
-#| msgid "The requested name for the array"
 msgid "The user name to connect as"
 msgstr "연결하기 위한 사용자 이름"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
-#| msgid "_Name:"
 msgid "_User Name:"
 msgstr "사용자 이름(_U):"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
-#| msgid "Maximum Size"
 msgid "Maximum Logical Volume Size"
 msgstr "최대 논리 볼륨 크기"
 
@@ -1389,12 +1365,10 @@ msgid "The maximum possible logical volume size"
 msgstr "가능한 최대 논리 볼륨 크기"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
-#| msgid "LVM2 Physical Volume"
 msgid "Logical Volume Size"
 msgstr "논리 볼륨 크기"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
-#| msgid "The requested filesystem label"
 msgid "The requested Logical Volume size"
 msgstr "요청한 논리 볼륨 크기"
 
@@ -1408,7 +1382,6 @@ msgstr "만들기(_R)"
 #. Translators: The %s is the name of the volume group
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
 #, c-format
-#| msgid "LVM2 Physical Volume (version %s)"
 msgid "Create Logical Volume on %s"
 msgstr "%s에 논리 볼륨을 만듭니다"
 
@@ -1541,7 +1514,6 @@ msgid "Array _Size:"
 msgstr "배열 크기(_S):"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
-#| msgid "Disks"
 msgid "_Disks"
 msgstr "디스크(_D)"
 
@@ -1555,30 +1527,29 @@ msgstr "파티션이 아닌 전체 디스크 사용(_P)"
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
-msgstr "이 옵션이 선택되면 각각의 디스크 전체가 RAID 배열을 위해 사용됩니다. 선택되지 않으면 파티션이 만들어 질 것입니다."
+msgstr ""
+"이 옵션이 선택되면 각각의 디스크 전체가 RAID 배열을 위해 사용됩니다. 선택되"
+"지 않으면 파티션이 만들어 질 것입니다."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:874
 #, c-format
-#| msgid "Insufficient number disks to create a %s array."
 msgid "Insufficient number of disks to create a %s array."
 msgstr "%s 배열을 만들기 위한 디스크의 수가 부족합니다."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:890
 #, c-format
-#| msgid "To create a %s array, select %d disks."
-#| msgid_plural "To create a %s array, select %d disks."
 msgid "To create a %s array, select a disk."
-msgstr "%s 배열을 만들려면 디스크를 선택하십시오."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] "%s 배열을 만들려면 디스크 %d개를 선택하십시오."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:897
 #, c-format
-#| msgid "To create a %s array, select %d more disks."
-#| msgid_plural "To create a %s array, select %d more disks."
 msgid "To create a %s array, select one more disk."
-msgstr "%s 배열을 만들려면 디스크를 하나 더 선택하십시오."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] "%s 배열을 만들려면 디스크를 %d개 더 선택하십시오."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the size e.g. '42 GB'.
@@ -1592,29 +1563,24 @@ msgstr ""
 "%3$d개의 디스크를 이용하여 %1$s %2$s 배열을 만들려면 \"만들기\"를 누릅니다"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
-#| msgid "Maximum Size"
 msgid "Maximum Partition Size"
 msgstr "파티션 최대 크기"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
-#| msgid "The maximum size that can be selected"
 msgid "The maximum possible partition size"
 msgstr "가능한 최대 파티션 크기"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
-#| msgid "Partitioned"
 msgid "Partition Size"
 msgstr "파티션 크기"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
-#| msgid "The requested stripe size of the array"
 msgid "The requested partition size"
 msgstr "요청된 파티션의 크기"
 
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
 #, c-format
-#| msgid "Create partition"
 msgid "Create partition on %s"
 msgstr "%s에 파티션 만들기"
 
@@ -1624,7 +1590,6 @@ msgid "Flags"
 msgstr "플래그"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
-#| msgid "Flags for the element"
 msgid "Flags for the widget"
 msgstr "위젯에 대한 플래그"
 
@@ -1646,7 +1611,6 @@ msgid "Largest Segment For Selected"
 msgstr "선택된 가장 큰 세그먼트"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
-#| msgid "Create new filesystem on the selected device"
 msgid "The largest free segment for the selected drives"
 msgstr "선택된 드라이브의 최대 여유 세그먼트"
 
@@ -1659,7 +1623,6 @@ msgid "The largest free segment for all the drives"
 msgstr "모든 드라이브 중 최대 여유 세그먼트"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
-#| msgid "The view to show details for"
 msgid "The size to use in the details header"
 msgstr "상세 정보 헤더에서 사용할 크기"
 
@@ -1678,10 +1641,11 @@ msgstr "여유 공간이 없습니다."
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
 #, c-format
-#| msgid "%s. Largest contiguous free block is %s"
 msgid ""
 "Insufficient space: %s is needed but largest contiguous free block is %s."
-msgstr "공간 부족: %s의 공간이 필요하지만 이용할 수 있는 가장 큰 연속된 블럭의 크기는 %s입니다."
+msgstr ""
+"공간 부족: %s의 공간이 필요하지만 이용할 수 있는 가장 큰 연속된 블럭의 크기"
+"는 %s입니다."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
@@ -1693,11 +1657,12 @@ msgstr "디스크가 파티션되어 파티션이 만들어 질 것입니다"
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
 #, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
 msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
 "no space will be available."
-msgstr "디스크가 파티션되어 %s의 파티션이 만들어 질 것입니다. 이후에는 사용할 수 있는 공간이 없어집니다."
+msgstr ""
+"디스크가 파티션되어 %s의 파티션이 만들어 질 것입니다. 이후에는 사용할 수 있"
+"는 공간이 없어집니다."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1705,11 +1670,12 @@ msgstr "디스크가 파티션되어 %s의 파티션이 만들어 질 것입니�
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
 #, c-format
-#| msgid "The disk will be partitioned and a %s partition will be created"
 msgid ""
-"The disk will be partitioned and a %s partition will be created. Afterwards %"
-"s will be available."
-msgstr "디스크가 파티션되어 %s의 파티션이 만들어 질 것입니다. 이후에는 %s의 공간을 사용할 수 있습니다."
+"The disk will be partitioned and a %s partition will be created. Afterwards "
+"%s will be available."
+msgstr ""
+"디스크가 파티션되어 %s의 파티션이 만들어 질 것입니다. 이후에는 %s의 공간을 사"
+"용할 수 있습니다."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
@@ -1718,7 +1684,6 @@ msgstr "파티션이 만들어 질 것입니다"
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
-#| msgid "A partition will be created"
 msgid "A volume will be created"
 msgstr "볼륨이 만들어 질 것입니다"
 
@@ -1727,9 +1692,9 @@ msgstr "볼륨이 만들어 질 것입니다"
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
 #, c-format
-#| msgid "A %s partition will be created"
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr "%s의 파티션이 만들어 질 것입니다. 이후에는 사용할 수 있는 공간이 없어집니다."
+msgstr ""
+"%s의 파티션이 만들어 질 것입니다. 이후에는 사용할 수 있는 공간이 없어집니다."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1737,7 +1702,8 @@ msgstr "%s의 파티션이 만들어 질 것입니다. 이후에는 사용할 �
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
 #, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
-msgstr "%s의 볼륨이 만들어 질 것입니다. 이후에는 사용할 수 있는 공간이 없어집니다."
+msgstr ""
+"%s의 볼륨이 만들어 질 것입니다. 이후에는 사용할 수 있는 공간이 없어집니다."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1745,9 +1711,9 @@ msgstr "%s의 볼륨이 만들어 질 것입니다. 이후에는 사용할 수 �
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
 #, c-format
-#| msgid "A %s partition will be created"
 msgid "A %s partition will be created. Afterwards %s will be available."
-msgstr "%s의 파티션이 만들어 질 것입니다. 이후에는 %s의 공간을 사용할 수 있습니다."
+msgstr ""
+"%s의 파티션이 만들어 질 것입니다. 이후에는 %s의 공간을 사용할 수 있습니다."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1756,7 +1722,8 @@ msgstr "%s의 파티션이 만들어 질 것입니다. 이후에는 %s의 공간
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
 #, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
-msgstr "%s의 볼륨이 만들어 질 것입니다. 이후에는 %s의 공간을 사용할 수 있습니다."
+msgstr ""
+"%s의 볼륨이 만들어 질 것입니다. 이후에는 %s의 공간을 사용할 수 있습니다."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1799,7 +1766,6 @@ msgstr "%s. 이용할 수 있는 가장 큰 연속된 블럭의 크기는 %s입�
 
 #. Tranlators: this string is used for the column header
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1096
-#| msgid "Detaching Device"
 msgid "Storage Devices"
 msgstr "저장 장치"
 
@@ -1809,12 +1775,10 @@ msgid "Details"
 msgstr "세부 사항"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
-#| msgid "Error detaching device"
 msgid "Error benchmarking drive"
 msgstr "드라이브를 벤치마크하는 중 오류 발생"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to start a read/write benchmark?"
 msgstr "읽기/쓰기 벤치마크를 시작하시겠습니까?"
 
@@ -1837,22 +1801,18 @@ msgstr "%s (%s) – 벤치마크"
 
 #. benchmark results
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
-#| msgid "Minimum Size"
 msgid "Minimum Read Rate:"
 msgstr "최소 읽기 비율:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
-#| msgid "Minimum Size"
 msgid "Minimum Write Rate:"
 msgstr "최소 쓰기 비율:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
-#| msgid "Maximum Size"
 msgid "Maximum Read Rate:"
 msgstr "최대 읽기 비율:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
-#| msgid "Maximum Size"
 msgid "Maximum Write Rate:"
 msgstr "최대 쓰기 비율:"
 
@@ -1861,7 +1821,6 @@ msgid "Average Read Rate:"
 msgstr "평균 읽기 비율:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
-#| msgid "Thermal Asperity Rate"
 msgid "Average Write Rate:"
 msgstr "평균 쓰기 비율:"
 
@@ -1870,7 +1829,6 @@ msgid "Last Benchmark:"
 msgstr "마지막 벤치마크:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
-#| msgid "Overall Assessment:"
 msgid "Average Access Time:"
 msgstr "평균 접근 시간:"
 
@@ -1905,7 +1863,6 @@ msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
-#| msgid "_Revert"
 msgid "Never"
 msgstr "없음"
 
@@ -1917,7 +1874,6 @@ msgstr "취소"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
-#| msgid "Cancels the currently running test"
 msgid "Cancels the currently running benchmark"
 msgstr "현재 실행 중인 벤치마크를 취소합니다"
 
@@ -1927,12 +1883,10 @@ msgstr "현재 실행 중인 벤치마크를 취소합니다"
 #: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
 #, c-format
-#| msgid "_Edit"
 msgid "Edit %s"
 msgstr "%s 편집"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
-#| msgid "LVM2 Physical Volume"
 msgid "Missing Physical Volume"
 msgstr "사라진 물리 볼륨"
 
@@ -1943,34 +1897,28 @@ msgstr "UUID: %s"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
 #, c-format
-#| msgid "Partition %d (%s)"
 msgid "Edit PVs on %s (%s)"
 msgstr "%s (%s) 내의 PV 편집"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
-#| msgid "LVM2 Physical Volume"
 msgid "Physical _Volumes"
 msgstr "물리 볼륨(_V)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:372
-#| msgid "LVM2 Physical Volume"
 msgid "Physical Volume"
 msgstr "물리 볼륨"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
-#| msgid "SD High Capacity"
 msgid "Capacity"
 msgstr "용량"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:397
-#| msgid "Unallocated Space"
 msgid "Unallocated"
 msgstr "할당되지 않음"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:449
 #: ../src/palimpsest/gdu-section-drive.c:935
-#| msgid "SMART status: %s"
 msgid "SMART Status:"
 msgstr "SMART 상태:"
 
@@ -1982,7 +1930,6 @@ msgid "Device:"
 msgstr "장치:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:428
-#| msgid "LVM2 Physical Volume"
 msgid "_New Physical Volume"
 msgstr "새 물리 볼륨(_N)"
 
@@ -1991,7 +1938,6 @@ msgid "Add a new PV to the VG"
 msgstr "VG 내에 새 PV를 추가합니다"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
-#| msgid "LVM2 Physical Volume"
 msgid "_Remove Physical Volume"
 msgstr " 물리 볼륨 제거(_R)"
 
@@ -2005,29 +1951,23 @@ msgstr "VG에서 PV를 제거합니다"
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:941
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:845
 #: ../src/palimpsest/gdu-section-drive.c:329
-#| msgid "SMART not supported"
 msgid "Not Supported"
 msgstr "지원하지 않음"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:369
 #, c-format
-#| msgid "%d Component (%s)"
-#| msgid_plural "%d Components (%s each)"
 msgid "Edit components on %s (%s)"
 msgstr "%s (%s) 내의 구성 요소 편집"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:380
-#| msgid "Components:"
 msgid "C_omponents"
 msgstr "구성 요소(_O)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:410
-#| msgid "Partition"
 msgid "Position"
 msgstr "위치"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:419
-#| msgid "Components:"
 msgid "Component"
 msgstr "구성 요소"
 
@@ -2036,7 +1976,6 @@ msgid "State"
 msgstr "상태"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:453
-#| msgid "Partition"
 msgid "Position:"
 msgstr "위치:"
 
@@ -2048,33 +1987,26 @@ msgid "State:"
 msgstr "상태:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
-#| msgctxt "Linux MD slave state"
-#| msgid "Spare"
 msgid "Add _Spare"
 msgstr "예비 디스크 추가(_S)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
-#| msgid "Start the array"
 msgid "Add a spare to the array"
 msgstr "배열에 예비 디스크를 추가합니다"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
-#| msgid "_Start Array"
 msgid "_Expand Array"
 msgstr "배열 확장(_E)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
-#| msgid "The requested size of the array"
 msgid "Increase the capacity of the array"
 msgstr "배열의 용량을 늘립니다"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
-#| msgid "RAID Component"
 msgid "_Attach Component"
 msgstr "구성 요소 연결(_A)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
-#| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Attach the component to the array"
 msgstr "배열에 구성 요소를 연결합니다(attach)"
 
@@ -2083,7 +2015,6 @@ msgid "_Remove Component"
 msgstr "구성 요소 제거(_R)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
-#| msgid "Removing Component from RAID Array"
 msgid "Remove the component from the array"
 msgstr "배열에서 구성 요소를 제거합니다"
 
@@ -2108,42 +2039,34 @@ msgid "Required / Firm_ware"
 msgstr "요청된 / 펌웨어(_W)"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:217
-#| msgid "The operation failed."
 msgid "The operation failed"
 msgstr "동작이 실패했습니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:220
-#| msgid "The device is busy."
 msgid "The device is busy"
 msgstr "장치를 사용하는 중입니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:223
-#| msgid "The operation was canceled."
 msgid "The operation was canceled"
 msgstr "동작이 취소되었습니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:226
-#| msgid "The daemon is being inhibited."
 msgid "The daemon is being inhibited"
 msgstr "대몬이 금지되었습니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:229
-#| msgid "An invalid option was passed."
 msgid "An invalid option was passed"
 msgstr "잘못된 옵션이 사용되었습니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:232
-#| msgid "The operation is not supported."
 msgid "The operation is not supported"
 msgstr "지원하지 않는 동작입니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:235
-#| msgid "Getting ATA SMART data would wake up the device."
 msgid "Getting ATA SMART data would wake up the device"
 msgstr "ATA SMART 데이터를 가져오면 장치가 깨어날 것입니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:238
-#| msgid "Permission denied."
 msgid "Permission denied"
 msgstr "권한이 없습니다"
 
@@ -2152,7 +2075,6 @@ msgid "Filesystem driver not installed"
 msgstr "파일 시스템 드라이버가 설치되지 않았습니다"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:244
-#| msgid "Filesystem label"
 msgid "Filesystem tools not installed"
 msgstr "파일 시스템 도구가 설치되지 않았습니다"
 
@@ -2167,12 +2089,10 @@ msgstr "\"%s\" (%s)에서 동작을 수행하는 중 오류가 발생했습니�
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:265
 #, c-format
-#| msgid "An error occured"
 msgid "An error occurred: %s"
 msgstr "오류 발생: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:274
-#| msgid "_Details:"
 msgid "_Details"
 msgstr "세부 정보(_D)"
 
@@ -2197,7 +2117,6 @@ msgid "The requested filesystem label"
 msgstr "요청한 파일 시스템 레이블"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:202
-#| msgid "Filesystem type"
 msgid "Filesystem options"
 msgstr "파일 시스템 옵션"
 
@@ -2218,7 +2137,6 @@ msgid "Take Ownership"
 msgstr "소유권 갖기"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:225
-#| msgid "Whether the volume should be encrypted"
 msgid "Whether the filesystem should be owned by the user"
 msgstr "파일 시스템을 사용자가 소유할지 여부"
 
@@ -2242,7 +2160,6 @@ msgstr "포맷(_F)"
 #: ../src/gdu-gtk/gdu-format-dialog.c:499
 #: ../src/gdu-gtk/gdu-partition-dialog.c:208
 #, c-format
-#| msgid "Format %s (%s)"
 msgid "Format %s"
 msgstr "%s 포맷"
 
@@ -2269,7 +2186,6 @@ msgid "Compatible with Linux (ext2)"
 msgstr "리눅스와 호환 (ext2)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:562
-#| msgid "Compatible with Linux (ext2)"
 msgid "Compatible with Linux (ext4)"
 msgstr "리눅스와 호환 (ext4)"
 
@@ -2292,7 +2208,6 @@ msgid "New Volume"
 msgstr "새 볼륨"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:632
-#| msgid "T_ake ownership of file system"
 msgid "T_ake ownership of filesystem"
 msgstr "파일 시스템의 소유권 얻음(_A)"
 
@@ -2307,7 +2222,6 @@ msgstr ""
 "리자 만이 이 파일 시스템에 접근할 수 있습니다."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:641
-#| msgid "Encr_ypt underlying device"
 msgid "_Encrypt underlying device"
 msgstr "장치 암호화(_E)"
 
@@ -2534,12 +2448,10 @@ msgid "Apple Partition Map"
 msgstr "Apple 파티션 맵"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:100
-#| msgid "MBR Partition Scheme"
 msgid "Partitioning Scheme"
 msgstr "파티션 체계"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:101
-#| msgid "The selected filesystem type"
 msgid "The selected partitioning scheme"
 msgstr "선택한 파일 시스템 체계"
 
@@ -2565,12 +2477,10 @@ msgid "TB"
 msgstr "TB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:104
-#| msgid "4 KiB"
 msgid "KiB"
 msgstr "KiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:107
-#| msgid "MB"
 msgid "MiB"
 msgstr "MiB"
 
@@ -2621,17 +2531,15 @@ msgstr[0] "%d 시간 전"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:498
 #: ../src/palimpsest/gdu-section-drive.c:150
-#| msgid "Drives"
 msgid "Drive"
 msgstr "드라이브"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:499
-#| msgid "Drive to show"
 msgid "Drive to show volumes for"
 msgstr "볼륨을 살펴 볼 드라이브"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1187
+#: ../src/gdu-gtk/gdu-volume-grid.c:1189
 msgid "RAID Array is not running"
 msgstr "RAID 배열이 동작 중이 아닙니다"
 
@@ -2639,31 +2547,31 @@ msgstr "RAID 배열이 동작 중이 아닙니다"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1190 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1192 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "미디어를 찾을 수 없음"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1274
+#: ../src/gdu-gtk/gdu-volume-grid.c:1277
 msgid "Extended"
 msgstr "확장"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1282
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285
 msgid "Encrypted"
 msgstr "암호화됨"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1296 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1299 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID 구성 요소"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1304
+#: ../src/gdu-gtk/gdu-volume-grid.c:1307
 msgid "Free"
 msgstr "이용 가능"
 
@@ -2756,7 +2664,6 @@ msgstr "HDDVD"
 #.
 #: ../src/gdu/gdu-drive.c:689
 #, c-format
-#| msgid "%s Free"
 msgid "%s File"
 msgstr "%s 파일"
 
@@ -2867,13 +2774,11 @@ msgstr "호스트 어댑터"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:330
-#| msgid "LVM2 Physical Volume"
 msgid "Logical Volume"
 msgstr "물리 볼륨"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume.c:333
-#| msgid "LVM2 Physical Volume"
 msgid "LVM2 Logical Volume"
 msgstr "LVM2 논리 볼륨"
 
@@ -2881,14 +2786,12 @@ msgstr "LVM2 논리 볼륨"
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
-#| msgid "Volume"
 msgid "Volume Group"
 msgstr "볼륨 그룹"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
-#| msgid "%s LVM2 Physical Volume"
 msgid "%s LVM2 Volume Group"
 msgstr "%s LVM2 볼륨 그룹"
 
@@ -2919,7 +2822,6 @@ msgstr "할당되지 않은 공간"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
-#| msgid "Unallocated Space"
 msgid "LVM2 VG Unallocated Space"
 msgstr "LVM2 VG 할당되지 않은 공간"
 
@@ -2927,7 +2829,6 @@ msgstr "LVM2 VG 할당되지 않은 공간"
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
 #, c-format
-#| msgid "%s %s Drive"
 msgid "%s %s Array"
 msgstr "%s %s 배열"
 
@@ -2935,7 +2836,6 @@ msgstr "%s %s 배열"
 #. Translators: %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, c-format
-#| msgid "RAID Array"
 msgid "%s Array"
 msgstr "%s 배열"
 
@@ -2944,7 +2844,6 @@ msgstr "%s 배열"
 #.
 #: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
-#| msgid "RAID Array"
 msgid "RAID Array %s (%s)"
 msgstr "RAID 배열 %s (%s)"
 
@@ -2956,8 +2855,6 @@ msgstr "RAID 장치 %s"
 
 #. Translators: fallback for level
 #: ../src/gdu/gdu-linux-md-drive.c:612
-#| msgctxt "RAID level"
-#| msgid "RAID"
 msgctxt "RAID Level fallback"
 msgid "RAID"
 msgstr "RAID"
@@ -2968,7 +2865,6 @@ msgid "RAID Array"
 msgstr "RAID 배열"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1114
-#| msgid "A_ttach"
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
 msgstr "연결되지 않음"
@@ -3014,7 +2910,6 @@ msgid "Storage on %s"
 msgstr "%s의 저장 장치"
 
 #: ../src/gdu/gdu-pool.c:885
-#| msgid "Detaching Device"
 msgid "Multipath Devices"
 msgstr "멀티패스 장치"
 
@@ -3040,13 +2935,11 @@ msgstr "USB, Firewire 등의 주변 장치"
 
 #: ../src/gdu/gdu-pool.c:2092
 #, c-format
-#| msgid "Error ejecting device"
 msgid "Error enumerating devices: %s"
 msgstr "장치를 찾는(enumeration) 중 오류 발생: %s"
 
 #: ../src/gdu/gdu-pool.c:2118
 #, c-format
-#| msgid "Error erasing data"
 msgid "Error enumerating adapters: %s"
 msgstr "어댑터를 찾는(enumeration) 중 오류 발생: %s"
 
@@ -3057,7 +2950,6 @@ msgstr "확장기(expander)를 찾는 (enumeration) 중 오류 발생: %s"
 
 #: ../src/gdu/gdu-pool.c:2164
 #, c-format
-#| msgid "Error deleting partition"
 msgid "Error enumerating ports: %s"
 msgstr "포트를 찾는(enumeration) 중 오류 발생: %s"
 
@@ -3071,7 +2963,9 @@ msgstr "`localhost:%d' 주소에서 기다리는(listen) 중 오류 발생: %s: 
 msgid ""
 "Error creating a local TCP server, tried binding to ports 9000-10000 on "
 "localhost"
-msgstr "localhost의 9000-10000 포트에 바인딩을 시도하는 로컬 TCP 서버를 만드는 중 오류 발생"
+msgstr ""
+"localhost의 9000-10000 포트에 바인딩을 시도하는 로컬 TCP 서버를 만드는 중 오"
+"류 발생"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
@@ -3085,7 +2979,6 @@ msgstr "명령행 `%s'을(를) 파싱할 수 없습니다 (잘못된 주소?): %
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, c-format
-#| msgid "Unable to format '%s'"
 msgid "Unable to spawn ssh program: %s"
 msgstr "ssh 프로그램을 실행할 수 없음: %s"
 
@@ -3095,12 +2988,10 @@ msgid "Error reading stderr output: %s"
 msgstr "표준 에러 출력을 읽는 중 오류 발생: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
-#| msgid "Error adding component"
 msgid "Error reading stderr output: No content"
 msgstr "표준 에러 출력을 읽는 중 오류 발생: 내용이 없습니다"
 
 #: ../src/gdu/gdu-ssh-bridge.c:471
-#| msgid "Error unlocking device"
 msgid "Error logging in"
 msgstr "로그인 하는 중 오류 발생"
 
@@ -3114,12 +3005,14 @@ msgstr "`%s'을(를) 보내는 중 오류 발생: %s"
 msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
-msgstr "예상치 못한 표준 오류 출력 - expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"
+msgstr ""
+"예상치 못한 표준 오류 출력 - expected `udisks-tcp-bridge: Waiting for "
+"secret' but got `%s'"
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "인증 비밀 정보를 전달하는데 오류: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
@@ -3131,7 +3024,9 @@ msgstr "표준 에러 출력을 읽는 중 오류 발생: %s"
 msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
-msgstr "예상치 못한 표준 오류 출력 - expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"
+msgstr ""
+"예상치 못한 표준 오류 출력 - expected `udisks-tcp-bridge: Attempting to "
+"connect to port %d' but got `%s'"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
@@ -3150,7 +3045,6 @@ msgstr "udisk-tcp-bridge 프로그램 인증을 증명하지 못했습니다"
 #.
 #: ../src/gdu/gdu-util.c:131 ../src/gdu/gdu-util.c:140
 #, c-format
-#| msgid "%s / %s / %s bytes"
 msgid "%s (%s bytes)"
 msgstr "%s (%s 바이트)"
 
@@ -3210,14 +3104,12 @@ msgstr "LUKS"
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:237
 #, c-format
-#| msgid "Linux Ext2 (version %s)"
 msgid "Ext2 (version %s)"
 msgstr "Ext2 (버전 %s)"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:240
 #, c-format
-#| msgid "ext2"
 msgid "Ext2"
 msgstr "Ext2"
 
@@ -3229,14 +3121,12 @@ msgstr "ext2"
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:249
 #, c-format
-#| msgid "Linux Ext3 (version %s)"
 msgid "Ext3 (version %s)"
 msgstr "Ext3 (버전 %s)"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:252
 #, c-format
-#| msgid "ext3"
 msgid "Ext3"
 msgstr "Ext3"
 
@@ -3248,14 +3138,12 @@ msgstr "ext3"
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:261
 #, c-format
-#| msgid "Journal for Linux ext3 (version %s)"
 msgid "Journal for Ext3 (version %s)"
 msgstr "Ext3 (버전 %s)용 저널"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:264
 #, c-format
-#| msgid "Journal for Linux ext3"
 msgid "Journal for Ext3"
 msgstr "Ext3용 저널"
 
@@ -3267,14 +3155,12 @@ msgstr "jbd"
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:273
 #, c-format
-#| msgid "Linux Ext4 (version %s)"
 msgid "Ext4 (version %s)"
 msgstr "Ext4 (버전 %s)"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:276
 #, c-format
-#| msgid "ext4"
 msgid "Ext4"
 msgstr "Ext4"
 
@@ -3286,14 +3172,12 @@ msgstr "ext4"
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:285
 #, c-format
-#| msgid "NTFS (version %s)"
 msgid "XFS (version %s)"
 msgstr "XFS (버전 %s)"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:288
 #, c-format
-#| msgid "HFS"
 msgid "XFS"
 msgstr "XFS"
 
@@ -3305,7 +3189,6 @@ msgstr "xfs"
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:297
 #, c-format
-#| msgid "NTFS (version %s)"
 msgid "ReiserFS (version %s)"
 msgstr "ReiserFS (버전 %s)"
 
@@ -3491,7 +3374,6 @@ msgstr "강제로 LUKS 장치를 잠그는(lock) 중"
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
 #: ../src/gdu/gdu-util.c:435
-#| msgid "Basic Data Partition"
 msgid "Linux Basic Data Partition"
 msgstr "리눅스 기본 데이터 파티션"
 
@@ -3522,7 +3404,6 @@ msgid "EFI System Partition"
 msgstr "EFI 시스템 파티션"
 
 #: ../src/gdu/gdu-util.c:443
-#| msgid "Not Partitioned"
 msgid "BIOS Boot Partition"
 msgstr "BIOS 부트 파티션"
 
@@ -3532,18 +3413,15 @@ msgid "Microsoft Reserved Partition"
 msgstr "Microsoft 예약 파티션"
 
 #: ../src/gdu/gdu-util.c:446
-#| msgid "Basic Data Partition"
 msgid "Microsoft Basic Data Partition"
 msgstr "Microsoft 기본 데이터 파티션"
 
 #. Same as Linux BDP
 #: ../src/gdu/gdu-util.c:447
-#| msgid "LDM meta data Partition"
 msgid "Microsoft LDM Metadata Partition"
 msgstr "Microsoft LDM 메타데이터 파티션"
 
 #: ../src/gdu/gdu-util.c:448
-#| msgid "LDM data Partition"
 msgid "Microsoft LDM Data Partition"
 msgstr "Microsoft LDM 데이터 파티션"
 
@@ -3553,110 +3431,89 @@ msgstr "Microsoft Windows 복구 환경"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:451
-#| msgid "Basic Data Partition"
 msgid "HP-UX Data Partition"
 msgstr "HP-UX 기본 데이터 파티션"
 
 #: ../src/gdu/gdu-util.c:452
-#| msgid "Driver Partition"
 msgid "HP-UX Service Partition"
 msgstr "HP-UX 서비스 파티션"
 
 #. FreeBSD
 #: ../src/gdu/gdu-util.c:454
-#| msgid "Create Partition"
 msgid "FreeBSD Boot Partition"
 msgstr "FreeBSD 부트 파티션"
 
 #: ../src/gdu/gdu-util.c:455
-#| msgid "Basic Data Partition"
 msgid "FreeBSD Data Partition"
 msgstr "FreeBSD 데이터 파티션"
 
 #: ../src/gdu/gdu-util.c:456
-#| msgid "Linux Swap Partition"
 msgid "FreeBSD Swap Partition"
 msgstr "FreeBSD 스왑 파티션"
 
 #: ../src/gdu/gdu-util.c:457
-#| msgid "Apple UFS Partition"
 msgid "FreeBSD UFS Partition"
 msgstr "FreeBSD UFS 파티션"
 
 #: ../src/gdu/gdu-util.c:458
-#| msgid "Deleting Partition"
 msgid "FreeBSD Vinum Partition"
 msgstr "FreeBSD Vinum 파티션"
 
 #: ../src/gdu/gdu-util.c:459
-#| msgid "Create Partition"
 msgid "FreeBSD ZFS Partition"
 msgstr "FreeBSD ZFS 파티션"
 
 #. Solaris
 #: ../src/gdu/gdu-util.c:461
-#| msgid "Basic Data Partition"
 msgid "Solaris Boot Partition"
 msgstr "솔라리스 부트 파티션"
 
 #: ../src/gdu/gdu-util.c:462
-#| msgid "Basic Data Partition"
 msgid "Solaris Root Partition"
 msgstr "솔라리스 루트 파티션"
 
 #: ../src/gdu/gdu-util.c:463
-#| msgid "Linux Swap Partition"
 msgid "Solaris Swap Partition"
 msgstr "솔라리스 스왑 파티션"
 
 #: ../src/gdu/gdu-util.c:464
-#| msgid "Basic Data Partition"
 msgid "Solaris Backup Partition"
 msgstr "솔라리스 백업 파티션"
 
 #: ../src/gdu/gdu-util.c:465
-#| msgid "Driver Partition"
 msgid "Solaris /usr Partition"
 msgstr "솔라리스 /usr 파티션"
 
 #. Same as Apple ZFS
 #: ../src/gdu/gdu-util.c:466
-#| msgid "Driver Partition"
 msgid "Solaris /var Partition"
 msgstr "솔라리스 /var 파티션"
 
 #: ../src/gdu/gdu-util.c:467
-#| msgid "Driver Partition"
 msgid "Solaris /home Partition"
 msgstr "솔라리스 /home 파티션"
 
 #: ../src/gdu/gdu-util.c:468
-#| msgid "Create Partition"
 msgid "Solaris Alternate Sector Partition"
 msgstr "솔라리스 Alternate Sector 파티션"
 
 #: ../src/gdu/gdu-util.c:469
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition"
 msgstr "솔라리스 예약 파티션"
 
 #: ../src/gdu/gdu-util.c:470
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (2)"
 msgstr "솔라리스 예약 파티션 (2)"
 
 #: ../src/gdu/gdu-util.c:471
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (3)"
 msgstr "솔라리스 예약 파티션 (3)"
 
 #: ../src/gdu/gdu-util.c:472
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (4)"
 msgstr "솔라리스 예약 파티션 (4)"
 
 #: ../src/gdu/gdu-util.c:473
-#| msgid "Linux Reserved Partition"
 msgid "Solaris Reserved Partition (5)"
 msgstr "솔라리스 예약 파티션 (5)"
 
@@ -3672,7 +3529,6 @@ msgid "Apple UFS Partition"
 msgstr "Apple UFS 파티션"
 
 #: ../src/gdu/gdu-util.c:477
-#| msgid "Apple UFS Partition"
 msgid "Apple ZFS Partition"
 msgstr "Apple ZFS 파티션"
 
@@ -3682,53 +3538,43 @@ msgid "Apple RAID Partition"
 msgstr "Apple RAID 파티션"
 
 #: ../src/gdu/gdu-util.c:479
-#| msgid "Apple RAID Partition"
 msgid "Apple RAID Partition (Offline)"
 msgstr "Apple RAID 파티션 (오프라인)"
 
 #: ../src/gdu/gdu-util.c:480
-#| msgid "Apple UFS Partition"
 msgid "Apple Boot Partition"
 msgstr "Apple 부트 파티션"
 
 #: ../src/gdu/gdu-util.c:481
-#| msgid "Apple UFS Partition"
 msgid "Apple Label Partition"
 msgstr "Apple 레이블 파티션"
 
 #: ../src/gdu/gdu-util.c:482
-#| msgid "Apple RAID Partition"
 msgid "Apple TV Recovery Partition"
 msgstr "Apple TV Recovery 파티션"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:484
-#| msgid "Linux Swap Partition"
 msgid "NetBSD Swap Partition"
 msgstr "NetBSD 스왑 파티션"
 
 #: ../src/gdu/gdu-util.c:485
-#| msgid "Apple UFS Partition"
 msgid "NetBSD FFS Partition"
 msgstr "NetBSD FFS 파티션"
 
 #: ../src/gdu/gdu-util.c:486
-#| msgid "Apple UFS Partition"
 msgid "NetBSD LFS Partition"
 msgstr "NetBSD LFS 파티션"
 
 #: ../src/gdu/gdu-util.c:487
-#| msgid "Apple RAID Partition"
 msgid "NetBSD RAID Partition"
 msgstr "NetBSD RAID 파티션"
 
 #: ../src/gdu/gdu-util.c:488
-#| msgid "Create Partition"
 msgid "NetBSD Concatenated Partition"
 msgstr "NetBSD 연결된(concatenated) 파티션"
 
 #: ../src/gdu/gdu-util.c:489
-#| msgid "Extended Partition"
 msgid "NetBSD Encrypted Partition"
 msgstr "NetBSD 암호화 파티션"
 
@@ -3854,7 +3700,6 @@ msgid "PartitionMagic (0x3c)"
 msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:528
-#| msgid "Linux (0x83)"
 msgid "Minix (0x81)"
 msgstr "미닉스 (0x81)"
 
@@ -3975,7 +3820,9 @@ msgstr ""
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with operating systems other than Linux and Minix."
-msgstr "낮은 오버헤드와 UNIX 접근 권한을 지원하는 단순한 파일 시스템. 리눅스와 미닉스를 제외한 다른 운영 체제에서는 잘 지원되지 않습니다."
+msgstr ""
+"낮은 오버헤드와 UNIX 접근 권한을 지원하는 단순한 파일 시스템. 리눅스와 미닉스"
+"를 제외한 다른 운영 체제에서는 잘 지원되지 않습니다."
 
 #: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
@@ -4021,19 +3868,16 @@ msgstr ""
 
 #: ../src/gdu/gdu-util.c:888
 #, c-format
-#| msgid "%.1f kbit/s"
 msgid "%.1f KB/s"
 msgstr "%.1f KB/s"
 
 #: ../src/gdu/gdu-util.c:891
 #, c-format
-#| msgid "%.1f Mbit/s"
 msgid "%.1f MB/s"
 msgstr "%.1f MB/s"
 
 #: ../src/gdu/gdu-util.c:894
 #, c-format
-#| msgid "%.1f Gbit/s"
 msgid "%.1f GB/s"
 msgstr "%.1f GB/s"
 
@@ -4482,8 +4326,6 @@ msgstr "RAID"
 #.
 #: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
 msgid "%s %s Component"
 msgstr "%s %s의 구성 요소"
 
@@ -4492,7 +4334,6 @@ msgstr "%s %s의 구성 요소"
 #.
 #: ../src/gdu/gdu-volume.c:372
 #, c-format
-#| msgid "Part of \"%s\" %s array"
 msgid "Part of \"%s\" array"
 msgstr "\"%s\" 배열의 일부"
 
@@ -4619,7 +4460,6 @@ msgstr "멀티패스 드라이브"
 #.
 #: ../src/palimpsest/gdu-section-drive.c:189
 #, c-format
-#| msgid "Partition %d of %s"
 msgid "PHY %d of %s"
 msgstr "%2$s의 %1$d번 PHY"
 
@@ -4630,7 +4470,6 @@ msgstr "%2$s의 %1$d번 PHY"
 #.
 #: ../src/palimpsest/gdu-section-drive.c:196
 #, c-format
-#| msgid "Partition %d of %s"
 msgid "Port %d of %s"
 msgstr "%2$s의 %1$d번 포트"
 
@@ -4654,7 +4493,6 @@ msgid "%d RPM"
 msgstr "%d RPM"
 
 #: ../src/palimpsest/gdu-section-drive.c:281
-#| msgid "Solid-State Disk"
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
 msgstr "Solid-State Disk (SSD)"
@@ -4668,32 +4506,26 @@ msgstr "알 수 없는 체계: %s"
 
 #: ../src/palimpsest/gdu-section-drive.c:439
 #: ../src/palimpsest/gdu-section-drive.c:459
-#| msgid "Error launching Disk Utility"
 msgid "Error launching Brasero"
 msgstr "브라세로를 실행하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-drive.c:440
-#| msgid "The operation is not supported."
 msgid "The application is not installed"
 msgstr "프로그램이 설치되지 않았습니다"
 
 #: ../src/palimpsest/gdu-section-drive.c:521
-#| msgid "Error ejecting device"
 msgid "Error ejecting medium"
 msgstr "미디어를 꺼내는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-drive.c:565
-#| msgid "Error detaching device"
 msgid "Error detaching drive"
 msgstr "드라이브를 분리하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-drive.c:610
-#| msgid "Error formatting volume"
 msgid "Error formatting drive"
 msgstr "드라이브를 포맷하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-drive.c:648
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to format the drive?"
 msgstr "이 드라이브를 포맷하시겠습니까?"
 
@@ -4701,7 +4533,9 @@ msgstr "이 드라이브를 포맷하시겠습니까?"
 msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
-msgstr "<b>경고:</b> 이 드라이브에 대한 다중 경로가 인식되었지만 멀티패스 장치를 찾지 못했습니다. OS가 잘못 설정되었을 수 있습니다."
+msgstr ""
+"<b>경고:</b> 이 드라이브에 대한 다중 경로가 인식되었지만 멀티패스 장치를 찾"
+"지 못했습니다. OS가 잘못 설정되었을 수 있습니다."
 
 #: ../src/palimpsest/gdu-section-drive.c:850
 msgid "Go to Multipath Device"
@@ -4711,11 +4545,12 @@ msgstr "멀티패스 장치로 이동"
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
-msgstr "<b>주의:</b> 이 객체는 드라이브에 대한 다중 경로를 나타냅니다. 드라이브에 연산을 수행하려면 대응하는 멀티패스 객체를 사용하십시오."
+msgstr ""
+"<b>주의:</b> 이 객체는 드라이브에 대한 다중 경로를 나타냅니다. 드라이브에 연"
+"산을 수행하려면 대응하는 멀티패스 객체를 사용하십시오."
 
 #: ../src/palimpsest/gdu-section-drive.c:890
 #: ../src/palimpsest/gdu-section-hub.c:225
-#| msgid "Model Name:"
 msgid "Model:"
 msgstr "모델:"
 
@@ -4727,14 +4562,13 @@ msgstr "시리얼 번호:"
 msgid "Firmware Version:"
 msgstr "펌웨어 버전:"
 
+# NOTE: 웃긴 말이지만 "월드 와이드 이름"으로 많이 발견된다
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
 #: ../src/palimpsest/gdu-section-drive.c:903
-#| msgid "Model Name:"
 msgid "World Wide Name:"
-msgstr ""
+msgstr "월드 와이드 이름 (WWN):"
 
 #: ../src/palimpsest/gdu-section-drive.c:907
-#| msgid "Load Friction"
 msgid "Location:"
 msgstr "위치:"
 
@@ -4750,7 +4584,6 @@ msgstr "회전 비율:"
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
-#| msgid "SD High Capacity"
 msgid "Capacity:"
 msgstr "용량:"
 
@@ -4760,7 +4593,6 @@ msgstr "연결:"
 
 #: ../src/palimpsest/gdu-section-drive.c:931
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
-#| msgid "Partition"
 msgid "Partitioning:"
 msgstr "파티셔닝:"
 
@@ -4773,17 +4605,14 @@ msgid "Create and copy CDs and DVDs"
 msgstr "CD 및 DVD를 만들거나 복사합니다"
 
 #: ../src/palimpsest/gdu-section-drive.c:964
-#| msgid "_Format"
 msgid "Format _Drive"
 msgstr "드라이브 포맷(_D)"
 
 #: ../src/palimpsest/gdu-section-drive.c:965
-#| msgid "There was an error starting the drive \"%s\"."
 msgid "Erase or partition the drive"
 msgstr "드라이브를 지우거나 파티션을 나눕니다"
 
 #: ../src/palimpsest/gdu-section-drive.c:974
-#| msgid "SMART Data"
 msgid "SM_ART Data"
 msgstr "SMART 데이터(_A)"
 
@@ -4796,7 +4625,6 @@ msgid "_Eject"
 msgstr "꺼내기(_E)"
 
 #: ../src/palimpsest/gdu-section-drive.c:985
-#| msgid "Eject media from the device"
 msgid "Eject medium from the drive"
 msgstr "드라이브에서 미디어를 꺼냅니다"
 
@@ -4809,7 +4637,6 @@ msgid "Power down the drive so it can be removed"
 msgstr "드라이브를 제거할 수 있도록 전원을 내립니다"
 
 #: ../src/palimpsest/gdu-section-drive.c:1005
-#| msgid "Seek Timer Performance"
 msgid "Measure drive performance"
 msgstr "드라이브 성능 측정"
 
@@ -4843,26 +4670,22 @@ msgid "Revision:"
 msgstr "리비전:"
 
 #: ../src/palimpsest/gdu-section-hub.c:233
-#| msgid "_Drive:"
 msgid "Driver:"
 msgstr "드라이버:"
 
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Fabric:"
-msgstr ""
+msgstr "구조:"
 
 #: ../src/palimpsest/gdu-section-hub.c:241
-#| msgid "Number of ECC errors"
 msgid "Number of Ports:"
 msgstr "포트 수:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
-#| msgid "Error formatting volume"
 msgid "Error starting Volume Group"
 msgstr "볼륨 그룹을 시작하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
-#| msgid "Error formatting volume"
 msgid "Error stopping Volume Group"
 msgstr "볼륨 그룹을 멈추는 중 오류 발생"
 
@@ -4879,7 +4702,6 @@ msgid "Error adding Physical Volume to Volume Group"
 msgstr "볼륨 그룹에 물리 볼륨을 추가하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
-#| msgid "Error creating RAID array"
 msgid "Error creating PV for VG"
 msgstr "VG를 위한 PV를 만드는 중 오류 발생"
 
@@ -4892,18 +4714,15 @@ msgid "Error removing Physical Volume from Volume Group"
 msgstr "볼륨 그룹에서 물리 볼륨을 제거하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the remove the Physical Volume?"
 msgstr "이 물리 볼륨을 제거하시겠습니까?"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
-#| msgid "_Revert"
 msgid "_Remove"
 msgstr "제거(_R)"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
-#| msgid "Not running"
 msgid "Not Running"
 msgstr "동작하지 않음"
 
@@ -4912,35 +4731,28 @@ msgid "Partially Running"
 msgstr "일부 동작 중"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:606
-#| msgctxt "RAID status"
-#| msgid "Running"
 msgid "Running"
 msgstr "동작 중"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
 #, c-format
-#| msgid "Unknown (%s)"
 msgid "Unknown (%d)"
 msgstr "알 수 없음 (%d)"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:966
-#| msgid "_Name:"
 msgid "Name:"
 msgstr "이름:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
-#| msgid "Percent Size"
 msgid "Extent Size:"
 msgstr "Extent 크기:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
-#| msgid "LVM2 Physical Volume"
 msgid "Physical Volumes:"
 msgstr "물리 볼륨:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
-#| msgid "Unallocated Space"
 msgid "Unallocated:"
 msgstr "할당되지 않음:"
 
@@ -4961,7 +4773,6 @@ msgid "Deactivate all LVs in the VG"
 msgstr "VG내의 모든 LV를 비활성화합니다"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
-#| msgid "_Name:"
 msgid "Edit _Name"
 msgstr "이름 편집(_N)"
 
@@ -4970,7 +4781,6 @@ msgid "Change the Volume Group name"
 msgstr "볼륨 그룹의 이름을 바꿉니다"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
-#| msgid "LVM2 Physical Volume"
 msgid "Edit _Physical Volumes"
 msgstr "물리 볼륨 편집(_P)"
 
@@ -5009,36 +4819,26 @@ msgid "Running"
 msgstr "실행 중"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:124
-#| msgctxt "RAID status"
-#| msgid "Reshaping"
 msgctxt "RAID action"
 msgid "Reshaping"
 msgstr "Reshape 중"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:126
-#| msgctxt "RAID status"
-#| msgid "Resyncing"
 msgctxt "RAID action"
 msgid "Resyncing"
 msgstr "Resync 중"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:128
-#| msgctxt "RAID status"
-#| msgid "Repairing"
 msgctxt "RAID action"
 msgid "Repairing"
 msgstr "수리(repair) 중"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:130
-#| msgctxt "RAID status"
-#| msgid "Recovering"
 msgctxt "RAID action"
 msgid "Recovering"
 msgstr "복구(recover) 중"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:132
-#| msgctxt "RAID status"
-#| msgid "Checking"
 msgctxt "RAID action"
 msgid "Checking"
 msgstr "검사 중"
@@ -5049,25 +4849,20 @@ msgid "Idle"
 msgstr "유휴 (idle)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
-#| msgid "Stopping RAID Array"
 msgid "Error stopping RAID Array"
 msgstr "RAID 배열을 중지하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:360
-#| msgid "Error creating RAID array"
 msgid "Error starting RAID Array"
 msgstr "RAID 배열을 시작하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:390
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
-#| msgctxt "RAID status"
-#| msgid "Not running, not enough components to start"
 msgid "Not enough components available to start the RAID Array"
 msgstr "RADI 배열을 시작하기 위한 구성 요소가 부족함"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:409
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want the RAID Array degraded?"
 msgstr "RAID 배열을 degrade 상태로 만드시겠습니까?"
 
@@ -5076,23 +4871,19 @@ msgid "_Start"
 msgstr "시작(_S)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:455
-#| msgid "Error creating partition table for component for RAID array"
 msgid "Error deleting partition for component in RAID Array"
 msgstr "RAID 배열 구성 요소의 파티션 테이블을 지우는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:478
-#| msgid "Removing Component from RAID Array"
 msgid "Error removing component from RAID Array"
 msgstr "RAID 배열에서 구성 요소를 제거하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:529
-#| msgid "Are you sure you want to remove the component from the array ?"
 msgid "Are you sure you want the remove the component?"
 msgstr "해당 구성 요소를 제거하시겠습니까?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:650
-#| msgid "Error creating component for RAID array"
 msgid "Error adding component to RAID Array"
 msgstr "RAID 배열에 구성 요소를 추가하는 중 오류 발생"
 
@@ -5102,22 +4893,18 @@ msgid "Error creating component for RAID array"
 msgstr "RAID 배열의 구성 요소를 만드는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
-#| msgid "Error creating RAID array"
 msgid "Error expanding RAID Array"
 msgstr "RAID 배열을 확장하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
-#| msgid "Error creating RAID array"
 msgid "Error checking RAID Array"
 msgstr "RAID 배열을 검사하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
-#| msgid "RAID _Level:"
 msgid "Level:"
 msgstr "레벨:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:962
-#| msgid "LDM meta data Partition"
 msgid "Metadata Version:"
 msgstr "메타데이터 버전:"
 
@@ -5130,54 +4917,43 @@ msgid "Components:"
 msgstr "구성 요소:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
-#| msgid "Starting RAID Array"
 msgid "St_art RAID Array"
 msgstr "RAID 배열 시작(_A)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
-#| msgid "Starting RAID Array"
 msgid "Bring up the RAID Array"
 msgstr "RAID 배열을 시작(bring up)합니다"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
-#| msgid "Stopping RAID Array"
 msgid "St_op RAID Array"
 msgstr "RAID 배열 중지(_O)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
-#| msgid "Create RAID Array"
 msgid "Tear down the RAID Array"
 msgstr "RAID 배열을 중지(tear down)합니다"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
-#| msgid "Create RAID Array"
 msgid "Format/Erase RAI_D Array"
 msgstr "RAID 배열 포맷/삭제(_D)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
-#| msgid "Starts repairing the RAID array"
 msgid "Erase or partition the array"
 msgstr "RAID 배열을 삭제하거나 포맷합니다"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
-#| msgid "Checking RAID Array"
 msgid "Chec_k Array"
 msgstr "RAID 배열 검사(_K)"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
-#| msgid "Starts repairing the RAID array"
 msgid "Check and repair the array"
 msgstr "RAID 배열을 검사하고 수리(repair)합니다"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
-#| msgid "%d Component"
-#| msgid_plural "%d Components"
 msgid "Edit Com_ponents"
 msgstr "구성 요소 편집(_P)"
 
 # 구성 요소를 만들거나 제거합니다
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
-#| msgid "Error removing component"
 msgid "Create and remove components"
 msgstr "구성 요소를 제거하는 중 오류 발생"
 
@@ -5186,12 +4962,10 @@ msgid "Measure RAID array performance"
 msgstr "RAID 배열 성능 측정"
 
 #: ../src/palimpsest/gdu-section-volumes.c:115
-#| msgid "Error unmounting device"
 msgid "Error unmounting volume"
 msgstr "볼륨을 언마운트하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:171
-#| msgid "Error formatting volume"
 msgid "Error mounting volume"
 msgstr "볼륨을 마운트하는 중 오류 발생"
 
@@ -5200,23 +4974,19 @@ msgid "Error deleting partition"
 msgstr "파티션을 지우는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:263
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the partition?"
 msgstr "이 파티션을 지우시겠습니까?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:264
 #: ../src/palimpsest/gdu-section-volumes.c:1788
-#| msgid "_Detect Media"
 msgid "_Delete"
 msgstr "삭제(_D)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:317
-#| msgid "Error setting file system label"
 msgid "Error creating filesystem"
 msgstr "파일 시스템을 만드는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:370
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to format the volume?"
 msgstr "이 볼륨을 포맷하시겠습니까?"
 
@@ -5225,22 +4995,18 @@ msgid "Error modifying partition"
 msgstr "파티션을 수정하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:519
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to forget the passphrase?"
 msgstr "비밀 번호를 삭제하시겠습니까?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:520
-#| msgid "_Format"
 msgid "_Forget"
 msgstr "지움(_F)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:550
-#| msgid "Error formatting volume"
 msgid "Error locking LUKS volume"
 msgstr "LUKS 볼륨을 잠그는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:673
-#| msgid "Error unlocking device"
 msgid "Error unlocking LUKS volume"
 msgstr "LUKS 볼륨을 푸는 중 오류 발생"
 
@@ -5249,12 +5015,10 @@ msgid "Error creating partition"
 msgstr "파티션을 만드는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1140
-#| msgid "Error creating partition table"
 msgid "Error changing label"
 msgstr "레이블을 변경하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1195
-#| msgid "The requested filesystem label"
 msgid "Choose a new filesystem label."
 msgstr "새 파일 시스템 레이블을 선택하십시오."
 
@@ -5263,13 +5027,11 @@ msgid "_Label:"
 msgstr "레이블(_L):"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1241
-#| msgid "Error checking file system on device"
 msgid "Error checking filesystem on volume"
 msgstr "볼륨의 파일 시스템을 검사하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
-#| msgid "File system check on \"%s\" completed"
 msgid "File system check on \"%s\" (%s) completed"
 msgstr "\"%s\" (%s)의 파일 시스템 검사가 완료되었습니다"
 
@@ -5287,17 +5049,14 @@ msgid "Error spawning nautilus: %s"
 msgstr "파일 탐색기를 실행하는 중 오류 발생: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1435
-#| msgid "Error formatting volume"
 msgid "Error creating Logical Volume"
 msgstr "논리 볼륨을 만드는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1588
-#| msgid "Error formatting volume"
 msgid "Error stopping Logical Volume"
 msgstr "논리 볼륨을 중지하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1634
-#| msgid "Error formatting volume"
 msgid "Error starting Logical Volume"
 msgstr "논리 볼륨을 시작하는 중 오류 발생"
 
@@ -5310,42 +5069,34 @@ msgid "Choose a new name for the Logical Volume."
 msgstr "논리 볼륨에서 사용할 새 이름을 선택합니다."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1754
-#| msgid "Error deleting partition"
 msgid "Error deleting Logical Volume"
 msgstr "논리 볼륨을 지우는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1787
-#| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the logical volume?"
 msgstr "이 논리 볼륨을 지우시겠습니까?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1906
-#| msgid "Model Name:"
 msgid "Volume Name:"
 msgstr "볼륨 이름:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1912
-#| msgid "Use"
 msgid "Usage:"
 msgstr "사용법:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1922
-#| msgid "Partitioned"
 msgid "Partition Type:"
 msgstr "파티션 형식:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1928
-#| msgid "Part_ition Label:"
 msgid "Partition Label:"
 msgstr "파티션 레이블:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1931
-#| msgid "Part_ition Label:"
 msgid "Partition Flags:"
 msgstr "파티션 플래그:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1956
-#| msgid "_Type:"
 msgid "Type:"
 msgstr "형식:"
 
@@ -5354,7 +5105,6 @@ msgid "Available:"
 msgstr "이용가능:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1962
-#| msgid "_Label:"
 msgid "Label:"
 msgstr "레이블:"
 
@@ -5363,21 +5113,17 @@ msgid "Mount Point:"
 msgstr "마운트 위치:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1986
-#| msgctxt "RAID status"
-#| msgid "Running"
 msgctxt "LVM2 LV State"
 msgid "Running"
 msgstr "실행 중"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1987
-#| msgid "Not running"
 msgctxt "LVM2 LV State"
 msgid "Not Running"
 msgstr "실행되지 않음"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2026
-#| msgid "_Bootable"
 msgid "Bootable"
 msgstr "부팅 가능"
 
@@ -5388,8 +5134,6 @@ msgstr "필수"
 
 #. Translators: This is for the 'allocated' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2032
-#| msgctxt "Linux MD slave state"
-#| msgid "Blocked"
 msgid "Allocated"
 msgstr "할당됨"
 
@@ -5409,7 +5153,6 @@ msgid "Boot Code PIC"
 msgstr "부트 코드 PIC"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2115
-#| msgid "%s Filesystem"
 msgid "Filesystem"
 msgstr "파일 시스템"
 
@@ -5434,7 +5177,6 @@ msgid "Mounted at %s"
 msgstr "%s에 마운트됨"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2170
-#| msgid "Not Partitioned"
 msgid "Not Mounted"
 msgstr "마운트되지 않음"
 
@@ -5447,77 +5189,62 @@ msgid "Encrypted Volume (Unlocked)"
 msgstr "암호화된 볼륨 (풀림)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2196
-#| msgid "Stop the array"
 msgid "Go to array"
 msgstr "배열로 이동합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2204
-#| msgid "Contains logical partitions"
 msgid "Container for Logical Partitions"
 msgstr "논리 파티션의 컨테이너"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2321
-#| msgid "LVM2 Physical Volume"
 msgid "Logical _Volumes"
 msgstr "논리 볼륨(_V)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2323
-#| msgid "Volume"
 msgid "_Volumes"
 msgstr "볼륨(_V)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2387
-#| msgid "Mounting volume..."
 msgid "_Mount Volume"
 msgstr "볼륨 마운트(_M)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2388
-#| msgid "Mounting volume..."
 msgid "Mount the volume"
 msgstr "볼륨을 마운트합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2397
-#| msgid "Cannot unmount volume"
 msgid "Un_mount Volume"
 msgstr "볼륨 언마운트(_M)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2398
-#| msgid "Unmount the filesystem"
 msgid "Unmount the volume"
 msgstr "볼륨을 언마운트합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2407
-#| msgid "Format %s Volume (%s)"
 msgid "Fo_rmat Volume"
 msgstr "볼륨 포맷(_R)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2408
-#| msgid "Error formatting volume"
 msgid "Erase or format the volume"
 msgstr "볼륨을 포맷 혹은 삭제하는 중 오류 발생"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2417
-#| msgid "_Check File System"
 msgid "_Check Filesystem"
 msgstr "파일 시스템 검사(_C)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2418
-#| msgid "Check the file system"
 msgid "Check and repair the filesystem"
 msgstr "파일 시스템을 검사 및 수리합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2428
-#| msgid "Filesystem label"
 msgid "Edit Filesystem _Label"
 msgstr "파일 시스템 레이블 편집(_L)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2429
-#| msgid "Check the file system"
 msgid "Change the label of the filesystem"
 msgstr "파일 시스템의 레이블을 바꿉니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2438
-#| msgid "Empty Partition"
 msgid "Ed_it Partition"
 msgstr "파티션 편집(_I)"
 
@@ -5526,7 +5253,6 @@ msgid "Change partition type, label and flags"
 msgstr "파티션 형식, 레이블, 플래그를 바꿉니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2448
-#| msgid "_Delete Partition"
 msgid "D_elete Partition"
 msgstr "파티션 삭제(_E)"
 
@@ -5535,27 +5261,22 @@ msgid "Delete the partition"
 msgstr "파티션을 지웁니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2458
-#| msgid "Create Partition"
 msgid "_Create Partition"
 msgstr "파티션 만들기(_C)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2459
-#| msgid "Create partition"
 msgid "Create a new partition"
 msgstr "파티션을 만듭니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2468
-#| msgid "Volume"
 msgid "_Lock Volume"
 msgstr "볼륨 잠그기(_L)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2469
-#| msgid "Lock the encrypted device, making the cleartext data unavailable"
 msgid "Make encrypted data unavailable"
 msgstr "암호화된 데이터를 이용할 수 없게 합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2478
-#| msgid "Volume"
 msgid "Un_lock Volume"
 msgstr "볼륨 풀기(_L)"
 
@@ -5564,17 +5285,14 @@ msgid "Make encrypted data available"
 msgstr "암호화된 데이터를 이용할 수 있게 합니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2488
-#| msgid "F_orget Passphrase"
 msgid "Forge_t Passphrase"
 msgstr "암호문 지우기(_T)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2489
-#| msgid "Error storing passphrase in keyring"
 msgid "Delete passphrase from keyring"
 msgstr "암호문을 키 모음에서 지웁니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2500
-#| msgid "Change _Passphrase"
 msgid "Change passphrase"
 msgstr "암호문 바꾸기"
 
@@ -5587,7 +5305,6 @@ msgid "Create a new logical volume"
 msgstr "새 논리 볼륨을 만듭니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2519
-#| msgid "Volume"
 msgid "S_tart Volume"
 msgstr "볼륨 시작(_T)"
 
@@ -5600,12 +5317,10 @@ msgid "Edit Vol_ume Name"
 msgstr "볼륨 이름 편집(_U)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2531
-#| msgid "Cannot unmount volume"
 msgid "Change the name of the volume"
 msgstr "볼륨의 이름을 바꿉니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2540
-#| msgid "New Volume"
 msgid "D_elete Volume"
 msgstr "볼륨 삭제(_E)"
 
@@ -5614,7 +5329,6 @@ msgid "Delete the Logical Volume"
 msgstr "논리 볼륨을 지웁니다"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2550
-#| msgid "Volume"
 msgid "Sto_p Volume"
 msgstr "볼륨 중지(_P)"
 
@@ -5627,7 +5341,6 @@ msgstr "논리 볼륨을 비활성화합니다"
 #.
 #: ../src/palimpsest/gdu-shell.c:290
 #, c-format
-#| msgid "Disk Utility"
 msgid "%s — Disk Utility"
 msgstr "%s — 디스크 도구"
 
@@ -5668,7 +5381,6 @@ msgstr "%s (%s) [%s] — 디스크 도구"
 #.
 #: ../src/palimpsest/gdu-shell.c:338
 #, c-format
-#| msgid "Disk Utility"
 msgid "%s (%s) — Disk Utility"
 msgstr "%s (%s) — 디스크 도구"
 
@@ -5698,17 +5410,14 @@ msgid "Manage storage devices on another machine"
 msgstr "다른 머신 내의 저장 장치를 관리합니다"
 
 #: ../src/palimpsest/gdu-shell.c:839
-#| msgid "Create"
 msgid "_Create"
 msgstr "만들기(_C)"
 
 #: ../src/palimpsest/gdu-shell.c:840
-#| msgid "RAID Array"
 msgid "_RAID Array..."
 msgstr "RAID 배열(_R)..."
 
 #: ../src/palimpsest/gdu-shell.c:840
-#| msgid "Create RAID Array"
 msgid "Create a RAID array"
 msgstr "RAID 배열을 만듭니다"
 
@@ -5729,7 +5438,6 @@ msgid "Quit"
 msgstr "종료합니다"
 
 #: ../src/palimpsest/gdu-shell.c:845
-#| msgid "Get Help on Palimpsest Disk Utility"
 msgid "Get Help on Disk Utility"
 msgstr "디스크 도구에 대한 도움말을 봅니다"
 
@@ -5778,7 +5486,6 @@ msgid "_Details:"
 msgstr "세부 정보(_D):"
 
 #: ../src/palimpsest/gdu-shell.c:1163
-#| msgid "Detaching Device"
 msgid "_Storage Devices"
 msgstr "저장 장치(_S)"
 

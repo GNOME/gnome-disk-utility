@@ -461,7 +461,7 @@ update_notification (NotificationData *data)
 {
         int num_drives;
 
-        if (g_list_length (data->ata_smart_failures) == 0) {
+        if (data->ata_smart_failures == NULL) {
                 if (data->ata_smart_notification != NULL) {
                         notify_notification_close (data->ata_smart_notification, NULL);
                         g_object_unref (data->ata_smart_notification);

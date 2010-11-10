@@ -25,7 +25,6 @@
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
-#include <X11/XKBlib.h>
 
 #include <gdu-gtk/gdu-gtk.h>
 
@@ -259,26 +258,6 @@ gdu_volume_grid_constructed (GObject *object)
 }
 
 static gboolean
-is_ctrl_pressed (void)
-{
-        gboolean ret;
-        XkbStateRec state;
-        Bool status;
-
-        ret = FALSE;
-
-        gdk_error_trap_push ();
-        status = XkbGetState (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), XkbUseCoreKbd, &state);
-        gdk_error_trap_pop ();
-
-        if (status == Success) {
-                ret = ((state.mods & ControlMask) != 0);
-        }
-
-        return ret;
-}
-
-static gboolean
 gdu_volume_grid_key_press_event (GtkWidget      *widget,
                                  GdkEventKey    *event)
 {
@@ -332,7 +311,7 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
                 }
 
                 if (target != NULL) {
-                        if (is_ctrl_pressed ()) {
+                        if ((event->state & GDK_CONTROL_MASK) != 0) {
                                 grid->priv->focused = target;
                         } else {
                                 grid->priv->selected = target;

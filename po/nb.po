@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility 2.29.x\n"
+"Project-Id-Version: gnome-disk-utility 2.92.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-17 08:39+0200\n"
-"PO-Revision-Date: 2010-09-17 08:46+0200\n"
+"POT-Creation-Date: 2010-11-20 14:18+0100\n"
+"PO-Revision-Date: 2010-11-20 14:23+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmal <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -21,9 +21,10 @@ msgstr ""
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
-#: ../src/palimpsest/gdu-shell.c:1114
+#: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
+#: ../src/palimpsest/gdu-shell.c:269 ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:803 ../src/palimpsest/gdu-shell.c:1114
 msgid "Disk Utility"
 msgstr "Diskverktøy"
 
@@ -166,7 +167,7 @@ msgstr "Feil under lagring av passord på nøkkelring"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
 msgid "The RAID Array to add a component to."
-msgstr ""
+msgstr "RAID-sett du vil legge til en komponent i"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
 #, c-format
@@ -188,7 +189,9 @@ msgstr "Utvid %s"
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
 "\" (%s)"
-msgstr "Velg en eller flere enheter du vil bruke %s på for å utvide RAID-array «%s» (%s) "
+msgstr ""
+"Velg en eller flere enheter du vil bruke %s på for å utvide RAID-array "
+"«%s» (%s) "
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
 msgid "_Expand"
@@ -1175,7 +1178,7 @@ msgstr "SMART-data er ikke korrekt utformet"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2033
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2042
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2104
-#: ../src/gdu-gtk/gdu-volume-grid.c:1321 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-volume-grid.c:1300 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -1958,36 +1961,32 @@ msgid "Add _Spare"
 msgstr "Legg til re_serve"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
-#, fuzzy
 msgid "Add a spare to the array"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Legg til en reserve i settet"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "_Expand Array"
 msgstr "_Utvid array"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
-#, fuzzy
 msgid "Increase the capacity of the array"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Øk kapasiteten for settet"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "_Attach Component"
 msgstr "_Legg til komponent"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
-#, fuzzy
 msgid "Attach the component to the array"
-msgstr "Er du sikker på at du vil slette %1?"
+msgstr "Legg til komponenten i settet"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "_Remove Component"
 msgstr "Fje_rn komponent"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
-#, fuzzy
 msgid "Remove the component from the array"
-msgstr "Er du sikker på at du vil slette %1?"
+msgstr "Fjern komponenten fra settet"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
 msgid "Part_ition Label:"
@@ -2493,17 +2492,17 @@ msgid_plural "%d hours ago"
 msgstr[0] "%d time siden"
 msgstr[1] "%d timer siden"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:504
+#: ../src/gdu-gtk/gdu-volume-grid.c:483
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
 msgstr "Stasjon"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:505
+#: ../src/gdu-gtk/gdu-volume-grid.c:484
 msgid "Drive to show volumes for"
 msgstr "Vis volumer for stasjon"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1195
+#: ../src/gdu-gtk/gdu-volume-grid.c:1174
 msgid "RAID Array is not running"
 msgstr ""
 
@@ -2511,31 +2510,31 @@ msgstr ""
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1198 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1177 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "Ingen media funnet"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1283
+#: ../src/gdu-gtk/gdu-volume-grid.c:1262
 msgid "Extended"
 msgstr "Utvidet"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1291
+#: ../src/gdu-gtk/gdu-volume-grid.c:1270
 msgid "Encrypted"
 msgstr "Kryptert"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1305 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1284 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID-komponent"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1313
+#: ../src/gdu-gtk/gdu-volume-grid.c:1292
 msgid "Free"
 msgstr "Ledig"
 
@@ -3505,14 +3504,12 @@ msgid "Apple Boot Partition"
 msgstr "Apple oppstartspartisjon"
 
 #: ../src/gdu/gdu-util.c:481
-#, fuzzy
 msgid "Apple Label Partition"
-msgstr "Apple UFS-partisjon"
+msgstr "Apple etikettpartisjon"
 
 #: ../src/gdu/gdu-util.c:482
-#, fuzzy
 msgid "Apple TV Recovery Partition"
-msgstr "Apple RAID-partisjon"
+msgstr "Gjenopprettingspartisjon for Apple TV"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:484
@@ -4348,20 +4345,27 @@ msgid ""
 "disconnecting the device."
 msgstr ""
 
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "En eller flere disker feiler"
-
 #. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "En harddisk feiler muligvis"
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr ""
 
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr ""
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
+msgstr ""
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr ""
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
 msgstr ""
 
 #: ../src/palimpsest/gdu-main.c:127
@@ -4768,14 +4772,12 @@ msgid "Idle"
 msgstr "Ledig"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
-#, fuzzy
 msgid "Error stopping RAID Array"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Feil ved stopp av RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:360
-#, fuzzy
 msgid "Error starting RAID Array"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Feil ved oppstart av RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:390
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:393
@@ -4793,14 +4795,12 @@ msgid "_Start"
 msgstr "S_tart"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:455
-#, fuzzy
 msgid "Error deleting partition for component in RAID Array"
-msgstr "Feil under oppretting av partisjonstabell"
+msgstr "Feil under sletting partisjon for komponent i RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:478
-#, fuzzy
 msgid "Error removing component from RAID Array"
-msgstr "Feil under oppretting av partisjonstabell"
+msgstr "Feil under fjerning av komponent fra RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:529
 msgid "Are you sure you want the remove the component?"
@@ -4844,29 +4844,24 @@ msgid "Components:"
 msgstr "Komponenter:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
-#, fuzzy
 msgid "St_art RAID Array"
-msgstr "Programvare-RAID-enhet"
+msgstr "St_art RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
-#, fuzzy
 msgid "Bring up the RAID Array"
-msgstr "Lag RAID-sett"
+msgstr "Ta opp RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
-#, fuzzy
 msgid "St_op RAID Array"
-msgstr "RAID-array"
+msgstr "St_opp RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
-#, fuzzy
 msgid "Tear down the RAID Array"
-msgstr "Lag RAID-sett"
+msgstr "Ta fra hverandre RAID-settet"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
-#, fuzzy
 msgid "Format/Erase RAI_D Array"
-msgstr "Lag RAID-sett"
+msgstr "Formater/slett RAID-sett"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
@@ -5120,9 +5115,8 @@ msgid "Encrypted Volume (Unlocked)"
 msgstr "Kryptert volum (ikke låst)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2196
-#, fuzzy
 msgid "Go to array"
-msgstr "Stopp"
+msgstr "Gå til sett"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2204
 msgid "Container for Logical Partitions"
@@ -5317,9 +5311,8 @@ msgid "%s (%s) — Disk Utility"
 msgstr "%s (%s) - Diskverktøy"
 
 #: ../src/palimpsest/gdu-shell.c:626
-#, fuzzy
 msgid "Error creating RAID array"
-msgstr "Feil ved oppretting av partisjon"
+msgstr "Feil ved oppretting av RAID-sett"
 
 #: ../src/palimpsest/gdu-shell.c:755
 #, c-format
@@ -5347,12 +5340,10 @@ msgid "_Create"
 msgstr "_Lag"
 
 #: ../src/palimpsest/gdu-shell.c:840
-#, fuzzy
 msgid "_RAID Array..."
-msgstr "_RAID-array..."
+msgstr "_RAID-sett..."
 
 #: ../src/palimpsest/gdu-shell.c:840
-#, fuzzy
 msgid "Create a RAID array"
 msgstr "Lag RAID-sett"
 

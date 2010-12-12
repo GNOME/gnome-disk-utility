@@ -345,7 +345,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
 
         dialog = gtk_dialog_new_with_buttons (window_title,
                                               GTK_WINDOW (parent_window),
-                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                                               NULL);
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
@@ -581,7 +581,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 
         dialog = gtk_dialog_new_with_buttons (window_title,
                                               GTK_WINDOW (parent_window),
-                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                                               GTK_STOCK_CANCEL,
                                               GTK_RESPONSE_CANCEL,
                                               NULL);
@@ -1161,7 +1161,7 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
 
         dialog = gtk_dialog_new_with_buttons (title,
                                               GTK_WINDOW (parent_window),
-                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                              GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                                               NULL);
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));

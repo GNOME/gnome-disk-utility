@@ -31,7 +31,6 @@
 
 #include "gdu-time-label.h"
 #include "gdu-ata-smart-dialog.h"
-#include "gdu-spinner.h"
 #include "gdu-pool-tree-model.h"
 #include "gdu-details-table.h"
 #include "gdu-details-element.h"
@@ -1110,7 +1109,7 @@ on_self_test_button_clicked (GduButtonElement *button_element,
 
         test_dialog = gtk_dialog_new_with_buttons (NULL,
                                                    GTK_WINDOW (dialog),
-                                                   GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_NO_SEPARATOR,
+                                                   GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
                                                    NULL);
         gtk_window_set_title (GTK_WINDOW (test_dialog), "");
 

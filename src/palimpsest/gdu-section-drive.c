@@ -397,13 +397,13 @@ gdu_section_drive_update (GduSection *_section)
         if (show_multipath_component_warning_info_bar) {
                 gtk_widget_show_all (section->priv->multipath_component_warning_info_bar);
         } else {
-                gtk_widget_hide_all (section->priv->multipath_component_warning_info_bar);
+                gtk_widget_hide (section->priv->multipath_component_warning_info_bar);
         }
 
         if (show_multipath_component_info_bar) {
                 gtk_widget_show_all (section->priv->multipath_component_info_bar);
         } else {
-                gtk_widget_hide_all (section->priv->multipath_component_info_bar);
+                gtk_widget_hide (section->priv->multipath_component_info_bar);
         }
 
         gtk_widget_set_sensitive (section->priv->drive_label, !make_insensitive);

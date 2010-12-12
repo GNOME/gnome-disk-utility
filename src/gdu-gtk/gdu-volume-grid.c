@@ -127,8 +127,8 @@ static GridElement *find_element_for_position (GduVolumeGrid *grid,
                                                guint x,
                                                guint y);
 
-static gboolean gdu_volume_grid_expose_event (GtkWidget           *widget,
-                                              GdkEventExpose      *event);
+static gboolean gdu_volume_grid_draw (GtkWidget *widget,
+                                      cairo_t   *cr);
 
 static void on_presentable_added        (GduPool        *pool,
                                          GduPresentable *p,
@@ -271,10 +271,10 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
                 goto out;
 
         switch (event->keyval) {
-        case GDK_Left:
-        case GDK_Right:
-        case GDK_Up:
-        case GDK_Down:
+        case GDK_KEY_Left:
+        case GDK_KEY_Right:
+        case GDK_KEY_Up:
+        case GDK_KEY_Down:
                 target = NULL;
 
                 if (grid->priv->focused == NULL) {
@@ -284,25 +284,25 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
 
                         element = grid->priv->focused;
                         if (element != NULL) {
-                                if (event->keyval == GDK_Left) {
+                                if (event->keyval == GDK_KEY_Left) {
                                         if (element->prev != NULL) {
                                                 target = element->prev;
                                         } else {
                                                 if (element->parent && element->parent->prev != NULL)
                                                         target = element->parent->prev;
                                         }
-                                } else if (event->keyval == GDK_Right) {
+                                } else if (event->keyval == GDK_KEY_Right) {
                                         if (element->next != NULL) {
                                                 target = element->next;
                                         } else {
                                                 if (element->parent && element->parent->next != NULL)
                                                         target = element->parent->next;
                                         }
-                                } else if (event->keyval == GDK_Up) {
+                                } else if (event->keyval == GDK_KEY_Up) {
                                         if (element->parent != NULL) {
                                                 target = element->parent;
                                         }
-                                } else if (event->keyval == GDK_Down) {
+                                } else if (event->keyval == GDK_KEY_Down) {
                                         if (element->embedded_elements != NULL) {
                                                 target = (GridElement *) element->embedded_elements->data;
                                         }
@@ -325,8 +325,8 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
                 handled = TRUE;
                 break;
 
-        case GDK_Return:
-        case GDK_space:
+        case GDK_KEY_Return:
+        case GDK_KEY_space:
                 if (grid->priv->focused != grid->priv->selected &&
                     grid->priv->focused != NULL) {
                         grid->priv->selected = grid->priv->focused;
@@ -408,9 +408,8 @@ gdu_volume_grid_realize (GtkWidget *widget)
                 GDK_ENTER_NOTIFY_MASK |
                 GDK_LEAVE_NOTIFY_MASK;
         attributes.visual = gtk_widget_get_visual (widget);
-        attributes.colormap = gtk_widget_get_colormap (widget);
 
-        attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+        attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
 
         window = gtk_widget_get_parent_window (widget);
         gtk_widget_set_window (widget, window);
@@ -458,6 +457,33 @@ gdu_volume_grid_size_request (GtkWidget      *widget,
         requisition->width = num_elements * ELEMENT_MINIMUM_WIDTH;
 }
 
+
+static void
+gdu_volume_grid_get_preferred_width (GtkWidget *widget,
+                                     gint      *minimal_width,
+                                     gint      *natural_width)
+{
+  GtkRequisition requisition;
+
+  gdu_volume_grid_size_request (widget, &requisition);
+
+  *minimal_width = *natural_width = requisition.width;
+}
+
+
+static void
+gdu_volume_grid_get_preferred_height (GtkWidget *widget,
+                                      gint      *minimal_height,
+                                      gint      *natural_height)
+{
+  GtkRequisition requisition;
+
+  gdu_volume_grid_size_request (widget, &requisition);
+
+  *minimal_height = *natural_height = requisition.height;
+}
+
+
 static void
 gdu_volume_grid_class_init (GduVolumeGridClass *klass)
 {
@@ -471,11 +497,12 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
         object_class->constructed  = gdu_volume_grid_constructed;
         object_class->finalize     = gdu_volume_grid_finalize;
 
-        widget_class->realize            = gdu_volume_grid_realize;
-        widget_class->key_press_event    = gdu_volume_grid_key_press_event;
-        widget_class->button_press_event = gdu_volume_grid_button_press_event;
-        widget_class->size_request       = gdu_volume_grid_size_request;
-        widget_class->expose_event       = gdu_volume_grid_expose_event;
+        widget_class->realize              = gdu_volume_grid_realize;
+        widget_class->key_press_event      = gdu_volume_grid_key_press_event;
+        widget_class->button_press_event   = gdu_volume_grid_button_press_event;
+        widget_class->get_preferred_width  = gdu_volume_grid_get_preferred_width;
+        widget_class->get_preferred_height = gdu_volume_grid_get_preferred_height;
+        widget_class->draw                 = gdu_volume_grid_draw;
 
         g_object_class_install_property (object_class,
                                          PROP_DRIVE,
@@ -1455,12 +1482,11 @@ render_slice (GduVolumeGrid *grid,
 }
 
 static gboolean
-gdu_volume_grid_expose_event (GtkWidget           *widget,
-                              GdkEventExpose      *event)
+gdu_volume_grid_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
         GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
         GtkAllocation allocation;
-        cairo_t *cr;
         gdouble width;
         gdouble height;
         gboolean need_animation_timeout;
@@ -1473,15 +1499,7 @@ gdu_volume_grid_expose_event (GtkWidget           *widget,
                         width - 1,
                         height -1);
 
-        cr = gdk_cairo_create (gtk_widget_get_window (widget));
-        cairo_rectangle (cr,
-                         event->area.x, event->area.y,
-                         event->area.width, event->area.height);
-        cairo_clip (cr);
-
         need_animation_timeout = render_slice (grid, cr, grid->priv->elements);
-
-        cairo_destroy (cr);
 
         if (need_animation_timeout) {
                 if (grid->priv->animation_timeout_id == 0) {

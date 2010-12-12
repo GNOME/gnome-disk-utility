@@ -2266,7 +2266,7 @@ gdu_section_volumes_update (GduSection *_section)
         if (show_misaligned_warning_info_bar) {
                 gtk_widget_show_all (section->priv->misaligned_warning_info_bar);
         } else {
-                gtk_widget_hide_all (section->priv->misaligned_warning_info_bar);
+                gtk_widget_hide (section->priv->misaligned_warning_info_bar);
         }
 
         if (d != NULL)

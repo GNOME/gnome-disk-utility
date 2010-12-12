@@ -32,7 +32,6 @@
 
 #include "gdu-time-label.h"
 #include "gdu-drive-benchmark-dialog.h"
-#include "gdu-spinner.h"
 #include "gdu-details-table.h"
 #include "gdu-details-element.h"
 

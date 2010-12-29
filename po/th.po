@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&component=general\n"
-"POT-Creation-Date: 2010-03-24 14:59+0000\n"
-"PO-Revision-Date: 2010-04-10 09:54+0700\n"
-"Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
+"POT-Creation-Date: 2010-12-28 21:33+0000\n"
+"PO-Revision-Date: 2010-12-29 19:47+0700\n"
+"Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,9 +23,10 @@ msgstr ""
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
-#: ../src/palimpsest/gdu-shell.c:1114
+#: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
+#: ../src/palimpsest/gdu-shell.c:269 ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:803 ../src/palimpsest/gdu-shell.c:1114
 msgid "Disk Utility"
 msgstr "เครื่องมือดิสก์"
 
@@ -41,56 +42,56 @@ msgstr "การแจ้งเหตุดิสก์"
 msgid "Provides notifications related to disks"
 msgstr "บริการแจ้งเหตุเกี่ยวกับดิสก์"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:184
+#: ../src/format-tool/gdu-format-progress-dialog.c:183
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
 msgstr "เพื่อป้องกันข้อมูลเสียหาย กรุณารอให้เสร็จสิ้นก่อนที่จะเอาสื่อออกหรือปลดการเชื่อมต่ออุปกรณ์"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:216
-#: ../src/notification/gdu-slow-unmount-dialog.c:286
+#: ../src/format-tool/gdu-format-progress-dialog.c:215
+#: ../src/notification/gdu-slow-unmount-dialog.c:284
 msgid "Device"
 msgstr "อุปกรณ์"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:217
-#: ../src/notification/gdu-slow-unmount-dialog.c:287
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
+#: ../src/notification/gdu-slow-unmount-dialog.c:285
 msgid "The device to show the dialog for"
 msgstr "อุปกรณ์ที่จะทำงานด้วยในกล่องโต้ตอบ"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:229
+#: ../src/format-tool/gdu-format-progress-dialog.c:228
 msgid "text"
 msgstr "ข้อความ"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:230
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "Text to show"
 msgstr "ข้อความที่จะแสดง"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:113
 msgid "Error launching Disk Utility"
 msgstr "เกิดข้อผิดพลาดขณะเรียกเครื่องมือดิสก์"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:133
 msgid "Device to format"
 msgstr "อุปกรณ์ที่จะฟอร์แมต"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:127
+#: ../src/format-tool/gdu-format-tool.c:133 ../src/palimpsest/gdu-main.c:127
 #: ../src/palimpsest/gdu-main.c:128
 msgid "DEVICE"
 msgstr "อุปกรณ์"
 
-#: ../src/format-tool/gdu-format-tool.c:160
+#: ../src/format-tool/gdu-format-tool.c:163
 #, c-format
 msgid "Operation was canceled"
 msgstr "ปฏิบัติการถูกยกเลิก"
 
-#: ../src/format-tool/gdu-format-tool.c:251
+#: ../src/format-tool/gdu-format-tool.c:254
 msgid "Gnome Disk Utility formatting tool"
 msgstr "เครื่องมือฟอร์แมตของเครื่องมือดิสก์ GNOME"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:300
+#: ../src/format-tool/gdu-format-tool.c:303
 #, c-format
 msgid "Format partition %d of %s (%s)"
 msgstr "ฟอร์แมตพาร์ทิชัน %d ของ %s (%s)"
@@ -98,69 +99,69 @@ msgstr "ฟอร์แมตพาร์ทิชัน %d ของ %s (%s)"
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:307
+#: ../src/format-tool/gdu-format-tool.c:310
 #, c-format
 msgid "Formatting partition %d of %s (%s)"
 msgstr "กำลังฟอร์แมตพาร์ทิชัน %d ของ %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:313
+#: ../src/format-tool/gdu-format-tool.c:316
 #, c-format
 msgid "Format %s (%s)"
 msgstr "ฟอร์แมต %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:317
+#: ../src/format-tool/gdu-format-tool.c:320
 #, c-format
 msgid "Formatting %s (%s)"
 msgstr "กำลังฟอร์แมต %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:323
+#: ../src/format-tool/gdu-format-tool.c:326
 #, c-format
 msgid "Format %s Volume (%s)"
 msgstr "ฟอร์แมตโวลุม %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:327
+#: ../src/format-tool/gdu-format-tool.c:330
 #, c-format
 msgid "Formatting %s Volume (%s)"
 msgstr "กำลังฟอร์แมตโวลุม %s (%s)"
 
-#: ../src/format-tool/gdu-format-tool.c:383
+#: ../src/format-tool/gdu-format-tool.c:386
 msgid "Preparing..."
 msgstr "กำลังเตรียมการ..."
 
-#: ../src/format-tool/gdu-format-tool.c:426
+#: ../src/format-tool/gdu-format-tool.c:429
 msgid "Unmounting..."
 msgstr "กำลังเลิกเมานท์..."
 
-#: ../src/format-tool/gdu-format-tool.c:444
+#: ../src/format-tool/gdu-format-tool.c:447
 #, c-format
 msgid "Unable to format '%s'"
 msgstr "ไม่สามารถฟอร์แมต '%s'"
 
-#: ../src/format-tool/gdu-format-tool.c:459
+#: ../src/format-tool/gdu-format-tool.c:462
 msgid "Formatting..."
 msgstr "กำลังฟอร์แมต..."
 
-#: ../src/format-tool/gdu-format-tool.c:476
+#: ../src/format-tool/gdu-format-tool.c:479
 msgid "Cancelling..."
 msgstr "กำลังยกเลิก..."
 
-#: ../src/format-tool/gdu-format-tool.c:486
+#: ../src/format-tool/gdu-format-tool.c:489
 msgid "Error formatting volume"
 msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตโวลุม"
 
-#: ../src/format-tool/gdu-format-tool.c:497
+#: ../src/format-tool/gdu-format-tool.c:500
 msgid "Mounting volume..."
 msgstr "กำลังเมานท์โวลุม..."
 
-#: ../src/format-tool/gdu-format-tool.c:521
+#: ../src/format-tool/gdu-format-tool.c:524
 msgid "Error mounting device"
 msgstr "เกิดข้อผิดพลาดขณะเมานท์อุปกรณ์"
 
-#: ../src/format-tool/gdu-format-tool.c:538
+#: ../src/format-tool/gdu-format-tool.c:541
 msgid "Error storing passphrase in keyring"
 msgstr "เกิดข้อผิดพลาดขณะเก็บวลีรหัสผ่านในพวงกุญแจ"
 
@@ -168,22 +169,22 @@ msgstr "เกิดข้อผิดพลาดขณะเก็บวลี
 msgid "The RAID Array to add a component to."
 msgstr "แอร์เรย์ RAID ที่จะเพิ่มองค์ประกอบ"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
 #, c-format
 msgid "Add spare to %s"
 msgstr "เพิ่มพื้นที่สำรองให้กับ %s"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 msgstr "เลือกอุปกรณ์ที่จะใช้เพิ่มพื้นที่สำรองขนาด %s สำหรับแอร์เรย์ RAID \"%s\" (%s)"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:237
 #, c-format
 msgid "Expand %s"
 msgstr "ขยาย %s"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
@@ -191,7 +192,7 @@ msgid ""
 msgstr ""
 "เลือกอุปกรณ์ตั้งแต่หนึ่งชิ้นขึ้นไปที่จะใช้สร้างเนื้อที่ %s สำหรับขยายแอร์เรย์ RAID \"%s\" (%s)"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
 msgid "_Expand"
 msgstr "_ขยาย"
 
@@ -199,12 +200,12 @@ msgstr "_ขยาย"
 msgid "The VG to add a PV to."
 msgstr "กลุ่มโวลุมที่จะเพิ่มโวลุมจริงเข้าไป"
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:249
 #, c-format
 msgid "Add Physical Volume to %s (%s)"
 msgstr "เพิ่มโวลุมจริงให้กับ %s (%s)"
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:266
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:265
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
 msgid "_Size:"
@@ -553,11 +554,11 @@ msgstr "จำนวนข้อผิดพลาดที่ไม่ได้
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
 msgid "Data Address Mark Errors"
-msgstr ""
+msgstr "ข้อผิดพลาดของ Data Address Mark"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:362
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
-msgstr ""
+msgstr "จำนวนข้อผิดพลาดของ Data Address Mark (DAM) (หรือค่าเฉพาะของผู้ผลิต)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -834,7 +835,7 @@ msgstr "ค่า:"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1636
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
 msgid "N/A"
 msgstr "N/A"
 
@@ -864,12 +865,12 @@ msgid "Error reading SMART data"
 msgstr "เกิดข้อผิดพลาดขณะอ่านข้อมูล SMART"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1135
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1141
 msgid "Choose SMART Self-test"
 msgstr "เลือกการทดสอบตัวเองของ SMART"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1146
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1152
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
@@ -879,22 +880,22 @@ msgstr ""
 "คุณสามารถใช้คอมพิวเตอร์ของคุณต่อไปได้ในระหว่างที่การทดสอบกำลังดำเนินการอยู่"
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1155
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
 msgid "_Short (usually less than ten minutes)"
 msgstr "_สั้น (ปกติจะต่ำกว่าสิบนาที)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1164
 msgid "_Extended (usually tens of minutes)"
 msgstr "_ขยาย (ปกติจะหลายสิบนาที)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1167
 msgid "C_onveyance (usually less than ten minutes)"
 msgstr "การขน_ส่ง (ปกติจะต่ำกว่าสิบนาที)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1169
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1175
 msgid "_Run Self Test"
 msgstr "เ_รียกการทดสอบตัวเอง"
 
@@ -902,18 +903,18 @@ msgstr "เ_รียกการทดสอบตัวเอง"
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1264
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1270
 #, c-format
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) – ข้อมูล SMART"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1286
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1290
 msgid "Updated:"
 msgstr "ปรับข้อมูลล่าสุด:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1293
 msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
@@ -922,186 +923,186 @@ msgstr ""
 "ถ้าดิสก์ไม่ได้หลับอยู่"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1295
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1299
 msgid "Self-tests:"
 msgstr "การทดสอบตัวเอง:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1302
 msgid "The result of the last self-test that ran on the disk"
 msgstr "ผลของการทดสอบตัวเองล่าสุดที่ทำกับดิสก์"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1303
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1307
 msgid "Powered On:"
 msgstr "เปิดทำงาน:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1310
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "ระยะเวลาที่ดิสก์อยู่ในสถานะเปิดทำงาน"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1315
 msgid "Power Cycles:"
 msgstr "รอบการปิด/เปิด:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1318
 msgid "The number of full disk power on/off cycles"
 msgstr "จำนวนรอบที่ดิสก์มีการปิด-เปิดทำงานเต็มที่"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1319
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1323
 msgid "Temperature:"
 msgstr "อุณหภูมิ:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1326
 msgid "The temperature of the disk"
 msgstr "อุณหภูมิของดิสก์"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1327
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1331
 msgid "Bad Sectors:"
 msgstr "เซ็กเตอร์เสีย:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1334
 msgid "The sum of pending and reallocated bad sectors"
 msgstr "จำนวนเซ็กเตอร์เสียที่อยู่ระหว่างรอจัดสรรใหม่หรือได้รับการจัดสรรใหม่แล้ว"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1335
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
 msgid "Self Assessment:"
 msgstr "การประเมินตัวเอง:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1342
 msgid "The assessment from the disk itself whether it is about to fail"
 msgstr "การประเมินจากตัวดิสก์เองว่ากำลังจะเสียหรือไม่"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
 msgid "Overall Assessment:"
 msgstr "การประเมินโดยรวม:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
 msgid "An overall assessment of the health of the disk"
 msgstr "การประเมินสุขภาพโดยรวมของดิสก์"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1361
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1365
 msgid "_Refresh"
 msgstr "เ_รียกใหม่"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1367
 msgid "Reads SMART Data, waking up the disk"
 msgstr "อ่านข้อมูล SMART ซึ่งจะปลุกดิสก์ให้ตื่นขึ้น"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1373
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1377
 msgid "Run _Self-test"
 msgstr "เรียกการทดสอบ_ตัวเอง"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1375
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1379
 msgid "Test the disk surface for errors"
 msgstr "ทดสอบผิวดิสก์เพื่อหาข้อผิดพลาด"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1385
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1389
 msgid "_Cancel Self-test"
 msgstr "_ยกเลิกการทดสอบตัวเอง"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1387
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1391
 msgid "Cancels the self-test"
 msgstr "ยกเลิกการทดสอบตัวเอง"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1405
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1409
 msgid "_Attributes"
 msgstr "แ_อตทริบิวต์"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1439
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1443
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1451
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1455
 msgid "Attribute"
 msgstr "แอตทริบิวต์"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1468
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1472
 msgid "Assessment"
 msgstr "การประเมิน"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1487
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1491
 msgid "Value"
 msgstr "ค่า"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1515
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1519
 msgid "Don't _warn if the disk is failing"
 msgstr "ไม่ต้องเ_ตือนถ้าดิสก์กำลังจะเสีย"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1517
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1521
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr "ไม่ต้องกาเลือกถ้าต้องการได้รับแจ้งเหตุเมื่อดิสก์เริ่มจะเสีย"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1582
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
 #, c-format
 msgid "%.1f years"
 msgstr "%.1f ปี"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f วัน"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f ชั่วโมง"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f นาที"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1602
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f วินาที"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1604
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1608
 #, c-format
 msgid "%s msec"
 msgstr "%s มิลลิวินาที"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1613
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1617
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1110,32 +1111,32 @@ msgstr[0] "%d เซ็กเตอร์"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1625
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1629
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1693
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "ถ้าล้มเหลวก็เป็นเครื่องหมายว่าดิสก์ใกล้จะเสีย (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1701
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "ถ้าล้มเหลวก็เป็นเครื่องหมายว่าดิสก์อายุมากแล้ว (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1703
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
 msgid "Every time data is collected (Online)"
 msgstr "ข้อมูลทุกครั้งจะถูกเก็บ (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1711
 msgid "Only during off-line activities (Not Online)"
 msgstr "เฉพาะระหว่างการกระทำออฟไลน์เท่านั้น (Not Online)"
 
@@ -1144,7 +1145,7 @@ msgstr "เฉพาะระหว่างการกระทำออฟไ
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1715
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1719
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1157,26 +1158,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1925
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1929
 msgid "No drive selected"
 msgstr "ไม่ได้เลือกไดรว์ใด"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1932
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
 msgid "SMART not supported"
 msgstr "ไม่รองรับ SMART"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1940
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1944
 msgid "SMART data never collected"
 msgstr "ยังไม่มีการเก็บข้อมูล SMART"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1947
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1953
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1951
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1957
 msgid "SMART data is malformed"
 msgstr "ข้อมูล SMART ผิดรูปแบบ"
 
@@ -1194,97 +1195,97 @@ msgstr "ข้อมูล SMART ผิดรูปแบบ"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1983
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2001
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2021
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
-#: ../src/gdu-gtk/gdu-volume-grid.c:1315 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1987
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2005
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2025
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2033
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2042
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2104
+#: ../src/gdu-gtk/gdu-volume-grid.c:1300 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1992
 msgid "Passed"
 msgstr "ผ่าน"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1994
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1998
 msgid "FAILING"
 msgstr "ล้มเหลว"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2006
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2010
 msgid "None"
 msgstr "ไม่มี"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2011
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2015
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
 msgstr[0] "เซ็กเตอร์เสีย %d เซ็กเตอร์"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2057
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
 msgid "Completed OK"
 msgstr "เสร็จสมบูรณ์เรียบร้อยดี"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
 msgid "Cancelled"
 msgstr "ยกเลิก"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
 msgid "Cancelled (with hard or soft reset)"
 msgstr "ยกเลิก (ด้วยการรีเซ็ตแบบฮาร์ดแวร์หรือซอฟต์แวร์)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "ไม่เสร็จสมบูรณ์ (อาจเกิดข้อผิดพลาดร้ายแรงขึ้น)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2077
 msgid "FAILED (Electrical)"
 msgstr "ล้มเหลว (ทางไฟฟ้า)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2078
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
 msgid "FAILED (Servo)"
 msgstr "ล้มเหลว (เซอร์โว)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2083
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2087
 msgid "FAILED (Read)"
 msgstr "ล้มเหลว (อ่าน)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2088
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2092
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "ล้มเหลว (อาจมีความเสียหายที่มีการจัดการไปแล้ว)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2093
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2097
 msgid "In progress"
 msgstr "กำลังดำเนินการ"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:171
 #, c-format
 msgid "This operation concerns the volume \"%s\" (%s)"
 msgstr "การกระทำนี้เกี่ยวข้องกับโวลุม \"%s\" (%s)"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:175
 #, c-format
 msgid "This operation concerns the drive \"%s\" (%s)"
 msgstr "การกระทำนี้เกี่ยวข้องกับไดรว์ \"%s\" (%s)"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:179
 #, c-format
 msgid "This operation concerns \"%s\" (%s)"
 msgstr "การกระทำนี้เกี่ยวข้องกับ \"%s\" (%s)"
@@ -1309,22 +1310,22 @@ msgstr "ที่อยู่ที่เลือก"
 msgid "Choose Server"
 msgstr "เลือกเซิร์ฟเวอร์"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:214
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:213
 msgid "Connect to Server"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:221
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:220
 msgid "_Browse..."
 msgstr "เ_รียกดู..."
 
 #. Translators: this is the tooltip for the "Browse..." button
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:233
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:232
 msgid "Browse servers discovered via the DNS-SD protocol"
 msgstr "เรียกดูรายชื่อเซิร์ฟเวอร์ที่ค้นพบผ่านโพรโทคอล DNS-SD"
 
 #. Translators: This is the label explaining the dialog
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:250
 msgid ""
 "To manage storage devices on another machine, enter the address and press "
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
@@ -1335,22 +1336,22 @@ msgstr ""
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:264
 msgid "The hostname or address to connect to"
 msgstr "ชื่อโฮสท์หรือที่อยู่ที่จะเชื่อมต่อไป"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:268
 msgid "Server _Address:"
 msgstr "_ที่อยู่เซิร์ฟเวอร์:"
 
 #. Translators: This is the tooltip for the "User Name" entry
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:287
 msgid "The user name to connect as"
 msgstr "ชื่อผู้ใช้ที่จะใช้เชื่อมต่อ"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:291
 msgid "_User Name:"
 msgstr "_ชื่อผู้ใช้:"
 
@@ -1371,7 +1372,7 @@ msgid "The requested Logical Volume size"
 msgstr "ขนาดโวลุมเสมือนที่ต้องการ"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:522
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
 msgid "C_reate"
@@ -1443,19 +1444,19 @@ msgstr "ไดรว์"
 msgid "Array of drives to use for the array"
 msgstr "แอร์เรย์ของไดรว์ที่จะใช้สำหรับแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:517
 msgid "Create RAID Array"
 msgstr "สร้างแอร์เรย์ RAID"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:535
 msgid "General"
 msgstr "ทั่วไป"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:554
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:556
 msgid "RAID _Level:"
 msgstr "_ระดับ RAID:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:593
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:595
 msgid "Array _Name:"
 msgstr "_ชื่อแอร์เรย์:"
 
@@ -1463,65 +1464,65 @@ msgstr "_ชื่อแอร์เรย์:"
 #. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
 #. * 32 bytes since that's the on-disk-format limit.
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:601
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:603
 msgid "New RAID Array"
 msgstr "แอร์เรย์ RAID ใหม่"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:617
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:619
 msgid "Stripe S_ize:"
 msgstr "_ขนาด stripe:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:627
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
 msgid "4 KiB"
 msgstr "4 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
 msgid "8 KiB"
 msgstr "8 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
 msgid "16 KiB"
 msgstr "16 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
 msgid "32 KiB"
 msgstr "32 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
 msgid "64 KiB"
 msgstr "64 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
 msgid "128 KiB"
 msgstr "128 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
 msgid "256 KiB"
 msgstr "256 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
 msgid "512 KiB"
 msgstr "512 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:645
 msgid "1 MiB"
 msgstr "1 MiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:661
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:663
 msgid "Array _Size:"
 msgstr "_ขนาดแอร์เรย์:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:690
 msgid "_Disks"
 msgstr "_ดิสก์"
 
 #. --------------------------------------------------------------------------------
 #. TODO: Actually make this work
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:706
 msgid "Use entire disks instead of _partitions"
 msgstr "ใช้ดิสก์ทั้งหมดแทนการใช้_พาร์ทิชัน"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:705
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:707
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1532,18 +1533,18 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:874
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:876
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr "จำนวนดิสก์ไม่พอที่จะสร้างแอร์เรย์ %s"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:890
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
 msgstr[0] "เพื่อจะสร้างแอร์เรย์ %s กรุณาเลือกดิสก์ %d ดิสก์"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:897
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1554,7 +1555,7 @@ msgstr[0] "เพื่อจะสร้างแอร์เรย์ %s ก�
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:921
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:923
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr "เพื่อจะสร้างแอร์เรย์ %2$s ขนาด %1$s บนดิสก์ %3$d ดิสก์ กรุณากด \"สร้าง\""
@@ -1761,16 +1762,16 @@ msgstr "อุปกรณ์เก็บข้อมูล"
 msgid "Details"
 msgstr "รายละเอียด"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:527
 msgid "Error benchmarking drive"
 msgstr "เกิดข้อผิดพลาดขณะตรวจวัดไดรว์"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
 msgid "Are you sure you want to start a read/write benchmark?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการเริ่มการตรวจวัดการอ่าน-เขียน?"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:596
 #: ../src/palimpsest/gdu-section-drive.c:1004
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
@@ -1781,7 +1782,7 @@ msgstr "_ตรวจวัด"
 #. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
 #. * or "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:685
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:687
 #, c-format
 msgid "%s (%s) – Benchmark"
 msgstr "%s (%s) – การตรวจวัด"
@@ -1837,38 +1838,38 @@ msgid "Measure read rate, write rate and access time"
 msgstr "วัดอัตราการอ่าน อัตราการเขียน และเวลาเข้าถึง"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:951
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:952
 #, c-format
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:956
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:957
 #, c-format
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1236
 msgid "Never"
 msgstr "ไม่เคย"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1308
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1310
 msgid "Cancel"
 msgstr "ยกเลิก"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1313
 msgid "Cancels the currently running benchmark"
 msgstr "ยกเลิกการตรวจวัดที่กำลังดำเนินอยู่"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
-#: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:217
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:299
 #, c-format
 msgid "Edit %s"
 msgstr "แก้ไข %s"
@@ -1882,204 +1883,204 @@ msgstr "ไม่พบโวลุมจริง"
 msgid "UUID: %s"
 msgstr "UUID: %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:332
 #, c-format
 msgid "Edit PVs on %s (%s)"
 msgstr "แก้ไขโวลุมจริงใน %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:343
 msgid "Physical _Volumes"
 msgstr "โ_วลุมจริง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:372
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:373
 msgid "Physical Volume"
 msgstr "โวลุมจริง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:389
 msgid "Capacity"
 msgstr "ความจุ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:397
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:398
 msgid "Unallocated"
 msgstr "พื้นที่ว่าง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:449
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
 #: ../src/palimpsest/gdu-section-drive.c:935
 msgid "SMART Status:"
 msgstr "สถานะ SMART:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:415
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:461
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
 #: ../src/palimpsest/gdu-section-drive.c:911
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "อุปกรณ์:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:428
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
 msgid "_New Physical Volume"
 msgstr "_สร้างโวลุมจริง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:430
 msgid "Add a new PV to the VG"
 msgstr "เพิ่ม PV ใหม่ใน VG"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "_Remove Physical Volume"
 msgstr "เ_อาโวลุมจริงออก"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:440
 msgid "Remove the PV from the VG"
 msgstr "เอาโวลุมจริงออกจากกลุ่มโวลุม"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:941
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:845
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:942
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:846
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "ไม่รองรับ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:369
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:370
 #, c-format
 msgid "Edit components on %s (%s)"
 msgstr "แก้ไของค์ประกอบใน %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:380
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:381
 msgid "C_omponents"
 msgstr "_องค์ประกอบ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:410
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:411
 msgid "Position"
 msgstr "ตำแหน่ง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:419
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:420
 msgid "Component"
 msgstr "องค์ประกอบ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:436
 msgid "State"
 msgstr "สถานะ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:453
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:454
 msgid "Position:"
 msgstr "ตำแหน่ง:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:457
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:458
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 #: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "สถานะ:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
 msgid "Add _Spare"
 msgstr "เพิ่มพื้นที่_สำรอง"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
 msgid "Add a spare to the array"
 msgstr "เริ่มพื้นที่สำรองให้กับแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "_Expand Array"
 msgstr "_ขยายแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
 msgid "Increase the capacity of the array"
 msgstr "เพิ่มความจุของแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "_Attach Component"
 msgstr "แ_นบองค์ประกอบ"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
 msgid "Attach the component to the array"
 msgstr "แนบองค์ประกอบเข้ากับแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:504
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "_Remove Component"
 msgstr "เ_อาองค์ประกอบออก"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
 msgid "Remove the component from the array"
 msgstr "เอาองค์ประกอบออกจากแอร์เรย์"
 
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
 msgid "Part_ition Label:"
 msgstr "_ชื่อพาร์ทิชัน:"
 
 #. Translators: 'Type' means partition type here
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:338
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:337
 msgid "Ty_pe:"
 msgstr "ช_นิด:"
 
 #. ---
 #. flag used by mbr, apm
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:352
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:351
 msgid "_Bootable"
 msgstr "บู_ตได้"
 
 #. flag used by gpt
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:360
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:359
 msgid "Required / Firm_ware"
 msgstr "ต้องการ / เ_ฟิร์มแวร์"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:217
+#: ../src/gdu-gtk/gdu-error-dialog.c:216
 msgid "The operation failed"
 msgstr "ปฏิบัติการล้มเหลว"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:220
+#: ../src/gdu-gtk/gdu-error-dialog.c:219
 msgid "The device is busy"
 msgstr "อุปกรณ์ไม่ว่าง"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:223
+#: ../src/gdu-gtk/gdu-error-dialog.c:222
 msgid "The operation was canceled"
 msgstr "ปฏิบัติการถูกยกเลิก"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:226
+#: ../src/gdu-gtk/gdu-error-dialog.c:225
 msgid "The daemon is being inhibited"
 msgstr "ดีมอนถูกระงับอยู่"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:229
+#: ../src/gdu-gtk/gdu-error-dialog.c:228
 msgid "An invalid option was passed"
 msgstr "ส่งตัวเลือกมาไม่ถูกต้อง"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:232
+#: ../src/gdu-gtk/gdu-error-dialog.c:231
 msgid "The operation is not supported"
 msgstr "ไม่รองรับปฏิบัติการนี้"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:235
+#: ../src/gdu-gtk/gdu-error-dialog.c:234
 msgid "Getting ATA SMART data would wake up the device"
 msgstr "การอ่านข้อมูล SMART ของ ATA จะเป็นการปลุกอุปกรณ์ขึ้น"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:238
+#: ../src/gdu-gtk/gdu-error-dialog.c:237
 msgid "Permission denied"
 msgstr "ไม่ได้รับอนุญาต"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:241
+#: ../src/gdu-gtk/gdu-error-dialog.c:240
 msgid "Filesystem driver not installed"
 msgstr "ไม่ได้ติดตั้งไดรเวอร์ของระบบแฟ้ม"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:244
+#: ../src/gdu-gtk/gdu-error-dialog.c:243
 msgid "Filesystem tools not installed"
 msgstr "ไม่ได้ติดตั้งเครื่องมือของระบบแฟ้ม"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:958
+#: ../src/gdu-gtk/gdu-error-dialog.c:248 ../src/palimpsest/gdu-shell.c:958
 msgid "Unknown error"
 msgstr "ข้อผิดพลาดไม่ทราบสาเหตุ"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:257
+#: ../src/gdu-gtk/gdu-error-dialog.c:256
 #, c-format
 msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
 msgstr "เกิดข้อผิดพลาดขณะดำเนินการกับ \"%s\" (%s): %s"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:265
+#: ../src/gdu-gtk/gdu-error-dialog.c:264
 #, c-format
 msgid "An error occurred: %s"
 msgstr "เกิดข้อผิดพลาด: %s"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:274
+#: ../src/gdu-gtk/gdu-error-dialog.c:273
 msgid "_Details"
 msgstr "_รายละเอียด"
 
@@ -2137,51 +2138,51 @@ msgstr "ป้ายชื่อพร้อมรหัสปุ่มลัด
 
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
-#: ../src/gdu-gtk/gdu-partition-dialog.c:216
+#: ../src/gdu-gtk/gdu-partition-dialog.c:219
 #: ../src/palimpsest/gdu-section-drive.c:649
 #: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_ฟอร์แมต"
 
 #. Translators: Format is a verb here. The %s is the name of the volume
-#: ../src/gdu-gtk/gdu-format-dialog.c:499
-#: ../src/gdu-gtk/gdu-partition-dialog.c:208
+#: ../src/gdu-gtk/gdu-format-dialog.c:502
+#: ../src/gdu-gtk/gdu-partition-dialog.c:211
 #, c-format
 msgid "Format %s"
 msgstr "ฟอร์แมต %s"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:510
+#: ../src/gdu-gtk/gdu-format-dialog.c:513
 msgid "Disk _Utility"
 msgstr "เ_ครื่องมือดิสก์"
 
 #. Translators: this is the tooltip for the "Disk Utility" button
-#: ../src/gdu-gtk/gdu-format-dialog.c:517
+#: ../src/gdu-gtk/gdu-format-dialog.c:520
 msgid "Use Disk Utility to format volume"
 msgstr "ใช้เครื่องมือดิสก์ฟอร์แมตโวลุม"
 
 #. Translators: 'type' means 'filesystem type' here.
-#: ../src/gdu-gtk/gdu-format-dialog.c:551
+#: ../src/gdu-gtk/gdu-format-dialog.c:553
 msgid "_Type:"
 msgstr "_ชนิด:"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:558
+#: ../src/gdu-gtk/gdu-format-dialog.c:560
 msgid "Compatible with all systems (FAT)"
 msgstr "เข้ากับทุกระบบ (FAT)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:560
+#: ../src/gdu-gtk/gdu-format-dialog.c:562
 msgid "Compatible with Linux (ext2)"
 msgstr "เข้ากับลินุกซ์ (ext2)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:562
+#: ../src/gdu-gtk/gdu-format-dialog.c:564
 msgid "Compatible with Linux (ext4)"
 msgstr "เข้ากับลินุกซ์ (ext4)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:564
+#: ../src/gdu-gtk/gdu-format-dialog.c:566
 msgid "Encrypted, compatible with Linux (FAT)"
 msgstr "เข้ารหัสลับ เข้ากับลินุกซ์ (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
-#: ../src/gdu-gtk/gdu-format-dialog.c:607
+#: ../src/gdu-gtk/gdu-format-dialog.c:609
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
 #: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
@@ -2190,15 +2191,15 @@ msgstr "_ชื่อ:"
 #. Translators: Default name to use for the formatted volume. Keep length of
 #. * translation of "New Volume" to less than 16 characters.
 #.
-#: ../src/gdu-gtk/gdu-format-dialog.c:614
+#: ../src/gdu-gtk/gdu-format-dialog.c:616
 msgid "New Volume"
 msgstr "โวลุมใหม่"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:632
+#: ../src/gdu-gtk/gdu-format-dialog.c:634
 msgid "T_ake ownership of filesystem"
 msgstr "เป็นเ_จ้าของระบบแฟ้ม"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:635
+#: ../src/gdu-gtk/gdu-format-dialog.c:637
 msgid ""
 "The selected file system has a concept of file ownership. If checked, the "
 "created file system will be owned by you. If not checked, only the super "
@@ -2207,11 +2208,11 @@ msgstr ""
 "ระบบแฟ้มที่เลือกมีแนวคิดของความเป็นเจ้าของแฟ้ม ถ้าเลือก ระบบแฟ้มที่สร้างจะเป็นกรรมสิทธิ์ของคุณ "
 "ถ้าไม่เลือก จะมีผู้ใช้อภิสิทธิ์ (super user) เท่านั้นที่สามารถเข้าใช้ระบบแฟ้มได้"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:641
+#: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid "_Encrypt underlying device"
 msgstr "เข้ารหัสลับในอุปกรณ์ที่ใช้"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:643
+#: ../src/gdu-gtk/gdu-format-dialog.c:645
 msgid ""
 "Encryption protects your data, requiring a passphrase to be entered before "
 "the file system can be used. May decrease performance and may not be "
@@ -2221,7 +2222,7 @@ msgstr ""
 "การเข้ารหัสลับอาจทำให้ประสิทธิภาพลดลง "
 "และอาจมีปัญหาเรื่องความเข้ากันได้ถ้าคุณนำสื่อนั้นไปใช้กับระบบปฏิบัติการอื่น"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:676
+#: ../src/gdu-gtk/gdu-format-dialog.c:678
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "คำเตือน: ข้อมูลทั้งหมดในโวลุมจะหายไปอย่างกู้คืนไม่ได้"
 
@@ -2281,17 +2282,17 @@ msgid "pid: %d  program: %s"
 msgstr "pid: %d  โปรแกรม: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:924
-#: ../src/gdu-gtk/gdu-gtk.c:1067
+#: ../src/gdu-gtk/gdu-gtk.c:337 ../src/gdu-gtk/gdu-gtk.c:933
+#: ../src/gdu-gtk/gdu-gtk.c:1076
 #, c-format
 msgid "Partition %d on %s"
 msgstr "พาร์ทิชัน %d ใน %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:371
+#: ../src/gdu-gtk/gdu-gtk.c:375
 msgid "Cannot unmount volume"
 msgstr "ไม่สามารถเลิกเมานท์โวลุม"
 
-#: ../src/gdu-gtk/gdu-gtk.c:381
+#: ../src/gdu-gtk/gdu-gtk.c:385
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
@@ -2299,134 +2300,134 @@ msgstr ""
 "มีโปรแกรมตั้งแต่หนึ่งโปรแกรมขึ้นไปกำลังใช้โวลุมอยู่ "
 "กรุณาปิดโปรแกรมดังกล่าวแล้วลองสั่งเลิกเมานท์อีกครั้ง"
 
-#: ../src/gdu-gtk/gdu-gtk.c:422
+#: ../src/gdu-gtk/gdu-gtk.c:426
 msgid "_Unmount"
 msgstr "เ_ลิกเมานท์"
 
-#: ../src/gdu-gtk/gdu-gtk.c:499
+#: ../src/gdu-gtk/gdu-gtk.c:503
 msgid "Passphrases do not match"
 msgstr "วลีรหัสผ่านไม่ตรงกัน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:506
+#: ../src/gdu-gtk/gdu-gtk.c:510
 msgid "Passphrases do not differ"
 msgstr "วลีรหัสผ่านไม่ต่างกัน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:512
+#: ../src/gdu-gtk/gdu-gtk.c:516
 msgid "Passphrase can't be empty"
 msgstr "วลีรหัสผ่านว่างเปล่าไม่ได้"
 
-#: ../src/gdu-gtk/gdu-gtk.c:584
+#: ../src/gdu-gtk/gdu-gtk.c:590
 msgid "Cr_eate"
 msgstr "_สร้าง"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2499
+#: ../src/gdu-gtk/gdu-gtk.c:592 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
 msgstr "เปลี่ยนวลี_รหัสผ่าน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:588
+#: ../src/gdu-gtk/gdu-gtk.c:594
 msgid "_Unlock"
 msgstr "_ปลดล็อค"
 
-#: ../src/gdu-gtk/gdu-gtk.c:617
+#: ../src/gdu-gtk/gdu-gtk.c:626
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr "เพื่อจะสร้างอุปกรณ์ที่เข้ารหัสลับ กรุณาตั้งวลีรหัสผ่านเพื่อปกป้องอุปกรณ์"
 
-#: ../src/gdu-gtk/gdu-gtk.c:620
+#: ../src/gdu-gtk/gdu-gtk.c:629
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr "เพื่อจะเปลี่ยนวลีรหัสผ่าน กรุณาป้อนทั้งวลีรหัสผ่านปัจจุบันและวลีรหัสผ่านใหม่"
 
-#: ../src/gdu-gtk/gdu-gtk.c:623
+#: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr "ข้อมูลในอุปกรณ์นี้ถูกจัดเก็บไว้ในรูปแบบที่เข้ารหัสลับ โดยปกป้องด้วยวลีรหัสผ่าน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:636
+#: ../src/gdu-gtk/gdu-gtk.c:645
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr "ข้อมูลในอุปกรณ์นี้จะถูกจัดเก็บในรูปแบบที่เข้ารหัสลับ โดยปกป้องด้วยวลีรหัสผ่าน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:639
+#: ../src/gdu-gtk/gdu-gtk.c:648
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr "ข้อมูลในอุปกรณ์นี้ถูกจัดเก็บไว้ในรูปแบบที่เข้ารหัสลับ โดยปกป้องด้วยวลีรหัสผ่าน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:642
+#: ../src/gdu-gtk/gdu-gtk.c:651
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
 msgstr "เพื่อให้สามารถเข้าใช้ข้อมูลได้ กรุณาป้อนวลีรหัสผ่านสำหรับอุปกรณ์"
 
-#: ../src/gdu-gtk/gdu-gtk.c:651
+#: ../src/gdu-gtk/gdu-gtk.c:660
 msgid "Incorrect Passphrase. Try again."
 msgstr "วลีรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"
 
-#: ../src/gdu-gtk/gdu-gtk.c:675
+#: ../src/gdu-gtk/gdu-gtk.c:684
 msgid "C_urrent Passphrase:"
 msgstr "วลีรหัสผ่าน_ปัจจุบัน:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:689
+#: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_New Passphrase:"
 msgstr "วลีรหัสผ่านให_ม่:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:702
+#: ../src/gdu-gtk/gdu-gtk.c:711
 msgid "_Verify Passphrase:"
 msgstr "_ตรวจสอบวลีรหัสผ่าน:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:744
+#: ../src/gdu-gtk/gdu-gtk.c:753
 msgid "_Passphrase:"
 msgstr "_วลีรหัสผ่าน:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:759
+#: ../src/gdu-gtk/gdu-gtk.c:768
 msgid "_Forget passphrase immediately"
 msgstr "_ลืมวลีรหัสผ่านทันที"
 
-#: ../src/gdu-gtk/gdu-gtk.c:762
+#: ../src/gdu-gtk/gdu-gtk.c:771
 msgid "Remember passphrase until you _log out"
 msgstr "จำวลีรหัสผ่านไว้จนกว่าจะ_ออกจากระบบ"
 
-#: ../src/gdu-gtk/gdu-gtk.c:765
+#: ../src/gdu-gtk/gdu-gtk.c:774
 msgid "_Remember forever"
 msgstr "_จำไว้ใช้ตลอดไป"
 
-#: ../src/gdu-gtk/gdu-gtk.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:837
 msgid "Enter Passphrase"
 msgstr "ป้อนวลีรหัสผ่าน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:957 ../src/gdu/gdu-util.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:966 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "วลีรหัสผ่าน LUKS สำหรับ UUID %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1255
+#: ../src/gdu-gtk/gdu-gtk.c:1268
 msgid "Empty (don't create a file system)"
 msgstr "ว่างเปล่า (ไม่สร้างระบบแฟ้ม)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1276
+#: ../src/gdu-gtk/gdu-gtk.c:1289
 msgid "Empty"
 msgstr "ว่างเปล่า"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1284
+#: ../src/gdu-gtk/gdu-gtk.c:1297
 msgid "Extended Partition"
 msgstr "พาร์ทิชันขยาย"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1543 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "มาสเตอร์บูตเรคอร์ด"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:833
+#: ../src/gdu-gtk/gdu-gtk.c:1561 ../src/gdu/gdu-drive.c:833
 #: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "ตารางพาร์ทิชัน GUID"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1553
+#: ../src/gdu-gtk/gdu-gtk.c:1566
 msgid "Don't partition"
 msgstr "ไม่แบ่งพาร์ทิชัน"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1558 ../src/gdu/gdu-util.c:495
+#: ../src/gdu-gtk/gdu-gtk.c:1571 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
@@ -2441,7 +2442,7 @@ msgid "The selected partitioning scheme"
 msgstr "แบบแผนการแบ่งพาร์ทิชันที่เลือกไว้"
 
 #. Translators: 'scheme' means 'partitioning scheme' here.
-#: ../src/gdu-gtk/gdu-partition-dialog.c:248
+#: ../src/gdu-gtk/gdu-partition-dialog.c:250
 msgid "_Scheme:"
 msgstr "แ_บบแผน"
 
@@ -2514,17 +2515,17 @@ msgid "%d hour ago"
 msgid_plural "%d hours ago"
 msgstr[0] "%d ชั่วโมงที่แล้ว"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:498
+#: ../src/gdu-gtk/gdu-volume-grid.c:483
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
 msgstr "ไดรว์"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:499
+#: ../src/gdu-gtk/gdu-volume-grid.c:484
 msgid "Drive to show volumes for"
 msgstr "ไดรว์ที่จะแสดงโวลุม"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1189
+#: ../src/gdu-gtk/gdu-volume-grid.c:1174
 msgid "RAID Array is not running"
 msgstr "แอร์เรย์ RAID ไม่ได้ทำงานอยู่"
 
@@ -2532,31 +2533,31 @@ msgstr "แอร์เรย์ RAID ไม่ได้ทำงานอยู
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1192 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1177 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "ตรวจไม่พบสื่อ"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1277
+#: ../src/gdu-gtk/gdu-volume-grid.c:1262
 msgid "Extended"
 msgstr "ขยาย"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1285
+#: ../src/gdu-gtk/gdu-volume-grid.c:1270
 msgid "Encrypted"
 msgstr "เข้ารหัสลับ"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1299 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1284 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "องค์ประกอบ RAID"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1307
+#: ../src/gdu-gtk/gdu-volume-grid.c:1292
 msgid "Free"
 msgstr "ว่าง"
 
@@ -2731,31 +2732,31 @@ msgstr "ยังไม่ได้จัดการพาร์ทิชัน
 #. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
 #: ../src/gdu/gdu-hub.c:222
 msgid "SAS Expander"
-msgstr ""
+msgstr "อุปกรณ์ขยาย SAS"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ PATA"
 
 #: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ SATA"
 
 #: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ ATA"
 
 #: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ SAS"
 
 #: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ SCSI"
 
 #: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
-msgstr ""
+msgstr "วงจรเชื่อมต่อ"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:330
@@ -2852,7 +2853,7 @@ msgstr "แอร์เรย์ RAID"
 #: ../src/gdu/gdu-linux-md-drive.c:1114
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
-msgstr "ยังไม่แนบ"
+msgstr "ยังไม่เชื่อม"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
@@ -2862,7 +2863,7 @@ msgstr "เสีย"
 #: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
-msgstr ""
+msgstr "ทำงานตรงกันเต็มที่"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
@@ -2872,12 +2873,12 @@ msgstr ""
 #: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Blocked"
-msgstr ""
+msgstr "ถูกปิดกั้น"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1130
 msgctxt "Linux MD slave state"
 msgid "Partially Synchronized"
-msgstr ""
+msgstr "ทำงานตรงกันบางส่วน"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
@@ -3010,8 +3011,8 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
-"พบผลลัพธ์ไม่คาดหมายที่ stderr - ต้องการ `udisks-tcp-bridge: Attempting to "
-"connect to port %d' แต่ได้รับ `%s'"
+"พบผลลัพธ์ไม่คาดหมายที่ stderr - ต้องการ `udisks-tcp-bridge: Attempting to connect "
+"to port %d' แต่ได้รับ `%s'"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
@@ -3480,7 +3481,7 @@ msgstr "พาร์ทิชัน /home ของ Solaris"
 
 #: ../src/gdu/gdu-util.c:468
 msgid "Solaris Alternate Sector Partition"
-msgstr ""
+msgstr "พาร์ทิชันเซ็กเตอร์สำรองของ Solaris"
 
 #: ../src/gdu/gdu-util.c:469
 msgid "Solaris Reserved Partition"
@@ -3557,7 +3558,7 @@ msgstr "พาร์ทิชัน RAID ของ NetBSD"
 
 #: ../src/gdu/gdu-util.c:488
 msgid "NetBSD Concatenated Partition"
-msgstr ""
+msgstr "พาร์ทิชันต่อชนกันของ NetBSD"
 
 #: ../src/gdu/gdu-util.c:489
 msgid "NetBSD Encrypted Partition"
@@ -3994,8 +3995,9 @@ msgid ""
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
 "fails."
 msgstr ""
-"แบ่งแถบข้อมูลโดยไม่มีข้อมูลตรวจสอบ (parity) ให้ประสิทธิภาพดีขึ้นแต่ไม่มีความทนทานต่อความผิดพลาด "
-"ถ้าดิสก์ใดดิสก์หนึ่งในแอร์เรย์เสียหาย แอร์เรย์ RAID-0 ก็เสียหายทั้งหมด"
+"แบ่งแถบข้อมูลโดยไม่มีข้อมูลตรวจสอบ (parity) "
+"ให้ประสิทธิภาพดีขึ้นแต่ไม่มีความทนทานต่อความผิดพลาด ถ้าดิสก์ใดดิสก์หนึ่งในแอร์เรย์เสียหาย แอร์เรย์ "
+"RAID-0 ก็เสียหายทั้งหมด"
 
 #: ../src/gdu/gdu-util.c:1019
 msgid ""
@@ -4384,32 +4386,39 @@ msgid "It's now safe to remove \"%s\"."
 msgstr "ปลอดภัยแล้วที่จะถอด \"%s\""
 
 #. Translators: %s is the name of the device
-#: ../src/notification/gdu-slow-unmount-dialog.c:233
+#: ../src/notification/gdu-slow-unmount-dialog.c:231
 #, c-format
 msgid "Writing data to \"%s\"..."
 msgstr "กำลังเขียนข้อมูลไปยัง \"%s\"..."
 
-#: ../src/notification/gdu-slow-unmount-dialog.c:248
+#: ../src/notification/gdu-slow-unmount-dialog.c:246
 msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
 msgstr "เพื่อป้องกันข้อมูลสูญหาย กรุณารอให้เสร็จสิ้นก่อนที่จะเอาสื่อออกหรือปลดการเชื่อมต่ออุปกรณ์"
 
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "มีดิสก์ตั้งแต่หนึ่งดิสก์ขึ้นไปกำลังจะล้มเหลว"
-
 #. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "ฮาร์ดดิสก์หนึ่งอาจกำลังล้มเหลว"
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr "ตรวจพบปัญหาของฮาร์ดดิสก์"
 
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
-msgstr "มีดิสก์ตั้งแต่หนึ่งดิสก์ขึ้นไปรายงานปัญหาสภาพการทำงาน คลิกที่ไอคอนเพื่อดูข้อมูลเพิ่มเติม"
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr "ฮาร์ดดิสก์กำลังรายงานปัญหาสุขภาพ"
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
+msgstr "ฮาร์ดดิสก์หลายตัวของระบบกำลังรายงานปัญหาสุขภาพ"
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr "ตรวจสอบ"
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
+msgstr "ฮาร์ดดิสก์หลายตัวกำลังรายงานปัญหาสุขภาพ"
 
 #: ../src/palimpsest/gdu-main.c:127
 msgid "Volume to show"
@@ -4715,7 +4724,7 @@ msgstr "ชื่อ:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
 msgid "Extent Size:"
-msgstr ""
+msgstr "ขนาดขอบเขต:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
 msgid "Physical Volumes:"
@@ -5070,7 +5079,7 @@ msgstr "ชนิด:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
-msgstr ""
+msgstr "พื้นที่ว่าง:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
@@ -5459,3 +5468,14 @@ msgstr "_รายละเอียด:"
 #: ../src/palimpsest/gdu-shell.c:1163
 msgid "_Storage Devices"
 msgstr "อุป_กรณ์เก็บข้อมูล"
+
+#~ msgid "One or more disks are failing"
+#~ msgstr "มีดิสก์ตั้งแต่หนึ่งดิสก์ขึ้นไปกำลังจะล้มเหลว"
+
+#~ msgid "A hard disk may be failing"
+#~ msgstr "ฮาร์ดดิสก์หนึ่งอาจกำลังล้มเหลว"
+
+#~ msgid ""
+#~ "One or more hard disks report health problems. Click the icon to get more "
+#~ "information."
+#~ msgstr "มีดิสก์ตั้งแต่หนึ่งดิสก์ขึ้นไปรายงานปัญหาสภาพการทำงาน คลิกที่ไอคอนเพื่อดูข้อมูลเพิ่มเติม"

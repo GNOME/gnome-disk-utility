@@ -556,20 +556,20 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("RAID _Level:"));
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-        combo_box = gtk_combo_box_new_text ();
+        combo_box = gtk_combo_box_text_new ();
         dialog->priv->level_combo_box = combo_box;
         /* keep in sync with on_level_combo_box_changed() */
         s = gdu_linux_md_get_raid_level_for_display ("raid0", TRUE);
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), s);
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, s);
         g_free (s);
         s = gdu_linux_md_get_raid_level_for_display ("raid1", TRUE);
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), s);
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, s);
         g_free (s);
         s = gdu_linux_md_get_raid_level_for_display ("raid5", TRUE);
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), s);
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, s);
         g_free (s);
         s = gdu_linux_md_get_raid_level_for_display ("raid6", TRUE);
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), s);
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, s);
         g_free (s);
         g_signal_connect (combo_box,
                           "changed",
@@ -620,28 +620,28 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         /* keep in sync with on_stripe_size_combo_box_changed() */
-        combo_box = gtk_combo_box_new_text ();
+        combo_box = gtk_combo_box_text_new ();
         /* Translators: The following strings (4 KiB, 8 Kib, ..., 1 MiB) are for choosing the RAID stripe size.
          * Since the rest of gnome-disk-utility use the sane 1k=1000 conventions and RAID needs the 1k=1024
          * convenention (this is because disk block sizes are powers of two) we resort to the nerdy units.
          */
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("4 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("8 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("16 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("32 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("64 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("128 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("256 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("512 KiB"));
-        gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+        gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                    _("1 MiB"));
         /* keep in sync with gtk_combo_box_set_active() on stripe_size_combo_box below */
         dialog->priv->stripe_size = 512 * 1024;

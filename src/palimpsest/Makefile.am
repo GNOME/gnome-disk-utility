@@ -31,7 +31,7 @@ palimpsest_CFLAGS = 					\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(DBUS_GLIB_CFLAGS)				\
 	$(GNOME_KEYRING_CFLAGS)				\
-	$(GTK2_CFLAGS)					\
+	$(GTK3_CFLAGS)					\
 	$(UNIQUE_CFLAGS)				\
 	$(X11_CFLAGS)					\
 	$(WARN_CFLAGS)					\
@@ -46,7 +46,7 @@ palimpsest_LDADD = 					\
 	$(GIO_UNIX2_LIBS)				\
 	$(DBUS_GLIB_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
-	$(GTK2_LIBS)					\
+	$(GTK3_LIBS)					\
 	$(UNIQUE_LIBS)					\
 	$(X11_LIBS)					\
 	$(INTLLIBS)					\

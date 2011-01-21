@@ -1749,6 +1749,7 @@ gdu_util_get_mix_color (GtkWidget    *widget,
                         gchar        *color_buf,
                         gsize         color_buf_size)
 {
+#if 0
         GtkStyle *style;
         GdkColor color = {0};
 
@@ -1770,4 +1771,11 @@ gdu_util_get_mix_color (GtkWidget    *widget,
                   (color.red >> 8),
                   (color.green >> 8),
                   (color.blue >> 8));
+#endif
+        /* TODO: use GtkStyleContext and/or CSS etc. instead of hard-coding colors */
+        snprintf (color_buf,
+                  color_buf_size, "#%02x%02x%02x",
+                  0x80,
+                  0x80,
+                  0x80);
 }

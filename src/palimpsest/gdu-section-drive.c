@@ -444,7 +444,7 @@ on_cddvd_button_clicked (GduButtonElement *button_element,
                 goto out;
         }
 
-        launch_context = G_APP_LAUNCH_CONTEXT (gdk_app_launch_context_new ());
+        launch_context = G_APP_LAUNCH_CONTEXT (gdk_display_get_app_launch_context (NULL));
 
         error = NULL;
         if (!g_app_info_launch (app_info,

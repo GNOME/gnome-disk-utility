@@ -17,7 +17,7 @@ CORE_CFLAGS = 						\
 	$(GIO2_CFLAGS)					\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(GTHREAD2_CFLAGS)				\
-	$(GTK2_CFLAGS)					\
+	$(GTK3_CFLAGS)					\
 	$(NULL)
 
 CORE_LIBADD = 						\
@@ -26,7 +26,7 @@ CORE_LIBADD = 						\
 	$(GIO2_LIBS)					\
 	$(GIO_UNIX2_LIBS)				\
 	$(GTHREAD2_LIBS)				\
-	$(GTK2_LIBS)					\
+	$(GTK3_LIBS)					\
 	$(INTLLIBS)					\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la	\

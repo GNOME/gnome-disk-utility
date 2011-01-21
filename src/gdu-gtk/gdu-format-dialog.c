@@ -555,14 +555,14 @@ gdu_format_dialog_constructed (GObject *object)
                           GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
         if (dialog->priv->flags & GDU_FORMAT_DIALOG_FLAGS_SIMPLE) {
                 /* keep in sync with on_combo_box_changed() */
-                combo_box = gtk_combo_box_new_text ();
-                gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+                combo_box = gtk_combo_box_text_new ();
+                gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                            _("Compatible with all systems (FAT)"));
-                gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+                gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                            _("Compatible with Linux (ext2)"));
-                gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+                gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                            _("Compatible with Linux (ext4)"));
-                gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box),
+                gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL,
                                            _("Encrypted, compatible with Linux (FAT)"));
                 gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
                 dialog->priv->fs_type = g_strdup ("vfat");

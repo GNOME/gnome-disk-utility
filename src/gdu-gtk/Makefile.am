@@ -111,7 +111,7 @@ libgdu_gtk_la_CFLAGS = 					\
 	$(GIO_UNIX2_CFLAGS)				\
 	$(DBUS_GLIB_CFLAGS)				\
 	$(GNOME_KEYRING_CFLAGS)				\
-	$(GTK2_CFLAGS)					\
+	$(GTK3_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(AM_CFLAGS)					\
 	$(LIBATASMART_CFLAGS)				\
@@ -124,7 +124,7 @@ libgdu_gtk_la_LIBADD = 					\
 	$(GIO_UNIX2_LIBS)				\
 	$(DBUS_GLIB_LIBS)				\
 	$(GNOME_KEYRING_LIBS)				\
-	$(GTK2_LIBS)					\
+	$(GTK3_LIBS)					\
 	$(INTLLIBS)					\
 	$(LIBATASMART_LIBS)				\
 	$(AVAHI_UI_LIBS)				\

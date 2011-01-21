@@ -23,7 +23,7 @@ gdu_notification_daemon_CFLAGS = 			\
 	$(GOBJECT2_CFLAGS)				\
 	$(GIO2_CFLAGS)					\
 	$(GIO_UNIX2_CFLAGS)				\
-	$(GTK2_CFLAGS)					\
+	$(GTK3_CFLAGS)					\
 	$(WARN_CFLAGS)					\
 	$(LIBNOTIFY_CFLAGS)				\
 	$(AM_CFLAGS)
@@ -35,7 +35,7 @@ gdu_notification_daemon_LDADD = 			\
 	$(GLIB2_LIBS)					\
 	$(GOBJECT2_LIBS)				\
 	$(GIO2_LIBS)					\
-	$(GTK2_LIBS)					\
+	$(GTK3_LIBS)					\
 	$(LIBNOTIFY_LIBS)				\
 	$(top_builddir)/src/gdu/libgdu.la		\
 	$(top_builddir)/src/gdu-gtk/libgdu-gtk.la

@@ -422,16 +422,19 @@ on_cddvd_button_clicked (GduButtonElement *button_element,
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
         GAppLaunchContext *launch_context;
         GAppInfo *app_info;
+        GtkWidget *top_level;
         GtkWidget *dialog;
         GError *error;
 
         app_info = NULL;
         launch_context = NULL;
 
+        top_level = GTK_WIDGET (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
+
         app_info = G_APP_INFO (g_desktop_app_info_new ("brasero.desktop"));
         if (app_info == NULL) {
                 /* TODO: Use PackageKit to install Brasero */
-                dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section)))),
+                dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (top_level),
                                                              GTK_DIALOG_MODAL,
                                                              GTK_MESSAGE_ERROR,
                                                              GTK_BUTTONS_OK,
@@ -444,7 +447,7 @@ on_cddvd_button_clicked (GduButtonElement *button_element,
                 goto out;
         }
 
-        launch_context = G_APP_LAUNCH_CONTEXT (gdk_display_get_app_launch_context (NULL));
+        launch_context = G_APP_LAUNCH_CONTEXT (gdk_display_get_app_launch_context (gtk_widget_get_display (top_level)));
 
         error = NULL;
         if (!g_app_info_launch (app_info,

@@ -1,14 +1,14 @@
-# translation of eu.po to Basque
+# translation of eu_to_be_translate.po to Basque
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009, 2010.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009, 2010, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2010-09-14 19:15+0000\n"
-"PO-Revision-Date: 2010-09-27 18:34+0200\n"
+"Project-Id-Version: eu_to_be_translate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-27 22:29+0100\n"
+"PO-Revision-Date: 2011-01-27 22:31+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,10 @@ msgstr ""
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
-#: ../src/palimpsest/gdu-shell.c:1115
+#: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
+#: ../src/palimpsest/gdu-shell.c:269 ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:803 ../src/palimpsest/gdu-shell.c:1114
 msgid "Disk Utility"
 msgstr "Diskoen tresna"
 
@@ -214,11 +215,11 @@ msgstr "_Tamaina:"
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:131
 msgid "Read Error Rate"
 msgstr "Irakurketako errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:133
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -230,44 +231,44 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:141
 msgid "Throughput Performance"
 msgstr "Transferentziaren errendimendua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:143
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
 msgid "Average efficiency of the disk"
 msgstr "Diskoaren eraginkortasunaren batez bestekoa"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:149
 msgid "Spinup Time"
 msgstr "Abiarazte denbora"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:151
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
 msgid "Time needed to spin up the disk"
 msgstr "Diskoa biratzen jartzeko behar den denbora"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:157
 msgid "Start/Stop Count"
 msgstr "Abio/gelditze kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:159
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
 msgid "Number of spindle start/stop cycles"
 msgstr "Ardatzen abio/gelditze zikloen kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:165
 msgid "Reallocated Sector Count"
 msgstr "Berriro esleitutako sektore kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as \"reallocated\" and transfers "
@@ -281,193 +282,195 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:175
 msgid "Read Channel Margin"
 msgstr "Irakurri kanalaren marjina"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:177
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
 msgid "Margin of a channel while reading data."
 msgstr "Kanal baten marjina datuak irakurtzean."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:183
 msgid "Seek Error Rate"
 msgstr "Bilaketaren errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:185
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
 msgid "Frequency of errors while positioning"
 msgstr "Posizioan kokatzean gertatzen diren erroreen maiztasuna"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:191
 msgid "Seek Timer Performance"
 msgstr "Bilaketaren denboraren errendimendua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:193
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
 msgid "Average efficiency of operations while positioning"
 msgstr "Eragiketen eraginkortasunaren batez bestekoa posizioan kokatzean"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:199
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:523
 msgid "Power-On Hours"
 msgstr "Orduak piztuta"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:201
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:525
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Piztuta egoeran egondako ordu kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:207
 msgid "Spinup Retry Count"
 msgstr "Abiarazteko saiakera kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:209
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
 msgid "Number of retry attempts to spin up"
 msgstr "Abiarazteko saiakera kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:215
 msgid "Calibration Retry Count"
 msgstr "Kalibrazioaren saiakera kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:217
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
 msgid "Number of attempts to calibrate the device"
 msgstr "Gailua kalibratzeko saiakera kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:223
 msgid "Power Cycle Count"
 msgstr "Piztutako kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:225
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
 msgid "Number of power-on events"
 msgstr "Piztutzeko gertaera kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:231
 msgid "Soft read error rate"
 msgstr "Soft bidezko irakurketaren errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:233
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
 msgid "Frequency of 'program' errors while reading from the disk"
 msgstr "Programaren errore maiztasuna diskotik irakurtzean"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:239
 msgid "Reported Uncorrectable Errors"
 msgstr "Ezin zuzendutako erroreen txostena"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:241
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Hardwareko ECC erabiliz berreskuratu ezin izan diren erroreen kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:247
 msgid "High Fly Writes"
 msgstr "Irismenetik kanpoko idazketak"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:249
-msgid "Number of times a recording head is flying outside its normal operating range"
-msgstr "Zenbat aldiz grabatzeko buruak eragiketa arrunteko barrutitik at kokatu den"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
+msgid ""
+"Number of times a recording head is flying outside its normal operating range"
+msgstr ""
+"Zenbat aldiz grabatzeko buruak eragiketa arrunteko barrutitik at kokatu den"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:255
 msgid "Airflow Temperature"
 msgstr "Inguruko tenperatura"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:257
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
 msgid "Airflow temperature of the drive"
 msgstr "Unitatearen inguruko tenperatura"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:263
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:433
 msgid "G-sense Error Rate"
 msgstr "G-sense errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:265
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Erroreen maiztasuna bibrazioengatik talka egitean"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:271
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:490
 msgid "Power-off Retract Count"
 msgstr "Itzaltze eta atzera-egite kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:273
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
 msgid "Number of power-off or emergency retract cycles"
 msgstr "Itzaltze edo larrialditako atzera-egite zikloen kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:279
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:466
 msgid "Load/Unload Cycle Count"
 msgstr "Kargen/Deskargen kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:281
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
 msgid "Number of cycles into landing zone position"
 msgstr "Posizioaren zonan kokatze kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:287
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:506
 msgid "Temperature"
 msgstr "Tenperatura"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
 msgid "Current internal temperature of the drive"
 msgstr "Unitatearen barneko uneko tenperatura"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:295
 msgid "Hardware ECC Recovered"
 msgstr "Hardwarezko ECC berreskuratuta"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:297
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
 msgid "Number of ECC on-the-fly errors"
 msgstr "ECC erroreen zuzeneko zuzenketa kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:303
 msgid "Reallocation Count"
 msgstr "Berresleipen kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:305
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -480,11 +483,11 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:314
 msgid "Current Pending Sector Count"
 msgstr "Unean falta diren sektore kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -499,11 +502,11 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:326
 msgid "Uncorrectable Sector Count"
 msgstr "Sektore zuzenkaitzen kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -516,22 +519,22 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:336
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:338
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
 msgid "Number of CRC errors during UDMA mode"
 msgstr "UDMA moduan gertatutako CRC errore kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:344
 msgid "Write Error Rate"
 msgstr "Idazketako errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:346
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -542,110 +545,111 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:352
 msgid "Soft Read Error Rate"
 msgstr "Softwarezko irakurketaren errore-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:354
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
 msgid "Number of off-track errors"
 msgstr "Pistetatik kanpoko errore kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:360
 msgid "Data Address Mark Errors"
 msgstr "Datuen helbideen marken erroreak"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:362
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
-msgstr "Datuen helbideen marken (DAM) errore kopurua edo hornitzailearen araberakoa"
+msgstr ""
+"Datuen helbideen marken (DAM) errore kopurua edo hornitzailearen araberakoa"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:368
 msgid "Run Out Cancel"
 msgstr "Agortutakoa utzi"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:370
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
 msgid "Number of ECC errors"
 msgstr "ECC erroreen kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:376
 msgid "Soft ECC correction"
 msgstr "Softwarezko ECC zuzenketa"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:378
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
 msgid "Number of errors corrected by software ECC"
 msgstr "Softwarezko ECCaren bidez zuzendutako errore kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:384
 msgid "Thermal Asperity Rate"
 msgstr "Laztura termikoaren emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:386
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Laztura termikoaren emarien errore kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:392
 msgid "Flying Height"
 msgstr "Gainazaletik kanpo"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:394
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
 msgid "Height of heads above the disk surface"
 msgstr "Buruen alturak diskoaren gainazalaren gainetik"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:400
 msgid "Spin High Current"
 msgstr "Biraketaren uneko gehienezkoa"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:402
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
 msgid "Amount of high current used to spin up the drive"
 msgstr "Unean erabilitako gehienezko kopurua diskoa abiarazteko"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:408
 msgid "Spin Buzz"
 msgstr "Biraketaren burrunbada"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:410
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Burrunbada errutinen kopurua unitatea abiarazteko"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:416
 msgid "Offline Seek Performance"
 msgstr "Lineaz kanpoko bilaketaren errendimendua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:418
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
 msgid "Drive's seek performance during offline operations"
 msgstr "Unitatearen bilaketaren errendimendua lineatik kanpoko eragiketetan"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:424
 msgid "Disk Shift"
 msgstr "Diskoaren desplazamendua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:426
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -653,29 +657,31 @@ msgstr ""
 "Diskoen desplazamendua gerta daiteke talka bortitz, erorketa edo "
 "tenperaturaren ondorioz"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:435
-msgid "Number of errors as a result of impact loads as detected by a shock sensor"
-msgstr "Talken sentsoreak detektatutako kargen talketatik eratorritako errore kopurua"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
+msgid ""
+"Number of errors as a result of impact loads as detected by a shock sensor"
+msgstr ""
+"Talken sentsoreak detektatutako kargen talketatik eratorritako errore kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:441
 msgid "Loaded Hours"
 msgstr "Kargatutako orduak"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:443
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
 msgid "Number of hours in general operational state"
 msgstr "Eragiketako egoera orokorreko ordu kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:449
 msgid "Load/Unload Retry Count"
 msgstr "Kargaren/Deskargaren saiakera kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:451
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -686,67 +692,67 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:458
 msgid "Load Friction"
 msgstr "Kargaren frikzioa"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Unitatean kargatzea biltegiaren zati mekanikoen frikzioak eragiten du"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:468
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
 msgid "Total number of load cycles"
 msgstr "Karga zikloen osoko kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:474
 msgid "Load-in Time"
 msgstr "Kargaren denbora"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:476
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
 msgid "General time for loading in a drive"
 msgstr "Unitate batean kargatzeko denbora orokorra"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:482
 msgid "Torque Amplification Count"
 msgstr "Momentuaren aplikazio kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:484
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Unitaten baten biraketa momentuaren ahaleginen kantitatea"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:492
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
 msgid "Number of power-off retract events"
 msgstr "Itzaltzeko saiakeren kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:498
 msgid "GMR Head Amplitude"
 msgstr "GMR buru-anplitudea"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:500
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Buruen dardaren anplitudea (GMR burua) exekuzio moduan"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:508
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
 msgid "Temperature of the drive"
 msgstr "Unitatearen tenperatura"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:514
 msgid "Endurance Remaining"
 msgstr "Falta den iraunkortasuna"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:516
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -757,22 +763,22 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:531
 msgid "Uncorrectable ECC Count"
 msgstr "ECC zuzenkaitzen kopurua"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:533
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
 msgid "Number of uncorrectable ECC errors"
 msgstr "ECC errore zuzenkaitzen kopurua"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:539
 msgid "Good Block Rate"
 msgstr "Bloke onen emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:541
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -783,50 +789,50 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:548
 msgid "Head Flying Hours"
 msgstr "Buruen hegaldi-orduak"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:550
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
 msgid "Time while head is positioning"
 msgstr "Denbora burua kokatzeko"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:556
 msgid "Read Error Retry Rate"
 msgstr "Irakurketako saiakera-emaria"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:558
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
 msgid "Number of errors while reading from a disk"
 msgstr "Errore kopurua diskotik irakurtzean"
 
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:700
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:699
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Ez dago %d atributuaren azalpenik"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:790
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:789
 msgid "Normalized:"
 msgstr "Normalizatuta:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:792
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:791
 msgid "Worst:"
 msgstr "Txarrena:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:794
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:793
 msgid "Threshold:"
 msgstr "Atalasea:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:796
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:795
 msgid "Value:"
 msgstr "Balioa:"
 
@@ -835,46 +841,46 @@ msgstr "Balioa:"
 #. Translators: Shown in the treeview for an attribute we don't know the status about
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:846
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:845
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:853
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:861
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1639
 msgid "N/A"
 msgstr "E/E"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:940
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:939
 msgid "Failing"
 msgstr "Hutsegitea"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:943
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:942
 msgid "Failed in the past"
 msgstr "Huts egin zuen iraganean"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:947
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:955
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:946
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:954
 msgid "Warning"
 msgstr "Abisua"
 
 #. Translators: Shown in the treeview for an attribute that is good
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:949
 msgid "Good"
 msgstr "Ongi"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1020
 msgid "Error reading SMART data"
 msgstr "Errorea SMART datuak irakurtzean"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1141
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1140
 msgid "Choose SMART Self-test"
 msgstr "Aukeratu SMART proba automatikoa"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1152
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1151
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
@@ -885,22 +891,22 @@ msgstr ""
 "bitartean."
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
 msgid "_Short (usually less than ten minutes)"
 msgstr "_Laburra (10 minutu baino gutxiago)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1164
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1163
 msgid "_Extended (usually tens of minutes)"
 msgstr "_Hedatua (10 minutu inguru)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1167
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1166
 msgid "C_onveyance (usually less than ten minutes)"
 msgstr "_Transferentzia (10 minutu baino gutxiago)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1175
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1174
 msgid "_Run Self Test"
 msgstr "_Exekutatu auto-proba"
 
@@ -908,18 +914,18 @@ msgstr "_Exekutatu auto-proba"
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1270
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1269
 #, c-format
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) - SMART datuak"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1290
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid "Updated:"
 msgstr "Eguneratuta:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1293
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1292
 msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
@@ -928,186 +934,186 @@ msgstr ""
 "minuturo eguneratzen dira, diskoa lotan ez badago bederen."
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1299
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "Self-tests:"
 msgstr "Auto-probak:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1302
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1301
 msgid "The result of the last self-test that ran on the disk"
 msgstr "Diskoan exekutatu den azken auto-probaren emaitza"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1307
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "Powered On:"
 msgstr "Piztuta:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1310
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1309
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "Diskoa piztuta egoeran igaro duen denbora kopurua"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1315
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "Power Cycles:"
 msgstr "Piztutako zikloak:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1318
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1317
 msgid "The number of full disk power on/off cycles"
 msgstr "Diskoa piztu/itzali ziklo osoen kopurua"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1323
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "Temperature:"
 msgstr "Tenperatura:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1326
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1325
 msgid "The temperature of the disk"
 msgstr "Diskoaren tenperatura"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1331
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "Bad Sectors:"
 msgstr "Sektore txarrak:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1334
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1333
 msgid "The sum of pending and reallocated bad sectors"
 msgstr "Birresleitutako eta falta diren sektore txarren batura"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "Self Assessment:"
 msgstr "Bere estimazioa:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1342
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1341
 msgid "The assessment from the disk itself whether it is about to fail"
 msgstr "Disko berak duen estimazioa, noiz hutsegingo duen buruzkoa"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1346
 msgid "Overall Assessment:"
 msgstr "Estimazio orokorra:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1350
 msgid "An overall assessment of the health of the disk"
 msgstr "Diskoaren osasunaren estimazio orokorra"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1365
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1364
 msgid "_Refresh"
 msgstr "_Freskatu"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1367
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1366
 msgid "Reads SMART Data, waking up the disk"
 msgstr "SMART datuak irakurtzen ditu, diskoa esnatuz"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1377
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1376
 msgid "Run _Self-test"
 msgstr "Exekutatu _auto-proba"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1379
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1378
 msgid "Test the disk surface for errors"
 msgstr "Probatu diskoaren gainazala erroreak aurkitzeko"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1389
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
 msgid "_Cancel Self-test"
 msgstr "_Utzi auto-proba"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1391
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1390
 msgid "Cancels the self-test"
 msgstr "Bertan behera utzi proba automatikoa"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1409
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1408
 msgid "_Attributes"
 msgstr "_Atributuak"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1443
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1442
 msgid "ID"
 msgstr "IDa"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1455
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1454
 msgid "Attribute"
 msgstr "Atributua"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1472
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1471
 msgid "Assessment"
 msgstr "Estimazioa"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1491
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1490
 msgid "Value"
 msgstr "Balioa"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1519
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1518
 msgid "Don't _warn if the disk is failing"
 msgstr "_Ez abisatu diskoak hutsegiten badu"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1521
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1520
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr "Utzi aktibatu gabe diskoa hutsegiten hastean jakinarazteko"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1585
 #, c-format
 msgid "%.1f years"
 msgstr "%.1f urte"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1589
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f egun"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1593
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f ordu"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1597
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f minutu"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1602
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1601
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f segundo"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1608
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
 #, c-format
 msgid "%s msec"
 msgstr "%s mseg."
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1617
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1616
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1117,32 +1123,33 @@ msgstr[1] "%d sektore"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1629
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1628
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1696
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
-msgstr "Hutsegitea berehalako diskoaren hutsegitearen adierazgarri da (Pre-Fail)"
+msgstr ""
+"Hutsegitea berehalako diskoaren hutsegitearen adierazgarri da (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1701
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1700
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "Hutsegitea zahartzaroaren adierazgarri da (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1706
 msgid "Every time data is collected (Online)"
 msgstr "Datuak jasotzen diren bakoitzean (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1711
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1710
 msgid "Only during off-line activities (Not Online)"
 msgstr "Soilik lineaz kanpoko jardueretan (Not Online)"
 
@@ -1151,7 +1158,7 @@ msgstr "Soilik lineaz kanpoko jardueretan (Not Online)"
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1719
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1164,26 +1171,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1929
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1928
 msgid "No drive selected"
 msgstr "Ez da unitaterik hautatu"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1935
 msgid "SMART not supported"
 msgstr "SMART ez dago onartuta"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1944
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1943
 msgid "SMART data never collected"
 msgstr "Inoiz ez dira SMART daturik eskuratu"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1951
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1956
 msgid "SMART data is malformed"
 msgstr "SMART datuak gaizki osatuta daude"
 
@@ -1201,36 +1208,36 @@ msgstr "SMART datuak gaizki osatuta daude"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1987
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2005
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2025
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2033
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2042
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2104
-#: ../src/gdu-gtk/gdu-volume-grid.c:1321 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1986
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2004
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2024
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2032
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2041
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
+#: ../src/gdu-gtk/gdu-volume-grid.c:1301 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1992
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1991
 msgid "Passed"
 msgstr "EGINDA"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1998
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1997
 msgid "FAILING"
 msgstr "HUTSEGINDA"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2010
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2009
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2015
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2014
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
@@ -1238,47 +1245,47 @@ msgstr[0] "Sektore %d txarra"
 msgstr[1] "%d sektore txarrak"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2060
 msgid "Completed OK"
 msgstr "Ongi burututa"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2064
 msgid "Cancelled"
 msgstr "Bertan behera utzita"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2068
 msgid "Cancelled (with hard or soft reset)"
 msgstr "Bertan behera utzita (berrabiarazte gogor edo bigunarekin)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2072
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "Burutu gabe (errore larri bat gerta zitekeen)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2077
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2076
 msgid "FAILED (Electrical)"
 msgstr "HUTS EGIN DU (elektrikoa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2081
 msgid "FAILED (Servo)"
 msgstr "HUTS EGIN DU (serboa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2087
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
 msgid "FAILED (Read)"
 msgstr "HUTS EGIN DU (irakurketa)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2092
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2091
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "HUTS EGIN DU (kalteak jaso dituenaren susmoa dago)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2097
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2096
 msgid "In progress"
 msgstr "Egiten ari da"
 
@@ -1651,7 +1658,8 @@ msgstr "Ez dago nahikoa leku librerik."
 #.
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
 #, c-format
-msgid "Insufficient space: %s is needed but largest contiguous free block is %s."
+msgid ""
+"Insufficient space: %s is needed but largest contiguous free block is %s."
 msgstr "Lekurik ez: %s. behar da, baina jarraian bloke libre handiena %s da."
 
 #. Translators: This is shown in the details column
@@ -1710,7 +1718,8 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
 #, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
-msgstr "%s(e)ko bolumena sortuko da. Ondoren, ez da leku librerik egongo erabilgarri."
+msgstr ""
+"%s(e)ko bolumena sortuko da. Ondoren, ez da leku librerik egongo erabilgarri."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1780,17 +1789,17 @@ msgstr "Biltegien gailuak"
 msgid "Details"
 msgstr "Xehetasunak"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:527
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
 msgid "Error benchmarking drive"
 msgstr "Errorea unitatearen proba-bankua lantzean"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 msgid "Are you sure you want to start a read/write benchmark?"
 msgstr "Ziur zaude irakurketa/idazketaren proba-banku bat hastea nahi duzula?"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:596
-#: ../src/palimpsest/gdu-section-drive.c:1004
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/palimpsest/gdu-section-drive.c:1007
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
 msgstr "_Proba-bankua"
@@ -1800,86 +1809,86 @@ msgstr "_Proba-bankua"
 #. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
 #. * or "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:687
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:686
 #, c-format
 msgid "%s (%s) – Benchmark"
 msgstr "%s (%s) – Proba-bankua"
 
 #. benchmark results
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
 msgid "Minimum Read Rate:"
 msgstr "Gutxieneko irakurketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
 msgid "Minimum Write Rate:"
 msgstr "Gutxieneko idazketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
 msgid "Maximum Read Rate:"
 msgstr "Gehienezko irakurketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
 msgid "Maximum Write Rate:"
 msgstr "Gehienezko idazketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
 msgid "Average Read Rate:"
 msgstr "Batez besteko irakurketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
 msgid "Average Write Rate:"
 msgstr "Batez besteko idazketa-emaria:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
 msgid "Last Benchmark:"
 msgstr "Azken proba-bankua:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
 msgid "Average Access Time:"
 msgstr "Batez besteko atzipen-denbora:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
 msgid "Start _Read-Only Benchmark"
 msgstr "Hasi _irakurketaren proba-bankua"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Measure read rate and access time"
 msgstr "Neurtu irakurketa-emaria eta atzipen-denbora"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
 msgid "Start Read/_Write Benchmark"
 msgstr "Hasi irakurketa/i_dazketaren proba-bankua"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
 msgid "Measure read rate, write rate and access time"
 msgstr "Neurtu irakurketa-emaria, idazketa-emaria eta atzipen-denbora"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:952
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
 #, c-format
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:957
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
 #, c-format
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1236
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1223
 msgid "Never"
 msgstr "Inoiz ere ez"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1310
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1297
 msgid "Cancel"
 msgstr "Utzi"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1313
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1300
 msgid "Cancels the currently running benchmark"
 msgstr "Bertan behera utzi unean exekutatzen ari den proba"
 
@@ -1924,13 +1933,13 @@ msgstr "Esleitu gabea"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
-#: ../src/palimpsest/gdu-section-drive.c:935
+#: ../src/palimpsest/gdu-section-drive.c:938
 msgid "SMART Status:"
 msgstr "SMARTen egoera:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
-#: ../src/palimpsest/gdu-section-drive.c:911
+#: ../src/palimpsest/gdu-section-drive.c:914
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Gailua:"
@@ -2157,7 +2166,7 @@ msgstr "Baiezko botoiaren etiketa mnemoteknikoa"
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:219
-#: ../src/palimpsest/gdu-section-drive.c:649
+#: ../src/palimpsest/gdu-section-drive.c:652
 #: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_Formateatu"
@@ -2245,52 +2254,6 @@ msgstr ""
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "Abisua: bolumeneko datu guztiak betirako galdu egingo dira."
 
-#: ../src/gdu-gtk/gdu-gtk.c:175
-msgctxt "application name"
-msgid "Bourne Again Shell"
-msgstr "Bourne Again Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:180
-msgctxt "application name"
-msgid "Bourne Shell"
-msgstr "Bourne Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:185
-msgctxt "application name"
-msgid "C Shell"
-msgstr "C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:190
-msgctxt "application name"
-msgid "TENEX C Shell"
-msgstr "TENEX C Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:195
-msgctxt "application name"
-msgid "Z Shell"
-msgstr "Z Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:200
-msgctxt "application name"
-msgid "Korn Shell"
-msgstr "Korn Shell"
-
-#: ../src/gdu-gtk/gdu-gtk.c:204
-msgctxt "application name"
-msgid "Process Viewer (top)"
-msgstr "Prozesuen ikustailea (top)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:208
-msgctxt "application name"
-msgid "Terminal Pager (less)"
-msgstr "Terminaleko orrikatzailea (less)"
-
-#: ../src/gdu-gtk/gdu-gtk.c:220
-#| msgid "Unknown"
-msgctxt "application name"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
 #: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
@@ -2357,7 +2320,8 @@ msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr "Pasaesaldia aldatzeko, sartu uneko pasaesaldia eta baita berria ere"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
-msgid "Data on this device is stored in an encrypted form protected by a passphrase"
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
 "Gailu honetako datuak pasaesaldi batekin babestutako enkriptatutako moduan "
 "gordeta daude"
@@ -2371,13 +2335,15 @@ msgstr ""
 "gorde egingo dira."
 
 #: ../src/gdu-gtk/gdu-gtk.c:648
-msgid "Data on this device is stored in an encrypted form protected by a passphrase."
+msgid ""
+"Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
 "Gailu honetako datuak pasaesaldi batekin babestutako enkriptatutako moduan "
 "gordeta daude."
 
 #: ../src/gdu-gtk/gdu-gtk.c:651
-msgid "To make the data available for use, enter the passphrase for the device."
+msgid ""
+"To make the data available for use, enter the passphrase for the device."
 msgstr "Datuak erabilgarri izateko, sartu gailuaren pasaesaldia."
 
 #: ../src/gdu-gtk/gdu-gtk.c:660
@@ -2540,17 +2506,17 @@ msgid_plural "%d hours ago"
 msgstr[0] "Duela ordu %d"
 msgstr[1] "Duela %d ordu"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:504
+#: ../src/gdu-gtk/gdu-volume-grid.c:489
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
 msgstr "Unitatea"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:505
+#: ../src/gdu-gtk/gdu-volume-grid.c:490
 msgid "Drive to show volumes for"
 msgstr "Unitatea (haren bolumenak erakusteko)"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1195
+#: ../src/gdu-gtk/gdu-volume-grid.c:1175
 msgid "RAID Array is not running"
 msgstr "RAID array-a ez da exekutatzen ari"
 
@@ -2558,31 +2524,31 @@ msgstr "RAID array-a ez da exekutatzen ari"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1198 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1178 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "Ez da euskarririk detektatu"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1283
+#: ../src/gdu-gtk/gdu-volume-grid.c:1263
 msgid "Extended"
 msgstr "Hedatuta"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1291
+#: ../src/gdu-gtk/gdu-volume-grid.c:1271
 msgid "Encrypted"
 msgstr "Enkriptatuta"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1305 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "RAID osagaia"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1313
+#: ../src/gdu-gtk/gdu-volume-grid.c:1293
 msgid "Free"
 msgstr "Libre"
 
@@ -2864,56 +2830,10 @@ msgstr "RAID array-a %s (%s)"
 msgid "RAID device %s"
 msgstr "%s RAID gailua"
 
-#. Translators: fallback for level
-#: ../src/gdu/gdu-linux-md-drive.c:612
-#| msgid "ID"
-msgctxt "RAID Level fallback"
-msgid "RAID"
-msgstr "RAID"
-
 #: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
 msgstr "RAID array-a"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1114
-#| msgid "Not Mounted"
-msgctxt "Linux MD slave state"
-msgid "Not Attached"
-msgstr "Erantsi gabe"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1117
-msgctxt "Linux MD slave state"
-msgid "Faulty"
-msgstr "Akastuna"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1122
-msgctxt "Linux MD slave state"
-msgid "Fully Synchronized"
-msgstr "Erabat sinkronizatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1124
-msgctxt "Linux MD slave state"
-msgid "Writemostly"
-msgstr "Gehienbat idatzita"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1126
-#| msgid "Allocated"
-msgctxt "Linux MD slave state"
-msgid "Blocked"
-msgstr "Blokeatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1130
-#| msgid "Partially Running"
-msgctxt "Linux MD slave state"
-msgid "Partially Synchronized"
-msgstr "Partzialki sinkronizatuta"
-
-#: ../src/gdu/gdu-linux-md-drive.c:1132
-#| msgid "Add _Spare"
-msgctxt "Linux MD slave state"
-msgid "Spare"
-msgstr "Ordezkoa"
 
 #: ../src/gdu/gdu-machine.c:151
 msgid "Local Storage"
@@ -3047,7 +2967,8 @@ msgstr ""
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
-msgstr "udisks-tcp-bridge programak huts egin du autorizazio zuela frogatzean: %s"
+msgstr ""
+"udisks-tcp-bridge programak huts egin du autorizazio zuela frogatzean: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:592
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
@@ -3823,7 +3744,8 @@ msgstr ""
 
 #: ../src/gdu/gdu-util.c:596
 msgid "Swap area used by the operating system for virtual memory."
-msgstr "Sistema eragileak memoria birtual gisa erabiltzen duen trukatzeko area."
+msgstr ""
+"Sistema eragileak memoria birtual gisa erabiltzen duen trukatzeko area."
 
 #: ../src/gdu/gdu-util.c:599
 msgid ""
@@ -3944,13 +3866,6 @@ msgstr "SDIO"
 msgid "Virtual"
 msgstr "Birtuala"
 
-#. Translators: name shown for unknown disk connection interfaces
-#: ../src/gdu/gdu-util.c:940
-#| msgid "Unknown"
-msgctxt "connection name"
-msgid "Unknown"
-msgstr "Ezezaguna"
-
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
 #. * second %s is the speed, like '2 Mbit/s'
@@ -3959,77 +3874,6 @@ msgstr "Ezezaguna"
 #, c-format
 msgid "%s at %s"
 msgstr "%s (%s)"
-
-#: ../src/gdu/gdu-util.c:969
-msgctxt "RAID level"
-msgid "Stripe (RAID-0)"
-msgstr "Zatitua (RAID-0)"
-
-#: ../src/gdu/gdu-util.c:971
-msgctxt "RAID level"
-msgid "RAID-0"
-msgstr "RAID-0"
-
-#: ../src/gdu/gdu-util.c:974
-msgctxt "RAID level"
-msgid "Mirror (RAID-1)"
-msgstr "Ispilua (RAID-1)"
-
-#: ../src/gdu/gdu-util.c:976
-msgctxt "RAID level"
-msgid "RAID-1"
-msgstr "RAID-1"
-
-#: ../src/gdu/gdu-util.c:979
-msgctxt "RAID level"
-msgid "Parity Disk (RAID-4)"
-msgstr "Disko paritatea (RAID-4)"
-
-#: ../src/gdu/gdu-util.c:981
-msgctxt "RAID level"
-msgid "RAID-4"
-msgstr "RAID-4"
-
-#: ../src/gdu/gdu-util.c:984
-msgctxt "RAID level"
-msgid "Distributed Parity (RAID-5)"
-msgstr "Banatutako paritatea (RAID-5)"
-
-#: ../src/gdu/gdu-util.c:986
-msgctxt "RAID level"
-msgid "RAID-5"
-msgstr "RAID-5"
-
-#: ../src/gdu/gdu-util.c:989
-msgctxt "RAID level"
-msgid "Dual Distributed Parity (RAID-6)"
-msgstr "Banatutako paritate bikoitza (RAID-6)"
-
-#: ../src/gdu/gdu-util.c:991
-msgctxt "RAID level"
-msgid "RAID-6"
-msgstr "RAID-6"
-
-#: ../src/gdu/gdu-util.c:994
-msgctxt "RAID level"
-msgid "Stripe of Mirrors (RAID-10)"
-msgstr "Ispilu zatituak (RAID-10)"
-
-#: ../src/gdu/gdu-util.c:996
-msgctxt "RAID level"
-msgid "RAID-10"
-msgstr "RAID-10"
-
-#: ../src/gdu/gdu-util.c:999
-#| msgid "NetBSD Concatenated Partition"
-msgctxt "RAID level"
-msgid "Concatenated (Linear)"
-msgstr "Kateatuta (lineala)"
-
-#: ../src/gdu/gdu-util.c:1001
-msgctxt "RAID level"
-msgid "Linear"
-msgstr "Lineala"
 
 #: ../src/gdu/gdu-util.c:1015
 msgid ""
@@ -4336,13 +4180,6 @@ msgstr "%s partizio-taula"
 msgid "%s LVM2 Physical Volume"
 msgstr "%s LVM2 bolumen fisikoa"
 
-#. Translators: Used if no specific RAID level could be determined
-#: ../src/gdu/gdu-volume.c:361
-#| msgid "ID"
-msgctxt "RAID level"
-msgid "RAID"
-msgstr "RAID"
-
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
 #. * Second %s is the RAID level string, e.g 'RAID-5'
@@ -4446,23 +4283,29 @@ msgstr ""
 "Datuak galtzea saihesteko, itxaron amaitu arte euskarria kendu edo gailua "
 "deskonektatu aurretik."
 
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "Disko bat edo gehiago hutsegiten"
-
 #. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "Disko gogorra agian hutsegiten"
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr "Disko gogorrean arazoak hautemanda"
 
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr "Disko gogor bateak osasun-arazoak dituela jakinarazi du."
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
 msgstr ""
-"Disko gogor bat edo gehiagok osasun arazoak dituztela jakinarazi da. Egin "
-"klik ikonoan informazio gehiago lortzeko."
+"Sistemako hainbat disko gogorrek osasun-arazoak dituztela jakinarazi dute."
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr "Aztertu"
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
+msgstr "Hainbat disko gogorrek osasun-arazoak dituztela jakinarazi dute."
 
 #: ../src/palimpsest/gdu-main.c:127
 msgid "Volume to show"
@@ -4496,32 +4339,6 @@ msgstr "%d. PHY - %s"
 msgid "Port %d of %s"
 msgstr "%d. ataka - %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:261
-msgctxt "Write Cache"
-msgid "Enabled"
-msgstr "Gaituta"
-
-#: ../src/palimpsest/gdu-section-drive.c:263
-msgctxt "Write Cache"
-msgid "Disabled"
-msgstr "Desgaituta"
-
-#. Translators: This is for the rotation rate of a hard
-#. * disk - RPM means rounds per minute
-#.
-#: ../src/palimpsest/gdu-section-drive.c:273
-#, c-format
-#| msgid "%d MB/s"
-msgctxt "Rotation Rate"
-msgid "%d RPM"
-msgstr "%d b/min"
-
-#: ../src/palimpsest/gdu-section-drive.c:281
-#| msgid "Solid-State Disk"
-msgctxt "Rotation Rate"
-msgid "Solid-State Disk"
-msgstr "Solid-State Diskoa"
-
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
 #: ../src/palimpsest/gdu-section-drive.c:296
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:259
@@ -4529,32 +4346,32 @@ msgstr "Solid-State Diskoa"
 msgid "Unknown Scheme: %s"
 msgstr "Eskema ezezaguna: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:439
-#: ../src/palimpsest/gdu-section-drive.c:459
+#: ../src/palimpsest/gdu-section-drive.c:442
+#: ../src/palimpsest/gdu-section-drive.c:462
 msgid "Error launching Brasero"
 msgstr "Errorea Brasero abiaraztean"
 
-#: ../src/palimpsest/gdu-section-drive.c:440
+#: ../src/palimpsest/gdu-section-drive.c:443
 msgid "The application is not installed"
 msgstr "Aplikazioa ez dago instalatuta"
 
-#: ../src/palimpsest/gdu-section-drive.c:521
+#: ../src/palimpsest/gdu-section-drive.c:524
 msgid "Error ejecting medium"
 msgstr "Errorea euskarria egoztean"
 
-#: ../src/palimpsest/gdu-section-drive.c:565
+#: ../src/palimpsest/gdu-section-drive.c:568
 msgid "Error detaching drive"
 msgstr "Errorea unitatea askatzean"
 
-#: ../src/palimpsest/gdu-section-drive.c:610
+#: ../src/palimpsest/gdu-section-drive.c:613
 msgid "Error formatting drive"
 msgstr "Errorea unitatea formateatzean"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-drive.c:651
 msgid "Are you sure you want to format the drive?"
 msgstr "Ziur zaude unitatea formateatzea nahi duzula?"
 
-#: ../src/palimpsest/gdu-section-drive.c:835
+#: ../src/palimpsest/gdu-section-drive.c:838
 msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
@@ -4563,11 +4380,11 @@ msgstr ""
 "bat datorren bide-izen anitzeko gailurik aurkitu. Sist. Erag. gaizki "
 "konfiguratuta egon daiteke."
 
-#: ../src/palimpsest/gdu-section-drive.c:850
+#: ../src/palimpsest/gdu-section-drive.c:853
 msgid "Go to Multipath Device"
 msgstr "Joan bide-izen anitzeko gailura"
 
-#: ../src/palimpsest/gdu-section-drive.c:861
+#: ../src/palimpsest/gdu-section-drive.c:864
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
@@ -4575,93 +4392,93 @@ msgstr ""
 "<b>Oharra:</b> objektu honek unitatearen bide-izenetariko bat adierazten du. "
 "Unitatean eragiketak lantzeko, erabili dagokion bide-izen anitzeko objektua."
 
-#: ../src/palimpsest/gdu-section-drive.c:890
+#: ../src/palimpsest/gdu-section-drive.c:893
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Model:"
 msgstr "Modeloa:"
 
-#: ../src/palimpsest/gdu-section-drive.c:894
+#: ../src/palimpsest/gdu-section-drive.c:897
 msgid "Serial Number:"
 msgstr "Serie-zenbakia:"
 
-#: ../src/palimpsest/gdu-section-drive.c:898
+#: ../src/palimpsest/gdu-section-drive.c:901
 msgid "Firmware Version:"
 msgstr "Firmware-aren bertsioa:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:903
+#: ../src/palimpsest/gdu-section-drive.c:906
 msgid "World Wide Name:"
 msgstr "Mundu zabaleko izena (WWN):"
 
-#: ../src/palimpsest/gdu-section-drive.c:907
+#: ../src/palimpsest/gdu-section-drive.c:910
 msgid "Location:"
 msgstr "Kokalekua:"
 
-#: ../src/palimpsest/gdu-section-drive.c:915
+#: ../src/palimpsest/gdu-section-drive.c:918
 msgid "Write Cache:"
 msgstr "Idazketa-cachea:"
 
-#: ../src/palimpsest/gdu-section-drive.c:919
+#: ../src/palimpsest/gdu-section-drive.c:922
 msgid "Rotation Rate:"
 msgstr "Biratze-emaria:"
 
-#: ../src/palimpsest/gdu-section-drive.c:923
+#: ../src/palimpsest/gdu-section-drive.c:926
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "Edukiera:"
 
-#: ../src/palimpsest/gdu-section-drive.c:927
+#: ../src/palimpsest/gdu-section-drive.c:930
 msgid "Connection:"
 msgstr "Konexioa:"
 
-#: ../src/palimpsest/gdu-section-drive.c:931
+#: ../src/palimpsest/gdu-section-drive.c:934
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
 msgstr "Partizioa egitea:"
 
-#: ../src/palimpsest/gdu-section-drive.c:954
+#: ../src/palimpsest/gdu-section-drive.c:957
 msgid "Open CD/_DVD Application"
 msgstr "Ireki CD/_DVD aplikazioa"
 
-#: ../src/palimpsest/gdu-section-drive.c:955
+#: ../src/palimpsest/gdu-section-drive.c:958
 msgid "Create and copy CDs and DVDs"
 msgstr "Sortu eta kopiatu CD eta DVDak"
 
-#: ../src/palimpsest/gdu-section-drive.c:964
+#: ../src/palimpsest/gdu-section-drive.c:967
 msgid "Format _Drive"
 msgstr "_Formateatu unitatea"
 
-#: ../src/palimpsest/gdu-section-drive.c:965
+#: ../src/palimpsest/gdu-section-drive.c:968
 msgid "Erase or partition the drive"
 msgstr "Ezabatu edo sortu partizioa unitatean"
 
-#: ../src/palimpsest/gdu-section-drive.c:974
+#: ../src/palimpsest/gdu-section-drive.c:977
 msgid "SM_ART Data"
 msgstr "_SMART datuak"
 
-#: ../src/palimpsest/gdu-section-drive.c:975
+#: ../src/palimpsest/gdu-section-drive.c:978
 msgid "View SMART data and run self-tests"
 msgstr "Ikusi SMART datuak eta exekutatu auto-probak"
 
-#: ../src/palimpsest/gdu-section-drive.c:984
+#: ../src/palimpsest/gdu-section-drive.c:987
 msgid "_Eject"
 msgstr "_Egotzi"
 
-#: ../src/palimpsest/gdu-section-drive.c:985
+#: ../src/palimpsest/gdu-section-drive.c:988
 msgid "Eject medium from the drive"
 msgstr "Egotzi euskarria unitatetik"
 
-#: ../src/palimpsest/gdu-section-drive.c:994
+#: ../src/palimpsest/gdu-section-drive.c:997
 msgid "Safe Rem_oval"
 msgstr "Segurtasunez _kendu"
 
-#: ../src/palimpsest/gdu-section-drive.c:995
+#: ../src/palimpsest/gdu-section-drive.c:998
 msgid "Power down the drive so it can be removed"
 msgstr "Itzali unitatea kendu ahal izateko"
 
-#: ../src/palimpsest/gdu-section-drive.c:1005
+#: ../src/palimpsest/gdu-section-drive.c:1008
 msgid "Measure drive performance"
 msgstr "Neurtu unitatearen errendimendua"
 
@@ -4812,71 +4629,6 @@ msgstr "Editatu bolumen _fisikoak"
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
 msgid "Create and remove PVs"
 msgstr "Sortu eta kendu bol. fisikoak"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
-msgctxt "RAID status"
-msgid "Not running, partially assembled"
-msgstr "Ez da exekutatzen ari, partzialki mihiztatua"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
-#| msgid "Not Running"
-msgctxt "RAID status"
-msgid "Not running"
-msgstr "Ez da exekutatzen ari"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
-msgctxt "RAID status"
-msgid "Not running, can only start degraded"
-msgstr "Ez da exekutatzen ari, degradatuta soilik abiaraz daiteke"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
-#| msgid "Not enough components available to start the RAID Array"
-msgctxt "RAID status"
-msgid "Not running, not enough components to start"
-msgstr "Ez da exekutatzen ari, ez dago nahikoa osagairik abiarazteko"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
-msgctxt "RAID status"
-msgid "DEGRADED"
-msgstr "DEGRADATUTA"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
-#| msgid "Running"
-msgctxt "RAID status"
-msgid "Running"
-msgstr "Exekutatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
-msgctxt "RAID action"
-msgid "Reshaping"
-msgstr "Berrantolatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
-#| msgid "Running"
-msgctxt "RAID action"
-msgid "Resyncing"
-msgstr "Birsinkronizatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
-#| msgid "Preparing..."
-msgctxt "RAID action"
-msgid "Repairing"
-msgstr "Konpontzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
-msgctxt "RAID action"
-msgid "Recovering"
-msgstr "Berreskuratzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
-msgctxt "RAID action"
-msgid "Checking"
-msgstr "Egiaztatzen"
-
-#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
-msgctxt "RAID action"
-msgid "Idle"
-msgstr "Inaktibo"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
 msgid "Error stopping RAID Array"
@@ -5140,18 +4892,6 @@ msgstr "Etiketa:"
 #: ../src/palimpsest/gdu-section-volumes.c:1965
 msgid "Mount Point:"
 msgstr "Muntatze-puntua:"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1986
-#| msgid "Running"
-msgctxt "LVM2 LV State"
-msgid "Running"
-msgstr "Exekutatzen"
-
-#: ../src/palimpsest/gdu-section-volumes.c:1987
-#| msgid "Not Running"
-msgctxt "LVM2 LV State"
-msgid "Not Running"
-msgstr "Ez da exekutatzen ari"
 
 #. Translators: This is for the 'boot' MBR/APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2026
@@ -5516,7 +5256,241 @@ msgstr "Baimena ukatuta."
 msgid "_Details:"
 msgstr "_Xehetasunak:"
 
-#: ../src/palimpsest/gdu-shell.c:1168
+#: ../src/palimpsest/gdu-shell.c:1163
 msgid "_Storage Devices"
 msgstr "_Biltegien gailuak"
 
+#~ msgctxt "application name"
+#~ msgid "Bourne Again Shell"
+#~ msgstr "Bourne Again Shell"
+
+#~ msgctxt "application name"
+#~ msgid "Bourne Shell"
+#~ msgstr "Bourne Shell"
+
+#~ msgctxt "application name"
+#~ msgid "C Shell"
+#~ msgstr "C Shell"
+
+#~ msgctxt "application name"
+#~ msgid "TENEX C Shell"
+#~ msgstr "TENEX C Shell"
+
+#~ msgctxt "application name"
+#~ msgid "Z Shell"
+#~ msgstr "Z Shell"
+
+#~ msgctxt "application name"
+#~ msgid "Korn Shell"
+#~ msgstr "Korn Shell"
+
+#~ msgctxt "application name"
+#~ msgid "Process Viewer (top)"
+#~ msgstr "Prozesuen ikustailea (top)"
+
+#~ msgctxt "application name"
+#~ msgid "Terminal Pager (less)"
+#~ msgstr "Terminaleko orrikatzailea (less)"
+
+#~| msgid "Unknown"
+#~ msgctxt "application name"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~| msgid "ID"
+#~ msgctxt "RAID Level fallback"
+#~ msgid "RAID"
+#~ msgstr "RAID"
+
+#~| msgid "Not Mounted"
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Not Attached"
+#~ msgstr "Erantsi gabe"
+
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Faulty"
+#~ msgstr "Akastuna"
+
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Fully Synchronized"
+#~ msgstr "Erabat sinkronizatuta"
+
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Writemostly"
+#~ msgstr "Gehienbat idatzita"
+
+#~| msgid "Allocated"
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Blocked"
+#~ msgstr "Blokeatuta"
+
+#~| msgid "Partially Running"
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Partially Synchronized"
+#~ msgstr "Partzialki sinkronizatuta"
+
+#~| msgid "Add _Spare"
+#~ msgctxt "Linux MD slave state"
+#~ msgid "Spare"
+#~ msgstr "Ordezkoa"
+
+#~| msgid "Unknown"
+#~ msgctxt "connection name"
+#~ msgid "Unknown"
+#~ msgstr "Ezezaguna"
+
+#~ msgctxt "RAID level"
+#~ msgid "Stripe (RAID-0)"
+#~ msgstr "Zatitua (RAID-0)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-0"
+#~ msgstr "RAID-0"
+
+#~ msgctxt "RAID level"
+#~ msgid "Mirror (RAID-1)"
+#~ msgstr "Ispilua (RAID-1)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-1"
+#~ msgstr "RAID-1"
+
+#~ msgctxt "RAID level"
+#~ msgid "Parity Disk (RAID-4)"
+#~ msgstr "Disko paritatea (RAID-4)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-4"
+#~ msgstr "RAID-4"
+
+#~ msgctxt "RAID level"
+#~ msgid "Distributed Parity (RAID-5)"
+#~ msgstr "Banatutako paritatea (RAID-5)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-5"
+#~ msgstr "RAID-5"
+
+#~ msgctxt "RAID level"
+#~ msgid "Dual Distributed Parity (RAID-6)"
+#~ msgstr "Banatutako paritate bikoitza (RAID-6)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-6"
+#~ msgstr "RAID-6"
+
+#~ msgctxt "RAID level"
+#~ msgid "Stripe of Mirrors (RAID-10)"
+#~ msgstr "Ispilu zatituak (RAID-10)"
+
+#~ msgctxt "RAID level"
+#~ msgid "RAID-10"
+#~ msgstr "RAID-10"
+
+#~| msgid "NetBSD Concatenated Partition"
+#~ msgctxt "RAID level"
+#~ msgid "Concatenated (Linear)"
+#~ msgstr "Kateatuta (lineala)"
+
+#~ msgctxt "RAID level"
+#~ msgid "Linear"
+#~ msgstr "Lineala"
+
+#~| msgid "ID"
+#~ msgctxt "RAID level"
+#~ msgid "RAID"
+#~ msgstr "RAID"
+
+#~ msgid "One or more disks are failing"
+#~ msgstr "Disko bat edo gehiago hutsegiten"
+
+#~ msgid "A hard disk may be failing"
+#~ msgstr "Disko gogorra agian hutsegiten"
+
+#~ msgid ""
+#~ "One or more hard disks report health problems. Click the icon to get more "
+#~ "information."
+#~ msgstr ""
+#~ "Disko gogor bat edo gehiagok osasun arazoak dituztela jakinarazi da. Egin "
+#~ "klik ikonoan informazio gehiago lortzeko."
+
+#~ msgctxt "Write Cache"
+#~ msgid "Enabled"
+#~ msgstr "Gaituta"
+
+#~ msgctxt "Write Cache"
+#~ msgid "Disabled"
+#~ msgstr "Desgaituta"
+
+#~| msgid "%d MB/s"
+#~ msgctxt "Rotation Rate"
+#~ msgid "%d RPM"
+#~ msgstr "%d b/min"
+
+#~| msgid "Solid-State Disk"
+#~ msgctxt "Rotation Rate"
+#~ msgid "Solid-State Disk"
+#~ msgstr "Solid-State Diskoa"
+
+#~ msgctxt "RAID status"
+#~ msgid "Not running, partially assembled"
+#~ msgstr "Ez da exekutatzen ari, partzialki mihiztatua"
+
+#~| msgid "Not Running"
+#~ msgctxt "RAID status"
+#~ msgid "Not running"
+#~ msgstr "Ez da exekutatzen ari"
+
+#~ msgctxt "RAID status"
+#~ msgid "Not running, can only start degraded"
+#~ msgstr "Ez da exekutatzen ari, degradatuta soilik abiaraz daiteke"
+
+#~| msgid "Not enough components available to start the RAID Array"
+#~ msgctxt "RAID status"
+#~ msgid "Not running, not enough components to start"
+#~ msgstr "Ez da exekutatzen ari, ez dago nahikoa osagairik abiarazteko"
+
+#~ msgctxt "RAID status"
+#~ msgid "DEGRADED"
+#~ msgstr "DEGRADATUTA"
+
+#~| msgid "Running"
+#~ msgctxt "RAID status"
+#~ msgid "Running"
+#~ msgstr "Exekutatzen"
+
+#~ msgctxt "RAID action"
+#~ msgid "Reshaping"
+#~ msgstr "Berrantolatzen"
+
+#~| msgid "Running"
+#~ msgctxt "RAID action"
+#~ msgid "Resyncing"
+#~ msgstr "Birsinkronizatzen"
+
+#~| msgid "Preparing..."
+#~ msgctxt "RAID action"
+#~ msgid "Repairing"
+#~ msgstr "Konpontzen"
+
+#~ msgctxt "RAID action"
+#~ msgid "Recovering"
+#~ msgstr "Berreskuratzen"
+
+#~ msgctxt "RAID action"
+#~ msgid "Checking"
+#~ msgstr "Egiaztatzen"
+
+#~ msgctxt "RAID action"
+#~ msgid "Idle"
+#~ msgstr "Inaktibo"
+
+#~| msgid "Running"
+#~ msgctxt "LVM2 LV State"
+#~ msgid "Running"
+#~ msgstr "Exekutatzen"
+
+#~| msgid "Not Running"
+#~ msgctxt "LVM2 LV State"
+#~ msgid "Not Running"
+#~ msgstr "Ez da exekutatzen ari"

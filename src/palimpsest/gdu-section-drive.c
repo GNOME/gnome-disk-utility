@@ -481,12 +481,12 @@ on_smart_button_clicked (GduButtonElement *button_element,
                          gpointer          user_data)
 {
         GduSectionDrive *section = GDU_SECTION_DRIVE (user_data);
-        GtkWindow *toplevel;
         GtkWidget *dialog;
 
-        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
-        dialog = gdu_ata_smart_dialog_new (toplevel,
+        dialog = gdu_ata_smart_dialog_new (NULL,
                                            GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
+        gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+
         gtk_widget_show_all (dialog);
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);
@@ -497,12 +497,11 @@ gdu_section_drive_on_benchmark_button_clicked (GduButtonElement *button_element,
                                                gpointer          user_data)
 {
         GduSection *section = GDU_SECTION (user_data);
-        GtkWindow *toplevel;
         GtkWidget *dialog;
 
-        toplevel = GTK_WINDOW (gdu_shell_get_toplevel (gdu_section_get_shell (GDU_SECTION (section))));
-        dialog = gdu_drive_benchmark_dialog_new (toplevel,
+        dialog = gdu_drive_benchmark_dialog_new (NULL,
                                                  GDU_DRIVE (gdu_section_get_presentable (GDU_SECTION (section))));
+        gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
         gtk_widget_show_all (dialog);
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);

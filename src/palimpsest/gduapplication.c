@@ -28,8 +28,10 @@
 struct _GduApplication
 {
   GtkApplication parent_instance;
+
   GtkBuilder *builder;
   GtkWindow *window;
+  gboolean running_from_source_tree;
 };
 
 typedef struct
@@ -42,18 +44,6 @@ G_DEFINE_TYPE (GduApplication, gdu_application, GTK_TYPE_APPLICATION);
 static void
 gdu_application_init (GduApplication *app)
 {
-  GError *error;
-
-  app->builder = gtk_builder_new ();
-
-  error = NULL;
-  if (gtk_builder_add_from_file (app->builder,
-                                 "../../data/ui/palimpsest.ui",
-                                 &error) == 0)
-    {
-      g_error ("Error loading palimpsest.ui: %s", error->message);
-      g_error_free (error);
-    }
 }
 
 static void
@@ -61,15 +51,50 @@ gdu_application_finalize (GObject *object)
 {
   GduApplication *app = GDU_APPLICATION (object);
 
-  g_object_unref (app->builder);
+  if (app->builder != NULL)
+    g_object_unref (app->builder);
 
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
+}
+
+static gboolean
+gdu_application_local_command_line (GApplication    *_app,
+                                    gchar         ***arguments,
+                                    int             *exit_status)
+{
+  GduApplication *app = GDU_APPLICATION (_app);
+
+  /* figure out if running from source tree */
+  if (g_strcmp0 ((*arguments)[0], "./palimpsest") == 0)
+    app->running_from_source_tree = TRUE;
+
+  /* chain up */
+  return G_APPLICATION_CLASS (gdu_application_parent_class)->local_command_line (_app,
+                                                                                 arguments,
+                                                                                 exit_status);
 }
 
 static void
 gdu_application_activate (GApplication *_app)
 {
   GduApplication *app = GDU_APPLICATION (_app);
+  GError *error;
+  const gchar *path;
+
+  if (app->builder != NULL)
+    return;
+
+  app->builder = gtk_builder_new ();
+  error = NULL;
+  path = app->running_from_source_tree ? "../../data/ui/palimpsest.ui" :
+                                         PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
+  if (gtk_builder_add_from_file (app->builder,
+                                 path,
+                                 &error) == 0)
+    {
+      g_error ("Error loading %s: %s", path, error->message);
+      g_error_free (error);
+    }
 
   app->window = GTK_WINDOW (gtk_builder_get_object (app->builder, "palimpsest-window"));
   gtk_window_set_application (app->window, GTK_APPLICATION (app));
@@ -86,7 +111,8 @@ gdu_application_class_init (GduApplicationClass *klass)
   gobject_class->finalize = gdu_application_finalize;
 
   application_class = G_APPLICATION_CLASS (klass);
-  application_class->activate = gdu_application_activate;
+  application_class->local_command_line = gdu_application_local_command_line;
+  application_class->activate           = gdu_application_activate;
 }
 
 GApplication *

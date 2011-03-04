@@ -1,7 +1,8 @@
 
 NULL =
 
-uidir = $(datadir)/ui/user-accounts
+uidir = $(datadir)/gnome-disk-utility/
+
 ui_DATA = 			\
 	palimpsest.ui		\
 	$(NULL)

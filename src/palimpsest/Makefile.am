@@ -13,6 +13,7 @@ palimpsest_SOURCES = 					\
 palimpsest_CPPFLAGS = 					\
 	-I$(top_srcdir)/src/				\
 	-I$(top_builddir)/src/				\
+	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
 	-DG_LOG_DOMAIN=\"Palimpsest\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(NULL)

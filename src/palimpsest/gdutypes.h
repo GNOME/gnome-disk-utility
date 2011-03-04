@@ -20,20 +20,16 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#include "config.h"
-#include <glib/gi18n.h>
+#ifndef __GDU_TYPES_H__
+#define __GDU_TYPES_H__
 
-#include "gdu.h"
+#include <gtk/gtk.h>
 
-int
-main (int argc, char *argv[])
-{
-  GApplication *app;
-  gint status;
+G_BEGIN_DECLS
 
-  app = gdu_application_new ();
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
+struct _GduApplication;
+typedef struct _GduApplication GduApplication;
 
-  return status;
-}
+G_END_DECLS
+
+#endif /* __GDU_TYPES_H__ */

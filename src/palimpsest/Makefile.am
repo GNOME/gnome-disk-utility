@@ -3,8 +3,11 @@ NULL =
 
 bin_PROGRAMS = palimpsest
 
-palimpsest_SOURCES = 									\
-						main.c					\
+palimpsest_SOURCES = 					\
+				main.c			\
+	gdu.h						\
+	gduapplication.h	gduapplication.c	\
+	gdutypes.h					\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\
@@ -17,11 +20,14 @@ palimpsest_CPPFLAGS = 					\
 palimpsest_CFLAGS = 					\
 	$(GLIB2_CFLAGS)					\
 	$(UDISKS2_CFLAGS)				\
+	$(GTK3_CFLAGS)					\
+	$(WARN_CFLAGS)					\
 	$(NULL)
 
 palimpsest_LDADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
+	$(GTK3_LIBS)					\
 	$(NULL)
 
 clean-local :

@@ -20,20 +20,24 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#include "config.h"
-#include <glib/gi18n.h>
+#ifndef __GDU_APPLICATION_H__
+#define __GDU_APPLICATION_H__
 
-#include "gdu.h"
+#include <gtk/gtk.h>
+#include "gdutypes.h"
 
-int
-main (int argc, char *argv[])
-{
-  GApplication *app;
-  gint status;
+G_BEGIN_DECLS
 
-  app = gdu_application_new ();
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
+#define GDU_TYPE_APPLICATION         (gdu_application_get_type ())
+#define GDU_APPLICATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_APPLICATION, GduApplication))
+#define GDU_IS_APPLICATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_APPLICATION))
 
-  return status;
-}
+GType         gdu_application_get_type   (void) G_GNUC_CONST;
+GApplication *gdu_application_new        (void);
+GtkWidget    *gdu_application_get_widget (GduApplication *app,
+                                            const gchar    *name);
+
+
+G_END_DECLS
+
+#endif /* __GDU_APPLICATION_H__ */

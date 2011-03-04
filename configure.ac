@@ -29,9 +29,11 @@ GNOME_MAINTAINER_MODE_DEFINES
 
 GLIB2_REQUIRED=2.22
 UDISKS2_REQUIRED=1.90
+GTK3_REQUIRED=3.0.0
 
 PKG_CHECK_MODULES(GLIB2, [gio-2.0 >= $GLIB2_REQUIRED])
 PKG_CHECK_MODULES(UDISKS2, [udisks2 >= $UDISKS2_REQUIRED])
+PKG_CHECK_MODULES(GTK3, [gtk+-3.0 >= $GTK3_REQUIRED])
 
 # ********************
 # Internationalization
@@ -61,6 +63,7 @@ data/icons/22x22/Makefile
 data/icons/24x24/Makefile
 data/icons/48x48/Makefile
 data/icons/scalable/Makefile
+data/ui/Makefile
 ])
 
 AC_OUTPUT

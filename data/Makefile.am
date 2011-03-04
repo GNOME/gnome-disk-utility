@@ -1,6 +1,6 @@
 NULL =
 
-SUBDIRS = icons
+SUBDIRS = ui icons
 
 desktopdir = $(datadir)/applications
 desktop_in_files = palimpsest.desktop.in

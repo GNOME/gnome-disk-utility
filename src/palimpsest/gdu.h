@@ -20,20 +20,10 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#include "config.h"
-#include <glib/gi18n.h>
+#ifndef __GDU_H__
+#define __GDU_H__
 
-#include "gdu.h"
+#include <gdutypes.h>
+#include <gduapplication.h>
 
-int
-main (int argc, char *argv[])
-{
-  GApplication *app;
-  gint status;
-
-  app = gdu_application_new ();
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
-
-  return status;
-}
+#endif /* __GDU_H__ */

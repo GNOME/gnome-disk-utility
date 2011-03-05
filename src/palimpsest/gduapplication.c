@@ -191,6 +191,8 @@ add_lun (GduApplication   *app,
   const gchar *model;
   const gchar *vendor;
 
+  g_debug ("add %s", g_dbus_object_proxy_get_object_path (object));
+
   lun = UDISKS_PEEK_LUN (object);
 
   model = udisks_lun_get_model (lun);
@@ -225,6 +227,8 @@ remove_lun (GduApplication   *app,
 {
   GtkTreeIter iter;
 
+  g_debug ("remove %s", g_dbus_object_proxy_get_object_path (object));
+
   if (!find_iter_for_object_proxy (app,
                                    object,
                                    &iter))
@@ -258,6 +262,16 @@ on_object_proxy_removed (GDBusProxyManager *manager,
   GduApplication *app = GDU_APPLICATION (user_data);
   if (UDISKS_PEEK_LUN (object) != NULL)
     remove_lun (app, object);
+}
+
+static void
+on_row_inserted (GtkTreeModel *tree_model,
+                 GtkTreePath  *path,
+                 GtkTreeIter  *iter,
+                 gpointer      user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_application_get_widget (app, "lunlist-treeview")));
 }
 
 static void
@@ -416,6 +430,11 @@ gdu_application_activate (GApplication *_app)
                     G_CALLBACK (on_object_proxy_removed),
                     app);
 
+  /* expand on insertion - hmm, I wonder if there's an easier way to do this */
+  g_signal_connect (app->lun_tree_store,
+                    "row-inserted",
+                    G_CALLBACK (on_row_inserted),
+                    app);
   gtk_tree_view_expand_all (tree_view);
 }
 

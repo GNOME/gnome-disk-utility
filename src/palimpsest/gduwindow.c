@@ -25,7 +25,7 @@
 
 #include "gduapplication.h"
 #include "gduwindow.h"
-#include "gdutreemodel.h"
+#include "gdudevicetreemodel.h"
 
 struct _GduWindow
 {
@@ -35,7 +35,7 @@ struct _GduWindow
   UDisksClient *client;
 
   GtkBuilder *builder;
-  GduTreeModel *model;
+  GduDeviceTreeModel *model;
 };
 
 typedef struct
@@ -85,7 +85,7 @@ dont_select_headings (GtkTreeSelection *selection,
                            path);
   gtk_tree_model_get (model,
                       &iter,
-                      GDU_TREE_MODEL_COLUMN_IS_HEADING,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING,
                       &is_heading,
                       -1);
 
@@ -149,12 +149,12 @@ gdu_window_constructed (GObject *object)
   context = gtk_widget_get_style_context (gdu_window_get_widget (window, "device-tree-add-remove-toolbar"));
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
-  window->model = gdu_tree_model_new (window->client);
+  window->model = gdu_device_tree_model_new (window->client);
 
   tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview"));
   gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
-                                        GDU_TREE_MODEL_COLUMN_SORT_KEY,
+                                        GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
                                         GTK_SORT_ASCENDING);
 
   selection = gtk_tree_view_get_selection (tree_view);
@@ -167,8 +167,8 @@ gdu_window_constructed (GObject *object)
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,
-                                       "markup", GDU_TREE_MODEL_COLUMN_HEADING_TEXT,
-                                       "visible", GDU_TREE_MODEL_COLUMN_IS_HEADING,
+                                       "markup", GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT,
+                                       "visible", GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING,
                                        NULL);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
@@ -178,13 +178,13 @@ gdu_window_constructed (GObject *object)
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,
-                                       "gicon", GDU_TREE_MODEL_COLUMN_ICON,
+                                       "gicon", GDU_DEVICE_TREE_MODEL_COLUMN_ICON,
                                        NULL);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,
-                                       "text", GDU_TREE_MODEL_COLUMN_NAME,
+                                       "text", GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
                                        NULL);
 
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */

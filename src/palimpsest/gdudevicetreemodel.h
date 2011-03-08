@@ -20,34 +20,34 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_TREE_MODEL_H__
-#define __GDU_TREE_MODEL_H__
+#ifndef __GDU_DEVICE_TREE_MODEL_H__
+#define __GDU_DEVICE_TREE_MODEL_H__
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_TREE_MODEL         (gdu_tree_model_get_type ())
-#define GDU_TREE_MODEL(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_TREE_MODEL, GduTreeModel))
-#define GDU_IS_TREE_MODEL(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_TREE_MODEL))
+#define GDU_TYPE_DEVICE_TREE_MODEL         (gdu_device_tree_model_get_type ())
+#define GDU_DEVICE_TREE_MODEL(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_DEVICE_TREE_MODEL, GduDeviceTreeModel))
+#define GDU_IS_DEVICE_TREE_MODEL(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_DEVICE_TREE_MODEL))
 
 enum
 {
-  GDU_TREE_MODEL_COLUMN_SORT_KEY,
-  GDU_TREE_MODEL_COLUMN_IS_HEADING,
-  GDU_TREE_MODEL_COLUMN_HEADING_TEXT,
-  GDU_TREE_MODEL_COLUMN_ICON,
-  GDU_TREE_MODEL_COLUMN_NAME,
-  GDU_TREE_MODEL_COLUMN_OBJECT_PROXY,
-  GDU_TREE_MODEL_N_COLUMNS
+  GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
+  GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING,
+  GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT,
+  GDU_DEVICE_TREE_MODEL_COLUMN_ICON,
+  GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
+  GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY,
+  GDU_DEVICE_TREE_MODEL_N_COLUMNS
 };
 
-GType         gdu_tree_model_get_type   (void) G_GNUC_CONST;
-GduTreeModel *gdu_tree_model_new        (UDisksClient *client);
-UDisksClient *gdu_tree_model_get_client (GduTreeModel *model);
+GType               gdu_device_tree_model_get_type   (void) G_GNUC_CONST;
+GduDeviceTreeModel *gdu_device_tree_model_new        (UDisksClient       *client);
+UDisksClient       *gdu_device_tree_model_get_client (GduDeviceTreeModel *model);
 
 
 G_END_DECLS
 
-#endif /* __GDU_TREE_MODEL_H__ */
+#endif /* __GDU_DEVICE_TREE_MODEL_H__ */

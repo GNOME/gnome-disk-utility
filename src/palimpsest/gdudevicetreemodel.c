@@ -23,9 +23,9 @@
 #include "config.h"
 #include <glib/gi18n.h>
 
-#include "gdutreemodel.h"
+#include "gdudevicetreemodel.h"
 
-struct _GduTreeModel
+struct _GduDeviceTreeModel
 {
   GtkTreeStore parent_instance;
 
@@ -41,7 +41,7 @@ struct _GduTreeModel
 typedef struct
 {
   GtkTreeStoreClass parent_class;
-} GduTreeModelClass;
+} GduDeviceTreeModelClass;
 
 enum
 {
@@ -49,9 +49,9 @@ enum
   PROP_CLIENT
 };
 
-G_DEFINE_TYPE (GduTreeModel, gdu_tree_model, GTK_TYPE_TREE_STORE);
+G_DEFINE_TYPE (GduDeviceTreeModel, gdu_device_tree_model, GTK_TYPE_TREE_STORE);
 
-static void coldplug (GduTreeModel *model);
+static void coldplug (GduDeviceTreeModel *model);
 
 static void on_object_proxy_added (GDBusProxyManager   *manager,
                                    GDBusObjectProxy    *object_proxy,
@@ -71,7 +71,7 @@ static void on_interface_proxy_removed (GDBusProxyManager   *manager,
                                         GDBusProxy          *interface_proxy,
                                         gpointer             user_data);
 
-static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
+static void on_interface_proxy_properties_changed (GDBusProxyManager *manager,
                                                    GDBusObjectProxy  *object_proxy,
                                                    GDBusProxy        *interface_proxy,
                                                    GVariant          *changed_properties,
@@ -79,9 +79,9 @@ static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
                                                    gpointer           user_data);
 
 static void
-gdu_tree_model_finalize (GObject *object)
+gdu_device_tree_model_finalize (GObject *object)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (object);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GDBusProxyManager *proxy_manager;
 
   proxy_manager = udisks_client_get_proxy_manager (model->client);
@@ -105,26 +105,26 @@ gdu_tree_model_finalize (GObject *object)
   g_list_free (model->current_luns);
   g_object_unref (model->client);
 
-  G_OBJECT_CLASS (gdu_tree_model_parent_class)->finalize (object);
+  G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->finalize (object);
 }
 
 static void
-gdu_tree_model_init (GduTreeModel *model)
+gdu_device_tree_model_init (GduDeviceTreeModel *model)
 {
 }
 
 static void
-gdu_tree_model_get_property (GObject    *object,
-                             guint       prop_id,
-                             GValue     *value,
-                             GParamSpec *pspec)
+gdu_device_tree_model_get_property (GObject    *object,
+                                    guint       prop_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (object);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
 
   switch (prop_id)
     {
     case PROP_CLIENT:
-      g_value_set_object (value, gdu_tree_model_get_client (model));
+      g_value_set_object (value, gdu_device_tree_model_get_client (model));
       break;
 
     default:
@@ -134,12 +134,12 @@ gdu_tree_model_get_property (GObject    *object,
 }
 
 static void
-gdu_tree_model_set_property (GObject      *object,
-                             guint         prop_id,
-                             const GValue *value,
-                             GParamSpec   *pspec)
+gdu_device_tree_model_set_property (GObject      *object,
+                                    guint         prop_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (object);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
 
   switch (prop_id)
     {
@@ -173,7 +173,7 @@ find_iter_for_object_proxy_cb (GtkTreeModel  *model,
 
   gtk_tree_model_get (model,
                       iter,
-                      GDU_TREE_MODEL_COLUMN_OBJECT_PROXY, &iter_object,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, &iter_object,
                       -1);
   if (iter_object == NULL)
     goto out;
@@ -192,9 +192,9 @@ find_iter_for_object_proxy_cb (GtkTreeModel  *model,
 }
 
 static gboolean
-find_iter_for_object_proxy (GduTreeModel     *model,
-                            GDBusObjectProxy *object,
-                            GtkTreeIter      *out_iter)
+find_iter_for_object_proxy (GduDeviceTreeModel *model,
+                            GDBusObjectProxy   *object,
+                            GtkTreeIter        *out_iter)
 {
   FindIterData data;
 
@@ -272,10 +272,10 @@ _g_dbus_object_proxy_compare (GDBusObjectProxy *a,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-gdu_tree_model_constructed (GObject *object)
+gdu_device_tree_model_constructed (GObject *object)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (object);
-  GType types[GDU_TREE_MODEL_N_COLUMNS];
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
+  GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
   GDBusProxyManager *proxy_manager;
   gchar *s;
 
@@ -285,9 +285,9 @@ gdu_tree_model_constructed (GObject *object)
   types[3] = G_TYPE_ICON;
   types[4] = G_TYPE_STRING;
   types[5] = G_TYPE_DBUS_OBJECT_PROXY;
-  G_STATIC_ASSERT (6 == GDU_TREE_MODEL_N_COLUMNS);
+  G_STATIC_ASSERT (6 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
-                                   GDU_TREE_MODEL_N_COLUMNS,
+                                   GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
 
   g_assert (gtk_tree_model_get_flags (GTK_TREE_MODEL (model)) & GTK_TREE_MODEL_ITERS_PERSIST);
@@ -298,9 +298,9 @@ gdu_tree_model_constructed (GObject *object)
                                      &model->lun_iter,
                                      NULL, /* GtkTreeIter *parent */
                                      0,
-                                     GDU_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
-                                     GDU_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
                                      -1);
   g_free (s);
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
@@ -309,9 +309,9 @@ gdu_tree_model_constructed (GObject *object)
                                      &model->block_iter,
                                      NULL, /* GtkTreeIter *parent */
                                      0,
-                                     GDU_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
-                                     GDU_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, "01_block",
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "01_block",
                                      -1);
   g_free (s);
 
@@ -338,25 +338,25 @@ gdu_tree_model_constructed (GObject *object)
                     model);
   coldplug (model);
 
-  if (G_OBJECT_CLASS (gdu_tree_model_parent_class)->constructed != NULL)
-    G_OBJECT_CLASS (gdu_tree_model_parent_class)->constructed (object);
+  if (G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed != NULL)
+    G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed (object);
 }
 
 static void
-gdu_tree_model_class_init (GduTreeModelClass *klass)
+gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
 {
   GObjectClass *gobject_class;
 
   gobject_class = G_OBJECT_CLASS (klass);
-  gobject_class->finalize     = gdu_tree_model_finalize;
-  gobject_class->constructed  = gdu_tree_model_constructed;
-  gobject_class->get_property = gdu_tree_model_get_property;
-  gobject_class->set_property = gdu_tree_model_set_property;
+  gobject_class->finalize     = gdu_device_tree_model_finalize;
+  gobject_class->constructed  = gdu_device_tree_model_constructed;
+  gobject_class->get_property = gdu_device_tree_model_get_property;
+  gobject_class->set_property = gdu_device_tree_model_set_property;
 
   /**
-   * GduTreeModel:client:
+   * GduDeviceTreeModel:client:
    *
-   * The #UDisksClient used by the #GduTreeModel instance.
+   * The #UDisksClient used by the #GduDeviceTreeModel instance.
    */
   g_object_class_install_property (gobject_class,
                                    PROP_CLIENT,
@@ -371,25 +371,25 @@ gdu_tree_model_class_init (GduTreeModelClass *klass)
 }
 
 /**
- * gdu_tree_model_new:
+ * gdu_device_tree_model_new:
  * @client: A #UDisksClient.
  *
- * Creates a new #GduTreeModel for viewing the devices belonging to
+ * Creates a new #GduDeviceTreeModel for viewing the devices belonging to
  * @client.
  *
- * Returns: A #GduTreeModel. Free with g_object_unref().
+ * Returns: A #GduDeviceTreeModel. Free with g_object_unref().
  */
-GduTreeModel *
-gdu_tree_model_new (UDisksClient *client)
+GduDeviceTreeModel *
+gdu_device_tree_model_new (UDisksClient *client)
 {
-  return GDU_TREE_MODEL (g_object_new (GDU_TYPE_TREE_MODEL,
+  return GDU_DEVICE_TREE_MODEL (g_object_new (GDU_TYPE_DEVICE_TREE_MODEL,
                                        "client", client,
                                        NULL));
 }
 
 /**
- * gdu_tree_model_get_client:
- * @model: A #GduTreeModel.
+ * gdu_device_tree_model_get_client:
+ * @model: A #GduDeviceTreeModel.
  *
  * Gets the #UDisksClient used by @model.
  *
@@ -397,18 +397,18 @@ gdu_tree_model_new (UDisksClient *client)
  * belongs to @model.
  */
 UDisksClient *
-gdu_tree_model_get_client (GduTreeModel *model)
+gdu_device_tree_model_get_client (GduDeviceTreeModel *model)
 {
-  g_return_val_if_fail (GDU_IS_TREE_MODEL (model), NULL);
+  g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
   return model->client;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-add_lun (GduTreeModel     *model,
-         GDBusObjectProxy *object_proxy,
-         GtkTreeIter      *parent)
+add_lun (GduDeviceTreeModel *model,
+         GDBusObjectProxy   *object_proxy,
+         GtkTreeIter        *parent)
 {
   const gchar *lun_vendor;
   const gchar *lun_model;
@@ -435,10 +435,10 @@ add_lun (GduTreeModel     *model,
                                      &iter,
                                      parent,
                                      0,
-                                     GDU_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_TREE_MODEL_COLUMN_NAME, name,
-                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
-                                     GDU_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, name,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
                                      -1);
   g_object_unref (icon);
   g_free (sort_key);
@@ -446,8 +446,8 @@ add_lun (GduTreeModel     *model,
 }
 
 static void
-remove_lun (GduTreeModel     *model,
-            GDBusObjectProxy *object_proxy)
+remove_lun (GduDeviceTreeModel *model,
+            GDBusObjectProxy   *object_proxy)
 {
   GtkTreeIter iter;
 
@@ -467,7 +467,7 @@ remove_lun (GduTreeModel     *model,
 }
 
 static void
-update_das (GduTreeModel *model)
+update_luns (GduDeviceTreeModel *model)
 {
   GDBusProxyManager *proxy_manager;
   GList *object_proxies;
@@ -528,9 +528,9 @@ update_das (GduTreeModel *model)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-add_block (GduTreeModel     *model,
-           GDBusObjectProxy *object_proxy,
-           GtkTreeIter      *parent)
+add_block (GduDeviceTreeModel  *model,
+           GDBusObjectProxy    *object_proxy,
+           GtkTreeIter         *parent)
 {
   UDisksBlockDevice *block;
   GIcon *icon;
@@ -566,10 +566,10 @@ add_block (GduTreeModel     *model,
                                      &iter,
                                      parent,
                                      0,
-                                     GDU_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_TREE_MODEL_COLUMN_NAME, name,
-                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
-                                     GDU_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, name,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
                                      -1);
   g_object_unref (icon);
   g_free (sort_key);
@@ -577,8 +577,8 @@ add_block (GduTreeModel     *model,
 }
 
 static void
-remove_block (GduTreeModel     *model,
-              GDBusObjectProxy *object_proxy)
+remove_block (GduDeviceTreeModel  *model,
+              GDBusObjectProxy    *object_proxy)
 {
   GtkTreeIter iter;
 
@@ -632,7 +632,7 @@ should_include_block (GDBusObjectProxy *object_proxy)
 }
 
 static void
-update_block (GduTreeModel *model)
+update_blocks (GduDeviceTreeModel *model)
 {
   GDBusProxyManager *proxy_manager;
   GList *object_proxies;
@@ -694,15 +694,15 @@ update_block (GduTreeModel *model)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_all (GduTreeModel *model)
+update_all (GduDeviceTreeModel *model)
 {
   /* TODO: if this is CPU intensive we could coalesce all updates / schedule timeouts */
-  update_das (model);
-  update_block (model);
+  update_luns (model);
+  update_blocks (model);
 }
 
 static void
-coldplug (GduTreeModel *model)
+coldplug (GduDeviceTreeModel *model)
 {
   update_all (model);
 }
@@ -712,7 +712,7 @@ on_object_proxy_added (GDBusProxyManager   *manager,
                        GDBusObjectProxy    *object_proxy,
                        gpointer             user_data)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
@@ -721,7 +721,7 @@ on_object_proxy_removed (GDBusProxyManager   *manager,
                          GDBusObjectProxy    *object_proxy,
                          gpointer             user_data)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
@@ -731,7 +731,7 @@ on_interface_proxy_added (GDBusProxyManager   *manager,
                           GDBusProxy          *interface_proxy,
                           gpointer             user_data)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
@@ -741,7 +741,7 @@ on_interface_proxy_removed (GDBusProxyManager   *manager,
                             GDBusProxy          *interface_proxy,
                             gpointer             user_data)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
@@ -753,7 +753,7 @@ on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
                                        GStrv              invalidated_properties,
                                        gpointer           user_data)
 {
-  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 

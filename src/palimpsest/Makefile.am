@@ -7,7 +7,7 @@ palimpsest_SOURCES = 					\
 				main.c			\
 	gdu.h						\
 	gduapplication.h	gduapplication.c	\
-	gdutreemodel.h		gdutreemodel.c		\
+	gdudevicetreemodel.h	gdudevicetreemodel.c	\
 	gdutypes.h					\
 	gduwindow.h		gduwindow.c		\
 	$(NULL)

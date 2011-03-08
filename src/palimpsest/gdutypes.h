@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 struct _GduApplication;
 typedef struct _GduApplication GduApplication;
 
-struct _GduTreeModel;
-typedef struct _GduTreeModel GduTreeModel;
+struct _GduDeviceTreeModel;
+typedef struct _GduDeviceTreeModel GduDeviceTreeModel;
 
 struct _GduWindow;
 typedef struct _GduWindow GduWindow;

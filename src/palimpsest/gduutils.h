@@ -20,13 +20,18 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_H__
-#define __GDU_H__
+#ifndef __GDU_UTILS_H__
+#define __GDU_UTILS_H__
 
-#include <gdutypes.h>
-#include <gduapplication.h>
-#include <gdudevicetreemodel.h>
-#include <gduutils.h>
-#include <gduwindow.h>
+#include <gtk/gtk.h>
+#include "gdutypes.h"
 
-#endif /* __GDU_H__ */
+G_BEGIN_DECLS
+
+gchar *gdu_util_get_size_for_display (guint64  size,
+                                      gboolean use_pow2,
+                                      gboolean long_string);
+
+G_END_DECLS
+
+#endif /* __GDU_UTILS_H__ */

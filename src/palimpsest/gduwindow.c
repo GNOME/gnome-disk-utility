@@ -26,6 +26,16 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdudevicetreemodel.h"
+#include "gduutils.h"
+
+/* Keep in sync with tabs in palimpsest.ui file */
+typedef enum
+{
+  DETAILS_PAGE_NOT_SELECTED,
+  DETAILS_PAGE_LUN,
+  DETAILS_PAGE_LOOP,
+  DETAILS_PAGE_BLOCK
+} DetailsPage;
 
 struct _GduWindow
 {
@@ -36,6 +46,11 @@ struct _GduWindow
 
   GtkBuilder *builder;
   GduDeviceTreeModel *model;
+
+  DetailsPage current_page;
+  GDBusObjectProxy *current_object_proxy;
+
+  GtkWidget *lun_write_cache_switch;
 };
 
 typedef struct
@@ -61,6 +76,9 @@ static void
 gdu_window_finalize (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
+
+  if (window->current_object_proxy != NULL)
+    g_object_unref (window->current_object_proxy);
 
   g_object_unref (window->builder);
   g_object_unref (window->model);
@@ -102,6 +120,65 @@ on_row_inserted (GtkTreeModel *tree_model,
   gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
 }
 
+static void select_details_page (GduWindow         *window,
+                                 GDBusObjectProxy  *object_proxy,
+                                 DetailsPage        page);
+
+static void
+set_selected_object_proxy (GduWindow        *window,
+                           GDBusObjectProxy *object_proxy)
+{
+  if (object_proxy != NULL)
+    {
+      UDisksBlockDevice *block;
+
+      if (UDISKS_PEEK_LUN (object_proxy) != NULL)
+        {
+          select_details_page (window, object_proxy, DETAILS_PAGE_LUN);
+        }
+      else if ((block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy)) != NULL)
+        {
+          if (strlen (udisks_block_device_get_loop_backing_file (block)) > 0)
+            select_details_page (window, object_proxy, DETAILS_PAGE_LOOP);
+          else
+            select_details_page (window, object_proxy, DETAILS_PAGE_BLOCK);
+        }
+      else
+        {
+          g_assert_not_reached ();
+        }
+    }
+  else
+    {
+      select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED);
+    }
+}
+
+static void
+on_tree_selection_changed (GtkTreeSelection *tree_selection,
+                           gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+
+  if (gtk_tree_selection_get_selected (tree_selection, &model, &iter))
+    {
+      GDBusObjectProxy *object_proxy;
+      gtk_tree_model_get (model,
+                          &iter,
+                          GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY,
+                          &object_proxy,
+                          -1);
+      set_selected_object_proxy (window, object_proxy);
+      g_object_unref (object_proxy);
+    }
+  else
+    {
+      set_selected_object_proxy (window, NULL);
+    }
+}
+
 gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
 
 static void
@@ -116,6 +193,7 @@ gdu_window_constructed (GObject *object)
   GtkTreeSelection *selection;
   const gchar *path;
   GtkWidget *w;
+  GtkWidget *align;
   GtkStyleContext *context;
 
   /* chain up */
@@ -138,7 +216,7 @@ gdu_window_constructed (GObject *object)
   w = gdu_window_get_widget (window, "palimpsest-hbox");
   gtk_widget_reparent (w, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
-  gtk_window_set_default_size (GTK_WINDOW (window), 400, 500);
+  gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
@@ -160,6 +238,10 @@ gdu_window_constructed (GObject *object)
 
   selection = gtk_tree_view_get_selection (tree_view);
   gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);
+  g_signal_connect (selection,
+                    "changed",
+                    G_CALLBACK (on_tree_selection_changed),
+                    window);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (tree_view, column);
@@ -194,6 +276,17 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_row_inserted),
                     window);
   gtk_tree_view_expand_all (tree_view);
+
+  /* insert widgets not yet supported by the glade app */
+  window->lun_write_cache_switch = gtk_switch_new ();
+  align = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
+  gtk_container_add (GTK_CONTAINER (align), window->lun_write_cache_switch);
+  gtk_table_attach (GTK_TABLE (gdu_window_get_widget (window, "lun-table")),
+                    align,
+                    1, 2,
+                    5, 6,
+                    GTK_FILL, 0,
+                    0, 0);
 }
 
 static void
@@ -319,4 +412,133 @@ gdu_window_get_widget (GduWindow    *window,
   g_return_val_if_fail (GDU_IS_WINDOW (window), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   return GTK_WIDGET (gtk_builder_get_object (window->builder, name));
+}
+
+static void
+teardown_details_page (GduWindow         *window,
+                       GDBusObjectProxy *object_proxy,
+                       gint              page)
+{
+  //g_debug ("teardown for %s, page %d",
+  //       object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //         page);
+  switch (page)
+    {
+    case DETAILS_PAGE_NOT_SELECTED:
+      break;
+    case DETAILS_PAGE_LUN:
+      break;
+    case DETAILS_PAGE_LOOP:
+      break;
+    case DETAILS_PAGE_BLOCK:
+      break;
+    }
+}
+
+static void
+set_string (GduWindow   *window,
+            const gchar *label_id,
+            const gchar *text)
+{
+  if (text == NULL || strlen (text) == 0)
+    text = "—";
+
+  /* TODO: utf-8 validate */
+  gtk_label_set_text (GTK_LABEL (gdu_window_get_widget (window, label_id)), text);
+}
+
+static void
+set_size (GduWindow   *window,
+          const gchar *label_id,
+          guint64      size)
+{
+  gchar *s;
+  s = gdu_util_get_size_for_display (size, FALSE, TRUE);
+  set_string (window, label_id, s);
+  g_free (s);
+}
+
+static void
+setup_details_page (GduWindow         *window,
+                    GDBusObjectProxy *object_proxy,
+                    gint              page)
+{
+  //g_debug ("setup for %s, page %d",
+  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //         page);
+  switch (page)
+    {
+    case DETAILS_PAGE_NOT_SELECTED:
+      break;
+    case DETAILS_PAGE_LUN:
+      {
+        UDisksLun *lun;
+        const gchar *lun_vendor;
+        const gchar *lun_model;
+        gchar *s;
+
+        lun = UDISKS_PEEK_LUN (object_proxy);
+        lun_vendor = udisks_lun_get_vendor (lun);
+        lun_model = udisks_lun_get_model (lun);
+        if (strlen (lun_vendor) == 0)
+          s = g_strdup (lun_model);
+        else if (strlen (lun_model) == 0)
+          s = g_strdup (lun_vendor);
+        else
+          s = g_strconcat (lun_vendor, " ", lun_model, NULL);
+        gtk_label_set_text (GTK_LABEL (gdu_window_get_widget (window, "lun-model-value-label")), s);
+        g_free (s);
+
+        set_string (window, "lun-serial-number-value-label", udisks_lun_get_serial (lun));
+        set_string (window, "lun-firmware-version-value-label", udisks_lun_get_revision (lun));
+        set_string (window, "lun-wwn-value-label", udisks_lun_get_wwn (lun));
+        set_size (window, "lun-size-value-label", udisks_lun_get_size (lun));
+        /* TODO: get this from udisks */
+        gtk_switch_set_active (GTK_SWITCH (window->lun_write_cache_switch), TRUE);
+      }
+      break;
+    case DETAILS_PAGE_LOOP:
+      {
+        UDisksBlockDevice *block;
+        block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+        set_string (window, "loop-device-value-label", udisks_block_device_get_preferred_device (block));
+        set_string (window, "loop-file-value-label", udisks_block_device_get_loop_backing_file (block));
+        set_size (window, "loop-size-value-label", udisks_block_device_get_size (block));
+      }
+      break;
+
+    case DETAILS_PAGE_BLOCK:
+      {
+        UDisksBlockDevice *block;
+        block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+        set_string (window, "block-device-value-label", udisks_block_device_get_preferred_device (block));
+        set_size (window, "block-size-value-label", udisks_block_device_get_size (block));
+      }
+      break;
+    }
+}
+
+static void
+select_details_page (GduWindow         *window,
+                     GDBusObjectProxy  *object_proxy,
+                     DetailsPage        page)
+{
+  GtkNotebook *notebook;
+
+  notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
+
+  teardown_details_page (window,
+                         window->current_object_proxy,
+                         window->current_page);
+
+  window->current_page = page;
+  if (window->current_object_proxy != NULL)
+    g_object_unref (window->current_object_proxy);
+  window->current_object_proxy = object_proxy != NULL ? g_object_ref (object_proxy) : NULL;
+
+  setup_details_page (window,
+                      window->current_object_proxy,
+                      window->current_page);
+
+  gtk_notebook_set_current_page (notebook, page);
 }

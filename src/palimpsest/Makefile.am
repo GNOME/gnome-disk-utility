@@ -9,6 +9,7 @@ palimpsest_SOURCES = 					\
 	gduapplication.h	gduapplication.c	\
 	gdutreemodel.h		gdutreemodel.c		\
 	gdutypes.h					\
+	gduwindow.h		gduwindow.c		\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

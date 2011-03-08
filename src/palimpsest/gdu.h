@@ -25,5 +25,7 @@
 
 #include <gdutypes.h>
 #include <gduapplication.h>
+#include <gdutreemodel.h>
+#include <gduwindow.h>
 
 #endif /* __GDU_H__ */

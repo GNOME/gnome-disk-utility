@@ -24,19 +24,16 @@
 #include <glib/gi18n.h>
 
 #include "gduapplication.h"
-#include "gdutreemodel.h"
+#include "gduwindow.h"
 
 struct _GduApplication
 {
   GtkApplication parent_instance;
 
-  GtkBuilder *builder;
-  GtkWindow *window;
   gboolean running_from_source_tree;
 
   UDisksClient *client;
-
-  GduTreeModel *model;
+  GduWindow *window;
 };
 
 typedef struct
@@ -56,12 +53,8 @@ gdu_application_finalize (GObject *object)
 {
   GduApplication *app = GDU_APPLICATION (object);
 
-  if (app->builder != NULL)
-    goto out;
+  g_object_unref (app->client);
 
-  g_object_unref (app->model);
-
- out:
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
 
@@ -82,52 +75,11 @@ gdu_application_local_command_line (GApplication    *_app,
                                                                                  exit_status);
 }
 
-static gboolean
-dont_select_headings (GtkTreeSelection *selection,
-                      GtkTreeModel     *model,
-                      GtkTreePath      *path,
-                      gboolean          selected,
-                      gpointer          data)
-{
-  GtkTreeIter iter;
-  gboolean is_heading;
-
-  gtk_tree_model_get_iter (model,
-                           &iter,
-                           path);
-  gtk_tree_model_get (model,
-                      &iter,
-                      GDU_TREE_MODEL_COLUMN_IS_HEADING,
-                      &is_heading,
-                      -1);
-
-  return !is_heading;
-}
-
-static void
-on_row_inserted (GtkTreeModel *tree_model,
-                 GtkTreePath  *path,
-                 GtkTreeIter  *iter,
-                 gpointer      user_data)
-{
-  GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_application_get_widget (app, "lunlist-treeview")));
-}
-
 static void
 gdu_application_activate (GApplication *_app)
 {
   GduApplication *app = GDU_APPLICATION (_app);
   GError *error;
-  GtkNotebook *notebook;
-  GtkTreeView *tree_view;
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *renderer;
-  GtkTreeSelection *selection;
-  const gchar *path;
-
-  if (app->builder != NULL)
-    return;
 
   error = NULL;
   app->client = udisks_client_new_sync (NULL, /* GCancellable* */
@@ -138,76 +90,10 @@ gdu_application_activate (GApplication *_app)
       g_error_free (error);
     }
 
-  app->builder = gtk_builder_new ();
-  error = NULL;
-  path = app->running_from_source_tree ? "../../data/ui/palimpsest.ui" :
-                                         PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
-  if (gtk_builder_add_from_file (app->builder,
-                                 path,
-                                 &error) == 0)
-    {
-      g_error ("Error loading %s: %s", path, error->message);
-      g_error_free (error);
-    }
-
-  app->window = GTK_WINDOW (gdu_application_get_widget (app, "palimpsest-window"));
-  gtk_application_add_window (GTK_APPLICATION (app), app->window);
+  app->window = gdu_window_new (app, app->client);
+  gtk_application_add_window (GTK_APPLICATION (app),
+                              GTK_WINDOW (app->window));
   gtk_widget_show_all (GTK_WIDGET (app->window));
-
-  notebook = GTK_NOTEBOOK (gdu_application_get_widget (app, "palimpsest-notebook"));
-  gtk_notebook_set_show_tabs (notebook, FALSE);
-  gtk_notebook_set_show_border (notebook, FALSE);
-
-  GtkStyleContext *context;
-  context = gtk_widget_get_style_context (gdu_application_get_widget (app, "lunlist-scrolledwindow"));
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
-  context = gtk_widget_get_style_context (gdu_application_get_widget (app, "lunlist-add-remove-toolbar"));
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
-
-  app->model = gdu_tree_model_new (app->client);
-
-  tree_view = GTK_TREE_VIEW (gdu_application_get_widget (app, "lunlist-treeview"));
-  gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (app->model));
-  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (app->model),
-                                        GDU_TREE_MODEL_COLUMN_SORT_KEY,
-                                        GTK_SORT_ASCENDING);
-
-  selection = gtk_tree_view_get_selection (tree_view);
-  gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_append_column (tree_view, column);
-
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column,
-                                       renderer,
-                                       "markup", GDU_TREE_MODEL_COLUMN_HEADING_TEXT,
-                                       "visible", GDU_TREE_MODEL_COLUMN_IS_HEADING,
-                                       NULL);
-
-  renderer = gtk_cell_renderer_pixbuf_new ();
-  g_object_set (G_OBJECT (renderer),
-                "stock-size", GTK_ICON_SIZE_DND,
-                NULL);
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column,
-                                       renderer,
-                                       "gicon", GDU_TREE_MODEL_COLUMN_ICON,
-                                       NULL);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column,
-                                       renderer,
-                                       "text", GDU_TREE_MODEL_COLUMN_NAME,
-                                       NULL);
-
-  /* expand on insertion - hmm, I wonder if there's an easier way to do this */
-  g_signal_connect (app->model,
-                    "row-inserted",
-                    G_CALLBACK (on_row_inserted),
-                    app);
-  gtk_tree_view_expand_all (tree_view);
 }
 
 static void
@@ -232,13 +118,4 @@ gdu_application_new (void)
                                       "application-id", "org.gnome.DiskUtility",
                                       "flags", G_APPLICATION_FLAGS_NONE,
                                       NULL));
-}
-
-GtkWidget *
-gdu_application_get_widget (GduApplication *app,
-                            const gchar    *name)
-{
-  g_return_val_if_fail (GDU_IS_APPLICATION (app), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-  return GTK_WIDGET (gtk_builder_get_object (app->builder, name));
 }

@@ -102,6 +102,8 @@ on_row_inserted (GtkTreeModel *tree_model,
   gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
 }
 
+gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
+
 static void
 gdu_window_constructed (GObject *object)
 {
@@ -122,8 +124,9 @@ gdu_window_constructed (GObject *object)
 
   window->builder = gtk_builder_new ();
   error = NULL;
-  path = (TRUE /*app->running_from_source_tree*/) ? "../../data/ui/palimpsest.ui" :
-                                         PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
+  path = _gdu_application_get_running_from_source_tree (window->application)
+    ? "../../data/ui/palimpsest.ui" :
+      PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
   if (gtk_builder_add_from_file (window->builder,
                                  path,
                                  &error) == 0)

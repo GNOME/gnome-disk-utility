@@ -119,3 +119,12 @@ gdu_application_new (void)
                                       "flags", G_APPLICATION_FLAGS_NONE,
                                       NULL));
 }
+
+gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
+
+gboolean
+_gdu_application_get_running_from_source_tree (GduApplication *app)
+{
+  g_return_val_if_fail (GDU_IS_APPLICATION (app), FALSE);
+  return app->running_from_source_tree;
+}

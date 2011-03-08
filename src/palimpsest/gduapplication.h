@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 GType         gdu_application_get_type   (void) G_GNUC_CONST;
 GApplication *gdu_application_new        (void);
 GtkWidget    *gdu_application_get_widget (GduApplication *app,
-                                            const gchar    *name);
+                                          const gchar    *name);
 
 
 G_END_DECLS

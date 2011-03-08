@@ -49,8 +49,6 @@ struct _GduWindow
 
   DetailsPage current_page;
   GDBusObjectProxy *current_object_proxy;
-
-  GtkWidget *lun_write_cache_switch;
 };
 
 typedef struct
@@ -193,7 +191,6 @@ gdu_window_constructed (GObject *object)
   GtkTreeSelection *selection;
   const gchar *path;
   GtkWidget *w;
-  GtkWidget *align;
   GtkStyleContext *context;
 
   /* chain up */
@@ -276,17 +273,6 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_row_inserted),
                     window);
   gtk_tree_view_expand_all (tree_view);
-
-  /* insert widgets not yet supported by the glade app */
-  window->lun_write_cache_switch = gtk_switch_new ();
-  align = gtk_alignment_new (0.0, 0.5, 0.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (align), window->lun_write_cache_switch);
-  gtk_table_attach (GTK_TABLE (gdu_window_get_widget (window, "lun-table")),
-                    align,
-                    1, 2,
-                    5, 6,
-                    GTK_FILL, 0,
-                    0, 0);
 }
 
 static void
@@ -494,7 +480,7 @@ setup_details_page (GduWindow         *window,
         set_string (window, "lun-wwn-value-label", udisks_lun_get_wwn (lun));
         set_size (window, "lun-size-value-label", udisks_lun_get_size (lun));
         /* TODO: get this from udisks */
-        gtk_switch_set_active (GTK_SWITCH (window->lun_write_cache_switch), TRUE);
+        gtk_switch_set_active (GTK_SWITCH (gdu_window_get_widget (window, "lun-write-cache-switch")), TRUE);
       }
       break;
     case DETAILS_PAGE_LOOP:

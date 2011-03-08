@@ -139,6 +139,7 @@ gdu_window_constructed (GObject *object)
   gtk_widget_reparent (w, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
   gtk_window_set_default_size (GTK_WINDOW (window), 400, 500);
+  gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
   gtk_notebook_set_show_tabs (notebook, FALSE);

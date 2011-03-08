@@ -32,7 +32,10 @@ struct _GduTreeModel
   UDisksClient *client;
 
   GList *current_luns;
-  GtkTreeIter direct_attached_storage_iter;
+  GtkTreeIter lun_iter;
+
+  GList *current_blocks;
+  GtkTreeIter block_iter;
 };
 
 typedef struct
@@ -49,6 +52,7 @@ enum
 G_DEFINE_TYPE (GduTreeModel, gdu_tree_model, GTK_TYPE_TREE_STORE);
 
 static void coldplug (GduTreeModel *model);
+
 static void on_object_proxy_added (GDBusProxyManager   *manager,
                                    GDBusObjectProxy    *object_proxy,
                                    gpointer             user_data);
@@ -56,6 +60,23 @@ static void on_object_proxy_added (GDBusProxyManager   *manager,
 static void on_object_proxy_removed (GDBusProxyManager   *manager,
                                      GDBusObjectProxy    *object_proxy,
                                      gpointer             user_data);
+
+static void on_interface_proxy_added (GDBusProxyManager   *manager,
+                                      GDBusObjectProxy    *object_proxy,
+                                      GDBusProxy          *interface_proxy,
+                                      gpointer             user_data);
+
+static void on_interface_proxy_removed (GDBusProxyManager   *manager,
+                                        GDBusObjectProxy    *object_proxy,
+                                        GDBusProxy          *interface_proxy,
+                                        gpointer             user_data);
+
+static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
+                                                   GDBusObjectProxy  *object_proxy,
+                                                   GDBusProxy        *interface_proxy,
+                                                   GVariant          *changed_properties,
+                                                   GStrv              invalidated_properties,
+                                                   gpointer           user_data);
 
 static void
 gdu_tree_model_finalize (GObject *object)
@@ -69,6 +90,15 @@ gdu_tree_model_finalize (GObject *object)
                                         model);
   g_signal_handlers_disconnect_by_func (proxy_manager,
                                         G_CALLBACK (on_object_proxy_removed),
+                                        model);
+  g_signal_handlers_disconnect_by_func (proxy_manager,
+                                        G_CALLBACK (on_interface_proxy_added),
+                                        model);
+  g_signal_handlers_disconnect_by_func (proxy_manager,
+                                        G_CALLBACK (on_interface_proxy_removed),
+                                        model);
+  g_signal_handlers_disconnect_by_func (proxy_manager,
+                                        G_CALLBACK (on_interface_proxy_properties_changed),
                                         model);
 
   g_list_foreach (model->current_luns, (GFunc) g_object_unref, NULL);
@@ -265,12 +295,23 @@ gdu_tree_model_constructed (GObject *object)
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
                        _("Direct-Attached Storage"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &model->direct_attached_storage_iter,
+                                     &model->lun_iter,
                                      NULL, /* GtkTreeIter *parent */
                                      0,
                                      GDU_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
                                      GDU_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, "00_direct_attached_storage",
+                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
+                                     -1);
+  g_free (s);
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       _("Other Devices"));
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &model->block_iter,
+                                     NULL, /* GtkTreeIter *parent */
+                                     0,
+                                     GDU_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, "01_block",
                                      -1);
   g_free (s);
 
@@ -282,6 +323,18 @@ gdu_tree_model_constructed (GObject *object)
   g_signal_connect (proxy_manager,
                     "object-proxy-removed",
                     G_CALLBACK (on_object_proxy_removed),
+                    model);
+  g_signal_connect (proxy_manager,
+                    "interface-proxy-added",
+                    G_CALLBACK (on_interface_proxy_added),
+                    model);
+  g_signal_connect (proxy_manager,
+                    "interface-proxy-removed",
+                    G_CALLBACK (on_interface_proxy_removed),
+                    model);
+  g_signal_connect (proxy_manager,
+                    "interface-proxy-properties-changed",
+                    G_CALLBACK (on_interface_proxy_properties_changed),
                     model);
   coldplug (model);
 
@@ -393,7 +446,7 @@ add_lun (GduTreeModel     *model,
 }
 
 static void
-remove_lun (GduTreeModel *model,
+remove_lun (GduTreeModel     *model,
             GDBusObjectProxy *object_proxy)
 {
   GtkTreeIter iter;
@@ -426,7 +479,6 @@ update_das (GduTreeModel *model)
   proxy_manager = udisks_client_get_proxy_manager (model->client);
   object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
 
-  /* update Direct-Attached Storage */
   luns = NULL;
   for (l = object_proxies; l != NULL; l = l->next)
     {
@@ -461,7 +513,7 @@ update_das (GduTreeModel *model)
     {
       GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
       model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object_proxy));
-      add_lun (model, object_proxy, &model->direct_attached_storage_iter);
+      add_lun (model, object_proxy, &model->lun_iter);
     }
 
   g_list_free (added_luns);
@@ -473,10 +525,168 @@ update_das (GduTreeModel *model)
   g_list_free (object_proxies);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+add_block (GduTreeModel     *model,
+           GDBusObjectProxy *object_proxy,
+           GtkTreeIter      *parent)
+{
+  UDisksBlockDevice *block;
+  GIcon *icon;
+  gchar *name;
+  gchar *sort_key;
+  GtkTreeIter iter;
+
+  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+
+  name = g_strdup (udisks_block_device_get_preferred_device (block));
+
+  icon = g_themed_icon_new ("drive-harddisk"); /* for now */
+  sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &iter,
+                                     parent,
+                                     0,
+                                     GDU_TREE_MODEL_COLUMN_ICON, icon,
+                                     GDU_TREE_MODEL_COLUMN_NAME, name,
+                                     GDU_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                                     GDU_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
+                                     -1);
+  g_object_unref (icon);
+  g_free (sort_key);
+  g_free (name);
+}
+
+static void
+remove_block (GduTreeModel     *model,
+              GDBusObjectProxy *object_proxy)
+{
+  GtkTreeIter iter;
+
+  if (!find_iter_for_object_proxy (model,
+                                   object_proxy,
+                                   &iter))
+    {
+      g_warning ("Error finding iter for object proxy at %s",
+                 g_dbus_object_proxy_get_object_path (object_proxy));
+      goto out;
+    }
+
+  gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+
+ out:
+  ;
+}
+
+static gboolean
+should_include_block (GDBusObjectProxy *object_proxy)
+{
+  UDisksBlockDevice *block;
+  gboolean ret;
+  const gchar *device;
+  const gchar *lun;
+  guint64 size;
+
+  ret = FALSE;
+
+  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  device = udisks_block_device_get_device (block);
+  size = udisks_block_device_get_size (block);
+  lun = udisks_block_device_get_lun (block);
+
+  /* RAM devices are useless */
+  if (g_str_has_prefix (device, "/dev/ram"))
+    goto out;
+
+  /* Otherwise we'd end up showing unused loop devices */
+  if (size == 0)
+    goto out;
+
+  /* Don't include if already shown in "Direct-Attached devices" */
+  if (g_strcmp0 (lun, "/") != 0)
+    goto out;
+
+  ret = TRUE;
+
+ out:
+  return ret;
+}
+
+static void
+update_block (GduTreeModel *model)
+{
+  GDBusProxyManager *proxy_manager;
+  GList *object_proxies;
+  GList *blocks;
+  GList *added_blocks;
+  GList *removed_blocks;
+  GList *l;
+
+  proxy_manager = udisks_client_get_proxy_manager (model->client);
+  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+
+  blocks = NULL;
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      UDisksBlockDevice *block;
+
+      block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+      if (block == NULL)
+        continue;
+
+      if (should_include_block (object_proxy))
+        blocks = g_list_prepend (blocks, g_object_ref (object_proxy));
+    }
+  blocks = g_list_sort (blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
+
+  diff_sorted_lists (model->current_blocks,
+                     blocks,
+                     (GCompareFunc) _g_dbus_object_proxy_compare,
+                     &added_blocks,
+                     &removed_blocks);
+
+  for (l = removed_blocks; l != NULL; l = l->next)
+    {
+      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+
+      g_assert (g_list_find (model->current_blocks, object_proxy) != NULL);
+
+      model->current_blocks = g_list_remove (model->current_blocks, object_proxy);
+      remove_block (model, object_proxy);
+      g_object_unref (object_proxy);
+    }
+  for (l = added_blocks; l != NULL; l = l->next)
+    {
+      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object_proxy));
+      add_block (model, object_proxy, &model->block_iter);
+    }
+
+  g_list_free (added_blocks);
+  g_list_free (removed_blocks);
+  g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
+  g_list_free (blocks);
+
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_all (GduTreeModel *model)
+{
+  /* TODO: if this is CPU intensive we could coalesce all updates / schedule timeouts */
+  update_das (model);
+  update_block (model);
+}
+
 static void
 coldplug (GduTreeModel *model)
 {
-  update_das (model);
+  update_all (model);
 }
 
 static void
@@ -485,7 +695,7 @@ on_object_proxy_added (GDBusProxyManager   *manager,
                        gpointer             user_data)
 {
   GduTreeModel *model = GDU_TREE_MODEL (user_data);
-  update_das (model);
+  update_all (model);
 }
 
 static void
@@ -494,5 +704,38 @@ on_object_proxy_removed (GDBusProxyManager   *manager,
                          gpointer             user_data)
 {
   GduTreeModel *model = GDU_TREE_MODEL (user_data);
-  update_das (model);
+  update_all (model);
 }
+
+static void
+on_interface_proxy_added (GDBusProxyManager   *manager,
+                          GDBusObjectProxy    *object_proxy,
+                          GDBusProxy          *interface_proxy,
+                          gpointer             user_data)
+{
+  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  update_all (model);
+}
+
+static void
+on_interface_proxy_removed (GDBusProxyManager   *manager,
+                            GDBusObjectProxy    *object_proxy,
+                            GDBusProxy          *interface_proxy,
+                            gpointer             user_data)
+{
+  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  update_all (model);
+}
+
+static void
+on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
+                                       GDBusObjectProxy  *object_proxy,
+                                       GDBusProxy        *interface_proxy,
+                                       GVariant          *changed_properties,
+                                       GStrv              invalidated_properties,
+                                       gpointer           user_data)
+{
+  GduTreeModel *model = GDU_TREE_MODEL (user_data);
+  update_all (model);
+}
+

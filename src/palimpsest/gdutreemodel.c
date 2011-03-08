@@ -537,12 +537,30 @@ add_block (GduTreeModel     *model,
   gchar *name;
   gchar *sort_key;
   GtkTreeIter iter;
+  const gchar *preferred_device;
+  const gchar *loop_backing_file;
 
   block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
 
-  name = g_strdup (udisks_block_device_get_preferred_device (block));
+  preferred_device = udisks_block_device_get_preferred_device (block);
+  loop_backing_file = udisks_block_device_get_loop_backing_file (block);
+  if (strlen (loop_backing_file) > 0)
+    {
+      /* loop devices */
+      icon = g_themed_icon_new ("text-x-generic"); /* for now */
+      /* Translators: This is for loop devices.
+       * The %s is the path to the file, e.g. /home/davidz/Downloads/Fedora.iso
+       */
+      name = g_strdup_printf (_("Loopback: %s"),
+                              loop_backing_file);
+    }
+  else
+    {
+      /* fallback: preferred device and drive-harddisk icon */
+      icon = g_themed_icon_new ("drive-harddisk"); /* for now */
+      name = g_strdup (preferred_device);
+    }
 
-  icon = g_themed_icon_new ("drive-harddisk"); /* for now */
   sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,

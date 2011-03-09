@@ -261,6 +261,9 @@ gdu_window_constructed (GObject *object)
                                        "gicon", GDU_DEVICE_TREE_MODEL_COLUMN_ICON,
                                        NULL);
   renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "ellipsize", PANGO_ELLIPSIZE_END,
+                NULL);
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,

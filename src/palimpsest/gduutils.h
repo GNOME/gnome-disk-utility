@@ -28,10 +28,6 @@
 
 G_BEGIN_DECLS
 
-gchar *gdu_util_get_size_for_display (guint64  size,
-                                      gboolean use_pow2,
-                                      gboolean long_string);
-
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

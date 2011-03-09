@@ -442,7 +442,7 @@ set_size (GduWindow   *window,
           guint64      size)
 {
   gchar *s;
-  s = gdu_util_get_size_for_display (size, FALSE, TRUE);
+  s = udisks_util_get_size_for_display (size, FALSE, TRUE);
   set_string (window, label_id, s);
   g_free (s);
 }

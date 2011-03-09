@@ -480,22 +480,31 @@ static void
 set_string (GduWindow   *window,
             const gchar *key_label_id,
             const gchar *label_id,
-            const gchar *text)
+            const gchar *text,
+            gboolean     hyphen_if_empty)
 {
   GtkWidget *key_label;
   GtkWidget *label;
 
   if (text == NULL || strlen (text) == 0)
-    text = "—";
-
-  /* TODO: utf-8 validate */
+    {
+      if (hyphen_if_empty)
+        text = "—";
+      else
+        goto out;
+    }
 
   key_label = gdu_window_get_widget (window, key_label_id);
   label = gdu_window_get_widget (window, label_id);
 
+  /* TODO: utf-8 validate */
+
   gtk_label_set_text (GTK_LABEL (label), text);
   gtk_widget_show (key_label);
   gtk_widget_show (label);
+
+ out:
+  ;
 }
 
 static void
@@ -506,7 +515,7 @@ set_size (GduWindow   *window,
 {
   gchar *s;
   s = udisks_util_get_size_for_display (size, FALSE, TRUE);
-  set_string (window, key_label_id, label_id, s);
+  set_string (window, key_label_id, label_id, s, TRUE);
   g_free (s);
 }
 
@@ -595,7 +604,7 @@ setup_device_page (GduWindow         *window,
       set_string (window,
                   "devtab-device-label",
                   "devtab-device-value-label",
-                  s);
+                  s, TRUE);
       g_free (s);
       g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
       g_list_free (block_devices);
@@ -610,20 +619,20 @@ setup_device_page (GduWindow         *window,
         s = g_strconcat (lun_vendor, " ", lun_model, NULL);
       set_string (window,
                   "devtab-model-label",
-                  "devtab-model-value-label", s);
+                  "devtab-model-value-label", s, FALSE);
       g_free (s);
       set_string (window,
                   "devtab-serial-number-label",
                   "devtab-serial-number-value-label",
-                  udisks_lun_get_serial (lun));
+                  udisks_lun_get_serial (lun), FALSE);
       set_string (window,
                   "devtab-firmware-version-label",
                   "devtab-firmware-version-value-label",
-                  udisks_lun_get_revision (lun));
+                  udisks_lun_get_revision (lun), FALSE);
       set_string (window,
                   "devtab-wwn-label",
                   "devtab-wwn-value-label",
-                  udisks_lun_get_wwn (lun));
+                  udisks_lun_get_wwn (lun), FALSE);
       set_size (window,
                 "devtab-size-label",
                 "devtab-size-value-label",
@@ -640,7 +649,7 @@ setup_device_page (GduWindow         *window,
       set_string (window,
                   "devtab-device-label",
                   "devtab-device-value-label",
-                  udisks_block_device_get_preferred_device (block));
+                  udisks_block_device_get_preferred_device (block), FALSE);
       set_size (window,
                 "devtab-size-label",
                 "devtab-size-value-label",
@@ -650,7 +659,7 @@ setup_device_page (GduWindow         *window,
         set_string (window,
                     "devtab-backing-file-label",
                     "devtab-backing-file-value-label",
-                    backing_file);
+                    backing_file, FALSE);
     }
   else
     {

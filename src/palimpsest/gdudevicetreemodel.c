@@ -72,12 +72,12 @@ static void on_interface_proxy_removed (GDBusProxyManager   *manager,
                                         GDBusProxy          *interface_proxy,
                                         gpointer             user_data);
 
-static void on_interface_proxy_properties_changed (GDBusProxyManager *manager,
-                                                   GDBusObjectProxy  *object_proxy,
-                                                   GDBusProxy        *interface_proxy,
-                                                   GVariant          *changed_properties,
-                                                   GStrv              invalidated_properties,
-                                                   gpointer           user_data);
+static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
+                                                   GDBusObjectProxy    *object_proxy,
+                                                   GDBusProxy          *interface_proxy,
+                                                   GVariant            *changed_properties,
+                                                   const gchar *const *invalidated_properties,
+                                                   gpointer            user_data);
 
 static void
 gdu_device_tree_model_finalize (GObject *object)
@@ -770,11 +770,11 @@ on_interface_proxy_removed (GDBusProxyManager   *manager,
 
 static void
 on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                       GDBusObjectProxy  *object_proxy,
-                                       GDBusProxy        *interface_proxy,
-                                       GVariant          *changed_properties,
-                                       GStrv              invalidated_properties,
-                                       gpointer           user_data)
+                                       GDBusObjectProxy    *object_proxy,
+                                       GDBusProxy          *interface_proxy,
+                                       GVariant            *changed_properties,
+                                       const gchar *const *invalidated_properties,
+                                       gpointer            user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);

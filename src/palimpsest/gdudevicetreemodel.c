@@ -24,6 +24,7 @@
 #include <glib/gi18n.h>
 
 #include "gdudevicetreemodel.h"
+#include "gduutils.h"
 
 struct _GduDeviceTreeModel
 {
@@ -410,38 +411,45 @@ add_lun (GduDeviceTreeModel *model,
          GDBusObjectProxy   *object_proxy,
          GtkTreeIter        *parent)
 {
-  const gchar *lun_vendor;
-  const gchar *lun_model;
   UDisksLun *lun;
-  GIcon *icon;
+  GIcon *drive_icon;
+  GIcon *media_icon;
   gchar *name;
+  gchar *description;
+  gchar *s;
   gchar *sort_key;
   GtkTreeIter iter;
 
   lun = UDISKS_PEEK_LUN (object_proxy);
-  lun_vendor = udisks_lun_get_vendor (lun);
-  lun_model = udisks_lun_get_model (lun);
+  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_icon);
+  s = g_strdup_printf ("%s\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       description,
+                       name);
 
-  if (strlen (lun_vendor) == 0)
-    name = g_strdup (lun_model);
-  else if (strlen (lun_model) == 0)
-    name = g_strdup (lun_vendor);
-  else
-    name = g_strconcat (lun_vendor, " ", lun_model, NULL);
+  g_debug ("lun %s ->\n"
+           " drive_icon=%s\n"
+           " media_icon=%s\n"
+           "\n",
+           g_dbus_object_proxy_get_object_path (object_proxy),
+           g_icon_to_string (drive_icon),
+           g_icon_to_string (media_icon));
 
-  icon = g_themed_icon_new ("drive-harddisk"); /* for now */
   sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
                                      0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, name,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
                                      -1);
-  g_object_unref (icon);
+  g_object_unref (media_icon);
+  g_object_unref (drive_icon);
   g_free (sort_key);
+  g_free (s);
+  g_free (description);
   g_free (name);
 }
 

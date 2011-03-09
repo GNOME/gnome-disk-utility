@@ -267,7 +267,7 @@ gdu_window_constructed (GObject *object)
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,
-                                       "text", GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
+                                       "markup", GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
                                        NULL);
 
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */

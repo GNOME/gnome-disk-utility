@@ -542,7 +542,7 @@ add_block (GduDeviceTreeModel  *model,
 {
   UDisksBlockDevice *block;
   GIcon *icon;
-  gchar *name;
+  gchar *s;
   gchar *sort_key;
   GtkTreeIter iter;
   const gchar *preferred_device;
@@ -554,19 +554,40 @@ add_block (GduDeviceTreeModel  *model,
   loop_backing_file = udisks_block_device_get_loop_backing_file (block);
   if (strlen (loop_backing_file) > 0)
     {
+      gchar *s1;
+      gint loop_number;
+
+      if (sscanf (udisks_block_device_get_device (block),
+                  "/dev/loop%d",
+                  &loop_number) == 1)
+        {
+          /* Translators: This is for a /dev/loop device - %d is the number of the device */
+          s1 = g_strdup_printf (_("Loop Device %d"), loop_number);
+        }
+      else
+        {
+          /* Translators: This is for a /dev/loop device */
+          s1 = g_strdup (_("Loop Device"));
+        }
+
       /* loop devices */
-      icon = g_themed_icon_new ("text-x-generic"); /* for now */
-      /* Translators: This is for loop devices.
-       * The %s is the path to the file, e.g. /home/davidz/Downloads/Fedora.iso
-       */
-      name = g_strdup_printf (_("Loopback: %s"),
-                              loop_backing_file);
+      icon = g_themed_icon_new ("drive-removable-media"); /* for now */
+      s = g_strdup_printf ("%s\n"
+                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           s1,
+                           loop_backing_file);
+      g_free (s1);
     }
   else
     {
       /* fallback: preferred device and drive-harddisk icon */
-      icon = g_themed_icon_new ("drive-harddisk"); /* for now */
-      name = g_strdup (preferred_device);
+      icon = g_themed_icon_new ("drive-removable-media"); /* for now */
+
+      s = g_strdup_printf ("%s\n"
+                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           /* Translators: This is for a device which we failed to categorize */
+                           _("Unknown Device"),
+                           preferred_device);
     }
 
   sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
@@ -575,13 +596,13 @@ add_block (GduDeviceTreeModel  *model,
                                      parent,
                                      0,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, name,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
                                      -1);
   g_object_unref (icon);
   g_free (sort_key);
-  g_free (name);
+  g_free (s);
 }
 
 static void

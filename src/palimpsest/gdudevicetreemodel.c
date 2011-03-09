@@ -499,8 +499,9 @@ update_luns (GduDeviceTreeModel *model)
 
       luns = g_list_prepend (luns, g_object_ref (object_proxy));
     }
-  luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_proxy_compare);
 
+  luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_proxy_compare);
+  model->current_luns = g_list_sort (model->current_luns, (GCompareFunc) _g_dbus_object_proxy_compare);
   diff_sorted_lists (model->current_luns,
                      luns,
                      (GCompareFunc) _g_dbus_object_proxy_compare,
@@ -510,9 +511,7 @@ update_luns (GduDeviceTreeModel *model)
   for (l = removed_luns; l != NULL; l = l->next)
     {
       GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
-
       g_assert (g_list_find (model->current_luns, object_proxy) != NULL);
-
       model->current_luns = g_list_remove (model->current_luns, object_proxy);
       remove_lun (model, object_proxy);
       g_object_unref (object_proxy);
@@ -686,8 +685,9 @@ update_blocks (GduDeviceTreeModel *model)
       if (should_include_block (object_proxy))
         blocks = g_list_prepend (blocks, g_object_ref (object_proxy));
     }
-  blocks = g_list_sort (blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
 
+  blocks = g_list_sort (blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
+  model->current_blocks = g_list_sort (model->current_blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
   diff_sorted_lists (model->current_blocks,
                      blocks,
                      (GCompareFunc) _g_dbus_object_proxy_compare,

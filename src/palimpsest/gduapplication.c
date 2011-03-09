@@ -113,6 +113,13 @@ gdu_application_class_init (GduApplicationClass *klass)
 GApplication *
 gdu_application_new (void)
 {
+  /* We manually set this until bug 644309
+   *
+   *  https://bugzilla.gnome.org/show_bug.cgi?id=644309
+   *
+   * has been resolved.
+   */
+  g_set_prgname ("palimpsest");
   gtk_init (NULL, NULL);
   return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
                                       "application-id", "org.gnome.DiskUtility",

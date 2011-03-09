@@ -553,29 +553,23 @@ add_block (GduDeviceTreeModel  *model,
   loop_backing_file = udisks_block_device_get_loop_backing_file (block);
   if (strlen (loop_backing_file) > 0)
     {
-      gchar *s1;
-      gint loop_number;
+      guint64 size;
+      gchar *size_str;
+      gchar *loop_name;
 
-      if (sscanf (udisks_block_device_get_device (block),
-                  "/dev/loop%d",
-                  &loop_number) == 1)
-        {
-          /* Translators: This is for a /dev/loop device - %d is the number of the device */
-          s1 = g_strdup_printf (_("Loop Device %d"), loop_number);
-        }
-      else
-        {
-          /* Translators: This is for a /dev/loop device */
-          s1 = g_strdup (_("Loop Device"));
-        }
+      size = udisks_block_device_get_size (block);
+      size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
+      /* Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB" */
+      loop_name = g_strdup_printf (_("%s Loop Device"), size_str);
+      g_free (size_str);
 
       /* loop devices */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
-                           s1,
+                           loop_name,
                            loop_backing_file);
-      g_free (s1);
+      g_free (loop_name);
     }
   else
     {

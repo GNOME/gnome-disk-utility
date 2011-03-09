@@ -727,9 +727,6 @@ static void
 update_all (GduWindow         *window,
             GDBusObjectProxy  *object_proxy)
 {
-  g_debug ("TODO: update_all for %s",
-           g_dbus_object_proxy_get_object_path (object_proxy));
-
   if (window->current_object_proxy == object_proxy)
     update_details_page (window);
 }

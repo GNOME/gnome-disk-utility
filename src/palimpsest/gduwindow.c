@@ -510,6 +510,48 @@ set_size (GduWindow   *window,
   g_free (s);
 }
 
+static GList *
+get_top_level_block_devices_for_lun (GduWindow   *window,
+                                     const gchar *lun_object_path)
+{
+  GList *ret;
+  GList *l;
+  GList *object_proxies;
+  GDBusProxyManager *proxy_manager;
+
+  proxy_manager = udisks_client_get_proxy_manager (window->client);
+  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+
+  ret = NULL;
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      UDisksBlockDevice *block;
+
+      block = UDISKS_GET_BLOCK_DEVICE (object_proxy);
+      if (block == NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_device_get_lun (block), lun_object_path) == 0 &&
+          !udisks_block_device_get_part_entry (block))
+        {
+          ret = g_list_append (ret, g_object_ref (block));
+        }
+      g_object_unref (block);
+    }
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
+  return ret;
+}
+
+static gint
+block_device_compare_on_preferred (UDisksBlockDevice *a,
+                                   UDisksBlockDevice *b)
+{
+  return g_strcmp0 (udisks_block_device_get_preferred_device (a),
+                    udisks_block_device_get_preferred_device (b));
+}
+
 static void
 setup_device_page (GduWindow         *window,
                    GDBusObjectProxy *object_proxy)
@@ -535,6 +577,28 @@ setup_device_page (GduWindow         *window,
       const gchar *lun_vendor;
       const gchar *lun_model;
       gchar *s;
+      GList *block_devices;
+      GList *l;
+      GString *str;
+
+      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_proxy_get_object_path (object_proxy));
+      block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
+      str = g_string_new (NULL);
+      for (l = block_devices; l != NULL; l = l->next)
+        {
+          UDisksBlockDevice *lun_block = UDISKS_BLOCK_DEVICE (l->data);
+          if (str->len > 0)
+            g_string_append_c (str, ' ');
+          g_string_append (str, udisks_block_device_get_preferred_device (lun_block));
+        }
+      s = g_string_free (str, FALSE);
+      set_string (window,
+                  "devtab-device-label",
+                  "devtab-device-value-label",
+                  s);
+      g_free (s);
+      g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
+      g_list_free (block_devices);
 
       lun_vendor = udisks_lun_get_vendor (lun);
       lun_model = udisks_lun_get_model (lun);
@@ -573,7 +637,6 @@ setup_device_page (GduWindow         *window,
   else if (block != NULL)
     {
       const gchar *backing_file;
-
       set_string (window,
                   "devtab-device-label",
                   "devtab-device-value-label",

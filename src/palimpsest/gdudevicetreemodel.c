@@ -546,22 +546,21 @@ add_block (GduDeviceTreeModel  *model,
   GtkTreeIter iter;
   const gchar *preferred_device;
   const gchar *loop_backing_file;
+  guint64 size;
+  gchar *size_str;
 
   block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  size = udisks_block_device_get_size (block);
+  size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
 
   preferred_device = udisks_block_device_get_preferred_device (block);
   loop_backing_file = udisks_block_device_get_loop_backing_file (block);
   if (strlen (loop_backing_file) > 0)
     {
-      guint64 size;
-      gchar *size_str;
       gchar *loop_name;
 
-      size = udisks_block_device_get_size (block);
-      size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
-      /* Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB" */
+      /* Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB". */
       loop_name = g_strdup_printf (_("%s Loop Device"), size_str);
-      g_free (size_str);
 
       /* loop devices */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
@@ -573,13 +572,20 @@ add_block (GduDeviceTreeModel  *model,
     }
   else
     {
+      gchar *block_name;
+
+      /* Translators: This is for a block device which we failed to categorize  - %s is
+       * the size of the device e.g. "230 MB".
+       */
+      block_name = g_strdup_printf (_("%s Block Device"),
+                                    size_str);
+
       /* fallback: preferred device and drive-harddisk icon */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
 
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
-                           /* Translators: This is for a device which we failed to categorize */
-                           _("Unknown Device"),
+                           block_name,
                            preferred_device);
     }
 
@@ -596,6 +602,7 @@ add_block (GduDeviceTreeModel  *model,
   g_object_unref (icon);
   g_free (sort_key);
   g_free (s);
+  g_free (size_str);
 }
 
 static void

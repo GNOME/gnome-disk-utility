@@ -34,9 +34,11 @@ struct _GduDeviceTreeModel
 
   GList *current_luns;
   GtkTreeIter lun_iter;
+  gboolean lun_iter_valid;
 
   GList *current_blocks;
   GtkTreeIter block_iter;
+  gboolean block_iter_valid;
 };
 
 typedef struct
@@ -278,7 +280,6 @@ gdu_device_tree_model_constructed (GObject *object)
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
   GDBusProxyManager *proxy_manager;
-  gchar *s;
 
   types[0] = G_TYPE_STRING;
   types[1] = G_TYPE_BOOLEAN;
@@ -292,29 +293,6 @@ gdu_device_tree_model_constructed (GObject *object)
                                    types);
 
   g_assert (gtk_tree_model_get_flags (GTK_TREE_MODEL (model)) & GTK_TREE_MODEL_ITERS_PERSIST);
-
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
-                       _("Direct-Attached Storage"));
-  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &model->lun_iter,
-                                     NULL, /* GtkTreeIter *parent */
-                                     0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
-                                     -1);
-  g_free (s);
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
-                       _("Other Devices"));
-  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &model->block_iter,
-                                     NULL, /* GtkTreeIter *parent */
-                                     0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "01_block",
-                                     -1);
-  g_free (s);
 
   proxy_manager = udisks_client_get_proxy_manager (model->client);
   g_signal_connect (proxy_manager,
@@ -405,6 +383,42 @@ gdu_device_tree_model_get_client (GduDeviceTreeModel *model)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static GtkTreeIter *
+get_lun_header_iter (GduDeviceTreeModel *model)
+{
+  gchar *s;
+
+  if (model->lun_iter_valid)
+    goto out;
+
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       _("Direct-Attached Storage"));
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &model->lun_iter,
+                                     NULL, /* GtkTreeIter *parent */
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
+                                     -1);
+  g_free (s);
+
+  model->lun_iter_valid = TRUE;
+
+ out:
+  return &model->lun_iter;
+}
+
+static void
+nuke_lun_header (GduDeviceTreeModel *model)
+{
+  if (model->lun_iter_valid)
+    {
+      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->lun_iter);
+      model->lun_iter_valid = FALSE;
+    }
+}
 
 static void
 add_lun (GduDeviceTreeModel *model,
@@ -520,8 +534,11 @@ update_luns (GduDeviceTreeModel *model)
     {
       GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
       model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object_proxy));
-      add_lun (model, object_proxy, &model->lun_iter);
+      add_lun (model, object_proxy, get_lun_header_iter (model));
     }
+
+  if (g_list_length (model->current_luns) == 0)
+    nuke_lun_header (model);
 
   g_list_free (added_luns);
   g_list_free (removed_luns);
@@ -533,6 +550,42 @@ update_luns (GduDeviceTreeModel *model)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static GtkTreeIter *
+get_block_header_iter (GduDeviceTreeModel *model)
+{
+  gchar *s;
+
+  if (model->block_iter_valid)
+    goto out;
+
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       _("Other Devices"));
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &model->block_iter,
+                                     NULL, /* GtkTreeIter *parent */
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "01_block",
+                                     -1);
+  g_free (s);
+
+  model->block_iter_valid = TRUE;
+
+ out:
+  return &model->block_iter;
+}
+
+static void
+nuke_block_header (GduDeviceTreeModel *model)
+{
+  if (model->block_iter_valid)
+    {
+      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->block_iter);
+      model->block_iter_valid = FALSE;
+    }
+}
 
 static void
 add_block (GduDeviceTreeModel  *model,
@@ -715,8 +768,11 @@ update_blocks (GduDeviceTreeModel *model)
     {
       GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
       model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object_proxy));
-      add_block (model, object_proxy, &model->block_iter);
+      add_block (model, object_proxy, get_block_header_iter (model));
     }
+
+  if (g_list_length (model->current_blocks) == 0)
+    nuke_block_header (model);
 
   g_list_free (added_blocks);
   g_list_free (removed_blocks);

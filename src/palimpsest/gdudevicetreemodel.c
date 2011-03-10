@@ -703,6 +703,10 @@ should_include_block (GDBusObjectProxy *object_proxy)
   if (size == 0)
     goto out;
 
+  /* Only include devices if they are top-level */
+  if (udisks_block_device_get_part_entry (block))
+    goto out;
+
   /* Don't include if already shown in "Direct-Attached devices" */
   lun = udisks_block_device_get_lun (block);
   if (g_strcmp0 (lun, "/") != 0)

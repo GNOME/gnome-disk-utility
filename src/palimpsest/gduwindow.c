@@ -227,6 +227,7 @@ gdu_window_constructed (GObject *object)
   GtkTreeSelection *selection;
   const gchar *path;
   GtkWidget *w;
+  GtkWidget *label;
   GtkStyleContext *context;
   GDBusProxyManager *proxy_manager;
 
@@ -265,6 +266,13 @@ gdu_window_constructed (GObject *object)
   window->model = gdu_device_tree_model_new (window->client);
 
   tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview"));
+
+  label = gtk_label_new (NULL);
+  gtk_label_set_markup_with_mnemonic (GTK_LABEL (label), _("_Storage Devices"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (tree_view));
+  gtk_widget_show_all (label);
+
   gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
                                         GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
@@ -278,6 +286,7 @@ gdu_window_constructed (GObject *object)
                     window);
 
   column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_widget (column, label);
   gtk_tree_view_append_column (tree_view, column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -340,6 +349,9 @@ gdu_window_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-grid-hbox")),
                       window->volume_grid,
                       TRUE, TRUE, 0);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-volumes-label")),
+                                 window->volume_grid);
 }
 
 static void

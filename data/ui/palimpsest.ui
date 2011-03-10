@@ -117,310 +117,12 @@
                 <property name="can_focus">False</property>
                 <property name="spacing">12</property>
                 <child>
-                  <object class="GtkTable" id="devtab-table">
+                  <object class="GtkLabel" id="devtab-disk-label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="n_rows">8</property>
-                    <property name="n_columns">2</property>
-                    <property name="column_spacing">10</property>
-                    <child>
-                      <object class="GtkLabel" id="devtab-model-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Model</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-model-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-write-cache-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Write Cache</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkHBox" id="devtab-write-cache-hbox">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkSwitch" id="devtab-write-cache-switch">
-                            <property name="visible">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-wwn-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">World Wide Name</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-firmware-version-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Firmware Version</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-serial-number-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Serial Number</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-wwn-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-firmware-version-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-serial-number-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-size-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Size</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-size-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-device-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Device</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-device-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-backing-file-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Backing File</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="devtab-backing-file-value-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">end</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Device&lt;/b&gt;</property>
+                    <property name="use_markup">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -429,7 +131,326 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label2">
+                  <object class="GtkAlignment" id="alignment3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="left_padding">12</property>
+                    <child>
+                      <object class="GtkTable" id="devtab-table">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="n_rows">8</property>
+                        <property name="n_columns">2</property>
+                        <property name="column_spacing">10</property>
+                        <child>
+                          <object class="GtkLabel" id="devtab-model-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Model</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-model-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-write-cache-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Write Cache</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">7</property>
+                            <property name="bottom_attach">8</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="devtab-write-cache-hbox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkSwitch" id="devtab-write-cache-switch">
+                                <property name="visible">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">7</property>
+                            <property name="bottom_attach">8</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-wwn-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">World Wide Name</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">6</property>
+                            <property name="bottom_attach">7</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-firmware-version-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Firmware Version</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">5</property>
+                            <property name="bottom_attach">6</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-serial-number-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Serial Number</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">4</property>
+                            <property name="bottom_attach">5</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-wwn-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">6</property>
+                            <property name="bottom_attach">7</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-firmware-version-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">5</property>
+                            <property name="bottom_attach">6</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-serial-number-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">4</property>
+                            <property name="bottom_attach">5</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-size-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Size</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-size-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-device-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Device</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-device-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-backing-file-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Backing File</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="devtab-backing-file-value-label">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="hexpand">True</property>
+                            <property name="xalign">0</property>
+                            <property name="selectable">True</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                            <property name="x_options">GTK_FILL</property>
+                            <property name="y_options"></property>
+                            <property name="y_padding">4</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="devtab-volumes-label">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
@@ -439,7 +460,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
@@ -463,7 +484,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>

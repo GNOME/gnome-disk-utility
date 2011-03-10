@@ -571,6 +571,16 @@ block_device_compare_on_preferred (GDBusObjectProxy *a,
 }
 
 static void
+set_disk_label (GduWindow *window,
+                const gchar *text)
+{
+  gchar *s;
+  s = g_strdup_printf ("<b>%s</b>", text);
+  gtk_label_set_markup (GTK_LABEL (gdu_window_get_widget (window, "devtab-disk-label")), s);
+  g_free (s);
+}
+
+static void
 setup_device_page (GduWindow         *window,
                    GDBusObjectProxy *object_proxy)
 {
@@ -658,6 +668,8 @@ setup_device_page (GduWindow         *window,
       gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
       gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-switch"));
       gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
+
+      set_disk_label (window, _("Drive"));
     }
   else if (block != NULL)
     {
@@ -673,10 +685,17 @@ setup_device_page (GduWindow         *window,
                 udisks_block_device_get_size (block));
       backing_file = udisks_block_device_get_loop_backing_file (block);
       if (strlen (backing_file) > 0)
-        set_string (window,
-                    "devtab-backing-file-label",
-                    "devtab-backing-file-value-label",
-                    backing_file, FALSE);
+        {
+          set_string (window,
+                      "devtab-backing-file-label",
+                      "devtab-backing-file-value-label",
+                      backing_file, FALSE);
+          set_disk_label (window, _("Loop Device"));
+        }
+      else
+        {
+          set_disk_label (window, _("Block Device"));
+        }
     }
   else
     {

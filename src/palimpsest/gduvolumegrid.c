@@ -1726,8 +1726,9 @@ grid_element_set_details (GduVolumeGrid  *grid,
             g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
             (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
           {
-            s = g_strdup_printf ("%s %s", size_str,
-                                 C_("volume-grid", "Extended Partition"));
+            s = g_strdup_printf ("%s\n%s",
+                                 C_("volume-grid", "Extended Partition"),
+                                 size_str);
           }
         else if (g_strcmp0 (usage, "filesystem") == 0)
           {

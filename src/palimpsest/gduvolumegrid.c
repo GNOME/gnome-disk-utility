@@ -1713,14 +1713,23 @@ grid_element_set_details (GduVolumeGrid  *grid,
         gchar *size_str;
         const gchar *usage;
         const gchar *type;
+        gint partition_type;
 
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
         block = UDISKS_PEEK_BLOCK_DEVICE (element->object_proxy);
 
         usage = udisks_block_device_get_id_usage (block);
         type = udisks_block_device_get_id_type (block);
+        partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
 
-        if (g_strcmp0 (usage, "filesystem") == 0)
+        if (udisks_block_device_get_part_entry (block) &&
+            g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
+            (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+          {
+            s = g_strdup_printf ("%s %s", size_str,
+                                 C_("volume-grid", "Extended Partition"));
+          }
+        else if (g_strcmp0 (usage, "filesystem") == 0)
           {
             const gchar *label;
             label = udisks_block_device_get_id_label (block);

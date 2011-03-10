@@ -633,25 +633,31 @@ should_include_block (GDBusObjectProxy *object_proxy)
   gboolean ret;
   const gchar *device;
   const gchar *lun;
+  const gchar *crypto_backing_device;
   guint64 size;
 
   ret = FALSE;
 
   block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
-  device = udisks_block_device_get_device (block);
-  size = udisks_block_device_get_size (block);
-  lun = udisks_block_device_get_lun (block);
 
   /* RAM devices are useless */
+  device = udisks_block_device_get_device (block);
   if (g_str_has_prefix (device, "/dev/ram"))
     goto out;
 
-  /* Otherwise we'd end up showing unused loop devices */
+  /* Don't show devices of size zero - otherwise we'd end up showing unused loop devices */
+  size = udisks_block_device_get_size (block);
   if (size == 0)
     goto out;
 
   /* Don't include if already shown in "Direct-Attached devices" */
+  lun = udisks_block_device_get_lun (block);
   if (g_strcmp0 (lun, "/") != 0)
+    goto out;
+
+  /* Don't include if already shown in volume grid as an unlocked device */
+  crypto_backing_device = udisks_block_device_get_crypto_backing_device (block);
+  if (g_strcmp0 (crypto_backing_device, "/") != 0)
     goto out;
 
   ret = TRUE;

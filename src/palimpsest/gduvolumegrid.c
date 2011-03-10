@@ -69,6 +69,10 @@ struct GridElement
 
   gchar *text;
 
+  gboolean show_spinner;
+  gboolean show_padlock_open;
+  gboolean show_padlock_closed;
+
   /* used for the job spinner */
   guint spinner_current;
 };
@@ -1137,18 +1141,12 @@ render_element (GduVolumeGrid *grid,
   g_object_unref (layout);
 
   gint icon_offset;
-  gboolean render_padlock_closed;
-  gboolean render_padlock_open;
-  gboolean render_job_in_progress;
   GPtrArray *pixbufs_to_render;
   guint n;
 
   icon_offset = 0;
-  render_padlock_closed = FALSE;
-  render_padlock_open = FALSE;
-  render_job_in_progress = FALSE;
 
-  if (render_job_in_progress)
+  if (element->show_spinner)
     {
       render_spinner (cr,
                       16,
@@ -1166,12 +1164,12 @@ render_element (GduVolumeGrid *grid,
 
   /* icons */
   pixbufs_to_render = g_ptr_array_new_with_free_func (g_object_unref);
-  if (render_padlock_open)
+  if (element->show_padlock_open)
     g_ptr_array_add (pixbufs_to_render,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                "gdu-encrypted-unlock",
                                                16, 0, NULL));
-  if (render_padlock_closed)
+  if (element->show_padlock_closed)
     g_ptr_array_add (pixbufs_to_render,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                "gdu-encrypted-lock",
@@ -1390,6 +1388,94 @@ partition_sort_by_offset_func (GDBusObjectProxy *a,
 static void grid_element_set_details (GduVolumeGrid  *grid,
                                       GridElement    *element);
 
+static GDBusObjectProxy *
+lookup_cleartext_device_for_crypto_device (GduVolumeGrid *grid,
+                                           const gchar   *object_path)
+{
+  GDBusProxyManager *proxy_manager;
+  GDBusObjectProxy *ret;
+  GList *object_proxies;
+  GList *l;
+
+  ret = NULL;
+
+  proxy_manager = udisks_client_get_proxy_manager (grid->client);
+  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      UDisksBlockDevice *block;
+
+      block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+      if (block == NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_device_get_crypto_backing_device (block),
+                     object_path) == 0)
+        {
+          ret = g_object_ref (object_proxy);
+          goto out;
+        }
+    }
+
+ out:
+  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
+  g_list_free (object_proxies);
+  return ret;
+}
+
+static GridElement *
+maybe_add_crypto (GduVolumeGrid    *grid,
+                  GridElement      *element)
+{
+  UDisksBlockDevice *block;
+  GridElement *cleartext_element;
+
+  cleartext_element = NULL;
+
+  if (element->object_proxy == NULL)
+    goto out;
+
+  block = UDISKS_PEEK_BLOCK_DEVICE (element->object_proxy);
+  if (block == NULL)
+    goto out;
+
+  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
+    {
+      GDBusObjectProxy *cleartext_object_proxy;
+      GridElement *embedded_cleartext_element;
+
+      cleartext_object_proxy = lookup_cleartext_device_for_crypto_device (grid,
+                                   g_dbus_object_proxy_get_object_path (element->object_proxy));
+      if (cleartext_object_proxy == NULL)
+        {
+          element->show_padlock_closed = TRUE;
+        }
+      else
+        {
+          element->show_padlock_open = TRUE;
+          cleartext_element = g_new0 (GridElement, 1);
+          cleartext_element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
+          cleartext_element->parent = element;
+          cleartext_element->size_ratio = 1.0;
+          cleartext_element->object_proxy = g_object_ref (cleartext_object_proxy);
+          cleartext_element->offset = 0;
+          cleartext_element->size = udisks_block_device_get_size (UDISKS_PEEK_BLOCK_DEVICE (cleartext_object_proxy));
+          grid_element_set_details (grid, cleartext_element);
+
+          /* recurse to handle multiple layers of encryption... */
+          embedded_cleartext_element = maybe_add_crypto (grid, cleartext_element);
+          if (embedded_cleartext_element != NULL)
+            cleartext_element->embedded_elements = g_list_prepend (NULL, embedded_cleartext_element);
+
+          g_object_unref (cleartext_object_proxy);
+        }
+    }
+
+ out:
+  return cleartext_element;
+}
+
 static GList *
 recompute_grid_add_partitions (GduVolumeGrid    *grid,
                                guint64           total_size,
@@ -1466,6 +1552,13 @@ recompute_grid_add_partitions (GduVolumeGrid    *grid,
                                                                       logical_partitions,
                                                                       NULL,
                                                                       NULL);
+        }
+      else
+        {
+          GridElement *cleartext_element;
+          cleartext_element = maybe_add_crypto (grid, element);
+          if (cleartext_element != NULL)
+            element->embedded_elements = g_list_prepend (NULL, cleartext_element);
         }
     }
   if (top_size + top_offset - prev_end > free_space_slack)
@@ -1618,6 +1711,7 @@ recompute_grid (GduVolumeGrid *grid)
           element->object_proxy = g_object_ref (grid->block_device);
           grid->elements = g_list_append (grid->elements, element);
           grid_element_set_details (grid, element);
+          maybe_add_crypto (grid, element);
         }
     }
   else
@@ -1769,16 +1863,14 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
-maybe_update (GduVolumeGrid    *grid,
-              GDBusObjectProxy *object_proxy)
+static gboolean
+is_disk_or_partition_in_grid (GduVolumeGrid    *grid,
+                              GDBusObjectProxy *object_proxy)
 {
   UDisksBlockDevice *block;
+  gboolean ret;
 
-  //g_debug ("in maybe_update %s", g_dbus_object_proxy_get_object_path (object_proxy));
-
-  if (grid->block_device == NULL)
-    goto out;
+  ret = FALSE;
 
   block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
   if (block == NULL)
@@ -1787,13 +1879,49 @@ maybe_update (GduVolumeGrid    *grid,
   if (object_proxy == grid->block_device ||
       g_strcmp0 (udisks_block_device_get_part_entry_table (block),
                  g_dbus_object_proxy_get_object_path (grid->block_device)) == 0)
-    {
-      /* object_proxy is either the block device we're a grid for or a partition of it */
-      recompute_grid (grid);
-    }
+    ret = TRUE;
 
  out:
-  ;
+  return ret;
+}
+
+static void
+maybe_update (GduVolumeGrid    *grid,
+              GDBusObjectProxy *object_proxy)
+{
+  UDisksBlockDevice *block;
+  const gchar *crypto_backing_device;
+  GDBusObjectProxy *crypto_object_proxy;
+
+  //g_debug ("in maybe_update %s", g_dbus_object_proxy_get_object_path (object_proxy));
+
+  crypto_object_proxy = NULL;
+
+  if (grid->block_device == NULL)
+    goto out;
+
+  if (is_disk_or_partition_in_grid (grid, object_proxy))
+    goto update;
+
+  /* handle when it's a crypt devices for our grid or a partition in it */
+  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  if (block != NULL)
+    {
+      crypto_backing_device = udisks_block_device_get_crypto_backing_device (block);
+      crypto_object_proxy = g_dbus_proxy_manager_lookup (udisks_client_get_proxy_manager (grid->client),
+                                                         crypto_backing_device);
+      if (crypto_object_proxy != NULL)
+        if (is_disk_or_partition_in_grid (grid, crypto_object_proxy))
+          goto update;
+    }
+
+  goto out;
+ update:
+  recompute_grid (grid);
+
+ out:
+  if (crypto_object_proxy != NULL)
+    g_object_unref (crypto_object_proxy);
 }
 
 static void

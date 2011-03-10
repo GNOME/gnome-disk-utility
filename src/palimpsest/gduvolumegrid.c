@@ -1700,8 +1700,9 @@ grid_element_set_details (GduVolumeGrid  *grid,
       {
         gchar *size_str;
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
-        /* Translators: This is shown in the volume grid - the first %s is the amount of free space */
-        element->text = g_strdup_printf (_("%s Free Space"), size_str);
+        element->text = g_strdup_printf ("%s\n%s",
+                                         C_("volume-grid", "Free Space"),
+                                         size_str);
         g_free (size_str);
       }
       break;
@@ -1743,12 +1744,8 @@ grid_element_set_details (GduVolumeGrid  *grid,
             const gchar *label;
             label = udisks_block_device_get_id_label (block);
             if (strlen (label) == 0)
-              s = g_strdup_printf ("%s\n%s",
-                                   C_("volume-grid", "Swap"),
-                                   size_str);
-            else
-              s = g_strdup_printf ("%s\n%s %s", label, size_str,
-                                   C_("volume-grid", "Swap"));
+              label = C_("volume-grid", "Swap");
+            s = g_strdup_printf ("%s\n%s %s", label, size_str, type);
           }
         else if (g_strcmp0 (usage, "crypto") == 0)
           {
@@ -1759,8 +1756,9 @@ grid_element_set_details (GduVolumeGrid  *grid,
           }
         else
           {
-            s = g_strdup_printf (_("%s %s"), size_str,
-                                 C_("volume-grid", "Unknown"));
+            s = g_strdup_printf (_("%s\n%s"),
+                                 C_("volume-grid", "Unknown"),
+                                 size_str);
           }
         element->text = s;
         g_free (size_str);

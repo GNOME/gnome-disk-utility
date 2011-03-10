@@ -36,6 +36,7 @@ GType                     gdu_volume_grid_get_type            (void) G_GNUC_CONS
 GtkWidget*                gdu_volume_grid_new                 (UDisksClient        *client);
 void                      gdu_volume_grid_set_block_device    (GduVolumeGrid       *grid,
                                                                GDBusObjectProxy    *block_device);
+GDBusObjectProxy         *gdu_volume_grid_get_block_device    (GduVolumeGrid       *grid);
 GduVolumeGridElementType  gdu_volume_grid_get_selected_type   (GduVolumeGrid       *grid);
 GDBusObjectProxy         *gdu_volume_grid_get_selected_device (GduVolumeGrid       *grid);
 guint64                   gdu_volume_grid_get_selected_offset (GduVolumeGrid       *grid);

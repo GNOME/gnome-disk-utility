@@ -21,6 +21,9 @@
  */
 
 #include "config.h"
+#include <string.h>
+#include <stdlib.h>
+
 #include <glib/gi18n.h>
 
 #include "gduapplication.h"
@@ -50,6 +53,7 @@ struct _GduWindow
   GDBusObjectProxy *current_object_proxy;
 
   GtkWidget *volume_grid;
+  GtkWidget *write_cache_switch;
 };
 
 typedef struct
@@ -63,6 +67,9 @@ enum
   PROP_APPLICATION,
   PROP_CLIENT
 };
+
+static void on_volume_grid_changed (GduVolumeGrid  *grid,
+                                    gpointer        user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -345,13 +352,25 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_interface_proxy_properties_changed),
                     window);
 
+  /* set up non-standard widgets that isn't in the .ui file */
+
   window->volume_grid = gdu_volume_grid_new (window->client);
   gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-grid-hbox")),
                       window->volume_grid,
                       TRUE, TRUE, 0);
-
   gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-volumes-label")),
                                  window->volume_grid);
+  g_signal_connect (window->volume_grid,
+                    "changed",
+                    G_CALLBACK (on_volume_grid_changed),
+                    window);
+
+  window->write_cache_switch = gtk_switch_new ();
+  gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-write-cache-hbox")),
+                      window->write_cache_switch,
+                      FALSE, TRUE, 0);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-write-cache-label")),
+                                 window->write_cache_switch);
 }
 
 static void
@@ -676,10 +695,9 @@ setup_device_page (GduWindow         *window,
                 "devtab-size-value-label",
                 udisks_lun_get_size (lun));
       /* TODO: get this from udisks */
-      gtk_switch_set_active (GTK_SWITCH (gdu_window_get_widget (window, "devtab-write-cache-switch")), TRUE);
+      gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
       gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
-      gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-switch"));
-      gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
+      gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
 
       set_disk_label (window, _("Drive"));
     }
@@ -829,3 +847,151 @@ on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
   update_all (window, object_proxy);
 }
 
+static void
+on_volume_grid_changed (GduVolumeGrid  *grid,
+                        gpointer        user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GDBusObjectProxy *object_proxy;
+  GList *children;
+  GList *l;
+  GduVolumeGridElementType type;
+  UDisksBlockDevice *block;
+  guint64 size;
+
+  /* first hide everything */
+  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-volume-table")));
+  for (l = children; l != NULL; l = l->next)
+    {
+      GtkWidget *child = GTK_WIDGET (l->data);
+      gtk_widget_hide (child);
+    }
+  g_list_free (children);
+
+  size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
+  type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
+  object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  if (object_proxy == NULL)
+    object_proxy = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
+  if (object_proxy == NULL)
+    goto out;
+
+  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+
+  g_debug ("In on_volume_grid_changed() - selected=%s",
+           object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
+
+  /* Always show the device kv-pair */
+  set_string (window,
+              "devtab-volume-device-label",
+              "devtab-volume-device-value-label",
+              udisks_block_device_get_preferred_device (block), TRUE);
+
+  /* Always show size if > 0 */
+  if (size > 0)
+    {
+      gchar *size_str;
+      size_str = udisks_util_get_size_for_display (size, FALSE, TRUE);
+      set_string (window,
+                  "devtab-volume-capacity-label",
+                  "devtab-volume-capacity-value-label",
+                  size_str, TRUE);
+      g_free (size_str);
+    }
+
+
+  switch (type)
+    {
+    case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
+      set_string (window,
+                  "devtab-volume-type-label",
+                  "devtab-volume-type-value-label",
+                  "", TRUE);
+      break;
+
+    case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:
+      set_string (window,
+                  "devtab-volume-type-label",
+                  "devtab-volume-type-value-label",
+                  _("Unallocated Space"), TRUE);
+      break;
+
+    case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
+      {
+        const gchar *usage;
+        const gchar *type;
+        gint partition_type;
+        gchar *s;
+
+        usage = udisks_block_device_get_id_usage (block);
+        type = udisks_block_device_get_id_type (block);
+        partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
+
+        if (udisks_block_device_get_part_entry (block) &&
+            g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
+            (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+          {
+            s = g_strdup (_("Extended Partition"));
+          }
+        else if (g_strcmp0 (usage, "filesystem") == 0)
+          {
+            /* TODO: map type to something localizable/nicer */
+            s = g_strdup_printf (_("%s Filesystem"), type);
+          }
+        else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
+          {
+            s = g_strdup_printf (_("Swap Space"));
+          }
+        else if (g_strcmp0 (usage, "crypto") == 0)
+          {
+            s = g_strdup (_("Encrypted"));
+          }
+        else
+          {
+            s = g_strdup (_("Unknown"));
+          }
+
+        set_string (window,
+                    "devtab-volume-type-label",
+                    "devtab-volume-type-value-label",
+                    s, TRUE);
+
+        set_string (window,
+                    "devtab-volume-name-label",
+                    "devtab-volume-name-value-label",
+                    udisks_block_device_get_id_label (block), FALSE);
+
+        set_string (window,
+                    "devtab-volume-uuid-label",
+                    "devtab-volume-uuid-value-label",
+                    udisks_block_device_get_id_uuid (block), FALSE);
+
+        if (udisks_block_device_get_part_entry (block))
+          {
+            const gchar *partition_type;
+            const gchar *partition_label;
+            const gchar *partition_uuid;
+            /* TODO: map part type to something localizable/nicer */
+            partition_type = udisks_block_device_get_part_entry_type (block);
+            partition_label = udisks_block_device_get_part_entry_label (block);
+            partition_uuid = udisks_block_device_get_part_entry_uuid (block);
+            set_string (window,
+                        "devtab-volume-partition-type-label",
+                        "devtab-volume-partition-type-value-label",
+                        partition_type, FALSE);
+            set_string (window,
+                        "devtab-volume-partition-name-label",
+                        "devtab-volume-partition-name-value-label",
+                        partition_label, FALSE);
+            set_string (window,
+                        "devtab-volume-partition-uuid-label",
+                        "devtab-volume-partition-uuid-value-label",
+                        partition_uuid, FALSE);
+          }
+      }
+      break;
+    }
+
+ out:
+  ;
+}

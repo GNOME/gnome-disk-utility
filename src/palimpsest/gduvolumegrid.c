@@ -603,6 +603,13 @@ gdu_volume_grid_new (UDisksClient *client)
                                    NULL));
 }
 
+GDBusObjectProxy *
+gdu_volume_grid_get_block_device (GduVolumeGrid *grid)
+{
+  g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), NULL);
+  return grid->block_device;
+}
+
 void
 gdu_volume_grid_set_block_device (GduVolumeGrid     *grid,
                                   GDBusObjectProxy  *block_device)
@@ -627,6 +634,10 @@ gdu_volume_grid_set_block_device (GduVolumeGrid     *grid,
     }
 
   g_object_notify (G_OBJECT (grid), "block-device");
+
+  g_signal_emit (grid,
+                 signals[CHANGED_SIGNAL],
+                 0);
  out:
   ;
 }
@@ -1846,7 +1857,6 @@ grid_element_set_details (GduVolumeGrid  *grid,
             s = g_strdup_printf ("%s\n%s",
                                  C_("volume-grid", "Encrypted"),
                                  size_str);
-            /* TODO: emblems for locked/unlocked */
           }
         else
           {

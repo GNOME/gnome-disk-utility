@@ -1,7 +1,26 @@
 
 NULL =
+BUILT_SOURCES =
 
 bin_PROGRAMS = palimpsest
+
+gduenumtypes.h: gduenums.h gduenumtypes.h.template
+	( top_builddir=`cd $(top_builddir) && pwd`; 						\
+	 cd $(srcdir) && glib-mkenums --template gduenumtypes.h.template gduenums.h ) > 	\
+	   gduenumtypes.h.tmp && mv gduenumtypes.h.tmp gduenumtypes.h				\
+	$(NULL)
+
+gduenumtypes.c: gduenums.h gduenumtypes.c.template
+	( top_builddir=`cd $(top_builddir) && pwd`; 						\
+	 cd $(srcdir) && glib-mkenums --template gduenumtypes.c.template gduenums.h ) > 	\
+	   gduenumtypes.c.tmp && mv gduenumtypes.c.tmp gduenumtypes.c				\
+	$(NULL)
+
+enum_built_sources =							\
+	gduenumtypes.h			gduenumtypes.c			\
+	$(NULL)
+
+BUILT_SOURCES += $(enum_built_sources)
 
 palimpsest_SOURCES = 					\
 				main.c			\
@@ -10,7 +29,9 @@ palimpsest_SOURCES = 					\
 	gdudevicetreemodel.h	gdudevicetreemodel.c	\
 	gdutypes.h					\
 	gduutils.h		gduutils.c		\
+	gduvolumegrid.h		gduvolumegrid.c		\
 	gduwindow.h		gduwindow.c		\
+	$(enum_built_sources)				\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

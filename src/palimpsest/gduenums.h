@@ -20,29 +20,20 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_TYPES_H__
-#define __GDU_TYPES_H__
+#ifndef __GDU_ENUMS_H__
+#define __GDU_ENUMS_H__
 
 #include <gtk/gtk.h>
-#define UDISKS_API_IS_SUBJECT_TO_CHANGE
-#include <udisks/udisks.h>
-
-#include "gduenums.h"
 
 G_BEGIN_DECLS
 
-struct _GduApplication;
-typedef struct _GduApplication GduApplication;
-
-struct _GduDeviceTreeModel;
-typedef struct _GduDeviceTreeModel GduDeviceTreeModel;
-
-struct _GduWindow;
-typedef struct _GduWindow GduWindow;
-
-struct _GduVolumeGrid;
-typedef struct _GduVolumeGrid GduVolumeGrid;
+typedef enum
+{
+  GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA,
+  GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE,
+  GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE
+} GduVolumeGridElementType;
 
 G_END_DECLS
 
-#endif /* __GDU_TYPES_H__ */
+#endif /* __GDU_ENUMS_H__ */

@@ -23,10 +23,13 @@
 #ifndef __GDU_H__
 #define __GDU_H__
 
-#include <gdutypes.h>
-#include <gduapplication.h>
-#include <gdudevicetreemodel.h>
-#include <gduutils.h>
-#include <gduwindow.h>
+#include "gdutypes.h"
+#include "gduenums.h"
+#include "gduenumtypes.h"
+#include "gduapplication.h"
+#include "gdudevicetreemodel.h"
+#include "gduutils.h"
+#include "gduvolumegrid.h"
+#include "gduwindow.h"
 
 #endif /* __GDU_H__ */

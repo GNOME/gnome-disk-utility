@@ -27,6 +27,7 @@
 #include "gduwindow.h"
 #include "gdudevicetreemodel.h"
 #include "gduutils.h"
+#include "gduvolumegrid.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -47,6 +48,8 @@ struct _GduWindow
 
   DetailsPage current_page;
   GDBusObjectProxy *current_object_proxy;
+
+  GtkWidget *volume_grid;
 };
 
 typedef struct
@@ -332,6 +335,11 @@ gdu_window_constructed (GObject *object)
                     "interface-proxy-properties-changed",
                     G_CALLBACK (on_interface_proxy_properties_changed),
                     window);
+
+  window->volume_grid = gdu_volume_grid_new (window->client);
+  gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-grid-hbox")),
+                      window->volume_grid,
+                      TRUE, TRUE, 0);
 }
 
 static void
@@ -472,6 +480,7 @@ teardown_details_page (GduWindow         *window,
     case DETAILS_PAGE_NOT_SELECTED:
       break;
     case DETAILS_PAGE_DEVICE:
+      gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
       break;
     }
 }
@@ -544,7 +553,7 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
       if (g_strcmp0 (udisks_block_device_get_lun (block), lun_object_path) == 0 &&
           !udisks_block_device_get_part_entry (block))
         {
-          ret = g_list_append (ret, g_object_ref (block));
+          ret = g_list_append (ret, g_object_ref (object_proxy));
         }
       g_object_unref (block);
     }
@@ -554,11 +563,11 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
 }
 
 static gint
-block_device_compare_on_preferred (UDisksBlockDevice *a,
-                                   UDisksBlockDevice *b)
+block_device_compare_on_preferred (GDBusObjectProxy *a,
+                                   GDBusObjectProxy *b)
 {
-  return g_strcmp0 (udisks_block_device_get_preferred_device (a),
-                    udisks_block_device_get_preferred_device (b));
+  return g_strcmp0 (udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (a)),
+                    udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (b)));
 }
 
 static void
@@ -590,15 +599,22 @@ setup_device_page (GduWindow         *window,
       GList *l;
       GString *str;
 
+      /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
       block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_proxy_get_object_path (object_proxy));
       block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
       str = g_string_new (NULL);
+
+      if (block_devices != NULL)
+        gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), block_devices->data);
+      else
+        gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
+
       for (l = block_devices; l != NULL; l = l->next)
         {
-          UDisksBlockDevice *lun_block = UDISKS_BLOCK_DEVICE (l->data);
+          GDBusObjectProxy *block_object_proxy = G_DBUS_OBJECT_PROXY (l->data);
           if (str->len > 0)
             g_string_append_c (str, ' ');
-          g_string_append (str, udisks_block_device_get_preferred_device (lun_block));
+          g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object_proxy)));
         }
       s = g_string_free (str, FALSE);
       set_string (window,
@@ -646,6 +662,7 @@ setup_device_page (GduWindow         *window,
   else if (block != NULL)
     {
       const gchar *backing_file;
+      gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), object_proxy);
       set_string (window,
                   "devtab-device-label",
                   "devtab-device-value-label",

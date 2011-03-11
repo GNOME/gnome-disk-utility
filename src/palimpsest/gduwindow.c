@@ -516,20 +516,28 @@ teardown_details_page (GduWindow         *window,
     }
 }
 
+typedef enum
+{
+  SET_MARKUP_FLAGS_NONE = 0,
+  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY = (1<<0),
+  SET_MARKUP_FLAGS_CHANGE_LINK = (1<<1)
+} SetMarkupFlags;
+
 static void
-set_string (GduWindow   *window,
-            const gchar *key_label_id,
-            const gchar *label_id,
-            const gchar *text,
-            gboolean     hyphen_if_empty)
+set_markup (GduWindow      *window,
+            const gchar    *key_label_id,
+            const gchar    *label_id,
+            const gchar    *markup,
+            SetMarkupFlags  flags)
 {
   GtkWidget *key_label;
   GtkWidget *label;
+  gchar *s;
 
-  if (text == NULL || strlen (text) == 0)
+  if (markup == NULL || strlen (markup) == 0)
     {
-      if (hyphen_if_empty)
-        text = "—";
+      if (flags & SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY)
+        markup = "—";
       else
         goto out;
     }
@@ -539,7 +547,16 @@ set_string (GduWindow   *window,
 
   /* TODO: utf-8 validate */
 
-  gtk_label_set_text (GTK_LABEL (label), text);
+  if (flags & SET_MARKUP_FLAGS_CHANGE_LINK)
+    {
+      s = g_strdup_printf ("%s <small><a href=\"action:/change/%s\">Change</a></small>", markup, label_id);
+    }
+  else
+    {
+      s = g_strdup (markup);
+    }
+  gtk_label_set_markup (GTK_LABEL (label), s);
+  g_free (s);
   gtk_widget_show (key_label);
   gtk_widget_show (label);
 
@@ -555,7 +572,7 @@ set_size (GduWindow   *window,
 {
   gchar *s;
   s = udisks_util_get_size_for_display (size, FALSE, TRUE);
-  set_string (window, key_label_id, label_id, s, TRUE);
+  set_markup (window, key_label_id, label_id, s, SET_MARKUP_FLAGS_NONE);
   g_free (s);
 }
 
@@ -811,10 +828,10 @@ update_devtab_for_lun (GduWindow         *window,
       g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object_proxy)));
     }
   s = g_string_free (str, FALSE);
-  set_string (window,
+  set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              s, TRUE);
+              s, SET_MARKUP_FLAGS_NONE);
   g_free (s);
   g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
   g_list_free (block_devices);
@@ -825,22 +842,22 @@ update_devtab_for_lun (GduWindow         *window,
     s = g_strdup (lun_vendor);
   else
     s = g_strconcat (lun_vendor, " ", lun_model, NULL);
-  set_string (window,
+  set_markup (window,
               "devtab-model-label",
-              "devtab-model-value-label", s, FALSE);
+              "devtab-model-value-label", s, SET_MARKUP_FLAGS_NONE);
   g_free (s);
-  set_string (window,
+  set_markup (window,
               "devtab-serial-number-label",
               "devtab-serial-number-value-label",
-              udisks_lun_get_serial (lun), FALSE);
-  set_string (window,
+              udisks_lun_get_serial (lun), SET_MARKUP_FLAGS_NONE);
+  set_markup (window,
               "devtab-firmware-version-label",
               "devtab-firmware-version-value-label",
-              udisks_lun_get_revision (lun), FALSE);
-  set_string (window,
+              udisks_lun_get_revision (lun), SET_MARKUP_FLAGS_NONE);
+  set_markup (window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
-              udisks_lun_get_wwn (lun), FALSE);
+              udisks_lun_get_wwn (lun), SET_MARKUP_FLAGS_NONE);
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
@@ -867,10 +884,10 @@ update_devtab_for_block (GduWindow         *window,
   //         size,
   //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
 
-  set_string (window,
+  set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              udisks_block_device_get_preferred_device (block), FALSE);
+              udisks_block_device_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
@@ -878,10 +895,10 @@ update_devtab_for_block (GduWindow         *window,
   backing_file = udisks_block_device_get_loop_backing_file (block);
   if (strlen (backing_file) > 0)
     {
-      set_string (window,
+      set_markup (window,
                   "devtab-backing-file-label",
                   "devtab-backing-file-value-label",
-                  backing_file, FALSE);
+                  backing_file, SET_MARKUP_FLAGS_NONE);
     }
 
   usage = udisks_block_device_get_id_usage (block);
@@ -911,42 +928,40 @@ update_devtab_for_block (GduWindow         *window,
     {
       s = g_strdup (_("Unknown"));
     }
-  set_string (window,
+  set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              s, TRUE);
+              s, SET_MARKUP_FLAGS_NONE);
 
-  set_string (window,
+  set_markup (window,
               "devtab-volume-label-label",
               "devtab-volume-label-value-label",
-              udisks_block_device_get_id_label (block), FALSE);
+              udisks_block_device_get_id_label (block),
+              SET_MARKUP_FLAGS_CHANGE_LINK);
 
-  set_string (window,
+  set_markup (window,
               "devtab-volume-uuid-label",
               "devtab-volume-uuid-value-label",
-              udisks_block_device_get_id_uuid (block), FALSE);
+              udisks_block_device_get_id_uuid (block),
+              SET_MARKUP_FLAGS_NONE);
 
   if (udisks_block_device_get_part_entry (block))
     {
       const gchar *partition_type;
       const gchar *partition_label;
-      const gchar *partition_uuid;
       /* TODO: map part type to something localizable/nicer */
       partition_type = udisks_block_device_get_part_entry_type (block);
       partition_label = udisks_block_device_get_part_entry_label (block);
-      partition_uuid = udisks_block_device_get_part_entry_uuid (block);
-      set_string (window,
+      set_markup (window,
                   "devtab-volume-partition-type-label",
                   "devtab-volume-partition-type-value-label",
-                  partition_type, FALSE);
-      set_string (window,
+                  partition_type,
+                  SET_MARKUP_FLAGS_CHANGE_LINK);
+      set_markup (window,
                   "devtab-volume-partition-label-label",
                   "devtab-volume-partition-label-value-label",
-                  partition_label, FALSE);
-      set_string (window,
-                  "devtab-volume-partition-uuid-label",
-                  "devtab-volume-partition-uuid-value-label",
-                  partition_uuid, FALSE);
+                  partition_label,
+                  SET_MARKUP_FLAGS_CHANGE_LINK);
     }
 }
 
@@ -969,18 +984,19 @@ update_devtab_for_free_space (GduWindow         *window,
   //         size,
   //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
 
-  set_string (window,
+  set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              udisks_block_device_get_preferred_device (block), FALSE);
+              udisks_block_device_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
             size);
-  set_string (window,
+  set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              _("Unallocated Space"), TRUE);
+              _("Unallocated Space"),
+              SET_MARKUP_FLAGS_NONE);
 }
 
 static void

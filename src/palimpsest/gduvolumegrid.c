@@ -50,6 +50,7 @@ struct GridElement
   GduVolumeGridElementType type;
 
   /* these values are set in recompute_grid() */
+  gint fixed_width;
   gdouble size_ratio;
   GDBusObjectProxy *object_proxy;
   guint64 offset;
@@ -67,7 +68,8 @@ struct GridElement
   guint height;
   GridEdgeFlags edge_flags;
 
-  gchar *text;
+  gchar *markup;
+  GIcon *icon;
 
   gboolean show_spinner;
   gboolean show_padlock_open;
@@ -80,9 +82,11 @@ struct GridElement
 static void
 grid_element_free (GridElement *element)
 {
+  if (element->icon != NULL)
+    g_object_unref (element->icon);
   if (element->object_proxy != NULL)
     g_object_unref (element->object_proxy);
-  g_free (element->text);
+  g_free (element->markup);
   g_list_foreach (element->embedded_elements, (GFunc) grid_element_free, NULL);
   g_list_free (element->embedded_elements);
 
@@ -98,6 +102,10 @@ struct _GduVolumeGrid
 
   UDisksClient *client;
   GDBusObjectProxy *block_device;
+
+  gboolean container_visible;
+  gchar *container_markup;
+  GIcon *container_icon;
 
   GList *elements;
 
@@ -179,6 +187,10 @@ gdu_volume_grid_finalize (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
   GDBusProxyManager *proxy_manager;
+
+  if (grid->container_icon != NULL)
+    g_object_unref (grid->container_icon);
+  g_free (grid->container_markup);
 
   proxy_manager = udisks_client_get_proxy_manager (grid->client);
   g_signal_handlers_disconnect_by_func (proxy_manager,
@@ -521,9 +533,15 @@ gdu_volume_grid_get_preferred_width (GtkWidget *widget,
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
   guint num_elements;
   gint width;
+  GList *l;
 
   num_elements = get_num_elements_for_slice (grid->elements);
   width = num_elements * ELEMENT_MINIMUM_WIDTH;
+  for (l = grid->elements; l != NULL; l = l->next)
+    {
+      GridElement *element = l->data;
+      width += element->fixed_width;
+    }
 
   *minimal_width = *natural_width = width;
 }
@@ -623,15 +641,10 @@ gdu_volume_grid_set_block_device (GduVolumeGrid     *grid,
     g_object_unref (grid->block_device);
   grid->block_device = block_device != NULL ? g_object_ref (block_device) : NULL;
 
+  /* this causes recompute_grid() to select the first element */
+  grid->selected = NULL;
+  grid->focused = NULL;
   recompute_grid (grid);
-
-  /* select the first element */
-  if (grid->elements != NULL)
-    {
-      GridElement *element = grid->elements->data;
-      grid->selected = element;
-      grid->focused = element;
-    }
 
   g_object_notify (G_OBJECT (grid), "block-device");
 
@@ -678,18 +691,25 @@ recompute_size_for_slice (GList          *elements,
 {
   GList *l;
   gint x;
-  gint pixels_left;
-  guint num_elements;
+  gint extra;
 
-  /* first steal all the allocated minimum width - then distribute remaining pixels
-   * based on the size_ratio and add the allocated minimum width.
+  /* first steal all the allocated minimum width OR fixed_width for each element - then
+   * distribute remaining pixels based on the size_ratio and add
+   * the allocated minimum width.
    */
-  num_elements = get_num_elements_for_slice (elements);
-  width -= num_elements * ELEMENT_MINIMUM_WIDTH;
+  extra = width;
+  for (l = elements; l != NULL; l = l->next)
+    {
+      GridElement *element = l->data;
+      if (element->fixed_width > 0)
+        extra -= element->fixed_width;
+      else
+        extra -= get_num_elements_for_slice (element->embedded_elements) * ELEMENT_MINIMUM_WIDTH;
+    }
+
   g_warn_if_fail (width >= 0);
 
   x = 0;
-  pixels_left = width;
   for (l = elements; l != NULL; l = l->next)
     {
       GridElement *element = l->data;
@@ -704,19 +724,21 @@ recompute_size_for_slice (GList          *elements,
 
       if (is_last)
         {
-          element_width = pixels_left;
-          pixels_left = 0;
+          element_width = width - x;
         }
       else
         {
-          element_width = element->size_ratio * width;
-          if (element_width > pixels_left)
-            element_width = pixels_left;
-          pixels_left -= element_width;
+          if (element->fixed_width > 0)
+            {
+              g_warn_if_fail (element->size_ratio == 0.0);
+              element_width = element->fixed_width;
+            }
+          else
+            {
+              element_width = element->size_ratio * extra;
+              element_width += get_num_elements_for_slice (element->embedded_elements) * ELEMENT_MINIMUM_WIDTH;
+            }
         }
-
-      num_elements = get_num_elements_for_slice (element->embedded_elements);
-      element_width += num_elements * ELEMENT_MINIMUM_WIDTH;
 
       element->x = x + offset_x;
       element->y = offset_y;
@@ -934,12 +956,6 @@ render_element (GduVolumeGrid *grid,
   gdouble focus_rect_red;
   gdouble focus_rect_green;
   gdouble focus_rect_blue;
-  gdouble focus_rect_selected_red;
-  gdouble focus_rect_selected_green;
-  gdouble focus_rect_selected_blue;
-  gdouble focus_rect_selected_not_focused_red;
-  gdouble focus_rect_selected_not_focused_green;
-  gdouble focus_rect_selected_not_focused_blue;
   gdouble stroke_red;
   gdouble stroke_green;
   gdouble stroke_blue;
@@ -961,6 +977,12 @@ render_element (GduVolumeGrid *grid,
   PangoLayout *layout;
   PangoFontDescription *desc;
   gint width, height;
+  GdkPixbuf *icon_pixbuf;
+  gint icon_width;
+  gint icon_height;
+  gint icon_offset;
+  GPtrArray *pixbufs_to_render;
+  guint n;
 
   need_animation_timeout = FALSE;
 
@@ -977,12 +999,6 @@ render_element (GduVolumeGrid *grid,
   focus_rect_red     = 0.75;
   focus_rect_green   = 0.75;
   focus_rect_blue    = 0.75;
-  focus_rect_selected_red     = 0.70;
-  focus_rect_selected_green   = 0.70;
-  focus_rect_selected_blue    = 0.80;
-  focus_rect_selected_not_focused_red     = 0.70;
-  focus_rect_selected_not_focused_green   = 0.70;
-  focus_rect_selected_not_focused_blue    = 0.70;
   stroke_red   = 0.75;
   stroke_green = 0.75;
   stroke_blue  = 0.75;
@@ -1002,11 +1018,9 @@ render_element (GduVolumeGrid *grid,
   text_selected_not_focused_green   = 1;
   text_selected_not_focused_blue    = 1;
 
-#if 0
-  g_debug ("rendering element: x=%d w=%d",
-           element->x,
-           element->width);
-#endif
+  //g_debug ("rendering element: x=%d w=%d",
+  //         element->x,
+  //         element->width);
 
   cairo_save (cr);
   cairo_rectangle (cr,
@@ -1136,8 +1150,10 @@ render_element (GduVolumeGrid *grid,
     {
       cairo_set_source_rgb (cr, text_red, text_green, text_blue);
     }
+
+  /* text + icon */
   layout = pango_cairo_create_layout (cr);
-  pango_layout_set_text (layout, element->text != NULL ? element->text : "", -1);
+  pango_layout_set_markup (layout, element->markup != NULL ? element->markup : "", -1);
   desc = pango_font_description_from_string ("Sans 7.0");
   pango_layout_set_font_description (layout, desc);
   pango_font_description_free (desc);
@@ -1145,15 +1161,41 @@ render_element (GduVolumeGrid *grid,
   pango_layout_set_width (layout, pango_units_from_double (element->width));
   pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
   pango_layout_get_size (layout, &width, &height);
+
+  icon_width = 0;
+  icon_height = 0;
+  icon_pixbuf = NULL;
+  if (element->icon != NULL)
+    {
+      GtkIconInfo *icon_info;
+      icon_info = gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (),
+                                                  element->icon,
+                                                  24,
+                                                  0); /* GtkIconLookupFlags */
+      if (icon_info != NULL)
+        {
+          icon_pixbuf = gtk_icon_info_load_icon (icon_info, NULL); /* GError */
+          icon_width = gdk_pixbuf_get_height (icon_pixbuf);
+          icon_height = gdk_pixbuf_get_height (icon_pixbuf);
+          gtk_icon_info_free (icon_info);
+        }
+    }
+  if (icon_pixbuf != NULL)
+    {
+      cairo_save (cr);
+      render_pixbuf (cr,
+                     ceil (element->x + element->width/2.0 - icon_width/2.0),
+                     ceil (element->y + element->height/2.0 - pango_units_to_double (height)/2.0 - icon_height/2.0),
+                     icon_pixbuf);
+      cairo_restore (cr);
+      g_object_unref (icon_pixbuf);
+    }
+
   cairo_move_to (cr,
-                 ceil(element->x),
-                 ceil (element->y + element->height / 2 - pango_units_to_double (height) / 2));
+                 ceil (element->x),
+                 ceil (element->y + element->height/2.0 - pango_units_to_double (height)/2.0 + icon_height/2.0));
   pango_cairo_show_layout (cr, layout);
   g_object_unref (layout);
-
-  gint icon_offset;
-  GPtrArray *pixbufs_to_render;
-  guint n;
 
   icon_offset = 0;
 
@@ -1610,14 +1652,14 @@ recompute_grid (GduVolumeGrid *grid)
   GDBusObjectProxy *cur_selected_object_proxy;
   GDBusObjectProxy *cur_focused_object_proxy;
 
-  cur_selected_offset = 0;
+  cur_selected_offset = G_MAXUINT64;
   cur_selected_object_proxy = NULL;
   if (grid->selected != NULL)
     {
       cur_selected_offset = grid->selected->offset;
       cur_selected_object_proxy = grid->selected->object_proxy;
     }
-  cur_focused_offset = 0;
+  cur_focused_offset = G_MAXUINT64;
   cur_focused_object_proxy = NULL;
   if (grid->focused != NULL)
     {
@@ -1630,11 +1672,22 @@ recompute_grid (GduVolumeGrid *grid)
   g_list_free (grid->elements);
   grid->elements = NULL;
 
-#if 0
-  g_debug ("TODO: recompute grid for %s",
-           grid->block_device != NULL ?
-           g_dbus_object_proxy_get_object_path (grid->block_device) : "<nothing selected>");
-#endif
+  //g_debug ("TODO: recompute grid for %s, container_visible=%d",
+  //         grid->block_device != NULL ?
+  //         g_dbus_object_proxy_get_object_path (grid->block_device) : "<nothing selected>",
+  //         grid->container_visible);
+
+  if (grid->container_visible)
+    {
+      element = g_new0 (GridElement, 1);
+      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER;
+      element->fixed_width = 150;
+      element->offset = 0;
+      element->size = 0;
+      element->markup = g_strdup (grid->container_markup);
+      element->icon = grid->container_icon != NULL ? g_object_ref (grid->container_icon) : NULL;
+      grid->elements = g_list_append (grid->elements, element);
+    }
 
   if (grid->block_device == NULL)
     {
@@ -1643,6 +1696,11 @@ recompute_grid (GduVolumeGrid *grid)
       element->size_ratio = 1.0;
       element->offset = 0;
       element->size = 0;
+      if (grid->elements != NULL)
+        {
+          ((GridElement *) grid->elements->data)->next = element;
+          element->prev = ((GridElement *) grid->elements->data);
+        }
       grid->elements = g_list_append (grid->elements, element);
       grid_element_set_details (grid, element);
       goto out;
@@ -1708,7 +1766,12 @@ recompute_grid (GduVolumeGrid *grid)
           element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
           element->size_ratio = 1.0;
           element->offset = 0;
-          element->size = 0;
+          element->size = top_size;
+          if (grid->elements != NULL)
+            {
+              ((GridElement *) grid->elements->data)->next = element;
+              element->prev = ((GridElement *) grid->elements->data);
+            }
           grid->elements = g_list_append (grid->elements, element);
           grid_element_set_details (grid, element);
         }
@@ -1720,6 +1783,11 @@ recompute_grid (GduVolumeGrid *grid)
           element->offset = 0;
           element->size = top_size;
           element->object_proxy = g_object_ref (grid->block_device);
+          if (grid->elements != NULL)
+            {
+              ((GridElement *) grid->elements->data)->next = element;
+              element->prev = ((GridElement *) grid->elements->data);
+            }
           grid->elements = g_list_append (grid->elements, element);
           grid_element_set_details (grid, element);
           maybe_add_crypto (grid, element);
@@ -1727,15 +1795,22 @@ recompute_grid (GduVolumeGrid *grid)
     }
   else
     {
-      grid->elements = recompute_grid_add_partitions (grid,
-                                                      top_size,
-                                                      NULL,
-                                                      free_space_slack,
-                                                      0,
-                                                      top_size,
-                                                      partitions,
-                                                      extended_partition,
-                                                      logical_partitions);
+      GList *result;
+      result = recompute_grid_add_partitions (grid,
+                                              top_size,
+                                              NULL,
+                                              free_space_slack,
+                                              0,
+                                              top_size,
+                                              partitions,
+                                              extended_partition,
+                                              logical_partitions);
+      if (grid->elements != NULL)
+        {
+          ((GridElement *) grid->elements->data)->next = ((GridElement *) result->data);
+          ((GridElement *) result->data)->prev =((GridElement *) grid->elements->data);
+        }
+      grid->elements = g_list_concat (grid->elements, result);
     }
 
   g_list_free (logical_partitions);
@@ -1797,17 +1872,21 @@ grid_element_set_details (GduVolumeGrid  *grid,
 {
   switch (element->type)
     {
+    case GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER:
+      g_assert_not_reached ();
+      break;
+
     case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
-      element->text = g_strdup (_("No Media"));
+      element->markup = g_strdup (_("No Media"));
       break;
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:
       {
         gchar *size_str;
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
-        element->text = g_strdup_printf ("%s\n%s",
-                                         C_("volume-grid", "Free Space"),
-                                         size_str);
+        element->markup = g_strdup_printf ("%s\n%s",
+                                           C_("volume-grid", "Free Space"),
+                                           size_str);
         g_free (size_str);
       }
       break;
@@ -1864,7 +1943,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
                                  C_("volume-grid", "Unknown"),
                                  size_str);
           }
-        element->text = s;
+        element->markup = s;
         g_free (size_str);
       }
       break;
@@ -1926,6 +2005,7 @@ maybe_update (GduVolumeGrid    *grid,
     }
 
   goto out;
+
  update:
   recompute_grid (grid);
 
@@ -1982,4 +2062,45 @@ on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
   maybe_update (grid, object_proxy);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_volume_grid_set_container_visible (GduVolumeGrid  *grid,
+                                       gboolean        visible)
+{
+  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
+  if (!!grid->container_visible != !!visible)
+    {
+      grid->container_visible = visible;
+      recompute_grid (grid);
+    }
+}
+
+void
+gdu_volume_grid_set_container_markup (GduVolumeGrid  *grid,
+                                      const gchar    *markup)
+{
+  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
+  if (g_strcmp0 (grid->container_markup, markup) != 0)
+    {
+      g_free (grid->container_markup);
+      grid->container_markup = g_strdup (markup);
+      recompute_grid (grid);
+    }
+}
+
+void
+gdu_volume_grid_set_container_icon (GduVolumeGrid       *grid,
+                                    GIcon               *icon)
+{
+  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
+  if (!g_icon_equal (grid->container_icon, icon))
+    {
+      if (grid->container_icon != NULL)
+        g_object_unref (grid->container_icon);
+      grid->container_icon = icon != NULL ? g_object_ref (icon) : NULL;
+      recompute_grid (grid);
+    }
 }

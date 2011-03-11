@@ -1681,7 +1681,7 @@ recompute_grid (GduVolumeGrid *grid)
     {
       element = g_new0 (GridElement, 1);
       element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER;
-      element->fixed_width = 150;
+      element->fixed_width = 40;
       element->offset = 0;
       element->size = 0;
       element->markup = g_strdup (grid->container_markup);

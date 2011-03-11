@@ -624,7 +624,6 @@ setup_device_page (GduWindow         *window,
   if (lun != NULL)
     {
       GList *block_devices;
-      GString *str;
       gchar *lun_name;
       gchar *lun_desc;
       GIcon *lun_icon;
@@ -639,19 +638,8 @@ setup_device_page (GduWindow         *window,
                                 &lun_desc,
                                 &lun_icon,
                                 &lun_media_icon);
-      str = g_string_new (NULL);
-      g_string_append_printf (str,
-                              "<b>"
-                              "%s\n"
-                              "%s",
-                              lun_desc,
-                              lun_name);
-      g_string_append (str, "</b>");
-      gdu_volume_grid_set_container_markup (GDU_VOLUME_GRID (window->volume_grid),
-                                            str->str);
       gdu_volume_grid_set_container_icon (GDU_VOLUME_GRID (window->volume_grid),
                                           lun_icon);
-      g_string_free (str, TRUE);
 
       gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), TRUE);
       if (block_devices != NULL)

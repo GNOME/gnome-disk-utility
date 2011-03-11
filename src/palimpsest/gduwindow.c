@@ -877,8 +877,9 @@ update_devtab_for_block (GduWindow         *window,
   const gchar *backing_file;
   const gchar *usage;
   const gchar *type;
+  const gchar *version;
   gint partition_type;
-  gchar *s;
+  gchar *type_for_display;
 
   //g_debug ("In update_devtab_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -903,35 +904,24 @@ update_devtab_for_block (GduWindow         *window,
 
   usage = udisks_block_device_get_id_usage (block);
   type = udisks_block_device_get_id_type (block);
+  version = udisks_block_device_get_id_version (block);
   partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
 
   if (udisks_block_device_get_part_entry (block) &&
       g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
       (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
     {
-      s = g_strdup (_("Extended Partition"));
-    }
-  else if (g_strcmp0 (usage, "filesystem") == 0)
-    {
-      /* TODO: map type to something localizable/nicer */
-      s = g_strdup_printf (_("%s Filesystem"), type);
-    }
-  else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
-    {
-      s = g_strdup_printf (_("Swap Space"));
-    }
-  else if (g_strcmp0 (usage, "crypto") == 0)
-    {
-      s = g_strdup (_("Encrypted"));
+      type_for_display = g_strdup (_("Extended Partition"));
     }
   else
     {
-      s = g_strdup (_("Unknown"));
+      type_for_display = udisks_util_get_id_for_display (usage, type, version, TRUE);
     }
   set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
+              type_for_display, SET_MARKUP_FLAGS_NONE);
+  g_free (type_for_display);
 
   set_markup (window,
               "devtab-volume-label-label",
@@ -947,21 +937,24 @@ update_devtab_for_block (GduWindow         *window,
 
   if (udisks_block_device_get_part_entry (block))
     {
-      const gchar *partition_type;
       const gchar *partition_label;
-      /* TODO: map part type to something localizable/nicer */
-      partition_type = udisks_block_device_get_part_entry_type (block);
+      gchar *type_for_display;
+
+      type_for_display = udisks_util_get_part_type_for_display (udisks_block_device_get_part_entry_scheme (block),
+                                                                udisks_block_device_get_part_entry_type (block));
+
       partition_label = udisks_block_device_get_part_entry_label (block);
       set_markup (window,
                   "devtab-volume-partition-type-label",
                   "devtab-volume-partition-type-value-label",
-                  partition_type,
+                  type_for_display,
                   SET_MARKUP_FLAGS_CHANGE_LINK);
       set_markup (window,
                   "devtab-volume-partition-label-label",
                   "devtab-volume-partition-label-value-label",
                   partition_label,
                   SET_MARKUP_FLAGS_CHANGE_LINK);
+      g_free (type_for_display);
     }
 }
 

@@ -990,15 +990,15 @@ render_element (GduVolumeGrid *grid,
   fill_red     = 1;
   fill_green   = 1;
   fill_blue    = 1;
-  fill_selected_red     = 0.40;
-  fill_selected_green   = 0.60;
-  fill_selected_blue    = 0.80;
-  fill_selected_not_focused_red     = 0.60;
-  fill_selected_not_focused_green   = 0.60;
-  fill_selected_not_focused_blue    = 0.60;
-  focus_rect_red     = 0.75;
-  focus_rect_green   = 0.75;
-  focus_rect_blue    = 0.75;
+  fill_selected_red     = 0.29;
+  fill_selected_green   = 0.56;
+  fill_selected_blue    = 0.85;
+  fill_selected_not_focused_red     = 0.29;
+  fill_selected_not_focused_green   = 0.56;
+  fill_selected_not_focused_blue    = 0.85;
+  focus_rect_red     = 0.60;
+  focus_rect_green   = 0.70;
+  focus_rect_blue    = 0.80;
   stroke_red   = 0.75;
   stroke_green = 0.75;
   stroke_blue  = 0.75;
@@ -1285,7 +1285,7 @@ render_slice (GduVolumeGrid *grid,
 
       if (element == grid->focused)
         {
-          if (grid->focused != grid->selected && is_grid_focused)
+          if (is_grid_focused)
             is_focused = TRUE;
         }
 

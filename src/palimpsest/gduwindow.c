@@ -54,6 +54,8 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
   GtkWidget *write_cache_switch;
+
+  GHashTable *label_connections;
 };
 
 typedef struct
@@ -76,6 +78,10 @@ G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 static void
 gdu_window_init (GduWindow *window)
 {
+  window->label_connections = g_hash_table_new_full (g_str_hash,
+                                                     g_str_equal,
+                                                     g_free,
+                                                     NULL);
 }
 
 static void on_object_proxy_added (GDBusProxyManager   *manager,
@@ -108,6 +114,8 @@ gdu_window_finalize (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
   GDBusProxyManager *proxy_manager;
+
+  g_hash_table_unref (window->label_connections);
 
   proxy_manager = udisks_client_get_proxy_manager (window->client);
   g_signal_handlers_disconnect_by_func (proxy_manager,
@@ -523,6 +531,11 @@ typedef enum
   SET_MARKUP_FLAGS_CHANGE_LINK = (1<<1)
 } SetMarkupFlags;
 
+static gboolean
+on_activate_link (GtkLabel    *label,
+                  const gchar *uri,
+                  gpointer     user_data);
+
 static void
 set_markup (GduWindow      *window,
             const gchar    *key_label_id,
@@ -549,7 +562,17 @@ set_markup (GduWindow      *window,
 
   if (flags & SET_MARKUP_FLAGS_CHANGE_LINK)
     {
-      s = g_strdup_printf ("%s <small><a href=\"action:/change/%s\">Change</a></small>", markup, label_id);
+      s = g_strdup_printf ("%s <small>— <a href=\"palimpsest://change/%s\">Change</a></small>", markup, label_id);
+      if (g_hash_table_lookup (window->label_connections, label_id) == NULL)
+        {
+          g_signal_connect (label,
+                            "activate-link",
+                            G_CALLBACK (on_activate_link),
+                            window);
+          g_hash_table_insert (window->label_connections,
+                               g_strdup (label_id),
+                               label);
+        }
     }
   else
     {
@@ -1062,3 +1085,49 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
   GduWindow *window = GDU_WINDOW (user_data);
   update_devtab (window);
 }
+
+static void
+on_change_label (GduWindow *window)
+{
+  g_debug ("TODO: %s", G_STRFUNC);
+}
+
+static void
+on_change_partition_type (GduWindow *window)
+{
+  g_debug ("TODO: %s", G_STRFUNC);
+}
+
+static void
+on_change_partition_label (GduWindow *window)
+{
+  g_debug ("TODO: %s", G_STRFUNC);
+}
+
+static gboolean
+on_activate_link (GtkLabel    *label,
+                  const gchar *uri,
+                  gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gboolean handled;
+
+  handled = FALSE;
+  if (!g_str_has_prefix (uri, "palimpsest://"))
+    goto out;
+
+  handled = TRUE;
+
+  if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-label-value-label") == 0)
+    on_change_label (window);
+  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-type-value-label") == 0)
+    on_change_partition_type (window);
+  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-label-value-label") == 0)
+    on_change_partition_label (window);
+  else
+    g_warning ("Unhandled action: %s", uri);
+
+ out:
+  return handled;
+}
+

@@ -1088,6 +1088,35 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/* TODO: right now we show a MessageDialog but we could do things like an InfoBar etc */
+static void
+gdu_window_show_error (GduWindow   *window,
+                       const gchar *message,
+                       GError      *orig_error)
+{
+  GtkWidget *dialog;
+  GError *error;
+
+  error = g_error_copy (orig_error);
+  if (g_dbus_error_is_remote_error (error))
+    g_dbus_error_strip_remote_error (error);
+
+  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_ERROR,
+                                               GTK_BUTTONS_CLOSE,
+                                               "<big><b>%s</b></big>",
+                                               message);
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s",
+                                              error->message);
+  g_error_free (error);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 typedef struct
 {
   GtkWidget *dialog;
@@ -1113,6 +1142,27 @@ on_change_filesystem_label_entry_changed (GtkEditable *editable,
 }
 
 static void
+change_filesystem_label_cb (UDisksBlockDevice *block,
+                            GAsyncResult      *res,
+                            gpointer           user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_block_device_call_filesystem_set_label_finish (block,
+                                                             res,
+                                                             &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error setting filesystem label"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
 on_change_filesystem_label (GduWindow *window)
 {
   gint response;
@@ -1123,6 +1173,7 @@ on_change_filesystem_label (GduWindow *window)
   const gchar *label;
   ChangeFilesystemLabelData data;
   const gchar *label_to_set;
+  const gchar *options[] = {NULL};
 
   object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object_proxy != NULL);
@@ -1132,7 +1183,7 @@ on_change_filesystem_label (GduWindow *window)
   dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
   entry = gdu_window_get_widget (window, "change-filesystem-label-entry");
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
-  //gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   label = udisks_block_device_get_id_label (block);
   g_signal_connect (entry,
@@ -1144,6 +1195,7 @@ on_change_filesystem_label (GduWindow *window)
   data.orig_label = g_strdup (label);
 
   gtk_entry_set_text (GTK_ENTRY (entry), label);
+  gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);
 
   gtk_widget_show_all (dialog);
   response = gtk_dialog_run (GTK_DIALOG (dialog));
@@ -1152,7 +1204,12 @@ on_change_filesystem_label (GduWindow *window)
 
   label_to_set = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  g_debug ("TODO: set filesystem label to %s", label_to_set);
+  udisks_block_device_call_filesystem_set_label (block,
+                                                 label_to_set,
+                                                 options, /* options */
+                                                 NULL, /* cancellable */
+                                                 (GAsyncReadyCallback) change_filesystem_label_cb,
+                                                 g_object_ref (window));
 
  out:
   g_signal_handlers_disconnect_by_func (entry,
@@ -1218,7 +1275,7 @@ on_change_partition_type (GduWindow *window)
   dialog = gdu_window_get_widget (window, "change-partition-type-dialog");
   combo_box = gdu_window_get_widget (window, "change-partition-type-combo-box");
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
-  //gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   scheme = udisks_block_device_get_part_entry_scheme (block);
   cur_type = udisks_block_device_get_part_entry_type (block);

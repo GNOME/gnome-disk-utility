@@ -1086,10 +1086,80 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
   update_devtab (window);
 }
 
-static void
-on_change_label (GduWindow *window)
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
 {
-  g_debug ("TODO: %s", G_STRFUNC);
+  GtkWidget *dialog;
+  gchar *orig_label;
+} ChangeFilesystemLabelData;
+
+static void
+on_change_filesystem_label_entry_changed (GtkEditable *editable,
+                                          gpointer     user_data)
+{
+  ChangeFilesystemLabelData *data = user_data;
+  gboolean sensitive;
+
+  sensitive = FALSE;
+  if (g_strcmp0 (gtk_entry_get_text (GTK_ENTRY (editable)), data->orig_label) != 0)
+    {
+      sensitive = TRUE;
+    }
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
+                                     GTK_RESPONSE_OK,
+                                     sensitive);
+}
+
+static void
+on_change_filesystem_label (GduWindow *window)
+{
+  gint response;
+  GtkWidget *dialog;
+  GtkWidget *entry;
+  GDBusObjectProxy *object_proxy;
+  UDisksBlockDevice *block;
+  const gchar *label;
+  ChangeFilesystemLabelData data;
+  const gchar *label_to_set;
+
+  object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object_proxy != NULL);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  g_assert (block != NULL);
+
+  dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
+  entry = gdu_window_get_widget (window, "change-filesystem-label-entry");
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  //gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  label = udisks_block_device_get_id_label (block);
+  g_signal_connect (entry,
+                    "changed",
+                    G_CALLBACK (on_change_filesystem_label_entry_changed),
+                    &data);
+  memset (&data, '\0', sizeof (ChangeFilesystemLabelData));
+  data.dialog = dialog;
+  data.orig_label = g_strdup (label);
+
+  gtk_entry_set_text (GTK_ENTRY (entry), label);
+
+  gtk_widget_show_all (dialog);
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  if (response != GTK_RESPONSE_OK)
+    goto out;
+
+  label_to_set = gtk_entry_get_text (GTK_ENTRY (entry));
+
+  g_debug ("TODO: set filesystem label to %s", label_to_set);
+
+ out:
+  g_signal_handlers_disconnect_by_func (entry,
+                                        G_CALLBACK (on_change_filesystem_label_entry_changed),
+                                        &data);
+  gtk_widget_hide (dialog);
+  g_free (data.orig_label);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1220,7 +1290,7 @@ on_activate_link (GtkLabel    *label,
   handled = TRUE;
 
   if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-label-value-label") == 0)
-    on_change_label (window);
+    on_change_filesystem_label (window);
   else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-type-value-label") == 0)
     on_change_partition_type (window);
   else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-label-value-label") == 0)

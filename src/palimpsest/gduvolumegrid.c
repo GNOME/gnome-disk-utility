@@ -98,7 +98,7 @@ grid_element_free (GridElement *element)
 typedef struct _GduVolumeGridClass GduVolumeGridClass;
 struct _GduVolumeGrid
 {
-  GtkDrawingArea parent;
+  GtkWidget parent;
 
   UDisksClient *client;
   GDBusObjectProxy *block_device;
@@ -117,7 +117,7 @@ struct _GduVolumeGrid
 
 struct _GduVolumeGridClass
 {
-  GtkDrawingAreaClass parent_class;
+  GtkWidgetClass parent_class;
 
   /* signals */
   void (*changed) (GduVolumeGrid *grid);
@@ -163,7 +163,7 @@ static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
                                                    const gchar *const *invalidated_properties,
                                                    gpointer            user_data);
 
-G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_WIDGET)
 
 static guint get_depth (GList *elements);
 
@@ -610,6 +610,7 @@ static void
 gdu_volume_grid_init (GduVolumeGrid *grid)
 {
   gtk_widget_set_can_focus (GTK_WIDGET (grid), TRUE);
+  gtk_widget_set_app_paintable (GTK_WIDGET (grid), TRUE);
 }
 
 GtkWidget *

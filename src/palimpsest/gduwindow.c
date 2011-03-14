@@ -788,18 +788,19 @@ static void
 update_all (GduWindow         *window,
             GDBusObjectProxy  *object_proxy)
 {
-  g_debug ("In %s co=%p (%s) op=%p (%s)",
-           G_STRFUNC,
-           window->current_object_proxy, g_dbus_object_proxy_get_object_path (window->current_object_proxy),
-           object_proxy, g_dbus_object_proxy_get_object_path (object_proxy));
-
-  if (window->current_page == DETAILS_PAGE_DEVICE)
+  switch (window->current_page)
     {
+    case DETAILS_PAGE_NOT_SELECTED:
+      /* Nothing to update */
+      break;
+
+    case DETAILS_PAGE_DEVICE:
       /* this is a little too inclusive.. */
       if (gdu_volume_grid_includes_object_proxy (GDU_VOLUME_GRID (window->volume_grid), object_proxy))
         {
           update_details_page (window, window->current_page);
         }
+      break;
     }
 }
 

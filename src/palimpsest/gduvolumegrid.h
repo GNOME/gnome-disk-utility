@@ -43,6 +43,10 @@ void                      gdu_volume_grid_set_container_markup  (GduVolumeGrid  
                                                                  const gchar         *text);
 void                      gdu_volume_grid_set_container_icon    (GduVolumeGrid       *grid,
                                                                  GIcon               *icon);
+
+gboolean                  gdu_volume_grid_includes_object_proxy (GduVolumeGrid       *grid,
+                                                                 GDBusObjectProxy    *object_proxy);
+
 GduVolumeGridElementType  gdu_volume_grid_get_selected_type     (GduVolumeGrid       *grid);
 GDBusObjectProxy         *gdu_volume_grid_get_selected_device   (GduVolumeGrid       *grid);
 guint64                   gdu_volume_grid_get_selected_offset   (GduVolumeGrid       *grid);

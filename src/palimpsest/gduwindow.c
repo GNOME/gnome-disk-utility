@@ -641,6 +641,8 @@ block_device_compare_on_preferred (GDBusObjectProxy *a,
                     udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (b)));
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 setup_device_page (GduWindow         *window,
                    GDBusObjectProxy *object_proxy)
@@ -706,6 +708,16 @@ setup_device_page (GduWindow         *window,
     }
 }
 
+static void update_devtab (GduWindow *window);
+
+static void
+update_device_page (GduWindow *window)
+{
+  update_devtab (window);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 setup_details_page (GduWindow         *window,
                     GDBusObjectProxy *object_proxy,
@@ -722,6 +734,25 @@ setup_details_page (GduWindow         *window,
 
     case DETAILS_PAGE_DEVICE:
       setup_device_page (window, object_proxy);
+      break;
+    }
+}
+
+static void
+update_details_page (GduWindow         *window,
+                     gint              page)
+{
+  //g_debug ("update for %s, page %d",
+  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //         page);
+
+  switch (page)
+    {
+    case DETAILS_PAGE_NOT_SELECTED:
+      break;
+
+    case DETAILS_PAGE_DEVICE:
+      update_device_page (window);
       break;
     }
 }
@@ -749,25 +780,27 @@ select_details_page (GduWindow         *window,
   setup_details_page (window,
                       window->current_object_proxy,
                       window->current_page);
-}
 
-static void
-update_details_page (GduWindow *window)
-{
-  teardown_details_page (window,
-                         window->current_object_proxy,
-                         window->current_page);
-  setup_details_page (window,
-                      window->current_object_proxy,
-                      window->current_page);
+  update_details_page (window, window->current_page);
 }
 
 static void
 update_all (GduWindow         *window,
             GDBusObjectProxy  *object_proxy)
 {
-  if (window->current_object_proxy == object_proxy)
-    update_details_page (window);
+  g_debug ("In %s co=%p (%s) op=%p (%s)",
+           G_STRFUNC,
+           window->current_object_proxy, g_dbus_object_proxy_get_object_path (window->current_object_proxy),
+           object_proxy, g_dbus_object_proxy_get_object_path (object_proxy));
+
+  if (window->current_page == DETAILS_PAGE_DEVICE)
+    {
+      /* this is a little too inclusive.. */
+      if (gdu_volume_grid_includes_object_proxy (GDU_VOLUME_GRID (window->volume_grid), object_proxy))
+        {
+          update_details_page (window, window->current_page);
+        }
+    }
 }
 
 static void

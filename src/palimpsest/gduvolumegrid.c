@@ -1978,23 +1978,29 @@ is_disk_or_partition_in_grid (GduVolumeGrid    *grid,
   return ret;
 }
 
-static void
-maybe_update (GduVolumeGrid    *grid,
-              GDBusObjectProxy *object_proxy)
+gboolean
+gdu_volume_grid_includes_object_proxy (GduVolumeGrid       *grid,
+                                       GDBusObjectProxy    *object_proxy)
 {
   UDisksBlockDevice *block;
   const gchar *crypto_backing_device;
   GDBusObjectProxy *crypto_object_proxy;
+  gboolean ret;
 
-  //g_debug ("in maybe_update %s", g_dbus_object_proxy_get_object_path (object_proxy));
+  g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), FALSE);
+  g_return_val_if_fail (G_IS_DBUS_OBJECT_PROXY (object_proxy), FALSE);
 
+  ret = FALSE;
   crypto_object_proxy = NULL;
 
   if (grid->block_device == NULL)
     goto out;
 
   if (is_disk_or_partition_in_grid (grid, object_proxy))
-    goto update;
+    {
+      ret = TRUE;
+      goto out;
+    }
 
   /* handle when it's a crypt devices for our grid or a partition in it */
   block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
@@ -2004,18 +2010,29 @@ maybe_update (GduVolumeGrid    *grid,
       crypto_object_proxy = g_dbus_proxy_manager_lookup (udisks_client_get_proxy_manager (grid->client),
                                                          crypto_backing_device);
       if (crypto_object_proxy != NULL)
-        if (is_disk_or_partition_in_grid (grid, crypto_object_proxy))
-          goto update;
+        {
+          if (is_disk_or_partition_in_grid (grid, crypto_object_proxy))
+            {
+              ret = TRUE;
+              goto out;
+            }
+        }
     }
-
-  goto out;
-
- update:
-  recompute_grid (grid);
 
  out:
   if (crypto_object_proxy != NULL)
     g_object_unref (crypto_object_proxy);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+maybe_update (GduVolumeGrid    *grid,
+              GDBusObjectProxy *object_proxy)
+{
+  if (gdu_volume_grid_includes_object_proxy (grid, object_proxy))
+    recompute_grid (grid);
 }
 
 static void

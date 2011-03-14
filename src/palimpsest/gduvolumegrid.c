@@ -1899,13 +1899,16 @@ grid_element_set_details (GduVolumeGrid  *grid,
         gchar *size_str;
         const gchar *usage;
         const gchar *type;
+        const gchar *version;
         gint partition_type;
+        gchar *type_for_display;
 
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
         block = UDISKS_PEEK_BLOCK_DEVICE (element->object_proxy);
 
         usage = udisks_block_device_get_id_usage (block);
         type = udisks_block_device_get_id_type (block);
+        version = udisks_block_device_get_id_version (block);
         partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
 
         if (udisks_block_device_get_part_entry (block) &&
@@ -1920,29 +1923,29 @@ grid_element_set_details (GduVolumeGrid  *grid,
           {
             const gchar *label;
             label = udisks_block_device_get_id_label (block);
+            type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
             if (strlen (label) == 0)
               label = C_("volume-grid", "Filesystem");
-            s = g_strdup_printf ("%s\n%s %s", label, size_str, type);
+            s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
+            g_free (type_for_display);
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {
             const gchar *label;
             label = udisks_block_device_get_id_label (block);
+            type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
             if (strlen (label) == 0)
               label = C_("volume-grid", "Swap");
-            s = g_strdup_printf ("%s\n%s %s", label, size_str, type);
-          }
-        else if (g_strcmp0 (usage, "crypto") == 0)
-          {
-            s = g_strdup_printf ("%s\n%s",
-                                 C_("volume-grid", "Encrypted"),
-                                 size_str);
+            s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
+            g_free (type_for_display);
           }
         else
           {
-            s = g_strdup_printf (_("%s\n%s"),
-                                 C_("volume-grid", "Unknown"),
+            type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
+            s = g_strdup_printf ("%s\n%s",
+                                 type_for_display,
                                  size_str);
+            g_free (type_for_display);
           }
         element->markup = s;
         g_free (size_str);

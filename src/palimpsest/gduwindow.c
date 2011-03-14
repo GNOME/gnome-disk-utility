@@ -865,6 +865,8 @@ update_devtab_for_lun (GduWindow         *window,
   GString *str;
   const gchar *lun_vendor;
   const gchar *lun_model;
+  const gchar* const *lun_media_compat;
+  gchar *media_compat_for_display;
 
   //g_debug ("In update_devtab_for_lun() - selected=%s",
   //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
@@ -875,6 +877,8 @@ update_devtab_for_lun (GduWindow         *window,
 
   lun_vendor = udisks_lun_get_vendor (lun);
   lun_model = udisks_lun_get_model (lun);
+  lun_media_compat = udisks_lun_get_media_compatibility (lun);
+  media_compat_for_display = udisks_util_get_media_compat_for_display (lun_media_compat);
 
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
@@ -923,6 +927,14 @@ update_devtab_for_lun (GduWindow         *window,
   gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
   gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
   gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
+
+  if (media_compat_for_display != NULL)
+  set_markup (window,
+              "devtab-compat-media-label",
+              "devtab-compat-media-value-label",
+              media_compat_for_display, SET_MARKUP_FLAGS_NONE);
+
+  g_free (media_compat_for_display);
 }
 
 static void

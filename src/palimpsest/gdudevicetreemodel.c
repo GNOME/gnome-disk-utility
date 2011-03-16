@@ -158,25 +158,25 @@ gdu_device_tree_model_set_property (GObject      *object,
 
 typedef struct
 {
-  GDBusObjectProxy *object;
+  GDBusObject *object;
   GtkTreeIter iter;
   gboolean found;
 } FindIterData;
 
 static gboolean
-find_iter_for_object_proxy_cb (GtkTreeModel  *model,
-                               GtkTreePath   *path,
-                               GtkTreeIter   *iter,
-                               gpointer       user_data)
+find_iter_for_object_cb (GtkTreeModel  *model,
+                         GtkTreePath   *path,
+                         GtkTreeIter   *iter,
+                         gpointer       user_data)
 {
   FindIterData *data = user_data;
-  GDBusObjectProxy *iter_object;
+  GDBusObject *iter_object;
 
   iter_object = NULL;
 
   gtk_tree_model_get (model,
                       iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, &iter_object,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, &iter_object,
                       -1);
   if (iter_object == NULL)
     goto out;
@@ -195,9 +195,9 @@ find_iter_for_object_proxy_cb (GtkTreeModel  *model,
 }
 
 static gboolean
-find_iter_for_object_proxy (GduDeviceTreeModel *model,
-                            GDBusObjectProxy   *object,
-                            GtkTreeIter        *out_iter)
+find_iter_for_object (GduDeviceTreeModel *model,
+                      GDBusObject        *object,
+                      GtkTreeIter        *out_iter)
 {
   FindIterData data;
 
@@ -205,7 +205,7 @@ find_iter_for_object_proxy (GduDeviceTreeModel *model,
   data.object = object;
   data.found = FALSE;
   gtk_tree_model_foreach (GTK_TREE_MODEL (model),
-                          find_iter_for_object_proxy_cb,
+                          find_iter_for_object_cb,
                           &data);
   if (data.found)
     {
@@ -265,11 +265,11 @@ diff_sorted_lists (GList         *list1,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gint
-_g_dbus_object_proxy_compare (GDBusObjectProxy *a,
-                              GDBusObjectProxy *b)
+_g_dbus_object_compare (GDBusObject *a,
+                        GDBusObject *b)
 {
-  return g_strcmp0 (g_dbus_object_proxy_get_object_path (a),
-                    g_dbus_object_proxy_get_object_path (b));
+  return g_strcmp0 (g_dbus_object_get_object_path (a),
+                    g_dbus_object_get_object_path (b));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -286,7 +286,7 @@ gdu_device_tree_model_constructed (GObject *object)
   types[2] = G_TYPE_STRING;
   types[3] = G_TYPE_ICON;
   types[4] = G_TYPE_STRING;
-  types[5] = G_TYPE_DBUS_OBJECT_PROXY;
+  types[5] = G_TYPE_DBUS_OBJECT;
   G_STATIC_ASSERT (6 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
@@ -422,7 +422,7 @@ nuke_lun_header (GduDeviceTreeModel *model)
 
 static void
 add_lun (GduDeviceTreeModel *model,
-         GDBusObjectProxy   *object_proxy,
+         GDBusObject        *object,
          GtkTreeIter        *parent)
 {
   UDisksLun *lun;
@@ -434,7 +434,7 @@ add_lun (GduDeviceTreeModel *model,
   gchar *sort_key;
   GtkTreeIter iter;
 
-  lun = UDISKS_PEEK_LUN (object_proxy);
+  lun = UDISKS_PEEK_LUN (object);
   udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_icon);
   s = g_strdup_printf ("%s\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
@@ -445,11 +445,11 @@ add_lun (GduDeviceTreeModel *model,
   //         " drive_icon=%s\n"
   //         " media_icon=%s\n"
   //         "\n",
-  //         g_dbus_object_proxy_get_object_path (object_proxy),
+  //         g_dbus_object_get_object_path (object),
   //         g_icon_to_string (drive_icon),
   //         g_icon_to_string (media_icon));
 
-  sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
+  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -457,7 +457,7 @@ add_lun (GduDeviceTreeModel *model,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
                                      -1);
   g_object_unref (media_icon);
   g_object_unref (drive_icon);
@@ -469,16 +469,16 @@ add_lun (GduDeviceTreeModel *model,
 
 static void
 remove_lun (GduDeviceTreeModel *model,
-            GDBusObjectProxy   *object_proxy)
+            GDBusObject        *object)
 {
   GtkTreeIter iter;
 
-  if (!find_iter_for_object_proxy (model,
-                                   object_proxy,
-                                   &iter))
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
     {
-      g_warning ("Error finding iter for object proxy at %s",
-                 g_dbus_object_proxy_get_object_path (object_proxy));
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (object));
       goto out;
     }
 
@@ -492,49 +492,49 @@ static void
 update_luns (GduDeviceTreeModel *model)
 {
   GDBusProxyManager *proxy_manager;
-  GList *object_proxies;
+  GList *objects;
   GList *luns;
   GList *added_luns;
   GList *removed_luns;
   GList *l;
 
   proxy_manager = udisks_client_get_proxy_manager (model->client);
-  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
 
   luns = NULL;
-  for (l = object_proxies; l != NULL; l = l->next)
+  for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
       UDisksLun *lun;
 
-      lun = UDISKS_PEEK_LUN (object_proxy);
+      lun = UDISKS_PEEK_LUN (object);
       if (lun == NULL)
         continue;
 
-      luns = g_list_prepend (luns, g_object_ref (object_proxy));
+      luns = g_list_prepend (luns, g_object_ref (object));
     }
 
-  luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_proxy_compare);
-  model->current_luns = g_list_sort (model->current_luns, (GCompareFunc) _g_dbus_object_proxy_compare);
+  luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_compare);
+  model->current_luns = g_list_sort (model->current_luns, (GCompareFunc) _g_dbus_object_compare);
   diff_sorted_lists (model->current_luns,
                      luns,
-                     (GCompareFunc) _g_dbus_object_proxy_compare,
+                     (GCompareFunc) _g_dbus_object_compare,
                      &added_luns,
                      &removed_luns);
 
   for (l = removed_luns; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
-      g_assert (g_list_find (model->current_luns, object_proxy) != NULL);
-      model->current_luns = g_list_remove (model->current_luns, object_proxy);
-      remove_lun (model, object_proxy);
-      g_object_unref (object_proxy);
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      g_assert (g_list_find (model->current_luns, object) != NULL);
+      model->current_luns = g_list_remove (model->current_luns, object);
+      remove_lun (model, object);
+      g_object_unref (object);
     }
   for (l = added_luns; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
-      model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object_proxy));
-      add_lun (model, object_proxy, get_lun_header_iter (model));
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object));
+      add_lun (model, object, get_lun_header_iter (model));
     }
 
   if (g_list_length (model->current_luns) == 0)
@@ -545,8 +545,8 @@ update_luns (GduDeviceTreeModel *model)
   g_list_foreach (luns, (GFunc) g_object_unref, NULL);
   g_list_free (luns);
 
-  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
-  g_list_free (object_proxies);
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -589,7 +589,7 @@ nuke_block_header (GduDeviceTreeModel *model)
 
 static void
 add_block (GduDeviceTreeModel  *model,
-           GDBusObjectProxy    *object_proxy,
+           GDBusObject         *object,
            GtkTreeIter         *parent)
 {
   UDisksBlockDevice *block;
@@ -602,7 +602,7 @@ add_block (GduDeviceTreeModel  *model,
   guint64 size;
   gchar *size_str;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object);
   size = udisks_block_device_get_size (block);
   size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
 
@@ -642,7 +642,7 @@ add_block (GduDeviceTreeModel  *model,
                            preferred_device);
     }
 
-  sort_key = g_strdup (g_dbus_object_proxy_get_object_path (object_proxy)); /* for now */
+  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -650,7 +650,7 @@ add_block (GduDeviceTreeModel  *model,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY, object_proxy,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
                                      -1);
   g_object_unref (icon);
   g_free (sort_key);
@@ -660,16 +660,16 @@ add_block (GduDeviceTreeModel  *model,
 
 static void
 remove_block (GduDeviceTreeModel  *model,
-              GDBusObjectProxy    *object_proxy)
+              GDBusObject         *object)
 {
   GtkTreeIter iter;
 
-  if (!find_iter_for_object_proxy (model,
-                                   object_proxy,
-                                   &iter))
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
     {
-      g_warning ("Error finding iter for object proxy at %s",
-                 g_dbus_object_proxy_get_object_path (object_proxy));
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (object));
       goto out;
     }
 
@@ -680,7 +680,7 @@ remove_block (GduDeviceTreeModel  *model,
 }
 
 static gboolean
-should_include_block (GDBusObjectProxy *object_proxy)
+should_include_block (GDBusObject *object)
 {
   UDisksBlockDevice *block;
   gboolean ret;
@@ -691,7 +691,7 @@ should_include_block (GDBusObjectProxy *object_proxy)
 
   ret = FALSE;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object);
 
   /* RAM devices are useless */
   device = udisks_block_device_get_device (block);
@@ -727,52 +727,52 @@ static void
 update_blocks (GduDeviceTreeModel *model)
 {
   GDBusProxyManager *proxy_manager;
-  GList *object_proxies;
+  GList *objects;
   GList *blocks;
   GList *added_blocks;
   GList *removed_blocks;
   GList *l;
 
   proxy_manager = udisks_client_get_proxy_manager (model->client);
-  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
 
   blocks = NULL;
-  for (l = object_proxies; l != NULL; l = l->next)
+  for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+      block = UDISKS_PEEK_BLOCK_DEVICE (object);
       if (block == NULL)
         continue;
 
-      if (should_include_block (object_proxy))
-        blocks = g_list_prepend (blocks, g_object_ref (object_proxy));
+      if (should_include_block (object))
+        blocks = g_list_prepend (blocks, g_object_ref (object));
     }
 
-  blocks = g_list_sort (blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
-  model->current_blocks = g_list_sort (model->current_blocks, (GCompareFunc) _g_dbus_object_proxy_compare);
+  blocks = g_list_sort (blocks, (GCompareFunc) _g_dbus_object_compare);
+  model->current_blocks = g_list_sort (model->current_blocks, (GCompareFunc) _g_dbus_object_compare);
   diff_sorted_lists (model->current_blocks,
                      blocks,
-                     (GCompareFunc) _g_dbus_object_proxy_compare,
+                     (GCompareFunc) _g_dbus_object_compare,
                      &added_blocks,
                      &removed_blocks);
 
   for (l = removed_blocks; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
 
-      g_assert (g_list_find (model->current_blocks, object_proxy) != NULL);
+      g_assert (g_list_find (model->current_blocks, object) != NULL);
 
-      model->current_blocks = g_list_remove (model->current_blocks, object_proxy);
-      remove_block (model, object_proxy);
-      g_object_unref (object_proxy);
+      model->current_blocks = g_list_remove (model->current_blocks, object);
+      remove_block (model, object);
+      g_object_unref (object);
     }
   for (l = added_blocks; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
-      model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object_proxy));
-      add_block (model, object_proxy, get_block_header_iter (model));
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object));
+      add_block (model, object, get_block_header_iter (model));
     }
 
   if (g_list_length (model->current_blocks) == 0)
@@ -783,8 +783,8 @@ update_blocks (GduDeviceTreeModel *model)
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
 
-  g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
-  g_list_free (object_proxies);
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

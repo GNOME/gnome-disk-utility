@@ -35,8 +35,8 @@ G_BEGIN_DECLS
 GType                     gdu_volume_grid_get_type              (void) G_GNUC_CONST;
 GtkWidget*                gdu_volume_grid_new                   (UDisksClient        *client);
 void                      gdu_volume_grid_set_block_device      (GduVolumeGrid       *grid,
-                                                                 GDBusObjectProxy    *block_device);
-GDBusObjectProxy         *gdu_volume_grid_get_block_device      (GduVolumeGrid       *grid);
+                                                                 GDBusObject         *block_device);
+GDBusObject              *gdu_volume_grid_get_block_device      (GduVolumeGrid       *grid);
 void                      gdu_volume_grid_set_container_visible (GduVolumeGrid       *grid,
                                                                  gboolean             visible);
 void                      gdu_volume_grid_set_container_markup  (GduVolumeGrid       *grid,
@@ -44,11 +44,11 @@ void                      gdu_volume_grid_set_container_markup  (GduVolumeGrid  
 void                      gdu_volume_grid_set_container_icon    (GduVolumeGrid       *grid,
                                                                  GIcon               *icon);
 
-gboolean                  gdu_volume_grid_includes_object_proxy (GduVolumeGrid       *grid,
-                                                                 GDBusObjectProxy    *object_proxy);
+gboolean                  gdu_volume_grid_includes_object       (GduVolumeGrid       *grid,
+                                                                 GDBusObject         *object);
 
 GduVolumeGridElementType  gdu_volume_grid_get_selected_type     (GduVolumeGrid       *grid);
-GDBusObjectProxy         *gdu_volume_grid_get_selected_device   (GduVolumeGrid       *grid);
+GDBusObject              *gdu_volume_grid_get_selected_device   (GduVolumeGrid       *grid);
 guint64                   gdu_volume_grid_get_selected_offset   (GduVolumeGrid       *grid);
 guint64                   gdu_volume_grid_get_selected_size     (GduVolumeGrid       *grid);
 

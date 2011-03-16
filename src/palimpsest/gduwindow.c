@@ -50,7 +50,7 @@ struct _GduWindow
   GduDeviceTreeModel *model;
 
   DetailsPage current_page;
-  GDBusObjectProxy *current_object_proxy;
+  GDBusObject *current_object;
 
   GtkWidget *volume_grid;
   GtkWidget *write_cache_switch;
@@ -134,8 +134,8 @@ gdu_window_finalize (GObject *object)
                                         G_CALLBACK (on_interface_proxy_properties_changed),
                                         window);
 
-  if (window->current_object_proxy != NULL)
-    g_object_unref (window->current_object_proxy);
+  if (window->current_object != NULL)
+    g_object_unref (window->current_object);
 
   g_object_unref (window->builder);
   g_object_unref (window->model);
@@ -177,20 +177,20 @@ on_row_inserted (GtkTreeModel *tree_model,
   gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
 }
 
-static void select_details_page (GduWindow         *window,
-                                 GDBusObjectProxy  *object_proxy,
-                                 DetailsPage        page);
+static void select_details_page (GduWindow    *window,
+                                 GDBusObject  *object,
+                                 DetailsPage   page);
 
 static void
-set_selected_object_proxy (GduWindow        *window,
-                           GDBusObjectProxy *object_proxy)
+set_selected_object (GduWindow   *window,
+                     GDBusObject *object)
 {
-  if (object_proxy != NULL)
+  if (object != NULL)
     {
-      if (UDISKS_PEEK_LUN (object_proxy) != NULL ||
-          UDISKS_PEEK_BLOCK_DEVICE (object_proxy) != NULL)
+      if (UDISKS_PEEK_LUN (object) != NULL ||
+          UDISKS_PEEK_BLOCK_DEVICE (object) != NULL)
         {
-          select_details_page (window, object_proxy, DETAILS_PAGE_DEVICE);
+          select_details_page (window, object, DETAILS_PAGE_DEVICE);
         }
       else
         {
@@ -213,18 +213,18 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 
   if (gtk_tree_selection_get_selected (tree_selection, &model, &iter))
     {
-      GDBusObjectProxy *object_proxy;
+      GDBusObject *object;
       gtk_tree_model_get (model,
                           &iter,
-                          GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT_PROXY,
-                          &object_proxy,
+                          GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT,
+                          &object,
                           -1);
-      set_selected_object_proxy (window, object_proxy);
-      g_object_unref (object_proxy);
+      set_selected_object (window, object);
+      g_object_unref (object);
     }
   else
     {
-      set_selected_object_proxy (window, NULL);
+      set_selected_object (window, NULL);
     }
 }
 
@@ -507,12 +507,12 @@ gdu_window_get_widget (GduWindow    *window,
 }
 
 static void
-teardown_details_page (GduWindow         *window,
-                       GDBusObjectProxy *object_proxy,
-                       gint              page)
+teardown_details_page (GduWindow   *window,
+                       GDBusObject *object,
+                       gint         page)
 {
   //g_debug ("teardown for %s, page %d",
-  //       object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //       object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
   //         page);
   switch (page)
     {
@@ -609,22 +609,22 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
   GDBusProxyManager *proxy_manager;
 
   proxy_manager = udisks_client_get_proxy_manager (window->client);
-  object_proxies = g_dbus_proxy_manager_get_all (proxy_manager);
+  object_proxies = g_dbus_proxy_manager_get_objects (proxy_manager);
 
   ret = NULL;
   for (l = object_proxies; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_GET_BLOCK_DEVICE (object_proxy);
+      block = UDISKS_GET_BLOCK_DEVICE (object);
       if (block == NULL)
         continue;
 
       if (g_strcmp0 (udisks_block_device_get_lun (block), lun_object_path) == 0 &&
           !udisks_block_device_get_part_entry (block))
         {
-          ret = g_list_append (ret, g_object_ref (object_proxy));
+          ret = g_list_append (ret, g_object_ref (object));
         }
       g_object_unref (block);
     }
@@ -634,8 +634,8 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
 }
 
 static gint
-block_device_compare_on_preferred (GDBusObjectProxy *a,
-                                   GDBusObjectProxy *b)
+block_device_compare_on_preferred (GDBusObject *a,
+                                   GDBusObject *b)
 {
   return g_strcmp0 (udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (a)),
                     udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (b)));
@@ -644,8 +644,8 @@ block_device_compare_on_preferred (GDBusObjectProxy *a,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-setup_device_page (GduWindow         *window,
-                   GDBusObjectProxy *object_proxy)
+setup_device_page (GduWindow   *window,
+                   GDBusObject *object)
 {
   UDisksLun *lun;
   UDisksBlockDevice *block;
@@ -660,8 +660,8 @@ setup_device_page (GduWindow         *window,
     }
   g_list_free (children);
 
-  lun = UDISKS_PEEK_LUN (object_proxy);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  lun = UDISKS_PEEK_LUN (object);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object);
 
   if (lun != NULL)
     {
@@ -672,7 +672,7 @@ setup_device_page (GduWindow         *window,
       GIcon *lun_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_proxy_get_object_path (object_proxy));
+      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
       block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
       udisks_util_get_lun_info (lun,
@@ -700,7 +700,7 @@ setup_device_page (GduWindow         *window,
   else if (block != NULL)
     {
       gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
-      gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), object_proxy);
+      gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), object);
     }
   else
     {
@@ -719,12 +719,12 @@ update_device_page (GduWindow *window)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-setup_details_page (GduWindow         *window,
-                    GDBusObjectProxy *object_proxy,
-                    gint              page)
+setup_details_page (GduWindow    *window,
+                    GDBusObject  *object,
+                    gint          page)
 {
   //g_debug ("setup for %s, page %d",
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
   //         page);
 
   switch (page)
@@ -733,17 +733,17 @@ setup_details_page (GduWindow         *window,
       break;
 
     case DETAILS_PAGE_DEVICE:
-      setup_device_page (window, object_proxy);
+      setup_device_page (window, object);
       break;
     }
 }
 
 static void
-update_details_page (GduWindow         *window,
-                     gint              page)
+update_details_page (GduWindow  *window,
+                     gint        page)
 {
   //g_debug ("update for %s, page %d",
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<none>",
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
   //         page);
 
   switch (page)
@@ -758,35 +758,35 @@ update_details_page (GduWindow         *window,
 }
 
 static void
-select_details_page (GduWindow         *window,
-                     GDBusObjectProxy  *object_proxy,
-                     DetailsPage        page)
+select_details_page (GduWindow    *window,
+                     GDBusObject  *object,
+                     DetailsPage   page)
 {
   GtkNotebook *notebook;
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
 
   teardown_details_page (window,
-                         window->current_object_proxy,
+                         window->current_object,
                          window->current_page);
 
   window->current_page = page;
-  if (window->current_object_proxy != NULL)
-    g_object_unref (window->current_object_proxy);
-  window->current_object_proxy = object_proxy != NULL ? g_object_ref (object_proxy) : NULL;
+  if (window->current_object != NULL)
+    g_object_unref (window->current_object);
+  window->current_object = object != NULL ? g_object_ref (object) : NULL;
 
   gtk_notebook_set_current_page (notebook, page);
 
   setup_details_page (window,
-                      window->current_object_proxy,
+                      window->current_object,
                       window->current_page);
 
   update_details_page (window, window->current_page);
 }
 
 static void
-update_all (GduWindow         *window,
-            GDBusObjectProxy  *object_proxy)
+update_all (GduWindow    *window,
+            GDBusObject  *object)
 {
   switch (window->current_page)
     {
@@ -796,7 +796,7 @@ update_all (GduWindow         *window,
 
     case DETAILS_PAGE_DEVICE:
       /* this is a little too inclusive.. */
-      if (gdu_volume_grid_includes_object_proxy (GDU_VOLUME_GRID (window->volume_grid), object_proxy))
+      if (gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
         {
           update_details_page (window, window->current_page);
         }
@@ -810,7 +810,7 @@ on_object_proxy_added (GDBusProxyManager   *manager,
                        gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object_proxy);
+  update_all (window, G_DBUS_OBJECT (object_proxy));
 }
 
 static void
@@ -819,7 +819,7 @@ on_object_proxy_removed (GDBusProxyManager   *manager,
                          gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object_proxy);
+  update_all (window, G_DBUS_OBJECT (object_proxy));
 }
 
 static void
@@ -829,7 +829,7 @@ on_interface_proxy_added (GDBusProxyManager   *manager,
                           gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object_proxy);
+  update_all (window, G_DBUS_OBJECT (object_proxy));
 }
 
 static void
@@ -839,7 +839,7 @@ on_interface_proxy_removed (GDBusProxyManager   *manager,
                             gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object_proxy);
+  update_all (window, G_DBUS_OBJECT (object_proxy));
 }
 
 static void
@@ -851,13 +851,13 @@ on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
                                        gpointer            user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object_proxy);
+  update_all (window, G_DBUS_OBJECT (object_proxy));
 }
 
 static void
-update_devtab_for_lun (GduWindow         *window,
-                       GDBusObjectProxy  *object_proxy,
-                       UDisksLun         *lun)
+update_devtab_for_lun (GduWindow    *window,
+                       GDBusObject  *object,
+                       UDisksLun    *lun)
 {
   gchar *s;
   GList *block_devices;
@@ -869,10 +869,10 @@ update_devtab_for_lun (GduWindow         *window,
   gchar *media_compat_for_display;
 
   //g_debug ("In update_devtab_for_lun() - selected=%s",
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-  block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_proxy_get_object_path (object_proxy));
+  block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
   lun_vendor = udisks_lun_get_vendor (lun);
@@ -883,10 +883,10 @@ update_devtab_for_lun (GduWindow         *window,
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
     {
-      GDBusObjectProxy *block_object_proxy = G_DBUS_OBJECT_PROXY (l->data);
+      GDBusObject *block_object = G_DBUS_OBJECT (l->data);
       if (str->len > 0)
         g_string_append_c (str, ' ');
-      g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object_proxy)));
+      g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object)));
     }
   s = g_string_free (str, FALSE);
   set_markup (window,
@@ -939,7 +939,7 @@ update_devtab_for_lun (GduWindow         *window,
 
 static void
 update_devtab_for_block (GduWindow         *window,
-                         GDBusObjectProxy  *object_proxy,
+                         GDBusObject       *object,
                          UDisksBlockDevice *block,
                          guint64            size)
 {
@@ -952,7 +952,7 @@ update_devtab_for_block (GduWindow         *window,
 
   //g_debug ("In update_devtab_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   set_markup (window,
               "devtab-device-label",
@@ -1029,22 +1029,22 @@ update_devtab_for_block (GduWindow         *window,
 
 static void
 update_devtab_for_no_media (GduWindow         *window,
-                            GDBusObjectProxy  *object_proxy,
+                            GDBusObject       *object,
                             UDisksBlockDevice *block)
 {
   //g_debug ("In update_devtab_for_no_media() - selected=%s",
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 }
 
 static void
 update_devtab_for_free_space (GduWindow         *window,
-                              GDBusObjectProxy  *object_proxy,
+                              GDBusObject       *object,
                               UDisksBlockDevice *block,
                               guint64            size)
 {
   //g_debug ("In update_devtab_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
-  //         object_proxy != NULL ? g_dbus_object_proxy_get_object_path (object_proxy) : "<nothing>");
+  //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   set_markup (window,
               "devtab-device-label",
@@ -1064,7 +1064,7 @@ update_devtab_for_free_space (GduWindow         *window,
 static void
 update_devtab (GduWindow *window)
 {
-  GDBusObjectProxy *object_proxy;
+  GDBusObject *object;
   GList *children;
   GList *l;
   GduVolumeGridElementType type;
@@ -1081,27 +1081,27 @@ update_devtab (GduWindow *window)
     }
   g_list_free (children);
 
-  object_proxy = window->current_object_proxy;
-  lun = UDISKS_PEEK_LUN (window->current_object_proxy);
-  block = UDISKS_PEEK_BLOCK_DEVICE (window->current_object_proxy);
+  object = window->current_object;
+  lun = UDISKS_PEEK_LUN (window->current_object);
+  block = UDISKS_PEEK_BLOCK_DEVICE (window->current_object);
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {
       if (lun != NULL)
-        update_devtab_for_lun (window, object_proxy, lun);
+        update_devtab_for_lun (window, object, lun);
       else if (block != NULL)
-        update_devtab_for_block (window, object_proxy, block, size);
+        update_devtab_for_block (window, object, block, size);
     }
   else
     {
-      object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-      if (object_proxy == NULL)
-        object_proxy = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
-      if (object_proxy != NULL)
+      object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+      if (object == NULL)
+        object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
+      if (object != NULL)
         {
-          block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+          block = UDISKS_PEEK_BLOCK_DEVICE (object);
           switch (type)
             {
             case GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER:
@@ -1109,15 +1109,15 @@ update_devtab (GduWindow *window)
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
-              update_devtab_for_block (window, object_proxy, block, size);
+              update_devtab_for_block (window, object, block, size);
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
-              update_devtab_for_no_media (window, object_proxy, block);
+              update_devtab_for_no_media (window, object, block);
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:
-              update_devtab_for_free_space (window, object_proxy, block, size);
+              update_devtab_for_free_space (window, object, block, size);
               break;
             }
         }
@@ -1214,16 +1214,16 @@ on_change_filesystem_label (GduWindow *window)
   gint response;
   GtkWidget *dialog;
   GtkWidget *entry;
-  GDBusObjectProxy *object_proxy;
+  GDBusObject *object;
   UDisksBlockDevice *block;
   const gchar *label;
   ChangeFilesystemLabelData data;
   const gchar *label_to_set;
   const gchar *options[] = {NULL};
 
-  object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  g_assert (object_proxy != NULL);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object);
   g_assert (block != NULL);
 
   dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
@@ -1303,7 +1303,7 @@ on_change_partition_type (GduWindow *window)
   gint response;
   GtkWidget *dialog;
   GtkWidget *combo_box;
-  GDBusObjectProxy *object_proxy;
+  GDBusObject *object;
   UDisksBlockDevice *block;
   const gchar *scheme;
   const gchar *cur_type;
@@ -1313,9 +1313,9 @@ on_change_partition_type (GduWindow *window)
   ChangePartitionTypeData data;
   const gchar *type_to_set;
 
-  object_proxy = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  g_assert (object_proxy != NULL);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object_proxy);
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  block = UDISKS_PEEK_BLOCK_DEVICE (object);
   g_assert (block != NULL);
 
   dialog = gdu_window_get_widget (window, "change-partition-type-dialog");

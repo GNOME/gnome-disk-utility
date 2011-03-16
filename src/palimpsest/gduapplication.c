@@ -53,7 +53,8 @@ gdu_application_finalize (GObject *object)
 {
   GduApplication *app = GDU_APPLICATION (object);
 
-  g_object_unref (app->client);
+  if (app->client != NULL)
+    g_object_unref (app->client);
 
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
@@ -81,6 +82,9 @@ gdu_application_activate (GApplication *_app)
   GduApplication *app = GDU_APPLICATION (_app);
   GError *error;
 
+  if (app->client != NULL)
+    goto out;
+
   error = NULL;
   app->client = udisks_client_new_sync (NULL, /* GCancellable* */
                                         &error);
@@ -94,6 +98,9 @@ gdu_application_activate (GApplication *_app)
   gtk_application_add_window (GTK_APPLICATION (app),
                               GTK_WINDOW (app->window));
   gtk_widget_show_all (GTK_WIDGET (app->window));
+
+ out:
+  ;
 }
 
 static void

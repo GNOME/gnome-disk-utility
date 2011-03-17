@@ -84,53 +84,51 @@ gdu_window_init (GduWindow *window)
                                                      NULL);
 }
 
-static void on_object_proxy_added (GDBusProxyManager   *manager,
-                                   GDBusObjectProxy    *object_proxy,
-                                   gpointer             user_data);
+static void on_object_added (GDBusObjectManager  *manager,
+                             GDBusObject         *object,
+                             gpointer             user_data);
 
-static void on_object_proxy_removed (GDBusProxyManager   *manager,
-                                     GDBusObjectProxy    *object_proxy,
-                                     gpointer             user_data);
+static void on_object_removed (GDBusObjectManager  *manager,
+                               GDBusObject         *object,
+                               gpointer             user_data);
 
-static void on_interface_proxy_added (GDBusProxyManager   *manager,
-                                      GDBusObjectProxy    *object_proxy,
-                                      GDBusProxy          *interface_proxy,
-                                      gpointer             user_data);
+static void on_interface_added (GDBusObjectManager  *manager,
+                                GDBusObject         *object,
+                                GDBusInterface      *interface,
+                                gpointer             user_data);
 
-static void on_interface_proxy_removed (GDBusProxyManager   *manager,
-                                        GDBusObjectProxy    *object_proxy,
-                                        GDBusProxy          *interface_proxy,
-                                        gpointer             user_data);
+static void on_interface_removed (GDBusObjectManager  *manager,
+                                  GDBusObject         *object,
+                                  GDBusInterface      *interface,
+                                  gpointer             user_data);
 
-static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                                   GDBusObjectProxy    *object_proxy,
-                                                   GDBusProxy          *interface_proxy,
-                                                   GVariant            *changed_properties,
-                                                   const gchar *const *invalidated_properties,
-                                                   gpointer            user_data);
+static void on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                                   GDBusObjectProxy           *object_proxy,
+                                                   GDBusProxy                 *interface_proxy,
+                                                   GVariant                   *changed_properties,
+                                                   const gchar *const         *invalidated_properties,
+                                                   gpointer                    user_data);
 
 static void
 gdu_window_finalize (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
-  g_hash_table_unref (window->label_connections);
-
-  proxy_manager = udisks_client_get_proxy_manager (window->client);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (window->client);
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_added),
                                         window);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_removed),
                                         window);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_added),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_added),
                                         window);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_removed),
                                         window);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
+  g_signal_handlers_disconnect_by_func (object_manager,
                                         G_CALLBACK (on_interface_proxy_properties_changed),
                                         window);
 
@@ -244,7 +242,7 @@ gdu_window_constructed (GObject *object)
   GtkWidget *w;
   GtkWidget *label;
   GtkStyleContext *context;
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
   /* chain up */
   if (G_OBJECT_CLASS (gdu_window_parent_class)->constructed != NULL)
@@ -338,24 +336,24 @@ gdu_window_constructed (GObject *object)
                     window);
   gtk_tree_view_expand_all (tree_view);
 
-  proxy_manager = udisks_client_get_proxy_manager (window->client);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-added",
-                    G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (window->client);
+  g_signal_connect (object_manager,
+                    "object-added",
+                    G_CALLBACK (on_object_added),
                     window);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-removed",
-                    G_CALLBACK (on_object_proxy_removed),
+  g_signal_connect (object_manager,
+                    "object-removed",
+                    G_CALLBACK (on_object_removed),
                     window);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-added",
-                    G_CALLBACK (on_interface_proxy_added),
+  g_signal_connect (object_manager,
+                    "interface-added",
+                    G_CALLBACK (on_interface_added),
                     window);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-removed",
-                    G_CALLBACK (on_interface_proxy_removed),
+  g_signal_connect (object_manager,
+                    "interface-removed",
+                    G_CALLBACK (on_interface_removed),
                     window);
-  g_signal_connect (proxy_manager,
+  g_signal_connect (object_manager,
                     "interface-proxy-properties-changed",
                     G_CALLBACK (on_interface_proxy_properties_changed),
                     window);
@@ -606,10 +604,10 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
   GList *ret;
   GList *l;
   GList *object_proxies;
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
-  proxy_manager = udisks_client_get_proxy_manager (window->client);
-  object_proxies = g_dbus_proxy_manager_get_objects (proxy_manager);
+  object_manager = udisks_client_get_object_manager (window->client);
+  object_proxies = g_dbus_object_manager_get_objects (object_manager);
 
   ret = NULL;
   for (l = object_proxies; l != NULL; l = l->next)
@@ -805,50 +803,50 @@ update_all (GduWindow    *window,
 }
 
 static void
-on_object_proxy_added (GDBusProxyManager   *manager,
-                       GDBusObjectProxy    *object_proxy,
-                       gpointer             user_data)
+on_object_added (GDBusObjectManager  *manager,
+                 GDBusObject         *object,
+                 gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, G_DBUS_OBJECT (object_proxy));
+  update_all (window, object);
 }
 
 static void
-on_object_proxy_removed (GDBusProxyManager   *manager,
-                         GDBusObjectProxy    *object_proxy,
-                         gpointer             user_data)
+on_object_removed (GDBusObjectManager  *manager,
+                   GDBusObject         *object,
+                   gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, G_DBUS_OBJECT (object_proxy));
+  update_all (window, object);
 }
 
 static void
-on_interface_proxy_added (GDBusProxyManager   *manager,
-                          GDBusObjectProxy    *object_proxy,
-                          GDBusProxy          *interface_proxy,
-                          gpointer             user_data)
+on_interface_added (GDBusObjectManager  *manager,
+                    GDBusObject         *object,
+                    GDBusInterface      *interface,
+                    gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, G_DBUS_OBJECT (object_proxy));
+  update_all (window, object);
 }
 
 static void
-on_interface_proxy_removed (GDBusProxyManager   *manager,
-                            GDBusObjectProxy    *object_proxy,
-                            GDBusProxy          *interface_proxy,
-                            gpointer             user_data)
+on_interface_removed (GDBusObjectManager  *manager,
+                      GDBusObject         *object,
+                      GDBusInterface      *interface,
+                      gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, G_DBUS_OBJECT (object_proxy));
+  update_all (window, object);
 }
 
 static void
-on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                       GDBusObjectProxy    *object_proxy,
-                                       GDBusProxy          *interface_proxy,
-                                       GVariant            *changed_properties,
-                                       const gchar *const *invalidated_properties,
-                                       gpointer            user_data)
+on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                       GDBusObjectProxy           *object_proxy,
+                                       GDBusProxy                 *interface_proxy,
+                                       GVariant                   *changed_properties,
+                                       const gchar *const         *invalidated_properties,
+                                       gpointer                    user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   update_all (window, G_DBUS_OBJECT (object_proxy));

@@ -138,30 +138,30 @@ enum
 
 static guint signals[LAST_SIGNAL] = {0};
 
-static void on_object_proxy_added (GDBusProxyManager   *manager,
-                                   GDBusObjectProxy    *object_proxy,
-                                   gpointer             user_data);
+static void on_object_added (GDBusObjectManager  *manager,
+                             GDBusObject         *object,
+                             gpointer             user_data);
 
-static void on_object_proxy_removed (GDBusProxyManager   *manager,
-                                     GDBusObjectProxy    *object_proxy,
-                                     gpointer             user_data);
+static void on_object_removed (GDBusObjectManager  *manager,
+                               GDBusObject         *object,
+                               gpointer             user_data);
 
-static void on_interface_proxy_added (GDBusProxyManager   *manager,
-                                      GDBusObjectProxy    *object_proxy,
-                                      GDBusProxy          *interface_proxy,
-                                      gpointer             user_data);
+static void on_interface_added (GDBusObjectManager  *manager,
+                                GDBusObject         *object,
+                                GDBusInterface      *interface,
+                                gpointer             user_data);
 
-static void on_interface_proxy_removed (GDBusProxyManager   *manager,
-                                        GDBusObjectProxy    *object_proxy,
-                                        GDBusProxy          *interface_proxy,
-                                        gpointer             user_data);
+static void on_interface_removed (GDBusObjectManager  *manager,
+                                  GDBusObject         *object,
+                                  GDBusInterface      *interface,
+                                  gpointer             user_data);
 
-static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                                   GDBusObjectProxy    *object_proxy,
-                                                   GDBusProxy          *interface_proxy,
-                                                   GVariant            *changed_properties,
-                                                   const gchar *const *invalidated_properties,
-                                                   gpointer            user_data);
+static void on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                                   GDBusObjectProxy           *object_proxy,
+                                                   GDBusProxy                 *interface_proxy,
+                                                   GVariant                   *changed_properties,
+                                                   const gchar *const         *invalidated_properties,
+                                                   gpointer                    user_data);
 
 G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_WIDGET)
 
@@ -186,26 +186,26 @@ static void
 gdu_volume_grid_finalize (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
   if (grid->container_icon != NULL)
     g_object_unref (grid->container_icon);
   g_free (grid->container_markup);
 
-  proxy_manager = udisks_client_get_proxy_manager (grid->client);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (grid->client);
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_added),
                                         grid);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_removed),
                                         grid);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_added),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_added),
                                         grid);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_removed),
                                         grid);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
+  g_signal_handlers_disconnect_by_func (object_manager,
                                         G_CALLBACK (on_interface_proxy_properties_changed),
                                         grid);
 
@@ -277,26 +277,26 @@ static void
 gdu_volume_grid_constructed (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
-  proxy_manager = udisks_client_get_proxy_manager (grid->client);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-added",
-                    G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (grid->client);
+  g_signal_connect (object_manager,
+                    "object-added",
+                    G_CALLBACK (on_object_added),
                     grid);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-removed",
-                    G_CALLBACK (on_object_proxy_removed),
+  g_signal_connect (object_manager,
+                    "object-removed",
+                    G_CALLBACK (on_object_removed),
                     grid);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-added",
-                    G_CALLBACK (on_interface_proxy_added),
+  g_signal_connect (object_manager,
+                    "interface-added",
+                    G_CALLBACK (on_interface_added),
                     grid);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-removed",
-                    G_CALLBACK (on_interface_proxy_removed),
+  g_signal_connect (object_manager,
+                    "interface-removed",
+                    G_CALLBACK (on_interface_removed),
                     grid);
-  g_signal_connect (proxy_manager,
+  g_signal_connect (object_manager,
                     "interface-proxy-properties-changed",
                     G_CALLBACK (on_interface_proxy_properties_changed),
                     grid);
@@ -1446,15 +1446,15 @@ static GDBusObject *
 lookup_cleartext_device_for_crypto_device (GduVolumeGrid *grid,
                                            const gchar   *object_path)
 {
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
   GDBusObject *ret;
   GList *objects;
   GList *l;
 
   ret = NULL;
 
-  proxy_manager = udisks_client_get_proxy_manager (grid->client);
-  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
+  object_manager = udisks_client_get_object_manager (grid->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
   for (l = objects; l != NULL; l = l->next)
     {
       GDBusObject *object = G_DBUS_OBJECT (l->data);
@@ -1641,7 +1641,7 @@ recompute_grid (GduVolumeGrid *grid)
   GList *logical_partitions;
   GDBusObject *extended_partition;
   GList *objects;
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
   GList *l;
   const gchar *top_object_path;
   UDisksBlockDevice *top_block;
@@ -1719,8 +1719,8 @@ recompute_grid (GduVolumeGrid *grid)
   partitions = NULL;
   logical_partitions = NULL;
   extended_partition = NULL;
-  proxy_manager = udisks_client_get_proxy_manager (grid->client);
-  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
+  object_manager = udisks_client_get_object_manager (grid->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
   for (l = objects; l != NULL; l = l->next)
     {
       GDBusObject *object = G_DBUS_OBJECT (l->data);
@@ -2007,8 +2007,8 @@ gdu_volume_grid_includes_object (GduVolumeGrid       *grid,
   if (block != NULL)
     {
       crypto_backing_device = udisks_block_device_get_crypto_backing_device (block);
-      crypto_object = g_dbus_proxy_manager_get_object (udisks_client_get_proxy_manager (grid->client),
-                                                       crypto_backing_device);
+      crypto_object = g_dbus_object_manager_get_object (udisks_client_get_object_manager (grid->client),
+                                                        crypto_backing_device);
       if (crypto_object != NULL)
         {
           if (is_disk_or_partition_in_grid (grid, crypto_object))
@@ -2029,60 +2029,60 @@ gdu_volume_grid_includes_object (GduVolumeGrid       *grid,
 
 static void
 maybe_update (GduVolumeGrid    *grid,
-              GDBusObjectProxy *object_proxy)
+              GDBusObject      *object)
 {
-  if (gdu_volume_grid_includes_object (grid, G_DBUS_OBJECT (object_proxy)))
+  if (gdu_volume_grid_includes_object (grid, object))
     recompute_grid (grid);
 }
 
 static void
-on_object_proxy_added (GDBusProxyManager   *manager,
-                       GDBusObjectProxy    *object_proxy,
-                       gpointer             user_data)
+on_object_added (GDBusObjectManager  *manager,
+                 GDBusObject         *object,
+                 gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object_proxy);
+  maybe_update (grid, object);
 }
 
 static void
-on_object_proxy_removed (GDBusProxyManager   *manager,
-                         GDBusObjectProxy    *object_proxy,
-                         gpointer             user_data)
+on_object_removed (GDBusObjectManager  *manager,
+                   GDBusObject         *object,
+                   gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object_proxy);
+  maybe_update (grid, object);
 }
 
 static void
-on_interface_proxy_added (GDBusProxyManager   *manager,
-                          GDBusObjectProxy    *object_proxy,
-                          GDBusProxy          *interface_proxy,
-                          gpointer             user_data)
+on_interface_added (GDBusObjectManager  *manager,
+                    GDBusObject         *object,
+                    GDBusInterface      *interface,
+                    gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object_proxy);
+  maybe_update (grid, object);
 }
 
 static void
-on_interface_proxy_removed (GDBusProxyManager   *manager,
-                            GDBusObjectProxy    *object_proxy,
-                            GDBusProxy          *interface_proxy,
-                            gpointer             user_data)
+on_interface_removed (GDBusObjectManager  *manager,
+                      GDBusObject         *object,
+                      GDBusInterface      *interface,
+                      gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object_proxy);
+  maybe_update (grid, object);
 }
 
 static void
-on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                       GDBusObjectProxy    *object_proxy,
-                                       GDBusProxy          *interface_proxy,
-                                       GVariant            *changed_properties,
-                                       const gchar *const *invalidated_properties,
-                                       gpointer            user_data)
+on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                       GDBusObjectProxy           *object_proxy,
+                                       GDBusProxy                 *interface_proxy,
+                                       GVariant                   *changed_properties,
+                                       const gchar *const         *invalidated_properties,
+                                       gpointer                    user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object_proxy);
+  maybe_update (grid, G_DBUS_OBJECT (object_proxy));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

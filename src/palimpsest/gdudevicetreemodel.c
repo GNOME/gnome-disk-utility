@@ -56,51 +56,51 @@ G_DEFINE_TYPE (GduDeviceTreeModel, gdu_device_tree_model, GTK_TYPE_TREE_STORE);
 
 static void coldplug (GduDeviceTreeModel *model);
 
-static void on_object_proxy_added (GDBusProxyManager   *manager,
-                                   GDBusObjectProxy    *object_proxy,
-                                   gpointer             user_data);
+static void on_object_added (GDBusObjectManager  *manager,
+                             GDBusObject         *object,
+                             gpointer             user_data);
 
-static void on_object_proxy_removed (GDBusProxyManager   *manager,
-                                     GDBusObjectProxy    *object_proxy,
-                                     gpointer             user_data);
+static void on_object_removed (GDBusObjectManager  *manager,
+                               GDBusObject         *object,
+                               gpointer             user_data);
 
-static void on_interface_proxy_added (GDBusProxyManager   *manager,
-                                      GDBusObjectProxy    *object_proxy,
-                                      GDBusProxy          *interface_proxy,
-                                      gpointer             user_data);
+static void on_interface_added (GDBusObjectManager  *manager,
+                                GDBusObject         *object,
+                                GDBusInterface      *interface,
+                                gpointer             user_data);
 
-static void on_interface_proxy_removed (GDBusProxyManager   *manager,
-                                        GDBusObjectProxy    *object_proxy,
-                                        GDBusProxy          *interface_proxy,
-                                        gpointer             user_data);
+static void on_interface_removed (GDBusObjectManager  *manager,
+                                  GDBusObject         *object,
+                                  GDBusInterface      *interface,
+                                  gpointer             user_data);
 
-static void on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                                   GDBusObjectProxy    *object_proxy,
-                                                   GDBusProxy          *interface_proxy,
-                                                   GVariant            *changed_properties,
-                                                   const gchar *const *invalidated_properties,
-                                                   gpointer            user_data);
+static void on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                                   GDBusObjectProxy           *object_proxy,
+                                                   GDBusProxy                 *interface_proxy,
+                                                   GVariant                   *changed_properties,
+                                                   const gchar *const         *invalidated_properties,
+                                                   gpointer                    user_data);
 
 static void
 gdu_device_tree_model_finalize (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
-  proxy_manager = udisks_client_get_proxy_manager (model->client);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (model->client);
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_added),
                                         model);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_object_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_object_removed),
                                         model);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_added),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_added),
                                         model);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
-                                        G_CALLBACK (on_interface_proxy_removed),
+  g_signal_handlers_disconnect_by_func (object_manager,
+                                        G_CALLBACK (on_interface_removed),
                                         model);
-  g_signal_handlers_disconnect_by_func (proxy_manager,
+  g_signal_handlers_disconnect_by_func (object_manager,
                                         G_CALLBACK (on_interface_proxy_properties_changed),
                                         model);
 
@@ -279,7 +279,7 @@ gdu_device_tree_model_constructed (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
 
   types[0] = G_TYPE_STRING;
   types[1] = G_TYPE_BOOLEAN;
@@ -294,24 +294,24 @@ gdu_device_tree_model_constructed (GObject *object)
 
   g_assert (gtk_tree_model_get_flags (GTK_TREE_MODEL (model)) & GTK_TREE_MODEL_ITERS_PERSIST);
 
-  proxy_manager = udisks_client_get_proxy_manager (model->client);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-added",
-                    G_CALLBACK (on_object_proxy_added),
+  object_manager = udisks_client_get_object_manager (model->client);
+  g_signal_connect (object_manager,
+                    "object-added",
+                    G_CALLBACK (on_object_added),
                     model);
-  g_signal_connect (proxy_manager,
-                    "object-proxy-removed",
-                    G_CALLBACK (on_object_proxy_removed),
+  g_signal_connect (object_manager,
+                    "object-removed",
+                    G_CALLBACK (on_object_removed),
                     model);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-added",
-                    G_CALLBACK (on_interface_proxy_added),
+  g_signal_connect (object_manager,
+                    "interface-added",
+                    G_CALLBACK (on_interface_added),
                     model);
-  g_signal_connect (proxy_manager,
-                    "interface-proxy-removed",
-                    G_CALLBACK (on_interface_proxy_removed),
+  g_signal_connect (object_manager,
+                    "interface-removed",
+                    G_CALLBACK (on_interface_removed),
                     model);
-  g_signal_connect (proxy_manager,
+  g_signal_connect (object_manager,
                     "interface-proxy-properties-changed",
                     G_CALLBACK (on_interface_proxy_properties_changed),
                     model);
@@ -491,15 +491,15 @@ remove_lun (GduDeviceTreeModel *model,
 static void
 update_luns (GduDeviceTreeModel *model)
 {
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
   GList *objects;
   GList *luns;
   GList *added_luns;
   GList *removed_luns;
   GList *l;
 
-  proxy_manager = udisks_client_get_proxy_manager (model->client);
-  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
+  object_manager = udisks_client_get_object_manager (model->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
 
   luns = NULL;
   for (l = objects; l != NULL; l = l->next)
@@ -726,15 +726,15 @@ should_include_block (GDBusObject *object)
 static void
 update_blocks (GduDeviceTreeModel *model)
 {
-  GDBusProxyManager *proxy_manager;
+  GDBusObjectManager *object_manager;
   GList *objects;
   GList *blocks;
   GList *added_blocks;
   GList *removed_blocks;
   GList *l;
 
-  proxy_manager = udisks_client_get_proxy_manager (model->client);
-  objects = g_dbus_proxy_manager_get_objects (proxy_manager);
+  object_manager = udisks_client_get_object_manager (model->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
 
   blocks = NULL;
   for (l = objects; l != NULL; l = l->next)
@@ -804,50 +804,50 @@ coldplug (GduDeviceTreeModel *model)
 }
 
 static void
-on_object_proxy_added (GDBusProxyManager   *manager,
-                       GDBusObjectProxy    *object_proxy,
-                       gpointer             user_data)
+on_object_added (GDBusObjectManager  *manager,
+                 GDBusObject         *object,
+                 gpointer             user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
 static void
-on_object_proxy_removed (GDBusProxyManager   *manager,
-                         GDBusObjectProxy    *object_proxy,
-                         gpointer             user_data)
+on_object_removed (GDBusObjectManager  *manager,
+                   GDBusObject         *object,
+                   gpointer             user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
 static void
-on_interface_proxy_added (GDBusProxyManager   *manager,
-                          GDBusObjectProxy    *object_proxy,
-                          GDBusProxy          *interface_proxy,
-                          gpointer             user_data)
+on_interface_added (GDBusObjectManager  *manager,
+                    GDBusObject         *object,
+                    GDBusInterface      *interface,
+                    gpointer             user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
 static void
-on_interface_proxy_removed (GDBusProxyManager   *manager,
-                            GDBusObjectProxy    *object_proxy,
-                            GDBusProxy          *interface_proxy,
-                            gpointer             user_data)
+on_interface_removed (GDBusObjectManager  *manager,
+                      GDBusObject         *object,
+                      GDBusInterface      *interface,
+                      gpointer             user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
 }
 
 static void
-on_interface_proxy_properties_changed (GDBusProxyManager   *manager,
-                                       GDBusObjectProxy    *object_proxy,
-                                       GDBusProxy          *interface_proxy,
-                                       GVariant            *changed_properties,
-                                       const gchar *const *invalidated_properties,
-                                       gpointer            user_data)
+on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
+                                       GDBusObjectProxy           *object_proxy,
+                                       GDBusProxy                 *interface_proxy,
+                                       GVariant                   *changed_properties,
+                                       const gchar *const         *invalidated_properties,
+                                       gpointer                    user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);

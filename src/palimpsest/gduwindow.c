@@ -1194,12 +1194,12 @@ change_filesystem_label_cb (UDisksBlockDevice *block,
   GError *error;
 
   error = NULL;
-  if (!udisks_block_device_call_filesystem_set_label_finish (block,
-                                                             res,
-                                                             &error))
+  if (!udisks_block_device_call_set_label_finish (block,
+                                                  res,
+                                                  &error))
     {
       gdu_window_show_error (window,
-                             _("Error setting filesystem label"),
+                             _("Error setting label"),
                              error);
       g_error_free (error);
     }
@@ -1248,12 +1248,12 @@ on_change_filesystem_label (GduWindow *window)
 
   label_to_set = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  udisks_block_device_call_filesystem_set_label (block,
-                                                 label_to_set,
-                                                 options, /* options */
-                                                 NULL, /* cancellable */
-                                                 (GAsyncReadyCallback) change_filesystem_label_cb,
-                                                 g_object_ref (window));
+  udisks_block_device_call_set_label (block,
+                                      label_to_set,
+                                      options, /* options */
+                                      NULL, /* cancellable */
+                                      (GAsyncReadyCallback) change_filesystem_label_cb,
+                                      g_object_ref (window));
 
  out:
   g_signal_handlers_disconnect_by_func (entry,

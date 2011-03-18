@@ -1141,6 +1141,13 @@ gdu_window_show_error (GduWindow   *window,
   GtkWidget *dialog;
   GError *error;
 
+  /* Never show an error if it's because the user dismissed the
+   * authentication dialog himself
+   */
+  if (orig_error->domain == UDISKS_ERROR &&
+      orig_error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED)
+    goto no_dialog;
+
   error = g_error_copy (orig_error);
   if (g_dbus_error_is_remote_error (error))
     g_dbus_error_strip_remote_error (error);
@@ -1157,6 +1164,9 @@ gdu_window_show_error (GduWindow   *window,
   g_error_free (error);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
+
+ no_dialog:
+  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

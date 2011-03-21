@@ -786,6 +786,7 @@ about_action_callback (GtkAction *action, gpointer user_data)
         GdkPixbuf *logo;
         const char *artists[] = {
                 "Mike Langlie <mlanglie@redhat.com>",
+                "Lapo Calamandrei <calamandrei@gmail.com>",
                 NULL
         };
         const char *authors[] = {

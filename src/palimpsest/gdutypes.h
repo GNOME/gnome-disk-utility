@@ -43,6 +43,9 @@ typedef struct _GduWindow GduWindow;
 struct _GduVolumeGrid;
 typedef struct _GduVolumeGrid GduVolumeGrid;
 
+struct _GduIScsiPathModel;
+typedef struct _GduIScsiPathModel GduIScsiPathModel;
+
 G_END_DECLS
 
 #endif /* __GDU_TYPES_H__ */

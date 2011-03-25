@@ -39,6 +39,10 @@ struct _GduDeviceTreeModel
   GList *current_blocks;
   GtkTreeIter block_iter;
   gboolean block_iter_valid;
+
+  GList *current_iscsi_targets_and_luns;
+  GtkTreeIter iscsi_targets_iter;
+  gboolean iscsi_targets_iter_valid;
 };
 
 typedef struct
@@ -156,9 +160,12 @@ gdu_device_tree_model_set_property (GObject      *object,
     }
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 typedef struct
 {
   GDBusObject *object;
+  const gchar *object_path;
   GtkTreeIter iter;
   gboolean found;
 } FindIterData;
@@ -188,6 +195,14 @@ find_iter_for_object_cb (GtkTreeModel  *model,
       goto out;
     }
 
+  if (g_strcmp0 (g_dbus_object_get_object_path (iter_object), data->object_path) == 0)
+    {
+      data->iter = *iter;
+      data->found = TRUE;
+      goto out;
+    }
+
+
  out:
   if (iter_object != NULL)
     g_object_unref (iter_object);
@@ -203,6 +218,28 @@ find_iter_for_object (GduDeviceTreeModel *model,
 
   memset (&data, 0, sizeof (data));
   data.object = object;
+  data.found = FALSE;
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model),
+                          find_iter_for_object_cb,
+                          &data);
+  if (data.found)
+    {
+      if (out_iter != NULL)
+        *out_iter = data.iter;
+    }
+
+  return data.found;
+}
+
+static gboolean
+find_iter_for_object_path (GduDeviceTreeModel *model,
+                           const gchar        *object_path,
+                           GtkTreeIter        *out_iter)
+{
+  FindIterData data;
+
+  memset (&data, 0, sizeof (data));
+  data.object_path = object_path;
   data.found = FALSE;
   gtk_tree_model_foreach (GTK_TREE_MODEL (model),
                           find_iter_for_object_cb,
@@ -488,6 +525,27 @@ remove_lun (GduDeviceTreeModel *model,
   ;
 }
 
+static gboolean
+should_include_lun (GDBusObject *object,
+                    gboolean     allow_iscsi)
+{
+  UDisksLun *lun;
+  gboolean ret;
+
+  ret = FALSE;
+
+  lun = UDISKS_PEEK_LUN (object);
+
+  /* unless specificlly allowed, don't show LUNs paired with an iSCSI target */
+  if (!allow_iscsi && g_strcmp0 (udisks_lun_get_iscsi_target (lun), "/") != 0)
+    goto out;
+
+  ret = TRUE;
+
+ out:
+  return ret;
+}
+
 static void
 update_luns (GduDeviceTreeModel *model)
 {
@@ -511,7 +569,8 @@ update_luns (GduDeviceTreeModel *model)
       if (lun == NULL)
         continue;
 
-      luns = g_list_prepend (luns, g_object_ref (object));
+      if (should_include_lun (object, FALSE))
+        luns = g_list_prepend (luns, g_object_ref (object));
     }
 
   luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_compare);
@@ -789,12 +848,233 @@ update_blocks (GduDeviceTreeModel *model)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GtkTreeIter *
+get_iscsi_header_iter (GduDeviceTreeModel *model)
+{
+  gchar *s;
+
+  if (model->iscsi_targets_iter_valid)
+    goto out;
+
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       _("iSCSI Targets"));
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &model->iscsi_targets_iter,
+                                     NULL, /* GtkTreeIter *parent */
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "02_iscsi",
+                                     -1);
+  g_free (s);
+
+  model->iscsi_targets_iter_valid = TRUE;
+
+ out:
+  return &model->iscsi_targets_iter;
+}
+
+static void
+nuke_iscsi_targets_header (GduDeviceTreeModel *model)
+{
+  if (model->iscsi_targets_iter_valid)
+    {
+      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->iscsi_targets_iter);
+      model->iscsi_targets_iter_valid = FALSE;
+    }
+}
+
+static void
+add_iscsi_target (GduDeviceTreeModel  *model,
+                  GDBusObject         *object,
+                  GtkTreeIter         *parent)
+{
+  UDisksIScsiTarget *target;
+  GIcon *icon;
+  gchar *s;
+  gchar *sort_key;
+  GtkTreeIter iter;
+
+  target = UDISKS_PEEK_ISCSI_TARGET (object);
+
+#if 0
+  GIcon *base_icon;
+  GIcon *emblem_icon;
+  GEmblem *emblem;
+  emblem_icon = g_themed_icon_new_with_default_fallbacks ("emblem-web");
+  emblem = g_emblem_new (emblem_icon);
+  base_icon = g_themed_icon_new_with_default_fallbacks ("drive-harddisk");
+  icon = g_emblemed_icon_new (base_icon, emblem);
+  g_object_unref (emblem);
+  g_object_unref (base_icon);
+  g_object_unref (emblem_icon);
+#endif
+  icon = g_themed_icon_new_with_default_fallbacks ("network-server");
+
+  s = g_strdup_printf ("%s\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       "Remote iSCSI Target", /* TODO: alias */
+                       udisks_iscsi_target_get_name (target));
+
+  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &iter,
+                                     parent,
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
+                                     -1);
+  g_object_unref (icon);
+  g_free (sort_key);
+  g_free (s);
+}
+
+static void
+remove_iscsi_target (GduDeviceTreeModel  *model,
+                     GDBusObject         *object)
+{
+  GtkTreeIter iter;
+
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (object));
+      goto out;
+    }
+
+  gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+
+ out:
+  ;
+}
+
+static gboolean
+should_include_iscsi_target (GDBusObject *object)
+{
+  /* for now, just include all of them */
+  return TRUE;
+}
+
+static void
+update_iscsi_targets (GduDeviceTreeModel *model)
+{
+  GDBusObjectManager *object_manager;
+  GList *objects;
+  GList *iscsi_targets_and_luns;
+  GList *added;
+  GList *removed;
+  GList *l;
+
+  object_manager = udisks_client_get_object_manager (model->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
+
+  iscsi_targets_and_luns = NULL;
+  for (l = objects; l != NULL; l = l->next)
+    {
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksIScsiTarget *target;
+
+      target = UDISKS_PEEK_ISCSI_TARGET (object);
+      if (target == NULL)
+        continue;
+
+      if (should_include_iscsi_target (object))
+        {
+          GList *ll;
+          const gchar *target_object_path;
+
+          iscsi_targets_and_luns = g_list_prepend (iscsi_targets_and_luns, g_object_ref (object));
+
+          /* also include the LUNs that are associated with this target */
+          target_object_path = g_dbus_object_get_object_path (object);
+          for (ll = objects; ll != NULL; ll = ll->next)
+            {
+              GDBusObject *lun_object = G_DBUS_OBJECT (ll->data);
+              UDisksLun *lun;
+              lun = UDISKS_PEEK_LUN (lun_object);
+              if (lun != NULL)
+                {
+                  if (g_strcmp0 (udisks_lun_get_iscsi_target (lun), target_object_path) == 0)
+                    {
+                      if (should_include_lun (lun_object, TRUE))
+                        iscsi_targets_and_luns = g_list_prepend (iscsi_targets_and_luns, g_object_ref (lun_object));
+                    }
+                }
+            }
+        }
+    }
+
+  iscsi_targets_and_luns = g_list_sort (iscsi_targets_and_luns, (GCompareFunc) _g_dbus_object_compare);
+  model->current_iscsi_targets_and_luns = g_list_sort (model->current_iscsi_targets_and_luns, (GCompareFunc) _g_dbus_object_compare);
+  diff_sorted_lists (model->current_iscsi_targets_and_luns,
+                     iscsi_targets_and_luns,
+                     (GCompareFunc) _g_dbus_object_compare,
+                     &added,
+                     &removed);
+
+  for (l = removed; l != NULL; l = l->next)
+    {
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+
+      g_assert (g_list_find (model->current_iscsi_targets_and_luns, object) != NULL);
+
+      model->current_iscsi_targets_and_luns = g_list_remove (model->current_iscsi_targets_and_luns, object);
+      remove_iscsi_target (model, object);
+      g_object_unref (object);
+    }
+
+  /* Two passes: first add the iSCSI targets ... */
+  for (l = added; l != NULL; l = l->next)
+    {
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      if (UDISKS_PEEK_ISCSI_TARGET (object) != NULL)
+        {
+          model->current_iscsi_targets_and_luns = g_list_prepend (model->current_iscsi_targets_and_luns,
+                                                              g_object_ref (object));
+          add_iscsi_target (model, object, get_iscsi_header_iter (model));
+        }
+    }
+  /* ... and then the LUNs */
+  for (l = added; l != NULL; l = l->next)
+    {
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      if (UDISKS_PEEK_LUN (object) != NULL)
+        {
+          GtkTreeIter iter;
+          model->current_iscsi_targets_and_luns = g_list_prepend (model->current_iscsi_targets_and_luns,
+                                                                  g_object_ref (object));
+          g_warn_if_fail (find_iter_for_object_path (model,
+                                                     udisks_lun_get_iscsi_target (UDISKS_PEEK_LUN (object)),
+                                                     &iter));
+          add_lun (model, object, &iter);
+        }
+    }
+
+  if (g_list_length (model->current_iscsi_targets_and_luns) == 0)
+    nuke_iscsi_targets_header (model);
+
+  g_list_free (added);
+  g_list_free (removed);
+  g_list_foreach (iscsi_targets_and_luns, (GFunc) g_object_unref, NULL);
+  g_list_free (iscsi_targets_and_luns);
+
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 update_all (GduDeviceTreeModel *model)
 {
   /* TODO: if this is CPU intensive we could coalesce all updates / schedule timeouts */
   update_luns (model);
   update_blocks (model);
+  update_iscsi_targets (model);
 }
 
 static void

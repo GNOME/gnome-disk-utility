@@ -3,39 +3,27 @@
   <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkActionGroup" id="devtab-actions">
     <child>
-      <object class="GtkAction" id="devtab-action-format">
-        <property name="tooltip" translatable="yes">Format the device</property>
-        <property name="icon_name">text-x-generic-symbolic</property>
-      </object>
-    </child>
-    <child>
       <object class="GtkAction" id="devtab-action-partition-create">
         <property name="tooltip" translatable="yes">Create a new partition in the free space</property>
         <property name="icon_name">list-add-symbolic</property>
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="devtab-action-partition-delete">
-        <property name="tooltip" translatable="yes">Delete the partition</property>
-        <property name="icon_name">edit-delete-symbolic</property>
-      </object>
-    </child>
-    <child>
       <object class="GtkAction" id="devtab-action-mount">
-        <property name="tooltip" translatable="yes">Mount the device</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
+        <property name="tooltip" translatable="yes">Mount the filesystem</property>
+        <property name="icon_name">gdu-action-mount-symbolic</property>
       </object>
     </child>
     <child>
       <object class="GtkAction" id="devtab-action-unmount">
-        <property name="tooltip" translatable="yes">Unmount the device</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
+        <property name="tooltip" translatable="yes">Unmount the filesystem</property>
+        <property name="icon_name">gdu-action-unmount-symbolic</property>
       </object>
     </child>
     <child>
       <object class="GtkAction" id="devtab-action-eject">
-        <property name="tooltip" translatable="yes">Ejects the media</property>
-        <property name="icon_name">media-eject-symbolic</property>
+        <property name="tooltip" translatable="yes">Eject the media</property>
+        <property name="icon_name">gdu-action-eject-symbolic</property>
       </object>
     </child>
     <child>
@@ -48,6 +36,11 @@
       <object class="GtkAction" id="devtab-action-lock">
         <property name="tooltip" translatable="yes">Lock the encrypted device</property>
         <property name="icon_name">changes-prevent-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-generic">
+        <property name="icon_name">system-run-symbolic</property>
       </object>
     </child>
   </object>
@@ -434,7 +427,7 @@
                                   <object class="GtkToolButton" id="toolbutton1">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-format</property>
+                                    <property name="related_action">devtab-action-partition-create</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -445,7 +438,7 @@
                                   <object class="GtkToolButton" id="toolbutton2">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-partition-create</property>
+                                    <property name="related_action">devtab-action-mount</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -456,7 +449,7 @@
                                   <object class="GtkToolButton" id="toolbutton3">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-partition-delete</property>
+                                    <property name="related_action">devtab-action-unmount</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -467,7 +460,7 @@
                                   <object class="GtkToolButton" id="toolbutton4">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-mount</property>
+                                    <property name="related_action">devtab-action-eject</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -478,7 +471,7 @@
                                   <object class="GtkToolButton" id="toolbutton5">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-unmount</property>
+                                    <property name="related_action">devtab-action-unlock</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -489,29 +482,18 @@
                                   <object class="GtkToolButton" id="toolbutton6">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-eject</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton7">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-unlock</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton8">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-lock</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton99">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-generic</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>

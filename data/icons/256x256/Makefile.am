@@ -1,7 +1,7 @@
 NULL =
 
-icondir = $(datadir)/icons/hicolor/16x16/apps
-icon_DATA =				\
+icondir = $(datadir)/icons/hicolor/256x256/apps
+icon_DATA = 				\
 	palimpsest.png			\
 	$(NULL)
 

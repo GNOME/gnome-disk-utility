@@ -92,11 +92,10 @@ static void teardown_iscsi_target_page (GduWindow *window);
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
 
+static void on_devtab_action_generic_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_mount_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unmount_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_action_format_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_action_partition_delete_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_eject_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
@@ -476,17 +475,13 @@ gdu_window_constructed (GObject *object)
                                  window->iscsi_connection_switch);
 
   /* actions */
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-format"),
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-generic"),
                     "activate",
-                    G_CALLBACK (on_devtab_action_format_activated),
+                    G_CALLBACK (on_devtab_action_generic_activated),
                     window);
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-partition-create"),
                     "activate",
                     G_CALLBACK (on_devtab_action_partition_create_activated),
-                    window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-partition-delete"),
-                    "activate",
-                    G_CALLBACK (on_devtab_action_partition_delete_activated),
                     window);
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-mount"),
                     "activate",
@@ -1073,9 +1068,6 @@ update_device_page_for_lun (GduWindow    *window,
 
   g_free (media_compat_for_display);
 
-  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                              "devtab-action-format")), TRUE);
-
   if (udisks_lun_get_media_removable (lun))
     {
       gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
@@ -1206,9 +1198,6 @@ update_device_page_for_block (GduWindow         *window,
                   partition_label,
                   SET_MARKUP_FLAGS_CHANGE_LINK);
       g_free (type_for_display);
-
-      gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                  "devtab-action-partition-delete")), TRUE);
     }
   else
     {
@@ -1290,8 +1279,6 @@ update_device_page_for_block (GduWindow         *window,
                                                                       "devtab-action-unlock")), TRUE);
         }
     }
-  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                              "devtab-action-format")), TRUE);
 }
 
 static void
@@ -1356,6 +1343,9 @@ update_device_page (GduWindow *window)
       gtk_action_set_visible (child, FALSE);
     }
   g_list_free (children);
+  /* always show the generic toolbar item */
+  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                              "devtab-action-generic")), TRUE);
 
 
   object = window->current_object;
@@ -2156,8 +2146,8 @@ on_devtab_action_unmount_activated (GtkAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_devtab_action_format_activated (GtkAction *action,
-                                   gpointer   user_data)
+on_devtab_action_generic_activated (GtkAction *action,
+                                    gpointer   user_data)
 {
   g_debug ("%s: TODO", G_STRFUNC);
 }
@@ -2166,15 +2156,6 @@ on_devtab_action_format_activated (GtkAction *action,
 
 static void
 on_devtab_action_partition_create_activated (GtkAction *action,
-                                             gpointer   user_data)
-{
-  g_debug ("%s: TODO", G_STRFUNC);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_devtab_action_partition_delete_activated (GtkAction *action,
                                              gpointer   user_data)
 {
   g_debug ("%s: TODO", G_STRFUNC);

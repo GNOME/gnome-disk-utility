@@ -74,6 +74,7 @@ struct GridElement
   gboolean show_spinner;
   gboolean show_padlock_open;
   gboolean show_padlock_closed;
+  gboolean show_mounted;
 
   /* used for the job spinner */
   guint spinner_current;
@@ -1230,11 +1231,19 @@ render_element (GduVolumeGrid *grid,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                "changes-prevent-symbolic",
                                                12, 0, NULL));
+  if (element->show_mounted)
+    g_ptr_array_add (pixbufs_to_render,
+                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                               "gdu-state-mounted-symbolic",
+                                               12, 0, NULL));
   for (n = 0; n < pixbufs_to_render->len; n++)
     {
       GdkPixbuf *pixbuf = GDK_PIXBUF (pixbufs_to_render->pdata[n]);
       guint icon_width;
       guint icon_height;
+
+      if (pixbuf == NULL)
+        continue;
 
       icon_width = gdk_pixbuf_get_width (pixbuf);
       icon_height = gdk_pixbuf_get_height (pixbuf);
@@ -1924,12 +1933,25 @@ grid_element_set_details (GduVolumeGrid  *grid,
         else if (g_strcmp0 (usage, "filesystem") == 0)
           {
             const gchar *label;
+            UDisksFilesystem *filesystem;
+
             label = udisks_block_device_get_id_label (block);
             type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
             if (strlen (label) == 0)
               label = C_("volume-grid", "Filesystem");
             s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
             g_free (type_for_display);
+
+            filesystem = UDISKS_PEEK_FILESYSTEM (element->object);
+            if (filesystem != NULL)
+              {
+                const gchar *const *mount_points;
+                mount_points = udisks_filesystem_get_mount_points (filesystem);
+                if (g_strv_length ((gchar **) mount_points) > 0)
+                  {
+                    element->show_mounted = TRUE;
+                  }
+              }
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {

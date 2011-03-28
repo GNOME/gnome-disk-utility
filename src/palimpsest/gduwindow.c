@@ -77,6 +77,10 @@ static void gdu_window_show_error (GduWindow   *window,
                                    const gchar *message,
                                    GError      *orig_error);
 
+static gboolean on_activate_link (GtkLabel    *label,
+                                  const gchar *uri,
+                                  gpointer     user_data);
+
 static void setup_device_page (GduWindow *window, GDBusObject *object);
 static void update_device_page (GduWindow *window);
 static void teardown_device_page (GduWindow *window);
@@ -87,6 +91,15 @@ static void teardown_iscsi_target_page (GduWindow *window);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
+
+static void on_devtab_action_mount_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_unmount_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_format_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_partition_delete_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_eject_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
 
 static void iscsi_connection_switch_on_notify_active (GObject     *object,
                                                       GParamSpec  *pspec,
@@ -252,6 +265,41 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
 
 static void
+init_css (GduWindow *window)
+{
+  GtkCssProvider *provider;
+  GError *error;
+  const gchar *css =
+"#devtab-grid-toolbar.toolbar {\n"
+"    border-width: 1;\n"
+"    border-radius: 3;\n"
+"    border-style: solid;\n"
+"    background-color: @theme_base_color;\n"
+"}\n"
+;
+
+  provider = gtk_css_provider_new ();
+  error = NULL;
+  if (!gtk_css_provider_load_from_data (provider,
+                                        css,
+                                        -1,
+                                        &error))
+    {
+      g_warning ("Can't parse custom CSS: %s\n", error->message);
+      g_error_free (error);
+      goto out;
+    }
+
+  gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)),
+                                             GTK_STYLE_PROVIDER (provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (provider);
+
+ out:
+  ;
+}
+
+static void
 gdu_window_constructed (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
@@ -266,6 +314,8 @@ gdu_window_constructed (GObject *object)
   GtkWidget *label;
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
+
+  init_css (window);
 
   /* chain up */
   if (G_OBJECT_CLASS (gdu_window_parent_class)->constructed != NULL)
@@ -401,6 +451,10 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_volume_grid_changed),
                     window);
 
+  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "devtab-grid-toolbar"));
+  gtk_widget_set_name (gdu_window_get_widget (window, "devtab-grid-toolbar"), "devtab-grid-toolbar");
+  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
+
   /* devtab's Write Cache switch */
   window->write_cache_switch = gtk_switch_new ();
   gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-write-cache-hbox")),
@@ -420,6 +474,40 @@ gdu_window_constructed (GObject *object)
                       FALSE, TRUE, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "iscsitab-connection-label")),
                                  window->iscsi_connection_switch);
+
+  /* actions */
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-format"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_format_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-partition-create"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_partition_create_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-partition-delete"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_partition_delete_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-mount"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_mount_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-unmount"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_unmount_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-eject"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_eject_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-unlock"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_unlock_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-lock"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_lock_activated),
+                    window);
 }
 
 static void
@@ -576,11 +664,6 @@ typedef enum
   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY = (1<<0),
   SET_MARKUP_FLAGS_CHANGE_LINK = (1<<1)
 } SetMarkupFlags;
-
-static gboolean
-on_activate_link (GtkLabel    *label,
-                  const gchar *uri,
-                  gpointer     user_data);
 
 static void
 set_markup (GduWindow      *window,
@@ -989,6 +1072,51 @@ update_device_page_for_lun (GduWindow    *window,
               media_compat_for_display, SET_MARKUP_FLAGS_NONE);
 
   g_free (media_compat_for_display);
+
+  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                              "devtab-action-format")), TRUE);
+
+  if (udisks_lun_get_media_removable (lun))
+    {
+      gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                  "devtab-action-eject")), TRUE);
+    }
+}
+
+static GDBusObject *
+lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
+                                           const gchar   *object_path)
+{
+  GDBusObjectManager *object_manager;
+  GDBusObject *ret;
+  GList *objects;
+  GList *l;
+
+  ret = NULL;
+
+  object_manager = udisks_client_get_object_manager (client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
+  for (l = objects; l != NULL; l = l->next)
+    {
+      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksBlockDevice *block;
+
+      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      if (block == NULL)
+        continue;
+
+      if (g_strcmp0 (udisks_block_device_get_crypto_backing_device (block),
+                     object_path) == 0)
+        {
+          ret = g_object_ref (object);
+          goto out;
+        }
+    }
+
+ out:
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
+  return ret;
 }
 
 static void
@@ -1078,7 +1206,92 @@ update_device_page_for_block (GduWindow         *window,
                   partition_label,
                   SET_MARKUP_FLAGS_CHANGE_LINK);
       g_free (type_for_display);
+
+      gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                  "devtab-action-partition-delete")), TRUE);
     }
+  else
+    {
+      GDBusObject *lun_object;
+      lun_object = g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                     udisks_block_device_get_lun (block));
+      if (lun_object != NULL)
+        {
+          UDisksLun *lun;
+          lun = UDISKS_PEEK_LUN (lun_object);
+          if (udisks_lun_get_media_removable (lun))
+            {
+              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                          "devtab-action-eject")), TRUE);
+            }
+          g_object_unref (lun_object);
+        }
+    }
+
+  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0)
+    {
+      UDisksFilesystem *filesystem;
+      filesystem = UDISKS_PEEK_FILESYSTEM (object);
+      if (filesystem != NULL)
+        {
+          const gchar *const *mount_points;
+          mount_points = udisks_filesystem_get_mount_points (filesystem);
+          if (g_strv_length ((gchar **) mount_points) > 0)
+            {
+              gchar *mount_points_for_display;
+              /* TODO: right now we only display the first mount point; could be we need to display
+               * more than just that...
+               */
+
+              if (g_strcmp0 (mount_points[0], "/") == 0)
+                {
+                  /* Translators: This is shown for a device mounted at the filesystem root / - we show
+                   * this text instead of '/', because '/' is too small to hit as a hyperlink
+                   */
+                  mount_points_for_display = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
+                }
+              else
+                {
+                  mount_points_for_display = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+                                                              mount_points[0], mount_points[0]);
+                }
+              set_markup (window,
+                          "devtab-volume-filesystem-mount-point-label",
+                          "devtab-volume-filesystem-mount-point-value-label",
+                          mount_points_for_display,
+                          SET_MARKUP_FLAGS_NONE);
+              g_free (mount_points_for_display);
+
+              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                          "devtab-action-unmount")), TRUE);
+            }
+          else
+            {
+              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                          "devtab-action-mount")), TRUE);
+            }
+        }
+    }
+  else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
+    {
+      GDBusObject *cleartext_device;
+
+      cleartext_device = lookup_cleartext_device_for_crypto_device (window->client,
+                                                                    g_dbus_object_get_object_path (object));
+      if (cleartext_device != NULL)
+        {
+          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                      "devtab-action-lock")), TRUE);
+          g_object_unref (cleartext_device);
+        }
+      else
+        {
+          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                      "devtab-action-unlock")), TRUE);
+        }
+    }
+  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                              "devtab-action-format")), TRUE);
 }
 
 static void
@@ -1113,6 +1326,8 @@ update_device_page_for_free_space (GduWindow         *window,
               "devtab-volume-type-value-label",
               _("Unallocated Space"),
               SET_MARKUP_FLAGS_NONE);
+  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                              "devtab-action-partition-create")), TRUE);
 }
 
 static void
@@ -1134,6 +1349,14 @@ update_device_page (GduWindow *window)
       gtk_widget_hide (child);
     }
   g_list_free (children);
+  children = gtk_action_group_list_actions (GTK_ACTION_GROUP (gtk_builder_get_object (window->builder, "devtab-actions")));
+  for (l = children; l != NULL; l = l->next)
+    {
+      GtkAction *child = GTK_ACTION (l->data);
+      gtk_action_set_visible (child, FALSE);
+    }
+  g_list_free (children);
+
 
   object = window->current_object;
   lun = UDISKS_PEEK_LUN (window->current_object);
@@ -1846,3 +2069,142 @@ on_activate_link (GtkLabel    *label,
   return handled;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+mount_cb (UDisksFilesystem *filesystem,
+          GAsyncResult     *res,
+          gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_filesystem_call_mount_finish (filesystem,
+                                            NULL, /* out_mount_path */
+                                            res,
+                                            &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error mounting filesystem"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_action_mount_activated (GtkAction *action,
+                                  gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GDBusObject *object;
+  UDisksFilesystem *filesystem;
+  const gchar *options[] = {NULL};
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  filesystem = UDISKS_PEEK_FILESYSTEM (object);
+  udisks_filesystem_call_mount (filesystem,
+                                "", /* filesystem type */
+                                options, /* options */
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) mount_cb,
+                                g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+unmount_cb (UDisksFilesystem *filesystem,
+            GAsyncResult     *res,
+            gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_filesystem_call_unmount_finish (filesystem,
+                                              res,
+                                              &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error unmounting filesystem"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_action_unmount_activated (GtkAction *action,
+                                    gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GDBusObject *object;
+  UDisksFilesystem *filesystem;
+  const gchar *options[] = {NULL};
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  filesystem = UDISKS_PEEK_FILESYSTEM (object);
+  udisks_filesystem_call_unmount (filesystem,
+                                  options, /* options */
+                                  NULL, /* cancellable */
+                                  (GAsyncReadyCallback) unmount_cb,
+                                  g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_format_activated (GtkAction *action,
+                                   gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_partition_create_activated (GtkAction *action,
+                                             gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_partition_delete_activated (GtkAction *action,
+                                             gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_eject_activated (GtkAction *action,
+                                  gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_unlock_activated (GtkAction *action,
+                                   gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_devtab_action_lock_activated (GtkAction *action,
+                                 gpointer   user_data)
+{
+  g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

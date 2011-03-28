@@ -759,8 +759,10 @@ recompute_size_for_slice (GList          *elements,
         element->edge_flags |= GRID_EDGE_TOP;
       if (element->x + element->width == total_width)
         element->edge_flags |= GRID_EDGE_RIGHT;
+#if 0
       if (element->y + element->height == total_height)
         element->edge_flags |= GRID_EDGE_BOTTOM;
+#endif
 
       x += element_width;
 
@@ -1000,9 +1002,9 @@ render_element (GduVolumeGrid *grid,
   focus_rect_red     = 0.60;
   focus_rect_green   = 0.70;
   focus_rect_blue    = 0.80;
-  stroke_red   = 0.75;
-  stroke_green = 0.75;
-  stroke_blue  = 0.75;
+  stroke_red   = 0.65;
+  stroke_green = 0.65;
+  stroke_blue  = 0.65;
   stroke_selected_red   = 0.3;
   stroke_selected_green = 0.45;
   stroke_selected_blue  = 0.6;
@@ -1025,10 +1027,10 @@ render_element (GduVolumeGrid *grid,
 
   cairo_save (cr);
   cairo_rectangle (cr,
-                   element->x + 0.5,
-                   element->y + 0.5,
-                   element->width,
-                   element->height);
+                   element->x - 0.5,
+                   element->y - 0.5,
+                   element->width + 1.5,
+                   element->height + 1.5);
   cairo_clip (cr);
 
   round_rect (cr,
@@ -1221,13 +1223,13 @@ render_element (GduVolumeGrid *grid,
   if (element->show_padlock_open)
     g_ptr_array_add (pixbufs_to_render,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "gdu-encrypted-unlock",
-                                               16, 0, NULL));
+                                               "changes-allow-symbolic",
+                                               12, 0, NULL));
   if (element->show_padlock_closed)
     g_ptr_array_add (pixbufs_to_render,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "gdu-encrypted-lock",
-                                               16, 0, NULL));
+                                               "changes-prevent-symbolic",
+                                               12, 0, NULL));
   for (n = 0; n < pixbufs_to_render->len; n++)
     {
       GdkPixbuf *pixbuf = GDK_PIXBUF (pixbufs_to_render->pdata[n]);

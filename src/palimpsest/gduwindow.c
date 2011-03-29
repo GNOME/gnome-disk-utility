@@ -997,10 +997,6 @@ update_device_page_for_lun (GduWindow    *window,
   GString *str;
   const gchar *lun_vendor;
   const gchar *lun_model;
-  const gchar *lun_media;
-  const gchar* const *lun_media_compat;
-  gchar *media_for_display;
-  gchar *media_compat_for_display;
   gchar *name;
   gchar *description;
   gchar *media_description;
@@ -1008,7 +1004,6 @@ update_device_page_for_lun (GduWindow    *window,
   GIcon *media_icon;
   GtkWidget *w;
   guint64 size;
-  const gchar *media_array[2];
 
   //g_debug ("In update_device_page_for_lun() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1021,13 +1016,6 @@ update_device_page_for_lun (GduWindow    *window,
 
   lun_vendor = udisks_lun_get_vendor (lun);
   lun_model = udisks_lun_get_model (lun);
-  lun_media = udisks_lun_get_media (lun);
-  lun_media_compat = udisks_lun_get_media_compatibility (lun);
-  media_array[0] = lun_media;
-  media_array[1] = NULL;
-  /* TODO: udisks_util_get_media_for_display() */
-  media_for_display = udisks_util_get_media_compat_for_display (media_array);
-  media_compat_for_display = udisks_util_get_media_compat_for_display (lun_media_compat);
 
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
@@ -1039,7 +1027,7 @@ update_device_page_for_lun (GduWindow    *window,
     }
   s = g_strdup_printf ("<big><b>%s</b></big>\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
-                       media_description != NULL ? media_description : description,
+                       description,
                        str->str);
   g_string_free (str, TRUE);
   w = gdu_window_get_widget (window, "devtab-drive-value-label");
@@ -1092,19 +1080,20 @@ update_device_page_for_lun (GduWindow    *window,
       set_markup (window,
                   "devtab-media-label",
                   "devtab-media-value-label",
-                  media_for_display, SET_MARKUP_FLAGS_NONE);
+                  media_description, SET_MARKUP_FLAGS_NONE);
     }
   else
     {
       set_markup (window,
                   "devtab-drive-size-label",
                   "devtab-drive-size-value-label",
-                  _("No Media"),
+                  "",
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
       set_markup (window,
                   "devtab-media-label",
                   "devtab-media-value-label",
-                  media_compat_for_display, SET_MARKUP_FLAGS_NONE);
+                  "",
+                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
   if (udisks_lun_get_media_removable (lun))
@@ -1113,8 +1102,6 @@ update_device_page_for_lun (GduWindow    *window,
                                                                   "devtab-action-eject")), TRUE);
     }
 
-  g_free (media_compat_for_display);
-  g_free (media_for_display);
   g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
   g_list_free (block_devices);
   if (media_icon != NULL)

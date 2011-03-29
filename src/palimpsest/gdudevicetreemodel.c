@@ -467,12 +467,13 @@ add_lun (GduDeviceTreeModel *model,
   GIcon *media_icon;
   gchar *name;
   gchar *description;
+  gchar *media_description;
   gchar *s;
   gchar *sort_key;
   GtkTreeIter iter;
 
   lun = UDISKS_PEEK_LUN (object);
-  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_icon);
+  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
   s = g_strdup_printf ("%s\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
                        description,
@@ -496,10 +497,12 @@ add_lun (GduDeviceTreeModel *model,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
                                      -1);
-  g_object_unref (media_icon);
+  if (media_icon != NULL)
+    g_object_unref (media_icon);
   g_object_unref (drive_icon);
   g_free (sort_key);
   g_free (s);
+  g_free (media_description);
   g_free (description);
   g_free (name);
 }

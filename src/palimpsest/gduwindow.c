@@ -948,6 +948,7 @@ setup_device_page (GduWindow   *window,
       gchar *lun_name;
       gchar *lun_desc;
       GIcon *lun_icon;
+      gchar *lun_media_desc;
       GIcon *lun_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
@@ -958,6 +959,7 @@ setup_device_page (GduWindow   *window,
                                 &lun_name,
                                 &lun_desc,
                                 &lun_icon,
+                                &lun_media_desc,
                                 &lun_media_icon);
       if (block_devices != NULL)
         gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), block_devices->data);
@@ -967,7 +969,9 @@ setup_device_page (GduWindow   *window,
       g_free (lun_name);
       g_free (lun_desc);
       g_object_unref (lun_icon);
-      g_object_unref (lun_media_icon);
+      g_free (lun_media_desc);
+      if (lun_media_icon != NULL)
+        g_object_unref (lun_media_icon);
 
       g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
       g_list_free (block_devices);
@@ -999,6 +1003,7 @@ update_device_page_for_lun (GduWindow    *window,
   gchar *media_compat_for_display;
   gchar *name;
   gchar *description;
+  gchar *media_description;
   GIcon *drive_icon;
   GIcon *media_icon;
   GtkWidget *w;
@@ -1012,7 +1017,7 @@ update_device_page_for_lun (GduWindow    *window,
   block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
-  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_icon);
+  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
 
   lun_vendor = udisks_lun_get_vendor (lun);
   lun_model = udisks_lun_get_model (lun);
@@ -1034,7 +1039,7 @@ update_device_page_for_lun (GduWindow    *window,
     }
   s = g_strdup_printf ("<big><b>%s</b></big>\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
-                       description,
+                       media_description != NULL ? media_description : description,
                        str->str);
   g_string_free (str, TRUE);
   w = gdu_window_get_widget (window, "devtab-drive-value-label");
@@ -1042,7 +1047,10 @@ update_device_page_for_lun (GduWindow    *window,
   gtk_widget_show (w);
   g_free (s);
   w = gdu_window_get_widget (window, "devtab-drive-image");
-  gtk_image_set_from_gicon (GTK_IMAGE (w), media_icon, GTK_ICON_SIZE_DIALOG);
+  if (media_icon != NULL)
+    gtk_image_set_from_gicon (GTK_IMAGE (w), media_icon, GTK_ICON_SIZE_DIALOG);
+  else
+    gtk_image_set_from_gicon (GTK_IMAGE (w), drive_icon, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (w);
 
   if (strlen (lun_vendor) == 0)
@@ -1109,9 +1117,11 @@ update_device_page_for_lun (GduWindow    *window,
   g_free (media_for_display);
   g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
   g_list_free (block_devices);
-  g_object_unref (media_icon);
+  if (media_icon != NULL)
+    g_object_unref (media_icon);
   g_object_unref (drive_icon);
   g_free (description);
+  g_free (media_description);
   g_free (name);
 }
 

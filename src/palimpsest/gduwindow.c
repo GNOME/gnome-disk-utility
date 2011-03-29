@@ -443,7 +443,7 @@ gdu_window_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-grid-hbox")),
                       window->volume_grid,
                       TRUE, TRUE, 0);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-details-label")),
+  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-volumes-label")),
                                  window->volume_grid);
   g_signal_connect (window->volume_grid,
                     "changed",
@@ -941,6 +941,7 @@ setup_device_page (GduWindow   *window,
   lun = UDISKS_PEEK_LUN (object);
   block = UDISKS_PEEK_BLOCK_DEVICE (object);
 
+  gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
   if (lun != NULL)
     {
       GList *block_devices;
@@ -958,10 +959,6 @@ setup_device_page (GduWindow   *window,
                                 &lun_desc,
                                 &lun_icon,
                                 &lun_media_icon);
-      gdu_volume_grid_set_container_icon (GDU_VOLUME_GRID (window->volume_grid),
-                                          lun_icon);
-
-      gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), TRUE);
       if (block_devices != NULL)
         gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), block_devices->data);
       else
@@ -977,7 +974,6 @@ setup_device_page (GduWindow   *window,
     }
   else if (block != NULL)
     {
-      gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
       gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), object);
     }
   else
@@ -997,8 +993,17 @@ update_device_page_for_lun (GduWindow    *window,
   GString *str;
   const gchar *lun_vendor;
   const gchar *lun_model;
+  const gchar *lun_media;
   const gchar* const *lun_media_compat;
+  gchar *media_for_display;
   gchar *media_compat_for_display;
+  gchar *name;
+  gchar *description;
+  GIcon *drive_icon;
+  GIcon *media_icon;
+  GtkWidget *w;
+  guint64 size;
+  const gchar *media_array[2];
 
   //g_debug ("In update_device_page_for_lun() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1007,9 +1012,16 @@ update_device_page_for_lun (GduWindow    *window,
   block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
+  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_icon);
+
   lun_vendor = udisks_lun_get_vendor (lun);
   lun_model = udisks_lun_get_model (lun);
+  lun_media = udisks_lun_get_media (lun);
   lun_media_compat = udisks_lun_get_media_compatibility (lun);
+  media_array[0] = lun_media;
+  media_array[1] = NULL;
+  /* TODO: udisks_util_get_media_for_display() */
+  media_for_display = udisks_util_get_media_compat_for_display (media_array);
   media_compat_for_display = udisks_util_get_media_compat_for_display (lun_media_compat);
 
   str = g_string_new (NULL);
@@ -1020,14 +1032,18 @@ update_device_page_for_lun (GduWindow    *window,
         g_string_append_c (str, ' ');
       g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object)));
     }
-  s = g_string_free (str, FALSE);
-  set_markup (window,
-              "devtab-device-label",
-              "devtab-device-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
+  s = g_strdup_printf ("<big><b>%s</b></big>\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       description,
+                       str->str);
+  g_string_free (str, TRUE);
+  w = gdu_window_get_widget (window, "devtab-drive-value-label");
+  gtk_label_set_markup (GTK_LABEL (w), s);
+  gtk_widget_show (w);
   g_free (s);
-  g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
-  g_list_free (block_devices);
+  w = gdu_window_get_widget (window, "devtab-drive-image");
+  gtk_image_set_from_gicon (GTK_IMAGE (w), media_icon, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (w);
 
   if (strlen (lun_vendor) == 0)
     s = g_strdup (lun_model);
@@ -1037,7 +1053,7 @@ update_device_page_for_lun (GduWindow    *window,
     s = g_strconcat (lun_vendor, " ", lun_model, NULL);
   set_markup (window,
               "devtab-model-label",
-              "devtab-model-value-label", s, SET_MARKUP_FLAGS_NONE);
+              "devtab-model-value-label", s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (s);
   set_markup (window,
               "devtab-serial-number-label",
@@ -1051,28 +1067,52 @@ update_device_page_for_lun (GduWindow    *window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
               udisks_lun_get_wwn (lun), SET_MARKUP_FLAGS_NONE);
-  set_size (window,
-            "devtab-size-label",
-            "devtab-size-value-label",
-            udisks_lun_get_size (lun));
   /* TODO: get this from udisks */
   gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
   gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
   gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
 
-  if (media_compat_for_display != NULL)
-  set_markup (window,
-              "devtab-compat-media-label",
-              "devtab-compat-media-value-label",
-              media_compat_for_display, SET_MARKUP_FLAGS_NONE);
-
-  g_free (media_compat_for_display);
+  size = udisks_lun_get_size (lun);
+  if (size > 0)
+    {
+      s = udisks_util_get_size_for_display (size, FALSE, TRUE);
+      set_markup (window,
+                  "devtab-drive-size-label",
+                  "devtab-drive-size-value-label",
+                  s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      g_free (s);
+      set_markup (window,
+                  "devtab-media-label",
+                  "devtab-media-value-label",
+                  media_for_display, SET_MARKUP_FLAGS_NONE);
+    }
+  else
+    {
+      set_markup (window,
+                  "devtab-drive-size-label",
+                  "devtab-drive-size-value-label",
+                  _("No Media"),
+                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      set_markup (window,
+                  "devtab-media-label",
+                  "devtab-media-value-label",
+                  media_compat_for_display, SET_MARKUP_FLAGS_NONE);
+    }
 
   if (udisks_lun_get_media_removable (lun))
     {
       gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                                   "devtab-action-eject")), TRUE);
     }
+
+  g_free (media_compat_for_display);
+  g_free (media_for_display);
+  g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
+  g_list_free (block_devices);
+  g_object_unref (media_icon);
+  g_object_unref (drive_icon);
+  g_free (description);
+  g_free (name);
 }
 
 static GDBusObject *
@@ -1329,19 +1369,17 @@ update_device_page (GduWindow *window)
   guint64 size;
 
   /* first hide everything */
+  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")));
+  for (l = children; l != NULL; l = l->next)
+    gtk_widget_hide (GTK_WIDGET (l->data));
+  g_list_free (children);
   children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")));
   for (l = children; l != NULL; l = l->next)
-    {
-      GtkWidget *child = GTK_WIDGET (l->data);
-      gtk_widget_hide (child);
-    }
+    gtk_widget_hide (GTK_WIDGET (l->data));
   g_list_free (children);
   children = gtk_action_group_list_actions (GTK_ACTION_GROUP (gtk_builder_get_object (window->builder, "devtab-actions")));
   for (l = children; l != NULL; l = l->next)
-    {
-      GtkAction *child = GTK_ACTION (l->data);
-      gtk_action_set_visible (child, FALSE);
-    }
+    gtk_action_set_visible (GTK_ACTION (l->data), FALSE);
   g_list_free (children);
   /* always show the generic toolbar item */
   gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
@@ -1354,11 +1392,12 @@ update_device_page (GduWindow *window)
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
+  if (lun != NULL)
+    update_device_page_for_lun (window, object, lun);
+
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {
-      if (lun != NULL)
-        update_device_page_for_lun (window, object, lun);
-      else if (block != NULL)
+      if (block != NULL)
         update_device_page_for_block (window, object, block, size);
     }
   else

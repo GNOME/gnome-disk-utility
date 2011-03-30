@@ -313,6 +313,7 @@ gdu_window_constructed (GObject *object)
   GtkWidget *label;
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
+  GList *children, *l;
 
   init_css (window);
 
@@ -338,6 +339,21 @@ gdu_window_constructed (GObject *object)
   gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
+
+  /* hide all children in the devtab list, otherwise the dialog is going to be huge by default */
+  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")));
+  for (l = children; l != NULL; l = l->next)
+    {
+      gtk_widget_hide (GTK_WIDGET (l->data));
+      gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
+    }
+  g_list_free (children);
+  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")));
+  for (l = children; l != NULL; l = l->next)
+    {
+      gtk_widget_hide (GTK_WIDGET (l->data));
+      gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
+    }
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
   gtk_notebook_set_show_tabs (notebook, FALSE);
@@ -927,16 +943,6 @@ setup_device_page (GduWindow   *window,
 {
   UDisksLun *lun;
   UDisksBlockDevice *block;
-  GList *children;
-  GList *l;
-
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")));
-  for (l = children; l != NULL; l = l->next)
-    {
-      GtkWidget *child = GTK_WIDGET (l->data);
-      gtk_widget_hide (child);
-    }
-  g_list_free (children);
 
   lun = UDISKS_PEEK_LUN (object);
   block = UDISKS_PEEK_BLOCK_DEVICE (object);
@@ -1358,26 +1364,23 @@ static void
 update_device_page (GduWindow *window)
 {
   GDBusObject *object;
-  GList *children;
-  GList *l;
   GduVolumeGridElementType type;
   UDisksBlockDevice *block;
   UDisksLun *lun;
   guint64 size;
+  GList *children;
+  GList *l;
 
   /* first hide everything */
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")));
-  for (l = children; l != NULL; l = l->next)
-    gtk_widget_hide (GTK_WIDGET (l->data));
-  g_list_free (children);
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")));
-  for (l = children; l != NULL; l = l->next)
-    gtk_widget_hide (GTK_WIDGET (l->data));
-  g_list_free (children);
+  gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")),
+                         (GtkCallback) gtk_widget_hide, NULL);
+  gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")),
+                         (GtkCallback) gtk_widget_hide, NULL);
   children = gtk_action_group_list_actions (GTK_ACTION_GROUP (gtk_builder_get_object (window->builder, "devtab-actions")));
   for (l = children; l != NULL; l = l->next)
     gtk_action_set_visible (GTK_ACTION (l->data), FALSE);
   g_list_free (children);
+
   /* always show the generic toolbar item */
   gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                               "devtab-action-generic")), TRUE);

@@ -1948,20 +1948,27 @@ grid_element_set_details (GduVolumeGrid  *grid,
                 const gchar *const *mount_points;
                 mount_points = udisks_filesystem_get_mount_points (filesystem);
                 if (g_strv_length ((gchar **) mount_points) > 0)
-                  {
-                    element->show_mounted = TRUE;
-                  }
+                  element->show_mounted = TRUE;
               }
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {
             const gchar *label;
+            UDisksSwapspace *swapspace;
+
             label = udisks_block_device_get_id_label (block);
             type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
             if (strlen (label) == 0)
               label = C_("volume-grid", "Swap");
             s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
             g_free (type_for_display);
+
+            swapspace = UDISKS_PEEK_SWAPSPACE (element->object);
+            if (swapspace != NULL)
+              {
+                if (udisks_swapspace_get_active (swapspace))
+                  element->show_mounted = TRUE;
+              }
           }
         else
           {

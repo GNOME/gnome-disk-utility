@@ -99,6 +99,8 @@ static void on_devtab_action_unmount_activated (GtkAction *action, gpointer user
 static void on_devtab_action_eject_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
 
 static void iscsi_connection_switch_on_notify_active (GObject     *object,
                                                       GParamSpec  *pspec,
@@ -518,6 +520,14 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-lock"),
                     "activate",
                     G_CALLBACK (on_devtab_action_lock_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-activate-swap"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_activate_swap_activated),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-deactivate-swap"),
+                    "activate",
+                    G_CALLBACK (on_devtab_action_deactivate_swap_activated),
                     window);
 }
 
@@ -1302,6 +1312,25 @@ update_device_page_for_block (GduWindow         *window,
             {
               gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                                           "devtab-action-mount")), TRUE);
+            }
+        }
+    }
+  else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
+           g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+    {
+      UDisksSwapspace *swapspace;
+      swapspace = UDISKS_PEEK_SWAPSPACE (object);
+      if (swapspace != NULL)
+        {
+          if (udisks_swapspace_get_active (swapspace))
+            {
+              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                          "devtab-action-deactivate-swap")), TRUE);
+            }
+          else
+            {
+              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                          "devtab-action-activate-swap")), TRUE);
             }
         }
     }
@@ -2226,6 +2255,84 @@ on_devtab_action_lock_activated (GtkAction *action,
                                  gpointer   user_data)
 {
   g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+swapspace_start_cb (UDisksSwapspace  *swapspace,
+                    GAsyncResult     *res,
+                    gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_swapspace_call_start_finish (swapspace,
+                                           res,
+                                           &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error starting swap"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GDBusObject *object;
+  UDisksSwapspace *swapspace;
+  const gchar *options[] = {NULL};
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  swapspace = UDISKS_PEEK_SWAPSPACE (object);
+  udisks_swapspace_call_start (swapspace,
+                               options, /* options */
+                               NULL, /* cancellable */
+                               (GAsyncReadyCallback) swapspace_start_cb,
+                               g_object_ref (window));
+}
+
+static void
+swapspace_stop_cb (UDisksSwapspace  *swapspace,
+                   GAsyncResult     *res,
+                   gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_swapspace_call_stop_finish (swapspace,
+                                          res,
+                                          &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error stopping swap"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GDBusObject *object;
+  UDisksSwapspace *swapspace;
+  const gchar *options[] = {NULL};
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  swapspace = UDISKS_PEEK_SWAPSPACE (object);
+  udisks_swapspace_call_stop (swapspace,
+                              options, /* options */
+                              NULL, /* cancellable */
+                              (GAsyncReadyCallback) swapspace_stop_cb,
+                              g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

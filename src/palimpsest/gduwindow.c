@@ -1072,6 +1072,7 @@ update_device_page_for_lun (GduWindow    *window,
   /* TODO: get this from udisks */
   gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
   gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
+  gtk_widget_set_no_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"), FALSE);
   gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
 
   size = udisks_lun_get_size (lun);

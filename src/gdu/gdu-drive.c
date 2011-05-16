@@ -682,7 +682,7 @@ gdu_drive_get_name (GduPresentable *presentable)
 
         if (gdu_device_is_linux_loop (drive->priv->device)) {
                 /* Translators: This is the name of a "Drive" backed by a file.
-                 * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+                 * The %s is the size of the file (e.g. "42 GB" or "5 kB").
                  *
                  * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
                  */

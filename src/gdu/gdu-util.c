@@ -86,7 +86,7 @@ get_pow10_size (guint64 size)
 
         if (size < MEGABYTE_FACTOR) {
                 displayed_size = (double) size / KILOBYTE_FACTOR;
-                unit = "KB";
+                unit = "kB";
         } else if (size < GIGABYTE_FACTOR) {
                 displayed_size = (double) size / MEGABYTE_FACTOR;
                 unit = "MB";
@@ -134,7 +134,7 @@ gdu_util_get_size_for_display (guint64 size,
                         gchar *pow10_str;
                         pow10_str = get_pow10_size (size);
 
-                        /* Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
+                        /* Translators: The first %s is the size in power-of-10 units, e.g. '100 kB'
                          * the second %s is the size as a number e.g. '100,000 bytes'
                          */
                         str = g_strdup_printf (_("%s (%s bytes)"), pow10_str, size_str);
@@ -885,7 +885,7 @@ gdu_util_get_speed_for_display (guint64 speed)
 
         if (speed < 1000 * 1000) {
                 displayed_speed = (double) speed / 1000.0;
-                str = g_strdup_printf (_("%.1f KB/s"), displayed_speed);
+                str = g_strdup_printf (_("%.1f kB/s"), displayed_speed);
         } else if (speed < 1000 * 1000 * 1000) {
                 displayed_speed = (double) speed / 1000.0 / 1000.0;
                 str = g_strdup_printf (_("%.1f MB/s"), displayed_speed);

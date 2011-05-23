@@ -164,7 +164,7 @@ gdu_device_tree_model_set_property (GObject      *object,
 
 typedef struct
 {
-  GDBusObject *object;
+  UDisksObject *object;
   const gchar *object_path;
   GtkTreeIter iter;
   gboolean found;
@@ -177,7 +177,7 @@ find_iter_for_object_cb (GtkTreeModel  *model,
                          gpointer       user_data)
 {
   FindIterData *data = user_data;
-  GDBusObject *iter_object;
+  UDisksObject *iter_object;
 
   iter_object = NULL;
 
@@ -195,7 +195,7 @@ find_iter_for_object_cb (GtkTreeModel  *model,
       goto out;
     }
 
-  if (g_strcmp0 (g_dbus_object_get_object_path (iter_object), data->object_path) == 0)
+  if (g_strcmp0 (g_dbus_object_get_object_path (G_DBUS_OBJECT (iter_object)), data->object_path) == 0)
     {
       data->iter = *iter;
       data->found = TRUE;
@@ -211,7 +211,7 @@ find_iter_for_object_cb (GtkTreeModel  *model,
 
 static gboolean
 find_iter_for_object (GduDeviceTreeModel *model,
-                      GDBusObject        *object,
+                      UDisksObject       *object,
                       GtkTreeIter        *out_iter)
 {
   FindIterData data;
@@ -459,7 +459,7 @@ nuke_lun_header (GduDeviceTreeModel *model)
 
 static void
 add_lun (GduDeviceTreeModel *model,
-         GDBusObject        *object,
+         UDisksObject       *object,
          GtkTreeIter        *parent)
 {
   UDisksLun *lun;
@@ -472,7 +472,7 @@ add_lun (GduDeviceTreeModel *model,
   gchar *sort_key;
   GtkTreeIter iter;
 
-  lun = UDISKS_PEEK_LUN (object);
+  lun = udisks_object_peek_lun (object);
   udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
   s = g_strdup_printf ("%s\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
@@ -487,7 +487,7 @@ add_lun (GduDeviceTreeModel *model,
   //         g_icon_to_string (drive_icon),
   //         g_icon_to_string (media_icon));
 
-  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
+  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -509,7 +509,7 @@ add_lun (GduDeviceTreeModel *model,
 
 static void
 remove_lun (GduDeviceTreeModel *model,
-            GDBusObject        *object)
+            UDisksObject       *object)
 {
   GtkTreeIter iter;
 
@@ -518,7 +518,7 @@ remove_lun (GduDeviceTreeModel *model,
                              &iter))
     {
       g_warning ("Error finding iter for object at %s",
-                 g_dbus_object_get_object_path (object));
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       goto out;
     }
 
@@ -529,15 +529,15 @@ remove_lun (GduDeviceTreeModel *model,
 }
 
 static gboolean
-should_include_lun (GDBusObject *object,
-                    gboolean     allow_iscsi)
+should_include_lun (UDisksObject *object,
+                    gboolean      allow_iscsi)
 {
   UDisksLun *lun;
   gboolean ret;
 
   ret = FALSE;
 
-  lun = UDISKS_PEEK_LUN (object);
+  lun = udisks_object_peek_lun (object);
 
   /* unless specificlly allowed, don't show LUNs paired with an iSCSI target */
   if (!allow_iscsi && g_strcmp0 (udisks_lun_get_iscsi_target (lun), "/") != 0)
@@ -565,10 +565,10 @@ update_luns (GduDeviceTreeModel *model)
   luns = NULL;
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksLun *lun;
 
-      lun = UDISKS_PEEK_LUN (object);
+      lun = udisks_object_peek_lun (object);
       if (lun == NULL)
         continue;
 
@@ -586,7 +586,7 @@ update_luns (GduDeviceTreeModel *model)
 
   for (l = removed_luns; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       g_assert (g_list_find (model->current_luns, object) != NULL);
       model->current_luns = g_list_remove (model->current_luns, object);
       remove_lun (model, object);
@@ -594,7 +594,7 @@ update_luns (GduDeviceTreeModel *model)
     }
   for (l = added_luns; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object));
       add_lun (model, object, get_lun_header_iter (model));
     }
@@ -651,7 +651,7 @@ nuke_block_header (GduDeviceTreeModel *model)
 
 static void
 add_block (GduDeviceTreeModel  *model,
-           GDBusObject         *object,
+           UDisksObject        *object,
            GtkTreeIter         *parent)
 {
   UDisksBlockDevice *block;
@@ -664,7 +664,7 @@ add_block (GduDeviceTreeModel  *model,
   guint64 size;
   gchar *size_str;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
   size = udisks_block_device_get_size (block);
   size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
 
@@ -704,7 +704,7 @@ add_block (GduDeviceTreeModel  *model,
                            preferred_device);
     }
 
-  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
+  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -722,7 +722,7 @@ add_block (GduDeviceTreeModel  *model,
 
 static void
 remove_block (GduDeviceTreeModel  *model,
-              GDBusObject         *object)
+              UDisksObject        *object)
 {
   GtkTreeIter iter;
 
@@ -731,7 +731,7 @@ remove_block (GduDeviceTreeModel  *model,
                              &iter))
     {
       g_warning ("Error finding iter for object at %s",
-                 g_dbus_object_get_object_path (object));
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       goto out;
     }
 
@@ -742,7 +742,7 @@ remove_block (GduDeviceTreeModel  *model,
 }
 
 static gboolean
-should_include_block (GDBusObject *object)
+should_include_block (UDisksObject *object)
 {
   UDisksBlockDevice *block;
   gboolean ret;
@@ -753,7 +753,7 @@ should_include_block (GDBusObject *object)
 
   ret = FALSE;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
 
   /* RAM devices are useless */
   device = udisks_block_device_get_device (block);
@@ -801,10 +801,10 @@ update_blocks (GduDeviceTreeModel *model)
   blocks = NULL;
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      block = udisks_object_peek_block_device (object);
       if (block == NULL)
         continue;
 
@@ -822,7 +822,7 @@ update_blocks (GduDeviceTreeModel *model)
 
   for (l = removed_blocks; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
 
       g_assert (g_list_find (model->current_blocks, object) != NULL);
 
@@ -832,7 +832,7 @@ update_blocks (GduDeviceTreeModel *model)
     }
   for (l = added_blocks; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object));
       add_block (model, object, get_block_header_iter (model));
     }
@@ -889,7 +889,7 @@ nuke_iscsi_targets_header (GduDeviceTreeModel *model)
 
 static void
 add_iscsi_target (GduDeviceTreeModel  *model,
-                  GDBusObject         *object,
+                  UDisksObject        *object,
                   GtkTreeIter         *parent)
 {
   UDisksIScsiTarget *target;
@@ -898,7 +898,7 @@ add_iscsi_target (GduDeviceTreeModel  *model,
   gchar *sort_key;
   GtkTreeIter iter;
 
-  target = UDISKS_PEEK_ISCSI_TARGET (object);
+  target = udisks_object_peek_iscsi_target (object);
 
 #if 0
   GIcon *base_icon;
@@ -919,7 +919,7 @@ add_iscsi_target (GduDeviceTreeModel  *model,
                        "Remote iSCSI Target", /* TODO: alias */
                        udisks_iscsi_target_get_name (target));
 
-  sort_key = g_strdup (g_dbus_object_get_object_path (object)); /* for now */
+  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -936,7 +936,7 @@ add_iscsi_target (GduDeviceTreeModel  *model,
 
 static void
 remove_iscsi_target (GduDeviceTreeModel  *model,
-                     GDBusObject         *object)
+                     UDisksObject        *object)
 {
   GtkTreeIter iter;
 
@@ -945,7 +945,7 @@ remove_iscsi_target (GduDeviceTreeModel  *model,
                              &iter))
     {
       g_warning ("Error finding iter for object at %s",
-                 g_dbus_object_get_object_path (object));
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       goto out;
     }
 
@@ -956,7 +956,7 @@ remove_iscsi_target (GduDeviceTreeModel  *model,
 }
 
 static gboolean
-should_include_iscsi_target (GDBusObject *object)
+should_include_iscsi_target (UDisksObject *object)
 {
   /* for now, just include all of them */
   return TRUE;
@@ -978,10 +978,10 @@ update_iscsi_targets (GduDeviceTreeModel *model)
   iscsi_targets_and_luns = NULL;
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksIScsiTarget *target;
 
-      target = UDISKS_PEEK_ISCSI_TARGET (object);
+      target = udisks_object_peek_iscsi_target (object);
       if (target == NULL)
         continue;
 
@@ -993,12 +993,12 @@ update_iscsi_targets (GduDeviceTreeModel *model)
           iscsi_targets_and_luns = g_list_prepend (iscsi_targets_and_luns, g_object_ref (object));
 
           /* also include the LUNs that are associated with this target */
-          target_object_path = g_dbus_object_get_object_path (object);
+          target_object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
           for (ll = objects; ll != NULL; ll = ll->next)
             {
-              GDBusObject *lun_object = G_DBUS_OBJECT (ll->data);
+              UDisksObject *lun_object = UDISKS_OBJECT (ll->data);
               UDisksLun *lun;
-              lun = UDISKS_PEEK_LUN (lun_object);
+              lun = udisks_object_peek_lun (lun_object);
               if (lun != NULL)
                 {
                   if (g_strcmp0 (udisks_lun_get_iscsi_target (lun), target_object_path) == 0)
@@ -1021,7 +1021,7 @@ update_iscsi_targets (GduDeviceTreeModel *model)
 
   for (l = removed; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
 
       g_assert (g_list_find (model->current_iscsi_targets_and_luns, object) != NULL);
 
@@ -1033,8 +1033,8 @@ update_iscsi_targets (GduDeviceTreeModel *model)
   /* Two passes: first add the iSCSI targets ... */
   for (l = added; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
-      if (UDISKS_PEEK_ISCSI_TARGET (object) != NULL)
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_iscsi_target (object) != NULL)
         {
           model->current_iscsi_targets_and_luns = g_list_prepend (model->current_iscsi_targets_and_luns,
                                                               g_object_ref (object));
@@ -1044,14 +1044,14 @@ update_iscsi_targets (GduDeviceTreeModel *model)
   /* ... and then the LUNs */
   for (l = added; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
-      if (UDISKS_PEEK_LUN (object) != NULL)
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_lun (object) != NULL)
         {
           GtkTreeIter iter;
           model->current_iscsi_targets_and_luns = g_list_prepend (model->current_iscsi_targets_and_luns,
                                                                   g_object_ref (object));
           g_warn_if_fail (find_iter_for_object_path (model,
-                                                     udisks_lun_get_iscsi_target (UDISKS_PEEK_LUN (object)),
+                                                     udisks_lun_get_iscsi_target (udisks_object_peek_lun (object)),
                                                      &iter));
           add_lun (model, object, &iter);
         }

@@ -33,7 +33,7 @@ struct _GduIScsiPathModel
   UDisksClient *client;
 
   UDisksIScsiTarget *iscsi_target;
-  GDBusObject *object;
+  UDisksObject *object;
 };
 
 typedef struct
@@ -131,7 +131,7 @@ gdu_iscsi_path_model_constructed (GObject *object)
   GType types[GDU_ISCSI_PATH_MODEL_N_COLUMNS];
   /* GDBusObjectManager *object_manager; */
 
-  model->iscsi_target = UDISKS_GET_ISCSI_TARGET (model->object);
+  model->iscsi_target = udisks_object_get_iscsi_target (model->object);
   g_assert (model->iscsi_target != NULL);
 
   types[0] = G_TYPE_BOOLEAN;
@@ -185,14 +185,14 @@ gdu_iscsi_path_model_class_init (GduIScsiPathModelClass *klass)
   /**
    * GduIScsiPathModel:object:
    *
-   * The #GDBusObject that is a iSCSI target.
+   * The #UDisksObject that is a iSCSI target.
    */
   g_object_class_install_property (gobject_class,
                                    PROP_OBJECT,
                                    g_param_spec_object ("object",
                                                         "Object",
                                                         "The iSCSI target",
-                                                        G_TYPE_DBUS_OBJECT,
+                                                        UDISKS_TYPE_OBJECT,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY |
@@ -202,7 +202,7 @@ gdu_iscsi_path_model_class_init (GduIScsiPathModelClass *klass)
 /**
  * gdu_iscsi_path_model_new:
  * @client: A #UDisksClient.
- * @object: A #GDBusObject.
+ * @object: A #UDisksObject.
  *
  * Creates a new #GduIScsiPathModel for viewing the paths on the iSCSI
  * target on @object.
@@ -211,7 +211,7 @@ gdu_iscsi_path_model_class_init (GduIScsiPathModelClass *klass)
  */
 GduIScsiPathModel *
 gdu_iscsi_path_model_new (UDisksClient  *client,
-                          GDBusObject   *object)
+                          UDisksObject  *object)
 {
   return GDU_ISCSI_PATH_MODEL (g_object_new (GDU_TYPE_ISCSI_PATH_MODEL,
                                              "client", client,
@@ -239,12 +239,12 @@ gdu_iscsi_path_model_get_client (GduIScsiPathModel *model)
  * gdu_iscsi_path_model_get_object:
  * @model: A #GduIScsiPathModel.
  *
- * Gets the #GDBusObject used by @model.
+ * Gets the #UDisksObject used by @model.
  *
- * Returns: (transfer none): A #GDBusObject. Do not free, the object
+ * Returns: (transfer none): A #UDisksObject. Do not free, the object
  * belongs to @model.
  */
-GDBusObject *
+UDisksObject *
 gdu_iscsi_path_model_get_object (GduIScsiPathModel *model)
 {
   g_return_val_if_fail (GDU_IS_ISCSI_PATH_MODEL (model), NULL);

@@ -52,7 +52,7 @@ struct _GduWindow
   GduDeviceTreeModel *model;
 
   DetailsPage current_page;
-  GDBusObject *current_object;
+  UDisksObject *current_object;
 
   GtkWidget *volume_grid;
   GtkWidget *write_cache_switch;
@@ -81,11 +81,11 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
 
-static void setup_device_page (GduWindow *window, GDBusObject *object);
+static void setup_device_page (GduWindow *window, UDisksObject *object);
 static void update_device_page (GduWindow *window);
 static void teardown_device_page (GduWindow *window);
 
-static void setup_iscsi_target_page (GduWindow *window, GDBusObject *object);
+static void setup_iscsi_target_page (GduWindow *window, UDisksObject *object);
 static void update_iscsi_target_page (GduWindow *window);
 static void teardown_iscsi_target_page (GduWindow *window);
 
@@ -209,21 +209,21 @@ on_row_inserted (GtkTreeModel *tree_model,
 }
 
 static void select_details_page (GduWindow    *window,
-                                 GDBusObject  *object,
+                                 UDisksObject *object,
                                  DetailsPage   page);
 
 static void
-set_selected_object (GduWindow   *window,
-                     GDBusObject *object)
+set_selected_object (GduWindow    *window,
+                     UDisksObject *object)
 {
   if (object != NULL)
     {
-      if (UDISKS_PEEK_LUN (object) != NULL ||
-          UDISKS_PEEK_BLOCK_DEVICE (object) != NULL)
+      if (udisks_object_peek_lun (object) != NULL ||
+          udisks_object_peek_block_device (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_DEVICE);
         }
-      else if (UDISKS_PEEK_ISCSI_TARGET (object) != NULL)
+      else if (udisks_object_peek_iscsi_target (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_ISCSI_TARGET);
         }
@@ -248,7 +248,7 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 
   if (gtk_tree_selection_get_selected (tree_selection, &model, &iter))
     {
-      GDBusObject *object;
+      UDisksObject *object;
       gtk_tree_model_get (model,
                           &iter,
                           GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT,
@@ -657,9 +657,9 @@ gdu_window_get_widget (GduWindow    *window,
 }
 
 static void
-teardown_details_page (GduWindow   *window,
-                       GDBusObject *object,
-                       DetailsPage  page)
+teardown_details_page (GduWindow    *window,
+                       UDisksObject *object,
+                       DetailsPage   page)
 {
   //g_debug ("teardown for %s, page %d",
   //       object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
@@ -764,10 +764,10 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
   ret = NULL;
   for (l = object_proxies; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_GET_BLOCK_DEVICE (object);
+      block = udisks_object_get_block_device (object);
       if (block == NULL)
         continue;
 
@@ -784,19 +784,19 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
 }
 
 static gint
-block_device_compare_on_preferred (GDBusObject *a,
-                                   GDBusObject *b)
+block_device_compare_on_preferred (UDisksObject *a,
+                                   UDisksObject *b)
 {
-  return g_strcmp0 (udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (a)),
-                    udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (b)));
+  return g_strcmp0 (udisks_block_device_get_preferred_device (udisks_object_peek_block_device (a)),
+                    udisks_block_device_get_preferred_device (udisks_object_peek_block_device (b)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-setup_details_page (GduWindow    *window,
-                    GDBusObject  *object,
-                    DetailsPage   page)
+setup_details_page (GduWindow     *window,
+                    UDisksObject  *object,
+                    DetailsPage    page)
 {
   //g_debug ("setup for %s, page %d",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
@@ -841,9 +841,9 @@ update_details_page (GduWindow   *window,
 }
 
 static void
-select_details_page (GduWindow    *window,
-                     GDBusObject  *object,
-                     DetailsPage   page)
+select_details_page (GduWindow     *window,
+                     UDisksObject  *object,
+                     DetailsPage    page)
 {
   GtkNotebook *notebook;
 
@@ -868,8 +868,8 @@ select_details_page (GduWindow    *window,
 }
 
 static void
-update_all (GduWindow    *window,
-            GDBusObject  *object)
+update_all (GduWindow     *window,
+            UDisksObject  *object)
 {
   switch (window->current_page)
     {
@@ -901,7 +901,7 @@ on_object_added (GDBusObjectManager  *manager,
                  gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object);
+  update_all (window, UDISKS_OBJECT (object));
 }
 
 static void
@@ -910,7 +910,7 @@ on_object_removed (GDBusObjectManager  *manager,
                    gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object);
+  update_all (window, UDISKS_OBJECT (object));
 }
 
 static void
@@ -920,7 +920,7 @@ on_interface_added (GDBusObjectManager  *manager,
                     gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object);
+  update_all (window, UDISKS_OBJECT (object));
 }
 
 static void
@@ -930,7 +930,7 @@ on_interface_removed (GDBusObjectManager  *manager,
                       gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, object);
+  update_all (window, UDISKS_OBJECT (object));
 }
 
 static void
@@ -942,20 +942,20 @@ on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
                                        gpointer                    user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window, G_DBUS_OBJECT (object_proxy));
+  update_all (window, UDISKS_OBJECT (object_proxy));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-setup_device_page (GduWindow   *window,
-                   GDBusObject *object)
+setup_device_page (GduWindow     *window,
+                   UDisksObject  *object)
 {
   UDisksLun *lun;
   UDisksBlockDevice *block;
 
-  lun = UDISKS_PEEK_LUN (object);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  lun = udisks_object_peek_lun (object);
+  block = udisks_object_peek_block_device (object);
 
   gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
   if (lun != NULL)
@@ -968,7 +968,7 @@ setup_device_page (GduWindow   *window,
       GIcon *lun_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
+      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
       udisks_util_get_lun_info (lun,
@@ -1003,9 +1003,9 @@ setup_device_page (GduWindow   *window,
 }
 
 static void
-update_device_page_for_lun (GduWindow    *window,
-                            GDBusObject  *object,
-                            UDisksLun    *lun)
+update_device_page_for_lun (GduWindow     *window,
+                            UDisksObject  *object,
+                            UDisksLun     *lun)
 {
   gchar *s;
   GList *block_devices;
@@ -1025,7 +1025,7 @@ update_device_page_for_lun (GduWindow    *window,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-  block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (object));
+  block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
   udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
@@ -1036,10 +1036,10 @@ update_device_page_for_lun (GduWindow    *window,
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
     {
-      GDBusObject *block_object = G_DBUS_OBJECT (l->data);
+      UDisksObject *block_object = UDISKS_OBJECT (l->data);
       if (str->len > 0)
         g_string_append_c (str, ' ');
-      g_string_append (str, udisks_block_device_get_preferred_device (UDISKS_PEEK_BLOCK_DEVICE (block_object)));
+      g_string_append (str, udisks_block_device_get_preferred_device (udisks_object_peek_block_device (block_object)));
     }
   s = g_strdup_printf ("<big><b>%s</b></big>\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
@@ -1129,12 +1129,12 @@ update_device_page_for_lun (GduWindow    *window,
   g_free (name);
 }
 
-static GDBusObject *
+static UDisksObject *
 lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
                                            const gchar   *object_path)
 {
   GDBusObjectManager *object_manager;
-  GDBusObject *ret;
+  UDisksObject *ret;
   GList *objects;
   GList *l;
 
@@ -1144,10 +1144,10 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
   objects = g_dbus_object_manager_get_objects (object_manager);
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      block = udisks_object_peek_block_device (object);
       if (block == NULL)
         continue;
 
@@ -1166,10 +1166,10 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
 }
 
 static void
-update_device_page_for_block (GduWindow         *window,
-                              GDBusObject       *object,
-                              UDisksBlockDevice *block,
-                              guint64            size)
+update_device_page_for_block (GduWindow          *window,
+                              UDisksObject       *object,
+                              UDisksBlockDevice  *block,
+                              guint64             size)
 {
   const gchar *backing_file;
   const gchar *usage;
@@ -1255,13 +1255,13 @@ update_device_page_for_block (GduWindow         *window,
     }
   else
     {
-      GDBusObject *lun_object;
-      lun_object = g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                     udisks_block_device_get_lun (block));
+      UDisksObject *lun_object;
+      lun_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                                      udisks_block_device_get_lun (block));
       if (lun_object != NULL)
         {
           UDisksLun *lun;
-          lun = UDISKS_PEEK_LUN (lun_object);
+          lun = udisks_object_peek_lun (lun_object);
           if (udisks_lun_get_media_removable (lun))
             {
               gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
@@ -1274,7 +1274,7 @@ update_device_page_for_block (GduWindow         *window,
   if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0)
     {
       UDisksFilesystem *filesystem;
-      filesystem = UDISKS_PEEK_FILESYSTEM (object);
+      filesystem = udisks_object_peek_filesystem (object);
       if (filesystem != NULL)
         {
           const gchar *const *mount_points;
@@ -1319,7 +1319,7 @@ update_device_page_for_block (GduWindow         *window,
            g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
     {
       UDisksSwapspace *swapspace;
-      swapspace = UDISKS_PEEK_SWAPSPACE (object);
+      swapspace = udisks_object_peek_swapspace (object);
       if (swapspace != NULL)
         {
           if (udisks_swapspace_get_active (swapspace))
@@ -1336,10 +1336,10 @@ update_device_page_for_block (GduWindow         *window,
     }
   else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
     {
-      GDBusObject *cleartext_device;
+      UDisksObject *cleartext_device;
 
       cleartext_device = lookup_cleartext_device_for_crypto_device (window->client,
-                                                                    g_dbus_object_get_object_path (object));
+                                                                    g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       if (cleartext_device != NULL)
         {
           gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
@@ -1355,19 +1355,19 @@ update_device_page_for_block (GduWindow         *window,
 }
 
 static void
-update_device_page_for_no_media (GduWindow         *window,
-                                 GDBusObject       *object,
-                                 UDisksBlockDevice *block)
+update_device_page_for_no_media (GduWindow          *window,
+                                 UDisksObject       *object,
+                                 UDisksBlockDevice  *block)
 {
   //g_debug ("In update_device_page_for_no_media() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 }
 
 static void
-update_device_page_for_free_space (GduWindow         *window,
-                                   GDBusObject       *object,
-                                   UDisksBlockDevice *block,
-                                   guint64            size)
+update_device_page_for_free_space (GduWindow          *window,
+                                   UDisksObject       *object,
+                                   UDisksBlockDevice  *block,
+                                   guint64             size)
 {
   //g_debug ("In update_device_page_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -1393,7 +1393,7 @@ update_device_page_for_free_space (GduWindow         *window,
 static void
 update_device_page (GduWindow *window)
 {
-  GDBusObject *object;
+  UDisksObject *object;
   GduVolumeGridElementType type;
   UDisksBlockDevice *block;
   UDisksLun *lun;
@@ -1417,8 +1417,8 @@ update_device_page (GduWindow *window)
 
 
   object = window->current_object;
-  lun = UDISKS_PEEK_LUN (window->current_object);
-  block = UDISKS_PEEK_BLOCK_DEVICE (window->current_object);
+  lun = udisks_object_peek_lun (window->current_object);
+  block = udisks_object_peek_block_device (window->current_object);
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
@@ -1437,7 +1437,7 @@ update_device_page (GduWindow *window)
         object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
       if (object != NULL)
         {
-          block = UDISKS_PEEK_BLOCK_DEVICE (object);
+          block = udisks_object_peek_block_device (object);
           switch (type)
             {
             case GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER:
@@ -1557,7 +1557,7 @@ on_iscsi_active_toggled (GtkCellRendererToggle *renderer,
   tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "iscsi-connections-treeview"));
   tree_model = gtk_tree_view_get_model (tree_view);
 
-  target = UDISKS_PEEK_ISCSI_TARGET (window->current_object);
+  target = udisks_object_peek_iscsi_target (window->current_object);
   if (target == NULL)
     {
       g_warning ("Expected selected object to be an iSCSI target");
@@ -1737,7 +1737,7 @@ update_iscsi_target_page (GduWindow   *window)
     }
   g_list_free (children);
 
-  target = UDISKS_PEEK_ISCSI_TARGET (window->current_object);
+  target = udisks_object_peek_iscsi_target (window->current_object);
   /* TODO: get Alias from somewhere */
   set_markup (window,
               "iscsitab-alias-label",
@@ -1765,7 +1765,7 @@ iscsi_connection_switch_on_notify_active (GObject     *object,
   gboolean has_connections;
   UDisksIScsiTarget *target;
 
-  target = UDISKS_PEEK_ISCSI_TARGET (window->current_object);
+  target = udisks_object_peek_iscsi_target (window->current_object);
   if (target == NULL)
     {
       g_warning ("Expected selected object to be an iSCSI target");
@@ -1808,8 +1808,8 @@ iscsi_connection_switch_on_notify_active (GObject     *object,
 }
 
 static void
-setup_iscsi_target_page (GduWindow   *window,
-                         GDBusObject *object)
+setup_iscsi_target_page (GduWindow    *window,
+                         UDisksObject *object)
 {
   GtkTreeView *tree_view;
   GduIScsiPathModel *model;
@@ -1937,7 +1937,7 @@ on_change_filesystem_label (GduWindow *window)
   gint response;
   GtkWidget *dialog;
   GtkWidget *entry;
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksBlockDevice *block;
   const gchar *label;
   ChangeFilesystemLabelData data;
@@ -1946,7 +1946,7 @@ on_change_filesystem_label (GduWindow *window)
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
   g_assert (block != NULL);
 
   dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
@@ -2026,7 +2026,7 @@ on_change_partition_type (GduWindow *window)
   gint response;
   GtkWidget *dialog;
   GtkWidget *combo_box;
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksBlockDevice *block;
   const gchar *scheme;
   const gchar *cur_type;
@@ -2038,7 +2038,7 @@ on_change_partition_type (GduWindow *window)
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
   g_assert (block != NULL);
 
   dialog = gdu_window_get_widget (window, "change-partition-type-dialog");
@@ -2157,12 +2157,12 @@ on_devtab_action_mount_activated (GtkAction *action,
                                   gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksFilesystem *filesystem;
   const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  filesystem = UDISKS_PEEK_FILESYSTEM (object);
+  filesystem = udisks_object_peek_filesystem (object);
   udisks_filesystem_call_mount (filesystem,
                                 "", /* filesystem type */
                                 options, /* options */
@@ -2199,12 +2199,12 @@ on_devtab_action_unmount_activated (GtkAction *action,
                                     gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksFilesystem *filesystem;
   const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  filesystem = UDISKS_PEEK_FILESYSTEM (object);
+  filesystem = udisks_object_peek_filesystem (object);
   udisks_filesystem_call_unmount (filesystem,
                                   options, /* options */
                                   NULL, /* cancellable */
@@ -2284,12 +2284,12 @@ static void
 on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksSwapspace *swapspace;
   const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  swapspace = UDISKS_PEEK_SWAPSPACE (object);
+  swapspace = udisks_object_peek_swapspace (object);
   udisks_swapspace_call_start (swapspace,
                                options, /* options */
                                NULL, /* cancellable */
@@ -2322,12 +2322,12 @@ static void
 on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GDBusObject *object;
+  UDisksObject *object;
   UDisksSwapspace *swapspace;
   const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  swapspace = UDISKS_PEEK_SWAPSPACE (object);
+  swapspace = udisks_object_peek_swapspace (object);
   udisks_swapspace_call_stop (swapspace,
                               options, /* options */
                               NULL, /* cancellable */

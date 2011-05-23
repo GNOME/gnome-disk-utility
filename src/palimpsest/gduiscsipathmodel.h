@@ -45,9 +45,9 @@ enum
 
 GType               gdu_iscsi_path_model_get_type   (void) G_GNUC_CONST;
 GduIScsiPathModel  *gdu_iscsi_path_model_new        (UDisksClient      *client,
-                                                     GDBusObject       *object);
+                                                     UDisksObject      *object);
 UDisksClient       *gdu_iscsi_path_model_get_client (GduIScsiPathModel *model);
-GDBusObject        *gdu_iscsi_path_model_get_object (GduIScsiPathModel *model);
+UDisksObject       *gdu_iscsi_path_model_get_object (GduIScsiPathModel *model);
 
 
 G_END_DECLS

@@ -52,7 +52,7 @@ struct GridElement
   /* these values are set in recompute_grid() */
   gint fixed_width;
   gdouble size_ratio;
-  GDBusObject *object;
+  UDisksObject *object;
   guint64 offset;
   guint64 size;
 
@@ -102,7 +102,7 @@ struct _GduVolumeGrid
   GtkWidget parent;
 
   UDisksClient *client;
-  GDBusObject *block_device;
+  UDisksObject *block_device;
 
   gboolean container_visible;
   gchar *container_markup;
@@ -623,7 +623,7 @@ gdu_volume_grid_new (UDisksClient *client)
                                    NULL));
 }
 
-GDBusObject *
+UDisksObject *
 gdu_volume_grid_get_block_device (GduVolumeGrid *grid)
 {
   g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), NULL);
@@ -632,7 +632,7 @@ gdu_volume_grid_get_block_device (GduVolumeGrid *grid)
 
 void
 gdu_volume_grid_set_block_device (GduVolumeGrid     *grid,
-                                  GDBusObject  *block_device)
+                                  UDisksObject  *block_device)
 {
   g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
 
@@ -1400,7 +1400,7 @@ find_element_for_position (GduVolumeGrid *grid,
 static GridElement *
 do_find_element_for_offset_and_object (GList *elements,
                                        guint64 offset,
-                                       GDBusObject *object)
+                                       UDisksObject *object)
 {
   GList *l;
   GridElement *ret;
@@ -1429,19 +1429,19 @@ do_find_element_for_offset_and_object (GList *elements,
 static GridElement *
 find_element_for_offset_and_object (GduVolumeGrid  *grid,
                                     guint64         offset,
-                                    GDBusObject    *object)
+                                    UDisksObject    *object)
 {
   return do_find_element_for_offset_and_object (grid->elements, offset, object);
 }
 
 static gint
-partition_sort_by_offset_func (GDBusObject *a,
-                               GDBusObject *b)
+partition_sort_by_offset_func (UDisksObject *a,
+                               UDisksObject *b)
 {
   guint64 oa;
   guint64 ob;
-  oa = udisks_block_device_get_part_entry_offset (UDISKS_PEEK_BLOCK_DEVICE (a));
-  ob = udisks_block_device_get_part_entry_offset (UDISKS_PEEK_BLOCK_DEVICE (b));
+  oa = udisks_block_device_get_part_entry_offset (udisks_object_peek_block_device (a));
+  ob = udisks_block_device_get_part_entry_offset (udisks_object_peek_block_device (b));
   if (oa > ob)
     return 1;
   else if (oa < ob)
@@ -1453,12 +1453,12 @@ partition_sort_by_offset_func (GDBusObject *a,
 static void grid_element_set_details (GduVolumeGrid  *grid,
                                       GridElement    *element);
 
-static GDBusObject *
+static UDisksObject *
 lookup_cleartext_device_for_crypto_device (GduVolumeGrid *grid,
                                            const gchar   *object_path)
 {
   GDBusObjectManager *object_manager;
-  GDBusObject *ret;
+  UDisksObject *ret;
   GList *objects;
   GList *l;
 
@@ -1468,10 +1468,10 @@ lookup_cleartext_device_for_crypto_device (GduVolumeGrid *grid,
   objects = g_dbus_object_manager_get_objects (object_manager);
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      block = udisks_object_peek_block_device (object);
       if (block == NULL)
         continue;
 
@@ -1501,17 +1501,17 @@ maybe_add_crypto (GduVolumeGrid    *grid,
   if (element->object == NULL)
     goto out;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (element->object);
+  block = udisks_object_peek_block_device (element->object);
   if (block == NULL)
     goto out;
 
   if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
     {
-      GDBusObject *cleartext_object;
+      UDisksObject *cleartext_object;
       GridElement *embedded_cleartext_element;
 
       cleartext_object = lookup_cleartext_device_for_crypto_device (grid,
-                                   g_dbus_object_get_object_path (element->object));
+                                                                    g_dbus_object_get_object_path (G_DBUS_OBJECT (element->object)));
       if (cleartext_object == NULL)
         {
           element->show_padlock_closed = TRUE;
@@ -1525,7 +1525,7 @@ maybe_add_crypto (GduVolumeGrid    *grid,
           cleartext_element->size_ratio = 1.0;
           cleartext_element->object = g_object_ref (cleartext_object);
           cleartext_element->offset = 0;
-          cleartext_element->size = udisks_block_device_get_size (UDISKS_PEEK_BLOCK_DEVICE (cleartext_object));
+          cleartext_element->size = udisks_block_device_get_size (udisks_object_peek_block_device (cleartext_object));
           grid_element_set_details (grid, cleartext_element);
 
           /* recurse to handle multiple layers of encryption... */
@@ -1549,7 +1549,7 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
                                guint64         top_offset,
                                guint64         top_size,
                                GList          *partitions,
-                               GDBusObject    *extended_partition,
+                               UDisksObject    *extended_partition,
                                GList          *logical_partitions)
 {
   guint64 prev_end;
@@ -1566,11 +1566,11 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
   prev_element = NULL;
   for (l = partitions; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
       guint64 begin, end, size;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      block = udisks_object_peek_block_device (object);
       begin = udisks_block_device_get_part_entry_offset (block);
       size = udisks_block_device_get_part_entry_size (block);
       end = begin + size;
@@ -1650,7 +1650,7 @@ recompute_grid (GduVolumeGrid *grid)
 {
   GList *partitions;
   GList *logical_partitions;
-  GDBusObject *extended_partition;
+  UDisksObject *extended_partition;
   GList *objects;
   GDBusObjectManager *object_manager;
   GList *l;
@@ -1661,8 +1661,8 @@ recompute_grid (GduVolumeGrid *grid)
   GridElement *element;
   guint64 cur_selected_offset;
   guint64 cur_focused_offset;
-  GDBusObject *cur_selected_object;
-  GDBusObject *cur_focused_object;
+  UDisksObject *cur_selected_object;
+  UDisksObject *cur_focused_object;
 
   cur_selected_offset = G_MAXUINT64;
   cur_selected_object = NULL;
@@ -1718,8 +1718,8 @@ recompute_grid (GduVolumeGrid *grid)
       goto out;
     }
 
-  top_object_path = g_dbus_object_get_object_path (grid->block_device);
-  top_block = UDISKS_PEEK_BLOCK_DEVICE (grid->block_device);
+  top_object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (grid->block_device));
+  top_block = udisks_object_peek_block_device (grid->block_device);
   top_size = udisks_block_device_get_size (top_block);
 
   /* include "Free Space" elements if there is at least this much slack between
@@ -1734,11 +1734,11 @@ recompute_grid (GduVolumeGrid *grid)
   objects = g_dbus_object_manager_get_objects (object_manager);
   for (l = objects; l != NULL; l = l->next)
     {
-      GDBusObject *object = G_DBUS_OBJECT (l->data);
+      UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlockDevice *block;
       gboolean is_logical;
 
-      block = UDISKS_PEEK_BLOCK_DEVICE (object);
+      block = udisks_object_peek_block_device (object);
       if (block != NULL &&
           g_strcmp0 (udisks_block_device_get_part_entry_table (block),
                      top_object_path) == 0)
@@ -1855,7 +1855,7 @@ gdu_volume_grid_get_selected_type (GduVolumeGrid *grid)
   return grid->selected->type;
 }
 
-GDBusObject *
+UDisksObject *
 gdu_volume_grid_get_selected_device (GduVolumeGrid *grid)
 {
   g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), NULL);
@@ -1915,7 +1915,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
         gchar *type_for_display;
 
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
-        block = UDISKS_PEEK_BLOCK_DEVICE (element->object);
+        block = udisks_object_peek_block_device (element->object);
 
         usage = udisks_block_device_get_id_usage (block);
         type = udisks_block_device_get_id_type (block);
@@ -1942,7 +1942,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
             s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
             g_free (type_for_display);
 
-            filesystem = UDISKS_PEEK_FILESYSTEM (element->object);
+            filesystem = udisks_object_peek_filesystem (element->object);
             if (filesystem != NULL)
               {
                 const gchar *const *mount_points;
@@ -1963,7 +1963,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
             s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
             g_free (type_for_display);
 
-            swapspace = UDISKS_PEEK_SWAPSPACE (element->object);
+            swapspace = udisks_object_peek_swapspace (element->object);
             if (swapspace != NULL)
               {
                 if (udisks_swapspace_get_active (swapspace))
@@ -1989,20 +1989,20 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
 static gboolean
 is_disk_or_partition_in_grid (GduVolumeGrid *grid,
-                              GDBusObject   *object)
+                              UDisksObject   *object)
 {
   UDisksBlockDevice *block;
   gboolean ret;
 
   ret = FALSE;
 
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
   if (block == NULL)
     goto out;
 
   if (object == grid->block_device ||
       g_strcmp0 (udisks_block_device_get_part_entry_table (block),
-                 g_dbus_object_get_object_path (grid->block_device)) == 0)
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (grid->block_device))) == 0)
     ret = TRUE;
 
  out:
@@ -2011,11 +2011,11 @@ is_disk_or_partition_in_grid (GduVolumeGrid *grid,
 
 gboolean
 gdu_volume_grid_includes_object (GduVolumeGrid       *grid,
-                                       GDBusObject    *object)
+                                       UDisksObject    *object)
 {
   UDisksBlockDevice *block;
   const gchar *crypto_backing_device;
-  GDBusObject *crypto_object;
+  UDisksObject *crypto_object;
   gboolean ret;
 
   g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), FALSE);
@@ -2034,12 +2034,12 @@ gdu_volume_grid_includes_object (GduVolumeGrid       *grid,
     }
 
   /* handle when it's a crypt devices for our grid or a partition in it */
-  block = UDISKS_PEEK_BLOCK_DEVICE (object);
+  block = udisks_object_peek_block_device (object);
   if (block != NULL)
     {
       crypto_backing_device = udisks_block_device_get_crypto_backing_device (block);
-      crypto_object = g_dbus_object_manager_get_object (udisks_client_get_object_manager (grid->client),
-                                                        crypto_backing_device);
+      crypto_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (grid->client),
+                                                                         crypto_backing_device);
       if (crypto_object != NULL)
         {
           if (is_disk_or_partition_in_grid (grid, crypto_object))
@@ -2060,7 +2060,7 @@ gdu_volume_grid_includes_object (GduVolumeGrid       *grid,
 
 static void
 maybe_update (GduVolumeGrid    *grid,
-              GDBusObject      *object)
+              UDisksObject      *object)
 {
   if (gdu_volume_grid_includes_object (grid, object))
     recompute_grid (grid);
@@ -2072,7 +2072,7 @@ on_object_added (GDBusObjectManager  *manager,
                  gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object);
+  maybe_update (grid, UDISKS_OBJECT (object));
 }
 
 static void
@@ -2081,7 +2081,7 @@ on_object_removed (GDBusObjectManager  *manager,
                    gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object);
+  maybe_update (grid, UDISKS_OBJECT (object));
 }
 
 static void
@@ -2091,7 +2091,7 @@ on_interface_added (GDBusObjectManager  *manager,
                     gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object);
+  maybe_update (grid, UDISKS_OBJECT (object));
 }
 
 static void
@@ -2101,7 +2101,7 @@ on_interface_removed (GDBusObjectManager  *manager,
                       gpointer             user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, object);
+  maybe_update (grid, UDISKS_OBJECT (object));
 }
 
 static void
@@ -2113,7 +2113,7 @@ on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
                                        gpointer                    user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, G_DBUS_OBJECT (object_proxy));
+  maybe_update (grid, UDISKS_OBJECT (object_proxy));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

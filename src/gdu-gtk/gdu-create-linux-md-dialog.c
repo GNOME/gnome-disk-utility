@@ -537,7 +537,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         g_free (s);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-        vbox2 = gtk_vbox_new (FALSE, 12);
+        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 6, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
@@ -693,7 +693,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), disk_selection_widget);
 
-        vbox2 = gtk_vbox_new (FALSE, 12);
+        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 6, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
@@ -717,7 +717,7 @@ gdu_create_linux_md_dialog_constructed (GObject *object)
 
         /* -------------------------------------------------------------------------------- */
 
-        hbox = gtk_hbox_new (FALSE, 6);
+        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
         gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
         image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);

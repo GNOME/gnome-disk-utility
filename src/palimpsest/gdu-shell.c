@@ -1114,7 +1114,7 @@ create_window (GduShell *shell)
         gtk_window_set_default_size (GTK_WINDOW (shell->priv->app_window), 800, 600);
         gtk_window_set_title (GTK_WINDOW (shell->priv->app_window), _("Disk Utility"));
 
-        vbox = gtk_vbox_new (FALSE, 0);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         gtk_container_add (GTK_CONTAINER (shell->priv->app_window), vbox);
 
         shell->priv->ui_manager = create_ui_manager (shell);
@@ -1142,17 +1142,17 @@ create_window (GduShell *shell)
 
         /* --- */
 
-        vbox1 = gtk_vbox_new (FALSE, 0);
+        vbox1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
         /* --- */
 
-        vbox2 = gtk_vbox_new (FALSE, 0);
+        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
         //gtk_container_set_border_width (GTK_CONTAINER (vbox2), 12);
         gtk_box_pack_start (GTK_BOX (vbox1), vbox2, TRUE, TRUE, 0);
 
         /* --- */
 
-        shell->priv->sections_vbox = gtk_vbox_new (FALSE, 12);
+        shell->priv->sections_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         gtk_container_set_border_width (GTK_CONTAINER (shell->priv->sections_vbox), 6);
         gtk_box_pack_start (GTK_BOX (vbox2), shell->priv->sections_vbox, TRUE, TRUE, 0);
 

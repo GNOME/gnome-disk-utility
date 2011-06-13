@@ -48,7 +48,7 @@ enum
 
 static void do_relayout (GduDetailsTable *table);
 
-G_DEFINE_TYPE (GduDetailsTable, gdu_details_table, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GduDetailsTable, gdu_details_table, GTK_TYPE_BOX)
 
 static void
 gdu_details_table_finalize (GObject *object)
@@ -448,7 +448,7 @@ do_relayout (GduDetailsTable *table)
                                   0, 1, row, row + 1,
                                   GTK_FILL, GTK_FILL, 0, 0);
 
-                hbox = gtk_hbox_new (FALSE, 2);
+                hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 
                 data->image = gtk_image_new_from_stock ("gtk-missing-image",
                                                         GTK_ICON_SIZE_MENU);

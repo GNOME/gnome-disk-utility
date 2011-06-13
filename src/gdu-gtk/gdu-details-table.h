@@ -39,7 +39,7 @@ typedef struct GduDetailsTablePrivate GduDetailsTablePrivate;
 
 struct GduDetailsTable
 {
-        GtkHBox parent;
+        GtkBox parent;
 
         /*< private >*/
         GduDetailsTablePrivate *priv;
@@ -47,7 +47,7 @@ struct GduDetailsTable
 
 struct GduDetailsTableClass
 {
-        GtkHBoxClass parent_class;
+        GtkBoxClass parent_class;
 };
 
 GType       gdu_details_table_get_type        (void) G_GNUC_CONST;

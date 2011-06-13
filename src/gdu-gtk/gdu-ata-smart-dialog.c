@@ -1123,7 +1123,7 @@ on_self_test_button_clicked (GduButtonElement *button_element,
 	gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (test_dialog), FALSE);
 
-	hbox = gtk_hbox_new (FALSE, 12);
+	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
 	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
@@ -1131,7 +1131,7 @@ on_self_test_button_clicked (GduButtonElement *button_element,
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-	main_vbox = gtk_vbox_new (FALSE, 10);
+	main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
 	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
 
 	label = gtk_label_new (NULL);
@@ -1278,7 +1278,7 @@ gdu_ata_smart_dialog_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 12, 12, 12, 12);
         gtk_box_pack_start (GTK_BOX (content_area), align, TRUE, TRUE, 0);
 
-        vbox = gtk_vbox_new (FALSE, 12);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         gtk_container_add (GTK_CONTAINER (align), vbox);
 
         /* ---------------------------------------------------------------------------------------------------- */

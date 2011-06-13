@@ -192,13 +192,13 @@ gdu_error_dialog_constructed (GObject *object)
                 image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_DIALOG);
         }
 
-        hbox = gtk_hbox_new (FALSE, 12);
+        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
         gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-        vbox = gtk_vbox_new (FALSE, 12);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
 
         s = g_strdup_printf ("<big><big><b>%s</b></big></big>",

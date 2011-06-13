@@ -695,7 +695,7 @@ gdu_drive_benchmark_dialog_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 12, 12, 12, 12);
         gtk_box_pack_start (GTK_BOX (content_area), align, TRUE, TRUE, 0);
 
-        vbox = gtk_vbox_new (FALSE, 12);
+        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         gtk_container_add (GTK_CONTAINER (align), vbox);
 
         /* ---------------------------------------------------------------------------------------------------- */
@@ -720,7 +720,7 @@ gdu_drive_benchmark_dialog_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 36, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
 
-        vbox2 = gtk_vbox_new (FALSE, 12);
+        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
 
         /* ---------------------------------------------------------------------------------------------------- */

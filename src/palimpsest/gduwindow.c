@@ -208,7 +208,7 @@ set_selected_object (GduWindow    *window,
 {
   if (object != NULL)
     {
-      if (udisks_object_peek_lun (object) != NULL ||
+      if (udisks_object_peek_drive (object) != NULL ||
           udisks_object_peek_block_device (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_DEVICE);
@@ -718,8 +718,8 @@ set_size (GduWindow   *window,
 }
 
 static GList *
-get_top_level_block_devices_for_lun (GduWindow   *window,
-                                     const gchar *lun_object_path)
+get_top_level_block_devices_for_drive (GduWindow   *window,
+                                       const gchar *drive_object_path)
 {
   GList *ret;
   GList *l;
@@ -739,7 +739,7 @@ get_top_level_block_devices_for_lun (GduWindow   *window,
       if (block == NULL)
         continue;
 
-      if (g_strcmp0 (udisks_block_device_get_lun (block), lun_object_path) == 0 &&
+      if (g_strcmp0 (udisks_block_device_get_drive (block), drive_object_path) == 0 &&
           !udisks_block_device_get_part_entry (block))
         {
           ret = g_list_append (ret, g_object_ref (object));
@@ -913,43 +913,43 @@ static void
 setup_device_page (GduWindow     *window,
                    UDisksObject  *object)
 {
-  UDisksLun *lun;
+  UDisksDrive *drive;
   UDisksBlockDevice *block;
 
-  lun = udisks_object_peek_lun (object);
+  drive = udisks_object_peek_drive (object);
   block = udisks_object_peek_block_device (object);
 
   gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
-  if (lun != NULL)
+  if (drive != NULL)
     {
       GList *block_devices;
-      gchar *lun_name;
-      gchar *lun_desc;
-      GIcon *lun_icon;
-      gchar *lun_media_desc;
-      GIcon *lun_media_icon;
+      gchar *drive_name;
+      gchar *drive_desc;
+      GIcon *drive_icon;
+      gchar *drive_media_desc;
+      GIcon *drive_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-      block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      block_devices = get_top_level_block_devices_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
-      udisks_util_get_lun_info (lun,
-                                &lun_name,
-                                &lun_desc,
-                                &lun_icon,
-                                &lun_media_desc,
-                                &lun_media_icon);
+      udisks_util_get_drive_info (drive,
+                                  &drive_name,
+                                  &drive_desc,
+                                  &drive_icon,
+                                  &drive_media_desc,
+                                  &drive_media_icon);
       if (block_devices != NULL)
         gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), block_devices->data);
       else
         gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
 
-      g_free (lun_name);
-      g_free (lun_desc);
-      g_object_unref (lun_icon);
-      g_free (lun_media_desc);
-      if (lun_media_icon != NULL)
-        g_object_unref (lun_media_icon);
+      g_free (drive_name);
+      g_free (drive_desc);
+      g_object_unref (drive_icon);
+      g_free (drive_media_desc);
+      if (drive_media_icon != NULL)
+        g_object_unref (drive_media_icon);
 
       g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
       g_list_free (block_devices);
@@ -965,16 +965,16 @@ setup_device_page (GduWindow     *window,
 }
 
 static void
-update_device_page_for_lun (GduWindow     *window,
-                            UDisksObject  *object,
-                            UDisksLun     *lun)
+update_device_page_for_drive (GduWindow     *window,
+                              UDisksObject  *object,
+                              UDisksDrive   *drive)
 {
   gchar *s;
   GList *block_devices;
   GList *l;
   GString *str;
-  const gchar *lun_vendor;
-  const gchar *lun_model;
+  const gchar *drive_vendor;
+  const gchar *drive_model;
   gchar *name;
   gchar *description;
   gchar *media_description;
@@ -983,17 +983,17 @@ update_device_page_for_lun (GduWindow     *window,
   GtkWidget *w;
   guint64 size;
 
-  //g_debug ("In update_device_page_for_lun() - selected=%s",
+  //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-  block_devices = get_top_level_block_devices_for_lun (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+  block_devices = get_top_level_block_devices_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
 
-  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
+  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
 
-  lun_vendor = udisks_lun_get_vendor (lun);
-  lun_model = udisks_lun_get_model (lun);
+  drive_vendor = udisks_drive_get_vendor (drive);
+  drive_model = udisks_drive_get_model (drive);
 
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
@@ -1019,12 +1019,12 @@ update_device_page_for_lun (GduWindow     *window,
     gtk_image_set_from_gicon (GTK_IMAGE (w), drive_icon, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (w);
 
-  if (strlen (lun_vendor) == 0)
-    s = g_strdup (lun_model);
-  else if (strlen (lun_model) == 0)
-    s = g_strdup (lun_vendor);
+  if (strlen (drive_vendor) == 0)
+    s = g_strdup (drive_model);
+  else if (strlen (drive_model) == 0)
+    s = g_strdup (drive_vendor);
   else
-    s = g_strconcat (lun_vendor, " ", lun_model, NULL);
+    s = g_strconcat (drive_vendor, " ", drive_model, NULL);
   set_markup (window,
               "devtab-model-label",
               "devtab-model-value-label", s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
@@ -1032,22 +1032,22 @@ update_device_page_for_lun (GduWindow     *window,
   set_markup (window,
               "devtab-serial-number-label",
               "devtab-serial-number-value-label",
-              udisks_lun_get_serial (lun), SET_MARKUP_FLAGS_NONE);
+              udisks_drive_get_serial (drive), SET_MARKUP_FLAGS_NONE);
   set_markup (window,
               "devtab-firmware-version-label",
               "devtab-firmware-version-value-label",
-              udisks_lun_get_revision (lun), SET_MARKUP_FLAGS_NONE);
+              udisks_drive_get_revision (drive), SET_MARKUP_FLAGS_NONE);
   set_markup (window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
-              udisks_lun_get_wwn (lun), SET_MARKUP_FLAGS_NONE);
+              udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
   /* TODO: get this from udisks */
   gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
   gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
   gtk_widget_set_no_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"), FALSE);
   gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
 
-  size = udisks_lun_get_size (lun);
+  size = udisks_drive_get_size (drive);
   if (size > 0)
     {
       s = udisks_util_get_size_for_display (size, FALSE, TRUE);
@@ -1075,7 +1075,7 @@ update_device_page_for_lun (GduWindow     *window,
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
-  if (udisks_lun_get_media_removable (lun))
+  if (udisks_drive_get_media_removable (drive))
     {
       gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                                   "devtab-action-eject")), TRUE);
@@ -1217,19 +1217,19 @@ update_device_page_for_block (GduWindow          *window,
     }
   else
     {
-      UDisksObject *lun_object;
-      lun_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                                      udisks_block_device_get_lun (block));
-      if (lun_object != NULL)
+      UDisksObject *drive_object;
+      drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                                        udisks_block_device_get_drive (block));
+      if (drive_object != NULL)
         {
-          UDisksLun *lun;
-          lun = udisks_object_peek_lun (lun_object);
-          if (udisks_lun_get_media_removable (lun))
+          UDisksDrive *drive;
+          drive = udisks_object_peek_drive (drive_object);
+          if (udisks_drive_get_media_removable (drive))
             {
               gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                                           "devtab-action-eject")), TRUE);
             }
-          g_object_unref (lun_object);
+          g_object_unref (drive_object);
         }
     }
 
@@ -1358,7 +1358,7 @@ update_device_page (GduWindow *window)
   UDisksObject *object;
   GduVolumeGridElementType type;
   UDisksBlockDevice *block;
-  UDisksLun *lun;
+  UDisksDrive *drive;
   guint64 size;
   GList *children;
   GList *l;
@@ -1379,13 +1379,13 @@ update_device_page (GduWindow *window)
 
 
   object = window->current_object;
-  lun = udisks_object_peek_lun (window->current_object);
+  drive = udisks_object_peek_drive (window->current_object);
   block = udisks_object_peek_block_device (window->current_object);
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
-  if (lun != NULL)
-    update_device_page_for_lun (window, object, lun);
+  if (drive != NULL)
+    update_device_page_for_drive (window, object, drive);
 
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {

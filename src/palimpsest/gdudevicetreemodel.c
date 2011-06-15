@@ -32,9 +32,9 @@ struct _GduDeviceTreeModel
 
   UDisksClient *client;
 
-  GList *current_luns;
-  GtkTreeIter lun_iter;
-  gboolean lun_iter_valid;
+  GList *current_drives;
+  GtkTreeIter drive_iter;
+  gboolean drive_iter_valid;
 
   GList *current_blocks;
   GtkTreeIter block_iter;
@@ -104,8 +104,8 @@ gdu_device_tree_model_finalize (GObject *object)
                                         G_CALLBACK (on_interface_proxy_properties_changed),
                                         model);
 
-  g_list_foreach (model->current_luns, (GFunc) g_object_unref, NULL);
-  g_list_free (model->current_luns);
+  g_list_foreach (model->current_drives, (GFunc) g_object_unref, NULL);
+  g_list_free (model->current_drives);
   g_object_unref (model->client);
 
   G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->finalize (object);
@@ -420,47 +420,47 @@ gdu_device_tree_model_get_client (GduDeviceTreeModel *model)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static GtkTreeIter *
-get_lun_header_iter (GduDeviceTreeModel *model)
+get_drive_header_iter (GduDeviceTreeModel *model)
 {
   gchar *s;
 
-  if (model->lun_iter_valid)
+  if (model->drive_iter_valid)
     goto out;
 
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
                        _("Direct-Attached Storage"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &model->lun_iter,
+                                     &model->drive_iter,
                                      NULL, /* GtkTreeIter *parent */
                                      0,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_lun",
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_drive",
                                      -1);
   g_free (s);
 
-  model->lun_iter_valid = TRUE;
+  model->drive_iter_valid = TRUE;
 
  out:
-  return &model->lun_iter;
+  return &model->drive_iter;
 }
 
 static void
-nuke_lun_header (GduDeviceTreeModel *model)
+nuke_drive_header (GduDeviceTreeModel *model)
 {
-  if (model->lun_iter_valid)
+  if (model->drive_iter_valid)
     {
-      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->lun_iter);
-      model->lun_iter_valid = FALSE;
+      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->drive_iter);
+      model->drive_iter_valid = FALSE;
     }
 }
 
 static void
-add_lun (GduDeviceTreeModel *model,
+add_drive (GduDeviceTreeModel *model,
          UDisksObject       *object,
          GtkTreeIter        *parent)
 {
-  UDisksLun *lun;
+  UDisksDrive *drive;
   GIcon *drive_icon;
   GIcon *media_icon;
   gchar *name;
@@ -470,14 +470,14 @@ add_lun (GduDeviceTreeModel *model,
   gchar *sort_key;
   GtkTreeIter iter;
 
-  lun = udisks_object_peek_lun (object);
-  udisks_util_get_lun_info (lun, &name, &description, &drive_icon, &media_description, &media_icon);
+  drive = udisks_object_peek_drive (object);
+  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
   s = g_strdup_printf ("%s\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
                        description,
                        name);
 
-  //g_debug ("lun %s ->\n"
+  //g_debug ("drive %s ->\n"
   //         " drive_icon=%s\n"
   //         " media_icon=%s\n"
   //         "\n",
@@ -506,8 +506,8 @@ add_lun (GduDeviceTreeModel *model,
 }
 
 static void
-remove_lun (GduDeviceTreeModel *model,
-            UDisksObject       *object)
+remove_drive (GduDeviceTreeModel *model,
+              UDisksObject       *object)
 {
   GtkTreeIter iter;
 
@@ -527,61 +527,61 @@ remove_lun (GduDeviceTreeModel *model,
 }
 
 static void
-update_luns (GduDeviceTreeModel *model)
+update_drives (GduDeviceTreeModel *model)
 {
   GDBusObjectManager *object_manager;
   GList *objects;
-  GList *luns;
-  GList *added_luns;
-  GList *removed_luns;
+  GList *drives;
+  GList *added_drives;
+  GList *removed_drives;
   GList *l;
 
   object_manager = udisks_client_get_object_manager (model->client);
   objects = g_dbus_object_manager_get_objects (object_manager);
 
-  luns = NULL;
+  drives = NULL;
   for (l = objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      UDisksLun *lun;
+      UDisksDrive *drive;
 
-      lun = udisks_object_peek_lun (object);
-      if (lun == NULL)
+      drive = udisks_object_peek_drive (object);
+      if (drive == NULL)
         continue;
 
-      luns = g_list_prepend (luns, g_object_ref (object));
+      drives = g_list_prepend (drives, g_object_ref (object));
     }
 
-  luns = g_list_sort (luns, (GCompareFunc) _g_dbus_object_compare);
-  model->current_luns = g_list_sort (model->current_luns, (GCompareFunc) _g_dbus_object_compare);
-  diff_sorted_lists (model->current_luns,
-                     luns,
+  drives = g_list_sort (drives, (GCompareFunc) _g_dbus_object_compare);
+  model->current_drives = g_list_sort (model->current_drives, (GCompareFunc) _g_dbus_object_compare);
+  diff_sorted_lists (model->current_drives,
+                     drives,
                      (GCompareFunc) _g_dbus_object_compare,
-                     &added_luns,
-                     &removed_luns);
+                     &added_drives,
+                     &removed_drives);
 
-  for (l = removed_luns; l != NULL; l = l->next)
+  for (l = removed_drives; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      g_assert (g_list_find (model->current_luns, object) != NULL);
-      model->current_luns = g_list_remove (model->current_luns, object);
-      remove_lun (model, object);
+      g_assert (g_list_find (model->current_drives, object) != NULL);
+      model->current_drives = g_list_remove (model->current_drives, object);
+      remove_drive (model, object);
       g_object_unref (object);
     }
-  for (l = added_luns; l != NULL; l = l->next)
+  for (l = added_drives; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      model->current_luns = g_list_prepend (model->current_luns, g_object_ref (object));
-      add_lun (model, object, get_lun_header_iter (model));
+      model->current_drives = g_list_prepend (model->current_drives, g_object_ref (object));
+      add_drive (model, object, get_drive_header_iter (model));
     }
 
-  if (g_list_length (model->current_luns) == 0)
-    nuke_lun_header (model);
+  if (g_list_length (model->current_drives) == 0)
+    nuke_drive_header (model);
 
-  g_list_free (added_luns);
-  g_list_free (removed_luns);
-  g_list_foreach (luns, (GFunc) g_object_unref, NULL);
-  g_list_free (luns);
+  g_list_free (added_drives);
+  g_list_free (removed_drives);
+  g_list_foreach (drives, (GFunc) g_object_unref, NULL);
+  g_list_free (drives);
 
   g_list_foreach (objects, (GFunc) g_object_unref, NULL);
   g_list_free (objects);
@@ -723,7 +723,7 @@ should_include_block (UDisksObject *object)
   UDisksBlockDevice *block;
   gboolean ret;
   const gchar *device;
-  const gchar *lun;
+  const gchar *drive;
   const gchar *crypto_backing_device;
   guint64 size;
 
@@ -746,8 +746,8 @@ should_include_block (UDisksObject *object)
     goto out;
 
   /* Don't include if already shown in "Direct-Attached devices" */
-  lun = udisks_block_device_get_lun (block);
-  if (g_strcmp0 (lun, "/") != 0)
+  drive = udisks_block_device_get_drive (block);
+  if (g_strcmp0 (drive, "/") != 0)
     goto out;
 
   /* Don't include if already shown in volume grid as an unlocked device */
@@ -831,7 +831,7 @@ static void
 update_all (GduDeviceTreeModel *model)
 {
   /* TODO: if this is CPU intensive we could coalesce all updates / schedule timeouts */
-  update_luns (model);
+  update_drives (model);
   update_blocks (model);
 }
 

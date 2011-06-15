@@ -37,8 +37,10 @@
 typedef enum
 {
   DETAILS_PAGE_NOT_SELECTED,
+  DETAILS_PAGE_NOT_IMPLEMENTED,
   DETAILS_PAGE_DEVICE,
   DETAILS_PAGE_ISCSI_TARGET,
+  DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION,
 } DetailsPage;
 
 struct _GduWindow
@@ -88,6 +90,10 @@ static void teardown_device_page (GduWindow *window);
 static void setup_iscsi_target_page (GduWindow *window, UDisksObject *object);
 static void update_iscsi_target_page (GduWindow *window);
 static void teardown_iscsi_target_page (GduWindow *window);
+
+//static void setup_iscsi_sendtargets_collection_page (GduWindow *window, UDisksObject *object);
+//static void update_iscsi_sendtargets_collection_page (GduWindow *window);
+//static void teardown_iscsi_sendtargets_collection_page (GduWindow *window);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
@@ -216,6 +222,8 @@ static void
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
+  UDisksIScsiCollection *collection;
+
   if (object != NULL)
     {
       if (udisks_object_peek_lun (object) != NULL ||
@@ -227,9 +235,15 @@ set_selected_object (GduWindow    *window,
         {
           select_details_page (window, object, DETAILS_PAGE_ISCSI_TARGET);
         }
+      else if ((collection = udisks_object_peek_iscsi_collection (object)) != NULL &&
+               g_strcmp0 (udisks_iscsi_collection_get_mechanism (collection), "sendtargets") == 0)
+        {
+          select_details_page (window, object, DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION);
+        }
       else
         {
-          g_assert_not_reached ();
+          g_warning ("no page for object %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+          select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED);
         }
     }
   else
@@ -669,12 +683,19 @@ teardown_details_page (GduWindow    *window,
     case DETAILS_PAGE_NOT_SELECTED:
       break;
 
+    case DETAILS_PAGE_NOT_IMPLEMENTED:
+      break;
+
     case DETAILS_PAGE_DEVICE:
       teardown_device_page (window);
       break;
 
     case DETAILS_PAGE_ISCSI_TARGET:
       teardown_iscsi_target_page (window);
+      break;
+
+    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
+      //TODO: teardown_iscsi_sendtargets_collection_page (window);
       break;
     }
 }
@@ -807,12 +828,19 @@ setup_details_page (GduWindow     *window,
     case DETAILS_PAGE_NOT_SELECTED:
       break;
 
+    case DETAILS_PAGE_NOT_IMPLEMENTED:
+      break;
+
     case DETAILS_PAGE_DEVICE:
       setup_device_page (window, object);
       break;
 
     case DETAILS_PAGE_ISCSI_TARGET:
       setup_iscsi_target_page (window, object);
+      break;
+
+    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
+      //TODO: setup_iscsi_sendtargets_collection_page (window, object);
       break;
     }
 }
@@ -830,12 +858,19 @@ update_details_page (GduWindow   *window,
     case DETAILS_PAGE_NOT_SELECTED:
       break;
 
+    case DETAILS_PAGE_NOT_IMPLEMENTED:
+      break;
+
     case DETAILS_PAGE_DEVICE:
       update_device_page (window);
       break;
 
     case DETAILS_PAGE_ISCSI_TARGET:
       update_iscsi_target_page (window);
+      break;
+
+    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
+      //TODO: update_iscsi_sendtargets_collection_page (window);
       break;
     }
 }
@@ -877,6 +912,10 @@ update_all (GduWindow     *window,
       /* Nothing to update */
       break;
 
+    case DETAILS_PAGE_NOT_IMPLEMENTED:
+      /* Nothing to update */
+      break;
+
     case DETAILS_PAGE_DEVICE:
       /* this is a little too inclusive.. */
       if (gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
@@ -886,6 +925,14 @@ update_all (GduWindow     *window,
       break;
 
     case DETAILS_PAGE_ISCSI_TARGET:
+      if (object == window->current_object)
+        {
+          update_details_page (window, window->current_page);
+        }
+      /* Nothing to update */
+      break;
+
+    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
       if (object == window->current_object)
         {
           update_details_page (window, window->current_page);

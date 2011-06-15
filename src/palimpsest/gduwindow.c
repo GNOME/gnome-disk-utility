@@ -31,7 +31,6 @@
 #include "gdudevicetreemodel.h"
 #include "gduutils.h"
 #include "gduvolumegrid.h"
-#include "gduiscsipathmodel.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -39,8 +38,6 @@ typedef enum
   DETAILS_PAGE_NOT_SELECTED,
   DETAILS_PAGE_NOT_IMPLEMENTED,
   DETAILS_PAGE_DEVICE,
-  DETAILS_PAGE_ISCSI_TARGET,
-  DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION,
 } DetailsPage;
 
 struct _GduWindow
@@ -58,7 +55,6 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
   GtkWidget *write_cache_switch;
-  GtkWidget *iscsi_connection_switch;
 
   GHashTable *label_connections;
 };
@@ -87,14 +83,6 @@ static void setup_device_page (GduWindow *window, UDisksObject *object);
 static void update_device_page (GduWindow *window);
 static void teardown_device_page (GduWindow *window);
 
-static void setup_iscsi_target_page (GduWindow *window, UDisksObject *object);
-static void update_iscsi_target_page (GduWindow *window);
-static void teardown_iscsi_target_page (GduWindow *window);
-
-//static void setup_iscsi_sendtargets_collection_page (GduWindow *window, UDisksObject *object);
-//static void update_iscsi_sendtargets_collection_page (GduWindow *window);
-//static void teardown_iscsi_sendtargets_collection_page (GduWindow *window);
-
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
 
@@ -107,10 +95,6 @@ static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
-
-static void iscsi_connection_switch_on_notify_active (GObject     *object,
-                                                      GParamSpec  *pspec,
-                                                      gpointer     user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -222,23 +206,12 @@ static void
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
-  UDisksIScsiCollection *collection;
-
   if (object != NULL)
     {
       if (udisks_object_peek_lun (object) != NULL ||
           udisks_object_peek_block_device (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_DEVICE);
-        }
-      else if (udisks_object_peek_iscsi_target (object) != NULL)
-        {
-          select_details_page (window, object, DETAILS_PAGE_ISCSI_TARGET);
-        }
-      else if ((collection = udisks_object_peek_iscsi_collection (object)) != NULL &&
-               g_strcmp0 (udisks_iscsi_collection_get_mechanism (collection), "sendtargets") == 0)
-        {
-          select_details_page (window, object, DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION);
         }
       else
         {
@@ -381,12 +354,6 @@ gdu_window_constructed (GObject *object)
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
-  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "iscsitab-scrolledwindow"));
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
-  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "iscsitab-toolbar"));
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
-
   window->model = gdu_device_tree_model_new (window->client);
 
   tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview"));
@@ -493,18 +460,6 @@ gdu_window_constructed (GObject *object)
                       FALSE, TRUE, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-write-cache-label")),
                                  window->write_cache_switch);
-
-  /* iSCSI tab's Connection switch */
-  window->iscsi_connection_switch = gtk_switch_new ();
-  g_signal_connect (window->iscsi_connection_switch,
-                    "notify::active",
-                    G_CALLBACK (iscsi_connection_switch_on_notify_active),
-                    window);
-  gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "iscsitab-connection-hbox")),
-                      window->iscsi_connection_switch,
-                      FALSE, TRUE, 0);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "iscsitab-connection-label")),
-                                 window->iscsi_connection_switch);
 
   /* actions */
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-generic"),
@@ -689,14 +644,6 @@ teardown_details_page (GduWindow    *window,
     case DETAILS_PAGE_DEVICE:
       teardown_device_page (window);
       break;
-
-    case DETAILS_PAGE_ISCSI_TARGET:
-      teardown_iscsi_target_page (window);
-      break;
-
-    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
-      //TODO: teardown_iscsi_sendtargets_collection_page (window);
-      break;
     }
 }
 
@@ -834,14 +781,6 @@ setup_details_page (GduWindow     *window,
     case DETAILS_PAGE_DEVICE:
       setup_device_page (window, object);
       break;
-
-    case DETAILS_PAGE_ISCSI_TARGET:
-      setup_iscsi_target_page (window, object);
-      break;
-
-    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
-      //TODO: setup_iscsi_sendtargets_collection_page (window, object);
-      break;
     }
 }
 
@@ -863,14 +802,6 @@ update_details_page (GduWindow   *window,
 
     case DETAILS_PAGE_DEVICE:
       update_device_page (window);
-      break;
-
-    case DETAILS_PAGE_ISCSI_TARGET:
-      update_iscsi_target_page (window);
-      break;
-
-    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
-      //TODO: update_iscsi_sendtargets_collection_page (window);
       break;
     }
 }
@@ -922,22 +853,6 @@ update_all (GduWindow     *window,
         {
           update_details_page (window, window->current_page);
         }
-      break;
-
-    case DETAILS_PAGE_ISCSI_TARGET:
-      if (object == window->current_object)
-        {
-          update_details_page (window, window->current_page);
-        }
-      /* Nothing to update */
-      break;
-
-    case DETAILS_PAGE_ISCSI_SENDTARGETS_COLLECTION:
-      if (object == window->current_object)
-        {
-          update_details_page (window, window->current_page);
-        }
-      /* Nothing to update */
       break;
     }
 }
@@ -1511,375 +1426,6 @@ static void
 teardown_device_page (GduWindow *window)
 {
   gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-iscsi_target_format_portal_address (GtkCellLayout   *cell_layout,
-                                    GtkCellRenderer *renderer,
-                                    GtkTreeModel    *tree_model,
-                                    GtkTreeIter     *iter,
-                                    gpointer         user_data)
-{
-  /* GduWindow *window = GDU_WINDOW (user_data); */
-  gchar *portal_address;
-  gint portal_port;
-  gchar *markup;
-
-  gtk_tree_model_get (tree_model,
-                      iter,
-                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_ADDRESS, &portal_address,
-                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_PORT, &portal_port,
-                      -1);
-
-  /* only show port if it is non-standard */
-  if (portal_port != 3260)
-    markup = g_strdup_printf ("%s:%d", portal_address, portal_port);
-  else
-    markup = g_strdup (portal_address);
-
-  g_object_set (renderer,
-                "markup", markup,
-                NULL);
-
-  g_free (markup);
-  g_free (portal_address);
-}
-
-static void
-iscsi_target_login_cb (UDisksIScsiTarget *target,
-                       GAsyncResult      *res,
-                       gpointer           user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
-  error = NULL;
-  if (!udisks_iscsi_target_call_login_finish (target, res, &error))
-    {
-      gdu_window_show_error (window,
-                             _("Error logging in to iSCSI target"),
-                             error);
-      g_error_free (error);
-    }
-  g_object_unref (window);
-}
-
-static void
-iscsi_target_logout_cb (UDisksIScsiTarget *target,
-                        GAsyncResult      *res,
-                        gpointer           user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
-  error = NULL;
-  if (!udisks_iscsi_target_call_logout_finish (target, res, &error))
-    {
-      gdu_window_show_error (window,
-                             _("Error logging out of iSCSI target"),
-                             error);
-      g_error_free (error);
-    }
-  g_object_unref (window);
-}
-
-static void
-on_iscsi_active_toggled (GtkCellRendererToggle *renderer,
-                         gchar                 *path,
-                         gpointer               user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  gboolean is_active;
-  GtkTreeView *tree_view;
-  GtkTreeModel *tree_model;
-  GtkTreeIter iter;
-  gchar *portal_address;
-  gchar *iface_name;
-  gint portal_port;
-  UDisksIScsiTarget *target;
-
-  portal_address = NULL;
-  iface_name = NULL;
-
-  tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "iscsi-connections-treeview"));
-  tree_model = gtk_tree_view_get_model (tree_view);
-
-  target = udisks_object_peek_iscsi_target (window->current_object);
-  if (target == NULL)
-    {
-      g_warning ("Expected selected object to be an iSCSI target");
-      goto out;
-    }
-
-  if (!gtk_tree_model_get_iter_from_string (tree_model,
-                                            &iter,
-                                            path))
-    {
-      g_warning ("Unable to get tree iter");
-      goto out;
-    }
-
-  gtk_tree_model_get (tree_model,
-                      &iter,
-                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_ADDRESS, &portal_address,
-                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_PORT, &portal_port,
-                      GDU_ISCSI_PATH_MODEL_COLUMN_INTERFACE, &iface_name,
-                      -1);
-
-  is_active = gtk_cell_renderer_toggle_get_active (renderer);
-  if (is_active)
-    {
-          const gchar *options[] = {NULL};
-          udisks_iscsi_target_call_logout (target,
-                                           options,
-                                           portal_address,
-                                           portal_port,
-                                           iface_name,
-                                           NULL,  /* GCancellable* */
-                                           (GAsyncReadyCallback) iscsi_target_login_cb,
-                                           g_object_ref (window));
-    }
-  else
-    {
-          const gchar *options[] = {NULL};
-          udisks_iscsi_target_call_login (target,
-                                          options,
-                                          portal_address,
-                                          portal_port,
-                                          iface_name,
-                                          NULL,  /* GCancellable* */
-                                          (GAsyncReadyCallback) iscsi_target_login_cb,
-                                          g_object_ref (window));
-    }
-
- out:
-  g_free (portal_address);
-  g_free (iface_name);
-}
-
-static void
-init_iscsi_target_page (GduWindow   *window)
-{
-  static volatile gsize init_val = 0;
-  GtkTreeView *tree_view;
-  /* GtkTreeSelection *selection; */
-  GtkTreeViewColumn *column;
-  GtkCellRenderer *renderer;
-
-  if (!g_once_init_enter (&init_val))
-    goto out;
-
-  tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "iscsi-connections-treeview"));
-  gtk_tree_view_set_rules_hint (tree_view, TRUE);
-#if 0
-  selection = gtk_tree_view_get_selection (tree_view);
-  gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);
-  g_signal_connect (selection,
-                    "changed",
-                    G_CALLBACK (on_tree_selection_changed),
-                    window);
-#endif
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_append_column (tree_view, column);
-  renderer = gtk_cell_renderer_toggle_new ();
-  gtk_tree_view_column_pack_end (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "active", GDU_ISCSI_PATH_MODEL_COLUMN_ACTIVE, NULL);
-  g_signal_connect (renderer,
-                    "toggled",
-                    G_CALLBACK (on_iscsi_active_toggled),
-                    window);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Portal"));
-  gtk_tree_view_append_column (tree_view, column);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_alignment (column, 0.0);
-  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (column),
-                                      renderer,
-                                      iscsi_target_format_portal_address,
-                                      window,
-                                      NULL);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Network Interface"));
-  gtk_tree_view_append_column (tree_view, column);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "markup", GDU_ISCSI_PATH_MODEL_COLUMN_INTERFACE, NULL);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("TPGT"));
-  gtk_tree_view_append_column (tree_view, column);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "markup", GDU_ISCSI_PATH_MODEL_COLUMN_TPGT, NULL);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_title (column, _("Status"));
-  gtk_tree_view_append_column (tree_view, column);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_column_pack_start (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column, renderer,
-                                       "markup", GDU_ISCSI_PATH_MODEL_COLUMN_STATUS, NULL);
-
-  g_once_init_leave (&init_val, 1);
- out:
-  ;
-}
-
-static gboolean
-iscsi_target_has_active_connections (UDisksIScsiTarget *target)
-{
-  GVariant *portals_and_interfaces;
-  GVariantIter portal_iter;
-  GVariantIter *iface_iter;
-  gboolean ret;
-
-  ret = FALSE;
-  portals_and_interfaces = udisks_iscsi_target_get_portals_and_interfaces (target);
-  g_variant_iter_init (&portal_iter, portals_and_interfaces);
-  while (g_variant_iter_next (&portal_iter,
-                              "(^&ayiia(ays))",
-                              NULL, /* &portal_adress */
-                              NULL, /* &port */
-                              NULL, /* &tpgt */
-                              &iface_iter))
-    {
-      const gchar *state;
-      while (g_variant_iter_next (iface_iter,
-                                  "(^&ays)",
-                                  NULL, /* &iface_name */
-                                  &state))
-        {
-          if (g_strcmp0 (state, "LOGGED_IN") == 0)
-            {
-              ret = TRUE;
-              goto out;
-            }
-        }
-    }
- out:
-  return ret;
-}
-
-
-static void
-update_iscsi_target_page (GduWindow   *window)
-{
-  GList *children;
-  GList *l;
-  UDisksIScsiTarget *target;
-
-  /* first hide everything */
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "iscsitab-table")));
-  for (l = children; l != NULL; l = l->next)
-    {
-      GtkWidget *child = GTK_WIDGET (l->data);
-      gtk_widget_hide (child);
-    }
-  g_list_free (children);
-
-  target = udisks_object_peek_iscsi_target (window->current_object);
-  /* TODO: get Alias from somewhere */
-  set_markup (window,
-              "iscsitab-alias-label",
-              "iscsitab-alias-value-label",
-              "", SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  set_markup (window,
-              "iscsitab-name-label",
-              "iscsitab-name-value-label",
-              udisks_iscsi_target_get_name (target), SET_MARKUP_FLAGS_NONE);
-
-  gtk_switch_set_active (GTK_SWITCH (window->iscsi_connection_switch),
-                         iscsi_target_has_active_connections (target));
-  gtk_widget_show (gdu_window_get_widget (window, "iscsitab-connection-label"));
-  gtk_widget_show_all (gdu_window_get_widget (window, "iscsitab-connection-hbox"));
-
-}
-
-static void
-iscsi_connection_switch_on_notify_active (GObject     *object,
-                                          GParamSpec  *pspec,
-                                          gpointer     user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  gboolean active;
-  gboolean has_connections;
-  UDisksIScsiTarget *target;
-
-  target = udisks_object_peek_iscsi_target (window->current_object);
-  if (target == NULL)
-    {
-      g_warning ("Expected selected object to be an iSCSI target");
-      goto out;
-    }
-
-  active = !! gtk_switch_get_active (GTK_SWITCH (window->iscsi_connection_switch));
-  has_connections = !! iscsi_target_has_active_connections (target);
-  if (active != has_connections)
-    {
-      if (!has_connections)
-        {
-          const gchar *options[] = {NULL};
-          udisks_iscsi_target_call_login (target,
-                                          options,
-                                          "", /* portal_address */
-                                          0, /* portal_port */
-                                          "", /* interface_name */
-                                          NULL,  /* GCancellable* */
-                                          (GAsyncReadyCallback) iscsi_target_login_cb,
-                                          g_object_ref (window));
-        }
-      else
-        {
-          const gchar *options[] = {NULL};
-          udisks_iscsi_target_call_logout (target,
-                                           options,
-                                           "", /* portal_address */
-                                           0, /* portal_port */
-                                           "", /* interface_name */
-                                           NULL,  /* GCancellable* */
-                                           (GAsyncReadyCallback) iscsi_target_logout_cb,
-                                           g_object_ref (window));
-        }
-    }
-  gtk_switch_set_active (GTK_SWITCH (window->iscsi_connection_switch), has_connections);
-
- out:
-  ;
-}
-
-static void
-setup_iscsi_target_page (GduWindow    *window,
-                         UDisksObject *object)
-{
-  GtkTreeView *tree_view;
-  GduIScsiPathModel *model;
-  GtkTreeIter first_iter;
-
-  init_iscsi_target_page (window);
-
-  tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "iscsi-connections-treeview"));
-  model = gdu_iscsi_path_model_new (window->client, object);
-  gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (model));
-  /* select the first row */
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (model), &first_iter))
-    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tree_view), &first_iter);
-  g_object_unref (model);
-}
-
-static void
-teardown_iscsi_target_page (GduWindow *window)
-{
-  GtkTreeView *tree_view;
-
-  tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "iscsi-connections-treeview"));
-  gtk_tree_view_set_model (tree_view, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

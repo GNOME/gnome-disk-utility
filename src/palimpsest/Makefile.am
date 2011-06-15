@@ -27,7 +27,6 @@ palimpsest_SOURCES = 					\
 	gdu.h						\
 	gduapplication.h	gduapplication.c	\
 	gdudevicetreemodel.h	gdudevicetreemodel.c	\
-	gduiscsipathmodel.h	gduiscsipathmodel.c	\
 	gdutypes.h					\
 	gduutils.h		gduutils.c		\
 	gduvolumegrid.h		gduvolumegrid.c		\

@@ -1038,7 +1038,7 @@ render_element (GduVolumeGrid *grid,
               element->x + 0.5,
               element->y + 0.5,
               element->width,
-              element->height,
+              element->height + 1,
               10,
               element->edge_flags);
 

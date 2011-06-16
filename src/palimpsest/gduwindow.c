@@ -1182,11 +1182,17 @@ update_device_page_for_block (GduWindow          *window,
               type_for_display, SET_MARKUP_FLAGS_NONE);
   g_free (type_for_display);
 
+  /* right now we only supports changing labels on filesystems, not e.g.
+   * swap devices
+   *
+   * TODO: use udisks_util_() function to determine if we support this
+   */
+  gboolean can_change_label = (udisks_object_peek_filesystem (object) != NULL);
   set_markup (window,
               "devtab-volume-label-label",
               "devtab-volume-label-value-label",
               udisks_block_device_get_id_label (block),
-              SET_MARKUP_FLAGS_CHANGE_LINK);
+              can_change_label ? SET_MARKUP_FLAGS_CHANGE_LINK : SET_MARKUP_FLAGS_NONE);
 
   set_markup (window,
               "devtab-volume-uuid-label",
@@ -1504,7 +1510,7 @@ on_change_filesystem_label_entry_changed (GtkEditable *editable,
 }
 
 static void
-change_filesystem_label_cb (UDisksBlockDevice *block,
+change_filesystem_label_cb (UDisksFilesystem  *filesystem,
                             GAsyncResult      *res,
                             gpointer           user_data)
 {
@@ -1512,9 +1518,9 @@ change_filesystem_label_cb (UDisksBlockDevice *block,
   GError *error;
 
   error = NULL;
-  if (!udisks_block_device_call_set_label_finish (block,
-                                                  res,
-                                                  &error))
+  if (!udisks_filesystem_call_set_label_finish (filesystem,
+                                                res,
+                                                &error))
     {
       gdu_window_show_error (window,
                              _("Error setting label"),
@@ -1532,6 +1538,7 @@ on_change_filesystem_label (GduWindow *window)
   GtkWidget *entry;
   UDisksObject *object;
   UDisksBlockDevice *block;
+  UDisksFilesystem *filesystem;
   const gchar *label;
   ChangeFilesystemLabelData data;
   const gchar *label_to_set;
@@ -1540,7 +1547,9 @@ on_change_filesystem_label (GduWindow *window)
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
   block = udisks_object_peek_block_device (object);
+  filesystem = udisks_object_peek_filesystem (object);
   g_assert (block != NULL);
+  g_assert (filesystem != NULL);
 
   dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
   entry = gdu_window_get_widget (window, "change-filesystem-label-entry");
@@ -1566,12 +1575,12 @@ on_change_filesystem_label (GduWindow *window)
 
   label_to_set = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  udisks_block_device_call_set_label (block,
-                                      label_to_set,
-                                      options, /* options */
-                                      NULL, /* cancellable */
-                                      (GAsyncReadyCallback) change_filesystem_label_cb,
-                                      g_object_ref (window));
+  udisks_filesystem_call_set_label (filesystem,
+                                    label_to_set,
+                                    options, /* options */
+                                    NULL, /* cancellable */
+                                    (GAsyncReadyCallback) change_filesystem_label_cb,
+                                    g_object_ref (window));
 
  out:
   g_signal_handlers_disconnect_by_func (entry,

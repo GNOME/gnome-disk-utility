@@ -54,7 +54,6 @@ struct _GduWindow
   UDisksObject *current_object;
 
   GtkWidget *volume_grid;
-  GtkWidget *write_cache_switch;
 
   GHashTable *label_connections;
 };
@@ -452,14 +451,6 @@ gdu_window_constructed (GObject *object)
   context = gtk_widget_get_style_context (gdu_window_get_widget (window, "devtab-grid-toolbar"));
   gtk_widget_set_name (gdu_window_get_widget (window, "devtab-grid-toolbar"), "devtab-grid-toolbar");
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
-
-  /* devtab's Write Cache switch */
-  window->write_cache_switch = gtk_switch_new ();
-  gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-write-cache-hbox")),
-                      window->write_cache_switch,
-                      FALSE, TRUE, 0);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-write-cache-label")),
-                                 window->write_cache_switch);
 
   /* actions */
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-generic"),
@@ -1041,11 +1032,6 @@ update_device_page_for_drive (GduWindow     *window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
               udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
-  /* TODO: get this from udisks */
-  gtk_switch_set_active (GTK_SWITCH (window->write_cache_switch), TRUE);
-  gtk_widget_show (gdu_window_get_widget (window, "devtab-write-cache-label"));
-  gtk_widget_set_no_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"), FALSE);
-  gtk_widget_show_all (gdu_window_get_widget (window, "devtab-write-cache-hbox"));
 
   size = udisks_drive_get_size (drive);
   if (size > 0)

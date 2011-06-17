@@ -1528,7 +1528,6 @@ on_change_filesystem_label (GduWindow *window)
   const gchar *label;
   ChangeFilesystemLabelData data;
   const gchar *label_to_set;
-  const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
@@ -1563,7 +1562,7 @@ on_change_filesystem_label (GduWindow *window)
 
   udisks_filesystem_call_set_label (filesystem,
                                     label_to_set,
-                                    options, /* options */
+                                    g_variant_new ("a{sv}", NULL), /* options */
                                     NULL, /* cancellable */
                                     (GAsyncReadyCallback) change_filesystem_label_cb,
                                     g_object_ref (window));
@@ -1747,13 +1746,11 @@ on_devtab_action_mount_activated (GtkAction *action,
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   UDisksFilesystem *filesystem;
-  const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   filesystem = udisks_object_peek_filesystem (object);
   udisks_filesystem_call_mount (filesystem,
-                                "", /* filesystem type */
-                                options, /* options */
+                                g_variant_new ("a{sv}", NULL), /* options */
                                 NULL, /* cancellable */
                                 (GAsyncReadyCallback) mount_cb,
                                 g_object_ref (window));
@@ -1789,12 +1786,11 @@ on_devtab_action_unmount_activated (GtkAction *action,
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   UDisksFilesystem *filesystem;
-  const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   filesystem = udisks_object_peek_filesystem (object);
   udisks_filesystem_call_unmount (filesystem,
-                                  options, /* options */
+                                  g_variant_new ("a{sv}", NULL), /* options */
                                   NULL, /* cancellable */
                                   (GAsyncReadyCallback) unmount_cb,
                                   g_object_ref (window));
@@ -1874,12 +1870,11 @@ on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data)
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   UDisksSwapspace *swapspace;
-  const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   swapspace = udisks_object_peek_swapspace (object);
   udisks_swapspace_call_start (swapspace,
-                               options, /* options */
+                               g_variant_new ("a{sv}", NULL), /* options */
                                NULL, /* cancellable */
                                (GAsyncReadyCallback) swapspace_start_cb,
                                g_object_ref (window));
@@ -1912,12 +1907,11 @@ on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_dat
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   UDisksSwapspace *swapspace;
-  const gchar *options[] = {NULL};
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   swapspace = udisks_object_peek_swapspace (object);
   udisks_swapspace_call_stop (swapspace,
-                              options, /* options */
+                              g_variant_new ("a{sv}", NULL), /* options */
                               NULL, /* cancellable */
                               (GAsyncReadyCallback) swapspace_stop_cb,
                               g_object_ref (window));

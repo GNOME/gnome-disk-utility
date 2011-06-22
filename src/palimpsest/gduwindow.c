@@ -1554,6 +1554,8 @@ on_change_filesystem_label (GduWindow *window)
   gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);
 
   gtk_widget_show_all (dialog);
+  gtk_widget_grab_focus (entry);
+
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   if (response != GTK_RESPONSE_OK)
     goto out;
@@ -1663,6 +1665,8 @@ on_change_partition_type (GduWindow *window)
     gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), active_index);
 
   gtk_widget_show_all (dialog);
+  gtk_widget_grab_focus (combo_box);
+
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   if (response != GTK_RESPONSE_OK)
     goto out;
@@ -1826,19 +1830,117 @@ on_devtab_action_eject_activated (GtkAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+unlock_cb (UDisksEncrypted *encrypted,
+           GAsyncResult    *res,
+           gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_encrypted_call_unlock_finish (encrypted,
+                                            NULL, /* out_cleartext_device */
+                                            res,
+                                            &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error unlocking encrypted device"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
 on_devtab_action_unlock_activated (GtkAction *action,
                                    gpointer   user_data)
 {
-  g_debug ("%s: TODO", G_STRFUNC);
+  GduWindow *window = GDU_WINDOW (user_data);
+  gint response;
+  GtkWidget *dialog;
+  GtkWidget *entry;
+  GtkWidget *show_passphrase_check_button;
+  UDisksObject *object;
+  UDisksEncrypted *encrypted;
+
+  /* TODO: look up passphrase from gnome-keyring */
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  encrypted = udisks_object_peek_encrypted (object);
+
+  dialog = gdu_window_get_widget (window, "unlock-device-dialog");
+  entry = gdu_window_get_widget (window, "unlock-device-passphrase-entry");
+  show_passphrase_check_button = gdu_window_get_widget (window, "unlock-device-show-passphrase-check-button");
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (show_passphrase_check_button), FALSE);
+  gtk_entry_set_text (GTK_ENTRY (entry), "");
+
+  g_object_bind_property (show_passphrase_check_button,
+                          "active",
+                          entry,
+                          "visibility",
+                          G_BINDING_SYNC_CREATE);
+
+  gtk_widget_show_all (dialog);
+  gtk_widget_grab_focus (entry);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  if (response != GTK_RESPONSE_OK)
+    goto out;
+
+  udisks_encrypted_call_unlock (encrypted,
+                                gtk_entry_get_text (GTK_ENTRY (entry)), /* passphrase */
+                                g_variant_new ("a{sv}", NULL), /* options */
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) unlock_cb,
+                                g_object_ref (window));
+
+ out:
+  gtk_widget_hide (dialog);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+lock_cb (UDisksEncrypted *encrypted,
+         GAsyncResult    *res,
+         gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_encrypted_call_lock_finish (encrypted,
+                                          res,
+                                          &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error locking encrypted device"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
 on_devtab_action_lock_activated (GtkAction *action,
                                  gpointer   user_data)
 {
-  g_debug ("%s: TODO", G_STRFUNC);
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+  UDisksEncrypted *encrypted;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  encrypted = udisks_object_peek_encrypted (object);
+
+  udisks_encrypted_call_lock (encrypted,
+                              g_variant_new ("a{sv}", NULL), /* options */
+                              NULL, /* cancellable */
+                              (GAsyncReadyCallback) lock_cb,
+                              g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

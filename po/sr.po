@@ -1,22 +1,21 @@
 # Serbian translation of gnome-disc-utility
 # Courtesy of Prevod.org team (http://prevod.org/) -- 2009.
-#
 # This file is distributed under the same license as the gnome-disc-utility package.
-#
 # Maintainer: Милош Поповић <gpopac@gmail.com>
-#
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disc-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&component=general\n"
-"POT-Creation-Date: 2010-03-22 15:59+0000\n"
-"PO-Revision-Date: 2010-03-22 18:59+0100\n"
-"Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
-"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
+"disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-05-29 16:18+0000\n"
+"PO-Revision-Date: 2011-06-13 10:47+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
+"Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: Serbian (sr)\n"
 "Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
@@ -24,9 +23,10 @@ msgstr ""
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gdu-shell.c:269
-#: ../src/palimpsest/gdu-shell.c:321 ../src/palimpsest/gdu-shell.c:803
-#: ../src/palimpsest/gdu-shell.c:1114
+#: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
+#: ../src/palimpsest/gdu-shell.c:269 ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:804 ../src/palimpsest/gdu-shell.c:1115
 msgid "Disk Utility"
 msgstr "Управник дискова"
 
@@ -42,7 +42,7 @@ msgstr "Обавештења о диску"
 msgid "Provides notifications related to disks"
 msgstr "Укључује обавештења везана за дискове"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:184
+#: ../src/format-tool/gdu-format-progress-dialog.c:183
 msgid ""
 "To prevent data corruption, wait until this has finished before removing "
 "media or disconnecting the device."
@@ -50,50 +50,50 @@ msgstr ""
 "Како би избегли оштећење података, сачекајте да се заврши цео процес пре "
 "него што уклоните медијум или уређај."
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:216
-#: ../src/notification/gdu-slow-unmount-dialog.c:286
+#: ../src/format-tool/gdu-format-progress-dialog.c:215
+#: ../src/notification/gdu-slow-unmount-dialog.c:284
 msgid "Device"
 msgstr "Уређај"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:217
-#: ../src/notification/gdu-slow-unmount-dialog.c:287
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
+#: ../src/notification/gdu-slow-unmount-dialog.c:285
 msgid "The device to show the dialog for"
 msgstr "Уређај за који се приказује прозорче"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:229
+#: ../src/format-tool/gdu-format-progress-dialog.c:228
 msgid "text"
 msgstr "текст"
 
-#: ../src/format-tool/gdu-format-progress-dialog.c:230
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "Text to show"
 msgstr "Текст за приказ"
 
-#: ../src/format-tool/gdu-format-tool.c:110
+#: ../src/format-tool/gdu-format-tool.c:113
 msgid "Error launching Disk Utility"
 msgstr "Грешка при покретању управника дискова"
 
-#: ../src/format-tool/gdu-format-tool.c:130
+#: ../src/format-tool/gdu-format-tool.c:133
 msgid "Device to format"
 msgstr "Уређај за форматирање"
 
-#: ../src/format-tool/gdu-format-tool.c:130 ../src/palimpsest/gdu-main.c:127
+#: ../src/format-tool/gdu-format-tool.c:133 ../src/palimpsest/gdu-main.c:127
 #: ../src/palimpsest/gdu-main.c:128
 msgid "DEVICE"
 msgstr "УРЕЂАЈ"
 
-#: ../src/format-tool/gdu-format-tool.c:160
+#: ../src/format-tool/gdu-format-tool.c:163
 #, c-format
 msgid "Operation was canceled"
 msgstr "Радња је прекинута"
 
-#: ../src/format-tool/gdu-format-tool.c:251
+#: ../src/format-tool/gdu-format-tool.c:254
 msgid "Gnome Disk Utility formatting tool"
 msgstr "Алат за форматирање из Гномовог управника дискова"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:300
+#: ../src/format-tool/gdu-format-tool.c:303
 #, c-format
 msgid "Format partition %d of %s (%s)"
 msgstr "Форматирај %d. партицију на %s (%s)"
@@ -101,69 +101,69 @@ msgstr "Форматирај %d. партицију на %s (%s)"
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
 #.
-#: ../src/format-tool/gdu-format-tool.c:307
+#: ../src/format-tool/gdu-format-tool.c:310
 #, c-format
 msgid "Formatting partition %d of %s (%s)"
 msgstr "Форматирам %d. партицију на %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:313
+#: ../src/format-tool/gdu-format-tool.c:316
 #, c-format
 msgid "Format %s (%s)"
 msgstr "Форматирај %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
-#: ../src/format-tool/gdu-format-tool.c:317
+#: ../src/format-tool/gdu-format-tool.c:320
 #, c-format
 msgid "Formatting %s (%s)"
 msgstr "Форматирам %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:323
+#: ../src/format-tool/gdu-format-tool.c:326
 #, c-format
 msgid "Format %s Volume (%s)"
 msgstr "Форматирај диск од %s (%s)"
 
 #. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
-#: ../src/format-tool/gdu-format-tool.c:327
+#: ../src/format-tool/gdu-format-tool.c:330
 #, c-format
 msgid "Formatting %s Volume (%s)"
 msgstr "Форматирам диск од %s (%s)"
 
-#: ../src/format-tool/gdu-format-tool.c:383
+#: ../src/format-tool/gdu-format-tool.c:386
 msgid "Preparing..."
 msgstr "Припремам..."
 
-#: ../src/format-tool/gdu-format-tool.c:426
+#: ../src/format-tool/gdu-format-tool.c:429
 msgid "Unmounting..."
 msgstr "Демонтирам..."
 
-#: ../src/format-tool/gdu-format-tool.c:444
+#: ../src/format-tool/gdu-format-tool.c:447
 #, c-format
 msgid "Unable to format '%s'"
 msgstr "Не могу да форматирам „%s“"
 
-#: ../src/format-tool/gdu-format-tool.c:459
+#: ../src/format-tool/gdu-format-tool.c:462
 msgid "Formatting..."
 msgstr "Форматирам..."
 
-#: ../src/format-tool/gdu-format-tool.c:476
+#: ../src/format-tool/gdu-format-tool.c:479
 msgid "Cancelling..."
 msgstr "Прекидам..."
 
-#: ../src/format-tool/gdu-format-tool.c:486
+#: ../src/format-tool/gdu-format-tool.c:489
 msgid "Error formatting volume"
 msgstr "Грешка при форматирању диска"
 
-#: ../src/format-tool/gdu-format-tool.c:497
+#: ../src/format-tool/gdu-format-tool.c:500
 msgid "Mounting volume..."
 msgstr "Монтирам диск..."
 
-#: ../src/format-tool/gdu-format-tool.c:521
+#: ../src/format-tool/gdu-format-tool.c:524
 msgid "Error mounting device"
 msgstr "Грешка при монтирању диска"
 
-#: ../src/format-tool/gdu-format-tool.c:538
+#: ../src/format-tool/gdu-format-tool.c:541
 msgid "Error storing passphrase in keyring"
 msgstr "Грешка приликом чувања лозинке у привезак"
 
@@ -171,22 +171,22 @@ msgstr "Грешка приликом чувања лозинке у приве�
 msgid "The RAID Array to add a component to."
 msgstr "РАИД опсег у који се додаје компонента."
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
 #, c-format
 msgid "Add spare to %s"
 msgstr "Додај резерву у %s"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:230
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 msgstr "Изаберите уређај за прављење резерве %s за РАИД опсег „%s“ (%s)"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:237
 #, c-format
 msgid "Expand %s"
 msgstr "Прошири %s"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:239
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
@@ -194,7 +194,7 @@ msgid ""
 msgstr ""
 "Изаберите диск или дискове који користе %s за проширење РАИД опсега „%s“ (%s)"
 
-#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:245
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
 msgid "_Expand"
 msgstr "_Прошири"
 
@@ -202,12 +202,12 @@ msgstr "_Прошири"
 msgid "The VG to add a PV to."
 msgstr "Група на који се додаје диск."
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:250
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:249
 #, c-format
 msgid "Add Physical Volume to %s (%s)"
 msgstr "Додај диск на %s (%s)"
 
-#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:266
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:265
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
 msgid "_Size:"
@@ -216,11 +216,11 @@ msgstr "_Величина:"
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:131
 msgid "Read Error Rate"
 msgstr "Стопа грешака при читању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:133
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -231,44 +231,44 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:141
 msgid "Throughput Performance"
 msgstr "Пропусна моћ"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:143
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
 msgid "Average efficiency of the disk"
 msgstr "Средња ефикасност диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:149
 msgid "Spinup Time"
 msgstr "Време завртаја"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:151
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
 msgid "Time needed to spin up the disk"
 msgstr "Време које је потребно за завртај диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:157
 msgid "Start/Stop Count"
 msgstr "Број покретања/заустављања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:159
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
 msgid "Number of spindle start/stop cycles"
 msgstr "Број започетих/завршених циклуса осовине"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:165
 msgid "Reallocated Sector Count"
 msgstr "Број премештених сектора"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as \"reallocated\" and transfers "
@@ -281,112 +281,112 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:175
 msgid "Read Channel Margin"
 msgstr "Ивица канала читања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:177
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
 msgid "Margin of a channel while reading data."
 msgstr "Ивица канала у току читања података."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:183
 msgid "Seek Error Rate"
 msgstr "Стопа грешака у претраживању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:185
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
 msgid "Frequency of errors while positioning"
 msgstr "Учестаност грешака у току позиционирања"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:191
 msgid "Seek Timer Performance"
 msgstr "Временски учинак претраживања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:193
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
 msgid "Average efficiency of operations while positioning"
 msgstr "Средња вредност ефикасности операција при позиционирању"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:199
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:523
 msgid "Power-On Hours"
 msgstr "Часова рада"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:201
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:525
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Број сати за које је диск био укључен"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:207
 msgid "Spinup Retry Count"
 msgstr "Број покушаја завртаја"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:209
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
 msgid "Number of retry attempts to spin up"
 msgstr "Број покушаја да заврти диск"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:215
 msgid "Calibration Retry Count"
 msgstr "Број покушаја калибрације"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:217
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
 msgid "Number of attempts to calibrate the device"
 msgstr "Број покушаја за калибрацију уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:223
 msgid "Power Cycle Count"
 msgstr "Број укључивања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:225
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
 msgid "Number of power-on events"
 msgstr "Број укључивања/искључивања диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:231
 msgid "Soft read error rate"
 msgstr "Стопа грешака при меком читању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:233
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
 msgid "Frequency of 'program' errors while reading from the disk"
 msgstr "Учестаност грешака у програму приликом читања података са диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:239
 msgid "Reported Uncorrectable Errors"
 msgstr "Непоправљиве грешке"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:241
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Број грешака које не могу бити поправљене помоћу ЕЦЦ-а из уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:247
 msgid "High Fly Writes"
 msgstr "Глава ван путање"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:249
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr "Број уписивања када је глава за упис била изван њене нормалне путање"
@@ -394,81 +394,81 @@ msgstr "Број уписивања када је глава за упис би�
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:255
 msgid "Airflow Temperature"
 msgstr "Температура ваздуха"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:257
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
 msgid "Airflow temperature of the drive"
 msgstr "Температура ваздуха који циркулише унутар уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:263
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:433
 msgid "G-sense Error Rate"
 msgstr "Учесталост Г-сенс грешака"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:265
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Учестаност грешака које су последица сударних учитавања"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:271
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:490
 msgid "Power-off Retract Count"
 msgstr "Број искључивања и повлачења"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:273
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
 msgid "Number of power-off or emergency retract cycles"
 msgstr "Број искључивања или хитно повучених циклуса"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:279
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:466
 msgid "Load/Unload Cycle Count"
 msgstr "Број целих циклуса"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:281
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
 msgid "Number of cycles into landing zone position"
 msgstr "Број циклуса на основу повлачења главе у почетан положај"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:287
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:506
 msgid "Temperature"
 msgstr "Температура"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
 msgid "Current internal temperature of the drive"
 msgstr "Тренутна температура унутар уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:295
 msgid "Hardware ECC Recovered"
 msgstr "Враћени ЕЦЦ уређаја"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:297
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
 msgid "Number of ECC on-the-fly errors"
 msgstr "Број ЕЦЦ грешака у току рада"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:303
 msgid "Reallocation Count"
 msgstr "Број премештања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:305
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -481,11 +481,11 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:314
 msgid "Current Pending Sector Count"
 msgstr "Број сектора на чекању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -500,11 +500,11 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:326
 msgid "Uncorrectable Sector Count"
 msgstr "Број непоправљивих сектора"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -517,22 +517,22 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:336
 msgid "UDMA CRC Error Rate"
 msgstr "Стопа УДМА ЦРЦ грешака"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:338
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
 msgid "Number of CRC errors during UDMA mode"
 msgstr "Стопа ЦРЦ грешака у УДМА режиму"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:344
 msgid "Write Error Rate"
 msgstr "Грешке при упису"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:346
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -543,110 +543,110 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:352
 msgid "Soft Read Error Rate"
 msgstr "Стопа благих грешака у читању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:354
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
 msgid "Number of off-track errors"
 msgstr "Број грешака ван стазе"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:360
 msgid "Data Address Mark Errors"
 msgstr "Грешке у ознаци адресе података"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:362
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "Број грешака у ознаци адресе података (DAM)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:368
 msgid "Run Out Cancel"
 msgstr "Прекид изласка"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:370
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
 msgid "Number of ECC errors"
 msgstr "Број ЕЦЦ грешака"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:376
 msgid "Soft ECC correction"
 msgstr "Благе ЕЦЦ поправке"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:378
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
 msgid "Number of errors corrected by software ECC"
 msgstr "Број грешака које је поправио ЕЦЦ програм"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:384
 msgid "Thermal Asperity Rate"
 msgstr "Стопа термичких грешака"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:386
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Број грешака због лоших температурних услова"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:392
 msgid "Flying Height"
 msgstr "Висина глава"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:394
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
 msgid "Height of heads above the disk surface"
 msgstr "Висина глава изнад површине диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:400
 msgid "Spin High Current"
 msgstr "Струја заокрета"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:402
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
 msgid "Amount of high current used to spin up the drive"
 msgstr "Количина струје која се користи да се покрене уређај"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:408
 msgid "Spin Buzz"
 msgstr "Зујање заокрета"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:410
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Количина зујања која се користи за покретање уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:416
 msgid "Offline Seek Performance"
 msgstr "Претрага док диск не ради"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:418
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
 msgid "Drive's seek performance during offline operations"
 msgstr "Учинак претраге података када диск не ради"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:424
 msgid "Disk Shift"
 msgstr "Истумбан диск"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:426
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -654,7 +654,7 @@ msgstr ""
 "Делови диска су померени из лежишта, што може бити последица тумбања "
 "приликом транспорта, пада или екстремне температуре"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:435
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "Сензор шока је открио бројне грешке које су последица ударца"
@@ -662,22 +662,22 @@ msgstr "Сензор шока је открио бројне грешке кој
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:441
 msgid "Loaded Hours"
 msgstr "Часова рада"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:443
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
 msgid "Number of hours in general operational state"
 msgstr "Број сати када је диск радио"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:449
 msgid "Load/Unload Retry Count"
 msgstr "Број покушаја учитавања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:451
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -688,68 +688,68 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:458
 msgid "Load Friction"
 msgstr "Трење при читању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr ""
 "Лоше читање података са уређаја изазвано трењем у механичким деловима диска"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:468
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
 msgid "Total number of load cycles"
 msgstr "Укупан број циклуса учитавања"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:474
 msgid "Load-in Time"
 msgstr "Време учитавања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:476
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
 msgid "General time for loading in a drive"
 msgstr "Укупно време за учитавање уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:482
 msgid "Torque Amplification Count"
 msgstr "Број појачаних увртања"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:484
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Број покушаја ротационог момента уређаја"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:492
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
 msgid "Number of power-off retract events"
 msgstr "Број враћања главе при гашењу"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:498
 msgid "GMR Head Amplitude"
 msgstr "Амплитуда подрхтавања главе"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:500
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Амплитуда погрхтавања глава (ГМР-главе) у току рада"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:508
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
 msgid "Temperature of the drive"
 msgstr "Температура уређаја"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:514
 msgid "Endurance Remaining"
 msgstr "Преостала издржљивост"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:516
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -760,22 +760,22 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:531
 msgid "Uncorrectable ECC Count"
 msgstr "Број неисправљивих ЕЦЦ грешака"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:533
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
 msgid "Number of uncorrectable ECC errors"
 msgstr "Broj ЕЦЦ грешака које се не могу исправити"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:539
 msgid "Good Block Rate"
 msgstr "Број добрих блокова"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:541
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -786,50 +786,50 @@ msgstr ""
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:548
 msgid "Head Flying Hours"
 msgstr "Време лебдења главе"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:550
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
 msgid "Time while head is positioning"
 msgstr "Време за које се глава позиционира на диск"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:556
 msgid "Read Error Retry Rate"
 msgstr "Стопа грешака у читању"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:558
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
 msgid "Number of errors while reading from a disk"
 msgstr "Број грешака у току читања података са диска"
 
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:700
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:699
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Не постоји опис за „%d“ особину"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:790
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:789
 msgid "Normalized:"
 msgstr "Нормализовано:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:792
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:791
 msgid "Worst:"
 msgstr "Најгоре:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:794
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:793
 msgid "Threshold:"
 msgstr "Праг:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:796
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:795
 msgid "Value:"
 msgstr "Вредност:"
 
@@ -838,46 +838,46 @@ msgstr "Вредност:"
 #. Translators: Shown in the treeview for an attribute we don't know the status about
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:846
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1636
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:845
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:853
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:861
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1639
 msgid "N/A"
 msgstr "Недоступно"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:940
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:939
 msgid "Failing"
 msgstr "Отказује"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:943
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:942
 msgid "Failed in the past"
 msgstr "Отказивао у прошлости"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:947
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:955
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:946
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:954
 msgid "Warning"
 msgstr "Упозорава"
 
 #. Translators: Shown in the treeview for an attribute that is good
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:949
 msgid "Good"
 msgstr "Исправан"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1020
 msgid "Error reading SMART data"
 msgstr "Грешка приликом читања СМАРТ података"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1135
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1140
 msgid "Choose SMART Self-test"
 msgstr "Изаберите СМАРТ самотестирање"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1146
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1151
 msgid ""
 "The tests may take a very long time to complete depending on the speed and "
 "size of the disk. You can continue using your system while the test is "
@@ -887,22 +887,22 @@ msgstr ""
 "Можете слободно да користите ваш рачунар док траје тест."
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1155
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
 msgid "_Short (usually less than ten minutes)"
 msgstr "_Брзо (обично мање од десет минута)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1163
 msgid "_Extended (usually tens of minutes)"
 msgstr "_Опширно (око десет минута)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1166
 msgid "C_onveyance (usually less than ten minutes)"
 msgstr "_Тест преноса (обично мање од десет минута)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1169
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1174
 msgid "_Run Self Test"
 msgstr "_Покрени самотестирање"
 
@@ -910,18 +910,18 @@ msgstr "_Покрени самотестирање"
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1264
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1269
 #, c-format
 msgid "%s (%s) – SMART Data"
 msgstr "%s (%s) — СМАРТ подаци"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1286
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid "Updated:"
 msgstr "Ажурирано:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1292
 msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
@@ -930,187 +930,187 @@ msgstr ""
 "на сваких 30 минута осим ако диск није успаван"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1295
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "Self-tests:"
 msgstr "Самотестирања:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1301
 msgid "The result of the last self-test that ran on the disk"
 msgstr "Резултат последњег самотестирања диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1303
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "Powered On:"
 msgstr "Укључен:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1309
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "Протекло време од када је диск укључен"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1311
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "Power Cycles:"
 msgstr "Број укључивања:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1317
 msgid "The number of full disk power on/off cycles"
 msgstr "Број потпуних циклуса укључивања/искључивања диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1319
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "Temperature:"
 msgstr "Температура:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1325
 msgid "The temperature of the disk"
 msgstr "Температура диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1327
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "Bad Sectors:"
 msgstr "Оштећени сектори:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1333
 msgid "The sum of pending and reallocated bad sectors"
 msgstr "Укупан број сектора који су на чекању или су премештени"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1335
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "Self Assessment:"
 msgstr "Процена из диска:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1341
 msgid "The assessment from the disk itself whether it is about to fail"
 msgstr "Процена самог диска о томе у каквом се стању налази"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1343
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1346
 msgid "Overall Assessment:"
 msgstr "Збирна процена:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1350
 msgid "An overall assessment of the health of the disk"
 msgstr "Укупна процена исправности диска"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1361
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1364
 msgid "_Refresh"
 msgstr "_Освежи"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1363
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1366
 msgid "Reads SMART Data, waking up the disk"
 msgstr "Очитава СМАРТ податке са диска и буди га уколико је потребно"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1373
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1376
 msgid "Run _Self-test"
 msgstr "Покрени _самотестирање"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1375
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1378
 msgid "Test the disk surface for errors"
 msgstr "Тражи грешке на површини диска"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1385
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
 msgid "_Cancel Self-test"
 msgstr "_Откажи самотестирање"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1387
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1390
 msgid "Cancels the self-test"
 msgstr "Прекида тренутно самотестирање"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1405
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1408
 msgid "_Attributes"
 msgstr "_Особине"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1439
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1442
 msgid "ID"
 msgstr "ИБ"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1451
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1454
 msgid "Attribute"
 msgstr "Особина"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1468
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1471
 msgid "Assessment"
 msgstr "Процена"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1487
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1490
 msgid "Value"
 msgstr "Вредност"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1515
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1518
 msgid "Don't _warn if the disk is failing"
 msgstr "Не _упозоравај ако диск отказује"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1517
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1520
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr ""
 "Оставите искључено како би били обавештени уколико диск почне да отказује"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1582
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1585
 #, c-format
 msgid "%.1f years"
 msgstr "%.1f година(е)"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1589
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f дан(а)"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1593
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f сат(а)"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1597
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f минут(а)"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1601
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунда(и)"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1604
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
 #, c-format
 msgid "%s msec"
 msgstr "%s msec"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1613
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1616
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1122,32 +1122,32 @@ msgstr[3] "Један сектор"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1625
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1628
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1693
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1696
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "Неуспех је знак скорог отказивања диска"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1700
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "Неуспех је знак старења диска"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1703
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1706
 msgid "Every time data is collected (Online)"
 msgstr "Увек када се прикупе подаци (у мрежи)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1710
 msgid "Only during off-line activities (Not Online)"
 msgstr "Само током рада ван мреже"
 
@@ -1156,7 +1156,7 @@ msgstr "Само током рада ван мреже"
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1715
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1169,26 +1169,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1925
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1928
 msgid "No drive selected"
 msgstr "Није изабран уређај"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1932
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1935
 msgid "SMART not supported"
 msgstr "Нису подржани СМАРТ подаци"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1940
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1943
 msgid "SMART data never collected"
 msgstr "Никада нису прикупљени СМАРТ подаци"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1947
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1953
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1956
 msgid "SMART data is malformed"
 msgstr "СМАРТ подаци су неисправни"
 
@@ -1206,36 +1206,36 @@ msgstr "СМАРТ подаци су неисправни"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1983
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2001
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2021
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2029
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2038
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2100
-#: ../src/gdu-gtk/gdu-volume-grid.c:1315 ../src/gdu/gdu-util.c:1110
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1986
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2004
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2024
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2032
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2041
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
+#: ../src/gdu-gtk/gdu-volume-grid.c:1301 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Непознато"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1988
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1991
 msgid "Passed"
 msgstr "Паузирано"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1994
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1997
 msgid "FAILING"
 msgstr "ОТКАЗУЈЕ"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2006
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2009
 msgid "None"
 msgstr "Нема"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2011
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2014
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
@@ -1245,63 +1245,63 @@ msgstr[2] "%d оштећених сектора"
 msgstr[3] "Један оштећен сектор"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2057
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2060
 msgid "Completed OK"
 msgstr "Исправно завршено"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2064
 msgid "Cancelled"
 msgstr "Отказано"
 
 # као хардвер и софтвер или као тешко и лако???
 # ~Милош
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2068
 msgid "Cancelled (with hard or soft reset)"
 msgstr "Отказано (уз хардверски или софтверски ресет)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2072
 msgid "Not completed (a fatal error might have occurred)"
 msgstr "Није завршено (можда постоји нека кобна грешка)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2076
 msgid "FAILED (Electrical)"
 msgstr "КВАР (електроника)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2078
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2081
 msgid "FAILED (Servo)"
 msgstr "КВАР (серво)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2083
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
 msgid "FAILED (Read)"
 msgstr "КВАР (читање)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2088
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2091
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "КВАР (сумњам на поправљиво оштећење)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2093
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2096
 msgid "In progress"
 msgstr "У току"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:172
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:171
 #, c-format
 msgid "This operation concerns the volume \"%s\" (%s)"
 msgstr "Радња се односи на одељак диска „%s“ (%s)"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:176
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:175
 #, c-format
 msgid "This operation concerns the drive \"%s\" (%s)"
 msgstr "Радња се односи на диск „%s“ (%s)"
 
-#: ../src/gdu-gtk/gdu-confirmation-dialog.c:180
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:179
 #, c-format
 msgid "This operation concerns \"%s\" (%s)"
 msgstr "Ова радња се односи на „%s“ (%s)"
@@ -1326,22 +1326,22 @@ msgstr "Изабрана адреса"
 msgid "Choose Server"
 msgstr "Изаберите сервер"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:214
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:213
 msgid "Connect to Server"
 msgstr "Повежи се на сервер"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:221
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:220
 msgid "_Browse..."
 msgstr "_Разгледај..."
 
 #. Translators: this is the tooltip for the "Browse..." button
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:233
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:232
 msgid "Browse servers discovered via the DNS-SD protocol"
 msgstr "Разгледа сервере преко ДНС-СД протокола"
 
 #. Translators: This is the label explaining the dialog
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:251
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:250
 msgid ""
 "To manage storage devices on another machine, enter the address and press "
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
@@ -1353,22 +1353,22 @@ msgstr ""
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:265
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:264
 msgid "The hostname or address to connect to"
 msgstr "Домаћин или адреса на коју желите да се повежете"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:269
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:268
 msgid "Server _Address:"
 msgstr "_Адреса сервера:"
 
 #. Translators: This is the tooltip for the "User Name" entry
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:288
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:287
 msgid "The user name to connect as"
 msgstr "Корисничко име под којим се пријављујете"
 
-#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:292
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:291
 msgid "_User Name:"
 msgstr "_Корисничко име:"
 
@@ -1389,7 +1389,7 @@ msgid "The requested Logical Volume size"
 msgstr "Захтевана величина логичке партиције"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:519
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:522
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
 msgid "C_reate"
@@ -1461,19 +1461,19 @@ msgstr "Дискови"
 msgid "Array of drives to use for the array"
 msgstr "Опсег дискове ка употребу у опсегу"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:514
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:517
 msgid "Create RAID Array"
 msgstr "Направи РАИД опсег"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:533
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:535
 msgid "General"
 msgstr "Опште"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:554
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:556
 msgid "RAID _Level:"
 msgstr "РАИД ни_во::"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:593
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:595
 msgid "Array _Name:"
 msgstr "_Име опсега:"
 
@@ -1481,65 +1481,65 @@ msgstr "_Име опсега:"
 #. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
 #. * 32 bytes since that's the on-disk-format limit.
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:601
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:603
 msgid "New RAID Array"
 msgstr "Нови РАИД опсег"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:617
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:619
 msgid "Stripe S_ize:"
 msgstr "Величина _траке:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:627
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
 msgid "4 KiB"
 msgstr "4 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
 msgid "8 KiB"
 msgstr "8 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
 msgid "16 KiB"
 msgstr "16 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
 msgid "32 KiB"
 msgstr "32 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
 msgid "64 KiB"
 msgstr "64 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
 msgid "128 KiB"
 msgstr "128 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
 msgid "256 KiB"
 msgstr "256 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
 msgid "512 KiB"
 msgstr "512 KiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:645
 msgid "1 MiB"
 msgstr "1 MiB"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:661
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:663
 msgid "Array _Size:"
 msgstr "Величина _опсега:"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:688
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:690
 msgid "_Disks"
 msgstr "_Дискови"
 
 #. --------------------------------------------------------------------------------
 #. TODO: Actually make this work
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:704
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:706
 msgid "Use entire disks instead of _partitions"
 msgstr "Искористи _цео диск, уместо партиција"
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:705
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:707
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
@@ -1550,12 +1550,12 @@ msgstr ""
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:874
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:876
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
 msgstr "Нема довољно дискова за образовање %s опсега."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:890
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
@@ -1564,7 +1564,7 @@ msgstr[1] "За прављење %s опсега, изаберите %d диск
 msgstr[2] "За прављење %s опсега, изаберите %d дискова."
 msgstr[3] "За прављење %s опсега, изаберите диск."
 
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:897
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
@@ -1578,7 +1578,7 @@ msgstr[3] "За прављење %s опсега, изаберите још је
 #. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
 #. * Third parameter is the number of disks to use (always greater than 1).
 #.
-#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:921
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:923
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
 msgstr "За првљење опсега од %s као %s од %d диска, притисните „Направи“"
@@ -1795,13 +1795,13 @@ msgstr "Детаљи"
 msgid "Error benchmarking drive"
 msgstr "Не могу да оценим уређај"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:593
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 msgid "Are you sure you want to start a read/write benchmark?"
 msgstr "Да ли желите да покренете оцењивање читања/уписа?"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
-#: ../src/palimpsest/gdu-section-drive.c:1004
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/palimpsest/gdu-section-drive.c:1006
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
 msgstr "_Оцена уређаја"
@@ -1811,94 +1811,94 @@ msgstr "_Оцена уређаја"
 #. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
 #. * or "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:685
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:686
 #, c-format
 msgid "%s (%s) – Benchmark"
 msgstr "%s (%s) – оцена уређаја"
 
 #. benchmark results
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
 msgid "Minimum Read Rate:"
 msgstr "Најмања стопа читања:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
 msgid "Minimum Write Rate:"
 msgstr "Најмања стопа уписа:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
 msgid "Maximum Read Rate:"
 msgstr "Највећа стопа читања:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
 msgid "Maximum Write Rate:"
 msgstr "Највећа стопа уписа:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
 msgid "Average Read Rate:"
 msgstr "Просечна стопа читања:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
 msgid "Average Write Rate:"
 msgstr "Просечна стопа уписа:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
 msgid "Last Benchmark:"
 msgstr "Последња оцена:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
 msgid "Average Access Time:"
 msgstr "Просечно време приступа:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
 msgid "Start _Read-Only Benchmark"
 msgstr "Покрени оцењивање _без уписа"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Measure read rate and access time"
 msgstr "Мери стопу читања и време приступа"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
 msgid "Start Read/_Write Benchmark"
 msgstr "Покрени _оцењивање читања и уписа"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
 msgid "Measure read rate, write rate and access time"
 msgstr "Мери стопу читања, уписа и време приступа"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:951
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
 #, c-format
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:956
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
 #, c-format
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1234
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1223
 msgid "Never"
 msgstr "Никад"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1308
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1297
 msgid "Cancel"
 msgstr "Откажи"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1311
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1300
 msgid "Cancels the currently running benchmark"
 msgstr "Прекида тренутно оцењивање"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
 #.
-#: ../src/gdu-gtk/gdu-edit-name-dialog.c:213
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:300
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:217
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:299
 #, c-format
 msgid "Edit %s"
 msgstr "Уреди %s"
@@ -1912,204 +1912,204 @@ msgstr "Нема физичког диска"
 msgid "UUID: %s"
 msgstr "УУИД: %s"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:331
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:332
 #, c-format
 msgid "Edit PVs on %s (%s)"
 msgstr "Уреди диск на %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:342
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:343
 msgid "Physical _Volumes"
 msgstr "_Физички дискови"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:372
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:373
 msgid "Physical Volume"
 msgstr "Физички дискови"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:388
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:389
 msgid "Capacity"
 msgstr "Величина"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:397
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:398
 msgid "Unallocated"
 msgstr "Нерезервисано"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:411
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:449
-#: ../src/palimpsest/gdu-section-drive.c:935
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
+#: ../src/palimpsest/gdu-section-drive.c:937
 msgid "SMART Status:"
 msgstr "СМАРТ стање:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:415
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:461
-#: ../src/palimpsest/gdu-section-drive.c:911
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
+#: ../src/palimpsest/gdu-section-drive.c:913
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Уређај:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:428
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
 msgid "_New Physical Volume"
 msgstr "_Нови физички диск"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:430
 msgid "Add a new PV to the VG"
 msgstr "Додај нови физички диск у групу партиција"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:438
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "_Remove Physical Volume"
 msgstr "_Уклони физички диск"
 
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:440
 msgid "Remove the PV from the VG"
 msgstr "Уклања физички диск из групе партиција"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
 #. Translators: This string is used when SMART is not supported
-#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:941
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:845
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:942
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:846
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
 msgstr "Није подржано"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:369
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:370
 #, c-format
 msgid "Edit components on %s (%s)"
 msgstr "Уреди компоненте на %s (%s)"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:380
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:381
 msgid "C_omponents"
 msgstr "_Компоненте:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:410
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:411
 msgid "Position"
 msgstr "Позиција"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:419
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:420
 msgid "Component"
 msgstr "Компонента"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:435
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:436
 msgid "State"
 msgstr "Стање"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:453
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:454
 msgid "Position:"
 msgstr "Позиција:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:457
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:458
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 #: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
 msgstr "Стање:"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:474
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
 msgid "Add _Spare"
 msgstr "Додај _резерву"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
 msgid "Add a spare to the array"
 msgstr "Додаје резерву у опсег"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:484
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "_Expand Array"
 msgstr "Про_шири опсег"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
 msgid "Increase the capacity of the array"
 msgstr "Повећава величину опсега"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:494
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "_Attach Component"
 msgstr "_Додај компоненту"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
 msgid "Attach the component to the array"
 msgstr "Додаје компоненту у опсег"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:504
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "_Remove Component"
 msgstr "_Уклони компоненту"
 
-#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
 msgid "Remove the component from the array"
 msgstr "Уклања компоненту из опсега"
 
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:321
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
 msgid "Part_ition Label:"
 msgstr "_Назив партиције:"
 
 #. Translators: 'Type' means partition type here
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:338
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:337
 msgid "Ty_pe:"
 msgstr "_Врста:"
 
 #. ---
 #. flag used by mbr, apm
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:352
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:351
 msgid "_Bootable"
 msgstr "_За подизање система"
 
 #. flag used by gpt
-#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:360
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:359
 msgid "Required / Firm_ware"
 msgstr "Потребно / Фирмвер"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:217
+#: ../src/gdu-gtk/gdu-error-dialog.c:216
 msgid "The operation failed"
 msgstr "Радња није успела"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:220
+#: ../src/gdu-gtk/gdu-error-dialog.c:219
 msgid "The device is busy"
 msgstr "Уређај је заузет"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:223
+#: ../src/gdu-gtk/gdu-error-dialog.c:222
 msgid "The operation was canceled"
 msgstr "Радња је прекинута"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:226
+#: ../src/gdu-gtk/gdu-error-dialog.c:225
 msgid "The daemon is being inhibited"
 msgstr "Управљачки програм је онемогућен"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:229
+#: ../src/gdu-gtk/gdu-error-dialog.c:228
 msgid "An invalid option was passed"
 msgstr "Прослеђена је неисправна опција"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:232
+#: ../src/gdu-gtk/gdu-error-dialog.c:231
 msgid "The operation is not supported"
 msgstr "Радња није подржана"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:235
+#: ../src/gdu-gtk/gdu-error-dialog.c:234
 msgid "Getting ATA SMART data would wake up the device"
 msgstr "Прикупљање АТА СМАРТ података ће пробудити уређај"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:238
+#: ../src/gdu-gtk/gdu-error-dialog.c:237
 msgid "Permission denied"
 msgstr "Немате овлашћења"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:241
+#: ../src/gdu-gtk/gdu-error-dialog.c:240
 msgid "Filesystem driver not installed"
 msgstr "Није инсталиран драјвер за овај систем датотека"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:244
+#: ../src/gdu-gtk/gdu-error-dialog.c:243
 msgid "Filesystem tools not installed"
 msgstr "Нису инсталирани алати за овај систем датотека"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:249 ../src/palimpsest/gdu-shell.c:958
+#: ../src/gdu-gtk/gdu-error-dialog.c:248 ../src/palimpsest/gdu-shell.c:959
 msgid "Unknown error"
 msgstr "Непозната грешка"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:257
+#: ../src/gdu-gtk/gdu-error-dialog.c:256
 #, c-format
 msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
 msgstr "Грешка приликом извођења радње на „%s“ (%s): %s"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:265
+#: ../src/gdu-gtk/gdu-error-dialog.c:264
 #, c-format
 msgid "An error occurred: %s"
 msgstr "Грешка: %s"
 
-#: ../src/gdu-gtk/gdu-error-dialog.c:274
+#: ../src/gdu-gtk/gdu-error-dialog.c:273
 msgid "_Details"
 msgstr "_Детаљи"
 
@@ -2167,51 +2167,51 @@ msgstr "Симбол у називу потврдног дугмета"
 
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
-#: ../src/gdu-gtk/gdu-partition-dialog.c:216
-#: ../src/palimpsest/gdu-section-drive.c:649
+#: ../src/gdu-gtk/gdu-partition-dialog.c:219
+#: ../src/palimpsest/gdu-section-drive.c:651
 #: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_Форматирај"
 
 #. Translators: Format is a verb here. The %s is the name of the volume
-#: ../src/gdu-gtk/gdu-format-dialog.c:499
-#: ../src/gdu-gtk/gdu-partition-dialog.c:208
+#: ../src/gdu-gtk/gdu-format-dialog.c:502
+#: ../src/gdu-gtk/gdu-partition-dialog.c:211
 #, c-format
 msgid "Format %s"
 msgstr "Форматирај %s"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:510
+#: ../src/gdu-gtk/gdu-format-dialog.c:513
 msgid "Disk _Utility"
 msgstr "Управник _дискова"
 
 #. Translators: this is the tooltip for the "Disk Utility" button
-#: ../src/gdu-gtk/gdu-format-dialog.c:517
+#: ../src/gdu-gtk/gdu-format-dialog.c:520
 msgid "Use Disk Utility to format volume"
 msgstr "Користи управника дисковима за форматирање диска"
 
 #. Translators: 'type' means 'filesystem type' here.
-#: ../src/gdu-gtk/gdu-format-dialog.c:551
+#: ../src/gdu-gtk/gdu-format-dialog.c:553
 msgid "_Type:"
 msgstr "_Врста:"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:558
+#: ../src/gdu-gtk/gdu-format-dialog.c:560
 msgid "Compatible with all systems (FAT)"
 msgstr "Подржан свуда (ФАТ)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:560
+#: ../src/gdu-gtk/gdu-format-dialog.c:562
 msgid "Compatible with Linux (ext2)"
 msgstr "Подржан на Линуксу (екст2)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:562
+#: ../src/gdu-gtk/gdu-format-dialog.c:564
 msgid "Compatible with Linux (ext4)"
 msgstr "Подржан на Линуксу (екст4)"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:564
+#: ../src/gdu-gtk/gdu-format-dialog.c:566
 msgid "Encrypted, compatible with Linux (FAT)"
 msgstr "Шифрован, подржан на линуксу (ФАТ)"
 
 #. Translators: 'name' means 'filesystem label' here.
-#: ../src/gdu-gtk/gdu-format-dialog.c:607
+#: ../src/gdu-gtk/gdu-format-dialog.c:609
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
 #: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
@@ -2220,15 +2220,15 @@ msgstr "_Назив:"
 #. Translators: Default name to use for the formatted volume. Keep length of
 #. * translation of "New Volume" to less than 16 characters.
 #.
-#: ../src/gdu-gtk/gdu-format-dialog.c:614
+#: ../src/gdu-gtk/gdu-format-dialog.c:616
 msgid "New Volume"
 msgstr "Нови диск"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:632
+#: ../src/gdu-gtk/gdu-format-dialog.c:634
 msgid "T_ake ownership of filesystem"
 msgstr "_Овласти ме за овај систем датотека"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:635
+#: ../src/gdu-gtk/gdu-format-dialog.c:637
 msgid ""
 "The selected file system has a concept of file ownership. If checked, the "
 "created file system will be owned by you. If not checked, only the super "
@@ -2238,11 +2238,11 @@ msgstr ""
 "ово, ви ћете бити власник система датотека, а у супротном ће само "
 "администратор моћи да му приступи."
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:641
+#: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid "_Encrypt underlying device"
 msgstr "_Шифруј овај уређај"
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:643
+#: ../src/gdu-gtk/gdu-format-dialog.c:645
 msgid ""
 "Encryption protects your data, requiring a passphrase to be entered before "
 "the file system can be used. May decrease performance and may not be "
@@ -2252,7 +2252,7 @@ msgstr ""
 "систему датотека. Ово може умањити учинак система, а не може бити сагласно "
 "са медијумима на другим оперативним системима."
 
-#: ../src/gdu-gtk/gdu-format-dialog.c:676
+#: ../src/gdu-gtk/gdu-format-dialog.c:678
 msgid "Warning: All data on the volume will be irrevocably lost."
 msgstr "Упозорење: Сви подаци на диску ће бити трајно обрисани."
 
@@ -2312,17 +2312,17 @@ msgid "pid: %d  program: %s"
 msgstr "pid: %d  програм: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
-#: ../src/gdu-gtk/gdu-gtk.c:335 ../src/gdu-gtk/gdu-gtk.c:924
-#: ../src/gdu-gtk/gdu-gtk.c:1067
+#: ../src/gdu-gtk/gdu-gtk.c:337 ../src/gdu-gtk/gdu-gtk.c:933
+#: ../src/gdu-gtk/gdu-gtk.c:1076
 #, c-format
 msgid "Partition %d on %s"
 msgstr "%d. партиција на %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:371
+#: ../src/gdu-gtk/gdu-gtk.c:375
 msgid "Cannot unmount volume"
 msgstr "Не могу да демонтирам диск"
 
-#: ../src/gdu-gtk/gdu-gtk.c:381
+#: ../src/gdu-gtk/gdu-gtk.c:385
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
@@ -2330,49 +2330,49 @@ msgstr ""
 "Један или више програма користе овај диск. Затворите те програме и пробајте "
 "поново да демонтирате диск."
 
-#: ../src/gdu-gtk/gdu-gtk.c:422
+#: ../src/gdu-gtk/gdu-gtk.c:426
 msgid "_Unmount"
 msgstr "_Демонтирај"
 
-#: ../src/gdu-gtk/gdu-gtk.c:499
+#: ../src/gdu-gtk/gdu-gtk.c:503
 msgid "Passphrases do not match"
 msgstr "Лозинка се не поклапа"
 
-#: ../src/gdu-gtk/gdu-gtk.c:506
+#: ../src/gdu-gtk/gdu-gtk.c:510
 msgid "Passphrases do not differ"
 msgstr "Лозинка се не разликује"
 
-#: ../src/gdu-gtk/gdu-gtk.c:512
+#: ../src/gdu-gtk/gdu-gtk.c:516
 msgid "Passphrase can't be empty"
 msgstr "Лозинка не сме бити празна"
 
-#: ../src/gdu-gtk/gdu-gtk.c:584
+#: ../src/gdu-gtk/gdu-gtk.c:590
 msgid "Cr_eate"
 msgstr "_Направи"
 
-#: ../src/gdu-gtk/gdu-gtk.c:586 ../src/palimpsest/gdu-section-volumes.c:2499
+#: ../src/gdu-gtk/gdu-gtk.c:592 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
 msgstr "Промени _лозинку"
 
-#: ../src/gdu-gtk/gdu-gtk.c:588
+#: ../src/gdu-gtk/gdu-gtk.c:594
 msgid "_Unlock"
 msgstr "О_ткључај"
 
-#: ../src/gdu-gtk/gdu-gtk.c:617
+#: ../src/gdu-gtk/gdu-gtk.c:626
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr "За прављење шифрованог уређаја, изаберите лозинку која ће га штитити"
 
-#: ../src/gdu-gtk/gdu-gtk.c:620
+#: ../src/gdu-gtk/gdu-gtk.c:629
 msgid "To change the passphrase, enter both the current and new passphrase"
 msgstr "За промену лозинке, унесите и тренутну и нову лозинку"
 
-#: ../src/gdu-gtk/gdu-gtk.c:623
+#: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
 "Подаци на овом уређају су сачувани у шифрованом облику и заштићени лозинком"
 
-#: ../src/gdu-gtk/gdu-gtk.c:636
+#: ../src/gdu-gtk/gdu-gtk.c:645
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
@@ -2380,88 +2380,88 @@ msgstr ""
 "Подаци на овом уређају ће бити сачувани у шифрованом облику, заштићени "
 "лозинком."
 
-#: ../src/gdu-gtk/gdu-gtk.c:639
+#: ../src/gdu-gtk/gdu-gtk.c:648
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
 "Подаци на овом уређају су сачувани у шифрованом облику, заштићени лозинком."
 
-#: ../src/gdu-gtk/gdu-gtk.c:642
+#: ../src/gdu-gtk/gdu-gtk.c:651
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
 msgstr "Унесите лозинку уређаја како би могли да користите податке."
 
-#: ../src/gdu-gtk/gdu-gtk.c:651
+#: ../src/gdu-gtk/gdu-gtk.c:660
 msgid "Incorrect Passphrase. Try again."
 msgstr "Није исправна лозинка. Покушајте поново."
 
-#: ../src/gdu-gtk/gdu-gtk.c:675
+#: ../src/gdu-gtk/gdu-gtk.c:684
 msgid "C_urrent Passphrase:"
 msgstr "_Тренутна лозинка:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:689
+#: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_New Passphrase:"
 msgstr "_Нова лозинка:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:702
+#: ../src/gdu-gtk/gdu-gtk.c:711
 msgid "_Verify Passphrase:"
 msgstr "_Потврда лозинке:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:744
+#: ../src/gdu-gtk/gdu-gtk.c:753
 msgid "_Passphrase:"
 msgstr "_Лозинка:"
 
-#: ../src/gdu-gtk/gdu-gtk.c:759
+#: ../src/gdu-gtk/gdu-gtk.c:768
 msgid "_Forget passphrase immediately"
 msgstr "_Одмах заборави лозинку"
 
-#: ../src/gdu-gtk/gdu-gtk.c:762
+#: ../src/gdu-gtk/gdu-gtk.c:771
 msgid "Remember passphrase until you _log out"
 msgstr "З_апамти лозинку док се не одјавим"
 
-#: ../src/gdu-gtk/gdu-gtk.c:765
+#: ../src/gdu-gtk/gdu-gtk.c:774
 msgid "_Remember forever"
 msgstr "_Запамти заувек"
 
-#: ../src/gdu-gtk/gdu-gtk.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:837
 msgid "Enter Passphrase"
 msgstr "Унесите лозинку"
 
-#: ../src/gdu-gtk/gdu-gtk.c:957 ../src/gdu/gdu-util.c:828
+#: ../src/gdu-gtk/gdu-gtk.c:966 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
 msgstr "ЛУКС лозинка за диск чији је УУИД %s"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1255
+#: ../src/gdu-gtk/gdu-gtk.c:1268
 msgid "Empty (don't create a file system)"
 msgstr "Празна (не прави систем датотека)"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1276
+#: ../src/gdu-gtk/gdu-gtk.c:1289
 msgid "Empty"
 msgstr "Празна"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1284
+#: ../src/gdu-gtk/gdu-gtk.c:1297
 msgid "Extended Partition"
 msgstr "Проширена партиција"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1543 ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
 msgstr "Запис за подизање система (МБР)"
 
 #. Translators: This string is used for conveying the partition table format
-#: ../src/gdu-gtk/gdu-gtk.c:1548 ../src/gdu/gdu-drive.c:833
+#: ../src/gdu-gtk/gdu-gtk.c:1561 ../src/gdu/gdu-drive.c:833
 #: ../src/gdu/gdu-linux-md-drive.c:572
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
 msgstr "GUID партициона табела"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1553
+#: ../src/gdu-gtk/gdu-gtk.c:1566
 msgid "Don't partition"
 msgstr "Не прави партицију"
 
-#: ../src/gdu-gtk/gdu-gtk.c:1558 ../src/gdu/gdu-util.c:495
+#: ../src/gdu-gtk/gdu-gtk.c:1571 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
@@ -2476,7 +2476,7 @@ msgid "The selected partitioning scheme"
 msgstr "Изабрана партициона шема"
 
 #. Translators: 'scheme' means 'partitioning scheme' here.
-#: ../src/gdu-gtk/gdu-partition-dialog.c:248
+#: ../src/gdu-gtk/gdu-partition-dialog.c:250
 msgid "_Scheme:"
 msgstr "_Шема:"
 
@@ -2555,17 +2555,17 @@ msgstr[1] "пре %d сата"
 msgstr[2] "пре %d сати"
 msgstr[3] "пре сат времена"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:498
+#: ../src/gdu-gtk/gdu-volume-grid.c:489
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
 msgstr "Уређај"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:499
+#: ../src/gdu-gtk/gdu-volume-grid.c:490
 msgid "Drive to show volumes for"
 msgstr "Уређај за који се приказују партиције"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1189
+#: ../src/gdu-gtk/gdu-volume-grid.c:1175
 msgid "RAID Array is not running"
 msgstr "РАИД опсег није покренут"
 
@@ -2573,31 +2573,31 @@ msgstr "РАИД опсег није покренут"
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1192 ../src/gdu/gdu-drive.c:819
+#: ../src/gdu-gtk/gdu-volume-grid.c:1178 ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
 msgstr "Нису пронађени медијуми"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1277
+#: ../src/gdu-gtk/gdu-volume-grid.c:1263
 msgid "Extended"
 msgstr "Проширено"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1285
+#: ../src/gdu-gtk/gdu-volume-grid.c:1271
 msgid "Encrypted"
 msgstr "Шифровано"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1299 ../src/gdu/gdu-util.c:344
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
 msgstr "РАИД компонента"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1307
+#: ../src/gdu-gtk/gdu-volume-grid.c:1293
 msgid "Free"
 msgstr "Слободно"
 
@@ -2690,7 +2690,6 @@ msgstr "ХД-ДВД"
 #.
 #: ../src/gdu/gdu-drive.c:689
 #, c-format
-#| msgid "%s Free"
 msgid "%s File"
 msgstr "Датотека од %s:"
 
@@ -4438,12 +4437,12 @@ msgid "It's now safe to remove \"%s\"."
 msgstr "Сада је безбедно да уклоните „%s“."
 
 #. Translators: %s is the name of the device
-#: ../src/notification/gdu-slow-unmount-dialog.c:233
+#: ../src/notification/gdu-slow-unmount-dialog.c:231
 #, c-format
 msgid "Writing data to \"%s\"..."
 msgstr "Уписујем податке на „%s“..."
 
-#: ../src/notification/gdu-slow-unmount-dialog.c:248
+#: ../src/notification/gdu-slow-unmount-dialog.c:246
 msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
@@ -4451,23 +4450,29 @@ msgstr ""
 "Сачекајте да се процес заврши пре него што уклоните медијум или искључите "
 "уређај, како би избегли губитак података."
 
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "Један или више дискова отказују"
-
 #. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "Тврди диск можда отказује"
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr "Откривени проблеми чврстог диска"
 
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid ""
-"One or more hard disks report health problems. Click the icon to get more "
-"information."
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr "Чврсти диск извештава о проблемима у функционисању."
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
 msgstr ""
-"Један или више тврдих дискова пријављују неисправност. Кликните на иконицу "
-"за више података."
+"Чврсти дискови вишеструког система извештавају о проблемима у функционисању."
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr "Испитати"
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
+msgstr "Више чврстих дискова извештавају о проблемима у функционисању."
 
 #: ../src/palimpsest/gdu-main.c:127
 msgid "Volume to show"
@@ -4532,32 +4537,32 @@ msgstr "Чврстоа меморија (ССД)"
 msgid "Unknown Scheme: %s"
 msgstr "Непозната шема: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:439
-#: ../src/palimpsest/gdu-section-drive.c:459
+#: ../src/palimpsest/gdu-section-drive.c:442
+#: ../src/palimpsest/gdu-section-drive.c:462
 msgid "Error launching Brasero"
 msgstr "Грешка при покретању Бразера"
 
-#: ../src/palimpsest/gdu-section-drive.c:440
+#: ../src/palimpsest/gdu-section-drive.c:443
 msgid "The application is not installed"
 msgstr "Програм није инсталиран"
 
-#: ../src/palimpsest/gdu-section-drive.c:521
+#: ../src/palimpsest/gdu-section-drive.c:523
 msgid "Error ejecting medium"
 msgstr "Грешка при избацивању диска"
 
-#: ../src/palimpsest/gdu-section-drive.c:565
+#: ../src/palimpsest/gdu-section-drive.c:567
 msgid "Error detaching drive"
 msgstr "Грешка при откачивању диска"
 
-#: ../src/palimpsest/gdu-section-drive.c:610
+#: ../src/palimpsest/gdu-section-drive.c:612
 msgid "Error formatting drive"
 msgstr "Грешка при форматирању диска"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-drive.c:650
 msgid "Are you sure you want to format the drive?"
 msgstr "Да ли сигурно желите да форматирате уређај?"
 
-#: ../src/palimpsest/gdu-section-drive.c:835
+#: ../src/palimpsest/gdu-section-drive.c:837
 msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
@@ -4566,11 +4571,11 @@ msgstr ""
 "одговарајући уређај са више путања. Можда сте лоше подесили оперативни "
 "систем."
 
-#: ../src/palimpsest/gdu-section-drive.c:850
+#: ../src/palimpsest/gdu-section-drive.c:852
 msgid "Go to Multipath Device"
 msgstr "Иди у уређај са више путања"
 
-#: ../src/palimpsest/gdu-section-drive.c:861
+#: ../src/palimpsest/gdu-section-drive.c:863
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
@@ -4578,93 +4583,93 @@ msgstr ""
 "<b>НАПОМЕНА:</b> Овај објекат представља једну од неколико путања до "
 "уређаја. За радње на уређају, употребите одговарајући објекат са више путања."
 
-#: ../src/palimpsest/gdu-section-drive.c:890
+#: ../src/palimpsest/gdu-section-drive.c:892
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Model:"
 msgstr "Модел:"
 
-#: ../src/palimpsest/gdu-section-drive.c:894
+#: ../src/palimpsest/gdu-section-drive.c:896
 msgid "Serial Number:"
 msgstr "Серијски број:"
 
-#: ../src/palimpsest/gdu-section-drive.c:898
+#: ../src/palimpsest/gdu-section-drive.c:900
 msgid "Firmware Version:"
 msgstr "Издање фирмвера:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:903
+#: ../src/palimpsest/gdu-section-drive.c:905
 msgid "World Wide Name:"
 msgstr "Уобичајено име (WWN):"
 
-#: ../src/palimpsest/gdu-section-drive.c:907
+#: ../src/palimpsest/gdu-section-drive.c:909
 msgid "Location:"
 msgstr "Путања:"
 
-#: ../src/palimpsest/gdu-section-drive.c:915
+#: ../src/palimpsest/gdu-section-drive.c:917
 msgid "Write Cache:"
 msgstr "Кеш:"
 
-#: ../src/palimpsest/gdu-section-drive.c:919
+#: ../src/palimpsest/gdu-section-drive.c:921
 msgid "Rotation Rate:"
 msgstr "Учесталост обртаја:"
 
-#: ../src/palimpsest/gdu-section-drive.c:923
+#: ../src/palimpsest/gdu-section-drive.c:925
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "Величина:"
 
-#: ../src/palimpsest/gdu-section-drive.c:927
+#: ../src/palimpsest/gdu-section-drive.c:929
 msgid "Connection:"
 msgstr "Веза:"
 
-#: ../src/palimpsest/gdu-section-drive.c:931
+#: ../src/palimpsest/gdu-section-drive.c:933
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
 msgstr "Партиције:"
 
-#: ../src/palimpsest/gdu-section-drive.c:954
+#: ../src/palimpsest/gdu-section-drive.c:956
 msgid "Open CD/_DVD Application"
 msgstr "_Покрени ЦД/ДВД програм"
 
-#: ../src/palimpsest/gdu-section-drive.c:955
+#: ../src/palimpsest/gdu-section-drive.c:957
 msgid "Create and copy CDs and DVDs"
 msgstr "Прави или копира ЦД и ДВД дискове"
 
-#: ../src/palimpsest/gdu-section-drive.c:964
+#: ../src/palimpsest/gdu-section-drive.c:966
 msgid "Format _Drive"
 msgstr "_Форматирај"
 
-#: ../src/palimpsest/gdu-section-drive.c:965
+#: ../src/palimpsest/gdu-section-drive.c:967
 msgid "Erase or partition the drive"
 msgstr "Брише или партиционише диск"
 
-#: ../src/palimpsest/gdu-section-drive.c:974
+#: ../src/palimpsest/gdu-section-drive.c:976
 msgid "SM_ART Data"
 msgstr "_СМАРТ подаци"
 
-#: ../src/palimpsest/gdu-section-drive.c:975
+#: ../src/palimpsest/gdu-section-drive.c:977
 msgid "View SMART data and run self-tests"
 msgstr "Приказује СМАРТ податке и покреће самотестирање"
 
-#: ../src/palimpsest/gdu-section-drive.c:984
+#: ../src/palimpsest/gdu-section-drive.c:986
 msgid "_Eject"
 msgstr "_Избаци"
 
-#: ../src/palimpsest/gdu-section-drive.c:985
+#: ../src/palimpsest/gdu-section-drive.c:987
 msgid "Eject medium from the drive"
 msgstr "Избацује диск из уређаја"
 
-#: ../src/palimpsest/gdu-section-drive.c:994
+#: ../src/palimpsest/gdu-section-drive.c:996
 msgid "Safe Rem_oval"
 msgstr "_Безбедно уклони"
 
-#: ../src/palimpsest/gdu-section-drive.c:995
+#: ../src/palimpsest/gdu-section-drive.c:997
 msgid "Power down the drive so it can be removed"
 msgstr "Искључује напајање уређаја, како би могли да га уклоните"
 
-#: ../src/palimpsest/gdu-section-drive.c:1005
+#: ../src/palimpsest/gdu-section-drive.c:1007
 msgid "Measure drive performance"
 msgstr "Мери учинак диска"
 
@@ -5420,103 +5425,116 @@ msgstr "Грешка приликом прављења РАИД опсега"
 msgid "Error connecting to “%s”"
 msgstr "Грешка при повезивању на „%s“"
 
-#: ../src/palimpsest/gdu-shell.c:808
+#: ../src/palimpsest/gdu-shell.c:809
 msgid "translator-credits"
 msgstr ""
 "Милош Поповић <gpopac@gmail.com>\n"
 "http://prevod.org — превод на српски језик."
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "_File"
 msgstr "_Датотека"
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "Connect to _Server..."
 msgstr "По_вежи се на сервер..."
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "Manage storage devices on another machine"
 msgstr "Управља уређајима за складиштење на другом рачунару"
 
-#: ../src/palimpsest/gdu-shell.c:839
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_Create"
 msgstr "_Направи"
 
-#: ../src/palimpsest/gdu-shell.c:840
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "_RAID Array..."
 msgstr "_РАИД опсег"
 
-#: ../src/palimpsest/gdu-shell.c:840
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "Create a RAID array"
 msgstr "Направи РАИД опсег"
 
-#: ../src/palimpsest/gdu-shell.c:841
+#: ../src/palimpsest/gdu-shell.c:842
 msgid "_Edit"
 msgstr "_Уређивање"
 
-#: ../src/palimpsest/gdu-shell.c:842 ../src/palimpsest/gdu-shell.c:845
+#: ../src/palimpsest/gdu-shell.c:843 ../src/palimpsest/gdu-shell.c:846
 msgid "_Help"
 msgstr "_Помоћ"
 
-#: ../src/palimpsest/gdu-shell.c:844
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "_Quit"
 msgstr "_Изађи"
 
-#: ../src/palimpsest/gdu-shell.c:844
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "Quit"
 msgstr "Напушта програм"
 
-#: ../src/palimpsest/gdu-shell.c:845
+#: ../src/palimpsest/gdu-shell.c:846
 msgid "Get Help on Disk Utility"
 msgstr "Потражите помоћ везану за управника дискова"
 
-#: ../src/palimpsest/gdu-shell.c:846
+#: ../src/palimpsest/gdu-shell.c:847
 msgid "_About"
 msgstr "_О програму"
 
-#: ../src/palimpsest/gdu-shell.c:925
+#: ../src/palimpsest/gdu-shell.c:926
 msgid "An error occured"
 msgstr "Грешка"
 
-#: ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:935
 msgid "The operation failed."
 msgstr "Радња није успела."
 
-#: ../src/palimpsest/gdu-shell.c:937
+#: ../src/palimpsest/gdu-shell.c:938
 msgid "The device is busy."
 msgstr "Уређај је заузет."
 
-#: ../src/palimpsest/gdu-shell.c:940
+#: ../src/palimpsest/gdu-shell.c:941
 msgid "The operation was canceled."
 msgstr "Радња је прекинута."
 
-#: ../src/palimpsest/gdu-shell.c:943
+#: ../src/palimpsest/gdu-shell.c:944
 msgid "The daemon is being inhibited."
 msgstr "Управљачки програм је онемогућен."
 
-#: ../src/palimpsest/gdu-shell.c:946
+#: ../src/palimpsest/gdu-shell.c:947
 msgid "An invalid option was passed."
 msgstr "Прослеђена је неисправна опција."
 
-#: ../src/palimpsest/gdu-shell.c:949
+#: ../src/palimpsest/gdu-shell.c:950
 msgid "The operation is not supported."
 msgstr "Радња није подржана."
 
-#: ../src/palimpsest/gdu-shell.c:952
+#: ../src/palimpsest/gdu-shell.c:953
 msgid "Getting ATA SMART data would wake up the device."
 msgstr "Прикупљање АТА СМАРТ података ће пробудити уређај."
 
-#: ../src/palimpsest/gdu-shell.c:955
+#: ../src/palimpsest/gdu-shell.c:956
 msgid "Permission denied."
 msgstr "Немате овлашћења."
 
-#: ../src/palimpsest/gdu-shell.c:994
+#: ../src/palimpsest/gdu-shell.c:995
 msgid "_Details:"
 msgstr "_Детаљи:"
 
-#: ../src/palimpsest/gdu-shell.c:1163
+#: ../src/palimpsest/gdu-shell.c:1164
 msgid "_Storage Devices"
 msgstr "_Складишни уређаји"
+
+#~ msgid "One or more disks are failing"
+#~ msgstr "Један или више дискова отказују"
+
+#~ msgid "A hard disk may be failing"
+#~ msgstr "Тврди диск можда отказује"
+
+#~ msgid ""
+#~ "One or more hard disks report health problems. Click the icon to get more "
+#~ "information."
+#~ msgstr ""
+#~ "Један или више тврдих дискова пријављују неисправност. Кликните на "
+#~ "иконицу за више података."
 
 #~ msgid "The volume to format"
 #~ msgstr "Диск за форматирање"

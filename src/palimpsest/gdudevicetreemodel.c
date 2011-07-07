@@ -428,7 +428,7 @@ get_drive_header_iter (GduDeviceTreeModel *model)
     goto out;
 
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
-                       _("Direct-Attached Storage"));
+                       _("Disk Drives"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &model->drive_iter,
                                      NULL, /* GtkTreeIter *parent */

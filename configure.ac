@@ -113,7 +113,24 @@ fi
 GNOME_DOC_INIT
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
-GNOME_MAINTAINER_MODE_DEFINES
+
+dnl ---------------------------------------------------------------------------
+dnl - Use strict options (default enabled for devs, disabled in releases)
+dnl ---------------------------------------------------------------------------
+dnl if .git directory is present, considering we are working in the repository
+if test -d ".git"; then
+        default_strict=yes
+else
+        default_strict=no
+fi
+
+AC_ARG_ENABLE(strict, AS_HELP_STRING([--enable-strict],
+                [Enable strict compilation options]), enable_strict=$enableval,
+                enable_strict=$default_strict)
+if test x$enable_strict != xno; then
+        CPPFLAGS="$CPPFLAGS -DG_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED"
+fi
+
 
 AC_ARG_ENABLE(gtk-doc, AS_HELP_STRING([--enable-gtk-doc],
   [use gtk-doc to build documentation [default=no]]),,
@@ -281,6 +298,7 @@ echo "
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}
         cppflags:                   ${CPPFLAGS}
+        strict:                     ${enable_strict}
 
         Maintainer mode:            ${USE_MAINTAINER_MODE}
         Building api docs:          ${enable_gtk_doc}

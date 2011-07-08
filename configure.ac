@@ -113,7 +113,6 @@ fi
 GNOME_DOC_INIT
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
-GNOME_MAINTAINER_MODE_DEFINES
 
 AC_ARG_ENABLE(gtk-doc, AS_HELP_STRING([--enable-gtk-doc],
   [use gtk-doc to build documentation [default=no]]),,

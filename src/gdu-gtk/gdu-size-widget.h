@@ -39,7 +39,7 @@ typedef struct GduSizeWidgetPrivate GduSizeWidgetPrivate;
 
 struct GduSizeWidget
 {
-        GtkBox parent;
+        GtkHBox parent;
 
         /*< private >*/
         GduSizeWidgetPrivate *priv;
@@ -47,7 +47,7 @@ struct GduSizeWidget
 
 struct GduSizeWidgetClass
 {
-        GtkBoxClass parent_class;
+        GtkHBoxClass parent_class;
 
         void (*changed) (GduSizeWidget *widget);
 };

@@ -100,7 +100,7 @@ static void on_row_inserted (GtkTreeModel *tree_model,
                              GtkTreeIter  *iter,
                              gpointer      user_data);
 
-G_DEFINE_TYPE (GduDiskSelectionWidget, gdu_disk_selection_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GduDiskSelectionWidget, gdu_disk_selection_widget, GTK_TYPE_VBOX)
 
 static void
 gdu_disk_selection_widget_finalize (GObject *object)

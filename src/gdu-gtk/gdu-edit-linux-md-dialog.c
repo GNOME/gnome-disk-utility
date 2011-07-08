@@ -349,14 +349,14 @@ gdu_edit_linux_md_dialog_constructed (GObject *object)
         content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
         gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+        hbox = gtk_hbox_new (FALSE, 12);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
         image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
         gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+        vbox = gtk_vbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
         action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
@@ -383,7 +383,7 @@ gdu_edit_linux_md_dialog_constructed (GObject *object)
         g_free (s);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+        vbox2 = gtk_vbox_new (FALSE, 12);
         align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 6, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);

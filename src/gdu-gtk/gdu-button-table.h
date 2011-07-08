@@ -39,7 +39,7 @@ typedef struct GduButtonTablePrivate GduButtonTablePrivate;
 
 struct GduButtonTable
 {
-        GtkBox parent;
+        GtkHBox parent;
 
         /*< private >*/
         GduButtonTablePrivate *priv;
@@ -47,7 +47,7 @@ struct GduButtonTable
 
 struct GduButtonTableClass
 {
-        GtkBoxClass parent_class;
+        GtkHBoxClass parent_class;
 };
 
 GType       gdu_button_table_get_type        (void) G_GNUC_CONST;

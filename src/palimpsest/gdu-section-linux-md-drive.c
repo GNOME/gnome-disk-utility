@@ -950,7 +950,7 @@ gdu_section_linux_md_drive_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (section), align, FALSE, FALSE, 0);
 
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+        vbox = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox);
 
         elements = g_ptr_array_new_with_free_func (g_object_unref);

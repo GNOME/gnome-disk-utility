@@ -39,7 +39,7 @@ typedef struct GduDiskSelectionWidgetPrivate GduDiskSelectionWidgetPrivate;
 
 struct GduDiskSelectionWidget
 {
-        GtkBox parent;
+        GtkVBox parent;
 
         /*< private >*/
         GduDiskSelectionWidgetPrivate *priv;
@@ -47,7 +47,7 @@ struct GduDiskSelectionWidget
 
 struct GduDiskSelectionWidgetClass
 {
-        GtkBoxClass parent_class;
+        GtkVBoxClass parent_class;
 
         void (*changed) (GduDiskSelectionWidget *widget);
 

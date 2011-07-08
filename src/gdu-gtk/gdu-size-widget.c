@@ -172,7 +172,7 @@ enum
 
 guint signals[LAST_SIGNAL] = {0,};
 
-G_DEFINE_TYPE (GduSizeWidget, gdu_size_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GduSizeWidget, gdu_size_widget, GTK_TYPE_HBOX)
 
 static void update_stepping (GduSizeWidget *widget);
 

@@ -524,7 +524,7 @@ gdu_format_dialog_constructed (GObject *object)
         gtk_container_set_border_width (GTK_CONTAINER (content_area), 10);
 
         /*  icon and text labels  */
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+        hbox = gtk_hbox_new (FALSE, 0);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, TRUE, 0);
 
         image = gtk_image_new_from_pixbuf (pixbuf);
@@ -535,7 +535,7 @@ gdu_format_dialog_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 12, 0, 0);
         gtk_box_pack_start (GTK_BOX (hbox), align, TRUE, TRUE, 0);
 
-        vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+        vbox2 = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox2);
 
         table = dialog->priv->table;

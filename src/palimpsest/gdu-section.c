@@ -38,7 +38,7 @@ struct _GduSectionPrivate
 
 static GObjectClass *parent_class = NULL;
 
-G_DEFINE_TYPE (GduSection, gdu_section, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GduSection, gdu_section, GTK_TYPE_VBOX)
 
 enum {
         PROP_0,

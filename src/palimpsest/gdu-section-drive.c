@@ -829,7 +829,7 @@ gdu_section_drive_constructed (GObject *object)
 
         info_bar = gtk_info_bar_new ();
         gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), GTK_MESSAGE_WARNING);
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+        hbox = gtk_hbox_new (FALSE, 6);
         image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_DIALOG);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
         label = gtk_label_new (NULL);
@@ -855,7 +855,7 @@ gdu_section_drive_constructed (GObject *object)
                           "response",
                           G_CALLBACK (on_multipath_component_info_bar_go_to_multipath_device),
                           section);
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+        hbox = gtk_hbox_new (FALSE, 6);
         image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
         label = gtk_label_new (NULL);
@@ -881,7 +881,7 @@ gdu_section_drive_constructed (GObject *object)
         gtk_alignment_set_padding (GTK_ALIGNMENT (align), 0, 0, 12, 0);
         gtk_box_pack_start (GTK_BOX (section), align, FALSE, FALSE, 0);
 
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+        vbox = gtk_vbox_new (FALSE, 6);
         gtk_container_add (GTK_CONTAINER (align), vbox);
         section->priv->main_vbox = vbox;
 

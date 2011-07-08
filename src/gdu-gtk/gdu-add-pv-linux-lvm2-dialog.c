@@ -233,14 +233,14 @@ gdu_add_pv_linux_lvm2_dialog_constructed (GObject *object)
 
         icon = gdu_presentable_get_icon (gdu_dialog_get_presentable (GDU_DIALOG (dialog)));
 
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+        hbox = gtk_hbox_new (FALSE, 12);
         gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
         image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
         gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-        vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+        vbox = gtk_vbox_new (FALSE, 12);
         gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
 
         p = gdu_dialog_get_presentable (GDU_DIALOG (dialog));

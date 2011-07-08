@@ -41,7 +41,7 @@ typedef struct _GduSectionPrivate     GduSectionPrivate;
 
 struct _GduSection
 {
-        GtkBox parent;
+        GtkVBox parent;
 
         /* private */
         GduSectionPrivate *priv;
@@ -49,7 +49,7 @@ struct _GduSection
 
 struct _GduSectionClass
 {
-        GtkBoxClass parent_class;
+        GtkVBoxClass parent_class;
 
         /* virtual table */
         void (*update) (GduSection *section);

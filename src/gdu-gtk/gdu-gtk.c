@@ -358,7 +358,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
         // TODO: no support for GIcon in GtkWindow
         //gtk_window_set_icon_name (GTK_WINDOW (dialog), window_icon);
 
-	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
 	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
@@ -366,7 +366,7 @@ gdu_util_dialog_show_filesystem_busy (GtkWidget *parent_window,
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-	main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
+	main_vbox = gtk_vbox_new (FALSE, 10);
 	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
 
         /* main message */
@@ -609,7 +609,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         //else
         gtk_window_set_icon_name (GTK_WINDOW (dialog), GTK_STOCK_DIALOG_AUTHENTICATION);
 
-	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
 	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
@@ -617,7 +617,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-	main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
+	main_vbox = gtk_vbox_new (FALSE, 10);
 	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
 
 	/* main message */
@@ -666,7 +666,7 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
         }
 
 	/* password entry */
-	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
 
 	table_alignment = gtk_alignment_new (0.0, 0.0, 1.0, 1.0);
@@ -719,13 +719,13 @@ gdu_util_dialog_secret_internal (GtkWidget   *parent_window,
                 gtk_table_attach_defaults (GTK_TABLE (table), data->password_entry_verify, 1, 2, row, row + 1);
                 gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->password_entry_verify);
 
-                data->warning_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+                data->warning_hbox = gtk_hbox_new (FALSE, 12);
                 image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU);
                 data->warning_label = gtk_label_new (NULL);
 
                 gtk_box_pack_start (GTK_BOX (data->warning_hbox), image, FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (data->warning_hbox), data->warning_label, FALSE, FALSE, 0);
-                hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+                hbox = gtk_hbox_new (FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (hbox), data->warning_hbox, FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (hbox), gtk_label_new (" "), FALSE, FALSE, 0);
                 gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1172,7 +1172,7 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
         gtk_box_set_spacing (GTK_BOX (action_area), 6);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-	hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+	hbox = gtk_hbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
 	gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
 
@@ -1180,7 +1180,7 @@ gdu_util_delete_confirmation_dialog (GtkWidget   *parent_window,
 	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
 	gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-	main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
+	main_vbox = gtk_vbox_new (FALSE, 10);
 	gtk_box_pack_start (GTK_BOX (hbox), main_vbox, TRUE, TRUE, 0);
 
 	label = gtk_label_new (NULL);

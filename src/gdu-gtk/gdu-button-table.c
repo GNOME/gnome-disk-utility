@@ -48,7 +48,7 @@ enum
 
 static void do_relayout (GduButtonTable *table);
 
-G_DEFINE_TYPE (GduButtonTable, gdu_button_table, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GduButtonTable, gdu_button_table, GTK_TYPE_HBOX)
 
 static void
 gdu_button_table_finalize (GObject *object)
@@ -295,7 +295,7 @@ create_button (GtkWidget   *widget,
         gtk_label_set_use_underline (GTK_LABEL (label), TRUE);
         g_free (s);
 
-        hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+        hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 

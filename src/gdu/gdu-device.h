@@ -143,6 +143,7 @@ const char *gdu_device_drive_get_wwn (GduDevice *device);
 const char *gdu_device_drive_get_connection_interface (GduDevice *device);
 guint64 gdu_device_drive_get_connection_speed (GduDevice *device);
 char **gdu_device_drive_get_media_compatibility (GduDevice *device);
+const gchar *gdu_device_get_automount_hint(GduDevice *device);
 const char *gdu_device_drive_get_media (GduDevice *device);
 gboolean gdu_device_drive_get_is_media_ejectable (GduDevice *device);
 gboolean gdu_device_drive_get_requires_eject (GduDevice *device);

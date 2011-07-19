@@ -298,7 +298,6 @@ gdu_window_constructed (GObject *object)
   GtkTreeSelection *selection;
   const gchar *path;
   GtkWidget *w;
-  GtkWidget *label;
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
   GList *children, *l;

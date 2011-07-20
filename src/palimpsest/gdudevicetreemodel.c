@@ -33,8 +33,6 @@ struct _GduDeviceTreeModel
   UDisksClient *client;
 
   GList *current_drives;
-  GtkTreeIter drive_iter;
-  gboolean drive_iter_valid;
 
   GList *current_blocks;
   GtkTreeIter block_iter;
@@ -419,46 +417,10 @@ gdu_device_tree_model_get_client (GduDeviceTreeModel *model)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static GtkTreeIter *
-get_drive_header_iter (GduDeviceTreeModel *model)
-{
-  gchar *s;
-
-  if (model->drive_iter_valid)
-    goto out;
-
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
-                       _("Disk Drives"));
-  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &model->drive_iter,
-                                     NULL, /* GtkTreeIter *parent */
-                                     0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_drive",
-                                     -1);
-  g_free (s);
-
-  model->drive_iter_valid = TRUE;
-
- out:
-  return &model->drive_iter;
-}
-
-static void
-nuke_drive_header (GduDeviceTreeModel *model)
-{
-  if (model->drive_iter_valid)
-    {
-      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->drive_iter);
-      model->drive_iter_valid = FALSE;
-    }
-}
-
 static void
 add_drive (GduDeviceTreeModel *model,
-         UDisksObject       *object,
-         GtkTreeIter        *parent)
+           UDisksObject       *object,
+           GtkTreeIter        *parent)
 {
   UDisksDrive *drive;
   GIcon *drive_icon;
@@ -485,7 +447,8 @@ add_drive (GduDeviceTreeModel *model,
   //         g_icon_to_string (drive_icon),
   //         g_icon_to_string (media_icon));
 
-  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
+  sort_key = g_strdup_printf ("00_drives_%s",
+                              g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
@@ -572,11 +535,8 @@ update_drives (GduDeviceTreeModel *model)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
       model->current_drives = g_list_prepend (model->current_drives, g_object_ref (object));
-      add_drive (model, object, get_drive_header_iter (model));
+      add_drive (model, object, NULL);
     }
-
-  if (g_list_length (model->current_drives) == 0)
-    nuke_drive_header (model);
 
   g_list_free (added_drives);
   g_list_free (removed_drives);

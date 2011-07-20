@@ -301,6 +301,7 @@ gdu_window_constructed (GObject *object)
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
   GList *children, *l;
+  GtkWidget *headers_label;
 
   init_css (window);
 
@@ -356,6 +357,12 @@ gdu_window_constructed (GObject *object)
 
   tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview"));
 
+  headers_label = gtk_label_new (NULL);
+  gtk_label_set_markup_with_mnemonic (GTK_LABEL (headers_label), _("_Devices"));
+  gtk_misc_set_alignment (GTK_MISC (headers_label), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (headers_label), GTK_WIDGET (tree_view));
+  gtk_widget_show_all (headers_label);
+
   gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
                                         GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
@@ -369,6 +376,7 @@ gdu_window_constructed (GObject *object)
                     window);
 
   column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_widget (column, headers_label);
   gtk_tree_view_append_column (tree_view, column);
 
   renderer = gtk_cell_renderer_text_new ();

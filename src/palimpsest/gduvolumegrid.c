@@ -1789,6 +1789,7 @@ recompute_grid (GduVolumeGrid *grid)
         }
       else
         {
+          GridElement *cleartext_element;
           element = g_new0 (GridElement, 1);
           element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
           element->size_ratio = 1.0;
@@ -1802,7 +1803,9 @@ recompute_grid (GduVolumeGrid *grid)
             }
           grid->elements = g_list_append (grid->elements, element);
           grid_element_set_details (grid, element);
-          maybe_add_crypto (grid, element);
+          cleartext_element = maybe_add_crypto (grid, element);
+          if (cleartext_element != NULL)
+            element->embedded_elements = g_list_prepend (NULL, cleartext_element);
         }
     }
   else

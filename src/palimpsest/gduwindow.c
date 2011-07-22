@@ -1119,7 +1119,7 @@ update_device_page_for_block (GduWindow          *window,
                               UDisksBlockDevice  *block,
                               guint64             size)
 {
-  const gchar *backing_file;
+  UDisksLoop *loop;
   const gchar *usage;
   const gchar *type;
   const gchar *version;
@@ -1138,13 +1138,14 @@ update_device_page_for_block (GduWindow          *window,
             "devtab-size-label",
             "devtab-size-value-label",
             size);
-  backing_file = udisks_block_device_get_loop_backing_file (block);
-  if (strlen (backing_file) > 0)
+
+  loop = udisks_object_peek_loop (object);
+  if (loop != NULL)
     {
       set_markup (window,
                   "devtab-backing-file-label",
                   "devtab-backing-file-value-label",
-                  backing_file, SET_MARKUP_FLAGS_NONE);
+                  udisks_loop_get_backing_file (loop), SET_MARKUP_FLAGS_NONE);
     }
 
   usage = udisks_block_device_get_id_usage (block);

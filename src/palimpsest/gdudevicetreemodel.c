@@ -591,6 +591,7 @@ add_block (GduDeviceTreeModel  *model,
            GtkTreeIter         *parent)
 {
   UDisksBlockDevice *block;
+  UDisksLoop *loop;
   GIcon *icon;
   gchar *s;
   gchar *sort_key;
@@ -601,12 +602,14 @@ add_block (GduDeviceTreeModel  *model,
   gchar *size_str;
 
   block = udisks_object_peek_block_device (object);
+  loop = udisks_object_peek_loop (object);
+
   size = udisks_block_device_get_size (block);
   size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
 
   preferred_device = udisks_block_device_get_preferred_device (block);
-  loop_backing_file = udisks_block_device_get_loop_backing_file (block);
-  if (strlen (loop_backing_file) > 0)
+  loop_backing_file = loop != NULL ? udisks_loop_get_backing_file (loop) : NULL;
+  if (loop_backing_file != NULL)
     {
       gchar *loop_name;
 

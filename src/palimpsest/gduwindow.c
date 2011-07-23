@@ -24,7 +24,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+
 #include <glib/gi18n.h>
+#include <gio/gunixfdlist.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -79,7 +85,7 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   gpointer     user_data);
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
-static void update_device_page (GduWindow *window);
+static gboolean update_device_page (GduWindow *window);
 static void teardown_device_page (GduWindow *window);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
@@ -197,31 +203,45 @@ on_row_inserted (GtkTreeModel *tree_model,
   gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
 }
 
-static void select_details_page (GduWindow    *window,
-                                 UDisksObject *object,
-                                 DetailsPage   page);
+static gboolean select_details_page (GduWindow    *window,
+                                     UDisksObject *object,
+                                     DetailsPage   page);
 
 static void
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
+  gboolean can_remove;
+  GtkTreeIter iter;
+
+  if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
+    {
+      GtkTreeSelection *tree_selection;
+      tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
+      gtk_tree_selection_select_iter (tree_selection, &iter);
+    }
+
+  can_remove = FALSE;
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
           udisks_object_peek_block_device (object) != NULL)
         {
-          select_details_page (window, object, DETAILS_PAGE_DEVICE);
+          can_remove = select_details_page (window, object, DETAILS_PAGE_DEVICE);
         }
       else
         {
           g_warning ("no page for object %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-          select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED);
+          can_remove = select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED);
         }
     }
   else
     {
-      select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED);
+      can_remove = select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED);
     }
+
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (window->builder, "device-tree-remove-button")),
+                            can_remove);
 }
 
 static void
@@ -248,6 +268,210 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
       set_selected_object (window, NULL);
     }
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_device_tree_add_button_clicked (GtkToolButton *button,
+                                   gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkMenu *menu;
+
+  menu = GTK_MENU (gtk_builder_get_object (window->builder, "device-tree-popup-menu"));
+  gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+loop_delete_cb (UDisksLoop   *loop,
+                GAsyncResult *res,
+                gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_loop_call_delete_finish (loop, res, &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error deleting loop device"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_device_tree_remove_button_clicked (GtkToolButton *button,
+                                      gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksLoop *loop;
+
+  loop = udisks_object_peek_loop (window->current_object);
+  if (loop != NULL)
+    {
+      GVariantBuilder options_builder;
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      udisks_loop_call_delete (loop,
+                               g_variant_builder_end (&options_builder),
+                               NULL, /* GCancellable */
+                               (GAsyncReadyCallback) loop_delete_cb,
+                               g_object_ref (window));
+    }
+  else
+    {
+      g_warning ("remove action not implemented for object");
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
+{
+  GduWindow *window;
+  gchar *filename;
+} LoopSetupData;
+
+static LoopSetupData *
+loop_setup_data_new (GduWindow   *window,
+                     const gchar *filename)
+{
+  LoopSetupData *data;
+  data = g_slice_new0 (LoopSetupData);
+  data->window = g_object_ref (window);
+  data->filename = g_strdup (filename);
+  return data;
+}
+
+static void
+loop_setup_data_free (LoopSetupData *data)
+{
+  g_object_unref (data->window);
+  g_free (data->filename);
+  g_slice_free (LoopSetupData, data);
+}
+
+static void
+loop_setup_cb (UDisksManager  *manager,
+               GAsyncResult   *res,
+               gpointer        user_data)
+{
+  LoopSetupData *data = user_data;
+  gchar *out_loop_device_object_path;
+  GError *error;
+
+  error = NULL;
+  if (!udisks_manager_call_loop_setup_finish (manager, &out_loop_device_object_path, NULL, res, &error))
+    {
+      gdu_window_show_error (data->window,
+                             _("Error attaching disk image"),
+                             error);
+      g_error_free (error);
+    }
+  else
+    {
+      gchar *uri;
+      UDisksObject *object;
+
+      /* This is to make it appear in the file chooser's "Recently Used" list */
+      uri = g_strdup_printf ("file://%s", data->filename);
+      gtk_recent_manager_add_item (gtk_recent_manager_get_default (), uri);
+      g_free (uri);
+
+      object = UDISKS_OBJECT (g_dbus_object_manager_get_object (udisks_client_get_object_manager (data->window->client),
+                                                                out_loop_device_object_path));
+      set_selected_object (data->window, object);
+      g_object_unref (object);
+      g_free (out_loop_device_object_path);
+    }
+
+  loop_setup_data_free (data);
+}
+
+static void
+on_dtpm_attach_disk_image_activated (GtkMenuItem *item,
+                                     gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkWidget *dialog;
+  GtkFileFilter *filter;
+  gchar *filename;
+  gint fd;
+  GUnixFDList *fd_list;
+  GVariantBuilder options_builder;
+
+  filename = NULL;
+  fd = -1;
+
+  dialog = gtk_file_chooser_dialog_new (_("Select Disk Image to Attach"),
+                                        GTK_WINDOW (window),
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        _("Attach"), GTK_RESPONSE_ACCEPT,
+                                        NULL);
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), g_get_home_dir ());
+
+  /* TODO: define proper mime-types */
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Disk Images"));
+  gtk_file_filter_add_pattern (filter, "*.img");
+  gtk_file_filter_add_pattern (filter, "*.iso");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  /* Can't support non-local files because uid gets EPERM when doing fstat(2)
+   * an FD from the FUSE mount... it would be nice to support this, though
+   */
+  /* gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE); */
+
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
+    goto out;
+
+  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+  gtk_widget_hide (dialog);
+
+  fd = open (filename, O_RDWR);
+  if (fd == -1)
+    fd = open (filename, O_RDONLY);
+  if (fd == -1)
+    {
+      GError *error;
+      error = g_error_new (G_IO_ERROR,
+                           g_io_error_from_errno (errno),
+                           "%s", strerror (errno));
+      gdu_window_show_error (window,
+                             _("Error attaching disk image"),
+                             error);
+      g_error_free (error);
+      goto out;
+    }
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  /* TODO: add options to options_builder */
+
+  fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
+  udisks_manager_call_loop_setup (udisks_client_get_manager (window->client),
+                                  g_variant_new_handle (0),
+                                  g_variant_builder_end (&options_builder),
+                                  fd_list,
+                                  NULL,                       /* GCancellable */
+                                  (GAsyncReadyCallback) loop_setup_cb,
+                                  loop_setup_data_new (window, filename));
+
+ out:
+  gtk_widget_destroy (dialog);
+  g_free (filename);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 
 gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
 
@@ -451,6 +675,20 @@ gdu_window_constructed (GObject *object)
   context = gtk_widget_get_style_context (gdu_window_get_widget (window, "devtab-grid-toolbar"));
   gtk_widget_set_name (gdu_window_get_widget (window, "devtab-grid-toolbar"), "devtab-grid-toolbar");
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
+
+  /* popup menu */
+  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-add-button"),
+                    "clicked",
+                    G_CALLBACK (on_device_tree_add_button_clicked),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-remove-button"),
+                    "clicked",
+                    G_CALLBACK (on_device_tree_remove_button_clicked),
+                    window);
+  g_signal_connect (gtk_builder_get_object (window->builder, "dtpm-attach-disk-image"),
+                    "activate",
+                    G_CALLBACK (on_dtpm_attach_disk_image_activated),
+                    window);
 
   /* actions */
   g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-generic"),
@@ -775,10 +1013,11 @@ setup_details_page (GduWindow     *window,
     }
 }
 
-static void
+static gboolean
 update_details_page (GduWindow   *window,
                      DetailsPage  page)
 {
+  gboolean can_remove;
   //g_debug ("update for %s, page %d",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
   //         page);
@@ -792,17 +1031,20 @@ update_details_page (GduWindow   *window,
       break;
 
     case DETAILS_PAGE_DEVICE:
-      update_device_page (window);
+      can_remove = update_device_page (window);
       break;
     }
+
+  return can_remove;
 }
 
-static void
+static gboolean
 select_details_page (GduWindow     *window,
                      UDisksObject  *object,
                      DetailsPage    page)
 {
   GtkNotebook *notebook;
+  gboolean can_remove;
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
 
@@ -821,7 +1063,8 @@ select_details_page (GduWindow     *window,
                       window->current_object,
                       window->current_page);
 
-  update_details_page (window, window->current_page);
+  can_remove = update_details_page (window, window->current_page);
+  return can_remove;
 }
 
 static void
@@ -1345,7 +1588,7 @@ update_device_page_for_free_space (GduWindow          *window,
                                                               "devtab-action-partition-create")), TRUE);
 }
 
-static void
+static gboolean
 update_device_page (GduWindow *window)
 {
   UDisksObject *object;
@@ -1355,6 +1598,9 @@ update_device_page (GduWindow *window)
   guint64 size;
   GList *children;
   GList *l;
+  gboolean can_remove;
+
+  can_remove = FALSE;
 
   /* first hide everything */
   gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")),
@@ -1376,6 +1622,9 @@ update_device_page (GduWindow *window)
   block = udisks_object_peek_block_device (window->current_object);
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
+
+  if (udisks_object_peek_loop (object) != NULL)
+    can_remove = TRUE;
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive);
@@ -1413,6 +1662,8 @@ update_device_page (GduWindow *window)
             }
         }
     }
+
+  return can_remove;
 }
 
 static void

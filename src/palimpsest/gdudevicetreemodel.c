@@ -225,6 +225,15 @@ find_iter_for_object (GduDeviceTreeModel *model,
   return data.found;
 }
 
+gboolean
+gdu_device_tree_model_get_iter_for_object (GduDeviceTreeModel *model,
+                                           UDisksObject       *object,
+                                           GtkTreeIter        *iter)
+{
+  return find_iter_for_object (model, object, iter);
+}
+
+
 #if 0
 static gboolean
 find_iter_for_object_path (GduDeviceTreeModel *model,

@@ -43,9 +43,12 @@ enum
   GDU_DEVICE_TREE_MODEL_N_COLUMNS
 };
 
-GType               gdu_device_tree_model_get_type   (void) G_GNUC_CONST;
-GduDeviceTreeModel *gdu_device_tree_model_new        (UDisksClient       *client);
-UDisksClient       *gdu_device_tree_model_get_client (GduDeviceTreeModel *model);
+GType               gdu_device_tree_model_get_type            (void) G_GNUC_CONST;
+GduDeviceTreeModel *gdu_device_tree_model_new                 (UDisksClient       *client);
+UDisksClient       *gdu_device_tree_model_get_client          (GduDeviceTreeModel *model);
+gboolean            gdu_device_tree_model_get_iter_for_object (GduDeviceTreeModel *model,
+                                                               UDisksObject       *object,
+                                                               GtkTreeIter        *iter);
 
 
 G_END_DECLS

@@ -464,6 +464,7 @@ on_dtpm_attach_disk_image_activated (GtkMenuItem *item,
                                   NULL,                       /* GCancellable */
                                   (GAsyncReadyCallback) loop_setup_cb,
                                   loop_setup_data_new (window, filename));
+  g_object_unref (fd_list);
 
  out:
   gtk_widget_destroy (dialog);

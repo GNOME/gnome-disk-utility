@@ -431,50 +431,13 @@ add_drive (GduDeviceTreeModel *model,
            UDisksObject       *object,
            GtkTreeIter        *parent)
 {
-  UDisksDrive *drive;
-  GIcon *drive_icon;
-  GIcon *media_icon;
-  gchar *name;
-  gchar *description;
-  gchar *media_description;
-  gchar *s;
-  gchar *sort_key;
   GtkTreeIter iter;
-
-  drive = udisks_object_peek_drive (object);
-  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
-  s = g_strdup_printf ("%s\n"
-                       "<small><span foreground=\"#555555\">%s</span></small>",
-                       description,
-                       name);
-
-  //g_debug ("drive %s ->\n"
-  //         " drive_icon=%s\n"
-  //         " media_icon=%s\n"
-  //         "\n",
-  //         g_dbus_object_get_object_path (object),
-  //         g_icon_to_string (drive_icon),
-  //         g_icon_to_string (media_icon));
-
-  sort_key = g_strdup_printf ("00_drives_%s",
-                              g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
                                      0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
                                      -1);
-  if (media_icon != NULL)
-    g_object_unref (media_icon);
-  g_object_unref (drive_icon);
-  g_free (sort_key);
-  g_free (s);
-  g_free (media_description);
-  g_free (description);
-  g_free (name);
 }
 
 static void
@@ -496,6 +459,58 @@ remove_drive (GduDeviceTreeModel *model,
 
  out:
   ;
+}
+
+static void
+update_drive (GduDeviceTreeModel *model,
+              UDisksObject       *object)
+{
+  UDisksDrive *drive = NULL;
+  GIcon *drive_icon = NULL;
+  GIcon *media_icon = NULL;
+  gchar *name = NULL;
+  gchar *description = NULL;
+  gchar *media_description = NULL;
+  gchar *s = NULL;
+  gchar *sort_key = NULL;
+  GtkTreeIter iter;
+
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
+    }
+
+  drive = udisks_object_peek_drive (object);
+
+  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
+  s = g_strdup_printf ("%s\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       description,
+                       name);
+  sort_key = g_strdup_printf ("00_drives_%s",
+                              g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
+
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      -1);
+
+ out:
+  if (media_icon != NULL)
+    g_object_unref (media_icon);
+  if (drive_icon != NULL)
+    g_object_unref (drive_icon);
+  g_free (sort_key);
+  g_free (s);
+  g_free (media_description);
+  g_free (description);
+  g_free (name);
 }
 
 static void
@@ -545,6 +560,12 @@ update_drives (GduDeviceTreeModel *model)
       UDisksObject *object = UDISKS_OBJECT (l->data);
       model->current_drives = g_list_prepend (model->current_drives, g_object_ref (object));
       add_drive (model, object, NULL);
+    }
+
+  for (l = model->current_drives; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      update_drive (model, object);
     }
 
   g_list_free (added_drives);
@@ -599,16 +620,59 @@ add_block (GduDeviceTreeModel  *model,
            UDisksObject        *object,
            GtkTreeIter         *parent)
 {
+  GtkTreeIter iter;
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &iter,
+                                     parent,
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
+                                     -1);
+}
+
+static void
+remove_block (GduDeviceTreeModel  *model,
+              UDisksObject        *object)
+{
+  GtkTreeIter iter;
+
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
+    }
+
+  gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+
+ out:
+  ;
+}
+
+static void
+update_block (GduDeviceTreeModel  *model,
+              UDisksObject        *object)
+{
+  GtkTreeIter iter;
   UDisksBlockDevice *block;
   UDisksLoop *loop;
-  GIcon *icon;
-  gchar *s;
-  gchar *sort_key;
-  GtkTreeIter iter;
+  GIcon *icon = NULL;
+  gchar *s = NULL;
+  gchar *sort_key = NULL;
   const gchar *preferred_device;
   const gchar *loop_backing_file;
   guint64 size;
-  gchar *size_str;
+  gchar *size_str = NULL;
+
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
+    }
 
   block = udisks_object_peek_block_device (object);
   loop = udisks_object_peek_loop (object);
@@ -653,40 +717,19 @@ add_block (GduDeviceTreeModel  *model,
     }
 
   sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
-  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
-                                     &iter,
-                                     parent,
-                                     0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
-                                     -1);
+
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      -1);
+
+ out:
   g_object_unref (icon);
   g_free (sort_key);
   g_free (s);
   g_free (size_str);
-}
-
-static void
-remove_block (GduDeviceTreeModel  *model,
-              UDisksObject        *object)
-{
-  GtkTreeIter iter;
-
-  if (!find_iter_for_object (model,
-                             object,
-                             &iter))
-    {
-      g_warning ("Error finding iter for object at %s",
-                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-      goto out;
-    }
-
-  gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
-
- out:
-  ;
 }
 
 static gboolean
@@ -783,6 +826,12 @@ update_blocks (GduDeviceTreeModel *model)
       UDisksObject *object = UDISKS_OBJECT (l->data);
       model->current_blocks = g_list_prepend (model->current_blocks, g_object_ref (object));
       add_block (model, object, get_block_header_iter (model));
+    }
+
+  for (l = model->current_blocks; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      update_block (model, object);
     }
 
   if (g_list_length (model->current_blocks) == 0)

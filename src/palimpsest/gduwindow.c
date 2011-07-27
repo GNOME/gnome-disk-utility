@@ -76,6 +76,12 @@ enum
   PROP_CLIENT
 };
 
+typedef enum
+{
+  TOOLBAR_BUTTONS_NONE = 0,
+  TOOLBAR_BUTTONS_DETACH_DISK_IMAGE = (1<<0)
+} ToolbarButtons;
+
 static void gdu_window_show_error (GduWindow   *window,
                                    const gchar *message,
                                    GError      *orig_error);
@@ -85,7 +91,7 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   gpointer     user_data);
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
-static gboolean update_device_page (GduWindow *window);
+static void update_device_page (GduWindow *window, ToolbarButtons *buttons);
 static void teardown_device_page (GduWindow *window);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
@@ -203,15 +209,16 @@ on_row_inserted (GtkTreeModel *tree_model,
   gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
 }
 
-static gboolean select_details_page (GduWindow    *window,
-                                     UDisksObject *object,
-                                     DetailsPage   page);
+static void select_details_page (GduWindow       *window,
+                                 UDisksObject    *object,
+                                 DetailsPage      page,
+                                 ToolbarButtons  *buttons);
 
 static void
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
-  gboolean can_remove;
+  ToolbarButtons buttons;
   GtkTreeIter iter;
 
   if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
@@ -221,27 +228,28 @@ set_selected_object (GduWindow    *window,
       gtk_tree_selection_select_iter (tree_selection, &iter);
     }
 
-  can_remove = FALSE;
+  buttons = TOOLBAR_BUTTONS_NONE;
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
           udisks_object_peek_block_device (object) != NULL)
         {
-          can_remove = select_details_page (window, object, DETAILS_PAGE_DEVICE);
+          select_details_page (window, object, DETAILS_PAGE_DEVICE, &buttons);
         }
       else
         {
           g_warning ("no page for object %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-          can_remove = select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED);
+          select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED, &buttons);
         }
     }
   else
     {
-      can_remove = select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED);
+      select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &buttons);
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (window->builder, "device-tree-remove-button")),
-                            can_remove);
+  gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (window->builder,
+                                                              "device-tree-detach-disk-image-button")),
+                          buttons & TOOLBAR_BUTTONS_DETACH_DISK_IMAGE);
 }
 
 static void
@@ -272,19 +280,6 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_device_tree_add_button_clicked (GtkToolButton *button,
-                                   gpointer       user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GtkMenu *menu;
-
-  menu = GTK_MENU (gtk_builder_get_object (window->builder, "device-tree-popup-menu"));
-  gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
 loop_delete_cb (UDisksLoop   *loop,
                 GAsyncResult *res,
                 gpointer      user_data)
@@ -304,8 +299,8 @@ loop_delete_cb (UDisksLoop   *loop,
 }
 
 static void
-on_device_tree_remove_button_clicked (GtkToolButton *button,
-                                      gpointer       user_data)
+on_device_tree_detach_disk_image_button_clicked (GtkToolButton *button,
+                                                 gpointer       user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksLoop *loop;
@@ -391,9 +386,11 @@ loop_setup_cb (UDisksManager  *manager,
   loop_setup_data_free (data);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
-on_dtpm_attach_disk_image_activated (GtkMenuItem *item,
-                                     gpointer     user_data)
+on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
+                                                 gpointer       user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GtkWidget *dialog;
@@ -677,18 +674,14 @@ gdu_window_constructed (GObject *object)
   gtk_widget_set_name (gdu_window_get_widget (window, "devtab-grid-toolbar"), "devtab-grid-toolbar");
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
-  /* popup menu */
-  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-add-button"),
+  /* main toolbar */
+  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-attach-disk-image-button"),
                     "clicked",
-                    G_CALLBACK (on_device_tree_add_button_clicked),
+                    G_CALLBACK (on_device_tree_attach_disk_image_button_clicked),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-remove-button"),
+  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-detach-disk-image-button"),
                     "clicked",
-                    G_CALLBACK (on_device_tree_remove_button_clicked),
-                    window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "dtpm-attach-disk-image"),
-                    "activate",
-                    G_CALLBACK (on_dtpm_attach_disk_image_activated),
+                    G_CALLBACK (on_device_tree_detach_disk_image_button_clicked),
                     window);
 
   /* actions */
@@ -1014,11 +1007,14 @@ setup_details_page (GduWindow     *window,
     }
 }
 
-static gboolean
-update_details_page (GduWindow   *window,
-                     DetailsPage  page)
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_details_page (GduWindow      *window,
+                     DetailsPage     page,
+                     ToolbarButtons *buttons)
 {
-  gboolean can_remove;
+  ;
   //g_debug ("update for %s, page %d",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<none>",
   //         page);
@@ -1032,20 +1028,18 @@ update_details_page (GduWindow   *window,
       break;
 
     case DETAILS_PAGE_DEVICE:
-      can_remove = update_device_page (window);
+      update_device_page (window, buttons);
       break;
     }
-
-  return can_remove;
 }
 
-static gboolean
-select_details_page (GduWindow     *window,
-                     UDisksObject  *object,
-                     DetailsPage    page)
+static void
+select_details_page (GduWindow      *window,
+                     UDisksObject   *object,
+                     DetailsPage     page,
+                     ToolbarButtons *buttons)
 {
   GtkNotebook *notebook;
-  gboolean can_remove;
 
   notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
 
@@ -1064,14 +1058,16 @@ select_details_page (GduWindow     *window,
                       window->current_object,
                       window->current_page);
 
-  can_remove = update_details_page (window, window->current_page);
-  return can_remove;
+  update_details_page (window, window->current_page, buttons);
 }
 
 static void
 update_all (GduWindow     *window,
             UDisksObject  *object)
 {
+  ToolbarButtons buttons;
+
+  buttons = TOOLBAR_BUTTONS_NONE;
   switch (window->current_page)
     {
     case DETAILS_PAGE_NOT_SELECTED:
@@ -1086,7 +1082,7 @@ update_all (GduWindow     *window,
       /* this is a little too inclusive.. */
       if (gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
         {
-          update_details_page (window, window->current_page);
+          update_details_page (window, window->current_page, &buttons);
         }
       break;
     }
@@ -1200,9 +1196,9 @@ setup_device_page (GduWindow     *window,
 }
 
 static void
-update_device_page_for_drive (GduWindow     *window,
-                              UDisksObject  *object,
-                              UDisksDrive   *drive)
+update_device_page_for_drive (GduWindow      *window,
+                              UDisksObject   *object,
+                              UDisksDrive    *drive)
 {
   gchar *s;
   GList *block_devices;
@@ -1589,8 +1585,9 @@ update_device_page_for_free_space (GduWindow          *window,
                                                               "devtab-action-partition-create")), TRUE);
 }
 
-static gboolean
-update_device_page (GduWindow *window)
+static void
+update_device_page (GduWindow      *window,
+                    ToolbarButtons *buttons)
 {
   UDisksObject *object;
   GduVolumeGridElementType type;
@@ -1599,9 +1596,6 @@ update_device_page (GduWindow *window)
   guint64 size;
   GList *children;
   GList *l;
-  gboolean can_remove;
-
-  can_remove = FALSE;
 
   /* first hide everything */
   gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")),
@@ -1625,7 +1619,7 @@ update_device_page (GduWindow *window)
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
   if (udisks_object_peek_loop (object) != NULL)
-    can_remove = TRUE;
+    *buttons |= TOOLBAR_BUTTONS_DETACH_DISK_IMAGE;
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive);
@@ -1663,8 +1657,6 @@ update_device_page (GduWindow *window)
             }
         }
     }
-
-  return can_remove;
 }
 
 static void
@@ -1680,7 +1672,9 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
                         gpointer        user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_device_page (window);
+  ToolbarButtons buttons;
+  buttons = TOOLBAR_BUTTONS_NONE;
+  update_device_page (window, &buttons);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

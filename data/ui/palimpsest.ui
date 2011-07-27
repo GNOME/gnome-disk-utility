@@ -286,18 +286,6 @@
       <action-widget response="-5">button2</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkMenu" id="device-tree-popup-menu">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkMenuItem" id="dtpm-attach-disk-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Attach Disk Image...</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkWindow" id="palimpsest-window">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -343,10 +331,10 @@
                 <property name="can_focus">False</property>
                 <property name="icon_size">1</property>
                 <child>
-                  <object class="GtkToolButton" id="device-tree-add-button">
+                  <object class="GtkToolButton" id="device-tree-attach-disk-image-button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Add a new device</property>
+                    <property name="tooltip_text" translatable="yes">Attach Disk Image...</property>
                     <property name="use_action_appearance">False</property>
                     <property name="icon_name">list-add-symbolic</property>
                   </object>
@@ -356,10 +344,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="device-tree-remove-button">
+                  <object class="GtkToolButton" id="device-tree-detach-disk-image-button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Remove device</property>
+                    <property name="tooltip_text" translatable="yes">Detach Disk Image</property>
                     <property name="use_action_appearance">False</property>
                     <property name="icon_name">list-remove-symbolic</property>
                   </object>

@@ -417,7 +417,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Disk Images"));
+  gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
   gtk_file_filter_add_pattern (filter, "*.img");
   gtk_file_filter_add_pattern (filter, "*.iso");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */

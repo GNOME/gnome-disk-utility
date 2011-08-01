@@ -1,0 +1,5552 @@
+# Persian translation for gnome-disk-utility.
+# Copyright (C) 2011 Iranian Free Software Users Group (IFSUG.org) translation team
+# Copyright (C) 2011 gnome-disk-utility's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-disk-utility package.
+# Arash Mousavi <mousavi.arash@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-disk-utility master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-07-26 11:30+0000\n"
+"PO-Revision-Date: 2011-08-02 01:13+0330\n"
+"Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
+"Language-Team: Persian <translate@ifsug.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Persian\n"
+"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#. Translators: Window title when no item is selected.
+#.
+#. Translators: Window title when the item representing the local machine is selected.
+#.
+#: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
+#: ../src/palimpsest/gdu-shell.c:269
+#: ../src/palimpsest/gdu-shell.c:321
+#: ../src/palimpsest/gdu-shell.c:804
+#: ../src/palimpsest/gdu-shell.c:1115
+msgid "Disk Utility"
+msgstr "ابزار دیسک"
+
+#: ../data/palimpsest.desktop.in.h:2
+msgid "Manage Drives and Media"
+msgstr "مدیریت دیسک‌گردان‌ها و رسانه‌ها"
+
+#: ../data/gdu-notification-daemon.desktop.in.in.in.h:1
+msgid "Disk Notifications"
+msgstr "اعلان‌های دیسک"
+
+#: ../data/gdu-notification-daemon.desktop.in.in.in.h:2
+msgid "Provides notifications related to disks"
+msgstr "فراهم‌کردن اعلان‌های مرتبط با دیسک‌ها"
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:183
+msgid "To prevent data corruption, wait until this has finished before removing media or disconnecting the device."
+msgstr "برای جلوگیری از نقص اطلاعات، قبل از حذف رسانه و یا قطع کردن دستگاه، اجازه بدهید این تمام شود."
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:215
+#: ../src/notification/gdu-slow-unmount-dialog.c:284
+msgid "Device"
+msgstr "دستگاه"
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:216
+#: ../src/notification/gdu-slow-unmount-dialog.c:285
+msgid "The device to show the dialog for"
+msgstr "دستگاهی که محاوره برای آن نمایش داده شود"
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:228
+msgid "text"
+msgstr "متن"
+
+#: ../src/format-tool/gdu-format-progress-dialog.c:229
+msgid "Text to show"
+msgstr "متن جهت نمایش"
+
+#: ../src/format-tool/gdu-format-tool.c:113
+msgid "Error launching Disk Utility"
+msgstr "خطا در اجرای ابزار دیسک"
+
+#: ../src/format-tool/gdu-format-tool.c:133
+msgid "Device to format"
+msgstr "دستگاه جهت قالب‌بندی"
+
+#: ../src/format-tool/gdu-format-tool.c:133
+#: ../src/palimpsest/gdu-main.c:127
+#: ../src/palimpsest/gdu-main.c:128
+msgid "DEVICE"
+msgstr "DEVICE"
+
+#: ../src/format-tool/gdu-format-tool.c:163
+#, c-format
+msgid "Operation was canceled"
+msgstr "عملیات لغو شد"
+
+#: ../src/format-tool/gdu-format-tool.c:254
+msgid "Gnome Disk Utility formatting tool"
+msgstr "ابزار قالب‌بندی دیسک گنوم"
+
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:303
+#, c-format
+msgid "Format partition %d of %s (%s)"
+msgstr "قالب‌بندی افراز %Id از %s (%s)"
+
+#. Translators: First argument is the partition number, second argument is the drive name,
+#. * third argument is the size (e.g. 10 GB)
+#.
+#: ../src/format-tool/gdu-format-tool.c:310
+#, c-format
+msgid "Formatting partition %d of %s (%s)"
+msgstr "درحال قالب‌بندی افراز %Id از %s (%s)"
+
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:316
+#, c-format
+msgid "Format %s (%s)"
+msgstr "قالب‌بندی %s (%s)"
+
+#. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
+#: ../src/format-tool/gdu-format-tool.c:320
+#, c-format
+msgid "Formatting %s (%s)"
+msgstr "قالب‌بندی %s (%s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:326
+#, c-format
+msgid "Format %s Volume (%s)"
+msgstr "قالب‌بندی جلد %s (آدرس %s)"
+
+#. Translators: First argument is the size (e.g. 10 GB), second is the device (e.g. /dev/md0)
+#: ../src/format-tool/gdu-format-tool.c:330
+#, c-format
+msgid "Formatting %s Volume (%s)"
+msgstr "درحال قالب‌بندی جلد %s (آدرس %s)"
+
+#: ../src/format-tool/gdu-format-tool.c:386
+msgid "Preparing..."
+msgstr "درحال آماده‌سازی..."
+
+#: ../src/format-tool/gdu-format-tool.c:429
+msgid "Unmounting..."
+msgstr "درحال پیاده کردن..."
+
+#: ../src/format-tool/gdu-format-tool.c:447
+#, c-format
+msgid "Unable to format '%s'"
+msgstr "قالب‌بندی «%s» ممکن نیست"
+
+#: ../src/format-tool/gdu-format-tool.c:462
+msgid "Formatting..."
+msgstr "درحال قالب‌بندی..."
+
+#: ../src/format-tool/gdu-format-tool.c:479
+msgid "Cancelling..."
+msgstr "درحال لغو..."
+
+#: ../src/format-tool/gdu-format-tool.c:489
+msgid "Error formatting volume"
+msgstr "خطا در هنگام قالب‌بندی جلد"
+
+#: ../src/format-tool/gdu-format-tool.c:500
+msgid "Mounting volume..."
+msgstr "درحال سوار کردن جلد"
+
+#: ../src/format-tool/gdu-format-tool.c:524
+msgid "Error mounting device"
+msgstr "خطا در هنگام سوارکردن دستگاه"
+
+#: ../src/format-tool/gdu-format-tool.c:541
+msgid "Error storing passphrase in keyring"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
+msgid "The RAID Array to add a component to."
+msgstr "آرایه‌ی RAID برای اضافه کردن یک جزء به آن"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
+#, c-format
+msgid "Add spare to %s"
+msgstr "اضافه کردن یک یدکی (spare) به %s"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
+#, c-format
+msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:237
+#, c-format
+msgid "Expand %s"
+msgstr "_باز کردن %s"
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
+#, c-format
+msgid "Select one or more devices to use %s on for expanding the RAID Array \"%s\" (%s)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
+msgid "_Expand"
+msgstr "_باز کردن"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
+msgid "The VG to add a PV to."
+msgstr "یک VG برای اضافه کردن یک PV به آن."
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:249
+#, c-format
+msgid "Add Physical Volume to %s (%s)"
+msgstr "اضافه کردن جلد فیزیکی به %s (%s)"
+
+#: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:265
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:203
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:220
+msgid "_Size:"
+msgstr "_اندازه:"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:131
+msgid "Read Error Rate"
+msgstr "خواندن درجه خطا"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
+msgid "Frequency of errors while reading raw data from the disk. A non-zero value indicates a problem with either the disk surface or read/write heads"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:141
+msgid "Throughput Performance"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
+msgid "Average efficiency of the disk"
+msgstr "میانگین بازده دیسک"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:149
+msgid "Spinup Time"
+msgstr "زمان چرخش"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
+msgid "Time needed to spin up the disk"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:157
+msgid "Start/Stop Count"
+msgstr "تعداد شروع/پایان"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
+msgid "Number of spindle start/stop cycles"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:165
+msgid "Reallocated Sector Count"
+msgstr "تعداد سکتورهای آماده شده"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
+msgid "Count of remapped sectors. When the hard drive finds a read/write/verification error, it marks the sector as \"reallocated\" and transfers data to a special reserved area (spare area)"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:175
+msgid "Read Channel Margin"
+msgstr "حاشیه خوانش کانال"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
+msgid "Margin of a channel while reading data."
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:183
+msgid "Seek Error Rate"
+msgstr "نرخ خطا جستجو"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
+msgid "Frequency of errors while positioning"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:191
+msgid "Seek Timer Performance"
+msgstr "کارائی زمان‌سنج جستجو"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
+msgid "Average efficiency of operations while positioning"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:199
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:523
+msgid "Power-On Hours"
+msgstr "مدت زمان روشن بودن"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
+msgid "Number of hours elapsed in the power-on state"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:207
+msgid "Spinup Retry Count"
+msgstr "تعداد تلاش جهت چرخش مجدد"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
+msgid "Number of retry attempts to spin up"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:215
+msgid "Calibration Retry Count"
+msgstr "تعداد تلاش جهت درجه‌بندی مجدد"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
+msgid "Number of attempts to calibrate the device"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:223
+msgid "Power Cycle Count"
+msgstr "تعداد دوره انرژی"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
+msgid "Number of power-on events"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:231
+msgid "Soft read error rate"
+msgstr "میزان خطای خوانش نرم"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
+msgid "Frequency of 'program' errors while reading from the disk"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:239
+msgid "Reported Uncorrectable Errors"
+msgstr "خطاهای گزارش شده‌ی غیرقابل اصلاح"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
+msgid "Number of errors that could not be recovered using hardware ECC"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:247
+msgid "High Fly Writes"
+msgstr "نوشتن‌های High Fly"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
+msgid "Number of times a recording head is flying outside its normal operating range"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:255
+#, fuzzy
+msgid "Airflow Temperature"
+msgstr "نمایش _دما"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
+#, fuzzy
+msgid "Airflow temperature of the drive"
+msgstr "دیسک‌گردان مشغول است"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:263
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:433
+msgid "G-sense Error Rate"
+msgstr "میزان خطا G-sense"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
+msgid "Frequency of mistakes as a result of impact loads"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:271
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:490
+msgid "Power-off Retract Count"
+msgstr "میزان پس‌کشیدن خاموش شدن"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
+msgid "Number of power-off or emergency retract cycles"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:279
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:466
+msgid "Load/Unload Cycle Count"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
+msgid "Number of cycles into landing zone position"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:287
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:506
+msgid "Temperature"
+msgstr "دما"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
+msgid "Current internal temperature of the drive"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:295
+msgid "Hardware ECC Recovered"
+msgstr "بازیابی سخت‌افزاری ECC"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
+msgid "Number of ECC on-the-fly errors"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:303
+msgid "Reallocation Count"
+msgstr "تعداد آماده شده"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
+msgid "Number of remapping operations. The raw value of this attribute shows the total number of (successful and unsuccessful) attempts to transfer data from reallocated sectors to a spare area"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:314
+msgid "Current Pending Sector Count"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
+msgid "Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:326
+msgid "Uncorrectable Sector Count"
+msgstr "تعداد سکتورهای غیرقابل اصلاح"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+msgid "The total number of uncorrectable errors when reading/writing a sector. A rise in the value of this attribute indicates defects of the disk surface and/or problems in the mechanical subsystem"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:336
+msgid "UDMA CRC Error Rate"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
+msgid "Number of CRC errors during UDMA mode"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:344
+msgid "Write Error Rate"
+msgstr "میزان خطای نوشتن"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
+msgid "Number of errors while writing to disk (or) multi-zone error rate (or) flying-height"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:352
+msgid "Soft Read Error Rate"
+msgstr "میزان خطای خوانش نرم"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
+msgid "Number of off-track errors"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:360
+msgid "Data Address Mark Errors"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
+msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:368
+#, fuzzy
+msgid "Run Out Cancel"
+msgstr "از تغییر گروه صرف نظر شود؟"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
+msgid "Number of ECC errors"
+msgstr "تعداد خطاهای ECC"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:376
+msgid "Soft ECC correction"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
+msgid "Number of errors corrected by software ECC"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:384
+msgid "Thermal Asperity Rate"
+msgstr "میزان بالارفتن حرارت"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
+msgid "Number of Thermal Asperity Rate errors"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:392
+#, fuzzy
+msgid "Flying Height"
+msgstr "ارتفاع پنجره"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
+msgid "Height of heads above the disk surface"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:400
+#, fuzzy
+msgid "Spin High Current"
+msgstr "_حفظ محل فعلی"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
+msgid "Amount of high current used to spin up the drive"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:408
+#, fuzzy
+msgid "Spin Buzz"
+msgstr "دگمه دوار"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
+msgid "Number of buzz routines to spin up the drive"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:416
+msgid "Offline Seek Performance"
+msgstr "کارائی جستجو برون‌خط"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
+msgid "Drive's seek performance during offline operations"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:424
+msgid "Disk Shift"
+msgstr "جابجایی دیسک"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
+msgid "Shift of disk is possible as a result of strong shock loading in the store, as a result of falling (or) temperature"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
+msgid "Number of errors as a result of impact loads as detected by a shock sensor"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:441
+msgid "Loaded Hours"
+msgstr "ساعت‌های بار شده"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
+msgid "Number of hours in general operational state"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:449
+msgid "Load/Unload Retry Count"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
+msgid "Loading on drive caused by numerous recurrences of operations, like reading, recording, positioning of heads, etc"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:458
+msgid "Load Friction"
+msgstr "اصطکاک بار کردن"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
+msgid "Load on drive caused by friction in mechanical parts of the store"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
+msgid "Total number of load cycles"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:474
+msgid "Load-in Time"
+msgstr "زمان بار شدن"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
+msgid "General time for loading in a drive"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:482
+msgid "Torque Amplification Count"
+msgstr "تعداد تقویت گشاتور"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
+msgid "Quantity efforts of the rotating moment of a drive"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
+msgid "Number of power-off retract events"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:498
+msgid "GMR Head Amplitude"
+msgstr "دامنه هد GMR"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
+msgid "Amplitude of heads trembling (GMR-head) in running mode"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
+msgid "Temperature of the drive"
+msgstr "حرارت دیسک‌گردان"
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:514
+msgid "Endurance Remaining"
+msgstr "حداکثر توان باقیمانده"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
+msgid "Number of physical erase cycles completed on the drive as a percentage of the maximum physical erase cycles the drive supports"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:531
+msgid "Uncorrectable ECC Count"
+msgstr "تعداد ECCهای غیرقابل اصلاح"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
+msgid "Number of uncorrectable ECC errors"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:539
+msgid "Good Block Rate"
+msgstr "میزان بلوک خوب"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
+msgid "Number of available reserved blocks as a percentage of the total number of reserved blocks"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:548
+#, fuzzy
+msgid "Head Flying Hours"
+msgstr "جزیره هیلتون هد"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
+msgid "Time while head is positioning"
+msgstr ""
+
+#. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:556
+msgid "Read Error Retry Rate"
+msgstr "میزان خطای خوانش مجدد"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
+msgid "Number of errors while reading from a disk"
+msgstr ""
+
+#. Translators: This is shown in the attribute treeview when no description is found.
+#. * %d is the attribute number.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:699
+#, c-format
+msgid "No description for attribute %d"
+msgstr "هیچ توضیحی برای مشخصه %Id نیست"
+
+#. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:789
+msgid "Normalized:"
+msgstr ""
+
+#. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:791
+msgid "Worst:"
+msgstr "بدترین:"
+
+#. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:793
+msgid "Threshold:"
+msgstr "آستانه:"
+
+#. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:795
+msgid "Value:"
+msgstr "مقدار:"
+
+#. Translators: This is used in the attribute treview when normalized/worst/treshold
+#. * value isn't available
+#. Translators: Shown in the treeview for an attribute we don't know the status about
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * where the value cannot be interpreted
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:845
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:853
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:861
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1639
+msgid "N/A"
+msgstr "نامعلوم"
+
+#. Translators: Shown in the treeview for a failing attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:939
+msgid "Failing"
+msgstr "درحال شکست"
+
+#. Translators: Shown in the treeview for an attribute that failed in the past
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:942
+msgid "Failed in the past"
+msgstr "شکست‌های گذشته"
+
+#. Translators: Shown in the treeview for an attribute that we want to warn about
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:946
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:954
+msgid "Warning"
+msgstr "اخطار"
+
+#. Translators: Shown in the treeview for an attribute that is good
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:949
+msgid "Good"
+msgstr "خوب"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1020
+msgid "Error reading SMART data"
+msgstr "خطا در خواندن اطلاعات SMART"
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1140
+msgid "Choose SMART Self-test"
+msgstr ""
+
+#. Translators: Shown in the "Run self-test" dialog
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1151
+msgid "The tests may take a very long time to complete depending on the speed and size of the disk. You can continue using your system while the test is running."
+msgstr ""
+
+#. Translators: Radio button for short test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
+msgid "_Short (usually less than ten minutes)"
+msgstr ""
+
+#. Translators: Radio button for extended test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1163
+msgid "_Extended (usually tens of minutes)"
+msgstr ""
+
+#. Translators: Radio button for conveyance test
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1166
+msgid "C_onveyance (usually less than ten minutes)"
+msgstr ""
+
+#. Translators: Button in "Run self-test dialog"
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1174
+msgid "_Run Self Test"
+msgstr "_اجرای آزمایش"
+
+#. Translators: The title of the SMART dialog.
+#. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
+#. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1269
+#, c-format
+msgid "%s (%s) – SMART Data"
+msgstr "%s (%s) – داده SMART"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
+msgid "Updated:"
+msgstr "به‌روزرسانی شد:"
+
+#. Translators: Tooltip for the 'Updated' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1292
+msgid "Time since SMART data was last read – SMART data is updated every 30 minutes unless the disk is sleeping"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
+msgid "Self-tests:"
+msgstr "آزمایش‌ها:"
+
+#. Translators: Tooltip for the 'Self-tests' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1301
+msgid "The result of the last self-test that ran on the disk"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
+msgid "Powered On:"
+msgstr "روشن شده در:"
+
+#. Translators: Tooltip for the 'Powered On' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1309
+msgid "The amount of elapsed time the disk has been in a powered-up state"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
+msgid "Power Cycles:"
+msgstr "چرخه‌های انرژی:"
+
+#. Translators: Tooltip for the 'Power Cycles' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1317
+msgid "The number of full disk power on/off cycles"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
+msgid "Temperature:"
+msgstr "دما:"
+
+#. Translators: Tooltip for the 'Temperature' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1325
+msgid "The temperature of the disk"
+msgstr "حرارت دیسک:"
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
+msgid "Bad Sectors:"
+msgstr "سکتورهای بد:"
+
+#. Translators: Tooltip for the 'Bad Sectors' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1333
+msgid "The sum of pending and reallocated bad sectors"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
+msgid "Self Assessment:"
+msgstr "خودآزمایی:"
+
+#. Translators: Tooltip for the 'Self Assesment' item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1341
+msgid "The assessment from the disk itself whether it is about to fail"
+msgstr ""
+
+#. Translators: Item name in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1346
+msgid "Overall Assessment:"
+msgstr ""
+
+#. Translators: Tooltip for the 'Overall Assessment' item in the
+#. * status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1350
+msgid "An overall assessment of the health of the disk"
+msgstr ""
+
+#. Translators: Button name
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1364
+msgid "_Refresh"
+msgstr "_نوسازی"
+
+#. Translators: Button details
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1366
+msgid "Reads SMART Data, waking up the disk"
+msgstr ""
+
+#. TODO: better icon
+#. Translators: Button name
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1376
+msgid "Run _Self-test"
+msgstr "اجرای آ_زمایش"
+
+#. Translators: Button details
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1378
+msgid "Test the disk surface for errors"
+msgstr ""
+
+#. Translators: Button name
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
+msgid "_Cancel Self-test"
+msgstr "_لغو آزمایش"
+
+#. Translators: Button details
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1390
+#, fuzzy
+msgid "Cancels the self-test"
+msgstr "چاپ _صفحه آزمایشی"
+
+#. Translators: Heading used in the main dialog for SMART attributes
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1408
+msgid "_Attributes"
+msgstr "_مشخصه‌ها"
+
+#. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1442
+msgid "ID"
+msgstr "ID"
+
+#. Translators: This string is used as the column title in the treeview for the attribute name and description
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1454
+msgid "Attribute"
+msgstr "مشخصه"
+
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1471
+msgid "Assessment"
+msgstr ""
+
+#. Translators: This string is used as the column title in the treeview for the value of the attribute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1490
+msgid "Value"
+msgstr "مقدار"
+
+#. ----------------------------------------------------------------------------------------------------
+#. Translators: Check button in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1518
+msgid "Don't _warn if the disk is failing"
+msgstr ""
+
+#. Translators: Tooltip for the "Don't warn me if disk is failing" check button
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1520
+msgid "Leave unchecked to get notified if the disk starts failing"
+msgstr ""
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one year
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1585
+#, c-format
+msgid "%.1f years"
+msgstr "%I.1f سال"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one day
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1589
+#, c-format
+msgid "%.1f days"
+msgstr "%I.1f روز"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one hour
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1593
+#, c-format
+msgid "%.1f hours"
+msgstr "%I.1f ساعت"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one minute
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1597
+#, c-format
+msgid "%.1f minutes"
+msgstr "%I.1f دقیقه"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that exceed one second
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1601
+#, c-format
+msgid "%.1f seconds"
+msgstr "%I.1f ثانیه"
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a time-based unit that is counted in milliseconds
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
+#, c-format
+msgid "%s msec"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1616
+#, c-format
+msgid "%d sector"
+msgid_plural "%d sectors"
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
+#. * is the temperature in degrees Fahrenheit
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1628
+#, c-format
+msgid "%.0f° C / %.0f° F"
+msgstr ""
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Pre-Fail)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1696
+msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
+msgstr ""
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Old-Age)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1700
+msgid "Failure is a sign of old age (Old-Age)"
+msgstr ""
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1706
+msgid "Every time data is collected (Online)"
+msgstr ""
+
+#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
+#. * "(Not Online)" in English
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1710
+msgid "Only during off-line activities (Not Online)"
+msgstr ""
+
+#. Translators: Used in the tooltip for a row in the attribute treeview.
+#. * First %s is the type of the attribute (Pre-Fail or Old-Age).
+#. * Second %s is the update type (Online or Not Online).
+#. * The six %x is the raw data of the attribute.
+#.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
+#, c-format
+msgid ""
+"Type: %s\n"
+"Updates: %s\n"
+"Raw: 0x%02x%02x%02x%02x%02x%02x"
+msgstr ""
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when no drive is currently selected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1928
+msgid "No drive selected"
+msgstr "هیچ دیسک‌گردانی انتخاب نشده است"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is not available
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1935
+msgid "SMART not supported"
+msgstr "از SMART پشتیبانی نمی‌شود"
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when SMART is supported but data was never collected
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1943
+msgid "SMART data never collected"
+msgstr ""
+
+#. Translators: Shown in the "Overall Assessment" item in the status table
+#. * when the SMART data is malformed
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1956
+msgid "SMART data is malformed"
+msgstr "داده‌های SMART ناقص است"
+
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is unknown
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we don't know if the disk has bad sectors
+#. Translators: Shown in the "Powered On" item in the status table when we don't know
+#. * the amount of time the disk has been powered on
+#. Translators: Shown in the "Power Cycles" item in the status table when we don't know
+#. * the amount of power cycles
+#. Translators: Shown in the "Temperature" item in the status table when we don't know
+#. * the temperature of the disk
+#.
+#. Translators: Shown in the "Self-tests" item in the status table
+#. Translators: shown when we don't know contents of the volume
+#. Translators: Description when the overall SMART status is unknown
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1986
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2004
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2024
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2032
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2041
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
+#: ../src/gdu-gtk/gdu-volume-grid.c:1301
+#: ../src/gdu/gdu-util.c:1110
+msgid "Unknown"
+msgstr "ناشناس"
+
+#. Translators: Shown in the "Self-assessment" item in the status table
+#. * when the self-assessment of the drive is PASSED
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1991
+msgid "Passed"
+msgstr ""
+
+#. Translators: Shown in the "Self-assessment" item in
+#. * the status table when the self-assessment of the
+#. * drive is FAILING
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1997
+msgid "FAILING"
+msgstr "درحال شکست"
+
+#. Translators: Shown in the "Bad Sectors" item in the status table
+#. * when we the disk has no bad sectors
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2009
+msgid "None"
+msgstr "هیچ‌کدام"
+
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2014
+#, c-format
+msgid "%d bad sector"
+msgid_plural "%d bad sectors"
+msgstr[0] "%Id سکتور بد"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2060
+#, fuzzy
+msgid "Completed OK"
+msgstr "_تاریخ انجام:"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2064
+msgid "Cancelled"
+msgstr "لغو شد"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2068
+msgid "Cancelled (with hard or soft reset)"
+msgstr ""
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2072
+msgid "Not completed (a fatal error might have occurred)"
+msgstr ""
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2076
+#, fuzzy
+msgid "FAILED (Electrical)"
+msgstr "تأیید هویت شکست خورد"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2081
+#, fuzzy
+msgid "FAILED (Servo)"
+msgstr "تأیید هویت شکست خورد"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
+#, fuzzy
+msgid "FAILED (Read)"
+msgstr "[فقط خواندنی]"
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2091
+msgid "FAILED (Suspected of having handled damage)"
+msgstr ""
+
+#. Translators: Shown in the "Self-tests" item in the status table
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2096
+msgid "In progress"
+msgstr "در حال پیشرفت"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:171
+#, fuzzy, c-format
+msgid "This operation concerns the volume \"%s\" (%s)"
+msgstr "سوار کردن جلد وابسته با این پوشه"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:175
+#, fuzzy, c-format
+msgid "This operation concerns the drive \"%s\" (%s)"
+msgstr "برنامه‌ی %s به یک افزونه‌ی اضافی برای این عملیات نیاز دارد"
+
+#: ../src/gdu-gtk/gdu-confirmation-dialog.c:179
+#, fuzzy, c-format
+msgid "This operation concerns \"%s\" (%s)"
+msgstr "کاربر از عملیات منصر شد"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
+msgid "User Name"
+msgstr "نام کاربری"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:95
+msgid "The chosen user name"
+msgstr "نام کاربری انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:105
+msgid "Address"
+msgstr "نشانی"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:106
+msgid "The chosen address"
+msgstr "نشانی انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:154
+msgid "Choose Server"
+msgstr "انتخاب کارگزار"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:213
+msgid "Connect to Server"
+msgstr "اتصال به کارگزار"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:220
+msgid "_Browse..."
+msgstr "_مرور..."
+
+#. Translators: this is the tooltip for the "Browse..." button
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:232
+msgid "Browse servers discovered via the DNS-SD protocol"
+msgstr ""
+
+#. Translators: This is the label explaining the dialog
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:250
+msgid "To manage storage devices on another machine, enter the address and press “Connect”. The connection will be made using the <i>Secure Shell</i> protocol."
+msgstr ""
+
+#. Translators: This is the tooltip for the "Server Address" entry
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:264
+msgid "The hostname or address to connect to"
+msgstr "نام میزبان یا نشانی‌ای برای اتصال"
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:268
+msgid "Server _Address:"
+msgstr "آ_درس کارگزار:"
+
+#. Translators: This is the tooltip for the "User Name" entry
+#. * First %s is the UNIX user name e.g. 'davidz'.
+#.
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:287
+msgid "The user name to connect as"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:291
+msgid "_User Name:"
+msgstr "_نام کاربر:"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
+msgid "Maximum Logical Volume Size"
+msgstr "حداکثر اندازه‌ی جلد منطقی"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
+msgid "The maximum possible logical volume size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
+msgid "Logical Volume Size"
+msgstr "اندازه‌ی جلد منطقی"
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
+msgid "The requested Logical Volume size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:522
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
+msgid "C_reate"
+msgstr "ای_جاد"
+
+#. Translators: The %s is the name of the volume group
+#: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
+#, c-format
+msgid "Create Logical Volume on %s"
+msgstr "ایجاد جلد منطقی بر روی %s"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
+msgid "Pool"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
+msgid "The pool of devices"
+msgstr "منبع دستگاه‌ها"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:192
+msgid "RAID Level"
+msgstr "سطح RAID"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:193
+msgid "The selected RAID level"
+msgstr "سطح RAID انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:203
+msgid "Name"
+msgstr "نام"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:204
+msgid "The requested name for the array"
+msgstr "نام درخواست شده برای آرایه"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
+#: ../src/gdu-gtk/gdu-size-widget.c:488
+msgid "Size"
+msgstr "اندازه"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:215
+msgid "The requested size of the array"
+msgstr "اندازه درخواست شده برای آرایه"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
+msgid "Component Size"
+msgstr "اندازه‌ی جزء"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:228
+msgid "The size of each component"
+msgstr "_اندازه هر کدام از اجزا"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:240
+msgid "Stripe Size"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
+msgid "The requested stripe size of the array"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
+msgid "Drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:254
+#, fuzzy
+msgid "Array of drives to use for the array"
+msgstr "رنگ مورد استفاده برای کِرم"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:517
+msgid "Create RAID Array"
+msgstr "ساخت آرایه RAID"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:535
+msgid "General"
+msgstr "عمومی"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:556
+msgid "RAID _Level:"
+msgstr "_سطح RAID:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:595
+msgid "Array _Name:"
+msgstr "_نام آرایه:"
+
+#. Translators: This is the default name to use for the new array.
+#. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
+#. * 32 bytes since that's the on-disk-format limit.
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:603
+msgid "New RAID Array"
+msgstr "آرایه‌ی RAID حدید"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:619
+#, fuzzy
+msgid "Stripe S_ize:"
+msgstr "حدا_قل اندازه"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
+msgid "4 KiB"
+msgstr "۴ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
+msgid "8 KiB"
+msgstr "۸ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
+msgid "16 KiB"
+msgstr "۱۶ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
+msgid "32 KiB"
+msgstr "۳۲ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
+msgid "64 KiB"
+msgstr "۶۴ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
+msgid "128 KiB"
+msgstr "۱۲۸ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
+msgid "256 KiB"
+msgstr "۲۵۶ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
+msgid "512 KiB"
+msgstr "۵۱۲ کیلو (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:645
+msgid "1 MiB"
+msgstr "۱ مگ (باینری)"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:663
+msgid "Array _Size:"
+msgstr "_اندازه آرایه:"
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:690
+msgid "_Disks"
+msgstr ""
+
+#. --------------------------------------------------------------------------------
+#. TODO: Actually make this work
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:706
+msgid "Use entire disks instead of _partitions"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:707
+msgid "If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."
+msgstr ""
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:876
+#, c-format
+msgid "Insufficient number of disks to create a %s array."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
+#, c-format
+msgid "To create a %s array, select a disk."
+msgid_plural "To create a %s array, select %d disks."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
+#, c-format
+msgid "To create a %s array, select one more disk."
+msgid_plural "To create a %s array, select %d more disks."
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: This is for the tip text shown in the dialog.
+#. * First %s is the size e.g. '42 GB'.
+#. * Second %s is the short localized name for the RAID level, e.g. "RAID-1".
+#. * Third parameter is the number of disks to use (always greater than 1).
+#.
+#: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:923
+#, c-format
+msgid "To create a %s %s array on %d disks, press \"Create\""
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
+msgid "Maximum Partition Size"
+msgstr "حداکثر اندازه‌ی افراز"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
+msgid "The maximum possible partition size"
+msgstr "حداکثر اندازه‌ی ممکن افراز"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
+msgid "Partition Size"
+msgstr "اندازه‌ی افراز"
+
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
+msgid "The requested partition size"
+msgstr "اندازه‌ی افراز انتخاب شده"
+
+#. Translators: The %s is the name of the drive
+#: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
+#, c-format
+msgid "Create partition on %s"
+msgstr "ایجاد افراز بر روی %s"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
+#: ../src/gdu-gtk/gdu-format-dialog.c:166
+msgid "Flags"
+msgstr "پرچم‌ها"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
+msgid "Flags for the widget"
+msgstr "پرچم‌های برای ویجت"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:256
+msgid "Selected Drives"
+msgstr "دیسک‌گردان‌های انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:257
+msgid "Array of selected drives"
+msgstr "آرایه‌های دیسک‌گردان‌های انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:267
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
+msgid "Number of available disks"
+msgstr "تعداد دیسک‌های موجود"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
+msgid "Largest Segment For Selected"
+msgstr "بزرگترین بخش برای مورد انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
+msgid "The largest free segment for the selected drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
+msgid "Largest Segment For All"
+msgstr "بزرگترین بخش برای همه"
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:294
+msgid "The largest free segment for all the drives"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
+msgid "The size to use in the details header"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
+msgid "Cannot select multipath component"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
+msgid "No free space."
+msgstr "هیچ فضای خالی نیست."
+
+#. Translators: Shown when device is unselectable because not enough space is available.
+#. * First %s (e.g. '10 GB') is how much space is needed.
+#. * Second %s (e.g. '5 GB') is how much space is available.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:445
+#, c-format
+msgid "Insufficient space: %s is needed but largest contiguous free block is %s."
+msgstr ""
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
+msgid "The disk will be partitioned and a partition will be created"
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
+#, c-format
+msgid "The disk will be partitioned and a %s partition will be created. Afterwards no space will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
+#, c-format
+msgid "The disk will be partitioned and a %s partition will be created. Afterwards %s will be available."
+msgstr ""
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
+msgid "A partition will be created"
+msgstr "یک افراز ساخته خواهد شد"
+
+#. Translators: This is shown in the details column
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
+msgid "A volume will be created"
+msgstr "یک جلد ساخته خواهد شد"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
+#, c-format
+msgid "A %s partition will be created. Afterwards no space will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
+#, c-format
+msgid "A %s volume will be created. Afterwards no space will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
+#, c-format
+msgid "A %s partition will be created. Afterwards %s will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the component size e.g. '42 GB'.
+#. * Second %s is the remaining free space after the operation.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
+#, c-format
+msgid "A %s volume will be created. Afterwards %s will be available."
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1003
+#, c-format
+msgid "Whole disk is uninitialized. %s available for use"
+msgstr ""
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1010
+#, c-format
+msgid "%s available for use"
+msgstr "میزان %s برای استفاده موجود است"
+
+#. Translators: This is shown in the Details column.
+#. * %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1016
+#, c-format
+msgid "The disk has no partitions. %s available for use"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1021
+#, c-format
+msgid "The disk has %d partition"
+msgid_plural "The disk has %d partitions"
+msgstr[0] "دیسک %Id افراز دارد"
+
+#. Translators: This is shown in the Details column.
+#. * First %s is the dngettext() result of "The disk has %d partitions.".
+#. * Second %s is the component size e.g. '42 GB'.
+#.
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1029
+#, c-format
+msgid "%s. Largest contiguous free block is %s"
+msgstr ""
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1096
+msgid "Storage Devices"
+msgstr "دستگاه‌های ذخیره‌سازی"
+
+#. Tranlators: this string is used for the column header
+#: ../src/gdu-gtk/gdu-disk-selection-widget.c:1136
+msgid "Details"
+msgstr "جزئیات"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
+msgid "Error benchmarking drive"
+msgstr "خطا در محک‌زدن دیسک‌گردان"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
+msgid "Are you sure you want to start a read/write benchmark?"
+msgstr ""
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/palimpsest/gdu-section-drive.c:1006
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
+msgid "_Benchmark"
+msgstr "آ_زمایش مبنا"
+
+#. Translators: The title of the benchmark dialog.
+#. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
+#. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
+#. * or "ATA WDC WD1001FALS-00J7B1").
+#.
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:686
+#, c-format
+msgid "%s (%s) – Benchmark"
+msgstr "%s (%s) – آزمایش مبنا"
+
+#. benchmark results
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
+msgid "Minimum Read Rate:"
+msgstr "میزان حداقل خوانش:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
+msgid "Minimum Write Rate:"
+msgstr "میزان حداکثر نوشتن:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
+msgid "Maximum Read Rate:"
+msgstr "میزان حداکثر خوانش:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
+msgid "Maximum Write Rate:"
+msgstr "میزان حداکثر خواندن"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
+msgid "Average Read Rate:"
+msgstr "میزان میانگین خوانش"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
+msgid "Average Write Rate:"
+msgstr "میزان میانگین نوشتن"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
+msgid "Last Benchmark:"
+msgstr "آخرین آزمایش مبنا:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
+msgid "Average Access Time:"
+msgstr "میانگین زمان در دسترس:"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
+#, fuzzy
+msgid "Start _Read-Only Benchmark"
+msgstr "مقصد فقط خواندنی است"
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+msgid "Measure read rate and access time"
+msgstr ""
+
+#. TODO: better icon
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
+msgid "Start Read/_Write Benchmark"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+msgid "Measure read rate, write rate and access time"
+msgstr ""
+
+#. Translators: This is used in the benchmark graph - %d is megabytes per second
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
+#, c-format
+msgid "%d MB/s"
+msgstr "%Id مگ/ثانیه"
+
+#. Translators: This is used in the benchmark graph - %g is number of milliseconds
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
+#, c-format
+msgid "%3g ms"
+msgstr "%I3g میلی ثانیه"
+
+#. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1223
+msgid "Never"
+msgstr "هرگز"
+
+#. Translators: Text used in the hyperlink in the status
+#. * table to cancel a self-test
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1297
+msgid "Cancel"
+msgstr "لغو"
+
+#. Translators: Tooptip for the "Cancel" hyperlink
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1300
+msgid "Cancels the currently running benchmark"
+msgstr "آزمایش مبنا درحال اجرا فعلی را لغو می‌کند"
+
+#. Translators: title of the dialog - first %s is the name of the volume
+#. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
+#.
+#: ../src/gdu-gtk/gdu-edit-name-dialog.c:217
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:299
+#, c-format
+msgid "Edit %s"
+msgstr "ویرایش %s"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
+msgid "Missing Physical Volume"
+msgstr "جلد فیزیکی غایب"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:222
+#, c-format
+msgid "UUID: %s"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:332
+#, c-format
+msgid "Edit PVs on %s (%s)"
+msgstr "ویرایش PVها بر روی %s (%s)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:343
+msgid "Physical _Volumes"
+msgstr "_جلدهای فیزیکی"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:373
+msgid "Physical Volume"
+msgstr "جلدهای فیزیکی"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:389
+msgid "Capacity"
+msgstr "گنجایش"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:398
+msgid "Unallocated"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
+#: ../src/palimpsest/gdu-section-drive.c:937
+msgid "SMART Status:"
+msgstr "وضعیت SMART"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
+#: ../src/palimpsest/gdu-section-drive.c:913
+#: ../src/palimpsest/gdu-section-volumes.c:1919
+msgid "Device:"
+msgstr "دستگاه:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
+msgid "_New Physical Volume"
+msgstr "جلد فیزیکی _جدید"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:430
+msgid "Add a new PV to the VG"
+msgstr "اضافه کردن یک PV‌ به VG"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
+msgid "_Remove Physical Volume"
+msgstr "_حذف جلد فیزیکی"
+
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:440
+msgid "Remove the PV from the VG"
+msgstr "حذف PV از VG"
+
+#. Translators: Used when SMART is not supported on the RAID pv
+#. Translators: Used when SMART is not supported on the RAID component
+#. Translators: This string is used when SMART is not supported
+#: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:942
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:846
+#: ../src/palimpsest/gdu-section-drive.c:329
+msgid "Not Supported"
+msgstr "پشتیبانی نمی‌شود"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:370
+#, c-format
+msgid "Edit components on %s (%s)"
+msgstr "ویرایش اجزا بر روی %s (%s)"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:381
+msgid "C_omponents"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:411
+msgid "Position"
+msgstr "موقعیت"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:420
+msgid "Component"
+msgstr "جزء"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:436
+msgid "State"
+msgstr "وضعیت"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:454
+msgid "Position:"
+msgstr "موقعیت:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:458
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:974
+#: ../src/palimpsest/gdu-section-volumes.c:1908
+msgid "State:"
+msgstr "وضعیت:"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
+msgid "Add _Spare"
+msgstr "افزودن _یدکی"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
+msgid "Add a spare to the array"
+msgstr "افزودن یک یدکی به آرایه"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
+msgid "_Expand Array"
+msgstr "_بازکردن آرایه"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
+msgid "Increase the capacity of the array"
+msgstr "افزایش گنجایش آرایه"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
+msgid "_Attach Component"
+msgstr "_ضمیمه کردن جزء"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
+msgid "Attach the component to the array"
+msgstr "ضمیمه کردن جزء به آرایه"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
+msgid "_Remove Component"
+msgstr "_حذف جزء"
+
+#: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
+msgid "Remove the component from the array"
+msgstr "حذف جزء از آرایه"
+
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
+msgid "Part_ition Label:"
+msgstr "برچسب _افراز:"
+
+#. Translators: 'Type' means partition type here
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:337
+msgid "Ty_pe:"
+msgstr "_نوع:"
+
+#. ---
+#. flag used by mbr, apm
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:351
+msgid "_Bootable"
+msgstr ""
+
+#. flag used by gpt
+#: ../src/gdu-gtk/gdu-edit-partition-dialog.c:359
+msgid "Required / Firm_ware"
+msgstr "مورد نیاز / _میان‌افزار"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:216
+msgid "The operation failed"
+msgstr "عملیات شکست خورد"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:219
+msgid "The device is busy"
+msgstr "دستگاه مشغول است"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:222
+msgid "The operation was canceled"
+msgstr "عملیات لغو شد"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:225
+msgid "The daemon is being inhibited"
+msgstr "شبح مهار شده است"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:228
+msgid "An invalid option was passed"
+msgstr "یک گزینه نادرست ارسال شده است"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:231
+msgid "The operation is not supported"
+msgstr "عملیات پشتیبانی نمی‌شود"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:234
+msgid "Getting ATA SMART data would wake up the device"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:237
+msgid "Permission denied"
+msgstr "اجازه داده نشد"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:240
+msgid "Filesystem driver not installed"
+msgstr "راه‌انداز سیستم‌پرونده‌ها نصب نشده است"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:243
+msgid "Filesystem tools not installed"
+msgstr "ابزارهای سیستم‌پرونده‌های نصب نشده است"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:248
+#: ../src/palimpsest/gdu-shell.c:959
+msgid "Unknown error"
+msgstr "خطای ناشناس"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:256
+#, c-format
+msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:264
+#, c-format
+msgid "An error occurred: %s"
+msgstr "خطایی رخ داد: %s"
+
+#: ../src/gdu-gtk/gdu-error-dialog.c:273
+msgid "_Details"
+msgstr "_جزئیات"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:167
+msgid "Flags specifying the behavior of the dialog"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:180
+msgid "Filesystem type"
+msgstr "نوع سیستم پرونده"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:181
+msgid "The selected filesystem type"
+msgstr "نوع سیستم‌پرونده‌های انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:191
+msgid "Filesystem label"
+msgstr "برچسب سیستم پرونده‌ها"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:192
+msgid "The requested filesystem label"
+msgstr "برچسب سیستم پرونده‌های درخواست شده"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:202
+msgid "Filesystem options"
+msgstr "گزینه‌های سیستم پرونده‌هاب"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:203
+msgid "The options to use for creating the filesystem"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:213
+msgid "Encryption"
+msgstr "رمزنگاری"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:214
+msgid "Whether the volume should be encrypted"
+msgstr "اینکه آیا باید جلد رمزنگاری شود یا خیر"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:224
+msgid "Take Ownership"
+msgstr "گرفتن مالک"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:225
+msgid "Whether the filesystem should be owned by the user"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:235
+#, fuzzy
+msgid "Affirmative Button Mnemonic"
+msgstr "برچسب _دکمه‌های نوار ابزار:"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:236
+msgid "The mnemonic label for the affirmative button"
+msgstr ""
+
+#. Translators: Format is used as a verb here
+#: ../src/gdu-gtk/gdu-format-dialog.c:238
+#: ../src/gdu-gtk/gdu-partition-dialog.c:219
+#: ../src/palimpsest/gdu-section-drive.c:651
+#: ../src/palimpsest/gdu-section-volumes.c:371
+msgid "_Format"
+msgstr "_قالب‌بندی"
+
+#. Translators: Format is a verb here. The %s is the name of the volume
+#: ../src/gdu-gtk/gdu-format-dialog.c:502
+#: ../src/gdu-gtk/gdu-partition-dialog.c:211
+#, c-format
+msgid "Format %s"
+msgstr "قالب‌بندی %s"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:513
+msgid "Disk _Utility"
+msgstr "_ابزارهای دیسک"
+
+#. Translators: this is the tooltip for the "Disk Utility" button
+#: ../src/gdu-gtk/gdu-format-dialog.c:520
+msgid "Use Disk Utility to format volume"
+msgstr ""
+
+#. Translators: 'type' means 'filesystem type' here.
+#: ../src/gdu-gtk/gdu-format-dialog.c:553
+msgid "_Type:"
+msgstr "_نوع:"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:560
+msgid "Compatible with all systems (FAT)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:562
+msgid "Compatible with Linux (ext2)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:564
+msgid "Compatible with Linux (ext4)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:566
+msgid "Encrypted, compatible with Linux (FAT)"
+msgstr ""
+
+#. Translators: 'name' means 'filesystem label' here.
+#: ../src/gdu-gtk/gdu-format-dialog.c:609
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
+#: ../src/palimpsest/gdu-section-volumes.c:1722
+msgid "_Name:"
+msgstr "_نام:"
+
+#. Translators: Default name to use for the formatted volume. Keep length of
+#. * translation of "New Volume" to less than 16 characters.
+#.
+#: ../src/gdu-gtk/gdu-format-dialog.c:616
+msgid "New Volume"
+msgstr "جلد جدید"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:634
+msgid "T_ake ownership of filesystem"
+msgstr "_گرفتن مالک سیستم پرونده‌ها"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:637
+msgid "The selected file system has a concept of file ownership. If checked, the created file system will be owned by you. If not checked, only the super user can access the file system."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:643
+msgid "_Encrypt underlying device"
+msgstr "_رمزنگاری دستگاه زمینه"
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:645
+msgid "Encryption protects your data, requiring a passphrase to be entered before the file system can be used. May decrease performance and may not be compatible if you use the media on other operating systems."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-format-dialog.c:678
+msgid "Warning: All data on the volume will be irrevocably lost."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:175
+msgctxt "application name"
+msgid "Bourne Again Shell"
+msgstr "پوسته‌ی بورن اِگِین"
+
+#: ../src/gdu-gtk/gdu-gtk.c:180
+msgctxt "application name"
+msgid "Bourne Shell"
+msgstr "پوسته‌ی بورن"
+
+#: ../src/gdu-gtk/gdu-gtk.c:185
+msgctxt "application name"
+msgid "C Shell"
+msgstr "پوسته‌ی زی"
+
+#: ../src/gdu-gtk/gdu-gtk.c:190
+msgctxt "application name"
+msgid "TENEX C Shell"
+msgstr "پوسته‌ی تنکس سی"
+
+#: ../src/gdu-gtk/gdu-gtk.c:195
+msgctxt "application name"
+msgid "Z Shell"
+msgstr "پوسته‌ی زی"
+
+#: ../src/gdu-gtk/gdu-gtk.c:200
+msgctxt "application name"
+msgid "Korn Shell"
+msgstr "پوسته‌ی کورن"
+
+#: ../src/gdu-gtk/gdu-gtk.c:204
+#, fuzzy
+msgctxt "application name"
+msgid "Process Viewer (top)"
+msgstr "تابلو‌ی وسط بالا"
+
+#: ../src/gdu-gtk/gdu-gtk.c:208
+#, fuzzy
+msgctxt "application name"
+msgid "Terminal Pager (less)"
+msgstr "کمتر است از"
+
+#: ../src/gdu-gtk/gdu-gtk.c:220
+#, fuzzy
+msgctxt "application name"
+msgid "Unknown"
+msgstr "ناشناخته"
+
+#: ../src/gdu-gtk/gdu-gtk.c:231
+#, fuzzy, c-format
+msgid "uid: %d  pid: %d  program: %s"
+msgstr "برنامه‌ی راهنمای توسعه‌دهندگان"
+
+#: ../src/gdu-gtk/gdu-gtk.c:236
+#, fuzzy, c-format
+msgid "pid: %d  program: %s"
+msgstr "اجرای یک برنامه"
+
+#. Translators: %d is the partition number, %s the name of the disk
+#: ../src/gdu-gtk/gdu-gtk.c:337
+#: ../src/gdu-gtk/gdu-gtk.c:933
+#: ../src/gdu-gtk/gdu-gtk.c:1076
+#, fuzzy, c-format
+msgid "Partition %d on %s"
+msgstr "روشن کردن دوربین"
+
+#: ../src/gdu-gtk/gdu-gtk.c:375
+msgid "Cannot unmount volume"
+msgstr "پیاده کردن جلد ممکن نیست"
+
+#: ../src/gdu-gtk/gdu-gtk.c:385
+msgid "One or more applications are using the volume. Quit the applications, and then try unmounting again."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:426
+msgid "_Unmount"
+msgstr "_پیاده‌کردن"
+
+#: ../src/gdu-gtk/gdu-gtk.c:503
+#, fuzzy
+msgid "Passphrases do not match"
+msgstr "گذرواژه‌ها برابر نیستند"
+
+#: ../src/gdu-gtk/gdu-gtk.c:510
+#, fuzzy
+msgid "Passphrases do not differ"
+msgstr "گذرواژه‌ها برابر نیستند"
+
+#: ../src/gdu-gtk/gdu-gtk.c:516
+#, fuzzy
+msgid "Passphrase can't be empty"
+msgstr "اتصال برقرار نمی‌شود"
+
+#: ../src/gdu-gtk/gdu-gtk.c:590
+msgid "Cr_eate"
+msgstr "ا_یجاد"
+
+#: ../src/gdu-gtk/gdu-gtk.c:592
+#: ../src/palimpsest/gdu-section-volumes.c:2499
+#, fuzzy
+msgid "Change _Passphrase"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:594
+msgid "_Unlock"
+msgstr "_باز کردن قفل"
+
+#: ../src/gdu-gtk/gdu-gtk.c:626
+msgid "To create an encrypted device, choose a passphrase to protect it"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:629
+msgid "To change the passphrase, enter both the current and new passphrase"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:632
+msgid "Data on this device is stored in an encrypted form protected by a passphrase"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:645
+msgid "Data on this device will be stored in an encrypted form protected by a passphrase."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:648
+msgid "Data on this device is stored in an encrypted form protected by a passphrase."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:651
+msgid "To make the data available for use, enter the passphrase for the device."
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:660
+#, fuzzy
+msgid "Incorrect Passphrase. Try again."
+msgstr "گذرواژه اشتباه است؛ لطفا دوباره سعی کنید:"
+
+#: ../src/gdu-gtk/gdu-gtk.c:684
+#, fuzzy
+msgid "C_urrent Passphrase:"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:698
+#, fuzzy
+msgid "_New Passphrase:"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:711
+#, fuzzy
+msgid "_Verify Passphrase:"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:753
+#, fuzzy
+msgid "_Passphrase:"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:768
+#, fuzzy
+msgid "_Forget passphrase immediately"
+msgstr "گذرواژه را بی‌درنگ _فراموش کن"
+
+#: ../src/gdu-gtk/gdu-gtk.c:771
+#, fuzzy
+msgid "Remember passphrase until you _log out"
+msgstr "گذرواژه تا زمان _خروج خاطر سپرده شود"
+
+#: ../src/gdu-gtk/gdu-gtk.c:774
+msgid "_Remember forever"
+msgstr "برای _همیشه بخاطر بسپار"
+
+#: ../src/gdu-gtk/gdu-gtk.c:837
+#, fuzzy
+msgid "Enter Passphrase"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/gdu-gtk/gdu-gtk.c:966
+#: ../src/gdu/gdu-util.c:828
+#, c-format
+msgid "LUKS Passphrase for UUID %s"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:1268
+msgid "Empty (don't create a file system)"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-gtk.c:1289
+msgid "Empty"
+msgstr "خالی"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1297
+#, fuzzy
+msgid "Extended Partition"
+msgstr "غایب ممتد"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1556
+#: ../src/palimpsest/gdu-section-drive.c:291
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:254
+#, fuzzy
+msgid "Master Boot Record"
+msgstr "نیاز به گذرواژه اصلی است"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu-gtk/gdu-gtk.c:1561
+#: ../src/gdu/gdu-drive.c:833
+#: ../src/gdu/gdu-linux-md-drive.c:572
+#: ../src/palimpsest/gdu-section-drive.c:293
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:256
+#, fuzzy
+msgid "GUID Partition Table"
+msgstr "سرستون جدول"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1566
+#, fuzzy
+msgid "Don't partition"
+msgstr "بروزرسانی _نشود"
+
+#: ../src/gdu-gtk/gdu-gtk.c:1571
+#: ../src/gdu/gdu-util.c:495
+#: ../src/palimpsest/gdu-section-drive.c:289
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:252
+#, fuzzy
+msgid "Apple Partition Map"
+msgstr "آشناها روی یک _نقشه"
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:100
+msgid "Partitioning Scheme"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-partition-dialog.c:101
+#, fuzzy
+msgid "The selected partitioning scheme"
+msgstr "باز کردن پرونده‌ی انتخاب شده"
+
+#. Translators: 'scheme' means 'partitioning scheme' here.
+#: ../src/gdu-gtk/gdu-partition-dialog.c:250
+msgid "_Scheme:"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:89
+msgid "kB"
+msgstr "کیلوبایت"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:95
+msgid "MB"
+msgstr "مگابایت"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:98
+msgid "GB"
+msgstr "گیگابایت"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:101
+msgid "TB"
+msgstr "ترابایت"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:104
+msgid "KiB"
+msgstr "کیلوبایت (باینری)"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:107
+msgid "MiB"
+msgstr "مگابایت (باینری)"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:110
+msgid "GiB"
+msgstr "گیگابایت (باینری)"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:113
+msgid "TiB"
+msgstr "ترابایت (باینری)"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:489
+#, fuzzy
+msgid "The currently selected size"
+msgstr "حذف منبع لغت‌نامه‌ی انتخاب شده"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:502
+msgid "Minimum Size"
+msgstr "حداقل اندازه"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:503
+msgid "The minimum size that can be selected"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-size-widget.c:516
+msgid "Maximum Size"
+msgstr "حداکثر اندازه"
+
+#: ../src/gdu-gtk/gdu-size-widget.c:517
+msgid "The maximum size that can be selected"
+msgstr ""
+
+#: ../src/gdu-gtk/gdu-time-label.c:71
+#, c-format
+msgid "Less than a minute ago"
+msgstr "کمتر از یک دقیقه پیش"
+
+#: ../src/gdu-gtk/gdu-time-label.c:75
+#, c-format
+msgid "%d minute ago"
+msgid_plural "%d minutes ago"
+msgstr[0] "%Id دقیقه قبل"
+
+#: ../src/gdu-gtk/gdu-time-label.c:82
+#, c-format
+msgid "%d hour ago"
+msgid_plural "%d hours ago"
+msgstr[0] "%Id ساعت قبل"
+
+#: ../src/gdu-gtk/gdu-volume-grid.c:489
+#: ../src/palimpsest/gdu-section-drive.c:150
+msgid "Drive"
+msgstr "دیسک‌گردان"
+
+#: ../src/gdu-gtk/gdu-volume-grid.c:490
+#, fuzzy
+msgid "Drive to show volumes for"
+msgstr "تنظیم دیسک‌گردان جهت استفاده برای سوزاندن"
+
+#. Translators: This is shown in the grid for a RAID array that is not running
+#: ../src/gdu-gtk/gdu-volume-grid.c:1175
+#, fuzzy
+msgid "RAID Array is not running"
+msgstr "بازگرداندن ۰ اگر gconfd در حال اجراست، ۲ اگر نیست."
+
+#. Translators: This is shown in the grid for a drive when no media has been detected
+#. Translators: This string is used as a description text when no media has
+#. * been detected for a drive
+#.
+#: ../src/gdu-gtk/gdu-volume-grid.c:1178
+#: ../src/gdu/gdu-drive.c:819
+#: ../src/palimpsest/gdu-section-drive.c:343
+#, fuzzy, c-format
+msgid "No Media Detected"
+msgstr "رسانه به عنوان «%s» شناسایی شده است."
+
+#. Translators: shown in the grid for an extended MS-DOS partition
+#: ../src/gdu-gtk/gdu-volume-grid.c:1263
+#, fuzzy
+msgid "Extended"
+msgstr "غایب ممتد"
+
+#. Translators: shown in the grid for an encrypted LUKS volume
+#: ../src/gdu-gtk/gdu-volume-grid.c:1271
+#, fuzzy
+msgid "Encrypted"
+msgstr "رمزنگاری شده"
+
+#. Translators: shown in the grid for an RAID Component
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285
+#: ../src/gdu/gdu-util.c:344
+#: ../src/palimpsest/gdu-section-volumes.c:2195
+#, fuzzy, c-format
+msgid "RAID Component"
+msgstr "مؤلفه‌ی تعبیه‌شده"
+
+#. Translators: shown for free/unallocated space
+#: ../src/gdu-gtk/gdu-volume-grid.c:1293
+msgid "Free"
+msgstr "آزاد"
+
+#. Translators: this is a verb
+#: ../src/nautilus-extension/nautilus-gdu.c:223
+msgid "_Format..."
+msgstr "_قالب‌بندی..."
+
+#: ../src/nautilus-extension/nautilus-gdu.c:224
+msgid "Create new filesystem on the selected device"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:573
+msgid "CompactFlash"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:576
+msgid "MemoryStick"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:579
+msgid "SmartMedia"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:582
+msgid "SecureDigital"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:585
+#, fuzzy
+msgid "SD High Capacity"
+msgstr "ظرفیت کل سیستم پرونده‌ها"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:588
+msgid "Floppy"
+msgstr "فلاپی"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:591
+msgid "Zip"
+msgstr "Zip"
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:594
+msgid "Jaz"
+msgstr ""
+
+#. Translators: This word is used to describe the media inserted into a device
+#: ../src/gdu/gdu-drive.c:597
+msgid "Flash"
+msgstr "فلش"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:620
+msgid "CD"
+msgstr "سی‌دی"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:628
+msgid "DVD"
+msgstr "دی‌وی‌دی"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:636
+msgid "Blu-Ray"
+msgstr "بلو-ری"
+
+#. Translators: This word is used to describe the optical disc type, it may appear
+#. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
+#.
+#: ../src/gdu/gdu-drive.c:644
+msgid "HDDVD"
+msgstr ""
+
+#. Translators: This is the name of a "Drive" backed by a file.
+#. * The %s is the size of the file (e.g. "42 GB" or "5 kB").
+#. *
+#. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
+#.
+#: ../src/gdu/gdu-drive.c:689
+#, c-format
+msgid "%s File"
+msgstr "%s پرونده"
+
+#. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
+#: ../src/gdu/gdu-drive.c:703
+#: ../src/gdu/gdu-drive.c:742
+#, c-format
+msgid "%s Drive"
+msgstr "%s دیسک‌گردان"
+
+#. Translators: first %s is the size, second %s is the media type
+#. * e.g. 'CD/DVD' or 'CompactFlash'
+#.
+#: ../src/gdu/gdu-drive.c:737
+#, fuzzy, c-format
+msgid "%s %s Drive"
+msgstr "اتصال _دیسک‌گردان"
+
+#. Translators: This string is used to describe a hard disk.
+#. * The first %s is the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:753
+#, fuzzy, c-format
+msgid "%s Hard Disk"
+msgstr "دیسکِ _سخت"
+
+#. Translators: This string is used to describe a hard disk where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:758
+#, fuzzy
+msgid "Hard Disk"
+msgstr "دیسکِ _سخت"
+
+#. Translators: This string is used to describe a SSD. The first %s is
+#. * the size of the drive e.g. '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:765
+#, fuzzy, c-format
+msgid "%s Solid-State Disk"
+msgstr "کمبود فضای دیسک"
+
+#. Translators: This string is used to describe a SSD where the size
+#. * is not known.
+#.
+#: ../src/gdu/gdu-drive.c:771
+#, fuzzy
+msgid "Solid-State Disk"
+msgstr "کمبود فضای دیسک"
+
+#. Translators: This string is the description of a drive. The first %s is the
+#. * size of the inserted media, for example '45 GB'.
+#.
+#: ../src/gdu/gdu-drive.c:812
+#, fuzzy, c-format
+msgid "%s Media"
+msgstr "رسانه"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:830
+#: ../src/gdu/gdu-linux-md-drive.c:569
+#, fuzzy
+msgid "MBR Partition Table"
+msgstr "سرستون جدول"
+
+#. Translators: This string is used for conveying the partition table format
+#: ../src/gdu/gdu-drive.c:836
+#: ../src/gdu/gdu-linux-md-drive.c:575
+#, fuzzy
+msgid "Apple Partition Table"
+msgstr "سرستون جدول"
+
+#. Translators: This string is used for conveying the partition table format when
+#. * the format is unknown
+#.
+#: ../src/gdu/gdu-drive.c:841
+#: ../src/gdu/gdu-linux-md-drive.c:580
+msgid "Partitioned"
+msgstr ""
+
+#. Translators: This string is used for conveying a device is not partitioned.
+#.
+#: ../src/gdu/gdu-drive.c:846
+#: ../src/palimpsest/gdu-section-drive.c:302
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:265
+#, fuzzy
+msgid "Not Partitioned"
+msgstr "پیاده‌سازی نشده است"
+
+#. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
+#: ../src/gdu/gdu-hub.c:222
+#, fuzzy
+msgid "SAS Expander"
+msgstr "فاصله‌گذاری دور ؟؟؟"
+
+#: ../src/gdu/gdu-hub.c:230
+#, fuzzy
+msgid "PATA Host Adapter"
+msgstr "گشتن به دنیال میزبان شکست خورد"
+
+#: ../src/gdu/gdu-hub.c:232
+#, fuzzy
+msgid "SATA Host Adapter"
+msgstr "گشتن به دنیال میزبان شکست خورد"
+
+#: ../src/gdu/gdu-hub.c:234
+#, fuzzy
+msgid "ATA Host Adapter"
+msgstr "کنترل کننده میزبان ATA"
+
+#: ../src/gdu/gdu-hub.c:236
+#, fuzzy
+msgid "SAS Host Adapter"
+msgstr "گشتن به دنیال میزبان شکست خورد"
+
+#: ../src/gdu/gdu-hub.c:238
+#, fuzzy
+msgid "SCSI Host Adapter"
+msgstr "گشتن به دنیال میزبان شکست خورد"
+
+#: ../src/gdu/gdu-hub.c:240
+#, fuzzy
+msgid "Host Adapter"
+msgstr "آداپتور برق شهری"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume.c:330
+#, fuzzy
+msgid "Logical Volume"
+msgstr "کاهش بلندی صدا"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume.c:333
+#, fuzzy
+msgid "LVM2 Logical Volume"
+msgstr "اندازهٔ پیش‌فرض جلد"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
+#, fuzzy
+msgid "Volume Group"
+msgstr "در حال حذف گروه"
+
+#. Translators: VPD name - first %s is the size e.g. '45 GB'
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
+#, fuzzy, c-format
+msgid "%s LVM2 Volume Group"
+msgstr "گروه‌بندی براساس زبان"
+
+#. Translators: VPD name when size is not known
+#: ../src/gdu/gdu-linux-lvm2-volume-group.c:393
+#, fuzzy
+msgid "LVM2 Volume Group"
+msgstr "گروه‌بندی براساس زبان"
+
+#. Translators: label for an unallocated space in a LVM2 volume group.
+#. * %s is the size, formatted like '45 GB'
+#.
+#. Translators: label for an unallocated space on a disk
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:201
+#: ../src/gdu/gdu-volume-hole.c:152
+#, fuzzy, c-format
+msgid "%s Free"
+msgstr "آزاد"
+
+#. Translators: Description
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
+#: ../src/gdu/gdu-volume-hole.c:161
+#: ../src/palimpsest/gdu-section-volumes.c:2209
+#: ../src/palimpsest/gdu-section-volumes.c:2217
+#, fuzzy
+msgid "Unallocated Space"
+msgstr "_فضای دیسک:"
+
+#. Translators: VPD name
+#: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
+msgid "LVM2 VG Unallocated Space"
+msgstr ""
+
+#. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
+#. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:542
+#: ../src/gdu/gdu-linux-md-drive.c:624
+#, fuzzy, c-format
+msgid "%s %s Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#. Translators: %s is a RAID level, e.g. 'RAID-5'
+#. Translators: %s is the level e.g. 'RAID-5'
+#: ../src/gdu/gdu-linux-md-drive.c:547
+#: ../src/gdu/gdu-linux-md-drive.c:629
+#, fuzzy, c-format
+msgid "%s Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#. Translators: First %s is a device file such as /dev/sda4
+#. * second %s is the state of the device
+#.
+#: ../src/gdu/gdu-linux-md-drive.c:600
+#, fuzzy, c-format
+msgid "RAID Array %s (%s)"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#. Translators: %s is a device file such as /dev/sda4
+#: ../src/gdu/gdu-linux-md-drive.c:605
+#, fuzzy, c-format
+msgid "RAID device %s"
+msgstr "DEVICE PATH"
+
+#. Translators: fallback for level
+#: ../src/gdu/gdu-linux-md-drive.c:612
+msgctxt "RAID Level fallback"
+msgid "RAID"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:617
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:944
+#, fuzzy
+msgid "RAID Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1114
+#, fuzzy
+msgctxt "Linux MD slave state"
+msgid "Not Attached"
+msgstr "پیاده‌سازی نشده است"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1117
+msgctxt "Linux MD slave state"
+msgid "Faulty"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1122
+#, fuzzy
+msgctxt "Linux MD slave state"
+msgid "Fully Synchronized"
+msgstr "اطلاع دادن پُر شدن باتری"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1124
+msgctxt "Linux MD slave state"
+msgid "Writemostly"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1126
+#, fuzzy
+msgctxt "Linux MD slave state"
+msgid "Blocked"
+msgstr "آشناهای _مسدود شده"
+
+#: ../src/gdu/gdu-linux-md-drive.c:1130
+msgctxt "Linux MD slave state"
+msgid "Partially Synchronized"
+msgstr ""
+
+#: ../src/gdu/gdu-linux-md-drive.c:1132
+msgctxt "Linux MD slave state"
+msgid "Spare"
+msgstr ""
+
+#: ../src/gdu/gdu-machine.c:151
+#, fuzzy
+msgid "Local Storage"
+msgstr "نوع حافظه"
+
+#. TODO: use display-hostname
+#: ../src/gdu/gdu-machine.c:154
+#, fuzzy, c-format
+msgid "Storage on %s"
+msgstr "روشن کردن دوربین"
+
+#: ../src/gdu/gdu-pool.c:885
+#, fuzzy
+msgid "Multipath Devices"
+msgstr "درحال دریافت دستگاه‌ها..."
+
+#: ../src/gdu/gdu-pool.c:886
+msgid "Drives with multiple I/O paths"
+msgstr ""
+
+#: ../src/gdu/gdu-pool.c:896
+#, fuzzy
+msgid "Multi-disk Devices"
+msgstr "آغاز دستگاه چند دیسکی"
+
+#: ../src/gdu/gdu-pool.c:897
+msgid "RAID, LVM and other logical drives"
+msgstr ""
+
+#: ../src/gdu/gdu-pool.c:907
+#, fuzzy
+msgid "Peripheral Devices"
+msgstr "درحال دریافت دستگاه‌ها..."
+
+#: ../src/gdu/gdu-pool.c:908
+msgid "USB, FireWire and other peripherals"
+msgstr ""
+
+#: ../src/gdu/gdu-pool.c:2092
+#, fuzzy, c-format
+msgid "Error enumerating devices: %s"
+msgstr "درحال جستجو برای دستگاه..."
+
+#: ../src/gdu/gdu-pool.c:2118
+#, fuzzy, c-format
+msgid "Error enumerating adapters: %s"
+msgstr "هیچ آداپتوری موجود نیست"
+
+#: ../src/gdu/gdu-pool.c:2141
+#, fuzzy, c-format
+msgid "Error enumerating expanders: %s"
+msgstr "یک خطای داخلی رخ داد"
+
+#: ../src/gdu/gdu-pool.c:2164
+#, fuzzy, c-format
+msgid "Error enumerating ports: %s"
+msgstr "یک خطای داخلی رخ داد"
+
+#: ../src/gdu/gdu-ssh-bridge.c:292
+#, c-format
+msgid "Error listening to address `localhost:%d': %s: %s\n"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:307
+#, c-format
+msgid "Error creating a local TCP server, tried binding to ports 9000-10000 on localhost"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:322
+#, c-format
+msgid "Error setting auth mechanisms on local DBusServer\n"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:347
+#, c-format
+msgid "Unable to parse command-line `%s' (Malformed address?): %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:369
+#, c-format
+msgid "Unable to spawn ssh program: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:398
+#: ../src/gdu/gdu-ssh-bridge.c:510
+#, fuzzy, c-format
+msgid "Error reading stderr output: %s"
+msgstr "خطا در خواندن پرونده‌ی نامه: %s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:405
+msgid "Error reading stderr output: No content"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:471
+msgid "Error logging in"
+msgstr "خطا در ورود به سیستم"
+
+#: ../src/gdu/gdu-ssh-bridge.c:491
+#, fuzzy, c-format
+msgid "Error sending `%s': %s"
+msgstr "خطا در فرستان پیام «%s»: %s"
+
+#: ../src/gdu/gdu-ssh-bridge.c:519
+#, c-format
+msgid "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' but got `%s'"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:536
+#, c-format
+msgid "Error passing authorization secret: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:557
+#, fuzzy, c-format
+msgid "Error reading stderr from: %s"
+msgstr "خطا در خواندن از فرزند: %s."
+
+#: ../src/gdu/gdu-ssh-bridge.c:566
+#, c-format
+msgid "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to connect to port %d' but got `%s'"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:585
+#, c-format
+msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
+msgstr ""
+
+#: ../src/gdu/gdu-ssh-bridge.c:592
+msgid "The udisks-tcp-bridge program failed to prove it was authorized"
+msgstr ""
+
+#. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
+#. * the second %s is the size as a number e.g. '65,536 bytes'
+#.
+#. Translators: The first %s is the size in power-of-10 units, e.g. '100 kB'
+#. * the second %s is the size as a number e.g. '100,000 bytes'
+#.
+#: ../src/gdu/gdu-util.c:131
+#: ../src/gdu/gdu-util.c:140
+#, fuzzy, c-format
+msgid "%s (%s bytes)"
+msgstr "%s (%s بایت)"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:175
+msgid "FAT (12-bit version)"
+msgstr "FAT (نسخه ۱۲ بیتی)"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:178
+#: ../src/gdu/gdu-util.c:185
+#: ../src/gdu/gdu-util.c:192
+#: ../src/gdu/gdu-util.c:196
+#: ../src/gdu/gdu-util.c:198
+msgid "FAT"
+msgstr "FAT"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:183
+msgid "FAT (16-bit version)"
+msgstr "FAT (نسخه ۱۶ بیتی)"
+
+#. Translators: FAT is a filesystem type
+#: ../src/gdu/gdu-util.c:190
+msgid "FAT (32-bit version)"
+msgstr "FAT (نسخه ۳۲ بیتی)"
+
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:205
+#, c-format
+msgid "NTFS (version %s)"
+msgstr "NTFS (نسخه %s)"
+
+#. Translators: NTFS is a filesystem type
+#: ../src/gdu/gdu-util.c:208
+#: ../src/gdu/gdu-util.c:210
+#, c-format
+msgid "NTFS"
+msgstr "NTFS"
+
+#. Translators: HFS is a filesystem type
+#: ../src/gdu/gdu-util.c:215
+#: ../src/gdu/gdu-util.c:217
+msgid "HFS"
+msgstr "HFS"
+
+#. Translators: HFS+ is a filesystem type
+#: ../src/gdu/gdu-util.c:222
+#: ../src/gdu/gdu-util.c:224
+msgid "HFS+"
+msgstr "HFS+"
+
+#: ../src/gdu/gdu-util.c:228
+msgid "Linux Unified Key Setup"
+msgstr "برپاسازی کلید متحد لینوکس"
+
+#. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
+#: ../src/gdu/gdu-util.c:231
+msgid "LUKS"
+msgstr "LUKS"
+
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:237
+#, c-format
+msgid "Ext2 (version %s)"
+msgstr "Ext2 (نسخه %s)"
+
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:240
+#, c-format
+msgid "Ext2"
+msgstr "Ext2"
+
+#. Translators: Ext2 is a filesystem type
+#: ../src/gdu/gdu-util.c:243
+msgid "ext2"
+msgstr "ext2"
+
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:249
+#, c-format
+msgid "Ext3 (version %s)"
+msgstr "Ext3 (نسخه %s)"
+
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:252
+#, c-format
+msgid "Ext3"
+msgstr "Ext3"
+
+#. Translators: Ext3 is a filesystem type
+#: ../src/gdu/gdu-util.c:255
+msgid "ext3"
+msgstr "ext3"
+
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:261
+#, fuzzy, c-format
+msgid "Journal for Ext3 (version %s)"
+msgstr "Journal for Ext3 (version %s)"
+
+#. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
+#: ../src/gdu/gdu-util.c:264
+#, fuzzy, c-format
+msgid "Journal for Ext3"
+msgstr "Journal for Ext3"
+
+#. Translators: jbd is a filesystem type
+#: ../src/gdu/gdu-util.c:267
+msgid "jbd"
+msgstr "jbd"
+
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:273
+#, c-format
+msgid "Ext4 (version %s)"
+msgstr "Ext4 (نسخه %s)"
+
+#. Translators: ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:276
+#, c-format
+msgid "Ext4"
+msgstr "Ext4"
+
+#. Translators: Ext4 is a filesystem type
+#: ../src/gdu/gdu-util.c:279
+msgid "ext4"
+msgstr "ext4"
+
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:285
+#, c-format
+msgid "XFS (version %s)"
+msgstr "XFS (نسخه %s)"
+
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:288
+#, c-format
+msgid "XFS"
+msgstr "XFS"
+
+#. Translators: xfs is a filesystem type
+#: ../src/gdu/gdu-util.c:291
+msgid "xfs"
+msgstr "xfs"
+
+#. Translators: reiserfs is a filesystem type
+#: ../src/gdu/gdu-util.c:297
+#, c-format
+msgid "ReiserFS (version %s)"
+msgstr "ReiserFS (نسخه %s)"
+
+#. Translators: reiserfs is a filesystem type
+#: ../src/gdu/gdu-util.c:300
+#, c-format
+msgid "ReiserFS"
+msgstr "ReiserFS"
+
+#. Translators: reiserfs is a filesystem type
+#: ../src/gdu/gdu-util.c:303
+msgid "reiserfs"
+msgstr "reiserfs"
+
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:308
+msgid "ISO 9660"
+msgstr "ISO 9660"
+
+#. Translators: iso9660 is a filesystem type
+#: ../src/gdu/gdu-util.c:311
+msgid "iso9660"
+msgstr "iso9660"
+
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:316
+#, fuzzy
+msgid "Universal Disk Format"
+msgstr "Universal Disk Format"
+
+#. Translators: udf is a filesystem type
+#: ../src/gdu/gdu-util.c:319
+msgid "udf"
+msgstr "udf"
+
+#: ../src/gdu/gdu-util.c:323
+#: ../src/palimpsest/gdu-section-volumes.c:2191
+#, fuzzy
+msgid "Swap Space"
+msgstr "_فضای دیسک:"
+
+#. Translators: filesystem type for swap space
+#: ../src/gdu/gdu-util.c:326
+#, fuzzy
+msgid "swap"
+msgstr "حافظه جانشین"
+
+#: ../src/gdu/gdu-util.c:331
+#, c-format
+msgid "LVM2 Physical Volume (version %s)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:333
+#, fuzzy, c-format
+msgid "LVM2 Physical Volume"
+msgstr "اندازهٔ پیش‌فرض جلد"
+
+#. Translators: short name for LVM2 Physical Volume
+#: ../src/gdu/gdu-util.c:336
+msgid "lvm2_pv"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:342
+#, fuzzy, c-format
+msgid "RAID Component (version %s)"
+msgstr "نمایش نسخه‌ی برنامه"
+
+#. Translators: short name for 'RAID Component'
+#: ../src/gdu/gdu-util.c:347
+msgid "raid"
+msgstr "raid"
+
+#. Translators: long filesystem type for minix
+#: ../src/gdu/gdu-util.c:352
+msgid "Minix"
+msgstr "Minix"
+
+#. Translators: filesystem type for minix
+#: ../src/gdu/gdu-util.c:355
+msgid "minix"
+msgstr "minix"
+
+#: ../src/gdu/gdu-util.c:369
+#, fuzzy
+msgid "Creating File System"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:371
+#, fuzzy
+msgid "Mounting File System"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:373
+#, fuzzy
+msgid "Unmounting File System"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:375
+#, fuzzy
+msgid "Checking File System"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:377
+#, fuzzy
+msgid "Creating LUKS Device"
+msgstr "PATH TO DEVICE"
+
+#: ../src/gdu/gdu-util.c:379
+#, fuzzy
+msgid "Unlocking LUKS Device"
+msgstr "PATH TO DEVICE"
+
+#: ../src/gdu/gdu-util.c:381
+#, fuzzy
+msgid "Locking LUKS Device"
+msgstr "PATH TO DEVICE"
+
+#: ../src/gdu/gdu-util.c:383
+#, fuzzy
+msgid "Creating Partition Table"
+msgstr "سرستون جدول"
+
+#: ../src/gdu/gdu-util.c:385
+#, fuzzy
+msgid "Deleting Partition"
+msgstr "حذف «%s» شکست خورد: %s. "
+
+#: ../src/gdu/gdu-util.c:387
+#, fuzzy
+msgid "Creating Partition"
+msgstr "درحال ساخت آرشیو"
+
+#: ../src/gdu/gdu-util.c:389
+#, fuzzy
+msgid "Modifying Partition"
+msgstr "خطا در تغییر دادن آشنا"
+
+#: ../src/gdu/gdu-util.c:391
+#, fuzzy
+msgid "Setting Label for Device"
+msgstr "تنظیمات برای دستگاه انتخاب شده:"
+
+#: ../src/gdu/gdu-util.c:393
+msgid "Changing Passphrase for Encrypted LUKS Device"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:395
+msgid "Adding Component to RAID Array"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:397
+msgid "Removing Component from RAID Array"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:399
+#, fuzzy
+msgid "Stopping RAID Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#: ../src/gdu/gdu-util.c:401
+#, fuzzy
+msgid "Starting RAID Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#: ../src/gdu/gdu-util.c:403
+#, fuzzy
+msgid "Checking RAID Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#: ../src/gdu/gdu-util.c:405
+#, fuzzy
+msgid "Repairing RAID Array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#: ../src/gdu/gdu-util.c:407
+msgid "Running Short SMART Self-Test"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:409
+msgid "Running Extended SMART Self-Test"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:411
+msgid "Running Conveyance SMART Self-Test"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:413
+#, fuzzy
+msgid "Ejecting Media"
+msgstr "رسانه‌های دیگر..."
+
+#: ../src/gdu/gdu-util.c:415
+#, fuzzy
+msgid "Detaching Device"
+msgstr "DEVICE PATH"
+
+#: ../src/gdu/gdu-util.c:417
+#, fuzzy
+msgid "Forcibly Unmounting Filesystem"
+msgstr "ظرفیت کل سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:419
+msgid "Forcibly Locking LUKS device"
+msgstr ""
+
+#. see http://en.wikipedia.org/wiki/GUID_Partition_Table
+#. Linux
+#: ../src/gdu/gdu-util.c:435
+msgid "Linux Basic Data Partition"
+msgstr ""
+
+#. Same as MS BDP
+#: ../src/gdu/gdu-util.c:436
+msgid "Linux RAID Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:437
+#, fuzzy
+msgid "Linux Swap Partition"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/gdu/gdu-util.c:438
+msgid "Linux LVM Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:439
+msgid "Linux Reserved Partition"
+msgstr ""
+
+#. Not associated with any OS
+#: ../src/gdu/gdu-util.c:441
+msgid "MBR Partition Scheme"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:442
+#, fuzzy
+msgid "EFI System Partition"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:443
+msgid "BIOS Boot Partition"
+msgstr ""
+
+#. Microsoft
+#: ../src/gdu/gdu-util.c:445
+msgid "Microsoft Reserved Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:446
+msgid "Microsoft Basic Data Partition"
+msgstr ""
+
+#. Same as Linux BDP
+#: ../src/gdu/gdu-util.c:447
+msgid "Microsoft LDM Metadata Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:448
+msgid "Microsoft LDM Data Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:449
+msgid "Microsoft Windows Recovery Environment"
+msgstr ""
+
+#. HP-UX
+#: ../src/gdu/gdu-util.c:451
+msgid "HP-UX Data Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:452
+msgid "HP-UX Service Partition"
+msgstr ""
+
+#. FreeBSD
+#: ../src/gdu/gdu-util.c:454
+msgid "FreeBSD Boot Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:455
+#, fuzzy
+msgid "FreeBSD Data Partition"
+msgstr "درحال سوزاندن دی‌وی‌دی اطلاعات"
+
+#: ../src/gdu/gdu-util.c:456
+#, fuzzy
+msgid "FreeBSD Swap Partition"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/gdu/gdu-util.c:457
+msgid "FreeBSD UFS Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:458
+msgid "FreeBSD Vinum Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:459
+msgid "FreeBSD ZFS Partition"
+msgstr ""
+
+#. Solaris
+#: ../src/gdu/gdu-util.c:461
+#, fuzzy
+msgid "Solaris Boot Partition"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:462
+#, fuzzy
+msgid "Solaris Root Partition"
+msgstr "ریشه‌ی دوم [Ctrl+R]"
+
+#: ../src/gdu/gdu-util.c:463
+#, fuzzy
+msgid "Solaris Swap Partition"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/gdu/gdu-util.c:464
+#, fuzzy
+msgid "Solaris Backup Partition"
+msgstr "ایجاد نسخه‌های پشتیبان"
+
+#: ../src/gdu/gdu-util.c:465
+#, fuzzy
+msgid "Solaris /usr Partition"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#. Same as Apple ZFS
+#: ../src/gdu/gdu-util.c:466
+#, fuzzy
+msgid "Solaris /var Partition"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:467
+#, fuzzy
+msgid "Solaris /home Partition"
+msgstr "برچسب نشانی خانه"
+
+#: ../src/gdu/gdu-util.c:468
+msgid "Solaris Alternate Sector Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:469
+#, fuzzy
+msgid "Solaris Reserved Partition"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:470
+#, fuzzy
+msgid "Solaris Reserved Partition (2)"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:471
+#, fuzzy
+msgid "Solaris Reserved Partition (3)"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:472
+#, fuzzy
+msgid "Solaris Reserved Partition (4)"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:473
+#, fuzzy
+msgid "Solaris Reserved Partition (5)"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#. Mac OS X
+#: ../src/gdu/gdu-util.c:475
+#: ../src/gdu/gdu-util.c:494
+msgid "Apple HFS/HFS+ Partition"
+msgstr ""
+
+#. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
+#. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
+#: ../src/gdu/gdu-util.c:476
+#: ../src/gdu/gdu-util.c:493
+msgid "Apple UFS Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:477
+msgid "Apple ZFS Partition"
+msgstr ""
+
+#. Same as Solaris /usr
+#: ../src/gdu/gdu-util.c:478
+msgid "Apple RAID Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:479
+msgid "Apple RAID Partition (Offline)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:480
+msgid "Apple Boot Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:481
+#, fuzzy
+msgid "Apple Label Partition"
+msgstr "برچسب نشانی خانه"
+
+#: ../src/gdu/gdu-util.c:482
+msgid "Apple TV Recovery Partition"
+msgstr ""
+
+#. NetBSD
+#: ../src/gdu/gdu-util.c:484
+#, fuzzy
+msgid "NetBSD Swap Partition"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/gdu/gdu-util.c:485
+msgid "NetBSD FFS Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:486
+msgid "NetBSD LFS Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:487
+msgid "NetBSD RAID Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:488
+msgid "NetBSD Concatenated Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:489
+#, fuzzy
+msgid "NetBSD Encrypted Partition"
+msgstr "تنها اتصالات رمزنگاری شده"
+
+#: ../src/gdu/gdu-util.c:496
+msgid "Unused Partition"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:497
+#, fuzzy
+msgid "Empty Partition"
+msgstr "_پروژه خالی"
+
+#: ../src/gdu/gdu-util.c:498
+#, fuzzy
+msgid "Driver Partition"
+msgstr "راه‌انداز کارت هوشمند"
+
+#: ../src/gdu/gdu-util.c:499
+#, fuzzy
+msgid "Driver 4.3 Partition"
+msgstr "راه‌انداز کارت هوشمند"
+
+#: ../src/gdu/gdu-util.c:500
+#, fuzzy
+msgid "ProDOS file system"
+msgstr "مرور سیستم پرونده‌ها"
+
+#: ../src/gdu/gdu-util.c:501
+msgid "FAT 12"
+msgstr "FAT 12"
+
+#: ../src/gdu/gdu-util.c:502
+msgid "FAT 16"
+msgstr "FAT 16"
+
+#: ../src/gdu/gdu-util.c:503
+msgid "FAT 32"
+msgstr "FAT 32"
+
+#: ../src/gdu/gdu-util.c:504
+#, fuzzy
+msgid "FAT 16 (Windows)"
+msgstr "اجازه دادن _پنجره‌های واشو"
+
+#: ../src/gdu/gdu-util.c:505
+#, fuzzy
+msgid "FAT 32 (Windows)"
+msgstr "اجازه دادن _پنجره‌های واشو"
+
+#. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
+#: ../src/gdu/gdu-util.c:508
+#, fuzzy
+msgid "Empty (0x00)"
+msgstr "_پروژه خالی"
+
+#: ../src/gdu/gdu-util.c:509
+msgid "FAT12 (0x01)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:510
+msgid "FAT16 <32M (0x04)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:511
+#, fuzzy
+msgid "Extended (0x05)"
+msgstr "غایب ممتد"
+
+#: ../src/gdu/gdu-util.c:512
+msgid "FAT16 (0x06)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:513
+msgid "HPFS/NTFS (0x07)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:514
+msgid "W95 FAT32 (0x0b)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:515
+msgid "W95 FAT32 (LBA) (0x0c)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:516
+msgid "W95 FAT16 (LBA) (0x0e)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:517
+msgid "W95 Ext d (LBA) (0x0f)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:518
+msgid "OPUS (0x10)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:519
+#, fuzzy
+msgid "Hidden FAT12 (0x11)"
+msgstr "_نمایش پوشه‌های مخفی"
+
+#: ../src/gdu/gdu-util.c:520
+msgid "Compaq diagnostics (0x12)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:521
+msgid "Hidden FAT16 <32M (0x14)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:522
+#, fuzzy
+msgid "Hidden FAT16 (0x16)"
+msgstr "_نمایش پوشه‌های مخفی"
+
+#: ../src/gdu/gdu-util.c:523
+msgid "Hidden HPFS/NTFS (0x17)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:524
+msgid "Hidden W95 FAT32 (0x1b)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:525
+msgid "Hidden W95 FAT32 (LBA) (0x1c)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:526
+msgid "Hidden W95 FAT16 (LBA) (0x1e)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:527
+msgid "PartitionMagic (0x3c)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:528
+msgid "Minix (0x81)"
+msgstr ""
+
+#. cf. http://en.wikipedia.org/wiki/MINIX_file_system
+#: ../src/gdu/gdu-util.c:529
+#, fuzzy
+msgid "Linux swap (0x82)"
+msgstr "تاریخچه‌ی حافظه و فضای مبادله"
+
+#: ../src/gdu/gdu-util.c:530
+#, fuzzy
+msgid "Linux (0x83)"
+msgstr "پیشانه‌ی لینوکس"
+
+#: ../src/gdu/gdu-util.c:531
+msgid "Hibernation (0x84)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:532
+#, fuzzy
+msgid "Linux Extended (0x85)"
+msgstr "نحوه استفاده از کلید تعمیم یافته"
+
+#: ../src/gdu/gdu-util.c:533
+msgid "Linux LVM (0x8e)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:534
+msgid "Hibernation (0xa0)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:535
+msgid "FreeBSD (0xa5)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:536
+msgid "OpenBSD (0xa6)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:537
+#, fuzzy
+msgid "Mac OS X (0xa8)"
+msgstr "نوع پردازنده / سیستم عامل"
+
+#: ../src/gdu/gdu-util.c:538
+#, fuzzy
+msgid "Mac OS X (0xaf)"
+msgstr "نوع پردازنده / سیستم عامل"
+
+#: ../src/gdu/gdu-util.c:539
+#, fuzzy
+msgid "Solaris boot (0xbe)"
+msgstr "حالت سولاریس برای درصد واحد پردازش مرکزی"
+
+#: ../src/gdu/gdu-util.c:540
+#, fuzzy
+msgid "Solaris (0xbf)"
+msgstr "حالت سولاریس"
+
+#: ../src/gdu/gdu-util.c:541
+msgid "BeOS BFS (0xeb)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:542
+msgid "SkyOS SkyFS (0xec)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:543
+msgid "EFI GPT (0xee)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:544
+msgid "EFI (FAT-12/16/32 (0xef)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:545
+msgid "Linux RAID autodetect (0xfd)"
+msgstr ""
+
+#. Translators: Shown for unknown partition types.
+#. * %s is the partition type name
+#.
+#: ../src/gdu/gdu-util.c:572
+#, fuzzy, c-format
+msgid "Unknown (%s)"
+msgstr "نامعلوم (%s)"
+
+#: ../src/gdu/gdu-util.c:582
+msgid "A popular format compatible with almost any device or system, typically used for file exchange."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:586
+msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support. This file system does not use a journal."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:592
+msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:596
+msgid "Swap area used by the operating system for virtual memory."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:599
+msgid "The native Windows file system. Not widely compatible with other operating systems than Windows."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:603
+msgid "Simple filesystem with low overhead and UNIX permissions support. Not widely compatible with operating systems other than Linux and Minix."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:607
+msgid "No file system will be created."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:610
+msgid "Create an Extended Partition for logical partitions."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:623
+msgid "The Master Boot Record scheme is compatible with almost any device or system but has a number of limitations with respect to disk size and number of partitions."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:628
+msgid "A legacy scheme that is incompatible with most systems except Apple systems and most Linux systems. Not recommended for removable media."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:633
+msgid "The GUID scheme is compatible with most modern systems but may be incompatible with some devices and legacy systems."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:637
+msgid "Marks the entire disk as unused. Use this option only if you want to avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:888
+#, fuzzy, c-format
+msgid "%.1f kB/s"
+msgstr "%I.1f کیلو"
+
+#: ../src/gdu/gdu-util.c:891
+#, fuzzy, c-format
+msgid "%.1f MB/s"
+msgstr "%I.1f مگ"
+
+#: ../src/gdu/gdu-util.c:894
+#, fuzzy, c-format
+msgid "%.1f GB/s"
+msgstr "%I.1f گیگ"
+
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:910
+msgid "SATA"
+msgstr "SATA"
+
+#. Translators: interface name for serial ATA disks
+#: ../src/gdu/gdu-util.c:913
+msgid "eSATA"
+msgstr "eSATA"
+
+#. Translators: interface name for parallel ATA disks
+#: ../src/gdu/gdu-util.c:916
+msgid "PATA"
+msgstr "PATA"
+
+#. Translators: interface name for ATA disks
+#: ../src/gdu/gdu-util.c:919
+#: ../src/palimpsest/gdu-section-hub.c:141
+msgid "ATA"
+msgstr "ATA"
+
+#. Translators: interface name for SCSI disks
+#: ../src/gdu/gdu-util.c:922
+#: ../src/palimpsest/gdu-section-hub.c:145
+msgid "SCSI"
+msgstr "SCSI"
+
+#. Translators: interface name for USB disks
+#: ../src/gdu/gdu-util.c:925
+msgid "USB"
+msgstr "یو‌اس‌بی"
+
+#. Translators: interface name for firewire disks
+#: ../src/gdu/gdu-util.c:928
+msgid "Firewire"
+msgstr ""
+
+#. Translators: interface name for SDIO disks
+#: ../src/gdu/gdu-util.c:931
+msgid "SDIO"
+msgstr "SDIO"
+
+#. Translators: interface name for virtual disks
+#: ../src/gdu/gdu-util.c:934
+msgid "Virtual"
+msgstr "مجازی"
+
+#. Translators: name shown for unknown disk connection interfaces
+#: ../src/gdu/gdu-util.c:940
+msgctxt "connection name"
+msgid "Unknown"
+msgstr "ناشناخته"
+
+#. Translators: Connection with speed information.
+#. * First %s is the connection name, like 'SATA' or 'USB'
+#. * second %s is the speed, like '2 Mbit/s'
+#.
+#: ../src/gdu/gdu-util.c:950
+#, fuzzy, c-format
+msgid "%s at %s"
+msgstr "%s %s"
+
+#: ../src/gdu/gdu-util.c:969
+msgctxt "RAID level"
+msgid "Stripe (RAID-0)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:971
+msgctxt "RAID level"
+msgid "RAID-0"
+msgstr "RAID-0"
+
+#: ../src/gdu/gdu-util.c:974
+#, fuzzy
+msgctxt "RAID level"
+msgid "Mirror (RAID-1)"
+msgstr "نمایشگرهای آ_ینه‌ای"
+
+#: ../src/gdu/gdu-util.c:976
+msgctxt "RAID level"
+msgid "RAID-1"
+msgstr "RAID-1"
+
+#: ../src/gdu/gdu-util.c:979
+#, fuzzy
+msgctxt "RAID level"
+msgid "Parity Disk (RAID-4)"
+msgstr "کمبود فضای دیسک"
+
+#: ../src/gdu/gdu-util.c:981
+msgctxt "RAID level"
+msgid "RAID-4"
+msgstr "RAID-4"
+
+#: ../src/gdu/gdu-util.c:984
+msgctxt "RAID level"
+msgid "Distributed Parity (RAID-5)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:986
+msgctxt "RAID level"
+msgid "RAID-5"
+msgstr "RAID-5"
+
+#: ../src/gdu/gdu-util.c:989
+msgctxt "RAID level"
+msgid "Dual Distributed Parity (RAID-6)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:991
+msgctxt "RAID level"
+msgid "RAID-6"
+msgstr "RAID-6"
+
+#: ../src/gdu/gdu-util.c:994
+msgctxt "RAID level"
+msgid "Stripe of Mirrors (RAID-10)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:996
+#, fuzzy
+msgctxt "RAID level"
+msgid "RAID-10"
+msgstr "۱۰ دقیقه"
+
+#: ../src/gdu/gdu-util.c:999
+msgctxt "RAID level"
+msgid "Concatenated (Linear)"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1001
+msgctxt "RAID level"
+msgid "Linear"
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1015
+msgid "Striped set without parity. Provides improved performance but no fault tolerance. If a single disk in the array fails, the entire RAID-0 array fails."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1019
+msgid "Mirrored set without parity. Provides fault tolerance and improved performance for reading. RAID-1 arrays can sustain all but one disk failing."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1023
+msgid "Striped set with parity on a single disk. Provides improved performance and fault tolerance. RAID-4 arrays can sustain a single disk failure."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1027
+msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-5 arrays can sustain a single disk failure."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1031
+msgid "Striped set with dual distributed parity. Provides improved performance and fault tolerance. RAID-6 arrays can sustain two disk failures."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1035
+msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-10 arrays can sustain multiple drive losses so long as no mirror loses all its drives."
+msgstr ""
+
+#: ../src/gdu/gdu-util.c:1041
+#, fuzzy, c-format
+msgid "Unknown RAID level %s."
+msgstr "تنظیم سطح زوم"
+
+#. Translators: Overall description of the GOOD status
+#: ../src/gdu/gdu-util.c:1077
+#, fuzzy
+msgid "Disk is healthy"
+msgstr "دیسک‌گردان مشغول است"
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
+#: ../src/gdu/gdu-util.c:1081
+msgid "Disk was used outside of design parameters in the past"
+msgstr ""
+
+#. Translators: Overall description of the BAD_SECTOR status
+#: ../src/gdu/gdu-util.c:1085
+msgid "Disk has a few bad sectors"
+msgstr ""
+
+#. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
+#: ../src/gdu/gdu-util.c:1089
+msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
+msgstr ""
+
+#. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
+#. Translators: Suggested action for the BAD_SECTOR_MANY status
+#. Translators: Suggested action for the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:1091
+#: ../src/gdu/gdu-util.c:1099
+#: ../src/gdu/gdu-util.c:1105
+msgid "Backup all data and replace the disk"
+msgstr ""
+
+#. Translators: Overall description of the BAD_SECTOR_MANY status
+#: ../src/gdu/gdu-util.c:1096
+msgid "DISK HAS MANY BAD SECTORS"
+msgstr ""
+
+#. Translators: Overall description of the BAD_STATUS status
+#: ../src/gdu/gdu-util.c:1103
+#, fuzzy
+msgid "DISK FAILURE IS IMMINENT"
+msgstr "هیچ فضایی بر روی دیسک باقی نمانده است"
+
+#. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
+#: ../src/gdu/gdu-volume.c:79
+#, fuzzy
+msgid "CD-ROM Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:79
+#, fuzzy
+msgid "Blank CD-ROM Disc"
+msgstr "بازکردن محاوره دیسک خام"
+
+#: ../src/gdu/gdu-volume.c:80
+#, fuzzy
+msgid "CD-R Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:80
+#, fuzzy
+msgid "Blank CD-R Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:81
+#, fuzzy
+msgid "CD-RW Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:81
+#, fuzzy
+msgid "Blank CD-RW Disc"
+msgstr "بازکردن محاوره دیسک خام"
+
+#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
+#, fuzzy
+msgid "DVD-ROM Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:82
+#: ../src/gdu/gdu-volume.c:83
+#, fuzzy
+msgid "Blank DVD-ROM Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:84
+#, fuzzy
+msgid "DVD-RW Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:84
+#, fuzzy
+msgid "Blank DVD-RW Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:85
+#, fuzzy
+msgid "DVD-RAM Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:85
+#, fuzzy
+msgid "Blank DVD-RAM Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:86
+#, fuzzy
+msgid "DVD+R Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:86
+#, fuzzy
+msgid "Blank DVD+R Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:87
+#, fuzzy
+msgid "DVD+RW Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:87
+#, fuzzy
+msgid "Blank DVD+RW Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:88
+#, fuzzy
+msgid "DVD+R DL Disc"
+msgstr "دیسک دی‌وی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:88
+#, fuzzy
+msgid "Blank DVD+R DL Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:89
+#, fuzzy
+msgid "DVD+RW DL Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:89
+msgid "Blank DVD+RW DL Disc"
+msgstr ""
+
+#: ../src/gdu/gdu-volume.c:90
+#, fuzzy
+msgid "Blu-Ray Disc"
+msgstr "دیسک بلو-ری خالی"
+
+#: ../src/gdu/gdu-volume.c:90
+#, fuzzy
+msgid "Blank Blu-Ray Disc"
+msgstr "دیسک بلو-ری خالی"
+
+#: ../src/gdu/gdu-volume.c:91
+#, fuzzy
+msgid "Blu-Ray R Disc"
+msgstr "دیسک بلو-ری خالی"
+
+#: ../src/gdu/gdu-volume.c:91
+#, fuzzy
+msgid "Blank Blu-Ray R Disc"
+msgstr "دیسک بلو-ری خالی"
+
+#: ../src/gdu/gdu-volume.c:92
+#, fuzzy
+msgid "Blu-Ray RW Disc"
+msgstr "دیسک بلو-ری خالی"
+
+#: ../src/gdu/gdu-volume.c:92
+#, fuzzy
+msgid "Blank Blu-Ray RW Disc"
+msgstr "شما هم‌اکنون یک دیسک بلو-ری خالی را وارد کردید."
+
+#: ../src/gdu/gdu-volume.c:93
+#, fuzzy
+msgid "HD DVD Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:93
+#, fuzzy
+msgid "Blank HD DVD Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:94
+#, fuzzy
+msgid "HD DVD-R Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:94
+#, fuzzy
+msgid "Blank HD DVD-R Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:95
+#, fuzzy
+msgid "HD DVD-RW Disc"
+msgstr "دیسک دی‌وی‌دی اچ‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:95
+#, fuzzy
+msgid "Blank HD DVD-RW Disc"
+msgstr "شما هم‌اکنون یک دی‌وی‌دی اچ‌دی خالی را وارد کردید."
+
+#: ../src/gdu/gdu-volume.c:96
+#, fuzzy
+msgid "MO Disc"
+msgstr "رونشت از یک دیسک"
+
+#: ../src/gdu/gdu-volume.c:96
+#, fuzzy
+msgid "Blank MO Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:97
+#, fuzzy
+msgid "MRW Disc"
+msgstr "رونشت از یک دیسک"
+
+#: ../src/gdu/gdu-volume.c:97
+#, fuzzy
+msgid "Blank MRW Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:98
+#, fuzzy
+msgid "MRW/W Disc"
+msgstr "رونشت از یک دیسک"
+
+#: ../src/gdu/gdu-volume.c:98
+#, fuzzy
+msgid "Blank MRW/W Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#: ../src/gdu/gdu-volume.c:294
+#, fuzzy
+msgid "Blank Optical Disc"
+msgstr "دیسک سی‌دی خالی"
+
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:304
+#, fuzzy, c-format
+msgid "%s Extended"
+msgstr "غایب ممتد"
+
+#: ../src/gdu/gdu-volume.c:305
+#, fuzzy
+msgid "Contains logical partitions"
+msgstr "آدرس افرازهای مستثنی شده"
+
+#. Translators: Label for an extended partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:320
+#, fuzzy, c-format
+msgid "%s Encrypted"
+msgstr "رمزنگاری شده"
+
+#: ../src/gdu/gdu-volume.c:330
+#, fuzzy
+msgid "Optical Disc"
+msgstr "رونشت از یک دیسک"
+
+#. Translators: Label for a partition with a filesystem
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:336
+#, fuzzy, c-format
+msgid "%s Filesystem"
+msgstr "پویش سیستم پرونده‌ها"
+
+#. Translators: Label for a partition table
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:342
+#, fuzzy, c-format
+msgid "%s Partition Table"
+msgstr "خانه‌ی جدول"
+
+#. Translators: Label for a LVM volume
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:348
+#, fuzzy, c-format
+msgid "%s LVM2 Physical Volume"
+msgstr "اندازهٔ پیش‌فرض جلد"
+
+#. Translators: Used if no specific RAID level could be determined
+#: ../src/gdu/gdu-volume.c:361
+msgctxt "RAID level"
+msgid "RAID"
+msgstr ""
+
+#. Translators: label for a RAID component
+#. * First %s is the size, formatted like '45 GB'
+#. * Second %s is the RAID level string, e.g 'RAID-5'
+#.
+#: ../src/gdu/gdu-volume.c:368
+#: ../src/gdu/gdu-volume.c:379
+#, fuzzy, c-format
+msgid "%s %s Component"
+msgstr "مؤلفه‌ی تعبیه‌شده"
+
+#. Translators: description for a RAID component
+#. * First %s is the array name, e.g. 'My Photos RAID',
+#.
+#: ../src/gdu/gdu-volume.c:372
+#, fuzzy, c-format
+msgid "Part of \"%s\" array"
+msgstr "آرایه‌ی پرونده‌های بسته"
+
+#. Translators: label for a swap partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:390
+#, fuzzy, c-format
+msgid "%s Swap Space"
+msgstr "_فضای دیسک:"
+
+#. Translators: label for a data partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:395
+#, c-format
+msgid "%s Data"
+msgstr "%s داده"
+
+#. Translators: label for a volume of unrecognized use
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:401
+#: ../src/gdu/gdu-volume.c:417
+#, fuzzy, c-format
+msgid "%s Unrecognized"
+msgstr "گزینه‌ی راه‌اندازی ناشناخته‌ی %d"
+
+#. Translators: description for a volume of unrecognized use
+#: ../src/gdu/gdu-volume.c:403
+msgid "Unknown or Unused"
+msgstr "ناشناخته یا استفاده نشده"
+
+#. Translators: label for a partition
+#. * %s is the size, formatted like '45 GB'
+#.
+#: ../src/gdu/gdu-volume.c:410
+#: ../src/gdu/gdu-volume.c:412
+#, c-format
+msgid "%s Partition"
+msgstr ""
+
+#. Translators: The VPD name for a volume. The %d is the partition number
+#. * and the %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:447
+#, c-format
+msgid "Partition %d of %s"
+msgstr "افراز %Id از %s"
+
+#. Translators: The VPD name for a volume. The %d is the partition number.
+#.
+#: ../src/gdu/gdu-volume.c:453
+#, c-format
+msgid "Partition %d"
+msgstr "افراز %Id"
+
+#. Translators: The VPD name for a whole-disk volume.
+#. * The %s is the VPD name for the drive.
+#.
+#: ../src/gdu/gdu-volume.c:461
+#, c-format
+msgid "Whole-disk volume on %s"
+msgstr "جلد Whole-disk در %s"
+
+#. Translators: The VPD name for a whole-disk volume.
+#.
+#: ../src/gdu/gdu-volume.c:466
+msgid "Whole-disk volume"
+msgstr "جلد Whole-disk"
+
+#. Translators: %s is the name of the device
+#: ../src/notification/gdu-slow-unmount-dialog.c:162
+#, c-format
+msgid "It's now safe to remove \"%s\"."
+msgstr ""
+
+#. Translators: %s is the name of the device
+#: ../src/notification/gdu-slow-unmount-dialog.c:231
+#, c-format
+msgid "Writing data to \"%s\"..."
+msgstr "درحال نوشتن اطلاعات در «%s»..."
+
+#: ../src/notification/gdu-slow-unmount-dialog.c:246
+msgid "To prevent data loss, wait until this has finished before removing media or disconnecting the device."
+msgstr ""
+
+#. Translators: This is used as the title of the notification
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr "مشکلاتی در دیسک سخت شناسایی شد"
+
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr "یک دیسک سخت در حال گزارش مشکلاتی سلامتی است."
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
+msgstr ""
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr "آزمایش"
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
+msgstr ""
+
+#: ../src/palimpsest/gdu-main.c:127
+msgid "Volume to show"
+msgstr "جلد جهت نمایش"
+
+#: ../src/palimpsest/gdu-main.c:128
+msgid "Drive to show"
+msgstr "دیسک‌گردان جهت نمایش"
+
+#: ../src/palimpsest/gdu-section-drive.c:148
+#, fuzzy
+msgid "Multipath Drive"
+msgstr "اتصال _دیسک‌گردان"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a SAS Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SAS Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:189
+#, c-format
+msgid "PHY %d of %s"
+msgstr "PHY %Id از %s"
+
+#. Translators: This is used in the "Location" element for a disk
+#. * connected to a Adapter or Expander - The %d is the
+#. * PHY number (starts at 1) and the %s is the Adapter/Expander
+#. * name (e.g. "SATA Host Adapter").
+#.
+#: ../src/palimpsest/gdu-section-drive.c:196
+#, c-format
+msgid "Port %d of %s"
+msgstr "درگاه %Id از %s"
+
+#: ../src/palimpsest/gdu-section-drive.c:261
+msgctxt "Write Cache"
+msgid "Enabled"
+msgstr "فعال شد"
+
+#: ../src/palimpsest/gdu-section-drive.c:263
+msgctxt "Write Cache"
+msgid "Disabled"
+msgstr "از کار افتاد"
+
+#. Translators: This is for the rotation rate of a hard
+#. * disk - RPM means rounds per minute
+#.
+#: ../src/palimpsest/gdu-section-drive.c:273
+#, c-format
+msgctxt "Rotation Rate"
+msgid "%d RPM"
+msgstr "%Id RPM"
+
+#: ../src/palimpsest/gdu-section-drive.c:281
+#, fuzzy
+msgctxt "Rotation Rate"
+msgid "Solid-State Disk"
+msgstr "کمبود فضای دیسک"
+
+#. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
+#: ../src/palimpsest/gdu-section-drive.c:296
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:259
+#, fuzzy, c-format
+msgid "Unknown Scheme: %s"
+msgstr "آهنگ ناشناس"
+
+#: ../src/palimpsest/gdu-section-drive.c:442
+#: ../src/palimpsest/gdu-section-drive.c:462
+#, fuzzy
+msgid "Error launching Brasero"
+msgstr "خطا هنگام راه‌اندازی پیش‌نمایش"
+
+#: ../src/palimpsest/gdu-section-drive.c:443
+#, fuzzy
+msgid "The application is not installed"
+msgstr "بسته نصب نشده است"
+
+#: ../src/palimpsest/gdu-section-drive.c:523
+#, fuzzy
+msgid "Error ejecting medium"
+msgstr "یک خطای داخلی رخ داد"
+
+#: ../src/palimpsest/gdu-section-drive.c:567
+#, fuzzy
+msgid "Error detaching drive"
+msgstr "دیسک‌گردان مشغول است"
+
+#: ../src/palimpsest/gdu-section-drive.c:612
+#, fuzzy
+msgid "Error formatting drive"
+msgstr "دیسک‌گردان مشغول است"
+
+#: ../src/palimpsest/gdu-section-drive.c:650
+#, fuzzy
+msgid "Are you sure you want to format the drive?"
+msgstr ""
+"آیا واقعاً می‌خواهید «%s» را\n"
+"در زباله‌دان بیندازید؟"
+
+#: ../src/palimpsest/gdu-section-drive.c:837
+msgid "<b>WARNING:</b> Several paths to this drive has been detected but no corresponding multipath device was found. Your OS may be misconfigured."
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:852
+#, fuzzy
+msgid "Go to Multipath Device"
+msgstr "برای انتخاب دستگاه کلیک کنید..."
+
+#: ../src/palimpsest/gdu-section-drive.c:863
+msgid "<b>NOTE:</b> This object represents one of several paths to the drive. To perform operations on the drive, use the corresponding multipath object."
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:892
+#: ../src/palimpsest/gdu-section-hub.c:225
+msgid "Model:"
+msgstr "مدل:"
+
+#: ../src/palimpsest/gdu-section-drive.c:896
+msgid "Serial Number:"
+msgstr "شماره‌ی سریال:"
+
+#: ../src/palimpsest/gdu-section-drive.c:900
+msgid "Firmware Version:"
+msgstr "نسخه‌ی میان‌افزار:"
+
+#. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
+#: ../src/palimpsest/gdu-section-drive.c:905
+msgid "World Wide Name:"
+msgstr "نام جهانی(WWN):"
+
+#: ../src/palimpsest/gdu-section-drive.c:909
+msgid "Location:"
+msgstr "مکان:"
+
+#: ../src/palimpsest/gdu-section-drive.c:917
+msgid "Write Cache:"
+msgstr "حافظه‌ی نهان نوشتن:"
+
+#: ../src/palimpsest/gdu-section-drive.c:921
+msgid "Rotation Rate:"
+msgstr "میزان چرخش:"
+
+#: ../src/palimpsest/gdu-section-drive.c:925
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:978
+#: ../src/palimpsest/gdu-section-volumes.c:1952
+msgid "Capacity:"
+msgstr "گنجایش:"
+
+#: ../src/palimpsest/gdu-section-drive.c:929
+msgid "Connection:"
+msgstr "ارتباط:"
+
+#: ../src/palimpsest/gdu-section-drive.c:933
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:970
+msgid "Partitioning:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:956
+#, fuzzy
+msgid "Open CD/_DVD Application"
+msgstr "ساخت یک سی‌دی/دی‌وی‌دی اطلاعات"
+
+#: ../src/palimpsest/gdu-section-drive.c:957
+#, fuzzy
+msgid "Create and copy CDs and DVDs"
+msgstr "ساخت و رونوشت از سی‌دی‌ها و دی‌وی‌دی‌ها"
+
+#: ../src/palimpsest/gdu-section-drive.c:966
+#, fuzzy
+msgid "Format _Drive"
+msgstr "اتصال _دیسک‌گردان"
+
+#: ../src/palimpsest/gdu-section-drive.c:967
+msgid "Erase or partition the drive"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:976
+#, fuzzy
+msgid "SM_ART Data"
+msgstr "درحال سوزاندن دی‌وی‌دی اطلاعات"
+
+#: ../src/palimpsest/gdu-section-drive.c:977
+msgid "View SMART data and run self-tests"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:986
+msgid "_Eject"
+msgstr "_بیرون دادن"
+
+#: ../src/palimpsest/gdu-section-drive.c:987
+msgid "Eject medium from the drive"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:996
+#, fuzzy
+msgid "Safe Rem_oval"
+msgstr "استفاده از حرکت‌های امن"
+
+#: ../src/palimpsest/gdu-section-drive.c:997
+msgid "Power down the drive so it can be removed"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-drive.c:1007
+#, fuzzy
+msgid "Measure drive performance"
+msgstr "دیسک‌گردان مشغول است"
+
+#. Translators: Used for SAS to convey the number of PHYs in the
+#. * "Number of Ports" element. You should probably not translate PHY.
+#.
+#: ../src/palimpsest/gdu-section-hub.c:106
+#: ../src/palimpsest/gdu-section-hub.c:161
+#, c-format
+msgid "%d PHYs"
+msgstr "%Id PHYs"
+
+#: ../src/palimpsest/gdu-section-hub.c:137
+#, fuzzy
+msgid "Parallel ATA"
+msgstr "پروژه _اطلاعات"
+
+#: ../src/palimpsest/gdu-section-hub.c:139
+#, fuzzy
+msgid "Serial ATA"
+msgstr "سریال ATA"
+
+#: ../src/palimpsest/gdu-section-hub.c:143
+#, fuzzy
+msgid "Serial Attached SCSI"
+msgstr "شِمای «%s» به کلید «%s» پیوست شد\n"
+
+#: ../src/palimpsest/gdu-section-hub.c:221
+msgid "Vendor:"
+msgstr "سازنده:"
+
+#: ../src/palimpsest/gdu-section-hub.c:229
+msgid "Revision:"
+msgstr "تجدید نظر:"
+
+#: ../src/palimpsest/gdu-section-hub.c:233
+msgid "Driver:"
+msgstr "راه‌انداز:"
+
+#: ../src/palimpsest/gdu-section-hub.c:237
+msgid "Fabric:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-hub.c:241
+msgid "Number of Ports:"
+msgstr "تعداد درگاه‌ها"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
+msgid "Error starting Volume Group"
+msgstr "خطا در اجرا گروه جلد"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
+msgid "Error stopping Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
+msgid "Error setting name for Volume Group"
+msgstr "خطا در هنگام تنظیم نام برای گروه جلد"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
+msgid "Choose a new Volume Group name."
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
+msgid "Error adding Physical Volume to Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
+msgid "Error creating PV for VG"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
+msgid "Error deleting partition for Physical Volume in Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
+msgid "Error removing Physical Volume from Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
+msgid "Are you sure you want the remove the Physical Volume?"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:530
+msgid "_Remove"
+msgstr "_حذف"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
+msgid "Not Running"
+msgstr "درحال اجرا نیست"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:601
+msgid "Partially Running"
+msgstr "بخشی درحال اجرا است"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:606
+msgid "Running"
+msgstr "درحال اجرا"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
+#, c-format
+msgid "Unknown (%d)"
+msgstr "نامعلوم (%Id)"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:667
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:966
+msgid "Name:"
+msgstr "نام:"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
+#, fuzzy
+msgid "Extent Size:"
+msgstr "اندازه‌ی _عادی"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
+#, fuzzy
+msgid "Physical Volumes:"
+msgstr "تقسیم بر _جلدهای"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:687
+msgid "Unallocated:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:706
+msgid "St_art Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:707
+msgid "Activate all LVs in the VG"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
+msgid "St_op Volume Group"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
+msgid "Deactivate all LVs in the VG"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
+msgid "Edit _Name"
+msgstr "ویرایش _نام"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:728
+#, fuzzy
+msgid "Change the Volume Group name"
+msgstr "تغییر نام این پوشه"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
+#, fuzzy
+msgid "Edit _Physical Volumes"
+msgstr "تقسیم بر _جلدهای"
+
+#: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
+#, fuzzy
+msgid "Create and remove PVs"
+msgstr "ساخت سی‌دی و دی‌وی‌دی"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:84
+#, fuzzy
+msgctxt "RAID status"
+msgid "Not running, partially assembled"
+msgstr "مدیر شبکه در حال اجرا نیست..."
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:92
+msgctxt "RAID status"
+msgid "Not running"
+msgstr "درحال اجرا نیست"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:94
+msgctxt "RAID status"
+msgid "Not running, can only start degraded"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:96
+msgctxt "RAID status"
+msgid "Not running, not enough components to start"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:114
+msgctxt "RAID status"
+msgid "DEGRADED"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:116
+msgctxt "RAID status"
+msgid "Running"
+msgstr "درحال اجرا"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:124
+msgctxt "RAID action"
+msgid "Reshaping"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:126
+msgctxt "RAID action"
+msgid "Resyncing"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:128
+msgctxt "RAID action"
+msgid "Repairing"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:130
+msgctxt "RAID action"
+msgid "Recovering"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:132
+msgctxt "RAID action"
+msgid "Checking"
+msgstr "درحال بررسی"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:137
+msgctxt "RAID action"
+msgid "Idle"
+msgstr "بی‌کار"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:315
+msgid "Error stopping RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:360
+msgid "Error starting RAID Array"
+msgstr "خطا در هنگام آغاز آرایه RAID"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:390
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:393
+#, c-format
+msgid "Not enough components available to start the RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:409
+msgid "Are you sure you want the RAID Array degraded?"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:410
+msgid "_Start"
+msgstr "_شروع"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:455
+msgid "Error deleting partition for component in RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:478
+msgid "Error removing component from RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:529
+msgid "Are you sure you want the remove the component?"
+msgstr "آیا در مطمئن هستید که می‌خواهید این جزء را حذف کنید؟"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:566
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:650
+msgid "Error adding component to RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:683
+#: ../src/palimpsest/gdu-shell.c:598
+msgid "Error creating component for RAID array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:722
+msgid "Error expanding RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:883
+msgid "Error checking RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:958
+msgid "Level:"
+msgstr "سطح:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:962
+#, fuzzy
+msgid "Metadata Version:"
+msgstr "نسخه‌ی پیکربندی"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:982
+msgid "Action:"
+msgstr "کنش:"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:986
+msgid "Components:"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
+msgid "St_art RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
+msgid "Bring up the RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
+msgid "St_op RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
+msgid "Tear down the RAID Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
+msgid "Format/Erase RAI_D Array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
+msgid "Erase or partition the array"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
+msgid "Chec_k Array"
+msgstr "_بررسی آرایه"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
+#, fuzzy
+msgid "Check and repair the array"
+msgstr "لطفاً املا را بررسی کنید و دوباره سعی کنید."
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
+#, fuzzy
+msgid "Edit Com_ponents"
+msgstr "ویرایش آشناهای مسدود شده"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
+#, fuzzy
+msgid "Create and remove components"
+msgstr "ساخت سی‌دی و دی‌وی‌دی"
+
+#: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
+msgid "Measure RAID array performance"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:115
+#, fuzzy
+msgid "Error unmounting volume"
+msgstr "اندازهٔ پیش‌فرض جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:171
+#, fuzzy
+msgid "Error mounting volume"
+msgstr "اندازهٔ پیش‌فرض جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:228
+#, fuzzy
+msgid "Error deleting partition"
+msgstr "خطا هنگام حذف."
+
+#: ../src/palimpsest/gdu-section-volumes.c:263
+#, fuzzy
+msgid "Are you sure you want to delete the partition?"
+msgstr "آیا مطمئنید که می‌خواهید تکلیف '{0}' را حذف کنید؟"
+
+#: ../src/palimpsest/gdu-section-volumes.c:264
+#: ../src/palimpsest/gdu-section-volumes.c:1788
+msgid "_Delete"
+msgstr "_حذف"
+
+#: ../src/palimpsest/gdu-section-volumes.c:317
+#, fuzzy
+msgid "Error creating filesystem"
+msgstr "خطا در هنگام ساخت ارتباط"
+
+#: ../src/palimpsest/gdu-section-volumes.c:370
+#, fuzzy
+msgid "Are you sure you want to format the volume?"
+msgstr ""
+"آیا واقعاً می‌خواهید «%s» را\n"
+"در زباله‌دان بیندازید؟"
+
+#: ../src/palimpsest/gdu-section-volumes.c:428
+#, fuzzy
+msgid "Error modifying partition"
+msgstr "خطا در تغییر دادن آشنا"
+
+#: ../src/palimpsest/gdu-section-volumes.c:519
+#, fuzzy
+msgid "Are you sure you want to forget the passphrase?"
+msgstr "آیا مطمئنید که می‌خواهید همه‌ی گذرواژه‌های به خاطر سپرده شده را فراموش کنید؟"
+
+#: ../src/palimpsest/gdu-section-volumes.c:520
+msgid "_Forget"
+msgstr "_فراموش کردن"
+
+#: ../src/palimpsest/gdu-section-volumes.c:550
+msgid "Error locking LUKS volume"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:673
+msgid "Error unlocking LUKS volume"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:969
+msgid "Error creating partition"
+msgstr "خطا در هنگام ساخت افراز"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1140
+msgid "Error changing label"
+msgstr "خطا هنگام تغییر برچسب"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1195
+msgid "Choose a new filesystem label."
+msgstr "یک برچسب دیگر برای سیستم‌پرونده انتخاب کنید"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1196
+msgid "_Label:"
+msgstr "_برچسب:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1241
+msgid "Error checking filesystem on volume"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:1268
+#, c-format
+msgid "File system check on \"%s\" (%s) completed"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:1272
+msgid "File system is clean."
+msgstr "سیستم پرونده‌ها تمیز است."
+
+#: ../src/palimpsest/gdu-section-volumes.c:1275
+msgid "File system is <b>NOT</b> clean."
+msgstr "سیستم پرونده‌های تمیز </b>نیست<b>."
+
+#: ../src/palimpsest/gdu-section-volumes.c:1387
+#, fuzzy, c-format
+msgid "Error spawning nautilus: %s"
+msgstr "پایگاه وب ناتیلوس"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1435
+#, fuzzy
+msgid "Error creating Logical Volume"
+msgstr "خطا در ایجاد پیش‌نمایش چاپ"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1588
+msgid "Error stopping Logical Volume"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:1634
+#, fuzzy
+msgid "Error starting Logical Volume"
+msgstr "خطا در آغاز برنامه‌ی اجرای خودکار: %s"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1683
+#, fuzzy
+msgid "Error setting name for Logical Volume"
+msgstr "خطای تنظیم نام فضای کاری %Id به \"%s\": %s\n"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1721
+msgid "Choose a new name for the Logical Volume."
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:1754
+#, fuzzy
+msgid "Error deleting Logical Volume"
+msgstr "خطا در حذف تصویر %s"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1787
+#, fuzzy
+msgid "Are you sure you want to delete the logical volume?"
+msgstr "آیا مطمئنید که می‌خواهید قرار به عنوان '{0}' را حذف کنید؟"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1906
+msgid "Volume Name:"
+msgstr "نام جلد:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1912
+msgid "Usage:"
+msgstr "روش استفاده:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1922
+msgid "Partition Type:"
+msgstr "نوع افراز:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1928
+msgid "Partition Label:"
+msgstr "برچسب افراز:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1931
+msgid "Partition Flags:"
+msgstr "پرچم‌های افراز:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1956
+msgid "Type:"
+msgstr "نوع:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1959
+msgid "Available:"
+msgstr "در دسترس:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1962
+msgid "Label:"
+msgstr "برچسب:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1965
+msgid "Mount Point:"
+msgstr "نقطه‌ی سوارکردن:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1986
+msgctxt "LVM2 LV State"
+msgid "Running"
+msgstr "درحال اجرا"
+
+#: ../src/palimpsest/gdu-section-volumes.c:1987
+msgctxt "LVM2 LV State"
+msgid "Not Running"
+msgstr "درحال اجرا نیست"
+
+#. Translators: This is for the 'boot' MBR/APM partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2026
+msgid "Bootable"
+msgstr ""
+
+#. Translators: This is for the 'required' GPT partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2029
+msgid "Required"
+msgstr "مورد نیاز"
+
+#. Translators: This is for the 'allocated' APM partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2032
+msgid "Allocated"
+msgstr ""
+
+#. Translators: This is for the 'allow_read' APM partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2035
+msgid "Allow Read"
+msgstr "اجازه خواندن"
+
+#. Translators: This is for the 'allow_write' APM partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2038
+msgid "Allow Write"
+msgstr "اجازه نوشتن"
+
+#. Translators: This is for the 'boot_code_is_pic' APM partition flag
+#: ../src/palimpsest/gdu-section-volumes.c:2041
+#, fuzzy
+msgid "Boot Code PIC"
+msgstr "کد ISO کشور:"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2115
+msgid "Filesystem"
+msgstr "سیستم پرونده‌ها"
+
+#. Translators: this the mount point hyperlink tooltip for a
+#. * remote server - it uses the sftp:// protocol
+#.
+#: ../src/palimpsest/gdu-section-volumes.c:2148
+msgid "View files on the volume using a SFTP network share"
+msgstr ""
+
+#. Translators: this the mount point hyperlink tooltip
+#: ../src/palimpsest/gdu-section-volumes.c:2155
+msgid "View files on the volume"
+msgstr "نمایش پرونده‌های بر روی جلد"
+
+#. Translators: this the the text for the mount point
+#. * item - %s is the mount point, e.g. '/media/disk'
+#.
+#: ../src/palimpsest/gdu-section-volumes.c:2162
+#, c-format
+msgid "Mounted at %s"
+msgstr "سوار شده در %s"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2170
+msgid "Not Mounted"
+msgstr "سوار نشده"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2180
+msgid "Encrypted Volume (Locked)"
+msgstr "جلد رمزنگاری شده (قفل شد)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2183
+msgid "Encrypted Volume (Unlocked)"
+msgstr "جلد رمزنگاری شده (قفل نشده)"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2196
+msgid "Go to array"
+msgstr "رفتن به آرایه"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2204
+msgid "Container for Logical Partitions"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:2321
+msgid "Logical _Volumes"
+msgstr "_جلدهای منطقی"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2323
+msgid "_Volumes"
+msgstr "_جلدها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2387
+msgid "_Mount Volume"
+msgstr "سوار کردن _جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2388
+msgid "Mount the volume"
+msgstr "سوار کردن جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2397
+msgid "Un_mount Volume"
+msgstr "پیاده کردن _جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2398
+msgid "Unmount the volume"
+msgstr "پیاده کردن جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2407
+msgid "Fo_rmat Volume"
+msgstr "قالب‌بندی جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2408
+msgid "Erase or format the volume"
+msgstr "پاک کردن یا قالب‌بندی جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2417
+msgid "_Check Filesystem"
+msgstr "_بررسی سیستم پرونده‌ها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2418
+msgid "Check and repair the filesystem"
+msgstr "بررسی و تعمیر سیستم پرنده‌ها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2428
+msgid "Edit Filesystem _Label"
+msgstr "ویرایش _برچسب سیستم پرونده‌ها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2429
+msgid "Change the label of the filesystem"
+msgstr "تغییر برچسب سیستم پرونده‌ها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2438
+msgid "Ed_it Partition"
+msgstr "_ویرایش افرازها"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2439
+msgid "Change partition type, label and flags"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:2448
+msgid "D_elete Partition"
+msgstr "حذف _افراز"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2449
+msgid "Delete the partition"
+msgstr "جذف افراز"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2458
+msgid "_Create Partition"
+msgstr "_ساخت افراز"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2459
+msgid "Create a new partition"
+msgstr "ساخت یک افراز جدید"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2468
+msgid "_Lock Volume"
+msgstr "_قفل کردن جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2469
+msgid "Make encrypted data unavailable"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:2478
+msgid "Un_lock Volume"
+msgstr "_بازکردن قفل جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2479
+msgid "Make encrypted data available"
+msgstr "دردسترس قراردادن اطلاعات رمزنگاری شده"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2488
+#, fuzzy
+msgid "Forge_t Passphrase"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2489
+#, fuzzy
+msgid "Delete passphrase from keyring"
+msgstr "حذف انتخاب شده‌ها از آرشیو"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2500
+#, fuzzy
+msgid "Change passphrase"
+msgstr "عبارت رمز (Passphrase) را وارد کنید"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2509
+msgid "_Create Logical Volume"
+msgstr "_ساخت جلد منطقی"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2510
+msgid "Create a new logical volume"
+msgstr "ساخت یک جلد منطقی جدید"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2519
+msgid "S_tart Volume"
+msgstr "_شروع جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2520
+msgid "Activate the Logical Volume"
+msgstr "فعال کردن جلد منطقی"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2530
+msgid "Edit Vol_ume Name"
+msgstr ""
+
+#: ../src/palimpsest/gdu-section-volumes.c:2531
+msgid "Change the name of the volume"
+msgstr "تغییر نام جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2540
+msgid "D_elete Volume"
+msgstr "_حذف جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2541
+msgid "Delete the Logical Volume"
+msgstr "حذف جلد منطقی"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2550
+msgid "Sto_p Volume"
+msgstr "_متوقف کردن جلد"
+
+#: ../src/palimpsest/gdu-section-volumes.c:2551
+msgid "Deactivate the Logical Volume"
+msgstr "غیرفعال کردن جلد منطقی"
+
+#. Translators: Window title when the item representing a remote machine is selected.
+#. * First %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:290
+#, c-format
+msgid "%s — Disk Utility"
+msgstr "%s — ابزار دیسک"
+
+#. Translators: Window title when an item on a remote machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#. * Fourth %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:300
+#, c-format
+msgid "%s (%s) [%s] @ %s — Disk Utility"
+msgstr "%s (%s) [%s] @ %s — ابزار دیسک"
+
+#. Translators: Window title when an item on a remote machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third %s is the hostname of the remote host (e.g. 'widget.gnome.org')
+#.
+#: ../src/palimpsest/gdu-shell.c:311
+#, c-format
+msgid "%s (%s) @ %s — Disk Utility"
+msgstr "%s (%s) @ %s — ابزار دیسک"
+
+#. Translators: Window title when an item on the local machine is selected and there is a device file.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#. * Third is the device file (e.g. '/dev/sda')
+#.
+#: ../src/palimpsest/gdu-shell.c:329
+#, c-format
+msgid "%s (%s) [%s] — Disk Utility"
+msgstr "%s (%s) [%s] — ابزار دیسک"
+
+#. Translators: Window title when an item on the local machine is selected.
+#. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
+#. * Second %s is the VPD name of the item (e.g. 'ATA INTEL SSDSA2MH080G1GC' or '6 TB RAID-6 Array').
+#.
+#: ../src/palimpsest/gdu-shell.c:338
+#, c-format
+msgid "%s (%s) — Disk Utility"
+msgstr "%s (%s) — ابزار دیسک"
+
+#: ../src/palimpsest/gdu-shell.c:626
+msgid "Error creating RAID array"
+msgstr "خطا در ایجاد آرایه RAID"
+
+#: ../src/palimpsest/gdu-shell.c:755
+#, c-format
+msgid "Error connecting to “%s”"
+msgstr "خطا در اتصال به «%s»"
+
+#: ../src/palimpsest/gdu-shell.c:809
+msgid "translator-credits"
+msgstr "آرش موسوی <mousavi.arash@gmail.com>"
+
+#: ../src/palimpsest/gdu-shell.c:838
+msgid "_File"
+msgstr "_پرونده"
+
+#: ../src/palimpsest/gdu-shell.c:839
+msgid "Connect to _Server..."
+msgstr "اتصال به _کارگزار..."
+
+#: ../src/palimpsest/gdu-shell.c:839
+msgid "Manage storage devices on another machine"
+msgstr ""
+
+#: ../src/palimpsest/gdu-shell.c:840
+msgid "_Create"
+msgstr "_ایجاد"
+
+#: ../src/palimpsest/gdu-shell.c:841
+msgid "_RAID Array..."
+msgstr "آ_رایه‌ی RAID..."
+
+#: ../src/palimpsest/gdu-shell.c:841
+msgid "Create a RAID array"
+msgstr "ساخت آرایه‌ی RAID"
+
+#: ../src/palimpsest/gdu-shell.c:842
+msgid "_Edit"
+msgstr "_ویرایش"
+
+#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:846
+msgid "_Help"
+msgstr "_راهنما"
+
+#: ../src/palimpsest/gdu-shell.c:845
+msgid "_Quit"
+msgstr "_خروج"
+
+#: ../src/palimpsest/gdu-shell.c:845
+msgid "Quit"
+msgstr "خروج"
+
+#: ../src/palimpsest/gdu-shell.c:846
+msgid "Get Help on Disk Utility"
+msgstr ""
+
+#: ../src/palimpsest/gdu-shell.c:847
+msgid "_About"
+msgstr "_درباره"
+
+#: ../src/palimpsest/gdu-shell.c:926
+msgid "An error occured"
+msgstr "یک خطا رُخ داد"
+
+#: ../src/palimpsest/gdu-shell.c:935
+msgid "The operation failed."
+msgstr "عملیات شکست خورد."
+
+#: ../src/palimpsest/gdu-shell.c:938
+msgid "The device is busy."
+msgstr "دستگاه مشغول است."
+
+#: ../src/palimpsest/gdu-shell.c:941
+msgid "The operation was canceled."
+msgstr "عملیات لغو شده."
+
+#: ../src/palimpsest/gdu-shell.c:944
+#, fuzzy
+msgid "The daemon is being inhibited."
+msgstr "پاک‌سازی خودکار نادیده گرفته شد"
+
+#: ../src/palimpsest/gdu-shell.c:947
+msgid "An invalid option was passed."
+msgstr "یک گزینه نادرست منتقل شده."
+
+#: ../src/palimpsest/gdu-shell.c:950
+msgid "The operation is not supported."
+msgstr "عملیات پشتیبانی نمی‌شود."
+
+#: ../src/palimpsest/gdu-shell.c:953
+msgid "Getting ATA SMART data would wake up the device."
+msgstr ""
+
+#: ../src/palimpsest/gdu-shell.c:956
+msgid "Permission denied."
+msgstr "مجوز رد شد."
+
+#: ../src/palimpsest/gdu-shell.c:995
+msgid "_Details:"
+msgstr "_جزئیات:"
+
+#: ../src/palimpsest/gdu-shell.c:1164
+msgid "_Storage Devices"
+msgstr "دستگاه‌های _ذخیره‌سازی"
+

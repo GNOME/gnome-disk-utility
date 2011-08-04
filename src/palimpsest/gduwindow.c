@@ -1433,7 +1433,8 @@ update_device_page_for_block (GduWindow          *window,
       gchar *type_for_display;
 
       type_for_display = udisks_util_get_part_type_for_display (udisks_block_device_get_part_entry_scheme (block),
-                                                                udisks_block_device_get_part_entry_type (block));
+                                                                udisks_block_device_get_part_entry_type (block),
+                                                                FALSE);
 
       partition_label = udisks_block_device_get_part_entry_label (block);
       set_markup (window,
@@ -1892,7 +1893,7 @@ on_change_partition_type (GduWindow *window)
       const gchar *type;
       gchar *type_for_display;
       type = part_types[n];
-      type_for_display = udisks_util_get_part_type_for_display (scheme, type);
+      type_for_display = udisks_util_get_part_type_for_display (scheme, type, TRUE);
       if (g_strcmp0 (type, cur_type) == 0)
         active_index = n;
       gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, type_for_display);

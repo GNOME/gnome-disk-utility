@@ -2069,10 +2069,39 @@ on_devtab_action_partition_create_activated (GtkAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+eject_cb (UDisksDrive  *drive,
+          GAsyncResult *res,
+          gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_drive_call_eject_finish (drive,
+                                       res,
+                                       &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error ejecting media"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
 on_devtab_action_eject_activated (GtkAction *action,
                                   gpointer   user_data)
 {
-  g_debug ("%s: TODO", G_STRFUNC);
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksDrive *drive;
+
+  drive = udisks_object_peek_drive (window->current_object);
+  udisks_drive_call_eject (drive,
+                           g_variant_new ("a{sv}", NULL), /* options */
+                           NULL, /* cancellable */
+                           (GAsyncReadyCallback) eject_cb,
+                           g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

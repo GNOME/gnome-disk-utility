@@ -351,6 +351,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">Checked if entry in the &lt;b&gt;/etc/fstab&lt;/b&gt; file exists for the device</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -451,6 +452,7 @@
                       <object class="GtkEntry" id="fstab-directory-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_markup" translatable="yes">The directory to mount the device in</property>
                         <property name="invisible_char">●</property>
                       </object>
                       <packing>
@@ -464,6 +466,7 @@
                       <object class="GtkEntry" id="fstab-type-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_markup" translatable="yes">The filesystem type to use</property>
                         <property name="invisible_char">●</property>
                       </object>
                       <packing>
@@ -477,6 +480,7 @@
                       <object class="GtkEntry" id="fstab-options-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_markup" translatable="yes">Mount options to use</property>
                         <property name="invisible_char">●</property>
                       </object>
                       <packing>
@@ -526,6 +530,7 @@
                       <object class="GtkSpinButton" id="fstab-freq-spinbutton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_markup" translatable="yes">This field is used for these filesystems by the &lt;b&gt;dump(8)&lt;/b&gt; command to determine which filesystems need to be dumped.</property>
                         <property name="invisible_char">●</property>
                         <property name="adjustment">fstab-freq-adjustment</property>
                         <property name="numeric">True</property>
@@ -541,6 +546,7 @@
                       <object class="GtkSpinButton" id="fstab-passno-spinbutton">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_markup" translatable="yes">This field is used by the &lt;b&gt;fsck(8)&lt;/b&gt; program to determine the order in which filesystem checks are done at reboot time.</property>
                         <property name="invisible_char">●</property>
                         <property name="adjustment">fstab-passno-adjustment</property>
                         <property name="numeric">True</property>
@@ -556,6 +562,7 @@
                       <object class="GtkComboBoxText" id="fstab-device-combobox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="tooltip_markup" translatable="yes">The &lt;b&gt;special device file&lt;/b&gt; - use symlinks in the &lt;b&gt;/dev/disk&lt;/b&gt; hierarchy to control the scope of the entry</property>
                         <property name="entry_text_column">0</property>
                       </object>
                       <packing>

@@ -53,6 +53,7 @@ struct _GduWindow
   GduApplication *application;
   UDisksClient *client;
 
+  const gchar *builder_path;
   GtkBuilder *builder;
   GduDeviceTreeModel *model;
 
@@ -61,7 +62,61 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
 
+  GtkWidget *main_hbox;
+  GtkWidget *details_notebook;
+  GtkWidget *device_scrolledwindow;
+  GtkWidget *device_treeview;
+  GtkWidget *device_toolbar;
+  GtkWidget *device_toolbar_attach_disk_image_button;
+  GtkWidget *device_toolbar_detach_disk_image_button;
+  GtkWidget *devtab_drive_value_label;
+  GtkWidget *devtab_drive_image;
+  GtkWidget *devtab_table;
+  GtkWidget *devtab_drive_table;
+  GtkWidget *devtab_grid_hbox;
+  GtkWidget *devtab_volumes_label;
+  GtkWidget *devtab_grid_toolbar;
+  GtkWidget *devtab_toolbar_generic_button;
+  GtkWidget *devtab_toolbar_partition_create_button;
+  GtkWidget *devtab_toolbar_mount_button;
+  GtkWidget *devtab_toolbar_unmount_button;
+  GtkWidget *devtab_toolbar_eject_button;
+  GtkWidget *devtab_toolbar_unlock_button;
+  GtkWidget *devtab_toolbar_lock_button;
+  GtkWidget *devtab_toolbar_activate_swap_button;
+  GtkWidget *devtab_toolbar_deactivate_swap_button;
+
   GHashTable *label_connections;
+};
+
+static const struct {
+  goffset offset;
+  const gchar *name;
+} widget_mapping[] = {
+  {G_STRUCT_OFFSET (GduWindow, main_hbox), "palimpsest-hbox"},
+  {G_STRUCT_OFFSET (GduWindow, device_scrolledwindow), "device-tree-scrolledwindow"},
+  {G_STRUCT_OFFSET (GduWindow, device_toolbar), "device-tree-add-remove-toolbar"},
+  {G_STRUCT_OFFSET (GduWindow, device_toolbar_attach_disk_image_button), "device-tree-attach-disk-image-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_toolbar_detach_disk_image_button), "device-tree-detach-disk-image-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_treeview), "device-tree-treeview"},
+  {G_STRUCT_OFFSET (GduWindow, details_notebook), "palimpsest-notebook"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_table), "devtab-drive-table"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_value_label), "devtab-drive-value-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_image), "devtab-drive-image"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_grid_hbox), "devtab-grid-hbox"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_volumes_label), "devtab-volumes-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_grid_toolbar), "devtab-grid-toolbar"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_generic_button), "devtab-action-generic"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_partition_create_button), "devtab-action-partition-create"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_mount_button), "devtab-action-mount"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_unmount_button), "devtab-action-unmount"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_eject_button), "devtab-action-eject"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_unlock_button), "devtab-action-unlock"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_lock_button), "devtab-action-lock"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_activate_swap_button), "devtab-action-activate-swap"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_deactivate_swap_button), "devtab-action-deactivate-swap"},
+  {0, NULL}
 };
 
 typedef struct
@@ -106,6 +161,11 @@ static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
+
+static GtkWidget *
+gdu_window_new_widget (GduWindow    *window,
+                       const gchar  *name,
+                       GtkBuilder  **out_builder);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -206,7 +266,7 @@ on_row_inserted (GtkTreeModel *tree_model,
                  gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  gtk_tree_view_expand_all (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
+  gtk_tree_view_expand_all (GTK_TREE_VIEW (window->device_treeview));
 }
 
 static void select_details_page (GduWindow       *window,
@@ -224,7 +284,7 @@ set_selected_object (GduWindow    *window,
   if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
     {
       GtkTreeSelection *tree_selection;
-      tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview")));
+      tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->device_treeview));
       gtk_tree_selection_select_iter (tree_selection, &iter);
     }
 
@@ -513,17 +573,14 @@ gdu_window_constructed (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
   GError *error;
-  GtkNotebook *notebook;
-  GtkTreeView *tree_view;
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkTreeSelection *selection;
-  const gchar *path;
-  GtkWidget *w;
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
   GList *children, *l;
   GtkWidget *headers_label;
+  guint n;
 
   init_css (window);
 
@@ -533,64 +590,67 @@ gdu_window_constructed (GObject *object)
 
   window->builder = gtk_builder_new ();
   error = NULL;
-  path = _gdu_application_get_running_from_source_tree (window->application)
+  window->builder_path = _gdu_application_get_running_from_source_tree (window->application)
     ? "../../data/ui/palimpsest.ui" :
-      PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
+    PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
   if (gtk_builder_add_from_file (window->builder,
-                                 path,
+                                 window->builder_path,
                                  &error) == 0)
     {
-      g_error ("Error loading %s: %s", path, error->message);
+      g_error ("Error loading %s: %s", window->builder_path, error->message);
       g_error_free (error);
     }
 
-  w = gdu_window_get_widget (window, "palimpsest-hbox");
-  gtk_widget_reparent (w, GTK_WIDGET (window));
+  /* set up widgets */
+  for (n = 0; widget_mapping[n].name != NULL; n++)
+    {
+      gpointer *p = (gpointer *) ((char *) window + widget_mapping[n].offset);
+      *p = G_OBJECT (gtk_builder_get_object (window->builder, widget_mapping[n].name));
+    }
+
+  gtk_widget_reparent (window->main_hbox, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   /* hide all children in the devtab list, otherwise the dialog is going to be huge by default */
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")));
+  children = gtk_container_get_children (GTK_CONTAINER (window->devtab_drive_table));
   for (l = children; l != NULL; l = l->next)
     {
       gtk_widget_hide (GTK_WIDGET (l->data));
       gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
     }
   g_list_free (children);
-  children = gtk_container_get_children (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")));
+  children = gtk_container_get_children (GTK_CONTAINER (window->devtab_table));
   for (l = children; l != NULL; l = l->next)
     {
       gtk_widget_hide (GTK_WIDGET (l->data));
       gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
     }
 
-  notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
-  gtk_notebook_set_show_tabs (notebook, FALSE);
-  gtk_notebook_set_show_border (notebook, FALSE);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (window->details_notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (window->details_notebook), FALSE);
 
-  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "device-tree-scrolledwindow"));
+  context = gtk_widget_get_style_context (window->device_scrolledwindow);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
-  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "device-tree-add-remove-toolbar"));
+  context = gtk_widget_get_style_context (window->device_toolbar);
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   window->model = gdu_device_tree_model_new (window->client);
 
-  tree_view = GTK_TREE_VIEW (gdu_window_get_widget (window, "device-tree-treeview"));
-
   headers_label = gtk_label_new (NULL);
   gtk_label_set_markup_with_mnemonic (GTK_LABEL (headers_label), _("_Devices"));
   gtk_misc_set_alignment (GTK_MISC (headers_label), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (headers_label), GTK_WIDGET (tree_view));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (headers_label), window->device_treeview);
   gtk_widget_show_all (headers_label);
 
-  gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (window->model));
+  gtk_tree_view_set_model (GTK_TREE_VIEW (window->device_treeview), GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
                                         GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
                                         GTK_SORT_ASCENDING);
 
-  selection = gtk_tree_view_get_selection (tree_view);
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->device_treeview));
   gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);
   g_signal_connect (selection,
                     "changed",
@@ -599,7 +659,7 @@ gdu_window_constructed (GObject *object)
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_widget (column, headers_label);
-  gtk_tree_view_append_column (tree_view, column);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (window->device_treeview), column);
 
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
@@ -633,7 +693,7 @@ gdu_window_constructed (GObject *object)
                     "row-inserted",
                     G_CALLBACK (on_row_inserted),
                     window);
-  gtk_tree_view_expand_all (tree_view);
+  gtk_tree_view_expand_all (GTK_TREE_VIEW (window->device_treeview));
 
   object_manager = udisks_client_get_object_manager (window->client);
   g_signal_connect (object_manager,
@@ -660,64 +720,64 @@ gdu_window_constructed (GObject *object)
   /* set up non-standard widgets that isn't in the .ui file */
 
   window->volume_grid = gdu_volume_grid_new (window->client);
-  gtk_box_pack_start (GTK_BOX (gdu_window_get_widget (window, "devtab-grid-hbox")),
+  gtk_box_pack_start (GTK_BOX (window->devtab_grid_hbox),
                       window->volume_grid,
                       TRUE, TRUE, 0);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (gdu_window_get_widget (window, "devtab-volumes-label")),
+  gtk_label_set_mnemonic_widget (GTK_LABEL (window->devtab_volumes_label),
                                  window->volume_grid);
   g_signal_connect (window->volume_grid,
                     "changed",
                     G_CALLBACK (on_volume_grid_changed),
                     window);
 
-  context = gtk_widget_get_style_context (gdu_window_get_widget (window, "devtab-grid-toolbar"));
-  gtk_widget_set_name (gdu_window_get_widget (window, "devtab-grid-toolbar"), "devtab-grid-toolbar");
+  context = gtk_widget_get_style_context (window->devtab_grid_toolbar);
+  gtk_widget_set_name (window->devtab_grid_toolbar, "devtab-grid-toolbar");
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   /* main toolbar */
-  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-attach-disk-image-button"),
+  g_signal_connect (window->device_toolbar_attach_disk_image_button,
                     "clicked",
                     G_CALLBACK (on_device_tree_attach_disk_image_button_clicked),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "device-tree-detach-disk-image-button"),
+  g_signal_connect (window->device_toolbar_detach_disk_image_button,
                     "clicked",
                     G_CALLBACK (on_device_tree_detach_disk_image_button_clicked),
                     window);
 
   /* actions */
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-generic"),
+  g_signal_connect (window->devtab_toolbar_generic_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_generic_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-partition-create"),
+  g_signal_connect (window->devtab_toolbar_partition_create_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_partition_create_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-mount"),
+  g_signal_connect (window->devtab_toolbar_mount_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_mount_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-unmount"),
+  g_signal_connect (window->devtab_toolbar_unmount_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_unmount_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-eject"),
+  g_signal_connect (window->devtab_toolbar_eject_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_eject_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-unlock"),
+  g_signal_connect (window->devtab_toolbar_unlock_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_unlock_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-lock"),
+  g_signal_connect (window->devtab_toolbar_lock_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_lock_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-activate-swap"),
+  g_signal_connect (window->devtab_toolbar_activate_swap_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_activate_swap_activated),
                     window);
-  g_signal_connect (gtk_builder_get_object (window->builder, "devtab-action-deactivate-swap"),
+  g_signal_connect (window->devtab_toolbar_deactivate_swap_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_deactivate_swap_activated),
                     window);
@@ -846,6 +906,42 @@ gdu_window_get_widget (GduWindow    *window,
   g_return_val_if_fail (GDU_IS_WINDOW (window), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   return GTK_WIDGET (gtk_builder_get_object (window->builder, name));
+}
+
+static GtkWidget *
+gdu_window_new_widget (GduWindow    *window,
+                       const gchar  *name,
+                       GtkBuilder  **out_builder)
+{
+  GtkWidget *ret;
+  GtkBuilder *builder;
+  GError *error;
+
+  g_return_val_if_fail (GDU_IS_WINDOW (window), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  ret = NULL;
+
+  builder = gtk_builder_new ();
+
+  error = NULL;
+  if (gtk_builder_add_from_file (builder,
+                                 window->builder_path,
+                                 &error) == 0)
+    {
+      g_error ("Error loading %s: %s", window->builder_path, error->message);
+      g_error_free (error);
+      goto out;
+    }
+
+  ret = GTK_WIDGET (gtk_builder_get_object (builder, name));
+  *out_builder = builder;
+  builder = NULL;
+
+ out:
+  if (builder != NULL)
+    g_object_unref (builder);
+  return ret;
 }
 
 static void
@@ -1039,10 +1135,6 @@ select_details_page (GduWindow      *window,
                      DetailsPage     page,
                      ToolbarButtons *buttons)
 {
-  GtkNotebook *notebook;
-
-  notebook = GTK_NOTEBOOK (gdu_window_get_widget (window, "palimpsest-notebook"));
-
   teardown_details_page (window,
                          window->current_object,
                          window->current_page);
@@ -1052,7 +1144,7 @@ select_details_page (GduWindow      *window,
     g_object_unref (window->current_object);
   window->current_object = object != NULL ? g_object_ref (object) : NULL;
 
-  gtk_notebook_set_current_page (notebook, page);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (window->details_notebook), page);
 
   setup_details_page (window,
                       window->current_object,
@@ -1211,7 +1303,6 @@ update_device_page_for_drive (GduWindow      *window,
   gchar *media_description;
   GIcon *drive_icon;
   GIcon *media_icon;
-  GtkWidget *w;
   guint64 size;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
@@ -1239,16 +1330,14 @@ update_device_page_for_drive (GduWindow      *window,
                        description,
                        str->str);
   g_string_free (str, TRUE);
-  w = gdu_window_get_widget (window, "devtab-drive-value-label");
-  gtk_label_set_markup (GTK_LABEL (w), s);
-  gtk_widget_show (w);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_value_label), s);
+  gtk_widget_show (window->devtab_drive_value_label);
   g_free (s);
-  w = gdu_window_get_widget (window, "devtab-drive-image");
   if (media_icon != NULL)
-    gtk_image_set_from_gicon (GTK_IMAGE (w), media_icon, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), media_icon, GTK_ICON_SIZE_DIALOG);
   else
-    gtk_image_set_from_gicon (GTK_IMAGE (w), drive_icon, GTK_ICON_SIZE_DIALOG);
-  gtk_widget_show (w);
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), drive_icon, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (window->devtab_drive_image);
 
   if (strlen (drive_vendor) == 0)
     s = g_strdup (drive_model);
@@ -1474,33 +1563,57 @@ update_device_page_for_block (GduWindow          *window,
       if (filesystem != NULL)
         {
           const gchar *const *mount_points;
+          gchar *mounted;
+          gchar *mount_point;
+          GVariant *configuration;
+
           mount_points = udisks_filesystem_get_mount_points (filesystem);
           if (g_strv_length ((gchar **) mount_points) > 0)
             {
-              gchar *mount_points_for_display;
-              /* TODO: right now we only display the first mount point; could be we need to display
-               * more than just that...
-               */
-
+              /* TODO: right now we only display the first mount point */
               if (g_strcmp0 (mount_points[0], "/") == 0)
                 {
                   /* Translators: This is shown for a device mounted at the filesystem root / - we show
                    * this text instead of '/', because '/' is too small to hit as a hyperlink
                    */
-                  mount_points_for_display = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
+                  mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
                 }
               else
                 {
-                  mount_points_for_display = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
-                                                              mount_points[0], mount_points[0]);
+                  mount_point = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+                                                 mount_points[0], mount_points[0]);
                 }
-              set_markup (window,
-                          "devtab-volume-filesystem-mount-point-label",
-                          "devtab-volume-filesystem-mount-point-value-label",
-                          mount_points_for_display,
-                          SET_MARKUP_FLAGS_NONE);
-              g_free (mount_points_for_display);
+            }
+          else
+            {
+              /* Translators: Shown when the device is not mounted */
+              mount_point = g_strdup (_("Not mounted"));
+            }
 
+          configuration = udisks_block_device_get_configuration (block);
+          if (g_variant_n_children (configuration) > 0)
+            {
+              /* Translators: Shown when the device is configured in /etc/fstab.
+               * Do not translate "fstab".
+               * The %s is the mount point or the string "Not mounted".
+               */
+              mounted = g_strdup_printf (_("%s (fstab configured)"), mount_point);
+            }
+          else
+            {
+              mounted = mount_point;
+              mount_point = NULL;
+            }
+          g_free (mount_point);
+          set_markup (window,
+                      "devtab-volume-filesystem-mounted-label",
+                      "devtab-volume-filesystem-mounted-value-label",
+                      mounted,
+                      SET_MARKUP_FLAGS_CHANGE_LINK);
+          g_free (mounted);
+
+          if (g_strv_length ((gchar **) mount_points) > 0)
+            {
               gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                                           "devtab-action-unmount")), TRUE);
             }
@@ -1599,10 +1712,8 @@ update_device_page (GduWindow      *window,
   GList *l;
 
   /* first hide everything */
-  gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-drive-table")),
-                         (GtkCallback) gtk_widget_hide, NULL);
-  gtk_container_foreach (GTK_CONTAINER (gdu_window_get_widget (window, "devtab-table")),
-                         (GtkCallback) gtk_widget_hide, NULL);
+  gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), (GtkCallback) gtk_widget_hide, NULL);
+  gtk_container_foreach (GTK_CONTAINER (window->devtab_table), (GtkCallback) gtk_widget_hide, NULL);
   children = gtk_action_group_list_actions (GTK_ACTION_GROUP (gtk_builder_get_object (window->builder, "devtab-actions")));
   for (l = children; l != NULL; l = l->next)
     gtk_action_set_visible (GTK_ACTION (l->data), FALSE);
@@ -1768,6 +1879,7 @@ static void
 on_change_filesystem_label (GduWindow *window)
 {
   gint response;
+  GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *entry;
   UDisksObject *object;
@@ -1784,8 +1896,8 @@ on_change_filesystem_label (GduWindow *window)
   g_assert (block != NULL);
   g_assert (filesystem != NULL);
 
-  dialog = gdu_window_get_widget (window, "change-filesystem-label-dialog");
-  entry = gdu_window_get_widget (window, "change-filesystem-label-entry");
+  dialog = gdu_window_new_widget (window, "change-filesystem-label-dialog", &builder);
+  entry = GTK_WIDGET (gtk_builder_get_object (builder, "change-filesystem-label-entry"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -1818,11 +1930,10 @@ on_change_filesystem_label (GduWindow *window)
                                     g_object_ref (window));
 
  out:
-  g_signal_handlers_disconnect_by_func (entry,
-                                        G_CALLBACK (on_change_filesystem_label_entry_changed),
-                                        &data);
-  gtk_widget_hide (dialog);
   g_free (data.orig_label);
+  gtk_widget_hide (dialog);
+  gtk_widget_destroy (dialog);
+  g_object_unref (builder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1861,6 +1972,7 @@ static void
 on_change_partition_type (GduWindow *window)
 {
   gint response;
+  GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *combo_box;
   UDisksObject *object;
@@ -1878,8 +1990,8 @@ on_change_partition_type (GduWindow *window)
   block = udisks_object_peek_block_device (object);
   g_assert (block != NULL);
 
-  dialog = gdu_window_get_widget (window, "change-partition-type-dialog");
-  combo_box = gdu_window_get_widget (window, "change-partition-type-combo-box");
+  dialog = gdu_window_new_widget (window, "change-partition-type-dialog", &builder);
+  combo_box = GTK_WIDGET (gtk_builder_get_object (builder, "change-partition-type-combo-box"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -1924,12 +2036,11 @@ on_change_partition_type (GduWindow *window)
   g_debug ("TODO: set partition type to %s", type_to_set);
 
  out:
-  g_signal_handlers_disconnect_by_func (combo_box,
-                                        G_CALLBACK (on_change_partition_type_combo_box_changed),
-                                        &data);
-  gtk_widget_hide (dialog);
   g_free (part_types);
   g_free (data.orig_type);
+  gtk_widget_hide (dialog);
+  gtk_widget_destroy (dialog);
+  g_object_unref (builder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1939,6 +2050,495 @@ on_change_partition_label (GduWindow *window)
 {
   g_debug ("TODO: %s", G_STRFUNC);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
+{
+  GtkWidget *dialog;
+  GtkWidget *configure_checkbutton;
+  GtkWidget *table;
+
+  GtkWidget *device_combobox;
+  GtkWidget *directory_entry;
+  GtkWidget *type_entry;
+  GtkWidget *options_entry;
+  GtkWidget *freq_spinbutton;
+  GtkWidget *passno_spinbutton;
+
+  GVariant *orig_fstab_entry;
+} FstabDialogData;
+
+static void
+fstab_dialog_update (FstabDialogData *data)
+{
+  gboolean ui_configured;
+  gchar *ui_fsname;
+  const gchar *ui_dir;
+  const gchar *ui_type;
+  const gchar *ui_opts;
+  gint ui_freq;
+  gint ui_passno;
+  gboolean configured;
+  const gchar *fsname;
+  const gchar *dir;
+  const gchar *type;
+  const gchar *opts;
+  gint freq;
+  gint passno;
+  gboolean can_apply;
+
+  if (data->orig_fstab_entry != NULL)
+    {
+      configured = TRUE;
+      g_variant_lookup (data->orig_fstab_entry, "fsname", "^&ay", &fsname);
+      g_variant_lookup (data->orig_fstab_entry, "dir", "^&ay", &dir);
+      g_variant_lookup (data->orig_fstab_entry, "type", "^&ay", &type);
+      g_variant_lookup (data->orig_fstab_entry, "opts", "^&ay", &opts);
+      g_variant_lookup (data->orig_fstab_entry, "freq", "i", &freq);
+      g_variant_lookup (data->orig_fstab_entry, "passno", "i", &passno);
+    }
+  else
+    {
+      configured = FALSE;
+      fsname = "";
+      dir = "";
+      type = "";
+      opts = "";
+      freq = 0;
+      passno = 0;
+    }
+
+  ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->configure_checkbutton));
+  ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->device_combobox));
+  ui_dir = gtk_entry_get_text (GTK_ENTRY (data->directory_entry));
+  ui_type = gtk_entry_get_text (GTK_ENTRY (data->type_entry));
+  ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
+  ui_freq = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data->freq_spinbutton));
+  ui_passno = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data->passno_spinbutton));
+
+  can_apply = FALSE;
+  if (configured != ui_configured)
+    {
+      can_apply = TRUE;
+    }
+  else if (ui_configured)
+    {
+      if (g_strcmp0 (ui_fsname, fsname) != 0 ||
+          g_strcmp0 (ui_dir, dir) != 0 ||
+          g_strcmp0 (ui_type, type) != 0 ||
+          g_strcmp0 (ui_opts, opts) != 0 ||
+          freq != ui_freq ||
+          passno != ui_passno)
+        {
+          can_apply = TRUE;
+        }
+    }
+
+  gtk_widget_set_sensitive (data->table, ui_configured);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
+                                     GTK_RESPONSE_APPLY,
+                                     can_apply);
+
+  g_free (ui_fsname);
+}
+
+static void
+fstab_dialog_property_changed (GObject     *object,
+                               GParamSpec  *pspec,
+                               gpointer     user_data)
+{
+  FstabDialogData *data = user_data;
+  fstab_dialog_update (data);
+}
+
+static void
+fstab_on_device_combobox_changed (GtkComboBox *combobox,
+                                  gpointer     user_data)
+{
+  FstabDialogData *data = user_data;
+  gchar *fsname;
+  gchar *proposed_mount_point;
+  const gchar *s;
+
+  fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->device_combobox));
+  s = strrchr (fsname, '/');
+  if (s == NULL)
+    s = strrchr (fsname, '=');
+  if (s == NULL)
+    s = "/disk";
+  proposed_mount_point = g_strdup_printf ("/media/%s", s + 1);
+  gtk_entry_set_text (GTK_ENTRY (data->directory_entry), proposed_mount_point);
+  g_free (proposed_mount_point);
+  g_free (fsname);
+}
+
+static void
+fstab_populate_device_combo_box (GtkWidget         *device_combobox,
+                                 UDisksDrive       *drive,
+                                 UDisksBlockDevice *block,
+                                 const gchar       *fstab_device)
+{
+  const gchar *device;
+  const gchar *const *symlinks;
+  guint n;
+  gint selected;
+  const gchar *uuid;
+  const gchar *label;
+  guint num_items;
+  gchar *s;
+  gint by_uuid = -1;
+  gint by_label = -1;
+  gint by_id = -1;
+  gint by_path = -1;
+
+  gtk_combo_box_text_remove_all (GTK_COMBO_BOX_TEXT (device_combobox));
+
+  num_items = 0;
+  selected = -1;
+
+  device = udisks_block_device_get_device (block);
+  gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox),
+                             NULL,
+                             device);
+  if (g_strcmp0 (fstab_device, device) == 0)
+    selected = num_items;
+  num_items = 1;
+
+  symlinks = udisks_block_device_get_symlinks (block);
+  for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
+    {
+      gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox), NULL, symlinks[n]);
+
+      if (g_str_has_prefix (symlinks[n], "/dev/disk/by-uuid"))
+        by_uuid = num_items;
+      else if (g_str_has_prefix (symlinks[n], "/dev/disk/by-label"))
+        by_label = num_items;
+      else if (g_str_has_prefix (symlinks[n], "/dev/disk/by-id"))
+        by_id = num_items;
+      else if (g_str_has_prefix (symlinks[n], "/dev/disk/by-path"))
+        by_path = num_items;
+
+      if (g_strcmp0 (fstab_device, symlinks[n]) == 0)
+        selected = num_items;
+      num_items++;
+    }
+
+  uuid = udisks_block_device_get_id_uuid (block);
+  if (uuid != NULL && strlen (uuid) > 0)
+    {
+      s = g_strdup_printf ("UUID=%s", uuid);
+      gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox), NULL, s);
+      if (g_strcmp0 (fstab_device, s) == 0)
+        selected = num_items;
+      g_free (s);
+      num_items++;
+    }
+
+  label = udisks_block_device_get_id_label (block);
+  if (label != NULL && strlen (label) > 0)
+    {
+      s = g_strdup_printf ("LABEL=%s", label);
+      gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox), NULL, s);
+      if (g_strcmp0 (fstab_device, s) == 0)
+        selected = num_items;
+      g_free (s);
+      num_items++;
+    }
+
+  /* Choose a device to default if creating a new entry */
+  if (selected == -1 && fstab_device == NULL)
+    {
+      /* if the device is using removable media, prefer
+       * by-id / by-path to by-uuid / by-label
+       */
+      if (drive != NULL && udisks_drive_get_media_removable (drive))
+        {
+          if (by_id != -1)
+            selected = by_id;
+          else if (by_path != -1)
+            selected = by_path;
+          else if (by_uuid != -1)
+            selected = by_uuid;
+          else if (by_label != -1)
+            selected = by_label;
+        }
+      else
+        {
+          if (by_uuid != -1)
+            selected = by_uuid;
+          else if (by_label != -1)
+            selected = by_label;
+          else if (by_id != -1)
+            selected = by_id;
+          else if (by_path != -1)
+            selected = by_path;
+        }
+    }
+  /* Fall back to device name as a last resort */
+  if (selected == -1)
+    selected = 0;
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (device_combobox), selected);
+}
+
+static gboolean
+is_system_mount (const gchar *dir)
+{
+  guint n;
+  static const gchar *dirs[] = {
+    "/",
+    "/boot",
+    "/home",
+    "/usr",
+    "/usr/local",
+    "/var",
+    "/var/crash",
+    "/var/local",
+    "/var/log",
+    "/var/log/audit",
+    "/var/mail",
+    "/var/run",
+    "/var/tmp",
+    "/opt",
+    "/root",
+    "/tmp",
+    NULL
+  };
+
+  for (n = 0; dirs[n] != NULL; n++)
+    if (g_strcmp0 (dir, dirs[n]) == 0)
+      return TRUE;
+  return FALSE;
+}
+
+
+static void
+on_change_mounted (GduWindow *window)
+{
+  GtkBuilder *builder;
+  UDisksObject *object;
+  UDisksBlockDevice *block;
+  UDisksObject *drive_object;
+  UDisksDrive *drive;
+  gint response;
+  GtkWidget *dialog;
+  FstabDialogData data;
+  gboolean configured;
+  gchar *fsname;
+  const gchar *dir;
+  const gchar *type;
+  const gchar *opts;
+  gint freq;
+  gint passno;
+  GVariantIter iter;
+  const gchar *configuration_type;
+  GVariant *configuration_dict;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  block = udisks_object_peek_block_device (object);
+  g_assert (block != NULL);
+
+  drive = NULL;
+  drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                                    udisks_block_device_get_drive (block));
+  if (drive_object != NULL)
+    {
+      drive = udisks_object_peek_drive (drive_object);
+      if (udisks_drive_get_media_removable (drive))
+        {
+          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
+                                                                      "devtab-action-eject")), TRUE);
+        }
+      g_object_unref (drive_object);
+    }
+
+  dialog = gdu_window_new_widget (window, "device-fstab-dialog", &builder);
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  memset (&data, '\0', sizeof (FstabDialogData));
+  data.dialog = dialog;
+  data.configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-configure-checkbutton"));
+  data.table = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-table"));
+  data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
+  data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));
+  data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
+  data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
+  data.freq_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-freq-spinbutton"));
+  data.passno_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-passno-spinbutton"));
+
+  /* there could be multiple fstab entries - we only consider the first one */
+  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &configuration_type, &configuration_dict))
+    {
+      if (g_strcmp0 (configuration_type, "fstab") == 0)
+        {
+          data.orig_fstab_entry = configuration_dict;
+          break;
+        }
+      else
+        {
+          g_variant_unref (configuration_dict);
+        }
+    }
+  if (data.orig_fstab_entry != NULL)
+    {
+      configured = TRUE;
+      g_variant_lookup (data.orig_fstab_entry, "fsname", "^ay", &fsname);
+      g_variant_lookup (data.orig_fstab_entry, "dir", "^&ay", &dir);
+      g_variant_lookup (data.orig_fstab_entry, "type", "^&ay", &type);
+      g_variant_lookup (data.orig_fstab_entry, "opts", "^&ay", &opts);
+      g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
+      g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
+    }
+  else
+    {
+      configured = FALSE;
+      fsname = NULL;
+      dir = "";
+      type = "auto";
+      opts = "defaults";
+      freq = 0;
+      passno = 0;
+    }
+  fstab_populate_device_combo_box (data.device_combobox,
+                                   drive,
+                                   block,
+                                   fsname);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data.configure_checkbutton), configured);
+  gtk_entry_set_text (GTK_ENTRY (data.directory_entry), dir);
+  gtk_entry_set_text (GTK_ENTRY (data.type_entry), type);
+  gtk_entry_set_text (GTK_ENTRY (data.options_entry), opts);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (data.freq_spinbutton), freq);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (data.passno_spinbutton), passno);
+  if (!configured)
+    fstab_on_device_combobox_changed (GTK_COMBO_BOX (data.device_combobox), &data);
+
+  g_signal_connect (data.configure_checkbutton,
+                    "notify::active", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.device_combobox,
+                    "notify::active", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.directory_entry,
+                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.type_entry,
+                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.options_entry,
+                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.freq_spinbutton,
+                    "notify::value", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.passno_spinbutton,
+                    "notify::value", G_CALLBACK (fstab_dialog_property_changed), &data);
+  g_signal_connect (data.device_combobox,
+                    "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
+
+  gtk_widget_show_all (dialog);
+
+  fstab_dialog_update (&data);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  if (response == GTK_RESPONSE_APPLY)
+    {
+      gboolean ui_configured;
+      gchar *ui_fsname;
+      const gchar *ui_dir;
+      const gchar *ui_type;
+      const gchar *ui_opts;
+      gint ui_freq;
+      gint ui_passno;
+      GError *error;
+      GtkWidget *confirmation_dialog;
+
+      ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data.configure_checkbutton));
+      ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
+      ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
+      ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
+      ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
+      ui_freq = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data.freq_spinbutton));
+      ui_passno = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data.passno_spinbutton));
+
+      gtk_widget_hide (dialog);
+
+      if (configured && is_system_mount (dir))
+        {
+          confirmation_dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
+                                                                    GTK_DIALOG_MODAL,
+                                                                    GTK_MESSAGE_WARNING,
+                                                                    GTK_BUTTONS_YES_NO,
+                                                                    "<big><b>%s</b></big>",
+                                                                    _("Are you sure you want to modify the /etc/fstab entry?"));
+          gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (confirmation_dialog),
+                                                      _("The system may not work correctly if this entry is modified."));
+          response = gtk_dialog_run (GTK_DIALOG (confirmation_dialog));
+          gtk_widget_destroy (confirmation_dialog);
+          if (response != GTK_RESPONSE_YES)
+            {
+              g_free (ui_fsname);
+              goto out;
+            }
+        }
+
+      if (configured)
+        {
+          error = NULL;
+          if (!udisks_block_device_call_remove_configuration_item_sync (block,
+                                                                        g_variant_new ("(s@a{sv})", "fstab",
+                                                                                       data.orig_fstab_entry),
+                                                                        g_variant_new ("a{sv}", NULL), /* options */
+                                                                        NULL, /* GCancellable */
+                                                                        &error))
+            {
+              gdu_window_show_error (window,
+                                     _("Error removing old /etc/fstab entry"),
+                                     error);
+              g_error_free (error);
+              g_free (ui_fsname);
+              goto out;
+            }
+        }
+
+      if (ui_configured)
+        {
+          GVariantBuilder builder;
+          g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+          g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
+          g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
+          g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
+          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (ui_freq));
+          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (ui_passno));
+          error = NULL;
+          if (!udisks_block_device_call_add_configuration_item_sync (block,
+                                                                     g_variant_new ("(sa{sv})", "fstab", &builder),
+                                                                     g_variant_new ("a{sv}", NULL), /* options */
+                                                                     NULL, /* GCancellable */
+                                                                     &error))
+            {
+              gdu_window_show_error (window,
+                                     _("Error adding new /etc/fstab entry"),
+                                     error);
+              g_error_free (error);
+              g_free (ui_fsname);
+              goto out;
+            }
+        }
+
+      g_free (ui_fsname);
+    }
+
+ out:
+  if (data.orig_fstab_entry != NULL)
+    g_variant_unref (data.orig_fstab_entry);
+  g_free (fsname);
+
+  gtk_widget_hide (dialog);
+  gtk_widget_destroy (dialog);
+  g_object_unref (builder);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
 on_activate_link (GtkLabel    *label,
@@ -1960,6 +2560,8 @@ on_activate_link (GtkLabel    *label,
     on_change_partition_type (window);
   else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-label-value-label") == 0)
     on_change_partition_label (window);
+  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-filesystem-mounted-value-label") == 0)
+    on_change_mounted (window);
   else
     g_warning ("Unhandled action: %s", uri);
 
@@ -2134,6 +2736,7 @@ on_devtab_action_unlock_activated (GtkAction *action,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gint response;
+  GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *entry;
   GtkWidget *show_passphrase_check_button;
@@ -2145,9 +2748,9 @@ on_devtab_action_unlock_activated (GtkAction *action,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   encrypted = udisks_object_peek_encrypted (object);
 
-  dialog = gdu_window_get_widget (window, "unlock-device-dialog");
-  entry = gdu_window_get_widget (window, "unlock-device-passphrase-entry");
-  show_passphrase_check_button = gdu_window_get_widget (window, "unlock-device-show-passphrase-check-button");
+  dialog = gdu_window_new_widget (window, "unlock-device-dialog", &builder);
+  entry = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-passphrase-entry"));
+  show_passphrase_check_button = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-show-passphrase-check-button"));
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -2177,6 +2780,8 @@ on_devtab_action_unlock_activated (GtkAction *action,
 
  out:
   gtk_widget_hide (dialog);
+  gtk_widget_destroy (dialog);
+  g_object_unref (builder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -86,6 +86,11 @@ struct _GduWindow
   GtkWidget *devtab_toolbar_activate_swap_button;
   GtkWidget *devtab_toolbar_deactivate_swap_button;
 
+  GtkWidget *generic_menu;
+  GtkWidget *generic_menu_item_configure_fstab;
+  GtkWidget *generic_menu_item_edit_label;
+  GtkWidget *generic_menu_item_edit_partition;
+
   GHashTable *label_connections;
 };
 
@@ -116,6 +121,10 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_lock_button), "devtab-action-lock"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_activate_swap_button), "devtab-action-activate-swap"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_deactivate_swap_button), "devtab-action-deactivate-swap"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
   {0, NULL}
 };
 
@@ -133,20 +142,28 @@ enum
 
 typedef enum
 {
-  TOOLBAR_BUTTONS_NONE = 0,
-  TOOLBAR_BUTTONS_DETACH_DISK_IMAGE = (1<<0)
-} ToolbarButtons;
+  SHOW_FLAGS_NONE                    = 0,
+  SHOW_FLAGS_DETACH_DISK_IMAGE       = (1<<0),
+  SHOW_FLAGS_EJECT_BUTTON            = (1<<1),
+  SHOW_FLAGS_PARTITION_CREATE_BUTTON = (1<<2),
+  SHOW_FLAGS_MOUNT_BUTTON            = (1<<3),
+  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<4),
+  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<5),
+  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<6),
+  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<7),
+  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<8),
+
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB = (1<<9),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL = (1<<10),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION = (1<<11),
+} ShowFlags;
 
 static void gdu_window_show_error (GduWindow   *window,
                                    const gchar *message,
                                    GError      *orig_error);
 
-static gboolean on_activate_link (GtkLabel    *label,
-                                  const gchar *uri,
-                                  gpointer     user_data);
-
 static void setup_device_page (GduWindow *window, UDisksObject *object);
-static void update_device_page (GduWindow *window, ToolbarButtons *buttons);
+static void update_device_page (GduWindow *window, ShowFlags *show_flags);
 static void teardown_device_page (GduWindow *window);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
@@ -161,6 +178,13 @@ static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
+
+static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
+                                                  gpointer   user_data);
+static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
+                                             gpointer   user_data);
+static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
+                                                 gpointer   user_data);
 
 static GtkWidget *
 gdu_window_new_widget (GduWindow    *window,
@@ -272,13 +296,45 @@ on_row_inserted (GtkTreeModel *tree_model,
 static void select_details_page (GduWindow       *window,
                                  UDisksObject    *object,
                                  DetailsPage      page,
-                                 ToolbarButtons  *buttons);
+                                 ShowFlags       *show_flags);
+
+static void
+update_for_show_flags (GduWindow *window,
+                       ShowFlags  show_flags)
+{
+  gtk_widget_set_visible (GTK_WIDGET (window->device_toolbar_detach_disk_image_button),
+                          show_flags & SHOW_FLAGS_DETACH_DISK_IMAGE);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_eject_button),
+                          show_flags & SHOW_FLAGS_EJECT_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_partition_create_button),
+                          show_flags & SHOW_FLAGS_PARTITION_CREATE_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_unmount_button),
+                          show_flags & SHOW_FLAGS_UNMOUNT_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_mount_button),
+                          show_flags & SHOW_FLAGS_MOUNT_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_activate_swap_button),
+                          show_flags & SHOW_FLAGS_ACTIVATE_SWAP_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_deactivate_swap_button),
+                          show_flags & SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_unlock_button),
+                          show_flags & SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_lock_button),
+                          show_flags & SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON);
+
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_configure_fstab),
+                          show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_edit_label),
+                          show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_edit_partition),
+                          show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
+  /* TODO: don't show the button bringing up the popup menu if it has no items */
+}
 
 static void
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
-  ToolbarButtons buttons;
+  ShowFlags show_flags;
   GtkTreeIter iter;
 
   if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
@@ -288,28 +344,25 @@ set_selected_object (GduWindow    *window,
       gtk_tree_selection_select_iter (tree_selection, &iter);
     }
 
-  buttons = TOOLBAR_BUTTONS_NONE;
+  show_flags = SHOW_FLAGS_NONE;
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
           udisks_object_peek_block_device (object) != NULL)
         {
-          select_details_page (window, object, DETAILS_PAGE_DEVICE, &buttons);
+          select_details_page (window, object, DETAILS_PAGE_DEVICE, &show_flags);
         }
       else
         {
           g_warning ("no page for object %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-          select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED, &buttons);
+          select_details_page (window, NULL, DETAILS_PAGE_NOT_IMPLEMENTED, &show_flags);
         }
     }
   else
     {
-      select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &buttons);
+      select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &show_flags);
     }
-
-  gtk_widget_set_visible (GTK_WIDGET (gtk_builder_get_object (window->builder,
-                                                              "device-tree-detach-disk-image-button")),
-                          buttons & TOOLBAR_BUTTONS_DETACH_DISK_IMAGE);
+  update_for_show_flags (window, show_flags);
 }
 
 static void
@@ -781,6 +834,19 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_devtab_action_deactivate_swap_activated),
                     window);
+
+  g_signal_connect (window->generic_menu_item_configure_fstab,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_configure_fstab),
+                    window);
+  g_signal_connect (window->generic_menu_item_edit_label,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_edit_label),
+                    window);
+  g_signal_connect (window->generic_menu_item_edit_partition,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_edit_partition),
+                    window);
 }
 
 static void
@@ -969,8 +1035,7 @@ teardown_details_page (GduWindow    *window,
 typedef enum
 {
   SET_MARKUP_FLAGS_NONE = 0,
-  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY = (1<<0),
-  SET_MARKUP_FLAGS_CHANGE_LINK = (1<<1)
+  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY = (1<<0)
 } SetMarkupFlags;
 
 static void
@@ -982,7 +1047,6 @@ set_markup (GduWindow      *window,
 {
   GtkWidget *key_label;
   GtkWidget *label;
-  gchar *s;
 
   if (markup == NULL || strlen (markup) == 0)
     {
@@ -997,26 +1061,7 @@ set_markup (GduWindow      *window,
 
   /* TODO: utf-8 validate */
 
-  if (flags & SET_MARKUP_FLAGS_CHANGE_LINK)
-    {
-      s = g_strdup_printf ("%s <small>— <a href=\"palimpsest://change/%s\">Change</a></small>", markup, label_id);
-      if (g_hash_table_lookup (window->label_connections, label_id) == NULL)
-        {
-          g_signal_connect (label,
-                            "activate-link",
-                            G_CALLBACK (on_activate_link),
-                            window);
-          g_hash_table_insert (window->label_connections,
-                               g_strdup (label_id),
-                               label);
-        }
-    }
-  else
-    {
-      s = g_strdup (markup);
-    }
-  gtk_label_set_markup (GTK_LABEL (label), s);
-  g_free (s);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_widget_show (key_label);
   gtk_widget_show (label);
 
@@ -1025,14 +1070,15 @@ set_markup (GduWindow      *window,
 }
 
 static void
-set_size (GduWindow   *window,
-          const gchar *key_label_id,
-          const gchar *label_id,
-          guint64      size)
+set_size (GduWindow      *window,
+          const gchar    *key_label_id,
+          const gchar    *label_id,
+          guint64         size,
+          SetMarkupFlags  flags)
 {
   gchar *s;
   s = udisks_util_get_size_for_display (size, FALSE, TRUE);
-  set_markup (window, key_label_id, label_id, s, SET_MARKUP_FLAGS_NONE);
+  set_markup (window, key_label_id, label_id, s, size);
   g_free (s);
 }
 
@@ -1108,7 +1154,7 @@ setup_details_page (GduWindow     *window,
 static void
 update_details_page (GduWindow      *window,
                      DetailsPage     page,
-                     ToolbarButtons *buttons)
+                     ShowFlags      *show_flags)
 {
   ;
   //g_debug ("update for %s, page %d",
@@ -1124,7 +1170,7 @@ update_details_page (GduWindow      *window,
       break;
 
     case DETAILS_PAGE_DEVICE:
-      update_device_page (window, buttons);
+      update_device_page (window, show_flags);
       break;
     }
 }
@@ -1133,7 +1179,7 @@ static void
 select_details_page (GduWindow      *window,
                      UDisksObject   *object,
                      DetailsPage     page,
-                     ToolbarButtons *buttons)
+                     ShowFlags      *show_flags)
 {
   teardown_details_page (window,
                          window->current_object,
@@ -1150,16 +1196,13 @@ select_details_page (GduWindow      *window,
                       window->current_object,
                       window->current_page);
 
-  update_details_page (window, window->current_page, buttons);
+  update_details_page (window, window->current_page, show_flags);
 }
 
 static void
 update_all (GduWindow     *window,
             UDisksObject  *object)
 {
-  ToolbarButtons buttons;
-
-  buttons = TOOLBAR_BUTTONS_NONE;
   switch (window->current_page)
     {
     case DETAILS_PAGE_NOT_SELECTED:
@@ -1174,7 +1217,10 @@ update_all (GduWindow     *window,
       /* this is a little too inclusive.. */
       if (gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
         {
-          update_details_page (window, window->current_page, &buttons);
+          ShowFlags show_flags;
+          show_flags = SHOW_FLAGS_NONE;
+          update_details_page (window, window->current_page, &show_flags);
+          update_for_show_flags (window, show_flags);
         }
       break;
     }
@@ -1290,7 +1336,8 @@ setup_device_page (GduWindow     *window,
 static void
 update_device_page_for_drive (GduWindow      *window,
                               UDisksObject   *object,
-                              UDisksDrive    *drive)
+                              UDisksDrive    *drive,
+                              ShowFlags      *show_flags)
 {
   gchar *s;
   GList *block_devices;
@@ -1392,8 +1439,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   if (udisks_drive_get_media_removable (drive))
     {
-      gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                  "devtab-action-eject")), TRUE);
+      *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
     }
 
   g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
@@ -1446,14 +1492,17 @@ static void
 update_device_page_for_block (GduWindow          *window,
                               UDisksObject       *object,
                               UDisksBlockDevice  *block,
-                              guint64             size)
+                              guint64             size,
+                              ShowFlags          *show_flags)
 {
-  UDisksLoop *loop;
   const gchar *usage;
   const gchar *type;
   const gchar *version;
   gint partition_type;
   gchar *type_for_display;
+
+  /* any device can be referenced in /etc/fstab even if it has no media or the type is unknown */
+  *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
 
   //g_debug ("In update_device_page_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -1463,18 +1512,19 @@ update_device_page_for_block (GduWindow          *window,
               "devtab-device-label",
               "devtab-device-value-label",
               udisks_block_device_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
-  set_size (window,
-            "devtab-size-label",
-            "devtab-size-value-label",
-            size);
-
-  loop = udisks_object_peek_loop (object);
-  if (loop != NULL)
+  if (size > 0)
+    {
+      set_size (window,
+                "devtab-size-label",
+                "devtab-size-value-label",
+                size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+    }
+  else
     {
       set_markup (window,
-                  "devtab-backing-file-label",
-                  "devtab-backing-file-value-label",
-                  udisks_loop_get_backing_file (loop), SET_MARKUP_FLAGS_NONE);
+                  "devtab-size-label",
+                  "devtab-size-value-label",
+                  NULL, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
   usage = udisks_block_device_get_id_usage (block);
@@ -1482,61 +1532,33 @@ update_device_page_for_block (GduWindow          *window,
   version = udisks_block_device_get_id_version (block);
   partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
 
-  if (udisks_block_device_get_part_entry (block) &&
-      g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
-      (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+  if (size > 0)
     {
-      type_for_display = g_strdup (_("Extended Partition"));
+      if (udisks_block_device_get_part_entry (block) &&
+          g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
+          (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+        {
+          type_for_display = g_strdup (_("Extended Partition"));
+        }
+      else
+        {
+          type_for_display = udisks_util_get_id_for_display (usage, type, version, TRUE);
+        }
     }
   else
     {
-      type_for_display = udisks_util_get_id_for_display (usage, type, version, TRUE);
+      type_for_display = NULL;
     }
   set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              type_for_display, SET_MARKUP_FLAGS_NONE);
+              type_for_display,
+              SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (type_for_display);
-
-  /* right now we only supports changing labels on filesystems, not e.g.
-   * swap devices
-   *
-   * TODO: use udisks_util_() function to determine if we support this
-   */
-  gboolean can_change_label = (udisks_object_peek_filesystem (object) != NULL);
-  set_markup (window,
-              "devtab-volume-label-label",
-              "devtab-volume-label-value-label",
-              udisks_block_device_get_id_label (block),
-              can_change_label ? SET_MARKUP_FLAGS_CHANGE_LINK : SET_MARKUP_FLAGS_NONE);
-
-  set_markup (window,
-              "devtab-volume-uuid-label",
-              "devtab-volume-uuid-value-label",
-              udisks_block_device_get_id_uuid (block),
-              SET_MARKUP_FLAGS_NONE);
 
   if (udisks_block_device_get_part_entry (block))
     {
-      const gchar *partition_label;
-      gchar *type_for_display;
-
-      type_for_display = udisks_util_get_part_type_for_display (udisks_block_device_get_part_entry_scheme (block),
-                                                                udisks_block_device_get_part_entry_type (block),
-                                                                FALSE);
-
-      partition_label = udisks_block_device_get_part_entry_label (block);
-      set_markup (window,
-                  "devtab-volume-partition-type-label",
-                  "devtab-volume-partition-type-value-label",
-                  type_for_display,
-                  SET_MARKUP_FLAGS_CHANGE_LINK);
-      set_markup (window,
-                  "devtab-volume-partition-label-label",
-                  "devtab-volume-partition-label-value-label",
-                  partition_label,
-                  SET_MARKUP_FLAGS_CHANGE_LINK);
-      g_free (type_for_display);
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
     }
   else
     {
@@ -1548,10 +1570,7 @@ update_device_page_for_block (GduWindow          *window,
           UDisksDrive *drive;
           drive = udisks_object_peek_drive (drive_object);
           if (udisks_drive_get_media_removable (drive))
-            {
-              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                          "devtab-action-eject")), TRUE);
-            }
+            *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
           g_object_unref (drive_object);
         }
     }
@@ -1563,9 +1582,7 @@ update_device_page_for_block (GduWindow          *window,
       if (filesystem != NULL)
         {
           const gchar *const *mount_points;
-          gchar *mounted;
           gchar *mount_point;
-          GVariant *configuration;
 
           mount_points = udisks_filesystem_get_mount_points (filesystem);
           if (g_strv_length ((gchar **) mount_points) > 0)
@@ -1586,87 +1603,114 @@ update_device_page_for_block (GduWindow          *window,
             }
           else
             {
-              /* Translators: Shown when the device is not mounted */
-              mount_point = g_strdup (_("Not mounted"));
+              /* Translators: Shown when the device is not mounted next to the "Mounted" label */
+              mount_point = g_strdup (_("No"));
             }
-
-          configuration = udisks_block_device_get_configuration (block);
-          if (g_variant_n_children (configuration) > 0)
-            {
-              /* Translators: Shown when the device is configured in /etc/fstab.
-               * Do not translate "fstab".
-               * The %s is the mount point or the string "Not mounted".
-               */
-              mounted = g_strdup_printf (_("%s (fstab configured)"), mount_point);
-            }
-          else
-            {
-              mounted = mount_point;
-              mount_point = NULL;
-            }
-          g_free (mount_point);
           set_markup (window,
                       "devtab-volume-filesystem-mounted-label",
                       "devtab-volume-filesystem-mounted-value-label",
-                      mounted,
-                      SET_MARKUP_FLAGS_CHANGE_LINK);
-          g_free (mounted);
+                      mount_point,
+                      SET_MARKUP_FLAGS_NONE);
+          g_free (mount_point);
 
           if (g_strv_length ((gchar **) mount_points) > 0)
-            {
-              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                          "devtab-action-unmount")), TRUE);
-            }
+            *show_flags |= SHOW_FLAGS_UNMOUNT_BUTTON;
           else
-            {
-              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                          "devtab-action-mount")), TRUE);
-            }
+            *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
         }
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
     }
   else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
            g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
     {
       UDisksSwapspace *swapspace;
+      const gchar *str;
       swapspace = udisks_object_peek_swapspace (object);
       if (swapspace != NULL)
         {
           if (udisks_swapspace_get_active (swapspace))
             {
-              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                          "devtab-action-deactivate-swap")), TRUE);
+              *show_flags |= SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON;
+              /* Translators: Shown if the swap device is in use next to the "Active" label */
+              str = _("Yes");
             }
           else
             {
-              gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                          "devtab-action-activate-swap")), TRUE);
+              *show_flags |= SHOW_FLAGS_ACTIVATE_SWAP_BUTTON;
+              /* Translators: Shown if the swap device is not in use next to the "Active" label */
+              str = _("No");
             }
+          set_markup (window,
+                      "devtab-volume-swap-active-label",
+                      "devtab-volume-swap-active-value-label",
+                      str,
+                      SET_MARKUP_FLAGS_NONE);
         }
     }
   else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
     {
       UDisksObject *cleartext_device;
+      const gchar *str;
 
       cleartext_device = lookup_cleartext_device_for_crypto_device (window->client,
                                                                     g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       if (cleartext_device != NULL)
         {
-          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                      "devtab-action-lock")), TRUE);
-          g_object_unref (cleartext_device);
+          *show_flags |= SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON;
+          /* Translators: Shown if the encrypted device is unlocked next to the "Unlocked" label */
+          str = _("Yes");
         }
       else
         {
-          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                      "devtab-action-unlock")), TRUE);
+          *show_flags |= SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON;
+          /* Translators: Shown if the encrypted device is not unlocked next to the "Unlocked" label */
+          str = _("No");
         }
+      set_markup (window,
+                  "devtab-volume-encrypted-unlocked-label",
+                  "devtab-volume-encrypted-unlocked-value-label",
+                  str,
+                  SET_MARKUP_FLAGS_NONE);
     }
+
+  /* Configuration */
+  if (TRUE)
+    {
+      const gchar *s;
+      GVariantIter iter;
+      const gchar *config_type;
+      gboolean in_fstab = FALSE;
+
+      g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+      while (g_variant_iter_next (&iter, "(&sa{sv})", &config_type, NULL))
+        {
+          if (g_strcmp0 (config_type, "fstab") == 0)
+            in_fstab = TRUE;
+        }
+
+      s = NULL;
+      if (in_fstab)
+        {
+          /* Translators: Shown when the device is configured in /etc/fstab.
+           * Do not translate "fstab".
+           */
+          s = _("In /etc/fstab");
+        }
+
+      set_markup (window,
+                  "devtab-volume-configured-label",
+                  "devtab-volume-configured-value-label",
+                  s,
+                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+    }
+
 }
 
 static void
 update_device_page_for_no_media (GduWindow          *window,
                                  UDisksObject       *object,
-                                 UDisksBlockDevice  *block)
+                                 UDisksBlockDevice  *block,
+                                 ShowFlags          *show_flags)
 {
   //g_debug ("In update_device_page_for_no_media() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1676,7 +1720,8 @@ static void
 update_device_page_for_free_space (GduWindow          *window,
                                    UDisksObject       *object,
                                    UDisksBlockDevice  *block,
-                                   guint64             size)
+                                   guint64             size,
+                                   ShowFlags          *show_flags)
 {
   //g_debug ("In update_device_page_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -1689,19 +1734,18 @@ update_device_page_for_free_space (GduWindow          *window,
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
-            size);
+            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
               _("Unallocated Space"),
               SET_MARKUP_FLAGS_NONE);
-  gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                              "devtab-action-partition-create")), TRUE);
+  *show_flags |= SHOW_FLAGS_PARTITION_CREATE_BUTTON;
 }
 
 static void
 update_device_page (GduWindow      *window,
-                    ToolbarButtons *buttons)
+                    ShowFlags      *show_flags)
 {
   UDisksObject *object;
   GduVolumeGridElementType type;
@@ -1731,15 +1775,15 @@ update_device_page (GduWindow      *window,
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
   if (udisks_object_peek_loop (object) != NULL)
-    *buttons |= TOOLBAR_BUTTONS_DETACH_DISK_IMAGE;
+    *show_flags |= SHOW_FLAGS_DETACH_DISK_IMAGE;
 
   if (drive != NULL)
-    update_device_page_for_drive (window, object, drive);
+    update_device_page_for_drive (window, object, drive, show_flags);
 
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {
       if (block != NULL)
-        update_device_page_for_block (window, object, block, size);
+        update_device_page_for_block (window, object, block, size, show_flags);
     }
   else
     {
@@ -1756,15 +1800,16 @@ update_device_page (GduWindow      *window,
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
-              update_device_page_for_block (window, object, block, size);
+              update_device_page_for_block (window, object, block, size, show_flags);
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
-              update_device_page_for_no_media (window, object, block);
+              update_device_page_for_block (window, object, block, size, show_flags);
+              update_device_page_for_no_media (window, object, block, show_flags);
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:
-              update_device_page_for_free_space (window, object, block, size);
+              update_device_page_for_free_space (window, object, block, size, show_flags);
               break;
             }
         }
@@ -1784,9 +1829,10 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
                         gpointer        user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  ToolbarButtons buttons;
-  buttons = TOOLBAR_BUTTONS_NONE;
-  update_device_page (window, &buttons);
+  ShowFlags show_flags;
+  show_flags = SHOW_FLAGS_NONE;
+  update_device_page (window, &show_flags);
+  update_for_show_flags (window, show_flags);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1876,8 +1922,10 @@ change_filesystem_label_cb (UDisksFilesystem  *filesystem,
 }
 
 static void
-on_change_filesystem_label (GduWindow *window)
+on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
+                                 gpointer   user_data)
 {
+  GduWindow *window = GDU_WINDOW (user_data);
   gint response;
   GtkBuilder *builder;
   GtkWidget *dialog;
@@ -1969,8 +2017,10 @@ on_change_partition_type_combo_box_changed (GtkComboBox *combo_box,
 }
 
 static void
-on_change_partition_type (GduWindow *window)
+on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
+                                     gpointer   user_data)
 {
+  GduWindow *window = GDU_WINDOW (user_data);
   gint response;
   GtkBuilder *builder;
   GtkWidget *dialog;
@@ -2041,14 +2091,6 @@ on_change_partition_type (GduWindow *window)
   gtk_widget_hide (dialog);
   gtk_widget_destroy (dialog);
   g_object_unref (builder);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_change_partition_label (GduWindow *window)
-{
-  g_debug ("TODO: %s", G_STRFUNC);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2371,8 +2413,10 @@ is_system_mount (const gchar *dir)
 
 
 static void
-on_change_mounted (GduWindow *window)
+on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
+                                      gpointer   user_data)
 {
+  GduWindow *window = GDU_WINDOW (user_data);
   GtkBuilder *builder;
   UDisksObject *object;
   UDisksBlockDevice *block;
@@ -2393,7 +2437,8 @@ on_change_mounted (GduWindow *window)
   GVariant *configuration_dict;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  g_assert (object != NULL);
+  if (object == NULL)
+    object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
   block = udisks_object_peek_block_device (object);
   g_assert (block != NULL);
 
@@ -2403,11 +2448,6 @@ on_change_mounted (GduWindow *window)
   if (drive_object != NULL)
     {
       drive = udisks_object_peek_drive (drive_object);
-      if (udisks_drive_get_media_removable (drive))
-        {
-          gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
-                                                                      "devtab-action-eject")), TRUE);
-        }
       g_object_unref (drive_object);
     }
 
@@ -2598,37 +2638,6 @@ on_change_mounted (GduWindow *window)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-on_activate_link (GtkLabel    *label,
-                  const gchar *uri,
-                  gpointer     user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  gboolean handled;
-
-  handled = FALSE;
-  if (!g_str_has_prefix (uri, "palimpsest://"))
-    goto out;
-
-  handled = TRUE;
-
-  if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-label-value-label") == 0)
-    on_change_filesystem_label (window);
-  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-type-value-label") == 0)
-    on_change_partition_type (window);
-  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-partition-label-value-label") == 0)
-    on_change_partition_label (window);
-  else if (g_strcmp0 (uri, "palimpsest://change/devtab-volume-filesystem-mounted-value-label") == 0)
-    on_change_mounted (window);
-  else
-    g_warning ("Unhandled action: %s", uri);
-
- out:
-  return handled;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static void
 mount_cb (UDisksFilesystem *filesystem,
           GAsyncResult     *res,
@@ -2714,7 +2723,9 @@ static void
 on_devtab_action_generic_activated (GtkAction *action,
                                     gpointer   user_data)
 {
-  g_debug ("%s: TODO", G_STRFUNC);
+  GduWindow *window = GDU_WINDOW (user_data);
+  gtk_menu_popup (GTK_MENU (window->generic_menu),
+                  NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -2192,7 +2192,7 @@ fstab_update_device_explanation (FstabDialogData *data)
     }
   else if (g_str_has_prefix (fsname, "/dev/disk/by-uuid/") || g_str_has_prefix (fsname, "UUID="))
     {
-      explanation = g_strdup (_("Matches the given UUID"));
+      explanation = g_strdup (_("Matches the device with the given UUID"));
     }
   else
     {

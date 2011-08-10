@@ -2101,6 +2101,7 @@ typedef struct
   GtkWidget *configure_checkbutton;
   GtkWidget *table;
 
+  GtkWidget *infobar_hbox;
   GtkWidget *device_combobox;
   GtkWidget *device_explanation_label;
   GtkWidget *directory_entry;
@@ -2382,7 +2383,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
 }
 
 static gboolean
-is_system_mount (const gchar *dir)
+check_if_system_mount (const gchar *dir)
 {
   guint n;
   static const gchar *dirs[] = {
@@ -2435,6 +2436,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
   GVariantIter iter;
   const gchar *configuration_type;
   GVariant *configuration_dict;
+  gboolean is_system_mount;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   if (object == NULL)
@@ -2457,6 +2459,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
 
   memset (&data, '\0', sizeof (FstabDialogData));
   data.dialog = dialog;
+  data.infobar_hbox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-infobar-hbox"));
   data.configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-configure-checkbutton"));
   data.table = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-table"));
   data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
@@ -2501,6 +2504,8 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       freq = 0;
       passno = 0;
     }
+  is_system_mount = check_if_system_mount (dir);
+
   fstab_populate_device_combo_box (data.device_combobox,
                                    drive,
                                    block,
@@ -2531,6 +2536,32 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
   g_signal_connect (data.device_combobox,
                     "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
 
+  /* Show a cluebar if the entry is considered a system mount */
+  if (is_system_mount)
+    {
+      GtkWidget *bar;
+      GtkWidget *label;
+      GtkWidget *image;
+      GtkWidget *hbox;
+
+      bar = gtk_info_bar_new ();
+      gtk_info_bar_set_message_type (GTK_INFO_BAR (bar), GTK_MESSAGE_WARNING);
+
+      image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
+
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label),
+                            _("<b>Warning:</b> "
+                              "The system may not work correctly if this entry is modified or removed."));
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+
+      gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (bar))), hbox);
+      gtk_box_pack_start (GTK_BOX (data.infobar_hbox), bar, TRUE, TRUE, 0);
+    }
+
   gtk_widget_show_all (dialog);
 
   fstab_update_device_explanation (&data);
@@ -2547,7 +2578,6 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       gint ui_freq;
       gint ui_passno;
       GError *error;
-      GtkWidget *confirmation_dialog;
 
       ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data.configure_checkbutton));
       ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
@@ -2558,25 +2588,6 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       ui_passno = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data.passno_spinbutton));
 
       gtk_widget_hide (dialog);
-
-      if (configured && is_system_mount (dir))
-        {
-          confirmation_dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
-                                                                    GTK_DIALOG_MODAL,
-                                                                    GTK_MESSAGE_WARNING,
-                                                                    GTK_BUTTONS_YES_NO,
-                                                                    "<big><b>%s</b></big>",
-                                                                    _("Are you sure you want to modify the /etc/fstab entry?"));
-          gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (confirmation_dialog),
-                                                      _("The system may not work correctly if this entry is modified."));
-          response = gtk_dialog_run (GTK_DIALOG (confirmation_dialog));
-          gtk_widget_destroy (confirmation_dialog);
-          if (response != GTK_RESPONSE_YES)
-            {
-              g_free (ui_fsname);
-              goto out;
-            }
-        }
 
       if (configured)
         {

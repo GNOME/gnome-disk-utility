@@ -2060,6 +2060,7 @@ typedef struct
   GtkWidget *table;
 
   GtkWidget *device_combobox;
+  GtkWidget *device_explanation_label;
   GtkWidget *directory_entry;
   GtkWidget *type_entry;
   GtkWidget *options_entry;
@@ -2154,6 +2155,58 @@ fstab_dialog_property_changed (GObject     *object,
 }
 
 static void
+fstab_update_device_explanation (FstabDialogData *data)
+{
+  const gchar *s;
+  gchar *fsname;
+  gchar *str;
+  gchar *explanation;
+  guint part_num;
+
+  fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->device_combobox));
+
+  part_num = 0;
+  s = g_strrstr (fsname, "-part");
+  if (s != NULL)
+    sscanf (s, "-part%d", &part_num);
+
+  if (g_str_has_prefix (fsname, "/dev/disk/by-id/"))
+    {
+      if (part_num > 0)
+        explanation = g_strdup_printf (_("Matches partition %d of the device with the given vital product data"),
+                                       part_num);
+      else
+        explanation = g_strdup (_("Matches the whole disk of the device with the given vital product data"));
+    }
+  else if (g_str_has_prefix (fsname, "/dev/disk/by-path/"))
+    {
+      if (part_num > 0)
+        explanation = g_strdup_printf (_("Matches partition %d of any device connected at the given port or address"),
+                                       part_num);
+      else
+        explanation = g_strdup (_("Matches the whole disk of any device connected at the given port or address"));
+    }
+  else if (g_str_has_prefix (fsname, "/dev/disk/by-label/") || g_str_has_prefix (fsname, "LABEL="))
+    {
+      explanation = g_strdup (_("Matches any device with the given label"));
+    }
+  else if (g_str_has_prefix (fsname, "/dev/disk/by-uuid/") || g_str_has_prefix (fsname, "UUID="))
+    {
+      explanation = g_strdup (_("Matches the given UUID"));
+    }
+  else
+    {
+      explanation = g_strdup (_("Matches the given device"));
+    }
+
+  str = g_strdup_printf ("<small><i>%s</i></small>", explanation);
+  gtk_label_set_markup (GTK_LABEL (data->device_explanation_label), str);
+  g_free (str);
+  g_free (explanation);
+  g_free (fsname);
+}
+
+static void
 fstab_on_device_combobox_changed (GtkComboBox *combobox,
                                   gpointer     user_data)
 {
@@ -2169,9 +2222,12 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
   if (s == NULL)
     s = "/disk";
   proposed_mount_point = g_strdup_printf ("/media/%s", s + 1);
+
   gtk_entry_set_text (GTK_ENTRY (data->directory_entry), proposed_mount_point);
   g_free (proposed_mount_point);
   g_free (fsname);
+
+  fstab_update_device_explanation (data);
 }
 
 static void
@@ -2364,6 +2420,7 @@ on_change_mounted (GduWindow *window)
   data.configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-configure-checkbutton"));
   data.table = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-table"));
   data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
+  data.device_explanation_label = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-explanation-label"));
   data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));
   data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
   data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
@@ -2436,6 +2493,7 @@ on_change_mounted (GduWindow *window)
 
   gtk_widget_show_all (dialog);
 
+  fstab_update_device_explanation (&data);
   fstab_dialog_update (&data);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));

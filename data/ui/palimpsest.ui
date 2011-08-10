@@ -1,61 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkActionGroup" id="devtab-actions">
-    <child>
-      <object class="GtkAction" id="devtab-action-partition-create">
-        <property name="tooltip" translatable="yes">Create a new partition in the free space</property>
-        <property name="icon_name">list-add-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-mount">
-        <property name="tooltip" translatable="yes">Mount the filesystem</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-unmount">
-        <property name="tooltip" translatable="yes">Unmount the filesystem</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-eject">
-        <property name="tooltip" translatable="yes">Eject the media</property>
-        <property name="icon_name">media-eject-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-unlock">
-        <property name="tooltip" translatable="yes">Unlock the encrypted device</property>
-        <property name="icon_name">changes-allow-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-activate-swap">
-        <property name="tooltip" translatable="yes">Activate the swap space</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-deactivate-swap">
-        <property name="tooltip" translatable="yes">Deactivate the swap space</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-lock">
-        <property name="tooltip" translatable="yes">Lock the encrypted device</property>
-        <property name="icon_name">changes-prevent-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-generic">
-        <property name="icon_name">system-run-symbolic</property>
-      </object>
-    </child>
-  </object>
   <object class="GtkDialog" id="change-filesystem-label-dialog">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -374,7 +319,7 @@
                   <object class="GtkTable" id="fstab-table">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="n_rows">6</property>
+                    <property name="n_rows">7</property>
                     <property name="n_columns">2</property>
                     <property name="column_spacing">10</property>
                     <property name="row_spacing">6</property>
@@ -407,8 +352,8 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -425,8 +370,8 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -443,8 +388,8 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -458,8 +403,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
                       </packing>
                     </child>
                     <child>
@@ -472,8 +417,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
                       </packing>
                     </child>
                     <child>
@@ -486,8 +431,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                       </packing>
                     </child>
                     <child>
@@ -503,8 +448,8 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">6</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -521,8 +466,8 @@
                         </attributes>
                       </object>
                       <packing>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
+                        <property name="top_attach">6</property>
+                        <property name="bottom_attach">7</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -538,8 +483,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">6</property>
                       </packing>
                     </child>
                     <child>
@@ -554,8 +499,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
+                        <property name="top_attach">6</property>
+                        <property name="bottom_attach">7</property>
                       </packing>
                     </child>
                     <child>
@@ -568,6 +513,24 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="fstab-device-explanation-label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0</property>
+                        <property name="wrap">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
                       </packing>
                     </child>
                   </object>
@@ -615,6 +578,61 @@
       <action-widget response="0">button7</action-widget>
       <action-widget response="-10">button8</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkActionGroup" id="devtab-actions">
+    <child>
+      <object class="GtkAction" id="devtab-action-partition-create">
+        <property name="tooltip" translatable="yes">Create a new partition in the free space</property>
+        <property name="icon_name">list-add-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-mount">
+        <property name="tooltip" translatable="yes">Mount the filesystem</property>
+        <property name="icon_name">media-playback-start-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-unmount">
+        <property name="tooltip" translatable="yes">Unmount the filesystem</property>
+        <property name="icon_name">media-playback-stop-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-eject">
+        <property name="tooltip" translatable="yes">Eject the media</property>
+        <property name="icon_name">media-eject-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-unlock">
+        <property name="tooltip" translatable="yes">Unlock the encrypted device</property>
+        <property name="icon_name">changes-allow-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-activate-swap">
+        <property name="tooltip" translatable="yes">Activate the swap space</property>
+        <property name="icon_name">media-playback-start-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-deactivate-swap">
+        <property name="tooltip" translatable="yes">Deactivate the swap space</property>
+        <property name="icon_name">media-playback-stop-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-lock">
+        <property name="tooltip" translatable="yes">Lock the encrypted device</property>
+        <property name="icon_name">changes-prevent-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-generic">
+        <property name="icon_name">system-run-symbolic</property>
+      </object>
+    </child>
   </object>
   <object class="GtkAdjustment" id="fstab-freq-adjustment">
     <property name="upper">1000000</property>

@@ -1507,6 +1507,9 @@ calculate_configuration_for_display (UDisksBlockDevice *block)
   const gchar *config_type;
   gboolean mentioned_fstab = FALSE;
   gboolean mentioned_crypttab = FALSE;
+  gchar *ret;
+
+  ret = NULL;
 
   /* TODO: could include more details such as whether the
    * device is activated at boot time
@@ -1552,11 +1555,27 @@ calculate_configuration_for_display (UDisksBlockDevice *block)
 
   if (str->len == 0)
     {
-      /* Translators: Shown when the device is not configured */
-      g_string_append (str, _("No"));
+      /* No known configuration... show "No" only if we actually
+       * know how to configure the device.
+       */
+      if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0 ||
+          (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
+           g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0) ||
+          g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
+        {
+          /* Translators: Shown when the device is not configured */
+          g_string_append (str, _("No"));
+        }
+      else
+        {
+          g_string_free (str, TRUE);
+          goto out;
+        }
     }
 
-  return g_string_free (str, FALSE);
+  ret = g_string_free (str, FALSE);
+ out:
+  return ret;
 }
 
 static gboolean
@@ -1782,12 +1801,15 @@ update_device_page_for_block (GduWindow          *window,
     }
 
   configuration_for_display = calculate_configuration_for_display (block);
-  set_markup (window,
-              "devtab-volume-configured-label",
-              "devtab-volume-configured-value-label",
-              configuration_for_display,
-              SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  g_free (configuration_for_display);
+  if (configuration_for_display != NULL)
+    {
+      set_markup (window,
+                  "devtab-volume-configured-label",
+                  "devtab-volume-configured-value-label",
+                  configuration_for_display,
+                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      g_free (configuration_for_display);
+    }
 }
 
 static void

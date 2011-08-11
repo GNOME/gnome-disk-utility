@@ -75,6 +75,7 @@ struct GridElement
   gboolean show_padlock_open;
   gboolean show_padlock_closed;
   gboolean show_mounted;
+  gboolean show_configured;
 
   /* used for the job spinner */
   guint spinner_current;
@@ -1234,7 +1235,12 @@ render_element (GduVolumeGrid *grid,
   if (element->show_mounted)
     g_ptr_array_add (pixbufs_to_render,
                      gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "gdu-state-mounted-symbolic",
+                                               "media-playback-start-symbolic",
+                                               12, 0, NULL));
+  if (element->show_configured)
+    g_ptr_array_add (pixbufs_to_render,
+                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                               "user-bookmarks-symbolic",
                                                12, 0, NULL));
   for (n = 0; n < pixbufs_to_render->len; n++)
     {
@@ -1924,6 +1930,9 @@ grid_element_set_details (GduVolumeGrid  *grid,
         type = udisks_block_device_get_id_type (block);
         version = udisks_block_device_get_id_version (block);
         partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
+
+        if (g_variant_n_children (udisks_block_device_get_configuration (block)) > 0)
+          element->show_configured = TRUE;
 
         if (udisks_block_device_get_part_entry (block) &&
             g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&

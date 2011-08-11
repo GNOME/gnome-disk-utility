@@ -1499,6 +1499,90 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
   return ret;
 }
 
+static gchar *
+calculate_configuration_for_display (UDisksBlockDevice *block)
+{
+  GString *str;
+  GVariantIter iter;
+  const gchar *config_type;
+  gboolean mentioned_fstab = FALSE;
+  gboolean mentioned_crypttab = FALSE;
+
+  /* TODO: could include more details such as whether the
+   * device is activated at boot time
+   */
+
+  str = g_string_new (NULL);
+  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, NULL))
+    {
+      if (g_strcmp0 (config_type, "fstab") == 0)
+        {
+          if (!mentioned_fstab)
+            {
+              mentioned_fstab = TRUE;
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: Shown when the device is configured in /etc/fstab.
+               * Do not translate "/etc/fstab".
+               */
+              g_string_append (str, _("Yes (via /etc/fstab)"));
+            }
+        }
+      else if (g_strcmp0 (config_type, "crypttab") == 0)
+        {
+          if (!mentioned_crypttab)
+            {
+              mentioned_crypttab = TRUE;
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: Shown when the device is configured in /etc/crypttab.
+               * Do not translate "/etc/crypttab".
+               */
+              g_string_append (str, _("Yes (via /etc/crypttab)"));
+            }
+        }
+      else
+        {
+          if (str->len > 0)
+            g_string_append (str, ", ");
+          g_string_append (str, config_type);
+        }
+    }
+
+  if (str->len == 0)
+    {
+      /* Translators: Shown when the device is not configured */
+      g_string_append (str, _("No"));
+    }
+
+  return g_string_free (str, FALSE);
+}
+
+static gboolean
+has_configuration (UDisksBlockDevice *block,
+                   const gchar       *type)
+{
+  GVariantIter iter;
+  const gchar *config_type;
+  gboolean ret;
+
+  ret = FALSE;
+
+  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, NULL))
+    {
+      if (g_strcmp0 (config_type, type) == 0)
+        {
+          ret = TRUE;
+          goto out;
+        }
+    }
+
+ out:
+  return ret;
+}
+
 static void
 update_device_page_for_block (GduWindow          *window,
                               UDisksObject       *object,
@@ -1511,9 +1595,17 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *version;
   gint partition_type;
   gchar *type_for_display;
+  gchar *configuration_for_display;
 
-  /* any device can be referenced in /etc/fstab even if it has no media or the type is unknown */
-  *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+  /* Since /etc/fstab, /etc/crypttab and so on can reference
+   * any device regardless of its content ... we want to show
+   * the relevant menu option (to get to the configuration dialog)
+   * if the device matches the configuration....
+   */
+  if (has_configuration (block, "fstab"))
+    *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+  if (has_configuration (block, "crypttab"))
+    *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
 
   //g_debug ("In update_device_page_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -1589,6 +1681,7 @@ update_device_page_for_block (GduWindow          *window,
   if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0)
     {
       UDisksFilesystem *filesystem;
+
       filesystem = udisks_object_peek_filesystem (object);
       if (filesystem != NULL)
         {
@@ -1629,7 +1722,9 @@ update_device_page_for_block (GduWindow          *window,
           else
             *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
         }
+
       *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
     }
   else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
            g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
@@ -1686,62 +1781,13 @@ update_device_page_for_block (GduWindow          *window,
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
     }
 
-  /* Configuration */
-  if (TRUE)
-    {
-      GString *str;
-      GVariantIter iter;
-      const gchar *config_type;
-      gboolean mentioned_fstab = FALSE;
-      gboolean mentioned_crypttab = FALSE;
-
-      str = g_string_new (NULL);
-
-      g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
-      while (g_variant_iter_next (&iter, "(&sa{sv})", &config_type, NULL))
-        {
-          if (g_strcmp0 (config_type, "fstab") == 0)
-            {
-              if (!mentioned_fstab)
-                {
-                  mentioned_fstab = TRUE;
-                  if (str->len > 0)
-                    g_string_append (str, ", ");
-                  /* Translators: Shown when the device is configured in /etc/fstab.
-                   * Do not translate "/etc/fstab".
-                   */
-                  g_string_append (str, _("In /etc/fstab"));
-                }
-            }
-          else if (g_strcmp0 (config_type, "crypttab") == 0)
-            {
-              if (!mentioned_crypttab)
-                {
-                  mentioned_crypttab = TRUE;
-                  if (str->len > 0)
-                    g_string_append (str, ", ");
-                  /* Translators: Shown when the device is configured in /etc/crypttab.
-                   * Do not translate "/etc/crypttab".
-                   */
-                  g_string_append (str, _("In /etc/crypttab"));
-                }
-            }
-          else
-            {
-              if (str->len > 0)
-                g_string_append (str, ", ");
-              g_string_append (str, config_type);
-            }
-        }
-
-      set_markup (window,
-                  "devtab-volume-configured-label",
-                  "devtab-volume-configured-value-label",
-                  str->str,
-                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-      g_string_free (str, TRUE);
-    }
-
+  configuration_for_display = calculate_configuration_for_display (block);
+  set_markup (window,
+              "devtab-volume-configured-label",
+              "devtab-volume-configured-value-label",
+              configuration_for_display,
+              SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_free (configuration_for_display);
 }
 
 static void

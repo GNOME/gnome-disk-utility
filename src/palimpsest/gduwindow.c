@@ -1499,16 +1499,39 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
   return ret;
 }
 
+static gboolean
+options_has (const gchar *options, const gchar *str)
+{
+  gboolean ret = FALSE;
+  gchar **tokens;
+  guint n;
+
+  tokens = g_strsplit (options, ",", 0);
+  for (n = 0; tokens != NULL && tokens[n] != NULL; n++)
+    {
+      if (g_strcmp0 (tokens[n], str) == 0)
+        {
+          ret = TRUE;
+          goto out;
+        }
+    }
+ out:
+  g_strfreev (tokens);
+  return ret;
+}
+
 static gchar *
 calculate_configuration_for_display (UDisksBlockDevice *block,
                                      guint              show_flags)
 {
   GString *str;
   GVariantIter iter;
-  const gchar *config_type;
+  const gchar *type;
+  GVariant *details;
   gboolean mentioned_fstab = FALSE;
   gboolean mentioned_crypttab = FALSE;
   gchar *ret;
+  const gchar *options;
 
   ret = NULL;
 
@@ -1518,40 +1541,69 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
 
   str = g_string_new (NULL);
   g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
-  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, NULL))
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &type, &details))
     {
-      if (g_strcmp0 (config_type, "fstab") == 0)
+      if (g_strcmp0 (type, "fstab") == 0)
         {
           if (!mentioned_fstab)
             {
               mentioned_fstab = TRUE;
               if (str->len > 0)
                 g_string_append (str, ", ");
-              /* Translators: Shown when the device is configured in /etc/fstab.
-               * Do not translate "/etc/fstab".
-               */
-              g_string_append (str, _("Yes (via /etc/fstab)"));
+              if (!g_variant_lookup (details, "opts", "^&ay", &options))
+                options = "";
+              if (options_has (options, "noauto"))
+                {
+                  /* Translators: Shown when the device is configured in /etc/fstab
+                   * but not automatically mounted at boot time.
+                   * This string is shown next to the label "Configured".
+                   */
+                  g_string_append (str, _("Yes, manually"));
+                }
+              else
+                {
+                  /* Translators: Shown when the device is configured in /etc/fstab
+                   * and automatically mounted at boot time.
+                   * This string is shown next to the label "Configured".
+                   */
+                  g_string_append (str, _("Yes, at system startup"));
+                }
             }
         }
-      else if (g_strcmp0 (config_type, "crypttab") == 0)
+      else if (g_strcmp0 (type, "crypttab") == 0)
         {
           if (!mentioned_crypttab)
             {
               mentioned_crypttab = TRUE;
               if (str->len > 0)
                 g_string_append (str, ", ");
-              /* Translators: Shown when the device is configured in /etc/crypttab.
-               * Do not translate "/etc/crypttab".
-               */
-              g_string_append (str, _("Yes (via /etc/crypttab)"));
+              if (!g_variant_lookup (details, "options", "^&ay", &options))
+                options = "";
+              if (options_has (options, "noauto"))
+                {
+                  /* Translators: Shown when the device is configured in /etc/crypttab
+                   * but not automatically unlocked at boot time.
+                   * This string is shown next to the label "Configured".
+                   */
+                  g_string_append (str, _("Yes, manually"));
+                }
+              else
+                {
+                  /* Translators: Shown when the device is configured in /etc/crypttab
+                   * but not automatically unlocked at boot time.
+                   * This string is shown next to the label "Configured".
+                   */
+                  g_string_append (str, _("Yes, at system startup"));
+                }
             }
         }
       else
         {
           if (str->len > 0)
             g_string_append (str, ", ");
-          g_string_append (str, config_type);
+          g_string_append (str, type);
         }
+      g_variant_unref (details);
     }
 
   if (str->len == 0)

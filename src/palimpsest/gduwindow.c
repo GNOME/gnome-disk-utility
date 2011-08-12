@@ -2621,6 +2621,9 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       dir = "";
       type = "auto";
       opts = "defaults";
+      /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
+      if (drive != NULL && udisks_drive_get_media_removable (drive))
+        opts = "defaults,noauto";
       freq = 0;
       passno = 0;
     }

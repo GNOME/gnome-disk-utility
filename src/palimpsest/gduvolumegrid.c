@@ -1898,7 +1898,17 @@ grid_element_set_details (GduVolumeGrid  *grid,
       break;
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
-      element->markup = g_strdup (_("No Media"));
+      {
+        element->markup = g_strdup (_("No Media"));
+
+        if (grid->block_device != NULL)
+          {
+            UDisksBlockDevice *block;
+            block = udisks_object_peek_block_device (grid->block_device);
+            if (block != NULL && g_variant_n_children (udisks_block_device_get_configuration (block)) > 0)
+              element->show_configured = TRUE;
+          }
+      }
       break;
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:

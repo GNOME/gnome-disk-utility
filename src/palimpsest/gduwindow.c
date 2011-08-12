@@ -1583,25 +1583,41 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
 
 static gboolean
 has_configuration (UDisksBlockDevice *block,
-                   const gchar       *type)
+                   const gchar       *type,
+                   gboolean          *out_has_passphrase)
 {
   GVariantIter iter;
   const gchar *config_type;
+  GVariant *config_details;
   gboolean ret;
+  gboolean has_passphrase;
 
   ret = FALSE;
+  has_passphrase = FALSE;
 
   g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
-  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, NULL))
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, &config_details))
     {
       if (g_strcmp0 (config_type, type) == 0)
         {
+          if (g_strcmp0 (type, "crypttab") == 0)
+            {
+              const gchar *passphrase_path;
+              if (g_variant_lookup (config_details, "passphrase-path", "^&ay", &passphrase_path) &&
+                  strlen (passphrase_path) > 0 &&
+                  !g_str_has_prefix (passphrase_path, "/dev"))
+                has_passphrase = TRUE;
+            }
           ret = TRUE;
+          g_variant_unref (config_details);
           goto out;
         }
+      g_variant_unref (config_details);
     }
 
  out:
+  if (out_has_passphrase != NULL)
+    *out_has_passphrase = has_passphrase;
   return ret;
 }
 
@@ -1624,9 +1640,9 @@ update_device_page_for_block (GduWindow          *window,
    * the relevant menu option (to get to the configuration dialog)
    * if the device matches the configuration....
    */
-  if (has_configuration (block, "fstab"))
+  if (has_configuration (block, "fstab", NULL))
     *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
-  if (has_configuration (block, "crypttab"))
+  if (has_configuration (block, "crypttab", NULL))
     *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
 
   /* if the device has no media and there is no existing configuration, then
@@ -3449,12 +3465,24 @@ on_devtab_action_unlock_activated (GtkAction *action,
   GtkWidget *entry;
   GtkWidget *show_passphrase_check_button;
   UDisksObject *object;
+  UDisksBlockDevice *block;
   UDisksEncrypted *encrypted;
+  const gchar *passphrase;
+  gboolean has_passphrase;
 
-  /* TODO: look up passphrase from gnome-keyring */
+  dialog = NULL;
+  builder = NULL;
+
+  /* TODO: look up passphrase from gnome-keyring? */
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  block = udisks_object_peek_block_device (object);
   encrypted = udisks_object_peek_encrypted (object);
+
+  passphrase = "";
+  has_passphrase = FALSE;
+  if (has_configuration (block, "crypttab", &has_passphrase) && has_passphrase)
+    goto do_call;
 
   dialog = gdu_window_new_widget (window, "unlock-device-dialog", &builder);
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-passphrase-entry"));
@@ -3479,17 +3507,24 @@ on_devtab_action_unlock_activated (GtkAction *action,
   if (response != GTK_RESPONSE_OK)
     goto out;
 
+  passphrase = gtk_entry_get_text (GTK_ENTRY (entry));
+
+ do_call:
   udisks_encrypted_call_unlock (encrypted,
-                                gtk_entry_get_text (GTK_ENTRY (entry)), /* passphrase */
+                                passphrase,
                                 g_variant_new ("a{sv}", NULL), /* options */
                                 NULL, /* cancellable */
                                 (GAsyncReadyCallback) unlock_cb,
                                 g_object_ref (window));
 
  out:
-  gtk_widget_hide (dialog);
-  gtk_widget_destroy (dialog);
-  g_object_unref (builder);
+  if (dialog != NULL)
+    {
+      gtk_widget_hide (dialog);
+      gtk_widget_destroy (dialog);
+    }
+  if (builder != NULL)
+    g_object_unref (builder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

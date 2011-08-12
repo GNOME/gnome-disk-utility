@@ -1554,19 +1554,43 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
                 options = "";
               if (options_has (options, "noauto"))
                 {
-                  /* Translators: Shown when the device is configured in /etc/fstab
-                   * but not automatically mounted at boot time.
-                   * This string is shown next to the label "Configured".
-                   */
-                  g_string_append (str, _("Yes, manually"));
+                  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
+                      g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+                    {
+                      /* Translators: Shown when the device is configured in /etc/fstab
+                       * is a swap device but not automatically mounted at boot time.
+                       * This string is shown next to the label "Configured".
+                       */
+                      g_string_append (str, _("Yes (not activated at system startup)"));
+                    }
+                  else
+                    {
+                      /* Translators: Shown when the device is configured in /etc/fstab
+                       * but not automatically mounted at boot time.
+                       * This string is shown next to the label "Configured".
+                       */
+                      g_string_append (str, _("Yes (not mounted at system startup)"));
+                    }
                 }
               else
                 {
-                  /* Translators: Shown when the device is configured in /etc/fstab
-                   * and automatically mounted at boot time.
-                   * This string is shown next to the label "Configured".
-                   */
-                  g_string_append (str, _("Yes, at system startup"));
+                  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
+                      g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+                    {
+                      /* Translators: Shown when the device is configured in /etc/fstab
+                       * is a swap device and automatically activated at boot time.
+                       * This string is shown next to the label "Configured".
+                       */
+                      g_string_append (str, _("Yes (activated at system startup)"));
+                    }
+                  else
+                    {
+                      /* Translators: Shown when the device is configured in /etc/fstab
+                       * and automatically mounted at boot time.
+                       * This string is shown next to the label "Configured".
+                       */
+                      g_string_append (str, _("Yes (mounted at system startup)"));
+                    }
                 }
             }
         }
@@ -1585,7 +1609,7 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
                    * but not automatically unlocked at boot time.
                    * This string is shown next to the label "Configured".
                    */
-                  g_string_append (str, _("Yes, manually"));
+                  g_string_append (str, _("Yes (not unlocked at system startup)"));
                 }
               else
                 {
@@ -1593,7 +1617,7 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
                    * but not automatically unlocked at boot time.
                    * This string is shown next to the label "Configured".
                    */
-                  g_string_append (str, _("Yes, at system startup"));
+                  g_string_append (str, _("Yes (unlocked at system startup)"));
                 }
             }
         }

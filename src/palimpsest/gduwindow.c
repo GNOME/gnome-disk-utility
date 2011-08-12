@@ -1500,7 +1500,8 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
 }
 
 static gchar *
-calculate_configuration_for_display (UDisksBlockDevice *block)
+calculate_configuration_for_display (UDisksBlockDevice *block,
+                                     guint              show_flags)
 {
   GString *str;
   GVariantIter iter;
@@ -1556,12 +1557,14 @@ calculate_configuration_for_display (UDisksBlockDevice *block)
   if (str->len == 0)
     {
       /* No known configuration... show "No" only if we actually
-       * know how to configure the device.
+       * know how to configure the device or already offer to
+       * configure the device...
        */
       if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0 ||
           (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
            g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0) ||
-          g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
+          g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0 ||
+          show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB | SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB))
         {
           /* Translators: Shown when the device is not configured */
           g_string_append (str, _("No"));
@@ -1625,6 +1628,17 @@ update_device_page_for_block (GduWindow          *window,
     *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
   if (has_configuration (block, "crypttab"))
     *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
+
+  /* if the device has no media and there is no existing configuration, then
+   * show CONFIGURE_FSTAB since the user might want to add an entry for e.g.
+   * /media/cdrom
+   */
+  if (udisks_block_device_get_size (block) == 0 &&
+      !(*show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB |
+                       SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB)))
+    {
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+    }
 
   //g_debug ("In update_device_page_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -1800,7 +1814,7 @@ update_device_page_for_block (GduWindow          *window,
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
     }
 
-  configuration_for_display = calculate_configuration_for_display (block);
+  configuration_for_display = calculate_configuration_for_display (block, *show_flags);
   if (configuration_for_display != NULL)
     {
       set_markup (window,

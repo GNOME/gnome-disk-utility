@@ -2409,6 +2409,33 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
   fstab_update_device_explanation (data);
 }
 
+static gboolean
+drive_treat_as_removable (UDisksDrive       *drive,
+                          UDisksBlockDevice *block)
+{
+  gboolean ret = FALSE;
+  const gchar *device_file;
+
+  g_return_val_if_fail (UDISKS_IS_DRIVE (drive), FALSE);
+  g_return_val_if_fail (UDISKS_IS_BLOCK_DEVICE (block), FALSE);
+
+  if (udisks_drive_get_media_removable (drive))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  device_file = udisks_block_device_get_device (block);
+  if (g_str_has_prefix (device_file, "/dev/mmcblk"))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+ out:
+  return ret;
+}
+
 static void
 fstab_populate_device_combo_box (GtkWidget         *device_combobox,
                                  UDisksDrive       *drive,
@@ -2488,7 +2515,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
       /* if the device is using removable media, prefer
        * by-id / by-path to by-uuid / by-label
        */
-      if (drive != NULL && udisks_drive_get_media_removable (drive))
+      if (drive != NULL && drive_treat_as_removable (drive, block))
         {
           if (by_id != -1)
             selected = by_id;
@@ -2547,7 +2574,6 @@ check_if_system_mount (const gchar *dir)
       return TRUE;
   return FALSE;
 }
-
 
 static void
 on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
@@ -2638,7 +2664,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       type = "auto";
       opts = "defaults";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
-      if (drive != NULL && udisks_drive_get_media_removable (drive))
+      if (drive != NULL && drive_treat_as_removable (drive, block))
         opts = "defaults,noauto";
       freq = 0;
       passno = 0;
@@ -2824,6 +2850,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
 
 typedef struct
 {
+  UDisksDrive *drive;
   UDisksBlockDevice *block;
 
   GduWindow *window;
@@ -2988,6 +3015,9 @@ crypttab_dialog_present (CrypttabDialogData *data)
       configured = FALSE;
       name = g_strdup_printf ("luks-%s", udisks_block_device_get_id_uuid (data->block));
       options = "";
+      /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
+      if (data->drive != NULL && drive_treat_as_removable (data->drive, data->block))
+        options = "noauto";
       passphrase_contents = "";
     }
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->configure_checkbutton), configured);
@@ -3214,6 +3244,7 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
+  UDisksObject *drive_object;
   GtkWidget *dialog;
   CrypttabDialogData *data;
   GVariantIter iter;
@@ -3230,6 +3261,15 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
     object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
   data->block = udisks_object_peek_block_device (object);
   g_assert (data->block != NULL);
+
+  data->drive = NULL;
+  drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                                    udisks_block_device_get_drive (data->block));
+  if (drive_object != NULL)
+    {
+      data->drive = udisks_object_peek_drive (drive_object);
+      g_object_unref (drive_object);
+    }
 
   dialog = gdu_window_new_widget (window, "crypttab-dialog", &data->builder);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));

@@ -1362,6 +1362,7 @@ update_device_page_for_drive (GduWindow      *window,
   GIcon *drive_icon;
   GIcon *media_icon;
   guint64 size;
+  UDisksDriveAta *ata;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1369,6 +1370,8 @@ update_device_page_for_drive (GduWindow      *window,
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
   block_devices = get_top_level_block_devices_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
+
+  ata = udisks_object_peek_drive_ata (object);
 
   udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
 
@@ -1419,6 +1422,73 @@ update_device_page_for_drive (GduWindow      *window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
               udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
+
+  if (ata != NULL && !udisks_drive_get_media_removable (drive))
+    {
+      gchar *s2 = NULL;
+      if (!udisks_drive_ata_get_smart_supported (ata))
+        {
+          s = g_strdup (_("S.M.A.R.T. not supported"));
+        }
+      else if (!udisks_drive_ata_get_smart_enabled (ata))
+        {
+          s = g_strdup (_("S.M.A.R.T. not enabled"));
+        }
+      else
+        {
+          guint64 updated;
+
+          updated = udisks_drive_ata_get_smart_updated (ata);
+          if (updated == 0)
+            {
+              s = g_strdup (_("S.M.A.R.T. data not collected"));
+            }
+          else
+            {
+              gboolean failing;
+              gdouble temp;
+
+              failing = udisks_drive_ata_get_smart_failing (ata);
+              if (failing)
+                {
+                  s = g_strdup_printf ("<b><span foreground=\"#ff0000\">%s</span></b>",
+                                        _("FAILING NOW"));
+                }
+              else
+                {
+                  s = g_strdup (_("Passed"));
+                }
+              /* TODO: also show if a self-test is in progress */
+
+              temp = udisks_drive_ata_get_smart_temperature (ata);
+              if (temp > 1.0)
+                {
+                  gdouble celcius;
+                  gdouble fahrenheit;
+                  celcius = temp - 273.15;
+                  fahrenheit = 9.0 * celcius / 5.0 + 32.0;
+                  /* Translators: Used to convey the temperature of a drive.
+                   * The first %f is the temperature in degrees Celcius and the second %f
+                   * is the temperature in degrees Fahrenheit
+                   */
+                  s2 = g_strdup_printf (_("%.0f° C / %.0f° F"), celcius, fahrenheit);
+                }
+            }
+        }
+      set_markup (window,
+                  "devtab-drive-smart-label",
+                  "devtab-drive-smart-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
+      if (s2 != NULL)
+        {
+          set_markup (window,
+                      "devtab-drive-temperature-label",
+                      "devtab-drive-temperature-value-label",
+                      s2, SET_MARKUP_FLAGS_NONE);
+          g_free (s2);
+        }
+    }
 
   size = udisks_drive_get_size (drive);
   if (size > 0)

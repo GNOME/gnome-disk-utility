@@ -1356,6 +1356,7 @@ update_device_page_for_drive (GduWindow      *window,
   GString *str;
   const gchar *drive_vendor;
   const gchar *drive_model;
+  const gchar *drive_revision;
   gchar *name;
   gchar *description;
   gchar *media_description;
@@ -1377,6 +1378,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   drive_vendor = udisks_drive_get_vendor (drive);
   drive_model = udisks_drive_get_model (drive);
+  drive_revision = udisks_drive_get_revision (drive);
 
   str = g_string_new (NULL);
   for (l = block_devices; l != NULL; l = l->next)
@@ -1400,32 +1402,28 @@ update_device_page_for_drive (GduWindow      *window,
     gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), drive_icon, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
+  str = g_string_new (NULL);
   if (strlen (drive_vendor) == 0)
-    s = g_strdup (drive_model);
+    g_string_append (str, drive_model);
   else if (strlen (drive_model) == 0)
-    s = g_strdup (drive_vendor);
+    g_string_append (str, drive_vendor);
   else
-    s = g_strconcat (drive_vendor, " ", drive_model, NULL);
+    g_string_append_printf (str, "%s %s", drive_vendor, drive_model);
+  if (strlen (drive_revision) > 0)
+    g_string_append_printf (str, " (%s)", drive_revision);
   set_markup (window,
               "devtab-model-label",
-              "devtab-model-value-label", s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  g_free (s);
+              "devtab-model-value-label", str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_string_free (str, TRUE);
   set_markup (window,
               "devtab-serial-number-label",
               "devtab-serial-number-value-label",
               udisks_drive_get_serial (drive), SET_MARKUP_FLAGS_NONE);
-  set_markup (window,
-              "devtab-firmware-version-label",
-              "devtab-firmware-version-value-label",
-              udisks_drive_get_revision (drive), SET_MARKUP_FLAGS_NONE);
-  set_markup (window,
-              "devtab-wwn-label",
-              "devtab-wwn-value-label",
-              udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
 
   if (ata != NULL && !udisks_drive_get_media_removable (drive))
     {
       gchar *s2 = NULL;
+      gchar *s3 = NULL;
       if (!udisks_drive_ata_get_smart_supported (ata))
         {
           s = g_strdup (_("S.M.A.R.T. not supported"));
@@ -1452,13 +1450,16 @@ update_device_page_for_drive (GduWindow      *window,
               if (failing)
                 {
                   s = g_strdup_printf ("<b><span foreground=\"#ff0000\">%s</span></b>",
-                                        _("FAILING NOW"));
+                                        _("ABOUT TO FAIL"));
                 }
               else
                 {
-                  s = g_strdup (_("Passed"));
+                  s = g_strdup (_("No problems detected"));
                 }
-              /* TODO: also show if a self-test is in progress */
+              /* TODO: Also show
+               * - if one or more prefail attrs are exceeding threshold
+               * - if a self-test is in progress
+               */
 
               temp = udisks_drive_ata_get_smart_temperature (ata);
               if (temp > 1.0)
@@ -1475,19 +1476,21 @@ update_device_page_for_drive (GduWindow      *window,
                 }
             }
         }
+      if (s2 != NULL)
+        {
+          s3 = g_strdup_printf ("%s (%s)", s, s2);
+        }
+      else
+        {
+          s3 = g_strdup (s);
+        }
       set_markup (window,
                   "devtab-drive-smart-label",
                   "devtab-drive-smart-value-label",
-                  s, SET_MARKUP_FLAGS_NONE);
+                  s3, SET_MARKUP_FLAGS_NONE);
+      g_free (s3);
+      g_free (s2);
       g_free (s);
-      if (s2 != NULL)
-        {
-          set_markup (window,
-                      "devtab-drive-temperature-label",
-                      "devtab-drive-temperature-value-label",
-                      s2, SET_MARKUP_FLAGS_NONE);
-          g_free (s2);
-        }
     }
 
   size = udisks_drive_get_size (drive);

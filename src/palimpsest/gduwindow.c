@@ -238,6 +238,10 @@ gdu_window_finalize (GObject *object)
   GduWindow *window = GDU_WINDOW (object);
   GDBusObjectManager *object_manager;
 
+  gtk_window_remove_mnemonic (GTK_WINDOW (window),
+                              'd',
+                              window->device_treeview);
+
   object_manager = udisks_client_get_object_manager (window->client);
   g_signal_handlers_disconnect_by_func (object_manager,
                                         G_CALLBACK (on_object_added),
@@ -346,9 +350,16 @@ set_selected_object (GduWindow    *window,
 
   if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
     {
+      GtkTreePath *path;
       GtkTreeSelection *tree_selection;
       tree_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->device_treeview));
       gtk_tree_selection_select_iter (tree_selection, &iter);
+      path = gtk_tree_model_get_path (GTK_TREE_MODEL (window->model), &iter);
+      gtk_tree_view_set_cursor (GTK_TREE_VIEW (window->device_treeview),
+                                path,
+                                NULL,
+                                FALSE);
+      gtk_tree_path_free (path);
     }
 
   show_flags = SHOW_FLAGS_NONE;
@@ -370,6 +381,35 @@ set_selected_object (GduWindow    *window,
       select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &show_flags);
     }
   update_for_show_flags (window, show_flags);
+}
+
+static gboolean
+ensure_something_selected_foreach_cb (GtkTreeModel  *model,
+                                      GtkTreePath   *path,
+                                      GtkTreeIter   *iter,
+                                      gpointer       user_data)
+{
+  UDisksObject **object = user_data;
+  gtk_tree_model_get (model, iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
+                      -1);
+  if (*object != NULL)
+    return TRUE;
+  return FALSE;
+}
+
+static void
+ensure_something_selected (GduWindow *window)
+{
+  UDisksObject *object = NULL;
+  gtk_tree_model_foreach (GTK_TREE_MODEL (window->model),
+                          ensure_something_selected_foreach_cb,
+                          &object);
+  if (object != NULL)
+    {
+      set_selected_object (window, object);
+      g_object_unref (object);
+    }
 }
 
 static void
@@ -394,6 +434,7 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
   else
     {
       set_selected_object (window, NULL);
+      ensure_something_selected (window);
     }
 }
 
@@ -628,6 +669,16 @@ init_css (GduWindow *window)
   ;
 }
 
+
+static gboolean
+on_constructed_in_idle (gpointer user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  /* select something sensible */
+  ensure_something_selected (window);
+  return FALSE; /* remove source */
+}
+
 static void
 gdu_window_constructed (GObject *object)
 {
@@ -639,7 +690,6 @@ gdu_window_constructed (GObject *object)
   GtkStyleContext *context;
   GDBusObjectManager *object_manager;
   GList *children, *l;
-  GtkWidget *headers_label;
   guint n;
 
   init_css (window);
@@ -699,11 +749,10 @@ gdu_window_constructed (GObject *object)
 
   window->model = gdu_device_tree_model_new (window->client);
 
-  headers_label = gtk_label_new (NULL);
-  gtk_label_set_markup_with_mnemonic (GTK_LABEL (headers_label), _("_Devices"));
-  gtk_misc_set_alignment (GTK_MISC (headers_label), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (headers_label), window->device_treeview);
-  gtk_widget_show_all (headers_label);
+  /* set up mnemonic */
+  gtk_window_add_mnemonic (GTK_WINDOW (window),
+                           'd',
+                           window->device_treeview);
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->device_treeview), GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
@@ -718,7 +767,6 @@ gdu_window_constructed (GObject *object)
                     window);
 
   column = gtk_tree_view_column_new ();
-  gtk_tree_view_column_set_widget (column, headers_label);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->device_treeview), column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -858,6 +906,8 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_menu_item_edit_partition),
                     window);
+
+  g_idle_add (on_constructed_in_idle, g_object_ref (window));
 }
 
 static void

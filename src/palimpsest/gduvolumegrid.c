@@ -553,7 +553,7 @@ gdu_volume_grid_get_preferred_height (GtkWidget *widget,
                                       gint      *minimal_height,
                                       gint      *natural_height)
 {
-  *minimal_height = *natural_height = 100;
+  *minimal_height = *natural_height = 120;
 }
 
 static void

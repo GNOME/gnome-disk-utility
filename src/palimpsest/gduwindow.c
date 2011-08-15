@@ -1276,7 +1276,7 @@ update_all (GduWindow     *window,
 
     case DETAILS_PAGE_DEVICE:
       /* this is a little too inclusive.. */
-      if (gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
+      if (object != NULL && gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
         {
           ShowFlags show_flags;
           show_flags = SHOW_FLAGS_NONE;
@@ -1293,6 +1293,7 @@ on_object_added (GDBusObjectManager  *manager,
                  gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_object_added %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   update_all (window, UDISKS_OBJECT (object));
 }
 
@@ -1302,6 +1303,7 @@ on_object_removed (GDBusObjectManager  *manager,
                    gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_object_removed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   update_all (window, UDISKS_OBJECT (object));
 }
 
@@ -1312,6 +1314,7 @@ on_interface_added (GDBusObjectManager  *manager,
                     gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_interface_added %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   update_all (window, UDISKS_OBJECT (object));
 }
 
@@ -1322,6 +1325,7 @@ on_interface_removed (GDBusObjectManager  *manager,
                       gpointer             user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_interface_removed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   update_all (window, UDISKS_OBJECT (object));
 }
 
@@ -1334,7 +1338,17 @@ on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
                                        gpointer                    user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_interface_proxy_properties_changed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object_proxy)));
   update_all (window, UDISKS_OBJECT (object_proxy));
+}
+
+static void
+on_volume_grid_changed (GduVolumeGrid  *grid,
+                        gpointer        user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  // g_debug ("on_volume_grid_changed");
+  update_all (window, gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2155,19 +2169,6 @@ static void
 teardown_device_page (GduWindow *window)
 {
   gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_volume_grid_changed (GduVolumeGrid  *grid,
-                        gpointer        user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  ShowFlags show_flags;
-  show_flags = SHOW_FLAGS_NONE;
-  update_device_page (window, &show_flags);
-  update_for_show_flags (window, show_flags);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

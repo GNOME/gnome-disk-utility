@@ -1853,6 +1853,8 @@ recompute_grid (GduVolumeGrid *grid)
 
   /* queue a redraw */
   gtk_widget_queue_draw (GTK_WIDGET (grid));
+
+  g_signal_emit (grid, signals[CHANGED_SIGNAL], 0);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -529,9 +529,8 @@ update_drive (GduDeviceTreeModel *model,
                        "<small><span foreground=\"#555555\">%s</span></small>",
                        description,
                        name);
-  /* for now */
-  sort_key = g_strdup_printf ("00_drives_1_%s",
-                              g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+
+  sort_key = g_strdup_printf ("00_drives_1_%s", udisks_drive_get_sort_key (drive));
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,

@@ -9,4 +9,4 @@ DOC_FIGURES = figures/main-app.png
 clean-local :
 	rm -f *~
 
-DOC_LINGUAS = cs de el es pl pt_BR ro sv sl zh_CN
+DOC_LINGUAS = cs de el es fr pl pt_BR ro sv sl zh_CN

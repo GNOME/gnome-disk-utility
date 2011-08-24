@@ -366,7 +366,7 @@ set_selected_object (GduWindow    *window,
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
-          udisks_object_peek_block_device (object) != NULL)
+          udisks_object_peek_block (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_DEVICE, &show_flags);
         }
@@ -1144,8 +1144,8 @@ set_size (GduWindow      *window,
 }
 
 static GList *
-get_top_level_block_devices_for_drive (GduWindow   *window,
-                                       const gchar *drive_object_path)
+get_top_level_blocks_for_drive (GduWindow   *window,
+                                const gchar *drive_object_path)
 {
   GList *ret;
   GList *l;
@@ -1159,14 +1159,14 @@ get_top_level_block_devices_for_drive (GduWindow   *window,
   for (l = object_proxies; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      UDisksBlockDevice *block;
+      UDisksBlock *block;
 
-      block = udisks_object_get_block_device (object);
+      block = udisks_object_get_block (object);
       if (block == NULL)
         continue;
 
-      if (g_strcmp0 (udisks_block_device_get_drive (block), drive_object_path) == 0 &&
-          !udisks_block_device_get_part_entry (block))
+      if (g_strcmp0 (udisks_block_get_drive (block), drive_object_path) == 0 &&
+          !udisks_block_get_part_entry (block))
         {
           ret = g_list_append (ret, g_object_ref (object));
         }
@@ -1178,11 +1178,11 @@ get_top_level_block_devices_for_drive (GduWindow   *window,
 }
 
 static gint
-block_device_compare_on_preferred (UDisksObject *a,
-                                   UDisksObject *b)
+block_compare_on_preferred (UDisksObject *a,
+                            UDisksObject *b)
 {
-  return g_strcmp0 (udisks_block_device_get_preferred_device (udisks_object_peek_block_device (a)),
-                    udisks_block_device_get_preferred_device (udisks_object_peek_block_device (b)));
+  return g_strcmp0 (udisks_block_get_preferred_device (udisks_object_peek_block (a)),
+                    udisks_block_get_preferred_device (udisks_object_peek_block (b)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1348,7 +1348,7 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   // g_debug ("on_volume_grid_changed");
-  update_all (window, gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid)));
+  update_all (window, gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1358,15 +1358,15 @@ setup_device_page (GduWindow     *window,
                    UDisksObject  *object)
 {
   UDisksDrive *drive;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
 
   drive = udisks_object_peek_drive (object);
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
 
   gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
   if (drive != NULL)
     {
-      GList *block_devices;
+      GList *blocks;
       gchar *drive_name;
       gchar *drive_desc;
       GIcon *drive_icon;
@@ -1374,8 +1374,8 @@ setup_device_page (GduWindow     *window,
       GIcon *drive_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-      block_devices = get_top_level_block_devices_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-      block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
+      blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
 
       udisks_util_get_drive_info (drive,
                                   &drive_name,
@@ -1383,10 +1383,10 @@ setup_device_page (GduWindow     *window,
                                   &drive_icon,
                                   &drive_media_desc,
                                   &drive_media_icon);
-      if (block_devices != NULL)
-        gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), block_devices->data);
+      if (blocks != NULL)
+        gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), blocks->data);
       else
-        gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
+        gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), NULL);
 
       g_free (drive_name);
       g_free (drive_desc);
@@ -1395,12 +1395,12 @@ setup_device_page (GduWindow     *window,
       if (drive_media_icon != NULL)
         g_object_unref (drive_media_icon);
 
-      g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
-      g_list_free (block_devices);
+      g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
+      g_list_free (blocks);
     }
   else if (block != NULL)
     {
-      gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), object);
+      gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), object);
     }
   else
     {
@@ -1415,7 +1415,7 @@ update_device_page_for_drive (GduWindow      *window,
                               ShowFlags      *show_flags)
 {
   gchar *s;
-  GList *block_devices;
+  GList *blocks;
   GList *l;
   GString *str;
   const gchar *drive_vendor;
@@ -1433,8 +1433,8 @@ update_device_page_for_drive (GduWindow      *window,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
-  block_devices = get_top_level_block_devices_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-  block_devices = g_list_sort (block_devices, (GCompareFunc) block_device_compare_on_preferred);
+  blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+  blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
 
   ata = udisks_object_peek_drive_ata (object);
 
@@ -1445,12 +1445,12 @@ update_device_page_for_drive (GduWindow      *window,
   drive_revision = udisks_drive_get_revision (drive);
 
   str = g_string_new (NULL);
-  for (l = block_devices; l != NULL; l = l->next)
+  for (l = blocks; l != NULL; l = l->next)
     {
       UDisksObject *block_object = UDISKS_OBJECT (l->data);
       if (str->len > 0)
         g_string_append_c (str, ' ');
-      g_string_append (str, udisks_block_device_get_preferred_device (udisks_object_peek_block_device (block_object)));
+      g_string_append (str, udisks_block_get_preferred_device (udisks_object_peek_block (block_object)));
     }
   s = g_strdup_printf ("<big><b>%s</b></big>\n"
                        "<small><span foreground=\"#555555\">%s</span></small>",
@@ -1590,8 +1590,8 @@ update_device_page_for_drive (GduWindow      *window,
       *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
     }
 
-  g_list_foreach (block_devices, (GFunc) g_object_unref, NULL);
-  g_list_free (block_devices);
+  g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
+  g_list_free (blocks);
   if (media_icon != NULL)
     g_object_unref (media_icon);
   g_object_unref (drive_icon);
@@ -1616,13 +1616,13 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
   for (l = objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      UDisksBlockDevice *block;
+      UDisksBlock *block;
 
-      block = udisks_object_peek_block_device (object);
+      block = udisks_object_peek_block (object);
       if (block == NULL)
         continue;
 
-      if (g_strcmp0 (udisks_block_device_get_crypto_backing_device (block),
+      if (g_strcmp0 (udisks_block_get_crypto_backing_device (block),
                      object_path) == 0)
         {
           ret = g_object_ref (object);
@@ -1658,8 +1658,8 @@ options_has (const gchar *options, const gchar *str)
 }
 
 static gchar *
-calculate_configuration_for_display (UDisksBlockDevice *block,
-                                     guint              show_flags)
+calculate_configuration_for_display (UDisksBlock *block,
+                                     guint        show_flags)
 {
   GString *str;
   GVariantIter iter;
@@ -1677,7 +1677,7 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
    */
 
   str = g_string_new (NULL);
-  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  g_variant_iter_init (&iter, udisks_block_get_configuration (block));
   while (g_variant_iter_next (&iter, "(&s@a{sv})", &type, &details))
     {
       if (g_strcmp0 (type, "fstab") == 0)
@@ -1691,8 +1691,8 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
                 options = "";
               if (options_has (options, "noauto"))
                 {
-                  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
-                      g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+                  if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
+                      g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
                     {
                       /* Translators: Shown when the device is configured in /etc/fstab
                        * is a swap device but not automatically mounted at boot time.
@@ -1711,8 +1711,8 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
                 }
               else
                 {
-                  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
-                      g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+                  if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
+                      g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
                     {
                       /* Translators: Shown when the device is configured in /etc/fstab
                        * is a swap device and automatically activated at boot time.
@@ -1773,10 +1773,10 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
        * know how to configure the device or already offer to
        * configure the device...
        */
-      if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0 ||
-          (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
-           g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0) ||
-          g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0 ||
+      if (g_strcmp0 (udisks_block_get_id_usage (block), "filesystem") == 0 ||
+          (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
+           g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0) ||
+          g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 ||
           show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB | SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB))
         {
           /* Translators: Shown when the device is not configured */
@@ -1795,9 +1795,9 @@ calculate_configuration_for_display (UDisksBlockDevice *block,
 }
 
 static gboolean
-has_configuration (UDisksBlockDevice *block,
-                   const gchar       *type,
-                   gboolean          *out_has_passphrase)
+has_configuration (UDisksBlock  *block,
+                   const gchar  *type,
+                   gboolean     *out_has_passphrase)
 {
   GVariantIter iter;
   const gchar *config_type;
@@ -1808,7 +1808,7 @@ has_configuration (UDisksBlockDevice *block,
   ret = FALSE;
   has_passphrase = FALSE;
 
-  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  g_variant_iter_init (&iter, udisks_block_get_configuration (block));
   while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, &config_details))
     {
       if (g_strcmp0 (config_type, type) == 0)
@@ -1837,7 +1837,7 @@ has_configuration (UDisksBlockDevice *block,
 static void
 update_device_page_for_block (GduWindow          *window,
                               UDisksObject       *object,
-                              UDisksBlockDevice  *block,
+                              UDisksBlock        *block,
                               guint64             size,
                               ShowFlags          *show_flags)
 {
@@ -1862,7 +1862,7 @@ update_device_page_for_block (GduWindow          *window,
    * show CONFIGURE_FSTAB since the user might want to add an entry for e.g.
    * /media/cdrom
    */
-  if (udisks_block_device_get_size (block) == 0 &&
+  if (udisks_block_get_size (block) == 0 &&
       !(*show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB |
                        SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB)))
     {
@@ -1876,7 +1876,7 @@ update_device_page_for_block (GduWindow          *window,
   set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              udisks_block_device_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
+              udisks_block_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
   if (size > 0)
     {
       set_size (window,
@@ -1892,15 +1892,15 @@ update_device_page_for_block (GduWindow          *window,
                   NULL, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
-  usage = udisks_block_device_get_id_usage (block);
-  type = udisks_block_device_get_id_type (block);
-  version = udisks_block_device_get_id_version (block);
-  partition_type = strtol (udisks_block_device_get_part_entry_type (block), NULL, 0);
+  usage = udisks_block_get_id_usage (block);
+  type = udisks_block_get_id_type (block);
+  version = udisks_block_get_id_version (block);
+  partition_type = strtol (udisks_block_get_part_entry_type (block), NULL, 0);
 
   if (size > 0)
     {
-      if (udisks_block_device_get_part_entry (block) &&
-          g_strcmp0 (udisks_block_device_get_part_entry_scheme (block), "mbr") == 0 &&
+      if (udisks_block_get_part_entry (block) &&
+          g_strcmp0 (udisks_block_get_part_entry_scheme (block), "mbr") == 0 &&
           (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
         {
           type_for_display = g_strdup (_("Extended Partition"));
@@ -1921,7 +1921,7 @@ update_device_page_for_block (GduWindow          *window,
               SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (type_for_display);
 
-  if (udisks_block_device_get_part_entry (block))
+  if (udisks_block_get_part_entry (block))
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
     }
@@ -1929,7 +1929,7 @@ update_device_page_for_block (GduWindow          *window,
     {
       UDisksObject *drive_object;
       drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                                        udisks_block_device_get_drive (block));
+                                                                        udisks_block_get_drive (block));
       if (drive_object != NULL)
         {
           UDisksDrive *drive;
@@ -1940,7 +1940,7 @@ update_device_page_for_block (GduWindow          *window,
         }
     }
 
-  if (g_strcmp0 (udisks_block_device_get_id_usage (block), "filesystem") == 0)
+  if (g_strcmp0 (udisks_block_get_id_usage (block), "filesystem") == 0)
     {
       UDisksFilesystem *filesystem;
 
@@ -1988,8 +1988,8 @@ update_device_page_for_block (GduWindow          *window,
       *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
     }
-  else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "other") == 0 &&
-           g_strcmp0 (udisks_block_device_get_id_type (block), "swap") == 0)
+  else if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
+           g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
     {
       UDisksSwapspace *swapspace;
       const gchar *str;
@@ -2015,7 +2015,7 @@ update_device_page_for_block (GduWindow          *window,
                       SET_MARKUP_FLAGS_NONE);
         }
     }
-  else if (g_strcmp0 (udisks_block_device_get_id_usage (block), "crypto") == 0)
+  else if (g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0)
     {
       UDisksObject *cleartext_device;
       const gchar *str;
@@ -2058,7 +2058,7 @@ update_device_page_for_block (GduWindow          *window,
 static void
 update_device_page_for_no_media (GduWindow          *window,
                                  UDisksObject       *object,
-                                 UDisksBlockDevice  *block,
+                                 UDisksBlock        *block,
                                  ShowFlags          *show_flags)
 {
   //g_debug ("In update_device_page_for_no_media() - selected=%s",
@@ -2068,7 +2068,7 @@ update_device_page_for_no_media (GduWindow          *window,
 static void
 update_device_page_for_free_space (GduWindow          *window,
                                    UDisksObject       *object,
-                                   UDisksBlockDevice  *block,
+                                   UDisksBlock        *block,
                                    guint64             size,
                                    ShowFlags          *show_flags)
 {
@@ -2079,7 +2079,7 @@ update_device_page_for_free_space (GduWindow          *window,
   set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              udisks_block_device_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
+              udisks_block_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
@@ -2098,7 +2098,7 @@ update_device_page (GduWindow      *window,
 {
   UDisksObject *object;
   GduVolumeGridElementType type;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   UDisksDrive *drive;
   guint64 size;
   GList *children;
@@ -2119,7 +2119,7 @@ update_device_page (GduWindow      *window,
 
   object = window->current_object;
   drive = udisks_object_peek_drive (window->current_object);
-  block = udisks_object_peek_block_device (window->current_object);
+  block = udisks_object_peek_block (window->current_object);
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
@@ -2138,10 +2138,10 @@ update_device_page (GduWindow      *window,
     {
       object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
       if (object == NULL)
-        object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
+        object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
       if (object != NULL)
         {
-          block = udisks_object_peek_block_device (object);
+          block = udisks_object_peek_block (object);
           switch (type)
             {
             case GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER:
@@ -2168,7 +2168,7 @@ update_device_page (GduWindow      *window,
 static void
 teardown_device_page (GduWindow *window)
 {
-  gdu_volume_grid_set_block_device (GDU_VOLUME_GRID (window->volume_grid), NULL);
+  gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2267,7 +2267,7 @@ on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
   GtkWidget *dialog;
   GtkWidget *entry;
   UDisksObject *object;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   UDisksFilesystem *filesystem;
   const gchar *label;
   ChangeFilesystemLabelData data;
@@ -2275,7 +2275,7 @@ on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
   filesystem = udisks_object_peek_filesystem (object);
   g_assert (block != NULL);
   g_assert (filesystem != NULL);
@@ -2285,7 +2285,7 @@ on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  label = udisks_block_device_get_id_label (block);
+  label = udisks_block_get_id_label (block);
   g_signal_connect (entry,
                     "changed",
                     G_CALLBACK (on_change_filesystem_label_entry_changed),
@@ -2362,7 +2362,7 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
   GtkWidget *dialog;
   GtkWidget *combo_box;
   UDisksObject *object;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   const gchar *scheme;
   const gchar *cur_type;
   const gchar **part_types;
@@ -2373,7 +2373,7 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
   g_assert (block != NULL);
 
   dialog = gdu_window_new_widget (window, "change-partition-type-dialog", &builder);
@@ -2381,8 +2381,8 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  scheme = udisks_block_device_get_part_entry_scheme (block);
-  cur_type = udisks_block_device_get_part_entry_type (block);
+  scheme = udisks_block_get_part_entry_scheme (block);
+  cur_type = udisks_block_get_part_entry_type (block);
   part_types = udisks_util_get_part_types_for_scheme (scheme);
   active_index = -1;
   gtk_combo_box_text_remove_all (GTK_COMBO_BOX_TEXT (combo_box));
@@ -2610,14 +2610,14 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
 }
 
 static gboolean
-drive_treat_as_removable (UDisksDrive       *drive,
-                          UDisksBlockDevice *block)
+drive_treat_as_removable (UDisksDrive  *drive,
+                          UDisksBlock  *block)
 {
   gboolean ret = FALSE;
   const gchar *device_file;
 
   g_return_val_if_fail (UDISKS_IS_DRIVE (drive), FALSE);
-  g_return_val_if_fail (UDISKS_IS_BLOCK_DEVICE (block), FALSE);
+  g_return_val_if_fail (UDISKS_IS_BLOCK (block), FALSE);
 
   if (udisks_drive_get_media_removable (drive))
     {
@@ -2625,7 +2625,7 @@ drive_treat_as_removable (UDisksDrive       *drive,
       goto out;
     }
 
-  device_file = udisks_block_device_get_device (block);
+  device_file = udisks_block_get_device (block);
   if (g_str_has_prefix (device_file, "/dev/mmcblk"))
     {
       ret = TRUE;
@@ -2639,7 +2639,7 @@ drive_treat_as_removable (UDisksDrive       *drive,
 static void
 fstab_populate_device_combo_box (GtkWidget         *device_combobox,
                                  UDisksDrive       *drive,
-                                 UDisksBlockDevice *block,
+                                 UDisksBlock       *block,
                                  const gchar       *fstab_device)
 {
   const gchar *device;
@@ -2660,7 +2660,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
   num_items = 0;
   selected = -1;
 
-  device = udisks_block_device_get_device (block);
+  device = udisks_block_get_device (block);
   gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox),
                              NULL,
                              device);
@@ -2668,7 +2668,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
     selected = num_items;
   num_items = 1;
 
-  symlinks = udisks_block_device_get_symlinks (block);
+  symlinks = udisks_block_get_symlinks (block);
   for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
     {
       gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (device_combobox), NULL, symlinks[n]);
@@ -2687,7 +2687,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
       num_items++;
     }
 
-  uuid = udisks_block_device_get_id_uuid (block);
+  uuid = udisks_block_get_id_uuid (block);
   if (uuid != NULL && strlen (uuid) > 0)
     {
       s = g_strdup_printf ("UUID=%s", uuid);
@@ -2698,7 +2698,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
       num_items++;
     }
 
-  label = udisks_block_device_get_id_label (block);
+  label = udisks_block_get_id_label (block);
   if (label != NULL && strlen (label) > 0)
     {
       s = g_strdup_printf ("LABEL=%s", label);
@@ -2782,7 +2782,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
   GduWindow *window = GDU_WINDOW (user_data);
   GtkBuilder *builder;
   UDisksObject *object;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   UDisksObject *drive_object;
   UDisksDrive *drive;
   gint response;
@@ -2802,13 +2802,13 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   if (object == NULL)
-    object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
-  block = udisks_object_peek_block_device (object);
+    object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  block = udisks_object_peek_block (object);
   g_assert (block != NULL);
 
   drive = NULL;
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                                    udisks_block_device_get_drive (block));
+                                                                    udisks_block_get_drive (block));
   if (drive_object != NULL)
     {
       drive = udisks_object_peek_drive (drive_object);
@@ -2833,7 +2833,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
   data.passno_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-passno-spinbutton"));
 
   /* there could be multiple fstab entries - we only consider the first one */
-  g_variant_iter_init (&iter, udisks_block_device_get_configuration (block));
+  g_variant_iter_init (&iter, udisks_block_get_configuration (block));
   while (g_variant_iter_next (&iter, "(&s@a{sv})", &configuration_type, &configuration_dict))
     {
       if (g_strcmp0 (configuration_type, "fstab") == 0)
@@ -2980,11 +2980,11 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       if (old_item != NULL && new_item == NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_remove_configuration_item_sync (block,
-                                                                        old_item,
-                                                                        g_variant_new ("a{sv}", NULL), /* options */
-                                                                        NULL, /* GCancellable */
-                                                                        &error))
+          if (!udisks_block_call_remove_configuration_item_sync (block,
+                                                                 old_item,
+                                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                                 NULL, /* GCancellable */
+                                                                 &error))
             {
               gdu_window_show_error (window,
                                      _("Error removing old /etc/fstab entry"),
@@ -2997,7 +2997,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       else if (old_item == NULL && new_item != NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_add_configuration_item_sync (block,
+          if (!udisks_block_call_add_configuration_item_sync (block,
                                                                      new_item,
                                                                      g_variant_new ("a{sv}", NULL), /* options */
                                                                      NULL, /* GCancellable */
@@ -3014,12 +3014,12 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       else if (old_item != NULL && new_item != NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_update_configuration_item_sync (block,
-                                                                        old_item,
-                                                                        new_item,
-                                                                        g_variant_new ("a{sv}", NULL), /* options */
-                                                                        NULL, /* GCancellable */
-                                                                        &error))
+          if (!udisks_block_call_update_configuration_item_sync (block,
+                                                                 old_item,
+                                                                 new_item,
+                                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                                 NULL, /* GCancellable */
+                                                                 &error))
             {
               gdu_window_show_error (window,
                                      _("Error updating /etc/fstab entry"),
@@ -3051,7 +3051,7 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
 typedef struct
 {
   UDisksDrive *drive;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
 
   GduWindow *window;
 
@@ -3213,7 +3213,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
   else
     {
       configured = FALSE;
-      name = g_strdup_printf ("luks-%s", udisks_block_device_get_id_uuid (data->block));
+      name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (data->block));
       options = "";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (data->drive != NULL && drive_treat_as_removable (data->drive, data->block))
@@ -3292,7 +3292,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
           GVariantBuilder builder;
           gchar *s;
           g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-          s = g_strdup_printf ("UUID=%s", udisks_block_device_get_id_uuid (data->block));
+          s = g_strdup_printf ("UUID=%s", udisks_block_get_id_uuid (data->block));
           g_variant_builder_add (&builder, "{sv}", "device", g_variant_new_bytestring (s));
           g_free (s);
           g_variant_builder_add (&builder, "{sv}", "name", g_variant_new_bytestring (ui_name));
@@ -3330,11 +3330,11 @@ crypttab_dialog_present (CrypttabDialogData *data)
       if (old_item != NULL && new_item == NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_remove_configuration_item_sync (data->block,
-                                                                        old_item,
-                                                                        g_variant_new ("a{sv}", NULL), /* options */
-                                                                        NULL, /* GCancellable */
-                                                                        &error))
+          if (!udisks_block_call_remove_configuration_item_sync (data->block,
+                                                                 old_item,
+                                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                                 NULL, /* GCancellable */
+                                                                 &error))
             {
               gdu_window_show_error (data->window,
                                      _("Error removing /etc/crypttab entry"),
@@ -3346,11 +3346,11 @@ crypttab_dialog_present (CrypttabDialogData *data)
       else if (old_item == NULL && new_item != NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_add_configuration_item_sync (data->block,
-                                                                     new_item,
-                                                                     g_variant_new ("a{sv}", NULL), /* options */
-                                                                     NULL, /* GCancellable */
-                                                                     &error))
+          if (!udisks_block_call_add_configuration_item_sync (data->block,
+                                                              new_item,
+                                                              g_variant_new ("a{sv}", NULL), /* options */
+                                                              NULL, /* GCancellable */
+                                                              &error))
             {
               gdu_window_show_error (data->window,
                                      _("Error adding /etc/crypttab entry"),
@@ -3362,12 +3362,12 @@ crypttab_dialog_present (CrypttabDialogData *data)
       else if (old_item != NULL && new_item != NULL)
         {
           error = NULL;
-          if (!udisks_block_device_call_update_configuration_item_sync (data->block,
-                                                                        old_item,
-                                                                        new_item,
-                                                                        g_variant_new ("a{sv}", NULL), /* options */
-                                                                        NULL, /* GCancellable */
-                                                                        &error))
+          if (!udisks_block_call_update_configuration_item_sync (data->block,
+                                                                 old_item,
+                                                                 new_item,
+                                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                                 NULL, /* GCancellable */
+                                                                 &error))
             {
               gdu_window_show_error (data->window,
                                      _("Error updating /etc/crypttab entry"),
@@ -3388,7 +3388,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
 }
 
 static void
-crypttab_dialog_on_get_secrets_cb (UDisksBlockDevice *block,
+crypttab_dialog_on_get_secrets_cb (UDisksBlock       *block,
                                    GAsyncResult      *res,
                                    gpointer           user_data)
 {
@@ -3401,10 +3401,10 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlockDevice *block,
 
   configuration = NULL;
   error = NULL;
-  if (!udisks_block_device_call_get_secret_configuration_finish (block,
-                                                                 &configuration,
-                                                                 res,
-                                                                 &error))
+  if (!udisks_block_call_get_secret_configuration_finish (block,
+                                                          &configuration,
+                                                          res,
+                                                          &error))
     {
       gdu_window_show_error (data->window,
                              _("Error retrieving configuration data"),
@@ -3458,13 +3458,13 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   if (object == NULL)
-    object = gdu_volume_grid_get_block_device (GDU_VOLUME_GRID (window->volume_grid));
-  data->block = udisks_object_peek_block_device (object);
+    object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  data->block = udisks_object_peek_block (object);
   g_assert (data->block != NULL);
 
   data->drive = NULL;
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                                    udisks_block_device_get_drive (data->block));
+                                                                    udisks_block_get_drive (data->block));
   if (drive_object != NULL)
     {
       data->drive = udisks_object_peek_drive (drive_object);
@@ -3488,7 +3488,7 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
   /* First check if there's an existing configuration */
   configured = FALSE;
   get_passphrase_contents = FALSE;
-  g_variant_iter_init (&iter, udisks_block_device_get_configuration (data->block));
+  g_variant_iter_init (&iter, udisks_block_get_configuration (data->block));
   while (g_variant_iter_next (&iter, "(&s@a{sv})", &configuration_type, &configuration_dict))
     {
       if (g_strcmp0 (configuration_type, "crypttab") == 0)
@@ -3518,11 +3518,11 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
    */
   if (configured && get_passphrase_contents)
     {
-      udisks_block_device_call_get_secret_configuration (data->block,
-                                                         g_variant_new ("a{sv}", NULL), /* options */
-                                                         NULL, /* cancellable */
-                                                         (GAsyncReadyCallback) crypttab_dialog_on_get_secrets_cb,
-                                                         data);
+      udisks_block_call_get_secret_configuration (data->block,
+                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                  NULL, /* cancellable */
+                                                  (GAsyncReadyCallback) crypttab_dialog_on_get_secrets_cb,
+                                                  data);
     }
   else
     {
@@ -3705,7 +3705,7 @@ on_devtab_action_unlock_activated (GtkAction *action,
   GtkWidget *entry;
   GtkWidget *show_passphrase_check_button;
   UDisksObject *object;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   UDisksEncrypted *encrypted;
   const gchar *passphrase;
   gboolean has_passphrase;
@@ -3716,7 +3716,7 @@ on_devtab_action_unlock_activated (GtkAction *action,
   /* TODO: look up passphrase from gnome-keyring? */
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
   encrypted = udisks_object_peek_encrypted (object);
 
   passphrase = "";

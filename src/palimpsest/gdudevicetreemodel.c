@@ -696,7 +696,7 @@ update_block (GduDeviceTreeModel  *model,
               UDisksObject        *object)
 {
   GtkTreeIter iter;
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   UDisksLoop *loop;
   GIcon *icon = NULL;
   gchar *s = NULL;
@@ -715,13 +715,13 @@ update_block (GduDeviceTreeModel  *model,
       goto out;
     }
 
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
   loop = udisks_object_peek_loop (object);
 
-  size = udisks_block_device_get_size (block);
+  size = udisks_block_get_size (block);
   size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
 
-  preferred_device = udisks_block_device_get_preferred_device (block);
+  preferred_device = udisks_block_get_preferred_device (block);
   loop_backing_file = loop != NULL ? udisks_loop_get_backing_file (loop) : NULL;
   if (loop_backing_file != NULL)
     {
@@ -778,7 +778,7 @@ update_block (GduDeviceTreeModel  *model,
 static gboolean
 should_include_block (UDisksObject *object)
 {
-  UDisksBlockDevice *block;
+  UDisksBlock *block;
   gboolean ret;
   const gchar *device;
   const gchar *drive;
@@ -787,29 +787,29 @@ should_include_block (UDisksObject *object)
 
   ret = FALSE;
 
-  block = udisks_object_peek_block_device (object);
+  block = udisks_object_peek_block (object);
 
   /* RAM devices are useless */
-  device = udisks_block_device_get_device (block);
+  device = udisks_block_get_device (block);
   if (g_str_has_prefix (device, "/dev/ram"))
     goto out;
 
   /* Don't show devices of size zero - otherwise we'd end up showing unused loop devices */
-  size = udisks_block_device_get_size (block);
+  size = udisks_block_get_size (block);
   if (size == 0)
     goto out;
 
   /* Only include devices if they are top-level */
-  if (udisks_block_device_get_part_entry (block))
+  if (udisks_block_get_part_entry (block))
     goto out;
 
   /* Don't include if already shown in "Direct-Attached devices" */
-  drive = udisks_block_device_get_drive (block);
+  drive = udisks_block_get_drive (block);
   if (g_strcmp0 (drive, "/") != 0)
     goto out;
 
   /* Don't include if already shown in volume grid as an unlocked device */
-  crypto_backing_device = udisks_block_device_get_crypto_backing_device (block);
+  crypto_backing_device = udisks_block_get_crypto_backing_device (block);
   if (g_strcmp0 (crypto_backing_device, "/") != 0)
     goto out;
 
@@ -836,9 +836,9 @@ update_blocks (GduDeviceTreeModel *model)
   for (l = objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      UDisksBlockDevice *block;
+      UDisksBlock *block;
 
-      block = udisks_object_peek_block_device (object);
+      block = udisks_object_peek_block (object);
       if (block == NULL)
         continue;
 

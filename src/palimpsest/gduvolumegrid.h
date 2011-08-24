@@ -34,9 +34,9 @@ G_BEGIN_DECLS
 
 GType                     gdu_volume_grid_get_type              (void) G_GNUC_CONST;
 GtkWidget*                gdu_volume_grid_new                   (UDisksClient        *client);
-void                      gdu_volume_grid_set_block_device      (GduVolumeGrid       *grid,
+void                      gdu_volume_grid_set_block_object      (GduVolumeGrid       *grid,
                                                                  UDisksObject        *block_device);
-UDisksObject             *gdu_volume_grid_get_block_device      (GduVolumeGrid      *grid);
+UDisksObject             *gdu_volume_grid_get_block_object      (GduVolumeGrid      *grid);
 void                      gdu_volume_grid_set_container_visible (GduVolumeGrid       *grid,
                                                                  gboolean             visible);
 void                      gdu_volume_grid_set_container_markup  (GduVolumeGrid       *grid,

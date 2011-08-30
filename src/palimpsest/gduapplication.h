@@ -34,8 +34,11 @@ G_BEGIN_DECLS
 
 GType         gdu_application_get_type   (void) G_GNUC_CONST;
 GApplication *gdu_application_new        (void);
-GtkWidget    *gdu_application_get_widget (GduApplication *app,
-                                          const gchar    *name);
+UDisksClient *gdu_application_get_client (GduApplication  *application);
+GtkWidget    *gdu_application_new_widget (GduApplication  *application,
+                                          const gchar     *ui_file,
+                                          const gchar     *name,
+                                          GtkBuilder     **out_builder);
 
 
 G_END_DECLS

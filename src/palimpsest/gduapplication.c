@@ -134,11 +134,55 @@ gdu_application_new (void)
                                       NULL));
 }
 
-gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
-
-gboolean
-_gdu_application_get_running_from_source_tree (GduApplication *app)
+UDisksClient *
+gdu_application_get_client (GduApplication  *application)
 {
-  g_return_val_if_fail (GDU_IS_APPLICATION (app), FALSE);
-  return app->running_from_source_tree;
+  return application->client;
+}
+
+
+GtkWidget *
+gdu_application_new_widget (GduApplication  *application,
+                            const gchar     *ui_file,
+                            const gchar     *name,
+                            GtkBuilder     **out_builder)
+{
+  GtkWidget *ret = NULL;
+  GtkBuilder *builder = NULL;
+  gchar *path = NULL;
+  GError *error;
+
+  g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
+  g_return_val_if_fail (ui_file != NULL, NULL);
+
+  builder = gtk_builder_new ();
+
+  path = g_strdup_printf ("%s/%s",
+                          application->running_from_source_tree ?
+                            "../../data/ui" :
+                            PACKAGE_DATA_DIR "/gnome-disk-utility",
+                          ui_file);
+
+  error = NULL;
+  if (gtk_builder_add_from_file (builder, path, &error) == 0)
+    {
+      g_error ("Error loading UI file %s: %s", path, error->message);
+      g_error_free (error);
+      goto out;
+    }
+
+  if (name != NULL)
+    ret = GTK_WIDGET (gtk_builder_get_object (builder, name));
+
+ out:
+  if (out_builder != NULL)
+    {
+      *out_builder = builder;
+      builder = NULL;
+    }
+  if (builder != NULL)
+    {
+      g_object_unref (builder);
+    }
+  return ret;
 }

@@ -37,9 +37,6 @@ GduWindow      *gdu_window_new             (GduApplication *application,
                                             UDisksClient   *client);
 GduApplication *gdu_window_get_application (GduWindow      *window);
 UDisksClient   *gdu_window_get_client      (GduWindow      *window);
-GtkWidget      *gdu_window_get_widget      (GduWindow      *window,
-                                            const gchar    *name);
-
 
 G_END_DECLS
 

@@ -191,11 +191,6 @@ static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
 static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
                                                  gpointer   user_data);
 
-static GtkWidget *
-gdu_window_new_widget (GduWindow    *window,
-                       const gchar  *name,
-                       GtkBuilder  **out_builder);
-
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
 static void
@@ -632,8 +627,6 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 
-gboolean _gdu_application_get_running_from_source_tree (GduApplication *app);
-
 static void
 init_css (GduWindow *window)
 {
@@ -683,7 +676,6 @@ static void
 gdu_window_constructed (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
-  GError *error;
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkTreeSelection *selection;
@@ -698,18 +690,8 @@ gdu_window_constructed (GObject *object)
   if (G_OBJECT_CLASS (gdu_window_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_window_parent_class)->constructed (object);
 
-  window->builder = gtk_builder_new ();
-  error = NULL;
-  window->builder_path = _gdu_application_get_running_from_source_tree (window->application)
-    ? "../../data/ui/palimpsest.ui" :
-    PACKAGE_DATA_DIR "/gnome-disk-utility/palimpsest.ui";
-  if (gtk_builder_add_from_file (window->builder,
-                                 window->builder_path,
-                                 &error) == 0)
-    {
-      g_error ("Error loading %s: %s", window->builder_path, error->message);
-      g_error_free (error);
-    }
+  /* load UI file */
+  gdu_application_new_widget (window->application, "palimpsest.ui", NULL, &window->builder);
 
   /* set up widgets */
   for (n = 0; widget_mapping[n].name != NULL; n++)
@@ -1026,51 +1008,6 @@ gdu_window_get_client (GduWindow *window)
   return window->client;
 }
 
-GtkWidget *
-gdu_window_get_widget (GduWindow    *window,
-                       const gchar  *name)
-{
-  g_return_val_if_fail (GDU_IS_WINDOW (window), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-  return GTK_WIDGET (gtk_builder_get_object (window->builder, name));
-}
-
-static GtkWidget *
-gdu_window_new_widget (GduWindow    *window,
-                       const gchar  *name,
-                       GtkBuilder  **out_builder)
-{
-  GtkWidget *ret;
-  GtkBuilder *builder;
-  GError *error;
-
-  g_return_val_if_fail (GDU_IS_WINDOW (window), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  ret = NULL;
-
-  builder = gtk_builder_new ();
-
-  error = NULL;
-  if (gtk_builder_add_from_file (builder,
-                                 window->builder_path,
-                                 &error) == 0)
-    {
-      g_error ("Error loading %s: %s", window->builder_path, error->message);
-      g_error_free (error);
-      goto out;
-    }
-
-  ret = GTK_WIDGET (gtk_builder_get_object (builder, name));
-  *out_builder = builder;
-  builder = NULL;
-
- out:
-  if (builder != NULL)
-    g_object_unref (builder);
-  return ret;
-}
-
 static void
 teardown_details_page (GduWindow    *window,
                        UDisksObject *object,
@@ -1117,8 +1054,8 @@ set_markup (GduWindow      *window,
         goto out;
     }
 
-  key_label = gdu_window_get_widget (window, key_label_id);
-  label = gdu_window_get_widget (window, label_id);
+  key_label = GTK_WIDGET (gtk_builder_get_object (window->builder, key_label_id));
+  label = GTK_WIDGET (gtk_builder_get_object (window->builder, label_id));
 
   /* TODO: utf-8 validate */
 
@@ -2280,7 +2217,10 @@ on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
   g_assert (block != NULL);
   g_assert (filesystem != NULL);
 
-  dialog = gdu_window_new_widget (window, "change-filesystem-label-dialog", &builder);
+  dialog = gdu_application_new_widget (window->application,
+                                       "edit-filesystem-dialog.ui",
+                                       "change-filesystem-label-dialog",
+                                       &builder);
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "change-filesystem-label-entry"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -2376,7 +2316,10 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
   block = udisks_object_peek_block (object);
   g_assert (block != NULL);
 
-  dialog = gdu_window_new_widget (window, "change-partition-type-dialog", &builder);
+  dialog = gdu_application_new_widget (window->application,
+                                       "edit-partition-dialog.ui",
+                                       "change-partition-type-dialog",
+                                       &builder);
   combo_box = GTK_WIDGET (gtk_builder_get_object (builder, "change-partition-type-combo-box"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -2815,7 +2758,9 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
       g_object_unref (drive_object);
     }
 
-  dialog = gdu_window_new_widget (window, "device-fstab-dialog", &builder);
+  dialog = gdu_application_new_widget (window->application,
+                                       "edit-fstab-dialog.ui",
+                                       "device-fstab-dialog", &builder);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -3471,7 +3416,10 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
       g_object_unref (drive_object);
     }
 
-  dialog = gdu_window_new_widget (window, "crypttab-dialog", &data->builder);
+  dialog = gdu_application_new_widget (window->application,
+                                       "edit-crypttab-dialog.ui",
+                                       "crypttab-dialog",
+                                       &data->builder);
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
@@ -3724,7 +3672,10 @@ on_devtab_action_unlock_activated (GtkAction *action,
   if (has_configuration (block, "crypttab", &has_passphrase) && has_passphrase)
     goto do_call;
 
-  dialog = gdu_window_new_widget (window, "unlock-device-dialog", &builder);
+  dialog = gdu_application_new_widget (window->application,
+                                       "unlock-device-dialog.ui",
+                                       "unlock-device-dialog",
+                                       &builder);
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-passphrase-entry"));
   show_passphrase_check_button = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-show-passphrase-check-button"));
 

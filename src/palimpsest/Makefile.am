@@ -31,6 +31,7 @@ palimpsest_SOURCES = 					\
 	gduutils.h		gduutils.c		\
 	gduvolumegrid.h		gduvolumegrid.c		\
 	gduwindow.h		gduwindow.c		\
+	gduatasmartdialog.h	gduatasmartdialog.c	\
 	$(enum_built_sources)				\
 	$(NULL)
 

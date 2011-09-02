@@ -20,28 +20,21 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_WINDOW_H__
-#define __GDU_WINDOW_H__
+#ifndef __GDU_ATA_SMART_DIALOG_H_H__
+#define __GDU_ATA_SMART_DIALOG_H_H__
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_WINDOW         (gdu_window_get_type ())
-#define GDU_WINDOW(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_WINDOW, GduWindow))
-#define GDU_IS_WINDOW(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_WINDOW))
+void   gdu_ata_smart_dialog_show (GduWindow    *window,
+                                  UDisksObject *object);
 
-GType           gdu_window_get_type        (void) G_GNUC_CONST;
-GduWindow      *gdu_window_new             (GduApplication *application,
-                                            UDisksClient   *client);
-GduApplication *gdu_window_get_application (GduWindow      *window);
-UDisksClient   *gdu_window_get_client      (GduWindow      *window);
-
-void            gdu_window_show_error      (GduWindow      *window,
-                                            const gchar    *message,
-                                            GError         *error);
+gchar *gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
+                                             gboolean        include_temperature,
+                                             gboolean       *out_smart_is_supported);
 
 G_END_DECLS
 
-#endif /* __GDU_WINDOW_H__ */
+#endif /* __GDU_ATA_SMART_DIALOG_H__ */

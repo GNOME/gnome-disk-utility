@@ -37,6 +37,7 @@
 #include "gdudevicetreemodel.h"
 #include "gduutils.h"
 #include "gduvolumegrid.h"
+#include "gduatasmartdialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -87,6 +88,7 @@ struct _GduWindow
   GtkWidget *devtab_toolbar_deactivate_swap_button;
 
   GtkWidget *generic_menu;
+  GtkWidget *generic_menu_item_view_smart;
   GtkWidget *generic_menu_item_configure_fstab;
   GtkWidget *generic_menu_item_configure_crypttab;
   GtkWidget *generic_menu_item_edit_label;
@@ -123,6 +125,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_activate_swap_button), "devtab-action-activate-swap"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_deactivate_swap_button), "devtab-action-deactivate-swap"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_view_smart), "generic-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
@@ -155,15 +158,12 @@ typedef enum
   SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<7),
   SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<8),
 
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<9),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<10),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<11),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<12),
+  SHOW_FLAGS_POPUP_MENU_VIEW_SMART         = (1<<9),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<10),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<11),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<12),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<13),
 } ShowFlags;
-
-static void gdu_window_show_error (GduWindow   *window,
-                                   const gchar *message,
-                                   GError      *orig_error);
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
 static void update_device_page (GduWindow *window, ShowFlags *show_flags);
@@ -182,6 +182,8 @@ static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_da
 static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
 
+static void on_generic_menu_item_view_smart (GtkMenuItem *menu_item,
+                                             gpointer   user_data);
 static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
 static void on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
@@ -325,6 +327,8 @@ update_for_show_flags (GduWindow *window,
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_lock_button),
                           show_flags & SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON);
 
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_view_smart),
+                          show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                           show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
@@ -872,6 +876,10 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_devtab_action_deactivate_swap_activated),
                     window);
 
+  g_signal_connect (window->generic_menu_item_view_smart,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_view_smart),
+                    window);
   g_signal_connect (window->generic_menu_item_configure_fstab,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_configure_fstab),
@@ -1213,12 +1221,16 @@ update_all (GduWindow     *window,
 
     case DETAILS_PAGE_DEVICE:
       /* this is a little too inclusive.. */
-      if (object != NULL && gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
+      if (object != NULL)
         {
-          ShowFlags show_flags;
-          show_flags = SHOW_FLAGS_NONE;
-          update_details_page (window, window->current_page, &show_flags);
-          update_for_show_flags (window, show_flags);
+          if (object == window->current_object ||
+              gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
+            {
+              ShowFlags show_flags;
+              show_flags = SHOW_FLAGS_NONE;
+              update_details_page (window, window->current_page, &show_flags);
+              update_for_show_flags (window, show_flags);
+            }
         }
       break;
     }
@@ -1423,74 +1435,14 @@ update_device_page_for_drive (GduWindow      *window,
 
   if (ata != NULL && !udisks_drive_get_media_removable (drive))
     {
-      gchar *s2 = NULL;
-      gchar *s3 = NULL;
-      if (!udisks_drive_ata_get_smart_supported (ata))
-        {
-          s = g_strdup (_("S.M.A.R.T. not supported"));
-        }
-      else if (!udisks_drive_ata_get_smart_enabled (ata))
-        {
-          s = g_strdup (_("S.M.A.R.T. not enabled"));
-        }
-      else
-        {
-          guint64 updated;
-
-          updated = udisks_drive_ata_get_smart_updated (ata);
-          if (updated == 0)
-            {
-              s = g_strdup (_("S.M.A.R.T. data not collected"));
-            }
-          else
-            {
-              gboolean failing;
-              gdouble temp;
-
-              failing = udisks_drive_ata_get_smart_failing (ata);
-              if (failing)
-                {
-                  s = g_strdup_printf ("<b><span foreground=\"#ff0000\">%s</span></b>",
-                                        _("ABOUT TO FAIL"));
-                }
-              else
-                {
-                  s = g_strdup (_("No problems detected"));
-                }
-              /* TODO: Also show
-               * - if one or more prefail attrs are exceeding threshold
-               * - if a self-test is in progress
-               */
-
-              temp = udisks_drive_ata_get_smart_temperature (ata);
-              if (temp > 1.0)
-                {
-                  gdouble celcius;
-                  gdouble fahrenheit;
-                  celcius = temp - 273.15;
-                  fahrenheit = 9.0 * celcius / 5.0 + 32.0;
-                  /* Translators: Used to convey the temperature of a drive.
-                   * The first %f is the temperature in degrees Celcius and the second %f
-                   * is the temperature in degrees Fahrenheit
-                   */
-                  s2 = g_strdup_printf (_("%.0f° C / %.0f° F"), celcius, fahrenheit);
-                }
-            }
-        }
-      if (s2 != NULL)
-        {
-          s3 = g_strdup_printf ("%s (%s)", s, s2);
-        }
-      else
-        {
-          s3 = g_strdup (s);
-        }
+      gboolean smart_is_supported;
+      s = gdu_ata_smart_get_overall_assessment (ata, TRUE, &smart_is_supported);
       set_markup (window,
                   "devtab-drive-smart-label",
                   "devtab-drive-smart-value-label",
-                  s3, SET_MARKUP_FLAGS_NONE);
-      g_free (s3);
-      g_free (s2);
+                  s, SET_MARKUP_FLAGS_NONE);
+      if (smart_is_supported)
+        *show_flags |= SHOW_FLAGS_POPUP_MENU_VIEW_SMART;
       g_free (s);
     }
 
@@ -2111,24 +2063,24 @@ teardown_device_page (GduWindow *window)
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* TODO: right now we show a MessageDialog but we could do things like an InfoBar etc */
-static void
+void
 gdu_window_show_error (GduWindow   *window,
                        const gchar *message,
-                       GError      *orig_error)
+                       GError      *error)
 {
   GtkWidget *dialog;
-  GError *error;
+  GError *fixed_up_error;
 
   /* Never show an error if it's because the user dismissed the
    * authentication dialog himself
    */
-  if (orig_error->domain == UDISKS_ERROR &&
-      orig_error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED)
+  if (error->domain == UDISKS_ERROR &&
+      error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED)
     goto no_dialog;
 
-  error = g_error_copy (orig_error);
-  if (g_dbus_error_is_remote_error (error))
-    g_dbus_error_strip_remote_error (error);
+  fixed_up_error = g_error_copy (error);
+  if (g_dbus_error_is_remote_error (fixed_up_error))
+    g_dbus_error_strip_remote_error (fixed_up_error);
 
   dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
                                                GTK_DIALOG_MODAL,
@@ -2138,8 +2090,8 @@ gdu_window_show_error (GduWindow   *window,
                                                message);
   gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
                                               "%s",
-                                              error->message);
-  g_error_free (error);
+                                              fixed_up_error->message);
+  g_error_free (fixed_up_error);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
@@ -2989,6 +2941,16 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
   gtk_widget_hide (dialog);
   gtk_widget_destroy (dialog);
   g_object_unref (builder);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_view_smart (GtkMenuItem *menu_item,
+                                 gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gdu_ata_smart_dialog_show (window, window->current_object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -63,7 +63,7 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
 
-  GtkWidget *main_hbox;
+  GtkWidget *main_hpane;
   GtkWidget *details_notebook;
   GtkWidget *device_scrolledwindow;
   GtkWidget *device_treeview;
@@ -101,7 +101,7 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
-  {G_STRUCT_OFFSET (GduWindow, main_hbox), "palimpsest-hbox"},
+  {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_scrolledwindow), "device-tree-scrolledwindow"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar), "device-tree-add-remove-toolbar"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar_attach_disk_image_button), "device-tree-attach-disk-image-button"},
@@ -704,7 +704,7 @@ gdu_window_constructed (GObject *object)
       *p = G_OBJECT (gtk_builder_get_object (window->builder, widget_mapping[n].name));
     }
 
-  gtk_widget_reparent (window->main_hbox, GTK_WIDGET (window));
+  gtk_widget_reparent (window->main_hpane, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);

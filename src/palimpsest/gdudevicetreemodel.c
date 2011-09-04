@@ -331,7 +331,8 @@ gdu_device_tree_model_constructed (GObject *object)
   types[3] = G_TYPE_ICON;
   types[4] = G_TYPE_STRING;
   types[5] = G_TYPE_DBUS_OBJECT;
-  G_STATIC_ASSERT (6 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+  types[6] = G_TYPE_BOOLEAN;
+  G_STATIC_ASSERT (7 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -504,6 +505,7 @@ update_drive (GduDeviceTreeModel *model,
               UDisksObject       *object)
 {
   UDisksDrive *drive = NULL;
+  UDisksDriveAta *ata = NULL;
   GIcon *drive_icon = NULL;
   GIcon *media_icon = NULL;
   gchar *name = NULL;
@@ -511,6 +513,7 @@ update_drive (GduDeviceTreeModel *model,
   gchar *media_description = NULL;
   gchar *s = NULL;
   gchar *sort_key = NULL;
+  gboolean warning = FALSE;
   GtkTreeIter iter;
 
   if (!find_iter_for_object (model,
@@ -523,20 +526,37 @@ update_drive (GduDeviceTreeModel *model,
     }
 
   drive = udisks_object_peek_drive (object);
-
-  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
-  s = g_strdup_printf ("%s\n"
-                       "<small><span foreground=\"#555555\">%s</span></small>",
-                       description,
-                       name);
+  ata = udisks_object_peek_drive_ata (object);
 
   sort_key = g_strdup_printf ("00_drives_1_%s", udisks_drive_get_sort_key (drive));
+
+  if (ata != NULL && udisks_drive_ata_get_smart_failing (ata))
+    {
+      warning = TRUE;
+    }
+
+  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
+  if (warning)
+    {
+      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
+                           "<small><span foreground=\"#ff0000\">%s</span></small>",
+                           description,
+                           name);
+    }
+  else
+    {
+      s = g_strdup_printf ("%s\n"
+                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           description,
+                           name);
+    }
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
                       -1);
 
  out:

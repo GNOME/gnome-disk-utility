@@ -1296,6 +1296,39 @@ on_timeout (gpointer user_data)
   return TRUE; /* keep timeout around */
 }
 
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+refresh_cb (UDisksDriveAta  *ata,
+            GAsyncResult    *res,
+            gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_drive_ata_call_smart_update_finish (ata, res, &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error refreshing SMART data"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+
+static void
+refresh_do (DialogData  *data)
+{
+  udisks_drive_ata_call_smart_update (data->ata,
+                                      g_variant_new ("a{sv}", NULL), /* options */
+                                      NULL, /* GCancellable */
+                                      (GAsyncReadyCallback) refresh_cb,
+                                      g_object_ref (data->window));
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -1503,6 +1536,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
     {
       gint response;
       response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+      /* Keep in sync with .ui file */
       switch (response)
         {
         case 0:
@@ -1510,6 +1544,9 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
           break;
         case 1:
           selftest_do (data, "abort");
+          break;
+        case 2:
+          refresh_do (data);
           break;
         }
 

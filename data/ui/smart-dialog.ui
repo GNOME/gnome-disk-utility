@@ -63,6 +63,22 @@
                 <property name="position">2</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkButton" id="refresh-button">
+                <property name="label">gtk-refresh</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+                <property name="secondary">True</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -335,6 +351,7 @@
       <action-widget response="0">start-selftest-button</action-widget>
       <action-widget response="1">stop-selftest-button</action-widget>
       <action-widget response="-7">button1</action-widget>
+      <action-widget response="2">refresh-button</action-widget>
     </action-widgets>
   </object>
   <object class="GtkMenu" id="selftest-menu">

@@ -70,7 +70,9 @@ struct _GduWindow
   GtkWidget *device_toolbar;
   GtkWidget *device_toolbar_attach_disk_image_button;
   GtkWidget *device_toolbar_detach_disk_image_button;
-  GtkWidget *devtab_drive_value_label;
+  GtkWidget *devtab_drive_vbox;
+  GtkWidget *devtab_drive_name_label;
+  GtkWidget *devtab_drive_devices_label;
   GtkWidget *devtab_drive_image;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
@@ -109,7 +111,9 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, device_treeview), "device-tree-treeview"},
   {G_STRUCT_OFFSET (GduWindow, details_notebook), "palimpsest-notebook"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_table), "devtab-drive-table"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_value_label), "devtab-drive-value-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_vbox), "devtab-drive-vbox"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_name_label), "devtab-drive-name-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_devices_label), "devtab-drive-devices-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_image), "devtab-drive-image"},
   {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_hbox), "devtab-grid-hbox"},
@@ -1401,14 +1405,19 @@ update_device_page_for_drive (GduWindow      *window,
         g_string_append_c (str, ' ');
       g_string_append (str, udisks_block_get_preferred_device (udisks_object_peek_block (block_object)));
     }
-  s = g_strdup_printf ("<big><b>%s</b></big>\n"
-                       "<small><span foreground=\"#555555\">%s</span></small>",
-                       description,
-                       str->str);
-  g_string_free (str, TRUE);
-  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_value_label), s);
-  gtk_widget_show (window->devtab_drive_value_label);
+  s = g_strdup_printf ("<big><b>%s</b></big>",
+                       description);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_name_label), s);
+  gtk_widget_show (window->devtab_drive_name_label);
   g_free (s);
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       str->str);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
+  gtk_widget_show (window->devtab_drive_devices_label);
+  g_free (s);
+  g_string_free (str, TRUE);
+  gtk_widget_show (window->devtab_drive_vbox);
+
   if (media_icon != NULL)
     gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), media_icon, GTK_ICON_SIZE_DIALOG);
   else

@@ -36,7 +36,7 @@ typedef struct
 {
   GtkWidget *dialog;
   GtkWidget *configure_checkbutton;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   GtkWidget *infobar_hbox;
   GtkWidget *device_combobox;
@@ -116,7 +116,7 @@ fstab_dialog_update (FstabDialogData *data)
         }
     }
 
-  gtk_widget_set_sensitive (data->table, ui_configured);
+  gtk_widget_set_sensitive (data->grid, ui_configured);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
                                      GTK_RESPONSE_APPLY,
@@ -394,7 +394,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.dialog = dialog;
   data.infobar_hbox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-infobar-hbox"));
   data.configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-configure-checkbutton"));
-  data.table = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-table"));
+  data.grid = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-grid"));
   data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
   data.device_explanation_label = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-explanation-label"));
   data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));

@@ -51,3 +51,43 @@ gdu_utils_drive_treat_as_removable (UDisksDrive  *drive,
  out:
   return ret;
 }
+
+gboolean
+gdu_utils_has_configuration (UDisksBlock  *block,
+                             const gchar  *type,
+                             gboolean     *out_has_passphrase)
+{
+  GVariantIter iter;
+  const gchar *config_type;
+  GVariant *config_details;
+  gboolean ret;
+  gboolean has_passphrase;
+
+  ret = FALSE;
+  has_passphrase = FALSE;
+
+  g_variant_iter_init (&iter, udisks_block_get_configuration (block));
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, &config_details))
+    {
+      if (g_strcmp0 (config_type, type) == 0)
+        {
+          if (g_strcmp0 (type, "crypttab") == 0)
+            {
+              const gchar *passphrase_path;
+              if (g_variant_lookup (config_details, "passphrase-path", "^&ay", &passphrase_path) &&
+                  strlen (passphrase_path) > 0 &&
+                  !g_str_has_prefix (passphrase_path, "/dev"))
+                has_passphrase = TRUE;
+            }
+          ret = TRUE;
+          g_variant_unref (config_details);
+          goto out;
+        }
+      g_variant_unref (config_details);
+    }
+
+ out:
+  if (out_has_passphrase != NULL)
+    *out_has_passphrase = has_passphrase;
+  return ret;
+}

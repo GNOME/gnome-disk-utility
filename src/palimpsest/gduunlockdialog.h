@@ -20,21 +20,17 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_UTILS_H__
-#define __GDU_UTILS_H__
+#ifndef __GDU_UNLOCK_DIALOG_H_H__
+#define __GDU_UNLOCK_DIALOG_H_H__
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-gboolean gdu_utils_drive_treat_as_removable (UDisksDrive  *drive,
-                                             UDisksBlock  *block);
-
-gboolean gdu_utils_has_configuration (UDisksBlock  *block,
-                                      const gchar  *type,
-                                      gboolean     *out_has_passphrase);
+void   gdu_unlock_dialog_show (GduWindow    *window,
+                               UDisksObject *object);
 
 G_END_DECLS
 
-#endif /* __GDU_UTILS_H__ */
+#endif /* __GDU_UNLOCK_DIALOG_H__ */

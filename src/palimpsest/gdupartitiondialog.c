@@ -67,7 +67,6 @@ void
 gdu_partition_dialog_show (GduWindow    *window,
                            UDisksObject *object)
 {
-
   gint response;
   GtkBuilder *builder;
   GtkWidget *dialog;

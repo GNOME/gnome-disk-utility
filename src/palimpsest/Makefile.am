@@ -33,6 +33,7 @@ palimpsest_SOURCES = 					\
 	gduwindow.h		gduwindow.c		\
 	gduatasmartdialog.h	gduatasmartdialog.c	\
 	gducrypttabdialog.h	gducrypttabdialog.c	\
+	gdufilesystemdialog.h	gdufilesystemdialog.c	\
 	gdufstabdialog.h	gdufstabdialog.c	\
 	$(enum_built_sources)				\
 	$(NULL)

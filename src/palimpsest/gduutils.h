@@ -28,6 +28,9 @@
 
 G_BEGIN_DECLS
 
+gboolean gdu_utils_drive_treat_as_removable (UDisksDrive  *drive,
+                                             UDisksBlock  *block);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

@@ -20,34 +20,17 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#include "config.h"
-#include <glib/gi18n.h>
+#ifndef __GDU_FSTAB_DIALOG_H_H__
+#define __GDU_FSTAB_DIALOG_H_H__
 
-#include "gduutils.h"
+#include <gtk/gtk.h>
+#include "gdutypes.h"
 
-gboolean
-gdu_utils_drive_treat_as_removable (UDisksDrive  *drive,
-                                    UDisksBlock  *block)
-{
-  gboolean ret = FALSE;
-  const gchar *device_file;
+G_BEGIN_DECLS
 
-  g_return_val_if_fail (UDISKS_IS_DRIVE (drive), FALSE);
-  g_return_val_if_fail (UDISKS_IS_BLOCK (block), FALSE);
+void   gdu_fstab_dialog_show (GduWindow    *window,
+                              UDisksObject *object);
 
-  if (udisks_drive_get_media_removable (drive))
-    {
-      ret = TRUE;
-      goto out;
-    }
+G_END_DECLS
 
-  device_file = udisks_block_get_device (block);
-  if (g_str_has_prefix (device_file, "/dev/mmcblk"))
-    {
-      ret = TRUE;
-      goto out;
-    }
-
- out:
-  return ret;
-}
+#endif /* __GDU_FSTAB_DIALOG_H__ */

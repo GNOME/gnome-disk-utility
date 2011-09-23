@@ -42,7 +42,7 @@ typedef struct
   GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *configure_checkbutton;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   GtkWidget *name_entry;
   GtkWidget *options_entry;
@@ -217,7 +217,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
 
   g_object_bind_property (data->configure_checkbutton,
                           "active",
-                          data->table,
+                          data->grid,
                           "sensitive",
                           G_BINDING_SYNC_CREATE);
 
@@ -459,7 +459,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
 
   data->dialog = dialog;
   data->configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-configure-checkbutton"));
-  data->table = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-table"));
+  data->grid = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-grid"));
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-name-entry"));
   data->options_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-options-entry"));
   data->passphrase_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-label"));

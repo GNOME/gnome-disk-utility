@@ -1335,12 +1335,13 @@ setup_device_page (GduWindow     *window,
       blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
 
-      udisks_util_get_drive_info (drive,
-                                  &drive_name,
-                                  &drive_desc,
-                                  &drive_icon,
-                                  &drive_media_desc,
-                                  &drive_media_icon);
+      udisks_client_get_drive_info (window->client,
+                                    drive,
+                                    &drive_name,
+                                    &drive_desc,
+                                    &drive_icon,
+                                    &drive_media_desc,
+                                    &drive_media_icon);
       if (blocks != NULL)
         gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), blocks->data);
       else
@@ -1396,7 +1397,13 @@ update_device_page_for_drive (GduWindow      *window,
 
   ata = udisks_object_peek_drive_ata (object);
 
-  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
+  udisks_client_get_drive_info (window->client,
+                                drive,
+                                &name,
+                                &description,
+                                &drive_icon,
+                                &media_description,
+                                &media_icon);
 
   drive_vendor = udisks_drive_get_vendor (drive);
   drive_model = udisks_drive_get_model (drive);

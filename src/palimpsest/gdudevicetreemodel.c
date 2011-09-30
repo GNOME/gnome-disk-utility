@@ -535,7 +535,13 @@ update_drive (GduDeviceTreeModel *model,
       warning = TRUE;
     }
 
-  udisks_util_get_drive_info (drive, &name, &description, &drive_icon, &media_description, &media_icon);
+  udisks_client_get_drive_info (model->client,
+                                drive,
+                                &name,
+                                &description,
+                                &drive_icon,
+                                &media_description,
+                                &media_icon);
   if (warning)
     {
       s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"

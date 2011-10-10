@@ -53,6 +53,7 @@ palimpsest_CFLAGS = 					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
 	$(WARN_CFLAGS)					\
+	-lm						\
 	$(NULL)
 
 palimpsest_LDADD = 					\

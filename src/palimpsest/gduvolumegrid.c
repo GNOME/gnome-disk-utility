@@ -1780,18 +1780,36 @@ recompute_grid (GduVolumeGrid *grid)
       /* No partitions and whole-disk has no partition table signature... */
       if (top_size == 0)
         {
-          element = g_new0 (GridElement, 1);
-          element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
-          element->size_ratio = 1.0;
-          element->offset = 0;
-          element->size = top_size;
-          if (grid->elements != NULL)
+          UDisksDrive *drive;
+          drive = udisks_client_get_drive_for_block (grid->client, top_block);
+          if (drive != NULL && !udisks_drive_get_media_change_detected (drive))
             {
-              ((GridElement *) grid->elements->data)->next = element;
-              element->prev = ((GridElement *) grid->elements->data);
+              /* If we can't detect media change, just always assume media */
+              element = g_new0 (GridElement, 1);
+              element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
+              element->size_ratio = 1.0;
+              element->offset = 0;
+              element->size = 0;
+              element->object = g_object_ref (grid->block_object);
+              grid->elements = g_list_append (grid->elements, element);
+              grid_element_set_details (grid, element);
             }
-          grid->elements = g_list_append (grid->elements, element);
-          grid_element_set_details (grid, element);
+          else
+            {
+              element = g_new0 (GridElement, 1);
+              element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
+              element->size_ratio = 1.0;
+              element->offset = 0;
+              element->size = top_size;
+              if (grid->elements != NULL)
+                {
+                  ((GridElement *) grid->elements->data)->next = element;
+                  element->prev = ((GridElement *) grid->elements->data);
+                }
+              grid->elements = g_list_append (grid->elements, element);
+              grid_element_set_details (grid, element);
+            }
+          g_clear_object (&drive);
         }
       else
         {
@@ -1934,9 +1952,11 @@ grid_element_set_details (GduVolumeGrid  *grid,
         const gchar *version;
         gint partition_type;
         gchar *type_for_display;
+        UDisksFilesystem *filesystem;
 
         size_str = udisks_util_get_size_for_display (element->size, FALSE, FALSE);
         block = udisks_object_peek_block (element->object);
+        filesystem = udisks_object_peek_filesystem (element->object);
 
         usage = udisks_block_get_id_usage (block);
         type = udisks_block_get_id_type (block);
@@ -1947,33 +1967,42 @@ grid_element_set_details (GduVolumeGrid  *grid,
           element->show_configured = TRUE;
 
         if (udisks_block_get_part_entry (block) &&
-            g_strcmp0 (udisks_block_get_part_entry_scheme (block), "mbr") == 0 &&
-            (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+                 g_strcmp0 (udisks_block_get_part_entry_scheme (block), "mbr") == 0 &&
+                 (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
           {
             s = g_strdup_printf ("%s\n%s",
                                  C_("volume-grid", "Extended Partition"),
                                  size_str);
           }
-        else if (g_strcmp0 (usage, "filesystem") == 0)
+        else if (filesystem != NULL)
           {
-            const gchar *label;
-            UDisksFilesystem *filesystem;
+            const gchar *const *mount_points;
+            UDisksDrive *drive;
 
-            label = udisks_block_get_id_label (block);
-            type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
-            if (strlen (label) == 0)
-              label = C_("volume-grid", "Filesystem");
-            s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
-            g_free (type_for_display);
-
-            filesystem = udisks_object_peek_filesystem (element->object);
-            if (filesystem != NULL)
+            drive = udisks_client_get_drive_for_block (grid->client, block);
+            if (drive != NULL && !udisks_drive_get_media_change_detected (drive))
               {
-                const gchar *const *mount_points;
-                mount_points = udisks_filesystem_get_mount_points (filesystem);
-                if (g_strv_length ((gchar **) mount_points) > 0)
-                  element->show_mounted = TRUE;
+                /* This is for e.g. /dev/fd0 - e.g. if we can't track media
+                 * changes then we don't know the size nor usage/type ... so
+                 * just print the device name
+                 */
+                s = udisks_block_dup_preferred_device (block);
               }
+            else
+              {
+                const gchar *label;
+                label = udisks_block_get_id_label (block);
+                type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
+                if (strlen (label) == 0)
+                  label = C_("volume-grid", "Filesystem");
+                s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
+                g_free (type_for_display);
+              }
+            g_clear_object (&drive);
+
+            mount_points = udisks_filesystem_get_mount_points (filesystem);
+            if (g_strv_length ((gchar **) mount_points) > 0)
+              element->show_mounted = TRUE;
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {

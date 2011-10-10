@@ -1476,10 +1476,6 @@ update_device_page_for_drive (GduWindow      *window,
                   "devtab-drive-size-value-label",
                   s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
       g_free (s);
-      set_markup (window,
-                  "devtab-media-label",
-                  "devtab-media-value-label",
-                  media_description, SET_MARKUP_FLAGS_NONE);
     }
   else
     {
@@ -1488,12 +1484,24 @@ update_device_page_for_drive (GduWindow      *window,
                   "devtab-drive-size-value-label",
                   "",
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+    }
+
+  if (udisks_drive_get_media_available (drive))
+    {
+      set_markup (window,
+                  "devtab-media-label",
+                  "devtab-media-value-label",
+                  media_description, SET_MARKUP_FLAGS_NONE);
+    }
+  else
+    {
       set_markup (window,
                   "devtab-media-label",
                   "devtab-media-value-label",
                   "",
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
+
 
   if (udisks_drive_get_media_removable (drive))
     {
@@ -1717,6 +1725,9 @@ update_device_page_for_block (GduWindow          *window,
   gint partition_type;
   gchar *type_for_display;
   gchar *configuration_for_display;
+  UDisksFilesystem *filesystem;
+
+  filesystem = udisks_object_peek_filesystem (object);
 
   /* Since /etc/fstab, /etc/crypttab and so on can reference
    * any device regardless of its content ... we want to show
@@ -1810,50 +1821,44 @@ update_device_page_for_block (GduWindow          *window,
         }
     }
 
-  if (g_strcmp0 (udisks_block_get_id_usage (block), "filesystem") == 0)
+  if (filesystem != NULL)
     {
-      UDisksFilesystem *filesystem;
+      const gchar *const *mount_points;
+      gchar *mount_point;
 
-      filesystem = udisks_object_peek_filesystem (object);
-      if (filesystem != NULL)
+      mount_points = udisks_filesystem_get_mount_points (filesystem);
+      if (g_strv_length ((gchar **) mount_points) > 0)
         {
-          const gchar *const *mount_points;
-          gchar *mount_point;
-
-          mount_points = udisks_filesystem_get_mount_points (filesystem);
-          if (g_strv_length ((gchar **) mount_points) > 0)
+          /* TODO: right now we only display the first mount point */
+          if (g_strcmp0 (mount_points[0], "/") == 0)
             {
-              /* TODO: right now we only display the first mount point */
-              if (g_strcmp0 (mount_points[0], "/") == 0)
-                {
-                  /* Translators: This is shown for a device mounted at the filesystem root / - we show
-                   * this text instead of '/', because '/' is too small to hit as a hyperlink
-                   */
-                  mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
-                }
-              else
-                {
-                  mount_point = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
-                                                 mount_points[0], mount_points[0]);
-                }
+              /* Translators: This is shown for a device mounted at the filesystem root / - we show
+               * this text instead of '/', because '/' is too small to hit as a hyperlink
+               */
+              mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
             }
           else
             {
-              /* Translators: Shown when the device is not mounted next to the "Mounted" label */
-              mount_point = g_strdup (_("No"));
+              mount_point = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+                                             mount_points[0], mount_points[0]);
             }
-          set_markup (window,
-                      "devtab-volume-filesystem-mounted-label",
-                      "devtab-volume-filesystem-mounted-value-label",
-                      mount_point,
-                      SET_MARKUP_FLAGS_NONE);
-          g_free (mount_point);
-
-          if (g_strv_length ((gchar **) mount_points) > 0)
-            *show_flags |= SHOW_FLAGS_UNMOUNT_BUTTON;
-          else
-            *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
         }
+      else
+        {
+          /* Translators: Shown when the device is not mounted next to the "Mounted" label */
+          mount_point = g_strdup (_("No"));
+        }
+      set_markup (window,
+                  "devtab-volume-filesystem-mounted-label",
+                  "devtab-volume-filesystem-mounted-value-label",
+                  mount_point,
+                  SET_MARKUP_FLAGS_NONE);
+      g_free (mount_point);
+
+      if (g_strv_length ((gchar **) mount_points) > 0)
+        *show_flags |= SHOW_FLAGS_UNMOUNT_BUTTON;
+      else
+        *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
 
       *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;

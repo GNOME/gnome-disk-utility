@@ -2068,6 +2068,9 @@ gdu_window_show_error (GduWindow   *window,
   if (g_dbus_error_is_remote_error (fixed_up_error))
     g_dbus_error_strip_remote_error (fixed_up_error);
 
+  /* TODO: probably provide the error-domain / error-code / D-Bus error name
+   * in a GtkExpander.
+   */
   dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
                                                GTK_DIALOG_MODAL,
                                                GTK_MESSAGE_ERROR,
@@ -2075,8 +2078,10 @@ gdu_window_show_error (GduWindow   *window,
                                                "<big><b>%s</b></big>",
                                                message);
   gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s",
-                                              fixed_up_error->message);
+                                              "%s (%s, %d)",
+                                              fixed_up_error->message,
+                                              g_quark_to_string (error->domain),
+                                              error->code);
   g_error_free (fixed_up_error);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);

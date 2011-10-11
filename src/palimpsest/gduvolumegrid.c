@@ -1946,10 +1946,12 @@ grid_element_set_details (GduVolumeGrid  *grid,
       {
         UDisksBlock *block;
         gchar *s;
+        const gchar *cs;
         gchar *size_str;
         const gchar *usage;
         const gchar *type;
         const gchar *version;
+        const gchar *label;
         gint partition_type;
         gchar *type_for_display;
         UDisksFilesystem *filesystem;
@@ -1961,6 +1963,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
         usage = udisks_block_get_id_usage (block);
         type = udisks_block_get_id_type (block);
         version = udisks_block_get_id_version (block);
+        label = udisks_block_get_id_label (block);
         partition_type = strtol (udisks_block_get_part_entry_type (block), NULL, 0);
 
         if (g_variant_n_children (udisks_block_get_configuration (block)) > 0)
@@ -1990,12 +1993,12 @@ grid_element_set_details (GduVolumeGrid  *grid,
               }
             else
               {
-                const gchar *label;
-                label = udisks_block_get_id_label (block);
                 type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
-                if (strlen (label) == 0)
-                  label = C_("volume-grid", "Filesystem");
-                s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
+                if (strlen (label) > 0)
+                  cs = label;
+                else
+                  cs = C_("volume-grid", "Filesystem");
+                s = g_strdup_printf ("%s\n%s %s", cs, size_str, type_for_display);
                 g_free (type_for_display);
               }
             g_clear_object (&drive);
@@ -2022,6 +2025,15 @@ grid_element_set_details (GduVolumeGrid  *grid,
                 if (udisks_swapspace_get_active (swapspace))
                   element->show_mounted = TRUE;
               }
+          }
+        else if (g_strcmp0 (usage, "raid") == 0 && strlen (label) > 0)
+          {
+            type_for_display = udisks_util_get_id_for_display (usage, type, version, FALSE);
+            s = g_strdup_printf ("%s\n%s %s",
+                                 label,
+                                 size_str,
+                                 type_for_display);
+            g_free (type_for_display);
           }
         else
           {

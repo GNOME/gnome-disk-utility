@@ -71,7 +71,8 @@ gdu_partition_dialog_show (GduWindow    *window,
   GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *combo_box;
-  UDisksBlock *block;
+  UDisksPartition *partition;
+  UDisksPartitionTable *partition_table;
   const gchar *scheme;
   const gchar *cur_type;
   const gchar **part_types;
@@ -80,8 +81,12 @@ gdu_partition_dialog_show (GduWindow    *window,
   ChangePartitionTypeData data;
   const gchar *type_to_set;
 
-  block = udisks_object_peek_block (object);
-  g_assert (block != NULL);
+  partition = udisks_object_peek_partition (object);
+  g_assert (partition != NULL);
+
+  partition_table = udisks_client_get_partition_table (gdu_window_get_client (window), partition);
+  g_assert (partition_table != NULL);
+  g_object_unref (partition_table);
 
   dialog = gdu_application_new_widget (gdu_window_get_application (window),
                                        "edit-partition-dialog.ui",
@@ -91,8 +96,8 @@ gdu_partition_dialog_show (GduWindow    *window,
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  scheme = udisks_block_get_part_entry_scheme (block);
-  cur_type = udisks_block_get_part_entry_type (block);
+  scheme = udisks_partition_table_get_type_ (partition_table);
+  cur_type = udisks_partition_get_type_ (partition);
   part_types = udisks_util_get_part_types_for_scheme (scheme);
   active_index = -1;
   gtk_combo_box_text_remove_all (GTK_COMBO_BOX_TEXT (combo_box));

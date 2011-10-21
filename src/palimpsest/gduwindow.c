@@ -1115,16 +1115,17 @@ get_top_level_blocks_for_drive (GduWindow   *window,
       UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksBlock *block;
 
-      block = udisks_object_get_block (object);
+      block = udisks_object_peek_block (object);
       if (block == NULL)
         continue;
 
-      if (g_strcmp0 (udisks_block_get_drive (block), drive_object_path) == 0 &&
-          !udisks_block_get_part_entry (block))
-        {
-          ret = g_list_append (ret, g_object_ref (object));
-        }
-      g_object_unref (block);
+      if (g_strcmp0 (udisks_block_get_drive (block), drive_object_path) != 0)
+        continue;
+
+      if (udisks_object_peek_partition (object) != NULL)
+        continue;
+
+      ret = g_list_append (ret, g_object_ref (object));
     }
   g_list_foreach (object_proxies, (GFunc) g_object_unref, NULL);
   g_list_free (object_proxies);
@@ -1726,7 +1727,9 @@ update_device_page_for_block (GduWindow          *window,
   gchar *type_for_display;
   gchar *configuration_for_display;
   UDisksFilesystem *filesystem;
+  UDisksPartition *partition;
 
+  partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
 
   /* Since /etc/fstab, /etc/crypttab and so on can reference
@@ -1776,13 +1779,14 @@ update_device_page_for_block (GduWindow          *window,
   usage = udisks_block_get_id_usage (block);
   type = udisks_block_get_id_type (block);
   version = udisks_block_get_id_version (block);
-  partition_type = strtol (udisks_block_get_part_entry_type (block), NULL, 0);
+
+  partition_type = 0;
+  if (partition != NULL)
+    partition_type = strtol (udisks_partition_get_type_ (partition), NULL, 0);
 
   if (size > 0)
     {
-      if (udisks_block_get_part_entry (block) &&
-          g_strcmp0 (udisks_block_get_part_entry_scheme (block), "mbr") == 0 &&
-          (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+      if (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85)
         {
           type_for_display = g_strdup (_("Extended Partition"));
         }
@@ -1802,7 +1806,7 @@ update_device_page_for_block (GduWindow          *window,
               SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (type_for_display);
 
-  if (udisks_block_get_part_entry (block))
+  if (partition != NULL)
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
     }

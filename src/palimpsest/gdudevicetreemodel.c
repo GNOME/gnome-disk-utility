@@ -805,6 +805,7 @@ static gboolean
 should_include_block (UDisksObject *object)
 {
   UDisksBlock *block;
+  UDisksPartition *partition;
   gboolean ret;
   const gchar *device;
   const gchar *drive;
@@ -814,6 +815,7 @@ should_include_block (UDisksObject *object)
   ret = FALSE;
 
   block = udisks_object_peek_block (object);
+  partition = udisks_object_peek_partition (object);
 
   /* RAM devices are useless */
   device = udisks_block_get_device (block);
@@ -826,7 +828,7 @@ should_include_block (UDisksObject *object)
     goto out;
 
   /* Only include devices if they are top-level */
-  if (udisks_block_get_part_entry (block))
+  if (partition != NULL)
     goto out;
 
   /* Don't include if already shown in "Direct-Attached devices" */

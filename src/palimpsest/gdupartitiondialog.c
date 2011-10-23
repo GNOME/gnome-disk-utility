@@ -98,7 +98,7 @@ gdu_partition_dialog_show (GduWindow    *window,
 
   scheme = udisks_partition_table_get_type_ (partition_table);
   cur_type = udisks_partition_get_type_ (partition);
-  part_types = udisks_util_get_part_types_for_scheme (scheme);
+  part_types = udisks_client_get_part_types_for_scheme (gdu_window_get_client (window), scheme);
   active_index = -1;
   gtk_combo_box_text_remove_all (GTK_COMBO_BOX_TEXT (combo_box));
   for (n = 0; part_types != NULL && part_types[n] != NULL; n++)
@@ -106,7 +106,7 @@ gdu_partition_dialog_show (GduWindow    *window,
       const gchar *type;
       gchar *type_for_display;
       type = part_types[n];
-      type_for_display = udisks_util_get_part_type_for_display (scheme, type, TRUE);
+      type_for_display = udisks_client_get_part_type_for_display (gdu_window_get_client (window), scheme, type, TRUE);
       if (g_strcmp0 (type, cur_type) == 0)
         active_index = n;
       gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (combo_box), NULL, type_for_display);

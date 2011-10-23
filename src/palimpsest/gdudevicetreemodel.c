@@ -745,7 +745,7 @@ update_block (GduDeviceTreeModel  *model,
   loop = udisks_object_peek_loop (object);
 
   size = udisks_block_get_size (block);
-  size_str = udisks_util_get_size_for_display (size, FALSE, FALSE);
+  size_str = udisks_client_get_size_for_display (model->client, size, FALSE, FALSE);
 
   preferred_device = udisks_block_get_preferred_device (block);
   loop_backing_file = loop != NULL ? udisks_loop_get_backing_file (loop) : NULL;

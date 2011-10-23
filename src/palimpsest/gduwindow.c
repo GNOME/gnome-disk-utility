@@ -1092,7 +1092,7 @@ set_size (GduWindow      *window,
           SetMarkupFlags  flags)
 {
   gchar *s;
-  s = udisks_util_get_size_for_display (size, FALSE, TRUE);
+  s = udisks_client_get_size_for_display (window->client, size, FALSE, TRUE);
   set_markup (window, key_label_id, label_id, s, size);
   g_free (s);
 }
@@ -1471,7 +1471,7 @@ update_device_page_for_drive (GduWindow      *window,
   size = udisks_drive_get_size (drive);
   if (size > 0)
     {
-      s = udisks_util_get_size_for_display (size, FALSE, TRUE);
+      s = udisks_client_get_size_for_display (window->client, size, FALSE, TRUE);
       set_markup (window,
                   "devtab-drive-size-label",
                   "devtab-drive-size-value-label",
@@ -1792,7 +1792,7 @@ update_device_page_for_block (GduWindow          *window,
         }
       else
         {
-          type_for_display = udisks_util_get_id_for_display (usage, type, version, TRUE);
+          type_for_display = udisks_client_get_id_for_display (window->client, usage, type, version, TRUE);
         }
     }
   else

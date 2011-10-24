@@ -140,31 +140,6 @@ enum
 
 static guint signals[LAST_SIGNAL] = {0};
 
-static void on_object_added (GDBusObjectManager  *manager,
-                             GDBusObject         *object,
-                             gpointer             user_data);
-
-static void on_object_removed (GDBusObjectManager  *manager,
-                               GDBusObject         *object,
-                               gpointer             user_data);
-
-static void on_interface_added (GDBusObjectManager  *manager,
-                                GDBusObject         *object,
-                                GDBusInterface      *interface,
-                                gpointer             user_data);
-
-static void on_interface_removed (GDBusObjectManager  *manager,
-                                  GDBusObject         *object,
-                                  GDBusInterface      *interface,
-                                  gpointer             user_data);
-
-static void on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
-                                                   GDBusObjectProxy           *object_proxy,
-                                                   GDBusProxy                 *interface_proxy,
-                                                   GVariant                   *changed_properties,
-                                                   const gchar *const         *invalidated_properties,
-                                                   gpointer                    user_data);
-
 G_DEFINE_TYPE (GduVolumeGrid, gdu_volume_grid, GTK_TYPE_WIDGET)
 
 static guint get_depth (GList *elements);
@@ -184,31 +159,20 @@ static GridElement *find_element_for_position (GduVolumeGrid *grid,
 static gboolean gdu_volume_grid_draw (GtkWidget *widget,
                                       cairo_t   *cr);
 
+static void on_client_changed (UDisksClient   *client,
+                               gpointer        user_data);
+
 static void
 gdu_volume_grid_finalize (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-  GDBusObjectManager *object_manager;
 
   if (grid->container_icon != NULL)
     g_object_unref (grid->container_icon);
   g_free (grid->container_markup);
 
-  object_manager = udisks_client_get_object_manager (grid->client);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_object_added),
-                                        grid);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_object_removed),
-                                        grid);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_added),
-                                        grid);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_removed),
-                                        grid);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_proxy_properties_changed),
+  g_signal_handlers_disconnect_by_func (grid->client,
+                                        G_CALLBACK (on_client_changed),
                                         grid);
 
   g_list_foreach (grid->elements, (GFunc) grid_element_free, NULL);
@@ -279,28 +243,10 @@ static void
 gdu_volume_grid_constructed (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-  GDBusObjectManager *object_manager;
 
-  object_manager = udisks_client_get_object_manager (grid->client);
-  g_signal_connect (object_manager,
-                    "object-added",
-                    G_CALLBACK (on_object_added),
-                    grid);
-  g_signal_connect (object_manager,
-                    "object-removed",
-                    G_CALLBACK (on_object_removed),
-                    grid);
-  g_signal_connect (object_manager,
-                    "interface-added",
-                    G_CALLBACK (on_interface_added),
-                    grid);
-  g_signal_connect (object_manager,
-                    "interface-removed",
-                    G_CALLBACK (on_interface_removed),
-                    grid);
-  g_signal_connect (object_manager,
-                    "interface-proxy-properties-changed",
-                    G_CALLBACK (on_interface_proxy_properties_changed),
+  g_signal_connect (grid->client,
+                    "changed",
+                    G_CALLBACK (on_client_changed),
                     grid);
 
   recompute_grid (grid);
@@ -2115,61 +2061,11 @@ gdu_volume_grid_includes_object (GduVolumeGrid   *grid,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-maybe_update (GduVolumeGrid    *grid,
-              UDisksObject      *object)
-{
-  if (gdu_volume_grid_includes_object (grid, object))
-    recompute_grid (grid);
-}
-
-static void
-on_object_added (GDBusObjectManager  *manager,
-                 GDBusObject         *object,
-                 gpointer             user_data)
+on_client_changed (UDisksClient   *client,
+                   gpointer        user_data)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, UDISKS_OBJECT (object));
-}
-
-static void
-on_object_removed (GDBusObjectManager  *manager,
-                   GDBusObject         *object,
-                   gpointer             user_data)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_added (GDBusObjectManager  *manager,
-                    GDBusObject         *object,
-                    GDBusInterface      *interface,
-                    gpointer             user_data)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_removed (GDBusObjectManager  *manager,
-                      GDBusObject         *object,
-                      GDBusInterface      *interface,
-                      gpointer             user_data)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
-                                       GDBusObjectProxy           *object_proxy,
-                                       GDBusProxy                 *interface_proxy,
-                                       GVariant                   *changed_properties,
-                                       const gchar *const         *invalidated_properties,
-                                       gpointer                    user_data)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
-  maybe_update (grid, UDISKS_OBJECT (object_proxy));
+  recompute_grid (grid);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

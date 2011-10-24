@@ -213,56 +213,20 @@ gdu_window_init (GduWindow *window)
                                                      NULL);
 }
 
-static void on_object_added (GDBusObjectManager  *manager,
-                             GDBusObject         *object,
-                             gpointer             user_data);
-
-static void on_object_removed (GDBusObjectManager  *manager,
-                               GDBusObject         *object,
-                               gpointer             user_data);
-
-static void on_interface_added (GDBusObjectManager  *manager,
-                                GDBusObject         *object,
-                                GDBusInterface      *interface,
-                                gpointer             user_data);
-
-static void on_interface_removed (GDBusObjectManager  *manager,
-                                  GDBusObject         *object,
-                                  GDBusInterface      *interface,
-                                  gpointer             user_data);
-
-static void on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
-                                                   GDBusObjectProxy           *object_proxy,
-                                                   GDBusProxy                 *interface_proxy,
-                                                   GVariant                   *changed_properties,
-                                                   const gchar *const         *invalidated_properties,
-                                                   gpointer                    user_data);
+static void on_client_changed (UDisksClient  *client,
+                               gpointer       user_data);
 
 static void
 gdu_window_finalize (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
-  GDBusObjectManager *object_manager;
 
   gtk_window_remove_mnemonic (GTK_WINDOW (window),
                               'd',
                               window->device_treeview);
 
-  object_manager = udisks_client_get_object_manager (window->client);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_object_added),
-                                        window);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_object_removed),
-                                        window);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_added),
-                                        window);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_removed),
-                                        window);
-  g_signal_handlers_disconnect_by_func (object_manager,
-                                        G_CALLBACK (on_interface_proxy_properties_changed),
+  g_signal_handlers_disconnect_by_func (window->client,
+                                        G_CALLBACK (on_client_changed),
                                         window);
 
   if (window->current_object != NULL)
@@ -693,7 +657,6 @@ gdu_window_constructed (GObject *object)
   GtkCellRenderer *renderer;
   GtkTreeSelection *selection;
   GtkStyleContext *context;
-  GDBusObjectManager *object_manager;
   GList *children, *l;
   guint n;
 
@@ -798,26 +761,9 @@ gdu_window_constructed (GObject *object)
                     window);
   gtk_tree_view_expand_all (GTK_TREE_VIEW (window->device_treeview));
 
-  object_manager = udisks_client_get_object_manager (window->client);
-  g_signal_connect (object_manager,
-                    "object-added",
-                    G_CALLBACK (on_object_added),
-                    window);
-  g_signal_connect (object_manager,
-                    "object-removed",
-                    G_CALLBACK (on_object_removed),
-                    window);
-  g_signal_connect (object_manager,
-                    "interface-added",
-                    G_CALLBACK (on_interface_added),
-                    window);
-  g_signal_connect (object_manager,
-                    "interface-removed",
-                    G_CALLBACK (on_interface_removed),
-                    window);
-  g_signal_connect (object_manager,
-                    "interface-proxy-properties-changed",
-                    G_CALLBACK (on_interface_proxy_properties_changed),
+  g_signal_connect (window->client,
+                    "changed",
+                    G_CALLBACK (on_client_changed),
                     window);
 
   /* set up non-standard widgets that isn't in the .ui file */
@@ -1216,9 +1162,10 @@ select_details_page (GduWindow      *window,
 }
 
 static void
-update_all (GduWindow     *window,
-            UDisksObject  *object)
+update_all (GduWindow     *window)
 {
+  ShowFlags show_flags;
+
   switch (window->current_page)
     {
     case DETAILS_PAGE_NOT_SELECTED:
@@ -1230,75 +1177,20 @@ update_all (GduWindow     *window,
       break;
 
     case DETAILS_PAGE_DEVICE:
-      /* this is a little too inclusive.. */
-      if (object != NULL)
-        {
-          if (object == window->current_object ||
-              gdu_volume_grid_includes_object (GDU_VOLUME_GRID (window->volume_grid), object))
-            {
-              ShowFlags show_flags;
-              show_flags = SHOW_FLAGS_NONE;
-              update_details_page (window, window->current_page, &show_flags);
-              update_for_show_flags (window, show_flags);
-            }
-        }
+      show_flags = SHOW_FLAGS_NONE;
+      update_details_page (window, window->current_page, &show_flags);
+      update_for_show_flags (window, show_flags);
       break;
     }
 }
 
 static void
-on_object_added (GDBusObjectManager  *manager,
-                 GDBusObject         *object,
-                 gpointer             user_data)
+on_client_changed (UDisksClient   *client,
+                   gpointer        user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_object_added %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-  update_all (window, UDISKS_OBJECT (object));
-}
-
-static void
-on_object_removed (GDBusObjectManager  *manager,
-                   GDBusObject         *object,
-                   gpointer             user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_object_removed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-  update_all (window, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_added (GDBusObjectManager  *manager,
-                    GDBusObject         *object,
-                    GDBusInterface      *interface,
-                    gpointer             user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_interface_added %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-  update_all (window, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_removed (GDBusObjectManager  *manager,
-                      GDBusObject         *object,
-                      GDBusInterface      *interface,
-                      gpointer             user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_interface_removed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-  update_all (window, UDISKS_OBJECT (object));
-}
-
-static void
-on_interface_proxy_properties_changed (GDBusObjectManagerClient   *manager,
-                                       GDBusObjectProxy           *object_proxy,
-                                       GDBusProxy                 *interface_proxy,
-                                       GVariant                   *changed_properties,
-                                       const gchar *const         *invalidated_properties,
-                                       gpointer                    user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_interface_proxy_properties_changed %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object_proxy)));
-  update_all (window, UDISKS_OBJECT (object_proxy));
+  //g_debug ("on_client_changed");
+  update_all (window);
 }
 
 static void
@@ -1306,8 +1198,8 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
                         gpointer        user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  // g_debug ("on_volume_grid_changed");
-  update_all (window, gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid)));
+  //g_debug ("on_volume_grid_changed");
+  update_all (window);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

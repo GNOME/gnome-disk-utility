@@ -1723,7 +1723,6 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *usage;
   const gchar *type;
   const gchar *version;
-  gint partition_type;
   gchar *type_for_display;
   gchar *configuration_for_display;
   UDisksFilesystem *filesystem;
@@ -1780,13 +1779,9 @@ update_device_page_for_block (GduWindow          *window,
   type = udisks_block_get_id_type (block);
   version = udisks_block_get_id_version (block);
 
-  partition_type = 0;
-  if (partition != NULL)
-    partition_type = strtol (udisks_partition_get_type_ (partition), NULL, 0);
-
   if (size > 0)
     {
-      if (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85)
+      if (partition != NULL && udisks_partition_get_is_container (partition))
         {
           type_for_display = g_strdup (_("Extended Partition"));
         }

@@ -1752,24 +1752,15 @@ recompute_grid (GduVolumeGrid *grid)
           g_strcmp0 (udisks_partition_get_table (partition), top_object_path) == 0)
         {
           is_logical = FALSE;
-          if (g_strcmp0 (udisks_partition_table_get_type_ (partition_table), "dos") == 0)
+          if (udisks_partition_get_is_contained (partition))
             {
-              if (udisks_partition_get_number (partition) >= 5)
-                {
-                  is_logical = TRUE;
-                }
-              else
-                {
-                  gint type;
-                  type = strtol (udisks_partition_get_type_ (partition), NULL, 0);
-                  if (type == 0x05 || type == 0x0f || type == 0x85)
-                    {
-                      g_warn_if_fail (extended_partition == NULL);
-                      extended_partition = object;
-                    }
-                }
+              is_logical = TRUE;
             }
-
+          else if (udisks_partition_get_is_container (partition))
+            {
+              g_warn_if_fail (extended_partition == NULL);
+              extended_partition = object;
+            }
           if (is_logical)
             logical_partitions = g_list_prepend (logical_partitions, object);
           else
@@ -1954,7 +1945,6 @@ grid_element_set_details (GduVolumeGrid  *grid,
         const gchar *type;
         const gchar *version;
         const gchar *label;
-        gint partition_type;
         gchar *type_for_display;
         UDisksFilesystem *filesystem;
         UDisksPartition *partition;
@@ -1968,15 +1958,11 @@ grid_element_set_details (GduVolumeGrid  *grid,
         type = udisks_block_get_id_type (block);
         version = udisks_block_get_id_version (block);
         label = udisks_block_get_id_label (block);
-        partition_type = 0;
-        if (partition != NULL)
-          partition_type = strtol (udisks_partition_get_type_ (partition), NULL, 0);
 
         if (g_variant_n_children (udisks_block_get_configuration (block)) > 0)
           element->show_configured = TRUE;
 
-        if (partition != NULL &&
-            (partition_type == 0x05 || partition_type == 0x0f || partition_type == 0x85))
+        if (partition != NULL && udisks_partition_get_is_container (partition))
           {
             s = g_strdup_printf ("%s\n%s",
                                  C_("volume-grid", "Extended Partition"),

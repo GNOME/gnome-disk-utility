@@ -1580,14 +1580,16 @@ calculate_configuration_for_display (UDisksBlock *block,
 
   if (str->len == 0)
     {
+      UDisksObject *object;
+
       /* No known configuration... show "No" only if we actually
        * know how to configure the device or already offer to
        * configure the device...
        */
-      if (g_strcmp0 (udisks_block_get_id_usage (block), "filesystem") == 0 ||
-          (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
-           g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0) ||
-          g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0 ||
+      object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (block)));
+      if (udisks_object_peek_filesystem (object) != NULL ||
+          udisks_object_peek_swapspace (object) != NULL ||
+          udisks_object_peek_encrypted (object) != NULL ||
           show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB | SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB))
         {
           /* Translators: Shown when the device is not configured */

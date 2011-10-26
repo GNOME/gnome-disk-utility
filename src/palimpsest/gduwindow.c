@@ -509,8 +509,9 @@ loop_setup_cb (UDisksManager  *manager,
       gtk_recent_manager_add_item (gtk_recent_manager_get_default (), uri);
       g_free (uri);
 
-      object = UDISKS_OBJECT (g_dbus_object_manager_get_object (udisks_client_get_object_manager (data->window->client),
-                                                                out_loop_device_object_path));
+      udisks_client_settle (data->window->client);
+
+      object = udisks_client_get_object (data->window->client, out_loop_device_object_path);
       set_selected_object (data->window, object);
       g_object_unref (object);
       g_free (out_loop_device_object_path);

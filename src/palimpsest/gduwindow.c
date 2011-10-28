@@ -1852,9 +1852,33 @@ update_device_page_for_free_space (GduWindow          *window,
                                    guint64             size,
                                    ShowFlags          *show_flags)
 {
+  gchar *s;
+  UDisksPartitionTable *table;
+  const gchar *table_type = NULL;
+
   //g_debug ("In update_device_page_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
+
+  table = udisks_object_peek_partition_table (object);
+  if (table != NULL)
+    table_type = udisks_partition_table_get_type_ (table);
+
+  if (table_type != NULL)
+    {
+      gchar *s2;
+      s2 = udisks_client_get_part_scheme_for_display (window->client, table_type);
+      /* Translators: used to convey free space for partitions - the %s is the
+       * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
+       */
+      s = g_strdup_printf (_("Unallocated Space (%s)"), s2 != NULL ? s2 : table_type);
+      g_free (s2);
+    }
+  else
+    {
+      /* Translators: used to convey free space for partitions (partition table format not known) */
+      s = g_strdup (_("Unallocated Space"));
+    }
 
   set_markup (window,
               "devtab-device-label",
@@ -1867,9 +1891,10 @@ update_device_page_for_free_space (GduWindow          *window,
   set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              _("Unallocated Space"),
+              s,
               SET_MARKUP_FLAGS_NONE);
   *show_flags |= SHOW_FLAGS_PARTITION_CREATE_BUTTON;
+  g_free (s);
 }
 
 static void

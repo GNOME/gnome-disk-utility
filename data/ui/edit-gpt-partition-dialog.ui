@@ -98,6 +98,7 @@
               <object class="GtkComboBoxText" id="type-combobox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_markup" translatable="yes">The partition type represented as a 32-bit &lt;i&gt;GUID&lt;/i&gt;</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -126,6 +127,7 @@
               <object class="GtkEntry" id="name-entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="tooltip_markup" translatable="yes">The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the &lt;b&gt;/dev/disk/by-partlabel&lt;/b&gt; directory</property>
                 <property name="max_length">36</property>
                 <property name="invisible_char">●</property>
               </object>
@@ -142,6 +144,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -160,6 +163,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">Legacy BIOS Bootable. This is equivalent to Master Boot Record &lt;i&gt;bootable&lt;/i&gt; flag. It is normally only used for GPT partitions on MBR systems</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -178,6 +182,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">If set, some OSes may mount or use the contents of the partition as read-only instead of read-write</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -196,6 +201,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">If set, some OSes may hide the contents of the partition in their user interfaces</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -214,6 +220,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
+                <property name="tooltip_markup" translatable="yes">If set, some OSes may not automount the contents of the partition</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
                 <property name="xalign">0</property>
@@ -225,9 +232,6 @@
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
             <child>
               <placeholder/>

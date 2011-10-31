@@ -1674,6 +1674,8 @@ update_device_page_for_block (GduWindow          *window,
     {
       gchar *s;
       s = udisks_client_get_partition_info (window->client, partition);
+      if (s == NULL)
+        s = g_strdup (C_("partition type", "Unknown"));
       set_markup (window,
                   "devtab-partition-label",
                   "devtab-partition-value-label",

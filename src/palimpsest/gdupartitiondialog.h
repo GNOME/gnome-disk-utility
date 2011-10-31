@@ -28,8 +28,8 @@
 
 G_BEGIN_DECLS
 
-void   gdu_partition_dialog_show (GduWindow    *window,
-                                  UDisksObject *object);
+void     gdu_partition_dialog_show (GduWindow    *window,
+                                    UDisksObject *object);
 
 G_END_DECLS
 

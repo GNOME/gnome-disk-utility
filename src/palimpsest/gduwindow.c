@@ -1866,13 +1866,14 @@ update_device_page_for_free_space (GduWindow          *window,
 
   if (table_type != NULL)
     {
-      gchar *s2;
-      s2 = udisks_client_get_part_scheme_for_display (window->client, table_type);
+      const gchar *table_type_for_display;
+      table_type_for_display = udisks_client_get_partition_table_type_for_display (window->client, table_type);
+      if (table_type_for_display == NULL)
+        table_type_for_display = table_type;
       /* Translators: used to convey free space for partitions - the %s is the
        * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
        */
-      s = g_strdup_printf (_("Unallocated Space (%s)"), s2 != NULL ? s2 : table_type);
-      g_free (s2);
+      s = g_strdup_printf (_("Unallocated Space (%s)"), table_type_for_display);
     }
   else
     {

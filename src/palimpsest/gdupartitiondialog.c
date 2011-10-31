@@ -270,25 +270,60 @@ gdu_partition_dialog_show (GduWindow    *window,
   gtk_widget_show_all (data->dialog);
   gtk_widget_grab_focus (data->type_combobox);
 
+  /* TODO: do this async */
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)
     {
       gchar *type;
       gchar *name;
       guint64 flags;
+      GError *error;
+
       edit_partition_get (data, &type, &name, &flags);
+
       if (g_strcmp0 (udisks_partition_get_type_ (data->partition), type) != 0)
         {
-          g_debug ("TODO: set partition type to %s", type);
+          error = NULL;
+          if (!udisks_partition_call_set_type_sync (data->partition,
+                                                    type,
+                                                    g_variant_new ("a{sv}", NULL), /* options */
+                                                    NULL, /* GCancellable */
+                                                    &error))
+            {
+              gdu_window_show_error (window, _("Error setting partition type"), error);
+              g_error_free (error);
+              goto set_out;
+            }
         }
       if (g_strcmp0 (udisks_partition_get_name (data->partition), name) != 0)
         {
-          g_debug ("TODO: set partition name to %s", type);
+          error = NULL;
+          if (!udisks_partition_call_set_name_sync (data->partition,
+                                                    name,
+                                                    g_variant_new ("a{sv}", NULL), /* options */
+                                                    NULL, /* GCancellable */
+                                                    &error))
+            {
+              gdu_window_show_error (window, _("Error setting partition name"), error);
+              g_error_free (error);
+              goto set_out;
+            }
         }
       if (udisks_partition_get_flags (data->partition) != flags)
         {
-          g_debug ("TODO: set partition flags");
+          error = NULL;
+          if (!udisks_partition_call_set_flags_sync (data->partition,
+                                                     flags,
+                                                     g_variant_new ("a{sv}", NULL), /* options */
+                                                     NULL, /* GCancellable */
+                                                     &error))
+            {
+              gdu_window_show_error (window, _("Error setting partition flags"), error);
+              g_error_free (error);
+              goto set_out;
+            }
         }
+    set_out:
       g_free (type);
       g_free (name);
     }

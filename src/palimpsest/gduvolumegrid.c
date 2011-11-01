@@ -1847,6 +1847,35 @@ gdu_volume_grid_get_selected_size (GduVolumeGrid *grid)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+maybe_add_partition (GduVolumeGrid   *grid,
+                     GPtrArray       *lines,
+                     UDisksPartition *partition)
+{
+  const gchar *name;
+  guint number;
+  gchar *s;
+
+  if (partition == NULL)
+    goto out;
+
+  name = udisks_partition_get_name (partition);
+  number = udisks_partition_get_number (partition);
+
+  if (strlen (name) > 0)
+    {
+      s = g_strdup_printf (C_("volume-grid", "Partition %d (%s)"), number, name);
+    }
+  else
+    {
+      s = g_strdup_printf (C_("volume-grid", "Partition %d"), number);
+    }
+  g_ptr_array_add (lines, s);
+
+ out:
+  ;
+}
+
+static void
 grid_element_set_details (GduVolumeGrid  *grid,
                           GridElement    *element)
 {
@@ -1884,8 +1913,6 @@ grid_element_set_details (GduVolumeGrid  *grid,
     case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
       {
         UDisksBlock *block;
-        gchar *s;
-        const gchar *cs;
         gchar *size_str;
         const gchar *usage;
         const gchar *type;
@@ -1894,6 +1921,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
         gchar *type_for_display;
         UDisksFilesystem *filesystem;
         UDisksPartition *partition;
+        GPtrArray *lines;
 
         size_str = udisks_client_get_size_for_display (grid->client, element->size, FALSE, FALSE);
         block = udisks_object_peek_block (element->object);
@@ -1905,14 +1933,15 @@ grid_element_set_details (GduVolumeGrid  *grid,
         version = udisks_block_get_id_version (block);
         label = udisks_block_get_id_label (block);
 
+        lines = g_ptr_array_new_with_free_func (g_free);
+
         if (g_variant_n_children (udisks_block_get_configuration (block)) > 0)
           element->show_configured = TRUE;
 
         if (partition != NULL && udisks_partition_get_is_container (partition))
           {
-            s = g_strdup_printf ("%s\n%s",
-                                 C_("volume-grid", "Extended Partition"),
-                                 size_str);
+            g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Extended Partition")));
+            g_ptr_array_add (lines, g_strdup (size_str));
           }
         else if (filesystem != NULL)
           {
@@ -1926,16 +1955,17 @@ grid_element_set_details (GduVolumeGrid  *grid,
                  * changes then we don't know the size nor usage/type ... so
                  * just print the device name
                  */
-                s = udisks_block_dup_preferred_device (block);
+                g_ptr_array_add (lines, udisks_block_dup_preferred_device (block));
               }
             else
               {
                 type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
                 if (strlen (label) > 0)
-                  cs = label;
+                  g_ptr_array_add (lines, g_strdup (label));
                 else
-                  cs = C_("volume-grid", "Filesystem");
-                s = g_strdup_printf ("%s\n%s %s", cs, size_str, type_for_display);
+                  g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Filesystem")));
+                maybe_add_partition (grid, lines, partition);
+                g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
                 g_free (type_for_display);
               }
             g_clear_object (&drive);
@@ -1952,8 +1982,11 @@ grid_element_set_details (GduVolumeGrid  *grid,
             label = udisks_block_get_id_label (block);
             type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
             if (strlen (label) == 0)
-              label = C_("volume-grid", "Swap");
-            s = g_strdup_printf ("%s\n%s %s", label, size_str, type_for_display);
+              g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Swap")));
+            else
+              g_ptr_array_add (lines, g_strdup (label));
+            maybe_add_partition (grid, lines, partition);
+            g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
             g_free (type_for_display);
 
             swapspace = udisks_object_peek_swapspace (element->object);
@@ -1966,21 +1999,21 @@ grid_element_set_details (GduVolumeGrid  *grid,
         else if (g_strcmp0 (usage, "raid") == 0 && strlen (label) > 0)
           {
             type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
-            s = g_strdup_printf ("%s\n%s %s",
-                                 label,
-                                 size_str,
-                                 type_for_display);
+            g_ptr_array_add (lines, g_strdup (label));
+            maybe_add_partition (grid, lines, partition);
+            g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
             g_free (type_for_display);
           }
         else
           {
+            maybe_add_partition (grid, lines, partition);
             type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
-            s = g_strdup_printf ("%s\n%s",
-                                 type_for_display,
-                                 size_str);
+            g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
             g_free (type_for_display);
           }
-        element->markup = s;
+        g_ptr_array_add (lines, NULL);
+        element->markup = g_strjoinv ("\n", (gchar **) lines->pdata);
+        g_ptr_array_unref (lines);
         g_free (size_str);
       }
       break;

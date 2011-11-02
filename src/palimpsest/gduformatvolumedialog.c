@@ -45,6 +45,13 @@ typedef struct
   GtkWidget *name_entry;
   GtkWidget *filesystem_label;
   GtkWidget *filesystem_entry;
+
+  GtkWidget *passphrase_label;
+  GtkWidget *passphrase_entry;
+  GtkWidget *confirm_passphrase_label;
+  GtkWidget *confirm_passphrase_entry;
+  GtkWidget *show_passphrase_checkbutton;
+
 } FormatVolumeData;
 
 static void
@@ -66,13 +73,28 @@ format_volume_data_free (FormatVolumeData *data)
 static void
 format_volume_update (FormatVolumeData *data)
 {
-  gboolean show_filesystem = FALSE;
+  gboolean show_filesystem_widgets = FALSE;
+  gboolean show_passphrase_widgets = FALSE;
   gboolean can_proceed = FALSE;
 
-  if (gtk_combo_box_get_active (GTK_COMBO_BOX (data->type_combobox)) == 3)
+  switch (gtk_combo_box_get_active (GTK_COMBO_BOX (data->type_combobox)))
     {
-      /* "Custom" selected */
-      show_filesystem = TRUE;
+    case 2:
+      /* Encrypted, compatible with Linux (LUKS + ext4) */
+      show_passphrase_widgets = TRUE;
+      if (strlen (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry))) > 0)
+        {
+          if (g_strcmp0 (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry)),
+                         gtk_entry_get_text (GTK_ENTRY (data->confirm_passphrase_entry))) == 0)
+            {
+              can_proceed = TRUE;
+            }
+        }
+      break;
+
+    case 3:
+      /* Custom */
+      show_filesystem_widgets = TRUE;
       if (strlen (gtk_entry_get_text (GTK_ENTRY (data->filesystem_entry))) > 0)
         {
           /* TODO: maybe validate we know how to create this FS?
@@ -80,13 +102,14 @@ format_volume_update (FormatVolumeData *data)
            */
           can_proceed = TRUE;
         }
-    }
-  else
-    {
+      break;
+
+    default:
       can_proceed = TRUE;
+      break;
     }
 
-  if (show_filesystem)
+  if (show_filesystem_widgets)
     {
       gtk_widget_show (data->filesystem_label);
       gtk_widget_show (data->filesystem_entry);
@@ -95,6 +118,23 @@ format_volume_update (FormatVolumeData *data)
     {
       gtk_widget_hide (data->filesystem_label);
       gtk_widget_hide (data->filesystem_entry);
+    }
+
+  if (show_passphrase_widgets)
+    {
+      gtk_widget_show (data->passphrase_label);
+      gtk_widget_show (data->passphrase_entry);
+      gtk_widget_show (data->confirm_passphrase_label);
+      gtk_widget_show (data->confirm_passphrase_entry);
+      gtk_widget_show (data->show_passphrase_checkbutton);
+    }
+  else
+    {
+      gtk_widget_hide (data->passphrase_label);
+      gtk_widget_hide (data->passphrase_entry);
+      gtk_widget_hide (data->confirm_passphrase_label);
+      gtk_widget_hide (data->confirm_passphrase_entry);
+      gtk_widget_hide (data->show_passphrase_checkbutton);
     }
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
@@ -120,6 +160,17 @@ format_volume_populate (FormatVolumeData *data)
 
   /* Set 'swap' for the custom filesystem */
   gtk_entry_set_text (GTK_ENTRY (data->filesystem_entry), "swap");
+
+  g_object_bind_property (data->show_passphrase_checkbutton,
+                          "active",
+                          data->passphrase_entry,
+                          "visibility",
+                          G_BINDING_SYNC_CREATE);
+  g_object_bind_property (data->show_passphrase_checkbutton,
+                          "active",
+                          data->confirm_passphrase_entry,
+                          "visibility",
+                          G_BINDING_SYNC_CREATE);
 }
 
 void
@@ -140,15 +191,20 @@ gdu_format_volume_dialog_show (GduWindow    *window,
                                              "format-volume-dialog",
                                              &data->builder);
   data->type_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "type-combobox"));
-  g_signal_connect (data->type_combobox,
-                    "notify::active", G_CALLBACK (format_volume_property_changed), data);
+  g_signal_connect (data->type_combobox, "notify::active", G_CALLBACK (format_volume_property_changed), data);
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "name-entry"));
-  g_signal_connect (data->name_entry,
-                    "notify::text", G_CALLBACK (format_volume_property_changed), data);
+  g_signal_connect (data->name_entry, "notify::text", G_CALLBACK (format_volume_property_changed), data);
   data->filesystem_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "filesystem-label"));
   data->filesystem_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "filesystem-entry"));
-  g_signal_connect (data->filesystem_entry,
-                    "notify::text", G_CALLBACK (format_volume_property_changed), data);
+  g_signal_connect (data->filesystem_entry, "notify::text", G_CALLBACK (format_volume_property_changed), data);
+  data->passphrase_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "passphrase-label"));
+  data->passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "passphrase-entry"));
+  g_signal_connect (data->passphrase_entry, "notify::text", G_CALLBACK (format_volume_property_changed), data);
+  data->confirm_passphrase_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "confirm-passphrase-label"));
+  data->confirm_passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "confirm-passphrase-entry"));
+  g_signal_connect (data->confirm_passphrase_entry, "notify::text", G_CALLBACK (format_volume_property_changed), data);
+  data->show_passphrase_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "show-passphrase-checkbutton"));
+  g_signal_connect (data->show_passphrase_checkbutton, "notify::active", G_CALLBACK (format_volume_property_changed), data);
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);

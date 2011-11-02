@@ -173,6 +173,25 @@ format_volume_populate (FormatVolumeData *data)
                           G_BINDING_SYNC_CREATE);
 }
 
+static void
+format_cb (GObject      *source_object,
+           GAsyncResult *res,
+           gpointer      user_data)
+{
+  FormatVolumeData *data = user_data;
+  GError *error;
+
+  error = NULL;
+  if (!udisks_block_call_format_finish (UDISKS_BLOCK (source_object),
+                                        res,
+                                        &error))
+    {
+      gdu_window_show_error (data->window, _("Error setting partition flags"), error);
+      g_error_free (error);
+    }
+  format_volume_data_free (data);
+}
+
 void
 gdu_format_volume_dialog_show (GduWindow    *window,
                                UDisksObject *object)
@@ -215,13 +234,11 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   gtk_widget_show_all (data->dialog);
   gtk_widget_grab_focus (data->name_entry);
 
-  /* TODO: do this async */
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)
     {
       GVariantBuilder options_builder;
       const gchar *type;
-      GError *error;
 
       gtk_widget_hide (data->dialog);
       if (!gdu_window_show_confirmation (window,
@@ -254,18 +271,14 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           break;
         }
 
-      error = NULL;
-      if (!udisks_block_call_format_sync (data->block,
-                                          type,
-                                          g_variant_builder_end (&options_builder),
-                                          NULL, /* GCancellable */
-                                          &error))
-        {
-          gdu_window_show_error (window, _("Error formatting volume"), error);
-          g_error_free (error);
-        }
+      udisks_block_call_format (data->block,
+                                type,
+                                g_variant_builder_end (&options_builder),
+                                NULL, /* GCancellable */
+                                format_cb,
+                                data);
+      return;
     }
-
  out:
   format_volume_data_free (data);
 }

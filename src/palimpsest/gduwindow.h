@@ -42,6 +42,12 @@ void            gdu_window_show_error      (GduWindow      *window,
                                             const gchar    *message,
                                             GError         *error);
 
+gboolean        gdu_window_show_confirmation (GduWindow   *window,
+                                              const gchar *message,
+                                              const gchar *secondary_message,
+                                              const gchar *affirmative_verb);
+
+
 G_END_DECLS
 
 #endif /* __GDU_WINDOW_H__ */

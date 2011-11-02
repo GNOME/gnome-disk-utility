@@ -163,9 +163,51 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)
     {
-      /* TODO: confirmation dialog? */
-      g_debug ("TODO: format volume");
+      GVariantBuilder options_builder;
+      const gchar *type;
+      GError *error;
+
+      gtk_widget_hide (data->dialog);
+      if (!gdu_window_show_confirmation (window,
+                                         _("Are you sure you want to format the volume?"),
+                                         _("All data on the volume will be lost"),
+                                         _("_Format")))
+        goto out;
+
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      if (strlen (gtk_entry_get_text (GTK_ENTRY (data->name_entry))) > 0)
+      g_variant_builder_add (&options_builder, "{sv}", "label",
+                             g_variant_new_string (gtk_entry_get_text (GTK_ENTRY (data->name_entry))));
+
+      switch (gtk_combo_box_get_active (GTK_COMBO_BOX (data->type_combobox)))
+        {
+        case 0:
+          type = "vfat";
+          break;
+        case 1:
+          type = "ext4";
+          break;
+        case 2:
+          /* TODO */
+          type = "luks+ext4";
+          break;
+        case 3:
+          type = gtk_entry_get_text (GTK_ENTRY (data->filesystem_entry));
+          break;
+        }
+
+      error = NULL;
+      if (!udisks_block_call_format_sync (data->block,
+                                          type,
+                                          g_variant_builder_end (&options_builder),
+                                          NULL, /* GCancellable */
+                                          &error))
+        {
+          gdu_window_show_error (window, _("Error formatting volume"), error);
+          g_error_free (error);
+        }
     }
 
+ out:
   format_volume_data_free (data);
 }

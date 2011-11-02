@@ -2040,6 +2040,38 @@ gdu_window_show_error (GduWindow   *window,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+gboolean
+gdu_window_show_confirmation (GduWindow   *window,
+                              const gchar *message,
+                              const gchar *secondary_message,
+                              const gchar *affirmative_verb)
+{
+  GtkWidget *dialog;
+  gint response;
+
+  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_INFO,
+                                               GTK_BUTTONS_CANCEL,
+                                               "<big><b>%s</b></big>",
+                                               message);
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s",
+                                              secondary_message);
+
+  gtk_dialog_add_button (GTK_DIALOG (dialog),
+                         affirmative_verb,
+                         GTK_RESPONSE_OK);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return response == GTK_RESPONSE_OK;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
                                  gpointer   user_data)

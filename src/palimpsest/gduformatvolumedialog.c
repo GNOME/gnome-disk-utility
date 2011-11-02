@@ -38,6 +38,7 @@ typedef struct
   GduWindow *window;
   UDisksObject *object;
   UDisksBlock *block;
+  UDisksDrive *drive;
 
   GtkBuilder *builder;
   GtkWidget *dialog;
@@ -60,6 +61,7 @@ format_volume_data_free (FormatVolumeData *data)
   g_object_unref (data->window);
   g_object_unref (data->object);
   g_object_unref (data->block);
+  g_clear_object (&data->drive);
   if (data->dialog != NULL)
     {
       gtk_widget_hide (data->dialog);
@@ -79,7 +81,7 @@ format_volume_update (FormatVolumeData *data)
 
   switch (gtk_combo_box_get_active (GTK_COMBO_BOX (data->type_combobox)))
     {
-    case 2:
+    case 3:
       /* Encrypted, compatible with Linux (LUKS + ext4) */
       show_passphrase_widgets = TRUE;
       if (strlen (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry))) > 0)
@@ -92,7 +94,7 @@ format_volume_update (FormatVolumeData *data)
         }
       break;
 
-    case 3:
+    case 4:
       /* Custom */
       show_filesystem_widgets = TRUE;
       if (strlen (gtk_entry_get_text (GTK_ENTRY (data->filesystem_entry))) > 0)
@@ -152,14 +154,23 @@ format_volume_property_changed (GObject     *object,
 static void
 format_volume_populate (FormatVolumeData *data)
 {
-  /* Select "Compatible with all systems (FAT)" by default */
-  gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 1);
+
+  /* Default to NTFS for removable media... Ext4 otherwise */
+  if (data->drive != NULL && udisks_drive_get_media_removable (data->drive))
+    {
+      /* TODO: Default to FAT for memory cards or if the media is smaller than, say, 100GB */
+      gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 1);
+    }
+  else
+    {
+      gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 2);
+    }
 
   /* Translators: this is the default name for the filesystem */
   gtk_entry_set_text (GTK_ENTRY (data->name_entry), _("New Volume"));
 
-  /* Set 'swap' for the custom filesystem */
-  gtk_entry_set_text (GTK_ENTRY (data->filesystem_entry), "swap");
+  /* Set 'btrfs' for the custom filesystem */
+  gtk_entry_set_text (GTK_ENTRY (data->filesystem_entry), "btrfs");
 
   g_object_bind_property (data->show_passphrase_checkbutton,
                           "active",
@@ -204,6 +215,7 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   data->object = g_object_ref (object);
   data->block = udisks_object_get_block (object);
   g_assert (data->block != NULL);
+  data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
 
   data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
                                              "format-volume-dialog.ui",
@@ -258,16 +270,19 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           type = "vfat";
           break;
         case 1:
+          type = "ntfs";
+          break;
+        case 2:
           type = "ext4";
           g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
           break;
-        case 2:
+        case 3:
           type = "ext4";
           g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
           g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase",
                                  g_variant_new_string (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry))));
           break;
-        case 3:
+        case 4:
           type = gtk_entry_get_text (GTK_ENTRY (data->filesystem_entry));
           break;
         }

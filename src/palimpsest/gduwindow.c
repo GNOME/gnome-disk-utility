@@ -43,6 +43,7 @@
 #include "gdufilesystemdialog.h"
 #include "gdupartitiondialog.h"
 #include "gduunlockdialog.h"
+#include "gduformatvolumedialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -100,6 +101,7 @@ struct _GduWindow
   GtkWidget *generic_menu_item_configure_crypttab;
   GtkWidget *generic_menu_item_edit_label;
   GtkWidget *generic_menu_item_edit_partition;
+  GtkWidget *generic_menu_item_format_volume;
 
   GHashTable *label_connections;
 };
@@ -139,6 +141,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
   {0, NULL}
 };
 
@@ -172,6 +175,7 @@ typedef enum
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<11),
   SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<12),
   SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<13),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<14),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -201,6 +205,8 @@ static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
                                              gpointer   user_data);
 static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
                                                  gpointer   user_data);
+static void on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
+                                                gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -310,6 +316,8 @@ update_for_show_flags (GduWindow *window,
                           show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_edit_partition),
                           show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_volume),
+                          show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME);
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
@@ -851,6 +859,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_edit_partition,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_edit_partition),
+                    window);
+  g_signal_connect (window->generic_menu_item_format_volume,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_format_volume),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -1626,6 +1638,9 @@ update_device_page_for_block (GduWindow          *window,
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
 
+  /* TODO: don't show on CD-ROM drives or RO media etc. */
+  *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+
   /* Since /etc/fstab, /etc/crypttab and so on can reference
    * any device regardless of its content ... we want to show
    * the relevant menu option (to get to the configuration dialog)
@@ -2049,6 +2064,20 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
   gdu_partition_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
+                                    gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_format_volume_dialog_show (window, object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

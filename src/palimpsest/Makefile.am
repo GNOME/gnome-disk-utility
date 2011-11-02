@@ -37,6 +37,7 @@ palimpsest_SOURCES = 					\
 	gdufstabdialog.h	gdufstabdialog.c	\
 	gdupartitiondialog.h	gdupartitiondialog.c	\
 	gduunlockdialog.h	gduunlockdialog.c	\
+	gduformatvolumedialog.h	gduformatvolumedialog.c	\
 	$(enum_built_sources)				\
 	$(NULL)
 

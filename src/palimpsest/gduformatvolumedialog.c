@@ -262,9 +262,10 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
           break;
         case 2:
-          /* TODO */
-          type = "luks+ext4";
+          type = "ext4";
           g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+          g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase",
+                                 g_variant_new_string (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry))));
           break;
         case 3:
           type = gtk_entry_get_text (GTK_ENTRY (data->filesystem_entry));

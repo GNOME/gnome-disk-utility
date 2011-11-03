@@ -87,6 +87,7 @@ struct _GduWindow
   GtkWidget *devtab_grid_toolbar;
   GtkWidget *devtab_toolbar_generic_button;
   GtkWidget *devtab_toolbar_partition_create_button;
+  GtkWidget *devtab_toolbar_partition_delete_button;
   GtkWidget *devtab_toolbar_mount_button;
   GtkWidget *devtab_toolbar_unmount_button;
   GtkWidget *devtab_toolbar_eject_button;
@@ -128,6 +129,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_toolbar), "devtab-grid-toolbar"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_generic_button), "devtab-action-generic"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_partition_create_button), "devtab-action-partition-create"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_partition_delete_button), "devtab-action-partition-delete"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_mount_button), "devtab-action-mount"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_unmount_button), "devtab-action-unmount"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_eject_button), "devtab-action-eject"},
@@ -163,19 +165,20 @@ typedef enum
   SHOW_FLAGS_DETACH_DISK_IMAGE       = (1<<0),
   SHOW_FLAGS_EJECT_BUTTON            = (1<<1),
   SHOW_FLAGS_PARTITION_CREATE_BUTTON = (1<<2),
-  SHOW_FLAGS_MOUNT_BUTTON            = (1<<3),
-  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<4),
-  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<5),
-  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<6),
-  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<7),
-  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<8),
+  SHOW_FLAGS_PARTITION_DELETE_BUTTON = (1<<3),
+  SHOW_FLAGS_MOUNT_BUTTON            = (1<<4),
+  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<5),
+  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<6),
+  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<7),
+  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<8),
+  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
 
-  SHOW_FLAGS_POPUP_MENU_VIEW_SMART         = (1<<9),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<10),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<11),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<12),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<13),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<14),
+  SHOW_FLAGS_POPUP_MENU_VIEW_SMART         = (1<<20),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<21),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<22),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<23),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<24),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<25),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -187,6 +190,7 @@ static void on_volume_grid_changed (GduVolumeGrid  *grid,
 
 static void on_devtab_action_generic_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_action_partition_delete_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_mount_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unmount_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_eject_activated (GtkAction *action, gpointer user_data);
@@ -293,6 +297,8 @@ update_for_show_flags (GduWindow *window,
                           show_flags & SHOW_FLAGS_EJECT_BUTTON);
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_partition_create_button),
                           show_flags & SHOW_FLAGS_PARTITION_CREATE_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_partition_delete_button),
+                          show_flags & SHOW_FLAGS_PARTITION_DELETE_BUTTON);
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_unmount_button),
                           show_flags & SHOW_FLAGS_UNMOUNT_BUTTON);
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_mount_button),
@@ -810,6 +816,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_toolbar_partition_create_button,
                     "activate",
                     G_CALLBACK (on_devtab_action_partition_create_activated),
+                    window);
+  g_signal_connect (window->devtab_toolbar_partition_delete_button,
+                    "activate",
+                    G_CALLBACK (on_devtab_action_partition_delete_activated),
                     window);
   g_signal_connect (window->devtab_toolbar_mount_button,
                     "activate",
@@ -1642,6 +1652,9 @@ update_device_page_for_block (GduWindow          *window,
   if (udisks_block_get_size (block) > 0)
     *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
 
+  if (partition != NULL)
+    *show_flags |= SHOW_FLAGS_PARTITION_DELETE_BUTTON;
+
   /* Since /etc/fstab, /etc/crypttab and so on can reference
    * any device regardless of its content ... we want to show
    * the relevant menu option (to get to the configuration dialog)
@@ -2246,7 +2259,57 @@ static void
 on_devtab_action_partition_create_activated (GtkAction *action,
                                              gpointer   user_data)
 {
+  // GduWindow *window = GDU_WINDOW (user_data);
   g_debug ("%s: TODO", G_STRFUNC);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+partition_delete_cb (UDisksPartition *partition,
+                     GAsyncResult    *res,
+                     gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_partition_call_delete_finish (partition,
+                                            res,
+                                            &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error deleting partition"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_action_partition_delete_activated (GtkAction *action,
+                                             gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+  UDisksPartition *partition;
+
+  if (!gdu_window_show_confirmation (window,
+                                     _("Are you sure you want to delete the partition?"),
+                                     _("All data on the partition will be lost"),
+                                     _("_Delete")))
+    goto out;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  partition = udisks_object_peek_partition (object);
+  udisks_partition_call_delete (partition,
+                                g_variant_new ("a{sv}", NULL), /* options */
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) partition_delete_cb,
+                                g_object_ref (window));
+
+ out:
+  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

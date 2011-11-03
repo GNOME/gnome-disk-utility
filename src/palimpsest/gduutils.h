@@ -28,9 +28,6 @@
 
 G_BEGIN_DECLS
 
-gboolean gdu_utils_drive_treat_as_removable (UDisksDrive  *drive,
-                                             UDisksBlock  *block);
-
 gboolean gdu_utils_has_configuration (UDisksBlock  *block,
                                       const gchar  *type,
                                       gboolean     *out_has_passphrase);

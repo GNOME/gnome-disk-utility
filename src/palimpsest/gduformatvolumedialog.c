@@ -151,19 +151,47 @@ format_volume_property_changed (GObject     *object,
   format_volume_update (data);
 }
 
+static gboolean
+is_flash (UDisksDrive *drive)
+{
+  gboolean ret = FALSE;
+  guint n;
+  const gchar *const *media_compat;
+
+  media_compat = udisks_drive_get_media_compatibility (drive);
+  for (n = 0; media_compat != NULL && media_compat[n] != NULL; n++)
+    {
+      if (g_str_has_prefix (media_compat[n], "flash"))
+        {
+          ret = TRUE;
+          goto out;
+        }
+    }
+
+ out:
+  return ret;
+}
+
 static void
 format_volume_populate (FormatVolumeData *data)
 {
 
-  /* Default to NTFS for removable media... Ext4 otherwise */
-  if (data->drive != NULL && udisks_drive_get_media_removable (data->drive))
+  /* Default to FAT or NTFS for removable drives... Ext4 otherwise */
+  if (data->drive != NULL && udisks_drive_get_removable (data->drive))
     {
-      /* TODO: Default to FAT for memory cards or if the media is smaller than, say, 100GB */
-      gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 1);
+      /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
+      if (is_flash (data->drive) || udisks_drive_get_size (data->drive) < 20L * 1000L*1000L*1000L)
+        {
+          gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 0); /* FAT */
+        }
+      else
+        {
+          gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 1); /* NTFS */
+        }
     }
   else
     {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 2);
+      gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), 2); /* Ext4 */
     }
 
   /* Translators: this is the default name for the filesystem */

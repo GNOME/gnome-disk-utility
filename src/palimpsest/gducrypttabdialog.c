@@ -200,7 +200,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
       name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (data->block));
       options = "";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
-      if (data->drive != NULL && gdu_utils_drive_treat_as_removable (data->drive, data->block))
+      if (data->drive != NULL && udisks_drive_get_removable (data->drive))
         options = "noauto";
       passphrase_contents = "";
     }

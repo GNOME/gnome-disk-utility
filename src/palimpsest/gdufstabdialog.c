@@ -289,7 +289,7 @@ fstab_populate_device_combo_box (GtkWidget         *device_combobox,
       /* if the device is using removable media, prefer
        * by-id / by-path to by-uuid / by-label
        */
-      if (drive != NULL && gdu_utils_drive_treat_as_removable (drive, block))
+      if (drive != NULL && udisks_drive_get_removable (drive))
         {
           if (by_id != -1)
             selected = by_id;
@@ -435,7 +435,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
       type = "auto";
       opts = "defaults";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
-      if (drive != NULL && gdu_utils_drive_treat_as_removable (drive, block))
+      if (drive != NULL && udisks_drive_get_removable (drive))
         opts = "defaults,noauto";
       freq = 0;
       passno = 0;

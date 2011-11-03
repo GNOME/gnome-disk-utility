@@ -1639,7 +1639,8 @@ update_device_page_for_block (GduWindow          *window,
   filesystem = udisks_object_peek_filesystem (object);
 
   /* TODO: don't show on CD-ROM drives or RO media etc. */
-  *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+  if (udisks_block_get_size (block) > 0)
+    *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
 
   /* Since /etc/fstab, /etc/crypttab and so on can reference
    * any device regardless of its content ... we want to show

@@ -47,6 +47,9 @@ gboolean        gdu_window_show_confirmation (GduWindow   *window,
                                               const gchar *secondary_message,
                                               const gchar *affirmative_verb);
 
+gboolean        gdu_window_select_object     (GduWindow    *window,
+                                              UDisksObject *object);
+
 
 G_END_DECLS
 

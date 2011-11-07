@@ -2099,6 +2099,63 @@ gdu_volume_grid_includes_object (GduVolumeGrid   *grid,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GridElement *
+find_element_for_object_list (GList         *elements,
+                              UDisksObject  *object)
+{
+  GridElement *ret = NULL;
+  GList *l;
+
+  for (l = elements; l != NULL; l = l->next)
+    {
+      GridElement *e = l->data;
+      if (e->object == object)
+        {
+          ret = e;
+          goto out;
+        }
+      ret = find_element_for_object_list (e->embedded_elements, object);
+      if (ret != NULL)
+        goto out;
+    }
+ out:
+  return ret;
+}
+
+static GridElement *
+find_element_for_object (GduVolumeGrid *grid,
+                         UDisksObject  *object)
+{
+  return find_element_for_object_list (grid->elements, object);
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+gdu_volume_grid_select_object (GduVolumeGrid   *grid,
+                               UDisksObject    *block_object)
+{
+  gboolean ret = FALSE;
+  GridElement *elem;
+
+  g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), FALSE);
+  g_return_val_if_fail (G_IS_DBUS_OBJECT (block_object), FALSE);
+
+  elem = find_element_for_object (grid, block_object);
+  if (elem != NULL)
+    {
+      grid->selected = elem;
+      grid->focused = elem;
+      ret = TRUE;
+      g_signal_emit (grid, signals[CHANGED_SIGNAL], 0);
+      gtk_widget_queue_draw (GTK_WIDGET (grid));
+    }
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 on_client_changed (UDisksClient   *client,
                    gpointer        user_data)

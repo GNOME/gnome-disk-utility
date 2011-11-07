@@ -14,6 +14,7 @@ ui_DATA = 				\
 	unlock-device-dialog.ui		\
 	format-volume-dialog.ui		\
 	smart-dialog.ui			\
+	create-partition-dialog.ui	\
 	$(NULL)
 
 clean-local :

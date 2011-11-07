@@ -46,6 +46,8 @@ void                      gdu_volume_grid_set_container_icon    (GduVolumeGrid  
 
 gboolean                  gdu_volume_grid_includes_object       (GduVolumeGrid       *grid,
                                                                  UDisksObject        *object);
+gboolean                  gdu_volume_grid_select_object         (GduVolumeGrid       *grid,
+                                                                 UDisksObject        *block_object);
 
 GduVolumeGridElementType  gdu_volume_grid_get_selected_type     (GduVolumeGrid       *grid);
 UDisksObject             *gdu_volume_grid_get_selected_device   (GduVolumeGrid       *grid);

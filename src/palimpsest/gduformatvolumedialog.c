@@ -225,7 +225,7 @@ format_cb (GObject      *source_object,
                                         res,
                                         &error))
     {
-      gdu_window_show_error (data->window, _("Error setting partition flags"), error);
+      gdu_window_show_error (data->window, _("Error formatting volume"), error);
       g_error_free (error);
     }
   format_volume_data_free (data);

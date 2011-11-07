@@ -44,6 +44,7 @@
 #include "gdupartitiondialog.h"
 #include "gduunlockdialog.h"
 #include "gduformatvolumedialog.h"
+#include "gducreatepartitiondialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -327,10 +328,11 @@ update_for_show_flags (GduWindow *window,
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
-static void
+static gboolean
 set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
+  gboolean ret = FALSE;
   ShowFlags show_flags;
   GtkTreeIter iter;
 
@@ -346,6 +348,14 @@ set_selected_object (GduWindow    *window,
                                 NULL,
                                 FALSE);
       gtk_tree_path_free (path);
+      ret = TRUE;
+    }
+  else
+    {
+      if (object != NULL)
+        g_warning ("Cannot display object with object path %s",
+                   g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
     }
 
   show_flags = SHOW_FLAGS_NONE;
@@ -367,6 +377,8 @@ set_selected_object (GduWindow    *window,
       select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &show_flags);
     }
   update_for_show_flags (window, show_flags);
+ out:
+  return ret;
 }
 
 static gboolean
@@ -614,6 +626,79 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
  out:
   gtk_widget_destroy (dialog);
   g_free (filename);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+gdu_window_select_object (GduWindow    *window,
+                          UDisksObject *object)
+{
+  gboolean ret = FALSE;
+  UDisksPartition *partition;
+  UDisksPartitionTable *table = NULL;
+  UDisksDrive *drive = NULL;
+
+  partition = udisks_object_peek_partition (object);
+
+  /* if it's a partition, first select the object with the partition table */
+  if (partition != NULL)
+    {
+      UDisksObject *table_object = NULL;
+
+      table = udisks_client_get_partition_table (window->client, partition);
+      if (table == NULL)
+        goto out;
+      table_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (table));
+      if (table_object == NULL)
+        goto out;
+
+      if (gdu_window_select_object (window, table_object))
+        {
+          /* then select the partition */
+          if (!gdu_volume_grid_select_object (GDU_VOLUME_GRID (window->volume_grid), object))
+            {
+              g_warning ("Error selecting partition %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+            }
+          else
+            {
+              ret = TRUE;
+            }
+        }
+    }
+  else
+    {
+      UDisksBlock *block;
+
+      block = udisks_object_peek_block (object);
+      if (block != NULL)
+        {
+          /* OK, if not a partition, either select the drive (if available) or the block device itself */
+          drive = udisks_client_get_drive_for_block (window->client, block);
+          if (drive != NULL)
+            {
+              UDisksObject *drive_object = NULL;
+              drive_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
+              if (drive_object != NULL)
+                {
+                  if (!set_selected_object (window, drive_object))
+                    goto out;
+                  ret = TRUE;
+                }
+            }
+          else
+            {
+              if (!set_selected_object (window, object))
+                goto out;
+              ret = TRUE;
+            }
+        }
+    }
+
+ out:
+  g_clear_object (&drive);
+  g_clear_object (&table);
+  return ret;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2259,8 +2344,15 @@ static void
 on_devtab_action_partition_create_activated (GtkAction *action,
                                              gpointer   user_data)
 {
-  // GduWindow *window = GDU_WINDOW (user_data);
-  g_debug ("%s: TODO", G_STRFUNC);
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_create_partition_dialog_show (window,
+                                    object,
+                                    gdu_volume_grid_get_selected_offset (GDU_VOLUME_GRID (window->volume_grid)),
+                                    gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid)));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

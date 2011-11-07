@@ -22,23 +22,24 @@ enum_built_sources =							\
 
 BUILT_SOURCES += $(enum_built_sources)
 
-palimpsest_SOURCES = 					\
-				main.c			\
-	gdu.h						\
-	gduapplication.h	gduapplication.c	\
-	gdudevicetreemodel.h	gdudevicetreemodel.c	\
-	gdutypes.h					\
-	gduutils.h		gduutils.c		\
-	gduvolumegrid.h		gduvolumegrid.c		\
-	gduwindow.h		gduwindow.c		\
-	gduatasmartdialog.h	gduatasmartdialog.c	\
-	gducrypttabdialog.h	gducrypttabdialog.c	\
-	gdufilesystemdialog.h	gdufilesystemdialog.c	\
-	gdufstabdialog.h	gdufstabdialog.c	\
-	gdupartitiondialog.h	gdupartitiondialog.c	\
-	gduunlockdialog.h	gduunlockdialog.c	\
-	gduformatvolumedialog.h	gduformatvolumedialog.c	\
-	$(enum_built_sources)				\
+palimpsest_SOURCES = 							\
+					main.c				\
+	gdu.h								\
+	gduapplication.h		gduapplication.c		\
+	gdudevicetreemodel.h		gdudevicetreemodel.c		\
+	gdutypes.h							\
+	gduutils.h			gduutils.c			\
+	gduvolumegrid.h			gduvolumegrid.c			\
+	gduwindow.h			gduwindow.c			\
+	gduatasmartdialog.h		gduatasmartdialog.c		\
+	gducrypttabdialog.h		gducrypttabdialog.c		\
+	gdufilesystemdialog.h		gdufilesystemdialog.c		\
+	gdufstabdialog.h		gdufstabdialog.c		\
+	gdupartitiondialog.h		gdupartitiondialog.c		\
+	gduunlockdialog.h		gduunlockdialog.c		\
+	gduformatvolumedialog.h		gduformatvolumedialog.c		\
+	gducreatepartitiondialog.h	gducreatepartitiondialog.c	\
+	$(enum_built_sources)						\
 	$(NULL)
 
 palimpsest_CPPFLAGS = 					\

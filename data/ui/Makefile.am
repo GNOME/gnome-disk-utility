@@ -15,6 +15,7 @@ ui_DATA = 				\
 	format-volume-dialog.ui		\
 	smart-dialog.ui			\
 	create-partition-dialog.ui	\
+	filesystem-create.ui		\
 	$(NULL)
 
 clean-local :

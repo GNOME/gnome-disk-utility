@@ -27,6 +27,7 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreatepartitiondialog.h"
+#include "gducreatefilesystemwidget.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -46,6 +47,9 @@ typedef struct
   GtkWidget *size_spinbutton;
   GtkAdjustment *size_adjustment;
   GtkAdjustment *free_following_adjustment;
+
+  GtkWidget *contents_box;
+  GtkWidget *create_filesystem_widget;
 
 } CreatePartitionData;
 
@@ -72,7 +76,8 @@ create_partition_update (CreatePartitionData *data)
 {
   gboolean can_proceed = FALSE;
 
-  if (gtk_adjustment_get_value (data->size_adjustment) > 0)
+  if (gtk_adjustment_get_value (data->size_adjustment) > 0 &&
+      gdu_create_filesystem_widget_get_has_info (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget)))
     can_proceed = TRUE;
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
@@ -103,6 +108,24 @@ size_binding_func (GBinding     *binding,
   return TRUE;
 }
 
+static void
+format_cb (GObject      *source_object,
+           GAsyncResult *res,
+           gpointer      user_data)
+{
+  CreatePartitionData *data = user_data;
+  GError *error;
+
+  error = NULL;
+  if (!udisks_block_call_format_finish (UDISKS_BLOCK (source_object),
+                                        res,
+                                        &error))
+    {
+      gdu_window_show_error (data->window, _("Error formatting partition"), error);
+      g_error_free (error);
+    }
+  create_partition_data_free (data);
+}
 
 static void
 create_partition_cb (GObject      *source_object,
@@ -111,7 +134,13 @@ create_partition_cb (GObject      *source_object,
 {
   CreatePartitionData *data = user_data;
   GError *error;
-  gchar *created_partition_object_path;
+  gchar *created_partition_object_path = NULL;
+  UDisksObject *partition_object = NULL;
+  UDisksBlock *partition_block;
+  GVariantBuilder options_builder;
+  const gchar *fstype;
+  const gchar *name;
+  const gchar *passphrase;
 
   error = NULL;
   if (!udisks_partition_table_call_create_partition_finish (UDISKS_PARTITION_TABLE (source_object),
@@ -121,20 +150,49 @@ create_partition_cb (GObject      *source_object,
     {
       gdu_window_show_error (data->window, _("Error creating partition"), error);
       g_error_free (error);
+      create_partition_data_free (data);
+      goto out;
     }
-  else
+
+  udisks_client_settle (gdu_window_get_client (data->window));
+
+  partition_object = udisks_client_get_object (gdu_window_get_client (data->window), created_partition_object_path);
+  gdu_window_select_object (data->window, partition_object);
+
+  /* OK, cool, now format the created partition */
+  partition_block = udisks_object_peek_block (partition_object);
+  if (partition_block == NULL)
     {
-      UDisksObject *object;
-
-      udisks_client_settle (gdu_window_get_client (data->window));
-
-      object = udisks_client_get_object (gdu_window_get_client (data->window),
-                                         created_partition_object_path);
-      gdu_window_select_object (data->window, object);
-      g_object_unref (object);
-      g_free (created_partition_object_path);
+      g_warning ("Created partition has no block interface");
+      create_partition_data_free (data);
+      goto out;
     }
-  create_partition_data_free (data);
+
+  fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (name != NULL && strlen (name) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "label", g_variant_new_string (name));
+  if (!(g_strcmp0 (fstype, "vfat") == 0 || g_strcmp0 (fstype, "ntfs") == 0))
+    {
+      /* TODO: need a better way to determine if this should be TRUE */
+      g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+    }
+  if (passphrase != NULL && strlen (passphrase) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
+
+  udisks_block_call_format (partition_block,
+                            fstype,
+                            g_variant_builder_end (&options_builder),
+                            NULL, /* GCancellable */
+                            format_cb,
+                            data);
+
+ out:
+  g_free (created_partition_object_path);
+  g_clear_object (&partition_object);
 }
 
 void
@@ -166,6 +224,13 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   data->size_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "size-adjustment"));
   g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), data);
   data->free_following_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "free-following-adjustment"));
+  data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
+  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window), data->drive);
+  gtk_box_pack_start (GTK_BOX (data->contents_box),
+                      data->create_filesystem_widget,
+                      TRUE, TRUE, 0);
+  g_signal_connect (data->create_filesystem_widget, "notify::has-info",
+                    G_CALLBACK (create_partition_property_changed), data);
 
   /* The adjustments count MB, not bytes */
   max_size_mb = max_size / (1000L*1000L);

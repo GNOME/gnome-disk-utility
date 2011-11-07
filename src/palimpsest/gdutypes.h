@@ -43,8 +43,8 @@ typedef struct _GduWindow GduWindow;
 struct _GduVolumeGrid;
 typedef struct _GduVolumeGrid GduVolumeGrid;
 
-struct _GduIScsiPathModel;
-typedef struct _GduIScsiPathModel GduIScsiPathModel;
+struct _GduCreateFilesystemWidget;
+typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
 
 G_END_DECLS
 

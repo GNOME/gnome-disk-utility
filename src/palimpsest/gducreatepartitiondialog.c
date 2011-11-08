@@ -266,7 +266,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   create_partition_update (data);
 
   gtk_widget_show_all (data->dialog);
-  gtk_widget_grab_focus (data->size_spinbutton);
+  gtk_widget_grab_focus (gdu_create_filesystem_widget_get_name_entry (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget)));
 
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)

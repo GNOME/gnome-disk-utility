@@ -32,6 +32,13 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+enum
+{
+  MODEL_COLUMN_SELECTABLE,
+  MODEL_COLUMN_NAME_MARKUP,
+  MODEL_COLUMN_TYPE,
+  MODEL_N_COLUMNS
+};
 
 typedef struct
 {
@@ -51,7 +58,6 @@ typedef struct
   GtkWidget *hidden_checkbutton;
   GtkWidget *do_not_automount_checkbutton;
 
-  const gchar **part_types;
 } EditPartitionData;
 
 static void
@@ -62,7 +68,6 @@ edit_partition_data_free (EditPartitionData *data)
   g_object_unref (data->partition);
   g_object_unref (data->partition_table);
   g_free (data->partition_table_type);
-  g_free (data->part_types);
   if (data->dialog != NULL)
     {
       gtk_widget_hide (data->dialog);
@@ -82,11 +87,15 @@ edit_partition_get (EditPartitionData   *data,
   gchar *type = NULL;
   gchar *name = NULL;
   guint64 flags = 0;
-  gint active;
+  GtkTreeIter iter;
 
-  active = gtk_combo_box_get_active (GTK_COMBO_BOX (data->type_combobox));
-  if (active > 0)
-    type = g_strdup (data->part_types[active]);
+  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (data->type_combobox), &iter))
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (gtk_combo_box_get_model (GTK_COMBO_BOX (data->type_combobox))),
+                          &iter,
+                          MODEL_COLUMN_TYPE, &type,
+                          -1);
+    }
 
   if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
     {
@@ -154,31 +163,83 @@ static void
 edit_partition_populate (EditPartitionData *data)
 {
   const gchar *cur_type;
+  GList *l;
   guint n;
-  gint active_index;
+  GtkTreeIter *active_iter = NULL;
+  GtkListStore *model;
+  GList *infos;
+  const gchar *cur_table_subtype;
+  UDisksClient *client;
+  GtkCellRenderer *renderer;
+
+  client = gdu_window_get_client (data->window);
+
+  model = gtk_list_store_new (MODEL_N_COLUMNS,
+                              G_TYPE_BOOLEAN,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING);
 
   cur_type = udisks_partition_get_type_ (data->partition);
-  data->part_types = udisks_client_get_partition_types (gdu_window_get_client (data->window),
-                                                        data->partition_table_type);
-  active_index = -1;
-  gtk_combo_box_text_remove_all (GTK_COMBO_BOX_TEXT (data->type_combobox));
-  for (n = 0; data->part_types != NULL && data->part_types[n] != NULL; n++)
+  infos = udisks_client_get_partition_type_infos (client,
+                                                  data->partition_table_type,
+                                                  NULL);
+  /* assume that table subtypes are in order */
+  cur_table_subtype = NULL;
+  for (l = infos, n = 0; l != NULL; l = l->next, n++)
     {
-      const gchar *type = data->part_types[n];
+      UDisksPartitionTypeInfo *info = l->data;
       const gchar *type_for_display;
       gchar *s;
+      GtkTreeIter iter;
 
-      type_for_display = udisks_client_get_partition_type_for_display (gdu_window_get_client (data->window),
+      if (g_strcmp0 (info->table_subtype, cur_table_subtype) != 0)
+        {
+          s = g_strdup_printf ("<i>%s</i>",
+                               udisks_client_get_partition_table_subtype_for_display (client,
+                                                                                      info->table_type,
+                                                                                      info->table_subtype));
+          gtk_list_store_insert_with_values (model,
+                                             NULL, /* out iter */
+                                             G_MAXINT, /* position */
+                                             MODEL_COLUMN_SELECTABLE, FALSE,
+                                             MODEL_COLUMN_NAME_MARKUP, s,
+                                             MODEL_COLUMN_TYPE, NULL,
+                                             -1);
+          g_free (s);
+          cur_table_subtype = info->table_subtype;
+        }
+
+      type_for_display = udisks_client_get_partition_type_for_display (client,
                                                                        data->partition_table_type,
-                                                                       type);
-      if (g_strcmp0 (type, cur_type) == 0)
-        active_index = n;
-      s = g_strdup_printf ("%s (%s)", type_for_display, type);
-      gtk_combo_box_text_append (GTK_COMBO_BOX_TEXT (data->type_combobox), NULL, s);
+                                                                       info->type);
+      s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>", type_for_display, info->type);
+
+      gtk_list_store_insert_with_values (model,
+                                         &iter,
+                                         G_MAXINT, /* position */
+                                         MODEL_COLUMN_SELECTABLE, TRUE,
+                                         MODEL_COLUMN_NAME_MARKUP, s,
+                                         MODEL_COLUMN_TYPE, info->type,
+                                         -1);
+
+      if (active_iter == NULL && g_strcmp0 (info->type, cur_type) == 0)
+        active_iter = gtk_tree_iter_copy (&iter);
+
       g_free (s);
     }
-  if (active_index > 0)
-    gtk_combo_box_set_active (GTK_COMBO_BOX (data->type_combobox), active_index);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (data->type_combobox), GTK_TREE_MODEL (model));
+  if (active_iter != NULL)
+    {
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (data->type_combobox), active_iter);
+      gtk_tree_iter_free (active_iter);
+    }
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->type_combobox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (data->type_combobox), renderer,
+                                  "sensitive", MODEL_COLUMN_SELECTABLE,
+                                  "markup", MODEL_COLUMN_NAME_MARKUP,
+                                  NULL);
 
   if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
     {
@@ -197,6 +258,10 @@ edit_partition_populate (EditPartitionData *data)
       flags = udisks_partition_get_flags (data->partition);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton),         (flags & (1UL<< 7)) != 0);
     }
+
+  g_list_foreach (infos, (GFunc) udisks_partition_type_info_free, NULL);
+  g_list_free (infos);
+  g_object_unref (model);
 }
 
 void

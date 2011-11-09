@@ -189,6 +189,7 @@ edit_partition_populate (EditPartitionData *data)
     {
       UDisksPartitionTypeInfo *info = l->data;
       const gchar *type_for_display;
+      gchar *escaped_type_for_display;
       gchar *s;
       GtkTreeIter iter;
 
@@ -212,7 +213,11 @@ edit_partition_populate (EditPartitionData *data)
       type_for_display = udisks_client_get_partition_type_for_display (client,
                                                                        data->partition_table_type,
                                                                        info->type);
-      s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>", type_for_display, info->type);
+      escaped_type_for_display = g_markup_escape_text (type_for_display, -1);
+      s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                           escaped_type_for_display,
+                           info->type);
+      g_free (escaped_type_for_display);
 
       gtk_list_store_insert_with_values (model,
                                          &iter,

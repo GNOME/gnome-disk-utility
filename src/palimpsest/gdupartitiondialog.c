@@ -193,6 +193,12 @@ edit_partition_populate (EditPartitionData *data)
       gchar *s;
       GtkTreeIter iter;
 
+      /* skip type like 'Extended Partition' (dos 0x05) since we can't
+       * just change the partition type to that
+       */
+      if (info->flags & UDISKS_PARTITION_TYPE_INFO_FLAGS_CREATE_ONLY)
+        continue;
+
       if (g_strcmp0 (info->table_subtype, cur_table_subtype) != 0)
         {
           s = g_strdup_printf ("<i>%s</i>",

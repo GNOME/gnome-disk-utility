@@ -313,18 +313,18 @@ update_for_show_flags (GduWindow *window,
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_lock_button),
                           show_flags & SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON);
 
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_view_smart),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_configure_fstab),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_edit_label),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_edit_partition),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_volume),
-                          show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_label),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_partition),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_volume),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME);
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 

@@ -1947,6 +1947,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
         if (partition != NULL && udisks_partition_get_is_container (partition))
           {
             g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Extended Partition")));
+            maybe_add_partition (grid, lines, partition);
             g_ptr_array_add (lines, g_strdup (size_str));
           }
         else if (filesystem != NULL)

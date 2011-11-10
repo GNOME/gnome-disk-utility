@@ -26,29 +26,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkComboBoxText" id="type-combobox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="has_tooltip">True</property>
-            <property name="tooltip_markup" translatable="yes">The kind of filesystem to create. Choose &lt;b&gt;Custom&lt;/b&gt; to specify a custom filesystem type such as &lt;i&gt;btrfs&lt;/i&gt;, &lt;i&gt;xfs&lt;/i&gt; or &lt;i&gt;swap&lt;/i&gt;</property>
-            <property name="tooltip_text" translatable="yes">The kind of filesystem to create. Choose Custom to specify a custom filesystem type such as btrfs, xfs or swap</property>
-            <items>
-              <item translatable="yes">Compatible with all systems and devices (FAT)</item>
-              <item translatable="yes">Compatible with most systems (NTFS)</item>
-              <item translatable="yes">Compatible with Linux systems (ext4)</item>
-              <item translatable="yes">Encrypted, compatible with Linux systems (LUKS, ext4)</item>
-              <item translatable="yes">Custom</item>
-            </items>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="label2">
+          <object class="GtkLabel" id="name-label">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="xalign">1</property>
@@ -209,6 +187,19 @@
           <packing>
             <property name="left_attach">1</property>
             <property name="top_attach">5</property>
+            <property name="width">1</property>
+            <property name="height">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBox" id="type-combobox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="id_column">0</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
             <property name="width">1</property>
             <property name="height">1</property>
           </packing>

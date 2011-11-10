@@ -123,7 +123,9 @@ gdu_format_volume_dialog_show (GduWindow    *window,
                                              &data->builder);
 
   data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
-  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window), data->drive);
+  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window),
+                                                                     data->drive,
+                                                                     NULL); /* additional_fstypes */
   gtk_box_pack_start (GTK_BOX (data->contents_box),
                       data->create_filesystem_widget,
                       TRUE, TRUE, 0);

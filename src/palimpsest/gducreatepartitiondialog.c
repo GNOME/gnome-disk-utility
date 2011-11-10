@@ -44,13 +44,14 @@ typedef struct
 
   GtkBuilder *builder;
   GtkWidget *dialog;
+  GtkWidget *dos_error_infobar;
+  GtkWidget *dos_warning_infobar;
   GtkWidget *size_spinbutton;
   GtkAdjustment *size_adjustment;
   GtkAdjustment *free_following_adjustment;
 
   GtkWidget *contents_box;
   GtkWidget *create_filesystem_widget;
-
 } CreatePartitionData;
 
 static void
@@ -71,15 +72,103 @@ create_partition_data_free (CreatePartitionData *data)
   g_free (data);
 }
 
+static guint
+count_primary_dos_partitions (CreatePartitionData *data)
+{
+  GList *partitions, *l;
+  guint ret = 0;
+  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (!udisks_partition_get_is_contained (partition))
+        ret += 1;
+    }
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+  return ret;
+}
+
+static gboolean
+have_dos_extended (CreatePartitionData *data)
+{
+  GList *partitions, *l;
+  gboolean ret = FALSE;
+  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (udisks_partition_get_is_container (partition))
+        {
+          ret = TRUE;
+          break;
+        }
+    }
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+  return ret;
+}
+
+static gboolean
+is_inside_dos_extended (CreatePartitionData *data, guint64 offset)
+{
+  GList *partitions, *l;
+  gboolean ret = FALSE;
+  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (udisks_partition_get_is_container (partition))
+        {
+          if (offset >= udisks_partition_get_offset (partition) &&
+              offset < udisks_partition_get_offset (partition) + udisks_partition_get_size (partition))
+            {
+              ret = TRUE;
+              break;
+            }
+        }
+    }
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+  return ret;
+}
+
 static void
 create_partition_update (CreatePartitionData *data)
 {
   gboolean can_proceed = FALSE;
+  gboolean show_dos_error = FALSE;
+  gboolean show_dos_warning = FALSE;
+
+  /* MBR Partitioning sucks. So if we're trying to create a primary partition, then
+   *
+   *  - Show WARNING if trying to create 4th primary partition
+   *  - Show ERROR if there are already 4 primary partitions
+   */
+  if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
+    {
+      if (!is_inside_dos_extended (data, data->offset))
+        {
+          guint num_primary;
+          num_primary = count_primary_dos_partitions (data);
+          if (num_primary == 4)
+            show_dos_error = TRUE;
+          else if (num_primary == 3)
+            show_dos_warning = TRUE;
+        }
+    }
 
   if (gtk_adjustment_get_value (data->size_adjustment) > 0 &&
       gdu_create_filesystem_widget_get_has_info (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget)))
     can_proceed = TRUE;
 
+  if (show_dos_error)
+    can_proceed = FALSE;
+
+  if (!show_dos_warning)
+    gtk_widget_set_no_show_all (data->dos_warning_infobar, TRUE);
+  if (!show_dos_error)
+    gtk_widget_set_no_show_all (data->dos_error_infobar, TRUE);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
 }
 
@@ -172,23 +261,31 @@ create_partition_cb (GObject      *source_object,
   name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
   passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
 
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  if (name != NULL && strlen (name) > 0)
-    g_variant_builder_add (&options_builder, "{sv}", "label", g_variant_new_string (name));
-  if (!(g_strcmp0 (fstype, "vfat") == 0 || g_strcmp0 (fstype, "ntfs") == 0))
+  /* Not meaningful to create a filesystem if requested to create an extended partition */
+  if (g_strcmp0 (fstype, "dos_extended") == 0)
     {
-      /* TODO: need a better way to determine if this should be TRUE */
-      g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+      create_partition_data_free (data);
     }
-  if (passphrase != NULL && strlen (passphrase) > 0)
-    g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
+  else
+    {
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      if (name != NULL && strlen (name) > 0)
+        g_variant_builder_add (&options_builder, "{sv}", "label", g_variant_new_string (name));
+      if (!(g_strcmp0 (fstype, "vfat") == 0 || g_strcmp0 (fstype, "ntfs") == 0))
+        {
+          /* TODO: need a better way to determine if this should be TRUE */
+          g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+        }
+      if (passphrase != NULL && strlen (passphrase) > 0)
+        g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
 
-  udisks_block_call_format (partition_block,
-                            fstype,
-                            g_variant_builder_end (&options_builder),
-                            NULL, /* GCancellable */
-                            format_cb,
-                            data);
+      udisks_block_call_format (partition_block,
+                                fstype,
+                                g_variant_builder_end (&options_builder),
+                                NULL, /* GCancellable */
+                                format_cb,
+                                data);
+    }
 
  out:
   g_free (created_partition_object_path);
@@ -204,6 +301,8 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   CreatePartitionData *data;
   guint64 max_size_mb;
   gint response;
+  const gchar *additional_fstypes[3] = {NULL, NULL, NULL};
+  gchar dos_extended_partition_name[256];
 
   data = g_new0 (CreatePartitionData, 1);
   data->window = g_object_ref (window);
@@ -216,16 +315,33 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   data->offset = offset;
   data->max_size = max_size;
 
+  if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
+    {
+      if (!have_dos_extended (data))
+        {
+          snprintf (dos_extended_partition_name, sizeof dos_extended_partition_name,
+                    "%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                    _("Extended partition"),
+                    _("For logical partitions"));
+          additional_fstypes[0] = "dos_extended";
+          additional_fstypes[1] = dos_extended_partition_name;
+        }
+    }
+
   data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
                                              "create-partition-dialog.ui",
                                              "create-partition-dialog",
                                              &data->builder);
+  data->dos_error_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-dos-error"));;
+  data->dos_warning_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-dos-warning"));;
   data->size_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-spinbutton"));
   data->size_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "size-adjustment"));
   g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), data);
   data->free_following_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "free-following-adjustment"));
   data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
-  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window), data->drive);
+  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window),
+                                                                     data->drive,
+                                                                     additional_fstypes);
   gtk_box_pack_start (GTK_BOX (data->contents_box),
                       data->create_filesystem_widget,
                       TRUE, TRUE, 0);
@@ -272,14 +388,22 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   if (response == GTK_RESPONSE_OK)
     {
       guint64 size;
+      const gchar *fstype;
+      const gchar *partition_type = "";
 
       gtk_widget_hide (data->dialog);
+
+      fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+      if (g_strcmp0 (fstype, "dos_extended") == 0)
+        {
+          partition_type = "0x05";
+        }
 
       size = gtk_adjustment_get_value (data->size_adjustment) * 1000L * 1000L;
       udisks_partition_table_call_create_partition (data->table,
                                                     data->offset,
                                                     size,
-                                                    "", /* use default type */
+                                                    partition_type, /* use default type */
                                                     "", /* use blank partition name */
                                                     g_variant_new ("a{sv}", NULL), /* options */
                                                     NULL, /* GCancellable */

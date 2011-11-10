@@ -34,7 +34,8 @@ G_BEGIN_DECLS
 
 GType        gdu_create_filesystem_widget_get_type       (void) G_GNUC_CONST;
 GtkWidget*   gdu_create_filesystem_widget_new            (GduApplication            *application,
-                                                          UDisksDrive               *drive);
+                                                          UDisksDrive               *drive,
+                                                          const gchar * const       *addtional_fstypes);
 const gchar *gdu_create_filesystem_widget_get_name       (GduCreateFilesystemWidget *widget);
 const gchar *gdu_create_filesystem_widget_get_fstype     (GduCreateFilesystemWidget *widget);
 const gchar *gdu_create_filesystem_widget_get_passphrase (GduCreateFilesystemWidget *widget);

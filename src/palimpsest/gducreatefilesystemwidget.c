@@ -37,12 +37,14 @@ struct _GduCreateFilesystemWidget
 {
   GtkVBox parent;
 
-  GduApplication *application;
-  UDisksDrive *drive;
+  GduApplication  *application;
+  UDisksDrive     *drive;
+  gchar          **additional_fstypes;
 
   GtkBuilder *builder;
   GtkWidget *grid;
   GtkWidget *type_combobox;
+  GtkWidget *name_label;
   GtkWidget *name_entry;
   GtkWidget *filesystem_label;
   GtkWidget *filesystem_entry;
@@ -68,10 +70,19 @@ enum
   PROP_0,
   PROP_APPLICATION,
   PROP_DRIVE,
+  PROP_ADDITIONAL_FSTYPES,
   PROP_FSTYPE,
   PROP_NAME,
   PROP_PASSPHRASE,
   PROP_HAS_INFO
+};
+
+enum
+{
+  MODEL_COLUMN_ID,
+  MODEL_COLUMN_MARKUP,
+  MODEL_COLUMN_SEPARATOR,
+  MODEL_N_COLUMNS,
 };
 
 G_DEFINE_TYPE (GduCreateFilesystemWidget, gdu_create_filesystem_widget, GTK_TYPE_VBOX)
@@ -83,6 +94,7 @@ gdu_create_filesystem_widget_finalize (GObject *object)
 
   g_object_unref (widget->application);
   g_clear_object (&widget->drive);
+  g_strfreev (widget->additional_fstypes);
   g_free (widget->fstype);
   g_free (widget->name);
   g_free (widget->passphrase);
@@ -106,6 +118,10 @@ gdu_create_filesystem_widget_get_property (GObject    *object,
 
     case PROP_DRIVE:
       g_value_set_object (value, widget->drive);
+      break;
+
+    case PROP_ADDITIONAL_FSTYPES:
+      g_value_set_boxed (value, widget->additional_fstypes);
       break;
 
     case PROP_FSTYPE:
@@ -148,6 +164,10 @@ gdu_create_filesystem_widget_set_property (GObject      *object,
       widget->drive = g_value_dup_object (value);
       break;
 
+    case PROP_ADDITIONAL_FSTYPES:
+      widget->additional_fstypes = g_value_dup_boxed (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -159,34 +179,36 @@ gdu_create_filesystem_widget_set_property (GObject      *object,
 static void
 update (GduCreateFilesystemWidget *widget)
 {
+  gboolean show_name_widgets = TRUE;
   gboolean show_filesystem_widgets = FALSE;
   gboolean show_passphrase_widgets = FALSE;
   gboolean has_info = FALSE;
   const gchar *fstype = NULL;
   const gchar *name = NULL;
   const gchar *passphrase = NULL;
+  const gchar *id;
 
   name = gtk_entry_get_text (GTK_ENTRY (widget->name_entry));
   passphrase = gtk_entry_get_text (GTK_ENTRY (widget->passphrase_entry));
 
-  switch (gtk_combo_box_get_active (GTK_COMBO_BOX (widget->type_combobox)))
+  id = gtk_combo_box_get_active_id (GTK_COMBO_BOX (widget->type_combobox));
+  if (g_strcmp0 (id, "vfat") == 0)
     {
-    case 0:
       fstype = "vfat";
       has_info = TRUE;
-      break;
-
-    case 1:
+    }
+  else if (g_strcmp0 (id, "ntfs") == 0)
+    {
       fstype = "ntfs";
       has_info = TRUE;
-      break;
-
-    case 2:
+    }
+  else if (g_strcmp0 (id, "ext4") == 0)
+    {
       fstype = "ext4";
       has_info = TRUE;
-      break;
-
-    case 3:
+    }
+  else if (g_strcmp0 (id, "luks+ext4") == 0)
+    {
       fstype = "ext4";
       /* Encrypted, compatible with Linux (LUKS + ext4) */
       show_passphrase_widgets = TRUE;
@@ -198,9 +220,9 @@ update (GduCreateFilesystemWidget *widget)
               has_info = TRUE;
             }
         }
-      break;
-
-    case 4:
+    }
+  else if (g_strcmp0 (id, "custom") == 0)
+    {
       /* Custom */
       show_filesystem_widgets = TRUE;
       if (strlen (gtk_entry_get_text (GTK_ENTRY (widget->filesystem_entry))) > 0)
@@ -211,11 +233,24 @@ update (GduCreateFilesystemWidget *widget)
            */
           has_info = TRUE;
         }
-      break;
+    }
+  else
+    {
+      /* Additional FS */
+      show_name_widgets = FALSE;
+      fstype = id;
+      has_info = TRUE;
+    }
 
-    default:
-      g_assert_not_reached ();
-      break;
+  if (show_name_widgets)
+    {
+      gtk_widget_show (widget->name_label);
+      gtk_widget_show (widget->name_entry);
+    }
+  else
+    {
+      gtk_widget_hide (widget->name_label);
+      gtk_widget_hide (widget->name_entry);
     }
 
   if (show_filesystem_widgets)
@@ -305,25 +340,109 @@ is_flash (UDisksDrive *drive)
   return ret;
 }
 
-static void
-set_defaults (GduCreateFilesystemWidget *widget)
+static gboolean
+separator_func (GtkTreeModel *model,
+                GtkTreeIter *iter,
+                gpointer data)
 {
+  gboolean is_separator;
+  gtk_tree_model_get (model, iter,
+                      MODEL_COLUMN_SEPARATOR, &is_separator,
+                      -1);
+  return is_separator;
+}
+
+static void
+populate (GduCreateFilesystemWidget *widget)
+{
+  GtkListStore *model;
+  GtkCellRenderer *renderer;
+  gchar *s;
+
+  model = gtk_list_store_new (MODEL_N_COLUMNS,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_BOOLEAN);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (widget->type_combobox), GTK_TREE_MODEL (model));
+  g_object_unref (model);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->type_combobox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget->type_combobox), renderer,
+                                  "markup", MODEL_COLUMN_MARKUP,
+                                  NULL);
+
+  gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (widget->type_combobox),
+                                        separator_func,
+                                        widget,
+                                        NULL); /* GDestroyNotify */
+
+  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                       _("Compatible with all systems and devices"),
+                       _("FAT"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "vfat", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                       _("Compatible with most systems"),
+                       _("NTFS"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "ntfs", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                       _("Compatible with Linux systems"),
+                       _("Ext4"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "ext4", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                       _("Encrypted, compatible with Linux systems"),
+                       _("LUKS + Ext4"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID,   "luks+ext4", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                       _("Custom"),
+                       _("Enter filesystem type"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "custom", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+
+  /* Add from additional_types */
+  if (widget->additional_fstypes != NULL && widget->additional_fstypes[0] != NULL)
+    {
+      guint n;
+
+      /* separator */
+      gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                         MODEL_COLUMN_SEPARATOR, TRUE, -1);
+
+      for (n = 0; widget->additional_fstypes[n] != NULL; n += 2)
+        {
+          const gchar *fstype = widget->additional_fstypes[n];
+          const gchar *name = widget->additional_fstypes[n+1];
+          gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                             MODEL_COLUMN_ID, fstype,
+                                             MODEL_COLUMN_MARKUP, name, -1);
+        }
+    }
+
   /* Default to FAT or NTFS for removable drives... Ext4 otherwise */
   if (widget->drive != NULL && udisks_drive_get_removable (widget->drive))
     {
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
       if (is_flash (widget->drive) || udisks_drive_get_size (widget->drive) < 20L * 1000L*1000L*1000L)
         {
-          gtk_combo_box_set_active (GTK_COMBO_BOX (widget->type_combobox), 0); /* FAT */
+          gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "vfat");
         }
       else
         {
-          gtk_combo_box_set_active (GTK_COMBO_BOX (widget->type_combobox), 1); /* NTFS */
+          gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "ntfs");
         }
     }
   else
     {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (widget->type_combobox), 2); /* Ext4 */
+      gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "ext4");
     }
 
   /* Translators: this is the default name for the filesystem */
@@ -357,6 +476,7 @@ gdu_create_filesystem_widget_constructed (GObject *object)
   widget->grid = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-create-grid"));
   widget->type_combobox = GTK_WIDGET (gtk_builder_get_object (widget->builder, "type-combobox"));
   g_signal_connect (widget->type_combobox, "notify::active", G_CALLBACK (on_property_changed), widget);
+  widget->name_label = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-label"));
   widget->name_entry = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-entry"));
   g_signal_connect (widget->name_entry, "notify::text", G_CALLBACK (on_property_changed), widget);
   widget->filesystem_label = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-label"));
@@ -375,7 +495,7 @@ gdu_create_filesystem_widget_constructed (GObject *object)
   gtk_widget_reparent (widget->grid, GTK_WIDGET (widget));
   gtk_widget_destroy (dummy_window);
 
-  set_defaults (widget);
+  populate (widget);
   update (widget);
 
   if (G_OBJECT_CLASS (gdu_create_filesystem_widget_parent_class)->constructed != NULL)
@@ -409,6 +529,14 @@ gdu_create_filesystem_widget_class_init (GduCreateFilesystemWidgetClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         G_PARAM_STATIC_STRINGS));
 
+  g_object_class_install_property (gobject_class, PROP_ADDITIONAL_FSTYPES,
+                                   g_param_spec_boxed ("additional-fstypes", NULL, NULL,
+                                                       G_TYPE_STRV,
+                                                       G_PARAM_READABLE |
+                                                       G_PARAM_WRITABLE |
+                                                       G_PARAM_CONSTRUCT_ONLY |
+                                                       G_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (gobject_class, PROP_FSTYPE,
                                    g_param_spec_string ("fstype", NULL, NULL,
                                                         NULL,
@@ -440,13 +568,15 @@ gdu_create_filesystem_widget_init (GduCreateFilesystemWidget *widget)
 }
 
 GtkWidget *
-gdu_create_filesystem_widget_new (GduApplication *application,
-                                  UDisksDrive    *drive)
+gdu_create_filesystem_widget_new (GduApplication            *application,
+                                  UDisksDrive               *drive,
+                                  const gchar * const       *additional_fstypes)
 {
   g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
   return GTK_WIDGET (g_object_new (GDU_TYPE_CREATE_FILESYSTEM_WIDGET,
                                    "application", application,
                                    "drive", drive,
+                                   "additional-fstypes", additional_fstypes,
                                    NULL));
 }
 

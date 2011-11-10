@@ -74,17 +74,34 @@
                         <property name="can_focus">False</property>
                         <property name="orientation">horizontal</property>
                         <property name="spacing">12</property>
+
+                        <child>
+                          <object class="GtkImage" id="infobar1-image1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1.0</property>
+                            <property name="stock">gtk-dialog-error</property>
+                            <property name="icon-size">2</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
                         <child>
                           <object class="GtkLabel" id="infobar1-label1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">&lt;b&gt;Error:&lt;/b&gt; Cannot create a new partition. There are already four primary partitions.</property>
                             <property name="use_markup">True</property>
+                            <property name="xalign">0.0</property>
+                            <property name="selectable">True</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">0</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
@@ -105,16 +122,32 @@
                         <property name="orientation">horizontal</property>
                         <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel" id="infobar2-label1">
+                          <object class="GtkImage" id="infobar2-image1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt; This is the last primary partition that can be created.</property>
-                            <property name="use_markup">True</property>
+                            <property name="xalign">1.0</property>
+                            <property name="stock">gtk-dialog-warning</property>
+                            <property name="icon-size">2</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="infobar2-label1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt; This is the last primary partition that can be created.</property>
+                            <property name="use_markup">True</property>
+                            <property name="xalign">0.0</property>
+                            <property name="selectable">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>

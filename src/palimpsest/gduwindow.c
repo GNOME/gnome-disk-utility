@@ -101,6 +101,7 @@ struct _GduWindow
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_view_smart;
   GtkWidget *generic_menu_item_format_disk;
+  GtkWidget *generic_menu_item_drive_separator;
   GtkWidget *generic_menu_item_configure_fstab;
   GtkWidget *generic_menu_item_configure_crypttab;
   GtkWidget *generic_menu_item_edit_label;
@@ -143,6 +144,8 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_view_smart), "generic-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_disk), "generic-menu-item-format-disk"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_drive_separator), "generic-menu-item-drive-separator"},
+
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
@@ -298,6 +301,8 @@ static void
 update_for_show_flags (GduWindow *window,
                        ShowFlags  show_flags)
 {
+  gboolean is_drive;
+
   gtk_widget_set_visible (GTK_WIDGET (window->device_toolbar_detach_disk_image_button),
                           show_flags & SHOW_FLAGS_DETACH_DISK_IMAGE);
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_eject_button),
@@ -318,6 +323,12 @@ update_for_show_flags (GduWindow *window,
                           show_flags & SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON);
   gtk_action_set_visible (GTK_ACTION (window->devtab_toolbar_lock_button),
                           show_flags & SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON);
+
+  /* Hide Drive menu items unless it's actually a drive */
+  is_drive = (udisks_object_peek_drive (window->current_object) != NULL);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_view_smart), is_drive);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), is_drive);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), is_drive);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
                             show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);

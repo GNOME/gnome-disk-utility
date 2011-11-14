@@ -16,6 +16,7 @@ ui_DATA = 				\
 	smart-dialog.ui			\
 	create-partition-dialog.ui	\
 	filesystem-create.ui		\
+	format-disk-dialog.ui		\
 	$(NULL)
 
 clean-local :

@@ -40,6 +40,7 @@ palimpsest_SOURCES = 							\
 	gduformatvolumedialog.h		gduformatvolumedialog.c		\
 	gducreatepartitiondialog.h	gducreatepartitiondialog.c	\
 	gducreatefilesystemwidget.h	gducreatefilesystemwidget.c	\
+	gduformatdiskdialog.h		gduformatdiskdialog.c		\
 	$(enum_built_sources)						\
 	$(NULL)
 

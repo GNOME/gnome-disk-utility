@@ -45,6 +45,7 @@
 #include "gduunlockdialog.h"
 #include "gduformatvolumedialog.h"
 #include "gducreatepartitiondialog.h"
+#include "gduformatdiskdialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -99,6 +100,7 @@ struct _GduWindow
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_view_smart;
+  GtkWidget *generic_menu_item_format_disk;
   GtkWidget *generic_menu_item_configure_fstab;
   GtkWidget *generic_menu_item_configure_crypttab;
   GtkWidget *generic_menu_item_edit_label;
@@ -140,6 +142,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_deactivate_swap_button), "devtab-action-deactivate-swap"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_view_smart), "generic-menu-item-view-smart"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_disk), "generic-menu-item-format-disk"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
@@ -175,11 +178,12 @@ typedef enum
   SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
 
   SHOW_FLAGS_POPUP_MENU_VIEW_SMART         = (1<<20),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<21),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<22),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<23),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<24),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<25),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_DISK        = (1<<21),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<22),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<23),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<24),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<25),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<26),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -212,6 +216,8 @@ static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
                                                  gpointer   user_data);
 static void on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
                                                 gpointer   user_data);
+static void on_generic_menu_item_format_disk (GtkMenuItem *menu_item,
+                                              gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -315,6 +321,8 @@ update_for_show_flags (GduWindow *window,
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
                             show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_disk),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_DISK);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
@@ -938,6 +946,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_view_smart,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_view_smart),
+                    window);
+  g_signal_connect (window->generic_menu_item_format_disk,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_format_disk),
                     window);
   g_signal_connect (window->generic_menu_item_configure_fstab,
                     "activate",
@@ -1735,7 +1747,11 @@ update_device_page_for_block (GduWindow          *window,
 
   /* TODO: don't show on CD-ROM drives or RO media etc. */
   if (udisks_block_get_size (block) > 0)
-    *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+    {
+      /* TODO: if not partitioned, don't show FORMAT_DISK on non-partitionable media like floppy disks */
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+    }
 
   if (partition != NULL)
     *show_flags |= SHOW_FLAGS_PARTITION_DELETE_BUTTON;
@@ -1971,6 +1987,8 @@ update_device_page_for_free_space (GduWindow          *window,
   gchar *s;
   UDisksPartitionTable *table;
   const gchar *table_type = NULL;
+
+  *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
 
   //g_debug ("In update_device_page_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
@@ -2209,6 +2227,20 @@ on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
   gdu_format_volume_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_format_disk (GtkMenuItem *menu_item,
+                                  gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_format_disk_dialog_show (window, object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

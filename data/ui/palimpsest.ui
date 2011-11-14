@@ -595,33 +595,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="icon_size">1</property>
                                 <child>
-                                  <object class="GtkToolButton" id="toolbutton1">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-partition-create</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="icon_name">list-add-symbolic</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton9">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-partition-delete</property>
-                                    <property name="label" translatable="yes">toolbutton9</property>
-                                    <property name="use_underline">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton2">
+                                  <object class="GtkToolButton" id="toolbutton-mount">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-mount</property>
@@ -634,7 +608,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkToolButton" id="toolbutton3">
+                                  <object class="GtkToolButton" id="toolbutton-unmount">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-unmount</property>
@@ -647,46 +621,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkToolButton" id="toolbutton4">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-eject</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="icon_name">media-eject-symbolic</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton5">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-unlock</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="icon_name">changes-allow-symbolic</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton6">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-lock</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="icon_name">changes-prevent-symbolic</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton7">
+                                  <object class="GtkToolButton" id="toolbutton-activate-swap">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-activate-swap</property>
@@ -699,7 +634,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkToolButton" id="toolbutton8">
+                                  <object class="GtkToolButton" id="toolbutton-deactivate-swap">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-deactivate-swap</property>
@@ -712,12 +647,77 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkToolButton" id="toolbutton99">
+                                  <object class="GtkToolButton" id="toolbutton-unlock">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-unlock</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="icon_name">changes-allow-symbolic</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton-lock">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-lock</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="icon_name">changes-prevent-symbolic</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton-eject">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-eject</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="icon_name">media-eject-symbolic</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton-generic-menu">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="related_action">devtab-action-generic</property>
                                     <property name="use_underline">True</property>
                                     <property name="icon_name">system-run-symbolic</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton-partition-create">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-partition-create</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="icon_name">list-add-symbolic</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="homogeneous">True</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkToolButton" id="toolbutton-partition-delete">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="related_action">devtab-action-partition-delete</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="icon_name">list-remove-symbolic</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>

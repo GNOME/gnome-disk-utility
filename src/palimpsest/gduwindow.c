@@ -586,7 +586,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
                                         GTK_WINDOW (window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        _("Attach"), GTK_RESPONSE_ACCEPT,
+                                        _("_Attach"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), g_get_home_dir ());
 

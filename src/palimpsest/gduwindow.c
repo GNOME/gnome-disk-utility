@@ -578,6 +578,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
   gint fd;
   GUnixFDList *fd_list;
   GVariantBuilder options_builder;
+  GtkWidget *ro_checkbutton;
 
   filename = NULL;
   fd = -1;
@@ -607,6 +608,13 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
    */
   /* gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE); */
 
+  /* Add a RO check button that defaults to RO */
+  ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only loop device"));
+  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the loop device will be read-only. This is useful if you don't want the underlying file to be modified"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), TRUE);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
+
+  //gtk_widget_show_all (dialog);
   if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
     goto out;
 
@@ -630,8 +638,8 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
     }
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  /* TODO: add options to options_builder */
-
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton)))
+    g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
   fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
   udisks_manager_call_loop_setup (udisks_client_get_manager (window->client),
                                   g_variant_new_handle (0),

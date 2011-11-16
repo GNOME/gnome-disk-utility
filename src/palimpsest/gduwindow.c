@@ -330,13 +330,18 @@ update_for_show_flags (GduWindow *window,
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), is_drive);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), is_drive);
 
-  /* except, if FORMAT_DISK is set (example: partitionable non-drive, e.g. /dev/loop0), then
-   * show the separator and the FORMAT_DISK item
+  /* except, if partitionable (example of partitionable non-drive
+   * device: /dev/loop0), then show the separator and the FORMAT_DISK
+   * item
    */
-  if (!is_drive && (show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_DISK))
+  if (!is_drive)
     {
-      gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), TRUE);
-      gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), TRUE);
+      UDisksBlock *block = udisks_object_peek_block (window->current_object);
+      if (block != NULL && udisks_block_get_hint_partitionable (block))
+        {
+          gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), TRUE);
+          gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), TRUE);
+        }
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),

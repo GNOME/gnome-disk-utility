@@ -330,6 +330,15 @@ update_for_show_flags (GduWindow *window,
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), is_drive);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), is_drive);
 
+  /* except, if FORMAT_DISK is set (example: partitionable non-drive, e.g. /dev/loop0), then
+   * show the separator and the FORMAT_DISK item
+   */
+  if (!is_drive && (show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_DISK))
+    {
+      gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), TRUE);
+    }
+
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
                             show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_disk),
@@ -1785,8 +1794,8 @@ update_device_page_for_block (GduWindow          *window,
   /* TODO: don't show on CD-ROM drives etc. */
   if (udisks_block_get_size (block) > 0 && !read_only)
     {
-      /* TODO: if not partitioned, don't show FORMAT_DISK on non-partitionable media like floppy disks */
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
+      if (udisks_block_get_hint_partitionable (block))
+        *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
     }
 

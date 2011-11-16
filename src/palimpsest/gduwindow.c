@@ -1746,6 +1746,23 @@ calculate_configuration_for_display (UDisksBlock *block,
   return ret;
 }
 
+static gchar *
+get_device_file_for_display (UDisksBlock *block)
+{
+  gchar *ret;
+  if (udisks_block_get_read_only (block))
+    {
+      /* Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1 */
+      ret = g_strdup_printf (_("%s <span foreground=\"#555555\" size=\"small\">(Read-Only)</span>"),
+                             udisks_block_get_preferred_device (block));
+    }
+  else
+    {
+      ret = g_strdup (udisks_block_get_preferred_device (block));
+    }
+  return ret;
+}
+
 static void
 update_device_page_for_block (GduWindow          *window,
                               UDisksObject       *object,
@@ -1756,23 +1773,24 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *usage;
   const gchar *type;
   const gchar *version;
-  gchar *type_for_display;
-  gchar *configuration_for_display;
   UDisksFilesystem *filesystem;
   UDisksPartition *partition;
+  gboolean read_only;
+  gchar *s;
 
+  read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
 
-  /* TODO: don't show on CD-ROM drives or RO media etc. */
-  if (udisks_block_get_size (block) > 0)
+  /* TODO: don't show on CD-ROM drives etc. */
+  if (udisks_block_get_size (block) > 0 && !read_only)
     {
       /* TODO: if not partitioned, don't show FORMAT_DISK on non-partitionable media like floppy disks */
       *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
     }
 
-  if (partition != NULL)
+  if (partition != NULL && !read_only)
     *show_flags |= SHOW_FLAGS_PARTITION_DELETE_BUTTON;
 
   /* Since /etc/fstab, /etc/crypttab and so on can reference
@@ -1800,10 +1818,12 @@ update_device_page_for_block (GduWindow          *window,
   //         size,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
+  s = get_device_file_for_display (block);
   set_markup (window,
               "devtab-device-label",
               "devtab-device-value-label",
-              udisks_block_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
   if (size > 0)
     {
       set_size (window,
@@ -1840,27 +1860,27 @@ update_device_page_for_block (GduWindow          *window,
     {
       if (partition != NULL && udisks_partition_get_is_container (partition))
         {
-          type_for_display = g_strdup (_("Extended Partition"));
+          s = g_strdup (_("Extended Partition"));
         }
       else
         {
-          type_for_display = udisks_client_get_id_for_display (window->client, usage, type, version, TRUE);
+          s = udisks_client_get_id_for_display (window->client, usage, type, version, TRUE);
         }
     }
   else
     {
-      type_for_display = NULL;
+      s = NULL;
     }
   set_markup (window,
               "devtab-volume-type-label",
               "devtab-volume-type-value-label",
-              type_for_display,
-              SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  g_free (type_for_display);
+              s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_free (s);
 
   if (partition != NULL)
     {
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
+      if (!read_only)
+        *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
     }
   else
     {
@@ -1916,8 +1936,9 @@ update_device_page_for_block (GduWindow          *window,
       else
         *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
 
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+      if (!read_only)
+        *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
     }
   else if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
            g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
@@ -1974,15 +1995,14 @@ update_device_page_for_block (GduWindow          *window,
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
     }
 
-  configuration_for_display = calculate_configuration_for_display (block, *show_flags);
-  if (configuration_for_display != NULL)
+  s = calculate_configuration_for_display (block, *show_flags);
+  if (s != NULL)
     {
       set_markup (window,
                   "devtab-volume-configured-label",
                   "devtab-volume-configured-value-label",
-                  configuration_for_display,
-                  SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-      g_free (configuration_for_display);
+                  s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      g_free (s);
     }
 }
 
@@ -2006,12 +2026,16 @@ update_device_page_for_free_space (GduWindow          *window,
   gchar *s;
   UDisksPartitionTable *table;
   const gchar *table_type = NULL;
-
-  *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
+  gboolean read_only;
 
   //g_debug ("In update_device_page_for_free_space() - size=%" G_GUINT64_FORMAT " selected=%s",
   //         size,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
+
+  read_only = udisks_block_get_read_only (block);
+
+  if (!read_only)
+    *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
 
   table = udisks_object_peek_partition_table (object);
   if (table != NULL)
@@ -2034,10 +2058,6 @@ update_device_page_for_free_space (GduWindow          *window,
       s = g_strdup (_("Unallocated Space"));
     }
 
-  set_markup (window,
-              "devtab-device-label",
-              "devtab-device-value-label",
-              udisks_block_get_preferred_device (block), SET_MARKUP_FLAGS_NONE);
   set_size (window,
             "devtab-size-label",
             "devtab-size-value-label",
@@ -2047,7 +2067,15 @@ update_device_page_for_free_space (GduWindow          *window,
               "devtab-volume-type-value-label",
               s,
               SET_MARKUP_FLAGS_NONE);
-  *show_flags |= SHOW_FLAGS_PARTITION_CREATE_BUTTON;
+  if (!read_only)
+    *show_flags |= SHOW_FLAGS_PARTITION_CREATE_BUTTON;
+  g_free (s);
+
+  s = get_device_file_for_display (block);
+  set_markup (window,
+              "devtab-device-label",
+              "devtab-device-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
   g_free (s);
 }
 

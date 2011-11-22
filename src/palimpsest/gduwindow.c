@@ -898,6 +898,7 @@ gdu_window_constructed (GObject *object)
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,
+                                       "visible", GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING,
                                        "active", GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING,
                                        "pulse", GDU_DEVICE_TREE_MODEL_COLUMN_PULSE,
                                        NULL);

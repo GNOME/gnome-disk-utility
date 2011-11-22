@@ -771,6 +771,7 @@ render_spinner (cairo_t   *cr,
 
       cairo_set_source_rgba (cr, 0, 0, 0, t);
       cairo_set_line_width (cr, 2.0);
+      cairo_set_dash (cr, NULL, 0, 0.0);
       cairo_move_to (cr,
                      cx + (radius - inset) * cos (n * M_PI / half),
                      cy + (radius - inset) * sin (n * M_PI / half));
@@ -1928,6 +1929,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
         UDisksFilesystem *filesystem;
         UDisksPartition *partition;
         GPtrArray *lines;
+        GList *jobs;
 
         size_str = udisks_client_get_size_for_display (grid->client, element->size, FALSE, FALSE);
         block = udisks_object_peek_block (element->object);
@@ -1943,6 +1945,11 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
         if (g_variant_n_children (udisks_block_get_configuration (block)) > 0)
           element->show_configured = TRUE;
+
+        jobs = udisks_client_get_jobs_for_object (grid->client, element->object);
+        element->show_spinner = (jobs != NULL);
+        g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+        g_list_free (jobs);
 
         if (partition != NULL && udisks_partition_get_is_container (partition))
           {

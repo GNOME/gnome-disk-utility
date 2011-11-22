@@ -59,6 +59,17 @@ static void coldplug (GduDeviceTreeModel *model);
 static void on_client_changed (UDisksClient  *client,
                                gpointer       user_data);
 
+
+static void update_drive (GduDeviceTreeModel *model,
+                          UDisksObject       *object,
+                          gboolean            from_timer);
+
+static void
+update_block (GduDeviceTreeModel  *model,
+              UDisksObject        *object,
+              gboolean             from_timer);
+
+
 static void
 gdu_device_tree_model_finalize (GObject *object)
 {
@@ -295,7 +306,9 @@ gdu_device_tree_model_constructed (GObject *object)
   types[4] = G_TYPE_STRING;
   types[5] = G_TYPE_DBUS_OBJECT;
   types[6] = G_TYPE_BOOLEAN;
-  G_STATIC_ASSERT (7 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+  types[7] = G_TYPE_BOOLEAN;
+  types[8] = G_TYPE_UINT;
+  G_STATIC_ASSERT (9 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -446,9 +459,177 @@ remove_drive (GduDeviceTreeModel *model,
   ;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+object_has_jobs (UDisksClient   *client,
+                 UDisksObject   *object)
+{
+  GList *jobs;
+  gboolean ret;
+
+  jobs = udisks_client_get_jobs_for_object (client, object);
+  ret = (jobs != NULL);
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
+
+  return ret;
+}
+
+static gboolean
+iface_has_jobs (UDisksClient   *client,
+                GDBusInterface *iface)
+{
+  GDBusObject *object;
+  object = g_dbus_interface_get_object (G_DBUS_INTERFACE (iface));
+  if (object != NULL)
+    return object_has_jobs (client, UDISKS_OBJECT (object));
+  else
+    return FALSE;
+}
+
+static gboolean
+block_has_jobs (UDisksClient   *client,
+                UDisksBlock    *block)
+{
+  gboolean ret = FALSE;
+  GDBusObject *block_object;
+  UDisksPartitionTable *part_table = NULL;
+  UDisksEncrypted *encrypted = NULL;
+  GList *partitions = NULL, *l;
+  UDisksBlock *cleartext_block = NULL;
+
+  if (iface_has_jobs (client, G_DBUS_INTERFACE (block)))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  block_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+  if (block_object == NULL)
+    goto out;
+
+  part_table = udisks_object_get_partition_table (UDISKS_OBJECT (block_object));
+  if (part_table != NULL)
+    {
+      partitions = udisks_client_get_partitions (client, part_table);
+      for (l = partitions; l != NULL; l = l->next)
+        {
+          UDisksPartition *partition = UDISKS_PARTITION (l->data);
+          GDBusObject *partition_object;
+          UDisksBlock *partition_block;
+
+          partition_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (partition));
+          if (partition_object != NULL)
+            {
+              partition_block = udisks_object_get_block (UDISKS_OBJECT (partition_object));
+              if (block_has_jobs (client, partition_block))
+                {
+                  ret = TRUE;
+                  goto out;
+                }
+            }
+        }
+    }
+
+  encrypted = udisks_object_get_encrypted (UDISKS_OBJECT (block_object));
+  if (encrypted != NULL)
+    {
+      cleartext_block = udisks_client_get_cleartext_block (client, block);
+      if (cleartext_block != NULL)
+        {
+          if (block_has_jobs (client, cleartext_block))
+            {
+              ret = TRUE;
+              goto out;
+            }
+        }
+    }
+
+ out:
+  g_clear_object (&part_table);
+  g_clear_object (&encrypted);
+  g_clear_object (&cleartext_block);
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+  return ret;
+}
+
+static gboolean
+drive_has_jobs (UDisksClient   *client,
+                UDisksDrive    *drive)
+{
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+
+  if (iface_has_jobs (client, G_DBUS_INTERFACE (drive)))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  block = udisks_client_get_block_for_drive (client, drive, FALSE); /* get_physical */
+  if (block_has_jobs (client, block))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  out:
+  g_clear_object (&block);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
+{
+  GduDeviceTreeModel *model;
+  UDisksObject       *object;
+} SpinnerTimeoutData;
+
+static SpinnerTimeoutData *
+spinner_timeout_data_new (GduDeviceTreeModel *model,
+                          UDisksObject       *object)
+{
+  SpinnerTimeoutData *data = g_slice_new0 (SpinnerTimeoutData);
+  data->model = g_object_ref (model);
+  data->object = g_object_ref (object);
+  return data;
+}
+
+static void
+spinner_timeout_data_free (SpinnerTimeoutData *data)
+{
+  g_object_unref (data->model);
+  g_object_unref (data->object);
+  g_slice_free (SpinnerTimeoutData, data);
+}
+
+static gboolean
+spinner_timeout_drive (gpointer user_data)
+{
+  SpinnerTimeoutData *data = user_data;
+  update_drive (data->model, data->object, TRUE);
+  spinner_timeout_data_free (data);
+  return FALSE; /* remove the timeout source */
+}
+
+static gboolean
+spinner_timeout_block (gpointer user_data)
+{
+  SpinnerTimeoutData *data = user_data;
+  update_block (data->model, data->object, TRUE);
+  spinner_timeout_data_free (data);
+  return FALSE; /* remove the timeout source */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 update_drive (GduDeviceTreeModel *model,
-              UDisksObject       *object)
+              UDisksObject       *object,
+              gboolean            from_timer)
 {
   UDisksDrive *drive = NULL;
   UDisksDriveAta *ata = NULL;
@@ -460,7 +641,9 @@ update_drive (GduDeviceTreeModel *model,
   gchar *s = NULL;
   gchar *sort_key = NULL;
   gboolean warning = FALSE;
+  gboolean jobs_running = FALSE;
   GtkTreeIter iter;
+  guint pulse;
 
   if (!find_iter_for_object (model,
                              object,
@@ -503,13 +686,28 @@ update_drive (GduDeviceTreeModel *model,
                            name);
     }
 
+  jobs_running = drive_has_jobs (model->client, drive);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, &pulse,
+                      -1);
+  if (from_timer)
+    pulse += 1;
+
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
                       -1);
+
+  /* update spinner, if jobs are running */
+  if (jobs_running)
+    g_timeout_add (80, spinner_timeout_drive, spinner_timeout_data_new (model, object));
 
  out:
   if (media_icon != NULL)
@@ -575,7 +773,7 @@ update_drives (GduDeviceTreeModel *model)
   for (l = model->current_drives; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      update_drive (model, object);
+      update_drive (model, object, FALSE);
     }
 
   if (g_list_length (model->current_drives) == 0)
@@ -665,7 +863,8 @@ remove_block (GduDeviceTreeModel  *model,
 
 static void
 update_block (GduDeviceTreeModel  *model,
-              UDisksObject        *object)
+              UDisksObject        *object,
+              gboolean             from_timer)
 {
   GtkTreeIter iter;
   UDisksBlock *block;
@@ -677,6 +876,8 @@ update_block (GduDeviceTreeModel  *model,
   const gchar *loop_backing_file;
   guint64 size;
   gchar *size_str = NULL;
+  gboolean jobs_running = FALSE;
+  guint pulse;
 
   if (!find_iter_for_object (model,
                              object,
@@ -733,12 +934,27 @@ update_block (GduDeviceTreeModel  *model,
   sort_key = g_strdup_printf ("01_block_1_%s",
                               g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
 
+  jobs_running = block_has_jobs (model->client, block);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, &pulse,
+                      -1);
+  if (from_timer)
+    pulse += 1;
+
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
                       -1);
+
+  /* update spinner, if jobs are running */
+  if (jobs_running)
+    g_timeout_add (80, spinner_timeout_block, spinner_timeout_data_new (model, object));
 
  out:
   g_object_unref (icon);
@@ -848,7 +1064,7 @@ update_blocks (GduDeviceTreeModel *model)
   for (l = model->current_blocks; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      update_block (model, object);
+      update_block (model, object, FALSE);
     }
 
   if (g_list_length (model->current_blocks) == 0)

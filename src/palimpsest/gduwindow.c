@@ -894,6 +894,13 @@ gdu_window_constructed (GObject *object)
                                        renderer,
                                        "markup", GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
                                        NULL);
+  renderer = gtk_cell_renderer_spinner_new ();
+  gtk_tree_view_column_pack_end (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column,
+                                       renderer,
+                                       "active", GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING,
+                                       "pulse", GDU_DEVICE_TREE_MODEL_COLUMN_PULSE,
+                                       NULL);
 
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */
   g_signal_connect (window->model,

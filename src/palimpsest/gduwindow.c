@@ -895,6 +895,9 @@ gdu_window_constructed (GObject *object)
                                        "markup", GDU_DEVICE_TREE_MODEL_COLUMN_NAME,
                                        NULL);
   renderer = gtk_cell_renderer_spinner_new ();
+  g_object_set (G_OBJECT (renderer),
+                "xalign", 1.0,
+                NULL);
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
                                        renderer,

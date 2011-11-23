@@ -41,8 +41,6 @@ void                      gdu_volume_grid_set_container_visible (GduVolumeGrid  
                                                                  gboolean             visible);
 void                      gdu_volume_grid_set_container_markup  (GduVolumeGrid       *grid,
                                                                  const gchar         *text);
-void                      gdu_volume_grid_set_container_icon    (GduVolumeGrid       *grid,
-                                                                 GIcon               *icon);
 
 gboolean                  gdu_volume_grid_includes_object       (GduVolumeGrid       *grid,
                                                                  UDisksObject        *object);

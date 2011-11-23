@@ -69,7 +69,6 @@ struct GridElement
   GridEdgeFlags edge_flags;
 
   gchar *markup;
-  GIcon *icon;
 
   gboolean show_spinner;
   gboolean show_padlock_open;
@@ -84,8 +83,6 @@ struct GridElement
 static void
 grid_element_free (GridElement *element)
 {
-  if (element->icon != NULL)
-    g_object_unref (element->icon);
   if (element->object != NULL)
     g_object_unref (element->object);
   g_free (element->markup);
@@ -107,7 +104,6 @@ struct _GduVolumeGrid
 
   gboolean container_visible;
   gchar *container_markup;
-  GIcon *container_icon;
 
   GList *elements;
 
@@ -167,8 +163,6 @@ gdu_volume_grid_finalize (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
 
-  if (grid->container_icon != NULL)
-    g_object_unref (grid->container_icon);
   g_free (grid->container_markup);
 
   g_signal_handlers_disconnect_by_func (grid->client,
@@ -797,95 +791,6 @@ render_pixbuf (cairo_t   *cr,
   cairo_fill (cr);
 }
 
-static void
-round_rect (cairo_t *cr,
-            gdouble x, gdouble y,
-            gdouble w, gdouble h,
-            gdouble r,
-            GridEdgeFlags edge_flags)
-{
-  gboolean top_left_round;
-  gboolean top_right_round;
-  gboolean bottom_right_round;
-  gboolean bottom_left_round;
-
-  top_left_round     = ((edge_flags & GRID_EDGE_TOP)    && (edge_flags & GRID_EDGE_LEFT));
-  top_right_round    = ((edge_flags & GRID_EDGE_TOP)    && (edge_flags & GRID_EDGE_RIGHT));
-  bottom_right_round = ((edge_flags & GRID_EDGE_BOTTOM) && (edge_flags & GRID_EDGE_RIGHT));
-  bottom_left_round  = ((edge_flags & GRID_EDGE_BOTTOM) && (edge_flags & GRID_EDGE_LEFT));
-
-  if (top_left_round)
-    {
-      cairo_move_to  (cr,
-                      x + r, y);
-    }
-  else
-    {
-      cairo_move_to  (cr,
-                      x, y);
-    }
-
-  if (top_right_round)
-    {
-      cairo_line_to  (cr,
-                      x + w - r, y);
-      cairo_curve_to (cr,
-                      x + w, y,
-                      x + w, y,
-                      x + w, y + r);
-    }
-  else
-    {
-      cairo_line_to  (cr,
-                      x + w, y);
-    }
-
-  if (bottom_right_round)
-    {
-      cairo_line_to  (cr,
-                      x + w, y + h - r);
-      cairo_curve_to (cr,
-                      x + w, y + h,
-                      x + w, y + h,
-                      x + w - r, y + h);
-    }
-  else
-    {
-      cairo_line_to  (cr,
-                      x + w, y + h);
-    }
-
-  if (bottom_left_round)
-    {
-      cairo_line_to  (cr,
-                      x + r, y + h);
-      cairo_curve_to (cr,
-                      x, y + h,
-                      x, y + h,
-                      x, y + h - r);
-    }
-  else
-    {
-      cairo_line_to  (cr,
-                      x, y + h);
-    }
-
-  if (top_left_round)
-    {
-      cairo_line_to  (cr,
-                      x, y + r);
-      cairo_curve_to (cr,
-                      x, y,
-                      x, y,
-                      x + r, y);
-    }
-  else
-    {
-      cairo_line_to  (cr,
-                      x, y);
-    }
-}
-
 /* returns true if an animation timeout is needed */
 static gboolean
 render_element (GduVolumeGrid *grid,
@@ -896,261 +801,78 @@ render_element (GduVolumeGrid *grid,
                 gboolean       is_grid_focused)
 {
   gboolean need_animation_timeout;
-  gdouble fill_red;
-  gdouble fill_green;
-  gdouble fill_blue;
-  gdouble fill_selected_red;
-  gdouble fill_selected_green;
-  gdouble fill_selected_blue;
-  gdouble fill_selected_not_focused_red;
-  gdouble fill_selected_not_focused_green;
-  gdouble fill_selected_not_focused_blue;
-  gdouble focus_rect_red;
-  gdouble focus_rect_green;
-  gdouble focus_rect_blue;
-  gdouble stroke_red;
-  gdouble stroke_green;
-  gdouble stroke_blue;
-  gdouble stroke_selected_red;
-  gdouble stroke_selected_green;
-  gdouble stroke_selected_blue;
-  gdouble stroke_selected_not_focused_red;
-  gdouble stroke_selected_not_focused_green;
-  gdouble stroke_selected_not_focused_blue;
-  gdouble text_red;
-  gdouble text_green;
-  gdouble text_blue;
-  gdouble text_selected_red;
-  gdouble text_selected_green;
-  gdouble text_selected_blue;
-  gdouble text_selected_not_focused_red;
-  gdouble text_selected_not_focused_green;
-  gdouble text_selected_not_focused_blue;
   PangoLayout *layout;
   PangoFontDescription *desc;
-  gint width, height;
-  GdkPixbuf *icon_pixbuf;
-  gint icon_width;
-  gint icon_height;
-  gint icon_offset;
+  gint text_width, text_height;
   GPtrArray *pixbufs_to_render;
   guint n;
+  gdouble x, y, w, h;
+  GtkStyleContext *context;
+  GtkStateFlags state;
+  GtkJunctionSides sides;
+  guint icon_offset;
 
   need_animation_timeout = FALSE;
 
-  /* TODO: use GtkStyleContext and/or CSS etc. instead of hard-coding colors */
-  fill_red     = 1;
-  fill_green   = 1;
-  fill_blue    = 1;
-  fill_selected_red     = 0.29;
-  fill_selected_green   = 0.56;
-  fill_selected_blue    = 0.85;
-  fill_selected_not_focused_red     = 0.29;
-  fill_selected_not_focused_green   = 0.56;
-  fill_selected_not_focused_blue    = 0.85;
-  focus_rect_red     = 0.60;
-  focus_rect_green   = 0.70;
-  focus_rect_blue    = 0.80;
-  stroke_red   = 0.65;
-  stroke_green = 0.65;
-  stroke_blue  = 0.65;
-  stroke_selected_red   = 0.3;
-  stroke_selected_green = 0.45;
-  stroke_selected_blue  = 0.6;
-  stroke_selected_not_focused_red   = 0.45;
-  stroke_selected_not_focused_green = 0.45;
-  stroke_selected_not_focused_blue  = 0.45;
-  text_red     = 0;
-  text_green   = 0;
-  text_blue    = 0;
-  text_selected_red     = 1;
-  text_selected_green   = 1;
-  text_selected_blue    = 1;
-  text_selected_not_focused_red     = 1;
-  text_selected_not_focused_green   = 1;
-  text_selected_not_focused_blue    = 1;
-
-  //g_debug ("rendering element: x=%d w=%d",
-  //         element->x,
-  //         element->width);
-
   cairo_save (cr);
-  cairo_rectangle (cr,
-                   element->x - 0.5,
-                   element->y - 0.5,
-                   element->width + 1.5,
-                   element->height + 1.5);
-  cairo_clip (cr);
 
-  round_rect (cr,
-              element->x + 0.5,
-              element->y + 0.5,
-              element->width,
-              element->height + 1,
-              10,
-              element->edge_flags);
+  x = element->x;
+  y = element->y;
+  w = element->width;
+  h = element->height;
 
+  context = gtk_widget_get_style_context (GTK_WIDGET (grid));
+  gtk_style_context_save (context);
+  sides = GTK_JUNCTION_NONE;
+  if (!(element->edge_flags & GRID_EDGE_TOP))
+    {
+      sides |= GTK_JUNCTION_TOP;
+    }
+  if (!(element->edge_flags & GRID_EDGE_BOTTOM))
+    {
+      sides |= GTK_JUNCTION_BOTTOM;
+      h += 2.0;
+    }
+  if (!(element->edge_flags & GRID_EDGE_LEFT))
+    {
+      sides |= GTK_JUNCTION_LEFT;
+    }
+  if (!(element->edge_flags & GRID_EDGE_RIGHT))
+    {
+      sides |= GTK_JUNCTION_RIGHT;
+      w += 1.0;
+    }
+  gtk_style_context_set_junction_sides (context, sides);
+
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
+  gtk_style_context_add_class (context, "gnome-disk-utility-grid");
+  state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
   if (is_selected)
-    {
-      cairo_pattern_t *gradient;
-      gradient = cairo_pattern_create_radial (element->x + element->width / 2,
-                                              element->y + element->height / 2,
-                                              0.0,
-                                              element->x + element->width / 2,
-                                              element->y + element->height / 2,
-                                              element->width/2.0);
-      if (is_grid_focused)
-        {
-          cairo_pattern_add_color_stop_rgb (gradient,
-                                            0.0,
-                                            1.0 * fill_selected_red,
-                                            1.0 * fill_selected_green,
-                                            1.0 * fill_selected_blue);
-          cairo_pattern_add_color_stop_rgb (gradient,
-                                            1.0,
-                                            0.8 * fill_selected_red,
-                                            0.8 * fill_selected_green,
-                                            0.8 * fill_selected_blue);
-        }
-      else
-        {
-          cairo_pattern_add_color_stop_rgb (gradient,
-                                            0.0,
-                                            1.0 * fill_selected_not_focused_red,
-                                            1.0 * fill_selected_not_focused_green,
-                                            1.0 * fill_selected_not_focused_blue);
-          cairo_pattern_add_color_stop_rgb (gradient,
-                                            1.0,
-                                            0.8 * fill_selected_not_focused_red,
-                                            0.8 * fill_selected_not_focused_green,
-                                            0.8 * fill_selected_not_focused_blue);
-        }
-      cairo_set_source (cr, gradient);
-      cairo_pattern_destroy (gradient);
-    }
-  else
-    {
-      cairo_set_source_rgb (cr,
-                            fill_red,
-                            fill_green,
-                            fill_blue);
-    }
-  cairo_fill_preserve (cr);
-  if (is_selected)
-    {
-      if (is_grid_focused)
-        {
-          cairo_set_source_rgb (cr,
-                                stroke_selected_red,
-                                stroke_selected_green,
-                                stroke_selected_blue);
-        }
-      else
-        {
-          cairo_set_source_rgb (cr,
-                                stroke_selected_not_focused_red,
-                                stroke_selected_not_focused_green,
-                                stroke_selected_not_focused_blue);
-        }
-    }
-  else
-    {
-      cairo_set_source_rgb (cr,
-                            stroke_red,
-                            stroke_green,
-                            stroke_blue);
-    }
-  cairo_set_dash (cr, NULL, 0, 0.0);
-  cairo_set_line_width (cr, 1.0);
-  cairo_stroke (cr);
+    state |= GTK_STATE_FLAG_SELECTED;
+  if (is_grid_focused)
+    state |= GTK_STATE_FLAG_FOCUSED;
+  gtk_style_context_set_state (context, state);
 
-  /* focus indicator */
+  gtk_render_background (context, cr, x, y, w, h);
+  gtk_render_frame (context, cr, x, y, w, h);
+
   if (is_focused && is_grid_focused)
-    {
-      gdouble dashes[] = {2.0};
-      round_rect (cr,
-                  element->x + 0.5 + 3,
-                  element->y + 0.5 + 3,
-                  element->width - 3 * 2,
-                  element->height - 3 * 2,
-                  20,
-                  element->edge_flags);
-      cairo_set_source_rgb (cr, focus_rect_red, focus_rect_green, focus_rect_blue);
-      cairo_set_dash (cr, dashes, 1, 0.0);
-      cairo_set_line_width (cr, 1.0);
-      cairo_stroke (cr);
-    }
+    gtk_render_focus (context, cr, x + 2, y + 2, w - 4, h - 4);
 
-  if (is_selected)
-    {
-      if (is_grid_focused)
-        {
-          cairo_set_source_rgb (cr,
-                                text_selected_red,
-                                text_selected_green,
-                                text_selected_blue);
-        }
-      else
-        {
-          cairo_set_source_rgb (cr,
-                                text_selected_not_focused_red,
-                                text_selected_not_focused_green,
-                                text_selected_not_focused_blue);
-        }
-    }
-  else
-    {
-      cairo_set_source_rgb (cr, text_red, text_green, text_blue);
-    }
-
-  /* text + icon */
+  /* text */
   layout = pango_cairo_create_layout (cr);
   pango_layout_set_markup (layout, element->markup != NULL ? element->markup : "", -1);
   desc = pango_font_description_from_string ("Sans 7.0");
   pango_layout_set_font_description (layout, desc);
   pango_font_description_free (desc);
   pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
-  pango_layout_set_width (layout, pango_units_from_double (element->width));
+  pango_layout_set_width (layout, pango_units_from_double (w));
   pango_layout_set_ellipsize (layout, PANGO_ELLIPSIZE_END);
-  pango_layout_get_size (layout, &width, &height);
-
-  icon_width = 0;
-  icon_height = 0;
-  icon_pixbuf = NULL;
-  if (element->icon != NULL)
-    {
-      GtkIconInfo *icon_info;
-      icon_info = gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (),
-                                                  element->icon,
-                                                  24,
-                                                  0); /* GtkIconLookupFlags */
-      if (icon_info != NULL)
-        {
-          icon_pixbuf = gtk_icon_info_load_icon (icon_info, NULL); /* GError */
-          icon_width = gdk_pixbuf_get_height (icon_pixbuf);
-          icon_height = gdk_pixbuf_get_height (icon_pixbuf);
-          gtk_icon_info_free (icon_info);
-        }
-    }
-  if (icon_pixbuf != NULL)
-    {
-      cairo_save (cr);
-      render_pixbuf (cr,
-                     ceil (element->x + element->width/2.0 - icon_width/2.0),
-                     ceil (element->y + element->height/2.0 - pango_units_to_double (height)/2.0 - icon_height/2.0),
-                     icon_pixbuf);
-      cairo_restore (cr);
-      g_object_unref (icon_pixbuf);
-    }
-
-  cairo_move_to (cr,
-                 ceil (element->x),
-                 ceil (element->y + element->height/2.0 - pango_units_to_double (height)/2.0 + icon_height/2.0));
-  pango_cairo_show_layout (cr, layout);
+  pango_layout_get_size (layout, &text_width, &text_height);
+  gtk_render_layout (context, cr, x, y + floor (h / 2.0 - text_height/2/PANGO_SCALE), layout);
   g_object_unref (layout);
 
   icon_offset = 0;
-
   if (element->show_spinner)
     {
       render_spinner (cr,
@@ -1210,6 +932,7 @@ render_element (GduVolumeGrid *grid,
     }
   g_ptr_array_free (pixbufs_to_render, TRUE);
 
+  gtk_style_context_restore (context);
   cairo_restore (cr);
 
   return need_animation_timeout;
@@ -1652,7 +1375,6 @@ recompute_grid (GduVolumeGrid *grid)
       element->offset = 0;
       element->size = 0;
       element->markup = g_strdup (grid->container_markup);
-      element->icon = grid->container_icon != NULL ? g_object_ref (grid->container_icon) : NULL;
       grid->elements = g_list_append (grid->elements, element);
     }
 
@@ -2195,20 +1917,6 @@ gdu_volume_grid_set_container_markup (GduVolumeGrid  *grid,
     {
       g_free (grid->container_markup);
       grid->container_markup = g_strdup (markup);
-      recompute_grid (grid);
-    }
-}
-
-void
-gdu_volume_grid_set_container_icon (GduVolumeGrid       *grid,
-                                    GIcon               *icon)
-{
-  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
-  if (!g_icon_equal (grid->container_icon, icon))
-    {
-      if (grid->container_icon != NULL)
-        g_object_unref (grid->container_icon);
-      grid->container_icon = icon != NULL ? g_object_ref (icon) : NULL;
       recompute_grid (grid);
     }
 }

@@ -859,6 +859,23 @@ render_element (GduVolumeGrid *grid,
 
   context = gtk_widget_get_style_context (GTK_WIDGET (grid));
   gtk_style_context_save (context);
+
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
+  gtk_style_context_add_class (context, "gnome-disk-utility-grid");
+  state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
+  if (grid->pointer_inside)
+    {
+      gint px, py;
+      gtk_widget_get_pointer (GTK_WIDGET (grid), &px, &py);
+      if (px >= x && px < x + w && py >= y && py < y + h)
+        state |= GTK_STATE_FLAG_PRELIGHT;
+    }
+  if (is_selected)
+    state |= GTK_STATE_FLAG_SELECTED;
+  if (is_grid_focused)
+    state |= GTK_STATE_FLAG_FOCUSED;
+  gtk_style_context_set_state (context, state);
+
   sides = GTK_JUNCTION_NONE;
   if (!(element->edge_flags & GRID_EDGE_TOP))
     {
@@ -879,22 +896,6 @@ render_element (GduVolumeGrid *grid,
       w += 1.0;
     }
   gtk_style_context_set_junction_sides (context, sides);
-
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
-  gtk_style_context_add_class (context, "gnome-disk-utility-grid");
-  state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
-  if (grid->pointer_inside)
-    {
-      gint px, py;
-      gtk_widget_get_pointer (GTK_WIDGET (grid), &px, &py);
-      if (px >= x && px < x + w && py >= y && py < y + h)
-        state |= GTK_STATE_FLAG_PRELIGHT;
-    }
-  if (is_selected)
-    state |= GTK_STATE_FLAG_SELECTED;
-  if (is_grid_focused)
-    state |= GTK_STATE_FLAG_FOCUSED;
-  gtk_style_context_set_state (context, state);
 
   gtk_render_background (context, cr, x, y, w, h);
   gtk_render_frame (context, cr, x, y, w, h);

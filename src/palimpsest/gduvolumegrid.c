@@ -1042,17 +1042,10 @@ gdu_volume_grid_draw (GtkWidget *widget,
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
   GtkAllocation allocation;
-  gdouble width;
-  gdouble height;
   gboolean need_animation_timeout;
 
   gtk_widget_get_allocation (widget, &allocation);
-  width = allocation.width;
-  height = allocation.height;
-
-  recompute_size (grid,
-                  width - 1,
-                  height -1);
+  recompute_size (grid, allocation.width, allocation.height);
 
   need_animation_timeout = render_slice (grid, cr, grid->elements);
 

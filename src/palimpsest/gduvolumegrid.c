@@ -102,6 +102,8 @@ struct _GduVolumeGrid
   UDisksClient *client;
   UDisksObject *block_object;
 
+  gboolean pointer_inside;
+
   gboolean container_visible;
   gchar *container_markup;
 
@@ -429,7 +431,8 @@ gdu_volume_grid_realize (GtkWidget *widget)
     GDK_BUTTON_PRESS_MASK |
     GDK_BUTTON_RELEASE_MASK |
     GDK_ENTER_NOTIFY_MASK |
-    GDK_LEAVE_NOTIFY_MASK;
+    GDK_LEAVE_NOTIFY_MASK |
+    GDK_POINTER_MOTION_MASK;
   attributes.visual = gtk_widget_get_visual (widget);
 
   attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
@@ -496,6 +499,36 @@ gdu_volume_grid_get_preferred_height (GtkWidget *widget,
   *minimal_height = *natural_height = 120;
 }
 
+static gboolean
+gdu_volume_grid_enter (GtkWidget        *widget,
+                       GdkEventCrossing *event)
+{
+  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+  grid->pointer_inside = TRUE;
+  gtk_widget_queue_draw (widget);
+  return TRUE;
+}
+
+static gboolean
+gdu_volume_grid_leave (GtkWidget        *widget,
+                       GdkEventCrossing *event)
+{
+  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+  grid->pointer_inside = FALSE;
+  gtk_widget_queue_draw (widget);
+  return TRUE;
+}
+
+static gboolean
+gdu_volume_grid_motion (GtkWidget      *widget,
+                        GdkEventMotion *event)
+{
+  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+  if (grid->pointer_inside)
+    gtk_widget_queue_draw (widget);
+  return TRUE;
+}
+
 static void
 gdu_volume_grid_class_init (GduVolumeGridClass *klass)
 {
@@ -515,6 +548,9 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
   gtkwidget_class->get_preferred_width  = gdu_volume_grid_get_preferred_width;
   gtkwidget_class->get_preferred_height = gdu_volume_grid_get_preferred_height;
   gtkwidget_class->draw                 = gdu_volume_grid_draw;
+  gtkwidget_class->enter_notify_event   = gdu_volume_grid_enter;
+  gtkwidget_class->leave_notify_event   = gdu_volume_grid_leave;
+  gtkwidget_class->motion_notify_event  = gdu_volume_grid_motion;
 
   g_object_class_install_property (gobject_class,
                                    PROP_CLIENT,
@@ -847,6 +883,13 @@ render_element (GduVolumeGrid *grid,
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
   gtk_style_context_add_class (context, "gnome-disk-utility-grid");
   state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
+  if (grid->pointer_inside)
+    {
+      gint px, py;
+      gtk_widget_get_pointer (GTK_WIDGET (grid), &px, &py);
+      if (px >= x && px < x + w && py >= y && py < y + h)
+        state |= GTK_STATE_FLAG_PRELIGHT;
+    }
   if (is_selected)
     state |= GTK_STATE_FLAG_SELECTED;
   if (is_grid_focused)

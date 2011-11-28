@@ -778,6 +778,7 @@ render_element (GduVolumeGrid *grid,
   GtkStyleContext *context;
   GtkStateFlags state;
   GtkJunctionSides sides;
+  GtkBorder border;
 
   animate_spinner = FALSE;
 
@@ -808,6 +809,7 @@ render_element (GduVolumeGrid *grid,
   gtk_style_context_save (context);
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
   gtk_style_context_add_class (context, "gnome-disk-utility-grid");
+  gtk_style_context_get_border (context, state, &border);
   sides = GTK_JUNCTION_NONE;
   if (!(element->edge_flags & GRID_EDGE_TOP))
     {
@@ -816,7 +818,7 @@ render_element (GduVolumeGrid *grid,
   if (!(element->edge_flags & GRID_EDGE_BOTTOM))
     {
       sides |= GTK_JUNCTION_BOTTOM;
-      h += 1.0;
+      h += border.bottom;
     }
   if (!(element->edge_flags & GRID_EDGE_LEFT))
     {
@@ -825,7 +827,7 @@ render_element (GduVolumeGrid *grid,
   if (!(element->edge_flags & GRID_EDGE_RIGHT))
     {
       sides |= GTK_JUNCTION_RIGHT;
-      w += 1.0;
+      w += border.right;
     }
   gtk_style_context_set_junction_sides (context, sides);
   gtk_render_background (context, cr, x, y, w, h);

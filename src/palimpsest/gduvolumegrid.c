@@ -75,9 +75,6 @@ struct GridElement
   gboolean show_padlock_closed;
   gboolean show_mounted;
   gboolean show_configured;
-
-  /* used for the job spinner */
-  guint spinner_current;
 };
 
 static void
@@ -112,7 +109,7 @@ struct _GduVolumeGrid
   GridElement *selected;
   GridElement *focused;
 
-  guint animation_timeout_id;
+  gboolean animating_spinner;
 };
 
 struct _GduVolumeGridClass
@@ -173,12 +170,6 @@ gdu_volume_grid_finalize (GObject *object)
 
   g_list_foreach (grid->elements, (GFunc) grid_element_free, NULL);
   g_list_free (grid->elements);
-
-  if (grid->animation_timeout_id > 0)
-    {
-      g_source_remove (grid->animation_timeout_id);
-      grid->animation_timeout_id = 0;
-    }
 
   if (grid->block_object != NULL)
     g_object_unref (grid->block_object);
@@ -768,65 +759,6 @@ recompute_size (GduVolumeGrid *grid,
                             0);
 }
 
-static void
-render_spinner (cairo_t   *cr,
-                guint      size,
-                guint      num_lines,
-                guint      current,
-                gdouble    x,
-                gdouble    y)
-{
-  guint n;
-  gdouble radius;
-  gdouble cx;
-  gdouble cy;
-  gdouble half;
-
-  cx = x + size/2.0;
-  cy = y + size/2.0;
-  radius = size/2.0;
-  half = num_lines / 2;
-
-  current = current % num_lines;
-
-  for (n = 0; n < num_lines; n++)
-    {
-      gdouble inset;
-      gdouble t;
-
-      inset = 0.7 * radius;
-
-      /* transparency is a function of time and intial value */
-      t = (gdouble) ((n + num_lines - current) % num_lines) / num_lines;
-
-      cairo_set_source_rgba (cr, 0, 0, 0, t);
-      cairo_set_line_width (cr, 2.0);
-      cairo_set_dash (cr, NULL, 0, 0.0);
-      cairo_move_to (cr,
-                     cx + (radius - inset) * cos (n * M_PI / half),
-                     cy + (radius - inset) * sin (n * M_PI / half));
-      cairo_line_to (cr,
-                     cx + radius * cos (n * M_PI / half),
-                     cy + radius * sin (n * M_PI / half));
-      cairo_stroke (cr);
-    }
-}
-
-static void
-render_pixbuf (cairo_t   *cr,
-               gdouble    x,
-               gdouble    y,
-               GdkPixbuf *pixbuf)
-{
-  gdk_cairo_set_source_pixbuf (cr, pixbuf, x, y);
-  cairo_rectangle (cr,
-                   x,
-                   y,
-                   gdk_pixbuf_get_width (pixbuf),
-                   gdk_pixbuf_get_height (pixbuf));
-  cairo_fill (cr);
-}
-
 /* returns true if an animation timeout is needed */
 static gboolean
 render_element (GduVolumeGrid *grid,
@@ -836,19 +768,18 @@ render_element (GduVolumeGrid *grid,
                 gboolean       is_focused,
                 gboolean       is_grid_focused)
 {
-  gboolean need_animation_timeout;
+  gboolean animate_spinner;
   PangoLayout *layout;
   PangoFontDescription *desc;
   gint text_width, text_height;
-  GPtrArray *pixbufs_to_render;
+  GPtrArray *icons_to_render;
   guint n;
   gdouble x, y, w, h;
   GtkStyleContext *context;
   GtkStateFlags state;
   GtkJunctionSides sides;
-  guint icon_offset;
 
-  need_animation_timeout = FALSE;
+  animate_spinner = FALSE;
 
   cairo_save (cr);
 
@@ -859,9 +790,6 @@ render_element (GduVolumeGrid *grid,
 
   context = gtk_widget_get_style_context (GTK_WIDGET (grid));
   gtk_style_context_save (context);
-
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
-  gtk_style_context_add_class (context, "gnome-disk-utility-grid");
   state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
   if (grid->pointer_inside)
     {
@@ -876,6 +804,10 @@ render_element (GduVolumeGrid *grid,
     state |= GTK_STATE_FLAG_FOCUSED;
   gtk_style_context_set_state (context, state);
 
+  /* frames */
+  gtk_style_context_save (context);
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
+  gtk_style_context_add_class (context, "gnome-disk-utility-grid");
   sides = GTK_JUNCTION_NONE;
   if (!(element->edge_flags & GRID_EDGE_TOP))
     {
@@ -884,7 +816,7 @@ render_element (GduVolumeGrid *grid,
   if (!(element->edge_flags & GRID_EDGE_BOTTOM))
     {
       sides |= GTK_JUNCTION_BOTTOM;
-      h += 2.0;
+      h += 1.0;
     }
   if (!(element->edge_flags & GRID_EDGE_LEFT))
     {
@@ -896,12 +828,85 @@ render_element (GduVolumeGrid *grid,
       w += 1.0;
     }
   gtk_style_context_set_junction_sides (context, sides);
-
   gtk_render_background (context, cr, x, y, w, h);
   gtk_render_frame (context, cr, x, y, w, h);
-
   if (is_focused && is_grid_focused)
     gtk_render_focus (context, cr, x + 2, y + 2, w - 4, h - 4);
+  gtk_style_context_restore (context);
+
+  /* icons */
+  icons_to_render = g_ptr_array_new_with_free_func (NULL);
+  if (element->show_padlock_open)
+    g_ptr_array_add (icons_to_render, "changes-allow-symbolic");
+  if (element->show_padlock_closed)
+    g_ptr_array_add (icons_to_render, "changes-prevent-symbolic");
+  if (element->show_mounted)
+    g_ptr_array_add (icons_to_render, "media-playback-start-symbolic");
+  if (element->show_configured)
+    g_ptr_array_add (icons_to_render, "user-bookmarks-symbolic");
+  if (icons_to_render->len > 0)
+    {
+      guint icon_offset = 0;
+      gtk_style_context_save (context);
+      gtk_style_context_add_class (context, GTK_STYLE_CLASS_IMAGE);
+      for (n = 0; n < icons_to_render->len; n++)
+        {
+          const gchar *name = icons_to_render->pdata[n];
+          GtkIconInfo *info;
+          info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), name, 12, 0);
+          if (info == NULL)
+            {
+              g_warning ("Error lookup up icon %s", name);
+            }
+          else
+            {
+              GdkPixbuf *base_pixbuf;
+              GdkPixbuf *pixbuf;
+              GError *error = NULL;
+              base_pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, &error);
+              if (base_pixbuf == NULL)
+                {
+                  g_warning ("Error loading icon %s: %s (%s, %d)",
+                             name, error->message, g_quark_to_string (error->domain), error->code);
+                  g_error_free (error);
+                }
+              else
+                {
+                  guint icon_width;
+                  guint icon_height;
+                  GtkIconSource *source;
+                  source = gtk_icon_source_new ();
+                  gtk_icon_source_set_pixbuf (source, base_pixbuf);
+                  pixbuf = gtk_render_icon_pixbuf (context, source, -1);
+                  icon_width = gdk_pixbuf_get_width (pixbuf);
+                  icon_height = gdk_pixbuf_get_height (pixbuf);
+                  gtk_render_icon (context, cr, pixbuf,
+                                   ceil (element->x + element->width - icon_width - icon_offset - 4),
+                                   ceil (element->y + element->height - icon_height - 4));
+                  icon_offset += icon_width + 2; /* padding */
+                  g_object_unref (pixbuf);
+                  g_object_unref (base_pixbuf);
+                  gtk_icon_source_free (source);
+                }
+              gtk_icon_info_free (info);
+            }
+        }
+      gtk_style_context_restore (context);
+    }
+  g_ptr_array_free (icons_to_render, TRUE);
+
+  /* spinner */
+  if (element->show_spinner)
+    {
+      gtk_style_context_save (context);
+      gtk_style_context_add_class (context, GTK_STYLE_CLASS_SPINNER);
+      gtk_render_activity (context, cr,
+                           ceil (element->x) + 4,
+                           ceil (element->y + element->height - 16 - 4),
+                           16, 16);
+      gtk_style_context_restore (context);
+      animate_spinner = TRUE;
+    }
 
   /* text */
   layout = pango_cairo_create_layout (cr);
@@ -916,80 +921,10 @@ render_element (GduVolumeGrid *grid,
   gtk_render_layout (context, cr, x, y + floor (h / 2.0 - text_height/2/PANGO_SCALE), layout);
   g_object_unref (layout);
 
-  icon_offset = 0;
-  if (element->show_spinner)
-    {
-      render_spinner (cr,
-                      16,
-                      12,
-                      element->spinner_current,
-                      ceil (element->x + element->width - 16 - icon_offset - 4),
-                      ceil (element->y + element->height - 16 - 4));
-
-      icon_offset += 16 + 2; /* padding */
-
-      element->spinner_current += 1;
-
-      need_animation_timeout = TRUE;
-    }
-
-  /* icons */
-  pixbufs_to_render = g_ptr_array_new_with_free_func (g_object_unref);
-  if (element->show_padlock_open)
-    g_ptr_array_add (pixbufs_to_render,
-                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "changes-allow-symbolic",
-                                               12, 0, NULL));
-  if (element->show_padlock_closed)
-    g_ptr_array_add (pixbufs_to_render,
-                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "changes-prevent-symbolic",
-                                               12, 0, NULL));
-  if (element->show_mounted)
-    g_ptr_array_add (pixbufs_to_render,
-                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "media-playback-start-symbolic",
-                                               12, 0, NULL));
-  if (element->show_configured)
-    g_ptr_array_add (pixbufs_to_render,
-                     gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               "user-bookmarks-symbolic",
-                                               12, 0, NULL));
-  for (n = 0; n < pixbufs_to_render->len; n++)
-    {
-      GdkPixbuf *pixbuf = GDK_PIXBUF (pixbufs_to_render->pdata[n]);
-      guint icon_width;
-      guint icon_height;
-
-      if (pixbuf == NULL)
-        continue;
-
-      icon_width = gdk_pixbuf_get_width (pixbuf);
-      icon_height = gdk_pixbuf_get_height (pixbuf);
-
-      render_pixbuf (cr,
-                     ceil (element->x + element->width - icon_width - icon_offset - 4),
-                     ceil (element->y + element->height - icon_height - 4),
-                     pixbuf);
-
-      icon_offset += icon_width + 2; /* padding */
-    }
-  g_ptr_array_free (pixbufs_to_render, TRUE);
-
   gtk_style_context_restore (context);
   cairo_restore (cr);
 
-  return need_animation_timeout;
-}
-
-static gboolean
-on_animation_timeout (gpointer data)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (data);
-
-  gtk_widget_queue_draw (GTK_WIDGET (grid));
-
-  return TRUE; /* keep timeout around */
+  return animate_spinner;
 }
 
 static gboolean
@@ -998,9 +933,9 @@ render_slice (GduVolumeGrid *grid,
               GList         *elements)
 {
   GList *l;
-  gboolean need_animation_timeout;
+  gboolean animate_spinner;
 
-  need_animation_timeout = FALSE;
+  animate_spinner = FALSE;
   for (l = elements; l != NULL; l = l->next)
     {
       GridElement *element = l->data;
@@ -1021,19 +956,19 @@ render_slice (GduVolumeGrid *grid,
             is_focused = TRUE;
         }
 
-      need_animation_timeout |= render_element (grid,
-                                                cr,
-                                                element,
-                                                is_selected,
-                                                is_focused,
-                                                is_grid_focused);
+      animate_spinner |= render_element (grid,
+                                         cr,
+                                         element,
+                                         is_selected,
+                                         is_focused,
+                                         is_grid_focused);
 
-      need_animation_timeout |= render_slice (grid,
-                                              cr,
-                                              element->embedded_elements);
+      animate_spinner |= render_slice (grid,
+                                       cr,
+                                       element->embedded_elements);
     }
 
-  return need_animation_timeout;
+  return animate_spinner;
 }
 
 static gboolean
@@ -1042,30 +977,29 @@ gdu_volume_grid_draw (GtkWidget *widget,
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
   GtkAllocation allocation;
-  gboolean need_animation_timeout;
+  gboolean animate_spinner;
 
   gtk_widget_get_allocation (widget, &allocation);
   recompute_size (grid, allocation.width, allocation.height);
 
-  need_animation_timeout = render_slice (grid, cr, grid->elements);
+  animate_spinner = render_slice (grid, cr, grid->elements);
 
-  if (need_animation_timeout)
+  if (animate_spinner != grid->animating_spinner)
     {
-      if (grid->animation_timeout_id == 0)
-        {
-          grid->animation_timeout_id = g_timeout_add (80,
-                                                      on_animation_timeout,
-                                                      grid);
-        }
+      GtkStyleContext *context = gtk_widget_get_style_context (widget);
+      gtk_style_context_save (context);
+      gtk_style_context_add_class (context, GTK_STYLE_CLASS_SPINNER);
+      gtk_style_context_notify_state_change (context,
+                                             gtk_widget_get_window (widget),
+                                             NULL, /* region_id */
+                                             GTK_STATE_ACTIVE,
+                                             animate_spinner);
+      gtk_style_context_restore (context);
     }
+  if (animate_spinner)
+    grid->animating_spinner = TRUE;
   else
-    {
-      if (grid->animation_timeout_id > 0)
-        {
-          g_source_remove (grid->animation_timeout_id);
-          grid->animation_timeout_id = 0;
-        }
-    }
+    grid->animating_spinner = FALSE;
 
   return FALSE;
 }

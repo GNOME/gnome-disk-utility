@@ -608,6 +608,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
   GUnixFDList *fd_list;
   GVariantBuilder options_builder;
   GtkWidget *ro_checkbutton;
+  const gchar *folder;
 
   filename = NULL;
   fd = -1;
@@ -631,6 +632,11 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
   gtk_file_filter_add_pattern (filter, "*.iso");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  /* Default to the "Documents" folder since that's where we save such images */
+  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
+  if (folder != NULL)
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), folder);
 
   /* Can't support non-local files because uid gets EPERM when doing fstat(2)
    * an FD from the FUSE mount... it would be nice to support this, though

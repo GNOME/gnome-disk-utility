@@ -337,6 +337,7 @@ update_for_show_flags (GduWindow *window,
 
   /* Hide Drive menu items unless it's actually a drive */
   is_drive = (udisks_object_peek_drive (window->current_object) != NULL);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_create_disk_image), is_drive);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_view_smart), is_drive);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_format_disk), is_drive);
   gtk_widget_set_visible (GTK_WIDGET (window->generic_menu_item_drive_separator), is_drive);

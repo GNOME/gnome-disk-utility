@@ -46,6 +46,7 @@
 #include "gduformatvolumedialog.h"
 #include "gducreatepartitiondialog.h"
 #include "gduformatdiskdialog.h"
+#include "gducreatediskimagedialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -99,6 +100,7 @@ struct _GduWindow
   GtkWidget *devtab_toolbar_deactivate_swap_button;
 
   GtkWidget *generic_menu;
+  GtkWidget *generic_menu_item_create_disk_image;
   GtkWidget *generic_menu_item_view_smart;
   GtkWidget *generic_menu_item_format_disk;
   GtkWidget *generic_menu_item_drive_separator;
@@ -107,6 +109,7 @@ struct _GduWindow
   GtkWidget *generic_menu_item_edit_label;
   GtkWidget *generic_menu_item_edit_partition;
   GtkWidget *generic_menu_item_format_volume;
+  GtkWidget *generic_menu_item_create_volume_image;
 
   GHashTable *label_connections;
 };
@@ -141,16 +144,18 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_lock_button), "devtab-action-lock"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_activate_swap_button), "devtab-action-activate-swap"},
   {G_STRUCT_OFFSET (GduWindow, devtab_toolbar_deactivate_swap_button), "devtab-action-deactivate-swap"},
+
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_disk_image), "generic-menu-item-create-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_view_smart), "generic-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_disk), "generic-menu-item-format-disk"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_drive_separator), "generic-menu-item-drive-separator"},
-
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {0, NULL}
 };
 
@@ -180,13 +185,15 @@ typedef enum
   SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<8),
   SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
 
-  SHOW_FLAGS_POPUP_MENU_VIEW_SMART         = (1<<20),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_DISK        = (1<<21),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB    = (1<<22),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB = (1<<23),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL         = (1<<24),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION     = (1<<25),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME      = (1<<26),
+  SHOW_FLAGS_POPUP_MENU_CREATE_DISK_IMAGE    = (1<<20),
+  SHOW_FLAGS_POPUP_MENU_VIEW_SMART           = (1<<21),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_DISK          = (1<<22),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB      = (1<<23),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB   = (1<<24),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL           = (1<<25),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION       = (1<<26),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME        = (1<<27),
+  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE  = (1<<28),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -221,6 +228,10 @@ static void on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
                                                 gpointer   user_data);
 static void on_generic_menu_item_format_disk (GtkMenuItem *menu_item,
                                               gpointer   user_data);
+static void on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
+                                                      gpointer   user_data);
+static void on_generic_menu_item_create_disk_image (GtkMenuItem *menu_item,
+                                                    gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
 
@@ -344,10 +355,12 @@ update_for_show_flags (GduWindow *window,
         }
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_create_disk_image),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_CREATE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_disk),
                             show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_DISK);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_view_smart),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_VIEW_SMART);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
@@ -358,6 +371,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_volume),
                             show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_create_volume_image),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE);
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
@@ -1027,6 +1042,14 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_format_volume,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_format_volume),
+                    window);
+  g_signal_connect (window->generic_menu_item_create_disk_image,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_create_disk_image),
+                    window);
+  g_signal_connect (window->generic_menu_item_create_volume_image,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_create_volume_image),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -1821,11 +1844,17 @@ update_device_page_for_block (GduWindow          *window,
   filesystem = udisks_object_peek_filesystem (object);
 
   /* TODO: don't show on CD-ROM drives etc. */
-  if (udisks_block_get_size (block) > 0 && !read_only)
+  if (udisks_block_get_size (block) > 0)
     {
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
       if (udisks_block_get_hint_partitionable (block))
-        *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+        *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_DISK_IMAGE;
+      if (!read_only)
+        {
+          if (udisks_block_get_hint_partitionable (block))
+            *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
+          *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+        }
     }
 
   if (partition != NULL && !read_only)
@@ -2312,6 +2341,34 @@ on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
   gdu_format_volume_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_create_disk_image (GtkMenuItem *menu_item,
+                                        gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_create_disk_image_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
+                                          gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_create_disk_image_dialog_show (window, object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -17,6 +17,7 @@ ui_DATA = 				\
 	create-partition-dialog.ui	\
 	filesystem-create.ui		\
 	format-disk-dialog.ui		\
+	create-disk-image-dialog.ui	\
 	$(NULL)
 
 clean-local :

@@ -465,6 +465,9 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
   gtk_widget_show_all (data->dialog);
+  /* Only select the precomputed filename, not the .img extension */
+  gtk_editable_select_region (GTK_EDITABLE (data->destination_name_entry), 0,
+                              strlen (gtk_entry_get_text (GTK_ENTRY (data->destination_name_entry))) - 4);
 
  again:
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));

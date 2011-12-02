@@ -354,14 +354,14 @@ gdu_create_partition_dialog_show (GduWindow    *window,
                             max_size_mb,
                             0.0,                    /* lower */
                             max_size_mb,            /* upper */
-                            100,                    /* step increment */
+                            1,                      /* step increment */
                             1000,                   /* page increment */
                             0.0);                   /* page_size */
   gtk_adjustment_configure (data->free_following_adjustment,
                             0,
                             0.0,                    /* lower */
                             max_size_mb,            /* upper */
-                            100,                    /* step increment */
+                            1,                      /* step increment */
                             1000,                   /* page increment */
                             0.0);                   /* page_size */
 

@@ -122,6 +122,29 @@ create_disk_image_data_complete (CreateDiskImageData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+create_disk_image_update (CreateDiskImageData *data)
+{
+  gboolean can_proceed = FALSE;
+
+  if (strlen (gtk_entry_get_text (GTK_ENTRY (data->destination_name_entry))) > 0)
+    can_proceed = TRUE;
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
+}
+
+static void
+on_notify (GObject     *object,
+           GParamSpec  *pspec,
+           gpointer     user_data)
+{
+  CreateDiskImageData *data = user_data;
+  create_disk_image_update (data);
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 create_disk_image_populate (CreateDiskImageData *data)
 {
   gchar *device_name;
@@ -449,11 +472,13 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   data->notebook = GTK_WIDGET (gtk_builder_get_object (data->builder, "notebook"));
   data->start_copying_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "start_copying_button"));
   data->destination_name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "destination_name_entry"));
+  g_signal_connect (data->destination_name_entry, "notify::text", G_CALLBACK (on_notify), data);
   data->destination_name_fcbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "destination_folder_fcbutton"));
   data->copying_progressbar = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progressbar"));
   data->copying_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_label"));
 
   create_disk_image_populate (data);
+  create_disk_image_update (data);
 
   /* Make sure we attach to parent */
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));

@@ -603,13 +603,11 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GtkWidget *dialog;
-  GtkFileFilter *filter;
   gchar *filename;
   gint fd;
   GUnixFDList *fd_list;
   GVariantBuilder options_builder;
   GtkWidget *ro_checkbutton;
-  const gchar *folder;
 
   filename = NULL;
   fd = -1;
@@ -620,24 +618,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         _("_Attach"), GTK_RESPONSE_ACCEPT,
                                         NULL);
-  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), g_get_home_dir ());
-
-  /* TODO: define proper mime-types */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
-  gtk_file_filter_add_pattern (filter, "*.img");
-  gtk_file_filter_add_pattern (filter, "*.iso");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter); /* adopts filter */
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  /* Default to the "Documents" folder since that's where we save such images */
-  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
-  if (folder != NULL)
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), folder);
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog));
 
   /* Can't support non-local files because uid gets EPERM when doing fstat(2)
    * an FD from the FUSE mount... it would be nice to support this, though

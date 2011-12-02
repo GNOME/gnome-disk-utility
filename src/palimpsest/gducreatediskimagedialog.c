@@ -130,7 +130,6 @@ create_disk_image_populate (CreateDiskImageData *data)
   guint n;
   GTimeZone *tz;
   GDateTime *now;
-  const gchar *folder;
 
   device_name = udisks_block_dup_preferred_device (data->block);
   if (g_str_has_prefix (device_name, "/dev/"))
@@ -159,12 +158,7 @@ create_disk_image_populate (CreateDiskImageData *data)
   g_time_zone_unref (tz);
   g_free (now_string);
 
-  /* Defaults to the "Documents" folder */
-  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
-  if (folder != NULL)
-    {
-      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (data->destination_name_fcbutton), folder);
-    }
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -20,35 +20,23 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_TYPES_H__
-#define __GDU_TYPES_H__
+#ifndef __GDU_PASSWORD_STRENGTH_WIDGET_H__
+#define __GDU_PASSWORD_STRENGTH_WIDGET_H__
 
 #include <gtk/gtk.h>
-#define UDISKS_API_IS_SUBJECT_TO_CHANGE
-#include <udisks/udisks.h>
-
-#include "gduenums.h"
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-struct _GduApplication;
-typedef struct _GduApplication GduApplication;
+#define GDU_TYPE_PASSWORD_STRENGTH_WIDGET         gdu_password_strength_widget_get_type()
+#define GDU_PASSWORD_STRENGTH_WIDGET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_PASSWORD_STRENGTH_WIDGET, GduPasswordStrengthWidget))
+#define GDU_IS_PASSWORD_STRENGTH_WIDGET(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_PASSWORD_STRENGTH_WIDGET))
 
-struct _GduDeviceTreeModel;
-typedef struct _GduDeviceTreeModel GduDeviceTreeModel;
-
-struct _GduWindow;
-typedef struct _GduWindow GduWindow;
-
-struct _GduVolumeGrid;
-typedef struct _GduVolumeGrid GduVolumeGrid;
-
-struct _GduCreateFilesystemWidget;
-typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
-
-struct _GduPasswordStrengthWidget;
-typedef struct _GduPasswordStrengthWidget GduPasswordStrengthWidget;
+GType        gdu_password_strength_widget_get_type       (void) G_GNUC_CONST;
+GtkWidget*   gdu_password_strength_widget_new            (void);
+void         gdu_password_strength_widget_set_password   (GduPasswordStrengthWidget *widget,
+                                                          const gchar               *password);
 
 G_END_DECLS
 
-#endif /* __GDU_TYPES_H__ */
+#endif /* __GDU_PASSWORD_STRENGTH_WIDGET_H__ */

@@ -31,6 +31,7 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreatefilesystemwidget.h"
+#include "gdupasswordstrengthwidget.h"
 
 typedef struct _GduCreateFilesystemWidgetClass GduCreateFilesystemWidgetClass;
 struct _GduCreateFilesystemWidget
@@ -53,6 +54,8 @@ struct _GduCreateFilesystemWidget
   GtkWidget *confirm_passphrase_label;
   GtkWidget *confirm_passphrase_entry;
   GtkWidget *show_passphrase_checkbutton;
+  GtkWidget *passphrase_strengh_box;
+  GtkWidget *passphrase_strengh_widget;
 
   gchar *fstype;
   gchar *name;
@@ -220,6 +223,8 @@ update (GduCreateFilesystemWidget *widget)
               has_info = TRUE;
             }
         }
+      gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (widget->passphrase_strengh_widget),
+                                                 gtk_entry_get_text (GTK_ENTRY (widget->passphrase_entry)));
     }
   else if (g_strcmp0 (id, "custom") == 0)
     {
@@ -271,6 +276,7 @@ update (GduCreateFilesystemWidget *widget)
       gtk_widget_show (widget->confirm_passphrase_label);
       gtk_widget_show (widget->confirm_passphrase_entry);
       gtk_widget_show (widget->show_passphrase_checkbutton);
+      gtk_widget_show (widget->passphrase_strengh_box);
     }
   else
     {
@@ -279,6 +285,7 @@ update (GduCreateFilesystemWidget *widget)
       gtk_widget_hide (widget->confirm_passphrase_label);
       gtk_widget_hide (widget->confirm_passphrase_entry);
       gtk_widget_hide (widget->show_passphrase_checkbutton);
+      gtk_widget_hide (widget->passphrase_strengh_box);
     }
 
   /* update local widget state for our users */
@@ -490,6 +497,12 @@ gdu_create_filesystem_widget_constructed (GObject *object)
   g_signal_connect (widget->confirm_passphrase_entry, "notify::text", G_CALLBACK (on_property_changed), widget);
   widget->show_passphrase_checkbutton = GTK_WIDGET (gtk_builder_get_object (widget->builder, "show-passphrase-checkbutton"));
   g_signal_connect (widget->show_passphrase_checkbutton, "notify::active", G_CALLBACK (on_property_changed), widget);
+  widget->passphrase_strengh_box = GTK_WIDGET (gtk_builder_get_object (widget->builder, "passphrase-strength-box"));
+  widget->passphrase_strengh_widget = gdu_password_strength_widget_new ();
+  gtk_widget_set_tooltip_markup (widget->passphrase_strengh_widget,
+                                 _("The strength of the passphrase"));
+  gtk_box_pack_start (GTK_BOX (widget->passphrase_strengh_box), widget->passphrase_strengh_widget,
+                      TRUE, TRUE, 0);
 
   /* reparent and nuke the dummy window */
   gtk_widget_reparent (widget->grid, GTK_WIDGET (widget));

@@ -43,6 +43,7 @@ palimpsest_SOURCES = 							\
 	gduformatdiskdialog.h		gduformatdiskdialog.c		\
 	gducreatediskimagedialog.h	gducreatediskimagedialog.c	\
 	gdurestorediskimagedialog.h	gdurestorediskimagedialog.c	\
+	gdupasswordstrengthwidget.h	gdupasswordstrengthwidget.c	\
 	$(enum_built_sources)						\
 	$(NULL)
 

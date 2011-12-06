@@ -49,6 +49,9 @@ typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
 struct _GduPasswordStrengthWidget;
 typedef struct _GduPasswordStrengthWidget GduPasswordStrengthWidget;
 
+struct _GduEstimator;
+typedef struct _GduEstimator GduEstimator;
+
 G_END_DECLS
 
 #endif /* __GDU_TYPES_H__ */

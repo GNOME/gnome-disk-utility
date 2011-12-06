@@ -27,6 +27,7 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gduatasmartdialog.h"
+#include "gduutils.h"
 
 enum
 {
@@ -118,41 +119,6 @@ dialog_data_free (DialogData *data)
 
   g_free (data);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-
-static gchar *
-age_to_string (guint age_seconds)
-{
-  gchar *s;
-
-  if (age_seconds < 60)
-    {
-      s = g_strdup_printf (_("Less than a minute ago"));
-      //next_update = 60 - age_seconds;
-    }
-  else if (age_seconds < 60 * 60)
-    {
-      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                      N_("%d minute ago"),
-                                      N_("%d minutes ago"),
-                                      age_seconds / 60),
-                           age_seconds / 60);
-      //next_update = 60*(age_seconds/60 + 1) - age_seconds;
-    }
-  else
-    {
-      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                      N_("%d hour ago"),
-                                      N_("%d hours ago"),
-                                      age_seconds / 60 / 60),
-                           age_seconds / 60 / 60);
-      //next_update = 60*60*(age_seconds/(60*60) + 1) - age_seconds;
-    }
-  return s;
-}
-
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -1020,11 +986,14 @@ update_updated_label (DialogData *data)
   time_t now;
   time_t updated;
   gchar *s;
+  gchar *s2;
 
   now = time (NULL);
   updated = udisks_drive_ata_get_smart_updated (data->ata);
-  s = age_to_string (now - updated);
-  gtk_label_set_text (GTK_LABEL (data->updated_label), s);
+  s = gdu_utils_duration_to_string (now - updated, FALSE);
+  s2 = g_strdup_printf (_("%s ago"), s);
+  gtk_label_set_text (GTK_LABEL (data->updated_label), s2);
+  g_free (s2);
   g_free (s);
 }
 

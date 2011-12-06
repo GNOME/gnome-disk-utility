@@ -88,3 +88,45 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
   gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
   gtk_file_chooser_set_filter (file_chooser, filter);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gchar *
+gdu_utils_duration_to_string (guint    duration_sec,
+                              gboolean include_second_precision)
+{
+  gchar *s;
+
+  if (duration_sec < 60)
+    {
+      if (include_second_precision)
+        {
+          s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                          N_("%d second"),
+                                          N_("%d seconds"),
+                                          duration_sec),
+                               duration_sec);
+        }
+      else
+        {
+          s = g_strdup (_("Less than a minute"));
+        }
+    }
+  else if (duration_sec < 3600)
+    {
+      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                      N_("%d minute"),
+                                      N_("%d minutes"),
+                                      duration_sec / 60),
+                           duration_sec / 60);
+    }
+  else
+    {
+      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                      N_("%d hour"),
+                                      N_("%d hours"),
+                                      duration_sec / 3600),
+                           duration_sec / 3600);
+    }
+  return s;
+}

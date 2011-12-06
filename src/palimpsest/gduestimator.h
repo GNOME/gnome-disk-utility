@@ -20,23 +20,28 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_UTILS_H__
-#define __GDU_UTILS_H__
+#ifndef __GDU_ESTIMATOR_H__
+#define __GDU_ESTIMATOR_H__
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-gboolean gdu_utils_has_configuration (UDisksBlock  *block,
-                                      const gchar  *type,
-                                      gboolean     *out_has_passphrase);
+#define GDU_TYPE_ESTIMATOR   gdu_estimator_get_type()
+#define GDU_ESTIMATOR(o)     (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_ESTIMATOR, GduEstimator))
+#define GDU_IS_ESTIMATOR(o)  (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_ESTIMATOR))
 
-void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser);
+GType          gdu_estimator_get_type            (void) G_GNUC_CONST;
+GduEstimator  *gdu_estimator_new                 (guint64         target_bytes);
+void           gdu_estimator_add_sample          (GduEstimator    *estimator,
+                                                  guint64          completed_bytes);
+guint64        gdu_estimator_get_target_bytes    (GduEstimator    *estimator);
+guint64        gdu_estimator_get_completed_bytes (GduEstimator    *estimator);
 
-gchar *gdu_utils_duration_to_string (guint    duration_sec,
-                                     gboolean include_second_precision);
+guint64        gdu_estimator_get_bytes_per_sec   (GduEstimator    *estimator);
+guint64        gdu_estimator_get_usec_remaining  (GduEstimator    *estimator);
 
 G_END_DECLS
 
-#endif /* __GDU_UTILS_H__ */
+#endif /* __GDU_ESTIMATOR_H__ */

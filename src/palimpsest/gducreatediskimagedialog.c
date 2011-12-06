@@ -32,10 +32,12 @@
 #include "gduvolumegrid.h"
 #include "gduutils.h"
 #include "gducreatefilesystemwidget.h"
+#include "gduestimator.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#define BUFFER_SIZE (1024*1024)
+/* TODO: make dynamic? */
+#define BUFFER_SIZE (1*1024*1024)
 
 typedef struct
 {
@@ -53,8 +55,10 @@ typedef struct
   GtkWidget *start_copying_button;
   GtkWidget *destination_name_entry;
   GtkWidget *destination_name_fcbutton;
-  GtkWidget *copying_progressbar;
+
   GtkWidget *copying_label;
+  GtkWidget *copying_progressbar;
+  GtkWidget *copying_progress_label;
 
   GCancellable *cancellable;
   GInputStream *block_stream;
@@ -67,6 +71,8 @@ typedef struct
   guint64 total_bytes_read;
   guint64 buffer_bytes_written;
   guint64 buffer_bytes_to_write;
+
+  GduEstimator *estimator;
 } CreateDiskImageData;
 
 static CreateDiskImageData *
@@ -106,6 +112,7 @@ create_disk_image_data_unref (CreateDiskImageData *data)
       if (data->builder != NULL)
         g_object_unref (data->builder);
       g_free (data->buffer);
+      g_clear_object (&data->estimator);
       g_free (data);
     }
 }
@@ -198,6 +205,9 @@ write_cb (GOutputStream  *output_stream,
   CreateDiskImageData *data = user_data;
   GError *error;
   gssize bytes_written;
+  guint64 bytes_per_sec;
+  guint64 usec_remaining;
+  gchar *s, *s2, *s3, *s4, *s5;
 
   error = NULL;
   bytes_written = g_output_stream_write_finish (output_stream, res, &error);
@@ -214,11 +224,36 @@ write_cb (GOutputStream  *output_stream,
   data->buffer_bytes_written += bytes_written;
   data->buffer_bytes_to_write -= bytes_written;
 
-  /* update progress bar */
+  /* update progress bar and estimator */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->copying_progressbar),
                                  ((gdouble) data->total_bytes_read) / ((gdouble) data->block_size));
 
-  /* TODO: we should do fancy stuff like printing the estimated speed and time remaining */
+  gdu_estimator_add_sample (data->estimator, data->total_bytes_read);
+  bytes_per_sec = gdu_estimator_get_bytes_per_sec (data->estimator);
+  usec_remaining = gdu_estimator_get_usec_remaining (data->estimator);
+  if (bytes_per_sec > 0 && usec_remaining > 0)
+    {
+      s2 = g_format_size (data->total_bytes_read);
+      s3 = g_format_size (data->block_size);
+      s4 = gdu_utils_duration_to_string (usec_remaining / G_USEC_PER_SEC, TRUE);
+      s5 = g_format_size (bytes_per_sec);
+      s = g_strdup_printf ("%s of %s copied – %s remaining (%s/sec)", s2, s3, s4, s5);
+      g_free (s5);
+      g_free (s4);
+      g_free (s3);
+      g_free (s2);
+    }
+  else
+    {
+      s2 = g_format_size (data->total_bytes_read);
+      s3 = g_format_size (data->block_size);
+      s = g_strdup_printf ("%s of %s copied", s2, s3);
+      g_free (s2);
+      g_free (s3);
+    }
+  s2 = g_strconcat ("<small>", s, "</small>", NULL);
+  gtk_label_set_markup (GTK_LABEL (data->copying_progress_label), s2);
+  g_free (s);
 
   write_more (data);
 
@@ -340,6 +375,7 @@ open_cb (UDisksBlock  *block,
   /* Alright, time to start copying! */
   data->cancellable = g_cancellable_new ();
   data->buffer = g_new0 (guchar, BUFFER_SIZE);
+  data->estimator = gdu_estimator_new (data->block_size);
   copy_more (data);
 
  out:
@@ -474,8 +510,9 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   data->destination_name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "destination_name_entry"));
   g_signal_connect (data->destination_name_entry, "notify::text", G_CALLBACK (on_notify), data);
   data->destination_name_fcbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "destination_folder_fcbutton"));
-  data->copying_progressbar = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progressbar"));
   data->copying_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_label"));
+  data->copying_progressbar = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progressbar"));
+  data->copying_progress_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progress_label"));
 
   create_disk_image_populate (data);
   create_disk_image_update (data);

@@ -644,11 +644,7 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
                                         _("_Attach"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog));
-
-  /* Can't support non-local files because uid gets EPERM when doing fstat(2)
-   * an FD from the FUSE mount... it would be nice to support this, though
-   */
-  /* gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE); */
+  gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
 
   /* Add a RO check button that defaults to RO */
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only loop device"));

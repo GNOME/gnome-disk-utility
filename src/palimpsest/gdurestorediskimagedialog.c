@@ -128,6 +128,10 @@ restore_disk_image_update (RestoreDiskImageData *data)
   gchar *restore_error = NULL;
   GFile *restore_file = NULL;
 
+  /* don't update if we're already copying */
+  if (data->buffer != NULL)
+    goto out;
+
   /* Check if we have a file */
   restore_file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->source_file_fcbutton));
   if (restore_file != NULL)
@@ -193,6 +197,9 @@ restore_disk_image_update (RestoreDiskImageData *data)
   g_clear_object (&restore_file);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
+
+ out:
+  ;
 }
 
 static void
@@ -527,9 +534,10 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
   gtk_label_set_markup (GTK_LABEL (data->copying_label), s);
   g_free (s);
 
-  /* Advance to the progress page */
+  /* Advance to the progress page and hide infobars, if any */
   gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
   gtk_widget_hide (data->start_copying_button);
+  gtk_widget_hide (data->infobar_vbox);
 
   if (!start_copying (data))
     goto out;

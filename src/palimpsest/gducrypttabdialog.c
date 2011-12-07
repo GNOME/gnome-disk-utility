@@ -41,6 +41,10 @@ typedef struct
 
   GtkBuilder *builder;
   GtkWidget *dialog;
+
+  GtkWidget *infobar_vbox;
+  GtkWidget *passphrase_warning_infobar;
+
   GtkWidget *configure_checkbutton;
   GtkWidget *grid;
 
@@ -416,6 +420,10 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock       *block,
     }
   g_variant_unref (configuration);
 
+  /* Do show the warning "Passphrase isn't changed on-disk" warning */
+  gtk_widget_set_no_show_all (data->passphrase_warning_infobar, FALSE);
+  gtk_widget_show (data->passphrase_warning_infobar);
+
   crypttab_dialog_present (data);
 
  out:
@@ -458,6 +466,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   data->dialog = dialog;
+  data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
   data->configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-configure-checkbutton"));
   data->grid = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-grid"));
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-name-entry"));
@@ -466,6 +475,33 @@ gdu_crypttab_dialog_show (GduWindow    *window,
   data->passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-entry"));
   data->show_passphrase_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-show-passphrase-checkbutton"));
   data->passphrase_path_value_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-path-value-label"));
+
+  /* do infobar stuff manually because of glade-hate !@#$ :-/ */
+  data->passphrase_warning_infobar = gtk_info_bar_new ();
+  gtk_info_bar_set_message_type (GTK_INFO_BAR (data->passphrase_warning_infobar),
+                                 GTK_MESSAGE_INFO);
+  {
+    GtkWidget *hbox;
+    GtkWidget *label;
+    GtkWidget *image;
+
+    /* don't show by default (see crypttab_dialog_on_get_secrets_cb()) */
+    gtk_widget_set_no_show_all (data->passphrase_warning_infobar, TRUE);
+
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_box_pack_start (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (data->passphrase_warning_infobar))),
+                        hbox, TRUE, TRUE, 0);
+
+    image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_BUTTON);
+    gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
+
+    label = gtk_label_new (NULL);
+    gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+    gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+    gtk_label_set_markup (GTK_LABEL (label), _("<b>NOTE:</b> Only the passphrase referenced by the <i>/etc/crypttab</i> file will be changed. To change the on-disk passphrase, use the <i>Change Passphrase...</i> menu item."));
+    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  }
+  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->passphrase_warning_infobar, TRUE, TRUE, 0);
 
   /* First check if there's an existing configuration */
   configured = FALSE;

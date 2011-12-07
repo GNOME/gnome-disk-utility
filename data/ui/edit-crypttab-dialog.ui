@@ -61,6 +61,21 @@
             <property name="orientation">vertical</property>
             <property name="spacing">12</property>
             <child>
+              <object class="GtkBox" id="infobar-vbox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkCheckButton" id="crypttab-configure-checkbutton">
                 <property name="label" translatable="yes">Config_ure passphrase and options</property>
                 <property name="visible">True</property>
@@ -76,7 +91,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -137,6 +152,7 @@
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">The name to use for the unlocked device - the device is set up as the name prefixed with &lt;b&gt;/dev/mapper/&lt;/b&gt;</property>
                         <property name="tooltip_text" translatable="yes">The name to use for the unlocked device - the device is set up as the name prefixed with /dev/mapper/</property>
+                        <property name="hexpand">True</property>
                         <property name="invisible_char">●</property>
                         <property name="invisible_char_set">True</property>
                       </object>
@@ -154,6 +170,7 @@
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">Options to use when unlocking the device</property>
                         <property name="tooltip_text" translatable="yes">Options to use when unlocking the device</property>
+                        <property name="hexpand">True</property>
                         <property name="invisible_char">●</property>
                         <property name="invisible_char_set">True</property>
                       </object>
@@ -190,6 +207,7 @@
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
                         <property name="tooltip_text" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
+                        <property name="hexpand">True</property>
                         <property name="invisible_char">●</property>
                         <property name="invisible_char_set">True</property>
                       </object>
@@ -289,7 +307,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>

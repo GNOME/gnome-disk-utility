@@ -209,8 +209,7 @@ gdu_utils_unfuse_path (const gchar *path)
     }
   else
     {
-      ret = uri;
-      uri = NULL;
+      ret = g_uri_unescape_string (uri, NULL);
     }
   g_object_unref (file);
   g_free (uri);

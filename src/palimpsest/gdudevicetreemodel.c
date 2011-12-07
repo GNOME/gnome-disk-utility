@@ -899,6 +899,9 @@ update_block (GduDeviceTreeModel  *model,
   if (loop_backing_file != NULL)
     {
       gchar *loop_name;
+      gchar *backing_file_unfused;
+
+      backing_file_unfused = gdu_utils_unfuse_path (loop_backing_file);
 
       /* Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB". */
       loop_name = g_strdup_printf (_("%s Loop Device"), size_str);
@@ -908,8 +911,9 @@ update_block (GduDeviceTreeModel  *model,
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
                            loop_name,
-                           loop_backing_file);
+                           backing_file_unfused);
       g_free (loop_name);
+      g_free (backing_file_unfused);
     }
   else
     {

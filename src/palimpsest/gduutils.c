@@ -192,3 +192,28 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   return info_bar;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+gchar *
+gdu_utils_unfuse_path (const gchar *path)
+{
+  gchar *ret;
+  GFile *file;
+  gchar *uri;
+
+  file = g_file_new_for_path (path);
+  uri = g_file_get_uri (file);
+  if (g_str_has_prefix (uri, "file:"))
+    {
+      ret = g_strdup (path);
+    }
+  else
+    {
+      ret = uri;
+      uri = NULL;
+    }
+  g_object_unref (file);
+  g_free (uri);
+
+  return ret;
+}

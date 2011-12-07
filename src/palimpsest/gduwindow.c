@@ -1857,12 +1857,14 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *version;
   UDisksFilesystem *filesystem;
   UDisksPartition *partition;
+  UDisksLoop *loop;
   gboolean read_only;
   gchar *s;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
+  loop = udisks_object_peek_loop (window->current_object);
 
   /* TODO: don't show on CD-ROM drives etc. */
   if (udisks_block_get_size (block) > 0)
@@ -1941,6 +1943,17 @@ update_device_page_for_block (GduWindow          *window,
       set_markup (window,
                   "devtab-partition-label",
                   "devtab-partition-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
+    }
+
+  if (loop != NULL)
+    {
+      gchar *s;
+      s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
+      set_markup (window,
+                  "devtab-backing-file-label",
+                  "devtab-backing-file-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
     }

@@ -41,6 +41,8 @@ GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
                                       const gchar    *markup,
                                       GtkWidget     **out_label);
 
+gchar *gdu_utils_unfuse_path (const gchar *path);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

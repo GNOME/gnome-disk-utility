@@ -2131,6 +2131,7 @@ update_device_page_for_free_space (GduWindow          *window,
                                    ShowFlags          *show_flags)
 {
   gchar *s;
+  UDisksLoop *loop;
   UDisksPartitionTable *table;
   const gchar *table_type = NULL;
   gboolean read_only;
@@ -2140,11 +2141,23 @@ update_device_page_for_free_space (GduWindow          *window,
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
   read_only = udisks_block_get_read_only (block);
+  loop = udisks_object_peek_loop (window->current_object);
 
   if (!read_only)
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_DISK;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_RESTORE_DISK_IMAGE;
+    }
+
+  if (loop != NULL)
+    {
+      gchar *s;
+      s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
+      set_markup (window,
+                  "devtab-backing-file-label",
+                  "devtab-backing-file-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
     }
 
   table = udisks_object_peek_partition_table (object);

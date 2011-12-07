@@ -35,8 +35,13 @@
 typedef struct
 {
   GduWindow *window;
+
   UDisksObject *object;
+  UDisksBlock *block;
   UDisksEncrypted *encrypted;
+
+  gboolean has_passphrase_in_configuration;
+  GVariant *crypttab_details;
 
   GtkBuilder *builder;
   GtkWidget *dialog;
@@ -55,6 +60,7 @@ change_passphrase_data_free (ChangePassphraseData *data)
 {
   g_object_unref (data->window);
   g_object_unref (data->object);
+  g_object_unref (data->block);
   g_object_unref (data->encrypted);
   if (data->dialog != NULL)
     {
@@ -63,6 +69,8 @@ change_passphrase_data_free (ChangePassphraseData *data)
     }
   if (data->builder != NULL)
     g_object_unref (data->builder);
+  if (data->crypttab_details != NULL)
+    g_variant_unref (data->crypttab_details);
   g_free (data);
 }
 
@@ -102,7 +110,8 @@ update (ChangePassphraseData *data)
                                              passphrase);
 
   if (strlen (existing_passphrase) > 0 && strlen (passphrase) > 0 &&
-      g_strcmp0 (passphrase, confirm_passphrase) == 0)
+      g_strcmp0 (passphrase, confirm_passphrase) == 0 &&
+      g_strcmp0 (passphrase, existing_passphrase) != 0)
     can_proceed = TRUE;
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
 }
@@ -114,6 +123,52 @@ on_property_changed (GObject     *object,
 {
   ChangePassphraseData *data = user_data;
   update (data);
+}
+
+static gboolean
+has_passphrase_in_configuration (ChangePassphraseData *data)
+{
+  gboolean ret = FALSE;
+  GVariantIter iter;
+  const gchar *type;
+  GVariant *details;
+
+  g_variant_iter_init (&iter, udisks_block_get_configuration (data->block));
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &type, &details))
+    {
+      if (g_strcmp0 (type, "crypttab") == 0)
+        {
+          const gchar *passphrase_path;
+          if (g_variant_lookup (details, "passphrase-path", "^&ay", &passphrase_path))
+            {
+              g_variant_unref (details);
+              ret = TRUE;
+              goto out;
+            }
+        }
+      g_variant_unref (details);
+    }
+ out:
+  return ret;
+}
+
+static void
+update_configuration_item_cb (GObject      *source_object,
+                              GAsyncResult *res,
+                              gpointer      user_data)
+{
+  ChangePassphraseData *data = user_data;
+  GError *error;
+
+  error = NULL;
+  if (!udisks_block_call_update_configuration_item_finish (UDISKS_BLOCK (source_object),
+                                                           res,
+                                                           &error))
+    {
+      gdu_window_show_error (data->window, _("Error updating /etc/crypttab"), error);
+      g_error_free (error);
+    }
+  change_passphrase_data_free (data);
 }
 
 static void
@@ -132,7 +187,122 @@ change_passphrase_cb (GObject      *source_object,
       gdu_window_show_error (data->window, _("Error changing passphrase"), error);
       g_error_free (error);
     }
+
+  /* Update the system-level configuration, if applicable */
+  if (data->has_passphrase_in_configuration)
+    {
+      GVariantBuilder builder;
+      GVariantIter iter;
+      const gchar *key;
+      GVariant *value;
+
+      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+      g_variant_iter_init (&iter, data->crypttab_details);
+      while (g_variant_iter_next (&iter, "{sv}", &key, &value))
+        {
+          if (g_strcmp0 (key, "passphrase-contents") == 0)
+            {
+              g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
+                                     g_variant_new_bytestring (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry))));
+            }
+          else
+            {
+              g_variant_builder_add (&builder, "{sv}", key, value);
+            }
+          g_variant_unref (value);
+        }
+
+      udisks_block_call_update_configuration_item (data->block,
+                                                   g_variant_new ("(s@a{sv})", "crypttab", data->crypttab_details),
+                                                   g_variant_new ("(sa{sv})", "crypttab", &builder),
+                                                   g_variant_new ("a{sv}", NULL), /* options */
+                                                   NULL, /* cancellable */
+                                                   update_configuration_item_cb,
+                                                   data);
+
+    }
+  else
+    {
+      change_passphrase_data_free (data);
+    }
+}
+
+static void
+run_dialog (ChangePassphraseData *data)
+{
+  gint response;
+
+  gtk_widget_show_all (data->dialog);
+  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+  gtk_widget_hide (data->dialog);
+  if (response == GTK_RESPONSE_OK)
+    {
+      udisks_encrypted_call_change_passphrase (data->encrypted,
+                                               gtk_entry_get_text (GTK_ENTRY (data->existing_passphrase_entry)),
+                                               gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry)),
+                                               g_variant_new ("a{sv}", NULL), /* options */
+                                               NULL, /* GCancellable */
+                                               change_passphrase_cb,
+                                               data);
+    }
+  else
+    {
+      change_passphrase_data_free (data);
+    }
+}
+
+static void
+on_get_secret_configuration_cb (GObject      *source_object,
+                                GAsyncResult *res,
+                                gpointer      user_data)
+{
+  ChangePassphraseData *data = user_data;
+  GVariantIter iter;
+  const gchar *type;
+  GVariant *details;
+  GVariant *configuration = NULL;
+  GError *error;
+
+  configuration = NULL;
+  error = NULL;
+  if (!udisks_block_call_get_secret_configuration_finish (UDISKS_BLOCK (source_object),
+                                                          &configuration,
+                                                          res,
+                                                          &error))
+    {
+      gdu_window_show_error (data->window,
+                             _("Error retrieving configuration data"),
+                             error);
+      g_error_free (error);
+      change_passphrase_data_free (data);
+      goto out;
+    }
+
+  g_variant_iter_init (&iter, configuration);
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &type, &details))
+    {
+      if (g_strcmp0 (type, "crypttab") == 0)
+        {
+          const gchar *passphrase_contents;
+          data->crypttab_details = g_variant_ref (details);
+          if (g_variant_lookup (details, "passphrase-contents", "^&ay", &passphrase_contents))
+            {
+              gtk_entry_set_text (GTK_ENTRY (data->existing_passphrase_entry), passphrase_contents);
+              /* Don't focus on the "Existing passphrase" entry */
+              gtk_editable_select_region (GTK_EDITABLE (data->existing_passphrase_entry), 0, 0);
+              gtk_widget_grab_focus (data->passphrase_entry);
+              run_dialog (data);
+              goto out;
+            }
+        }
+    }
+
+  gdu_window_show_error (data->window, _("/etc/crypttab configuration data is malformed"), NULL);
   change_passphrase_data_free (data);
+
+ out:
+  if (configuration != NULL)
+    g_variant_unref (configuration);
 }
 
 void
@@ -140,13 +310,15 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
                                    UDisksObject *object)
 {
   ChangePassphraseData *data;
-  gint response;
 
   data = g_new0 (ChangePassphraseData, 1);
   data->window = g_object_ref (window);
   data->object = g_object_ref (object);
+  data->block = udisks_object_get_block (object);
+  g_assert (data->block != NULL);
   data->encrypted = udisks_object_get_encrypted (object);
   g_assert (data->encrypted != NULL);
+  data->has_passphrase_in_configuration = has_passphrase_in_configuration (data);
 
   data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
                                              "change-passphrase-dialog.ui",
@@ -178,22 +350,17 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
   populate (data);
   update (data);
 
-  gtk_widget_show_all (data->dialog);
-
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-  gtk_widget_hide (data->dialog);
-  if (response == GTK_RESPONSE_OK)
+  /* Retrieve the passphrase from system-level configuration, if applicable */
+  if (data->has_passphrase_in_configuration)
     {
-      udisks_encrypted_call_change_passphrase (data->encrypted,
-                                               gtk_entry_get_text (GTK_ENTRY (data->existing_passphrase_entry)),
-                                               gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry)),
-                                               g_variant_new ("a{sv}", NULL), /* options */
-                                               NULL, /* GCancellable */
-                                               change_passphrase_cb,
-                                               data);
+      udisks_block_call_get_secret_configuration (data->block,
+                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                  NULL, /* cancellable */
+                                                  on_get_secret_configuration_cb,
+                                                  data);
     }
   else
     {
-      change_passphrase_data_free (data);
+      run_dialog (data);
     }
 }

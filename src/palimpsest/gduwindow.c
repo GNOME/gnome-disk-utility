@@ -48,6 +48,7 @@
 #include "gduformatdiskdialog.h"
 #include "gducreatediskimagedialog.h"
 #include "gdurestorediskimagedialog.h"
+#include "gduchangepassphrasedialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -109,6 +110,7 @@ struct _GduWindow
   GtkWidget *generic_menu_item_drive_separator;
   GtkWidget *generic_menu_item_configure_fstab;
   GtkWidget *generic_menu_item_configure_crypttab;
+  GtkWidget *generic_menu_item_change_passphrase;
   GtkWidget *generic_menu_item_edit_label;
   GtkWidget *generic_menu_item_edit_partition;
   GtkWidget *generic_menu_item_format_volume;
@@ -157,6 +159,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_drive_separator), "generic-menu-item-drive-separator"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_change_passphrase), "generic-menu-item-change-passphrase"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
@@ -197,11 +200,12 @@ typedef enum
   SHOW_FLAGS_POPUP_MENU_FORMAT_DISK           = (1<<23),
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<24),
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB    = (1<<25),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL            = (1<<26),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION        = (1<<27),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME         = (1<<28),
-  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE   = (1<<29),
-  SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<30),
+  SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE     = (1<<26),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL            = (1<<27),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION        = (1<<28),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME         = (1<<29),
+  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE   = (1<<30),
+  SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<31),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -228,6 +232,8 @@ static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
 static void on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
                                                      gpointer   user_data);
+static void on_generic_menu_item_change_passphrase (GtkMenuItem *menu_item,
+                                                    gpointer   user_data);
 static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
                                              gpointer   user_data);
 static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
@@ -381,6 +387,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_change_passphrase),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_label),
                             show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_partition),
@@ -1035,6 +1043,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_configure_crypttab,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_configure_crypttab),
+                    window);
+  g_signal_connect (window->generic_menu_item_change_passphrase,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_change_passphrase),
                     window);
   g_signal_connect (window->generic_menu_item_edit_label,
                     "activate",
@@ -2078,6 +2090,7 @@ update_device_page_for_block (GduWindow          *window,
                   SET_MARKUP_FLAGS_NONE);
 
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE;
     }
 
   s = calculate_configuration_for_display (block, *show_flags);
@@ -2467,6 +2480,19 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
   if (object == NULL)
     object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
   gdu_crypttab_dialog_show (window, object);
+}
+
+static void
+on_generic_menu_item_change_passphrase (GtkMenuItem *menu_item,
+                                        gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  if (object == NULL)
+    object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  gdu_change_passphrase_dialog_show (window, object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

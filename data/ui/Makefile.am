@@ -19,6 +19,7 @@ ui_DATA = 				\
 	format-disk-dialog.ui		\
 	create-disk-image-dialog.ui	\
 	restore-disk-image-dialog.ui	\
+	change-passphrase-dialog.ui	\
 	$(NULL)
 
 clean-local :

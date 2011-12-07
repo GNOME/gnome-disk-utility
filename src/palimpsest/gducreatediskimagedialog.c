@@ -34,6 +34,17 @@
 #include "gducreatefilesystemwidget.h"
 #include "gduestimator.h"
 
+/* TODOs / ideas for Disk Image creation
+ *
+ * - Be tolerant of I/O errors like dd_rescue(1), see http://www.gnu.org/s/ddrescue/ddrescue.html
+ * - Create images useful for Virtualization, e.g. vdi, vmdk, qcow2. Maybe use libguestfs for
+ *   this. See http://libguestfs.org/
+ * - Support a Apple DMG-ish format
+ * - Sliding buffer size
+ * - Update time remaining / speed exactly every 1/10th second instead of when we've read a full buffer
+ *
+ */
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* TODO: make dynamic? */

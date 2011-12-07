@@ -37,6 +37,10 @@ void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_choo
 gchar *gdu_utils_duration_to_string (guint    duration_sec,
                                      gboolean include_second_precision);
 
+GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
+                                      const gchar    *markup,
+                                      GtkWidget     **out_label);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

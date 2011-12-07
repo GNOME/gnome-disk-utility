@@ -476,25 +476,9 @@ gdu_fstab_dialog_show (GduWindow    *window,
   if (is_system_mount)
     {
       GtkWidget *bar;
-      GtkWidget *label;
-      GtkWidget *image;
-      GtkWidget *hbox;
-
-      bar = gtk_info_bar_new ();
-      gtk_info_bar_set_message_type (GTK_INFO_BAR (bar), GTK_MESSAGE_WARNING);
-
-      image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_WARNING, GTK_ICON_SIZE_BUTTON);
-
-      label = gtk_label_new (NULL);
-      gtk_label_set_markup (GTK_LABEL (label),
-                            _("<b>Warning:</b> "
-                              "The system may not work correctly if this entry is modified or removed."));
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-
-      gtk_container_add (GTK_CONTAINER (gtk_info_bar_get_content_area (GTK_INFO_BAR (bar))), hbox);
+      bar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING,
+                                       _("The system may not work correctly if this entry is modified or removed."),
+                                       NULL);
       gtk_box_pack_start (GTK_BOX (data.infobar_hbox), bar, TRUE, TRUE, 0);
     }
 

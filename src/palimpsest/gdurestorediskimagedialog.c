@@ -53,6 +53,8 @@ typedef struct
   GtkWidget *notebook;
   GtkWidget *start_copying_button;
   GtkWidget *source_file_fcbutton;
+
+  GtkWidget *infobar_vbox;
   GtkWidget *warning_infobar;
   GtkWidget *warning_label;
   GtkWidget *error_infobar;
@@ -484,10 +486,13 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
   data->source_file_fcbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "source_file_fcbutton"));
   g_signal_connect (data->source_file_fcbutton, "file-set",
                     G_CALLBACK (on_file_set), data);
-  data->warning_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "warning_infobar"));
-  data->warning_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "warning_label"));
-  data->error_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "error_infobar"));
-  data->error_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "error_label"));
+  data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
+  data->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING, "", &data->warning_label);
+  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->warning_infobar, TRUE, TRUE, 0);
+  gtk_widget_set_no_show_all (data->warning_infobar, TRUE);
+  data->error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR, "", &data->error_label);
+  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->error_infobar, TRUE, TRUE, 0);
+  gtk_widget_set_no_show_all (data->error_infobar, TRUE);
   data->copying_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_label"));
   data->copying_progressbar = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progressbar"));
   data->copying_progress_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "copying_progress_label"));

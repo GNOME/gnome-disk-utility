@@ -28,6 +28,7 @@
 #include "gduwindow.h"
 #include "gducreatepartitiondialog.h"
 #include "gducreatefilesystemwidget.h"
+#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -44,6 +45,7 @@ typedef struct
 
   GtkBuilder *builder;
   GtkWidget *dialog;
+  GtkWidget *infobar_vbox;
   GtkWidget *dos_error_infobar;
   GtkWidget *dos_warning_infobar;
   GtkWidget *size_spinbutton;
@@ -332,8 +334,16 @@ gdu_create_partition_dialog_show (GduWindow    *window,
                                              "create-partition-dialog.ui",
                                              "create-partition-dialog",
                                              &data->builder);
-  data->dos_error_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-dos-error"));;
-  data->dos_warning_infobar = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-dos-warning"));;
+
+  data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));;
+  data->dos_error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,
+                                                       _("Cannot create a new partition. There are already four primary partitions."),
+                                                       NULL);
+  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->dos_error_infobar, TRUE, TRUE, 0);
+  data->dos_warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING,
+                                                         _("This is the last primary partition that can be created."),
+                                                         NULL);
+  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->dos_warning_infobar, TRUE, TRUE, 0);
   data->size_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-spinbutton"));
   data->size_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "size-adjustment"));
   g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), data);

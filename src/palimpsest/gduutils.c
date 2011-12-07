@@ -130,3 +130,65 @@ gdu_utils_duration_to_string (guint    duration_sec,
     }
   return s;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* wouldn't need this if glade would support GtkInfoBar #$@#$@#!!@# */
+
+GtkWidget *
+gdu_utils_create_info_bar (GtkMessageType   message_type,
+                           const gchar     *markup,
+                           GtkWidget      **out_label)
+{
+  GtkWidget *info_bar;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *image;
+  const gchar *stock_id;
+
+  info_bar = gtk_info_bar_new ();
+  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
+                      hbox, TRUE, TRUE, 0);
+
+  switch (message_type)
+    {
+    case GTK_MESSAGE_QUESTION:
+      stock_id = GTK_STOCK_DIALOG_QUESTION;
+      break;
+
+    default:                 /* explicit fall-through */
+    case GTK_MESSAGE_OTHER:  /* explicit fall-through */
+    case GTK_MESSAGE_INFO:
+      stock_id = GTK_STOCK_DIALOG_INFO;
+      break;
+
+    case GTK_MESSAGE_WARNING:
+      stock_id = GTK_STOCK_DIALOG_WARNING;
+      break;
+
+    case GTK_MESSAGE_ERROR:
+      stock_id = GTK_STOCK_DIALOG_ERROR;
+      break;
+    }
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+
+  label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+
+  if (out_label != NULL)
+    *out_label = label;
+
+  gtk_widget_show (hbox);
+  gtk_widget_show (image);
+  gtk_widget_show (label);
+
+  return info_bar;
+}
+

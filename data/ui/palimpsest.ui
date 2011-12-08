@@ -62,60 +62,66 @@
         <property name="icon_name">list-remove-symbolic</property>
       </object>
     </child>
+    <child>
+      <object class="GtkAction" id="devtab-action-generic-drive">
+        <property name="tooltip" translatable="yes">More actions...</property>
+        <property name="icon_name">system-run-symbolic</property>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="generic-drive-menu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="generic-drive-menu-item-format-disk">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">Format Disk...</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="generic-drive-menu-item-create-disk-image">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">Create Disk Image...</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="generic-drive-menu-item-restore-disk-image">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">Restore Disk Image...</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="generic-drive-menu-item-view-smart">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">View SMART Data...</property>
+      </object>
+    </child>
   </object>
   <object class="GtkMenu" id="generic-menu">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkMenuItem" id="generic-menu-item-format-disk">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Format Whole Disk...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-create-disk-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Create Disk Image...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-restore-disk-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Restore Disk Image to Whole Disk...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-view-smart">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">View SMART Data...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="generic-menu-item-drive-separator">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-      </object>
-    </child>
-    <child>
       <object class="GtkMenuItem" id="generic-menu-item-format-volume">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Format Volume...</property>
+        <property name="label" translatable="yes">Format...</property>
         <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem3">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
       </object>
     </child>
     <child>
@@ -123,7 +129,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Edit Partition...</property>
+        <property name="label" translatable="yes">Edit Partition Type...</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -137,24 +143,6 @@
       </object>
     </child>
     <child>
-      <object class="GtkMenuItem" id="generic-menu-item-configure-fstab">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Configure Mount Options...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-configure-crypttab">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Configure Encryption...</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
       <object class="GtkMenuItem" id="generic-menu-item-change-passphrase">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -164,11 +152,43 @@
       </object>
     </child>
     <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem2">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="generic-menu-item-configure-fstab">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">Configure fstab entry...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="generic-menu-item-configure-crypttab">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="label" translatable="yes">Configure crypttab entry...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+      </object>
+    </child>
+    <child>
       <object class="GtkMenuItem" id="generic-menu-item-create-volume-image">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Create Disk Image from Volume...</property>
+        <property name="label" translatable="yes">Create Disk Image...</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -177,7 +197,7 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="use_action_appearance">False</property>
-        <property name="label" translatable="yes">Restore Disk Image to Volume...</property>
+        <property name="label" translatable="yes">Restore Disk Image...</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -538,34 +558,105 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkVBox" id="devtab-drive-vbox">
+                      <object class="GtkHBox" id="devtab-drive-box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkLabel" id="devtab-drive-name-label">
+                          <object class="GtkVBox" id="devtab-drive-vbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="hexpand">True</property>
-                            <property name="xalign">0</property>
-                            <property name="selectable">True</property>
-                            <property name="ellipsize">end</property>
-                            <property name="single_line_mode">True</property>
+                            <child>
+                              <object class="GtkLabel" id="devtab-drive-name-label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="hexpand">True</property>
+                                <property name="xalign">0</property>
+                                <property name="selectable">True</property>
+                                <property name="ellipsize">end</property>
+                                <property name="single_line_mode">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="devtab-drive-devices-label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="hexpand">True</property>
+                                <property name="xalign">0</property>
+                                <property name="selectable">True</property>
+                                <property name="ellipsize">end</property>
+                                <property name="single_line_mode">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
+                            <property name="expand">True</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="devtab-drive-devices-label">
+                          <object class="GtkButtonBox" id="devtab-drive-buttonbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="hexpand">True</property>
-                            <property name="xalign">0</property>
-                            <property name="selectable">True</property>
-                            <property name="ellipsize">end</property>
-                            <property name="single_line_mode">True</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkButton" id="devtab-drive-eject-button">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="related_action">devtab-action-eject</property>
+                                <property name="use_action_appearance">False</property>
+                                <child>
+                                  <object class="GtkImage" id="image1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">Eject media</property>
+                                    <property name="pixel_size">16</property>
+                                    <property name="icon_name">media-eject-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                                <property name="non_homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="devtab-drive-generic-button">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="related_action">devtab-action-generic-drive</property>
+                                <property name="use_action_appearance">False</property>
+                                <child>
+                                  <object class="GtkImage" id="image2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">More actions...</property>
+                                    <property name="pixel_size">16</property>
+                                    <property name="icon_name">system-run-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                                <property name="non_homogeneous">True</property>
+                              </packing>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -639,19 +730,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="icon_size">1</property>
-                                <child>
-                                  <object class="GtkToolButton" id="toolbutton-eject">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="related_action">devtab-action-eject</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="icon_name">media-eject-symbolic</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="homogeneous">True</property>
-                                  </packing>
-                                </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-mount">
                                     <property name="visible">True</property>

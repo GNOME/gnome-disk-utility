@@ -28,6 +28,7 @@
 #include "gduwindow.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdupasswordstrengthwidget.h"
+#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -46,6 +47,7 @@ typedef struct
   GtkBuilder *builder;
   GtkWidget *dialog;
 
+  GtkWidget *infobar_vbox;
   GtkWidget *existing_passphrase_entry;
   GtkWidget *passphrase_entry;
   GtkWidget *confirm_passphrase_entry;
@@ -139,7 +141,8 @@ has_passphrase_in_configuration (ChangePassphraseData *data)
       if (g_strcmp0 (type, "crypttab") == 0)
         {
           const gchar *passphrase_path;
-          if (g_variant_lookup (details, "passphrase-path", "^&ay", &passphrase_path))
+          if (g_variant_lookup (details, "passphrase-path", "^&ay", &passphrase_path) &&
+              strlen (passphrase_path) > 0)
             {
               g_variant_unref (details);
               ret = TRUE;
@@ -324,6 +327,16 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
                                              "change-passphrase-dialog.ui",
                                              "change-passphrase-dialog",
                                              &data->builder);
+
+  data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
+  if (data->has_passphrase_in_configuration)
+    {
+      GtkWidget *infobar;
+      infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
+                                           _("Changing the passphrase for this device, will also update the passphrase referenced by the <i>/etc/crypttab</i> file"),
+                                           NULL);
+      gtk_box_pack_start (GTK_BOX (data->infobar_vbox), infobar, TRUE, TRUE, 0);
+    }
 
   data->existing_passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "existing-passphrase-entry"));
   g_signal_connect (data->existing_passphrase_entry, "notify::text", G_CALLBACK (on_property_changed), data);

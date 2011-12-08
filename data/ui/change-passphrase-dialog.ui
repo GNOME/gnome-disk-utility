@@ -56,6 +56,21 @@
           </packing>
         </child>
         <child>
+          <object class="GtkBox" id="infobar-vbox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkLabel" id="label2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -66,7 +81,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -101,6 +116,7 @@
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_markup" translatable="yes">Enter passphrase used to protect the data</property>
                 <property name="tooltip_text" translatable="yes">Enter passphrase used to protect the data</property>
+                <property name="hexpand">True</property>
                 <property name="visibility">False</property>
                 <property name="invisible_char">●</property>
                 <property name="activates_default">True</property>
@@ -159,6 +175,7 @@
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_markup" translatable="yes">Confirm passphrase entered above</property>
                 <property name="tooltip_text" translatable="yes">Confirm passphrase entered above</property>
+                <property name="hexpand">True</property>
                 <property name="visibility">False</property>
                 <property name="invisible_char">●</property>
                 <property name="activates_default">True</property>
@@ -179,6 +196,7 @@
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_markup" translatable="yes">Enter passphrase used to protect the data</property>
                 <property name="tooltip_text" translatable="yes">Enter passphrase used to protect the data</property>
+                <property name="hexpand">True</property>
                 <property name="visibility">False</property>
                 <property name="invisible_char">●</property>
                 <property name="activates_default">True</property>
@@ -258,7 +276,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>

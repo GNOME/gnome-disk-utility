@@ -20,6 +20,8 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
+#define SPINNER_TIMEOUT_MSEC 80
+
 #include "config.h"
 #include <glib/gi18n.h>
 
@@ -39,6 +41,8 @@ struct _GduDeviceTreeModel
   GList *current_blocks;
   GtkTreeIter block_iter;
   gboolean block_iter_valid;
+
+  guint spinner_timeout;
 };
 
 typedef struct
@@ -60,20 +64,22 @@ static void on_client_changed (UDisksClient  *client,
                                gpointer       user_data);
 
 
-static void update_drive (GduDeviceTreeModel *model,
-                          UDisksObject       *object,
-                          gboolean            from_timer);
+static gboolean update_drive (GduDeviceTreeModel *model,
+                              UDisksObject       *object,
+                              gboolean            from_timer);
 
-static void
-update_block (GduDeviceTreeModel  *model,
-              UDisksObject        *object,
-              gboolean             from_timer);
+static gboolean update_block (GduDeviceTreeModel  *model,
+                              UDisksObject        *object,
+                              gboolean             from_timer);
 
 
 static void
 gdu_device_tree_model_finalize (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
+
+  if (model->spinner_timeout != 0)
+    g_source_remove (model->spinner_timeout);
 
   g_signal_handlers_disconnect_by_func (model->client,
                                         G_CALLBACK (on_client_changed),
@@ -582,51 +588,42 @@ drive_has_jobs (UDisksClient   *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-typedef struct
-{
-  GduDeviceTreeModel *model;
-  UDisksObject       *object;
-} SpinnerTimeoutData;
-
-static SpinnerTimeoutData *
-spinner_timeout_data_new (GduDeviceTreeModel *model,
-                          UDisksObject       *object)
-{
-  SpinnerTimeoutData *data = g_slice_new0 (SpinnerTimeoutData);
-  data->model = g_object_ref (model);
-  data->object = g_object_ref (object);
-  return data;
-}
-
-static void
-spinner_timeout_data_free (SpinnerTimeoutData *data)
-{
-  g_object_unref (data->model);
-  g_object_unref (data->object);
-  g_slice_free (SpinnerTimeoutData, data);
-}
-
 static gboolean
-spinner_timeout_drive (gpointer user_data)
+on_spinner_timeout (gpointer user_data)
 {
-  SpinnerTimeoutData *data = user_data;
-  update_drive (data->model, data->object, TRUE);
-  spinner_timeout_data_free (data);
-  return FALSE; /* remove the timeout source */
-}
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
+  GList *l;
+  gboolean keep_animating = FALSE;
 
-static gboolean
-spinner_timeout_block (gpointer user_data)
-{
-  SpinnerTimeoutData *data = user_data;
-  update_block (data->model, data->object, TRUE);
-  spinner_timeout_data_free (data);
-  return FALSE; /* remove the timeout source */
+  for (l = model->current_drives; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (update_drive (model, object, TRUE))
+        keep_animating = TRUE;
+    }
+
+  for (l = model->current_blocks; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (update_block (model, object, TRUE))
+        keep_animating = TRUE;
+    }
+
+
+  if (keep_animating)
+    {
+      return TRUE; /* keep source */
+    }
+  else
+    {
+      model->spinner_timeout = 0;
+      return FALSE; /* nuke source */
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
+static gboolean
 update_drive (GduDeviceTreeModel *model,
               UDisksObject       *object,
               gboolean            from_timer)
@@ -707,7 +704,12 @@ update_drive (GduDeviceTreeModel *model,
 
   /* update spinner, if jobs are running */
   if (jobs_running)
-    g_timeout_add (80, spinner_timeout_drive, spinner_timeout_data_new (model, object));
+    {
+      if (model->spinner_timeout == 0)
+        {
+          model->spinner_timeout = g_timeout_add (SPINNER_TIMEOUT_MSEC, on_spinner_timeout, model);
+        }
+    }
 
  out:
   if (media_icon != NULL)
@@ -719,6 +721,7 @@ update_drive (GduDeviceTreeModel *model,
   g_free (media_description);
   g_free (description);
   g_free (name);
+  return jobs_running;
 }
 
 static void
@@ -861,7 +864,7 @@ remove_block (GduDeviceTreeModel  *model,
   ;
 }
 
-static void
+static gboolean
 update_block (GduDeviceTreeModel  *model,
               UDisksObject        *object,
               gboolean             from_timer)
@@ -958,13 +961,19 @@ update_block (GduDeviceTreeModel  *model,
 
   /* update spinner, if jobs are running */
   if (jobs_running)
-    g_timeout_add (80, spinner_timeout_block, spinner_timeout_data_new (model, object));
+    {
+      if (model->spinner_timeout == 0)
+        {
+          model->spinner_timeout = g_timeout_add (SPINNER_TIMEOUT_MSEC, on_spinner_timeout, model);
+        }
+    }
 
  out:
   g_object_unref (icon);
   g_free (sort_key);
   g_free (s);
   g_free (size_str);
+  return jobs_running;
 }
 
 static gboolean

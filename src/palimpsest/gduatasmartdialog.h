@@ -31,9 +31,8 @@ G_BEGIN_DECLS
 void   gdu_ata_smart_dialog_show (GduWindow    *window,
                                   UDisksObject *object);
 
-gchar *gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
-                                             gboolean        include_temperature,
-                                             gboolean       *out_smart_is_supported);
+gchar *gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
+                                               gboolean       *out_smart_is_supported);
 
 G_END_DECLS
 

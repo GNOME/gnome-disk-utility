@@ -965,7 +965,7 @@ calculate_self_test (DialogData *data,
     ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (handling)"));
   else if (g_strcmp0 (s, "inprogress") == 0)
     {
-      ret = g_strdup_printf (C_("smart-self-test-result", "A self-test is in progress (%d%% remaining)"),
+      ret = g_strdup_printf (C_("smart-self-test-result", "Self-test in progress — %d%% remaining"),
                              udisks_drive_ata_get_smart_selftest_percent_remaining (data->ata));
       selftest_running = TRUE;
     }
@@ -1032,9 +1032,9 @@ format_powered_on (UDisksDriveAta *ata)
   return ret;
 }
 
-gchar *
+static gchar *
 gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
-                                      gboolean        include_temperature,
+                                      gboolean        one_liner,
                                       gboolean       *out_smart_is_supported)
 {
   gchar *ret;
@@ -1042,17 +1042,16 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   gint num_failed_in_the_past;
   gint num_bad_sectors;
   gboolean smart_is_supported = FALSE;
+  gchar *selftest = NULL;
 
   if (!udisks_drive_ata_get_smart_supported (ata))
     {
-      /* Translators: XXX */
       ret = g_strdup (_("SMART is not supported"));
       goto out_no_smart;
     }
 
   if (!udisks_drive_ata_get_smart_enabled (ata))
     {
-      /* Translators: XXX */
       ret = g_strdup (_("SMART is not enabled"));
       goto out_no_smart;
     }
@@ -1063,19 +1062,43 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   num_failed_in_the_past = udisks_drive_ata_get_smart_num_attributes_failed_in_the_past (ata);
   num_bad_sectors = udisks_drive_ata_get_smart_num_bad_sectors (ata);
 
-  /* If self-assessment indicates failure, just return that */
+  if (g_strcmp0 (udisks_drive_ata_get_smart_selftest_status (ata), "inprogress") == 0)
+    {
+      selftest = g_strdup_printf (_("Self-test in progress — %d%% remaining"),
+                                  udisks_drive_ata_get_smart_selftest_percent_remaining (ata));
+    }
+
+  /* If self-assessment indicates failure, always return that */
   if (udisks_drive_ata_get_smart_failing (ata))
     {
-      ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
-                             /* Translators: XXX */
-                             _("DISK IS LIKELY TO FAIL SOON"));
+      /* if doing a one-liner also include if a self-test is running */
+      if (one_liner && selftest != NULL)
+        {
+          ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span> — %s",
+                                 _("DISK IS LIKELY TO FAIL SOON"),
+                                 selftest);
+        }
+      else
+        {
+          ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
+                                 _("DISK IS LIKELY TO FAIL SOON"));
+        }
+      goto out;
+    }
+
+  /* Ok, self-assessment is good.. so if doing a self-test, prefer that to attrs / bad sectors
+   * on the one-liner
+   */
+  if (one_liner && selftest != NULL)
+    {
+      ret = selftest;
+      selftest = NULL;
       goto out;
     }
 
   /* Otherwise, if an attribute is failing, return that */
   if (num_failing > 0)
     {
-      /* Translators: XXX */
       ret = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
                                         "Disk is OK, one failing attribute is failing",
                                         "Disk is OK, %d attributes are failing",
@@ -1087,7 +1110,6 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   /* Otherwise, if bad sectors have been detected, return that */
   if (num_bad_sectors > 0)
     {
-      /* Translators: XXX */
       ret = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
                                         "Disk is OK, one bad sector",
                                         "Disk is OK, %d bad sectors",
@@ -1099,7 +1121,6 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   /* Otherwise, if an attribute has failed in the past return that */
   if (num_failed_in_the_past > 0)
     {
-      /* Translators: XXX */
       ret = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
                                         "Disk is OK, one attribute failed in the past",
                                         "Disk is OK, %d attributes failed in the past",
@@ -1110,12 +1131,11 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
 
   /* Otherwise, it's all honky dory */
 
-  /* Translators: XXX */
   ret = g_strdup ("Disk is OK");
 
  out:
 
-  if (include_temperature)
+  if (one_liner)
     {
       gchar *s, *s1;
       s = format_temp (ata);
@@ -1132,9 +1152,17 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
     }
 
  out_no_smart:
+  g_free (selftest);
   if (out_smart_is_supported != NULL)
     *out_smart_is_supported = smart_is_supported;
   return ret;
+}
+
+gchar *
+gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
+                                        gboolean       *out_smart_is_supported)
+{
+  return gdu_ata_smart_get_overall_assessment (ata, TRUE, out_smart_is_supported);
 }
 
 static void

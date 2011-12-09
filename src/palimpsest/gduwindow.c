@@ -1451,34 +1451,15 @@ setup_device_page (GduWindow     *window,
   if (drive != NULL)
     {
       GList *blocks;
-      gchar *drive_name;
-      gchar *drive_desc;
-      GIcon *drive_icon;
-      gchar *drive_media_desc;
-      GIcon *drive_media_icon;
 
       /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
       blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
 
-      udisks_client_get_drive_info (window->client,
-                                    drive,
-                                    &drive_name,
-                                    &drive_desc,
-                                    &drive_icon,
-                                    &drive_media_desc,
-                                    &drive_media_icon);
       if (blocks != NULL)
         gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), blocks->data);
       else
         gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), NULL);
-
-      g_free (drive_name);
-      g_free (drive_desc);
-      g_object_unref (drive_icon);
-      g_free (drive_media_desc);
-      if (drive_media_icon != NULL)
-        g_object_unref (drive_media_icon);
 
       g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
       g_list_free (blocks);
@@ -1633,7 +1614,7 @@ update_device_page_for_drive (GduWindow      *window,
     }
 
 
-  if (udisks_drive_get_media_removable (drive))
+  if (udisks_drive_get_ejectable (drive))
     {
       *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
     }
@@ -2013,7 +1994,7 @@ update_device_page_for_block (GduWindow          *window,
         {
           UDisksDrive *drive;
           drive = udisks_object_peek_drive (drive_object);
-          if (udisks_drive_get_media_removable (drive))
+          if (udisks_drive_get_ejectable (drive))
             *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
           g_object_unref (drive_object);
         }

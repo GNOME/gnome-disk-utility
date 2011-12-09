@@ -2030,25 +2030,27 @@ update_device_page_for_block (GduWindow          *window,
           /* TODO: right now we only display the first mount point */
           if (g_strcmp0 (mount_points[0], "/") == 0)
             {
-              /* Translators: This is shown for a device mounted at the filesystem root / - we show
-               * this text instead of '/', because '/' is too small to hit as a hyperlink
+              /* Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
                */
-              mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Root Filesystem (/)"));
+              s = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Filesystem Root"));
             }
           else
             {
-              mount_point = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
-                                             mount_points[0], mount_points[0]);
+              s = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+                                   mount_points[0], mount_points[0]);
             }
+          /* Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar */
+          mount_point = g_strdup_printf (_("Yes, mounted at %s"), s);
+          g_free (s);
         }
       else
         {
-          /* Translators: Shown when the device is not mounted next to the "Mounted" label */
+          /* Translators: Shown when the device is not mounted next to the "In Use" label */
           mount_point = g_strdup (_("No"));
         }
       set_markup (window,
-                  "devtab-volume-filesystem-mounted-label",
-                  "devtab-volume-filesystem-mounted-value-label",
+                  "devtab-volume-in-use-label",
+                  "devtab-volume-in-use-value-label",
                   mount_point,
                   SET_MARKUP_FLAGS_NONE);
       g_free (mount_point);
@@ -2073,18 +2075,18 @@ update_device_page_for_block (GduWindow          *window,
           if (udisks_swapspace_get_active (swapspace))
             {
               *show_flags |= SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON;
-              /* Translators: Shown if the swap device is in use next to the "Active" label */
+              /* Translators: Shown if the swap device is in use next to the "In Use" label */
               str = _("Yes");
             }
           else
             {
               *show_flags |= SHOW_FLAGS_ACTIVATE_SWAP_BUTTON;
-              /* Translators: Shown if the swap device is not in use next to the "Active" label */
+              /* Translators: Shown if the swap device is not in use next to the "In Use" label */
               str = _("No");
             }
           set_markup (window,
-                      "devtab-volume-swap-active-label",
-                      "devtab-volume-swap-active-value-label",
+                      "devtab-volume-in-use-label",
+                      "devtab-volume-in-use-value-label",
                       str,
                       SET_MARKUP_FLAGS_NONE);
         }
@@ -2099,18 +2101,18 @@ update_device_page_for_block (GduWindow          *window,
       if (cleartext_device != NULL)
         {
           *show_flags |= SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON;
-          /* Translators: Shown if the encrypted device is unlocked next to the "Unlocked" label */
+          /* Translators: Shown if the encrypted device is unlocked next to the "In Use" label */
           str = _("Yes");
         }
       else
         {
           *show_flags |= SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON;
-          /* Translators: Shown if the encrypted device is not unlocked next to the "Unlocked" label */
+          /* Translators: Shown if the encrypted device is not unlocked next to the "In Use" label */
           str = _("No");
         }
       set_markup (window,
-                  "devtab-volume-encrypted-unlocked-label",
-                  "devtab-volume-encrypted-unlocked-value-label",
+                  "devtab-volume-in-use-label",
+                  "devtab-volume-in-use-value-label",
                   str,
                   SET_MARKUP_FLAGS_NONE);
 

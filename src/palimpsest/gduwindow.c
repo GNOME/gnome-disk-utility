@@ -860,7 +860,7 @@ gdu_window_constructed (GObject *object)
     }
 
   gtk_widget_reparent (window->main_hpane, GTK_WIDGET (window));
-  gtk_window_set_title (GTK_WINDOW (window), _("Disk Utility"));
+  gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 

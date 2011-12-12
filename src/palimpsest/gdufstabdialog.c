@@ -95,8 +95,8 @@ update (FstabDialogData *data,
   g_object_freeze_notify (G_OBJECT (data->options_entry));
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
   gdu_options_update_check_option (data->options_entry, "users", widget, data->users_checkbutton);
-  gdu_options_update_entry_option (data->options_entry, "comment=gvfs.name=", widget, data->name_entry);
-  gdu_options_update_entry_option (data->options_entry, "comment=gvfs.icon_name=", widget, data->icon_entry);
+  gdu_options_update_entry_option (data->options_entry, "comment=gvfs-name=", widget, data->name_entry);
+  gdu_options_update_entry_option (data->options_entry, "comment=gvfs-icon=", widget, data->icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_apply = FALSE;

@@ -76,7 +76,7 @@
             <property name="spacing">12</property>
             <child>
               <object class="GtkCheckButton" id="fstab-configure-checkbutton">
-                <property name="label" translatable="yes">Config_ure mount point and options</property>
+                <property name="label" translatable="yes">Con_figure mount point and options</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -194,63 +194,6 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="fstab-options-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">_Options</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">fstab-options-entry</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">4</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="fstab-freq-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">_Frequency</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">fstab-freq-spinbutton</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">5</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="fstab-passno-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Pass _Number</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">fstab-passno-spinbutton</property>
-                        <attributes>
-                          <attribute name="foreground" value="#555555555555"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">6</property>
-                        <property name="width">1</property>
-                        <property name="height">1</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkEntry" id="fstab-directory-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -302,16 +245,35 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="fstab-freq-spinbutton">
+                      <object class="GtkLabel" id="fstab-options-label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xalign">1</property>
+                        <property name="label" translatable="yes">_Options</property>
+                        <property name="use_underline">True</property>
+                        <property name="mnemonic_widget">fstab-options-entry</property>
+                        <attributes>
+                          <attribute name="foreground" value="#555555555555"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">4</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="fstab-noauto-checkbutton">
+                        <property name="label" translatable="yes">Don't mount at startu_p</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="tooltip_markup" translatable="yes">This field is used for these filesystems by the &lt;b&gt;dump(8)&lt;/b&gt; command to determine which filesystems need to be dumped.</property>
-                        <property name="tooltip_text" translatable="yes">This field is used for these filesystems by the dump(8) command to determine which filesystems need to be dumped.</property>
-                        <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
-                        <property name="adjustment">fstab-freq-adjustment</property>
-                        <property name="numeric">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">If checked, the device will not be mounted at startup [noauto]</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -321,16 +283,16 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="fstab-passno-spinbutton">
+                      <object class="GtkCheckButton" id="fstab-users-checkbutton">
+                        <property name="label" translatable="yes">Allow any _user to mount and unmount</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="tooltip_markup" translatable="yes">This field is used by the &lt;b&gt;fsck(8)&lt;/b&gt; program to determine the order in which filesystem checks are done at reboot time.</property>
-                        <property name="tooltip_text" translatable="yes">This field is used by the fsck(8) program to determine the order in which filesystem checks are done at reboot time.</property>
-                        <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
-                        <property name="adjustment">fstab-passno-adjustment</property>
-                        <property name="numeric">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">If checked, any user may mount and unmount the device [users]</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="xalign">0</property>
+                        <property name="draw_indicator">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -338,6 +300,116 @@
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <object class="GtkGrid" id="grid1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="row_spacing">10</property>
+                        <property name="column_spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="label1">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Display _Name</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">fstab-name-entry</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="fstab-name-entry">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_text" translatable="yes">If set, the name to use for the device in the user interface [comment=gvfs.name]</property>
+                            <property name="hexpand">True</property>
+                            <property name="invisible_char">●</property>
+                            <property name="invisible_char_set">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">Icon Na_me</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">fstab-icon-entry</property>
+                            <attributes>
+                              <attribute name="foreground" value="#555555555555"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">1</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="fstab-icon-entry">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_text" translatable="yes">If set, the name of the icon to use in the device in the user interface [comment=gvfs.icon_name]</property>
+                            <property name="hexpand">True</property>
+                            <property name="invisible_char">●</property>
+                            <property name="invisible_char_set">True</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">1</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">7</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                     <child>
                       <placeholder/>

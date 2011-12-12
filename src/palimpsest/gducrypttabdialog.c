@@ -50,6 +50,7 @@ typedef struct
 
   GtkWidget *name_entry;
   GtkWidget *options_entry;
+  GtkWidget *noauto_checkbutton;
   GtkWidget *passphrase_label;
   GtkWidget *passphrase_entry;
   GtkWidget *show_passphrase_checkbutton;
@@ -76,7 +77,8 @@ crypttab_dialog_free (CrypttabDialogData *data)
 }
 
 static void
-crypttab_dialog_update (CrypttabDialogData *data)
+update (CrypttabDialogData *data,
+        GtkWidget          *widget)
 {
   gboolean ui_configured;
   const gchar *ui_name;
@@ -151,6 +153,10 @@ crypttab_dialog_update (CrypttabDialogData *data)
   gtk_label_set_markup (GTK_LABEL (data->passphrase_path_value_label), s);
   g_free (s);
 
+  g_object_freeze_notify (G_OBJECT (data->options_entry));
+  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
+  g_object_thaw_notify (G_OBJECT (data->options_entry));
+
   can_apply = FALSE;
   if (configured != ui_configured)
     {
@@ -172,12 +178,12 @@ crypttab_dialog_update (CrypttabDialogData *data)
 }
 
 static void
-crypttab_dialog_property_changed (GObject     *object,
-                                  GParamSpec  *pspec,
-                                  gpointer     user_data)
+on_property_changed (GObject     *object,
+                     GParamSpec  *pspec,
+                     gpointer     user_data)
 {
   CrypttabDialogData *data = user_data;
-  crypttab_dialog_update (data);
+  update (data, GTK_WIDGET (object));
 }
 
 
@@ -226,17 +232,19 @@ crypttab_dialog_present (CrypttabDialogData *data)
                           G_BINDING_SYNC_CREATE);
 
   g_signal_connect (data->configure_checkbutton,
-                    "notify::active", G_CALLBACK (crypttab_dialog_property_changed), data);
+                    "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->name_entry,
-                    "notify::text", G_CALLBACK (crypttab_dialog_property_changed), data);
+                    "notify::text", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->options_entry,
-                    "notify::text", G_CALLBACK (crypttab_dialog_property_changed), data);
+                    "notify::text", G_CALLBACK (on_property_changed), data);
+  g_signal_connect (data->noauto_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->passphrase_entry,
-                    "notify::text", G_CALLBACK (crypttab_dialog_property_changed), data);
+                    "notify::text", G_CALLBACK (on_property_changed), data);
 
   gtk_widget_show_all (data->dialog);
 
-  crypttab_dialog_update (data);
+  update (data, NULL);
 
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
@@ -471,6 +479,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
   data->grid = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-grid"));
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-name-entry"));
   data->options_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-options-entry"));
+  data->noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-noauto-checkbutton"));
   data->passphrase_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-label"));
   data->passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-entry"));
   data->show_passphrase_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-show-passphrase-checkbutton"));

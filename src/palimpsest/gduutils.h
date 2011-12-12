@@ -43,6 +43,16 @@ GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
 
 gchar *gdu_utils_unfuse_path (const gchar *path);
 
+void gdu_options_update_check_option (GtkWidget       *options_entry,
+                                      const gchar     *option,
+                                      GtkWidget       *widget,
+                                      GtkWidget       *check_button);
+
+void gdu_options_update_entry_option (GtkWidget       *options_entry,
+                                      const gchar     *option,
+                                      GtkWidget       *widget,
+                                      GtkWidget       *entry);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

@@ -216,3 +216,155 @@ gdu_utils_unfuse_path (const gchar *path)
 
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+has_option (GtkWidget       *options_entry,
+            const gchar     *option,
+            gboolean         check_prefix,
+            gchar          **out_value)
+{
+  guint n;
+  gboolean ret = FALSE;
+  gchar **options;
+
+  options = g_strsplit (gtk_entry_get_text (GTK_ENTRY (options_entry)), ",", 0);
+  for (n = 0; options != NULL && options[n] != NULL; n++)
+    {
+      if (check_prefix)
+        {
+          if (g_str_has_prefix (options[n], option))
+            {
+              if (out_value != NULL)
+                *out_value = g_strdup (options[n] + strlen (option));
+              ret = TRUE;
+              goto out;
+            }
+        }
+      else
+        {
+          if (g_strcmp0 (options[n], option) == 0)
+            {
+              ret = TRUE;
+              goto out;
+            }
+        }
+    }
+ out:
+  g_strfreev (options);
+  return ret;
+}
+
+static void
+add_option (GtkWidget       *options_entry,
+            const gchar     *prefix,
+            const gchar     *option)
+{
+  gchar *s;
+  const gchar *text;
+  text = gtk_entry_get_text (GTK_ENTRY (options_entry));
+  s = g_strdup_printf ("%s%s%s%s",
+                       text,
+                       strlen (text) > 0 ? "," : "",
+                       prefix,
+                       option);
+  gtk_entry_set_text (GTK_ENTRY (options_entry), s);
+  g_free (s);
+}
+
+static void
+remove_option (GtkWidget       *options_entry,
+               const gchar     *option,
+               gboolean         check_prefix)
+{
+  GString *str;
+  guint n;
+  gchar **options;
+
+  str = g_string_new (NULL);
+  options = g_strsplit (gtk_entry_get_text (GTK_ENTRY (options_entry)), ",", 0);
+  for (n = 0; options != NULL && options[n] != NULL; n++)
+    {
+      if (check_prefix)
+        {
+          if (g_str_has_prefix (options[n], option))
+            continue;
+        }
+      else
+        {
+          if (g_strcmp0 (options[n], option) == 0)
+            continue;
+        }
+      if (str->len > 0)
+        g_string_append_c (str, ',');
+      g_string_append (str, options[n]);
+    }
+  gtk_entry_set_text (GTK_ENTRY (options_entry), str->str);
+  g_string_free (str, TRUE);
+}
+
+void
+gdu_options_update_check_option (GtkWidget       *options_entry,
+                                 const gchar     *option,
+                                 GtkWidget       *widget,
+                                 GtkWidget       *check_button)
+{
+  gboolean opts, ui;
+  opts = !! has_option (options_entry, option, FALSE, NULL);
+  ui = !! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
+  if (opts != ui)
+    {
+      if (widget == check_button)
+        {
+          if (ui)
+            add_option (options_entry, "", option);
+          else
+            remove_option (options_entry, option, FALSE);
+        }
+      else
+        {
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), opts);
+        }
+    }
+}
+
+void
+gdu_options_update_entry_option (GtkWidget       *options_entry,
+                                 const gchar     *option,
+                                 GtkWidget       *widget,
+                                 GtkWidget       *entry)
+{
+  gchar *opts = NULL;
+  const gchar *ui;
+  gchar *ui_escaped;
+  has_option (options_entry, option, TRUE, &opts);
+  if (opts == NULL)
+    opts = g_strdup ("");
+  ui = gtk_entry_get_text (GTK_ENTRY (entry));
+  ui_escaped = g_uri_escape_string (ui, NULL, TRUE);
+  // g_print ("opts=`%s', ui=`%s', widget=%p, entry=%p\n", opts, ui, widget, entry);
+  if (g_strcmp0 (opts, ui_escaped) != 0)
+    {
+      if (widget == entry)
+        {
+          if (strlen (ui_escaped) > 0)
+            {
+              remove_option (options_entry, option, TRUE);
+              add_option (options_entry, option, ui_escaped);
+            }
+          else
+            {
+              remove_option (options_entry, option, TRUE);
+            }
+        }
+      else
+        {
+          gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
+          gtk_entry_set_text (GTK_ENTRY (entry), opts_unescaped);
+          g_free (opts_unescaped);
+        }
+    }
+  g_free (ui_escaped);
+  g_free (opts);
+}

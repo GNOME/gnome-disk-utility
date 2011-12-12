@@ -77,7 +77,7 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="crypttab-configure-checkbutton">
-                <property name="label" translatable="yes">Config_ure passphrase and options</property>
+                <property name="label" translatable="yes">Con_figure passphrase and options</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -182,38 +182,34 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="crypttab-passphrase-label">
+                      <object class="GtkLabel" id="crypttab-passphrase-path-label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">1</property>
-                        <property name="label" translatable="yes">_Passphrase</property>
+                        <property name="label" translatable="yes">Passphrase File</property>
                         <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">crypttab-passphrase-entry</property>
                         <attributes>
                           <attribute name="foreground" value="#555555555555"/>
                         </attributes>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">2</property>
+                        <property name="top_attach">5</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEntry" id="crypttab-passphrase-entry">
+                      <object class="GtkLabel" id="crypttab-passphrase-path-value-label">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="tooltip_markup" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
-                        <property name="tooltip_text" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
-                        <property name="hexpand">True</property>
-                        <property name="invisible_char">●</property>
-                        <property name="invisible_char_set">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xalign">0</property>
+                        <property name="selectable">True</property>
+                        <property name="ellipsize">middle</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">2</property>
+                        <property name="top_attach">5</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
@@ -231,17 +227,35 @@
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
+                        <property name="width">1</property>
+                        <property name="height">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="crypttab-passphrase-entry">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_markup" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
+                        <property name="tooltip_text" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
+                        <property name="hexpand">True</property>
+                        <property name="invisible_char">●</property>
+                        <property name="invisible_char_set">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
                         <property name="top_attach">3</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="crypttab-passphrase-path-label">
+                      <object class="GtkLabel" id="crypttab-passphrase-label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">1</property>
-                        <property name="label" translatable="yes">Passphrase File</property>
+                        <property name="label" translatable="yes">_Passphrase</property>
                         <property name="use_underline">True</property>
                         <attributes>
                           <attribute name="foreground" value="#555555555555"/>
@@ -249,28 +263,29 @@
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
-                        <property name="top_attach">4</property>
+                        <property name="top_attach">3</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="crypttab-passphrase-path-value-label">
+                      <object class="GtkCheckButton" id="crypttab-noauto-checkbutton">
+                        <property name="label" translatable="yes">Don't unlock at _startup</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="tooltip_text" translatable="yes">If checked, the device will not be unlocked at startup [noauto]</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
-                        <property name="selectable">True</property>
-                        <property name="ellipsize">middle</property>
+                        <property name="draw_indicator">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">4</property>
+                        <property name="top_attach">2</property>
                         <property name="width">1</property>
                         <property name="height">1</property>
                       </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
                     </child>
                     <child>
                       <placeholder/>

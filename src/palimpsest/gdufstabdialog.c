@@ -43,30 +43,30 @@ typedef struct
   GtkWidget *device_explanation_label;
   GtkWidget *directory_entry;
   GtkWidget *type_entry;
+
   GtkWidget *options_entry;
-  GtkWidget *freq_spinbutton;
-  GtkWidget *passno_spinbutton;
+  GtkWidget *noauto_checkbutton;
+  GtkWidget *users_checkbutton;
+  GtkWidget *name_entry;
+  GtkWidget *icon_entry;
 
   GVariant *orig_fstab_entry;
 } FstabDialogData;
 
 static void
-fstab_dialog_update (FstabDialogData *data)
+update (FstabDialogData *data,
+        GtkWidget       *widget)
 {
   gboolean ui_configured;
   gchar *ui_fsname;
   const gchar *ui_dir;
   const gchar *ui_type;
   const gchar *ui_opts;
-  gint ui_freq;
-  gint ui_passno;
   gboolean configured;
   const gchar *fsname;
   const gchar *dir;
   const gchar *type;
   const gchar *opts;
-  gint freq;
-  gint passno;
   gboolean can_apply;
 
   if (data->orig_fstab_entry != NULL)
@@ -76,8 +76,6 @@ fstab_dialog_update (FstabDialogData *data)
       g_variant_lookup (data->orig_fstab_entry, "dir", "^&ay", &dir);
       g_variant_lookup (data->orig_fstab_entry, "type", "^&ay", &type);
       g_variant_lookup (data->orig_fstab_entry, "opts", "^&ay", &opts);
-      g_variant_lookup (data->orig_fstab_entry, "freq", "i", &freq);
-      g_variant_lookup (data->orig_fstab_entry, "passno", "i", &passno);
     }
   else
     {
@@ -86,8 +84,6 @@ fstab_dialog_update (FstabDialogData *data)
       dir = "";
       type = "";
       opts = "";
-      freq = 0;
-      passno = 0;
     }
 
   ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->configure_checkbutton));
@@ -95,8 +91,13 @@ fstab_dialog_update (FstabDialogData *data)
   ui_dir = gtk_entry_get_text (GTK_ENTRY (data->directory_entry));
   ui_type = gtk_entry_get_text (GTK_ENTRY (data->type_entry));
   ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
-  ui_freq = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data->freq_spinbutton));
-  ui_passno = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data->passno_spinbutton));
+
+  g_object_freeze_notify (G_OBJECT (data->options_entry));
+  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
+  gdu_options_update_check_option (data->options_entry, "users", widget, data->users_checkbutton);
+  gdu_options_update_entry_option (data->options_entry, "comment=gvfs.name=", widget, data->name_entry);
+  gdu_options_update_entry_option (data->options_entry, "comment=gvfs.icon_name=", widget, data->icon_entry);
+  g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_apply = FALSE;
   if (configured != ui_configured)
@@ -108,9 +109,7 @@ fstab_dialog_update (FstabDialogData *data)
       if (g_strcmp0 (ui_fsname, fsname) != 0 ||
           g_strcmp0 (ui_dir, dir) != 0 ||
           g_strcmp0 (ui_type, type) != 0 ||
-          g_strcmp0 (ui_opts, opts) != 0 ||
-          freq != ui_freq ||
-          passno != ui_passno)
+          g_strcmp0 (ui_opts, opts) != 0)
         {
           can_apply = TRUE;
         }
@@ -126,16 +125,16 @@ fstab_dialog_update (FstabDialogData *data)
 }
 
 static void
-fstab_dialog_property_changed (GObject     *object,
-                               GParamSpec  *pspec,
-                               gpointer     user_data)
+on_property_changed (GObject     *object,
+                     GParamSpec  *pspec,
+                     gpointer     user_data)
 {
   FstabDialogData *data = user_data;
-  fstab_dialog_update (data);
+  update (data, GTK_WIDGET (object));
 }
 
 static void
-fstab_update_device_explanation (FstabDialogData *data)
+update_device_explanation (FstabDialogData *data)
 {
   const gchar *s;
   gchar *fsname;
@@ -207,7 +206,7 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
   g_free (proposed_mount_point);
   g_free (fsname);
 
-  fstab_update_device_explanation (data);
+  update_device_explanation (data);
 }
 
 static void
@@ -400,8 +399,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));
   data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
   data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
-  data.freq_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-freq-spinbutton"));
-  data.passno_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-passno-spinbutton"));
+  data.noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-noauto-checkbutton"));
+  data.users_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-users-checkbutton"));
+  data.name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-name-entry"));
+  data.icon_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-icon-entry"));
 
   /* there could be multiple fstab entries - we only consider the first one */
   g_variant_iter_init (&iter, udisks_block_get_configuration (block));
@@ -450,27 +451,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
   gtk_entry_set_text (GTK_ENTRY (data.directory_entry), dir);
   gtk_entry_set_text (GTK_ENTRY (data.type_entry), type);
   gtk_entry_set_text (GTK_ENTRY (data.options_entry), opts);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (data.freq_spinbutton), freq);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (data.passno_spinbutton), passno);
   if (!configured)
     fstab_on_device_combobox_changed (GTK_COMBO_BOX (data.device_combobox), &data);
-
-  g_signal_connect (data.configure_checkbutton,
-                    "notify::active", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.device_combobox,
-                    "notify::active", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.directory_entry,
-                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.type_entry,
-                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.options_entry,
-                    "notify::text", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.freq_spinbutton,
-                    "notify::value", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.passno_spinbutton,
-                    "notify::value", G_CALLBACK (fstab_dialog_property_changed), &data);
-  g_signal_connect (data.device_combobox,
-                    "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
 
   /* Show a cluebar if the entry is considered a system mount */
   if (is_system_mount)
@@ -484,8 +466,29 @@ gdu_fstab_dialog_show (GduWindow    *window,
 
   gtk_widget_show_all (dialog);
 
-  fstab_update_device_explanation (&data);
-  fstab_dialog_update (&data);
+  update_device_explanation (&data);
+  update (&data, NULL);
+
+  g_signal_connect (data.configure_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.device_combobox,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.directory_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.type_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.options_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.device_combobox,
+                    "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
+  g_signal_connect (data.noauto_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.users_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.name_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.icon_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   if (response == GTK_RESPONSE_APPLY)
@@ -495,8 +498,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
       const gchar *ui_dir;
       const gchar *ui_type;
       const gchar *ui_opts;
-      gint ui_freq;
-      gint ui_passno;
+      gint freq = 0;
+      gint passno = 0;
       GError *error;
       GVariant *old_item;
       GVariant *new_item;
@@ -506,8 +509,11 @@ gdu_fstab_dialog_show (GduWindow    *window,
       ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
       ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
       ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
-      ui_freq = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data.freq_spinbutton));
-      ui_passno = gtk_spin_button_get_value (GTK_SPIN_BUTTON (data.passno_spinbutton));
+      if (data.orig_fstab_entry != NULL)
+        {
+          g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
+          g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
+        }
 
       gtk_widget_hide (dialog);
 
@@ -527,8 +533,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
           g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
           g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
           g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
-          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (ui_freq));
-          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (ui_passno));
+          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
+          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
           new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
         }
 

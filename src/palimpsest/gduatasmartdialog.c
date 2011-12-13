@@ -937,14 +937,14 @@ update_attr (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
-calculate_self_test (DialogData *data,
-                     gboolean   *out_selftest_running)
+calculate_self_test (UDisksDriveAta *ata,
+                     gboolean       *out_selftest_running)
 {
   const gchar *s;
   gchar *ret;
   gboolean selftest_running = FALSE;
 
-  s = udisks_drive_ata_get_smart_selftest_status (data->ata);
+  s = udisks_drive_ata_get_smart_selftest_status (ata);
   if (g_strcmp0 (s, "success") == 0)
     ret = g_strdup (C_("smart-self-test-result", "Last self-test completed successfully"));
   else if (g_strcmp0 (s, "aborted") == 0)
@@ -966,7 +966,7 @@ calculate_self_test (DialogData *data,
   else if (g_strcmp0 (s, "inprogress") == 0)
     {
       ret = g_strdup_printf (C_("smart-self-test-result", "Self-test in progress — %d%% remaining"),
-                             udisks_drive_ata_get_smart_selftest_percent_remaining (data->ata));
+                             udisks_drive_ata_get_smart_selftest_percent_remaining (ata));
       selftest_running = TRUE;
     }
   else
@@ -1035,13 +1035,15 @@ format_powered_on (UDisksDriveAta *ata)
 static gchar *
 gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
                                       gboolean        one_liner,
-                                      gboolean       *out_smart_is_supported)
+                                      gboolean       *out_smart_is_supported,
+                                      gboolean       *out_warn)
 {
   gchar *ret;
   gint num_failing;
   gint num_failed_in_the_past;
   gint num_bad_sectors;
   gboolean smart_is_supported = FALSE;
+  gboolean warn = FALSE;
   gchar *selftest = NULL;
 
   if (!udisks_drive_ata_get_smart_supported (ata))
@@ -1083,6 +1085,7 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
           ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
                                  _("DISK IS LIKELY TO FAIL SOON"));
         }
+      warn = TRUE;
       goto out;
     }
 
@@ -1093,6 +1096,15 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
     {
       ret = selftest;
       selftest = NULL;
+      goto out;
+    }
+
+  /* Otherwise, if last self-test failed, return that for the one-liner */
+  if (g_str_has_prefix (udisks_drive_ata_get_smart_selftest_status (ata), "error"))
+    {
+      ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
+                             _("SELF-TEST FAILED"));
+      warn = TRUE;
       goto out;
     }
 
@@ -1155,14 +1167,17 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   g_free (selftest);
   if (out_smart_is_supported != NULL)
     *out_smart_is_supported = smart_is_supported;
+  if (out_warn != NULL)
+    *out_warn = warn;
   return ret;
 }
 
 gchar *
 gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
-                                        gboolean       *out_smart_is_supported)
+                                        gboolean       *out_smart_is_supported,
+                                        gboolean       *out_warn)
 {
-  return gdu_ata_smart_get_overall_assessment (ata, TRUE, out_smart_is_supported);
+  return gdu_ata_smart_get_overall_assessment (ata, TRUE, out_smart_is_supported, out_warn);
 }
 
 static void
@@ -1191,7 +1206,7 @@ update_dialog (DialogData *data)
 
   update_updated_label (data);
 
-  s = calculate_self_test (data, &selftest_running);
+  s = calculate_self_test (data->ata, &selftest_running);
   gtk_label_set_text (GTK_LABEL (data->self_test_label), s);
   g_free (s);
 
@@ -1319,7 +1334,7 @@ update_dialog (DialogData *data)
   gtk_label_set_markup (GTK_LABEL (data->temperature_label), s);
   g_free (s);
 
-  s = gdu_ata_smart_get_overall_assessment (data->ata, FALSE, NULL);
+  s = gdu_ata_smart_get_overall_assessment (data->ata, FALSE, NULL, NULL);
   gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), s);
   g_free (s);
 

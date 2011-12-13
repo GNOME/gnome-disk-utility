@@ -656,9 +656,11 @@ update_drive (GduDeviceTreeModel *model,
 
   sort_key = g_strdup_printf ("00_drives_1_%s", udisks_drive_get_sort_key (drive));
 
-  if (ata != NULL && udisks_drive_ata_get_smart_failing (ata))
+  if (ata != NULL)
     {
-      warning = TRUE;
+      gchar *s;
+      s = gdu_ata_smart_get_one_liner_assessment (ata, NULL /* out_smart_supported */, &warning);
+      g_free (s);
     }
 
   udisks_client_get_drive_info (model->client,

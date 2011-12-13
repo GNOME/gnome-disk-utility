@@ -32,7 +32,8 @@ void   gdu_ata_smart_dialog_show (GduWindow    *window,
                                   UDisksObject *object);
 
 gchar *gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
-                                               gboolean       *out_smart_is_supported);
+                                               gboolean       *out_smart_is_supported,
+                                               gboolean       *out_warn);
 
 G_END_DECLS
 

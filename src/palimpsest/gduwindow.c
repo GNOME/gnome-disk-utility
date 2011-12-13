@@ -1568,7 +1568,7 @@ update_device_page_for_drive (GduWindow      *window,
   if (ata != NULL && !udisks_drive_get_media_removable (drive))
     {
       gboolean smart_is_supported;
-      s = gdu_ata_smart_get_one_liner_assessment (ata, &smart_is_supported);
+      s = gdu_ata_smart_get_one_liner_assessment (ata, &smart_is_supported, NULL /* out_warning */);
       set_markup (window,
                   "devtab-drive-smart-label",
                   "devtab-drive-smart-value-label",

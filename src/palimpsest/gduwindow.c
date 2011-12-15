@@ -1867,12 +1867,9 @@ update_device_page_for_block (GduWindow          *window,
   if (udisks_block_get_size (block) > 0)
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
-      if (udisks_block_get_hint_partitionable (block))
-        {
-          *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
-          if (!read_only)
-            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
-        }
+      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
+      if (!read_only)
+        *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
       if (!read_only)
         {
           *show_flags |= SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE;

@@ -26,6 +26,7 @@
 #include <glib/gi18n.h>
 
 #include "gdudevicetreemodel.h"
+#include "gduatasmartdialog.h"
 #include "gduutils.h"
 
 struct _GduDeviceTreeModel

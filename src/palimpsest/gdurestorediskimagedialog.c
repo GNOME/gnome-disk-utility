@@ -42,6 +42,8 @@ typedef struct
 {
   volatile gint ref_count;
 
+  gboolean destroying;
+
   GduWindow *window;
   UDisksObject *object;
   UDisksBlock *block;
@@ -89,6 +91,7 @@ restore_disk_image_data_unref (RestoreDiskImageData *data)
 {
   if (g_atomic_int_dec_and_test (&data->ref_count))
     {
+      data->destroying = TRUE;
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
@@ -127,6 +130,9 @@ restore_disk_image_update (RestoreDiskImageData *data)
   gchar *restore_warning = NULL;
   gchar *restore_error = NULL;
   GFile *restore_file = NULL;
+
+  if (data->destroying)
+    goto out;
 
   /* don't update if we're already copying */
   if (data->buffer != NULL)

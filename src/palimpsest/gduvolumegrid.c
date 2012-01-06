@@ -1498,6 +1498,18 @@ recompute_grid (GduVolumeGrid *grid)
   grid->selected = find_element_for_offset_and_object (grid, cur_selected_offset, cur_selected_object);
   grid->focused = find_element_for_offset_and_object (grid, cur_focused_offset, cur_focused_object);
 
+  /* ensure we have at least one element */
+  if (grid->elements == NULL)
+    {
+      element = g_new0 (GridElement, 1);
+      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
+      element->size_ratio = 1.0;
+      element->offset = 0;
+      element->size = 0;
+      grid->elements = g_list_append (NULL, element);
+      grid_element_set_details (grid, element);
+    }
+
   /* ensure something is always focused/selected */
   if (grid->selected == NULL)
     grid->selected = grid->elements->data;

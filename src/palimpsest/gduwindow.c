@@ -1529,8 +1529,7 @@ update_device_page_for_drive (GduWindow      *window,
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_name_label), s);
   gtk_widget_show (window->devtab_drive_name_label);
   g_free (s);
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
-                       str->str);
+  s = g_strdup_printf ("<small>%s</small>", str->str);
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
   gtk_widget_show (window->devtab_drive_devices_label);
   g_free (s);

@@ -1474,6 +1474,23 @@ setup_device_page (GduWindow     *window,
     }
 }
 
+static gchar *
+get_device_file_for_display (UDisksBlock *block)
+{
+  gchar *ret;
+  if (udisks_block_get_read_only (block))
+    {
+      /* Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1 */
+      ret = g_strdup_printf (_("%s <span size=\"smaller\">(Read-Only)</span>"),
+                             udisks_block_get_preferred_device (block));
+    }
+  else
+    {
+      ret = g_strdup (udisks_block_get_preferred_device (block));
+    }
+  return ret;
+}
+
 static void
 update_device_page_for_drive (GduWindow      *window,
                               UDisksObject   *object,
@@ -1522,7 +1539,9 @@ update_device_page_for_drive (GduWindow      *window,
       UDisksObject *block_object = UDISKS_OBJECT (l->data);
       if (str->len > 0)
         g_string_append_c (str, ' ');
-      g_string_append (str, udisks_block_get_preferred_device (udisks_object_peek_block (block_object)));
+      s = get_device_file_for_display (udisks_object_peek_block (block_object));
+      g_string_append (str, s);
+      g_free (s);
     }
   s = g_strdup_printf ("<big><b>%s</b></big>",
                        description);
@@ -1661,23 +1680,6 @@ lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
  out:
   g_list_foreach (objects, (GFunc) g_object_unref, NULL);
   g_list_free (objects);
-  return ret;
-}
-
-static gchar *
-get_device_file_for_display (UDisksBlock *block)
-{
-  gchar *ret;
-  if (udisks_block_get_read_only (block))
-    {
-      /* Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1 */
-      ret = g_strdup_printf (_("%s <span foreground=\"#555555\" size=\"small\">(Read-Only)</span>"),
-                             udisks_block_get_preferred_device (block));
-    }
-  else
-    {
-      ret = g_strdup (udisks_block_get_preferred_device (block));
-    }
   return ret;
 }
 

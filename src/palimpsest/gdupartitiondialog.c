@@ -220,7 +220,7 @@ edit_partition_populate (EditPartitionData *data)
                                                                        data->partition_table_type,
                                                                        info->type);
       escaped_type_for_display = g_markup_escape_text (type_for_display, -1);
-      s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+      s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                            escaped_type_for_display,
                            info->type);
       g_free (escaped_type_for_display);

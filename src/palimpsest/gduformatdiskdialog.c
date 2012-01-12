@@ -126,7 +126,7 @@ format_disk_populate (FormatDiskData *data)
                                         NULL); /* GDestroyNotify */
 
   /* MBR */
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Compatible with all systems and devices"),
                        _("MBR / DOS"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
@@ -134,7 +134,7 @@ format_disk_populate (FormatDiskData *data)
   g_free (s);
 
   /* GPT */
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Compatible with modern systems and hard disks > 2TB"),
                        _("GPT"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
@@ -147,7 +147,7 @@ format_disk_populate (FormatDiskData *data)
 
 
   /* Empty */
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("No partitioning"),
                        _("Empty"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */

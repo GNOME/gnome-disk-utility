@@ -891,7 +891,7 @@ update_attr (DialogData *data)
                       -1);
 
   value_str = g_strdup (pretty);
-  normalized_str = g_strdup_printf (_("%d <span foreground=\"#555555\" size=\"small\">(Worst:%d, Threshold: %d)</span>"),
+  normalized_str = g_strdup_printf (_("%d <span size=\"small\">(Worst:%d, Threshold: %d)</span>"),
                                     normalized, worst, threshold);
 
   prefail = (flags & 0x0001);
@@ -901,26 +901,26 @@ update_attr (DialogData *data)
     {
       /* Translators: Please keep "(Pre-Fail)" in English
        */
-      type_str = _("Failure is a sign the disk will fail within 24 hours <span foreground=\"#555555\" size=\"small\">(Pre-Fail)</span>");
+      type_str = _("Failure is a sign the disk will fail within 24 hours <span size=\"small\">(Pre-Fail)</span>");
     }
   else
     {
       /* Translators: Please keep "(Old-Age)" in English
        */
-      type_str = _("Failure is a sign the disk exceeded its intended design life period <span foreground=\"#555555\" size=\"small\">(Old-Age)</span>");
+      type_str = _("Failure is a sign the disk exceeded its intended design life period <span size=\"small\">(Old-Age)</span>");
     }
 
   if (online)
     {
       /* Translators: Please keep "(Online)" in English
        */
-      updates_str = _("Every time data is collected <span foreground=\"#555555\" size=\"small\">(Online)</span>");
+      updates_str = _("Every time data is collected <span size=\"small\">(Online)</span>");
     }
   else
     {
       /* Translators: Please keep "(Not Online)" in English
        */
-      updates_str = _("Only during off-line activities <span foreground=\"#555555\" size=\"small\">(Not Online)</span>");
+      updates_str = _("Only during off-line activities <span size=\"small\">(Not Online)</span>");
     }
 
  out:

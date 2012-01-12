@@ -384,31 +384,31 @@ populate (GduCreateFilesystemWidget *widget)
                                         widget,
                                         NULL); /* GDestroyNotify */
 
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Compatible with all systems and devices"),
                        _("FAT"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID, "vfat", MODEL_COLUMN_MARKUP, s, -1);
   g_free (s);
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Compatible with most systems"),
                        _("NTFS"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID, "ntfs", MODEL_COLUMN_MARKUP, s, -1);
   g_free (s);
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Compatible with Linux systems"),
                        _("Ext4"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID, "ext4", MODEL_COLUMN_MARKUP, s, -1);
   g_free (s);
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Encrypted, compatible with Linux systems"),
                        _("LUKS + Ext4"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID,   "luks+ext4", MODEL_COLUMN_MARKUP, s, -1);
   g_free (s);
-  s = g_strdup_printf ("%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                        _("Custom"),
                        _("Enter filesystem type"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */

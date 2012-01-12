@@ -322,7 +322,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
       if (!have_dos_extended (data))
         {
           snprintf (dos_extended_partition_name, sizeof dos_extended_partition_name,
-                    "%s <span foreground=\"#555555\" size=\"small\">(%s)</span>",
+                    "%s <span size=\"small\">(%s)</span>",
                     _("Extended partition"),
                     _("For logical partitions"));
           additional_fstypes[0] = "dos_extended";

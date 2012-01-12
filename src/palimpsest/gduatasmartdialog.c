@@ -672,12 +672,18 @@ attr_format_assessment (gint     current,
 
   if (failed)
     {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
                              /* Translators: Shown in the treeview for a failing attribute */
                              _("FAILING"));
     }
   else if (failed_in_the_past)
     {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       ret = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>",
                              /* Translators: Shown in the treeview for an attribute that failed in the past */
                              _("Failed in the past"));
@@ -1076,12 +1082,18 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
       /* if doing a one-liner also include if a self-test is running */
       if (one_liner && selftest != NULL)
         {
+          /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+           * of hard-coding the color
+           */
           ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span> — %s",
                                  _("DISK IS LIKELY TO FAIL SOON"),
                                  selftest);
         }
       else
         {
+          /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+           * of hard-coding the color
+           */
           ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
                                  _("DISK IS LIKELY TO FAIL SOON"));
         }
@@ -1102,6 +1114,9 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
   /* Otherwise, if last self-test failed, return that for the one-liner */
   if (g_str_has_prefix (udisks_drive_ata_get_smart_selftest_status (ata), "error"))
     {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       ret = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
                              _("SELF-TEST FAILED"));
       warn = TRUE;

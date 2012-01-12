@@ -403,6 +403,9 @@ get_drive_header_iter (GduDeviceTreeModel *model)
   if (model->drive_iter_valid)
     goto out;
 
+  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+   * of hard-coding the color
+   */
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
                        _("Disk Drives"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
@@ -673,6 +676,9 @@ update_drive (GduDeviceTreeModel *model,
                                 &media_icon);
   if (warning)
     {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
                            "<small><span foreground=\"#ff0000\">%s</span></small>",
                            description,
@@ -680,6 +686,9 @@ update_drive (GduDeviceTreeModel *model,
     }
   else
     {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
                            description,
@@ -804,6 +813,9 @@ get_block_header_iter (GduDeviceTreeModel *model)
   if (model->block_iter_valid)
     goto out;
 
+  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+   * of hard-coding the color
+   */
   s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
                        _("Other Devices"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
@@ -914,6 +926,9 @@ update_block (GduDeviceTreeModel  *model,
 
       /* loop devices */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
                            loop_name,
@@ -934,6 +949,9 @@ update_block (GduDeviceTreeModel  *model,
       /* fallback: preferred device and drive-harddisk icon */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
 
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
                            block_name,

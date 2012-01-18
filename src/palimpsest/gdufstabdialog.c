@@ -440,10 +440,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       fsname = NULL;
       dir = "";
       type = "auto";
-      opts = "defaults";
+      opts = "";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (drive != NULL && udisks_drive_get_removable (drive))
-        opts = "defaults,noauto";
+        opts = "noauto";
       freq = 0;
       passno = 0;
     }

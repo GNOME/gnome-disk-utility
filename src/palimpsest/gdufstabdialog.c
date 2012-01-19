@@ -117,14 +117,19 @@ update (FstabDialogData *data,
           g_strcmp0 (ui_type, type) != 0 ||
           g_strcmp0 (ui_opts, opts) != 0)
         {
-          /* sanity-check */
-          if (strlen (ui_fsname) > 0 &&
-              strlen (ui_dir) > 0 &&
-              strlen (ui_type) > 0 &&
-              strlen (ui_opts) > 0)
-            {
-              can_apply = TRUE;
-            }
+          can_apply = TRUE;
+        }
+    }
+
+  /* sanity-check and validate */
+  if (ui_configured)
+    {
+      if (strlen (ui_fsname) == 0 ||
+          strlen (ui_dir) == 0 ||
+          strlen (ui_type) == 0 ||
+          strlen (ui_opts) == 0)
+        {
+          can_apply = FALSE;
         }
     }
 

@@ -45,6 +45,7 @@ typedef struct
   GtkWidget *type_entry;
 
   GtkWidget *options_entry;
+  GtkWidget *defaults_checkbutton;
   GtkWidget *noauto_checkbutton;
   GtkWidget *auth_checkbutton;
   GtkWidget *show_checkbutton;
@@ -95,6 +96,7 @@ update (FstabDialogData *data,
   ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
+  gdu_options_update_check_option (data->options_entry, "defaults", widget, data->defaults_checkbutton);
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
   gdu_options_update_check_option (data->options_entry, "comment=udisks-auth", widget, data->auth_checkbutton);
   gdu_options_update_check_option (data->options_entry, "comment=gvfs-show", widget, data->show_checkbutton);
@@ -115,7 +117,14 @@ update (FstabDialogData *data,
           g_strcmp0 (ui_type, type) != 0 ||
           g_strcmp0 (ui_opts, opts) != 0)
         {
-          can_apply = TRUE;
+          /* sanity-check */
+          if (strlen (ui_fsname) > 0 &&
+              strlen (ui_dir) > 0 &&
+              strlen (ui_type) > 0 &&
+              strlen (ui_opts) > 0)
+            {
+              can_apply = TRUE;
+            }
         }
     }
 
@@ -403,6 +412,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));
   data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
   data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
+  data.defaults_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-defaults-checkbutton"));
   data.noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-noauto-checkbutton"));
   data.auth_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-auth-checkbutton"));
   data.show_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-show-checkbutton"));
@@ -431,8 +441,6 @@ gdu_fstab_dialog_show (GduWindow    *window,
       g_variant_lookup (data.orig_fstab_entry, "dir", "^&ay", &dir);
       g_variant_lookup (data.orig_fstab_entry, "type", "^&ay", &type);
       g_variant_lookup (data.orig_fstab_entry, "opts", "^&ay", &opts);
-      if (g_strcmp0 (opts, "defaults") == 0)
-        opts = "";
       g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
       g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
     }
@@ -442,10 +450,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       fsname = NULL;
       dir = "";
       type = "auto";
-      opts = "";
+      opts = "defaults";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (drive != NULL && udisks_drive_get_removable (drive))
-        opts = "noauto";
+        opts = "defaults,noauto";
       freq = 0;
       passno = 0;
     }
@@ -489,6 +497,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.device_combobox,
                     "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
+  g_signal_connect (data.defaults_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.noauto_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.auth_checkbutton,
@@ -544,10 +554,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
           g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
           g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
           g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
-          if (strlen (ui_opts) > 0)
-            g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
-          else
-            g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring ("defaults"));
+          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
           g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
           g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
           new_item = g_variant_new ("(sa{sv})", "fstab", &builder);

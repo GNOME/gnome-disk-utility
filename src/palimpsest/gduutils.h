@@ -46,7 +46,8 @@ gchar *gdu_utils_unfuse_path (const gchar *path);
 void gdu_options_update_check_option (GtkWidget       *options_entry,
                                       const gchar     *option,
                                       GtkWidget       *widget,
-                                      GtkWidget       *check_button);
+                                      GtkWidget       *check_button,
+                                      gboolean         add_to_front);
 
 void gdu_options_update_entry_option (GtkWidget       *options_entry,
                                       const gchar     *option,

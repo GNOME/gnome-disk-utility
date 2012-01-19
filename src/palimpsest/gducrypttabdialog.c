@@ -155,8 +155,8 @@ update (CrypttabDialogData *data,
   g_free (s);
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
-  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
-  gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton);
+  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton, FALSE);
+  gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_apply = FALSE;

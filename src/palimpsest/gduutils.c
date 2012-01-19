@@ -259,16 +259,17 @@ has_option (GtkWidget       *options_entry,
 static void
 add_option (GtkWidget       *options_entry,
             const gchar     *prefix,
-            const gchar     *option)
+            const gchar     *option,
+            gboolean         add_to_front)
 {
   gchar *s;
   const gchar *text;
   text = gtk_entry_get_text (GTK_ENTRY (options_entry));
   s = g_strdup_printf ("%s%s%s%s",
-                       text,
+                       add_to_front ? option : text,
                        strlen (text) > 0 ? "," : "",
                        prefix,
-                       option);
+                       add_to_front ? text : option);
   gtk_entry_set_text (GTK_ENTRY (options_entry), s);
   g_free (s);
 }
@@ -308,7 +309,8 @@ void
 gdu_options_update_check_option (GtkWidget       *options_entry,
                                  const gchar     *option,
                                  GtkWidget       *widget,
-                                 GtkWidget       *check_button)
+                                 GtkWidget       *check_button,
+                                 gboolean         add_to_front)
 {
   gboolean opts, ui;
   opts = !! has_option (options_entry, option, FALSE, NULL);
@@ -318,7 +320,7 @@ gdu_options_update_check_option (GtkWidget       *options_entry,
       if (widget == check_button)
         {
           if (ui)
-            add_option (options_entry, "", option);
+            add_option (options_entry, "", option, add_to_front);
           else
             remove_option (options_entry, option, FALSE);
         }
@@ -351,7 +353,7 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
           if (strlen (ui_escaped) > 0)
             {
               remove_option (options_entry, option, TRUE);
-              add_option (options_entry, option, ui_escaped);
+              add_option (options_entry, option, ui_escaped, FALSE);
             }
           else
             {

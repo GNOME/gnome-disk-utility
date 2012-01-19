@@ -283,12 +283,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="fstab-users-checkbutton">
-                        <property name="label" translatable="yes">Allow any _user to mount and unmount</property>
+                      <object class="GtkCheckButton" id="fstab-auth-checkbutton">
+                        <property name="label" translatable="yes">Require additional authorizations to mount</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="tooltip_text" translatable="yes">If checked, any user may mount and unmount the device [users]</property>
+                        <property name="tooltip_text" translatable="yes">If checked, additional authorizations (typically requiring the user to prove he is an administrator) are required to mount the device [comment=udisks-no-auth]</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="xalign">0</property>
@@ -303,7 +303,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="fstab-show-checkbutton">
-                        <property name="label" translatable="yes">Always sho_w in user interface</property>
+                        <property name="label" translatable="yes">Always show in user interface</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -322,7 +322,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="fstab-hide-checkbutton">
-                        <property name="label" translatable="yes">Never sh_ow in user interface</property>
+                        <property name="label" translatable="yes">Never show in user interface</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>

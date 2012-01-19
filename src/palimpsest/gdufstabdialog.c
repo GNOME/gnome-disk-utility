@@ -46,7 +46,7 @@ typedef struct
 
   GtkWidget *options_entry;
   GtkWidget *noauto_checkbutton;
-  GtkWidget *users_checkbutton;
+  GtkWidget *auth_checkbutton;
   GtkWidget *show_checkbutton;
   GtkWidget *hide_checkbutton;
   GtkWidget *name_entry;
@@ -96,7 +96,7 @@ update (FstabDialogData *data,
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton);
-  gdu_options_update_check_option (data->options_entry, "users", widget, data->users_checkbutton);
+  gdu_options_update_check_option (data->options_entry, "comment=udisks-auth", widget, data->auth_checkbutton);
   gdu_options_update_check_option (data->options_entry, "comment=gvfs-show", widget, data->show_checkbutton);
   gdu_options_update_check_option (data->options_entry, "comment=gvfs-hide", widget, data->hide_checkbutton);
   gdu_options_update_entry_option (data->options_entry, "comment=gvfs-name=", widget, data->name_entry);
@@ -404,7 +404,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
   data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
   data.noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-noauto-checkbutton"));
-  data.users_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-users-checkbutton"));
+  data.auth_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-auth-checkbutton"));
   data.show_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-show-checkbutton"));
   data.hide_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-hide-checkbutton"));
   data.name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-name-entry"));
@@ -489,7 +489,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
                     "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
   g_signal_connect (data.noauto_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
-  g_signal_connect (data.users_checkbutton,
+  g_signal_connect (data.auth_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.show_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);

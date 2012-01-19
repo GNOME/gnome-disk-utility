@@ -431,6 +431,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
       g_variant_lookup (data.orig_fstab_entry, "dir", "^&ay", &dir);
       g_variant_lookup (data.orig_fstab_entry, "type", "^&ay", &type);
       g_variant_lookup (data.orig_fstab_entry, "opts", "^&ay", &opts);
+      if (g_strcmp0 (opts, "defaults") == 0)
+        opts = "";
       g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
       g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
     }
@@ -542,7 +544,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
           g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
           g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
           g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
-          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+          if (strlen (ui_opts) > 0)
+            g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+          else
+            g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring ("defaults"));
           g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
           g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
           new_item = g_variant_new ("(sa{sv})", "fstab", &builder);

@@ -26,6 +26,10 @@
 #include <gio/gunixfdlist.h>
 #include <gio/gunixoutputstream.h>
 
+#include <glib-unix.h>
+#include <sys/ioctl.h>
+#include <linux/fs.h>
+
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdurestorediskimagedialog.h"
@@ -65,6 +69,8 @@ typedef struct
   GtkWidget *copying_label;
   GtkWidget *copying_progressbar;
   GtkWidget *copying_progress_label;
+
+  guint64 block_size;
 
   GCancellable *cancellable;
   GOutputStream *block_stream;
@@ -153,29 +159,32 @@ restore_disk_image_update (RestoreDiskImageData *data)
       size = g_file_info_get_size (info);
       g_object_unref (info);
 
-      if (size < udisks_block_get_size (data->block))
+      if (data->block_size > 0)
         {
-          /* Only complain if slack is bigger than 1MB */
-          if (udisks_block_get_size (data->block) - size > 1000L*1000L)
+          if (size < data->block_size)
+            {
+              /* Only complain if slack is bigger than 1MB */
+              if (data->block_size - size > 1000L*1000L)
+                {
+                  s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
+                                                          data->block_size - size, FALSE, FALSE);
+                  restore_warning = g_strdup_printf (_("The selected image is %s bytes smaller than the device"), s);
+                  g_free (s);
+                }
+              can_proceed = TRUE;
+            }
+          else if (size > data->block_size)
             {
               s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
-                                                      udisks_block_get_size (data->block) - size, FALSE, FALSE);
-              restore_warning = g_strdup_printf (_("The selected image is %s bytes smaller than the device"), s);
+                                                      size - data->block_size, FALSE, FALSE);
+              restore_error = g_strdup_printf (_("The selected image is %s bytes bigger than the device"), s);
               g_free (s);
             }
-          can_proceed = TRUE;
-        }
-      else if (size > udisks_block_get_size (data->block))
-        {
-          s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
-                                                  size - udisks_block_get_size (data->block), FALSE, FALSE);
-          restore_error = g_strdup_printf (_("The selected image is %s bytes bigger than the device"), s);
-          g_free (s);
-        }
-      else
-        {
-          /* all good */
-          can_proceed = TRUE;
+          else
+            {
+              /* all good */
+              can_proceed = TRUE;
+            }
         }
     }
 
@@ -383,46 +392,6 @@ copy_more (RestoreDiskImageData *data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
-open_cb (UDisksBlock  *block,
-         GAsyncResult *res,
-         gpointer      user_data)
-{
-  RestoreDiskImageData *data = user_data;
-  GError *error;
-  GUnixFDList *fd_list = NULL;
-  GVariant *fd_index = NULL;
-  int fd;
-
-  error = NULL;
-  if (!udisks_block_call_open_for_restore_finish (block,
-                                                  &fd_index,
-                                                  &fd_list,
-                                                  res,
-                                                  &error))
-    {
-      if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error opening device"), error);
-      g_error_free (error);
-      restore_disk_image_data_complete (data);
-      goto out;
-    }
-
-  fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
-  data->block_stream = g_unix_output_stream_new (fd, TRUE);
-
-  /* Alright, time to start copying! */
-  data->cancellable = g_cancellable_new ();
-  data->buffer = g_new0 (guchar, BUFFER_SIZE);
-  data->estimator = gdu_estimator_new (data->file_size);
-  copy_more (data);
-
- out:
-  if (fd_index != NULL)
-    g_variant_unref (fd_index);
-  g_clear_object (&fd_list);
-}
-
 static gboolean
 start_copying (RestoreDiskImageData *data)
 {
@@ -460,12 +429,11 @@ start_copying (RestoreDiskImageData *data)
   data->file_size = g_file_info_get_size (info);
   g_object_unref (info);
 
-  udisks_block_call_open_for_restore (data->block,
-                                      g_variant_new ("a{sv}", NULL), /* options */
-                                      NULL, /* fd_list */
-                                      NULL, /* cancellable */
-                                      (GAsyncReadyCallback) open_cb,
-                                      data);
+  /* Alright, time to start copying! */
+  data->cancellable = g_cancellable_new ();
+  data->buffer = g_new0 (guchar, BUFFER_SIZE);
+  data->estimator = gdu_estimator_new (data->file_size);
+  copy_more (data);
 
   ret = TRUE;
 
@@ -474,23 +442,13 @@ start_copying (RestoreDiskImageData *data)
   return ret;
 }
 
-void
-gdu_restore_disk_image_dialog_show (GduWindow    *window,
-                                   UDisksObject *object)
+static void
+gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
 {
-  RestoreDiskImageData *data;
   gint response;
   gchar *s;
 
-  data = g_new0 (RestoreDiskImageData, 1);
-  data->ref_count = 1;
-  data->window = g_object_ref (window);
-  data->object = g_object_ref (object);
-  data->block = udisks_object_get_block (object);
-  g_assert (data->block != NULL);
-  data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
-
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = gdu_application_new_widget (gdu_window_get_application (data->window),
                                              "restore-disk-image-dialog.ui",
                                              "restore-disk-image-dialog",
                                              &data->builder);
@@ -520,16 +478,15 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
                     G_CALLBACK (on_notify), data);
 
   /* Make sure we attach to parent */
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (data->window));
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
   gtk_widget_show_all (data->dialog);
-
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
   if (response != GTK_RESPONSE_OK)
     goto out;
 
-  if (!gdu_window_show_confirmation (window,
+  if (!gdu_window_show_confirmation (data->window,
                                      _("Are you sure you want to write the disk image to the device?"),
                                      _("All existing data will be lost"),
                                      _("_Restore")))
@@ -553,4 +510,82 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
 
  out:
   restore_disk_image_data_unref (data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+open_cb (UDisksBlock  *block,
+         GAsyncResult *res,
+         gpointer      user_data)
+{
+  RestoreDiskImageData *data = user_data;
+  GError *error;
+  GUnixFDList *fd_list = NULL;
+  GVariant *fd_index = NULL;
+  int fd;
+
+  error = NULL;
+  if (!udisks_block_call_open_for_restore_finish (block,
+                                                  &fd_index,
+                                                  &fd_list,
+                                                  res,
+                                                  &error))
+    {
+      if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
+        gdu_window_show_error (data->window, _("Error opening device"), error);
+      g_error_free (error);
+      restore_disk_image_data_complete (data);
+      restore_disk_image_data_unref (data);
+      goto out;
+    }
+
+  fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
+
+  /* We can't use udisks_block_get_size() because the media may have
+   * changed and udisks may not have noticed. TODO: maybe have a
+   * Block.GetSize() method instead...
+   */
+  if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
+    {
+      error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), strerror (errno));
+      gdu_window_show_error (data->window, _("Error determining size of device"), error);
+      g_error_free (error);
+      restore_disk_image_data_complete (data);
+      restore_disk_image_data_unref (data);
+      goto out;
+    }
+  data->block_stream = g_unix_output_stream_new (fd, TRUE);
+
+  /* OK, we can now show the dialog */
+  gdu_restore_disk_image_dialog_show2 (data);
+
+ out:
+  if (fd_index != NULL)
+    g_variant_unref (fd_index);
+  g_clear_object (&fd_list);
+}
+
+
+void
+gdu_restore_disk_image_dialog_show (GduWindow    *window,
+                                   UDisksObject *object)
+{
+  RestoreDiskImageData *data;
+
+  data = g_new0 (RestoreDiskImageData, 1);
+  data->ref_count = 1;
+  data->window = g_object_ref (window);
+  data->object = g_object_ref (object);
+  data->block = udisks_object_get_block (object);
+  g_assert (data->block != NULL);
+  data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
+
+  /* first, open the device */
+  udisks_block_call_open_for_restore (data->block,
+                                      g_variant_new ("a{sv}", NULL), /* options */
+                                      NULL, /* fd_list */
+                                      NULL, /* cancellable */
+                                      (GAsyncReadyCallback) open_cb,
+                                      data);
 }

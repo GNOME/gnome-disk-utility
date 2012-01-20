@@ -4,28 +4,33 @@
 #
 # Leonid Kanter <leon@asplinux.ru>, 2009, 2010.
 # Andrey Sharoyko <rabidvan@mail.ru>, 2009.
+# Yuri Kozlov <yuray@komyakino.ru>, 2011.
+# Stas Solovey <whats_up@tut.by>, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&component=general\n"
-"POT-Creation-Date: 2010-09-14 19:15+0000\n"
-"PO-Revision-Date: 2010-09-26 18:38+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-09-03 12:11+0000\n"
+"PO-Revision-Date: 2011-09-06 20:31+0300\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Launchpad-Export-Date: 2011-06-15 15:18+0000\n"
+"X-Generator: Lokalize 1.0\n"
 
 #. Translators: Window title when no item is selected.
 #.
 #. Translators: Window title when the item representing the local machine is selected.
 #.
 #: ../data/palimpsest.desktop.in.h:1
+#: ../src/notification/notification-main.c:537
 #: ../src/palimpsest/gdu-shell.c:269
 #: ../src/palimpsest/gdu-shell.c:321
-#: ../src/palimpsest/gdu-shell.c:803
+#: ../src/palimpsest/gdu-shell.c:804
 #: ../src/palimpsest/gdu-shell.c:1115
 msgid "Disk Utility"
 msgstr "Дисковая утилита"
@@ -54,7 +59,7 @@ msgstr "Устройство"
 #: ../src/format-tool/gdu-format-progress-dialog.c:216
 #: ../src/notification/gdu-slow-unmount-dialog.c:285
 msgid "The device to show the dialog for"
-msgstr "Показать диалог для устройства"
+msgstr "Устройство, для которого показать диалоговое окно"
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:228
 msgid "text"
@@ -62,11 +67,11 @@ msgstr "текст"
 
 #: ../src/format-tool/gdu-format-progress-dialog.c:229
 msgid "Text to show"
-msgstr "Текст для отображения"
+msgstr "Показываемый текст"
 
 #: ../src/format-tool/gdu-format-tool.c:113
 msgid "Error launching Disk Utility"
-msgstr "Ошибка запуска Дисковой утилиты"
+msgstr "Ошибка запуска «Дисковой утилиты»"
 
 #: ../src/format-tool/gdu-format-tool.c:133
 msgid "Device to format"
@@ -85,7 +90,7 @@ msgstr "Действие было отменено"
 
 #: ../src/format-tool/gdu-format-tool.c:254
 msgid "Gnome Disk Utility formatting tool"
-msgstr "Дисковая утилита — средство форматирования Gnome"
+msgstr "Дисковая утилита GNOME — средство для форматирования, создания и изменения разделов"
 
 #. Translators: First argument is the partition number, second argument is the drive name,
 #. * third argument is the size (e.g. 10 GB)
@@ -154,19 +159,19 @@ msgstr "Ошибка форматирования тома"
 
 #: ../src/format-tool/gdu-format-tool.c:500
 msgid "Mounting volume..."
-msgstr "Монтирование тома…"
+msgstr "Подключение тома…"
 
 #: ../src/format-tool/gdu-format-tool.c:524
 msgid "Error mounting device"
-msgstr "Ошибка при монтировании устройства"
+msgstr "Ошибка подключения устройства"
 
 #: ../src/format-tool/gdu-format-tool.c:541
 msgid "Error storing passphrase in keyring"
-msgstr "Ошибка при сохранении ключевой фразы на брелоке"
+msgstr "Ошибка сохранения пароля"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:156
 msgid "The RAID Array to add a component to."
-msgstr "RAID-массив, к которому добавить компонент."
+msgstr "Массив RAID, к которому добавить компонент."
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
 #, c-format
@@ -176,7 +181,7 @@ msgstr "Добавить резервный компонент к %s"
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
-msgstr "Выберите устройство для создания резервного компонента %s для RAID-массива «%s» (%s)"
+msgstr "Выберите устройство для создания резервного компонента %s для массива RAID «%s» (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:237
 #, c-format
@@ -186,7 +191,7 @@ msgstr "Увеличить %s"
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
 msgid "Select one or more devices to use %s on for expanding the RAID Array \"%s\" (%s)"
-msgstr "Выберите одно устройство или более для использования %s для расширения RAID-массива «%s» (%s)"
+msgstr "Выберите одно устройство или более, чтобы использовать %s для расширения массива RAID «%s» (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
 msgid "_Expand"
@@ -210,567 +215,567 @@ msgstr "_Размер:"
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:131
 msgid "Read Error Rate"
 msgstr "Ошибки чтения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:133
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:132
 msgid "Frequency of errors while reading raw data from the disk. A non-zero value indicates a problem with either the disk surface or read/write heads"
-msgstr "Частота ошибок при чтении данных с диска. Отличное от нуля значение показывает, что есть проблемы либо с поверхностью диска, либо с головками чтения/записи."
+msgstr "Количество ошибок чтения данных с диска. Отличное от нуля значение показывает, что есть проблемы либо с поверхностью диска, либо с головками чтения/записи"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:141
 msgid "Throughput Performance"
 msgstr "Пропускная способность"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:143
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
 msgid "Average efficiency of the disk"
 msgstr "Средняя эффективность диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:149
 msgid "Spinup Time"
 msgstr "Время раскрутки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:151
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:150
 msgid "Time needed to spin up the disk"
-msgstr "Время, необходимое для раскрутки диска"
+msgstr "Время, необходимое диску для набора рабочей скорости вращения"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:157
 msgid "Start/Stop Count"
-msgstr "Кол-во запуск/останов"
+msgstr "Циклы «запуск/останов»"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:159
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:158
 msgid "Number of spindle start/stop cycles"
-msgstr "Число циклов запуск/останов шпинделя"
+msgstr "Количество циклов шпинделя «запуск/останов»"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:165
 msgid "Reallocated Sector Count"
-msgstr "Кол-во перераспределённых секторов"
+msgstr "Перераспределения секторов"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:167
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:166
 msgid "Count of remapped sectors. When the hard drive finds a read/write/verification error, it marks the sector as \"reallocated\" and transfers data to a special reserved area (spare area)"
-msgstr "Количество перераспределённых секторов. Когда жёсткий диск находит ошибку чтения/записи/проверки, он помечает сектор как «перераспределённый» и перемещает данные в специальную резервную область."
+msgstr "Количество перераспределённых секторов. Когда жёсткий диск находит ошибку чтения/записи/проверки, он помечает сектор как «перераспределённый» и перемещает данные в специальную резервную область"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:175
 msgid "Read Channel Margin"
 msgstr "Размер канала чтения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:177
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:176
 msgid "Margin of a channel while reading data."
 msgstr "Размер канала при чтении данных."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:183
 msgid "Seek Error Rate"
 msgstr "Ошибки позиционирования"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:185
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:184
 msgid "Frequency of errors while positioning"
-msgstr "Частота ошибок при позиционировании"
+msgstr "Количество ошибок позиционирования"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:191
 msgid "Seek Timer Performance"
 msgstr "Время позиционирования"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:193
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
 msgid "Average efficiency of operations while positioning"
 msgstr "Средняя эффективность выполнения позиционирования"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:199
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:523
+msgid "Power-On Hours"
+msgstr "Отработанное время"
+
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:200
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:524
-msgid "Power-On Hours"
-msgstr "Включен (часов)"
-
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:201
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:525
 msgid "Number of hours elapsed in the power-on state"
-msgstr "Время в часах во включенном состоянии"
+msgstr "Количество времени во включённом состоянии"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:207
 msgid "Spinup Retry Count"
-msgstr "Попыток раскрутки"
+msgstr "Попытки повторной раскрутки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:209
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:208
 msgid "Number of retry attempts to spin up"
-msgstr "Количество попыток раскрутки диска"
+msgstr "Количество попыток повторного набора рабочей скорости вращения диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:215
 msgid "Calibration Retry Count"
-msgstr "Попыток калибровки"
+msgstr "Попытки калибровки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:217
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:216
 msgid "Number of attempts to calibrate the device"
 msgstr "Количество попыток калибровки устройства"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:223
 msgid "Power Cycle Count"
-msgstr "Циклов вкл/выкл"
+msgstr "Цикл «включение/выключение»"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:225
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:224
 msgid "Number of power-on events"
-msgstr "Количество событий включения"
+msgstr "Количество циклов «включение/выключение»"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:231
 msgid "Soft read error rate"
 msgstr "Программные ошибки чтения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:233
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:232
 msgid "Frequency of 'program' errors while reading from the disk"
-msgstr "Частота «программных» ошибок при чтении с диска"
+msgstr "Количество программных ошибок чтения данных с диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:239
 msgid "Reported Uncorrectable Errors"
-msgstr "Кол-во отказов"
+msgstr "Некорректируемые ошибки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:241
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:240
 msgid "Number of errors that could not be recovered using hardware ECC"
-msgstr "Количество ошибок, которые невозможно скорректировать, используя аппаратную коррекцию ошибок"
+msgstr "Количество ошибок, не поддающихся аппаратной коррекции"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:247
 msgid "High Fly Writes"
-msgstr "Вылетов записи"
+msgstr "Вылеты пишущей головки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:249
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:248
 msgid "Number of times a recording head is flying outside its normal operating range"
 msgstr "Количество случаев, когда пишущая головка поднималась выше своего допустимого уровня"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:255
 msgid "Airflow Temperature"
 msgstr "Температура воздушного потока"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:257
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
 msgid "Airflow temperature of the drive"
-msgstr "Температура воздушного потока устройства"
+msgstr "Температура воздушного потока внутри устройства"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:263
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:433
 msgid "G-sense Error Rate"
-msgstr "Отказов удароустойчивости"
+msgstr "Удары и сотрясения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:265
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:264
 msgid "Frequency of mistakes as a result of impact loads"
-msgstr "Частота ошибок в результате ударных нагрузок"
+msgstr "Количество ошибок в результате нагрузок при ударе или падении"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:271
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:490
 msgid "Power-off Retract Count"
-msgstr "Аварийных выключений"
+msgstr "Аварийные выключения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:273
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:272
 msgid "Number of power-off or emergency retract cycles"
-msgstr "Количество циклов восстановления после аварийного выключения"
+msgstr "Количество аварийных выключений"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:279
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:466
 msgid "Load/Unload Cycle Count"
-msgstr "Циклов загрузки/выгрузки"
+msgstr "Циклы «загрузка/выгрузка»"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:281
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:280
 msgid "Number of cycles into landing zone position"
-msgstr "Количество циклов позиционирования в зону парковки"
+msgstr "Количество циклов позиционирования пишущей головки в зону парковки"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:287
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:506
 msgid "Temperature"
-msgstr "Температура"
+msgstr "Температура устройства"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:289
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:288
 msgid "Current internal temperature of the drive"
-msgstr "Текущая внутренняя температура устройства"
+msgstr "Текущее значение внутренней температуры устройства"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:295
 msgid "Hardware ECC Recovered"
-msgstr "Аппаратных коррекций"
+msgstr "Аппаратная коррекция"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:297
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:296
 msgid "Number of ECC on-the-fly errors"
-msgstr "Кол-во ошибок, потребовавших аппаратной коррекции"
+msgstr "Количество ошибок, исправленных аппаратной коррекцией"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:303
 msgid "Reallocation Count"
-msgstr "Перераспределений"
+msgstr "Перераспределения секторов"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:305
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:304
 msgid "Number of remapping operations. The raw value of this attribute shows the total number of (successful and unsuccessful) attempts to transfer data from reallocated sectors to a spare area"
-msgstr "Количество операций перераспределения. Значение этого атрибута показывает полное число (успешных и неуспешных) попыток переместить данных из перераспределённых секторов в запасную область"
+msgstr "Количество операций перераспределения. Значение этого атрибута показывает количество удачных и неудачных попыток перемещения данных из поврежденных секторов в резервную область"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:314
 msgid "Current Pending Sector Count"
-msgstr "Неопределённых секторов"
+msgstr "Неопределённые секторы"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:316
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:315
 msgid "Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt"
-msgstr "Количество секторов, ожидающих перераспределения. Если сектор, ожидающий перераспределения, успешно проходит тестирование на чтение/запись, это значение уменьшается, и сектор не перераспределяется. Ошибки чтения сектора не приводят к его перераспределению, он будет перераспределён только в случае ошибки при попытке записи."
+msgstr "Количество секторов, ожидающих перераспределения. Если сектор, ожидающий перераспределения, успешно проходит тестирование на чтение/запись, это значение уменьшается, и сектор не перераспределяется. Ошибки чтения сектора не приводят к его перераспределению, он будет перераспределён только в случае ошибки при попытке записи"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:326
 msgid "Uncorrectable Sector Count"
-msgstr "Неисправных секторов"
+msgstr "Неисправные секторы"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:328
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:327
 msgid "The total number of uncorrectable errors when reading/writing a sector. A rise in the value of this attribute indicates defects of the disk surface and/or problems in the mechanical subsystem"
-msgstr "Количество некорректируемых ошибок  при чтении/записи сектора. Прирост значения этого атрибута показывает наличие дефектов поверхности диска или проблемы с механикой устройства."
+msgstr "Количество некорректируемых ошибок при чтении/записи сектора. Прирост значения этого атрибута показывает наличие дефектов поверхности диска или проблемы с механикой устройства"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:336
 msgid "UDMA CRC Error Rate"
-msgstr "Ошибок CRC UDMA"
+msgstr "Ошибки CRC UDMA"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:338
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:337
 msgid "Number of CRC errors during UDMA mode"
-msgstr "Количество ошибок контрольной суммы в режиме UDMA"
+msgstr "Количество ошибок контрольных сумм в режиме UDMA"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:344
 msgid "Write Error Rate"
-msgstr "Ошибок записи"
+msgstr "Ошибки записи"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:346
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:345
 msgid "Number of errors while writing to disk (or) multi-zone error rate (or) flying-height"
-msgstr "Количество ошибок при записи на диск (или) многозонные ошибки (или) высота вылета"
+msgstr "Количество ошибок записи на диск"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:352
 msgid "Soft Read Error Rate"
-msgstr "Мягких ошибок чтения"
+msgstr "Программные ошибки чтения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:354
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:353
 msgid "Number of off-track errors"
-msgstr "Количество ошибок выхода за трек"
+msgstr "Количество ошибок выхода за зону записи"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:360
 msgid "Data Address Mark Errors"
-msgstr "Ошибок маркирования"
+msgstr "Ошибки регистрации адреса данных"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:362
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
-msgstr "Количество ошибок маркирования адресации данных (DAM)"
+msgstr "Количество ошибок регистрации адреса данных (DAM)"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:368
 msgid "Run Out Cancel"
-msgstr "Отмен разгона"
+msgstr "Отмены раскрутки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:370
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:369
 msgid "Number of ECC errors"
 msgstr "Количество коррекций ECC"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:376
 msgid "Soft ECC correction"
-msgstr "Программных коррекций ECC"
+msgstr "Программная коррекция ошибок"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:378
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:377
 msgid "Number of errors corrected by software ECC"
 msgstr "Количество ошибок, скорректированных программно"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:384
 msgid "Thermal Asperity Rate"
-msgstr "Перегревов"
+msgstr "Перегревы"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:386
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:385
 msgid "Number of Thermal Asperity Rate errors"
-msgstr "Количество ошибок нештатного температурного режима"
+msgstr "Количество нештатных температурных режимов"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:392
 msgid "Flying Height"
 msgstr "Высота вылета"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:394
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:393
 msgid "Height of heads above the disk surface"
 msgstr "Высота головки над поверхностью диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:400
 msgid "Spin High Current"
 msgstr "Сила тока раскрутки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:402
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:401
 msgid "Amount of high current used to spin up the drive"
 msgstr "Сила тока, используемая для раскрутки диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:408
 msgid "Spin Buzz"
 msgstr "Шум раскрутки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:410
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:409
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Количество усилий раскрутки диска"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:416
 msgid "Offline Seek Performance"
 msgstr "Автономное позиционирование"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:418
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:417
 msgid "Drive's seek performance during offline operations"
 msgstr "Производительность позиционирования привода при автономных операциях"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:424
 msgid "Disk Shift"
 msgstr "Смещение диска"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:426
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
 msgid "Shift of disk is possible as a result of strong shock loading in the store, as a result of falling (or) temperature"
-msgstr "Смещение диска возможно вследствие сильных ударных нагрузок в накопителе, в результате падения или перегрева"
+msgstr "Смещение диска, предположительно, произошло вследствие сильных ударных нагрузок: падения или перегрева"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:435
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
 msgid "Number of errors as a result of impact loads as detected by a shock sensor"
-msgstr "Число ошибок в результате ударных нагрузок зафиксированных шоковым сенсором"
+msgstr "Количество ошибок в результате ударных нагрузок, зафиксированные шоковым датчиком"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:441
 msgid "Loaded Hours"
-msgstr "Часов нагрузки"
+msgstr "Часы нагрузки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:443
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
 msgid "Number of hours in general operational state"
 msgstr "Количество часов в основном рабочем состоянии"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:449
 msgid "Load/Unload Retry Count"
-msgstr "Попыток загрузки/выгрузки"
+msgstr "Попытки загрузки/выгрузки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:451
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
 msgid "Loading on drive caused by numerous recurrences of operations, like reading, recording, positioning of heads, etc"
-msgstr "Нагрузка на привода, вызванная повторяющимися операциями, такими как чтение, запись, позиционирование головок и т.д."
+msgstr "Нагрузка на приводы, вызванная повторяющимися операциями, такими как чтение, запись, позиционирование головок и т.д."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:458
 msgid "Load Friction"
-msgstr "Трение нагрузки"
+msgstr "Нагрузки трением"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:460
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Нагрузка на привод, вызванная трением в механических частях накопителя"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:468
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
 msgid "Total number of load cycles"
-msgstr "Всего циклов загрузки"
+msgstr "Количество всех циклов загрузки"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:474
 msgid "Load-in Time"
 msgstr "Время загрузки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:476
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
 msgid "General time for loading in a drive"
-msgstr "Основное время для загрузки в приводе"
+msgstr "Общее время загрузки в приводе"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:482
 msgid "Torque Amplification Count"
 msgstr "Усиление крутящего момента"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:484
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Количество усилий момента вращения привода"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:492
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
 msgid "Number of power-off retract events"
-msgstr "Кол-во событий аварийного выключения"
+msgstr "Количество аварийных выключений"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:498
 msgid "GMR Head Amplitude"
 msgstr "Амплитуда GMR-головки"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:500
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Амплитуда дрожания головок (GMR-головка) в подвижном режиме"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:508
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
 msgid "Temperature of the drive"
 msgstr "Температура привода"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:514
 msgid "Endurance Remaining"
 msgstr "Запас прочности"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:516
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
 msgid "Number of physical erase cycles completed on the drive as a percentage of the maximum physical erase cycles the drive supports"
 msgstr "Количество физических циклов стирания выполненных на приводе в процентном соотношении к максимальному числу физических циклов стирания, поддерживаемых приводом"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:531
 msgid "Uncorrectable ECC Count"
-msgstr "Некорректируемых ECC"
+msgstr "Некорректируемые ошибки ECC"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:533
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
 msgid "Number of uncorrectable ECC errors"
 msgstr "Количество некорректируемых ошибок ECC"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:539
 msgid "Good Block Rate"
 msgstr "Процент хороших блоков"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:541
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
 msgid "Number of available reserved blocks as a percentage of the total number of reserved blocks"
 msgstr "Количество доступных резервных блоков в процентном соотношении к общему числу резервных блоков"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:548
 msgid "Head Flying Hours"
-msgstr "Часов вылета головок"
+msgstr "Время вылета пишущих головок"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:550
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
 msgid "Time while head is positioning"
-msgstr "Время позиционирования головки"
+msgstr "Время позиционирования пишущей головки"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:556
 msgid "Read Error Retry Rate"
-msgstr "Попыток повторного чтения"
+msgstr "Попытки повторного чтения"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:558
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
 msgid "Number of errors while reading from a disk"
-msgstr "Количество ошибок при чтении с диска"
+msgstr "Количество ошибок чтения данных с диска"
 
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:700
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:699
 #, c-format
 msgid "No description for attribute %d"
-msgstr "Нет описания для аттрибута %d"
+msgstr "Нет описания для атрибута %d"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:790
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:789
 msgid "Normalized:"
 msgstr "Нормализованное:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:792
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:791
 msgid "Worst:"
 msgstr "Наихудшее:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:794
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:793
 msgid "Threshold:"
 msgstr "Порог:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:796
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:795
 msgid "Value:"
 msgstr "Значение:"
 
@@ -779,269 +784,273 @@ msgstr "Значение:"
 #. Translators: Shown in the treeview for an attribute we don't know the status about
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:846
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:854
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:862
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:958
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1640
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:845
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:853
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:861
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1639
 msgid "N/A"
 msgstr "Н/Д"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:940
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:939
 msgid "Failing"
 msgstr "Неудачно"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:943
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:942
 msgid "Failed in the past"
 msgstr "Неудачно в прошлом"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:947
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:955
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:946
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:954
 msgid "Warning"
 msgstr "Предупреждение"
 
 #. Translators: Shown in the treeview for an attribute that is good
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:949
 msgid "Good"
 msgstr "Хорошо"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1021
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1020
 msgid "Error reading SMART data"
-msgstr "Ошибка при чтении данных SMART"
+msgstr "Ошибка чтения данных SMART"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1141
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1140
 msgid "Choose SMART Self-test"
-msgstr "Выберите самопроверку SMART"
+msgstr "Выберите тип самодиагностики"
 
 #. Translators: Shown in the "Run self-test" dialog
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1152
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1151
 msgid "The tests may take a very long time to complete depending on the speed and size of the disk. You can continue using your system while the test is running."
-msgstr "Выполнение теста может занять продолжительное время, в зависимости от скорости и размера диска. Во время выполнения теста можно продолжать пользоваться системой."
+msgstr "Выполнение диагностики может занять продолжительное время, в зависимости от скорости и размера диска. Во время выполнения диагностики можно продолжать пользоваться системой."
 
 #. Translators: Radio button for short test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1161
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
 msgid "_Short (usually less than ten minutes)"
-msgstr "_Короткая (обычно, менее десяти минут)"
+msgstr "_Обычная диагностика (5-10 минут)"
 
 #. Translators: Radio button for extended test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1164
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1163
 msgid "_Extended (usually tens of minutes)"
-msgstr "_Продолжительная (обычно, десятки минут)"
+msgstr "_Расширенная диагностика (10-20 минут)"
 
 #. Translators: Radio button for conveyance test
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1167
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1166
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr "К_онвейерный (обычно, менее десяти минут)"
+msgstr ""
+"_Диагностика на выявление повреждений, \n"
+"возникших при транспортировке (5-10 минут)"
 
 #. Translators: Button in "Run self-test dialog"
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1175
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1174
 msgid "_Run Self Test"
-msgstr "_Запустить самопроверку"
+msgstr "З_апустить самодиагностику"
 
 #. Translators: The title of the SMART dialog.
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
 #. * Second %s is the VPD name for the array (e.g. "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1270
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1269
 #, c-format
 msgid "%s (%s) – SMART Data"
-msgstr "%s (%s) — данные SMART"
+msgstr "Данные SMART — %s (%s)"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1290
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid "Updated:"
 msgstr "Обновлено:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1293
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1292
 msgid "Time since SMART data was last read – SMART data is updated every 30 minutes unless the disk is sleeping"
 msgstr "Время с последнего считывания данных SMART – данные SMART обновляются каждые 30 минут, если диск не спит"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1299
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "Self-tests:"
-msgstr "Самопроверки:"
+msgstr "Самодиагностика:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1302
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1301
 msgid "The result of the last self-test that ran on the disk"
-msgstr "Результат последней самопроверки диска"
+msgstr "Результат последней самодиагностики диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1307
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "Powered On:"
 msgstr "Проработал:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1310
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1309
 msgid "The amount of elapsed time the disk has been in a powered-up state"
 msgstr "Количество времени, которое диск провёл во включенном состоянии"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1315
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "Power Cycles:"
-msgstr "Циклы питания:"
+msgstr "Циклы «вкл./выкл.»:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1318
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1317
 msgid "The number of full disk power on/off cycles"
-msgstr "Количество полных циклов вкл./выкл. питания диска"
+msgstr "Количество полных циклов включения/выключения питания диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1323
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "Temperature:"
 msgstr "Температура:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1326
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1325
 msgid "The temperature of the disk"
 msgstr "Температура диска"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1331
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "Bad Sectors:"
-msgstr "Битых секторов:"
+msgstr "Битые секторы:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1334
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1333
 msgid "The sum of pending and reallocated bad sectors"
-msgstr "Сумма непроверенных и перераспределённых битых секторов"
+msgstr "Сумма ожидающих перераспределения и перераспределённых битых секторов"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1339
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "Self Assessment:"
-msgstr "Самооценка:"
+msgstr "Состояние:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1342
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1341
 msgid "The assessment from the disk itself whether it is about to fail"
-msgstr "Самооценка от диска, может ли он отказать"
+msgstr "Самодиагностика состояния диска и вероятность его отказа"
 
 #. Translators: Item name in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1347
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1346
 msgid "Overall Assessment:"
 msgstr "Общая оценка:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1351
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1350
 msgid "An overall assessment of the health of the disk"
 msgstr "Общая оценка исправности диска"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1365
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1364
 msgid "_Refresh"
 msgstr "_Обновить"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1367
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1366
 msgid "Reads SMART Data, waking up the disk"
-msgstr "Считывает данные SMART, включая диск"
+msgstr ""
+"Повторное считывание данных SMART \n"
+"(пробуждает диск, если он в спящем режиме)"
 
 #. TODO: better icon
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1377
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1376
 msgid "Run _Self-test"
-msgstr "_Запустить самопроверку"
+msgstr "За_пустить самодиагностику"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1379
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1378
 msgid "Test the disk surface for errors"
-msgstr "Проверить поверхность диска на ошибки"
+msgstr "Проверка поверхности диска на повреждения и ошибки"
 
 #. Translators: Button name
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1389
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
 msgid "_Cancel Self-test"
-msgstr "_Отменить самопроверку"
+msgstr "От_менить самодиагностику"
 
 #. Translators: Button details
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1391
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1390
 msgid "Cancels the self-test"
-msgstr "Отменяет самопроверку"
+msgstr "Отменяет проведение самодиагностики"
 
 #. Translators: Heading used in the main dialog for SMART attributes
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1409
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1408
 msgid "_Attributes"
 msgstr "_Атрибуты"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1443
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1442
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1455
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1454
 msgid "Attribute"
 msgstr "Атрибут"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1472
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1471
 msgid "Assessment"
 msgstr "Оценка"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1491
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1490
 msgid "Value"
 msgstr "Значение"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1519
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1518
 msgid "Don't _warn if the disk is failing"
-msgstr "_Не предупреждать, если диск сбоит"
+msgstr "_Не выводить предупреждения о сбоях и ошибках диска"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1521
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1520
 msgid "Leave unchecked to get notified if the disk starts failing"
-msgstr "Оставьте неотмеченным, чтобы получать сообщения, если диск будет сбоить"
+msgstr "Оставьте неотмеченным, чтобы получать предупреждения о сбоях и ошибках диска"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1586
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1585
 #, c-format
 msgid "%.1f years"
-msgstr "%.1f лет"
+msgstr "%.1f года / лет"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1590
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1589
 #, c-format
 msgid "%.1f days"
 msgstr "%.1f дней"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1594
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1593
 #, c-format
 msgid "%.1f hours"
 msgstr "%.1f часов"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1598
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1597
 #, c-format
 msgid "%.1f minutes"
 msgstr "%.1f минут"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1602
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1601
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунд"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1608
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
 #, c-format
 msgid "%s msec"
 msgstr "%s мс"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1617
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1616
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1052,41 +1061,41 @@ msgstr[2] "%d секторов"
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
 #. * is the temperature in degrees Fahrenheit
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1629
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1628
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1697
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1696
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
 msgstr "Ошибка означает неминуемый отказ диска (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1701
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1700
 msgid "Failure is a sign of old age (Old-Age)"
 msgstr "Ошибка означает признак ветхости (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1707
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1706
 msgid "Every time data is collected (Online)"
-msgstr "Всякий раз, когда данные собраны (Online)"
+msgstr "По мере накопления (на лету)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1711
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1710
 msgid "Only during off-line activities (Not Online)"
-msgstr "Только автономно (Not Online)"
+msgstr "Только автономно (не на лету)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview.
 #. * First %s is the type of the attribute (Pre-Fail or Old-Age).
 #. * Second %s is the update type (Online or Not Online).
 #. * The six %x is the raw data of the attribute.
 #.
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1719
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1718
 #, c-format
 msgid ""
 "Type: %s\n"
@@ -1099,26 +1108,26 @@ msgstr ""
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1929
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1928
 msgid "No drive selected"
 msgstr "Привод не выбран"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1936
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1935
 msgid "SMART not supported"
 msgstr "SMART-тест не поддерживается"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1944
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1943
 msgid "SMART data never collected"
 msgstr "Данные SMART никогда не собирались"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1951
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1957
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1956
 msgid "SMART data is malformed"
 msgstr "Данные SMART повреждены"
 
@@ -1136,86 +1145,86 @@ msgstr "Данные SMART повреждены"
 #. Translators: Shown in the "Self-tests" item in the status table
 #. Translators: shown when we don't know contents of the volume
 #. Translators: Description when the overall SMART status is unknown
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1987
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2005
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2025
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2033
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2042
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2104
-#: ../src/gdu-gtk/gdu-volume-grid.c:1321
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1986
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2004
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2024
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2032
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2041
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
+#: ../src/gdu-gtk/gdu-volume-grid.c:1301
 #: ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
 msgstr "Неизвестно"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1992
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1991
 msgid "Passed"
 msgstr "Исправен"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1998
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1997
 msgid "FAILING"
 msgstr "НЕ ИСПРАВЕН"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2010
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2009
 msgid "None"
 msgstr "Нет"
 
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2015
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2014
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
-msgstr[0] "%d битый сектор"
-msgstr[1] "%d битый сектора"
-msgstr[2] "%d битый секторов"
+msgstr[0] "%d"
+msgstr[1] "%d"
+msgstr[2] "%d"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2061
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2060
 msgid "Completed OK"
-msgstr "Успешно завершено"
+msgstr "Успешно завершена"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2065
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2064
 msgid "Cancelled"
-msgstr "Отменено"
+msgstr "Отменена"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2069
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2068
 msgid "Cancelled (with hard or soft reset)"
-msgstr "Отменено (аппаратный или программный сброс)"
+msgstr "Отменена (аппаратный или программный сброс)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2073
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2072
 msgid "Not completed (a fatal error might have occurred)"
-msgstr "Не завершено (возможно, из-за фатальной ошибки)"
+msgstr "Не завершена (возможно, из-за фатальной ошибки)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2077
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2076
 msgid "FAILED (Electrical)"
 msgstr "СБОЙ (электроника)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2082
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2081
 msgid "FAILED (Servo)"
 msgstr "СБОЙ (сервопривод)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2087
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
 msgid "FAILED (Read)"
 msgstr "СБОЙ (чтение)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2092
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2091
 msgid "FAILED (Suspected of having handled damage)"
 msgstr "СБОЙ (предположительно, подвергся повреждению)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
-#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2097
+#: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2096
 msgid "In progress"
 msgstr "Выполняется"
 
@@ -1271,7 +1280,7 @@ msgstr "Обзор серверов, найденных через проток�
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:250
 msgid "To manage storage devices on another machine, enter the address and press “Connect”. The connection will be made using the <i>Secure Shell</i> protocol."
-msgstr "Чтобы получить управление над устройствами хранения на других машинах, введите адрес и нажмите «Подключиться». Созданное соединение использует протокол <i>Secure Shell</i>."
+msgstr "Чтобы получить управление над устройствами хранения на других компьютерах, введите адрес и нажмите «Подключиться». Созданное соединение использует протокол <i>Secure Shell</i>."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
@@ -1326,7 +1335,7 @@ msgstr "Создать логический том на %s"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
 msgid "Pool"
-msgstr "Пул"
+msgstr "Накопитель"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
@@ -1361,7 +1370,7 @@ msgstr "Запрашиваемый размер массива"
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
 msgid "Component Size"
-msgstr "Размер компонента:"
+msgstr "Размер компонента"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:228
 msgid "The size of each component"
@@ -1369,15 +1378,15 @@ msgstr "Размер каждого из компонентов"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:240
 msgid "Stripe Size"
-msgstr "Stripe-размер"
+msgstr "Размер чередования"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
 msgid "The requested stripe size of the array"
-msgstr "Запрашиваемый stripe-размер массива"
+msgstr "Запрашиваемый размер чередования массива"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
 msgid "Drives"
-msgstr "Диски"
+msgstr "Устройства"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:254
 msgid "Array of drives to use for the array"
@@ -1385,11 +1394,11 @@ msgstr "Массив дисков для использования в масс�
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:517
 msgid "Create RAID Array"
-msgstr "Создать RAID-массив"
+msgstr "Создать массив RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:535
 msgid "General"
-msgstr "Основное"
+msgstr "Общие"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:556
 msgid "RAID _Level:"
@@ -1405,11 +1414,11 @@ msgstr "_Название массива:"
 #.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:603
 msgid "New RAID Array"
-msgstr "Новый RAID-массив"
+msgstr "Новый массив RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:619
 msgid "Stripe S_ize:"
-msgstr "Stripe-_размер:"
+msgstr "Размер _чередования"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
 msgid "4 KiB"
@@ -1459,11 +1468,11 @@ msgstr "_Диски"
 #. TODO: Actually make this work
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:706
 msgid "Use entire disks instead of _partitions"
-msgstr "_Использовать все диски вместо разделов"
+msgstr "_Использовать весь диск вместо разделов"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:707
 msgid "If checked, the entirety of each selected disk will be used for the RAID array. Otherwise partitions will be created."
-msgstr "Если включено, всё содержимое каждого выбранного диска будет использовано для RAID-массива. В противном случае, будут созданы разделы."
+msgstr "Если включено, всё содержимое каждого выбранного диска будет использовано для массива RAID. В противном случае, будут созданы разделы."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
@@ -1471,7 +1480,7 @@ msgstr "Если включено, всё содержимое каждого в
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:876
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
-msgstr "Для создания массива %s не хватает дисков."
+msgstr "Недостаточное количество дисков для создания массива %s."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
 #, c-format
@@ -1485,7 +1494,7 @@ msgstr[2] "Чтобы создать массив %s, выберите %d дис
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] "Чтобы создать массив %s, выберите ещё %d один диск."
+msgstr[0] "Чтобы создать массив %s, выберите ещё %d диск."
 msgstr[1] "Чтобы создать массив %s, выберите ещё %d диска."
 msgstr[2] "Чтобы создать массив %s, выберите ещё %d дисков."
 
@@ -1528,15 +1537,15 @@ msgstr "Флаги"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
 msgid "Flags for the widget"
-msgstr "Флаги для виджета"
+msgstr "Флаги элемента"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:256
 msgid "Selected Drives"
-msgstr "Выбранные диски"
+msgstr "Выбранные устройства"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:257
 msgid "Array of selected drives"
-msgstr "Массив выбранных дисков"
+msgstr "Массив выбранных устройств"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:267
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
@@ -1584,7 +1593,7 @@ msgstr "Недостаточно места: требуется %s, но наи�
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
 msgid "The disk will be partitioned and a partition will be created"
-msgstr "Диск будет размечен на разделы и будет создан раздел"
+msgstr "На диск будет записана таблица разделов и будет создан раздел"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1592,7 +1601,7 @@ msgstr "Диск будет размечен на разделы и будет �
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:926
 #, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards no space will be available."
-msgstr "Диск будет размечен, будет создан раздел %s. После этого не останется свободного места."
+msgstr "На диск будет записана таблица разделов и будет создан раздел %s. После этого не останется свободного места."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1601,7 +1610,7 @@ msgstr "Диск будет размечен, будет создан разде
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
 #, c-format
 msgid "The disk will be partitioned and a %s partition will be created. Afterwards %s will be available."
-msgstr "Диск будет размечен, будет создан раздел %s. После этого останется %s."
+msgstr "На диск будет записана таблица разделов и будет создан раздел %s. После этого останется %s."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
@@ -1669,7 +1678,7 @@ msgstr "%s доступно для использования"
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1016
 #, c-format
 msgid "The disk has no partitions. %s available for use"
-msgstr "Диск без разделов. %s доступно для использования"
+msgstr "Диск не содержит разделов. %s доступно для использования"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1021
 #, c-format
@@ -1698,17 +1707,17 @@ msgstr "Устройства хранения"
 msgid "Details"
 msgstr "Сведения"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:527
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
 msgid "Error benchmarking drive"
 msgstr "Ошибка при проведении теста производительности диска"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 msgid "Are you sure you want to start a read/write benchmark?"
-msgstr "Действительно запустить тест производительности чтения-записи?"
+msgstr "Уверены, что хотите начать тест производительности чтения/записи?"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:596
-#: ../src/palimpsest/gdu-section-drive.c:1004
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
+#: ../src/palimpsest/gdu-section-drive.c:1006
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
 msgstr "_Тест производительности"
@@ -1718,86 +1727,86 @@ msgstr "_Тест производительности"
 #. * Second %s is the VPD name for the drive or array (e.g. "158 GB RAID-0 Array"
 #. * or "ATA WDC WD1001FALS-00J7B1").
 #.
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:687
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:686
 #, c-format
 msgid "%s (%s) – Benchmark"
-msgstr "%s (%s) — тест производительности"
+msgstr "Тест производительности — %s (%s)"
 
 #. benchmark results
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:733
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
 msgid "Minimum Read Rate:"
 msgstr "Минимальная скорость чтения:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:737
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
 msgid "Minimum Write Rate:"
 msgstr "Минимальная скорость записи:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:741
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
 msgid "Maximum Read Rate:"
 msgstr "Максимальная скорость чтения:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:745
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
 msgid "Maximum Write Rate:"
 msgstr "Максимальная скорость записи:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:749
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
 msgid "Average Read Rate:"
 msgstr "Средняя скорость чтения:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:753
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
 msgid "Average Write Rate:"
 msgstr "Средняя скорость записи:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:757
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
 msgid "Last Benchmark:"
 msgstr "Последний тест производительности:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:765
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
 msgid "Average Access Time:"
 msgstr "Среднее время доступа:"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
 msgid "Start _Read-Only Benchmark"
 msgstr "Запустить тест _только на чтение"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:779
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Measure read rate and access time"
 msgstr "Измерить скорость чтения и время доступа"
 
 #. TODO: better icon
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
 msgid "Start Read/_Write Benchmark"
-msgstr "Запустить тест _на чтение-запись"
+msgstr "Запустить тест _на чтение/запись"
 
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:788
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
 msgid "Measure read rate, write rate and access time"
 msgstr "Измерить скорость чтения, записи и время доступа"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:952
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
 #, c-format
 msgid "%d MB/s"
 msgstr "%d МБ/с"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:957
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
 #, c-format
 msgid "%3g ms"
 msgstr "%3g мс"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1236
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1223
 msgid "Never"
 msgstr "Никогда"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1310
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1297
 msgid "Cancel"
 msgstr "Отменить"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
-#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1313
+#: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1300
 msgid "Cancels the currently running benchmark"
 msgstr "Отменяет запущенный тест производительности"
 
@@ -1826,7 +1835,7 @@ msgstr "Изменить физические тома на %s (%s)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:343
 msgid "Physical _Volumes"
-msgstr "Физические _тома"
+msgstr "Физические том_а"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:373
 msgid "Physical Volume"
@@ -1842,13 +1851,13 @@ msgstr "Нераспределённое"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
-#: ../src/palimpsest/gdu-section-drive.c:935
+#: ../src/palimpsest/gdu-section-drive.c:937
 msgid "SMART Status:"
-msgstr "Состояние SMART:"
+msgstr "Состояние диска:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
-#: ../src/palimpsest/gdu-section-drive.c:911
+#: ../src/palimpsest/gdu-section-drive.c:913
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
 msgstr "Устройство:"
@@ -1859,7 +1868,7 @@ msgstr "_Новый физический том"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:430
 msgid "Add a new PV to the VG"
-msgstr "Добавить новый том в группу томов"
+msgstr "Добавить новый физический том в группу томов"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "_Remove Physical Volume"
@@ -1867,7 +1876,7 @@ msgstr "_Удалить физический том"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:440
 msgid "Remove the PV from the VG"
-msgstr "Удалить том из группы томов"
+msgstr "Удалить физический том из группы томов"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
@@ -1916,15 +1925,15 @@ msgstr "_Добавить запасной компонент"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
 msgid "Add a spare to the array"
-msgstr "Добавить запасной компонент к массиву"
+msgstr "Добавление запасного компонента к массиву"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "_Expand Array"
-msgstr "_Расширить массив"
+msgstr "Расширить массив"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
 msgid "Increase the capacity of the array"
-msgstr "Увеличить объём массива"
+msgstr "Увеличение объёма массива"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "_Attach Component"
@@ -1932,15 +1941,15 @@ msgstr "_Присоединить компонент"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
 msgid "Attach the component to the array"
-msgstr "Присоединить компонент к массиву"
+msgstr "Присоединение компонента к массиву"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "_Remove Component"
-msgstr "_Убрать компонент"
+msgstr "_Удалить компонент"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
 msgid "Remove the component from the array"
-msgstr "Удалить компонент из массива"
+msgstr "Удаление компонента из массива"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
 msgid "Part_ition Label:"
@@ -1949,7 +1958,7 @@ msgstr "_Метка раздела:"
 #. Translators: 'Type' means partition type here
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:337
 msgid "Ty_pe:"
-msgstr "_Тип:"
+msgstr "_Файловая система:"
 
 #. ---
 #. flag used by mbr, apm
@@ -1960,11 +1969,11 @@ msgstr "_Загрузочный"
 #. flag used by gpt
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:359
 msgid "Required / Firm_ware"
-msgstr "Обязательно / Про_шивка"
+msgstr "Требуется / Про_шивка"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:216
 msgid "The operation failed"
-msgstr "Сбой при выполнении операции"
+msgstr "При выполнении действия произошёл сбой"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:219
 msgid "The device is busy"
@@ -1976,7 +1985,7 @@ msgstr "Действие отменено"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:225
 msgid "The daemon is being inhibited"
-msgstr "Демон находится в сдерживаемом состоянии"
+msgstr "Служба находится в неактивном состоянии"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:228
 msgid "An invalid option was passed"
@@ -1988,7 +1997,7 @@ msgstr "Операция не поддерживается"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:234
 msgid "Getting ATA SMART data would wake up the device"
-msgstr "Получение данных ATA SMART может привести к включению устройства"
+msgstr "Получение данных ATA SMART приведет к включению устройства."
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:237
 msgid "Permission denied"
@@ -2003,14 +2012,14 @@ msgid "Filesystem tools not installed"
 msgstr "Инструменты файловой системы не установлены"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:248
-#: ../src/palimpsest/gdu-shell.c:958
+#: ../src/palimpsest/gdu-shell.c:959
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:256
 #, c-format
 msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
-msgstr "Произошла ошибка при выполнении операции в «%s» (%s): %s"
+msgstr "Произошла ошибка выполнения операции на «%s» (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:264
 #, c-format
@@ -2047,7 +2056,7 @@ msgstr "Параметры файловой системы"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:203
 msgid "The options to use for creating the filesystem"
-msgstr "Параметры, используемые для создания файловой системы"
+msgstr "Параметры, используемые при создании файловой системы"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:213
 msgid "Encryption"
@@ -2055,7 +2064,7 @@ msgstr "Шифрование"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:214
 msgid "Whether the volume should be encrypted"
-msgstr "Должен ли этот том быть зашифрован"
+msgstr "Использовать ли шифрование тома"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:224
 msgid "Take Ownership"
@@ -2076,7 +2085,7 @@ msgstr "Мнемоническая метка для кнопки подтвер
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
 #: ../src/gdu-gtk/gdu-partition-dialog.c:219
-#: ../src/palimpsest/gdu-section-drive.c:649
+#: ../src/palimpsest/gdu-section-drive.c:651
 #: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
 msgstr "_Форматировать"
@@ -2100,23 +2109,25 @@ msgstr "Использовать дисковую утилиту для форм
 #. Translators: 'type' means 'filesystem type' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:553
 msgid "_Type:"
-msgstr "_Тип:"
+msgstr "_Файловая система:"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:560
 msgid "Compatible with all systems (FAT)"
-msgstr "Совместимый со всеми системами (FAT)"
+msgstr "FAT (поддерживается всеми ОС)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:562
 msgid "Compatible with Linux (ext2)"
-msgstr "Совместимый с Linux (ext2)"
+msgstr "ext2 (поддерживается только *nix-системами)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:564
 msgid "Compatible with Linux (ext4)"
-msgstr "Совместимый с Linux (ext4)"
+msgstr "ext4 (поддерживается только *nix-системами)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:566
 msgid "Encrypted, compatible with Linux (FAT)"
-msgstr "Зашифрованный, совместимый с Linux (FAT)"
+msgstr ""
+"FAT Encrypted (зашифрованный, с парольной защитой)\r\n"
+"(поддерживается только *nix-системами)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:609
@@ -2130,7 +2141,7 @@ msgstr "Назван_ие:"
 #.
 #: ../src/gdu-gtk/gdu-format-dialog.c:616
 msgid "New Volume"
-msgstr "Новый том"
+msgstr "Новый"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:634
 msgid "T_ake ownership of filesystem"
@@ -2138,7 +2149,7 @@ msgstr "Ст_ать владельцем файловой системы"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:637
 msgid "The selected file system has a concept of file ownership. If checked, the created file system will be owned by you. If not checked, only the super user can access the file system."
-msgstr "Выбранная файловая система включает концепцию принадлежности файлов. Установите отметку, чтобы создаваемая файловая система принадлежала Вам. Если отметку снять, то только суперпользователь будет иметь доступ к этой файловой системе."
+msgstr "Выбранная файловая система поддерживает принадлежность файлов. Установите отметку, чтобы все пользователи имели доступ к создаваемой файловой системе. Если отметку снять, то только суперпользователь будет иметь доступ к этой файловой системе."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid "_Encrypt underlying device"
@@ -2146,11 +2157,11 @@ msgstr "За_шифровать соответствующее устройст�
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:645
 msgid "Encryption protects your data, requiring a passphrase to be entered before the file system can be used. May decrease performance and may not be compatible if you use the media on other operating systems."
-msgstr "Шифрование защищает ваши данные, требуя ввода ключевой фразы для получения доступа к файловой системе. Может снизить производительность и сделать носитель несовместимым для использования с другими операционными системами."
+msgstr "Шифрование защищает ваши данные, требуя ввода пароля для получения доступа к файловой системе. Может снизить производительность и сделать носитель несовместимым для использования с другими операционными системами."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:678
 msgid "Warning: All data on the volume will be irrevocably lost."
-msgstr "Предупреждение: все данные на этом томе будут безвозвратно потеряны."
+msgstr "Предупреждение: все данные на этом томе будут безвозвратно удалены."
 
 #: ../src/gdu-gtk/gdu-gtk.c:175
 msgctxt "application name"
@@ -2221,7 +2232,7 @@ msgstr "Не удалось отключить том"
 
 #: ../src/gdu-gtk/gdu-gtk.c:385
 msgid "One or more applications are using the volume. Quit the applications, and then try unmounting again."
-msgstr "Одно или несколько приложений используют этот том. Закройте приложения и попробуйте отключить том еще раз."
+msgstr "Одно или несколько приложений используют этот том. Закройте приложения и попробуйте отключить снова."
 
 #: ../src/gdu-gtk/gdu-gtk.c:426
 msgid "_Unmount"
@@ -2229,15 +2240,15 @@ msgstr "_Отключить"
 
 #: ../src/gdu-gtk/gdu-gtk.c:503
 msgid "Passphrases do not match"
-msgstr "Ключевые фразы не совпадают"
+msgstr "Пароли не совпадают"
 
 #: ../src/gdu-gtk/gdu-gtk.c:510
 msgid "Passphrases do not differ"
-msgstr "Ключевые фразы не отличаются"
+msgstr "Пароли не отличаются"
 
 #: ../src/gdu-gtk/gdu-gtk.c:516
 msgid "Passphrase can't be empty"
-msgstr "Ключевая фраза не может быть пустой"
+msgstr "Пустая строка не может быть паролем"
 
 #: ../src/gdu-gtk/gdu-gtk.c:590
 msgid "Cr_eate"
@@ -2246,7 +2257,7 @@ msgstr "С_оздать"
 #: ../src/gdu-gtk/gdu-gtk.c:592
 #: ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
-msgstr "Сменить ключевую фразу"
+msgstr "Сменить _пароль"
 
 #: ../src/gdu-gtk/gdu-gtk.c:594
 msgid "_Unlock"
@@ -2254,69 +2265,69 @@ msgstr "_Разблокировать"
 
 #: ../src/gdu-gtk/gdu-gtk.c:626
 msgid "To create an encrypted device, choose a passphrase to protect it"
-msgstr "Выберите ключевую фразу для защиты создаваемого зашифрованного устройства"
+msgstr "Задайте пароль для защиты создаваемого зашифрованного устройства"
 
 #: ../src/gdu-gtk/gdu-gtk.c:629
 msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr "Чтобы сменить ключевую фразу, введите обе ключевые фразы — и текущую, и новую"
+msgstr "Чтобы сменить пароль, введите оба пароля — текущий и новый"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
 msgid "Data on this device is stored in an encrypted form protected by a passphrase"
-msgstr "Данные на этом устройстве хранятся в зашифрованной форме, защищённые ключевой фразой"
+msgstr "Данные на этом устройстве хранятся в зашифрованном виде и защищены паролем"
 
 #: ../src/gdu-gtk/gdu-gtk.c:645
 msgid "Data on this device will be stored in an encrypted form protected by a passphrase."
-msgstr "Данные на этом устройстве будут храниться в зашифрованной форме, защищённые ключевой фразой"
+msgstr "Данные на этом устройстве будут храниться в зашифрованном виде и защищены паролем."
 
 #: ../src/gdu-gtk/gdu-gtk.c:648
 msgid "Data on this device is stored in an encrypted form protected by a passphrase."
-msgstr "Данные на этом устройстве хранятся в зашифрованной форме, защищённые ключевой фразой"
+msgstr "Данные на этом устройстве хранятся в зашифрованном виде и защищены паролем."
 
 #: ../src/gdu-gtk/gdu-gtk.c:651
 msgid "To make the data available for use, enter the passphrase for the device."
-msgstr "Чтобы сделать данные доступными для использования, введите ключевую фразу для устройства."
+msgstr "Чтобы сделать данные доступными для использования, введите пароль."
 
 #: ../src/gdu-gtk/gdu-gtk.c:660
 msgid "Incorrect Passphrase. Try again."
-msgstr "Некорректная ключевая фраза. Повторите попытку."
+msgstr "Неправильный пароль. Повторите попытку."
 
 #: ../src/gdu-gtk/gdu-gtk.c:684
 msgid "C_urrent Passphrase:"
-msgstr "_Текущая ключевая фраза:"
+msgstr "_Текущий пароль:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_New Passphrase:"
-msgstr "_Новая ключева фраза:"
+msgstr "_Новый пароль:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:711
 msgid "_Verify Passphrase:"
-msgstr "_Повтор ключевой фразы:"
+msgstr "По_втор пароля:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:753
 msgid "_Passphrase:"
-msgstr "_Ключевая фраза:"
+msgstr "_Пароль:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:768
 msgid "_Forget passphrase immediately"
-msgstr "_Забыть ключевую фразу незамедлительно"
+msgstr "_Незамедлительно забыть пароль"
 
 #: ../src/gdu-gtk/gdu-gtk.c:771
 msgid "Remember passphrase until you _log out"
-msgstr "Помнить ключевую фразу только _между сеансами"
+msgstr "Запоминать пароль только _до завершения сеанса"
 
 #: ../src/gdu-gtk/gdu-gtk.c:774
 msgid "_Remember forever"
-msgstr "Помнить _всегда"
+msgstr "_Запомнить навсегда"
 
 #: ../src/gdu-gtk/gdu-gtk.c:837
 msgid "Enter Passphrase"
-msgstr "Введите ключевую фразу"
+msgstr "Введите пароль"
 
 #: ../src/gdu-gtk/gdu-gtk.c:966
 #: ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
-msgstr "Ключевая фраза LUKS для UUID %s"
+msgstr "Пароль LUKS для UUID %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1268
 msgid "Empty (don't create a file system)"
@@ -2334,7 +2345,7 @@ msgstr "Расширенный раздел"
 #: ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
-msgstr "Главная загрузочная запись"
+msgstr "Таблица разделов MBR"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu-gtk/gdu-gtk.c:1561
@@ -2343,11 +2354,11 @@ msgstr "Главная загрузочная запись"
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
-msgstr "Таблицы разделов GUID"
+msgstr "Таблица разделов GUID"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1566
 msgid "Don't partition"
-msgstr "Не размечать"
+msgstr "Без разметки"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1571
 #: ../src/gdu/gdu-util.c:495
@@ -2358,11 +2369,11 @@ msgstr "Таблица разделов Apple"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:100
 msgid "Partitioning Scheme"
-msgstr "Схема разбиения"
+msgstr "Таблица разделов"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:101
 msgid "The selected partitioning scheme"
-msgstr "Выбранная схема разбиения"
+msgstr "Выбранная таблица разделов"
 
 #. Translators: 'scheme' means 'partitioning scheme' here.
 #: ../src/gdu-gtk/gdu-partition-dialog.c:250
@@ -2370,7 +2381,7 @@ msgid "_Scheme:"
 msgstr "_Схема:"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:89
-msgid "KB"
+msgid "kB"
 msgstr "КБ"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:95
@@ -2442,43 +2453,43 @@ msgstr[0] "%d час назад"
 msgstr[1] "%d часа назад"
 msgstr[2] "%d часов назад"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:504
+#: ../src/gdu-gtk/gdu-volume-grid.c:489
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
-msgstr "Диск"
+msgstr "Устройство"
 
-#: ../src/gdu-gtk/gdu-volume-grid.c:505
+#: ../src/gdu-gtk/gdu-volume-grid.c:490
 msgid "Drive to show volumes for"
 msgstr "Показать тома диска"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
-#: ../src/gdu-gtk/gdu-volume-grid.c:1195
+#: ../src/gdu-gtk/gdu-volume-grid.c:1175
 msgid "RAID Array is not running"
-msgstr "RAID-массив не запущен"
+msgstr "Массив RAID не запущен"
 
 #. Translators: This is shown in the grid for a drive when no media has been detected
 #. Translators: This string is used as a description text when no media has
 #. * been detected for a drive
 #.
-#: ../src/gdu-gtk/gdu-volume-grid.c:1198
+#: ../src/gdu-gtk/gdu-volume-grid.c:1178
 #: ../src/gdu/gdu-drive.c:819
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
-msgstr "Носитель не обнаружен"
+msgstr "Носитель отсутствует"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
-#: ../src/gdu-gtk/gdu-volume-grid.c:1283
+#: ../src/gdu-gtk/gdu-volume-grid.c:1263
 msgid "Extended"
 msgstr "Расширенный"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
-#: ../src/gdu-gtk/gdu-volume-grid.c:1291
+#: ../src/gdu-gtk/gdu-volume-grid.c:1271
 msgid "Encrypted"
 msgstr "Зашифрованный"
 
 #. Translators: shown in the grid for an RAID Component
-#: ../src/gdu-gtk/gdu-volume-grid.c:1305
+#: ../src/gdu-gtk/gdu-volume-grid.c:1285
 #: ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
@@ -2486,9 +2497,9 @@ msgid "RAID Component"
 msgstr "Компонент RAID"
 
 #. Translators: shown for free/unallocated space
-#: ../src/gdu-gtk/gdu-volume-grid.c:1313
+#: ../src/gdu-gtk/gdu-volume-grid.c:1293
 msgid "Free"
-msgstr "Свободный"
+msgstr "Свободно"
 
 #. Translators: this is a verb
 #: ../src/nautilus-extension/nautilus-gdu.c:223
@@ -2522,12 +2533,12 @@ msgstr "SecureDigital"
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:585
 msgid "SD High Capacity"
-msgstr "SD High Capacity"
+msgstr "SD HC"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:588
 msgid "Floppy"
-msgstr "Дискета"
+msgstr "Дисковод гибких дисков"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:591
@@ -2573,13 +2584,12 @@ msgid "HDDVD"
 msgstr "HDDVD"
 
 #. Translators: This is the name of a "Drive" backed by a file.
-#. * The %s is the size of the file (e.g. "42 GB" or "5 KB").
+#. * The %s is the size of the file (e.g. "42 GB" or "5 kB").
 #. *
 #. * See e.g. http://people.freedesktop.org/~david/gnome-loopback-2.png
 #.
 #: ../src/gdu/gdu-drive.c:689
 #, c-format
-#| msgid "%s Free"
 msgid "%s File"
 msgstr "Файл %s"
 
@@ -2619,14 +2629,14 @@ msgstr "Жёсткий диск"
 #: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
-msgstr "%s диск SSD"
+msgstr "%s твердотельный диск"
 
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
 #: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
-msgstr "Диск SSD"
+msgstr "Твердотельный диск"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
@@ -2640,7 +2650,7 @@ msgstr "%s носитель"
 #: ../src/gdu/gdu-drive.c:830
 #: ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
-msgstr "MBR таблицы разделов"
+msgstr "Таблица разделов MBR"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu/gdu-drive.c:836
@@ -2739,12 +2749,12 @@ msgstr "%s свободно"
 #: ../src/palimpsest/gdu-section-volumes.c:2209
 #: ../src/palimpsest/gdu-section-volumes.c:2217
 msgid "Unallocated Space"
-msgstr "Нераспределённое место"
+msgstr "Нераспределённое пространство"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
 msgid "LVM2 VG Unallocated Space"
-msgstr "Нераспределённое место группы томов LVM2"
+msgstr "Нераспределённое пространство группы томов LVM2"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
@@ -2768,7 +2778,7 @@ msgstr "Массив %s"
 #: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
 msgid "RAID Array %s (%s)"
-msgstr "RAID-массив %s (%s)"
+msgstr "Массив RAID %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
 #: ../src/gdu/gdu-linux-md-drive.c:605
@@ -2785,17 +2795,17 @@ msgstr "RAID"
 #: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
-msgstr "RAID-массив"
+msgstr "Массив RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1114
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
-msgstr "Не присоединён"
+msgstr "Не подключён"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr "Неисправный"
+msgstr "Неисправен"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
@@ -2854,7 +2864,7 @@ msgstr "Периферийные устройства"
 
 #: ../src/gdu/gdu-pool.c:908
 msgid "USB, FireWire and other peripherals"
-msgstr "USB, FireWire и другая периферия"
+msgstr "USB, FireWire и другие периферийные устройства"
 
 #: ../src/gdu/gdu-pool.c:2092
 #, c-format
@@ -2928,7 +2938,7 @@ msgstr "Неожиданный вывод из стандартного пото
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr "Ошибка при передаче секретных данных авторизации: %s"
+msgstr "Ошибка передачи секретных данных авторизации: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
 #, c-format
@@ -2952,7 +2962,7 @@ msgstr "Программе udisks-tcp-bridge не удалось подтвер�
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
 #.
-#. Translators: The first %s is the size in power-of-10 units, e.g. '100 KB'
+#. Translators: The first %s is the size in power-of-10 units, e.g. '100 kB'
 #. * the second %s is the size as a number e.g. '100,000 bytes'
 #.
 #: ../src/gdu/gdu-util.c:131
@@ -3134,7 +3144,7 @@ msgstr "iso9660"
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:316
 msgid "Universal Disk Format"
-msgstr "Universal Disk Format"
+msgstr "UDF"
 
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:319
@@ -3144,7 +3154,7 @@ msgstr "udf"
 #: ../src/gdu/gdu-util.c:323
 #: ../src/palimpsest/gdu-section-volumes.c:2191
 msgid "Swap Space"
-msgstr "Область подкачки (swap)"
+msgstr "Область подкачки"
 
 #. Translators: filesystem type for swap space
 #: ../src/gdu/gdu-util.c:326
@@ -3236,43 +3246,43 @@ msgstr "Назначение метки устройства"
 
 #: ../src/gdu/gdu-util.c:393
 msgid "Changing Passphrase for Encrypted LUKS Device"
-msgstr "Изменение ключевой фразы зашифрованного устройства LUKS"
+msgstr "Изменение пароля зашифрованного устройства LUKS"
 
 #: ../src/gdu/gdu-util.c:395
 msgid "Adding Component to RAID Array"
-msgstr "Добавление компонента в RAID-массив"
+msgstr "Добавление компонента в массив RAID"
 
 #: ../src/gdu/gdu-util.c:397
 msgid "Removing Component from RAID Array"
-msgstr "Удаление компонента из RAID-массива"
+msgstr "Удаление компонента из массива RAID"
 
 #: ../src/gdu/gdu-util.c:399
 msgid "Stopping RAID Array"
-msgstr "Остановка RAID-массива"
+msgstr "Остановка массива RAID"
 
 #: ../src/gdu/gdu-util.c:401
 msgid "Starting RAID Array"
-msgstr "Запуск RAID-массива"
+msgstr "Запуск массива RAID"
 
 #: ../src/gdu/gdu-util.c:403
 msgid "Checking RAID Array"
-msgstr "Проверка RAID-массива"
+msgstr "Проверка массива RAID"
 
 #: ../src/gdu/gdu-util.c:405
 msgid "Repairing RAID Array"
-msgstr "Восстановление RAID-массива"
+msgstr "Восстановление массива RAID"
 
 #: ../src/gdu/gdu-util.c:407
 msgid "Running Short SMART Self-Test"
-msgstr "Короткий SMART-тест"
+msgstr "Обычная самодиагностика"
 
 #: ../src/gdu/gdu-util.c:409
 msgid "Running Extended SMART Self-Test"
-msgstr "Продолжительный SMART-тест"
+msgstr "Расширенная самодиагностика"
 
 #: ../src/gdu/gdu-util.c:411
 msgid "Running Conveyance SMART Self-Test"
-msgstr "Конвейерный SMART-тест"
+msgstr "Диагностика устройства на повреждения, возникшие при транспортировке"
 
 #: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
@@ -3280,7 +3290,7 @@ msgstr "Извлечение носителя"
 
 #: ../src/gdu/gdu-util.c:415
 msgid "Detaching Device"
-msgstr "Отключение устройства"
+msgstr "Отсоединение устройства"
 
 #: ../src/gdu/gdu-util.c:417
 msgid "Forcibly Unmounting Filesystem"
@@ -3303,7 +3313,7 @@ msgstr "Раздел Linux RAID"
 
 #: ../src/gdu/gdu-util.c:437
 msgid "Linux Swap Partition"
-msgstr "Раздел Linux Swap"
+msgstr "Раздел подкачки Linux"
 
 #: ../src/gdu/gdu-util.c:438
 msgid "Linux LVM Partition"
@@ -3316,7 +3326,7 @@ msgstr "Зарезервированный раздел Linux"
 #. Not associated with any OS
 #: ../src/gdu/gdu-util.c:441
 msgid "MBR Partition Scheme"
-msgstr "Схема разделов MBR"
+msgstr "Таблица разделов MBR"
 
 #: ../src/gdu/gdu-util.c:442
 msgid "EFI System Partition"
@@ -3346,7 +3356,7 @@ msgstr "Раздел данных Microsoft LDM"
 
 #: ../src/gdu/gdu-util.c:449
 msgid "Microsoft Windows Recovery Environment"
-msgstr "Среда восстановления Microsoft Windows (WinRE)"
+msgstr "Раздел восстановления Microsoft Windows"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:451
@@ -3397,7 +3407,7 @@ msgstr "Раздел подкачки Solaris"
 
 #: ../src/gdu/gdu-util.c:464
 msgid "Solaris Backup Partition"
-msgstr "Резервный раздел Solaris"
+msgstr "Раздел восстановления Solaris"
 
 #: ../src/gdu/gdu-util.c:465
 msgid "Solaris /usr Partition"
@@ -3703,31 +3713,31 @@ msgstr "Неизвестный (%s)"
 
 #: ../src/gdu/gdu-util.c:582
 msgid "A popular format compatible with almost any device or system, typically used for file exchange."
-msgstr "Популярный формат, совместимый почти со всеми устройствами и системами, в основном используется для обмена файлами."
+msgstr "Файловая система, совместимая почти со всеми устройствами и операционными системами. Обычно используется на сменных носителях."
 
 #: ../src/gdu/gdu-util.c:586
 msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support. This file system does not use a journal."
-msgstr "Эта файловая система совместима только с системами Linux и предоставляет поддержку классической для систем UNIX прав доступа к файлам. Эта файловая система не использует журнал."
+msgstr "Эта файловая система совместима только с системами Linux. Предоставляет поддержку классических для систем UNIX прав доступа к файлам. Не использует журналирование."
 
 #: ../src/gdu/gdu-util.c:592
 msgid "This file system is compatible with Linux systems only and provides classic UNIX file permissions support."
-msgstr "Эта файловая система совместима только с системами Linux и предоставляет поддержку классической для систем UNIX прав доступа к файлам."
+msgstr "Эта файловая система совместима только с системами Linux. Предоставляет поддержку классических для систем UNIX прав доступа к файлам."
 
 #: ../src/gdu/gdu-util.c:596
 msgid "Swap area used by the operating system for virtual memory."
-msgstr "Область подкачки, используемая операционной системой как виртуальная память."
+msgstr "Область подкачки. Используется операционной системой как виртуальная память, а также для хранения содержимого оперативной памяти в спящем режиме."
 
 #: ../src/gdu/gdu-util.c:599
 msgid "The native Windows file system. Not widely compatible with other operating systems than Windows."
-msgstr "Оригинальная файловая система Windows. Не очень хорошо совместима с операционными системами, отличными от Windows."
+msgstr "Файловая система Windows. Поддерживается другими операционными системами не полностью."
 
 #: ../src/gdu/gdu-util.c:603
 msgid "Simple filesystem with low overhead and UNIX permissions support. Not widely compatible with operating systems other than Linux and Minix."
-msgstr "Простая файловая система с низкими накладными расходами и поддержкой прав доступа UNIX. Не является широко совместимой с ОС, отличными от Linux и Minix."
+msgstr "Файловая система, совместимая с системами Linux и Minix. Предоставляет поддержку классических для систем UNIX прав доступа к файлам."
 
 #: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
-msgstr "Ни одна файловая система не будет создана."
+msgstr "Будет создан раздел без файловой системы."
 
 #: ../src/gdu/gdu-util.c:610
 msgid "Create an Extended Partition for logical partitions."
@@ -3735,23 +3745,23 @@ msgstr "Создать расширенный раздел для логичес
 
 #: ../src/gdu/gdu-util.c:623
 msgid "The Master Boot Record scheme is compatible with almost any device or system but has a number of limitations with respect to disk size and number of partitions."
-msgstr "Схема главной загрузочной записи (MBR) совместима почти с любым устройством или системой, но имеет ряд ограничений на размер диска и число разделов."
+msgstr "Таблица разделов MBR совместима с любыми устройствами и системами. Имеет ряд ограничений на число и размер разделов. Все ещё является стандартом для большинства персональных компьютеров. В будущем будет заменена на таблицу разделов GUID."
 
 #: ../src/gdu/gdu-util.c:628
 msgid "A legacy scheme that is incompatible with most systems except Apple systems and most Linux systems. Not recommended for removable media."
-msgstr "Схема с наследованием, которая несовместима с большинством систем, за исключением систем Apple и большинства систем Linux. Не рекомендуется для сменных носителей."
+msgstr "Таблица разделов Apple несовместима с большинством систем, за исключением систем Apple и некоторых систем Linux. Не рекомендуется для использования на современных персональных компьютерах. Является устаревшей и более нигде не используется. На её смену пришла таблица разделов GUID."
 
 #: ../src/gdu/gdu-util.c:633
 msgid "The GUID scheme is compatible with most modern systems but may be incompatible with some devices and legacy systems."
-msgstr "GUID-cхема совместима с большинством современных систем, но может быть несовместима с некоторыми устройствами и системами с наследованием."
+msgstr "Таблица разделов GUID совместима с большинством современных систем, но несовместима с устаревшими устройствами и системами. Является стандартом для компьютеров Apple."
 
 #: ../src/gdu/gdu-util.c:637
 msgid "Marks the entire disk as unused. Use this option only if you want to avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
-msgstr "Помечает весь диск как неиспользуемый. Используйте этот параметр, только если хотите исключить разметку диска, например для использования всего диска или для дискет и дисков Zip."
+msgstr "Помечает всё пространство диска как пустое, без разметки. Используйте эту опцию, если хотите заполнить всё пространство диска одним разделом."
 
 #: ../src/gdu/gdu-util.c:888
 #, c-format
-msgid "%.1f KB/s"
+msgid "%.1f kB/s"
 msgstr "%.1f КБ/с"
 
 #: ../src/gdu/gdu-util.c:891
@@ -3829,7 +3839,7 @@ msgstr "%s с %s"
 #: ../src/gdu/gdu-util.c:969
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
-msgstr "Stripe (RAID-0)"
+msgstr "Чередование (RAID-0)"
 
 #: ../src/gdu/gdu-util.c:971
 msgctxt "RAID level"
@@ -3839,7 +3849,7 @@ msgstr "RAID-0"
 #: ../src/gdu/gdu-util.c:974
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
-msgstr "Mirror (RAID-1)"
+msgstr "Зеркалирование (RAID-1)"
 
 #: ../src/gdu/gdu-util.c:976
 msgctxt "RAID level"
@@ -3849,7 +3859,7 @@ msgstr "RAID-1"
 #: ../src/gdu/gdu-util.c:979
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
-msgstr "Parity Disk (RAID-4)"
+msgstr "Контроль чётности (RAID-4)"
 
 #: ../src/gdu/gdu-util.c:981
 msgctxt "RAID level"
@@ -3859,7 +3869,7 @@ msgstr "RAID-4"
 #: ../src/gdu/gdu-util.c:984
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
-msgstr "Distributed Parity (RAID-5)"
+msgstr "Распределённый контроль чётности (RAID-5)"
 
 #: ../src/gdu/gdu-util.c:986
 msgctxt "RAID level"
@@ -3869,7 +3879,7 @@ msgstr "RAID-5"
 #: ../src/gdu/gdu-util.c:989
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
-msgstr "Dual Distributed Parity (RAID-6)"
+msgstr "Двойной распределённый контроль чётности (RAID-6)"
 
 #: ../src/gdu/gdu-util.c:991
 msgctxt "RAID level"
@@ -3879,7 +3889,7 @@ msgstr "RAID-6"
 #: ../src/gdu/gdu-util.c:994
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
-msgstr "Stripe of Mirrors (RAID-10)"
+msgstr "Чередование с зеркалированием (RAID-10)"
 
 #: ../src/gdu/gdu-util.c:996
 msgctxt "RAID level"
@@ -3906,15 +3916,15 @@ msgstr "Установка с зеркалированием без контро
 
 #: ../src/gdu/gdu-util.c:1023
 msgid "Striped set with parity on a single disk. Provides improved performance and fault tolerance. RAID-4 arrays can sustain a single disk failure."
-msgstr "Простая установка с контролем чётности на одном диске. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-4 устойчивы к отказам одного из дисков."
+msgstr "Чередование с контролем чётности на одном диске. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-4 выдерживают отказ одного из дисков."
 
 #: ../src/gdu/gdu-util.c:1027
 msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-5 arrays can sustain a single disk failure."
-msgstr "Простая установка с распределённым контролем чётности. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-5 устойчивы к отказу одного из дисков."
+msgstr "Чередование с распределённым контролем чётности. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-5 выдерживают отказ одного из дисков."
 
 #: ../src/gdu/gdu-util.c:1031
 msgid "Striped set with dual distributed parity. Provides improved performance and fault tolerance. RAID-6 arrays can sustain two disk failures."
-msgstr "Простая установка с двойным распределённым контролем чётности. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-6 устойчивы к отказу двух дисков сразу."
+msgstr "Чередование с двойным распределённым контролем чётности. Предоставляет высокую производительность и устойчивость к отказам. Массивы RAID-6 выдерживают отказ двух дисков сразу."
 
 #: ../src/gdu/gdu-util.c:1035
 msgid "Striped set with distributed parity. Provides improved performance and fault tolerance. RAID-10 arrays can sustain multiple drive losses so long as no mirror loses all its drives."
@@ -3928,7 +3938,7 @@ msgstr "Неизвестный уровень RAID: %s"
 #. Translators: Overall description of the GOOD status
 #: ../src/gdu/gdu-util.c:1077
 msgid "Disk is healthy"
-msgstr "Диск исправен"
+msgstr "Исправен"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
 #: ../src/gdu/gdu-util.c:1081
@@ -3938,7 +3948,7 @@ msgstr "В прошлом диск использовался с нештатн�
 #. Translators: Overall description of the BAD_SECTOR status
 #: ../src/gdu/gdu-util.c:1085
 msgid "Disk has a few bad sectors"
-msgstr "На диске несколько битых секторов."
+msgstr "Есть битые секторы"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
 #: ../src/gdu/gdu-util.c:1089
@@ -3957,7 +3967,7 @@ msgstr "Создайте резервную копию данных и заме�
 #. Translators: Overall description of the BAD_SECTOR_MANY status
 #: ../src/gdu/gdu-util.c:1096
 msgid "DISK HAS MANY BAD SECTORS"
-msgstr "НА ДИСКЕ МНОГО БИТЫХ СЕКТОРОВ"
+msgstr "Много битых секторов"
 
 #. Translators: Overall description of the BAD_STATUS status
 #: ../src/gdu/gdu-util.c:1103
@@ -4109,7 +4119,7 @@ msgstr "Диск MRW"
 
 #: ../src/gdu/gdu-volume.c:97
 msgid "Blank MRW Disc"
-msgstr "Чистый диск MRW/W"
+msgstr "Чистый диск MRW"
 
 #: ../src/gdu/gdu-volume.c:98
 msgid "MRW/W Disc"
@@ -4153,7 +4163,7 @@ msgstr "Оптический диск"
 #: ../src/gdu/gdu-volume.c:336
 #, c-format
 msgid "%s Filesystem"
-msgstr "Файловая система %s"
+msgstr "Диск %s"
 
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
@@ -4267,7 +4277,7 @@ msgstr "Том занимает весь диск"
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
 msgid "It's now safe to remove \"%s\"."
-msgstr "Теперь «%s» извлечь безопасно."
+msgstr "Теперь «%s» можно безопасно извлечь."
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:231
@@ -4279,19 +4289,28 @@ msgstr "Запись данных на «%s»…"
 msgid "To prevent data loss, wait until this has finished before removing media or disconnecting the device."
 msgstr "Во избежание потери данных не извлекайте носитель и не отключайте устройство до завершения операции."
 
-#: ../src/notification/notification-main.c:170
-msgid "One or more disks are failing"
-msgstr "Один или несколько дисков дают сбои"
-
 #. Translators: This is used as the title of the notification
-#: ../src/notification/notification-main.c:535
-msgid "A hard disk may be failing"
-msgstr "Жёсткий диск может быть со сбоями"
+#: ../src/notification/notification-main.c:478
+#: ../src/notification/notification-main.c:496
+msgid "Hard Disk Problems Detected"
+msgstr "В работе жёсткого диска обнаружены неполадки"
 
-#. Translators: This is used as the text of the notification
-#: ../src/notification/notification-main.c:537
-msgid "One or more hard disks report health problems. Click the icon to get more information."
-msgstr "Один или несколько жёстких дисков имеют проблемы. Для получения более подробной информации, щёлкните по значку."
+#: ../src/notification/notification-main.c:481
+#: ../src/notification/notification-main.c:499
+msgid "A hard disk is reporting health problems."
+msgstr "Жёсткий диск сообщает о неполадках."
+
+#: ../src/notification/notification-main.c:482
+msgid "Multiple system hard disks are reporting health problems."
+msgstr "Несколько системных жёстких дисков сообщают о неполадках."
+
+#: ../src/notification/notification-main.c:489
+msgid "Examine"
+msgstr "Проверить"
+
+#: ../src/notification/notification-main.c:500
+msgid "Multiple hard disks are reporting health problems."
+msgstr "Несколько жёстких дисков сообщают о неполадках."
 
 #: ../src/palimpsest/gdu-main.c:127
 msgid "Volume to show"
@@ -4299,7 +4318,7 @@ msgstr "Показать том"
 
 #: ../src/palimpsest/gdu-main.c:128
 msgid "Drive to show"
-msgstr "Показать привод"
+msgstr "Показать устройство"
 
 #: ../src/palimpsest/gdu-section-drive.c:148
 msgid "Multipath Drive"
@@ -4313,7 +4332,7 @@ msgstr "Многопутевой диск"
 #: ../src/palimpsest/gdu-section-drive.c:189
 #, c-format
 msgid "PHY %d of %s"
-msgstr "PHY %d из %s"
+msgstr "PHY %d на %s"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a Adapter or Expander - The %d is the
@@ -4323,7 +4342,7 @@ msgstr "PHY %d из %s"
 #: ../src/palimpsest/gdu-section-drive.c:196
 #, c-format
 msgid "Port %d of %s"
-msgstr "Раздел %d на %s"
+msgstr "Порт %d на %s"
 
 #: ../src/palimpsest/gdu-section-drive.c:261
 msgctxt "Write Cache"
@@ -4347,141 +4366,141 @@ msgstr "%d об/мин"
 #: ../src/palimpsest/gdu-section-drive.c:281
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
-msgstr "Твердотельный диск (SSD)"
+msgstr "Твердотельный диск"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
 #: ../src/palimpsest/gdu-section-drive.c:296
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:259
 #, c-format
 msgid "Unknown Scheme: %s"
-msgstr "Неизвестная схема: %s"
+msgstr "Неизвестная таблица разделов: %s"
 
-#: ../src/palimpsest/gdu-section-drive.c:439
-#: ../src/palimpsest/gdu-section-drive.c:459
+#: ../src/palimpsest/gdu-section-drive.c:442
+#: ../src/palimpsest/gdu-section-drive.c:462
 msgid "Error launching Brasero"
 msgstr "Ошибка запуска Brasero"
 
-#: ../src/palimpsest/gdu-section-drive.c:440
+#: ../src/palimpsest/gdu-section-drive.c:443
 msgid "The application is not installed"
 msgstr "Приложение не установлено"
 
-#: ../src/palimpsest/gdu-section-drive.c:521
+#: ../src/palimpsest/gdu-section-drive.c:523
 msgid "Error ejecting medium"
 msgstr "Ошибка извлечения носителя"
 
-#: ../src/palimpsest/gdu-section-drive.c:565
+#: ../src/palimpsest/gdu-section-drive.c:567
 msgid "Error detaching drive"
 msgstr "Ошибка отключения диска"
 
-#: ../src/palimpsest/gdu-section-drive.c:610
+#: ../src/palimpsest/gdu-section-drive.c:612
 msgid "Error formatting drive"
 msgstr "Ошибка форматирования диска"
 
-#: ../src/palimpsest/gdu-section-drive.c:648
+#: ../src/palimpsest/gdu-section-drive.c:650
 msgid "Are you sure you want to format the drive?"
 msgstr "Действительно отформатировать диск?"
 
-#: ../src/palimpsest/gdu-section-drive.c:835
+#: ../src/palimpsest/gdu-section-drive.c:837
 msgid "<b>WARNING:</b> Several paths to this drive has been detected but no corresponding multipath device was found. Your OS may be misconfigured."
-msgstr "<b>ВНИМАНИЕ:</b> Обнаружено несколько путей к этому диску, но соответствующего многопутевого устройства не обнаружено. Возможно, ОС неправильно настроена."
+msgstr "<b>ВНИМАНИЕ:</b> Обнаружено несколько путей к этому диску, но соответствующего многопутевого устройства не обнаружено. Возможно, ОС настроена неправильно."
 
-#: ../src/palimpsest/gdu-section-drive.c:850
+#: ../src/palimpsest/gdu-section-drive.c:852
 msgid "Go to Multipath Device"
 msgstr "Перейти к многопутевому устройству"
 
-#: ../src/palimpsest/gdu-section-drive.c:861
+#: ../src/palimpsest/gdu-section-drive.c:863
 msgid "<b>NOTE:</b> This object represents one of several paths to the drive. To perform operations on the drive, use the corresponding multipath object."
 msgstr "<b>ПРИМЕЧАНИЕ:</b> Этот объект представляет один из нескольких путей к диску. Чтобы выполнить операции на диске, используйте соответствующий многопутевой объект."
 
-#: ../src/palimpsest/gdu-section-drive.c:890
+#: ../src/palimpsest/gdu-section-drive.c:892
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Model:"
 msgstr "Модель:"
 
-#: ../src/palimpsest/gdu-section-drive.c:894
+#: ../src/palimpsest/gdu-section-drive.c:896
 msgid "Serial Number:"
 msgstr "Серийный номер:"
 
-#: ../src/palimpsest/gdu-section-drive.c:898
+#: ../src/palimpsest/gdu-section-drive.c:900
 msgid "Firmware Version:"
 msgstr "Версия прошивки:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
-#: ../src/palimpsest/gdu-section-drive.c:903
+#: ../src/palimpsest/gdu-section-drive.c:905
 msgid "World Wide Name:"
-msgstr "Всемирный идентификатор:"
+msgstr "Серийный идентификатор WWN:"
 
-#: ../src/palimpsest/gdu-section-drive.c:907
+#: ../src/palimpsest/gdu-section-drive.c:909
 msgid "Location:"
 msgstr "Расположение:"
 
-#: ../src/palimpsest/gdu-section-drive.c:915
+#: ../src/palimpsest/gdu-section-drive.c:917
 msgid "Write Cache:"
 msgstr "Кэш записи:"
 
-#: ../src/palimpsest/gdu-section-drive.c:919
+#: ../src/palimpsest/gdu-section-drive.c:921
 msgid "Rotation Rate:"
 msgstr "Скорость вращения:"
 
-#: ../src/palimpsest/gdu-section-drive.c:923
+#: ../src/palimpsest/gdu-section-drive.c:925
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
 msgstr "Объём:"
 
-#: ../src/palimpsest/gdu-section-drive.c:927
+#: ../src/palimpsest/gdu-section-drive.c:929
 msgid "Connection:"
 msgstr "Подключение:"
 
-#: ../src/palimpsest/gdu-section-drive.c:931
+#: ../src/palimpsest/gdu-section-drive.c:933
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
-msgstr "Разбиение:"
+msgstr "Тип разметки:"
 
-#: ../src/palimpsest/gdu-section-drive.c:954
+#: ../src/palimpsest/gdu-section-drive.c:956
 msgid "Open CD/_DVD Application"
-msgstr "_Открыть приложение CD/DVD"
+msgstr "Открыть прило_жение для записи CD и DVD"
 
-#: ../src/palimpsest/gdu-section-drive.c:955
+#: ../src/palimpsest/gdu-section-drive.c:957
 msgid "Create and copy CDs and DVDs"
-msgstr "Создать и скопировать CD и DVD"
+msgstr "Запуск приложения для записи и копирования CD и DVD дисков"
 
-#: ../src/palimpsest/gdu-section-drive.c:964
+#: ../src/palimpsest/gdu-section-drive.c:966
 msgid "Format _Drive"
-msgstr "Форматировать _диск"
+msgstr "Ф_орматировать устройство"
 
-#: ../src/palimpsest/gdu-section-drive.c:965
+#: ../src/palimpsest/gdu-section-drive.c:967
 msgid "Erase or partition the drive"
-msgstr "Стереть или разбить диск"
+msgstr "Удаление данных о разметке диска и изменение таблицы разделов"
 
-#: ../src/palimpsest/gdu-section-drive.c:974
+#: ../src/palimpsest/gdu-section-drive.c:976
 msgid "SM_ART Data"
 msgstr "_Данные SMART"
 
-#: ../src/palimpsest/gdu-section-drive.c:975
+#: ../src/palimpsest/gdu-section-drive.c:977
 msgid "View SMART data and run self-tests"
-msgstr "Просмотреть данные SMART и запустить самопроверку"
+msgstr "Просмотр данных SMART и проведение самодиагностики устройства"
 
-#: ../src/palimpsest/gdu-section-drive.c:984
+#: ../src/palimpsest/gdu-section-drive.c:986
 msgid "_Eject"
-msgstr "_Извлечь"
+msgstr "Извле_чь"
 
-#: ../src/palimpsest/gdu-section-drive.c:985
+#: ../src/palimpsest/gdu-section-drive.c:987
 msgid "Eject medium from the drive"
-msgstr "Извлечь носитель из привода"
+msgstr "Извлечение носителя из привода"
 
-#: ../src/palimpsest/gdu-section-drive.c:994
+#: ../src/palimpsest/gdu-section-drive.c:996
 msgid "Safe Rem_oval"
 msgstr "_Безопасное отключение"
 
-#: ../src/palimpsest/gdu-section-drive.c:995
+#: ../src/palimpsest/gdu-section-drive.c:997
 msgid "Power down the drive so it can be removed"
-msgstr "Выключить питание диска, чтобы его можно было извлечь"
+msgstr "Отключение питания устройства для безопасного извлечения"
 
-#: ../src/palimpsest/gdu-section-drive.c:1005
+#: ../src/palimpsest/gdu-section-drive.c:1007
 msgid "Measure drive performance"
-msgstr "Измерить производительность диска"
+msgstr "Измерение производительности устройства"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -4514,11 +4533,11 @@ msgstr "Модификация:"
 
 #: ../src/palimpsest/gdu-section-hub.c:233
 msgid "Driver:"
-msgstr "Драйвер:"
+msgstr "Режим:"
 
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Fabric:"
-msgstr "Fabric:"
+msgstr "Тип порта:"
 
 #: ../src/palimpsest/gdu-section-hub.c:241
 msgid "Number of Ports:"
@@ -4546,11 +4565,11 @@ msgstr "Ошибка добавления физического тома в г�
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
 msgid "Error creating PV for VG"
-msgstr "Ошибка создания тома для группы томов"
+msgstr "Ошибка создания физического тома для группы томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:380
 msgid "Error deleting partition for Physical Volume in Volume Group"
-msgstr "Ошибка удаления раздела физического тома в группе томов"
+msgstr "Ошибка удаления физического тома в группе томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:403
 msgid "Error removing Physical Volume from Volume Group"
@@ -4558,7 +4577,7 @@ msgstr "Ошибка удаления физического тома из гр�
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:476
 msgid "Are you sure you want the remove the Physical Volume?"
-msgstr "Действительно удалить физический том?"
+msgstr "Уверены, что хотите удалить физический том?"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
@@ -4609,15 +4628,15 @@ msgstr "Включить все тома в группе томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:716
 msgid "St_op Volume Group"
-msgstr "_Остановить группу томов"
+msgstr "_Отключить группу томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:717
 msgid "Deactivate all LVs in the VG"
-msgstr "Выключить все логические тома в группе"
+msgstr "Выключить все логические тома в группе томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:727
 msgid "Edit _Name"
-msgstr "Изм_енить название"
+msgstr "Изменить _название"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:728
 msgid "Change the Volume Group name"
@@ -4625,7 +4644,7 @@ msgstr "Изменить название группы томов"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:737
 msgid "Edit _Physical Volumes"
-msgstr "Из_менить физические тома"
+msgstr "Изменить _физические тома"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:738
 msgid "Create and remove PVs"
@@ -4689,25 +4708,25 @@ msgstr "Проверка"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:137
 msgctxt "RAID action"
 msgid "Idle"
-msgstr "Простой"
+msgstr "Простаивает"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:315
 msgid "Error stopping RAID Array"
-msgstr "Ошибка при остановке RAID-массива"
+msgstr "Ошибка отключения массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:360
 msgid "Error starting RAID Array"
-msgstr "Ошибка при запуске RAID-массива"
+msgstr "Ошибка запуска массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:390
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:393
 #, c-format
 msgid "Not enough components available to start the RAID Array"
-msgstr "Недостаточно компонентов для запуска RAID-массива"
+msgstr "Недостаточно доступных компонентов для запуска массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:409
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "Действительно хотите, чтобы RAID-массив был в ухудшенном состоянии?"
+msgstr "Действительно допустить ухудшение состояния массива RAID?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
@@ -4715,11 +4734,11 @@ msgstr "_Запустить"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:455
 msgid "Error deleting partition for component in RAID Array"
-msgstr "Ошибка при удалении раздела для компонента в массиве RAID"
+msgstr "Ошибка удаления раздела для компонента в массиве RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:478
 msgid "Error removing component from RAID Array"
-msgstr "Ошибка при удалении компонента из RAID-массива"
+msgstr "Ошибка удаления компонента из массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:529
 msgid "Are you sure you want the remove the component?"
@@ -4728,20 +4747,20 @@ msgstr "Действительно удалить компонент?"
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:566
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:650
 msgid "Error adding component to RAID Array"
-msgstr "Ошибка при добавлении компонентов в RAID-массив"
+msgstr "Ошибка добавления компонентов в массив RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:683
 #: ../src/palimpsest/gdu-shell.c:598
 msgid "Error creating component for RAID array"
-msgstr "Ошибка при создании компонента для RAID-массива"
+msgstr "Ошибка создания компонента для массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:722
 msgid "Error expanding RAID Array"
-msgstr "Ошибка при расширении RAID-массива"
+msgstr "Ошибка при расширении массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:883
 msgid "Error checking RAID Array"
-msgstr "Ошибка при проверке RAID-массива"
+msgstr "Ошибка при проверке массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:958
 msgid "Level:"
@@ -4761,27 +4780,27 @@ msgstr "Компоненты:"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1003
 msgid "St_art RAID Array"
-msgstr "_Запустить RAID-массив"
+msgstr "_Запустить массив RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1004
 msgid "Bring up the RAID Array"
-msgstr "Поднять RAID-массив"
+msgstr "Включение массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1013
 msgid "St_op RAID Array"
-msgstr "_Остановить RAID-массив"
+msgstr "_Остановить массив RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1014
 msgid "Tear down the RAID Array"
-msgstr "Уничтожить RAID-массив"
+msgstr "Отключение массива RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1023
 msgid "Format/Erase RAI_D Array"
-msgstr "Форматировать/стереть _RAID-массив"
+msgstr "Форматировать устройства масси_ва RAID"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1024
 msgid "Erase or partition the array"
-msgstr "Стереть массив или разбить на разделы"
+msgstr "Удаление данных о разметке массива и изменение таблицы разделов"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1033
 msgid "Chec_k Array"
@@ -4789,19 +4808,19 @@ msgstr "_Проверить массив"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1034
 msgid "Check and repair the array"
-msgstr "Проверить и восстановить массив"
+msgstr "Проверка и восстановление массива"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1043
 msgid "Edit Com_ponents"
-msgstr "Изменить ком_поненты"
+msgstr "Изменить компонент_ы"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1044
 msgid "Create and remove components"
-msgstr "Создать и удалить компоненты"
+msgstr "Создание и удаление компонентов"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1054
 msgid "Measure RAID array performance"
-msgstr "Измерить производительность RAID-массива"
+msgstr "Измерение производительности массива RAID"
 
 #: ../src/palimpsest/gdu-section-volumes.c:115
 msgid "Error unmounting volume"
@@ -4809,7 +4828,7 @@ msgstr "Ошибка при отсоединении тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:171
 msgid "Error mounting volume"
-msgstr "Ошибка при монтировании тома"
+msgstr "Ошибка при подключении тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:228
 msgid "Error deleting partition"
@@ -4830,7 +4849,7 @@ msgstr "Ошибка при создании файловой системы"
 
 #: ../src/palimpsest/gdu-section-volumes.c:370
 msgid "Are you sure you want to format the volume?"
-msgstr "Действительно отформатировать том?"
+msgstr "Уверены, что хотите отформатировать том?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:428
 msgid "Error modifying partition"
@@ -4838,11 +4857,11 @@ msgstr "Ошибка при изменении раздела"
 
 #: ../src/palimpsest/gdu-section-volumes.c:519
 msgid "Are you sure you want to forget the passphrase?"
-msgstr "Действительно забыть ключевую фразу?"
+msgstr "Действительно не запоминать пароль?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
-msgstr "_Забыть"
+msgstr "За_быть"
 
 #: ../src/palimpsest/gdu-section-volumes.c:550
 msgid "Error locking LUKS volume"
@@ -4862,11 +4881,11 @@ msgstr "Ошибка при изменении метки"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1195
 msgid "Choose a new filesystem label."
-msgstr "Выберите новую метку файловой системы."
+msgstr "Выберите новое название раздела."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1196
 msgid "_Label:"
-msgstr "_Метка:"
+msgstr "_Название:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1241
 msgid "Error checking filesystem on volume"
@@ -4896,19 +4915,19 @@ msgstr "Ошибка создания логического тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1588
 msgid "Error stopping Logical Volume"
-msgstr "Ошибка при установке логического тома"
+msgstr "Ошибка остановки логического тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1634
 msgid "Error starting Logical Volume"
-msgstr "Ошибка при запуске логического тома"
+msgstr "Ошибка запуска логического тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1683
 msgid "Error setting name for Logical Volume"
-msgstr "Ошибка при установке имени логического тома"
+msgstr "Ошибка назначения имени логического тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1721
 msgid "Choose a new name for the Logical Volume."
-msgstr "Выберите новое название для логического тома."
+msgstr "Выберите новое название логического тома."
 
 #: ../src/palimpsest/gdu-section-volumes.c:1754
 msgid "Error deleting Logical Volume"
@@ -4920,7 +4939,7 @@ msgstr "Действительно удалить логический том?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1906
 msgid "Volume Name:"
-msgstr "Имя тома:"
+msgstr "Название тома:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1912
 msgid "Usage:"
@@ -4940,7 +4959,7 @@ msgstr "Флаги раздела:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1956
 msgid "Type:"
-msgstr "Тип:"
+msgstr "Файловая система:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
@@ -4948,7 +4967,7 @@ msgstr "Доступно:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
-msgstr "Метка:"
+msgstr "Название:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1965
 msgid "Mount Point:"
@@ -5003,12 +5022,12 @@ msgstr "Файловая система"
 #.
 #: ../src/palimpsest/gdu-section-volumes.c:2148
 msgid "View files on the volume using a SFTP network share"
-msgstr "Просмотреть файлы на томе с помощью сетевого разделяемого ресурса SFTP"
+msgstr "Просмотреть файлы тома с помощью сетевого разделяемого ресурса SFTP"
 
 #. Translators: this the mount point hyperlink tooltip
 #: ../src/palimpsest/gdu-section-volumes.c:2155
 msgid "View files on the volume"
-msgstr "Просмотреть файлы на томе"
+msgstr "Просмотр файлов тома"
 
 #. Translators: this the the text for the mount point
 #. * item - %s is the mount point, e.g. '/media/disk'
@@ -5016,11 +5035,11 @@ msgstr "Просмотреть файлы на томе"
 #: ../src/palimpsest/gdu-section-volumes.c:2162
 #, c-format
 msgid "Mounted at %s"
-msgstr "Примонтирован к %s"
+msgstr "Подключён как %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2170
 msgid "Not Mounted"
-msgstr "Не примонтирован"
+msgstr "Не подключён"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2180
 msgid "Encrypted Volume (Locked)"
@@ -5036,39 +5055,39 @@ msgstr "Перейти к массиву"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2204
 msgid "Container for Logical Partitions"
-msgstr "Контейнер для логических томов"
+msgstr "Контейнер логических разделов"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2321
 msgid "Logical _Volumes"
-msgstr "Логические _тома"
+msgstr "Ло_гические тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2323
 msgid "_Volumes"
-msgstr "_Тома"
+msgstr "То_ма"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2387
 msgid "_Mount Volume"
-msgstr "_Монтировать том"
+msgstr "_Подключить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2388
 msgid "Mount the volume"
-msgstr "Монтировать том"
+msgstr "Подключить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2397
 msgid "Un_mount Volume"
-msgstr "_Размонтировать том"
+msgstr "От_ключить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2398
 msgid "Unmount the volume"
-msgstr "Размонтировать том"
+msgstr "Отключить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2407
 msgid "Fo_rmat Volume"
-msgstr "_Форматировать том"
+msgstr "Фо_рматировать том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2408
 msgid "Erase or format the volume"
-msgstr "Стереть или форматировать том"
+msgstr "Формать или удалить все данные с тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2417
 msgid "_Check Filesystem"
@@ -5076,31 +5095,31 @@ msgstr "_Проверить файловую систему"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2418
 msgid "Check and repair the filesystem"
-msgstr "Проверить и восстановить файловую систему"
+msgstr "Проверть и автоматически исправить ошибки файловой системы"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2428
 msgid "Edit Filesystem _Label"
-msgstr "Из_менить метку файловой системы"
+msgstr "Изм_енить название файловой системы"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2429
 msgid "Change the label of the filesystem"
-msgstr "Изменить метку файловой системы"
+msgstr "Изменить название файловой системы"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2438
 msgid "Ed_it Partition"
-msgstr "_Изменить раздел"
+msgstr "_Изменить параметры раздела"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2439
 msgid "Change partition type, label and flags"
-msgstr "Изменить тип раздела, метки или флагов"
+msgstr "Изменить тип, название и флаги раздела"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "D_elete Partition"
-msgstr "_Удалить раздел"
+msgstr "Уда_лить раздел"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2449
 msgid "Delete the partition"
-msgstr "Удалить этот раздел"
+msgstr "Удалить раздел"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2458
 msgid "_Create Partition"
@@ -5116,7 +5135,7 @@ msgstr "_Заблокировать том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2469
 msgid "Make encrypted data unavailable"
-msgstr "Сделать зашифрованные данные доступными"
+msgstr "Сделать зашифрованные данные недоступными"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2478
 msgid "Un_lock Volume"
@@ -5128,15 +5147,15 @@ msgstr "Сделать зашифрованные данные доступны�
 
 #: ../src/palimpsest/gdu-section-volumes.c:2488
 msgid "Forge_t Passphrase"
-msgstr "_Забыть ключевую фразу"
+msgstr "Забыть _пароль"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2489
 msgid "Delete passphrase from keyring"
-msgstr "Удалить ключевую фразу со связки ключей"
+msgstr "Удалить пароль"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2500
 msgid "Change passphrase"
-msgstr "Изменить ключевую фразу"
+msgstr "Изменить пароль"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2509
 msgid "_Create Logical Volume"
@@ -5148,7 +5167,7 @@ msgstr "Создать новый логический том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2519
 msgid "S_tart Volume"
-msgstr "_Запустить том"
+msgstr "Вк_лючить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2520
 msgid "Activate the Logical Volume"
@@ -5160,7 +5179,7 @@ msgstr "И_зменить название тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2531
 msgid "Change the name of the volume"
-msgstr "Изменить имя тома"
+msgstr "Изменить название тома"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2540
 msgid "D_elete Volume"
@@ -5172,7 +5191,7 @@ msgstr "Удалить логический том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2550
 msgid "Sto_p Volume"
-msgstr "_Остановить том"
+msgstr "_Отключить том"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2551
 msgid "Deactivate the Logical Volume"
@@ -5184,7 +5203,7 @@ msgstr "Отключить логический том"
 #: ../src/palimpsest/gdu-shell.c:290
 #, c-format
 msgid "%s — Disk Utility"
-msgstr "%s — Дисковая утилита"
+msgstr "Дисковая утилита — %s"
 
 #. Translators: Window title when an item on a remote machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5195,7 +5214,7 @@ msgstr "%s — Дисковая утилита"
 #: ../src/palimpsest/gdu-shell.c:300
 #, c-format
 msgid "%s (%s) [%s] @ %s — Disk Utility"
-msgstr "%s (%s) [%s] @ %s — Дисковая утилита"
+msgstr "Дисковая утилита — %s (%s) [%s] @ %s"
 
 #. Translators: Window title when an item on a remote machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5205,7 +5224,7 @@ msgstr "%s (%s) [%s] @ %s — Дисковая утилита"
 #: ../src/palimpsest/gdu-shell.c:311
 #, c-format
 msgid "%s (%s) @ %s — Disk Utility"
-msgstr "%s (%s) @ %s — Дисковая утилита"
+msgstr "Дисковая утилита — %s (%s) @ %s"
 
 #. Translators: Window title when an item on the local machine is selected and there is a device file.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5215,7 +5234,7 @@ msgstr "%s (%s) @ %s — Дисковая утилита"
 #: ../src/palimpsest/gdu-shell.c:329
 #, c-format
 msgid "%s (%s) [%s] — Disk Utility"
-msgstr "%s (%s) [%s] — Дисковая утилита"
+msgstr "Дисковая утилита — %s (%s) [%s]"
 
 #. Translators: Window title when an item on the local machine is selected.
 #. * First %s is the name of the item (e.g. '80 GB Solid-State Disk' or 'Saturn').
@@ -5224,111 +5243,114 @@ msgstr "%s (%s) [%s] — Дисковая утилита"
 #: ../src/palimpsest/gdu-shell.c:338
 #, c-format
 msgid "%s (%s) — Disk Utility"
-msgstr "%s (%s) — Дисковая утилита"
+msgstr "Дисковая утилита — %s (%s)"
 
 #: ../src/palimpsest/gdu-shell.c:626
 msgid "Error creating RAID array"
-msgstr "Ошибка при создании RAID-массива"
+msgstr "Ошибка создания массива RAID"
 
 #: ../src/palimpsest/gdu-shell.c:755
 #, c-format
 msgid "Error connecting to “%s”"
 msgstr "Ошибка подключения к «%s»"
 
-#: ../src/palimpsest/gdu-shell.c:808
+#: ../src/palimpsest/gdu-shell.c:809
 msgid "translator-credits"
-msgstr "Leonid Kanter <leon@asplinux.ru>, Andrey Sharoyko <rabidvan@mail.ru>"
+msgstr ""
+"Leonid Kanter <leon@asplinux.ru>\n"
+"Andrey Sharoyko <rabidvan@mail.ru>\n"
+"Stas Solovey <whats_up@tut.by>"
 
-#: ../src/palimpsest/gdu-shell.c:837
+#: ../src/palimpsest/gdu-shell.c:838
 msgid "_File"
 msgstr "_Файл"
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "Connect to _Server..."
 msgstr "Подключиться к _серверу…"
 
-#: ../src/palimpsest/gdu-shell.c:838
+#: ../src/palimpsest/gdu-shell.c:839
 msgid "Manage storage devices on another machine"
 msgstr "Управление устройствами хранения на другой машине"
 
-#: ../src/palimpsest/gdu-shell.c:839
+#: ../src/palimpsest/gdu-shell.c:840
 msgid "_Create"
 msgstr "С_оздать"
 
-#: ../src/palimpsest/gdu-shell.c:840
+#: ../src/palimpsest/gdu-shell.c:841
 msgid "_RAID Array..."
-msgstr "_RAID-массив…"
-
-#: ../src/palimpsest/gdu-shell.c:840
-msgid "Create a RAID array"
-msgstr "Создать RAID-массив"
+msgstr "_Массив RAID…"
 
 #: ../src/palimpsest/gdu-shell.c:841
+msgid "Create a RAID array"
+msgstr "Создать массив RAID"
+
+#: ../src/palimpsest/gdu-shell.c:842
 msgid "_Edit"
 msgstr "_Правка"
 
-#: ../src/palimpsest/gdu-shell.c:842
-#: ../src/palimpsest/gdu-shell.c:845
+#: ../src/palimpsest/gdu-shell.c:843
+#: ../src/palimpsest/gdu-shell.c:846
 msgid "_Help"
 msgstr "_Справка"
 
-#: ../src/palimpsest/gdu-shell.c:844
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "_Quit"
 msgstr "_Выйти"
 
-#: ../src/palimpsest/gdu-shell.c:844
+#: ../src/palimpsest/gdu-shell.c:845
 msgid "Quit"
 msgstr "Выйти"
 
-#: ../src/palimpsest/gdu-shell.c:845
+#: ../src/palimpsest/gdu-shell.c:846
 msgid "Get Help on Disk Utility"
 msgstr "Получить справку по Дисковой утилите"
 
-#: ../src/palimpsest/gdu-shell.c:846
+#: ../src/palimpsest/gdu-shell.c:847
 msgid "_About"
 msgstr "_О программе"
 
-#: ../src/palimpsest/gdu-shell.c:925
+#: ../src/palimpsest/gdu-shell.c:926
 msgid "An error occured"
 msgstr "Произошла ошибка"
 
-#: ../src/palimpsest/gdu-shell.c:934
+#: ../src/palimpsest/gdu-shell.c:935
 msgid "The operation failed."
 msgstr "Сбой выполнения операции."
 
-#: ../src/palimpsest/gdu-shell.c:937
+#: ../src/palimpsest/gdu-shell.c:938
 msgid "The device is busy."
 msgstr "Устройство занято."
 
-#: ../src/palimpsest/gdu-shell.c:940
+#: ../src/palimpsest/gdu-shell.c:941
 msgid "The operation was canceled."
 msgstr "Действие было отменено."
 
-#: ../src/palimpsest/gdu-shell.c:943
+#: ../src/palimpsest/gdu-shell.c:944
 msgid "The daemon is being inhibited."
-msgstr "Демон находится в сдерживаемом состоянии."
+msgstr "Служба находится в неактивном состоянии."
 
-#: ../src/palimpsest/gdu-shell.c:946
+#: ../src/palimpsest/gdu-shell.c:947
 msgid "An invalid option was passed."
 msgstr "Передан недопустимый параметр."
 
-#: ../src/palimpsest/gdu-shell.c:949
+#: ../src/palimpsest/gdu-shell.c:950
 msgid "The operation is not supported."
 msgstr "Операция не поддерживается."
 
-#: ../src/palimpsest/gdu-shell.c:952
+#: ../src/palimpsest/gdu-shell.c:953
 msgid "Getting ATA SMART data would wake up the device."
-msgstr "Получение данных SMART ATA может привести ко включению устройства."
+msgstr "Получение данных ATA SMART приведет к включению устройства."
 
-#: ../src/palimpsest/gdu-shell.c:955
+#: ../src/palimpsest/gdu-shell.c:956
 msgid "Permission denied."
 msgstr "Доступ запрещён."
 
-#: ../src/palimpsest/gdu-shell.c:994
+#: ../src/palimpsest/gdu-shell.c:995
 msgid "_Details:"
 msgstr "_Сведения:"
 
-#: ../src/palimpsest/gdu-shell.c:1168
+#: ../src/palimpsest/gdu-shell.c:1164
 msgid "_Storage Devices"
 msgstr "_Устройства хранения"
 

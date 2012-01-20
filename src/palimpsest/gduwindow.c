@@ -1699,7 +1699,7 @@ update_device_page_for_block (GduWindow          *window,
   gboolean read_only;
   gchar *s;
   UDisksObject *drive_object;
-  UDisksDrive *drive;
+  UDisksDrive *drive = NULL;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
@@ -1715,7 +1715,7 @@ update_device_page_for_block (GduWindow          *window,
     }
 
   /* TODO: don't show on CD-ROM drives etc. */
-  if (udisks_block_get_size (block) > 0 || !udisks_drive_get_media_change_detected (drive))
+  if (udisks_block_get_size (block) > 0 || (drive != NULL && !udisks_drive_get_media_change_detected (drive)))
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
@@ -1835,7 +1835,7 @@ update_device_page_for_block (GduWindow          *window,
     }
   else
     {
-      if (udisks_drive_get_ejectable (drive))
+      if (drive != NULL && udisks_drive_get_ejectable (drive))
         *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
     }
 

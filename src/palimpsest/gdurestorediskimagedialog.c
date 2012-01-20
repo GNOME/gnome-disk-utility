@@ -124,7 +124,8 @@ static void
 restore_disk_image_data_complete (RestoreDiskImageData *data)
 {
   g_cancellable_cancel (data->cancellable);
-  gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
+  if (data->dialog != NULL)
+    gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -161,7 +161,11 @@ restore_disk_image_update (RestoreDiskImageData *data)
 
       if (data->block_size > 0)
         {
-          if (size < data->block_size)
+          if (size == 0)
+            {
+              restore_error = g_strdup (_("Cannot restore image of size 0"));
+            }
+          else if (size < data->block_size)
             {
               /* Only complain if slack is bigger than 1MB */
               if (data->block_size - size > 1000L*1000L)

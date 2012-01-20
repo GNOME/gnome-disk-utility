@@ -22,5 +22,9 @@ ui_DATA = 				\
 	change-passphrase-dialog.ui	\
 	$(NULL)
 
+EXTRA_DIST = 				\
+	$(ui_DATA)			\
+	$(NULL)
+
 clean-local :
 	rm -f *~

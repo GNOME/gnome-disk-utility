@@ -28,6 +28,7 @@ palimpsest_SOURCES = 							\
 	gduapplication.h		gduapplication.c		\
 	gdudevicetreemodel.h		gdudevicetreemodel.c		\
 	gdutypes.h							\
+	gduenums.h							\
 	gduutils.h			gduutils.c			\
 	gduvolumegrid.h			gduvolumegrid.c			\
 	gduwindow.h			gduwindow.c			\
@@ -69,6 +70,11 @@ palimpsest_LDADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
+	$(NULL)
+
+EXTRA_DIST = 						\
+	gduenumtypes.h.template				\
+	gduenumtypes.c.template				\
 	$(NULL)
 
 clean-local :

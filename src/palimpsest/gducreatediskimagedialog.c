@@ -26,6 +26,10 @@
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
 
+#include <glib-unix.h>
+#include <sys/ioctl.h>
+#include <linux/fs.h>
+
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreatediskimagedialog.h"
@@ -381,6 +385,20 @@ open_cb (UDisksBlock  *block,
     }
 
   fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
+
+  /* We can't use udisks_block_get_size() because the media may have
+   * changed and udisks may not have noticed. TODO: maybe have a
+   * Block.GetSize() method instead...
+   */
+  if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
+    {
+      error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), strerror (errno));
+      gdu_window_show_error (data->window, _("Error determining size of device"), error);
+      g_error_free (error);
+      create_disk_image_data_complete (data);
+      goto out;
+    }
+
   data->block_stream = g_unix_input_stream_new (fd, TRUE);
 
   /* Alright, time to start copying! */
@@ -483,7 +501,6 @@ start_copying (CreateDiskImageData *data)
     }
   data->delete_on_free = TRUE;
 
-  data->block_size = udisks_block_get_size (data->block);
   udisks_block_call_open_for_backup (data->block,
                                      g_variant_new ("a{sv}", NULL), /* options */
                                      NULL, /* fd_list */

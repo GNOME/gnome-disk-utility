@@ -86,7 +86,7 @@ gdu_unit_get_name (GduUnit unit)
 
         switch (unit) {
         case GDU_UNIT_KB:
-                ret = _("kB");
+                ret = _("KB");
                 break;
         default:
                 g_warning ("Unknown unit %d", unit);
@@ -124,7 +124,7 @@ gdu_unit_guess (const gchar *str)
 
         ret = GDU_UNIT_NOT_SET;
 
-        if (strstr (str, "kB") != NULL) {
+        if (strstr (str, "KB") != NULL) {
                 ret = GDU_UNIT_KB;
         } else if (strstr (str, "MB") != NULL) {
                 ret = GDU_UNIT_MB;

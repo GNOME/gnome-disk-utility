@@ -82,7 +82,6 @@ typedef struct
   gboolean device_presentation_nopolicy;
   char *device_presentation_name;
   char *device_presentation_icon_name;
-  char *device_automount_hint;
   guint64 device_size;
   guint64 device_block_size;
 
@@ -280,8 +279,6 @@ collect_props (const char *key,
     props->device_presentation_name = g_strdup (g_value_get_string (value));
   else if (strcmp (key, "DevicePresentationIconName") == 0)
     props->device_presentation_icon_name = g_strdup (g_value_get_string (value));
-  else if (strcmp (key, "DeviceAutomountHint") == 0)
-    props->device_automount_hint = g_strdup (g_value_get_string (value));
   else if (strcmp (key, "DeviceSize") == 0)
     props->device_size = g_value_get_uint64 (value);
   else if (strcmp (key, "DeviceBlockSize") == 0)
@@ -552,7 +549,6 @@ device_properties_free (DeviceProperties *props)
   g_strfreev (props->device_mount_paths);
   g_free (props->device_presentation_name);
   g_free (props->device_presentation_icon_name);
-  g_free (props->device_automount_hint);
   g_free (props->job_id);
   g_free (props->id_usage);
   g_free (props->id_type);
@@ -1295,12 +1291,6 @@ char **
 gdu_device_drive_get_media_compatibility (GduDevice *device)
 {
         return device->priv->props->drive_media_compatibility;
-}
-
-const char *
-gdu_device_get_automount_hint (GduDevice *device)
-{
-        return device->priv->props->device_automount_hint;
 }
 
 const char *

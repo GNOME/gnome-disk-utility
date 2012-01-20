@@ -34,7 +34,7 @@ CORE_LIBADD = 						\
 	$(NULL)
 
 
-nautilus_extensiondir = $(libdir)/nautilus/extensions-3.0
+nautilus_extensiondir = $(libdir)/nautilus/extensions-2.0
 nautilus_extension_LTLIBRARIES = libnautilus-gdu.la
 
 libnautilus_gdu_la_SOURCES =			\

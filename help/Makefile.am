@@ -1,4 +1,4 @@
-include $(top_srcdir)/build-aux/gnome-doc-utils.make
+include $(top_srcdir)/gnome-doc-utils.make
 dist-hook: doc-dist-hook
 
 DOC_MODULE = palimpsest
@@ -9,4 +9,4 @@ DOC_FIGURES = figures/main-app.png
 clean-local :
 	rm -f *~
 
-DOC_LINGUAS = cs de el es fr ko pl pt_BR ro ru sv sl zh_CN
+DOC_LINGUAS = cs de el es pl pt_BR sv sl zh_CN

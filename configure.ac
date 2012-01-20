@@ -1,14 +1,11 @@
-AC_INIT([GNOME Disk Utility],[3.0.3],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
+AC_INIT([GNOME Disk Utility],[2.91.7],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
+
+AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_AUX_DIR([build-aux])
 
-AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip tar-ustar])
-AM_MAINTAINER_MODE([enable])
-
-AM_SILENT_RULES([yes])
+AM_MAINTAINER_MODE
 
 # libtool versioning - this applies to all libraries in this package
 #
@@ -21,13 +18,12 @@ AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 
-# Check for programs
 AC_PROG_CC
+AC_ISC_POSIX
 AC_HEADER_STDC
+AC_PROG_LIBTOOL
 
-# Initialize libtool
-LT_PREREQ([2.2])
-LT_INIT
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 #### gcc warning flags
 
@@ -110,9 +106,11 @@ fi
 # GNOME
 # *****
 
+GNOME_COMMON_INIT
 GNOME_DOC_INIT
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
+GNOME_MAINTAINER_MODE_DEFINES
 
 AC_ARG_ENABLE(gtk-doc, AS_HELP_STRING([--enable-gtk-doc],
   [use gtk-doc to build documentation [default=no]]),,
@@ -131,7 +129,7 @@ GNOME_KEYRING_REQUIRED=2.22
 GTK3_REQUIRED=2.90.7
 UNIQUE_REQUIRED=2.90.1
 LIBNOTIFY_REQUIRED=0.6.1
-NAUTILUS_REQUIRED=2.91.0
+NAUTILUS_REQUIRED=2.24.0
 AVAHI_UI_REQUIRED=0.6.25
 
 UDISKS_REQUIRED=1.0.0
@@ -253,9 +251,7 @@ data/icons/Makefile
 data/icons/16x16/Makefile
 data/icons/22x22/Makefile
 data/icons/24x24/Makefile
-data/icons/32x32/Makefile
 data/icons/48x48/Makefile
-data/icons/256x256/Makefile
 data/icons/scalable/Makefile
 help/Makefile
 doc/Makefile

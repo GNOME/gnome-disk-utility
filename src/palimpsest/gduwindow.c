@@ -1698,14 +1698,24 @@ update_device_page_for_block (GduWindow          *window,
   UDisksLoop *loop;
   gboolean read_only;
   gchar *s;
+  UDisksObject *drive_object;
+  UDisksDrive *drive;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
   loop = udisks_object_peek_loop (window->current_object);
 
+  drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
+                                                                        udisks_block_get_drive (block));
+  if (drive_object != NULL)
+    {
+      drive = udisks_object_peek_drive (drive_object);
+      g_object_unref (drive_object);
+    }
+
   /* TODO: don't show on CD-ROM drives etc. */
-  if (udisks_block_get_size (block) > 0)
+  if (udisks_block_get_size (block) > 0 || !udisks_drive_get_media_change_detected (drive))
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
@@ -1825,17 +1835,8 @@ update_device_page_for_block (GduWindow          *window,
     }
   else
     {
-      UDisksObject *drive_object;
-      drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
-                                                                        udisks_block_get_drive (block));
-      if (drive_object != NULL)
-        {
-          UDisksDrive *drive;
-          drive = udisks_object_peek_drive (drive_object);
-          if (udisks_drive_get_ejectable (drive))
-            *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
-          g_object_unref (drive_object);
-        }
+      if (udisks_drive_get_ejectable (drive))
+        *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
     }
 
   if (filesystem != NULL)

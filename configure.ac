@@ -1,4 +1,4 @@
-AC_INIT([GNOME Disk Utility],[2.91.7],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
+AC_INIT([GNOME Disk Utility],[3.3.90],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
 
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 no-dist-gzip])
 
@@ -27,9 +27,9 @@ GNOME_MAINTAINER_MODE_DEFINES
 # Check for required packages
 # ***************************
 
-GLIB2_REQUIRED=2.22
+GLIB2_REQUIRED=2.31.0
 UDISKS2_REQUIRED=1.90
-GTK3_REQUIRED=3.0.0
+GTK3_REQUIRED=3.3.0
 
 PKG_CHECK_MODULES(GLIB2, [gio-unix-2.0 >= $GLIB2_REQUIRED])
 PKG_CHECK_MODULES(UDISKS2, [udisks2 >= $UDISKS2_REQUIRED])

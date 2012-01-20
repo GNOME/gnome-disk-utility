@@ -1,0 +1,26 @@
+
+NULL =
+
+uidir = $(datadir)/gnome-disk-utility/
+
+ui_DATA = 				\
+	edit-crypttab-dialog.ui		\
+	edit-filesystem-dialog.ui	\
+	edit-fstab-dialog.ui		\
+	edit-partition-dialog.ui	\
+	edit-gpt-partition-dialog.ui	\
+	edit-dos-partition-dialog.ui	\
+	palimpsest.ui			\
+	unlock-device-dialog.ui		\
+	format-volume-dialog.ui		\
+	smart-dialog.ui			\
+	create-partition-dialog.ui	\
+	filesystem-create.ui		\
+	format-disk-dialog.ui		\
+	create-disk-image-dialog.ui	\
+	restore-disk-image-dialog.ui	\
+	change-passphrase-dialog.ui	\
+	$(NULL)
+
+clean-local :
+	rm -f *~

@@ -51,6 +51,8 @@ gboolean        gdu_window_select_object     (GduWindow    *window,
                                               UDisksObject *object);
 
 
+void            gdu_window_show_attach_disk_image (GduWindow *window);
+
 G_END_DECLS
 
 #endif /* __GDU_WINDOW_H__ */

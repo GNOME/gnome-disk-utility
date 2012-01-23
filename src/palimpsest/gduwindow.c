@@ -626,11 +626,9 @@ loop_setup_cb (UDisksManager  *manager,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
-on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
-                                                 gpointer       user_data)
+void
+gdu_window_show_attach_disk_image (GduWindow *window)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
   GtkWidget *dialog;
   gchar *filename;
   gint fd;
@@ -695,6 +693,14 @@ on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
  out:
   gtk_widget_destroy (dialog);
   g_free (filename);
+}
+
+static void
+on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
+                                                 gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gdu_window_show_attach_disk_image (window);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

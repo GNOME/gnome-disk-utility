@@ -106,12 +106,12 @@ gdu_application_activate (GApplication *_app)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-quit_activated (GSimpleAction *action,
-                GVariant      *parameter,
-                gpointer       user_data)
+attach_disk_image_activated (GSimpleAction *action,
+                             GVariant      *parameter,
+                             gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_widget_destroy (GTK_WIDGET (app->window));
+  gdu_window_show_attach_disk_image (app->window);
 }
 
 static void
@@ -137,8 +137,18 @@ about_activated (GSimpleAction *action,
   g_object_unref (dialog);
 }
 
+static void
+quit_activated (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  gtk_widget_destroy (GTK_WIDGET (app->window));
+}
+
 static GActionEntry app_entries[] =
 {
+  { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
   { "quit", quit_activated, NULL, NULL, NULL }
 };

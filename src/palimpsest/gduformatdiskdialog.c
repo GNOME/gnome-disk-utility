@@ -203,10 +203,10 @@ gdu_format_disk_dialog_show (GduWindow    *window,
   g_assert (data->block != NULL);
   data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "format-disk-dialog.ui",
-                                             "format-disk-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "format-disk-dialog.ui",
+                                                         "format-disk-dialog",
+                                                         &data->builder));
   data->type_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "type-combobox"));
   g_signal_connect (data->type_combobox, "notify::active", G_CALLBACK (on_property_changed), data);
 

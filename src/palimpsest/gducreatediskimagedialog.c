@@ -529,10 +529,10 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   g_assert (data->block != NULL);
   data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "create-disk-image-dialog.ui",
-                                             "create-disk-image-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "create-disk-image-dialog.ui",
+                                                         "create-disk-image-dialog",
+                                                         &data->builder));
   data->notebook = GTK_WIDGET (gtk_builder_get_object (data->builder, "notebook"));
   data->start_copying_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "start_copying_button"));
   data->destination_name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "destination_name_entry"));

@@ -330,10 +330,10 @@ gdu_create_partition_dialog_show (GduWindow    *window,
         }
     }
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "create-partition-dialog.ui",
-                                             "create-partition-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "create-partition-dialog.ui",
+                                                         "create-partition-dialog",
+                                                         &data->builder));
 
   data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));;
   data->dos_error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,

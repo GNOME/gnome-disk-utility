@@ -97,10 +97,10 @@ gdu_filesystem_dialog_show (GduWindow    *window,
   g_assert (block != NULL);
   g_assert (filesystem != NULL);
 
-  dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                       "edit-filesystem-dialog.ui",
-                                       "change-filesystem-label-dialog",
-                                       &builder);
+  dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                   "edit-filesystem-dialog.ui",
+                                                   "change-filesystem-label-dialog",
+                                                   &builder));
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "change-filesystem-label-entry"));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);

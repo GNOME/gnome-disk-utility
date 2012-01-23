@@ -323,10 +323,10 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
   g_assert (data->encrypted != NULL);
   data->has_passphrase_in_configuration = has_passphrase_in_configuration (data);
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "change-passphrase-dialog.ui",
-                                             "change-passphrase-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "change-passphrase-dialog.ui",
+                                                         "change-passphrase-dialog",
+                                                         &data->builder));
 
   data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
   if (data->has_passphrase_in_configuration)

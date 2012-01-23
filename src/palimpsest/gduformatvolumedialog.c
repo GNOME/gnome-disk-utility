@@ -117,10 +117,10 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   g_assert (data->block != NULL);
   data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "format-volume-dialog.ui",
-                                             "format-volume-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "format-volume-dialog.ui",
+                                                         "format-volume-dialog",
+                                                         &data->builder));
 
   data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
   data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window),

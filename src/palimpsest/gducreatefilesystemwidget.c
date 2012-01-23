@@ -476,10 +476,10 @@ gdu_create_filesystem_widget_constructed (GObject *object)
   GduCreateFilesystemWidget *widget = GDU_CREATE_FILESYSTEM_WIDGET (object);
   GtkWidget *dummy_window;
 
-  dummy_window = gdu_application_new_widget (widget->application,
-                                             "filesystem-create.ui",
-                                             "filesystem-create-dummywindow",
-                                             &widget->builder);
+  dummy_window = GTK_WIDGET (gdu_application_new_widget (widget->application,
+                                                         "filesystem-create.ui",
+                                                         "filesystem-create-dummywindow",
+                                                         &widget->builder));
   widget->grid = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-create-grid"));
   widget->type_combobox = GTK_WIDGET (gtk_builder_get_object (widget->builder, "type-combobox"));
   g_signal_connect (widget->type_combobox, "notify::active", G_CALLBACK (on_property_changed), widget);

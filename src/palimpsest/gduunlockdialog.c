@@ -81,10 +81,10 @@ gdu_unlock_dialog_show (GduWindow    *window,
   if (gdu_utils_has_configuration (block, "crypttab", &has_passphrase) && has_passphrase)
     goto do_call;
 
-  dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                       "unlock-device-dialog.ui",
-                                       "unlock-device-dialog",
-                                       &builder);
+  dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                   "unlock-device-dialog.ui",
+                                                   "unlock-device-dialog",
+                                                   &builder));
   entry = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-passphrase-entry"));
   show_passphrase_check_button = GTK_WIDGET (gtk_builder_get_object (builder, "unlock-device-show-passphrase-check-button"));
 

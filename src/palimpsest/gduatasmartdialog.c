@@ -1525,10 +1525,10 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   data->ata = udisks_object_peek_drive_ata (data->object);
   data->window = g_object_ref (window);
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                             "smart-dialog.ui",
-                                             "dialog1",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                         "smart-dialog.ui",
+                                                         "dialog1",
+                                                         &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)
     {
       gpointer *p = (gpointer *) ((char *) data + widget_mapping[n].offset);

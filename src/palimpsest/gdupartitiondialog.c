@@ -293,10 +293,10 @@ gdu_partition_dialog_show (GduWindow    *window,
 
   if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
     {
-      data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                                 "edit-gpt-partition-dialog.ui",
-                                                 "edit-gpt-partition-dialog",
-                                                 &data->builder);
+      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                             "edit-gpt-partition-dialog.ui",
+                                                             "edit-gpt-partition-dialog",
+                                                             &data->builder));
       data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "name-entry"));
       data->system_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "system-checkbutton"));
       data->bootable_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "bootable-checkbutton"));
@@ -318,20 +318,20 @@ gdu_partition_dialog_show (GduWindow    *window,
     }
   else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
     {
-      data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                                 "edit-dos-partition-dialog.ui",
-                                                 "edit-dos-partition-dialog",
-                                                 &data->builder);
+      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                             "edit-dos-partition-dialog.ui",
+                                                             "edit-dos-partition-dialog",
+                                                             &data->builder));
       data->bootable_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "bootable-checkbutton"));
       g_signal_connect (data->bootable_checkbutton,
                         "notify::active", G_CALLBACK (edit_partition_property_changed), data);
     }
   else
     {
-      data->dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                                 "edit-partition-dialog.ui",
-                                                 "edit-partition-dialog",
-                                                 &data->builder);
+      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                             "edit-partition-dialog.ui",
+                                                             "edit-partition-dialog",
+                                                             &data->builder));
     }
   data->type_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "type-combobox"));
   g_signal_connect (data->type_combobox,

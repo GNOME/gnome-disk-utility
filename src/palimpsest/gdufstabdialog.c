@@ -401,9 +401,9 @@ gdu_fstab_dialog_show (GduWindow    *window,
       g_object_unref (drive_object);
     }
 
-  dialog = gdu_application_new_widget (gdu_window_get_application (window),
-                                       "edit-fstab-dialog.ui",
-                                       "device-fstab-dialog", &builder);
+  dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+                                                   "edit-fstab-dialog.ui",
+                                                   "device-fstab-dialog", &builder));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 

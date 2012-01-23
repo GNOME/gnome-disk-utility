@@ -453,10 +453,10 @@ gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
   gint response;
   gchar *s;
 
-  data->dialog = gdu_application_new_widget (gdu_window_get_application (data->window),
-                                             "restore-disk-image-dialog.ui",
-                                             "restore-disk-image-dialog",
-                                             &data->builder);
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (data->window),
+                                                         "restore-disk-image-dialog.ui",
+                                                         "restore-disk-image-dialog",
+                                                         &data->builder));
   data->notebook = GTK_WIDGET (gtk_builder_get_object (data->builder, "notebook"));
   data->start_copying_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "start_copying_button"));
   data->source_file_fcbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "source_file_fcbutton"));

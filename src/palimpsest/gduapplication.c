@@ -111,14 +111,7 @@ quit_activated (GSimpleAction *action,
                 gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  GList *windows, *l;
-
-  windows = gtk_application_get_windows (GTK_APPLICATION (app));
-  for (l = windows; l != NULL; l = l->next)
-    {
-      GtkWindow *window = GTK_WINDOW (l->data);
-      gtk_widget_destroy (GTK_WIDGET (window));
-    }
+  gtk_widget_destroy (GTK_WIDGET (app->window));
 }
 
 static void
@@ -137,9 +130,11 @@ about_activated (GSimpleAction *action,
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_widget_show_all (dialog);
+  g_object_ref (dialog);
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_hide (dialog);
   gtk_widget_destroy (dialog);
+  g_object_unref (dialog);
 }
 
 static GActionEntry app_entries[] =

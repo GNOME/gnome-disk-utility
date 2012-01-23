@@ -103,6 +103,74 @@ gdu_application_activate (GApplication *_app)
   ;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+quit_activated (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  GList *windows, *l;
+
+  windows = gtk_application_get_windows (GTK_APPLICATION (app));
+  for (l = windows; l != NULL; l = l->next)
+    {
+      GtkWindow *window = GTK_WINDOW (l->data);
+      gtk_widget_destroy (GTK_WIDGET (window));
+    }
+}
+
+static void
+about_activated (GSimpleAction *action,
+                 GVariant      *parameter,
+                 gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  GtkWidget *dialog;
+
+  dialog = GTK_WIDGET (gdu_application_new_widget (app,
+                                                   "about-dialog.ui",
+                                                   "about-dialog",
+                                                   NULL));
+  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), PACKAGE_VERSION);
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_widget_show_all (dialog);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_hide (dialog);
+  gtk_widget_destroy (dialog);
+}
+
+static GActionEntry app_entries[] =
+{
+  { "about", about_activated, NULL, NULL, NULL },
+  { "quit", quit_activated, NULL, NULL, NULL }
+};
+
+static void
+gdu_application_startup (GApplication *_app)
+{
+  GduApplication *app = GDU_APPLICATION (_app);
+  GMenuModel *app_menu;
+  GtkBuilder *builder;
+
+  if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
+    G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
+
+  g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
+
+  app_menu = G_MENU_MODEL (gdu_application_new_widget (app,
+                                                       "app-menu.ui",
+                                                       "app-menu",
+                                                       &builder));
+  gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
+  g_object_unref (app_menu);
+  g_clear_object (&builder);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 gdu_application_class_init (GduApplicationClass *klass)
 {
@@ -115,6 +183,7 @@ gdu_application_class_init (GduApplicationClass *klass)
   application_class = G_APPLICATION_CLASS (klass);
   application_class->local_command_line = gdu_application_local_command_line;
   application_class->activate           = gdu_application_activate;
+  application_class->startup            = gdu_application_startup;
 }
 
 GApplication *
@@ -141,13 +210,13 @@ gdu_application_get_client (GduApplication  *application)
 }
 
 
-GtkWidget *
+GObject *
 gdu_application_new_widget (GduApplication  *application,
                             const gchar     *ui_file,
                             const gchar     *name,
                             GtkBuilder     **out_builder)
 {
-  GtkWidget *ret = NULL;
+  GObject *ret = NULL;
   GtkBuilder *builder = NULL;
   gchar *path = NULL;
   GError *error;
@@ -172,7 +241,7 @@ gdu_application_new_widget (GduApplication  *application,
     }
 
   if (name != NULL)
-    ret = GTK_WIDGET (gtk_builder_get_object (builder, name));
+    ret = G_OBJECT (gtk_builder_get_object (builder, name));
 
  out:
   if (out_builder != NULL)

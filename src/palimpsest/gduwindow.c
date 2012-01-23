@@ -60,7 +60,7 @@ typedef enum
 
 struct _GduWindow
 {
-  GtkWindow parent_instance;
+  GtkApplicationWindow parent_instance;
 
   GduApplication *application;
   UDisksClient *client;
@@ -181,7 +181,7 @@ static const struct {
 
 typedef struct
 {
-  GtkWindowClass parent_class;
+  GtkApplicationWindowClass parent_class;
 } GduWindowClass;
 
 enum
@@ -273,7 +273,7 @@ static void on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
 static void on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
                                                        gpointer   user_data);
 
-G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_WINDOW);
+G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
 static void
 gdu_window_init (GduWindow *window)

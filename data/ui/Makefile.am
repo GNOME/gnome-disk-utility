@@ -20,6 +20,8 @@ ui_DATA = 				\
 	create-disk-image-dialog.ui	\
 	restore-disk-image-dialog.ui	\
 	change-passphrase-dialog.ui	\
+	about-dialog.ui			\
+	app-menu.ui			\
 	$(NULL)
 
 EXTRA_DIST = 				\

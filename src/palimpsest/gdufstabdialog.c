@@ -98,11 +98,11 @@ update (FstabDialogData *data,
   g_object_freeze_notify (G_OBJECT (data->options_entry));
   gdu_options_update_check_option (data->options_entry, "defaults", widget, data->defaults_checkbutton, TRUE);
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "comment=udisks-auth", widget, data->auth_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "comment=gvfs-show", widget, data->show_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "comment=gvfs-hide", widget, data->hide_checkbutton, FALSE);
-  gdu_options_update_entry_option (data->options_entry, "comment=gvfs-name=", widget, data->name_entry);
-  gdu_options_update_entry_option (data->options_entry, "comment=gvfs-icon=", widget, data->icon_entry);
+  gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE);
+  gdu_options_update_check_option (data->options_entry, "x-gvfs-show", widget, data->show_checkbutton, FALSE);
+  gdu_options_update_check_option (data->options_entry, "x-gvfs-hide", widget, data->hide_checkbutton, FALSE);
+  gdu_options_update_entry_option (data->options_entry, "x-gvfs-name=", widget, data->name_entry);
+  gdu_options_update_entry_option (data->options_entry, "x-gvfs-icon=", widget, data->icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_apply = FALSE;

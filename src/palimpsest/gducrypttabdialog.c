@@ -51,6 +51,7 @@ typedef struct
   GtkWidget *name_entry;
   GtkWidget *options_entry;
   GtkWidget *noauto_checkbutton;
+  GtkWidget *nofail_checkbutton;
   GtkWidget *auth_checkbutton;
   GtkWidget *passphrase_label;
   GtkWidget *passphrase_entry;
@@ -156,6 +157,7 @@ update (CrypttabDialogData *data,
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton, FALSE);
+  gdu_options_update_check_option (data->options_entry, "nofail", widget, data->nofail_checkbutton, FALSE);
   gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
@@ -210,7 +212,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
     {
       configured = FALSE;
       name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (data->block));
-      options = "";
+      options = "nofail";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (data->drive != NULL && udisks_drive_get_removable (data->drive))
         options = "noauto";
@@ -240,6 +242,8 @@ crypttab_dialog_present (CrypttabDialogData *data)
   g_signal_connect (data->options_entry,
                     "notify::text", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->noauto_checkbutton,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
+  g_signal_connect (data->nofail_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->auth_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), data);
@@ -484,6 +488,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-name-entry"));
   data->options_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-options-entry"));
   data->noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-noauto-checkbutton"));
+  data->nofail_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-nofail-checkbutton"));
   data->auth_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-auth-checkbutton"));
   data->passphrase_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-label"));
   data->passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-passphrase-entry"));

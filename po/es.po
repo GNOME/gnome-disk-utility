@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-23 12:15+0000\n"
-"PO-Revision-Date: 2012-01-23 17:51+0100\n"
+"POT-Creation-Date: 2012-01-24 23:01+0000\n"
+"PO-Revision-Date: 2012-01-25 17:45+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,13 +20,33 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gduwindow.c:863
+#: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:3
+#: ../src/palimpsest/gduwindow.c:869
 msgid "Disks"
 msgstr "Discos"
 
 #: ../data/palimpsest.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Gestione dispositivos y soportes"
+
+#: ../data/ui/about-dialog.ui.h:1
+msgid ""
+"Copyright © 2008-2012 Red Hat, Inc.\n"
+"Copyright © 2008-2012 David Zeuthen"
+msgstr ""
+"Copyright © 2008-2012 Red Hat, Inc.\n"
+"Copyright © 2008-2012 David Zeuthen"
+
+#: ../data/ui/about-dialog.ui.h:4
+msgid "View, modify and configure disks and media"
+msgstr "Ver, modificar y configurar y discos y medios"
+
+#: ../data/ui/about-dialog.ui.h:5
+msgid "translator-credits"
+msgstr ""
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012\n"
+"Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010\n"
+"Benjamín Valero Espinosa <benjavalero@gmail.com>, 2009"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 msgid "<big>Change Passphrase</big>"
@@ -95,7 +115,7 @@ msgid "Select a Folder"
 msgstr "Seleccionar una carpeta"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:5
-#: ../data/ui/edit-crypttab-dialog.ui.h:14
+#: ../data/ui/edit-crypttab-dialog.ui.h:16
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 #: ../data/ui/filesystem-create.ui.h:11
 msgid "_Name"
@@ -112,7 +132,6 @@ msgid "<big>Contents</big>"
 msgstr "<big>Contenido</big>"
 
 #: ../data/ui/create-partition-dialog.ui.h:2
-#| msgid "_Create Partition"
 msgid "<big>Create Partition</big>"
 msgstr "<big>Crear partición</big>"
 
@@ -149,68 +168,78 @@ msgid "Con_figure passphrase and options"
 msgstr "Con_figurar contraseña y opciones"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:3
-msgid "Don't unlock at _startup"
+#| msgid "Don't unlock at _startup"
+msgid "Don't unlock at startup"
+msgstr "No bloquear al iniciar"
+
+#: ../data/ui/edit-crypttab-dialog.ui.h:4 ../data/ui/edit-fstab-dialog.ui.h:7
+#, fuzzy
+#| msgid "Don't unlock at _startup"
+msgid "Don't wait for device at startup"
 msgstr "No _bloquear al iniciar"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:4
-msgid ""
-"If checked, additional authorization (typically requiring the user to prove "
-"he is an administrator) is required to unlock the device [x-udisks-auth]"
-msgstr ""
-
 #: ../data/ui/edit-crypttab-dialog.ui.h:5
-msgid "If checked, the device will not be unlocked at startup [noauto]"
+msgid ""
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
 msgstr ""
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:6
+msgid "If checked, the device will not be unlocked at startup [noauto]"
+msgstr ""
+
+#: ../data/ui/edit-crypttab-dialog.ui.h:7 ../data/ui/edit-fstab-dialog.ui.h:13
+msgid "If checked, the system won't wait for the device at startup [nofail]"
+msgstr ""
+
+#: ../data/ui/edit-crypttab-dialog.ui.h:8
 msgid "Options to use when unlocking the device"
 msgstr "Opciones que usar al desbloquear el deispositivo"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:7
+#: ../data/ui/edit-crypttab-dialog.ui.h:9
 #, fuzzy
 #| msgid "_Passphrase:"
 msgid "Passphrase File"
 msgstr "Contrase_ña:"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:8
+#: ../data/ui/edit-crypttab-dialog.ui.h:10
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:9
+#: ../data/ui/edit-crypttab-dialog.ui.h:11
 msgid "Require additional authorization to unlock"
-msgstr ""
+msgstr "Requerir autorización adicional para desbloquear"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:10
+#: ../data/ui/edit-crypttab-dialog.ui.h:12
 #: ../data/ui/unlock-device-dialog.ui.h:2
-#| msgid "_New Passphrase:"
 msgid "Sho_w passphrase"
 msgstr "Mos_trar contraseña"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:11
+#: ../data/ui/edit-crypttab-dialog.ui.h:13
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with /dev/mapper/"
 msgstr ""
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:12
+#: ../data/ui/edit-crypttab-dialog.ui.h:14
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper/</b>"
 msgstr ""
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:13
+#: ../data/ui/edit-crypttab-dialog.ui.h:15
 #: ../data/ui/edit-fstab-dialog.ui.h:23
 msgid "What's this?"
 msgstr "¿Qué es esto?"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:15
+#: ../data/ui/edit-crypttab-dialog.ui.h:17
 #: ../data/ui/edit-fstab-dialog.ui.h:25
 msgid "_Options"
 msgstr "_Opciones"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:16
+#: ../data/ui/edit-crypttab-dialog.ui.h:18
 #: ../data/ui/filesystem-create.ui.h:12 ../data/ui/unlock-device-dialog.ui.h:3
 msgid "_Passphrase"
 msgstr "_Contraseña"
@@ -218,7 +247,6 @@ msgstr "_Contraseña"
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:1
 #: ../data/ui/edit-partition-dialog.ui.h:1
-#| msgid "Ed_it Partition"
 msgid "<big>Edit Partition</big>"
 msgstr "<big>Editar partición</big>"
 
@@ -270,20 +298,14 @@ msgid "D_irectory"
 msgstr "_Carpeta"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:5
-#, fuzzy
-#| msgid "Details"
-msgid "Defaults"
-msgstr "Detalles"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:6
-#, fuzzy
 #| msgid "Array _Name:"
 msgid "Display _Name"
-msgstr "_Nombre del conjunto:"
+msgstr "Mostrar _nombre"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:7
-msgid "Don't mount at startu_p"
-msgstr "No montar al _inicio"
+#: ../data/ui/edit-fstab-dialog.ui.h:6
+#| msgid "Don't mount at startu_p"
+msgid "Don't mount at startup"
+msgstr "No montar al inicio"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:8
 msgid "Icon Na_me"
@@ -291,42 +313,35 @@ msgstr "No_mbre del icono"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:9
 msgid ""
-"If checked, additional authorization (typically requiring the user to prove "
-"he is an administrator) is required to mount the device [comment=udisks-auth]"
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:10
 msgid ""
-"If checked, the default options will be used (rw, suid, dev, exec, auto, "
-"nouser, async) [defaults]"
+"If checked, the device is always shown in the user interface no matter what "
+"its directory is [x-gvfs-show]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:11
 msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [comment=gvfs-show]"
+"If checked, the device is never shown in the user interface no matter what "
+"its directory is [x-gvfs-hide]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
-msgid ""
-"If checked, the device is never shown in the user interface no matter what "
-"its directory is [comment=gvfs-hide]"
-msgstr ""
-
-#: ../data/ui/edit-fstab-dialog.ui.h:13
 msgid "If checked, the device will not be mounted at startup [noauto]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:14
 msgid ""
-"If set, the name of the icon to use in the device in the user interface "
-"[comment=gvfs-icon=]"
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:15
 msgid ""
-"If set, the name to use for the device in the user interface [comment=gvfs-"
-"name=]"
+"If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
 
 #: ../data/ui/edit-fstab-dialog.ui.h:16
@@ -472,12 +487,10 @@ msgid "_Partitioning"
 msgstr "_Particionado"
 
 #: ../data/ui/format-volume-dialog.ui.h:1
-#| msgid "Fo_rmat Volume"
 msgid "<big>Format Volume</big>"
 msgstr "<big>Formatear volumen</big>"
 
 #: ../data/ui/palimpsest.ui.h:1
-#| msgid "_Volumes"
 msgid "<b>_Volumes</b>"
 msgstr "<b>_Volúmenes</b>"
 
@@ -523,10 +536,9 @@ msgid "Delete partition..."
 msgstr "Eliminar partición…"
 
 #: ../data/ui/palimpsest.ui.h:12
-#, fuzzy
 #| msgid "Detaching Device"
 msgid "Detach Disk Image"
-msgstr "Desacoplando dispositivo"
+msgstr "Desacoplando imagen de disco"
 
 #: ../data/ui/palimpsest.ui.h:13
 msgid "Device"
@@ -653,10 +665,9 @@ msgstr "No se seleccionó ninguna unidad"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "<big>Restore Disk Image</big>"
-msgstr ""
+msgstr "<big>Restaurar imagen de disco</big>"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:2
-#| msgid "Writing data to \"%s\"..."
 msgid "Copying data to device..."
 msgstr "Copiando datos al dispositivo…"
 
@@ -689,12 +700,10 @@ msgid "Extended"
 msgstr "Extendido"
 
 #: ../data/ui/smart-dialog.ui.h:4
-#| msgid "Normalized:"
 msgid "Normalized"
 msgstr "Normalizado"
 
 #: ../data/ui/smart-dialog.ui.h:5
-#| msgid "Overall Assessment:"
 msgid "Overall Assessment"
 msgstr "Estimación general"
 
@@ -703,7 +712,6 @@ msgid "Powered On"
 msgstr "Encendido"
 
 #: ../data/ui/smart-dialog.ui.h:7
-#| msgid "Self Assessment:"
 msgid "Self-assessment"
 msgstr "Estimación propia"
 
@@ -1515,74 +1523,65 @@ msgid ""
 msgstr "Sólo durante actividades desconectadas (Not Online)"
 
 #: ../src/palimpsest/gduatasmartdialog.c:955
-#, fuzzy
 #| msgid "Last self-test completed OK"
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "La última autocomprobación se completó correctamente"
 
 #: ../src/palimpsest/gduatasmartdialog.c:957
-#, fuzzy
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Se canceló la última autocomprobación"
 
 #: ../src/palimpsest/gduatasmartdialog.c:959
-#, fuzzy
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
-msgstr "Se canceló la última autocomprobación"
+msgstr "Se interrumpió la última autocomprobación"
 
 #: ../src/palimpsest/gduatasmartdialog.c:961
-#, fuzzy
 #| msgid "Last self-test completed OK"
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
-msgstr "La última autocomprobación se completó correctamente"
+msgstr "La última autocomprobación no se completó"
 
 #: ../src/palimpsest/gduatasmartdialog.c:963
-#, fuzzy
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
-msgstr "Se canceló la última autocomprobación"
+msgstr "Falló la última autocomprobación"
 
 #: ../src/palimpsest/gduatasmartdialog.c:965
-#, fuzzy
 #| msgid "Last self-test FAILED (Electrical)"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
-msgstr "FALLÓ la última autocomprobación (eléctrico)"
+msgstr "Falló la última autocomprobación (eléctrico)"
 
 #: ../src/palimpsest/gduatasmartdialog.c:967
-#, fuzzy
 #| msgid "Last self-test FAILED (Servo)"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
-msgstr "FALLÓ la última autocomprobación (servo)"
+msgstr "Falló la última autocomprobación (servo)"
 
 #: ../src/palimpsest/gduatasmartdialog.c:969
-#, fuzzy
 #| msgid "Last self-test completed OK"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
-msgstr "La última autocomprobación se completó correctamente"
+msgstr "Falló la última autocomprobación (lectura)"
 
 #: ../src/palimpsest/gduatasmartdialog.c:971
-#, fuzzy
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
-msgstr "Se canceló la última autocomprobación"
+msgstr "Falló la última autocomprobación (manipulación)"
 
 #: ../src/palimpsest/gduatasmartdialog.c:974
-#, fuzzy, c-format
+#, c-format
 #| msgid "Self-test is in progress"
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
-msgstr "La autocomprobación está en progreso"
+msgstr "Autocomprobación en progreso: queda %d%%"
 
 #: ../src/palimpsest/gduatasmartdialog.c:979
 #, fuzzy, c-format
@@ -1605,15 +1604,15 @@ msgid "SMART is not enabled"
 msgstr "SMART no está activado"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1075
-#, fuzzy, c-format
+#, c-format
 #| msgid "Self-test is in progress"
 msgid "Self-test in progress — %d%% remaining"
-msgstr "La autocomprobación está en progreso"
+msgstr "Autocomprobación en progreso: queda %d%%"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1089
 #: ../src/palimpsest/gduatasmartdialog.c:1098
 msgid "DISK IS LIKELY TO FAIL SOON"
-msgstr ""
+msgstr "ES PROBABLE QUE EL DISCO FALLE PRONTO"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1121
 msgid "SELF-TEST FAILED"
@@ -1652,33 +1651,29 @@ msgstr "%s (%s)"
 
 #. Translators: XXX
 #: ../src/palimpsest/gduatasmartdialog.c:1330
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Threshold exceeded"
-msgstr "Umbral:"
+msgstr "Umbral excedido"
 
 #. Translators: XXX
 #: ../src/palimpsest/gduatasmartdialog.c:1335
 msgid "Threshold not exceeded"
-msgstr ""
+msgstr "Umbral no excedido"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1394
-#, fuzzy
 #| msgid "Error reading SMART data"
 msgid "Error refreshing SMART data"
-msgstr "Error al leer los datos SMART"
+msgstr "Error al actualizar los datos SMART"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1426
-#, fuzzy
 #| msgid "Error initiating ATA SMART Self Test"
 msgid "Error aborting SMART self-test"
-msgstr "Error al iniciar la autoprueba ATA SMART"
+msgstr "Error al cancelar la autocomprobación SMART"
 
 #: ../src/palimpsest/gduatasmartdialog.c:1445
-#, fuzzy
 #| msgid "Error initiating ATA SMART Self Test"
 msgid "Error starting SMART self-test"
-msgstr "Error al iniciar la autoprueba ATA SMART"
+msgstr "Error al iniciar la autocomprobación SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/palimpsest/gduatasmartdialog.c:1560
@@ -1695,17 +1690,15 @@ msgid "Error updating /etc/crypttab"
 msgstr "Error al actualizar /etc/crypttab"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:190
-#, fuzzy
 #| msgid "Error changing label"
 msgid "Error changing passphrase"
-msgstr "Error al cambiar la etiqueta"
+msgstr "Error al cambiar la contraseña"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:277
-#: ../src/palimpsest/gducrypttabdialog.c:410
-#, fuzzy
+#: ../src/palimpsest/gducrypttabdialog.c:414
 #| msgid "Error creating partition"
 msgid "Error retrieving configuration data"
-msgstr "Error al crear la partición"
+msgstr "Error al obtener los datos de configuración"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:303
 msgid "/etc/crypttab configuration data is malformed"
@@ -1729,7 +1722,7 @@ msgstr "La fortaleza de la contraseña"
 #: ../src/palimpsest/gducreatediskimagedialog.c:196
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr ""
+msgstr "Imagen de disco de %s (%s).img"
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:233
 #: ../src/palimpsest/gdurestorediskimagedialog.c:274
@@ -1852,33 +1845,33 @@ msgstr ""
 msgid "This is the last primary partition that can be created."
 msgstr "Esta es la última partición primaria que se puede crear."
 
-#: ../src/palimpsest/gducrypttabdialog.c:122
-#: ../src/palimpsest/gducrypttabdialog.c:142
+#: ../src/palimpsest/gducrypttabdialog.c:123
+#: ../src/palimpsest/gducrypttabdialog.c:143
 msgid "Will be created"
 msgstr "Se creará"
 
-#: ../src/palimpsest/gducrypttabdialog.c:124
-#: ../src/palimpsest/gducrypttabdialog.c:149
+#: ../src/palimpsest/gducrypttabdialog.c:125
+#: ../src/palimpsest/gducrypttabdialog.c:150
 msgid "None"
 msgstr "Ninguno"
 
-#: ../src/palimpsest/gducrypttabdialog.c:151
+#: ../src/palimpsest/gducrypttabdialog.c:152
 msgid "Will be deleted"
 msgstr "No se eliminará"
 
-#: ../src/palimpsest/gducrypttabdialog.c:340
+#: ../src/palimpsest/gducrypttabdialog.c:344
 msgid "Error removing /etc/crypttab entry"
-msgstr ""
+msgstr "Error al quitar la entrada de /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:356
+#: ../src/palimpsest/gducrypttabdialog.c:360
 msgid "Error adding /etc/crypttab entry"
-msgstr ""
+msgstr "Error al añadir la entrada a /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:373
+#: ../src/palimpsest/gducrypttabdialog.c:377
 msgid "Error updating /etc/crypttab entry"
-msgstr ""
+msgstr "Error al actualizar la entrada de /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:495
+#: ../src/palimpsest/gducrypttabdialog.c:500
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
@@ -1903,10 +1896,10 @@ msgstr "Dispositivo"
 #. * the size of the device e.g. "230 MB".
 #.
 #: ../src/palimpsest/gdudevicetreemodel.c:946
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unlocking LUKS Device"
 msgid "%s Block Device"
-msgstr "Desbloqueando dispositivo LUKS"
+msgstr "Dispositivo de bloques de %s"
 
 #: ../src/palimpsest/gdufilesystemdialog.c:74
 msgid "Error setting label"
@@ -1987,10 +1980,9 @@ msgid "Matches the device with the given UUID"
 msgstr ""
 
 #: ../src/palimpsest/gdufstabdialog.c:196
-#, fuzzy
 #| msgid "Mount the filesystem on device"
 msgid "Matches the given device"
-msgstr "Montar el sistema de archivos en el dispositivo"
+msgstr "Coincide con el dispositivo dado"
 
 #: ../src/palimpsest/gdufstabdialog.c:483
 msgid "The system may not work correctly if this entry is modified or removed."
@@ -1998,33 +1990,30 @@ msgstr ""
 
 #: ../src/palimpsest/gdufstabdialog.c:578
 msgid "Error removing old /etc/fstab entry"
-msgstr ""
+msgstr "Error al quitar la entrada antigua de /etc/fstab"
 
 #: ../src/palimpsest/gdufstabdialog.c:595
 msgid "Error adding new /etc/fstab entry"
-msgstr ""
+msgstr "Error al añadir la entrada nueva a /etc/fstab"
 
 #: ../src/palimpsest/gdufstabdialog.c:613
 msgid "Error updating /etc/fstab entry"
-msgstr ""
+msgstr "Error al actualizar la entrada de /etc/fstab"
 
 #: ../src/palimpsest/gdupartitiondialog.c:369
-#, fuzzy
 #| msgid "Error deleting partition"
 msgid "Error setting partition type"
-msgstr "Error al eliminar la partición"
+msgstr "Error al establecer el tipo de partición"
 
 #: ../src/palimpsest/gdupartitiondialog.c:383
-#, fuzzy
 #| msgid "Error deleting partition"
 msgid "Error setting partition name"
-msgstr "Error al eliminar la partición"
+msgstr "Error al establecer el nombre de la partición"
 
 #: ../src/palimpsest/gdupartitiondialog.c:397
-#, fuzzy
 #| msgid "Error deleting partition"
 msgid "Error setting partition flags"
-msgstr "Error al eliminar la partición"
+msgstr "Error al establecer las opciones de la partición"
 
 #: ../src/palimpsest/gdupasswordstrengthwidget.c:169
 msgid "Weak"
@@ -2044,12 +2033,12 @@ msgstr ""
 
 #: ../src/palimpsest/gdurestorediskimagedialog.c:167
 msgid "Cannot restore image of size 0"
-msgstr ""
+msgstr "No se puede restaurar una imagen de tamaño 0"
 
 #: ../src/palimpsest/gdurestorediskimagedialog.c:176
 #, c-format
 msgid "The selected image is %s bytes smaller than the device"
-msgstr ""
+msgstr "La imagen seleccionada es %s bytes más pequeña que el dispositivo"
 
 #: ../src/palimpsest/gdurestorediskimagedialog.c:185
 #, c-format
@@ -2176,58 +2165,56 @@ msgstr "Intercambio"
 msgid "Error deleting loop device"
 msgstr "Error al montar el volumen"
 
-#: ../src/palimpsest/gduwindow.c:602 ../src/palimpsest/gduwindow.c:676
-#, fuzzy
+#: ../src/palimpsest/gduwindow.c:602 ../src/palimpsest/gduwindow.c:674
 #| msgid "Error detaching drive"
 msgid "Error attaching disk image"
-msgstr "Error al desacoplar la unidad"
+msgstr "Error al acoplar la imagen de disco"
 
-#: ../src/palimpsest/gduwindow.c:644
+#: ../src/palimpsest/gduwindow.c:642
 msgid "Select Disk Image to Attach"
-msgstr ""
+msgstr "Seleccionar la imagen de disco que acoplar"
 
-#: ../src/palimpsest/gduwindow.c:648
-#, fuzzy
+#: ../src/palimpsest/gduwindow.c:646
 #| msgid "_Detach"
 msgid "_Attach"
-msgstr "_Desacoplar"
+msgstr "_Acoplar"
 
 #. Add a RO check button that defaults to RO
-#: ../src/palimpsest/gduwindow.c:654
+#: ../src/palimpsest/gduwindow.c:652
 msgid "Set up _read-only loop device"
 msgstr ""
 
-#: ../src/palimpsest/gduwindow.c:655
+#: ../src/palimpsest/gduwindow.c:653
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
 msgstr ""
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/palimpsest/gduwindow.c:1484
+#: ../src/palimpsest/gduwindow.c:1490
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Sólo lectura)</span>"
 
-#: ../src/palimpsest/gduwindow.c:1787
+#: ../src/palimpsest/gduwindow.c:1793
 #, fuzzy
 #| msgid "Unknown"
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/palimpsest/gduwindow.c:1814
+#: ../src/palimpsest/gduwindow.c:1820
 msgid "Extended Partition"
 msgstr "Partición extendida"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1855
+#: ../src/palimpsest/gduwindow.c:1861
 msgid "Filesystem Root"
 msgstr "Raíz del sistema de archivos"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1863
+#: ../src/palimpsest/gduwindow.c:1869
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Sí, montado en %s"
@@ -2235,69 +2222,74 @@ msgstr "Sí, montado en %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1869 ../src/palimpsest/gduwindow.c:1905
-#: ../src/palimpsest/gduwindow.c:1931
+#: ../src/palimpsest/gduwindow.c:1875 ../src/palimpsest/gduwindow.c:1911
+#: ../src/palimpsest/gduwindow.c:1937
 msgid "No"
 msgstr "No"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1899 ../src/palimpsest/gduwindow.c:1925
+#: ../src/palimpsest/gduwindow.c:1905 ../src/palimpsest/gduwindow.c:1931
 msgid "Yes"
 msgstr "Sí"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2004
+#: ../src/palimpsest/gduwindow.c:2010
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espacio sin usar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2009
+#: ../src/palimpsest/gduwindow.c:2015
 msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
-#: ../src/palimpsest/gduwindow.c:2365
+#: ../src/palimpsest/gduwindow.c:2371
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: ../src/palimpsest/gduwindow.c:2405
+#: ../src/palimpsest/gduwindow.c:2411
 msgid "Error unmounting filesystem"
 msgstr "Error al desmontar el sistema de archivos"
 
-#: ../src/palimpsest/gduwindow.c:2484
+#: ../src/palimpsest/gduwindow.c:2490
 msgid "Error deleting partition"
 msgstr "Error al eliminar la partición"
 
-#: ../src/palimpsest/gduwindow.c:2500
+#: ../src/palimpsest/gduwindow.c:2506
 msgid "Are you sure you want to delete the partition?"
 msgstr "¿Está seguro de que quiere eliminar la partición?"
 
-#: ../src/palimpsest/gduwindow.c:2501
+#: ../src/palimpsest/gduwindow.c:2507
 msgid "All data on the partition will be lost"
 msgstr "Se perderán todos los datos de la partición"
 
-#: ../src/palimpsest/gduwindow.c:2502
+#: ../src/palimpsest/gduwindow.c:2508
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/palimpsest/gduwindow.c:2533
+#: ../src/palimpsest/gduwindow.c:2539
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: ../src/palimpsest/gduwindow.c:2585
+#: ../src/palimpsest/gduwindow.c:2591
 msgid "Error locking encrypted device"
 msgstr "Error al bloquear el dispositivo cifrado"
 
-#: ../src/palimpsest/gduwindow.c:2626
+#: ../src/palimpsest/gduwindow.c:2632
 msgid "Error starting swap"
 msgstr "Error al iniciar el intercambio"
 
-#: ../src/palimpsest/gduwindow.c:2663
+#: ../src/palimpsest/gduwindow.c:2669
 msgid "Error stopping swap"
 msgstr "Error al detener el intercambio"
+
+#, fuzzy
+#~| msgid "Details"
+#~ msgid "Defaults"
+#~ msgstr "Detalles"
 
 #~ msgid "Disk Utility"
 #~ msgstr "Utilidad de discos"
@@ -5018,11 +5010,6 @@ msgstr "Error al detener el intercambio"
 
 #~ msgid "Error connecting to “%s”"
 #~ msgstr "Error al conectar con «%s»"
-
-#~ msgid "translator-credits"
-#~ msgstr ""
-#~ "Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010\n"
-#~ "Benjamín Valero Espinosa <benjavalero@gmail.com>, 2009"
 
 #~ msgid "_File"
 #~ msgstr "_Archivo"

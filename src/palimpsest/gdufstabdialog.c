@@ -455,10 +455,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       fsname = NULL;
       dir = "";
       type = "auto";
-      opts = "nofail";
+      opts = "nosuid,nodev,nofail";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (drive != NULL && udisks_drive_get_removable (drive))
-        opts = "noauto";
+        opts = "nosuid,nodev,noauto";
       freq = 0;
       passno = 0;
     }

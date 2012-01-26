@@ -837,6 +837,25 @@ on_constructed_in_idle (gpointer user_data)
   return FALSE; /* remove source */
 }
 
+static gint
+device_sort_function (GtkTreeModel *model,
+                      GtkTreeIter *a,
+                      GtkTreeIter *b,
+                      gpointer user_data)
+{
+  gchar *sa, *sb;
+
+  gtk_tree_model_get (model, a,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, &sa,
+                      -1);
+  gtk_tree_model_get (model, b,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, &sb,
+                      -1);
+
+  return g_strcmp0 (sa, sb);
+}
+
+
 static void
 gdu_window_constructed (GObject *object)
 {
@@ -905,6 +924,12 @@ gdu_window_constructed (GObject *object)
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
                                         GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
                                         GTK_SORT_ASCENDING);
+  /* Force g_strcmp0() as the sort function otherwise ___aa won't come before ____b ... */
+  gtk_tree_sortable_set_sort_func (GTK_TREE_SORTABLE (window->model),
+                                   GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY,
+                                   device_sort_function,
+                                   NULL, /* user_data */
+                                   NULL); /* GDestroyNotify */
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->device_treeview));
   gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);

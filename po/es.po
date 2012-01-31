@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-27 12:30+0000\n"
-"PO-Revision-Date: 2012-01-29 21:27+0100\n"
+"POT-Creation-Date: 2012-01-29 20:32+0000\n"
+"PO-Revision-Date: 2012-01-31 17:34+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -120,10 +120,9 @@ msgid "_Name"
 msgstr "_Nombre"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:6
-#, fuzzy
 #| msgid "Preparing..."
 msgid "_Start Creating..."
-msgstr "Preparando…"
+msgstr "_Empezando a crear…"
 
 #: ../data/ui/create-partition-dialog.ui.h:1
 msgid "<big>Contents</big>"
@@ -160,6 +159,7 @@ msgstr "El tamaño de la partición que crear, en megabytes"
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "Checked if an entry in the /etc/crypttab file exists for the device"
 msgstr ""
+"Marcada si existe una entrada en el archivo /etc/crypttab para el dispositivo"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid "Con_figure passphrase and options"
@@ -170,10 +170,9 @@ msgid "Don't unlock at startup"
 msgstr "No bloquear al iniciar"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:4 ../data/ui/edit-fstab-dialog.ui.h:7
-#, fuzzy
 #| msgid "Don't unlock at _startup"
 msgid "Don't wait for device at startup"
-msgstr "No _bloquear al iniciar"
+msgstr "No esperar al dispositivo al iniciar"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:5
 msgid ""
@@ -190,6 +189,7 @@ msgstr "Si está marcada, el dispositivo no se desbloqueará al inicio [noauto]"
 #: ../data/ui/edit-crypttab-dialog.ui.h:7 ../data/ui/edit-fstab-dialog.ui.h:13
 msgid "If checked, the system won't wait for the device at startup [nofail]"
 msgstr ""
+"Si está marcada, el sistema no esperará al dispositivo al iniciar [nofail]"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:8
 msgid "Options to use when unlocking the device"
@@ -204,6 +204,8 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
+"Contraseña del dispositivo, o en blanco para pedírsela al usuario al "
+"configurar el dispositivo"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:11
 msgid "Require additional authorization to unlock"
@@ -219,12 +221,16 @@ msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with /dev/mapper/"
 msgstr ""
+"El nombre que usar para el dispositivo desbloqueado; al nombre del "
+"dispositivo se añade el prefijo /dev/mapper"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:14
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper/</b>"
 msgstr ""
+"El nombre que usar para el dispositivo desbloqueado; al nombre del "
+"dispositivo se añade el prefijo <b>/dev/mapper/</b>"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:15
 #: ../data/ui/edit-fstab-dialog.ui.h:23
@@ -253,6 +259,9 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
+"Una opción usada por el cargador de arranque de la plataforma para "
+"determinar de dónde se cargará el sistema operativo. Algunas veces, la "
+"partición que tiene esta opción se denomina partición <i>activa</i>"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:4
 msgid "The partition type as a 8-bit unsigned integer"
@@ -285,6 +294,8 @@ msgstr "Mostrar siempre en la interfaz del usuario"
 #: ../data/ui/edit-fstab-dialog.ui.h:2
 msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
 msgstr ""
+"Marcada si la entrada en el archivo <b>/etc/fstab</b> existe para el "
+"dispositivo"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:3
 msgid "Con_figure mount point and options"
@@ -366,6 +377,8 @@ msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"El <b>archivo de dispositivo especial</b>; use enlaces simbólicos en la "
+"jerarquía de <b>/dev/disk</b> para controlar el alcance de la entrada nueva"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:20
 msgid "The directory to mount the device in"
@@ -380,6 +393,8 @@ msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"El archivo de dispositivo especial; use enlaces simbólicos en la jerarquía "
+"de /dev/disk para controlar el alcance de la entrada nueva"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:24
 msgid "_Device"
@@ -406,6 +421,8 @@ msgid ""
 "If set, some OSes may mount or use the contents of the partition as read-"
 "only instead of read-write"
 msgstr ""
+"Si está establecida, algunos sistemas operativos pueden montar o usar el "
+"contenido de la partición como solo lectura en lugar de lectura/escritura"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
 msgid "If set, some OSes may not automount the contents of the partition"
@@ -445,6 +462,9 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
+"Usado para indicar que la partición y su contenido son necesarios para que "
+"el sistema operativo o la plataforma funcionen. Se debe tener especial "
+"cuidado de no borrar o sobreescribir el contenido."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:14
 msgid "_Read-Only"
@@ -480,12 +500,18 @@ msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory"
 msgstr ""
+"El nombre que usar por el sistema de archivos. Esto es útil si quiere "
+"referirse al dispositivo con un enlace simbólico en la carpeta /dev/disk/by-"
+"label"
 
 #: ../data/ui/filesystem-create.ui.h:10
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the <b>/dev/disk/by-label</b> directory"
 msgstr ""
+"El nombre que usar por el sistema de archivos. Esto es útil si quiere "
+"referirse al dispositivo con un enlace simbólico en la carpeta <b>/dev/disk/"
+"by-label</b>"
 
 #: ../data/ui/format-disk-dialog.ui.h:1
 msgid "<big>Format Disk</big>"
@@ -657,22 +683,18 @@ msgid "devtab"
 msgstr "devtab"
 
 #: ../data/ui/palimpsest.ui.h:39
-#| msgctxt "ATA SMART graph label"
-#| msgid "now"
 msgid "new"
 msgstr "nueva"
 
 #: ../data/ui/palimpsest.ui.h:40
-#, fuzzy
 #| msgid "Not yet implemented"
 msgid "not_implemented"
-msgstr "Aún no está implementado"
+msgstr "no implementado"
 
 #: ../data/ui/palimpsest.ui.h:41
-#, fuzzy
 #| msgid "No drive selected"
 msgid "nothing_selected"
-msgstr "No se seleccionó ninguna unidad"
+msgstr "nada_seleccionado"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "<big>Restore Disk Image</big>"
@@ -691,20 +713,18 @@ msgid "_Image to restore"
 msgstr "_Imagen que restaurar"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
-#, fuzzy
 #| msgid "Retrieving..."
 msgid "_Start Restoring..."
-msgstr "Obteniendo…"
+msgstr "_Iniciando la restauración…"
 
 #: ../data/ui/smart-dialog.ui.h:1
 msgid "<b>SMART _Attributes</b>"
 msgstr "<b>Atributos de SMART</b>"
 
 #: ../data/ui/smart-dialog.ui.h:2
-#, fuzzy
 #| msgid "Cancel"
 msgid "Conveyance"
-msgstr "Cancelar"
+msgstr "Transferencia"
 
 #: ../data/ui/smart-dialog.ui.h:3
 msgid "Extended"
@@ -840,8 +860,8 @@ msgid ""
 "data to a special reserved area (spare area)"
 msgstr ""
 "Conteo de sectores remapeados. Cuando el disco duro halla un error de "
-"lectura/escritura/verificación, marca el sector como «reubicado» y "
-"transfiere los datos a un área reservada especial (área libre)."
+"lectura/escritura/verificación, marca el sector como «reubicado» y transfiere "
+"los datos a un área reservada especial (área libre)."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1704,6 +1724,8 @@ msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
+"Cambiar la contraseña de este dispositivo también actualizará la contraseña "
+"referenciada en el archivo <i>/etc/crypttab</i>"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:355
 #: ../src/palimpsest/gducreatefilesystemwidget.c:503
@@ -1726,10 +1748,9 @@ msgstr "Error al escribir en la imagen de respaldo"
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:313
 #: ../src/palimpsest/gdurestorediskimagedialog.c:353
-#, fuzzy
 #| msgid "Error reading stderr from: %s"
 msgid "Error reading from offset %"
-msgstr "Error al leer desde stderr: %s"
+msgstr "Error al leer desde el desplazamiento %"
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:381
 #: ../src/palimpsest/gdurestorediskimagedialog.c:541
@@ -1869,6 +1890,8 @@ msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
 msgstr ""
+"Sólo se cambiará la contraseña referenciada en el archivo <i>/etc/crypttab</"
+"i>. Para cambiar la contraseña del disco, use <i>Cambiar contraseña...</i>"
 
 #: ../src/palimpsest/gdudevicetreemodel.c:410
 msgid "Disk Drives"
@@ -2362,8 +2385,8 @@ msgstr "Error al detener el intercambio"
 #~ msgid ""
 #~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
-#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID "
-#~ "«%s» (%s)"
+#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID «%"
+#~ "s» (%s)"
 
 #~ msgid "Expand %s"
 #~ msgstr "Expandir %s"
@@ -3498,8 +3521,7 @@ msgstr "Error al detener el intercambio"
 
 #~ msgid "Unable to parse command-line `%s' (Malformed address?): %s"
 #~ msgstr ""
-#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): "
-#~ "%s"
+#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): %s"
 
 #~ msgid "Unable to spawn ssh program: %s"
 #~ msgstr "No se pudo iniciar el programa de SSH: %s"
@@ -5459,8 +5481,8 @@ msgstr "Error al detener el intercambio"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de "
-#~ "«%s».\n"
+#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de «%"
+#~ "s».\n"
 #~ "\n"
 #~ "Asegúrese de respaldar los datos importantes. Esta acción no se puede "
 #~ "deshacer."
@@ -5566,8 +5588,7 @@ msgstr "Error al detener el intercambio"
 #~ msgstr "Dispositivo LUKS en texto"
 
 #~ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-#~ msgstr ""
-#~ "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
+#~ msgstr "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
 
 #~ msgid ""
 #~ "Starting a RAID array in degraded mode means that the RAID volume is no "

@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-16 15:07+0000\n"
-"PO-Revision-Date: 2011-04-21 13:05+0200\n"
+"POT-Creation-Date: 2012-01-20 23:01+0000\n"
+"PO-Revision-Date: 2012-02-14 18:48+0100\n"
 "Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Poedit-Language: Slovak\n"
 
 #. Translators: Window title when no item is selected.
 #.
@@ -103,7 +105,7 @@ msgstr "Formátovať %d. oddiel na zariadení %s (%s)"
 #: ../src/format-tool/gdu-format-tool.c:310
 #, c-format
 msgid "Formatting partition %d of %s (%s)"
-msgstr "Formátovanie %d. oddielu na zariadení %s (%s)"
+msgstr "Formátuje sa %d. oddiel na zariadení %s (%s)"
 
 #. Translators: First argument is the drive name, second argument is the size (e.g. 10 GB)
 #: ../src/format-tool/gdu-format-tool.c:316
@@ -170,12 +172,14 @@ msgstr "Chyba pri ukladaní hesla do zväzku kľúčov"
 msgid "The RAID Array to add a component to."
 msgstr "Diskové pole RAID, do ktorého se má komponent pridať."
 
+# Translators: %s is the name of a RAID array
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:228
 #, c-format
 msgid "Add spare to %s"
 msgstr "Pridať náhradné zariadenie do %s"
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=646602
+# Translators: first %s is the size of the spare (in MB or GB)
+# second %s is the name of the array, third %s is a unique identifier for it
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:229
 #, c-format
 msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
@@ -183,18 +187,21 @@ msgstr ""
 "Vyberte zariadenie, ktoré vytvorí náhradné zariadenie s veľkosťou %s pre "
 "diskové pole RAID „%s“ (%s)"
 
+# Translators: %s is the name of a RAID array
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:237
 #, c-format
 msgid "Expand %s"
 msgstr "Rozšíriť %s"
 
+# Translators: first %s is the size to use (in MB or GB)
+# second %s is the name of the array, third %s is a unique identifier for it
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:238
 #, c-format
 msgid ""
 "Select one or more devices to use %s on for expanding the RAID Array \"%s"
 "\" (%s)"
 msgstr ""
-"Vyberte jedno alebo viac zariadní, z ktorých sa použije %s na rozšíenie "
+"Vyberte jedno alebo viac zariadení, z ktorých sa použije %s na rozšíenie "
 "diskového poľa RAID „%s“ (%s)"
 
 #: ../src/gdu-gtk/gdu-add-component-linux-md-dialog.c:244
@@ -203,7 +210,7 @@ msgstr "_Rozšíriť"
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:184
 msgid "The VG to add a PV to."
-msgstr "Skupina zväzkov, ktoré sa pridajú do fyzických zväzkov."
+msgstr "Skupina zväzkov, do ktorej sa pridá fyzický zväzok."
 
 #: ../src/gdu-gtk/gdu-add-pv-linux-lvm2-dialog.c:249
 #, c-format
@@ -240,7 +247,7 @@ msgstr "Priepustnosť"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:142
 msgid "Average efficiency of the disk"
-msgstr "Priemerný výkon disku"
+msgstr "Priemerná výkonnosť disku"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -312,7 +319,7 @@ msgstr "Trvanie presunu"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:192
 msgid "Average efficiency of operations while positioning"
-msgstr "Priemerný výkon operácií pri umiestňovaní hláv"
+msgstr "Priemerná výkonnosť operácií pri umiestňovaní hláv"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -395,8 +402,6 @@ msgid ""
 msgstr ""
 "Počet situací, kedy zápisovacia hlava vyšla von zo svojho operačného rozpätia"
 
-# PK: to ako tam ten vzduch prudi?
-# peter: 	Airflow temperature on Western Digital HDs (Same as temp. , but current value is 50 less for some models. Marked as obsolete.)
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
@@ -404,7 +409,6 @@ msgstr ""
 msgid "Airflow Temperature"
 msgstr "Teplota prúdiaceho vzduchu"
 
-# PK: to ako tam ten vzduch prudi?
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:256
 msgid "Airflow temperature of the drive"
 msgstr "Teplota prúdiaceho vzduchu v disku"
@@ -501,9 +505,9 @@ msgid ""
 msgstr ""
 "Počet sektorov, ktoré čakajú na premapovanie. Ak sa sektor čakajúcí na "
 "premapovanie neskôr podarí úspešne zapísať alebo prečítať, tak sa táto "
-"hodnota zníži a sektor nebude premapovaný. Chyby pri čítaní sektora "
-"jeho premapovanie neovplyvňujú, premapovanie sa vykná iba pri chybnom "
-"pokuse o zápis."
+"hodnota zníži a sektor nebude premapovaný. Chyby pri čítaní sektora jeho "
+"premapovanie neovplyvňujú, premapovanie sa vykoná iba pri chybnom pokuse o "
+"zápis."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -569,8 +573,7 @@ msgstr "Chyby dátových adresovacích značiek"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:361
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr ""
-"Počet chýb dátových adresovacích značiek (DAM) (alebo) špecifické pre "
-"výrobcu"
+"Počet chýb dátových adresovacích značiek (DAM) (alebo) špecifické pre výrobcu"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -655,157 +658,170 @@ msgstr "Výkon presunu hláv pri nedátových operáciách"
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:424
 msgid "Disk Shift"
-msgstr ""
+msgstr "Posun disku"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:425
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
+"Posun disku môže nastať silným nárazom pri skladovaní, následkom pádu alebo "
+"teploty"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:434
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
+"Počet chýb, ktoré nastali dôsledkom silných nárazov zistených senzorom "
+"otrasov"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:441
 msgid "Loaded Hours"
-msgstr ""
+msgstr "Počet hodín prevádzky"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:442
 msgid "Number of hours in general operational state"
-msgstr ""
+msgstr "Počet hodín v bežnom prevádzkovom stave"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:449
 msgid "Load/Unload Retry Count"
-msgstr ""
+msgstr "Počet opakovaných zaťaží"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:450
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
 msgstr ""
+"Záťaž disku spôsobená početnými opakovanými operáciami, ako napríklad "
+"čítanie, zápis, nastavovanie hláv, atď."
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:458
 msgid "Load Friction"
-msgstr ""
+msgstr "Záťaž trením"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:459
 msgid "Load on drive caused by friction in mechanical parts of the store"
-msgstr ""
+msgstr "Záťaž disku spôsobená trením mechanických častí úložiska"
 
+# PK: zle, tu ide o pocet posunu hlavicky
+# PM: ako si na to prišiel?
+# PK: cez google ;-)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:467
 msgid "Total number of load cycles"
-msgstr ""
+msgstr "Celkový počet cyklov záťaže"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:474
 msgid "Load-in Time"
-msgstr ""
+msgstr "Čas prevádzky"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:475
 msgid "General time for loading in a drive"
-msgstr ""
+msgstr "Celkový čas záťaže disku"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:482
 msgid "Torque Amplification Count"
-msgstr ""
+msgstr "Počet zvýšení krútiaceho momentu"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:483
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "Počet pokusov o vyrovnanie krútiaceho momentu disku"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:491
 msgid "Number of power-off retract events"
-msgstr ""
+msgstr "Počet zaparkovaní spôsobených stratou energie"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:498
 msgid "GMR Head Amplitude"
-msgstr ""
+msgstr "Rozkmit GMR hláv"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:499
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
-msgstr ""
+msgstr "Rozkmit hláv pri ich chvení počas behu"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:507
 msgid "Temperature of the drive"
-msgstr ""
+msgstr "Teplota disku"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:514
 msgid "Endurance Remaining"
-msgstr ""
+msgstr "Zostávajúca odolnosť"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:515
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
 msgstr ""
+"Percentuálny pomer počtu fyzických mazacích cyklov k maximálnemu počtu "
+"podporovaných mazacích cyklov"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:531
 msgid "Uncorrectable ECC Count"
-msgstr ""
+msgstr "Neopraviteľné ECC chyby"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:532
 msgid "Number of uncorrectable ECC errors"
-msgstr ""
+msgstr "Počet neopraviteľných ECC chýb"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:539
 msgid "Good Block Rate"
-msgstr ""
+msgstr "Početnosť dobrých blokov"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:540
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
 msgstr ""
+"Percentuálny pomer dostupných vyhradených blokov k celkovému počtu "
+"vyhradených blokov"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:548
 msgid "Head Flying Hours"
-msgstr ""
+msgstr "Počet hodín pohybu hláv"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:549
 msgid "Time while head is positioning"
-msgstr ""
+msgstr "Čas strávený nastavovaním hláv"
 
 #. Translators: S.M.A.R.T attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:556
 msgid "Read Error Retry Rate"
-msgstr ""
+msgstr "Početnosť chýb opakovaného čítania"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:557
 msgid "Number of errors while reading from a disk"
-msgstr ""
+msgstr "Počet chýb počas čítania z disku"
 
 #. Translators: This is shown in the attribute treeview when no description is found.
 #. * %d is the attribute number.
@@ -813,27 +829,27 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:699
 #, c-format
 msgid "No description for attribute %d"
-msgstr ""
+msgstr "Pre atribút %d neexistuje popis"
 
 #. Translators: This is shown in the tree view for the normalized value of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:789
 msgid "Normalized:"
-msgstr ""
+msgstr "Normalizovaná:"
 
 #. Translators: This is shown in the tree view for the worst value of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:791
 msgid "Worst:"
-msgstr ""
+msgstr "Najhoršia:"
 
 #. Translators: This is shown in the tree view for the threshold of an attribute (0-254)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:793
 msgid "Threshold:"
-msgstr ""
+msgstr "Prahová:"
 
 #. Translators: This is shown in the tree view for the interpreted/pretty value of an attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:795
 msgid "Value:"
-msgstr ""
+msgstr "Hodnota:"
 
 #. Translators: This is used in the attribute treview when normalized/worst/treshold
 #. * value isn't available
@@ -846,37 +862,37 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:957
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1639
 msgid "N/A"
-msgstr ""
+msgstr "–"
 
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:939
 msgid "Failing"
-msgstr ""
+msgstr "Zlyhanie"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:942
 msgid "Failed in the past"
-msgstr ""
+msgstr "Dávnejšie zlyhanie"
 
 #. Translators: Shown in the treeview for an attribute that we want to warn about
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:946
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:954
 msgid "Warning"
-msgstr ""
+msgstr "Upozornenie"
 
 #. Translators: Shown in the treeview for an attribute that is good
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:949
 msgid "Good"
-msgstr ""
+msgstr "V poriadku"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1020
 msgid "Error reading SMART data"
-msgstr ""
+msgstr "Chyba čítania údajov SMART"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1140
 msgid "Choose SMART Self-test"
-msgstr ""
+msgstr "Zvoľte samokontrolu SMART"
 
 #. Translators: Shown in the "Run self-test" dialog
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1151
@@ -885,26 +901,28 @@ msgid ""
 "size of the disk. You can continue using your system while the test is "
 "running."
 msgstr ""
+"Testy môžu trvať veľmi dlhý čas, v závislosti od rýchlosti a kapacity disku. "
+"Počas priebehu testu môžete pokračovať v práci."
 
 #. Translators: Radio button for short test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1160
 msgid "_Short (usually less than ten minutes)"
-msgstr ""
+msgstr "_Krátky (zvyčajne menej ako desať minút)"
 
 #. Translators: Radio button for extended test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1163
 msgid "_Extended (usually tens of minutes)"
-msgstr ""
+msgstr "_Rozšírený (zvyčajne desiatky minúť)"
 
 #. Translators: Radio button for conveyance test
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1166
 msgid "C_onveyance (usually less than ten minutes)"
-msgstr ""
+msgstr "_Po preprave (zvyčajne menej ako desať minút)"
 
 #. Translators: Button in "Run self-test dialog"
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1174
 msgid "_Run Self Test"
-msgstr ""
+msgstr "_Spustiť samokontrolu"
 
 #. Translators: The title of the SMART dialog.
 #. * First %s is the name for the drive (e.g. "1.0 TB Hard Disk")
@@ -913,12 +931,12 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1269
 #, c-format
 msgid "%s (%s) – SMART Data"
-msgstr ""
+msgstr "Údaje SMART pre %s (%s)"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1289
 msgid "Updated:"
-msgstr ""
+msgstr "Aktualizované:"
 
 #. Translators: Tooltip for the 'Updated' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1292
@@ -926,194 +944,204 @@ msgid ""
 "Time since SMART data was last read – SMART data is updated every 30 minutes "
 "unless the disk is sleeping"
 msgstr ""
+"Čas kedy boli údaje SMART naposledy prečítané – údaje SMART sú aktualizované "
+"každých 30 minút, ak nie je disk v režime spánku"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1298
 msgid "Self-tests:"
-msgstr ""
+msgstr "Samokontrola:"
 
 #. Translators: Tooltip for the 'Self-tests' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1301
 msgid "The result of the last self-test that ran on the disk"
-msgstr ""
+msgstr "Výsledok poslednej vykonanej samokontroly disku"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1306
 msgid "Powered On:"
-msgstr ""
+msgstr "V prevádzke:"
 
 #. Translators: Tooltip for the 'Powered On' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1309
 msgid "The amount of elapsed time the disk has been in a powered-up state"
-msgstr ""
+msgstr "Celkový čas disku stráveného v zapnutom stave"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1314
 msgid "Power Cycles:"
-msgstr ""
+msgstr "Počet zapnutí:"
 
 #. Translators: Tooltip for the 'Power Cycles' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1317
 msgid "The number of full disk power on/off cycles"
-msgstr ""
+msgstr "Počet celých cyklov zapnutia/vypnutia"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1322
 msgid "Temperature:"
-msgstr ""
+msgstr "Teplota:"
 
 #. Translators: Tooltip for the 'Temperature' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1325
 msgid "The temperature of the disk"
-msgstr ""
+msgstr "Teplota disku"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1330
 msgid "Bad Sectors:"
-msgstr ""
+msgstr "Chybné sektory:"
 
 #. Translators: Tooltip for the 'Bad Sectors' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1333
 msgid "The sum of pending and reallocated bad sectors"
-msgstr ""
+msgstr "Celkový počet čakajúcich a premiestnených chybných sektorov"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1338
 msgid "Self Assessment:"
-msgstr ""
+msgstr "Samozhodnotenie:"
 
 #. Translators: Tooltip for the 'Self Assesment' item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1341
 msgid "The assessment from the disk itself whether it is about to fail"
-msgstr ""
+msgstr "Zhodnotenie sa disku ohľadne vlastného zlyhávania"
 
 #. Translators: Item name in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1346
 msgid "Overall Assessment:"
-msgstr ""
+msgstr "Celkové zhodnotenie:"
 
 #. Translators: Tooltip for the 'Overall Assessment' item in the
 #. * status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1350
 msgid "An overall assessment of the health of the disk"
-msgstr ""
+msgstr "Celkové zhodnotenie funkčnosti disku"
 
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1364
 msgid "_Refresh"
-msgstr ""
+msgstr "_Obnoviť"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1366
 msgid "Reads SMART Data, waking up the disk"
-msgstr ""
+msgstr "Prebudí disk z režimu spánku a prečíta SMART údaje"
 
 #. TODO: better icon
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1376
 msgid "Run _Self-test"
-msgstr ""
+msgstr "Spustiť _samokontrolu"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1378
 msgid "Test the disk surface for errors"
-msgstr ""
+msgstr "Otestuje chyby na povrchu disku"
 
 #. Translators: Button name
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1388
+#, fuzzy
 msgid "_Cancel Self-test"
-msgstr ""
+msgstr "Spustiť _samokontrolu"
 
 #. Translators: Button details
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1390
 msgid "Cancels the self-test"
-msgstr ""
+msgstr "Preruší samokontrolu"
 
 #. Translators: Heading used in the main dialog for SMART attributes
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1408
 msgid "_Attributes"
-msgstr ""
+msgstr "_Atribúty"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1442
 msgid "ID"
-msgstr ""
+msgstr "Identifikátor"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1454
 msgid "Attribute"
-msgstr ""
+msgstr "Atribút"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1471
 msgid "Assessment"
-msgstr ""
+msgstr "Zhodnotenie"
 
 #. Translators: This string is used as the column title in the treeview for the value of the attribute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1490
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #. ----------------------------------------------------------------------------------------------------
 #. Translators: Check button in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1518
 msgid "Don't _warn if the disk is failing"
-msgstr ""
+msgstr "_Neupozorňovať, že disk zlyháva"
 
 #. Translators: Tooltip for the "Don't warn me if disk is failing" check button
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1520
 msgid "Leave unchecked to get notified if the disk starts failing"
 msgstr ""
+"Nechajte nezaškrtnuté, ak chcete byť informovaný pri začatí zlyhávania disku"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one year
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1585
 #, c-format
 msgid "%.1f years"
-msgstr ""
+msgstr "%.1f roka"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one day
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1589
 #, c-format
 msgid "%.1f days"
-msgstr ""
+msgstr "%.1f dňa"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one hour
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1593
 #, c-format
 msgid "%.1f hours"
-msgstr ""
+msgstr "%.1f hodiny"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one minute
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1597
 #, c-format
 msgid "%.1f minutes"
-msgstr ""
+msgstr "%.1f minúty"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that exceed one second
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1601
 #, c-format
 msgid "%.1f seconds"
-msgstr ""
+msgstr "%.1f sekundy"
 
+# *https://bugzilla.gnome.org/show_bug.cgi?id=655569
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a time-based unit that is counted in milliseconds
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1607
-#, c-format
+#, fuzzy, c-format
 msgid "%s msec"
-msgstr ""
+msgstr "%s milisekúnd"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1616
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d sektorov"
+msgstr[1] "%d sektor"
+msgstr[2] "%d sektory"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
@@ -1121,31 +1149,31 @@ msgstr[2] ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1628
 #, c-format
 msgid "%.0f° C / %.0f° F"
-msgstr ""
+msgstr "%.0f° C / %.0f° F"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Pre-Fail)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1696
 msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
-msgstr ""
+msgstr "Zlyhanie je príznakom blízkeho zlyhania disku (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1700
 msgid "Failure is a sign of old age (Old-Age)"
-msgstr ""
+msgstr "Zlyhanie je príznakom vysokého veku (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1706
 msgid "Every time data is collected (Online)"
-msgstr ""
+msgstr "Vždy, keď sa zbierajú údaje (Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Not Online)" in English
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1710
 msgid "Only during off-line activities (Not Online)"
-msgstr ""
+msgstr "Iba pri aktivitách v odpojenom stave (Not Online)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview.
 #. * First %s is the type of the attribute (Pre-Fail or Old-Age).
@@ -1159,32 +1187,38 @@ msgid ""
 "Updates: %s\n"
 "Raw: 0x%02x%02x%02x%02x%02x%02x"
 msgstr ""
+"Typ: %s\n"
+"Typ aktualizácie: %s\n"
+"Nespracované údaje: 0x%02x%02x%02x%02x%02x%02x"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when no drive is currently selected
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1928
+#, fuzzy
 msgid "No drive selected"
-msgstr ""
+msgstr "Médium nezistené"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is not available
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1935
+#, fuzzy
 msgid "SMART not supported"
-msgstr ""
+msgstr "SMART nepodporovaný"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when SMART is supported but data was never collected
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1943
 msgid "SMART data never collected"
-msgstr ""
+msgstr "Údaje SMART neboli zbierané"
 
 #. Translators: Shown in the "Overall Assessment" item in the status table
 #. * when the SMART data is malformed
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1950
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1956
 msgid "SMART data is malformed"
-msgstr ""
+msgstr "Údaje SMART sú poškodené"
 
+# https://bugzilla.gnome.org/show_bug.cgi?id=655571
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is unknown
 #. Translators: Shown in the "Bad Sectors" item in the status table
@@ -1207,127 +1241,127 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2103
 #: ../src/gdu-gtk/gdu-volume-grid.c:1301 ../src/gdu/gdu-util.c:1110
 msgid "Unknown"
-msgstr ""
+msgstr "Neznáme"
 
 #. Translators: Shown in the "Self-assessment" item in the status table
 #. * when the self-assessment of the drive is PASSED
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1991
 msgid "Passed"
-msgstr ""
+msgstr "V poriadku"
 
 #. Translators: Shown in the "Self-assessment" item in
 #. * the status table when the self-assessment of the
 #. * drive is FAILING
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:1997
 msgid "FAILING"
-msgstr ""
+msgstr "ZLYHANIE"
 
 #. Translators: Shown in the "Bad Sectors" item in the status table
 #. * when we the disk has no bad sectors
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2009
 msgid "None"
-msgstr ""
+msgstr "Žiadne"
 
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2014
 #, c-format
 msgid "%d bad sector"
 msgid_plural "%d bad sectors"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d chybných sektorov"
+msgstr[1] "%d chybný sektor"
+msgstr[2] "%d chybné sektory"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2060
 msgid "Completed OK"
-msgstr ""
+msgstr "Úspešne dokončená"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2064
 msgid "Cancelled"
-msgstr ""
+msgstr "Zrušená"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2068
 msgid "Cancelled (with hard or soft reset)"
-msgstr ""
+msgstr "Zrušená (tvrdým alebo mäkkým reštartom)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2072
 msgid "Not completed (a fatal error might have occurred)"
-msgstr ""
+msgstr "Nedokončená (mohla nastať kritická chyba)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2076
 msgid "FAILED (Electrical)"
-msgstr ""
+msgstr "ZLYHALA (kvôli elektronike)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2081
 msgid "FAILED (Servo)"
-msgstr ""
+msgstr "ZLYHALA (kvôli servomotorom)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2086
 msgid "FAILED (Read)"
-msgstr ""
+msgstr "ZLYHALA (kvôli čítaniu)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2091
 msgid "FAILED (Suspected of having handled damage)"
-msgstr ""
+msgstr "ZLYHALA (kvôli podozreniu na poškodenie)"
 
 #. Translators: Shown in the "Self-tests" item in the status table
 #: ../src/gdu-gtk/gdu-ata-smart-dialog.c:2096
 msgid "In progress"
-msgstr ""
+msgstr "Prebieha"
 
 #: ../src/gdu-gtk/gdu-confirmation-dialog.c:171
 #, c-format
 msgid "This operation concerns the volume \"%s\" (%s)"
-msgstr ""
+msgstr "Táto operácia sa týka zväzku „%s“ (%s)"
 
 #: ../src/gdu-gtk/gdu-confirmation-dialog.c:175
 #, c-format
 msgid "This operation concerns the drive \"%s\" (%s)"
-msgstr ""
+msgstr "Táto operácia sa týka disku „%s“ (%s)"
 
 #: ../src/gdu-gtk/gdu-confirmation-dialog.c:179
 #, c-format
 msgid "This operation concerns \"%s\" (%s)"
-msgstr ""
+msgstr "Táto operácia sa týka „%s“ (%s)"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:94
 msgid "User Name"
-msgstr ""
+msgstr "Používateľské meno"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:95
 msgid "The chosen user name"
-msgstr ""
+msgstr "Zvolené používateľské meno"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:105
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:106
 msgid "The chosen address"
-msgstr ""
+msgstr "Zvolená adresa"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:154
 msgid "Choose Server"
-msgstr ""
+msgstr "Zvoľte server"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:213
 msgid "Connect to Server"
-msgstr ""
+msgstr "Pripojenie k serveru"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:220
 msgid "_Browse..."
-msgstr ""
+msgstr "_Prechádzať..."
 
 #. Translators: this is the tooltip for the "Browse..." button
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:232
 msgid "Browse servers discovered via the DNS-SD protocol"
-msgstr ""
+msgstr "Prechádza servery objavené pomocou protokolu DNS-SD"
 
 #. Translators: This is the label explaining the dialog
 #.
@@ -1337,132 +1371,138 @@ msgid ""
 "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 "protocol."
 msgstr ""
+"Keď chcete spravovať zariadenia na iných počítačoch, zadajte adresu a "
+"kliknite na „Pripojiť“. Spojenie sa vytvorí pomocou protokolu <i>Secure "
+"Shell</i>."
 
 #. Translators: This is the tooltip for the "Server Address" entry
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:264
 msgid "The hostname or address to connect to"
-msgstr ""
+msgstr "Názov alebo adresa hostiteľa, ku ktorému sa program má pripojiť"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:268
 msgid "Server _Address:"
-msgstr ""
+msgstr "_Adresa servera:"
 
 #. Translators: This is the tooltip for the "User Name" entry
 #. * First %s is the UNIX user name e.g. 'davidz'.
 #.
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:287
 msgid "The user name to connect as"
-msgstr ""
+msgstr "Používateľské meno, pod ktorým sa má program pripojiť"
 
 #: ../src/gdu-gtk/gdu-connect-to-server-dialog.c:291
 msgid "_User Name:"
-msgstr ""
+msgstr "Po_užívateľské meno:"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:117
 msgid "Maximum Logical Volume Size"
-msgstr ""
+msgstr "Maximálna veľkosť logického zväzku"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:118
 msgid "The maximum possible logical volume size"
-msgstr ""
+msgstr "Maximálna možná veľkosť logického zväzku"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:132
 msgid "Logical Volume Size"
-msgstr ""
+msgstr "Veľkosť logického zväzku"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:133
 msgid "The requested Logical Volume size"
-msgstr ""
+msgstr "Požadovaná veľkosť logického zväzku"
 
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:161
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:522
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:163
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:178
 msgid "C_reate"
-msgstr ""
+msgstr "_Vytvoriť"
 
 #. Translators: The %s is the name of the volume group
 #: ../src/gdu-gtk/gdu-create-linux-lvm2-volume-dialog.c:222
 #, c-format
 msgid "Create Logical Volume on %s"
-msgstr ""
+msgstr "Vytvoriť logický zväzok v %s"
 
+# nieco ako zoznam zariadení, s ktorými mozes pracovat
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:179
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:229
 msgid "Pool"
-msgstr ""
+msgstr "Fond"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:180
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:230
 msgid "The pool of devices"
-msgstr ""
+msgstr "Fond zariadení"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:192
 msgid "RAID Level"
-msgstr ""
+msgstr "Typ RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:193
 msgid "The selected RAID level"
-msgstr ""
+msgstr "Vybraný typ RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:203
 msgid "Name"
-msgstr ""
+msgstr "Názov"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:204
 msgid "The requested name for the array"
-msgstr ""
+msgstr "Požadovaný názov pre pole"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:214
 #: ../src/gdu-gtk/gdu-size-widget.c:488
 msgid "Size"
-msgstr ""
+msgstr "Veľkosť"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:215
 msgid "The requested size of the array"
-msgstr ""
+msgstr "Požadovaná veľkosť poľa"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:227
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:306
 msgid "Component Size"
-msgstr ""
+msgstr "Veľkosť súčasti"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:228
 msgid "The size of each component"
-msgstr ""
+msgstr "Veľkosť každej súčasti"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:240
 msgid "Stripe Size"
-msgstr ""
+msgstr "Veľkosť bloku"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:241
 msgid "The requested stripe size of the array"
-msgstr ""
+msgstr "Požadovaná veľkosť bloku poľa"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:253
 msgid "Drives"
-msgstr ""
+msgstr "Disky"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:254
 msgid "Array of drives to use for the array"
-msgstr ""
+msgstr "Pole diskov, ktoré sa majú použiť pre pole"
 
+# nadpis
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:517
 msgid "Create RAID Array"
-msgstr ""
+msgstr "Vytvorenie diskového poľa RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:535
 msgid "General"
-msgstr ""
+msgstr "Všeobecné"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:556
 msgid "RAID _Level:"
-msgstr ""
+msgstr "_Typ RAID:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:595
+#, fuzzy
 msgid "Array _Name:"
-msgstr ""
+msgstr "Veľkosť _poľa:"
 
 #. Translators: This is the default name to use for the new array.
 #. * Keep length of UTF-8 representation of the translation of "New RAID Array" to less than
@@ -1470,67 +1510,69 @@ msgstr ""
 #.
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:603
 msgid "New RAID Array"
-msgstr ""
+msgstr "Nové diskové pole RAID"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:619
 msgid "Stripe S_ize:"
-msgstr ""
+msgstr "Veľkosť _bloku:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:629
 msgid "4 KiB"
-msgstr ""
+msgstr "4 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:631
 msgid "8 KiB"
-msgstr ""
+msgstr "8 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:633
 msgid "16 KiB"
-msgstr ""
+msgstr "16 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:635
 msgid "32 KiB"
-msgstr ""
+msgstr "32 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:637
 msgid "64 KiB"
-msgstr ""
+msgstr "64 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:639
 msgid "128 KiB"
-msgstr ""
+msgstr "128 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:641
 msgid "256 KiB"
-msgstr ""
+msgstr "256 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:643
 msgid "512 KiB"
-msgstr ""
+msgstr "512 KiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:645
 msgid "1 MiB"
-msgstr ""
+msgstr "1 MiB"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:663
 msgid "Array _Size:"
-msgstr ""
+msgstr "Veľkosť _poľa:"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:690
 msgid "_Disks"
-msgstr ""
+msgstr "_Disky"
 
 #. --------------------------------------------------------------------------------
 #. TODO: Actually make this work
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:706
 msgid "Use entire disks instead of _partitions"
-msgstr ""
+msgstr "Požiť celý disk namiesto _oddielov"
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:707
 msgid ""
 "If checked, the entirety of each selected disk will be used for the RAID "
 "array. Otherwise partitions will be created."
 msgstr ""
+"Ak je zaškrtnuté, použije sa celý priestor každého vybraného disku pre "
+"diskové pole RAID. V opačnom prípade budú vytvorené oddiely."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the short localized name for the RAID level, e.g. "RAID-1".
@@ -1538,23 +1580,23 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:876
 #, c-format
 msgid "Insufficient number of disks to create a %s array."
-msgstr ""
+msgstr "Nedostatočný počet diskov na vytvorenie diskového poľa %s."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:892
 #, c-format
 msgid "To create a %s array, select a disk."
 msgid_plural "To create a %s array, select %d disks."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Na vytvorenie diskového poľa %s označte %d diskov."
+msgstr[1] "Na vytvorenie diskového poľa %s označte disk."
+msgstr[2] "Na vytvorenie diskového poľa %s označte %d disky."
 
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:899
 #, c-format
 msgid "To create a %s array, select one more disk."
 msgid_plural "To create a %s array, select %d more disks."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Na vytvorenie diskového poľa %s vyberte ešte %d diskov."
+msgstr[1] "Na vytvorenie diskového poľa %s vyberte ešte jeden disk."
+msgstr[2] "Na vytvorenie diskového poľa %s vyberte ešte %d disky."
 
 #. Translators: This is for the tip text shown in the dialog.
 #. * First %s is the size e.g. '42 GB'.
@@ -1564,80 +1606,83 @@ msgstr[2] ""
 #: ../src/gdu-gtk/gdu-create-linux-md-dialog.c:923
 #, c-format
 msgid "To create a %s %s array on %d disks, press \"Create\""
-msgstr ""
+msgstr "Na vytvorenie %s poľa %s na %d diskoch, stlačte „Vytvoriť“"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:119
 msgid "Maximum Partition Size"
-msgstr ""
+msgstr "Maximálna veľkosť oddielu"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:120
 msgid "The maximum possible partition size"
-msgstr ""
+msgstr "Maximálna možná veľkosť oddielu"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:134
 msgid "Partition Size"
-msgstr ""
+msgstr "Veľkosť oddielu"
 
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:135
 msgid "The requested partition size"
-msgstr ""
+msgstr "Požadovaná veľkosť oddielu"
 
 #. Translators: The %s is the name of the drive
 #: ../src/gdu-gtk/gdu-create-partition-dialog.c:238
 #, c-format
 msgid "Create partition on %s"
-msgstr ""
+msgstr "Vytvoriť oddiel na %s"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:242
 #: ../src/gdu-gtk/gdu-format-dialog.c:166
 msgid "Flags"
-msgstr ""
+msgstr "Príznaky"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:243
 msgid "Flags for the widget"
-msgstr ""
+msgstr "Príznaky pre widget"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:256
 msgid "Selected Drives"
-msgstr ""
+msgstr "Vybrané disky"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:257
 msgid "Array of selected drives"
-msgstr ""
+msgstr "Pole vybraných diskov"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:267
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:268
 msgid "Number of available disks"
-msgstr ""
+msgstr "Počet dostupných diskov"
 
+# diskoch
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:280
 msgid "Largest Segment For Selected"
-msgstr ""
+msgstr "Najväčší úsek na vybraných"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:281
 msgid "The largest free segment for the selected drives"
-msgstr ""
+msgstr "Najväčší voľný úsek na vybraných diskoch"
 
+# diskoch
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:293
 msgid "Largest Segment For All"
-msgstr ""
+msgstr "Najväčší úsek na všetkých"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:294
 msgid "The largest free segment for all the drives"
-msgstr ""
+msgstr "Najväčší voľný úsek na všetkých diskoch"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:307
 msgid "The size to use in the details header"
-msgstr ""
+msgstr "Veľkosť, ktorá sa má použiť v hlavičke podrobností"
 
+# zariadenie, ku ktorému existuje viac ako jeden prístupový kanál
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:417
 msgid "Cannot select multipath component"
-msgstr ""
+msgstr "Nie je možné vybrať súčasť viaccestného zariadenia"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:435
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:455
 msgid "No free space."
-msgstr ""
+msgstr "Žiadne voľné miesto."
 
 #. Translators: Shown when device is unselectable because not enough space is available.
 #. * First %s (e.g. '10 GB') is how much space is needed.
@@ -1648,11 +1693,12 @@ msgstr ""
 msgid ""
 "Insufficient space: %s is needed but largest contiguous free block is %s."
 msgstr ""
+"Nedostatok miesta: potrebných je %s, no najväčší súvislý voľný blok má %s."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:920
 msgid "The disk will be partitioned and a partition will be created"
-msgstr ""
+msgstr "Disk bude rozdelený a oddiel bude vytvorený."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1663,6 +1709,8 @@ msgid ""
 "The disk will be partitioned and a %s partition will be created. Afterwards "
 "no space will be available."
 msgstr ""
+"Disk bude rozdelený a %s oddiel bude vytvorený. Nezostane žiadne voľné "
+"miesto."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1671,19 +1719,20 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:935
 #, c-format
 msgid ""
-"The disk will be partitioned and a %s partition will be created. Afterwards %"
-"s will be available."
+"The disk will be partitioned and a %s partition will be created. Afterwards "
+"%s will be available."
 msgstr ""
+"Disk bude rozdelený a %s oddiel bude vytvorený. Zostane %s voľného miesta."
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:946
 msgid "A partition will be created"
-msgstr ""
+msgstr "Oddiel bude vytvorený"
 
 #. Translators: This is shown in the details column
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:949
 msgid "A volume will be created"
-msgstr ""
+msgstr "Zväzok bude vytvorený"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1691,7 +1740,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:957
 #, c-format
 msgid "A %s partition will be created. Afterwards no space will be available."
-msgstr ""
+msgstr "%s oddiel bude vytvorený. Nezostane žiadne voľné miesto."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1699,7 +1748,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:964
 #, c-format
 msgid "A %s volume will be created. Afterwards no space will be available."
-msgstr ""
+msgstr "%s zväzok bude vytvorený. Nezostane žiadne voľné miesto."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1708,7 +1757,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:974
 #, c-format
 msgid "A %s partition will be created. Afterwards %s will be available."
-msgstr ""
+msgstr "%s oddiel bude vytvorený. Zostane %s voľného miesta."
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the component size e.g. '42 GB'.
@@ -1717,7 +1766,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:983
 #, c-format
 msgid "A %s volume will be created. Afterwards %s will be available."
-msgstr ""
+msgstr "%s zväzok bude vytvorený. Zostane %s voľného miesta."
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1725,7 +1774,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1003
 #, c-format
 msgid "Whole disk is uninitialized. %s available for use"
-msgstr ""
+msgstr "Obsah disku nie je inicializovaný. Je možné použiť %s"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1733,7 +1782,7 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1010
 #, c-format
 msgid "%s available for use"
-msgstr ""
+msgstr "Je možné použiť %s"
 
 #. Translators: This is shown in the Details column.
 #. * %s is the component size e.g. '42 GB'.
@@ -1741,15 +1790,15 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1016
 #, c-format
 msgid "The disk has no partitions. %s available for use"
-msgstr ""
+msgstr "Disk nemá oddiely. Je možné použiť %s"
 
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1021
 #, c-format
 msgid "The disk has %d partition"
 msgid_plural "The disk has %d partitions"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Disk má %d oddielov"
+msgstr[1] "Disk má %d oddiel"
+msgstr[2] "Disk má %d oddiely"
 
 #. Translators: This is shown in the Details column.
 #. * First %s is the dngettext() result of "The disk has %d partitions.".
@@ -1758,32 +1807,32 @@ msgstr[2] ""
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1029
 #, c-format
 msgid "%s. Largest contiguous free block is %s"
-msgstr ""
+msgstr "%s. Najväčší súvislý voľný blok má %s"
 
 #. Tranlators: this string is used for the column header
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1096
 msgid "Storage Devices"
-msgstr ""
+msgstr "Úložné zariadenia"
 
 #. Tranlators: this string is used for the column header
 #: ../src/gdu-gtk/gdu-disk-selection-widget.c:1136
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:526
 msgid "Error benchmarking drive"
-msgstr ""
+msgstr "Chyba pri testovaní výkonu disku"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:594
 msgid "Are you sure you want to start a read/write benchmark?"
-msgstr ""
+msgstr "Ste si istý, že chcete spustiť test výkonu čítania a zápisu?"
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:595
 #: ../src/palimpsest/gdu-section-drive.c:1006
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:1053
 msgid "_Benchmark"
-msgstr ""
+msgstr "_Test výkonu"
 
 #. Translators: The title of the benchmark dialog.
 #. * First %s is the name for the drive (e.g. "Fedora" or "1.0 TB Hard Disk")
@@ -1793,85 +1842,85 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:686
 #, c-format
 msgid "%s (%s) – Benchmark"
-msgstr ""
+msgstr "Test výkonu %s (%s)"
 
 #. benchmark results
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:732
 msgid "Minimum Read Rate:"
-msgstr ""
+msgstr "Minimálna rýchlosť čítania:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:736
 msgid "Minimum Write Rate:"
-msgstr ""
+msgstr "Minimálna rýchlosť zápisu:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:740
 msgid "Maximum Read Rate:"
-msgstr ""
+msgstr "Maximálna rýchlosť čítania:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:744
 msgid "Maximum Write Rate:"
-msgstr ""
+msgstr "Maximálna rýchlosť zápisu:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:748
 msgid "Average Read Rate:"
-msgstr ""
+msgstr "Priemerná rýchlosť čítania:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:752
 msgid "Average Write Rate:"
-msgstr ""
+msgstr "Priemerná rýchlosť zápisu:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:756
 msgid "Last Benchmark:"
-msgstr ""
+msgstr "Posledný test výkonu:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:764
 msgid "Average Access Time:"
-msgstr ""
+msgstr "Priemerná prístupová doba:"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:777
 msgid "Start _Read-Only Benchmark"
-msgstr ""
+msgstr "Spustiť _test výkonu čítania"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:778
 msgid "Measure read rate and access time"
-msgstr ""
+msgstr "Zmeria rýchlosť čítania a prístupovú dobu"
 
 #. TODO: better icon
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:786
 msgid "Start Read/_Write Benchmark"
-msgstr ""
+msgstr "Spustiť test výkonu čítania aj _zápisu"
 
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:787
 msgid "Measure read rate, write rate and access time"
-msgstr ""
+msgstr "Zmeria rýchlosť čítania, rýchlosť zápisu a prístupovú dobu"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:950
 #, c-format
 msgid "%d MB/s"
-msgstr ""
+msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:955
 #, c-format
 msgid "%3g ms"
-msgstr ""
+msgstr "%3g ms"
 
 #. Translators: This is used for the "Last Benchmark" element when we don't have benchmark data
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1223
 msgid "Never"
-msgstr ""
+msgstr "Nikdy"
 
 #. Translators: Text used in the hyperlink in the status
 #. * table to cancel a self-test
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1297
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušiť"
 
 #. Translators: Tooptip for the "Cancel" hyperlink
 #: ../src/gdu-gtk/gdu-drive-benchmark-dialog.c:1300
 msgid "Cancels the currently running benchmark"
-msgstr ""
+msgstr "Zruší práve prebiehajúci test výkonu"
 
 #. Translators: title of the dialog - first %s is the name of the volume
 #. * e.g. "Partition 1 of ATA INTEL SSDSA2MH080G1GC"
@@ -1880,66 +1929,66 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:299
 #, c-format
 msgid "Edit %s"
-msgstr ""
+msgstr "Upraviť %s"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:221
 msgid "Missing Physical Volume"
-msgstr ""
+msgstr "Chýba fyzický zväzok"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:222
 #, c-format
 msgid "UUID: %s"
-msgstr ""
+msgstr "UUID: %s"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:332
 #, c-format
 msgid "Edit PVs on %s (%s)"
-msgstr ""
+msgstr "Upraviť fyzický zväzok na %s (%s)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:343
 msgid "Physical _Volumes"
-msgstr ""
+msgstr "Fyzické _zväzky"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:373
 msgid "Physical Volume"
-msgstr ""
+msgstr "Fyzický zväzok"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:389
 msgid "Capacity"
-msgstr ""
+msgstr "Kapacita"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:398
 msgid "Unallocated"
-msgstr ""
+msgstr "Nerezervované"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:412
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:450
 #: ../src/palimpsest/gdu-section-drive.c:937
 msgid "SMART Status:"
-msgstr ""
+msgstr "Stav SMART:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:416
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:462
 #: ../src/palimpsest/gdu-section-drive.c:913
 #: ../src/palimpsest/gdu-section-volumes.c:1919
 msgid "Device:"
-msgstr ""
+msgstr "Zariadenie:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:429
 msgid "_New Physical Volume"
-msgstr ""
+msgstr "_Nový fyzický zväzok"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:430
 msgid "Add a new PV to the VG"
-msgstr ""
+msgstr "Pridá nový fyzický zväzok do skupiny zväzkov"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:439
 msgid "_Remove Physical Volume"
-msgstr ""
+msgstr "O_dobrať fyzický zväzok"
 
 #: ../src/gdu-gtk/gdu-edit-linux-lvm2-dialog.c:440
 msgid "Remove the PV from the VG"
-msgstr ""
+msgstr "Odoberie fyzický zväzok zo skupiny zväzkov"
 
 #. Translators: Used when SMART is not supported on the RAID pv
 #. Translators: Used when SMART is not supported on the RAID component
@@ -1948,201 +1997,203 @@ msgstr ""
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:846
 #: ../src/palimpsest/gdu-section-drive.c:329
 msgid "Not Supported"
-msgstr ""
+msgstr "Nepodporované"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:370
 #, c-format
 msgid "Edit components on %s (%s)"
-msgstr ""
+msgstr "Upraviť súčasti na %s (%s)"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:381
 msgid "C_omponents"
-msgstr ""
+msgstr "_Súčasti"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:411
 msgid "Position"
-msgstr ""
+msgstr "Pozícia"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:420
 msgid "Component"
-msgstr ""
+msgstr "Súčasť"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:436
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:454
 msgid "Position:"
-msgstr ""
+msgstr "Pozícia:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:458
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:683
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:974
 #: ../src/palimpsest/gdu-section-volumes.c:1908
 msgid "State:"
-msgstr ""
+msgstr "Stav:"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:475
 msgid "Add _Spare"
-msgstr ""
+msgstr "Pridať _náhradné zariadenie"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:476
 msgid "Add a spare to the array"
-msgstr ""
+msgstr "Pridá náhradné zariadenie do poľa"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:485
 msgid "_Expand Array"
-msgstr ""
+msgstr "_Rozšíriť pole"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:486
 msgid "Increase the capacity of the array"
-msgstr ""
+msgstr "Zvýši kapacitu poľa"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:495
 msgid "_Attach Component"
-msgstr ""
+msgstr "_Pripojiť súčasť"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:496
 msgid "Attach the component to the array"
-msgstr ""
+msgstr "Pripojí súčasť do poľa"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:505
 msgid "_Remove Component"
-msgstr ""
+msgstr "O_dobrať súčasť"
 
 #: ../src/gdu-gtk/gdu-edit-linux-md-dialog.c:506
 msgid "Remove the component from the array"
-msgstr ""
+msgstr "Odoberie súčasť z poľa"
 
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:320
 msgid "Part_ition Label:"
-msgstr ""
+msgstr "_Menovka oddielu:"
 
 #. Translators: 'Type' means partition type here
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:337
 msgid "Ty_pe:"
-msgstr ""
+msgstr "_Typ:"
 
 #. ---
 #. flag used by mbr, apm
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:351
 msgid "_Bootable"
-msgstr ""
+msgstr "_Zavádzací"
 
 #. flag used by gpt
 #: ../src/gdu-gtk/gdu-edit-partition-dialog.c:359
 msgid "Required / Firm_ware"
-msgstr ""
+msgstr "Požadovaný / _Firmvér"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:216
 msgid "The operation failed"
-msgstr ""
+msgstr "Operácia zlyhala"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:219
 msgid "The device is busy"
-msgstr ""
+msgstr "Zariadenie je zaneprázdnené"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:222
 msgid "The operation was canceled"
-msgstr ""
+msgstr "Operácia bola zrušená"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:225
 msgid "The daemon is being inhibited"
-msgstr ""
+msgstr "Démon je potlačený"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:228
 msgid "An invalid option was passed"
-msgstr ""
+msgstr "Bola predaná neplatná voľba"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:231
 msgid "The operation is not supported"
-msgstr ""
+msgstr "Operácia nie je podporovaná"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:234
 msgid "Getting ATA SMART data would wake up the device"
-msgstr ""
+msgstr "Získanie údajov z ATA SMART by zariadenie prebudilo"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:237
 msgid "Permission denied"
-msgstr ""
+msgstr "Prístup zamietnutý"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:240
 msgid "Filesystem driver not installed"
-msgstr ""
+msgstr "Ovládač súborového systému nie je nainštalovaný"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:243
 msgid "Filesystem tools not installed"
-msgstr ""
+msgstr "Nástroje súborového systému nie sú nainštalované"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:248 ../src/palimpsest/gdu-shell.c:959
 msgid "Unknown error"
-msgstr ""
+msgstr "Neznáma chyba"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:256
 #, c-format
 msgid "An error occurred while performing an operation on \"%s\" (%s): %s"
-msgstr ""
+msgstr "Nastala chyba počas vykonávania operácie na „%s“ (%s): %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:264
 #, c-format
 msgid "An error occurred: %s"
-msgstr ""
+msgstr "Nastala chyba: %s"
 
 #: ../src/gdu-gtk/gdu-error-dialog.c:273
 msgid "_Details"
-msgstr ""
+msgstr "_Podrobnosti"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:167
 msgid "Flags specifying the behavior of the dialog"
-msgstr ""
+msgstr "Príznaky určujúce správanie dialógového okna"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:180
 msgid "Filesystem type"
-msgstr ""
+msgstr "Typ súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:181
+#, fuzzy
 msgid "The selected filesystem type"
-msgstr ""
+msgstr "Požadovaná menovka súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:191
 msgid "Filesystem label"
-msgstr ""
+msgstr "Menovka súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:192
 msgid "The requested filesystem label"
-msgstr ""
+msgstr "Požadovaná menovka súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:202
 msgid "Filesystem options"
-msgstr ""
+msgstr "Voľby súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:203
+#, fuzzy
 msgid "The options to use for creating the filesystem"
-msgstr ""
+msgstr "Skontroluje a opraví súborový systém"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:213
 msgid "Encryption"
-msgstr ""
+msgstr "Šifrovanie"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:214
 msgid "Whether the volume should be encrypted"
-msgstr ""
+msgstr "Či má byť zväzok zašifrovaný"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:224
 msgid "Take Ownership"
-msgstr ""
+msgstr "Prevziať vlastníctvo"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:225
 msgid "Whether the filesystem should be owned by the user"
-msgstr ""
+msgstr "Či má byť súborový systém vlastnený používateľom"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:235
 msgid "Affirmative Button Mnemonic"
-msgstr ""
+msgstr "Mnemotechnika pre potvrdzujúce tlačidlo"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:236
 msgid "The mnemonic label for the affirmative button"
-msgstr ""
+msgstr "Mnemotechnická menovka pre potvrdzujúce tlačidlo"
 
 #. Translators: Format is used as a verb here
 #: ../src/gdu-gtk/gdu-format-dialog.c:238
@@ -2150,62 +2201,62 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:651
 #: ../src/palimpsest/gdu-section-volumes.c:371
 msgid "_Format"
-msgstr ""
+msgstr "_Formátovať"
 
 #. Translators: Format is a verb here. The %s is the name of the volume
 #: ../src/gdu-gtk/gdu-format-dialog.c:502
 #: ../src/gdu-gtk/gdu-partition-dialog.c:211
 #, c-format
 msgid "Format %s"
-msgstr ""
+msgstr "Formátovanie %s"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:513
 msgid "Disk _Utility"
-msgstr ""
+msgstr "Diskové _nástroje"
 
 #. Translators: this is the tooltip for the "Disk Utility" button
 #: ../src/gdu-gtk/gdu-format-dialog.c:520
 msgid "Use Disk Utility to format volume"
-msgstr ""
+msgstr "Použije Diskové nástroje na formátovanie zväzku"
 
 #. Translators: 'type' means 'filesystem type' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:553
 msgid "_Type:"
-msgstr ""
+msgstr "_Typ:"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:560
 msgid "Compatible with all systems (FAT)"
-msgstr ""
+msgstr "Kompatibilný so všetkými systémami (FAT)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:562
 msgid "Compatible with Linux (ext2)"
-msgstr ""
+msgstr "Kompatibilný s Linuxom (ext2)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:564
 msgid "Compatible with Linux (ext4)"
-msgstr ""
+msgstr "Kompatibilný s Linuxom (ext4)"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:566
 msgid "Encrypted, compatible with Linux (FAT)"
-msgstr ""
+msgstr "Šifrovaný, kompatibilný s Linuxom (FAT)"
 
 #. Translators: 'name' means 'filesystem label' here.
 #: ../src/gdu-gtk/gdu-format-dialog.c:609
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:204
 #: ../src/palimpsest/gdu-section-volumes.c:1722
 msgid "_Name:"
-msgstr ""
+msgstr "_Názov:"
 
 #. Translators: Default name to use for the formatted volume. Keep length of
 #. * translation of "New Volume" to less than 16 characters.
 #.
 #: ../src/gdu-gtk/gdu-format-dialog.c:616
 msgid "New Volume"
-msgstr ""
+msgstr "Nový zväzok"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:634
 msgid "T_ake ownership of filesystem"
-msgstr ""
+msgstr "_Prevziať vlastníctvo súborového systému"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:637
 msgid ""
@@ -2213,10 +2264,15 @@ msgid ""
 "created file system will be owned by you. If not checked, only the super "
 "user can access the file system."
 msgstr ""
+"Vybraný súborový systém používa koncept vlastníctva súborov. Ak položku "
+"zaškrtnente, budete vytvorený súborový systém vlastniť vy. Ak ju "
+"nezaškrtnete, k súborovému systému bude mať prístup iba správca."
 
+# PK: toto je co? tu ide o sifrovanie daneho disku?
+# https://help.ubuntu.com/community/EncryptedFilesystemsOnRemovableStorage
 #: ../src/gdu-gtk/gdu-format-dialog.c:643
 msgid "_Encrypt underlying device"
-msgstr ""
+msgstr "Z_ašifrovať podkladové zariadenie"
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:645
 msgid ""
@@ -2224,197 +2280,207 @@ msgid ""
 "the file system can be used. May decrease performance and may not be "
 "compatible if you use the media on other operating systems."
 msgstr ""
+"Šifrovanie chráni vaše údaje pomocou hesla, ktoré je potrebné zadať, aby "
+"bolo možné súborový systém použiť. Môže to však znížiť výkon a médium "
+"nemusí byť kompatibilné, ak ho používate v iných operačných systémoch."
 
 #: ../src/gdu-gtk/gdu-format-dialog.c:678
 msgid "Warning: All data on the volume will be irrevocably lost."
-msgstr ""
+msgstr "Varovanie: Všetky údaje na zväzku budú nenávratne stratené."
 
 #: ../src/gdu-gtk/gdu-gtk.c:175
 msgctxt "application name"
 msgid "Bourne Again Shell"
-msgstr ""
+msgstr "Bourne Again Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:180
 msgctxt "application name"
 msgid "Bourne Shell"
-msgstr ""
+msgstr "Bourne Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:185
 msgctxt "application name"
 msgid "C Shell"
-msgstr ""
+msgstr "C Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:190
 msgctxt "application name"
 msgid "TENEX C Shell"
-msgstr ""
+msgstr "TENEX C Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:195
 msgctxt "application name"
 msgid "Z Shell"
-msgstr ""
+msgstr "Z Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:200
 msgctxt "application name"
 msgid "Korn Shell"
-msgstr ""
+msgstr "Korn Shell"
 
 #: ../src/gdu-gtk/gdu-gtk.c:204
 msgctxt "application name"
 msgid "Process Viewer (top)"
-msgstr ""
+msgstr "Prehliadač procesov (top)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:208
 msgctxt "application name"
 msgid "Terminal Pager (less)"
-msgstr ""
+msgstr "Stránkovač terminálu (less)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:220
 msgctxt "application name"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámy"
 
 #: ../src/gdu-gtk/gdu-gtk.c:231
 #, c-format
 msgid "uid: %d  pid: %d  program: %s"
-msgstr ""
+msgstr "uid: %d  pid: %d  program: %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:236
 #, c-format
 msgid "pid: %d  program: %s"
-msgstr ""
+msgstr "pid: %d  program: %s"
 
 #. Translators: %d is the partition number, %s the name of the disk
 #: ../src/gdu-gtk/gdu-gtk.c:337 ../src/gdu-gtk/gdu-gtk.c:933
 #: ../src/gdu-gtk/gdu-gtk.c:1076
 #, c-format
 msgid "Partition %d on %s"
-msgstr ""
+msgstr "%d. oddiel na %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:375
 msgid "Cannot unmount volume"
-msgstr ""
+msgstr "Nedá sa odpojiť zväzok"
 
 #: ../src/gdu-gtk/gdu-gtk.c:385
 msgid ""
 "One or more applications are using the volume. Quit the applications, and "
 "then try unmounting again."
 msgstr ""
+"Zväzok používa jedna alebo viacero aplikácií. Ukončite aplikácie a potom sa "
+"znova pokúste zväzok odpojiť."
 
 #: ../src/gdu-gtk/gdu-gtk.c:426
 msgid "_Unmount"
-msgstr ""
+msgstr "_Odpojiť"
 
 #: ../src/gdu-gtk/gdu-gtk.c:503
 msgid "Passphrases do not match"
-msgstr ""
+msgstr "Heslá sa nezhodujú"
 
 #: ../src/gdu-gtk/gdu-gtk.c:510
 msgid "Passphrases do not differ"
-msgstr ""
+msgstr "Heslá sa nelíšia"
 
 #: ../src/gdu-gtk/gdu-gtk.c:516
 msgid "Passphrase can't be empty"
-msgstr ""
+msgstr "Heslo nemôže byť prázdne"
 
 #: ../src/gdu-gtk/gdu-gtk.c:590
 msgid "Cr_eate"
-msgstr ""
+msgstr "_Vytvoriť"
 
 #: ../src/gdu-gtk/gdu-gtk.c:592 ../src/palimpsest/gdu-section-volumes.c:2499
 msgid "Change _Passphrase"
-msgstr ""
+msgstr "Zmeniť _heslo"
 
 #: ../src/gdu-gtk/gdu-gtk.c:594
 msgid "_Unlock"
-msgstr ""
+msgstr "Odo_mknúť"
 
 #: ../src/gdu-gtk/gdu-gtk.c:626
 msgid "To create an encrypted device, choose a passphrase to protect it"
 msgstr ""
+"Na vytvorenie šifrovaného zariadenia zvoľte heslo, ktoré ho bude chrániť"
 
 #: ../src/gdu-gtk/gdu-gtk.c:629
 msgid "To change the passphrase, enter both the current and new passphrase"
-msgstr ""
+msgstr "Na zmenu hesla zadajte aktuálne aj nové heslo"
 
 #: ../src/gdu-gtk/gdu-gtk.c:632
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase"
 msgstr ""
+"Údaje na tomto zariadení sú uložené v šifrovanej forme, chránenej heslom"
 
 #: ../src/gdu-gtk/gdu-gtk.c:645
 msgid ""
 "Data on this device will be stored in an encrypted form protected by a "
 "passphrase."
 msgstr ""
+"Údaje na tomto zariadení budú uložené v šifrovanej forme, chránenej heslom."
 
 #: ../src/gdu-gtk/gdu-gtk.c:648
 msgid ""
 "Data on this device is stored in an encrypted form protected by a passphrase."
 msgstr ""
+"Údaje na tomto zariadení sú uložené v šifrovanej forme, chránenej heslom."
 
 #: ../src/gdu-gtk/gdu-gtk.c:651
 msgid ""
 "To make the data available for use, enter the passphrase for the device."
-msgstr ""
+msgstr "Keď chcete údaje používať, zadajte heslo pre zariadenie."
 
 #: ../src/gdu-gtk/gdu-gtk.c:660
 msgid "Incorrect Passphrase. Try again."
-msgstr ""
+msgstr "Nesprávne heslo. Skúste znova."
 
 #: ../src/gdu-gtk/gdu-gtk.c:684
 msgid "C_urrent Passphrase:"
-msgstr ""
+msgstr "_Aktuálne heslo:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:698
 msgid "_New Passphrase:"
-msgstr ""
+msgstr "_Nové heslo:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:711
 msgid "_Verify Passphrase:"
-msgstr ""
+msgstr "_Overenie hesla:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:753
 msgid "_Passphrase:"
-msgstr ""
+msgstr "_Heslo:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:768
 msgid "_Forget passphrase immediately"
-msgstr ""
+msgstr "Heslo _ihneď zabudnúť"
 
 #: ../src/gdu-gtk/gdu-gtk.c:771
 msgid "Remember passphrase until you _log out"
-msgstr ""
+msgstr "Zapamätať heslo do od_hlásenia"
 
 #: ../src/gdu-gtk/gdu-gtk.c:774
 msgid "_Remember forever"
-msgstr ""
+msgstr "Zapamätať _navždy"
 
 #: ../src/gdu-gtk/gdu-gtk.c:837
+#, fuzzy
 msgid "Enter Passphrase"
-msgstr ""
+msgstr "_Nové heslo:"
 
 #: ../src/gdu-gtk/gdu-gtk.c:966 ../src/gdu/gdu-util.c:828
 #, c-format
 msgid "LUKS Passphrase for UUID %s"
-msgstr ""
+msgstr "Heslo LUKS pre UUID %s"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1268
 msgid "Empty (don't create a file system)"
-msgstr ""
+msgstr "Prázdny (nevytvárať súborový systém)"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1289
 msgid "Empty"
-msgstr ""
+msgstr "Prázdny"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1297
 msgid "Extended Partition"
-msgstr ""
+msgstr "Rozšírený oddiel"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1556 ../src/palimpsest/gdu-section-drive.c:291
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:254
 msgid "Master Boot Record"
-msgstr ""
+msgstr "Hlavný zavádzací záznam (MBR)"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu-gtk/gdu-gtk.c:1561 ../src/gdu/gdu-drive.c:833
@@ -2422,117 +2488,117 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:293
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:256
 msgid "GUID Partition Table"
-msgstr ""
+msgstr "Tabuľka oddielov GUID"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1566
 msgid "Don't partition"
-msgstr ""
+msgstr "Nerozdeľovať"
 
 #: ../src/gdu-gtk/gdu-gtk.c:1571 ../src/gdu/gdu-util.c:495
 #: ../src/palimpsest/gdu-section-drive.c:289
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:252
 msgid "Apple Partition Map"
-msgstr ""
+msgstr "Mapa oddielov Apple"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:100
 msgid "Partitioning Scheme"
-msgstr ""
+msgstr "Schéma rozdelenia"
 
 #: ../src/gdu-gtk/gdu-partition-dialog.c:101
 msgid "The selected partitioning scheme"
-msgstr ""
+msgstr "Vybraná schéma rozdelenia"
 
 #. Translators: 'scheme' means 'partitioning scheme' here.
 #: ../src/gdu-gtk/gdu-partition-dialog.c:250
 msgid "_Scheme:"
-msgstr ""
+msgstr "_Schéma:"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:89
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:95
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:98
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:101
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:104
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:107
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:110
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:113
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:489
 msgid "The currently selected size"
-msgstr ""
+msgstr "Aktuálne zvolená veľkosť"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:502
 msgid "Minimum Size"
-msgstr ""
+msgstr "Minimálna veľkosť"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:503
 msgid "The minimum size that can be selected"
-msgstr ""
+msgstr "Minimálna veľkosť, ktorá sa dá zvoliť"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:516
 msgid "Maximum Size"
-msgstr ""
+msgstr "Maximálna veľkosť"
 
 #: ../src/gdu-gtk/gdu-size-widget.c:517
 msgid "The maximum size that can be selected"
-msgstr ""
+msgstr "Maximálna veľkosť, ktorá sa dá zvoliť"
 
 #: ../src/gdu-gtk/gdu-time-label.c:71
 #, c-format
 msgid "Less than a minute ago"
-msgstr ""
+msgstr "Pred menej ako minútou"
 
 #: ../src/gdu-gtk/gdu-time-label.c:75
 #, c-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Pred %d minútami"
+msgstr[1] "Pred minútou"
+msgstr[2] "Pred %d minútami"
 
 #: ../src/gdu-gtk/gdu-time-label.c:82
 #, c-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Pred %d hodinami"
+msgstr[1] "Pred hodinou"
+msgstr[2] "Pred %d hodinami"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:489
 #: ../src/palimpsest/gdu-section-drive.c:150
 msgid "Drive"
-msgstr ""
+msgstr "Disk"
 
 #: ../src/gdu-gtk/gdu-volume-grid.c:490
 msgid "Drive to show volumes for"
-msgstr ""
+msgstr "Disk, pre ktorý zobraziť zväzky"
 
 #. Translators: This is shown in the grid for a RAID array that is not running
 #: ../src/gdu-gtk/gdu-volume-grid.c:1175
 msgid "RAID Array is not running"
-msgstr ""
+msgstr "Pole RAID nebeží"
 
 #. Translators: This is shown in the grid for a drive when no media has been detected
 #. Translators: This string is used as a description text when no media has
@@ -2542,111 +2608,114 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:343
 #, c-format
 msgid "No Media Detected"
-msgstr ""
+msgstr "Médium nezistené"
 
 #. Translators: shown in the grid for an extended MS-DOS partition
 #: ../src/gdu-gtk/gdu-volume-grid.c:1263
 msgid "Extended"
-msgstr ""
+msgstr "Rozšírený"
 
 #. Translators: shown in the grid for an encrypted LUKS volume
 #: ../src/gdu-gtk/gdu-volume-grid.c:1271
 msgid "Encrypted"
-msgstr ""
+msgstr "Šifrovaný"
 
 #. Translators: shown in the grid for an RAID Component
 #: ../src/gdu-gtk/gdu-volume-grid.c:1285 ../src/gdu/gdu-util.c:344
 #: ../src/palimpsest/gdu-section-volumes.c:2195
 #, c-format
 msgid "RAID Component"
-msgstr ""
+msgstr "Súčasť poľa RAID"
 
 #. Translators: shown for free/unallocated space
 #: ../src/gdu-gtk/gdu-volume-grid.c:1293
 msgid "Free"
-msgstr ""
+msgstr "Voľné miesto"
 
 #. Translators: this is a verb
 #: ../src/nautilus-extension/nautilus-gdu.c:223
 msgid "_Format..."
-msgstr ""
+msgstr "_Formátovať..."
 
 #: ../src/nautilus-extension/nautilus-gdu.c:224
 msgid "Create new filesystem on the selected device"
-msgstr ""
+msgstr "Vytvorí nový súborový systém na vybranom zariadení"
 
+# PK: nepise sa v TC nic o citacke
+# vid komentár k %s drive - preklad drive som pridal k jednotlivým typom médií
+# PŠ: pozri CD, DVD a pod. - potom to vyzerá takto: CD mechanika/DVD mechanika/Blu-Ray mechanika. Radšej som to zrušil, aj tak ide hlavne o médium (nosič) a nie o mechaniku
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:573
 msgid "CompactFlash"
-msgstr ""
+msgstr "CompactFlash karta"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:576
 msgid "MemoryStick"
-msgstr ""
+msgstr "MemoryStick karta"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:579
 msgid "SmartMedia"
-msgstr ""
+msgstr "SmartMedia karta"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:582
 msgid "SecureDigital"
-msgstr ""
+msgstr "SD karta"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:585
 msgid "SD High Capacity"
-msgstr ""
+msgstr "SDHC karta"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:588
 msgid "Floppy"
-msgstr ""
+msgstr "Disketová mechanika"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:591
 msgid "Zip"
-msgstr ""
+msgstr "Zip mechanika"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:594
 msgid "Jaz"
-msgstr ""
+msgstr "Jaz mechanika"
 
 #. Translators: This word is used to describe the media inserted into a device
 #: ../src/gdu/gdu-drive.c:597
 msgid "Flash"
-msgstr ""
+msgstr "USB kľúč"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
 #: ../src/gdu/gdu-drive.c:620
 msgid "CD"
-msgstr ""
+msgstr "CD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
 #: ../src/gdu/gdu-drive.c:628
 msgid "DVD"
-msgstr ""
+msgstr "DVD"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
 #: ../src/gdu/gdu-drive.c:636
 msgid "Blu-Ray"
-msgstr ""
+msgstr "Blu-Ray"
 
 #. Translators: This word is used to describe the optical disc type, it may appear
 #. * in a slash-separated list e.g. 'CD/DVD/Blu-Ray'
 #.
 #: ../src/gdu/gdu-drive.c:644
 msgid "HDDVD"
-msgstr ""
+msgstr "HDDVD"
 
 #. Translators: This is the name of a "Drive" backed by a file.
 #. * The %s is the size of the file (e.g. "42 GB" or "5 kB").
@@ -2656,21 +2725,23 @@ msgstr ""
 #: ../src/gdu/gdu-drive.c:689
 #, c-format
 msgid "%s File"
-msgstr ""
+msgstr "%s súbor"
 
+# preklad drive som pridal k jednotlivým typom médií
 #. Translators: %s is the media type e.g. 'CD/DVD' or 'CompactFlash'
 #: ../src/gdu/gdu-drive.c:703 ../src/gdu/gdu-drive.c:742
 #, c-format
 msgid "%s Drive"
-msgstr ""
+msgstr "%s"
 
+# preklad drive som pridal k jednotlivým typom médií
 #. Translators: first %s is the size, second %s is the media type
 #. * e.g. 'CD/DVD' or 'CompactFlash'
 #.
 #: ../src/gdu/gdu-drive.c:737
 #, c-format
 msgid "%s %s Drive"
-msgstr ""
+msgstr "%s %s"
 
 #. Translators: This string is used to describe a hard disk.
 #. * The first %s is the size of the drive e.g. '45 GB'.
@@ -2678,29 +2749,30 @@ msgstr ""
 #: ../src/gdu/gdu-drive.c:753
 #, c-format
 msgid "%s Hard Disk"
-msgstr ""
+msgstr "%s pevný disk"
 
 #. Translators: This string is used to describe a hard disk where the size
 #. * is not known.
 #.
 #: ../src/gdu/gdu-drive.c:758
 msgid "Hard Disk"
-msgstr ""
+msgstr "Pevný disk"
 
+# PŠ: toto spadá do kategórie duplicít, ale čo už: Solid State Disc disc (ako aj Liquid Crystal Display display, Compact Disc disc... ;-)
 #. Translators: This string is used to describe a SSD. The first %s is
 #. * the size of the drive e.g. '45 GB'.
 #.
 #: ../src/gdu/gdu-drive.c:765
 #, c-format
 msgid "%s Solid-State Disk"
-msgstr ""
+msgstr "%s SSD disk"
 
 #. Translators: This string is used to describe a SSD where the size
 #. * is not known.
 #.
 #: ../src/gdu/gdu-drive.c:771
 msgid "Solid-State Disk"
-msgstr ""
+msgstr "SSD disk"
 
 #. Translators: This string is the description of a drive. The first %s is the
 #. * size of the inserted media, for example '45 GB'.
@@ -2708,88 +2780,88 @@ msgstr ""
 #: ../src/gdu/gdu-drive.c:812
 #, c-format
 msgid "%s Media"
-msgstr ""
+msgstr "%s médium"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu/gdu-drive.c:830 ../src/gdu/gdu-linux-md-drive.c:569
 msgid "MBR Partition Table"
-msgstr ""
+msgstr "Tabuľka oddielov MBR"
 
 #. Translators: This string is used for conveying the partition table format
 #: ../src/gdu/gdu-drive.c:836 ../src/gdu/gdu-linux-md-drive.c:575
 msgid "Apple Partition Table"
-msgstr ""
+msgstr "Tabuľka oddielov Apple"
 
 #. Translators: This string is used for conveying the partition table format when
 #. * the format is unknown
 #.
 #: ../src/gdu/gdu-drive.c:841 ../src/gdu/gdu-linux-md-drive.c:580
 msgid "Partitioned"
-msgstr ""
+msgstr "Rozdelený"
 
 #. Translators: This string is used for conveying a device is not partitioned.
 #.
 #: ../src/gdu/gdu-drive.c:846 ../src/palimpsest/gdu-section-drive.c:302
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:265
 msgid "Not Partitioned"
-msgstr ""
+msgstr "Nerozdelený"
 
 #. TODO: include type e.g. SATA Port Multiplier, SAS Expander etc
 #: ../src/gdu/gdu-hub.c:222
 msgid "SAS Expander"
-msgstr ""
+msgstr "Expandér SAS"
 
 #: ../src/gdu/gdu-hub.c:230
 msgid "PATA Host Adapter"
-msgstr ""
+msgstr "Radič PATA"
 
 #: ../src/gdu/gdu-hub.c:232
 msgid "SATA Host Adapter"
-msgstr ""
+msgstr "Radič SATA"
 
 #: ../src/gdu/gdu-hub.c:234
 msgid "ATA Host Adapter"
-msgstr ""
+msgstr "Radič ATA"
 
 #: ../src/gdu/gdu-hub.c:236
 msgid "SAS Host Adapter"
-msgstr ""
+msgstr "Radič SAS"
 
 #: ../src/gdu/gdu-hub.c:238
 msgid "SCSI Host Adapter"
-msgstr ""
+msgstr "Radič SCSI"
 
 #: ../src/gdu/gdu-hub.c:240
 msgid "Host Adapter"
-msgstr ""
+msgstr "Radič"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume.c:330
 msgid "Logical Volume"
-msgstr ""
+msgstr "Logický zväzok"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume.c:333
 msgid "LVM2 Logical Volume"
-msgstr ""
+msgstr "Logický zväzok LVM2"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:382
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:386
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:653
 msgid "Volume Group"
-msgstr ""
+msgstr "Skupina zväzkov"
 
 #. Translators: VPD name - first %s is the size e.g. '45 GB'
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:390
 #, c-format
 msgid "%s LVM2 Volume Group"
-msgstr ""
+msgstr "%s skupina zväzkov LVM2"
 
 #. Translators: VPD name when size is not known
 #: ../src/gdu/gdu-linux-lvm2-volume-group.c:393
 msgid "LVM2 Volume Group"
-msgstr ""
+msgstr "Skupina zväzkov LVM2"
 
 #. Translators: label for an unallocated space in a LVM2 volume group.
 #. * %s is the size, formatted like '45 GB'
@@ -2801,7 +2873,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume-hole.c:152
 #, c-format
 msgid "%s Free"
-msgstr ""
+msgstr "%s voľného miesta"
 
 #. Translators: Description
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:205
@@ -2809,26 +2881,26 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-volumes.c:2209
 #: ../src/palimpsest/gdu-section-volumes.c:2217
 msgid "Unallocated Space"
-msgstr ""
+msgstr "Nerezervované miesto"
 
 #. Translators: VPD name
 #: ../src/gdu/gdu-linux-lvm2-volume-hole.c:208
 msgid "LVM2 VG Unallocated Space"
-msgstr ""
+msgstr "Nerezervované miesto skupiny zväzkov LVM2"
 
 #. Translators: First %s is the size, second %s is a RAID level, e.g. 'RAID-5'
 #. Translators: first %s is the size e.g. '45 GB', second %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:542 ../src/gdu/gdu-linux-md-drive.c:624
 #, c-format
 msgid "%s %s Array"
-msgstr ""
+msgstr "%s pole %s"
 
 #. Translators: %s is a RAID level, e.g. 'RAID-5'
 #. Translators: %s is the level e.g. 'RAID-5'
 #: ../src/gdu/gdu-linux-md-drive.c:547 ../src/gdu/gdu-linux-md-drive.c:629
 #, c-format
 msgid "%s Array"
-msgstr ""
+msgstr "%s pole"
 
 #. Translators: First %s is a device file such as /dev/sda4
 #. * second %s is the state of the device
@@ -2836,118 +2908,120 @@ msgstr ""
 #: ../src/gdu/gdu-linux-md-drive.c:600
 #, c-format
 msgid "RAID Array %s (%s)"
-msgstr ""
+msgstr "Pole RAID %s (%s)"
 
 #. Translators: %s is a device file such as /dev/sda4
 #: ../src/gdu/gdu-linux-md-drive.c:605
 #, c-format
 msgid "RAID device %s"
-msgstr ""
+msgstr "Zariadenie RAID %s"
 
 #. Translators: fallback for level
 #: ../src/gdu/gdu-linux-md-drive.c:612
 msgctxt "RAID Level fallback"
 msgid "RAID"
-msgstr ""
+msgstr "RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:617
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:944
 msgid "RAID Array"
-msgstr ""
+msgstr "Pole RAID"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1114
 msgctxt "Linux MD slave state"
 msgid "Not Attached"
-msgstr ""
+msgstr "Nepripojené"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1117
 msgctxt "Linux MD slave state"
 msgid "Faulty"
-msgstr ""
+msgstr "Chybné"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1122
 msgctxt "Linux MD slave state"
 msgid "Fully Synchronized"
-msgstr ""
+msgstr "Plne synchronizované"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1124
 msgctxt "Linux MD slave state"
 msgid "Writemostly"
-msgstr ""
+msgstr "Vyhradené na zápis"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1126
 msgctxt "Linux MD slave state"
 msgid "Blocked"
-msgstr ""
+msgstr "Blokované"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1130
 msgctxt "Linux MD slave state"
 msgid "Partially Synchronized"
-msgstr ""
+msgstr "Čiastočne synchronizované"
 
 #: ../src/gdu/gdu-linux-md-drive.c:1132
 msgctxt "Linux MD slave state"
 msgid "Spare"
-msgstr ""
+msgstr "Náhradné"
 
 #: ../src/gdu/gdu-machine.c:151
 msgid "Local Storage"
-msgstr ""
+msgstr "Miestne úložisko"
 
 #. TODO: use display-hostname
 #: ../src/gdu/gdu-machine.c:154
 #, c-format
 msgid "Storage on %s"
-msgstr ""
+msgstr "Úložisko na %s"
 
 #: ../src/gdu/gdu-pool.c:885
 msgid "Multipath Devices"
-msgstr ""
+msgstr "Viaccestné zariadenie"
 
 #: ../src/gdu/gdu-pool.c:886
 msgid "Drives with multiple I/O paths"
-msgstr ""
+msgstr "Disky s viacerými V/V cestami"
 
 #: ../src/gdu/gdu-pool.c:896
 msgid "Multi-disk Devices"
-msgstr ""
+msgstr "Viacdiskové zariadenia"
 
 #: ../src/gdu/gdu-pool.c:897
 msgid "RAID, LVM and other logical drives"
-msgstr ""
+msgstr "RAID, LVM a iné logické disky"
 
 #: ../src/gdu/gdu-pool.c:907
 msgid "Peripheral Devices"
-msgstr ""
+msgstr "Periférne zariadenia"
 
 #: ../src/gdu/gdu-pool.c:908
 msgid "USB, FireWire and other peripherals"
-msgstr ""
+msgstr "USB, FireWire a iné periférie"
 
 #: ../src/gdu/gdu-pool.c:2092
 #, c-format
 msgid "Error enumerating devices: %s"
-msgstr ""
+msgstr "Chyba pri vymenovávaní zariadení: %s"
 
 #: ../src/gdu/gdu-pool.c:2118
 #, c-format
 msgid "Error enumerating adapters: %s"
-msgstr ""
+msgstr "Chyba pri vymenovávaní radičov: %s"
 
+# PK: co je expander
+# PM: niečo ako radič diskov ale nie celkom
 #: ../src/gdu/gdu-pool.c:2141
 #, c-format
 msgid "Error enumerating expanders: %s"
-msgstr ""
+msgstr "Chyba pri vymenovávaní expandérov: %s"
 
 #: ../src/gdu/gdu-pool.c:2164
 #, c-format
 msgid "Error enumerating ports: %s"
-msgstr ""
+msgstr "Chyba pri vymenovávaní portov: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:292
 #, c-format
 msgid "Error listening to address `localhost:%d': %s: %s\n"
-msgstr ""
+msgstr "Chyba pri počúvaní na adrese „localhost:%d“: %s: %s\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:307
 #, c-format
@@ -2955,56 +3029,64 @@ msgid ""
 "Error creating a local TCP server, tried binding to ports 9000-10000 on "
 "localhost"
 msgstr ""
+"Chyba pri vytváraní miestneho TCP servera, vyskúšané naviazanie na portoch "
+"9000-10000 na localhost"
 
 #: ../src/gdu/gdu-ssh-bridge.c:322
 #, c-format
 msgid "Error setting auth mechanisms on local DBusServer\n"
 msgstr ""
+"Chyba pri nastavovaní mechanizmov overenia totožnosti pre miestny DBusServer\n"
 
 #: ../src/gdu/gdu-ssh-bridge.c:347
 #, c-format
 msgid "Unable to parse command-line `%s' (Malformed address?): %s"
 msgstr ""
+"Nepodarilo sa analyzovať príkazový riadok „%s“ (Zle zadaná adresa?): %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:369
 #, c-format
 msgid "Unable to spawn ssh program: %s"
-msgstr ""
+msgstr "Nepodarilo sa spustiť program ssh: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:398 ../src/gdu/gdu-ssh-bridge.c:510
 #, c-format
 msgid "Error reading stderr output: %s"
-msgstr ""
+msgstr "Chyba pri čítaní výstupu stderr: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:405
 msgid "Error reading stderr output: No content"
-msgstr ""
+msgstr "Chyba pri čítaní výstupu stderr: Žiaden obsah"
 
 #: ../src/gdu/gdu-ssh-bridge.c:471
 msgid "Error logging in"
-msgstr ""
+msgstr "Chyba pri prihlasovaní"
 
 #: ../src/gdu/gdu-ssh-bridge.c:491
 #, c-format
 msgid "Error sending `%s': %s"
-msgstr ""
+msgstr "Chyba pri odosielaní „%s“: %s"
 
+# PK: preklada sa Waiting...? nkrat
+# PM: tie hlásky sa týkajú nejakého programu, ktorý nie je logializovaný
 #: ../src/gdu/gdu-ssh-bridge.c:519
 #, c-format
 msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
 "but got `%s'"
 msgstr ""
+"Neočakávaný výstup stderr - očakávalo sa „udisks-tcp-bridge: Waiting for "
+"secret“, no bolo získané „%s“"
 
 #: ../src/gdu/gdu-ssh-bridge.c:536
 #, c-format
 msgid "Error passing authorization secret: %s"
-msgstr ""
+msgstr "Chyba pri odovzdávaní údajov pre overenie totožnosti: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:557
-#, c-format
+#, fuzzy, c-format
 msgid "Error reading stderr from: %s"
-msgstr ""
+msgstr "Chyba pri čítaní výstupu stderr: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:566
 #, c-format
@@ -3012,15 +3094,17 @@ msgid ""
 "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 "connect to port %d' but got `%s'"
 msgstr ""
+"Neočakávaný výstup stderr - očakávalo sa „udisks-tcp-bridge: Attempting to "
+"connect to port %d“, no bolo získané „%s“"
 
 #: ../src/gdu/gdu-ssh-bridge.c:585
 #, c-format
 msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
-msgstr ""
+msgstr "Program udisks-tcp-bridge zlyhal pri preukazovaní, že bol overený: %s"
 
 #: ../src/gdu/gdu-ssh-bridge.c:592
 msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-msgstr ""
+msgstr "Program udisks-tcp-bridge zlyhal pri preukazovaní, že bol overený"
 
 #. Translators: The first %s is the size in power-of-2 units, e.g. '64 KiB'
 #. * the second %s is the size as a number e.g. '65,536 bytes'
@@ -3031,186 +3115,186 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:131 ../src/gdu/gdu-util.c:140
 #, c-format
 msgid "%s (%s bytes)"
-msgstr ""
+msgstr "%s (%s bajtov)"
 
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:175
 msgid "FAT (12-bit version)"
-msgstr ""
+msgstr "FAT (12 bitová verzia)"
 
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:178 ../src/gdu/gdu-util.c:185
 #: ../src/gdu/gdu-util.c:192 ../src/gdu/gdu-util.c:196
 #: ../src/gdu/gdu-util.c:198
 msgid "FAT"
-msgstr ""
+msgstr "FAT"
 
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:183
 msgid "FAT (16-bit version)"
-msgstr ""
+msgstr "FAT (16 bitová verzia)"
 
 #. Translators: FAT is a filesystem type
 #: ../src/gdu/gdu-util.c:190
 msgid "FAT (32-bit version)"
-msgstr ""
+msgstr "FAT (32 bitová verzia)"
 
 #. Translators: NTFS is a filesystem type
 #: ../src/gdu/gdu-util.c:205
 #, c-format
 msgid "NTFS (version %s)"
-msgstr ""
+msgstr "NTFS (verzia %s)"
 
 #. Translators: NTFS is a filesystem type
 #: ../src/gdu/gdu-util.c:208 ../src/gdu/gdu-util.c:210
 #, c-format
 msgid "NTFS"
-msgstr ""
+msgstr "NTFS"
 
 #. Translators: HFS is a filesystem type
 #: ../src/gdu/gdu-util.c:215 ../src/gdu/gdu-util.c:217
 msgid "HFS"
-msgstr ""
+msgstr "HFS"
 
 #. Translators: HFS+ is a filesystem type
 #: ../src/gdu/gdu-util.c:222 ../src/gdu/gdu-util.c:224
 msgid "HFS+"
-msgstr ""
+msgstr "HFS+"
 
 #: ../src/gdu/gdu-util.c:228
 msgid "Linux Unified Key Setup"
-msgstr ""
+msgstr "Linux Unified Key Setup"
 
 #. Translators: LUKS is 'Linux Unified Key Setup', a disk encryption format
 #: ../src/gdu/gdu-util.c:231
 msgid "LUKS"
-msgstr ""
+msgstr "LUKS"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:237
 #, c-format
 msgid "Ext2 (version %s)"
-msgstr ""
+msgstr "Ext2 (verzia %s)"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:240
 #, c-format
 msgid "Ext2"
-msgstr ""
+msgstr "Ext2"
 
 #. Translators: Ext2 is a filesystem type
 #: ../src/gdu/gdu-util.c:243
 msgid "ext2"
-msgstr ""
+msgstr "ext2"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:249
 #, c-format
 msgid "Ext3 (version %s)"
-msgstr ""
+msgstr "Ext3 (verzia %s)"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:252
 #, c-format
 msgid "Ext3"
-msgstr ""
+msgstr "Ext3"
 
 #. Translators: Ext3 is a filesystem type
 #: ../src/gdu/gdu-util.c:255
 msgid "ext3"
-msgstr ""
+msgstr "ext3"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:261
 #, c-format
 msgid "Journal for Ext3 (version %s)"
-msgstr ""
+msgstr "Žurnál pre Ext3 (verzia %s)"
 
 #. Translators: 'Journal' refers to a filesystem technology here, see 'journaling filesystems'
 #: ../src/gdu/gdu-util.c:264
 #, c-format
 msgid "Journal for Ext3"
-msgstr ""
+msgstr "Žurnál pre Ext3"
 
 #. Translators: jbd is a filesystem type
 #: ../src/gdu/gdu-util.c:267
 msgid "jbd"
-msgstr ""
+msgstr "jbd"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:273
 #, c-format
 msgid "Ext4 (version %s)"
-msgstr ""
+msgstr "Ext4 (verzia %s)"
 
 #. Translators: ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:276
 #, c-format
 msgid "Ext4"
-msgstr ""
+msgstr "Ext4"
 
 #. Translators: Ext4 is a filesystem type
 #: ../src/gdu/gdu-util.c:279
 msgid "ext4"
-msgstr ""
+msgstr "ext4"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:285
 #, c-format
 msgid "XFS (version %s)"
-msgstr ""
+msgstr "XFS (verzia %s)"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:288
 #, c-format
 msgid "XFS"
-msgstr ""
+msgstr "XFS"
 
 #. Translators: xfs is a filesystem type
 #: ../src/gdu/gdu-util.c:291
 msgid "xfs"
-msgstr ""
+msgstr "xfs"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:297
 #, c-format
 msgid "ReiserFS (version %s)"
-msgstr ""
+msgstr "ReiserFS (verzia %s)"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:300
 #, c-format
 msgid "ReiserFS"
-msgstr ""
+msgstr "ReiserFS"
 
 #. Translators: reiserfs is a filesystem type
 #: ../src/gdu/gdu-util.c:303
 msgid "reiserfs"
-msgstr ""
+msgstr "reiserfs"
 
 #. Translators: iso9660 is a filesystem type
 #: ../src/gdu/gdu-util.c:308
 msgid "ISO 9660"
-msgstr ""
+msgstr "ISO 9660"
 
 #. Translators: iso9660 is a filesystem type
 #: ../src/gdu/gdu-util.c:311
 msgid "iso9660"
-msgstr ""
+msgstr "iso9660"
 
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:316
 msgid "Universal Disk Format"
-msgstr ""
+msgstr "Univerzálny diskový formát (UDF)"
 
 #. Translators: udf is a filesystem type
 #: ../src/gdu/gdu-util.c:319
 msgid "udf"
-msgstr ""
+msgstr "udf"
 
 #: ../src/gdu/gdu-util.c:323 ../src/palimpsest/gdu-section-volumes.c:2191
 msgid "Swap Space"
-msgstr ""
+msgstr "Odkladací priestor"
 
 #. Translators: filesystem type for swap space
 #: ../src/gdu/gdu-util.c:326
@@ -3220,542 +3304,550 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:331
 #, c-format
 msgid "LVM2 Physical Volume (version %s)"
-msgstr ""
+msgstr "Fyzický zväzok LVM2 (verzia %s)"
 
 #: ../src/gdu/gdu-util.c:333
 #, c-format
 msgid "LVM2 Physical Volume"
-msgstr ""
+msgstr "Fyzický zväzok LVM2"
 
 #. Translators: short name for LVM2 Physical Volume
 #: ../src/gdu/gdu-util.c:336
 msgid "lvm2_pv"
-msgstr ""
+msgstr "lvm2_pv"
 
 #: ../src/gdu/gdu-util.c:342
 #, c-format
 msgid "RAID Component (version %s)"
-msgstr ""
+msgstr "Súčasť poľa RAID (verzia %s)"
 
 #. Translators: short name for 'RAID Component'
 #: ../src/gdu/gdu-util.c:347
 msgid "raid"
-msgstr ""
+msgstr "raid"
 
 #. Translators: long filesystem type for minix
 #: ../src/gdu/gdu-util.c:352
 msgid "Minix"
-msgstr ""
+msgstr "Minix"
 
 #. Translators: filesystem type for minix
 #: ../src/gdu/gdu-util.c:355
 msgid "minix"
-msgstr ""
+msgstr "minix"
 
 #: ../src/gdu/gdu-util.c:369
 msgid "Creating File System"
-msgstr ""
+msgstr "Vytvára sa súborový systém"
 
 #: ../src/gdu/gdu-util.c:371
 msgid "Mounting File System"
-msgstr ""
+msgstr "Pripája sa súborový systém"
 
 #: ../src/gdu/gdu-util.c:373
 msgid "Unmounting File System"
-msgstr ""
+msgstr "Odpája sa súborový systém"
 
 #: ../src/gdu/gdu-util.c:375
+#, fuzzy
 msgid "Checking File System"
-msgstr ""
+msgstr "Vytvára sa súborový systém"
 
 #: ../src/gdu/gdu-util.c:377
 msgid "Creating LUKS Device"
-msgstr ""
+msgstr "Vytvára sa zariadenie LUKS"
 
 #: ../src/gdu/gdu-util.c:379
 msgid "Unlocking LUKS Device"
-msgstr ""
+msgstr "Odomyká sa zariadenie LUKS"
 
 #: ../src/gdu/gdu-util.c:381
 msgid "Locking LUKS Device"
-msgstr ""
+msgstr "Uzamyká sa zariadenie LUKS"
 
 #: ../src/gdu/gdu-util.c:383
 msgid "Creating Partition Table"
-msgstr ""
+msgstr "Vytvára sa tabuľka oddielov"
 
 #: ../src/gdu/gdu-util.c:385
 msgid "Deleting Partition"
-msgstr ""
+msgstr "Odstraňuje sa tabuľka oddielov"
 
 #: ../src/gdu/gdu-util.c:387
 msgid "Creating Partition"
-msgstr ""
+msgstr "Vytvára sa oddiel"
 
 #: ../src/gdu/gdu-util.c:389
 msgid "Modifying Partition"
-msgstr ""
+msgstr "Upravuje sa oddiel"
 
 #: ../src/gdu/gdu-util.c:391
 msgid "Setting Label for Device"
-msgstr ""
+msgstr "Nastavuje sa menovka pre zariadenie"
 
 #: ../src/gdu/gdu-util.c:393
 msgid "Changing Passphrase for Encrypted LUKS Device"
-msgstr ""
+msgstr "Mení sa heslo pre šifrované zariadenie LUKS"
 
 #: ../src/gdu/gdu-util.c:395
 msgid "Adding Component to RAID Array"
-msgstr ""
+msgstr "Pridáva sa súčasť do poľa RAID"
 
 #: ../src/gdu/gdu-util.c:397
 msgid "Removing Component from RAID Array"
-msgstr ""
+msgstr "Odoberá sa súčasť z poľa RAID"
 
 #: ../src/gdu/gdu-util.c:399
 msgid "Stopping RAID Array"
-msgstr ""
+msgstr "Zastavuje sa pole RAID"
 
 #: ../src/gdu/gdu-util.c:401
 msgid "Starting RAID Array"
-msgstr ""
+msgstr "Spúšťa sa pole RAID"
 
 #: ../src/gdu/gdu-util.c:403
 msgid "Checking RAID Array"
-msgstr ""
+msgstr "Kontroluje sa pole RAID"
 
 #: ../src/gdu/gdu-util.c:405
 msgid "Repairing RAID Array"
-msgstr ""
+msgstr "Opravuje sa pole RAID"
 
 #: ../src/gdu/gdu-util.c:407
 msgid "Running Short SMART Self-Test"
-msgstr ""
+msgstr "Beží krátka samokontrola SMART"
 
 #: ../src/gdu/gdu-util.c:409
 msgid "Running Extended SMART Self-Test"
-msgstr ""
+msgstr "Beží rozšírená samokontrola SMART"
 
+# Ten typ kontroly sa tak volá viď vyššie - je to kotrola určená na spustenie ked prenesieš disk
 #: ../src/gdu/gdu-util.c:411
 msgid "Running Conveyance SMART Self-Test"
-msgstr ""
+msgstr "Beží samokontrola po preprave SMART"
 
 #: ../src/gdu/gdu-util.c:413
 msgid "Ejecting Media"
-msgstr ""
+msgstr "Vysúva sa médium"
 
 #: ../src/gdu/gdu-util.c:415
+#, fuzzy
 msgid "Detaching Device"
-msgstr ""
+msgstr "Odpája sa zariadenie"
 
 #: ../src/gdu/gdu-util.c:417
 msgid "Forcibly Unmounting Filesystem"
-msgstr ""
+msgstr "Násilne sa odpája súborový systém"
 
 #: ../src/gdu/gdu-util.c:419
 msgid "Forcibly Locking LUKS device"
-msgstr ""
+msgstr "Násilne sa uzamyká zariadenie LUKS"
 
 #. see http://en.wikipedia.org/wiki/GUID_Partition_Table
 #. Linux
 #: ../src/gdu/gdu-util.c:435
 msgid "Linux Basic Data Partition"
-msgstr ""
+msgstr "Základný údajový oddiel pre Linux"
 
 #. Same as MS BDP
 #: ../src/gdu/gdu-util.c:436
 msgid "Linux RAID Partition"
-msgstr ""
+msgstr "RAID oddiel pre Linux"
 
 #: ../src/gdu/gdu-util.c:437
 msgid "Linux Swap Partition"
-msgstr ""
+msgstr "Odkladací oddiel pre Linux"
 
 #: ../src/gdu/gdu-util.c:438
 msgid "Linux LVM Partition"
-msgstr ""
+msgstr "LVM oddiel pre Linux"
 
 #: ../src/gdu/gdu-util.c:439
 msgid "Linux Reserved Partition"
-msgstr ""
+msgstr "Rezervovaný oddiel pre Linux"
 
 #. Not associated with any OS
 #: ../src/gdu/gdu-util.c:441
 msgid "MBR Partition Scheme"
-msgstr ""
+msgstr "Schéma oddielov MBR"
 
 #: ../src/gdu/gdu-util.c:442
 msgid "EFI System Partition"
-msgstr ""
+msgstr "Systémový oddiel EFI"
 
 #: ../src/gdu/gdu-util.c:443
 msgid "BIOS Boot Partition"
-msgstr ""
+msgstr "Zavádzací oddiel BIOSu"
 
 #. Microsoft
 #: ../src/gdu/gdu-util.c:445
 msgid "Microsoft Reserved Partition"
-msgstr ""
+msgstr "Rezervovaný oddiel pre Microsoft"
 
 #: ../src/gdu/gdu-util.c:446
 msgid "Microsoft Basic Data Partition"
-msgstr ""
+msgstr "Základný údajový oddiel pre Microsoft"
 
 #. Same as Linux BDP
 #: ../src/gdu/gdu-util.c:447
 msgid "Microsoft LDM Metadata Partition"
-msgstr ""
+msgstr "Oddiel metaúdajov LDM pre Microsoft"
 
 #: ../src/gdu/gdu-util.c:448
 msgid "Microsoft LDM Data Partition"
-msgstr ""
+msgstr "Oddiel údajov LDM pre Microsoft"
 
 #: ../src/gdu/gdu-util.c:449
 msgid "Microsoft Windows Recovery Environment"
-msgstr ""
+msgstr "Záchranné prostredie pre Microsoft Windows"
 
 #. HP-UX
 #: ../src/gdu/gdu-util.c:451
 msgid "HP-UX Data Partition"
-msgstr ""
+msgstr "Oddiel údajov pre HP-UX"
 
 #: ../src/gdu/gdu-util.c:452
 msgid "HP-UX Service Partition"
-msgstr ""
+msgstr "Servisný oddiel pre HP-UX"
 
 #. FreeBSD
 #: ../src/gdu/gdu-util.c:454
 msgid "FreeBSD Boot Partition"
-msgstr ""
+msgstr "Zavádzací oddiel pre FreeBSD"
 
 #: ../src/gdu/gdu-util.c:455
 msgid "FreeBSD Data Partition"
-msgstr ""
+msgstr "Údajový oddiel pre FreeBSD"
 
 #: ../src/gdu/gdu-util.c:456
 msgid "FreeBSD Swap Partition"
-msgstr ""
+msgstr "Odkladací oddiel pre FreeBSD"
 
 #: ../src/gdu/gdu-util.c:457
 msgid "FreeBSD UFS Partition"
-msgstr ""
+msgstr "Oddiel UFS pre FreeBSD"
 
 #: ../src/gdu/gdu-util.c:458
 msgid "FreeBSD Vinum Partition"
-msgstr ""
+msgstr "Oddiel Vinum pre FreeBSD"
 
 #: ../src/gdu/gdu-util.c:459
 msgid "FreeBSD ZFS Partition"
-msgstr ""
+msgstr "Oddiel ZFS pre FreeBSD"
 
 #. Solaris
 #: ../src/gdu/gdu-util.c:461
 msgid "Solaris Boot Partition"
-msgstr ""
+msgstr "Zavádzací oddiel pre Solaris"
 
 #: ../src/gdu/gdu-util.c:462
 msgid "Solaris Root Partition"
-msgstr ""
+msgstr "Koreňový oddiel pre Solaris"
 
 #: ../src/gdu/gdu-util.c:463
 msgid "Solaris Swap Partition"
-msgstr ""
+msgstr "Odkladací oddiel pre Solaris"
 
 #: ../src/gdu/gdu-util.c:464
 msgid "Solaris Backup Partition"
-msgstr ""
+msgstr "Zálohovací oddiel pre Solaris"
 
 #: ../src/gdu/gdu-util.c:465
 msgid "Solaris /usr Partition"
-msgstr ""
+msgstr "Oddiel /usr pre Solaris"
 
 #. Same as Apple ZFS
 #: ../src/gdu/gdu-util.c:466
 msgid "Solaris /var Partition"
-msgstr ""
+msgstr "Oddiel /var pre Solaris"
 
 #: ../src/gdu/gdu-util.c:467
 msgid "Solaris /home Partition"
-msgstr ""
+msgstr "Oddiel /home pre Solaris"
 
 #: ../src/gdu/gdu-util.c:468
 msgid "Solaris Alternate Sector Partition"
-msgstr ""
+msgstr "Oddiel alternatívnych sektorov pre Solaris"
 
 #: ../src/gdu/gdu-util.c:469
 msgid "Solaris Reserved Partition"
-msgstr ""
+msgstr "Rezervovaný oddiel pre Solaris"
 
 #: ../src/gdu/gdu-util.c:470
 msgid "Solaris Reserved Partition (2)"
-msgstr ""
+msgstr "Rezervovaný oddiel (2) pre Solaris"
 
 #: ../src/gdu/gdu-util.c:471
 msgid "Solaris Reserved Partition (3)"
-msgstr ""
+msgstr "Rezervovaný oddiel (3) pre Solaris"
 
 #: ../src/gdu/gdu-util.c:472
 msgid "Solaris Reserved Partition (4)"
-msgstr ""
+msgstr "Rezervovaný oddiel (4) pre Solaris"
 
 #: ../src/gdu/gdu-util.c:473
 msgid "Solaris Reserved Partition (5)"
-msgstr ""
+msgstr "Rezervovaný oddiel (5) pre Solaris"
 
 #. Mac OS X
 #: ../src/gdu/gdu-util.c:475 ../src/gdu/gdu-util.c:494
 msgid "Apple HFS/HFS+ Partition"
-msgstr ""
+msgstr "Oddiel HFS/HFS+ pre Apple"
 
 #. see http://developer.apple.com/documentation/mac/Devices/Devices-126.html
 #. *     http://lists.apple.com/archives/Darwin-drivers/2003/May/msg00021.html
 #: ../src/gdu/gdu-util.c:476 ../src/gdu/gdu-util.c:493
 msgid "Apple UFS Partition"
-msgstr ""
+msgstr "Oddiel UFS pre Apple"
 
 #: ../src/gdu/gdu-util.c:477
 msgid "Apple ZFS Partition"
-msgstr ""
+msgstr "Oddiel ZFS pre Apple"
 
 #. Same as Solaris /usr
 #: ../src/gdu/gdu-util.c:478
 msgid "Apple RAID Partition"
-msgstr ""
+msgstr "Oddiel RAID pre Apple"
 
+# PK:
 #: ../src/gdu/gdu-util.c:479
 msgid "Apple RAID Partition (Offline)"
-msgstr ""
+msgstr "Oddiel RAID pre Apple (odpojený)"
 
 #: ../src/gdu/gdu-util.c:480
 msgid "Apple Boot Partition"
-msgstr ""
+msgstr "Zavádzací oddiel pre Apple"
 
+# PK: preco label neprelozene?
+# PM: je to názov súborového systému - nikde som nenasiel ze by to mali na macoch prelozené
 #: ../src/gdu/gdu-util.c:481
 msgid "Apple Label Partition"
-msgstr ""
+msgstr "Oddiel Apple Label"
 
 #: ../src/gdu/gdu-util.c:482
 msgid "Apple TV Recovery Partition"
-msgstr ""
+msgstr "Záchranný oddiel Apple TV"
 
 #. NetBSD
 #: ../src/gdu/gdu-util.c:484
 msgid "NetBSD Swap Partition"
-msgstr ""
+msgstr "Odkladací oddiel pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:485
 msgid "NetBSD FFS Partition"
-msgstr ""
+msgstr "Oddiel FFS pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:486
 msgid "NetBSD LFS Partition"
-msgstr ""
+msgstr "Oddiel LFS pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:487
 msgid "NetBSD RAID Partition"
-msgstr ""
+msgstr "Oddiel RAID pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:488
 msgid "NetBSD Concatenated Partition"
-msgstr ""
+msgstr "Zreťazený oddiel pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:489
 msgid "NetBSD Encrypted Partition"
-msgstr ""
+msgstr "Šifrovaný oddiel pre NetBSD"
 
 #: ../src/gdu/gdu-util.c:496
 msgid "Unused Partition"
-msgstr ""
+msgstr "Nepoužitý oddiel"
 
 #: ../src/gdu/gdu-util.c:497
 msgid "Empty Partition"
-msgstr ""
+msgstr "Prázdny oddiel"
 
 #: ../src/gdu/gdu-util.c:498
 msgid "Driver Partition"
-msgstr ""
+msgstr "Oddiel pre ovládač"
 
+# PK: preco nrepelozene Driver, je to fakt ovladac?
+# PM: je to názov súborového systému
 #: ../src/gdu/gdu-util.c:499
 msgid "Driver 4.3 Partition"
-msgstr ""
+msgstr "Oddiel Driver 4.3"
 
 #: ../src/gdu/gdu-util.c:500
 msgid "ProDOS file system"
-msgstr ""
+msgstr "Súborový systém ProDOS"
 
 #: ../src/gdu/gdu-util.c:501
 msgid "FAT 12"
-msgstr ""
+msgstr "FAT 12"
 
 #: ../src/gdu/gdu-util.c:502
 msgid "FAT 16"
-msgstr ""
+msgstr "FAT 16"
 
 #: ../src/gdu/gdu-util.c:503
 msgid "FAT 32"
-msgstr ""
+msgstr "FAT 32"
 
 #: ../src/gdu/gdu-util.c:504
 msgid "FAT 16 (Windows)"
-msgstr ""
+msgstr "FAT 16 (Windows)"
 
 #: ../src/gdu/gdu-util.c:505
 msgid "FAT 32 (Windows)"
-msgstr ""
+msgstr "FAT 32 (Windows)"
 
 #. see http://www.win.tue.nl/~aeb/partitions/partition_types-1.html
 #: ../src/gdu/gdu-util.c:508
 msgid "Empty (0x00)"
-msgstr ""
+msgstr "Prázdny (0x00)"
 
 #: ../src/gdu/gdu-util.c:509
 msgid "FAT12 (0x01)"
-msgstr ""
+msgstr "FAT12 (0x01)"
 
 #: ../src/gdu/gdu-util.c:510
 msgid "FAT16 <32M (0x04)"
-msgstr ""
+msgstr "FAT16 <32M (0x04)"
 
 #: ../src/gdu/gdu-util.c:511
 msgid "Extended (0x05)"
-msgstr ""
+msgstr "Rozšírený (0x05)"
 
 #: ../src/gdu/gdu-util.c:512
 msgid "FAT16 (0x06)"
-msgstr ""
+msgstr "FAT16 (0x06)"
 
 #: ../src/gdu/gdu-util.c:513
 msgid "HPFS/NTFS (0x07)"
-msgstr ""
+msgstr "HPFS/NTFS (0x07)"
 
 #: ../src/gdu/gdu-util.c:514
 msgid "W95 FAT32 (0x0b)"
-msgstr ""
+msgstr "W95 FAT32 (0x0b)"
 
 #: ../src/gdu/gdu-util.c:515
 msgid "W95 FAT32 (LBA) (0x0c)"
-msgstr ""
+msgstr "W95 FAT32 (LBA) (0x0c)"
 
 #: ../src/gdu/gdu-util.c:516
 msgid "W95 FAT16 (LBA) (0x0e)"
-msgstr ""
+msgstr "W95 FAT16 (LBA) (0x0e)"
 
 #: ../src/gdu/gdu-util.c:517
 msgid "W95 Ext d (LBA) (0x0f)"
-msgstr ""
+msgstr "W95 Ext d (LBA) (0x0f)"
 
 #: ../src/gdu/gdu-util.c:518
 msgid "OPUS (0x10)"
-msgstr ""
+msgstr "OPUS (0x10)"
 
 #: ../src/gdu/gdu-util.c:519
 msgid "Hidden FAT12 (0x11)"
-msgstr ""
+msgstr "Skrytý FAT12 (0x11)"
 
 #: ../src/gdu/gdu-util.c:520
 msgid "Compaq diagnostics (0x12)"
-msgstr ""
+msgstr "Diagnostika Compaq (0x12)"
 
 #: ../src/gdu/gdu-util.c:521
 msgid "Hidden FAT16 <32M (0x14)"
-msgstr ""
+msgstr "Skrytý FAT16 <32M (0x14)"
 
 #: ../src/gdu/gdu-util.c:522
 msgid "Hidden FAT16 (0x16)"
-msgstr ""
+msgstr "Skrytý FAT16 (0x16)"
 
 #: ../src/gdu/gdu-util.c:523
 msgid "Hidden HPFS/NTFS (0x17)"
-msgstr ""
+msgstr "Skrytý HPFS/NTFS (0x17)"
 
 #: ../src/gdu/gdu-util.c:524
 msgid "Hidden W95 FAT32 (0x1b)"
-msgstr ""
+msgstr "Skrytý W95 FAT32 (0x1b)"
 
 #: ../src/gdu/gdu-util.c:525
 msgid "Hidden W95 FAT32 (LBA) (0x1c)"
-msgstr ""
+msgstr "Skrytý W95 FAT32 (LBA) (0x1c)"
 
 #: ../src/gdu/gdu-util.c:526
 msgid "Hidden W95 FAT16 (LBA) (0x1e)"
-msgstr ""
+msgstr "Skrytý W95 FAT16 (LBA) (0x1e)"
 
 #: ../src/gdu/gdu-util.c:527
 msgid "PartitionMagic (0x3c)"
-msgstr ""
+msgstr "PartitionMagic (0x3c)"
 
 #: ../src/gdu/gdu-util.c:528
 msgid "Minix (0x81)"
-msgstr ""
+msgstr "Minix (0x81)"
 
 #. cf. http://en.wikipedia.org/wiki/MINIX_file_system
 #: ../src/gdu/gdu-util.c:529
 msgid "Linux swap (0x82)"
-msgstr ""
+msgstr "Linux odkladací (0x82)"
 
 #: ../src/gdu/gdu-util.c:530
 msgid "Linux (0x83)"
-msgstr ""
+msgstr "Linux (0x83)"
 
 #: ../src/gdu/gdu-util.c:531
 msgid "Hibernation (0x84)"
-msgstr ""
+msgstr "Hibernácia (0x84)"
 
 #: ../src/gdu/gdu-util.c:532
 msgid "Linux Extended (0x85)"
-msgstr ""
+msgstr "Linux rozšírený (0x85)"
 
 #: ../src/gdu/gdu-util.c:533
 msgid "Linux LVM (0x8e)"
-msgstr ""
+msgstr "Linux LVM (0x8e)"
 
 #: ../src/gdu/gdu-util.c:534
 msgid "Hibernation (0xa0)"
-msgstr ""
+msgstr "Hibernácia (0xa0)"
 
 #: ../src/gdu/gdu-util.c:535
 msgid "FreeBSD (0xa5)"
-msgstr ""
+msgstr "FreeBSD (0xa5)"
 
 #: ../src/gdu/gdu-util.c:536
 msgid "OpenBSD (0xa6)"
-msgstr ""
+msgstr "OpenBSD (0xa6)"
 
 #: ../src/gdu/gdu-util.c:537
 msgid "Mac OS X (0xa8)"
-msgstr ""
+msgstr "Mac OS X (0xa8)"
 
 #: ../src/gdu/gdu-util.c:538
 msgid "Mac OS X (0xaf)"
-msgstr ""
+msgstr "Mac OS X (0xaf)"
 
 #: ../src/gdu/gdu-util.c:539
 msgid "Solaris boot (0xbe)"
-msgstr ""
+msgstr "Solaris zavádzací (0xbe)"
 
 #: ../src/gdu/gdu-util.c:540
 msgid "Solaris (0xbf)"
-msgstr ""
+msgstr "Solaris (0xbf)"
 
 #: ../src/gdu/gdu-util.c:541
 msgid "BeOS BFS (0xeb)"
-msgstr ""
+msgstr "BeOS BFS (0xeb)"
 
 #: ../src/gdu/gdu-util.c:542
 msgid "SkyOS SkyFS (0xec)"
-msgstr ""
+msgstr "SkyOS SkyFS (0xec)"
 
 #: ../src/gdu/gdu-util.c:543
 msgid "EFI GPT (0xee)"
-msgstr ""
+msgstr "EFI GPT (0xee)"
 
 #: ../src/gdu/gdu-util.c:544
 msgid "EFI (FAT-12/16/32 (0xef)"
-msgstr ""
+msgstr "EFI (FAT-12/16/32 (0xef)"
 
 #: ../src/gdu/gdu-util.c:545
 msgid "Linux RAID autodetect (0xfd)"
-msgstr ""
+msgstr "Linux autodetegovaný RAID (0xfd)"
 
 #. Translators: Shown for unknown partition types.
 #. * %s is the partition type name
@@ -3763,49 +3855,61 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:572
 #, c-format
 msgid "Unknown (%s)"
-msgstr ""
+msgstr "Neznámy (%s)"
 
 #: ../src/gdu/gdu-util.c:582
 msgid ""
 "A popular format compatible with almost any device or system, typically used "
 "for file exchange."
 msgstr ""
+"Populárny formát kompatibilný s väčšinou zariadení a systémov, zvyčajne sa "
+"používa na výmenu súborov."
 
 #: ../src/gdu/gdu-util.c:586
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support. This file system does not use a journal."
 msgstr ""
+"Súborový systém je kompatibilný iba so systémami Linux a poskytuje podporu "
+"klasických UNIXových súborových oprávnení. Tento súborový systém nepoužíva "
+"žurnál."
 
 #: ../src/gdu/gdu-util.c:592
 msgid ""
 "This file system is compatible with Linux systems only and provides classic "
 "UNIX file permissions support."
 msgstr ""
+"Súborový systém je kompatibilný iba so systémami Linux a poskytuje podporu "
+"klasických UNIXových súborových oprávnení. "
 
 #: ../src/gdu/gdu-util.c:596
 msgid "Swap area used by the operating system for virtual memory."
-msgstr ""
+msgstr "Odkladacia oblasť používaná operačným systémom pre virtuálnu pamäť."
 
 #: ../src/gdu/gdu-util.c:599
 msgid ""
 "The native Windows file system. Not widely compatible with other operating "
 "systems than Windows."
 msgstr ""
+"Súborový systém vlastný pre Windows. Nie je veľmi kompatibilný s operačnými "
+"systémami inými ako Windows."
 
 #: ../src/gdu/gdu-util.c:603
 msgid ""
 "Simple filesystem with low overhead and UNIX permissions support. Not widely "
 "compatible with operating systems other than Linux and Minix."
 msgstr ""
+"Jednoduchý súborový systém s nízkou réžiou a podporou UNIXových oprávnení. "
+"Nie je veľmi kompatibilný s operačnými systémami inými ako Linux a Minix."
 
 #: ../src/gdu/gdu-util.c:607
 msgid "No file system will be created."
-msgstr ""
+msgstr "Nebude vytvorený žiadny súborový systém."
 
 #: ../src/gdu/gdu-util.c:610
+#, fuzzy
 msgid "Create an Extended Partition for logical partitions."
-msgstr ""
+msgstr "Kontajner pre logické oddiely"
 
 #: ../src/gdu/gdu-util.c:623
 msgid ""
@@ -3813,90 +3917,99 @@ msgid ""
 "but has a number of limitations with respect to disk size and number of "
 "partitions."
 msgstr ""
+"Schéma MBR je kompatibilná s väčšinou zariadení a systémov, no má niekoľko "
+"obmedzení, ktoré sa týkajú veľkosti disku a počtu oddielov."
 
 #: ../src/gdu/gdu-util.c:628
 msgid ""
 "A legacy scheme that is incompatible with most systems except Apple systems "
 "and most Linux systems. Not recommended for removable media."
 msgstr ""
+"Starší typ schémy, ktorý nie je kompatibilný s väčšinou systémov okrem "
+"systémov Apple a väčšiny Linuxových systémov. Neodporúča sa pre odoberateľné "
+"médiá."
 
 #: ../src/gdu/gdu-util.c:633
 msgid ""
 "The GUID scheme is compatible with most modern systems but may be "
 "incompatible with some devices and legacy systems."
 msgstr ""
+"Schéma GUID je kompatibilná s väčšinou moderných systémov, ale s niektorými "
+"zariadeniami a staršími systémami nemusí byť."
 
 #: ../src/gdu/gdu-util.c:637
 msgid ""
 "Marks the entire disk as unused. Use this option only if you want to avoid "
 "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 msgstr ""
+"Označí celý disk ako nepoužitý. Túto voľbu použite iba ak chcete predísť "
+"rozdeleniu disku, t.j. aby sa použil celý disk, disketa alebo zip disk."
 
 #: ../src/gdu/gdu-util.c:888
 #, c-format
 msgid "%.1f kB/s"
-msgstr ""
+msgstr "%.1f kB/s"
 
 #: ../src/gdu/gdu-util.c:891
 #, c-format
 msgid "%.1f MB/s"
-msgstr ""
+msgstr "%.1f MB/s"
 
 #: ../src/gdu/gdu-util.c:894
 #, c-format
 msgid "%.1f GB/s"
-msgstr ""
+msgstr "%.1f GB/s"
 
 #. Translators: interface name for serial ATA disks
 #: ../src/gdu/gdu-util.c:910
 msgid "SATA"
-msgstr ""
+msgstr "SATA"
 
 #. Translators: interface name for serial ATA disks
 #: ../src/gdu/gdu-util.c:913
 msgid "eSATA"
-msgstr ""
+msgstr "eSATA"
 
 #. Translators: interface name for parallel ATA disks
 #: ../src/gdu/gdu-util.c:916
 msgid "PATA"
-msgstr ""
+msgstr "PATA"
 
 #. Translators: interface name for ATA disks
 #: ../src/gdu/gdu-util.c:919 ../src/palimpsest/gdu-section-hub.c:141
 msgid "ATA"
-msgstr ""
+msgstr "ATA"
 
 #. Translators: interface name for SCSI disks
 #: ../src/gdu/gdu-util.c:922 ../src/palimpsest/gdu-section-hub.c:145
 msgid "SCSI"
-msgstr ""
+msgstr "SCSI"
 
 #. Translators: interface name for USB disks
 #: ../src/gdu/gdu-util.c:925
 msgid "USB"
-msgstr ""
+msgstr "USB"
 
 #. Translators: interface name for firewire disks
 #: ../src/gdu/gdu-util.c:928
 msgid "Firewire"
-msgstr ""
+msgstr "Firewire"
 
 #. Translators: interface name for SDIO disks
 #: ../src/gdu/gdu-util.c:931
 msgid "SDIO"
-msgstr ""
+msgstr "SDIO"
 
 #. Translators: interface name for virtual disks
 #: ../src/gdu/gdu-util.c:934
 msgid "Virtual"
-msgstr ""
+msgstr "Virtuálny"
 
 #. Translators: name shown for unknown disk connection interfaces
 #: ../src/gdu/gdu-util.c:940
 msgctxt "connection name"
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámy"
 
 #. Translators: Connection with speed information.
 #. * First %s is the connection name, like 'SATA' or 'USB'
@@ -3905,77 +4018,77 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:950
 #, c-format
 msgid "%s at %s"
-msgstr ""
+msgstr "%s (%s)"
 
 #: ../src/gdu/gdu-util.c:969
 msgctxt "RAID level"
 msgid "Stripe (RAID-0)"
-msgstr ""
+msgstr "Prekladanie (RAID-0)"
 
 #: ../src/gdu/gdu-util.c:971
 msgctxt "RAID level"
 msgid "RAID-0"
-msgstr ""
+msgstr "RAID-0"
 
 #: ../src/gdu/gdu-util.c:974
 msgctxt "RAID level"
 msgid "Mirror (RAID-1)"
-msgstr ""
+msgstr "Zrkadlenie (RAID-1)"
 
 #: ../src/gdu/gdu-util.c:976
 msgctxt "RAID level"
 msgid "RAID-1"
-msgstr ""
+msgstr "RAID-1"
 
 #: ../src/gdu/gdu-util.c:979
 msgctxt "RAID level"
 msgid "Parity Disk (RAID-4)"
-msgstr ""
+msgstr "S vyhradenou paritou (RAID-4)"
 
 #: ../src/gdu/gdu-util.c:981
 msgctxt "RAID level"
 msgid "RAID-4"
-msgstr ""
+msgstr "RAID-4"
 
 #: ../src/gdu/gdu-util.c:984
 msgctxt "RAID level"
 msgid "Distributed Parity (RAID-5)"
-msgstr ""
+msgstr "S distribuovanou paritou (RAID-5)"
 
 #: ../src/gdu/gdu-util.c:986
 msgctxt "RAID level"
 msgid "RAID-5"
-msgstr ""
+msgstr "RAID-5"
 
 #: ../src/gdu/gdu-util.c:989
 msgctxt "RAID level"
 msgid "Dual Distributed Parity (RAID-6)"
-msgstr ""
+msgstr "S dvojitou distribuovanou paritou  (RAID-6)"
 
 #: ../src/gdu/gdu-util.c:991
 msgctxt "RAID level"
 msgid "RAID-6"
-msgstr ""
+msgstr "RAID-6"
 
 #: ../src/gdu/gdu-util.c:994
 msgctxt "RAID level"
 msgid "Stripe of Mirrors (RAID-10)"
-msgstr ""
+msgstr "Prekladané zrkadlenie (RAID-10)"
 
 #: ../src/gdu/gdu-util.c:996
 msgctxt "RAID level"
 msgid "RAID-10"
-msgstr ""
+msgstr "RAID-10"
 
 #: ../src/gdu/gdu-util.c:999
 msgctxt "RAID level"
 msgid "Concatenated (Linear)"
-msgstr ""
+msgstr "Pospájanie (Linear)"
 
 #: ../src/gdu/gdu-util.c:1001
 msgctxt "RAID level"
 msgid "Linear"
-msgstr ""
+msgstr "Linear"
 
 #: ../src/gdu/gdu-util.c:1015
 msgid ""
@@ -3983,30 +4096,40 @@ msgid ""
 "tolerance. If a single disk in the array fails, the entire RAID-0 array "
 "fails."
 msgstr ""
+"Prekladané pole bez parity. Poskytuje lepší výkon, no netoleruje žiadne "
+"chyby. Ak jeden disk v poli zlyhá, celé pole RAID-0 bude nepoužiteľné."
 
 #: ../src/gdu/gdu-util.c:1019
 msgid ""
 "Mirrored set without parity. Provides fault tolerance and improved "
 "performance for reading. RAID-1 arrays can sustain all but one disk failing."
 msgstr ""
+"Zrkadlené pole bez parity. Poskytuje toleranciu chýb a lepší výkon pri "
+"čítaní. Polia RAID-1 pri zlyhaní jedného z diskov zachovajú všetky údaje."
 
 #: ../src/gdu/gdu-util.c:1023
 msgid ""
 "Striped set with parity on a single disk. Provides improved performance and "
 "fault tolerance. RAID-4 arrays can sustain a single disk failure."
 msgstr ""
+"Prekladané pole s paritou na jednom disku. Poskytuje lepší výkon a toleranciu "
+"chýb. Polia RAID-4 pri zlyhaní jedného disku zachovajú údaje."
 
 #: ../src/gdu/gdu-util.c:1027
 msgid ""
 "Striped set with distributed parity. Provides improved performance and fault "
 "tolerance. RAID-5 arrays can sustain a single disk failure."
 msgstr ""
+"Prekladané pole s distribuovanou paritou. Poskytuje lepší výkon a toleranciu "
+"chýb. Polia RAID-5 pri zlyhaní jedného disku zachovajú údaje."
 
 #: ../src/gdu/gdu-util.c:1031
 msgid ""
 "Striped set with dual distributed parity. Provides improved performance and "
 "fault tolerance. RAID-6 arrays can sustain two disk failures."
 msgstr ""
+"Prekladané pole s dvojitou distribuovanou paritou. Poskytuje lepší výkon a "
+"toleranciu chýb. Polia RAID-6 pri zlyhaní dvoch diskov zachovajú údaje."
 
 #: ../src/gdu/gdu-util.c:1035
 msgid ""
@@ -4014,31 +4137,34 @@ msgid ""
 "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
 "mirror loses all its drives."
 msgstr ""
+"Prekladané pole s distribuovanou paritou. Poskytuje lepší výkon a toleranciu "
+"chýb. Polia RAID-10 zachovajú údaje aj pri zlyhaní viacerých diskov za "
+"predpokladu, že zostanú zachované disky tvoriace zrkadlenú časť údajov."
 
 #: ../src/gdu/gdu-util.c:1041
 #, c-format
 msgid "Unknown RAID level %s."
-msgstr ""
+msgstr "Neznámy typ RAID %s."
 
 #. Translators: Overall description of the GOOD status
 #: ../src/gdu/gdu-util.c:1077
 msgid "Disk is healthy"
-msgstr ""
+msgstr "Disk je v dobrom stave"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_IN_THE_PAST status
 #: ../src/gdu/gdu-util.c:1081
 msgid "Disk was used outside of design parameters in the past"
-msgstr ""
+msgstr "Disk bol skôr používaný s inými parametrami ako výrobnými"
 
 #. Translators: Overall description of the BAD_SECTOR status
 #: ../src/gdu/gdu-util.c:1085
 msgid "Disk has a few bad sectors"
-msgstr ""
+msgstr "Disk má niekoľko chybných sektorov"
 
 #. Translators: Overall description of the BAD_ATTRIBUTE_NOW status
 #: ../src/gdu/gdu-util.c:1089
 msgid "DISK IS BEING USED OUTSIDE DESIGN PARAMETERS"
-msgstr ""
+msgstr "DISK JE POUŽÍVANÝ S INÝMI PARAMETRAMI AKO VÝROBNÝMI"
 
 #. Translators: Suggested action for the BAD_ATTRIBUTE_NOW status
 #. Translators: Suggested action for the BAD_SECTOR_MANY status
@@ -4046,174 +4172,174 @@ msgstr ""
 #: ../src/gdu/gdu-util.c:1091 ../src/gdu/gdu-util.c:1099
 #: ../src/gdu/gdu-util.c:1105
 msgid "Backup all data and replace the disk"
-msgstr ""
+msgstr "Zálohujte všetky údaje a vymente disk"
 
 #. Translators: Overall description of the BAD_SECTOR_MANY status
 #: ../src/gdu/gdu-util.c:1096
 msgid "DISK HAS MANY BAD SECTORS"
-msgstr ""
+msgstr "DISK MÁ MNOHO CHYBNÝCH SEKTOROV"
 
 #. Translators: Overall description of the BAD_STATUS status
 #: ../src/gdu/gdu-util.c:1103
 msgid "DISK FAILURE IS IMMINENT"
-msgstr ""
+msgstr "DISKU HROZÍ POKAZENIE"
 
 #. Translator: The word "blank" is used as an adjective, e.g. we are decsribing discs that are already blank
 #: ../src/gdu/gdu-volume.c:79
 msgid "CD-ROM Disc"
-msgstr ""
+msgstr "Disk CD-ROM"
 
 #: ../src/gdu/gdu-volume.c:79
 msgid "Blank CD-ROM Disc"
-msgstr ""
+msgstr "Čistý disk CD-ROM"
 
 #: ../src/gdu/gdu-volume.c:80
 msgid "CD-R Disc"
-msgstr ""
+msgstr "Disk CD-R"
 
 #: ../src/gdu/gdu-volume.c:80
 msgid "Blank CD-R Disc"
-msgstr ""
+msgstr "Čistý disk CD-R"
 
 #: ../src/gdu/gdu-volume.c:81
 msgid "CD-RW Disc"
-msgstr ""
+msgstr "Disk CD-RW"
 
 #: ../src/gdu/gdu-volume.c:81
 msgid "Blank CD-RW Disc"
-msgstr ""
+msgstr "Čistý disk CD-RW"
 
 #: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "DVD-ROM Disc"
-msgstr ""
+msgstr "Disk DVD-ROM"
 
 #: ../src/gdu/gdu-volume.c:82 ../src/gdu/gdu-volume.c:83
 msgid "Blank DVD-ROM Disc"
-msgstr ""
+msgstr "Čistý disk DVD-ROM"
 
 #: ../src/gdu/gdu-volume.c:84
 msgid "DVD-RW Disc"
-msgstr ""
+msgstr "Disk DVD-RW"
 
 #: ../src/gdu/gdu-volume.c:84
 msgid "Blank DVD-RW Disc"
-msgstr ""
+msgstr "Čistý disk DVD-RW"
 
 #: ../src/gdu/gdu-volume.c:85
 msgid "DVD-RAM Disc"
-msgstr ""
+msgstr "Disk DVD-RAM"
 
 #: ../src/gdu/gdu-volume.c:85
 msgid "Blank DVD-RAM Disc"
-msgstr ""
+msgstr "Čistý disk DVD-RAM"
 
 #: ../src/gdu/gdu-volume.c:86
 msgid "DVD+R Disc"
-msgstr ""
+msgstr "Disk DVD+R"
 
 #: ../src/gdu/gdu-volume.c:86
 msgid "Blank DVD+R Disc"
-msgstr ""
+msgstr "Čistý disk DVD+R"
 
 #: ../src/gdu/gdu-volume.c:87
 msgid "DVD+RW Disc"
-msgstr ""
+msgstr "Disk DVD+RW"
 
 #: ../src/gdu/gdu-volume.c:87
 msgid "Blank DVD+RW Disc"
-msgstr ""
+msgstr "Čistý disk DVD+RW"
 
 #: ../src/gdu/gdu-volume.c:88
 msgid "DVD+R DL Disc"
-msgstr ""
+msgstr "Disk DVD+R DL"
 
 #: ../src/gdu/gdu-volume.c:88
 msgid "Blank DVD+R DL Disc"
-msgstr ""
+msgstr "Čistý disk DVD+R DL"
 
 #: ../src/gdu/gdu-volume.c:89
 msgid "DVD+RW DL Disc"
-msgstr ""
+msgstr "Disk DVD+RW DL"
 
 #: ../src/gdu/gdu-volume.c:89
 msgid "Blank DVD+RW DL Disc"
-msgstr ""
+msgstr "Čistý disk DVD+RW DL"
 
 #: ../src/gdu/gdu-volume.c:90
 msgid "Blu-Ray Disc"
-msgstr ""
+msgstr "Disk Blu-Ray"
 
 #: ../src/gdu/gdu-volume.c:90
 msgid "Blank Blu-Ray Disc"
-msgstr ""
+msgstr "Čistý disk Blu-Ray"
 
 #: ../src/gdu/gdu-volume.c:91
 msgid "Blu-Ray R Disc"
-msgstr ""
+msgstr "Disk Blu-Ray R"
 
 #: ../src/gdu/gdu-volume.c:91
 msgid "Blank Blu-Ray R Disc"
-msgstr ""
+msgstr "Čistý disk Blu-Ray R"
 
 #: ../src/gdu/gdu-volume.c:92
 msgid "Blu-Ray RW Disc"
-msgstr ""
+msgstr "Čistý disk Blu-Ray RW"
 
 #: ../src/gdu/gdu-volume.c:92
 msgid "Blank Blu-Ray RW Disc"
-msgstr ""
+msgstr "Čistý disk Blu-Ray RW"
 
 #: ../src/gdu/gdu-volume.c:93
 msgid "HD DVD Disc"
-msgstr ""
+msgstr "Disk HD DVD"
 
 #: ../src/gdu/gdu-volume.c:93
 msgid "Blank HD DVD Disc"
-msgstr ""
+msgstr "Čistý disk HD DVD"
 
 #: ../src/gdu/gdu-volume.c:94
 msgid "HD DVD-R Disc"
-msgstr ""
+msgstr "Disk HD DVD-R"
 
 #: ../src/gdu/gdu-volume.c:94
 msgid "Blank HD DVD-R Disc"
-msgstr ""
+msgstr "Čistý disk HD DVD-R"
 
 #: ../src/gdu/gdu-volume.c:95
 msgid "HD DVD-RW Disc"
-msgstr ""
+msgstr "Disk HD DVD-RW"
 
 #: ../src/gdu/gdu-volume.c:95
 msgid "Blank HD DVD-RW Disc"
-msgstr ""
+msgstr "Čistý disk HD DVD-RW"
 
 #: ../src/gdu/gdu-volume.c:96
 msgid "MO Disc"
-msgstr ""
+msgstr "Disk MO"
 
 #: ../src/gdu/gdu-volume.c:96
 msgid "Blank MO Disc"
-msgstr ""
+msgstr "Čistý disk MO"
 
 #: ../src/gdu/gdu-volume.c:97
 msgid "MRW Disc"
-msgstr ""
+msgstr "Disk MRW"
 
 #: ../src/gdu/gdu-volume.c:97
 msgid "Blank MRW Disc"
-msgstr ""
+msgstr "Čistý disk MRW"
 
 #: ../src/gdu/gdu-volume.c:98
 msgid "MRW/W Disc"
-msgstr ""
+msgstr "Disk MRW/W"
 
 #: ../src/gdu/gdu-volume.c:98
 msgid "Blank MRW/W Disc"
-msgstr ""
+msgstr "Čistý disk MRW/W"
 
 #: ../src/gdu/gdu-volume.c:294
 msgid "Blank Optical Disc"
-msgstr ""
+msgstr "Čistý optický disk"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
@@ -4221,11 +4347,11 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:304
 #, c-format
 msgid "%s Extended"
-msgstr ""
+msgstr "%s Rozšírený"
 
 #: ../src/gdu/gdu-volume.c:305
 msgid "Contains logical partitions"
-msgstr ""
+msgstr "Obsahuje logické oddiely"
 
 #. Translators: Label for an extended partition
 #. * %s is the size, formatted like '45 GB'
@@ -4233,11 +4359,11 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:320
 #, c-format
 msgid "%s Encrypted"
-msgstr ""
+msgstr "%s Šifrovaný"
 
 #: ../src/gdu/gdu-volume.c:330
 msgid "Optical Disc"
-msgstr ""
+msgstr "Optický disk"
 
 #. Translators: Label for a partition with a filesystem
 #. * %s is the size, formatted like '45 GB'
@@ -4245,7 +4371,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:336
 #, c-format
 msgid "%s Filesystem"
-msgstr ""
+msgstr "%s Súborový systém"
 
 #. Translators: Label for a partition table
 #. * %s is the size, formatted like '45 GB'
@@ -4253,7 +4379,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:342
 #, c-format
 msgid "%s Partition Table"
-msgstr ""
+msgstr "%s Tabuľka oddielov"
 
 #. Translators: Label for a LVM volume
 #. * %s is the size, formatted like '45 GB'
@@ -4261,13 +4387,13 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:348
 #, c-format
 msgid "%s LVM2 Physical Volume"
-msgstr ""
+msgstr "%s Fyzický zväzok LVM2"
 
 #. Translators: Used if no specific RAID level could be determined
 #: ../src/gdu/gdu-volume.c:361
 msgctxt "RAID level"
 msgid "RAID"
-msgstr ""
+msgstr "RAID"
 
 #. Translators: label for a RAID component
 #. * First %s is the size, formatted like '45 GB'
@@ -4276,7 +4402,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:368 ../src/gdu/gdu-volume.c:379
 #, c-format
 msgid "%s %s Component"
-msgstr ""
+msgstr "%s Súčasť %s"
 
 #. Translators: description for a RAID component
 #. * First %s is the array name, e.g. 'My Photos RAID',
@@ -4284,7 +4410,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:372
 #, c-format
 msgid "Part of \"%s\" array"
-msgstr ""
+msgstr "Časť poľa „%s“"
 
 #. Translators: label for a swap partition
 #. * %s is the size, formatted like '45 GB'
@@ -4292,7 +4418,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:390
 #, c-format
 msgid "%s Swap Space"
-msgstr ""
+msgstr "%s Odkladací priestor"
 
 #. Translators: label for a data partition
 #. * %s is the size, formatted like '45 GB'
@@ -4300,7 +4426,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:395
 #, c-format
 msgid "%s Data"
-msgstr ""
+msgstr "%s Dátový"
 
 #. Translators: label for a volume of unrecognized use
 #. * %s is the size, formatted like '45 GB'
@@ -4308,12 +4434,12 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:401 ../src/gdu/gdu-volume.c:417
 #, c-format
 msgid "%s Unrecognized"
-msgstr ""
+msgstr "%s Nerozpoznaný"
 
 #. Translators: description for a volume of unrecognized use
 #: ../src/gdu/gdu-volume.c:403
 msgid "Unknown or Unused"
-msgstr ""
+msgstr "Neznámy alebo nepoužívaný"
 
 #. Translators: label for a partition
 #. * %s is the size, formatted like '45 GB'
@@ -4321,7 +4447,7 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:410 ../src/gdu/gdu-volume.c:412
 #, c-format
 msgid "%s Partition"
-msgstr ""
+msgstr "%s Oddiel"
 
 #. Translators: The VPD name for a volume. The %d is the partition number
 #. * and the %s is the VPD name for the drive.
@@ -4329,14 +4455,14 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:447
 #, c-format
 msgid "Partition %d of %s"
-msgstr ""
+msgstr "Oddiel %d na %s"
 
 #. Translators: The VPD name for a volume. The %d is the partition number.
 #.
 #: ../src/gdu/gdu-volume.c:453
 #, c-format
 msgid "Partition %d"
-msgstr ""
+msgstr "Oddiel %d"
 
 #. Translators: The VPD name for a whole-disk volume.
 #. * The %s is the VPD name for the drive.
@@ -4344,66 +4470,68 @@ msgstr ""
 #: ../src/gdu/gdu-volume.c:461
 #, c-format
 msgid "Whole-disk volume on %s"
-msgstr ""
+msgstr "Celodiskový zväzok na %s"
 
 #. Translators: The VPD name for a whole-disk volume.
 #.
 #: ../src/gdu/gdu-volume.c:466
 msgid "Whole-disk volume"
-msgstr ""
+msgstr "Celodiskový zväzok"
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:162
 #, c-format
 msgid "It's now safe to remove \"%s\"."
-msgstr ""
+msgstr "Teraz je možné bezpečne odobrať „%s“."
 
 #. Translators: %s is the name of the device
 #: ../src/notification/gdu-slow-unmount-dialog.c:231
 #, c-format
 msgid "Writing data to \"%s\"..."
-msgstr ""
+msgstr "Zapisujú sa údaje na „%s“..."
 
 #: ../src/notification/gdu-slow-unmount-dialog.c:246
 msgid ""
 "To prevent data loss, wait until this has finished before removing media or "
 "disconnecting the device."
 msgstr ""
+"Aby ste predišli strate údajov, pred odobratím alebo odpojením média "
+"počkajte, pokým sa táto operácia nedokončí."
 
 #. Translators: This is used as the title of the notification
 #: ../src/notification/notification-main.c:478
 #: ../src/notification/notification-main.c:496
 msgid "Hard Disk Problems Detected"
-msgstr ""
+msgstr "Nájdené problémy na pevnom disku"
 
 #: ../src/notification/notification-main.c:481
 #: ../src/notification/notification-main.c:499
 msgid "A hard disk is reporting health problems."
-msgstr ""
+msgstr "Pevný disk hlási problémy so svojim stavom."
 
 #: ../src/notification/notification-main.c:482
 msgid "Multiple system hard disks are reporting health problems."
-msgstr ""
+msgstr "Viacero systémových pevných diskov hlási problémy so svojim stavom."
 
 #: ../src/notification/notification-main.c:489
 msgid "Examine"
-msgstr ""
+msgstr "Preveriť"
 
 #: ../src/notification/notification-main.c:500
 msgid "Multiple hard disks are reporting health problems."
-msgstr ""
+msgstr "Viacero pevných diskov hlási problémy s dobrým stavom."
 
 #: ../src/palimpsest/gdu-main.c:127
 msgid "Volume to show"
-msgstr ""
+msgstr "Zväzok, ktorý sa zobrazí"
 
 #: ../src/palimpsest/gdu-main.c:128
 msgid "Drive to show"
-msgstr ""
+msgstr "Disk, ktorý sa zobrazí"
 
 #: ../src/palimpsest/gdu-section-drive.c:148
 msgid "Multipath Drive"
-msgstr ""
+msgstr "Viaccestný disk"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a SAS Adapter or Expander - The %d is the
@@ -4413,7 +4541,7 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:189
 #, c-format
 msgid "PHY %d of %s"
-msgstr ""
+msgstr "PHY %d, %s"
 
 #. Translators: This is used in the "Location" element for a disk
 #. * connected to a Adapter or Expander - The %d is the
@@ -4423,17 +4551,19 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-drive.c:196
 #, c-format
 msgid "Port %d of %s"
-msgstr ""
+msgstr "Port %d, %s"
 
+# Write cache
 #: ../src/palimpsest/gdu-section-drive.c:261
 msgctxt "Write Cache"
 msgid "Enabled"
-msgstr ""
+msgstr "Povolená"
 
+# Write cache
 #: ../src/palimpsest/gdu-section-drive.c:263
 msgctxt "Write Cache"
 msgid "Disabled"
-msgstr ""
+msgstr "Zakázaná"
 
 #. Translators: This is for the rotation rate of a hard
 #. * disk - RPM means rounds per minute
@@ -4442,150 +4572,156 @@ msgstr ""
 #, c-format
 msgctxt "Rotation Rate"
 msgid "%d RPM"
-msgstr ""
+msgstr "%d ot/min"
 
 #: ../src/palimpsest/gdu-section-drive.c:281
 msgctxt "Rotation Rate"
 msgid "Solid-State Disk"
-msgstr ""
+msgstr "Bez pohyblivých častí (SSD)"
 
 #. Translators: 'scheme' refers to a partition table format here, like 'mbr' or 'gpt'
 #: ../src/palimpsest/gdu-section-drive.c:296
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:259
 #, c-format
 msgid "Unknown Scheme: %s"
-msgstr ""
+msgstr "Neznáma schéma: %s"
 
 #: ../src/palimpsest/gdu-section-drive.c:442
 #: ../src/palimpsest/gdu-section-drive.c:462
 msgid "Error launching Brasero"
-msgstr ""
+msgstr "Chyba pri spúšťaní programu Brasero"
 
 #: ../src/palimpsest/gdu-section-drive.c:443
 msgid "The application is not installed"
-msgstr ""
+msgstr "Aplikácia nie je nainštalovaná"
 
 #: ../src/palimpsest/gdu-section-drive.c:523
 msgid "Error ejecting medium"
-msgstr ""
+msgstr "Chyba pri vysúvaní média"
 
 #: ../src/palimpsest/gdu-section-drive.c:567
+#, fuzzy
 msgid "Error detaching drive"
-msgstr ""
+msgstr "Chyba pri testovaní výkonu disku"
 
 #: ../src/palimpsest/gdu-section-drive.c:612
 msgid "Error formatting drive"
-msgstr ""
+msgstr "Chyba pri formátovaní disku"
 
 #: ../src/palimpsest/gdu-section-drive.c:650
 msgid "Are you sure you want to format the drive?"
-msgstr ""
+msgstr "Ste si istý, že chcete formátovať disk?"
 
 #: ../src/palimpsest/gdu-section-drive.c:837
 msgid ""
 "<b>WARNING:</b> Several paths to this drive has been detected but no "
 "corresponding multipath device was found. Your OS may be misconfigured."
 msgstr ""
+"<b>UPOZORNENIE:</b> Bolo nájdených viacero ciest k disku, no nebolo nájdené "
+"zodpovedajúce viaccestné zariadenie. Váš OS môže byť chybne nakonfigurovaný."
 
 #: ../src/palimpsest/gdu-section-drive.c:852
 msgid "Go to Multipath Device"
-msgstr ""
+msgstr "Prejsť na viaccestné zariadenie"
 
 #: ../src/palimpsest/gdu-section-drive.c:863
 msgid ""
 "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 "perform operations on the drive, use the corresponding multipath object."
 msgstr ""
+"<b>POZNÁMKA:</b> Tento objekt reprezentuje jednu z niekoľkých ciest k disku. "
+"Na vykonanie operácií na tomto disku použite zodpovedajúci viaccestný "
+"objekt."
 
 #: ../src/palimpsest/gdu-section-drive.c:892
 #: ../src/palimpsest/gdu-section-hub.c:225
 msgid "Model:"
-msgstr ""
+msgstr "Model:"
 
 #: ../src/palimpsest/gdu-section-drive.c:896
 msgid "Serial Number:"
-msgstr ""
+msgstr "Sériové číslo:"
 
 #: ../src/palimpsest/gdu-section-drive.c:900
 msgid "Firmware Version:"
-msgstr ""
+msgstr "Verzia firmvéru:"
 
 #. Translators: if you translate "World Wide Name", please include the abbreviation "WWN"
 #: ../src/palimpsest/gdu-section-drive.c:905
 msgid "World Wide Name:"
-msgstr ""
+msgstr "Jedinečný názov WWN:"
 
 #: ../src/palimpsest/gdu-section-drive.c:909
 msgid "Location:"
-msgstr ""
+msgstr "Umiestnenie:"
 
 #: ../src/palimpsest/gdu-section-drive.c:917
 msgid "Write Cache:"
-msgstr ""
+msgstr "Vyrovnávacia pamäť zápisu:"
 
 #: ../src/palimpsest/gdu-section-drive.c:921
 msgid "Rotation Rate:"
-msgstr ""
+msgstr "Frekvencia otáčania:"
 
 #: ../src/palimpsest/gdu-section-drive.c:925
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:679
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:978
 #: ../src/palimpsest/gdu-section-volumes.c:1952
 msgid "Capacity:"
-msgstr ""
+msgstr "Kapacita:"
 
 #: ../src/palimpsest/gdu-section-drive.c:929
 msgid "Connection:"
-msgstr ""
+msgstr "Pripojenie:"
 
 #: ../src/palimpsest/gdu-section-drive.c:933
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:970
 msgid "Partitioning:"
-msgstr ""
+msgstr "Typ rozdelenia:"
 
 #: ../src/palimpsest/gdu-section-drive.c:956
 msgid "Open CD/_DVD Application"
-msgstr ""
+msgstr "Otvoriť aplikáciu pre CD/_DVD"
 
 #: ../src/palimpsest/gdu-section-drive.c:957
 msgid "Create and copy CDs and DVDs"
-msgstr ""
+msgstr "Vytvára a kopíruje CD a DVD"
 
 #: ../src/palimpsest/gdu-section-drive.c:966
 msgid "Format _Drive"
-msgstr ""
+msgstr "Formátovať _disk"
 
 #: ../src/palimpsest/gdu-section-drive.c:967
 msgid "Erase or partition the drive"
-msgstr ""
+msgstr "Vymaže alebo rozdelí disk"
 
 #: ../src/palimpsest/gdu-section-drive.c:976
 msgid "SM_ART Data"
-msgstr ""
+msgstr "Údaje SM_ART"
 
 #: ../src/palimpsest/gdu-section-drive.c:977
 msgid "View SMART data and run self-tests"
-msgstr ""
+msgstr "Zobrazí údaje SMART a spustí samokontrolu"
 
 #: ../src/palimpsest/gdu-section-drive.c:986
 msgid "_Eject"
-msgstr ""
+msgstr "_Vysunúť"
 
 #: ../src/palimpsest/gdu-section-drive.c:987
 msgid "Eject medium from the drive"
-msgstr ""
+msgstr "Vysunie médium z mechaniky"
 
 #: ../src/palimpsest/gdu-section-drive.c:996
 msgid "Safe Rem_oval"
-msgstr ""
+msgstr "Bezpečne _odobrať"
 
 #: ../src/palimpsest/gdu-section-drive.c:997
 msgid "Power down the drive so it can be removed"
-msgstr ""
+msgstr "Vypne napájanie disku, aby mohol byť odobraný"
 
 #: ../src/palimpsest/gdu-section-drive.c:1007
 msgid "Measure drive performance"
-msgstr ""
+msgstr "Zmeria výkon disku"
 
 #. Translators: Used for SAS to convey the number of PHYs in the
 #. * "Number of Ports" element. You should probably not translate PHY.
@@ -4594,59 +4730,59 @@ msgstr ""
 #: ../src/palimpsest/gdu-section-hub.c:161
 #, c-format
 msgid "%d PHYs"
-msgstr ""
+msgstr "%d PHY"
 
 #: ../src/palimpsest/gdu-section-hub.c:137
 msgid "Parallel ATA"
-msgstr ""
+msgstr "Paralelné ATA (PATA)"
 
 #: ../src/palimpsest/gdu-section-hub.c:139
 msgid "Serial ATA"
-msgstr ""
+msgstr "Sériové ATA (SATA)"
 
 #: ../src/palimpsest/gdu-section-hub.c:143
 msgid "Serial Attached SCSI"
-msgstr ""
+msgstr "Sériovo pripojené SCSI (SAS)"
 
 #: ../src/palimpsest/gdu-section-hub.c:221
 msgid "Vendor:"
-msgstr ""
+msgstr "Výrobca:"
 
 #: ../src/palimpsest/gdu-section-hub.c:229
 msgid "Revision:"
-msgstr ""
+msgstr "Revízia:"
 
 #: ../src/palimpsest/gdu-section-hub.c:233
 msgid "Driver:"
-msgstr ""
+msgstr "Ovládač:"
 
 #: ../src/palimpsest/gdu-section-hub.c:237
 msgid "Fabric:"
-msgstr ""
+msgstr "Konštrukcia:"
 
 #: ../src/palimpsest/gdu-section-hub.c:241
 msgid "Number of Ports:"
-msgstr ""
+msgstr "Počet portov:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:77
 msgid "Error starting Volume Group"
-msgstr ""
+msgstr "Chyba pri spúšťaní skupiny zväzkov"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:123
 msgid "Error stopping Volume Group"
-msgstr ""
+msgstr "Chyba pri zastavovaní skupiny zväzkov"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:169
 msgid "Error setting name for Volume Group"
-msgstr ""
+msgstr "Chyba pri nastavovaní názvu pre skupinu zväzkov"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:203
 msgid "Choose a new Volume Group name."
-msgstr ""
+msgstr "Zvoľte nový názov pre skupinu zväzkov."
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:255
 msgid "Error adding Physical Volume to Volume Group"
-msgstr ""
+msgstr "Chyba pri pridávaní fyzického zväzku do skupiny zväzkov"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:285
 msgid "Error creating PV for VG"
@@ -4667,7 +4803,7 @@ msgstr "Ste si istý, že chcete odobrať fyzický zväzok?"
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:477
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:530
 msgid "_Remove"
-msgstr "Odo_brať"
+msgstr ""
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:597
 msgid "Not Running"
@@ -4681,7 +4817,7 @@ msgstr "Beží obmedzene"
 msgid "Running"
 msgstr "Beží"
 
-# TODO overiť správnosť rodu
+# stav
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:610
 #, c-format
 msgid "Unknown (%d)"
@@ -4692,10 +4828,9 @@ msgstr "Neznámy (%d)"
 msgid "Name:"
 msgstr "Názov:"
 
-# rozsahu?
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:671
 msgid "Extent Size:"
-msgstr "Veľkosť bloku:"
+msgstr "Veľkosť rozsahu:"
 
 #: ../src/palimpsest/gdu-section-linux-lvm2-volume-group.c:675
 msgid "Physical Volumes:"
@@ -4813,7 +4948,7 @@ msgstr "Na spustenie diskového poľa RAID nie je dostatok súčastí"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:409
 msgid "Are you sure you want the RAID Array degraded?"
-msgstr "Ste si istý, že chcete diskové pole RAID degradovať?"
+msgstr "Ste si istý, že chcete degradované diskové pole RAID?"
 
 #: ../src/palimpsest/gdu-section-linux-md-drive.c:410
 msgid "_Start"
@@ -4923,7 +5058,7 @@ msgstr "Chyba pri odstraňovaní oddielu"
 
 #: ../src/palimpsest/gdu-section-volumes.c:263
 msgid "Are you sure you want to delete the partition?"
-msgstr "Ste si istý, že chcete oddiel odtrániť?"
+msgstr "Ste si istý, že chcete oddiel odstrániť?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:264
 #: ../src/palimpsest/gdu-section-volumes.c:1788
@@ -4943,8 +5078,9 @@ msgid "Error modifying partition"
 msgstr "Chyba pri úprave oddielu"
 
 #: ../src/palimpsest/gdu-section-volumes.c:519
+#, fuzzy
 msgid "Are you sure you want to forget the passphrase?"
-msgstr "Ste si istý, že chcete zabudnúť heslo?"
+msgstr "Ste si istý, že chcete formátovať disk?"
 
 #: ../src/palimpsest/gdu-section-volumes.c:520
 msgid "_Forget"
@@ -4976,7 +5112,7 @@ msgstr "_Menovka:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1241
 msgid "Error checking filesystem on volume"
-msgstr "Chyba pri kontrole súborového systému na zväzku"
+msgstr "Chyba pri kontrole súborového systému v zväzku"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1268
 #, c-format
@@ -4994,7 +5130,7 @@ msgstr "Súborový systém <b>NIE JE</b> v poriadku."
 #: ../src/palimpsest/gdu-section-volumes.c:1387
 #, c-format
 msgid "Error spawning nautilus: %s"
-msgstr "Chyba pri spúšťaní aplikácie nautilus: %s"
+msgstr "Chyba pri spúšťaní programu nautilus: %s"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1435
 msgid "Error creating Logical Volume"
@@ -5052,7 +5188,7 @@ msgstr "Typ:"
 # * https://bugzilla.gnome.org/show_bug.cgi?id=647322
 #: ../src/palimpsest/gdu-section-volumes.c:1959
 msgid "Available:"
-msgstr "Dostupný:"
+msgstr "Dostupných:"
 
 #: ../src/palimpsest/gdu-section-volumes.c:1962
 msgid "Label:"
@@ -5100,7 +5236,7 @@ msgstr "Povolený zápis"
 #. Translators: This is for the 'boot_code_is_pic' APM partition flag
 #: ../src/palimpsest/gdu-section-volumes.c:2041
 msgid "Boot Code PIC"
-msgstr "Zavádzací kód PIC"
+msgstr "Zavádzací PIC kód"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2115
 msgid "Filesystem"
@@ -5171,8 +5307,9 @@ msgid "Unmount the volume"
 msgstr "Odpojí zväzok"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2407
+#, fuzzy
 msgid "Fo_rmat Volume"
-msgstr "Na_formátovať zväzok"
+msgstr "Formátováť %s zväzok (%s)"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2408
 msgid "Erase or format the volume"
@@ -5186,35 +5323,40 @@ msgstr "S_kontrolovať súborový systém"
 msgid "Check and repair the filesystem"
 msgstr "Skontroluje a opraví súborový systém"
 
-# o to že ide o súborový je jasné z kontextu a keby to bolo dlhšie text na tlačidle sa zalomí a vyzerá to zle
+# o to že ide o súborový systém hovorí popis a keby to bolo dlhšie text na tlačidle sa zalomí a vyzerá to zle
 # uz aj "S_kontrolovať súborový systém" sa u mna zalomi...
+# PK: reportni bug, celkovo UI tejto app na malych rozliseniach je problematicke
+# PM: https://bugzilla.gnome.org/show_bug.cgi?id=661462
 #: ../src/palimpsest/gdu-section-volumes.c:2428
 msgid "Edit Filesystem _Label"
-msgstr "Upraviť _menovku súborového systému"
+msgstr "Upraviť _menovku"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2429
 msgid "Change the label of the filesystem"
 msgstr "Zmení menovku súborového systému"
 
+# PŠ: TODO accelerator
 #: ../src/palimpsest/gdu-section-volumes.c:2438
 msgid "Ed_it Partition"
-msgstr "_Upraviť oddiel"
+msgstr "Upraviť oddiel"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2439
 msgid "Change partition type, label and flags"
 msgstr "Zmení typ oddielu, menovku a príznaky"
 
+# PŠ: TODO accelerator
 #: ../src/palimpsest/gdu-section-volumes.c:2448
 msgid "D_elete Partition"
-msgstr "O_dstrániť oddiel"
+msgstr "Odstrániť oddiel"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2449
 msgid "Delete the partition"
 msgstr "Odstráni oddiel"
 
+# PŠ: TODO accelerator
 #: ../src/palimpsest/gdu-section-volumes.c:2458
 msgid "_Create Partition"
-msgstr "_Vytvoriť oddiel"
+msgstr "Vytvoriť oddiel"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2459
 msgid "Create a new partition"
@@ -5234,7 +5376,7 @@ msgstr "_Odomknúť zväzok"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2479
 msgid "Make encrypted data available"
-msgstr "Sprístupní zašifrovné údaje"
+msgstr "Sprístupní zašifrované údaje"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2488
 msgid "Forge_t Passphrase"
@@ -5246,7 +5388,7 @@ msgstr "Odstráni heslo zo zväzku kľúčov"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2500
 msgid "Change passphrase"
-msgstr "Zmeniť heslo"
+msgstr "Zmení heslo"
 
 #: ../src/palimpsest/gdu-section-volumes.c:2509
 msgid "_Create Logical Volume"
@@ -5347,7 +5489,7 @@ msgstr "Chyba pri pripájání k „%s“"
 
 #: ../src/palimpsest/gdu-shell.c:809
 msgid "translator-credits"
-msgstr "Peter Mraz <etkinator@gmail.com>, 2011"
+msgstr "Peter Mráz <etkinator@gmail.com>"
 
 #: ../src/palimpsest/gdu-shell.c:838
 msgid "_File"

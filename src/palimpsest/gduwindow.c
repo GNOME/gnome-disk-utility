@@ -786,14 +786,14 @@ init_css (GduWindow *window)
   GError *error;
   const gchar *css =
 "#devtab-grid-toolbar.toolbar {\n"
-"    border-width: 1;\n"
-"    border-radius: 3;\n"
+"    border-width: 1px;\n"
+"    border-radius: 3px;\n"
 "    border-style: solid;\n"
 "    background-color: @theme_base_color;\n"
 "}\n"
 "\n"
 ".gnome-disk-utility-grid {\n"
-"  border-radius: 3;\n"
+"  border-radius: 3px;\n"
 "}\n"
 "\n"
 ".gnome-disk-utility-grid:selected {\n"

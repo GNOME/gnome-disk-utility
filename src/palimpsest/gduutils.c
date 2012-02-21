@@ -310,11 +310,14 @@ gdu_options_update_check_option (GtkWidget       *options_entry,
                                  const gchar     *option,
                                  GtkWidget       *widget,
                                  GtkWidget       *check_button,
+                                 gboolean         negate,
                                  gboolean         add_to_front)
 {
   gboolean opts, ui;
   opts = !! has_option (options_entry, option, FALSE, NULL);
   ui = !! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
+  if (negate)
+    ui = !ui;
   if (opts != ui)
     {
       if (widget == check_button)

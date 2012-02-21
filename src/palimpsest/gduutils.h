@@ -47,6 +47,7 @@ void gdu_options_update_check_option (GtkWidget       *options_entry,
                                       const gchar     *option,
                                       GtkWidget       *widget,
                                       GtkWidget       *check_button,
+                                      gboolean         negate,
                                       gboolean         add_to_front);
 
 void gdu_options_update_entry_option (GtkWidget       *options_entry,

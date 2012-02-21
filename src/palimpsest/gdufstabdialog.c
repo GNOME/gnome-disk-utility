@@ -45,8 +45,7 @@ typedef struct
   GtkWidget *type_entry;
 
   GtkWidget *options_entry;
-  GtkWidget *noauto_checkbutton;
-  GtkWidget *nofail_checkbutton;
+  GtkWidget *neg_noauto_checkbutton;
   GtkWidget *auth_checkbutton;
   GtkWidget *show_checkbutton;
   GtkWidget *name_entry;
@@ -90,10 +89,9 @@ update (FstabDialogData *data,
   ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
-  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->noauto_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "nofail", widget, data->nofail_checkbutton, TRUE);
-  gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "x-gvfs-show", widget, data->show_checkbutton, FALSE);
+  gdu_options_update_check_option (data->options_entry, "noauto", widget, data->neg_noauto_checkbutton, TRUE, FALSE);
+  gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE, FALSE);
+  gdu_options_update_check_option (data->options_entry, "x-gvfs-show", widget, data->show_checkbutton, FALSE, FALSE);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-name=", widget, data->name_entry);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-icon=", widget, data->icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
@@ -398,8 +396,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.directory_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-directory-entry"));
   data.type_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-type-entry"));
   data.options_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-options-entry"));
-  data.noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-noauto-checkbutton"));
-  data.nofail_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-nofail-checkbutton"));
+  data.neg_noauto_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-neg-noauto-checkbutton"));
   data.auth_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-auth-checkbutton"));
   data.show_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-show-checkbutton"));
   data.name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-name-entry"));
@@ -438,7 +435,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
       opts = "nosuid,nodev,nofail,x-gvfs-show";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (drive != NULL && udisks_drive_get_removable (drive))
-        opts = "nosuid,nodev,noauto,x-gvfs-show";
+        opts = "nosuid,nodev,nofail,noauto,x-gvfs-show";
       freq = 0;
       passno = 0;
     }
@@ -483,9 +480,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.device_combobox,
                     "changed", G_CALLBACK (fstab_on_device_combobox_changed), &data);
-  g_signal_connect (data.noauto_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), &data);
-  g_signal_connect (data.nofail_checkbutton,
+  g_signal_connect (data.neg_noauto_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.auth_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);

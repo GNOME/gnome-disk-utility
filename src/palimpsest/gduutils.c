@@ -316,20 +316,21 @@ gdu_options_update_check_option (GtkWidget       *options_entry,
   gboolean opts, ui;
   opts = !! has_option (options_entry, option, FALSE, NULL);
   ui = !! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
-  if (negate)
-    ui = !ui;
-  if (opts != ui)
+  if ((!negate && (opts != ui)) || (negate && (opts == ui)))
     {
       if (widget == check_button)
         {
-          if (ui)
+          if ((!negate && ui) || (negate && !ui))
             add_option (options_entry, "", option, add_to_front);
           else
             remove_option (options_entry, option, FALSE);
         }
       else
         {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), opts);
+          if (negate)
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), !opts);
+          else
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), opts);
         }
     }
 }

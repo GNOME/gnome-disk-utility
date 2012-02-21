@@ -35,7 +35,7 @@
 typedef struct
 {
   GtkWidget *dialog;
-  GtkWidget *configure_checkbutton;
+  GtkWidget *reset_button;
   GtkWidget *grid;
 
   GtkWidget *infobar_hbox;
@@ -49,7 +49,6 @@ typedef struct
   GtkWidget *nofail_checkbutton;
   GtkWidget *auth_checkbutton;
   GtkWidget *show_checkbutton;
-  GtkWidget *hide_checkbutton;
   GtkWidget *name_entry;
   GtkWidget *icon_entry;
 
@@ -60,12 +59,10 @@ static void
 update (FstabDialogData *data,
         GtkWidget       *widget)
 {
-  gboolean ui_configured;
   gchar *ui_fsname;
   const gchar *ui_dir;
   const gchar *ui_type;
   const gchar *ui_opts;
-  gboolean configured;
   const gchar *fsname;
   const gchar *dir;
   const gchar *type;
@@ -74,7 +71,6 @@ update (FstabDialogData *data,
 
   if (data->orig_fstab_entry != NULL)
     {
-      configured = TRUE;
       g_variant_lookup (data->orig_fstab_entry, "fsname", "^&ay", &fsname);
       g_variant_lookup (data->orig_fstab_entry, "dir", "^&ay", &dir);
       g_variant_lookup (data->orig_fstab_entry, "type", "^&ay", &type);
@@ -82,14 +78,12 @@ update (FstabDialogData *data,
     }
   else
     {
-      configured = FALSE;
       fsname = "";
       dir = "";
       type = "";
       opts = "";
     }
 
-  ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->configure_checkbutton));
   ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->device_combobox));
   ui_dir = gtk_entry_get_text (GTK_ENTRY (data->directory_entry));
   ui_type = gtk_entry_get_text (GTK_ENTRY (data->type_entry));
@@ -100,40 +94,27 @@ update (FstabDialogData *data,
   gdu_options_update_check_option (data->options_entry, "nofail", widget, data->nofail_checkbutton, TRUE);
   gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE);
   gdu_options_update_check_option (data->options_entry, "x-gvfs-show", widget, data->show_checkbutton, FALSE);
-  gdu_options_update_check_option (data->options_entry, "x-gvfs-hide", widget, data->hide_checkbutton, FALSE);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-name=", widget, data->name_entry);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-icon=", widget, data->icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_apply = FALSE;
-  if (configured != ui_configured)
+  if (g_strcmp0 (ui_fsname, fsname) != 0 ||
+      g_strcmp0 (ui_dir, dir) != 0 ||
+      g_strcmp0 (ui_type, type) != 0 ||
+      g_strcmp0 (ui_opts, opts) != 0)
     {
       can_apply = TRUE;
     }
-  else if (ui_configured)
-    {
-      if (g_strcmp0 (ui_fsname, fsname) != 0 ||
-          g_strcmp0 (ui_dir, dir) != 0 ||
-          g_strcmp0 (ui_type, type) != 0 ||
-          g_strcmp0 (ui_opts, opts) != 0)
-        {
-          can_apply = TRUE;
-        }
-    }
 
   /* sanity-check and validate */
-  if (ui_configured)
+  if (strlen (ui_fsname) == 0 ||
+      strlen (ui_dir) == 0 ||
+      strlen (ui_type) == 0 ||
+      strlen (ui_opts) == 0)
     {
-      if (strlen (ui_fsname) == 0 ||
-          strlen (ui_dir) == 0 ||
-          strlen (ui_type) == 0 ||
-          strlen (ui_opts) == 0)
-        {
-          can_apply = FALSE;
-        }
+      can_apply = FALSE;
     }
-
-  gtk_widget_set_sensitive (data->grid, ui_configured);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
                                      GTK_RESPONSE_APPLY,
@@ -218,7 +199,7 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
     s = strrchr (fsname, '=');
   if (s == NULL)
     s = "/disk";
-  proposed_mount_point = g_strdup_printf ("/media/%s", s + 1);
+  proposed_mount_point = g_strdup_printf ("/mnt/%s", s + 1);
 
   gtk_entry_set_text (GTK_ENTRY (data->directory_entry), proposed_mount_point);
   g_free (proposed_mount_point);
@@ -410,7 +391,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   memset (&data, '\0', sizeof (FstabDialogData));
   data.dialog = dialog;
   data.infobar_hbox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-infobar-hbox"));
-  data.configure_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-configure-checkbutton"));
+  data.reset_button = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-button-reset"));
   data.grid = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-grid"));
   data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
   data.device_explanation_label = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-explanation-label"));
@@ -421,7 +402,6 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.nofail_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-nofail-checkbutton"));
   data.auth_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-auth-checkbutton"));
   data.show_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-show-checkbutton"));
-  data.hide_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-hide-checkbutton"));
   data.name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-name-entry"));
   data.icon_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-icon-entry"));
 
@@ -455,10 +435,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       fsname = NULL;
       dir = "";
       type = "auto";
-      opts = "nosuid,nodev,nofail";
+      opts = "nosuid,nodev,nofail,x-gvfs-show";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (drive != NULL && udisks_drive_get_removable (drive))
-        opts = "nosuid,nodev,noauto";
+        opts = "nosuid,nodev,noauto,x-gvfs-show";
       freq = 0;
       passno = 0;
     }
@@ -468,7 +448,6 @@ gdu_fstab_dialog_show (GduWindow    *window,
                                    drive,
                                    block,
                                    fsname);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data.configure_checkbutton), configured);
   gtk_entry_set_text (GTK_ENTRY (data.directory_entry), dir);
   gtk_entry_set_text (GTK_ENTRY (data.type_entry), type);
   gtk_entry_set_text (GTK_ENTRY (data.options_entry), opts);
@@ -487,11 +466,13 @@ gdu_fstab_dialog_show (GduWindow    *window,
 
   gtk_widget_show_all (dialog);
 
+  /* Show "Reset" button only if already configured */
+  if (!configured)
+    gtk_widget_hide (data.reset_button);
+
   update_device_explanation (&data);
   update (&data, NULL);
 
-  g_signal_connect (data.configure_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.device_combobox,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.directory_entry,
@@ -510,17 +491,32 @@ gdu_fstab_dialog_show (GduWindow    *window,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.show_checkbutton,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
-  g_signal_connect (data.hide_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.name_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.icon_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
-  if (response == GTK_RESPONSE_APPLY)
+  if (response == 1) /* application-defined for "fstab-button-reset" */
     {
-      gboolean ui_configured;
+      GError *error;
+
+      error = NULL;
+      if (!udisks_block_call_remove_configuration_item_sync (block,
+                                                             g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry),
+                                                             g_variant_new ("a{sv}", NULL), /* options */
+                                                             NULL, /* GCancellable */
+                                                             &error))
+        {
+          gdu_window_show_error (window,
+                                 _("Error removing old /etc/fstab entry"),
+                                 error);
+          g_error_free (error);
+          goto out;
+        }
+    }
+  else if (response == GTK_RESPONSE_APPLY)
+    {
       gchar *ui_fsname;
       const gchar *ui_dir;
       const gchar *ui_type;
@@ -528,10 +524,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       gint freq = 0;
       gint passno = 0;
       GError *error;
-      GVariant *old_item;
-      GVariant *new_item;
+      GVariant *old_item = NULL;
+      GVariant *new_item = NULL;
+      GVariantBuilder builder;
 
-      ui_configured = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data.configure_checkbutton));
       ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
       ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
       ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
@@ -544,45 +540,19 @@ gdu_fstab_dialog_show (GduWindow    *window,
 
       gtk_widget_hide (dialog);
 
-      old_item = NULL;
-      new_item = NULL;
+      if (data.orig_fstab_entry != NULL)
+        old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
 
-      if (configured)
-        {
-          old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
-        }
+      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+      g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
+      g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
+      g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
+      g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+      g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
+      g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
+      new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
 
-      if (ui_configured)
-        {
-          GVariantBuilder builder;
-          g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-          g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
-          g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
-          g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
-          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
-          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
-          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
-          new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
-        }
-
-      if (old_item != NULL && new_item == NULL)
-        {
-          error = NULL;
-          if (!udisks_block_call_remove_configuration_item_sync (block,
-                                                                 old_item,
-                                                                 g_variant_new ("a{sv}", NULL), /* options */
-                                                                 NULL, /* GCancellable */
-                                                                 &error))
-            {
-              gdu_window_show_error (window,
-                                     _("Error removing old /etc/fstab entry"),
-                                     error);
-              g_error_free (error);
-              g_free (ui_fsname);
-              goto out;
-            }
-        }
-      else if (old_item == NULL && new_item != NULL)
+      if (old_item == NULL && new_item != NULL)
         {
           error = NULL;
           if (!udisks_block_call_add_configuration_item_sync (block,

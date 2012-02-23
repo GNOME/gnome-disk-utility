@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disc-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-20 22:19+0000\n"
-"PO-Revision-Date: 2012-02-21 11:36+0200\n"
+"POT-Creation-Date: 2012-02-21 19:14+0000\n"
+"PO-Revision-Date: 2012-02-23 21:34+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -116,7 +116,7 @@ msgid "_Start Creating..."
 msgstr "_Започни стварање..."
 
 #: ../data/ui/create-disk-image-dialog.ui.h:3
-#: ../data/ui/edit-crypttab-dialog.ui.h:3
+#: ../data/ui/edit-crypttab-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:2
 msgid "_Name"
@@ -166,27 +166,16 @@ msgstr "Слободан простор који се долази после п
 msgid "<big>Contents</big>"
 msgstr "<big>Садржаји</big>"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:1
-msgid "Con_figure passphrase and options"
-msgstr "По_деси лозинку и опције"
+#: ../data/ui/edit-crypttab-dialog.ui.h:1 ../data/ui/edit-fstab-dialog.ui.h:22
+#| msgid "_Restore"
+msgid "Reset"
+msgstr "Поврати"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:2
-msgid "Checked if an entry in the /etc/crypttab file exists for the device"
-msgstr "Изабрано ако ставка у датотеци „/etc/crypttab“ постоји за уређај"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:4 ../data/ui/edit-fstab-dialog.ui.h:11
+#: ../data/ui/edit-crypttab-dialog.ui.h:3
 msgid "_Options"
 msgstr "_Опције"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:5
-msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
-"prefixed with <b>/dev/mapper/</b>"
-msgstr ""
-"Назив који ће бити коришћен за откључани уређај — уређај је подешен са <b>/"
-"dev/mapper/</b> испред назива"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:6
+#: ../data/ui/edit-crypttab-dialog.ui.h:4
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with /dev/mapper/"
@@ -194,20 +183,20 @@ msgstr ""
 "Назив који ће бити коришћен за откључани уређај — уређај је подешен са /dev/"
 "mapper/ испред назива"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:7
+#: ../data/ui/edit-crypttab-dialog.ui.h:5
 msgid "Options to use when unlocking the device"
 msgstr "Опције које се користе при откључавању уређаја"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:8
+#: ../data/ui/edit-crypttab-dialog.ui.h:6
 msgid "Passphrase File"
 msgstr "Датотека лозинке"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:9
+#: ../data/ui/edit-crypttab-dialog.ui.h:7
 #: ../data/ui/unlock-device-dialog.ui.h:3
 msgid "Sho_w passphrase"
 msgstr "_Прикажи лозинку"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:10
+#: ../data/ui/edit-crypttab-dialog.ui.h:8
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
@@ -215,34 +204,26 @@ msgstr ""
 "Лозинка уређаја или празна која ће бити затражена од корисника када подешава "
 "уређај"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:8
+#: ../data/ui/edit-crypttab-dialog.ui.h:9 ../data/ui/filesystem-create.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:2
 msgid "_Passphrase"
 msgstr "_Лозинка"
 
+#: ../data/ui/edit-crypttab-dialog.ui.h:10
+#| msgid "Don't unlock at startup"
+msgid "Unlock at startup"
+msgstr "Откључај при покретању"
+
+#: ../data/ui/edit-crypttab-dialog.ui.h:11
+#| msgid "If checked, the device will not be unlocked at startup [noauto]"
+msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgstr "Ако је изабрано, уређај ће бити откључан при покретању [!noauto]"
+
 #: ../data/ui/edit-crypttab-dialog.ui.h:12
-msgid "Don't unlock at startup"
-msgstr "Немој откључавати при покретању"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:13
-msgid "If checked, the device will not be unlocked at startup [noauto]"
-msgstr "Ако је изабрано, уређај неће бити откључан при покретању [noauto]"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:14
-#: ../data/ui/edit-fstab-dialog.ui.h:14
-msgid "Don't wait for device at startup"
-msgstr "Немој чекати на уређај при покретању"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:15
-#: ../data/ui/edit-fstab-dialog.ui.h:15
-msgid "If checked, the system won't wait for the device at startup [nofail]"
-msgstr "Ако је изабрано, систем неће чекати на уређај при покретању [nofail]"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:16
 msgid "Require additional authorization to unlock"
 msgstr "Захтевај додатно овлашћење за откључавање"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:17
+#: ../data/ui/edit-crypttab-dialog.ui.h:13
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
@@ -250,8 +231,8 @@ msgstr ""
 "Ако је изабрано, додатно овлашћење је потребно за откључавање уређаја [x-"
 "udisks-auth]"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:18
-#: ../data/ui/edit-fstab-dialog.ui.h:26
+#: ../data/ui/edit-crypttab-dialog.ui.h:14
+#: ../data/ui/edit-fstab-dialog.ui.h:20
 msgid "What's this?"
 msgstr "Шта је ово?"
 
@@ -262,7 +243,6 @@ msgid "<big>Edit Partition</big>"
 msgstr "<big>Измените партицију</big>"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:3
-#: ../data/ui/edit-fstab-dialog.ui.h:7
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:3
 #: ../data/ui/edit-partition-dialog.ui.h:3 ../data/ui/filesystem-create.ui.h:1
 msgid "_Type"
@@ -295,18 +275,10 @@ msgid "_Label"
 msgstr "_Натпис"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
-msgid "Con_figure mount point and options"
-msgstr "Подеси тачку _качења и опције"
+msgid "I_dentify As"
+msgstr "_Препознај као"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
-msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
-msgstr "Изабрано ако ставка у датотеци <b>/etc/crypttab</b> постоји за уређај"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:3
-msgid "_Device"
-msgstr "_Уређај"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:4
 msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
@@ -314,7 +286,7 @@ msgstr ""
 "<b>Датотека посебног уређаја</b> — користи симболичке везе у <b>/dev/disk</"
 "b> хијерархији да управља дометом ставке"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:5
+#: ../data/ui/edit-fstab-dialog.ui.h:3
 msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
@@ -322,47 +294,54 @@ msgstr ""
 "Датотека посебног уређаја — користи симболичке везе у „/dev/disk“ "
 "хијерархији да управља дометом ставке"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:6
-msgid "D_irectory"
-msgstr "Д_иректоријум"
+#: ../data/ui/edit-fstab-dialog.ui.h:4
+#| msgid "Mount options to use"
+msgid "Mount _Point"
+msgstr "Тачка _монтирања"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:8
+#: ../data/ui/edit-fstab-dialog.ui.h:5
+#| msgctxt "volume-grid"
+#| msgid "Filesystem"
+msgid "Filesystem _Type"
+msgstr "Систем да_тотека"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid "The directory to mount the device in"
 msgstr "Директоријум у коме ће бити прикачен уређај"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:9
+#: ../data/ui/edit-fstab-dialog.ui.h:7
 msgid "The filesystem type to use"
 msgstr "Систем датотека за коришћење"
 
+#: ../data/ui/edit-fstab-dialog.ui.h:8
+msgid "Display _Name"
+msgstr "Назив _приказа"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:9
+msgid ""
+"If set, the name to use for the device in the user interface [x-gvfs-name=]"
+msgstr ""
+"Ако је подешено, назив који ће бити коришћен за уређај у корисничком сучељу "
+"[x-gvfs-icon=]"
+
 #: ../data/ui/edit-fstab-dialog.ui.h:10
-msgid "Mount options to use"
-msgstr "Опције качења за коришћење"
+msgid "Icon Na_me"
+msgstr "Назив _иконице"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:11
+msgid ""
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
+msgstr ""
+"Ако је подешено, назив иконице који ће бити коришћен у уређају у корисничком "
+"сучељу [x-gvfs-icon=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
-msgid "Don't mount at startup"
-msgstr "Немој качити при покретању"
+#| msgid "Never show in user interface"
+msgid "Show in user interface"
+msgstr "Прикажи у корисничком сучељу"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:13
-msgid "If checked, the device will not be mounted at startup [noauto]"
-msgstr "Ако је изабрано, уређај неће бити прикачен при покретању [noauto]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:16
-msgid "Require additional authorization to mount"
-msgstr "Захтевај додатно овлашћење за качење"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:17
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
-msgstr ""
-"Ако је изабрано, додатно овлашћење је потребно за качење уређаја [x-udisks-"
-"auth]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:18
-msgid "Always show in user interface"
-msgstr "Увек прикажи у корисничком сучељу"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:19
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
@@ -370,40 +349,47 @@ msgstr ""
 "Ако је изабрано, уређај је увек приказан у корисничком сучељу без обзира "
 "који је његов директоријум [x-gvfs-show]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:20
-msgid "Never show in user interface"
-msgstr "Никада не приказуј у корисничком сучељу"
+#: ../data/ui/edit-fstab-dialog.ui.h:14
+msgid "Require additional authorization to mount"
+msgstr "Захтевај додатно овлашћење за качење"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:15
+msgid ""
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
+msgstr ""
+"Ако је изабрано, додатно овлашћење је потребно за качење уређаја [x-udisks-"
+"auth]"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:16
+#| msgid "Don't mount at startup"
+msgid "Mount at startup"
+msgstr "Прикачи при покретању"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:17
+#| msgid "If checked, the device will not be mounted at startup [noauto]"
+msgid "If checked, the device will be mounted at startup [!noauto]"
+msgstr "Ако је изабрано, уређај ће бити прикачен при покретању [!noauto]"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:18
+#| msgid "_Options"
+msgid "Mount _Options"
+msgstr "_Опције монтирања"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:19
+#| msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
+msgid "The mount options stored in the <b>/etc/fstab</b> file"
+msgstr "Опције монтирања сачуване у датотеци <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
-msgid ""
-"If checked, the device is never shown in the user interface no matter what "
-"its directory is [x-gvfs-hide]"
-msgstr ""
-"Ако је изабрано, уређај није никада приказан у корисничком сучељу без обзира "
-"који је његов директоријум [x-gvfs-hide]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:22
-msgid "Display _Name"
-msgstr "Назив _приказа"
+#| msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
+msgid "Click to create or update entry in the <b>/etc/fstab</b> file"
+msgstr "Кликните да направите или ажурирате унос у датотеци <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:23
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
-"Ако је подешено, назив који ће бити коришћен за уређај у корисничком сучељу "
-"[x-gvfs-icon=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:24
-msgid "Icon Na_me"
-msgstr "Назив _иконице"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:25
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr ""
-"Ако је подешено, назив иконице који ће бити коришћен у уређају у корисничком "
-"сучељу [x-gvfs-icon=]"
+#| msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
+msgid "Click to remove the entry from the <b>/etc/fstab</b> file"
+msgstr "Кликните да уклоните унос из датотеке <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
@@ -607,12 +593,14 @@ msgid "Change Passphrase..."
 msgstr "Измени лозинку..."
 
 #: ../data/ui/palimpsest.ui.h:19
-msgid "Edit fstab entry..."
-msgstr "Уреди унос фстаба..."
+#| msgid "More actions..."
+msgid "Edit Mount Options..."
+msgstr "Уреди опције монтирања..."
 
 #: ../data/ui/palimpsest.ui.h:20
-msgid "Edit crypttab entry..."
-msgstr "Уреди унос крипттаба..."
+#| msgid "Edit Partition Type..."
+msgid "Edit Crypt Options..."
+msgstr "Уреди опције шифровања..."
 
 #: ../data/ui/palimpsest.ui.h:21
 msgid "Attach Disk Image..."
@@ -1519,8 +1507,8 @@ msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
 msgstr ""
-"Отказивање је знак да ће се диск покварити за 24 сата <span size=\"small"
-"\">(Pre-Fail)</span>"
+"Отказивање је знак да ће се диск покварити за 24 сата <span size=\"small\">"
+"(Pre-Fail)</span>"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
@@ -1529,8 +1517,8 @@ msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
-"Отказивање је знак да је диск премашио свој намењени радни век <span "
-"size=\"small\">(Old-Age)</span>"
+"Отказивање је знак да је диск премашио свој намењени радни век <span size="
+"\"small\">(Old-Age)</span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
@@ -1706,7 +1694,7 @@ msgid "Error changing passphrase"
 msgstr "Грешка приликом измене лозинке"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:277
-#: ../src/palimpsest/gducrypttabdialog.c:414
+#: ../src/palimpsest/gducrypttabdialog.c:388
 msgid "Error retrieving configuration data"
 msgstr "Грешка приликом довлачења података подешавања"
 
@@ -1853,33 +1841,33 @@ msgstr ""
 msgid "This is the last primary partition that can be created."
 msgstr "Ово је последња примарна партиција коју можете да направите."
 
-#: ../src/palimpsest/gducrypttabdialog.c:123
-#: ../src/palimpsest/gducrypttabdialog.c:143
+#: ../src/palimpsest/gducrypttabdialog.c:120
+#: ../src/palimpsest/gducrypttabdialog.c:140
 msgid "Will be created"
 msgstr "Биће направљена"
 
-#: ../src/palimpsest/gducrypttabdialog.c:125
-#: ../src/palimpsest/gducrypttabdialog.c:150
+#: ../src/palimpsest/gducrypttabdialog.c:122
+#: ../src/palimpsest/gducrypttabdialog.c:147
 msgid "None"
 msgstr "Ништа"
 
-#: ../src/palimpsest/gducrypttabdialog.c:152
+#: ../src/palimpsest/gducrypttabdialog.c:149
 msgid "Will be deleted"
 msgstr "Биће обрисана"
 
-#: ../src/palimpsest/gducrypttabdialog.c:344
+#: ../src/palimpsest/gducrypttabdialog.c:253
 msgid "Error removing /etc/crypttab entry"
 msgstr "Грешка приликом уклањања „/etc/crypttab“ уноса"
 
-#: ../src/palimpsest/gducrypttabdialog.c:360
+#: ../src/palimpsest/gducrypttabdialog.c:334
 msgid "Error adding /etc/crypttab entry"
 msgstr "Грешка приликом додавања „/etc/crypttab“ уноса"
 
-#: ../src/palimpsest/gducrypttabdialog.c:377
+#: ../src/palimpsest/gducrypttabdialog.c:351
 msgid "Error updating /etc/crypttab entry"
 msgstr "Грешка приликом ажурирања „/etc/crypttab“ уноса"
 
-#: ../src/palimpsest/gducrypttabdialog.c:500
+#: ../src/palimpsest/gducrypttabdialog.c:473
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
@@ -1959,53 +1947,53 @@ msgstr "Грешка приликом форматирања диска"
 msgid "Are you sure you want to format the volume?"
 msgstr "Да ли сигурно желите да форматирате диск?"
 
-#: ../src/palimpsest/gdufstabdialog.c:173
+#: ../src/palimpsest/gdufstabdialog.c:152
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
 msgstr "Одговара партицији „%d“ уређаја са датим важним подацима производа"
 
-#: ../src/palimpsest/gdufstabdialog.c:176
+#: ../src/palimpsest/gdufstabdialog.c:155
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "Одговара читавом диску уређаја са датим важним подацима производа"
 
-#: ../src/palimpsest/gdufstabdialog.c:181
+#: ../src/palimpsest/gdufstabdialog.c:160
 #, c-format
 msgid ""
 "Matches partition %d of any device connected at the given port or address"
 msgstr ""
 "Одговара партицији „%d“ било ког уређаја повезаног на датом порту или адреси"
 
-#: ../src/palimpsest/gdufstabdialog.c:184
+#: ../src/palimpsest/gdufstabdialog.c:163
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
 "Одговара читавом диску било ког уређаја повезаног на датом порту или адреси"
 
-#: ../src/palimpsest/gdufstabdialog.c:188
+#: ../src/palimpsest/gdufstabdialog.c:167
 msgid "Matches any device with the given label"
 msgstr "Одговара било ком уређају са датим натписом"
 
-#: ../src/palimpsest/gdufstabdialog.c:192
+#: ../src/palimpsest/gdufstabdialog.c:171
 msgid "Matches the device with the given UUID"
 msgstr "Одговара уређају са датим УУИД-ом"
 
-#: ../src/palimpsest/gdufstabdialog.c:196
+#: ../src/palimpsest/gdufstabdialog.c:175
 msgid "Matches the given device"
 msgstr "Одговара датом уређају"
 
-#: ../src/palimpsest/gdufstabdialog.c:483
+#: ../src/palimpsest/gdufstabdialog.c:459
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr "Систем неће радити исправно ако је овај унос измењен или уклоњен."
 
-#: ../src/palimpsest/gdufstabdialog.c:578
+#: ../src/palimpsest/gdufstabdialog.c:507
 msgid "Error removing old /etc/fstab entry"
 msgstr "Грешка приликом уклањања старог „/etc/fstab“ уноса"
 
-#: ../src/palimpsest/gdufstabdialog.c:595
+#: ../src/palimpsest/gdufstabdialog.c:560
 msgid "Error adding new /etc/fstab entry"
 msgstr "Грешка приликом додавања новог „/etc/fstab“ уноса"
 
-#: ../src/palimpsest/gdufstabdialog.c:613
+#: ../src/palimpsest/gdufstabdialog.c:578
 msgid "Error updating /etc/fstab entry"
 msgstr "Грешка приликом ажурирања „/etc/fstab“ уноса"
 
@@ -2239,7 +2227,6 @@ msgstr "Јесте"
 #.
 #: ../src/palimpsest/gduwindow.c:2035
 #, c-format
-#| msgid "Unallocated Space"
 msgid "Unallocated Space (%s)"
 msgstr "Нераспоређен простор (%s)"
 
@@ -2249,12 +2236,10 @@ msgid "Unallocated Space"
 msgstr "Нераспоређен простор"
 
 #: ../src/palimpsest/gduwindow.c:2396
-#| msgid "Error creating filesystem"
 msgid "Error mounting filesystem"
 msgstr "Грешка прликом монтирања система датотека"
 
 #: ../src/palimpsest/gduwindow.c:2436
-#| msgid "Error creating filesystem"
 msgid "Error unmounting filesystem"
 msgstr "Грешка прликом демонтирања система датотека"
 
@@ -2267,7 +2252,6 @@ msgid "Are you sure you want to delete the partition?"
 msgstr "Да ли сигурно желите да обришете партицију?"
 
 #: ../src/palimpsest/gduwindow.c:2532
-#| msgid "A partition will be created"
 msgid "All data on the partition will be lost"
 msgstr "Сви подаци на партицији ће бити изгубљени"
 
@@ -2276,7 +2260,6 @@ msgid "_Delete"
 msgstr "_Обриши"
 
 #: ../src/palimpsest/gduwindow.c:2564
-#| msgid "Error ejecting medium"
 msgid "Error ejecting media"
 msgstr "Грешка приликом избацивања медијума"
 
@@ -2285,14 +2268,57 @@ msgid "Error locking encrypted device"
 msgstr "Грешка приликом закључавања шифрованог уређаја"
 
 #: ../src/palimpsest/gduwindow.c:2657
-#| msgid "Error starting RAID Array"
 msgid "Error starting swap"
 msgstr "Грешка приликом покретања разменске меморије"
 
 #: ../src/palimpsest/gduwindow.c:2694
-#| msgid "Error stopping RAID Array"
 msgid "Error stopping swap"
 msgstr "Грешка приликом заустављања разменске меморије"
+
+#~ msgid "Con_figure passphrase and options"
+#~ msgstr "По_деси лозинку и опције"
+
+#~ msgid "Checked if an entry in the /etc/crypttab file exists for the device"
+#~ msgstr "Изабрано ако ставка у датотеци „/etc/crypttab“ постоји за уређај"
+
+#~ msgid ""
+#~ "The name to use for the unlocked device - the device is set up as the "
+#~ "name prefixed with <b>/dev/mapper/</b>"
+#~ msgstr ""
+#~ "Назив који ће бити коришћен за откључани уређај — уређај је подешен са "
+#~ "<b>/dev/mapper/</b> испред назива"
+
+#~ msgid "Don't wait for device at startup"
+#~ msgstr "Немој чекати на уређај при покретању"
+
+#~ msgid "If checked, the system won't wait for the device at startup [nofail]"
+#~ msgstr ""
+#~ "Ако је изабрано, систем неће чекати на уређај при покретању [nofail]"
+
+#~ msgid "Con_figure mount point and options"
+#~ msgstr "Подеси тачку _качења и опције"
+
+#~ msgid "_Device"
+#~ msgstr "_Уређај"
+
+#~ msgid "D_irectory"
+#~ msgstr "Д_иректоријум"
+
+#~ msgid "Always show in user interface"
+#~ msgstr "Увек прикажи у корисничком сучељу"
+
+#~ msgid ""
+#~ "If checked, the device is never shown in the user interface no matter "
+#~ "what its directory is [x-gvfs-hide]"
+#~ msgstr ""
+#~ "Ако је изабрано, уређај није никада приказан у корисничком сучељу без "
+#~ "обзира који је његов директоријум [x-gvfs-hide]"
+
+#~ msgid "Edit fstab entry..."
+#~ msgstr "Уреди унос фстаба..."
+
+#~ msgid "Edit crypttab entry..."
+#~ msgstr "Уреди унос крипттаба..."
 
 #~ msgid "Disk Utility"
 #~ msgstr "Управник дискова"

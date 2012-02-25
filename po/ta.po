@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-22 07:30+0530\n"
+"POT-Creation-Date: 2012-02-23 05:55+0530\n"
 "PO-Revision-Date: 2012-02-22 20:59+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -19,19 +19,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\\n"
-"\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\\n\n"
 "\n"
 "\n"
 "X-Generator: Lokalize 1.1\n"
 
-#: ../data/palimpsest.desktop.in.h:1 ../src/palimpsest/gduwindow.c:863
+#: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:3
+#: ../src/palimpsest/gduwindow.c:888
 msgid "Disks"
 msgstr "வட்டுகள்"
 
 #: ../data/palimpsest.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "இயக்கிகள் மற்றும் ஊடகங்களை மேலாள"
+
+#: ../data/ui/about-dialog.ui.h:1
+msgid ""
+"Copyright © 2008-2012 Red Hat, Inc.\n"
+"Copyright © 2008-2012 David Zeuthen"
+msgstr ""
+
+#: ../data/ui/about-dialog.ui.h:4
+msgid "View, modify and configure disks and media"
+msgstr ""
+
+#: ../data/ui/about-dialog.ui.h:5
+msgid "translator-credits"
+msgstr "I. Felix <ifelix@redhat.com>, Dr. T. Vasudevan <agnihot3@gmail.com>"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 msgid "<big>Change Passphrase</big>"
@@ -98,7 +112,7 @@ msgid "Select a Folder"
 msgstr "அடைவை தேர்ந்தெடு"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:5
-#: ../data/ui/edit-crypttab-dialog.ui.h:14
+#: ../data/ui/edit-crypttab-dialog.ui.h:12
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 #: ../data/ui/filesystem-create.ui.h:11
 msgid "_Name"
@@ -141,79 +155,69 @@ msgid "The size of the partition to create, in megabytes"
 msgstr "உருவாக்க வேன்டிய பகிர்வின் அளவு, மெகாபைட்டுகளில்"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
-msgid "Checked if an entry in the /etc/crypttab file exists for the device"
-msgstr "சாதனத்துக்கு /etc/crypttab கோப்பில் உள்ளீடு உள்ளதா என சோதிக்கப்பட்டது."
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:2
-msgid "Con_figure passphrase and options"
-msgstr "_f கடவுச்சொல் மற்றும் தேர்வுகளை அமை"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:3
-msgid "Don't unlock at _startup"
-msgstr "_s துவக்கத்தில் பூட்டுதிறக்காதே"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:4
+#, fuzzy
 msgid ""
-"If checked, additional authorization (typically requiring the user to prove "
-"he is an administrator) is required to unlock the device [x-udisks-auth]"
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
 msgstr ""
 "குறியிட்டால் கூடுதல் உறுதிப்படுத்தல் (வழக்கமாக பயனர் தான் நிர்வாகி என நிரூபிக்க வேண்டும்) "
 "இருந்தால்தால் சாதனம் திறக்கப்படும். [x-udisks-auth]"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:5
-msgid "If checked, the device will not be unlocked at startup [noauto]"
+#: ../data/ui/edit-crypttab-dialog.ui.h:2
+#, fuzzy
+msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgstr "குறியிட்டால் சாதனம் துவக்கத்தின் போது பூட்டு திறக்கப்படாது. [noauto]"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:6
+#: ../data/ui/edit-crypttab-dialog.ui.h:3
 msgid "Options to use when unlocking the device"
 msgstr "சாதனத்தை திறக்கும் போது தேர்வுகள்"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:7
+#: ../data/ui/edit-crypttab-dialog.ui.h:4
 msgid "Passphrase File"
 msgstr "கடவுச்சொல் கோப்பு"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:8
+#: ../data/ui/edit-crypttab-dialog.ui.h:5
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr "சாதனத்தை அமைக்கும்போது பயனரிடம் கேட்க வேண்டிய சாதனத்தின் கடவுச்சொல் அல்லது காலி "
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:9
+#: ../data/ui/edit-crypttab-dialog.ui.h:6
 msgid "Require additional authorization to unlock"
 msgstr "பூட்டு திறக்க கூடுதல் அதிகாரம் தேவை."
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:10
+#: ../data/ui/edit-crypttab-dialog.ui.h:7 ../data/ui/edit-fstab-dialog.ui.h:16
+msgid "Reset"
+msgstr ""
+
+#: ../data/ui/edit-crypttab-dialog.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:2
 msgid "Sho_w passphrase"
 msgstr "_w கடவுச்சொல்லை காட்டு"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:11
+#: ../data/ui/edit-crypttab-dialog.ui.h:9
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with /dev/mapper/"
 msgstr ""
-"பூட்டு திறக்கப்பட்ட சாதனத்துக்கு பயன்படுத்த வேண்டிய பெயர். சாதனம் பெயரின் முன் "
-"/dev/mapper/ என்பதுடன் அமைக்கப்படும்."
+"பூட்டு திறக்கப்பட்ட சாதனத்துக்கு பயன்படுத்த வேண்டிய பெயர். சாதனம் பெயரின் முன் /dev/"
+"mapper/ என்பதுடன் அமைக்கப்படும்."
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:12
-msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
-"prefixed with <b>/dev/mapper/</b>"
-msgstr ""
-"பூட்டு திறக்கப்பட்ட சாதனத்துக்கு பயன்படுத்த வேண்டிய பெயர். சாதனம் பெயரின் முன் <b>"
-"/dev/mapper/</b> என்பதுடன் அமைக்கப்படும்."
+#: ../data/ui/edit-crypttab-dialog.ui.h:10
+#, fuzzy
+msgid "Unlock at startup"
+msgstr "_s துவக்கத்தில் பூட்டுதிறக்காதே"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:13
+#: ../data/ui/edit-crypttab-dialog.ui.h:11
 #: ../data/ui/edit-fstab-dialog.ui.h:23
 msgid "What's this?"
 msgstr "இது என்ன? "
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:15
-#: ../data/ui/edit-fstab-dialog.ui.h:25
+#: ../data/ui/edit-crypttab-dialog.ui.h:13
 msgid "_Options"
 msgstr "(_O) தேர்வுகள்"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:16
+#: ../data/ui/edit-crypttab-dialog.ui.h:14
 #: ../data/ui/filesystem-create.ui.h:12 ../data/ui/unlock-device-dialog.ui.h:3
 msgid "_Passphrase"
 msgstr "கடவுச்சொல் (_P):"
@@ -242,7 +246,6 @@ msgid "_Bootable"
 msgstr "துவக்கக்கூடிய (_B)"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:6
-#: ../data/ui/edit-fstab-dialog.ui.h:26
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:16
 #: ../data/ui/edit-partition-dialog.ui.h:3
 #: ../data/ui/filesystem-create.ui.h:13
@@ -258,114 +261,115 @@ msgid "_Label"
 msgstr "பெயர் (_L)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
-msgid "Always show in user interface"
-msgstr "எப்போதும் பயனர் இடைமுகத்தில் காட்டு"
+#, fuzzy
+msgid "Click to create or update entry in the <b>/etc/fstab</b> file"
+msgstr "சாதனத்துக்கு <b>/etc/fstab</b> கோப்பில் உள்ளீடு உள்ளதா என சோதிக்கபப்ட்டது."
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
-msgid "Checked if entry in the <b>/etc/fstab</b> file exists for the device"
+#, fuzzy
+msgid "Click to remove the entry from the <b>/etc/fstab</b> file"
 msgstr "சாதனத்துக்கு <b>/etc/fstab</b> கோப்பில் உள்ளீடு உள்ளதா என சோதிக்கபப்ட்டது."
 
 #: ../data/ui/edit-fstab-dialog.ui.h:3
-msgid "Con_figure mount point and options"
-msgstr "_f ஏற்றப்புள்ளிகளையும் தேர்வுகளையும் வடிவமைக்கவும்"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:4
-msgid "D_irectory"
-msgstr "_i அடைவு"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:5
-msgid "Defaults"
-msgstr "முன்னிருப்புகள்"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid "Display _Name"
 msgstr "காட்ட வேண்டிய பெயர் ( _N)"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:7
-msgid "Don't mount at startu_p"
-msgstr "_p துவக்கத்தில் ஏற்றாதீர்"
+#: ../data/ui/edit-fstab-dialog.ui.h:4
+#, fuzzy
+msgid "Filesystem _Type"
+msgstr "கோப்பு முறைமை"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:8
+#: ../data/ui/edit-fstab-dialog.ui.h:5
+msgid "I_dentify As"
+msgstr ""
+
+#: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid "Icon Na_me"
 msgstr "_m சின்னத்தின் பெயர்"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:9
+#: ../data/ui/edit-fstab-dialog.ui.h:7
+#, fuzzy
 msgid ""
-"If checked, additional authorization (typically requiring the user to prove "
-"he is an administrator) is required to mount the device [comment=udisks-auth]"
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
 msgstr ""
 "குறியிட்டால் கூடுதல் உறுதிப்படுத்தல் (வழக்கமாக பயனர் தான் நிர்வாகி என நிரூபிக்க வேண்டும்) "
-"இருந்தால்தால் சாதனம் ஏற்றப்படும். [comment=udisks-auth]"
+"இருந்தால்தால் சாதனம் திறக்கப்படும். [x-udisks-auth]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:10
-msgid ""
-"If checked, the default options will be used (rw, suid, dev, exec, auto, "
-"nouser, async) [defaults]"
-msgstr ""
-"குறியிட்டால் முன்னிருப்பு தேர்வுகள் பயனப்டுத்தப்படும். (rw, suid, dev, exec, auto, "
-"nouser, async) [defaults]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:11
+#: ../data/ui/edit-fstab-dialog.ui.h:8
+#, fuzzy
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
-"its directory is [comment=gvfs-show]"
+"its directory is [x-gvfs-show]"
 msgstr ""
 "குறியிட்டால் சாதனம் எப்போது பயனர் இடைமுகத்தில் காட்டப்படும். அதன் அடைவு எது என்பது ஒரு "
 "பொருட்டல்ல. [comment=gvfs-show]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:12
-msgid ""
-"If checked, the device is never shown in the user interface no matter what "
-"its directory is [comment=gvfs-hide]"
-msgstr ""
-"குறியிட்டால் சாதனம் எப்போது பயனர் இடைமுகத்தில் காட்டப்பட மாட்டாது. அதன் அடைவு எது என்பது ஒரு "
-"பொருட்டல்ல. [comment=gvfs-hide]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:13
-msgid "If checked, the device will not be mounted at startup [noauto]"
+#: ../data/ui/edit-fstab-dialog.ui.h:9
+#, fuzzy
+msgid "If checked, the device will be mounted at startup [!noauto]"
 msgstr "குறியிட்டால், சாதனம் துவக்கத்தில் ஏற்றப்படாது.  [noauto]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:14
+#: ../data/ui/edit-fstab-dialog.ui.h:10
+#, fuzzy
 msgid ""
-"If set, the name of the icon to use in the device in the user interface "
-"[comment=gvfs-icon=]"
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
 msgstr ""
-"அமைத்தால் பயனர் இடைமுகத்தில் சாதனத்துக்கு காட்ட வேண்டிய சின்னத்தின் பெயர். "
-"[comment=gvfs-icon=]"
+"அமைத்தால் பயனர் இடைமுகத்தில் சாதனத்துக்கு காட்ட வேண்டிய சின்னத்தின் பெயர். [comment=gvfs-"
+"icon=]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:15
+#: ../data/ui/edit-fstab-dialog.ui.h:11
+#, fuzzy
 msgid ""
-"If set, the name to use for the device in the user interface [comment=gvfs-"
-"name=]"
-msgstr "அமைத்தால் பயனர் இடைமுகத்தில் சாதனத்துக்கு காட்ட வேண்டிய பெயர். [comment=gvfs-name=]"
+"If set, the name to use for the device in the user interface [x-gvfs-name=]"
+msgstr ""
+"அமைத்தால் பயனர் இடைமுகத்தில் சாதனத்துக்கு காட்ட வேண்டிய பெயர். [comment=gvfs-name=]"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:16
-msgid "Mount options to use"
+#: ../data/ui/edit-fstab-dialog.ui.h:12
+#, fuzzy
+msgid "Mount _Options"
+msgstr "(_O) தேர்வுகள்"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:13
+#, fuzzy
+msgid "Mount _Point"
 msgstr "பயன்படுத்த ஏற்ற தேர்வுகள்"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:17
-msgid "Never show in user interface"
-msgstr "பயனர் இடைமுகத்தில் ஒருபோதும் காட்டாதே"
+#: ../data/ui/edit-fstab-dialog.ui.h:14
+#, fuzzy
+msgid "Mount at startup"
+msgstr "_p துவக்கத்தில் ஏற்றாதீர்"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:18
+#: ../data/ui/edit-fstab-dialog.ui.h:15
 msgid "Require additional authorization to mount"
 msgstr "ஏற்ற கூடுதல் அனுமதி தேவை"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:19
+#: ../data/ui/edit-fstab-dialog.ui.h:17
+#, fuzzy
+msgid "Show in user interface"
+msgstr "பயனர் இடைமுகத்தில் ஒருபோதும் காட்டாதே"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:18
 msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
-"அந்த  <b>special device file</b> - சிம்லிக்ங்குகளை <b>/dev/disk</b> அதிகார அடுக்கில் "
-"உள்ளீட்டின் பயனை கட்டுப்படுத்த பயன்படுத்துகிறது."
+"அந்த  <b>special device file</b> - சிம்லிக்ங்குகளை <b>/dev/disk</b> அதிகார "
+"அடுக்கில் உள்ளீட்டின் பயனை கட்டுப்படுத்த பயன்படுத்துகிறது."
 
-#: ../data/ui/edit-fstab-dialog.ui.h:20
+#: ../data/ui/edit-fstab-dialog.ui.h:19
 msgid "The directory to mount the device in"
 msgstr "சாதனத்தை ஏற்றவேண்டிய அடைவு"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:21
+#: ../data/ui/edit-fstab-dialog.ui.h:20
 msgid "The filesystem type to use"
 msgstr "பயன்படுத்த வேண்டிய கோப்பு அமைப்பு முறை"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:21
+#, fuzzy
+msgid "The mount options stored in the <b>/etc/fstab</b> file"
+msgstr "சாதனத்துக்கு <b>/etc/fstab</b> கோப்பில் உள்ளீடு உள்ளதா என சோதிக்கபப்ட்டது."
 
 #: ../data/ui/edit-fstab-dialog.ui.h:22
 msgid ""
@@ -374,10 +378,6 @@ msgid ""
 msgstr ""
 "அந்த  சிறப்பு சாதன கோப்பு - சிம்லிக்ங்குகளை /dev/disk அதிகார அடுக்கில் உள்ளீட்டின் பயனை "
 "கட்டுப்படுத்த பயன்படுத்துகிறது."
-
-#: ../data/ui/edit-fstab-dialog.ui.h:24
-msgid "_Device"
-msgstr "_D சாதனம்"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:3
 msgid "Do Not _Automount"
@@ -412,8 +412,8 @@ msgid ""
 "Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
 "i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
-"பாரம்பரிய பயாஸ் ஆல் துவக்கக்கூடிய. இது முதன்மை பூட் பதிவு <i>bootable</"
-"i> சின்னத்துக்கு சமமானது. இது சாதாரணமாக எம்பிஆர் அமைப்புகளில் ஜிபிடி பகிர்வுகளாள் மட்டும் "
+"பாரம்பரிய பயாஸ் ஆல் துவக்கக்கூடிய. இது முதன்மை பூட் பதிவு <i>bootable</i> "
+"சின்னத்துக்கு சமமானது. இது சாதாரணமாக எம்பிஆர் அமைப்புகளில் ஜிபிடி பகிர்வுகளாள் மட்டும் "
 "பயன்படுத்தப்படும்."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
@@ -426,8 +426,8 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
-"பகிர்வின் பெயர் (36 ஒருங்குறி உருக்கள் வரை). இது நீங்கள் <b>/dev/disk/by-partlabel</b> "
-"அடைவில் உள்ள ஒரு சிம்லிங்க் வழியாக ஒரு சாதனத்தை குறிப்பிட எண்ணினால் பயனாகும்."
+"பகிர்வின் பெயர் (36 ஒருங்குறி உருக்கள் வரை). இது நீங்கள் <b>/dev/disk/by-partlabel</"
+"b> அடைவில் உள்ள ஒரு சிம்லிங்க் வழியாக ஒரு சாதனத்தை குறிப்பிட எண்ணினால் பயனாகும்."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:11
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
@@ -439,8 +439,8 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
-"இயங்குதளம்/ ப்ளாட்பார்ம் செயலாக இந்த பகிர்வும் அதன் உள்ளடக்கங்களும் தேவை என குறிக்க பயனாகிறது."
-" உள்ளடக்கங்களை மேலெழுதவும் நீக்கவும் இயலாமல் இருப்பது அவசியம்."
+"இயங்குதளம்/ ப்ளாட்பார்ம் செயலாக இந்த பகிர்வும் அதன் உள்ளடக்கங்களும் தேவை என குறிக்க "
+"பயனாகிறது. உள்ளடக்கங்களை மேலெழுதவும் நீக்கவும் இயலாமல் இருப்பது அவசியம்."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:14
 msgid "_Read-Only"
@@ -463,14 +463,12 @@ msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
 msgstr ""
-"உருவாக்க வேன்டிய தனிப்பயன் கோப்பு அமைப்பு. எ-கா: <i>btrfs</i>, <i>xfs</i> அல்லது"
-"<i>swap</i>"
+"உருவாக்க வேன்டிய தனிப்பயன் கோப்பு அமைப்பு. எ-கா: <i>btrfs</i>, <i>xfs</i> "
+"அல்லது<i>swap</i>"
 
 #: ../data/ui/filesystem-create.ui.h:8
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
-"உருவாக்க வேன்டிய தனிப்பயன் கோப்பு அமைப்பு. எ-கா: btrfs, xfs அல்லது"
-"swap"
+msgstr "உருவாக்க வேன்டிய தனிப்பயன் கோப்பு அமைப்பு. எ-கா: btrfs, xfs அல்லதுswap"
 
 #: ../data/ui/filesystem-create.ui.h:9
 msgid ""
@@ -485,8 +483,8 @@ msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the <b>/dev/disk/by-label</b> directory"
 msgstr ""
-"கோப்பு முறைக்கு பயன்படுத்த வேண்டிய பெயர். இது நீங்கள் இந்த சாதனத்தை <b>/dev/disk/by-label </b>"
-" அடைவில் உள்ள சிம்லிங்கால் காட்ட நினைத்தால் பயனாகும்."
+"கோப்பு முறைக்கு பயன்படுத்த வேண்டிய பெயர். இது நீங்கள் இந்த சாதனத்தை <b>/dev/disk/by-"
+"label </b> அடைவில் உள்ள சிம்லிங்கால் காட்ட நினைத்தால் பயனாகும்."
 
 #: ../data/ui/format-disk-dialog.ui.h:1
 msgid "<big>Format Disk</big>"
@@ -562,20 +560,22 @@ msgid "Disk Size"
 msgstr "வட்டு அளவு"
 
 #: ../data/ui/palimpsest.ui.h:15
+#, fuzzy
+msgid "Edit Crypt Options..."
+msgstr "பகிர்வு வகையை திருத்துக..."
+
+#: ../data/ui/palimpsest.ui.h:16
 msgid "Edit Filesystem Label..."
 msgstr "கோப்பு முறைமை அடையாளத்தை திருத்துக..."
 
-#: ../data/ui/palimpsest.ui.h:16
-msgid "Edit Partition Type..."
-msgstr "பகிர்வு வகையை திருத்துக..."
-
 #: ../data/ui/palimpsest.ui.h:17
-msgid "Edit crypttab entry..."
-msgstr "க்ரிப்ட்டாப் உள்ளீட்டை திருத்துக..."
+#, fuzzy
+msgid "Edit Mount Options..."
+msgstr "மேலும் செயல்கள்..."
 
 #: ../data/ui/palimpsest.ui.h:18
-msgid "Edit fstab entry..."
-msgstr "எஃப் டாப் உள்ளீட்டை திருத்துக..."
+msgid "Edit Partition Type..."
+msgstr "பகிர்வு வகையை திருத்துக..."
 
 #: ../data/ui/palimpsest.ui.h:19
 msgid "Eject media"
@@ -942,7 +942,8 @@ msgid "High Fly Writes"
 msgstr "உயர பறக்க எழுதுகிறது"
 
 #: ../src/palimpsest/gduatasmartdialog.c:260
-msgid "Number of times a recording head is flying outside its normal operating range"
+msgid ""
+"Number of times a recording head is flying outside its normal operating range"
 msgstr "சாதாரண இயக்க வரம்பில் வெளியே ஒரு பதிவின் எண்ணிக்கை"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -1197,7 +1198,8 @@ msgstr ""
 "ஸ்டோரில் கடினமாக ஏற்றும் போது வட்டு நகர்தலுக்கு வாய்ப்புள்ளது, அது விழும் ஆபத்தில் உள்ளது"
 
 #: ../src/palimpsest/gduatasmartdialog.c:446
-msgid "Number of errors as a result of impact loads as detected by a shock sensor"
+msgid ""
+"Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "ஒரு ஷாக் கண்டறிதலால் ஒரு முடிவாக பல பிழைகளின் எண்ணிக்கை கொடுக்கிறது"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -1432,14 +1434,17 @@ msgstr "N/A"
 #.
 #: ../src/palimpsest/gduatasmartdialog.c:823
 msgid "Failure is a sign the disk will fail within 24 hours (Pre-Fail)"
-msgstr "தோல்வியுறுதல் என்பது 24 மணி நேரத்தில் வட்டு செயலிழக்கும் எனக் காட்டுகிறது (Pre-Fail)"
+msgstr ""
+"தோல்வியுறுதல் என்பது 24 மணி நேரத்தில் வட்டு செயலிழக்கும் எனக் காட்டுகிறது (Pre-Fail)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Old-Age)" in English
 #.
 #: ../src/palimpsest/gduatasmartdialog.c:830
-msgid "Failure is a sign the disk exceeded its intended design life period (Old-Age)"
-msgstr "தோல்வியுறுதல் என்பது வட்டின் திட்டமிட்ட வாழ்நாள் முடிந்தது எனக் காட்டுகிறது (Old-Age)"
+msgid ""
+"Failure is a sign the disk exceeded its intended design life period (Old-Age)"
+msgstr ""
+"தோல்வியுறுதல் என்பது வட்டின் திட்டமிட்ட வாழ்நாள் முடிந்தது எனக் காட்டுகிறது (Old-Age)"
 
 #. Translators: Used in the tooltip for a row in the attribute treeview - please keep
 #. * "(Online)" in English
@@ -1477,9 +1482,8 @@ msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
 msgstr ""
-"தோல்வியுறுதல் என்பது 24 மணி நேரத்தில் வட்டு செயலிழக்கும் எனக் காட்டுகிறது <span "
-"size=\"small\">"
-"(Pre-Fail)</span>"
+"தோல்வியுறுதல் என்பது 24 மணி நேரத்தில் வட்டு செயலிழக்கும் எனக் காட்டுகிறது <span size="
+"\"small\">(Pre-Fail)</span>"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
@@ -1488,8 +1492,8 @@ msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
-"தோல்வியுறுதல் என்பது வட்டின் திட்டமிட்ட வாழ்நாள் முடிந்தது எனக் காட்டுகிறது <span "
-"size=\"small\">(Old-Age)</span>"
+"தோல்வியுறுதல் என்பது வட்டின் திட்டமிட்ட வாழ்நாள் முடிந்தது எனக் காட்டுகிறது <span size="
+"\"small\">(Old-Age)</span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
@@ -1500,8 +1504,10 @@ msgstr "தரவு சேகரிக்கப்பட்ட ஒவ்வொ�
 #. Translators: Please keep "(Not Online)" in English
 #.
 #: ../src/palimpsest/gduatasmartdialog.c:929
-msgid "Only during off-line activities <span size=\"small\">(Not Online)</span>"
-msgstr "ஆஃப்-லைன் செயல்பாடுகளின் போது மட்டும் <span size=\"small\">(Not Online)</span>"
+msgid ""
+"Only during off-line activities <span size=\"small\">(Not Online)</span>"
+msgstr ""
+"ஆஃப்-லைன் செயல்பாடுகளின் போது மட்டும் <span size=\"small\">(Not Online)</span>"
 
 #: ../src/palimpsest/gduatasmartdialog.c:955
 msgctxt "smart-self-test-result"
@@ -1658,7 +1664,7 @@ msgid "Error changing passphrase"
 msgstr "கடவுச்சொல்லை மாற்றுவதில் பிழை"
 
 #: ../src/palimpsest/gduchangepassphrasedialog.c:277
-#: ../src/palimpsest/gducrypttabdialog.c:410
+#: ../src/palimpsest/gducrypttabdialog.c:388
 msgid "Error retrieving configuration data"
 msgstr "வடிவமைக்கும் தரவை மீட்கும் போது பிழை"
 
@@ -1715,8 +1721,10 @@ msgstr "\"%s\" என்ற கோப்பு ஏற்கெனெவே உ�
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:449
 #, c-format
-msgid "The file already exists in \"%s\".  Replacing it will overwrite its contents."
-msgstr "இந்த கோப்பு ஏற்கெனவே \"%s\" இல் உள்ளது. அதை மாற்றுவது அதன் உள்ளடக்கத்தை மேலெழுதும்."
+msgid ""
+"The file already exists in \"%s\".  Replacing it will overwrite its contents."
+msgstr ""
+"இந்த கோப்பு ஏற்கெனவே \"%s\" இல் உள்ளது. அதை மாற்றுவது அதன் உள்ளடக்கத்தை மேலெழுதும்."
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:453
 msgid "_Replace"
@@ -1794,46 +1802,47 @@ msgid "For logical partitions"
 msgstr "தருக்க பகிர்வுகளுக்காக"
 
 #: ../src/palimpsest/gducreatepartitiondialog.c:340
-msgid "Cannot create a new partition. There are already four primary partitions."
+msgid ""
+"Cannot create a new partition. There are already four primary partitions."
 msgstr "புதிய பகிர்வை உருவாக்க முடியாது. ஏற்கெனெவே நான்கு முதன்மை பகிர்வுகள் உள்ளன."
 
 #: ../src/palimpsest/gducreatepartitiondialog.c:344
 msgid "This is the last primary partition that can be created."
 msgstr "இதுவே உருவாக்கக்கூடிய கடைசி முதன்மை பகிர்வு"
 
-#: ../src/palimpsest/gducrypttabdialog.c:122
-#: ../src/palimpsest/gducrypttabdialog.c:142
+#: ../src/palimpsest/gducrypttabdialog.c:120
+#: ../src/palimpsest/gducrypttabdialog.c:140
 msgid "Will be created"
 msgstr "உருவாக்கப்படும்"
 
-#: ../src/palimpsest/gducrypttabdialog.c:124
-#: ../src/palimpsest/gducrypttabdialog.c:149
+#: ../src/palimpsest/gducrypttabdialog.c:122
+#: ../src/palimpsest/gducrypttabdialog.c:147
 msgid "None"
 msgstr "எதுவுமில்லை"
 
-#: ../src/palimpsest/gducrypttabdialog.c:151
+#: ../src/palimpsest/gducrypttabdialog.c:149
 msgid "Will be deleted"
 msgstr "நீக்கப்படும்."
 
-#: ../src/palimpsest/gducrypttabdialog.c:340
+#: ../src/palimpsest/gducrypttabdialog.c:253
 msgid "Error removing /etc/crypttab entry"
 msgstr "/etc/crypttab உள்ளீட்டை நீக்குவதில் பிழை"
 
-#: ../src/palimpsest/gducrypttabdialog.c:356
+#: ../src/palimpsest/gducrypttabdialog.c:334
 msgid "Error adding /etc/crypttab entry"
 msgstr "/etc/crypttab உள்ளீட்டில் சேர்ப்பதில் பிழை"
 
-#: ../src/palimpsest/gducrypttabdialog.c:373
+#: ../src/palimpsest/gducrypttabdialog.c:351
 msgid "Error updating /etc/crypttab entry"
 msgstr "/etc/crypttab உள்ளீட்டை மேம்படுத்துவதில் பிழை"
 
-#: ../src/palimpsest/gducrypttabdialog.c:495
+#: ../src/palimpsest/gducrypttabdialog.c:473
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
 msgstr ""
-"<i>/etc/crypttab</i> கோப்பால் குறிக்கப்படும் கடவுசொற்றொடர் மட்டுமே மாற்றப்படும். வட்டிலுள்ள "
-"கடவுச்சொற்றொடரை மாற்ற <i>Change Passphrase...</i> ஐ பயன்படுத்துக"
+"<i>/etc/crypttab</i> கோப்பால் குறிக்கப்படும் கடவுசொற்றொடர் மட்டுமே மாற்றப்படும். "
+"வட்டிலுள்ள கடவுச்சொற்றொடரை மாற்ற <i>Change Passphrase...</i> ஐ பயன்படுத்துக"
 
 #: ../src/palimpsest/gdudevicetreemodel.c:410
 msgid "Disk Drives"
@@ -1907,49 +1916,51 @@ msgstr "ஒழுங்கு செய்வதில் பிழை"
 msgid "Are you sure you want to format the volume?"
 msgstr "நீங்கள் இந்த தொகுதியை நிச்சயம் ஒழுங்கு செய்ய விரும்புகிறீர்களா?"
 
-#: ../src/palimpsest/gdufstabdialog.c:173
+#: ../src/palimpsest/gdufstabdialog.c:152
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
 msgstr "சாதனத்தின் பகிர்வு %d ஐ கொடுத்த முக்கிய பொருள் தரவுடன் ஒப்பிடுகிறது."
 
-#: ../src/palimpsest/gdufstabdialog.c:176
+#: ../src/palimpsest/gdufstabdialog.c:155
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "சாதனத்தின் வட்டு மொத்தத்தையும் கொடுத்த முக்கிய பொருள் தரவுடன் ஒப்பிடுகிறது."
 
-#: ../src/palimpsest/gdufstabdialog.c:181
+#: ../src/palimpsest/gdufstabdialog.c:160
 #, c-format
-msgid "Matches partition %d of any device connected at the given port or address"
+msgid ""
+"Matches partition %d of any device connected at the given port or address"
 msgstr "எந்த சாதனத்தின் பகிர்வு %d ஐயும் இணைத்த துறை அல்லது முகவரியுடன் ஒப்பிடுகிறது."
 
-#: ../src/palimpsest/gdufstabdialog.c:184
-msgid "Matches the whole disk of any device connected at the given port or address"
+#: ../src/palimpsest/gdufstabdialog.c:163
+msgid ""
+"Matches the whole disk of any device connected at the given port or address"
 msgstr "எந்த சாதனத்தின் மொத்த வட்டையும் இணைத்த துறை அல்லது முகவரியுடன் ஒப்பிடுகிறது."
 
-#: ../src/palimpsest/gdufstabdialog.c:188
+#: ../src/palimpsest/gdufstabdialog.c:167
 msgid "Matches any device with the given label"
 msgstr "அடையாளம் உள்ள எந்த சாதனத்தையும்  ஒப்பிடுகிறது."
 
-#: ../src/palimpsest/gdufstabdialog.c:192
+#: ../src/palimpsest/gdufstabdialog.c:171
 msgid "Matches the device with the given UUID"
 msgstr "கொடுத்த யூயூஐடி உடன் சாதனத்தை ஒப்பிடுகிறது"
 
-#: ../src/palimpsest/gdufstabdialog.c:196
+#: ../src/palimpsest/gdufstabdialog.c:175
 msgid "Matches the given device"
 msgstr "கொடுத்த சாதனத்துடன் ஒப்பிடுகிறது "
 
-#: ../src/palimpsest/gdufstabdialog.c:483
+#: ../src/palimpsest/gdufstabdialog.c:459
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr "இந்த உள்ளிடு மாற்றப்பட்டாலோ அல்லது நீக்கப்பட்டாலோ கணினி வேலை செய்யாமல் போகலாம்."
 
-#: ../src/palimpsest/gdufstabdialog.c:578
+#: ../src/palimpsest/gdufstabdialog.c:507
 msgid "Error removing old /etc/fstab entry"
 msgstr "பழைய /etc/fstab உள்ளீட்டை நீக்குவதில் பிழை"
 
-#: ../src/palimpsest/gdufstabdialog.c:595
+#: ../src/palimpsest/gdufstabdialog.c:560
 msgid "Error adding new /etc/fstab entry"
 msgstr "புதிய /etc/fstab உள்ளீட்டை சேர்ப்பதில் பிழை"
 
-#: ../src/palimpsest/gdufstabdialog.c:613
+#: ../src/palimpsest/gdufstabdialog.c:578
 msgid "Error updating /etc/fstab entry"
 msgstr "/etc/fstab உள்ளீட்டை மேம்படுத்துவதில் பிழை"
 
@@ -2112,24 +2123,24 @@ msgstr "இட மாற்று"
 msgid "Error deleting loop device"
 msgstr "லூப் சாதனத்தை நீக்கும் போது பிழை"
 
-#: ../src/palimpsest/gduwindow.c:602 ../src/palimpsest/gduwindow.c:676
+#: ../src/palimpsest/gduwindow.c:602 ../src/palimpsest/gduwindow.c:674
 msgid "Error attaching disk image"
 msgstr "வட்டு பிம்பத்தை இணைக்கும்போது பிழை"
 
-#: ../src/palimpsest/gduwindow.c:644
+#: ../src/palimpsest/gduwindow.c:642
 msgid "Select Disk Image to Attach"
 msgstr "இணைக்க ஒரு வட்டு பிம்பத்தை தேர்ந்தெடு"
 
-#: ../src/palimpsest/gduwindow.c:648
+#: ../src/palimpsest/gduwindow.c:646
 msgid "_Attach"
 msgstr "_A இணை"
 
 #. Add a RO check button that defaults to RO
-#: ../src/palimpsest/gduwindow.c:654
+#: ../src/palimpsest/gduwindow.c:652
 msgid "Set up _read-only loop device"
 msgstr "_r படிக்க மட்டும் லூப் சாதனம்"
 
-#: ../src/palimpsest/gduwindow.c:655
+#: ../src/palimpsest/gduwindow.c:653
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
@@ -2138,28 +2149,28 @@ msgstr ""
 "மாற்றப்படக்கூடாது என எண்னினால் மிகவும் உதவும்."
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/palimpsest/gduwindow.c:1484
+#: ../src/palimpsest/gduwindow.c:1515
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(படிக்கமட்டும்)</span>"
 
-#: ../src/palimpsest/gduwindow.c:1787
+#: ../src/palimpsest/gduwindow.c:1818
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "தெரியாதது"
 
-#: ../src/palimpsest/gduwindow.c:1814
+#: ../src/palimpsest/gduwindow.c:1845
 msgid "Extended Partition"
 msgstr "விரிவாக்கப்பட்ட பகிர்வு"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1855
+#: ../src/palimpsest/gduwindow.c:1886
 msgid "Filesystem Root"
 msgstr "கோப்பு அமைப்பு முறை ரூட்"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1863
+#: ../src/palimpsest/gduwindow.c:1894
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "ஆம், %s இல் ஏற்றி உள்ளது"
@@ -2167,69 +2178,125 @@ msgstr "ஆம், %s இல் ஏற்றி உள்ளது"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1869 ../src/palimpsest/gduwindow.c:1905
-#: ../src/palimpsest/gduwindow.c:1931
+#: ../src/palimpsest/gduwindow.c:1900 ../src/palimpsest/gduwindow.c:1936
+#: ../src/palimpsest/gduwindow.c:1962
 msgid "No"
 msgstr "இல்லை"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1899 ../src/palimpsest/gduwindow.c:1925
+#: ../src/palimpsest/gduwindow.c:1930 ../src/palimpsest/gduwindow.c:1956
 msgid "Yes"
 msgstr "ஆம்"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2004
+#: ../src/palimpsest/gduwindow.c:2035
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "ஒதுக்கப்படாத இடம் (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2009
+#: ../src/palimpsest/gduwindow.c:2040
 msgid "Unallocated Space"
 msgstr "ஒதுக்கப்படாத இடம்"
 
-#: ../src/palimpsest/gduwindow.c:2365
+#: ../src/palimpsest/gduwindow.c:2396
 msgid "Error mounting filesystem"
 msgstr "கோப்பு அமைப்பை ஏற்றுவதில் பிழை"
 
-#: ../src/palimpsest/gduwindow.c:2405
+#: ../src/palimpsest/gduwindow.c:2436
 msgid "Error unmounting filesystem"
 msgstr "கோப்பு அமைப்பை ஏற்றமிறக்குவதில் பிழை"
 
-#: ../src/palimpsest/gduwindow.c:2484
+#: ../src/palimpsest/gduwindow.c:2515
 msgid "Error deleting partition"
 msgstr "பகிர்வை அழிக்கும் போது பிழை"
 
-#: ../src/palimpsest/gduwindow.c:2500
+#: ../src/palimpsest/gduwindow.c:2531
 msgid "Are you sure you want to delete the partition?"
 msgstr "நீங்கள் இந்த பகிர்வை நிச்சயம் நீக்க விரும்புகிறீர்களா?"
 
-#: ../src/palimpsest/gduwindow.c:2501
+#: ../src/palimpsest/gduwindow.c:2532
 msgid "All data on the partition will be lost"
 msgstr "பகிர்வில் உள்ள தரவு அனைத்தும் இழக்கப் படும்"
 
-#: ../src/palimpsest/gduwindow.c:2502
+#: ../src/palimpsest/gduwindow.c:2533
 msgid "_Delete"
 msgstr "(_D) அழி"
 
-#: ../src/palimpsest/gduwindow.c:2533
+#: ../src/palimpsest/gduwindow.c:2564
 msgid "Error ejecting media"
 msgstr "ஊடகத்தை வெளியேற்றுவதில் பிழை"
 
-#: ../src/palimpsest/gduwindow.c:2585
+#: ../src/palimpsest/gduwindow.c:2616
 msgid "Error locking encrypted device"
 msgstr "மறைகுறியாக்கம் செய்த சாதனத்தை பூட்டும்போது பிழை"
 
-#: ../src/palimpsest/gduwindow.c:2626
+#: ../src/palimpsest/gduwindow.c:2657
 msgid "Error starting swap"
 msgstr "இட மாற்றை துவக்குவதில்  பிழை "
 
-#: ../src/palimpsest/gduwindow.c:2663
+#: ../src/palimpsest/gduwindow.c:2694
 msgid "Error stopping swap"
 msgstr "இட மாற்றை நிறுத்துவதில்  பிழை "
+
+#~ msgid "Checked if an entry in the /etc/crypttab file exists for the device"
+#~ msgstr "சாதனத்துக்கு /etc/crypttab கோப்பில் உள்ளீடு உள்ளதா என சோதிக்கப்பட்டது."
+
+#~ msgid "Con_figure passphrase and options"
+#~ msgstr "_f கடவுச்சொல் மற்றும் தேர்வுகளை அமை"
+
+#~ msgid ""
+#~ "The name to use for the unlocked device - the device is set up as the "
+#~ "name prefixed with <b>/dev/mapper/</b>"
+#~ msgstr ""
+#~ "பூட்டு திறக்கப்பட்ட சாதனத்துக்கு பயன்படுத்த வேண்டிய பெயர். சாதனம் பெயரின் முன் <b>/dev/"
+#~ "mapper/</b> என்பதுடன் அமைக்கப்படும்."
+
+#~ msgid "Always show in user interface"
+#~ msgstr "எப்போதும் பயனர் இடைமுகத்தில் காட்டு"
+
+#~ msgid "Con_figure mount point and options"
+#~ msgstr "_f ஏற்றப்புள்ளிகளையும் தேர்வுகளையும் வடிவமைக்கவும்"
+
+#~ msgid "D_irectory"
+#~ msgstr "_i அடைவு"
+
+#~ msgid "Defaults"
+#~ msgstr "முன்னிருப்புகள்"
+
+#~ msgid ""
+#~ "If checked, additional authorization (typically requiring the user to "
+#~ "prove he is an administrator) is required to mount the device "
+#~ "[comment=udisks-auth]"
+#~ msgstr ""
+#~ "குறியிட்டால் கூடுதல் உறுதிப்படுத்தல் (வழக்கமாக பயனர் தான் நிர்வாகி என நிரூபிக்க "
+#~ "வேண்டும்) இருந்தால்தால் சாதனம் ஏற்றப்படும். [comment=udisks-auth]"
+
+#~ msgid ""
+#~ "If checked, the default options will be used (rw, suid, dev, exec, auto, "
+#~ "nouser, async) [defaults]"
+#~ msgstr ""
+#~ "குறியிட்டால் முன்னிருப்பு தேர்வுகள் பயனப்டுத்தப்படும். (rw, suid, dev, exec, auto, "
+#~ "nouser, async) [defaults]"
+
+#~ msgid ""
+#~ "If checked, the device is never shown in the user interface no matter "
+#~ "what its directory is [comment=gvfs-hide]"
+#~ msgstr ""
+#~ "குறியிட்டால் சாதனம் எப்போது பயனர் இடைமுகத்தில் காட்டப்பட மாட்டாது. அதன் அடைவு எது "
+#~ "என்பது ஒரு பொருட்டல்ல. [comment=gvfs-hide]"
+
+#~ msgid "_Device"
+#~ msgstr "_D சாதனம்"
+
+#~ msgid "Edit crypttab entry..."
+#~ msgstr "க்ரிப்ட்டாப் உள்ளீட்டை திருத்துக..."
+
+#~ msgid "Edit fstab entry..."
+#~ msgstr "எஃப் டாப் உள்ளீட்டை திருத்துக..."
 
 #~ msgid "Disk Utility"
 #~ msgstr "வட்டு பயன்பாடு"
@@ -4901,9 +4968,6 @@ msgstr "இட மாற்றை நிறுத்துவதில்  ப�
 
 #~ msgid "Error connecting to “%s”"
 #~ msgstr " “%s” க்கு இணைக்கும் போது பிழை"
-
-#~ msgid "translator-credits"
-#~ msgstr "I. Felix <ifelix@redhat.com>, Dr. T. Vasudevan <agnihot3@gmail.com>"
 
 #~ msgid "_File"
 #~ msgstr "கோப்பு (_F)"

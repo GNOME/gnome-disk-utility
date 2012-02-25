@@ -1613,6 +1613,10 @@ update_device_page_for_drive (GduWindow      *window,
               "devtab-serial-number-label",
               "devtab-serial-number-value-label",
               udisks_drive_get_serial (drive), SET_MARKUP_FLAGS_NONE);
+  set_markup (window,
+              "devtab-wwn-label",
+              "devtab-wwn-value-label",
+              udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
 
   if (ata != NULL && !udisks_drive_get_media_removable (drive))
     {

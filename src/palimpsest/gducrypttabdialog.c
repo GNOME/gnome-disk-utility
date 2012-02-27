@@ -89,7 +89,7 @@ update (CrypttabDialogData *data,
   const gchar *passphrase_path;
   const gchar *passphrase_contents;
   const gchar *options;
-  gboolean can_apply;
+  gboolean can_ok;
   gchar *s;
 
   if (data->orig_crypttab_entry != NULL)
@@ -157,16 +157,16 @@ update (CrypttabDialogData *data,
   gdu_options_update_check_option (data->options_entry, "x-udisks-auth", widget, data->auth_checkbutton, FALSE, FALSE);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
-  can_apply = FALSE;
+  can_ok = FALSE;
   if (g_strcmp0 (ui_name, name) != 0 ||
       g_strcmp0 (ui_options, options) != 0 ||
       g_strcmp0 (ui_passphrase_contents, passphrase_contents) != 0)
     {
-      can_apply = TRUE;
+      can_ok = TRUE;
     }
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
-                                     GTK_RESPONSE_APPLY,
-                                     can_apply);
+                                     GTK_RESPONSE_OK,
+                                     can_ok);
 }
 
 static void
@@ -256,7 +256,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
           goto out;
         }
     }
-  else if (response == GTK_RESPONSE_APPLY)
+  else if (response == GTK_RESPONSE_OK)
     {
       const gchar *ui_name;
       const gchar *ui_options;

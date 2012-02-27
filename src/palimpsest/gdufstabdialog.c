@@ -66,7 +66,7 @@ update (FstabDialogData *data,
   const gchar *dir;
   const gchar *type;
   const gchar *opts;
-  gboolean can_apply;
+  gboolean can_ok;
 
   if (data->orig_fstab_entry != NULL)
     {
@@ -96,13 +96,13 @@ update (FstabDialogData *data,
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-icon=", widget, data->icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
-  can_apply = FALSE;
+  can_ok = FALSE;
   if (g_strcmp0 (ui_fsname, fsname) != 0 ||
       g_strcmp0 (ui_dir, dir) != 0 ||
       g_strcmp0 (ui_type, type) != 0 ||
       g_strcmp0 (ui_opts, opts) != 0)
     {
-      can_apply = TRUE;
+      can_ok = TRUE;
     }
 
   /* sanity-check and validate */
@@ -111,12 +111,12 @@ update (FstabDialogData *data,
       strlen (ui_type) == 0 ||
       strlen (ui_opts) == 0)
     {
-      can_apply = FALSE;
+      can_ok = FALSE;
     }
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
-                                     GTK_RESPONSE_APPLY,
-                                     can_apply);
+                                     GTK_RESPONSE_OK,
+                                     can_ok);
 
   g_free (ui_fsname);
 }
@@ -510,7 +510,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
           goto out;
         }
     }
-  else if (response == GTK_RESPONSE_APPLY)
+  else if (response == GTK_RESPONSE_OK)
     {
       gchar *ui_fsname;
       const gchar *ui_dir;

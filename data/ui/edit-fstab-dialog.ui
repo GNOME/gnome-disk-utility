@@ -405,12 +405,13 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="fstab-button-apply">
-                <property name="label">gtk-apply</property>
+              <object class="GtkButton" id="fstab-button-ok">
+                <property name="label">gtk-ok</property>
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="can_default">True</property>
                 <property name="tooltip_markup" translatable="yes">Click to create or update entry in the &lt;b&gt;/etc/fstab&lt;/b&gt; file</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
@@ -450,7 +451,7 @@
     </child>
     <action-widgets>
       <action-widget response="-6">fstab-button-cancel</action-widget>
-      <action-widget response="-10">fstab-button-apply</action-widget>
+      <action-widget response="-5">fstab-button-ok</action-widget>
       <action-widget response="1">fstab-button-reset</action-widget>
     </action-widgets>
   </object>

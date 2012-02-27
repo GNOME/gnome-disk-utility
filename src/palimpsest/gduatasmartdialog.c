@@ -241,7 +241,8 @@ static const SmartDetails smart_details[] = {
    * or the next string for a longer explanation.
    */
   N_("Soft read error rate"),
-  N_("Frequency of 'program' errors while reading from the disk")
+
+  N_("Frequency of errors while reading from the disk")
 },
 {
   "reported-uncorrect",

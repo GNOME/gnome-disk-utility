@@ -702,35 +702,42 @@ static gchar *
 format_duration_msec (guint64 msec)
 {
   gchar *ret;
+  gdouble val;
   if (msec > 1000 * 60 * 60 * 24 * 365.25)
     {
+      val = msec / 1000.0 / 60.0 / 60.0 / 24.0 / 365.25;
       /* Translators: Used for a time-based unit that exceed one year */
-      ret = g_strdup_printf (_("%.1f years"), msec / 1000.0 / 60.0 / 60.0 / 24.0 / 365.25);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f year", "%.1f years", val), val);
     }
   else if (msec > 1000 * 60 * 60 * 24)
     {
+      val = msec / 1000.0 / 60.0 / 60.0 / 24.0;
       /* Translators: Used for a time-based unit that exceed one day but not one year */
-      ret = g_strdup_printf (_("%.1f days"), msec / 1000.0 / 60.0 / 60.0 / 24.0);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f day", "%.1f days", val), val);
     }
   else if (msec > 1000 * 60 * 60)
     {
+      val = msec / 1000.0 / 60.0 / 60.0;
       /* Translators: Used for a time-based unit that exceed one hour but not one day */
-      ret = g_strdup_printf (_("%.1f hours"), msec / 1000.0 / 60.0 / 60.0);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f hour", "%.1f hours", val), val);
     }
   else if (msec > 1000 * 60)
     {
+      val = msec / 1000.0 / 60.0;
       /* Translators: Used for a time-based unit that exceed one minute but not one hour */
-      ret = g_strdup_printf (_("%.1f minutes"), msec / 1000.0 / 60.0);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f minute", "%.1f minutes", val), val);
     }
   else if (msec > 1000)
     {
+      val = msec / 1000.0;
       /* Translators: Used for a time-based unit that exceed one second but not one minute */
-      ret = g_strdup_printf (_("%.1f seconds"), msec / 1000.0);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f second", "%.1f seconds", val), val);
     }
   else
     {
+      val = msec;
       /* Translators: Used for a time-based unit that is counted in milliseconds and doesn't exceed one second */
-      ret = g_strdup_printf (_("%d msec"), (gint) msec);
+      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f msec", "%.1f msecs", val), val);
     }
   return ret;
 }
@@ -952,31 +959,57 @@ calculate_self_test (UDisksDriveAta *ata,
 
   s = udisks_drive_ata_get_smart_selftest_status (ata);
   if (g_strcmp0 (s, "success") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test completed successfully"));
+    {
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test completed successfully"));
+    }
   else if (g_strcmp0 (s, "aborted") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test was aborted"));
+    {
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test was aborted"));
+    }
   else if (g_strcmp0 (s, "interrupted") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test was interrupted"));
+    {
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test was interrupted"));
+    }
   else if (g_strcmp0 (s, "fatal") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test did not complete"));
+    {
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test did not complete"));
+    }
   else if (g_strcmp0 (s, "error_unknown") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test failed"));
+    {
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test failed"));
+    }
   else if (g_strcmp0 (s, "error_electrical") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (electrical)"));
+    {
+      /* Translators: shown when the last self-test failed and the problem is with the electrical subsystem */
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (electrical)"));
+    }
   else if (g_strcmp0 (s, "error_servo") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (servo)"));
+    {
+      /* Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism */
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (servo)"));
+    }
   else if (g_strcmp0 (s, "error_read") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (read)"));
+    {
+      /* Translators: shown when the last self-test failed and the problem is with the reading subsystem - */
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (read)"));
+    }
   else if (g_strcmp0 (s, "error_handling") == 0)
-    ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (handling)"));
+    {
+      /* Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk) */
+      ret = g_strdup (C_("smart-self-test-result", "Last self-test failed (handling)"));
+    }
   else if (g_strcmp0 (s, "inprogress") == 0)
     {
+      /* Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining. */
       ret = g_strdup_printf (C_("smart-self-test-result", "Self-test in progress — %d%% remaining"),
                              udisks_drive_ata_get_smart_selftest_percent_remaining (ata));
       selftest_running = TRUE;
     }
   else
-    ret = g_strdup_printf (C_("smart-self-test-result", "Unknown (%s)"), s);
+    {
+      /* Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code. */
+      ret = g_strdup_printf (C_("smart-self-test-result", "Unknown (%s)"), s);
+    }
 
   if (out_selftest_running)
     *out_selftest_running = selftest_running;

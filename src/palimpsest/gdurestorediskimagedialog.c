@@ -173,7 +173,7 @@ restore_disk_image_update (RestoreDiskImageData *data)
                 {
                   s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
                                                           data->block_size - size, FALSE, FALSE);
-                  restore_warning = g_strdup_printf (_("The selected image is %s bytes smaller than the device"), s);
+                  restore_warning = g_strdup_printf (_("The selected image is %s smaller than the device"), s);
                   g_free (s);
                 }
               can_proceed = TRUE;
@@ -182,7 +182,7 @@ restore_disk_image_update (RestoreDiskImageData *data)
             {
               s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
                                                       size - data->block_size, FALSE, FALSE);
-              restore_error = g_strdup_printf (_("The selected image is %s bytes bigger than the device"), s);
+              restore_error = g_strdup_printf (_("The selected image is %s bigger than the device"), s);
               g_free (s);
             }
           else

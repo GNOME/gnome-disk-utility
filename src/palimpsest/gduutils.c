@@ -101,10 +101,10 @@ gdu_utils_duration_to_string (guint    duration_sec,
     {
       if (include_second_precision)
         {
-          s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                          N_("%d second"),
-                                          N_("%d seconds"),
-                                          duration_sec),
+          s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                            "%d second",
+                                            "%d seconds",
+                                            duration_sec),
                                duration_sec);
         }
       else
@@ -114,18 +114,18 @@ gdu_utils_duration_to_string (guint    duration_sec,
     }
   else if (duration_sec < 3600)
     {
-      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                      N_("%d minute"),
-                                      N_("%d minutes"),
-                                      duration_sec / 60),
+      s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                        "%d minute",
+                                        "%d minutes",
+                                        duration_sec / 60),
                            duration_sec / 60);
     }
   else
     {
-      s = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                      N_("%d hour"),
-                                      N_("%d hours"),
-                                      duration_sec / 3600),
+      s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                        "%d hour",
+                                        "%d hours",
+                                        duration_sec / 3600),
                            duration_sec / 3600);
     }
   return s;

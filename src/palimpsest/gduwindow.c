@@ -112,6 +112,7 @@ struct _GduWindow
   GtkWidget *iscsitab_table;
   GtkWidget *iscsitab_toolbar;
   GtkWidget *iscsitab_connections_treeview;
+  GtkWidget *iscsitab_connection_switch;
 
   GtkWidget *generic_drive_menu;
   GtkWidget *generic_drive_menu_item_view_smart;
@@ -171,7 +172,8 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, iscsitab_scrolledwindow), "iscsitab-scrolledwindow"},
   {G_STRUCT_OFFSET (GduWindow, iscsitab_table), "iscsitab-table"},
   {G_STRUCT_OFFSET (GduWindow, iscsitab_toolbar), "iscsitab-toolbar"},
-  {G_STRUCT_OFFSET (GduWindow, iscsitab_connections_treeview), "iscsi-connections-treeview"},
+  {G_STRUCT_OFFSET (GduWindow, iscsitab_connections_treeview), "iscsitab-connections-treeview"},
+  {G_STRUCT_OFFSET (GduWindow, iscsitab_connection_switch), "iscsitab-connection-switch"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
@@ -253,6 +255,10 @@ static void on_volume_grid_changed (GduVolumeGrid  *grid,
 
 static void on_iscsi_connections_tree_selection_changed (GtkTreeSelection *tree_selection,
                                                          gpointer          user_data);
+
+static void iscsi_target_connection_switch_on_notify_active (GObject     *object,
+                                                             GParamSpec  *pspec,
+                                                             gpointer     user_data);
 
 static void on_devtab_action_generic_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
@@ -2401,12 +2407,16 @@ init_iscsi_target_page (GduWindow   *window)
   gtk_tree_view_column_set_attributes (column, renderer,
                                        "markup", GDU_ISCSI_PATH_MODEL_COLUMN_STATUS, NULL);
 
+  g_signal_connect (window->iscsitab_connection_switch,
+                    "notify::active",
+                    G_CALLBACK (iscsi_target_connection_switch_on_notify_active),
+                    window);
+
   g_once_init_leave (&init_val, 1);
  out:
   ;
 }
 
-#if 0
 static gboolean
 iscsi_target_has_active_connections (UDisksiSCSITarget *target)
 {
@@ -2418,11 +2428,12 @@ iscsi_target_has_active_connections (UDisksiSCSITarget *target)
   portals_and_interfaces = udisks_iscsi_target_get_connections (target);
   g_variant_iter_init (&portal_iter, portals_and_interfaces);
   while (g_variant_iter_next (&portal_iter,
-                              "(^&siis&sa{sv})",
+                              "(&siisa{ss}&sa{sv})",
                               NULL,   /* &portal_adress */
                               NULL,   /* &port */
                               NULL,   /* &tpgt */
                               NULL,   /* iface_name */
+                              NULL,   /* configuration */
                               &state,
                               NULL))  /* expansion */
     {
@@ -2435,7 +2446,6 @@ iscsi_target_has_active_connections (UDisksiSCSITarget *target)
  out:
   return ret;
 }
-#endif
 
 static void
 update_iscsi_connection_details (GduWindow *window)
@@ -2515,27 +2525,19 @@ out:
 static void
 update_iscsi_target_page (GduWindow *window)
 {
-  GList *children;
-  GList *l;
   UDisksiSCSITarget *target;
   UDisksObject *source_object = NULL;
   UDisksiSCSISource *source = NULL;
   gchar *discovery = NULL;
-
-  /* first hide everything */
-  children = gtk_container_get_children (GTK_CONTAINER (window->iscsitab_table));
-  for (l = children; l != NULL; l = l->next)
-    {
-      GtkWidget *child = GTK_WIDGET (l->data);
-      gtk_widget_hide (child);
-    }
-  g_list_free (children);
 
   target = udisks_object_peek_iscsi_target (window->current_object);
   set_markup (window,
               "iscsitab-name-label",
               "iscsitab-name-value-label",
               udisks_iscsi_target_get_name (target), SET_MARKUP_FLAGS_NONE);
+
+  gtk_switch_set_active (GTK_SWITCH (window->iscsitab_connection_switch),
+                         iscsi_target_has_active_connections (target));
 
   /* TODO: also show Alias for the target */
 
@@ -2687,6 +2689,58 @@ teardown_iscsi_target_page (GduWindow *window)
 
   tree_view = GTK_TREE_VIEW (window->iscsitab_connections_treeview);
   gtk_tree_view_set_model (tree_view, NULL);
+}
+
+static void
+iscsi_target_connection_switch_on_notify_active (GObject     *object,
+                                                 GParamSpec  *pspec,
+                                                 gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gboolean active;
+  gboolean has_connections;
+  UDisksiSCSITarget *target;
+
+  target = udisks_object_peek_iscsi_target (window->current_object);
+  if (target == NULL)
+    {
+      g_warning ("Expected selected object to be an iSCSI target");
+      goto out;
+    }
+
+  active = !! gtk_switch_get_active (GTK_SWITCH (window->iscsitab_connection_switch));
+  has_connections = !! iscsi_target_has_active_connections (target);
+  if (active != has_connections)
+    {
+      if (!has_connections)
+        {
+          udisks_iscsi_target_call_login (target,
+                                          "", /* portal_address */
+                                          0,  /* portal_port */
+                                          -1, /* tpgt */
+                                          "", /* interface_name */
+                                          g_variant_new ("a{sv}", NULL), /* options */
+                                          NULL,  /* GCancellable* */
+                                          (GAsyncReadyCallback) iscsi_target_login_cb,
+                                          g_object_ref (window));
+        }
+      else
+        {
+          udisks_iscsi_target_call_logout (target,
+                                           "", /* portal_address */
+                                           0, /* portal_port */
+                                           -1, /* tpgt */
+                                           "", /* interface_name */
+                                           g_variant_new ("a{sv}", NULL), /* options */
+                                           NULL,  /* GCancellable* */
+                                           (GAsyncReadyCallback) iscsi_target_logout_cb,
+                                           g_object_ref (window));
+        }
+    }
+  gtk_switch_set_active (GTK_SWITCH (window->iscsitab_connection_switch), has_connections);
+
+ out:
+  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

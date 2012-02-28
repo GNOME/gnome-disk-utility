@@ -504,6 +504,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   g_signal_connect (data.icon_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
 
+ again:
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   if (response == GTK_RESPONSE_OK)
     {
@@ -521,6 +522,12 @@ gdu_fstab_dialog_show (GduWindow    *window,
                                                                  NULL, /* GCancellable */
                                                                  &error))
             {
+              if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                {
+                  g_error_free (error);
+                  goto again;
+                }
+              gtk_widget_hide (dialog);
               gdu_window_show_error (window,
                                      _("Error removing old /etc/fstab entry"),
                                      error);
@@ -550,8 +557,6 @@ gdu_fstab_dialog_show (GduWindow    *window,
               g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
             }
 
-          gtk_widget_hide (dialog);
-
           if (data.orig_fstab_entry != NULL)
             old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
 
@@ -573,6 +578,12 @@ gdu_fstab_dialog_show (GduWindow    *window,
                                                                   NULL, /* GCancellable */
                                                                   &error))
                 {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (dialog);
                   gdu_window_show_error (window,
                                          _("Error adding new /etc/fstab entry"),
                                          error);
@@ -591,6 +602,12 @@ gdu_fstab_dialog_show (GduWindow    *window,
                                                                      NULL, /* GCancellable */
                                                                      &error))
                 {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (dialog);
                   gdu_window_show_error (window,
                                          _("Error updating /etc/fstab entry"),
                                          error);

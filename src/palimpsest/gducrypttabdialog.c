@@ -246,6 +246,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
 
   update (data, NULL);
 
+ again:
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
   if (response == GTK_RESPONSE_OK)
@@ -267,6 +268,12 @@ crypttab_dialog_present (CrypttabDialogData *data)
                                                                  NULL, /* GCancellable */
                                                                  &error))
             {
+              if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                {
+                  g_error_free (error);
+                  goto again;
+                }
+              gtk_widget_hide (data->dialog);
               gdu_window_show_error (data->window,
                                      _("Error removing /etc/crypttab entry"),
                                      error);
@@ -289,8 +296,6 @@ crypttab_dialog_present (CrypttabDialogData *data)
           ui_name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
           ui_options = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
           ui_passphrase_contents = gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry));
-
-          gtk_widget_hide (data->dialog);
 
           old_passphrase_path = NULL;
           if (data->orig_crypttab_entry != NULL)
@@ -348,6 +353,12 @@ crypttab_dialog_present (CrypttabDialogData *data)
                                                                   NULL, /* GCancellable */
                                                                   &error))
                 {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (data->dialog);
                   gdu_window_show_error (data->window,
                                          _("Error adding /etc/crypttab entry"),
                                          error);
@@ -365,6 +376,12 @@ crypttab_dialog_present (CrypttabDialogData *data)
                                                                      NULL, /* GCancellable */
                                                                      &error))
                 {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (data->dialog);
                   gdu_window_show_error (data->window,
                                          _("Error updating /etc/crypttab entry"),
                                          error);

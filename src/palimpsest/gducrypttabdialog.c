@@ -45,7 +45,7 @@ typedef struct
   GtkWidget *infobar_vbox;
   GtkWidget *passphrase_warning_infobar;
 
-  GtkWidget *reset_button;
+  GtkWidget *automatic_crypt_options_switch;
   GtkWidget *grid;
 
   GtkWidget *name_entry;
@@ -81,10 +81,11 @@ static void
 update (CrypttabDialogData *data,
         GtkWidget          *widget)
 {
+  gboolean ui_configured;
+  gboolean configured;
   const gchar *ui_name;
   const gchar *ui_options;
   const gchar *ui_passphrase_contents;
-  gboolean configured;
   const gchar *name;
   const gchar *passphrase_path;
   const gchar *passphrase_contents;
@@ -113,6 +114,7 @@ update (CrypttabDialogData *data,
   ui_name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
   ui_options = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
   ui_passphrase_contents = gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry));
+  ui_configured = !gtk_switch_get_active (GTK_SWITCH (data->automatic_crypt_options_switch));
 
   if (!configured)
     {
@@ -158,15 +160,25 @@ update (CrypttabDialogData *data,
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_ok = FALSE;
-  if (g_strcmp0 (ui_name, name) != 0 ||
-      g_strcmp0 (ui_options, options) != 0 ||
-      g_strcmp0 (ui_passphrase_contents, passphrase_contents) != 0)
+  if (configured != ui_configured)
     {
       can_ok = TRUE;
     }
+  else if (ui_configured)
+    {
+      if (g_strcmp0 (ui_name, name) != 0 ||
+          g_strcmp0 (ui_options, options) != 0 ||
+          g_strcmp0 (ui_passphrase_contents, passphrase_contents) != 0)
+        {
+          can_ok = TRUE;
+        }
+    }
+
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
                                      GTK_RESPONSE_OK,
                                      can_ok);
+
+  gtk_widget_set_sensitive (data->grid, ui_configured);
 }
 
 static void
@@ -216,6 +228,8 @@ crypttab_dialog_present (CrypttabDialogData *data)
                           "visibility",
                           G_BINDING_SYNC_CREATE);
 
+  g_signal_connect (data->automatic_crypt_options_switch,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->name_entry,
                     "notify::text", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->options_entry,
@@ -227,128 +241,34 @@ crypttab_dialog_present (CrypttabDialogData *data)
   g_signal_connect (data->passphrase_entry,
                     "notify::text", G_CALLBACK (on_property_changed), data);
 
+  gtk_switch_set_active (GTK_SWITCH (data->automatic_crypt_options_switch), !configured);
   gtk_widget_show_all (data->dialog);
-
-  /* Show "Reset" button only if already configured */
-  if (!configured)
-    gtk_widget_hide (data->reset_button);
 
   update (data, NULL);
 
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
-  if (response == 1) /* application-defined for "crypttab-button-reset" */
+  if (response == GTK_RESPONSE_OK)
     {
+      gboolean configured;
+      gboolean ui_configured;
       GError *error;
 
-      error = NULL;
-      if (!udisks_block_call_remove_configuration_item_sync (data->block,
-                                                             g_variant_new ("(s@a{sv})", "crypttab",
-                                                                            data->orig_crypttab_entry),
-                                                             g_variant_new ("a{sv}", NULL), /* options */
-                                                             NULL, /* GCancellable */
-                                                             &error))
-        {
-          gdu_window_show_error (data->window,
-                                 _("Error removing /etc/crypttab entry"),
-                                 error);
-          g_error_free (error);
-          goto out;
-        }
-    }
-  else if (response == GTK_RESPONSE_OK)
-    {
-      const gchar *ui_name;
-      const gchar *ui_options;
-      const gchar *ui_passphrase_contents;
-      const gchar *old_passphrase_path;
-      GError *error;
-      GVariant *old_item = NULL;
-      GVariant *new_item = NULL;
-      GVariantBuilder builder;
-      gchar *s;
+      configured = (data->orig_crypttab_entry != NULL);
+      ui_configured = !gtk_switch_get_active (GTK_SWITCH (data->automatic_crypt_options_switch));
 
-      ui_name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
-      ui_options = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
-      ui_passphrase_contents = gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry));
-
-      gtk_widget_hide (data->dialog);
-
-      old_passphrase_path = NULL;
-      if (data->orig_crypttab_entry != NULL)
-        {
-          const gchar *s;
-          if (g_variant_lookup (data->orig_crypttab_entry, "passphrase-path", "^&ay", &s))
-            {
-              if (strlen (s) > 0 && !g_str_has_prefix (s, "/dev"))
-                old_passphrase_path = s;
-            }
-          error = NULL;
-          old_item = g_variant_new ("(s@a{sv})", "crypttab",
-                                    data->orig_crypttab_entry);
-        }
-
-      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-      s = g_strdup_printf ("UUID=%s", udisks_block_get_id_uuid (data->block));
-      g_variant_builder_add (&builder, "{sv}", "device", g_variant_new_bytestring (s));
-      g_free (s);
-      g_variant_builder_add (&builder, "{sv}", "name", g_variant_new_bytestring (ui_name));
-      g_variant_builder_add (&builder, "{sv}", "options", g_variant_new_bytestring (ui_options));
-      if (strlen (ui_passphrase_contents) > 0)
-        {
-          /* use old/existing passphrase file, if available */
-          if (old_passphrase_path != NULL)
-            {
-              g_variant_builder_add (&builder, "{sv}", "passphrase-path",
-                                     g_variant_new_bytestring (old_passphrase_path));
-            }
-          else
-            {
-              /* otherwise fall back to the requested name */
-              s = g_strdup_printf ("/etc/luks-keys/%s", ui_name);
-              g_variant_builder_add (&builder, "{sv}", "passphrase-path", g_variant_new_bytestring (s));
-              g_free (s);
-            }
-          g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                 g_variant_new_bytestring (ui_passphrase_contents));
-        }
-      else
-        {
-          g_variant_builder_add (&builder, "{sv}", "passphrase-path",
-                                 g_variant_new_bytestring (""));
-          g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                 g_variant_new_bytestring (""));
-        }
-      new_item = g_variant_new ("(sa{sv})", "crypttab", &builder);
-
-      if (old_item == NULL && new_item != NULL)
+      if (configured && !ui_configured)
         {
           error = NULL;
-          if (!udisks_block_call_add_configuration_item_sync (data->block,
-                                                              new_item,
-                                                              g_variant_new ("a{sv}", NULL), /* options */
-                                                              NULL, /* GCancellable */
-                                                              &error))
-            {
-              gdu_window_show_error (data->window,
-                                     _("Error adding /etc/crypttab entry"),
-                                     error);
-              g_error_free (error);
-              goto out;
-            }
-        }
-      else if (old_item != NULL && new_item != NULL)
-        {
-          error = NULL;
-          if (!udisks_block_call_update_configuration_item_sync (data->block,
-                                                                 old_item,
-                                                                 new_item,
+          if (!udisks_block_call_remove_configuration_item_sync (data->block,
+                                                                 g_variant_new ("(s@a{sv})", "crypttab",
+                                                                                data->orig_crypttab_entry),
                                                                  g_variant_new ("a{sv}", NULL), /* options */
                                                                  NULL, /* GCancellable */
                                                                  &error))
             {
               gdu_window_show_error (data->window,
-                                     _("Error updating /etc/crypttab entry"),
+                                     _("Error removing /etc/crypttab entry"),
                                      error);
               g_error_free (error);
               goto out;
@@ -356,7 +276,106 @@ crypttab_dialog_present (CrypttabDialogData *data)
         }
       else
         {
-          g_assert_not_reached ();
+          const gchar *ui_name;
+          const gchar *ui_options;
+          const gchar *ui_passphrase_contents;
+          const gchar *old_passphrase_path;
+          GError *error;
+          GVariant *old_item = NULL;
+          GVariant *new_item = NULL;
+          GVariantBuilder builder;
+          gchar *s;
+
+          ui_name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
+          ui_options = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
+          ui_passphrase_contents = gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry));
+
+          gtk_widget_hide (data->dialog);
+
+          old_passphrase_path = NULL;
+          if (data->orig_crypttab_entry != NULL)
+            {
+              const gchar *s;
+              if (g_variant_lookup (data->orig_crypttab_entry, "passphrase-path", "^&ay", &s))
+                {
+                  if (strlen (s) > 0 && !g_str_has_prefix (s, "/dev"))
+                    old_passphrase_path = s;
+                }
+              error = NULL;
+              old_item = g_variant_new ("(s@a{sv})", "crypttab",
+                                        data->orig_crypttab_entry);
+            }
+
+          g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+          s = g_strdup_printf ("UUID=%s", udisks_block_get_id_uuid (data->block));
+          g_variant_builder_add (&builder, "{sv}", "device", g_variant_new_bytestring (s));
+          g_free (s);
+          g_variant_builder_add (&builder, "{sv}", "name", g_variant_new_bytestring (ui_name));
+          g_variant_builder_add (&builder, "{sv}", "options", g_variant_new_bytestring (ui_options));
+          if (strlen (ui_passphrase_contents) > 0)
+            {
+              /* use old/existing passphrase file, if available */
+              if (old_passphrase_path != NULL)
+                {
+                  g_variant_builder_add (&builder, "{sv}", "passphrase-path",
+                                         g_variant_new_bytestring (old_passphrase_path));
+                }
+              else
+                {
+                  /* otherwise fall back to the requested name */
+                  s = g_strdup_printf ("/etc/luks-keys/%s", ui_name);
+                  g_variant_builder_add (&builder, "{sv}", "passphrase-path", g_variant_new_bytestring (s));
+                  g_free (s);
+                }
+              g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
+                                     g_variant_new_bytestring (ui_passphrase_contents));
+            }
+          else
+            {
+              g_variant_builder_add (&builder, "{sv}", "passphrase-path",
+                                     g_variant_new_bytestring (""));
+              g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
+                                     g_variant_new_bytestring (""));
+            }
+          new_item = g_variant_new ("(sa{sv})", "crypttab", &builder);
+
+          if (old_item == NULL && new_item != NULL)
+            {
+              error = NULL;
+              if (!udisks_block_call_add_configuration_item_sync (data->block,
+                                                                  new_item,
+                                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                                  NULL, /* GCancellable */
+                                                                  &error))
+                {
+                  gdu_window_show_error (data->window,
+                                         _("Error adding /etc/crypttab entry"),
+                                         error);
+                  g_error_free (error);
+                  goto out;
+                }
+            }
+          else if (old_item != NULL && new_item != NULL)
+            {
+              error = NULL;
+              if (!udisks_block_call_update_configuration_item_sync (data->block,
+                                                                     old_item,
+                                                                     new_item,
+                                                                     g_variant_new ("a{sv}", NULL), /* options */
+                                                                     NULL, /* GCancellable */
+                                                                     &error))
+                {
+                  gdu_window_show_error (data->window,
+                                         _("Error updating /etc/crypttab entry"),
+                                         error);
+                  g_error_free (error);
+                  goto out;
+                }
+            }
+          else
+            {
+              g_assert_not_reached ();
+            }
         }
     }
 
@@ -457,7 +476,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
 
   data->dialog = dialog;
   data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
-  data->reset_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-reset-button"));
+  data->automatic_crypt_options_switch = GTK_WIDGET (gtk_builder_get_object (data->builder, "automatic-crypt-options-switch"));
   data->grid = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-grid"));
   data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-name-entry"));
   data->options_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "crypttab-options-entry"));

@@ -139,8 +139,9 @@ gdu_iscsi_path_model_constructed (GObject *object)
   types[2] = G_TYPE_INT;
   types[3] = G_TYPE_INT;
   types[4] = G_TYPE_STRING;
-  types[5] = G_TYPE_STRING;
-  G_STATIC_ASSERT (6 == GDU_ISCSI_PATH_MODEL_N_COLUMNS);
+  types[5] = G_TYPE_VARIANT;
+  types[6] = G_TYPE_STRING;
+  G_STATIC_ASSERT (7 == GDU_ISCSI_PATH_MODEL_N_COLUMNS);
   gtk_list_store_set_column_types (GTK_LIST_STORE (model),
                                    GDU_ISCSI_PATH_MODEL_N_COLUMNS,
                                    types);
@@ -261,6 +262,7 @@ update_all (GduiSCSIPathModel *model)
   const gchar *portal_name;
   gint port;
   gint group;
+  GVariant *configuration;
   const gchar *iface_name;
   const gchar *state;
 
@@ -270,11 +272,12 @@ update_all (GduiSCSIPathModel *model)
   g_variant_iter_init (&portal_iter, portals_and_interfaces);
 
   while (g_variant_iter_next (&portal_iter,
-                              "(&sii&s&sa{sv})",
+                              "(&sii&s@a{ss}&sa{sv})",
                               &portal_name,
                               &port,
                               &group,
                               &iface_name,
+                              &configuration,
                               &state,
                               NULL)) /* expansion */
     {
@@ -309,8 +312,10 @@ update_all (GduiSCSIPathModel *model)
                                          GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_PORT, port,
                                          GDU_ISCSI_PATH_MODEL_COLUMN_TPGT, group,
                                          GDU_ISCSI_PATH_MODEL_COLUMN_INTERFACE, iface_name,
+                                         GDU_ISCSI_PATH_MODEL_COLUMN_CONFIGURATION, configuration,
                                          GDU_ISCSI_PATH_MODEL_COLUMN_STATUS, status,
                                          -1);
+      g_variant_unref (configuration);
       g_free (status);
     }
 }

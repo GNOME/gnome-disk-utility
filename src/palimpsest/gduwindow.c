@@ -251,6 +251,9 @@ static void teardown_iscsi_target_page (GduWindow *window);
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
 
+static void on_iscsi_connections_tree_selection_changed (GtkTreeSelection *tree_selection,
+                                                         gpointer          user_data);
+
 static void on_devtab_action_generic_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_partition_create_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_partition_delete_activated (GtkAction *action, gpointer user_data);
@@ -2337,7 +2340,6 @@ init_iscsi_target_page (GduWindow   *window)
 {
   static volatile gsize init_val = 0;
   GtkTreeView *tree_view;
-  /* GtkTreeSelection *selection; */
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
 
@@ -2346,14 +2348,11 @@ init_iscsi_target_page (GduWindow   *window)
 
   tree_view = GTK_TREE_VIEW (window->iscsitab_connections_treeview);
   gtk_tree_view_set_rules_hint (tree_view, TRUE);
-#if 0
-  selection = gtk_tree_view_get_selection (tree_view);
-  gtk_tree_selection_set_select_function (selection, dont_select_headings, NULL, NULL);
-  g_signal_connect (selection,
+
+  g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (window->iscsitab_connections_treeview)),
                     "changed",
-                    G_CALLBACK (on_tree_selection_changed),
+                    G_CALLBACK (on_iscsi_connections_tree_selection_changed),
                     window);
-#endif
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (tree_view, column);
@@ -2407,6 +2406,7 @@ init_iscsi_target_page (GduWindow   *window)
   ;
 }
 
+#if 0
 static gboolean
 iscsi_target_has_active_connections (UDisksiSCSITarget *target)
 {
@@ -2435,10 +2435,85 @@ iscsi_target_has_active_connections (UDisksiSCSITarget *target)
  out:
   return ret;
 }
-
+#endif
 
 static void
-update_iscsi_target_page (GduWindow   *window)
+update_iscsi_connection_details (GduWindow *window)
+{
+
+  GtkTreeSelection *selection;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GVariant *configuration;
+  const gchar *node_startup = NULL;
+  const gchar *startup = NULL;
+  const gchar *timeout_str = NULL;
+  gint timeout_val = 0;
+  gchar *timeout= NULL;
+  const gchar *auth_method = NULL;
+  const gchar *username_in = NULL;
+  gchar *auth = NULL;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->iscsitab_connections_treeview));
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    goto out;
+
+  gtk_tree_model_get (model, &iter,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_CONFIGURATION, &configuration,
+                      -1);
+
+  g_variant_lookup (configuration, "node.startup", "&s", &node_startup);
+  if (g_strcmp0 (node_startup, "automatic") == 0)
+    startup = C_("iscsi-target", "Yes");
+  else
+    startup = C_("iscsi-target", "No");
+
+  g_variant_lookup (configuration, "node.session.timeo.replacement_timeout", "&s", &timeout_str);
+  if (timeout_str != NULL)
+    timeout_val = atoi (timeout_str);
+  timeout = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                          "%d second",
+                                          "%d seconds",
+                                          timeout_val),
+                             timeout_val);
+
+  g_variant_lookup (configuration, "node.session.auth.authmethod", "&s", &auth_method);
+  g_variant_lookup (configuration, "node.session.auth.username_in", "&s", &username_in);
+  if (g_strcmp0 (auth_method, "None") == 0)
+    {
+        auth = g_strdup (C_("iscsi-target", "None"));
+    }
+  else if (g_strcmp0 (auth_method, "CHAP") == 0)
+    {
+      if (username_in != NULL && strlen (username_in) > 0)
+        auth = g_strdup (C_("iscsi-target", "Mutual CHAP"));
+      else
+        auth = g_strdup (C_("iscsi-target", "CHAP"));
+    }
+  else
+    {
+      auth = g_strdup_printf (C_("iscsi-target", "Other (%s)"), auth_method);
+    }
+
+out:
+  set_markup (window,
+              "iscsitab-connection-startup-label",
+              "iscsitab-connection-startup-value-label",
+              startup, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  set_markup (window,
+              "iscsitab-connection-timeout-label",
+              "iscsitab-connection-timeout-value-label",
+              timeout, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  set_markup (window,
+              "iscsitab-connection-auth-label",
+              "iscsitab-connection-auth-value-label",
+              auth, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_free (timeout);
+  g_free (auth);
+}
+
+static void
+update_iscsi_target_page (GduWindow *window)
 {
   GList *children;
   GList *l;
@@ -2500,6 +2575,81 @@ update_iscsi_target_page (GduWindow   *window)
               "iscsitab-discovery-value-label",
               discovery, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (discovery);
+
+  update_iscsi_connection_details (window);
+}
+
+
+static void
+iscsi_connections_select_first (GduWindow    *window,
+                                GtkTreeModel *model)
+{
+  GtkTreeIter iter;
+  GtkTreeSelection *selection;
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->iscsitab_connections_treeview));
+  if (gtk_tree_model_get_iter_first (model, &iter))
+    {
+      gtk_tree_selection_select_iter (selection, &iter);
+    }
+}
+
+static void
+iscsi_connections_ensure_selected (GduWindow *window)
+{
+  GtkTreeSelection *selection;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->iscsitab_connections_treeview));
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      /* ensure something is always selected */
+      iscsi_connections_select_first (window, model);
+    }
+}
+
+static void
+iscsi_connections_on_row_deleted (GtkTreeModel *model,
+                                  GtkTreePath  *path,
+                                  gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  iscsi_connections_ensure_selected (window);
+}
+
+static void
+iscsi_connections_on_row_inserted (GtkTreeModel *model,
+                                   GtkTreePath  *path,
+                                   GtkTreeIter  *iter,
+                                   gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  iscsi_connections_ensure_selected (window);
+}
+
+static void
+on_iscsi_connections_tree_selection_changed (GtkTreeSelection *tree_selection,
+                                             gpointer          user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+
+  if (gtk_tree_selection_get_selected (tree_selection, &model, &iter))
+    {
+      ShowFlags show_flags;
+      show_flags = SHOW_FLAGS_NONE;
+      update_details_page (window, window->current_page, &show_flags);
+      update_for_show_flags (window, show_flags);
+    }
+  else
+    {
+      if (model != NULL)
+        {
+          /* ensure something is always selected */
+          iscsi_connections_select_first (window, model);
+        }
+    }
 }
 
 static void
@@ -2508,16 +2658,25 @@ setup_iscsi_target_page (GduWindow    *window,
 {
   GtkTreeView *tree_view;
   GduiSCSIPathModel *model;
-  GtkTreeIter first_iter;
 
   init_iscsi_target_page (window);
 
   tree_view = GTK_TREE_VIEW (window->iscsitab_connections_treeview);
   model = gdu_iscsi_path_model_new (window->client, object);
   gtk_tree_view_set_model (tree_view, GTK_TREE_MODEL (model));
-  /* select the first row */
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (model), &first_iter))
-    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tree_view), &first_iter);
+
+  iscsi_connections_select_first (window, GTK_TREE_MODEL (model));
+
+  /* to ensure something is always selected */
+  g_signal_connect (model,
+                    "row-deleted",
+                    G_CALLBACK (iscsi_connections_on_row_deleted),
+                    window);
+  g_signal_connect (model,
+                    "row-inserted",
+                    G_CALLBACK (iscsi_connections_on_row_inserted),
+                    window);
+
   g_object_unref (model);
 }
 

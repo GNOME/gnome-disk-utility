@@ -47,6 +47,7 @@ palimpsest_SOURCES = 							\
 	gdupasswordstrengthwidget.h	gdupasswordstrengthwidget.c	\
 	gduestimator.h			gduestimator.c			\
 	gduchangepassphrasedialog.h	gduchangepassphrasedialog.c	\
+	gduiscsipathmodel.h		gduiscsipathmodel.c		\
 	$(enum_built_sources)						\
 	$(NULL)
 

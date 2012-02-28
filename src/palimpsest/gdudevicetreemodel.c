@@ -43,6 +43,10 @@ struct _GduDeviceTreeModel
   GtkTreeIter block_iter;
   gboolean block_iter_valid;
 
+  GList *current_iscsi_objects;
+  GtkTreeIter iscsi_iter;
+  gboolean iscsi_iter_valid;
+
   guint spinner_timeout;
 };
 
@@ -196,6 +200,28 @@ find_iter_for_object (GduDeviceTreeModel *model,
 
   memset (&data, 0, sizeof (data));
   data.object = object;
+  data.found = FALSE;
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model),
+                          find_iter_for_object_cb,
+                          &data);
+  if (data.found)
+    {
+      if (out_iter != NULL)
+        *out_iter = data.iter;
+    }
+
+  return data.found;
+}
+
+static gboolean
+find_iter_for_object_path (GduDeviceTreeModel *model,
+                           const gchar        *object_path,
+                           GtkTreeIter        *out_iter)
+{
+  FindIterData data;
+
+  memset (&data, 0, sizeof (data));
+  data.object_path = object_path;
   data.found = FALSE;
   gtk_tree_model_foreach (GTK_TREE_MODEL (model),
                           find_iter_for_object_cb,
@@ -736,6 +762,27 @@ update_drive (GduDeviceTreeModel *model,
   return jobs_running;
 }
 
+static gboolean
+should_include_drive (UDisksObject *object,
+                      gboolean      allow_iscsi)
+{
+  UDisksDrive *drive;
+  gboolean ret;
+
+  ret = FALSE;
+
+  drive = udisks_object_peek_drive (object);
+
+  /* unless specificlly allowed, don't show DRIVEs paired with an iSCSI target */
+  if (!allow_iscsi && g_strcmp0 (udisks_drive_get_iscsi_target (drive), "/") != 0)
+    goto out;
+
+  ret = TRUE;
+
+ out:
+  return ret;
+}
+
 static void
 update_drives (GduDeviceTreeModel *model)
 {
@@ -759,7 +806,8 @@ update_drives (GduDeviceTreeModel *model)
       if (drive == NULL)
         continue;
 
-      drives = g_list_prepend (drives, g_object_ref (object));
+      if (should_include_drive (object, FALSE))
+        drives = g_list_prepend (drives, g_object_ref (object));
     }
 
   drives = g_list_sort (drives, (GCompareFunc) _g_dbus_object_compare);
@@ -1115,12 +1163,241 @@ update_blocks (GduDeviceTreeModel *model)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GtkTreeIter *
+get_iscsi_iter (GduDeviceTreeModel *model)
+{
+  gchar *s;
+
+  if (model->iscsi_iter_valid)
+    goto out;
+
+  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+   * of hard-coding the color
+   */
+  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+                       _("iSCSI Targets"));
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &model->iscsi_iter,
+                                     NULL, /* GtkTreeIter *parent */
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, TRUE,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_HEADING_TEXT, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "02_iscsi",
+                                     -1);
+  g_free (s);
+
+  model->iscsi_iter_valid = TRUE;
+
+ out:
+  return &model->iscsi_iter;
+}
+
+static void
+nuke_iscsi_iter (GduDeviceTreeModel *model)
+{
+  if (model->iscsi_iter_valid)
+    {
+      gtk_tree_store_remove (GTK_TREE_STORE (model), &model->iscsi_iter);
+      model->iscsi_iter_valid = FALSE;
+    }
+}
+
+static void
+add_iscsi_target (GduDeviceTreeModel  *model,
+                  UDisksObject        *object,
+                  GtkTreeIter         *parent)
+{
+  UDisksiSCSITarget *target;
+  GIcon *icon;
+  gchar *s;
+  gchar *sort_key;
+  GtkTreeIter iter;
+
+  target = udisks_object_peek_iscsi_target (object);
+
+#if 0
+  GIcon *base_icon;
+  GIcon *emblem_icon;
+  GEmblem *emblem;
+  emblem_icon = g_themed_icon_new_with_default_fallbacks ("emblem-web");
+  emblem = g_emblem_new (emblem_icon);
+  base_icon = g_themed_icon_new_with_default_fallbacks ("drive-harddisk");
+  icon = g_emblemed_icon_new (base_icon, emblem);
+  g_object_unref (emblem);
+  g_object_unref (base_icon);
+  g_object_unref (emblem_icon);
+#endif
+  icon = g_themed_icon_new_with_default_fallbacks ("network-server");
+
+  s = g_strdup_printf ("%s\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       "iSCSI Target", /* TODO: alias */
+                       udisks_iscsi_target_get_name (target));
+
+  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
+  gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                     &iter,
+                                     parent,
+                                     0,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                                     GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
+                                     -1);
+  g_object_unref (icon);
+  g_free (sort_key);
+  g_free (s);
+}
+
+static void
+remove_iscsi_target (GduDeviceTreeModel  *model,
+                     UDisksObject        *object)
+{
+  GtkTreeIter iter;
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
+    }
+  gtk_tree_store_remove (GTK_TREE_STORE (model), &iter);
+
+ out:
+  ;
+}
+
+static void
+update_iscsi_targets (GduDeviceTreeModel *model)
+{
+  GDBusObjectManager *object_manager;
+  GList *objects;
+  GList *iscsi_objects;
+  GList *added;
+  GList *removed;
+  GList *l;
+
+  object_manager = udisks_client_get_object_manager (model->client);
+  objects = g_dbus_object_manager_get_objects (object_manager);
+
+  iscsi_objects = NULL;
+  for (l = objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksiSCSITarget *target;
+      target = udisks_object_peek_iscsi_target (object);
+      if (target != NULL)
+        {
+          GList *ll;
+          const gchar *target_object_path;
+
+          iscsi_objects = g_list_prepend (iscsi_objects, g_object_ref (object));
+
+          /* also include the drives that are associated with this target */
+          target_object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+          for (ll = objects; ll != NULL; ll = ll->next)
+            {
+              UDisksObject *drive_object = UDISKS_OBJECT (ll->data);
+              UDisksDrive *drive;
+              drive = udisks_object_peek_drive (drive_object);
+              if (drive != NULL)
+                {
+                  if (g_strcmp0 (udisks_drive_get_iscsi_target (drive), target_object_path) == 0)
+                    {
+                      if (should_include_drive (drive_object, TRUE))
+                        iscsi_objects = g_list_prepend (iscsi_objects, g_object_ref (drive_object));
+                    }
+                }
+            }
+        }
+    }
+
+  iscsi_objects = g_list_sort (iscsi_objects, (GCompareFunc) _g_dbus_object_compare);
+  model->current_iscsi_objects = g_list_sort (model->current_iscsi_objects, (GCompareFunc) _g_dbus_object_compare);
+  diff_sorted_lists (model->current_iscsi_objects,
+                     iscsi_objects,
+                     (GCompareFunc) _g_dbus_object_compare,
+                     &added,
+                     &removed);
+
+  for (l = removed; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+
+      g_assert (g_list_find (model->current_iscsi_objects, object) != NULL);
+
+      model->current_iscsi_objects = g_list_remove (model->current_iscsi_objects, object);
+      if (udisks_object_peek_iscsi_target (object) != NULL)
+        {
+          remove_iscsi_target (model, object);
+        }
+      else if (udisks_object_peek_drive (object) != NULL)
+        {
+          remove_drive (model, object);
+        }
+      g_object_unref (object);
+    }
+
+  /* Add targets */
+  for (l = added; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_iscsi_target (object) != NULL)
+        {
+          model->current_iscsi_objects = g_list_prepend (model->current_iscsi_objects,
+                                                         g_object_ref (object));
+          add_iscsi_target (model, object, get_iscsi_iter (model));
+        }
+    }
+
+  /* ... then add drives */
+  for (l = added; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_drive (object) != NULL)
+        {
+          GtkTreeIter iter;
+          model->current_iscsi_objects = g_list_prepend (model->current_iscsi_objects,
+                                                         g_object_ref (object));
+          g_warn_if_fail (find_iter_for_object_path (model,
+                                                     udisks_drive_get_iscsi_target (udisks_object_peek_drive (object)),
+                                                     &iter));
+          add_drive (model, object, &iter);
+        }
+    }
+
+  /* update all drives (newly added as well as the existing ones) */
+  for (l = model->current_iscsi_objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_drive (object) != NULL)
+        {
+          update_drive (model, object, FALSE);
+        }
+    }
+
+  if (g_list_length (model->current_iscsi_objects) == 0)
+    nuke_iscsi_iter (model);
+
+  g_list_free (added);
+  g_list_free (removed);
+  g_list_foreach (iscsi_objects, (GFunc) g_object_unref, NULL);
+  g_list_free (iscsi_objects);
+
+  g_list_foreach (objects, (GFunc) g_object_unref, NULL);
+  g_list_free (objects);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 update_all (GduDeviceTreeModel *model)
 {
   /* TODO: if this is CPU intensive we could coalesce all updates / schedule timeouts */
   update_drives (model);
   update_blocks (model);
+  update_iscsi_targets (model);
 }
 
 static void

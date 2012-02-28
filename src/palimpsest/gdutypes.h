@@ -52,6 +52,9 @@ typedef struct _GduPasswordStrengthWidget GduPasswordStrengthWidget;
 struct _GduEstimator;
 typedef struct _GduEstimator GduEstimator;
 
+struct _GduiSCSIPathModel;
+typedef struct _GduiSCSIPathModel GduiSCSIPathModel;
+
 G_END_DECLS
 
 #endif /* __GDU_TYPES_H__ */

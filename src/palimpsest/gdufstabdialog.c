@@ -35,7 +35,7 @@
 typedef struct
 {
   GtkWidget *dialog;
-  GtkWidget *reset_button;
+  GtkWidget *automatic_mount_options_switch;
   GtkWidget *grid;
 
   GtkWidget *infobar_hbox;
@@ -58,6 +58,8 @@ static void
 update (FstabDialogData *data,
         GtkWidget       *widget)
 {
+  gboolean ui_configured;
+  gboolean configured;
   gchar *ui_fsname;
   const gchar *ui_dir;
   const gchar *ui_type;
@@ -70,6 +72,7 @@ update (FstabDialogData *data,
 
   if (data->orig_fstab_entry != NULL)
     {
+      configured = TRUE;
       g_variant_lookup (data->orig_fstab_entry, "fsname", "^&ay", &fsname);
       g_variant_lookup (data->orig_fstab_entry, "dir", "^&ay", &dir);
       g_variant_lookup (data->orig_fstab_entry, "type", "^&ay", &type);
@@ -77,6 +80,7 @@ update (FstabDialogData *data,
     }
   else
     {
+      configured = FALSE;
       fsname = "";
       dir = "";
       type = "";
@@ -87,6 +91,7 @@ update (FstabDialogData *data,
   ui_dir = gtk_entry_get_text (GTK_ENTRY (data->directory_entry));
   ui_type = gtk_entry_get_text (GTK_ENTRY (data->type_entry));
   ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
+  ui_configured = !gtk_switch_get_active (GTK_SWITCH (data->automatic_mount_options_switch));
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
   gdu_options_update_check_option (data->options_entry, "noauto", widget, data->neg_noauto_checkbutton, TRUE, FALSE);
@@ -97,22 +102,31 @@ update (FstabDialogData *data,
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_ok = FALSE;
-  if (g_strcmp0 (ui_fsname, fsname) != 0 ||
-      g_strcmp0 (ui_dir, dir) != 0 ||
-      g_strcmp0 (ui_type, type) != 0 ||
-      g_strcmp0 (ui_opts, opts) != 0)
+  if (configured != ui_configured)
     {
       can_ok = TRUE;
     }
-
-  /* sanity-check and validate */
-  if (strlen (ui_fsname) == 0 ||
-      strlen (ui_dir) == 0 ||
-      strlen (ui_type) == 0 ||
-      strlen (ui_opts) == 0)
+  else if (ui_configured)
     {
-      can_ok = FALSE;
+      if (g_strcmp0 (ui_fsname, fsname) != 0 ||
+          g_strcmp0 (ui_dir, dir) != 0 ||
+          g_strcmp0 (ui_type, type) != 0 ||
+          g_strcmp0 (ui_opts, opts) != 0)
+        {
+          can_ok = TRUE;
+        }
+
+      /* sanity-check and validate */
+      if (strlen (ui_fsname) == 0 ||
+          strlen (ui_dir) == 0 ||
+          strlen (ui_type) == 0 ||
+          strlen (ui_opts) == 0)
+        {
+          can_ok = FALSE;
+        }
     }
+
+  gtk_widget_set_sensitive (data->grid, ui_configured);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
                                      GTK_RESPONSE_OK,
@@ -389,7 +403,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   memset (&data, '\0', sizeof (FstabDialogData));
   data.dialog = dialog;
   data.infobar_hbox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-infobar-hbox"));
-  data.reset_button = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-button-reset"));
+  data.automatic_mount_options_switch = GTK_WIDGET (gtk_builder_get_object (builder, "automatic-mount-options-switch"));
   data.grid = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-grid"));
   data.device_combobox = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-combobox"));
   data.device_explanation_label = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-device-explanation-label"));
@@ -461,15 +475,14 @@ gdu_fstab_dialog_show (GduWindow    *window,
       gtk_box_pack_start (GTK_BOX (data.infobar_hbox), bar, TRUE, TRUE, 0);
     }
 
+  gtk_switch_set_active (GTK_SWITCH (data.automatic_mount_options_switch), !configured);
   gtk_widget_show_all (dialog);
-
-  /* Show "Reset" button only if already configured */
-  if (!configured)
-    gtk_widget_hide (data.reset_button);
 
   update_device_explanation (&data);
   update (&data, NULL);
 
+  g_signal_connect (data.automatic_mount_options_switch,
+                    "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.device_combobox,
                     "notify::active", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.directory_entry,
@@ -491,102 +504,124 @@ gdu_fstab_dialog_show (GduWindow    *window,
   g_signal_connect (data.icon_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
 
+ again:
   response = gtk_dialog_run (GTK_DIALOG (dialog));
-  if (response == 1) /* application-defined for "fstab-button-reset" */
+  if (response == GTK_RESPONSE_OK)
     {
+      gboolean ui_configured;
       GError *error;
 
-      error = NULL;
-      if (!udisks_block_call_remove_configuration_item_sync (block,
-                                                             g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry),
-                                                             g_variant_new ("a{sv}", NULL), /* options */
-                                                             NULL, /* GCancellable */
-                                                             &error))
-        {
-          gdu_window_show_error (window,
-                                 _("Error removing old /etc/fstab entry"),
-                                 error);
-          g_error_free (error);
-          goto out;
-        }
-    }
-  else if (response == GTK_RESPONSE_OK)
-    {
-      gchar *ui_fsname;
-      const gchar *ui_dir;
-      const gchar *ui_type;
-      const gchar *ui_opts;
-      gint freq = 0;
-      gint passno = 0;
-      GError *error;
-      GVariant *old_item = NULL;
-      GVariant *new_item = NULL;
-      GVariantBuilder builder;
+      ui_configured = !gtk_switch_get_active (GTK_SWITCH (data.automatic_mount_options_switch));
 
-      ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
-      ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
-      ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
-      ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
-      if (data.orig_fstab_entry != NULL)
-        {
-          g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
-          g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
-        }
-
-      gtk_widget_hide (dialog);
-
-      if (data.orig_fstab_entry != NULL)
-        old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
-
-      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-      g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
-      g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
-      g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
-      g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
-      g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
-      g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
-      new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
-
-      if (old_item == NULL && new_item != NULL)
+      if (configured && !ui_configured)
         {
           error = NULL;
-          if (!udisks_block_call_add_configuration_item_sync (block,
-                                                                     new_item,
-                                                                     g_variant_new ("a{sv}", NULL), /* options */
-                                                                     NULL, /* GCancellable */
-                                                                     &error))
-            {
-              gdu_window_show_error (window,
-                                     _("Error adding new /etc/fstab entry"),
-                                     error);
-              g_error_free (error);
-              g_free (ui_fsname);
-              goto out;
-            }
-        }
-      else if (old_item != NULL && new_item != NULL)
-        {
-          error = NULL;
-          if (!udisks_block_call_update_configuration_item_sync (block,
-                                                                 old_item,
-                                                                 new_item,
+          if (!udisks_block_call_remove_configuration_item_sync (block,
+                                                                 g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry),
                                                                  g_variant_new ("a{sv}", NULL), /* options */
                                                                  NULL, /* GCancellable */
                                                                  &error))
             {
+              if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                {
+                  g_error_free (error);
+                  goto again;
+                }
+              gtk_widget_hide (dialog);
               gdu_window_show_error (window,
-                                     _("Error updating /etc/fstab entry"),
+                                     _("Error removing old /etc/fstab entry"),
                                      error);
               g_error_free (error);
-              g_free (ui_fsname);
               goto out;
             }
         }
       else
         {
-          g_assert_not_reached ();
+          gchar *ui_fsname;
+          const gchar *ui_dir;
+          const gchar *ui_type;
+          const gchar *ui_opts;
+          gint freq = 0;
+          gint passno = 0;
+          GVariant *old_item = NULL;
+          GVariant *new_item = NULL;
+          GVariantBuilder builder;
+
+          ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
+          ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
+          ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
+          ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
+          if (data.orig_fstab_entry != NULL)
+            {
+              g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
+              g_variant_lookup (data.orig_fstab_entry, "passno", "i", &passno);
+            }
+
+          if (data.orig_fstab_entry != NULL)
+            old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
+
+          g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+          g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
+          g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
+          g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
+          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
+          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
+          new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
+
+          if (old_item == NULL && new_item != NULL)
+            {
+              error = NULL;
+              if (!udisks_block_call_add_configuration_item_sync (block,
+                                                                  new_item,
+                                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                                  NULL, /* GCancellable */
+                                                                  &error))
+                {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (dialog);
+                  gdu_window_show_error (window,
+                                         _("Error adding new /etc/fstab entry"),
+                                         error);
+                  g_error_free (error);
+                  g_free (ui_fsname);
+                  goto out;
+                }
+            }
+          else if (old_item != NULL && new_item != NULL)
+            {
+              error = NULL;
+              if (!udisks_block_call_update_configuration_item_sync (block,
+                                                                     old_item,
+                                                                     new_item,
+                                                                     g_variant_new ("a{sv}", NULL), /* options */
+                                                                     NULL, /* GCancellable */
+                                                                     &error))
+                {
+                  if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+                    {
+                      g_error_free (error);
+                      goto again;
+                    }
+                  gtk_widget_hide (dialog);
+                  gdu_window_show_error (window,
+                                         _("Error updating /etc/fstab entry"),
+                                         error);
+                  g_error_free (error);
+                  g_free (ui_fsname);
+                  goto out;
+                }
+            }
+          else
+            {
+              g_assert_not_reached ();
+            }
+          g_free (ui_fsname);
         }
-      g_free (ui_fsname);
     }
 
  out:

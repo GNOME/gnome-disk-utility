@@ -39,8 +39,8 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="can_default">True</property>
+                <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
@@ -48,22 +48,6 @@
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="crypttab-reset-button">
-                <property name="label" translatable="yes">Reset</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-                <property name="secondary">True</property>
               </packing>
             </child>
           </object>
@@ -79,7 +63,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">12</property>
+            <property name="spacing">6</property>
             <child>
               <object class="GtkBox" id="infobar-vbox">
                 <property name="visible">True</property>
@@ -96,9 +80,55 @@
               </packing>
             </child>
             <child>
+              <object class="GtkBox" id="box1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">_Automatic Encryption Options</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">automatic-crypt-options-switch</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                      <attribute name="scale" value="1"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="automatic-crypt-options-switch">
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_markup" translatable="yes">Switch off &lt;i&gt;Automatic Encryption Options&lt;/i&gt; to manage encryption options and passphrase for the device. The options correspond to an entry in the &lt;b&gt;/etc/crypttab&lt;/b&gt; file</property>
+                    <property name="use_action_appearance">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkGrid" id="crypttab-grid">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">24</property>
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">10</property>
                 <child>
@@ -145,8 +175,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_markup" translatable="yes">The name to use for the unlocked device - the device is set up as the name prefixed with /dev/mapper/</property>
-                    <property name="tooltip_text" translatable="yes">The name to use for the unlocked device - the device is set up as the name prefixed with /dev/mapper/</property>
+                    <property name="tooltip_markup" translatable="yes">The name to use for the unlocked device - the device is set up as the name prefixed with &lt;b&gt;/dev/mapper&lt;/b&gt;/</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">●</property>
                     <property name="invisible_char_set">True</property>
@@ -164,7 +193,6 @@
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip_markup" translatable="yes">Options to use when unlocking the device</property>
-                    <property name="tooltip_text" translatable="yes">Options to use when unlocking the device</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">●</property>
                     <property name="invisible_char_set">True</property>
@@ -234,7 +262,6 @@
                     <property name="can_focus">True</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip_markup" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
-                    <property name="tooltip_text" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
                     <property name="hexpand">True</property>
                     <property name="invisible_char">●</property>
                     <property name="invisible_char_set">True</property>
@@ -281,9 +308,9 @@
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">If checked, the device will be unlocked at startup [!noauto]</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
-                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -294,18 +321,17 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="crypttab-auth-checkbutton">
-                        <property name="label" translatable="yes">Require additional _authorization to unlock</property>
+                        <property name="label" translatable="yes">Require additional authori_zation to unlock</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">If checked, additional authorization is required to unlock the device [x-udisks-auth]</property>
-                        <property name="tooltip_text" translatable="yes">If checked, additional authorization is required to unlock the device [x-udisks-auth]</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
-                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -332,25 +358,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLinkButton" id="linkbutton2">
-                <property name="label" translatable="yes">What's this?</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="has_tooltip">True</property>
-                <property name="use_action_appearance">False</property>
-                <property name="relief">none</property>
-                <property name="xalign">0</property>
-                <property name="uri">man:crypttab</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -366,7 +373,6 @@
     <action-widgets>
       <action-widget response="0">crypttab-cancel-button</action-widget>
       <action-widget response="-5">crypttab-ok-button</action-widget>
-      <action-widget response="1">crypttab-reset-button</action-widget>
     </action-widgets>
   </object>
 </interface>

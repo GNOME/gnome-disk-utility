@@ -14,11 +14,11 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkBox" id="box2">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">12</property>
+            <property name="spacing">6</property>
             <child>
               <object class="GtkBox" id="fstab-infobar-hbox">
                 <property name="visible">True</property>
@@ -34,9 +34,54 @@
               </packing>
             </child>
             <child>
+              <object class="GtkBox" id="box3">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">_Automatic Mount Options</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">automatic-mount-options-switch</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                      <attribute name="scale" value="1"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSwitch" id="automatic-mount-options-switch">
+                    <property name="use_action_appearance">False</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_markup" translatable="yes">Switch off &lt;i&gt;Automatic Mount Options&lt;/i&gt; to manage mount point and mount options for the device. The options correspond to an entry in the &lt;b&gt;/etc/fstab&lt;/b&gt; file</property>
+                    <property name="use_action_appearance">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkGrid" id="fstab-grid">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="margin_left">24</property>
                 <property name="row_spacing">10</property>
                 <property name="column_spacing">6</property>
                 <child>
@@ -250,9 +295,9 @@
                         <property name="tooltip_markup" translatable="yes">If checked, the device is always shown in the user interface no matter what its directory is [x-gvfs-show]</property>
                         <property name="tooltip_text" translatable="yes">If checked, the device is always shown in the user interface no matter what its directory is [x-gvfs-show]</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
-                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -263,7 +308,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="fstab-auth-checkbutton">
-                        <property name="label" translatable="yes">Require additional _authorization to mount</property>
+                        <property name="label" translatable="yes">Require additional authori_zation to mount</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -272,9 +317,9 @@
                         <property name="tooltip_markup" translatable="yes">If checked, additional authorization is required to mount the device [x-udisks-auth]</property>
                         <property name="tooltip_text" translatable="yes">If checked, additional authorization is required to mount the device [x-udisks-auth]</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
-                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -293,9 +338,9 @@
                         <property name="has_tooltip">True</property>
                         <property name="tooltip_markup" translatable="yes">If checked, the device will be mounted at startup [!noauto]</property>
                         <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
                         <property name="xalign">0</property>
                         <property name="draw_indicator">True</property>
-                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -358,25 +403,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLinkButton" id="linkbutton1">
-                <property name="label" translatable="yes">What's this?</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="has_tooltip">True</property>
-                <property name="use_action_appearance">False</property>
-                <property name="relief">none</property>
-                <property name="xalign">0</property>
-                <property name="uri">man:fstab</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
                 <property name="position">2</property>
               </packing>
             </child>
@@ -413,9 +439,8 @@
                 <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="can_default">True</property>
-                <property name="tooltip_markup" translatable="yes">Click to create or update entry in the &lt;b&gt;/etc/fstab&lt;/b&gt; file</property>
+                <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
@@ -423,23 +448,6 @@
                 <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="fstab-button-reset">
-                <property name="label" translatable="yes">Reset</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="tooltip_markup" translatable="yes">Click to remove the entry from the &lt;b&gt;/etc/fstab&lt;/b&gt; file</property>
-                <property name="use_action_appearance">False</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-                <property name="secondary">True</property>
               </packing>
             </child>
           </object>
@@ -455,7 +463,6 @@
     <action-widgets>
       <action-widget response="-6">fstab-button-cancel</action-widget>
       <action-widget response="-5">fstab-button-ok</action-widget>
-      <action-widget response="1">fstab-button-reset</action-widget>
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="fstab-freq-adjustment">

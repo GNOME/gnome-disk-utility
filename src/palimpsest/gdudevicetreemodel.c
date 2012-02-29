@@ -77,6 +77,10 @@ static gboolean update_block (GduDeviceTreeModel  *model,
                               UDisksObject        *object,
                               gboolean             from_timer);
 
+static gboolean update_iscsi_target (GduDeviceTreeModel  *model,
+                                     UDisksObject        *object,
+                                     gboolean             from_timer);
+
 
 static void
 gdu_device_tree_model_finalize (GObject *object)
@@ -616,6 +620,24 @@ drive_has_jobs (UDisksClient   *client,
   return ret;
 }
 
+static gboolean
+iscsi_target_has_jobs (UDisksClient       *client,
+                       UDisksiSCSITarget  *target)
+{
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+
+  if (iface_has_jobs (client, G_DBUS_INTERFACE (target)))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  out:
+  g_clear_object (&block);
+  return ret;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
@@ -639,6 +661,20 @@ on_spinner_timeout (gpointer user_data)
         keep_animating = TRUE;
     }
 
+  for (l = model->current_iscsi_objects; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      if (udisks_object_peek_iscsi_target (object) != NULL)
+        {
+          if (update_iscsi_target (model, object, TRUE))
+            keep_animating = TRUE;
+        }
+      else if (udisks_object_peek_drive (object) != NULL)
+        {
+          if (update_drive (model, object, TRUE))
+            keep_animating = TRUE;
+        }
+    }
 
   if (keep_animating)
     {
@@ -1202,51 +1238,78 @@ nuke_iscsi_iter (GduDeviceTreeModel *model)
     }
 }
 
+static gboolean
+update_iscsi_target (GduDeviceTreeModel  *model,
+                     UDisksObject        *object,
+                     gboolean             from_timer)
+{
+
+  UDisksiSCSITarget *target = NULL;
+  GIcon *icon = NULL;
+  gchar *s = NULL;
+  gchar *sort_key = NULL;
+  GtkTreeIter iter;
+  gboolean warning = FALSE;
+  gboolean jobs_running = FALSE;
+  guint pulse;
+
+  if (!find_iter_for_object (model,
+                             object,
+                             &iter))
+    {
+      g_warning ("Error finding iter for object at %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      goto out;
+    }
+
+  target = udisks_object_peek_iscsi_target (object);
+
+  icon = g_themed_icon_new_with_default_fallbacks ("network-server"); /* TODO: get new icon from jimmac? */
+
+  s = g_strdup_printf ("%s\n"
+                       "<small><span foreground=\"#555555\">%s</span></small>",
+                       "iSCSI Target", /* TODO: get show Alias value from open-iscsi db */
+                       udisks_iscsi_target_get_name (target));
+
+  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
+
+  jobs_running = iscsi_target_has_jobs (model->client, target);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, &pulse,
+                      -1);
+  if (from_timer)
+    pulse += 1;
+
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      &iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
+                      -1);
+ out:
+  g_clear_object (&icon);
+  g_free (sort_key);
+  g_free (s);
+  return jobs_running;
+}
+
 static void
 add_iscsi_target (GduDeviceTreeModel  *model,
                   UDisksObject        *object,
                   GtkTreeIter         *parent)
 {
-  UDisksiSCSITarget *target;
-  GIcon *icon;
-  gchar *s;
-  gchar *sort_key;
   GtkTreeIter iter;
-
-  target = udisks_object_peek_iscsi_target (object);
-
-#if 0
-  GIcon *base_icon;
-  GIcon *emblem_icon;
-  GEmblem *emblem;
-  emblem_icon = g_themed_icon_new_with_default_fallbacks ("emblem-web");
-  emblem = g_emblem_new (emblem_icon);
-  base_icon = g_themed_icon_new_with_default_fallbacks ("drive-harddisk");
-  icon = g_emblemed_icon_new (base_icon, emblem);
-  g_object_unref (emblem);
-  g_object_unref (base_icon);
-  g_object_unref (emblem_icon);
-#endif
-  icon = g_themed_icon_new_with_default_fallbacks ("network-server");
-
-  s = g_strdup_printf ("%s\n"
-                       "<small><span foreground=\"#555555\">%s</span></small>",
-                       "iSCSI Target", /* TODO: alias */
-                       udisks_iscsi_target_get_name (target));
-
-  sort_key = g_strdup (g_dbus_object_get_object_path (G_DBUS_OBJECT (object))); /* for now */
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &iter,
                                      parent,
                                      0,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                                     GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, object,
                                      -1);
-  g_object_unref (icon);
-  g_free (sort_key);
-  g_free (s);
 }
 
 static void
@@ -1371,9 +1434,13 @@ update_iscsi_targets (GduDeviceTreeModel *model)
   for (l = model->current_iscsi_objects; l != NULL; l = l->next)
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
-      if (udisks_object_peek_drive (object) != NULL)
+      if (udisks_object_peek_iscsi_target (object) != NULL)
         {
-          update_drive (model, object, FALSE);
+          update_iscsi_target (model, object, TRUE);
+        }
+      else if (udisks_object_peek_drive (object) != NULL)
+        {
+          update_drive (model, object, TRUE);
         }
     }
 

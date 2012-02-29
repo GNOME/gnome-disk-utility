@@ -50,6 +50,7 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 #include "gduiscsipathmodel.h"
+#include "gduiscsiconnectiondialog.h"
 
 /* Keep in sync with tabs in palimpsest.ui file */
 typedef enum
@@ -113,6 +114,7 @@ struct _GduWindow
   GtkWidget *iscsitab_toolbar;
   GtkWidget *iscsitab_connections_treeview;
   GtkWidget *iscsitab_connection_switch;
+  GtkWidget *iscsitab_configure_toolbutton;
 
   GtkWidget *generic_drive_menu;
   GtkWidget *generic_drive_menu_item_view_smart;
@@ -174,6 +176,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, iscsitab_toolbar), "iscsitab-toolbar"},
   {G_STRUCT_OFFSET (GduWindow, iscsitab_connections_treeview), "iscsitab-connections-treeview"},
   {G_STRUCT_OFFSET (GduWindow, iscsitab_connection_switch), "iscsitab-connection-switch"},
+  {G_STRUCT_OFFSET (GduWindow, iscsitab_configure_toolbutton), "iscsitab-configure-toolbutton"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
@@ -249,6 +252,9 @@ static void teardown_device_page (GduWindow *window);
 static void setup_iscsi_target_page (GduWindow *window, UDisksObject *object);
 static void update_iscsi_target_page (GduWindow *window);
 static void teardown_iscsi_target_page (GduWindow *window);
+
+static void on_iscsitab_configure_toolbutton_clicked (GtkToolButton *button,
+                                                      gpointer       user_data);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
@@ -1149,6 +1155,12 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_restore_volume_image,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_restore_volume_image),
+                    window);
+
+  /* iSCSI toolbar */
+  g_signal_connect (window->iscsitab_configure_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_iscsitab_configure_toolbutton_clicked),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -2454,7 +2466,7 @@ update_iscsi_connection_details (GduWindow *window)
   GtkTreeSelection *selection;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GVariant *configuration;
+  GVariant *configuration = NULL;
   const gchar *node_startup = NULL;
   const gchar *startup = NULL;
   const gchar *timeout_str = NULL;
@@ -2520,6 +2532,8 @@ out:
               auth, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_free (timeout);
   g_free (auth);
+  if (configuration != NULL)
+    g_variant_unref (configuration);
 }
 
 static void
@@ -2741,6 +2755,52 @@ iscsi_target_connection_switch_on_notify_active (GObject     *object,
 
  out:
   ;
+}
+
+static void
+on_iscsitab_configure_toolbutton_clicked (GtkToolButton *button,
+                                          gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksiSCSITarget *target;
+  GtkTreeSelection *selection;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  gchar *address = NULL;
+  gint port;
+  gint tpgt;
+  gchar *interface_name = NULL;
+  GVariant *configuration = NULL;
+
+  target = udisks_object_peek_iscsi_target (window->current_object);
+  if (target == NULL)
+    {
+      g_warning ("Expected selected object to be an iSCSI target");
+      goto out;
+    }
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (window->iscsitab_connections_treeview));
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      g_warning ("No iSCSI connection selected");
+      goto out;
+    }
+
+  gtk_tree_model_get (model, &iter,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_ADDRESS, &address,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_PORTAL_PORT, &port,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_TPGT, &tpgt,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_INTERFACE, &interface_name,
+                      GDU_ISCSI_PATH_MODEL_COLUMN_CONFIGURATION, &configuration,
+                      -1);
+
+  gdu_iscsi_connection_dialog_show (window, target, address, port, tpgt, interface_name, configuration);
+
+ out:
+  g_free (address);
+  g_free (interface_name);
+  if (configuration != NULL)
+    g_variant_unref (configuration);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

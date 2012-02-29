@@ -22,6 +22,7 @@ ui_DATA = 				\
 	change-passphrase-dialog.ui	\
 	about-dialog.ui			\
 	app-menu.ui			\
+	iscsi-connection-dialog.ui	\
 	$(NULL)
 
 EXTRA_DIST = 				\

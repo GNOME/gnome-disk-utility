@@ -48,6 +48,7 @@ palimpsest_SOURCES = 							\
 	gduestimator.h			gduestimator.c			\
 	gduchangepassphrasedialog.h	gduchangepassphrasedialog.c	\
 	gduiscsipathmodel.h		gduiscsipathmodel.c		\
+	gduiscsiconnectiondialog.h	gduiscsiconnectiondialog.c	\
 	$(enum_built_sources)						\
 	$(NULL)
 

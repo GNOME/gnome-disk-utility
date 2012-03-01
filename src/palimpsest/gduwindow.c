@@ -2508,9 +2508,9 @@ update_iscsi_connection_details (GduWindow *window)
   else if (g_strcmp0 (auth_method, "CHAP") == 0)
     {
       if (username_in != NULL && strlen (username_in) > 0)
-        auth = g_strdup (C_("iscsi-target", "Mutual CHAP"));
+        auth = g_strdup (C_("iscsi-target", "Password (Mutual)"));
       else
-        auth = g_strdup (C_("iscsi-target", "CHAP"));
+        auth = g_strdup (C_("iscsi-target", "Password"));
     }
   else
     {

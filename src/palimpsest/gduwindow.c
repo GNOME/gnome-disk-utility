@@ -2542,7 +2542,7 @@ update_iscsi_target_page (GduWindow *window)
   UDisksiSCSITarget *target;
   UDisksObject *source_object = NULL;
   UDisksiSCSISource *source = NULL;
-  gchar *discovery = NULL;
+  gchar *server = NULL;
 
   target = udisks_object_peek_iscsi_target (window->current_object);
   set_markup (window,
@@ -2563,34 +2563,37 @@ update_iscsi_target_page (GduWindow *window)
       const gchar *mechanism = udisks_iscsi_source_get_mechanism (source);
       if (g_strcmp0 (mechanism, "static") == 0)
         {
-          discovery = g_strdup (_("Statically configured"));
+          server = g_strdup (_("Configured statically"));
         }
       else if (g_strcmp0 (mechanism, "firmware") == 0)
         {
-          discovery = g_strdup (_("Configured in firmware"));
+          server = g_strdup (_("Configured in firmware"));
         }
       else if (g_strcmp0 (mechanism, "sendtargets") == 0)
         {
-          discovery = g_strdup_printf (_("%s (SendTargets protocol)"),
-                                       udisks_iscsi_source_get_address (source));
+          gchar *str = udisks_iscsi_source_dup_address (source);
+          if (g_str_has_suffix (str, ",3260"))
+            str[strlen (str) - (sizeof ",3260" - 1)] = '\0';
+          server = g_strdup_printf (_("%s <span size=\"smaller\">(SendTargets)</span>"), str);
+          g_free (str);
         }
       else if (g_strcmp0 (mechanism, "isns") == 0)
         {
-          discovery = g_strdup_printf (_("%s (iSNS server)"),
-                                       udisks_iscsi_source_get_address (source));
+          server = g_strdup_printf (_("%s <span size=\"smaller\">(iSNS)</span>"),
+                                    udisks_iscsi_source_get_address (source));
         }
       else
         {
-          discovery = g_strdup_printf (_("%s (Mechanism: %s)"),
-                                       mechanism,
-                                       udisks_iscsi_source_get_address (source));
+          server = g_strdup_printf (_("%s (Mechanism: %s)"),
+                                    udisks_iscsi_source_get_address (source),
+                                    mechanism);
         }
     }
   set_markup (window,
-              "iscsitab-discovery-label",
-              "iscsitab-discovery-value-label",
-              discovery, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  g_free (discovery);
+              "iscsitab-server-label",
+              "iscsitab-server-value-label",
+              server, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_free (server);
 
   update_iscsi_connection_details (window);
 }

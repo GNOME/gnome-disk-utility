@@ -31,6 +31,11 @@ main (int argc, char *argv[])
   GApplication *app;
   gint status;
 
+  /* Initialize gettext support */
+  bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+  textdomain (GETTEXT_PACKAGE);
+
   app = gdu_application_new ();
   status = g_application_run (G_APPLICATION (app), argc, argv);
   g_object_unref (app);

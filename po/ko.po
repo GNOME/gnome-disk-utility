@@ -2,19 +2,18 @@
 # Copyright (C) 2009 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Namhyung Kim <namhyung@gmail.com>, 2009, 2010
-# Changwoo Ryu <cwryu@debian.org>, 2011
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
+# Changwoo Ryu <cwryu@debian.org>, 2011, 2012
 #
 # 새로 번역하시는 분은 아래 translator-credits에 추가하세요.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-06 16:05+0000\n"
-"PO-Revision-Date: 2012-03-10 15:37+0900\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-03-31 01:53+0000\n"
+"PO-Revision-Date: 2012-03-31 19:20+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -329,7 +328,8 @@ msgstr "표시 이름(_N)"
 #: ../data/ui/edit-fstab-dialog.ui.h:11
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr "설정하면, 사용자 인터페이스에서 장치의 이름으로 사용합니다 [x-gvfs-name=]"
+msgstr ""
+"설정하면, 사용자 인터페이스에서 장치의 이름으로 사용합니다 [x-gvfs-name=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
 msgid "Icon Na_me"
@@ -339,7 +339,9 @@ msgstr "아이콘 이름(_M)"
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
-msgstr "설정하면, 사용자 인터페이스에서 장치의 아이콘 이름으로 사용합니다 [x-gvfs-icon=]"
+msgstr ""
+"설정하면, 사용자 인터페이스에서 장치의 아이콘 이름으로 사용합니다 [x-gvfs-"
+"icon=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:14
 msgid "Sho_w in user interface"
@@ -349,7 +351,9 @@ msgstr "사용자 인터페이스에서 보이기(_W)"
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
-msgstr "표시하면, 장치가 어떤 디렉터리에 있든 사용자 인터페이스에 항상 보입니다 [x-gvfs-show]"
+msgstr ""
+"표시하면, 장치가 어떤 디렉터리에 있든 사용자 인터페이스에 항상 보입니다 [x-"
+"gvfs-show]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:16
 msgid "Require additional authori_zation to mount"
@@ -423,7 +427,9 @@ msgstr "읽기 전용(_R)"
 msgid ""
 "If set, some OSes may mount or use the contents of the partition as read-"
 "only instead of read-write"
-msgstr "설정하면, OS에 따라서는 파티션의 내용을 읽고 쓰기 모드가 아닌 읽기전용 모드로 마운트하고 사용할 수 있습니다."
+msgstr ""
+"설정하면, OS에 따라서는 파티션의 내용을 읽고 쓰기 모드가 아닌 읽기전용 모드"
+"로 마운트하고 사용할 수 있습니다."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 msgid "H_idden"
@@ -433,7 +439,9 @@ msgstr "숨김(_I)"
 msgid ""
 "If set, some OSes may hide the contents of the partition in their user "
 "interfaces"
-msgstr "설정하면, OS에 따라서는 파티션의 내용을 사용자 인터페이스에서 숨길 수도 있습니다."
+msgstr ""
+"설정하면, OS에 따라서는 파티션의 내용을 사용자 인터페이스에서 숨길 수도 있습"
+"니다."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:15
 msgid "Do Not _Automount"
@@ -441,7 +449,8 @@ msgstr "자동마운트 하지 않습니다(_A)"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:16
 msgid "If set, some OSes may not automount the contents of the partition"
-msgstr "설정하면, OS에 따라서 파티션의 내용을 자동 마운트하지 않을 수도 있습니다."
+msgstr ""
+"설정하면, OS에 따라서 파티션의 내용을 자동 마운트하지 않을 수도 있습니다."
 
 #: ../data/ui/filesystem-create.ui.h:3
 msgid ""
@@ -1597,6 +1606,11 @@ msgstr[0] ""
 "디스크에 이상이 없지만, 이전에 한 개 또는 %d개 이상의 속성에 대해 실패했습니"
 "다"
 
+#. Otherwise, it's all honky dory
+#: ../src/palimpsest/gduatasmartdialog.c:1195
+msgid "Disk is OK"
+msgstr "디스크 이상 없음"
+
 #. Translators: Used to convey the status and temperature in one line.
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
@@ -2054,7 +2068,7 @@ msgstr[0] "%d 시간"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1577
+#: ../src/palimpsest/gduvolumegrid.c:1536
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -2063,32 +2077,32 @@ msgstr "%2$s의 %1$d번 파티션"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1584
+#: ../src/palimpsest/gduvolumegrid.c:1543
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "%d번 파티션"
 
-#: ../src/palimpsest/gduvolumegrid.c:1604
+#: ../src/palimpsest/gduvolumegrid.c:1563
 msgid "No Media"
 msgstr "미디어 없음"
 
-#: ../src/palimpsest/gduvolumegrid.c:1621
+#: ../src/palimpsest/gduvolumegrid.c:1580
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "여유 공간"
 
-#: ../src/palimpsest/gduvolumegrid.c:1663
+#: ../src/palimpsest/gduvolumegrid.c:1622
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "확장 파티션"
 
-#: ../src/palimpsest/gduvolumegrid.c:1687
+#: ../src/palimpsest/gduvolumegrid.c:1646
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "파일 시스템"
 
-#: ../src/palimpsest/gduvolumegrid.c:1706
+#: ../src/palimpsest/gduvolumegrid.c:1665
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "스왑"
@@ -2118,7 +2132,9 @@ msgstr "읽기 전용 루프 장치 설정(_R)"
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
-msgstr "표시하면, 루프 장치를 읽기 전용으로 합니다. 파일이 수정되지 않게 할 때 사용합니다"
+msgstr ""
+"표시하면, 루프 장치를 읽기 전용으로 합니다. 파일이 수정되지 않게 할 때 사용합"
+"니다"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
 #: ../src/palimpsest/gduwindow.c:1515

@@ -1192,7 +1192,7 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
 
   /* Otherwise, it's all honky dory */
 
-  ret = g_strdup ("Disk is OK");
+  ret = g_strdup (_("Disk is OK"));
 
  out:
 

@@ -6,15 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-15 23:44+0100\n"
-"PO-Revision-Date: 2012-03-15 23:07+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-03-31 01:53+0000\n"
+"PO-Revision-Date: 2012-04-02 00:02+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
@@ -41,6 +42,18 @@ msgstr "Visualitzeu, modifiqueu i configureu discs i suports"
 #: ../data/ui/about-dialog.ui.h:5
 msgid "translator-credits"
 msgstr "Gil Forcada <gilforcada@guifi.net>"
+
+#: ../data/ui/app-menu.ui.h:1
+msgid "Attach Disk _Image..."
+msgstr "Adjunta una _imatge de disc..."
+
+#: ../data/ui/app-menu.ui.h:2
+msgid "_About Disks"
+msgstr "_Quant al discs"
+
+#: ../data/ui/app-menu.ui.h:3
+msgid "_Quit"
+msgstr "_Surt"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
@@ -1635,6 +1648,11 @@ msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "El disc està bé, abans havia fallat un atribut"
 msgstr[1] "El disc està bé, abans havien fallat %d atributs"
 
+#. Otherwise, it's all honky dory
+#: ../src/palimpsest/gduatasmartdialog.c:1195
+msgid "Disk is OK"
+msgstr "El disc està bé"
+
 #. Translators: Used to convey the status and temperature in one line.
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
@@ -1745,8 +1763,7 @@ msgstr "Ja existeix un fitxer amb el nom «%s». Voleu reemplaçar-lo?"
 msgid ""
 "The file already exists in \"%s\".  Replacing it will overwrite its contents."
 msgstr ""
-"Ja existeix el fitxer a «%s». Si el reemplaceu en sobreescriureu el "
-"contingut."
+"Ja existeix el fitxer a «%s». Si el reemplaceu en sobreescriureu el contingut."
 
 #: ../src/palimpsest/gducreatediskimagedialog.c:453
 msgid "_Replace"
@@ -2104,7 +2121,7 @@ msgstr[1] "%d hores"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1577
+#: ../src/palimpsest/gduvolumegrid.c:1536
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -2113,32 +2130,32 @@ msgstr "Partició %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1584
+#: ../src/palimpsest/gduvolumegrid.c:1543
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Partició %d"
 
-#: ../src/palimpsest/gduvolumegrid.c:1604
+#: ../src/palimpsest/gduvolumegrid.c:1563
 msgid "No Media"
 msgstr "Cap suport"
 
-#: ../src/palimpsest/gduvolumegrid.c:1621
+#: ../src/palimpsest/gduvolumegrid.c:1580
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espai lliure"
 
-#: ../src/palimpsest/gduvolumegrid.c:1663
+#: ../src/palimpsest/gduvolumegrid.c:1622
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
 
-#: ../src/palimpsest/gduvolumegrid.c:1687
+#: ../src/palimpsest/gduvolumegrid.c:1646
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Sistema de fitxers"
 
-#: ../src/palimpsest/gduvolumegrid.c:1706
+#: ../src/palimpsest/gduvolumegrid.c:1665
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Memòria intermèdia"
@@ -2265,12 +2282,3 @@ msgstr "S'ha produït un error en iniciar la memòria d'intercanvi"
 #: ../src/palimpsest/gduwindow.c:2698
 msgid "Error stopping swap"
 msgstr "S'ha produït un error en aturar la memòria d'intercanvi"
-
-#~ msgid "Attach Disk _Image..."
-#~ msgstr "Adjunta una _imatge de disc..."
-
-#~ msgid "_About Disks"
-#~ msgstr "_Quant al discs"
-
-#~ msgid "_Quit"
-#~ msgstr "_Surt"

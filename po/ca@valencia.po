@@ -2,13 +2,14 @@
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Gil Forcada <gilforcada@guifi.net>, 2009, 2010, 2012.
+# Jordi Serratosa <jordis@softcatala.cat>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-15 23:45+0100\n"
-"PO-Revision-Date: 2012-03-15 23:07+0100\n"
+"POT-Creation-Date: 2012-04-10 23:15+0200\n"
+"PO-Revision-Date: 2012-04-02 00:02+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca-XV\n"
@@ -399,7 +400,7 @@ msgid ""
 msgstr ""
 "S'utilitza per indicar que la partició i el seu contingut són necessaris "
 "perquè funcione el sistema operatiu/plataforma. S'hauria d'anar amb "
-"precaució per no suprimir-la o sobreescriuren el contingut"
+"precaució per no suprimir-la o sobreescriure'n el contingut"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
 msgid "Legacy BIOS _Bootable"
@@ -424,7 +425,8 @@ msgid ""
 "only instead of read-write"
 msgstr ""
 "Si s'estableix, alguns sistemes operatius muntaran o utilitzaran el "
-"contingut de la partició només en mode lectura enlloc de lectura i escriptura"
+"contingut de la partició només en mode lectura en lloc de lectura i "
+"escriptura"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 msgid "H_idden"
@@ -1482,7 +1484,7 @@ msgstr "Nom"
 #. Translators: Used in the tooltip for a SMART attribute
 #: ../src/palimpsest/gduatasmartdialog.c:867
 msgid "Description"
-msgstr "Descripció"
+msgstr "Descripció"
 
 #: ../src/palimpsest/gduatasmartdialog.c:908
 #, c-format
@@ -1634,6 +1636,11 @@ msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "El disc està bé, abans havia fallat un atribut"
 msgstr[1] "El disc està bé, abans havien fallat %d atributs"
+
+#. Otherwise, it's all honky dory
+#: ../src/palimpsest/gduatasmartdialog.c:1195
+msgid "Disk is OK"
+msgstr "El disc està bé"
 
 #. Translators: Used to convey the status and temperature in one line.
 #. * The first %s is the status of the drive.
@@ -2104,7 +2111,7 @@ msgstr[1] "%d hores"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1577
+#: ../src/palimpsest/gduvolumegrid.c:1536
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -2113,32 +2120,32 @@ msgstr "Partició %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1584
+#: ../src/palimpsest/gduvolumegrid.c:1543
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Partició %d"
 
-#: ../src/palimpsest/gduvolumegrid.c:1604
+#: ../src/palimpsest/gduvolumegrid.c:1563
 msgid "No Media"
 msgstr "Cap suport"
 
-#: ../src/palimpsest/gduvolumegrid.c:1621
+#: ../src/palimpsest/gduvolumegrid.c:1580
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espai lliure"
 
-#: ../src/palimpsest/gduvolumegrid.c:1663
+#: ../src/palimpsest/gduvolumegrid.c:1622
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
 
-#: ../src/palimpsest/gduvolumegrid.c:1687
+#: ../src/palimpsest/gduvolumegrid.c:1646
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Sistema de fitxers"
 
-#: ../src/palimpsest/gduvolumegrid.c:1706
+#: ../src/palimpsest/gduvolumegrid.c:1665
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Memòria intermèdia"

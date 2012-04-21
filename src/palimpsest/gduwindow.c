@@ -1631,6 +1631,7 @@ update_device_page_for_drive (GduWindow      *window,
   if (our_seat != NULL)
     {
       const gchar *drive_seat = NULL;
+      gboolean consider;
       /* Assume seat0 if a) device is not tagged; or b) udisks does not
        * have seat-support.
        *
@@ -1645,7 +1646,18 @@ update_device_page_for_drive (GduWindow      *window,
 #endif
       if (drive_seat == NULL || strlen (drive_seat) == 0)
         drive_seat = "seat0";
-      if (g_strcmp0 (our_seat, drive_seat) != 0)
+
+      /* If device is attached to seat0, only consider it to be another seat if
+       * it's removable...
+       */
+      consider = TRUE;
+      if (g_strcmp0 (drive_seat, "seat0") == 0)
+        {
+          consider = FALSE;
+          if (udisks_drive_get_removable (drive))
+            consider = TRUE;
+        }
+      if (consider && g_strcmp0 (our_seat, drive_seat) != 0)
         {
           /* Translators: Shown in "Location" when drive is connected to another seat than where
            * our application is running.

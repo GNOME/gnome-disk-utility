@@ -62,6 +62,7 @@ palimpsest_CFLAGS = 					\
 	$(GLIB2_CFLAGS)					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
+	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
 	$(WARN_CFLAGS)					\
 	-lm						\
 	$(NULL)
@@ -70,6 +71,7 @@ palimpsest_LDADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
+	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(NULL)
 
 EXTRA_DIST = 						\

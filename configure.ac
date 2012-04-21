@@ -35,6 +35,27 @@ PKG_CHECK_MODULES(GLIB2, [gio-unix-2.0 >= $GLIB2_REQUIRED])
 PKG_CHECK_MODULES(UDISKS2, [udisks2 >= $UDISKS2_REQUIRED])
 PKG_CHECK_MODULES(GTK3, [gtk+-3.0 >= $GTK3_REQUIRED])
 
+dnl **********************************
+dnl *** Check for libsystemd-login ***
+dnl **********************************
+
+AC_ARG_ENABLE(libsystemd_login, AS_HELP_STRING([--disable-libsystemd-login],[build without liblibsystemd-login]))
+msg_libsystemd_login=no
+LIBSYSTEMD_LOGIN_LIBS=
+LIBSYSTEMD_LOGIN_CFLAGS=
+LIBSYSTEMD_LOGIN_REQUIRED=44
+
+if test "x$enable_libsystemd_login" != "xno"; then
+  PKG_CHECK_EXISTS([libsystemd-login >= $LIBSYSTEMD_LOGIN_REQUIRED], msg_libsystemd_login=yes)
+
+  if test "x$msg_libsystemd_login" = "xyes"; then
+    PKG_CHECK_MODULES([LIBSYSTEMD_LOGIN],[libsystemd-login >= $LIBSYSTEMD_LOGIN_REQUIRED])
+    AC_DEFINE(HAVE_LIBSYSTEMD_LOGIN, 1, [Define to 1 if liblibsystemd_login is available])
+  fi
+fi
+
+AM_CONDITIONAL(USE_LIBSYSTEMD_LOGIN, [test "$msg_libsystemd_login" = "yes"])
+
 # ********************
 # Internationalization
 # ********************
@@ -82,6 +103,8 @@ echo "
         datadir:                    ${datadir}
         sysconfdir:                 ${sysconfdir}
         localstatedir:              ${localstatedir}
+
+        Use libsystem-login:        ${msg_libsystemd_login}
 
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}

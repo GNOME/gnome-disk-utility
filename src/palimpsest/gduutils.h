@@ -55,6 +55,8 @@ void gdu_options_update_entry_option (GtkWidget       *options_entry,
                                       GtkWidget       *widget,
                                       GtkWidget       *entry);
 
+const gchar *gdu_utils_get_seat (void);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

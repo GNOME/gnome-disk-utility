@@ -1542,6 +1542,7 @@ update_device_page_for_drive (GduWindow      *window,
   GIcon *media_icon;
   guint64 size;
   UDisksDriveAta *ata;
+  const gchar *our_seat;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1617,6 +1618,50 @@ update_device_page_for_drive (GduWindow      *window,
               "devtab-wwn-label",
               "devtab-wwn-value-label",
               udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
+
+  /* Figure out Location ...
+   *
+   * TODO: should also show things like "USB port 3" (if connected
+   * to the main chassis) or "Bay 11 of Promise VTRAK 630" (if in a
+   * disk enclosure)...
+   */
+  s = NULL;
+  /* First see if connected to another seat than ours */
+  our_seat = gdu_utils_get_seat ();
+  if (our_seat != NULL)
+    {
+      const gchar *drive_seat = NULL;
+      /* Assume seat0 if a) device is not tagged; or b) udisks does not
+       * have seat-support.
+       *
+       * Note that seat support was added in udisks 1.95.0 (and so was the
+       * UDISKS_CHECK_VERSION macro) - for now, be compatible with older
+       * versions instead of bumping requirement in configure.ac
+       */
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,95,0)
+      drive_seat = udisks_drive_get_seat (drive);
+# endif
+#endif
+      if (drive_seat == NULL || strlen (drive_seat) == 0)
+        drive_seat = "seat0";
+      if (g_strcmp0 (our_seat, drive_seat) != 0)
+        {
+          /* Translators: Shown in "Location" when drive is connected to another seat than where
+           * our application is running.
+           */
+          s = g_strdup (_("Connected to another seat"));
+        }
+    }
+  if (s != NULL)
+    {
+      set_markup (window,
+                  "devtab-location-label",
+                  "devtab-location-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
+    }
+
 
   if (ata != NULL && !udisks_drive_get_media_removable (drive))
     {

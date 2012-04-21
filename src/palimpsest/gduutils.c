@@ -25,6 +25,10 @@
 
 #include "gduutils.h"
 
+#if defined(HAVE_LIBSYSTEMD_LOGIN)
+#include <systemd/sd-login.h>
+#endif
+
 gboolean
 gdu_utils_has_configuration (UDisksBlock  *block,
                              const gchar  *type,
@@ -374,3 +378,35 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
   g_free (ui_escaped);
   g_free (opts);
 }
+
+#if defined(HAVE_LIBSYSTEMD_LOGIN)
+#include <systemd/sd-login.h>
+
+const gchar *
+gdu_utils_get_seat (void)
+{
+  static gsize once = 0;
+  static char *seat = NULL;
+
+  if (g_once_init_enter (&once))
+    {
+      char *session = NULL;
+      if (sd_pid_get_session (getpid (), &session) == 0)
+        {
+          sd_session_get_seat (session, &seat);
+          /* we intentionally leak seat here... */
+        }
+      g_once_init_leave (&once, (gsize) 1);
+    }
+  return seat;
+}
+
+#else
+
+const gchar *
+gdu_utils_get_seat (void)
+{
+  return NULL;
+}
+
+#endif

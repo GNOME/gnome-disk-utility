@@ -1632,8 +1632,12 @@ update_device_page_for_drive (GduWindow      *window,
     {
       const gchar *drive_seat = NULL;
       gboolean consider;
-      /* Assume seat0 if a) device is not tagged; or b) udisks does not
-       * have seat-support.
+      /* If the device is not tagged, assume that udisks does not have
+       * working seat-support... so just assume it's available at our
+       * seat.
+       *
+       * If the seat is "all" it means the device is available at all
+       * seats so don't show anything there.
        *
        * Note that seat support was added in udisks 1.95.0 (and so was the
        * UDISKS_CHECK_VERSION macro) - for now, be compatible with older
@@ -1644,25 +1648,25 @@ update_device_page_for_drive (GduWindow      *window,
       drive_seat = udisks_drive_get_seat (drive);
 # endif
 #endif
-      if (drive_seat == NULL || strlen (drive_seat) == 0)
-        drive_seat = "seat0";
-
-      /* If device is attached to seat0, only consider it to be another seat if
-       * it's removable...
-       */
-      consider = TRUE;
-      if (g_strcmp0 (drive_seat, "seat0") == 0)
+      if (drive_seat != NULL && g_strcmp0 (drive_seat, "all") != 0)
         {
-          consider = FALSE;
-          if (udisks_drive_get_removable (drive))
-            consider = TRUE;
-        }
-      if (consider && g_strcmp0 (our_seat, drive_seat) != 0)
-        {
-          /* Translators: Shown in "Location" when drive is connected to another seat than where
-           * our application is running.
+          /* If device is attached to seat0, only consider it to be another seat if
+           * it's removable...
            */
-          s = g_strdup (_("Connected to another seat"));
+          consider = TRUE;
+          if (g_strcmp0 (drive_seat, "seat0") == 0)
+            {
+              consider = FALSE;
+              if (udisks_drive_get_removable (drive))
+                consider = TRUE;
+            }
+          if (consider && g_strcmp0 (our_seat, drive_seat) != 0)
+            {
+              /* Translators: Shown in "Location" when drive is connected to another seat than where
+               * our application is running.
+               */
+              s = g_strdup (_("Connected to another seat"));
+            }
         }
     }
   if (s != NULL)

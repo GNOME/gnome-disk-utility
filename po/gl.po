@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-02 16:39+0200\n"
-"PO-Revision-Date: 2012-04-02 16:39+0200\n"
+"POT-Creation-Date: 2012-04-22 17:55+0200\n"
+"PO-Revision-Date: 2012-04-22 17:56+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -624,46 +624,51 @@ msgstr "Número de serie"
 msgid "World Wide Name"
 msgstr "Nome a nivel mundial"
 
-#: ../data/ui/palimpsest.ui.h:27
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: ../data/ui/palimpsest.ui.h:28
+msgid "Location"
+msgstr "Localización"
+
+#: ../data/ui/palimpsest.ui.h:29
 msgid "Media"
 msgstr "Medio"
 
-#: ../data/ui/palimpsest.ui.h:28
+#: ../data/ui/palimpsest.ui.h:30
 msgid "Size"
 msgstr "Tamaño"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/palimpsest.ui.h:29 ../src/palimpsest/gduatasmartdialog.c:1632
+#: ../data/ui/palimpsest.ui.h:31 ../src/palimpsest/gduatasmartdialog.c:1632
 msgid "Assessment"
 msgstr "Valoración"
 
-#: ../data/ui/palimpsest.ui.h:30
+#: ../data/ui/palimpsest.ui.h:32
 msgid "Eject media"
 msgstr "Expulsar medio"
 
-#: ../data/ui/palimpsest.ui.h:31
+#: ../data/ui/palimpsest.ui.h:33
 msgid "<b>_Volumes</b>"
 msgstr "<b>_Volumes</b>"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/palimpsest.ui.h:33
+#: ../data/ui/palimpsest.ui.h:35
 msgid "Contents"
 msgstr "Contidos"
 
-#: ../data/ui/palimpsest.ui.h:34
+#: ../data/ui/palimpsest.ui.h:36
 msgid "Device"
 msgstr "Dispositivo"
 
-#: ../data/ui/palimpsest.ui.h:35
+#: ../data/ui/palimpsest.ui.h:37
 msgid "In Use"
 msgstr "En uso"
 
-#: ../data/ui/palimpsest.ui.h:36
+#: ../data/ui/palimpsest.ui.h:38
 msgid "Partition Type"
 msgstr "Tipo de partición"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/palimpsest.ui.h:38
+#: ../data/ui/palimpsest.ui.h:40
 msgid "Backing File"
 msgstr "Facendo copia de seguranza do ficheiro"
 
@@ -2084,33 +2089,33 @@ msgstr "Copiar os datos do dispositivo <i>%s</i>…"
 msgid "Error unlocking encrypted device"
 msgstr "Produciuse un erro ao desbloquear o dispositivo cifrado"
 
-#: ../src/palimpsest/gduutils.c:81
+#: ../src/palimpsest/gduutils.c:85
 msgid "All Files"
 msgstr "Todos os ficheiros"
 
-#: ../src/palimpsest/gduutils.c:85
+#: ../src/palimpsest/gduutils.c:89
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imaxes de disco (*.img, *.iso)"
 
-#: ../src/palimpsest/gduutils.c:105
+#: ../src/palimpsest/gduutils.c:109
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
-#: ../src/palimpsest/gduutils.c:112
+#: ../src/palimpsest/gduutils.c:116
 msgid "Less than a minute"
 msgstr "Menos dun minuto"
 
-#: ../src/palimpsest/gduutils.c:118
+#: ../src/palimpsest/gduutils.c:122
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: ../src/palimpsest/gduutils.c:126
+#: ../src/palimpsest/gduutils.c:130
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -2194,23 +2199,30 @@ msgstr ""
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Só lectura)</span>"
 
-#: ../src/palimpsest/gduwindow.c:1822
+#. Translators: Shown in "Location" when drive is connected to another seat than where
+#. * our application is running.
+#.
+#: ../src/palimpsest/gduwindow.c:1665
+msgid "Connected to another seat"
+msgstr "Conectado a outra localización"
+
+#: ../src/palimpsest/gduwindow.c:1879
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Descoñecido"
 
-#: ../src/palimpsest/gduwindow.c:1849
+#: ../src/palimpsest/gduwindow.c:1906
 msgid "Extended Partition"
 msgstr "Partición estendida"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1890
+#: ../src/palimpsest/gduwindow.c:1947
 msgid "Filesystem Root"
 msgstr "Sistema de ficheiros raíz"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1898
+#: ../src/palimpsest/gduwindow.c:1955
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Si, montado en %s"
@@ -2218,67 +2230,67 @@ msgstr "Si, montado en %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1904 ../src/palimpsest/gduwindow.c:1940
-#: ../src/palimpsest/gduwindow.c:1966
+#: ../src/palimpsest/gduwindow.c:1961 ../src/palimpsest/gduwindow.c:1997
+#: ../src/palimpsest/gduwindow.c:2023
 msgid "No"
 msgstr "Non"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1934 ../src/palimpsest/gduwindow.c:1960
+#: ../src/palimpsest/gduwindow.c:1991 ../src/palimpsest/gduwindow.c:2017
 msgid "Yes"
 msgstr "Si"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2039
+#: ../src/palimpsest/gduwindow.c:2096
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espazo sen asignar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2044
+#: ../src/palimpsest/gduwindow.c:2101
 msgid "Unallocated Space"
 msgstr "Espazo sen asignar"
 
-#: ../src/palimpsest/gduwindow.c:2400
+#: ../src/palimpsest/gduwindow.c:2457
 msgid "Error mounting filesystem"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros"
 
-#: ../src/palimpsest/gduwindow.c:2440
+#: ../src/palimpsest/gduwindow.c:2497
 msgid "Error unmounting filesystem"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
-#: ../src/palimpsest/gduwindow.c:2519
+#: ../src/palimpsest/gduwindow.c:2576
 msgid "Error deleting partition"
 msgstr "Produciuse un erro ao eliminar a partición"
 
-#: ../src/palimpsest/gduwindow.c:2535
+#: ../src/palimpsest/gduwindow.c:2592
 msgid "Are you sure you want to delete the partition?"
 msgstr "Está seguro de que quere eliminar o dispositivo?"
 
-#: ../src/palimpsest/gduwindow.c:2536
+#: ../src/palimpsest/gduwindow.c:2593
 msgid "All data on the partition will be lost"
 msgstr "Todos os datos da partición perderanse"
 
-#: ../src/palimpsest/gduwindow.c:2537
+#: ../src/palimpsest/gduwindow.c:2594
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/palimpsest/gduwindow.c:2568
+#: ../src/palimpsest/gduwindow.c:2625
 msgid "Error ejecting media"
 msgstr "Produciuse un erro ao extraer o medio"
 
-#: ../src/palimpsest/gduwindow.c:2620
+#: ../src/palimpsest/gduwindow.c:2677
 msgid "Error locking encrypted device"
 msgstr "Produciuse un erro ao bloquear o dispositivo cifrado"
 
-#: ../src/palimpsest/gduwindow.c:2661
+#: ../src/palimpsest/gduwindow.c:2718
 msgid "Error starting swap"
 msgstr "Produciuse un erro ao iniciar o espazo de intercambio"
 
-#: ../src/palimpsest/gduwindow.c:2698
+#: ../src/palimpsest/gduwindow.c:2755
 msgid "Error stopping swap"
 msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
@@ -2671,9 +2683,6 @@ msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
 #~ msgid "Choose Server"
 #~ msgstr "Seleccione un servidor"
-
-#~ msgid "Connect to Server"
-#~ msgstr "Conectar a un servidor"
 
 #~ msgid "_Browse..."
 #~ msgstr "_Explorar…"
@@ -4604,9 +4613,6 @@ msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
 #~ msgid "Firmware Version:"
 #~ msgstr "Versión de firmware:"
-
-#~ msgid "Location:"
-#~ msgstr "Localización:"
 
 #~ msgid "Write Cache:"
 #~ msgstr "Caché de escritura:"

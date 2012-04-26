@@ -62,6 +62,7 @@ palimpsest_CFLAGS = 					\
 	$(GLIB2_CFLAGS)					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
+	$(KEYRING1_CFLAGS)				\
 	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
 	$(WARN_CFLAGS)					\
 	-lm						\
@@ -71,6 +72,7 @@ palimpsest_LDADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
+	$(KEYRING1_LIBS)				\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(NULL)
 

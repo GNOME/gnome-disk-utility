@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-22 17:55+0200\n"
-"PO-Revision-Date: 2012-04-22 17:56+0200\n"
+"POT-Creation-Date: 2012-04-27 17:14+0200\n"
+"PO-Revision-Date: 2012-04-27 17:15+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -2085,9 +2085,13 @@ msgstr "_Restaurar"
 msgid "Copying data to device <i>%s</i>..."
 msgstr "Copiar os datos do dispositivo <i>%s</i>…"
 
-#: ../src/palimpsest/gduunlockdialog.c:50
+#: ../src/palimpsest/gduunlockdialog.c:99
 msgid "Error unlocking encrypted device"
 msgstr "Produciuse un erro ao desbloquear o dispositivo cifrado"
+
+#: ../src/palimpsest/gduunlockdialog.c:154
+msgid "The encryption passphrase was retrieved from the keyring"
+msgstr "A frase de paso de cifrado obtívose desde o anel de chaves"
 
 #: ../src/palimpsest/gduutils.c:85
 msgid "All Files"
@@ -2202,27 +2206,27 @@ msgstr "%s <span size=\"smaller\">(Só lectura)</span>"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/palimpsest/gduwindow.c:1665
+#: ../src/palimpsest/gduwindow.c:1668
 msgid "Connected to another seat"
 msgstr "Conectado a outra localización"
 
-#: ../src/palimpsest/gduwindow.c:1879
+#: ../src/palimpsest/gduwindow.c:1883
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Descoñecido"
 
-#: ../src/palimpsest/gduwindow.c:1906
+#: ../src/palimpsest/gduwindow.c:1910
 msgid "Extended Partition"
 msgstr "Partición estendida"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1947
+#: ../src/palimpsest/gduwindow.c:1951
 msgid "Filesystem Root"
 msgstr "Sistema de ficheiros raíz"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1955
+#: ../src/palimpsest/gduwindow.c:1959
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Si, montado en %s"
@@ -2230,67 +2234,67 @@ msgstr "Si, montado en %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1961 ../src/palimpsest/gduwindow.c:1997
-#: ../src/palimpsest/gduwindow.c:2023
+#: ../src/palimpsest/gduwindow.c:1965 ../src/palimpsest/gduwindow.c:2001
+#: ../src/palimpsest/gduwindow.c:2027
 msgid "No"
 msgstr "Non"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1991 ../src/palimpsest/gduwindow.c:2017
+#: ../src/palimpsest/gduwindow.c:1995 ../src/palimpsest/gduwindow.c:2021
 msgid "Yes"
 msgstr "Si"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2096
+#: ../src/palimpsest/gduwindow.c:2100
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espazo sen asignar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2101
+#: ../src/palimpsest/gduwindow.c:2105
 msgid "Unallocated Space"
 msgstr "Espazo sen asignar"
 
-#: ../src/palimpsest/gduwindow.c:2457
+#: ../src/palimpsest/gduwindow.c:2461
 msgid "Error mounting filesystem"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros"
 
-#: ../src/palimpsest/gduwindow.c:2497
+#: ../src/palimpsest/gduwindow.c:2501
 msgid "Error unmounting filesystem"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
-#: ../src/palimpsest/gduwindow.c:2576
+#: ../src/palimpsest/gduwindow.c:2580
 msgid "Error deleting partition"
 msgstr "Produciuse un erro ao eliminar a partición"
 
-#: ../src/palimpsest/gduwindow.c:2592
+#: ../src/palimpsest/gduwindow.c:2596
 msgid "Are you sure you want to delete the partition?"
 msgstr "Está seguro de que quere eliminar o dispositivo?"
 
-#: ../src/palimpsest/gduwindow.c:2593
+#: ../src/palimpsest/gduwindow.c:2597
 msgid "All data on the partition will be lost"
 msgstr "Todos os datos da partición perderanse"
 
-#: ../src/palimpsest/gduwindow.c:2594
+#: ../src/palimpsest/gduwindow.c:2598
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/palimpsest/gduwindow.c:2625
+#: ../src/palimpsest/gduwindow.c:2629
 msgid "Error ejecting media"
 msgstr "Produciuse un erro ao extraer o medio"
 
-#: ../src/palimpsest/gduwindow.c:2677
+#: ../src/palimpsest/gduwindow.c:2681
 msgid "Error locking encrypted device"
 msgstr "Produciuse un erro ao bloquear o dispositivo cifrado"
 
-#: ../src/palimpsest/gduwindow.c:2718
+#: ../src/palimpsest/gduwindow.c:2722
 msgid "Error starting swap"
 msgstr "Produciuse un erro ao iniciar o espazo de intercambio"
 
-#: ../src/palimpsest/gduwindow.c:2755
+#: ../src/palimpsest/gduwindow.c:2759
 msgid "Error stopping swap"
 msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
@@ -5052,9 +5056,6 @@ msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
 #~ msgid "Forge_t Passphrase"
 #~ msgstr "Esquecer a frase de pas_o"
-
-#~ msgid "Delete passphrase from keyring"
-#~ msgstr "Eliminar a frase de paso desde o anel de chaves"
 
 #~ msgid "_Create Logical Volume"
 #~ msgstr "_Crear un volume lóxico"

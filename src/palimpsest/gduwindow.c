@@ -1636,9 +1636,6 @@ update_device_page_for_drive (GduWindow      *window,
        * working seat-support... so just assume it's available at our
        * seat.
        *
-       * If the seat is "all" it means the device is available at all
-       * seats so don't show anything there.
-       *
        * Note that seat support was added in udisks 1.95.0 (and so was the
        * UDISKS_CHECK_VERSION macro) - for now, be compatible with older
        * versions instead of bumping requirement in configure.ac
@@ -1648,7 +1645,7 @@ update_device_page_for_drive (GduWindow      *window,
       drive_seat = udisks_drive_get_seat (drive);
 # endif
 #endif
-      if (drive_seat != NULL && g_strcmp0 (drive_seat, "all") != 0)
+      if (drive_seat != NULL)
         {
           /* If device is attached to seat0, only consider it to be another seat if
            * it's removable...

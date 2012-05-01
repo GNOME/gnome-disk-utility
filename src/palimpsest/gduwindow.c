@@ -1833,6 +1833,8 @@ update_device_page_for_block (GduWindow          *window,
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
+
+  /* loop device of main block device (not partition) */
   loop = udisks_object_peek_loop (window->current_object);
 
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
@@ -2859,13 +2861,12 @@ on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
                                                gpointer    user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  UDisksObject *object;
   UDisksLoop *loop;
   gboolean sw_value;
 
-  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  g_assert (object != NULL);
-  loop = udisks_object_peek_loop (object);
+  g_return_if_fail (window->current_object != NULL);
+
+  loop = udisks_object_peek_loop (window->current_object);
   if (loop == NULL)
     {
       g_warning ("current object is not a loop object");

@@ -122,6 +122,8 @@ struct _GduWindow
   GtkWidget *generic_menu_item_create_volume_image;
   GtkWidget *generic_menu_item_restore_volume_image;
 
+  GtkWidget *devtab_loop_autoclear_switch;
+
   GHashTable *label_connections;
 };
 
@@ -161,6 +163,8 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_action_deactivate_swap), "devtab-action-deactivate-swap"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_generic_drive), "devtab-action-generic-drive"},
 
+  {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
+
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_restore_disk_image), "generic-drive-menu-item-restore-disk-image"},
@@ -176,6 +180,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
+
   {0, NULL}
 };
 
@@ -272,6 +277,10 @@ static void on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
                                                       gpointer   user_data);
 static void on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
                                                        gpointer   user_data);
+
+static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
+                                                           GParamSpec *pspec,
+                                                           gpointer    user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -1116,6 +1125,12 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_generic_menu_item_restore_volume_image),
                     window);
 
+  /* loop's auto-clear switch */
+  g_signal_connect (window->devtab_loop_autoclear_switch,
+                    "notify::active",
+                    G_CALLBACK (on_devtab_loop_autoclear_switch_notify_active),
+                    window);
+
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
 }
 
@@ -1305,6 +1320,27 @@ set_size (GduWindow      *window,
   s = udisks_client_get_size_for_display (window->client, size, FALSE, TRUE);
   set_markup (window, key_label_id, label_id, s, size);
   g_free (s);
+}
+
+static void
+set_switch (GduWindow      *window,
+            const gchar    *key_label_id,
+            const gchar    *switch_box_id,
+            const gchar    *switch_id,
+            gboolean        active)
+{
+  GtkWidget *key_label;
+  GtkWidget *switch_box;
+  GtkWidget *switch_;
+
+  key_label = GTK_WIDGET (gtk_builder_get_object (window->builder, key_label_id));
+  switch_box = GTK_WIDGET (gtk_builder_get_object (window->builder, switch_box_id));
+  switch_ = GTK_WIDGET (gtk_builder_get_object (window->builder, switch_id));
+
+  gtk_switch_set_active (GTK_SWITCH (switch_), active);
+  gtk_widget_show (key_label);
+  gtk_widget_show (switch_box);
+  gtk_widget_show (switch_);
 }
 
 static GList *
@@ -1894,6 +1930,16 @@ update_device_page_for_block (GduWindow          *window,
                   "devtab-backing-file-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
+
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,97,0)
+      set_switch (window,
+                  "devtab-loop-autoclear-label",
+                  "devtab-loop-autoclear-switch-box",
+                  "devtab-loop-autoclear-switch",
+                  udisks_loop_get_autoclear (loop));
+# endif
+#endif
     }
 
   usage = udisks_block_get_id_usage (block);
@@ -2774,6 +2820,75 @@ on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_dat
                               NULL, /* cancellable */
                               (GAsyncReadyCallback) swapspace_stop_cb,
                               g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,97,0)
+
+static void
+loop_set_autoclear_cb (UDisksLoop      *loop,
+                       GAsyncResult    *res,
+                       gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  /* in case of error, make sure the GtkSwitch:active corresponds to UDisksLoop:autoclear */
+  update_all (window);
+
+  error = NULL;
+  if (!udisks_loop_call_set_autoclear_finish (loop,
+                                              res,
+                                              &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error setting autoclear flag"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+# endif
+#endif
+
+static void
+on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
+                                               GParamSpec *pspec,
+                                               gpointer    user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+  UDisksLoop *loop;
+  gboolean sw_value;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  loop = udisks_object_peek_loop (object);
+  if (loop == NULL)
+    {
+      g_warning ("current object is not a loop object");
+      goto out;
+    }
+
+  sw_value = !! gtk_switch_get_active (GTK_SWITCH (gobject));
+  if (sw_value != (!!udisks_loop_get_autoclear (loop)))
+    {
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,97,0)
+      udisks_loop_call_set_autoclear (loop,
+                                      sw_value,
+                                      g_variant_new ("a{sv}", NULL), /* options */
+                                      NULL, /* cancellable */
+                                      (GAsyncReadyCallback) loop_set_autoclear_cb,
+                                      g_object_ref (window));
+# endif
+#endif
+    }
+
+ out:
+  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-01 04:09+0000\n"
-"PO-Revision-Date: 2012-05-01 12:00+0200\n"
+"POT-Creation-Date: 2012-05-01 23:35+0000\n"
+"PO-Revision-Date: 2012-05-02 13:10+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../data/gnome-disk-image-mounter.desktop.in.h:1
+#: ../src/gnome-disk-image-mounter/main.c:127
+#| msgid "Select Disk Image to restore"
+msgid "Disk Image Mounter"
+msgstr "Montador de imágenes de discos"
 
 #: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
 #: ../src/palimpsest/gduwindow.c:897
@@ -775,6 +781,85 @@ msgstr "<big>Introduzca la contraseña para desbloquear</big>"
 #: ../data/ui/unlock-device-dialog.ui.h:4
 msgid "_Unlock"
 msgstr "_Desbloquear"
+
+#: ../src/gnome-disk-image-mounter/main.c:47
+msgid "COMMAND"
+msgstr "COMANDO"
+
+#: ../src/gnome-disk-image-mounter/main.c:52
+#, c-format
+msgid ""
+"Commands:\n"
+"  help         Shows this information\n"
+"  attach       Attach and mount one or more disk image files\n"
+"\n"
+"Use \"%s COMMAND --help\" to get help on each command.\n"
+msgstr ""
+"Comandos:\n"
+"  help         Muestra esta información\n"
+"  attach       Acoplar y montar uno o más archivos de imágenes de discos\n"
+"\n"
+"Use «%s COMANDO --help» para obtener ayuda sobre cada comando.\n"
+
+#: ../src/gnome-disk-image-mounter/main.c:125
+#| msgid "An error occured"
+msgid "An error occurred"
+msgstr "Ocurrió un error"
+
+#: ../src/gnome-disk-image-mounter/main.c:146
+#| msgid "Error writing to backup image"
+msgid "Allow writing to the image"
+msgstr "Permitir escribir en la imagen"
+
+#: ../src/gnome-disk-image-mounter/main.c:162
+msgid "Attach and mount one or more disk image files."
+msgstr "Acoplar y montar uno o más archivos de imágenes de discos."
+
+#: ../src/gnome-disk-image-mounter/main.c:189
+#, c-format
+#| msgid "Error sending `%s': %s"
+msgid "Error opening file `%s': %m"
+msgstr "Error al abrir el archivo «%s»: %m"
+
+#: ../src/gnome-disk-image-mounter/main.c:210
+#, c-format
+#| msgid "Error attaching disk image"
+msgid "Error attaching disk image: %s (%s, %d)"
+msgstr "Error al acoplar la imagen de disco: %s (%s, %d)"
+
+#: ../src/gnome-disk-image-mounter/main.c:229
+#, c-format
+#| msgid "The volume contains a mountable filesystem."
+msgid "The file `%s' does not appear to contain a mountable filesystem"
+msgstr "El archivo «%s» no contiene un sistema de archivos montable"
+
+#: ../src/gnome-disk-image-mounter/main.c:237
+#: ../src/gnome-disk-image-mounter/main.c:263
+#, c-format
+#| msgid "Error deleting loop device"
+msgid "Error cleaning up loop device: %s (%s, %d)"
+msgstr "Error al eliminar el dispositivo «loop»: %s (%s, %d)"
+
+#: ../src/gnome-disk-image-mounter/main.c:253
+#, c-format
+#| msgid "Error mounting filesystem"
+msgid "Error mounting filesystem: %s (%s, %d)"
+msgstr "Error al montar el sistema de archivos: %s (%s, %d)"
+
+#: ../src/gnome-disk-image-mounter/main.c:296
+#, c-format
+msgid "Error connecting to udisks daemon: %s (%s, %d)"
+msgstr "Error al conectar con el demonio udisks: %s (%s, %d)"
+
+#: ../src/gnome-disk-image-mounter/main.c:316
+#, c-format
+#| msgid "Unknown Scheme: %s"
+msgid ""
+"Unknown command `%s'\n"
+"\n"
+msgstr ""
+"Comando «%s» desconocido\n"
+"\n"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2217,23 +2302,23 @@ msgstr "%s <span size=\"smaller\">(Sólo lectura)</span>"
 msgid "Connected to another seat"
 msgstr "Conectado a otra ubicación"
 
-#: ../src/palimpsest/gduwindow.c:1916
+#: ../src/palimpsest/gduwindow.c:1918
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/palimpsest/gduwindow.c:1953
+#: ../src/palimpsest/gduwindow.c:1955
 msgid "Extended Partition"
 msgstr "Partición extendida"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1994
+#: ../src/palimpsest/gduwindow.c:1996
 msgid "Filesystem Root"
 msgstr "Raíz del sistema de archivos"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:2002
+#: ../src/palimpsest/gduwindow.c:2004
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Sí, montado en %s"
@@ -2241,72 +2326,71 @@ msgstr "Sí, montado en %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:2008 ../src/palimpsest/gduwindow.c:2044
-#: ../src/palimpsest/gduwindow.c:2070
+#: ../src/palimpsest/gduwindow.c:2010 ../src/palimpsest/gduwindow.c:2046
+#: ../src/palimpsest/gduwindow.c:2072
 msgid "No"
 msgstr "No"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:2038 ../src/palimpsest/gduwindow.c:2064
+#: ../src/palimpsest/gduwindow.c:2040 ../src/palimpsest/gduwindow.c:2066
 msgid "Yes"
 msgstr "Sí"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2143
+#: ../src/palimpsest/gduwindow.c:2145
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espacio sin usar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2148
+#: ../src/palimpsest/gduwindow.c:2150
 msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
-#: ../src/palimpsest/gduwindow.c:2504
+#: ../src/palimpsest/gduwindow.c:2506
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: ../src/palimpsest/gduwindow.c:2544
+#: ../src/palimpsest/gduwindow.c:2546
 msgid "Error unmounting filesystem"
 msgstr "Error al desmontar el sistema de archivos"
 
-#: ../src/palimpsest/gduwindow.c:2623
+#: ../src/palimpsest/gduwindow.c:2625
 msgid "Error deleting partition"
 msgstr "Error al eliminar la partición"
 
-#: ../src/palimpsest/gduwindow.c:2639
+#: ../src/palimpsest/gduwindow.c:2641
 msgid "Are you sure you want to delete the partition?"
 msgstr "¿Está seguro de que quiere eliminar la partición?"
 
-#: ../src/palimpsest/gduwindow.c:2640
+#: ../src/palimpsest/gduwindow.c:2642
 msgid "All data on the partition will be lost"
 msgstr "Se perderán todos los datos de la partición"
 
-#: ../src/palimpsest/gduwindow.c:2641
+#: ../src/palimpsest/gduwindow.c:2643
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/palimpsest/gduwindow.c:2672
+#: ../src/palimpsest/gduwindow.c:2674
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: ../src/palimpsest/gduwindow.c:2724
+#: ../src/palimpsest/gduwindow.c:2726
 msgid "Error locking encrypted device"
 msgstr "Error al bloquear el dispositivo cifrado"
 
-#: ../src/palimpsest/gduwindow.c:2765
+#: ../src/palimpsest/gduwindow.c:2767
 msgid "Error starting swap"
 msgstr "Error al iniciar el intercambio"
 
-#: ../src/palimpsest/gduwindow.c:2802
+#: ../src/palimpsest/gduwindow.c:2804
 msgid "Error stopping swap"
 msgstr "Error al detener el intercambio"
 
-#: ../src/palimpsest/gduwindow.c:2847
-#| msgid "Error setting partition flags"
+#: ../src/palimpsest/gduwindow.c:2849
 msgid "Error setting autoclear flag"
 msgstr "Error al establecer la opción de limpieza automática"
 
@@ -3638,9 +3722,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Error logging in"
 #~ msgstr "Error al iniciar sesión"
 
-#~ msgid "Error sending `%s': %s"
-#~ msgstr "Error al enviar «%s»: %s"
-
 #~ msgid ""
 #~ "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for "
 #~ "secret' but got `%s'"
@@ -4602,9 +4683,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Solid-State Disk"
 #~ msgstr "Disco de estado sólido"
 
-#~ msgid "Unknown Scheme: %s"
-#~ msgstr "Esquema desconocido: %s"
-
 #~ msgid "Error launching Brasero"
 #~ msgstr "Error al lanzar Brasero"
 
@@ -5144,9 +5222,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Get Help on Disk Utility"
 #~ msgstr "Obtener ayuda acerca de la Utilidad de discos"
 
-#~ msgid "An error occured"
-#~ msgstr "Ocurrió un error"
-
 #~ msgid "The operation failed."
 #~ msgstr "Falló la operación."
 
@@ -5360,9 +5435,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 
 #~ msgid "Error setting file system label"
 #~ msgstr "Error al establecer la etiqueta del sistema de archivos"
-
-#~ msgid "The volume contains a mountable filesystem."
-#~ msgstr "El volumen contiene un sistema de archivos montable."
 
 #~ msgid "_Change"
 #~ msgstr "_Cambiar"

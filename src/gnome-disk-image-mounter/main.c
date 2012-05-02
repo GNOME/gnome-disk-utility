@@ -30,77 +30,8 @@
 
 #include <udisks/udisks.h>
 
-/* ---------------------------------------------------------------------------------------------------- */
-
 static gboolean have_gtk = FALSE;
 static UDisksClient *udisks_client = NULL;
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-usage (gint *argc, gchar **argv[], gboolean use_stdout)
-{
-  GOptionContext *o;
-  gchar *s;
-  gchar *program_name;
-
-  o = g_option_context_new (_("COMMAND"));
-  g_option_context_set_help_enabled (o, FALSE);
-  /* Ignore parsing result */
-  g_option_context_parse (o, argc, argv, NULL);
-  program_name = g_path_get_basename ((*argv)[0]);
-  s = g_strdup_printf (_("Commands:\n"
-                         "  help         Shows this information\n"
-                         "  attach       Attach and mount one or more disk image files\n"
-                         "\n"
-                         "Use \"%s COMMAND --help\" to get help on each command.\n"),
-                       program_name);
-  g_free (program_name);
-  g_option_context_set_description (o, s);
-  g_free (s);
-  s = g_option_context_get_help (o, FALSE, NULL);
-  if (use_stdout)
-    g_print ("%s", s);
-  else
-    g_printerr ("%s", s);
-  g_free (s);
-  g_option_context_free (o);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-remove_arg (gint num, gint *argc, gchar **argv[])
-{
-  gint n;
-
-  g_assert (num <= (*argc));
-
-  for (n = num; (*argv)[n] != NULL; n++)
-    (*argv)[n] = (*argv)[n+1];
-  (*argv)[n] = NULL;
-  (*argc) = (*argc) - 1;
-}
-
-static void
-modify_argv0_for_command (gint *argc, gchar **argv[], const gchar *command)
-{
-  gchar *s;
-  gchar *program_name;
-
-  /* TODO:
-   *  1. get a g_set_prgname() ?; or
-   *  2. save old argv[0] and restore later
-   */
-
-  g_assert (g_strcmp0 ((*argv)[1], command) == 0);
-  remove_arg (1, argc, argv);
-
-  program_name = g_path_get_basename ((*argv)[0]);
-  s = g_strdup_printf ("%s %s", (*argv)[0], command);
-  (*argv)[0] = s;
-  g_free (program_name);
-}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -139,30 +70,47 @@ show_error (const gchar *format, ...)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean opt_attach_writable = FALSE;
+static gboolean opt_writable = FALSE;
 
-static const GOptionEntry attach_entries[] =
+static const GOptionEntry opt_entries[] =
 {
-  { "writable", 'w', 0, G_OPTION_ARG_NONE, &opt_attach_writable, N_("Allow writing to the image"), NULL},
+  { "writable", 'w', 0, G_OPTION_ARG_NONE, &opt_writable, N_("Allow writing to the image"), NULL},
   { NULL }
 };
 
-static gint
-handle_attach (gint *argc, gchar **argv[])
+/* ---------------------------------------------------------------------------------------------------- */
+
+int
+main (int argc, char *argv[])
 {
-  guint n;
   gint ret = 1;
+  GError *error = NULL;
   gchar *s = NULL;
   GOptionContext *o = NULL;
+  guint n;
 
-  modify_argv0_for_command (argc, argv, "attach");
+  bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+  textdomain (GETTEXT_PACKAGE);
+
+  g_type_init ();
+  have_gtk = gtk_init_check (&argc, &argv);
+
+  udisks_client = udisks_client_new_sync (NULL, &error);
+  if (udisks_client == NULL)
+    {
+      g_printerr (_("Error connecting to udisks daemon: %s (%s, %d)"),
+                  error->message, g_quark_to_string (error->domain), error->code);
+      g_error_free (error);
+      goto out;
+    }
 
   o = g_option_context_new (NULL);
   g_option_context_set_help_enabled (o, FALSE);
   g_option_context_set_summary (o, _("Attach and mount one or more disk image files."));
-  g_option_context_add_main_entries (o, attach_entries, GETTEXT_PACKAGE);
+  g_option_context_add_main_entries (o, opt_entries, GETTEXT_PACKAGE);
 
-  if (!g_option_context_parse (o, argc, argv, NULL) || *argc <= 1)
+  if (!g_option_context_parse (o, &argc, &argv, NULL) || argc <= 1)
     {
       s = g_option_context_get_help (o, FALSE, NULL);
       g_printerr ("%s", s);
@@ -171,9 +119,10 @@ handle_attach (gint *argc, gchar **argv[])
     }
 
   /* Files to attach are positional arguments */
-  for (n = 1; n < *argc; n++)
+  for (n = 1; n < argc; n++)
     {
-      const gchar *filename = (*argv)[n];
+      const gchar *uri;
+      gchar *filename;
       GUnixFDList *fd_list;
       GVariantBuilder options_builder;
       gint fd;
@@ -182,17 +131,30 @@ handle_attach (gint *argc, gchar **argv[])
       UDisksObject *object;
       UDisksLoop *loop;
       UDisksFilesystem *filesystem;
+      GFile *file;
 
-      fd = open (filename, opt_attach_writable ? O_RDWR : O_RDONLY);
+      uri = argv[n];
+      file = g_file_new_for_commandline_arg (uri);
+      filename = g_file_get_path (file);
+      g_object_unref (file);
+
+      if (filename == NULL)
+        {
+          show_error (_("Cannot open `%s' - maybe the volume isn't mounted?"), uri);
+          goto out;
+        }
+
+      fd = open (filename, opt_writable ? O_RDWR : O_RDONLY);
       if (fd == -1)
         {
-          show_error (_("Error opening file `%s': %m"), filename);
+          show_error (_("Error opening `%s': %m"), filename);
+          g_free (filename);
           goto out;
         }
 
       g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
       g_variant_builder_add (&options_builder, "{sv}", "no-part-scan", g_variant_new_boolean (TRUE));
-      if (!opt_attach_writable)
+      if (!opt_writable)
         g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
 
       fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
@@ -212,6 +174,7 @@ handle_attach (gint *argc, gchar **argv[])
                       error->message, g_quark_to_string (error->domain), error->code);
           g_error_free (error);
           g_object_unref (fd_list);
+          g_free (filename);
           goto out;
         }
       g_object_unref (fd_list);
@@ -239,6 +202,7 @@ handle_attach (gint *argc, gchar **argv[])
                           error->message, g_quark_to_string (error->domain), error->code);
               g_error_free (error);
             }
+          g_free (filename);
           goto out;
         }
 
@@ -265,59 +229,14 @@ handle_attach (gint *argc, gchar **argv[])
                           error->message, g_quark_to_string (error->domain), error->code);
               g_error_free (error);
             }
+          g_free (filename);
           goto out;
         }
+
+      g_free (filename);
     }
 
   ret = 0;
-
- out:
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-int
-main (int argc, char *argv[])
-{
-  gint ret = 1;
-  const gchar *command;
-  GError *error = NULL;
-
-  bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
-
-  g_type_init ();
-  have_gtk = gtk_init_check (&argc, &argv);
-
-  udisks_client = udisks_client_new_sync (NULL, &error);
-  if (udisks_client == NULL)
-    {
-      g_printerr (_("Error connecting to udisks daemon: %s (%s, %d)"),
-                  error->message, g_quark_to_string (error->domain), error->code);
-      g_error_free (error);
-      goto out;
-    }
-
-  command = argv[1];
-  if (g_strcmp0 (command, "help") == 0)
-    {
-      usage (&argc, &argv, TRUE);
-      ret = 0;
-    }
-  else if (g_strcmp0 (command, "attach") == 0)
-    {
-      ret = handle_attach (&argc, &argv);
-      goto out;
-    }
-  else
-    {
-      if (command != NULL)
-        g_printerr (_("Unknown command `%s'\n\n"), command);
-      usage (&argc, &argv, FALSE);
-      goto out;
-    }
 
  out:
   g_clear_object (&udisks_client);

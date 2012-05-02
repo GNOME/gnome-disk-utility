@@ -191,7 +191,7 @@ handle_attach (gint *argc, gchar **argv[])
         }
 
       g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-        g_variant_builder_add (&options_builder, "{sv}", "no-part-scan", g_variant_new_boolean (TRUE));
+      g_variant_builder_add (&options_builder, "{sv}", "no-part-scan", g_variant_new_boolean (TRUE));
       if (!opt_attach_writable)
         g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
 

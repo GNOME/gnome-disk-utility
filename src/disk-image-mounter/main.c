@@ -80,6 +80,69 @@ static const GOptionEntry opt_entries[] =
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/* TODO: keep in sync with src/disks/gduutils.c (ideally in shared lib) */
+static void
+_gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
+{
+  GtkFileFilter *filter;
+  const gchar *folder;
+
+  /* Default to the "Documents" folder since that's where we save such images */
+  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
+  if (folder != NULL)
+    gtk_file_chooser_set_current_folder (file_chooser, folder);
+
+  /* TODO: define proper mime-types */
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
+  gtk_file_filter_add_pattern (filter, "*.img");
+  gtk_file_filter_add_pattern (filter, "*.iso");
+  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
+  gtk_file_chooser_set_filter (file_chooser, filter);
+}
+
+static GSList *
+do_filechooser (void)
+{
+  GSList *ret = NULL;
+  GtkWidget *dialog;
+  GtkWidget *ro_checkbutton;
+
+  ret = NULL;
+
+  dialog = gtk_file_chooser_dialog_new (_("Select Disk Image(s) to Mount"),
+                                        NULL, /* parent window */
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        _("_Mount"), GTK_RESPONSE_ACCEPT,
+                                        NULL);
+  _gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog));
+  gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
+
+  /* Add a RO check button that defaults to RO */
+  ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only mount"));
+  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the mounts will be read-only. This is useful if you don't want the underlying disk image to be modified"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), TRUE);
+  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
+
+  //gtk_widget_show_all (dialog);
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
+    goto out;
+
+  ret = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (dialog));
+
+ out:
+  gtk_widget_destroy (dialog);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 int
 main (int argc, char *argv[])
 {
@@ -88,6 +151,8 @@ main (int argc, char *argv[])
   gchar *s = NULL;
   GOptionContext *o = NULL;
   guint n;
+  GSList *uris = NULL;
+  GSList *l;
 
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -110,7 +175,7 @@ main (int argc, char *argv[])
   g_option_context_set_summary (o, _("Attach and mount one or more disk image files."));
   g_option_context_add_main_entries (o, opt_entries, GETTEXT_PACKAGE);
 
-  if (!g_option_context_parse (o, &argc, &argv, NULL) || argc <= 1)
+  if (!g_option_context_parse (o, &argc, &argv, NULL))
     {
       s = g_option_context_get_help (o, FALSE, NULL);
       g_printerr ("%s", s);
@@ -118,8 +183,27 @@ main (int argc, char *argv[])
       goto out;
     }
 
+  if (argc > 1)
+    {
+      for (n = 1; n < argc; n++)
+        uris = g_slist_prepend (uris, g_strdup (argv[n]));
+      uris = g_slist_reverse (uris);
+    }
+  else
+    {
+      if (!have_gtk)
+        {
+          show_error ("No files given and GTK+ not available");
+          goto out;
+        }
+      else
+        {
+          uris = do_filechooser ();
+        }
+    }
+
   /* Files to attach are positional arguments */
-  for (n = 1; n < argc; n++)
+  for (l = uris; l != NULL; l = l->next)
     {
       const gchar *uri;
       gchar *filename;
@@ -133,7 +217,7 @@ main (int argc, char *argv[])
       UDisksFilesystem *filesystem;
       GFile *file;
 
-      uri = argv[n];
+      uri = l->data;
       file = g_file_new_for_commandline_arg (uri);
       filename = g_file_get_path (file);
       g_object_unref (file);
@@ -239,6 +323,7 @@ main (int argc, char *argv[])
   ret = 0;
 
  out:
+  g_slist_free_full (uris, g_free);
   g_clear_object (&udisks_client);
   return ret;
 }

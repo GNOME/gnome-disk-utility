@@ -1,4 +1,4 @@
-SUBDIRS = palimpsest gnome-disk-image-mounter
+SUBDIRS = disks disk-image-mounter
 
 clean-local :
 	rm -f *~

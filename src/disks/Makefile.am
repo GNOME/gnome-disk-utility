@@ -2,7 +2,7 @@
 NULL =
 BUILT_SOURCES =
 
-bin_PROGRAMS = palimpsest
+bin_PROGRAMS = gnome-disks
 
 gduenumtypes.h: gduenums.h gduenumtypes.h.template
 	( top_builddir=`cd $(top_builddir) && pwd`; 						\
@@ -22,7 +22,7 @@ enum_built_sources =							\
 
 BUILT_SOURCES += $(enum_built_sources)
 
-palimpsest_SOURCES = 							\
+gnome_disks_SOURCES = 							\
 					main.c				\
 	gdu.h								\
 	gduapplication.h		gduapplication.c		\
@@ -50,15 +50,15 @@ palimpsest_SOURCES = 							\
 	$(enum_built_sources)						\
 	$(NULL)
 
-palimpsest_CPPFLAGS = 					\
+gnome_disks_CPPFLAGS = 					\
 	-I$(top_srcdir)/src/				\
 	-I$(top_builddir)/src/				\
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
-	-DG_LOG_DOMAIN=\"Palimpsest\"			\
+	-DG_LOG_DOMAIN=\"GNOME-Disks\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(NULL)
 
-palimpsest_CFLAGS = 					\
+gnome_disks_CFLAGS = 					\
 	$(GLIB2_CFLAGS)					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
@@ -68,7 +68,7 @@ palimpsest_CFLAGS = 					\
 	-lm						\
 	$(NULL)
 
-palimpsest_LDADD = 					\
+gnome_disks_LDADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\

@@ -10,7 +10,7 @@ ui_DATA = 				\
 	edit-partition-dialog.ui	\
 	edit-gpt-partition-dialog.ui	\
 	edit-dos-partition-dialog.ui	\
-	palimpsest.ui			\
+	disks.ui			\
 	unlock-device-dialog.ui		\
 	format-volume-dialog.ui		\
 	smart-dialog.ui			\

@@ -77,8 +77,8 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
-src/palimpsest/Makefile
-src/gnome-disk-image-mounter/Makefile
+src/disks/Makefile
+src/disk-image-mounter/Makefile
 po/Makefile.in
 data/Makefile
 data/icons/Makefile

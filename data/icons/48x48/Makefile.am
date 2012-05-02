@@ -2,7 +2,7 @@ NULL =
 
 icondir = $(datadir)/icons/hicolor/48x48/apps
 icon_DATA = 				\
-	palimpsest.png			\
+	gnome-disks.png			\
 	$(NULL)
 
 EXTRA_DIST = \

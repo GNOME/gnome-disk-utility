@@ -50,7 +50,7 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 
-/* Keep in sync with tabs in palimpsest.ui file */
+/* Keep in sync with tabs in disks.ui file */
 typedef enum
 {
   DETAILS_PAGE_NOT_SELECTED,
@@ -137,7 +137,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, device_toolbar_attach_disk_image_button), "device-tree-attach-disk-image-button"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar_detach_disk_image_button), "device-tree-detach-disk-image-button"},
   {G_STRUCT_OFFSET (GduWindow, device_treeview), "device-tree-treeview"},
-  {G_STRUCT_OFFSET (GduWindow, details_notebook), "palimpsest-notebook"},
+  {G_STRUCT_OFFSET (GduWindow, details_notebook), "disks-notebook"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_table), "devtab-drive-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_box), "devtab-drive-box"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_vbox), "devtab-drive-vbox"},
@@ -883,7 +883,7 @@ gdu_window_constructed (GObject *object)
     G_OBJECT_CLASS (gdu_window_parent_class)->constructed (object);
 
   /* load UI file */
-  gdu_application_new_widget (window->application, "palimpsest.ui", NULL, &window->builder);
+  gdu_application_new_widget (window->application, "disks.ui", NULL, &window->builder);
 
   /* set up widgets */
   for (n = 0; widget_mapping[n].name != NULL; n++)

@@ -67,7 +67,7 @@ gdu_application_local_command_line (GApplication    *_app,
   GduApplication *app = GDU_APPLICATION (_app);
 
   /* figure out if running from source tree */
-  if (g_strcmp0 ((*arguments)[0], "./palimpsest") == 0)
+  if (g_strcmp0 ((*arguments)[0], "./gnome-disks") == 0)
     app->running_from_source_tree = TRUE;
 
   /* chain up */
@@ -200,7 +200,7 @@ gdu_application_new (void)
    *
    * has been resolved.
    */
-  g_set_prgname ("palimpsest");
+  g_set_prgname ("gnome-disks");
   gtk_init (NULL, NULL);
   return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
                                       "application-id", "org.gnome.DiskUtility",

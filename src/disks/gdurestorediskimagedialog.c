@@ -463,7 +463,7 @@ gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
   g_signal_connect (data->source_file_fcbutton, "file-set",
                     G_CALLBACK (on_file_set), data);
   data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
-  data->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING, "", &data->warning_label);
+  data->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO, "", &data->warning_label);
   gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->warning_infobar, TRUE, TRUE, 0);
   gtk_widget_set_no_show_all (data->warning_infobar, TRUE);
   data->error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR, "", &data->error_label);

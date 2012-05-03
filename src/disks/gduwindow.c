@@ -2874,19 +2874,19 @@ on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
     }
 
   sw_value = !! gtk_switch_get_active (GTK_SWITCH (gobject));
-  if (sw_value != (!!udisks_loop_get_autoclear (loop)))
-    {
 #ifdef UDISKS_CHECK_VERSION
 # if UDISKS_CHECK_VERSION(1,97,0)
+  if (sw_value != (!!udisks_loop_get_autoclear (loop)))
+    {
       udisks_loop_call_set_autoclear (loop,
                                       sw_value,
                                       g_variant_new ("a{sv}", NULL), /* options */
                                       NULL, /* cancellable */
                                       (GAsyncReadyCallback) loop_set_autoclear_cb,
                                       g_object_ref (window));
+    }
 # endif
 #endif
-    }
 
  out:
   ;

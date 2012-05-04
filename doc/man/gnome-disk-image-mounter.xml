@@ -1,0 +1,77 @@
+<refentry id="gnome-disk-image-mounter">
+  <refentryinfo>
+    <title>gnome-disk-utility</title>
+    <date>May 2012</date>
+    <productname>GNOME</productname>
+  </refentryinfo>
+
+  <refnamediv>
+    <refname>gnome-disk-image-mounter</refname>
+    <refpurpose>Attach and mount disk images</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv><title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>gnome-disk-image-mounter</command>
+      <arg choice="opt">--writable</arg>
+      <arg choice="opt" rep="repeat"><replaceable>URI</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      <command>gnome-disk-image-mounter</command> can be used to mount
+      disk images. Both regular files and <emphasis>GVfs</emphasis>
+      URIs (such as <filename>smb://filer/media/file.iso</filename>)
+      can be used in the <parameter>URI</parameter> parameter. If no
+      <parameter>URI</parameter>s are given and a window server is
+      running, a graphical file chooser will be presented.
+    </para>
+    <para>
+      If a disk image is partitioned, all mountable partitions in the
+      image will be mounted (except for e.g. firmware
+      partitions). Otherwise the whole disk image will be mounted.
+    </para>
+    <para>
+      If a disk image is not mountable or mounting fails, an error
+      will be presented either on <emphasis>standard error</emphasis>
+      or in a dialog box if a window server is running.
+    </para>
+    <para>
+      By default the disk images are attached read-only, use
+      <option>--writable</option> to change this.
+    </para>
+  </refsect1>
+
+  <refsect1><title>RETURN VALUE</title>
+    <para>
+      <command>gnome-disk-image-mounter</command> returns 0 on success
+      and non-zero on failure.
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    <para>
+      Written by David Zeuthen <email>zeuthen@gmail.com</email> with
+      a lot of help from many others.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>BUGS</title>
+    <para>
+      Please send bug reports to either the distribution bug tracker
+      or the upstream bug tracker at
+      <ulink url="https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility"/>.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>
+      <link linkend="gnome-disks.1"><citerefentry><refentrytitle>gnome-disks</refentrytitle><manvolnum>1</manvolnum></citerefentry></link>,
+      <citerefentry><refentrytitle>udisks</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>losetup</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+</refentry>

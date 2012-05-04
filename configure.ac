@@ -62,6 +62,11 @@ AM_CONDITIONAL(USE_LIBSYSTEMD_LOGIN, [test "$msg_libsystemd_login" = "yes"])
 # Internationalization
 # ********************
 
+AC_PATH_PROG([XSLTPROC], [xsltproc])
+if test -z "$XSLTPROC"; then
+  AC_MSG_ERROR([xsltproc is needed])
+fi
+
 IT_PROG_INTLTOOL([$INTLTOOL_REQUIRED])
 
 GETTEXT_PACKAGE=gnome-disk-utility
@@ -90,6 +95,8 @@ data/icons/48x48/Makefile
 data/icons/256x256/Makefile
 data/icons/scalable/Makefile
 data/ui/Makefile
+doc/Makefile
+doc/man/Makefile
 ])
 
 AC_OUTPUT

@@ -2127,6 +2127,16 @@ update_device_page_for_free_space (GduWindow          *window,
                   "devtab-backing-file-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
+
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,97,0)
+      set_switch (window,
+                  "devtab-loop-autoclear-label",
+                  "devtab-loop-autoclear-switch-box",
+                  "devtab-loop-autoclear-switch",
+                  udisks_loop_get_autoclear (loop));
+# endif
+#endif
     }
 
   table = udisks_object_peek_partition_table (object);

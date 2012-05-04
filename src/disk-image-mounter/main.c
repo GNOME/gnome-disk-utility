@@ -291,11 +291,9 @@ main (int argc, char *argv[])
           goto out;
         }
 
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      g_variant_builder_add (&options_builder, "{sv}", "loop.autoclear", g_variant_new_boolean (TRUE));
       error = NULL;
       if (!udisks_filesystem_call_mount_sync (filesystem,
-                                              g_variant_builder_end (&options_builder),
+                                              g_variant_new ("a{sv}", NULL), /* options */
                                               NULL, /* out_mount_path */
                                               NULL, /* cancellable */
                                               &error))
@@ -316,6 +314,24 @@ main (int argc, char *argv[])
             }
           g_free (filename);
           goto out;
+        }
+
+      /* Finally set autoclear to TRUE so the loop device will get removed
+       * when the filesystem is unmounted
+       */
+      error = NULL;
+      if (!udisks_loop_call_set_autoclear_sync (loop,
+                                                TRUE,
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* cancellable */
+                                                &error))
+        {
+          /* this is not fatal but can happen when using FUSE crap where uid 0 is
+           * not permitted to view files on a FUSE mount
+           */
+          g_printerr (_("Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"),
+                      error->message, g_quark_to_string (error->domain), error->code);
+          g_error_free (error);
         }
 
       g_free (filename);

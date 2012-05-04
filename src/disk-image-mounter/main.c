@@ -208,15 +208,17 @@ main (int argc, char *argv[])
     {
       const gchar *uri;
       gchar *filename;
-      GUnixFDList *fd_list;
+      GUnixFDList *fd_list = NULL;
       GVariantBuilder options_builder;
       gint fd;
       GError *error;
       gchar *loop_object_path;
       UDisksObject *object;
-      UDisksLoop *loop;
       UDisksFilesystem *filesystem;
+      UDisksPartitionTable *partition_table;
       GFile *file;
+      UDisksLoop *loop = NULL;
+      guint num_mounts = 0;
 
       uri = l->data;
       file = g_file_new_for_commandline_arg (uri);
@@ -226,19 +228,17 @@ main (int argc, char *argv[])
       if (filename == NULL)
         {
           show_error (_("Cannot open `%s' - maybe the volume isn't mounted?"), uri);
-          goto out;
+          goto done_with_image;
         }
 
       fd = open (filename, opt_writable ? O_RDWR : O_RDONLY);
       if (fd == -1)
         {
           show_error (_("Error opening `%s': %m"), filename);
-          g_free (filename);
-          goto out;
+          goto done_with_image;
         }
 
       g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      g_variant_builder_add (&options_builder, "{sv}", "no-part-scan", g_variant_new_boolean (TRUE));
       if (!opt_writable)
         g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
 
@@ -258,88 +258,133 @@ main (int argc, char *argv[])
           show_error (_("Error attaching disk image: %s (%s, %d)"),
                       error->message, g_quark_to_string (error->domain), error->code);
           g_error_free (error);
-          g_object_unref (fd_list);
-          g_free (filename);
-          goto out;
+          goto done_with_image;
         }
-      g_object_unref (fd_list);
 
       udisks_client_settle (udisks_client);
 
-      /* ... and then mount it */
+      /* ... and then mount whatever is inside it */
       object = udisks_client_peek_object (udisks_client, loop_object_path);
       g_free (loop_object_path);
       g_assert (object != NULL);
       loop = udisks_object_peek_loop (object);
       g_assert (loop != NULL);
       filesystem = udisks_object_peek_filesystem (object);
-      if (filesystem == NULL)
+      partition_table = udisks_object_peek_partition_table (object);
+      if (partition_table != NULL)
         {
-          show_error (_("The file `%s' does not appear to contain a mountable filesystem"), filename);
-          /* clean up */
-          error = NULL;
-          if (!udisks_loop_call_delete_sync (loop,
-                                             g_variant_new ("a{sv}", NULL), /* options */
-                                             NULL, /* cancellable */
-                                             &error))
+          GList *partitions, *l;
+          partitions = udisks_client_get_partitions (udisks_client, partition_table);
+          for (l = partitions; l != NULL; l = l->next)
             {
-              show_error (_("Error cleaning up loop device: %s (%s, %d)"),
+              UDisksPartition *partition = UDISKS_PARTITION (l->data);
+              UDisksObject *partition_object;
+              UDisksBlock *partition_block;
+              UDisksFilesystem *partition_filesystem;
+
+              partition_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (partition));
+              if (partition_object == NULL)
+                continue;
+
+              partition_block = udisks_object_peek_block (partition_object);
+              g_assert (partition_block != NULL);
+
+              if (udisks_block_get_hint_ignore (partition_block))
+                continue;
+
+              partition_filesystem = udisks_object_peek_filesystem (partition_object);
+              if (partition_filesystem == NULL)
+                continue;
+
+              error = NULL;
+              if (!udisks_filesystem_call_mount_sync (partition_filesystem,
+                                                      g_variant_new ("a{sv}", NULL), /* options */
+                                                      NULL, /* out_mount_path */
+                                                      NULL, /* cancellable */
+                                                      &error))
+                {
+                  show_error (_("Error mounting filesystem on partition %d of disk image: %s (%s, %d)"),
+                              udisks_partition_get_number (partition),
+                              error->message, g_quark_to_string (error->domain), error->code);
+                  g_error_free (error);
+                  goto done_with_image;
+                }
+              num_mounts++;
+            }
+          g_list_free_full (partitions, g_object_unref);
+        }
+      else
+        {
+          /* not partitioned */
+          if (filesystem == NULL)
+            {
+              show_error (_("The file `%s' does not appear to contain a mountable filesystem or partition table"), filename);
+              goto done_with_image;
+            }
+
+          error = NULL;
+          if (!udisks_filesystem_call_mount_sync (filesystem,
+                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                  NULL, /* out_mount_path */
+                                                  NULL, /* cancellable */
+                                                  &error))
+            {
+              show_error (_("Error mounting filesystem: %s (%s, %d)"),
                           error->message, g_quark_to_string (error->domain), error->code);
               g_error_free (error);
+              goto done_with_image;
             }
-          g_free (filename);
-          goto out;
+          num_mounts++;
         }
 
-      error = NULL;
-      if (!udisks_filesystem_call_mount_sync (filesystem,
-                                              g_variant_new ("a{sv}", NULL), /* options */
-                                              NULL, /* out_mount_path */
-                                              NULL, /* cancellable */
-                                              &error))
-        {
-          show_error (_("Error mounting filesystem: %s (%s, %d)"),
-                      error->message, g_quark_to_string (error->domain), error->code);
-          g_error_free (error);
-          /* clean up */
-          error = NULL;
-          if (!udisks_loop_call_delete_sync (loop,
-                                             g_variant_new ("a{sv}", NULL), /* options */
-                                             NULL, /* cancellable */
-                                             &error))
-            {
-              show_error (_("Error cleaning up loop device: %s (%s, %d)"),
-                          error->message, g_quark_to_string (error->domain), error->code);
-              g_error_free (error);
-            }
-          g_free (filename);
-          goto out;
-        }
-
-      /* Finally set autoclear to TRUE so the loop device will get removed
-       * when the filesystem is unmounted
+    done_with_image:
+      /* We arrive here both if it worked or if something failed.
+       *
+       * Now, if we did mount anything, set Autoclear to TRUE to
+       * ensure that the loop device goes bye-bye when the last mount
+       * is unmounted
        */
-      error = NULL;
-      if (!udisks_loop_call_set_autoclear_sync (loop,
-                                                TRUE,
-                                                g_variant_new ("a{sv}", NULL), /* options */
-                                                NULL, /* cancellable */
-                                                &error))
+      if (num_mounts > 0)
         {
-          /* this is not fatal but can happen when using FUSE crap where uid 0 is
-           * not permitted to view files on a FUSE mount
-           */
-          g_printerr (_("Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"),
-                      error->message, g_quark_to_string (error->domain), error->code);
-          g_error_free (error);
+          error = NULL;
+          if (!udisks_loop_call_set_autoclear_sync (loop,
+                                                    TRUE,
+                                                    g_variant_new ("a{sv}", NULL), /* options */
+                                                    NULL, /* cancellable */
+                                                    &error))
+            {
+              /* this is not fatal but can happen when using FUSE crap where uid 0 is
+               * not permitted to view files on a FUSE mount
+               */
+              g_printerr (_("Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"),
+                          error->message, g_quark_to_string (error->domain), error->code);
+              g_error_free (error);
+            }
+        }
+      else if (loop != NULL)
+        {
+          /* otherwise, if we didn't mount anything, nuke the loop device */
+          error = NULL;
+          if (!udisks_loop_call_delete_sync (loop,
+                                             g_variant_new ("a{sv}", NULL), /* options */
+                                             NULL, /* cancellable */
+                                             &error))
+            {
+              show_error (_("Error cleaning up loop device: %s (%s, %d)"),
+                          error->message, g_quark_to_string (error->domain), error->code);
+              g_error_free (error);
+            }
         }
 
+      g_clear_object (&fd_list);
       g_free (filename);
-    }
+
+    } /* for each image */
 
   ret = 0;
 
  out:
+
   g_slist_free_full (uris, g_free);
   g_clear_object (&udisks_client);
   return ret;

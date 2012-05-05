@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-04 00:21+0200\n"
-"PO-Revision-Date: 2012-05-04 00:22+0200\n"
+"POT-Creation-Date: 2012-05-05 15:08+0200\n"
+"PO-Revision-Date: 2012-05-05 15:10+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -831,12 +831,12 @@ msgstr "Produciuse un erro ao conectarse ao «daemon» udisks: %s (%s, %d)"
 msgid "Attach and mount one or more disk image files."
 msgstr "Anexar e montar un ou máis ficheiros de imaxe de disco. "
 
-#: ../src/disk-image-mounter/main.c:228
+#: ../src/disk-image-mounter/main.c:230
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "Non é posíbel abrir «%s» - pode ser que o volume non estea montado?"
 
-#: ../src/disk-image-mounter/main.c:235
+#: ../src/disk-image-mounter/main.c:237
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Produciuse un erro ao abrir «%s»: %m"
@@ -846,20 +846,41 @@ msgstr "Produciuse un erro ao abrir «%s»: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Produciuse un erro ao anexar a imaxe do disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:278
+#: ../src/disk-image-mounter/main.c:306
 #, c-format
-msgid "The file `%s' does not appear to contain a mountable filesystem"
-msgstr "O ficheiro «%s» non semella conter un sistema de ficheiros montábel"
+msgid "Error mounting filesystem on partition %d of disk image: %s (%s, %d)"
+msgstr ""
+"Produciuse un erro ao montar o sistema de ficheiros na partición %d da imaxe "
+"de disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:286 ../src/disk-image-mounter/main.c:313
+#: ../src/disk-image-mounter/main.c:321
 #, c-format
-msgid "Error cleaning up loop device: %s (%s, %d)"
-msgstr "Produciuse un erro ao limpar o dispositivo loop: %s (%s, %d)"
+msgid ""
+"The file `%s' does not appear to contain a mountable filesystem or partition "
+"table"
+msgstr ""
+"O ficheiro «%s» non semella conter un sistema de ficheiros montábel ou táboa "
+"de particións"
 
-#: ../src/disk-image-mounter/main.c:303
+#: ../src/disk-image-mounter/main.c:332
 #, c-format
 msgid "Error mounting filesystem: %s (%s, %d)"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros: %s (%s, %d)"
+
+#. this is not fatal but can happen when using FUSE crap where uid 0 is
+#. * not permitted to view files on a FUSE mount
+#.
+#: ../src/disk-image-mounter/main.c:359
+#, c-format
+msgid "Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"
+msgstr ""
+"Erro non fatal: produciuse un erro ao configurar autoclear a TRUE: %s (%s, "
+"%d)\n"
+
+#: ../src/disk-image-mounter/main.c:373
+#, c-format
+msgid "Error cleaning up loop device: %s (%s, %d)"
+msgstr "Produciuse un erro ao limpar o dispositivo loop: %s (%s, %d)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2319,57 +2340,57 @@ msgstr "Si"
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/disks/gduwindow.c:2145
+#: ../src/disks/gduwindow.c:2155
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espazo sen asignar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/disks/gduwindow.c:2150
+#: ../src/disks/gduwindow.c:2160
 msgid "Unallocated Space"
 msgstr "Espazo sen asignar"
 
-#: ../src/disks/gduwindow.c:2506
+#: ../src/disks/gduwindow.c:2516
 msgid "Error mounting filesystem"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros"
 
-#: ../src/disks/gduwindow.c:2546
+#: ../src/disks/gduwindow.c:2556
 msgid "Error unmounting filesystem"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
-#: ../src/disks/gduwindow.c:2625
+#: ../src/disks/gduwindow.c:2635
 msgid "Error deleting partition"
 msgstr "Produciuse un erro ao eliminar a partición"
 
-#: ../src/disks/gduwindow.c:2641
+#: ../src/disks/gduwindow.c:2651
 msgid "Are you sure you want to delete the partition?"
 msgstr "Está seguro de que quere eliminar o dispositivo?"
 
-#: ../src/disks/gduwindow.c:2642
+#: ../src/disks/gduwindow.c:2652
 msgid "All data on the partition will be lost"
 msgstr "Todos os datos da partición perderanse"
 
-#: ../src/disks/gduwindow.c:2643
+#: ../src/disks/gduwindow.c:2653
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/disks/gduwindow.c:2674
+#: ../src/disks/gduwindow.c:2684
 msgid "Error ejecting media"
 msgstr "Produciuse un erro ao extraer o medio"
 
-#: ../src/disks/gduwindow.c:2726
+#: ../src/disks/gduwindow.c:2736
 msgid "Error locking encrypted device"
 msgstr "Produciuse un erro ao bloquear o dispositivo cifrado"
 
-#: ../src/disks/gduwindow.c:2767
+#: ../src/disks/gduwindow.c:2777
 msgid "Error starting swap"
 msgstr "Produciuse un erro ao iniciar o espazo de intercambio"
 
-#: ../src/disks/gduwindow.c:2804
+#: ../src/disks/gduwindow.c:2814
 msgid "Error stopping swap"
 msgstr "Produciuse un erro ao deter o espazo de intercambio"
 
-#: ../src/disks/gduwindow.c:2849
+#: ../src/disks/gduwindow.c:2859
 msgid "Error setting autoclear flag"
 msgstr "Produciuse un erro ao estabelecer a opción de limpeza automática"
 

@@ -32,6 +32,46 @@
 
 static gboolean have_gtk = FALSE;
 static UDisksClient *udisks_client = NULL;
+static GMainLoop *main_loop = NULL;
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_udisks_client_changed_check_loop_cleared (UDisksClient *client,
+                                             gpointer      user_data)
+{
+  GList *loop_device_objpaths = user_data;
+  GList *l;
+  guint num_loops = 0;
+  guint num_cleared = 0;
+
+  for (l = loop_device_objpaths; l != NULL; l = l->next)
+    {
+      const gchar *loop_object_path = l->data;
+      UDisksObject *object;
+      UDisksBlock *block;
+
+      num_loops++;
+      num_cleared++; /* assume clear */
+
+      object = udisks_client_peek_object (udisks_client, loop_object_path);
+      if (object == NULL)
+        continue;
+
+      block = udisks_object_peek_block (object);
+      if (block == NULL)
+        continue;
+
+      if (udisks_block_get_size (block) > 0)
+        {
+          /* nope, not clear */
+          num_cleared--;
+        }
+    }
+
+  if (num_cleared == num_loops)
+    g_main_loop_quit (main_loop);
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -70,11 +110,13 @@ show_error (const gchar *format, ...)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean opt_writable = FALSE;
+static gboolean  opt_writable = FALSE;
+static gboolean  opt_wait_until_clear = FALSE;
 
 static const GOptionEntry opt_entries[] =
 {
   { "writable", 'w', 0, G_OPTION_ARG_NONE, &opt_writable, N_("Allow writing to the image"), NULL},
+  { "wait-until-clear", 0, 0, G_OPTION_ARG_NONE, &opt_wait_until_clear, N_("Wait until created loop devices are cleared"), NULL},
   { NULL }
 };
 
@@ -154,6 +196,7 @@ main (int argc, char *argv[])
   guint n;
   GSList *uris = NULL;
   GSList *l;
+  GList *loop_device_objpaths = NULL;
 
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -161,6 +204,8 @@ main (int argc, char *argv[])
 
   g_type_init ();
   have_gtk = gtk_init_check (&argc, &argv);
+
+  main_loop = g_main_loop_new (NULL, FALSE);
 
   udisks_client = udisks_client_new_sync (NULL, &error);
   if (udisks_client == NULL)
@@ -212,7 +257,7 @@ main (int argc, char *argv[])
       GVariantBuilder options_builder;
       gint fd;
       GError *error;
-      gchar *loop_object_path;
+      gchar *loop_object_path = NULL;
       UDisksObject *object;
       UDisksFilesystem *filesystem;
       UDisksPartitionTable *partition_table;
@@ -265,7 +310,6 @@ main (int argc, char *argv[])
 
       /* ... and then mount whatever is inside it */
       object = udisks_client_peek_object (udisks_client, loop_object_path);
-      g_free (loop_object_path);
       g_assert (object != NULL);
       loop = udisks_object_peek_loop (object);
       g_assert (loop != NULL);
@@ -360,6 +404,7 @@ main (int argc, char *argv[])
                           error->message, g_quark_to_string (error->domain), error->code);
               g_error_free (error);
             }
+          loop_device_objpaths = g_list_prepend (loop_device_objpaths, g_strdup (loop_object_path));
         }
       else if (loop != NULL)
         {
@@ -378,13 +423,25 @@ main (int argc, char *argv[])
 
       g_clear_object (&fd_list);
       g_free (filename);
+      g_free (loop_object_path);
 
     } /* for each image */
+
+  if (opt_wait_until_clear)
+    {
+      g_signal_connect (udisks_client,
+                        "changed",
+                        G_CALLBACK (on_udisks_client_changed_check_loop_cleared),
+                        loop_device_objpaths);
+      g_main_loop_run (main_loop);
+    }
 
   ret = 0;
 
  out:
-
+  if (main_loop != NULL)
+    g_main_loop_unref (main_loop);
+  g_list_free_full (loop_device_objpaths, g_free);
   g_slist_free_full (uris, g_free);
   g_clear_object (&udisks_client);
   return ret;

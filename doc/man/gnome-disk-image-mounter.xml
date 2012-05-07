@@ -14,6 +14,7 @@
     <cmdsynopsis>
       <command>gnome-disk-image-mounter</command>
       <arg choice="opt">--writable</arg>
+      <arg choice="opt">--wait-until-clear</arg>
       <arg choice="opt" rep="repeat"><replaceable>URI</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
@@ -30,16 +31,26 @@
     <para>
       If a disk image is partitioned, all mountable partitions in the
       image will be mounted (except for e.g. firmware
-      partitions). Otherwise the whole disk image will be mounted.
+      partitions). Otherwise the whole disk image will be mounted. If
+      a disk image is not mountable or mounting fails, an error will
+      be presented either on <emphasis>standard error</emphasis> or in
+      a dialog box if a window server is running.
     </para>
     <para>
-      If a disk image is not mountable or mounting fails, an error
-      will be presented either on <emphasis>standard error</emphasis>
-      or in a dialog box if a window server is running.
+      After mounting <command>gnome-disk-image-mounter</command> will
+      exit unless the option <option>--wait-until-clear</option> is
+      used, in which case the program will sit and wait until all loop
+      devices set up, are no longer in use.
     </para>
     <para>
       By default the disk images are attached read-only, use
-      <option>--writable</option> to change this.
+      the option <option>--writable</option> to change this.
+    </para>
+    <para>
+      Loop devices will be set up using the
+      <emphasis>autoclear</emphasis> option. This means that the loop
+      device will be cleared when the last filesystem using it has
+      been unmounted.
     </para>
   </refsect1>
 

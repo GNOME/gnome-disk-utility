@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-04 18:26+0000\n"
-"PO-Revision-Date: 2012-05-06 12:04+0200\n"
+"POT-Creation-Date: 2012-05-07 18:58+0000\n"
+"PO-Revision-Date: 2012-05-08 10:40+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:58
+#: ../src/disk-image-mounter/main.c:98
 msgid "Disk Image Mounter"
 msgstr "Montador de imágenes de discos"
 
@@ -437,8 +437,8 @@ msgid ""
 "i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
 "BIOS heredada arrancable. Es el equivalente a la opción <i>arrancable</i> "
-"del «Master Boot Record». Normalmente se usa para particiones GPT en "
-"sistemas MBR"
+"del «Master Boot Record». Normalmente se usa para particiones GPT en sistemas "
+"MBR"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:11
 msgid "_Read-Only"
@@ -785,36 +785,40 @@ msgstr "<big>Introduzca la contraseña para desbloquear</big>"
 msgid "_Unlock"
 msgstr "_Desbloquear"
 
-#: ../src/disk-image-mounter/main.c:56
+#: ../src/disk-image-mounter/main.c:96
 msgid "An error occurred"
 msgstr "Ocurrió un error"
 
-#: ../src/disk-image-mounter/main.c:77
+#: ../src/disk-image-mounter/main.c:118
 msgid "Allow writing to the image"
 msgstr "Permitir escribir en la imagen"
 
-#: ../src/disk-image-mounter/main.c:97 ../src/disks/gduutils.c:85
+#: ../src/disk-image-mounter/main.c:119
+msgid "Wait until created loop devices are cleared"
+msgstr "Espere hasta que se limpien los dispositivos de «loop»"
+
+#: ../src/disk-image-mounter/main.c:139 ../src/disks/gduutils.c:85
 msgid "All Files"
 msgstr "Todos los archivos"
 
-#: ../src/disk-image-mounter/main.c:101 ../src/disks/gduutils.c:89
+#: ../src/disk-image-mounter/main.c:143 ../src/disks/gduutils.c:89
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imágenes de disco (*.img, *.iso)"
 
-#: ../src/disk-image-mounter/main.c:117
+#: ../src/disk-image-mounter/main.c:159
 msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccionar las imágenes de discos que montar"
 
-#: ../src/disk-image-mounter/main.c:121
+#: ../src/disk-image-mounter/main.c:163
 msgid "_Mount"
 msgstr "_Montar"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:127
+#: ../src/disk-image-mounter/main.c:169
 msgid "Set up _read-only mount"
 msgstr "Establecer el dispositivo como solo lectu_ra"
 
-#: ../src/disk-image-mounter/main.c:128
+#: ../src/disk-image-mounter/main.c:170
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -822,41 +826,39 @@ msgstr ""
 "Si está marcada, el dispositivo montado será de solo lectura. Esto es útil "
 "si no quiere que se modifique el archivo de imagen de disco subyacente"
 
-#: ../src/disk-image-mounter/main.c:168
+#: ../src/disk-image-mounter/main.c:213
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Error al conectar con el demonio udisks: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:176
+#: ../src/disk-image-mounter/main.c:221
 msgid "Attach and mount one or more disk image files."
 msgstr "Acoplar y montar uno o más archivos de imágenes de discos."
 
-#: ../src/disk-image-mounter/main.c:230
+#: ../src/disk-image-mounter/main.c:275
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "No se puede abrir «%s», ¿es posible que el volumen no esté montado?"
 
-#: ../src/disk-image-mounter/main.c:237
+#: ../src/disk-image-mounter/main.c:282
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Error al abrir «%s»: %m"
 
-#: ../src/disk-image-mounter/main.c:258
+#: ../src/disk-image-mounter/main.c:303
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Error al acoplar la imagen de disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:306
+#: ../src/disk-image-mounter/main.c:350
 #, c-format
-#| msgid "Error mounting filesystem: %s (%s, %d)"
 msgid "Error mounting filesystem on partition %d of disk image: %s (%s, %d)"
 msgstr ""
 "Error al montar el sistema de archivos en la partición %d de la imagen del "
 "disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:321
+#: ../src/disk-image-mounter/main.c:365
 #, c-format
-#| msgid "The file `%s' does not appear to contain a mountable filesystem"
 msgid ""
 "The file `%s' does not appear to contain a mountable filesystem or partition "
 "table"
@@ -864,7 +866,7 @@ msgstr ""
 "El archivo «%s» no contiene un sistema de archivos montable o una tabla de "
 "particiones"
 
-#: ../src/disk-image-mounter/main.c:332
+#: ../src/disk-image-mounter/main.c:376
 #, c-format
 msgid "Error mounting filesystem: %s (%s, %d)"
 msgstr "Error al montar el sistema de archivos: %s (%s, %d)"
@@ -872,14 +874,14 @@ msgstr "Error al montar el sistema de archivos: %s (%s, %d)"
 #. this is not fatal but can happen when using FUSE crap where uid 0 is
 #. * not permitted to view files on a FUSE mount
 #.
-#: ../src/disk-image-mounter/main.c:359
+#: ../src/disk-image-mounter/main.c:403
 #, c-format
 msgid "Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"
 msgstr ""
 "Error no fatal: error al establecer la limpieza automática a cierto: %s (%s, "
 "%d)\n"
 
-#: ../src/disk-image-mounter/main.c:373
+#: ../src/disk-image-mounter/main.c:418
 #, c-format
 msgid "Error cleaning up loop device: %s (%s, %d)"
 msgstr "Error al eliminar el dispositivo «loop»: %s (%s, %d)"
@@ -947,8 +949,8 @@ msgid ""
 "data to a special reserved area (spare area)"
 msgstr ""
 "Conteo de sectores remapeados. Cuando el disco duro halla un error de "
-"lectura/escritura/verificación, marca el sector como «reubicado» y "
-"transfiere los datos a un área reservada especial (área libre)."
+"lectura/escritura/verificación, marca el sector como «reubicado» y transfiere "
+"los datos a un área reservada especial (área libre)."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2603,8 +2605,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid ""
 #~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
-#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID "
-#~ "«%s» (%s)"
+#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID «%"
+#~ "s» (%s)"
 
 #~ msgid "Expand %s"
 #~ msgstr "Expandir %s"
@@ -3736,8 +3738,7 @@ msgstr "Error al establecer la opción de limpieza automática"
 
 #~ msgid "Unable to parse command-line `%s' (Malformed address?): %s"
 #~ msgstr ""
-#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): "
-#~ "%s"
+#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): %s"
 
 #~ msgid "Unable to spawn ssh program: %s"
 #~ msgstr "No se pudo iniciar el programa de SSH: %s"
@@ -5670,8 +5671,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de "
-#~ "«%s».\n"
+#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de «%"
+#~ "s».\n"
 #~ "\n"
 #~ "Asegúrese de respaldar los datos importantes. Esta acción no se puede "
 #~ "deshacer."
@@ -5777,8 +5778,7 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgstr "Dispositivo LUKS en texto"
 
 #~ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-#~ msgstr ""
-#~ "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
+#~ msgstr "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
 
 #~ msgid ""
 #~ "Starting a RAID array in degraded mode means that the RAID volume is no "

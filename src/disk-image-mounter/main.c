@@ -390,6 +390,8 @@ main (int argc, char *argv[])
        */
       if (num_mounts > 0)
         {
+#ifdef UDISKS_CHECK_VERSION
+# if UDISKS_CHECK_VERSION(1,97,0)
           error = NULL;
           if (!udisks_loop_call_set_autoclear_sync (loop,
                                                     TRUE,
@@ -404,6 +406,8 @@ main (int argc, char *argv[])
                           error->message, g_quark_to_string (error->domain), error->code);
               g_error_free (error);
             }
+# endif
+#endif
           loop_device_objpaths = g_list_prepend (loop_device_objpaths, g_strdup (loop_object_path));
         }
       else if (loop != NULL)

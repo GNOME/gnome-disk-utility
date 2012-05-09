@@ -1671,16 +1671,8 @@ update_device_page_for_drive (GduWindow      *window,
       /* If the device is not tagged, assume that udisks does not have
        * working seat-support... so just assume it's available at our
        * seat.
-       *
-       * Note that seat support was added in udisks 1.95.0 (and so was the
-       * UDISKS_CHECK_VERSION macro) - for now, be compatible with older
-       * versions instead of bumping requirement in configure.ac
        */
-#ifdef UDISKS_CHECK_VERSION
-# if UDISKS_CHECK_VERSION(1,95,0)
       drive_seat = udisks_drive_get_seat (drive);
-# endif
-#endif
       if (drive_seat != NULL)
         {
           /* If device is attached to seat0, only consider it to be another seat if
@@ -1933,15 +1925,11 @@ update_device_page_for_block (GduWindow          *window,
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
 
-#ifdef UDISKS_CHECK_VERSION
-# if UDISKS_CHECK_VERSION(1,97,0)
       set_switch (window,
                   "devtab-loop-autoclear-label",
                   "devtab-loop-autoclear-switch-box",
                   "devtab-loop-autoclear-switch",
                   udisks_loop_get_autoclear (loop));
-# endif
-#endif
     }
 
   usage = udisks_block_get_id_usage (block);
@@ -2128,15 +2116,11 @@ update_device_page_for_free_space (GduWindow          *window,
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
 
-#ifdef UDISKS_CHECK_VERSION
-# if UDISKS_CHECK_VERSION(1,97,0)
       set_switch (window,
                   "devtab-loop-autoclear-label",
                   "devtab-loop-autoclear-switch-box",
                   "devtab-loop-autoclear-switch",
                   udisks_loop_get_autoclear (loop));
-# endif
-#endif
     }
 
   table = udisks_object_peek_partition_table (object);
@@ -2836,9 +2820,6 @@ on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_dat
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#ifdef UDISKS_CHECK_VERSION
-# if UDISKS_CHECK_VERSION(1,97,0)
-
 static void
 loop_set_autoclear_cb (UDisksLoop      *loop,
                        GAsyncResult    *res,
@@ -2862,8 +2843,6 @@ loop_set_autoclear_cb (UDisksLoop      *loop,
     }
   g_object_unref (window);
 }
-# endif
-#endif
 
 static void
 on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
@@ -2884,8 +2863,6 @@ on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
     }
 
   sw_value = !! gtk_switch_get_active (GTK_SWITCH (gobject));
-#ifdef UDISKS_CHECK_VERSION
-# if UDISKS_CHECK_VERSION(1,97,0)
   if (sw_value != (!!udisks_loop_get_autoclear (loop)))
     {
       udisks_loop_call_set_autoclear (loop,
@@ -2895,8 +2872,6 @@ on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
                                       (GAsyncReadyCallback) loop_set_autoclear_cb,
                                       g_object_ref (window));
     }
-# endif
-#endif
 
  out:
   ;

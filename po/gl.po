@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-05 15:08+0200\n"
-"PO-Revision-Date: 2012-05-05 15:10+0200\n"
+"POT-Creation-Date: 2012-05-09 13:23+0200\n"
+"PO-Revision-Date: 2012-05-09 13:24+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:58
+#: ../src/disk-image-mounter/main.c:98
 msgid "Disk Image Mounter"
 msgstr "Montador de imaxes de disco"
 
@@ -785,36 +785,40 @@ msgstr "<big>Escriba a frase de paso para desbloquear</big>"
 msgid "_Unlock"
 msgstr "_Desbloquear"
 
-#: ../src/disk-image-mounter/main.c:56
+#: ../src/disk-image-mounter/main.c:96
 msgid "An error occurred"
 msgstr "Produciuse un erro ao montar"
 
-#: ../src/disk-image-mounter/main.c:77
+#: ../src/disk-image-mounter/main.c:118
 msgid "Allow writing to the image"
 msgstr "Permitir escribir na imaxe"
 
-#: ../src/disk-image-mounter/main.c:97 ../src/disks/gduutils.c:85
+#: ../src/disk-image-mounter/main.c:119
+msgid "Wait until created loop devices are cleared"
+msgstr "Agarde ate que se limpen os dispositivos de «loop»."
+
+#: ../src/disk-image-mounter/main.c:139 ../src/disks/gduutils.c:85
 msgid "All Files"
 msgstr "Todos os ficheiros"
 
-#: ../src/disk-image-mounter/main.c:101 ../src/disks/gduutils.c:89
+#: ../src/disk-image-mounter/main.c:143 ../src/disks/gduutils.c:89
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imaxes de disco (*.img, *.iso)"
 
-#: ../src/disk-image-mounter/main.c:117
+#: ../src/disk-image-mounter/main.c:159
 msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccione a(s) imaxe(s) de disco a montar"
 
-#: ../src/disk-image-mounter/main.c:121
+#: ../src/disk-image-mounter/main.c:163
 msgid "_Mount"
 msgstr "_Montar"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:127
+#: ../src/disk-image-mounter/main.c:169
 msgid "Set up _read-only mount"
 msgstr "Configurar a montaxe de _só lectura"
 
-#: ../src/disk-image-mounter/main.c:128
+#: ../src/disk-image-mounter/main.c:170
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -822,38 +826,38 @@ msgstr ""
 "Se está marcada, o montaxe será de só lectura. Isto é útil se non quere que "
 "se modifique a imaxe de disco subxacente"
 
-#: ../src/disk-image-mounter/main.c:168
+#: ../src/disk-image-mounter/main.c:213
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Produciuse un erro ao conectarse ao «daemon» udisks: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:176
+#: ../src/disk-image-mounter/main.c:221
 msgid "Attach and mount one or more disk image files."
 msgstr "Anexar e montar un ou máis ficheiros de imaxe de disco. "
 
-#: ../src/disk-image-mounter/main.c:230
+#: ../src/disk-image-mounter/main.c:275
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "Non é posíbel abrir «%s» - pode ser que o volume non estea montado?"
 
-#: ../src/disk-image-mounter/main.c:237
+#: ../src/disk-image-mounter/main.c:282
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Produciuse un erro ao abrir «%s»: %m"
 
-#: ../src/disk-image-mounter/main.c:258
+#: ../src/disk-image-mounter/main.c:303
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Produciuse un erro ao anexar a imaxe do disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:306
+#: ../src/disk-image-mounter/main.c:350
 #, c-format
 msgid "Error mounting filesystem on partition %d of disk image: %s (%s, %d)"
 msgstr ""
 "Produciuse un erro ao montar o sistema de ficheiros na partición %d da imaxe "
 "de disco: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:321
+#: ../src/disk-image-mounter/main.c:365
 #, c-format
 msgid ""
 "The file `%s' does not appear to contain a mountable filesystem or partition "
@@ -862,7 +866,7 @@ msgstr ""
 "O ficheiro «%s» non semella conter un sistema de ficheiros montábel ou táboa "
 "de particións"
 
-#: ../src/disk-image-mounter/main.c:332
+#: ../src/disk-image-mounter/main.c:376
 #, c-format
 msgid "Error mounting filesystem: %s (%s, %d)"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros: %s (%s, %d)"
@@ -870,14 +874,14 @@ msgstr "Produciuse un erro ao montar o sistema de ficheiros: %s (%s, %d)"
 #. this is not fatal but can happen when using FUSE crap where uid 0 is
 #. * not permitted to view files on a FUSE mount
 #.
-#: ../src/disk-image-mounter/main.c:359
+#: ../src/disk-image-mounter/main.c:405
 #, c-format
 msgid "Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"
 msgstr ""
 "Erro non fatal: produciuse un erro ao configurar autoclear a TRUE: %s (%s, "
 "%d)\n"
 
-#: ../src/disk-image-mounter/main.c:373
+#: ../src/disk-image-mounter/main.c:422
 #, c-format
 msgid "Error cleaning up loop device: %s (%s, %d)"
 msgstr "Produciuse un erro ao limpar o dispositivo loop: %s (%s, %d)"

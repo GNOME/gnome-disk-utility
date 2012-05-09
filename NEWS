@@ -1,4 +1,50 @@
 -------------------------
+gnome-disk-utility 3.5.1
+-------------------------
+
+The gnome-disk-utility project provides the Disks application for
+dealing with storage devices. It relies on the udisks project.
+
+Changes since gnome-disk-utility 3.4.1:
+
+ Alexander Larsson (1):
+       Fix build with older udisk version
+
+ David Zeuthen (26):
+       Post-release version bump to 3.4.2
+       If drive is on another seat, show "Connected to another seat"
+       Only removable seat0 devices should be shown as "connected to another seat"
+       Handle when seat is "all"
+       Check keyring for LUKS passphrase and put it in passphrase entry if available
+       Remove support for ID_SEAT=all
+       Add a "Auto-clear" switch for loop devices
+       Check loop interface on main block device, not the partition
+       Add "Disk Image Mounter" utility and associate with application/x-cd-image
+       gnome-disk-image-mounter: set no-part-scan option to TRUE
+       Fix indentation in last commit
+       gnome-disk-image-mounter: simplify command-line handling and accept any GIO URI
+       Rename palimpsest(1) to gnome-disks(1)
+       disk-image-mounter: if launched without args, show a file chooser
+       disk-image-mounter: make the "Set up read-only mount" check-button work
+       When restoring a disk image onto a bigger target, use info, not warning
+       disk-image-mounter: use Loop.SetAutoclear() and treat error as non-fatal
+       Also show Autoclear switch for free space on a partitioned loop device
+       disk-image-mounter: support partitioned disk images
+       Add gnome-disks(1) and gnome-disk-image-mounter(1) man pages
+       disk-image-mounter: add --wait-until-clear option
+       disks: update man page a bit
+       disk-image-mounter: Use UDISKS_CHECK_VERSION before using 1.97.0 API
+       Version bump to 3.5.1
+       Bump required udisks version to 1.97.0
+       Update NEWS for release
+
+ Updated translations: Daniel Mustieles, Fran Diéguez, Jonh Wendell,
+   Kjartan Maraas
+
+David Zeuthen,
+May 9, 2012
+
+-------------------------
 gnome-disk-utility 3.4.1
 -------------------------
 

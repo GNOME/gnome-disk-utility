@@ -33,7 +33,7 @@ enum
 {
   ID_COLUMN,
   DESC_COLUMN,
-  TOOLTIP_COLUMN,
+  LONG_DESC_COLUMN,
   ASSESSMENT_COLUMN,
   PRETTY_COLUMN,
   NORMALIZED_COLUMN,
@@ -62,9 +62,8 @@ typedef struct
   GtkWidget *overall_assessment_label;
 
   GtkWidget *attr_value_label;
-  GtkWidget *attr_normalized_label;
   GtkWidget *attr_type_label;
-  GtkWidget *attr_updates_label;
+  GtkWidget *attr_long_description_label;
 
   GtkWidget *attributes_treeview;
 
@@ -93,9 +92,8 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, selftest_extended_menuitem), "selftest-extended-menuitem"},
   {G_STRUCT_OFFSET (DialogData, selftest_conveyance_menuitem), "selftest-conveyance-menuitem"},
   {G_STRUCT_OFFSET (DialogData, attr_value_label), "attr-value-label"},
-  {G_STRUCT_OFFSET (DialogData, attr_normalized_label), "attr-normalized-label"},
   {G_STRUCT_OFFSET (DialogData, attr_type_label), "attr-type-label"},
-  {G_STRUCT_OFFSET (DialogData, attr_updates_label), "attr-updates-label"},
+  {G_STRUCT_OFFSET (DialogData, attr_long_description_label), "attr-long-description-label"},
   {0, NULL}
 };
 
@@ -619,7 +617,7 @@ attribute_get_details (const gchar  *name,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
-attr_format_tooltip (gint id, const gchar *name)
+attr_format_long_desc (gint id, const gchar *name)
 {
   const gchar *localized_name;
   const gchar *localized_desc;
@@ -650,7 +648,7 @@ attr_format_desc (gint id, const gchar *name)
       localized_desc = "";
     }
 
-  ret = g_strdup_printf ("<b>%s</b>", localized_name);
+  ret = g_strdup (localized_name);
 
   return ret;
 }
@@ -793,102 +791,21 @@ pretty_to_string (guint64 pretty,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#if 0
-static gchar *
-attr_format_tooltip (gint         id,
-                     const gchar *name,
-                     guint16      flags)
-{
-  gboolean prefail;
-  gboolean online;
-  const gchar *type_str;
-  const gchar *updates_str;
-  gchar *ret;
-  const gchar *localized_name;
-  const gchar *localized_desc;
-  gchar *n;
-  gchar *d;
-
-  if (attribute_get_details (name, &localized_name, &localized_desc))
-    {
-      n = g_strdup (localized_name);
-      d = g_strdup (localized_desc);
-    }
-  else
-    {
-      n = g_strdup (name);
-      d = g_strdup_printf (_("No description for attribute %d"), id);
-    }
-
-  prefail = (flags & 0x0001);
-  online = (flags & 0x0002);
-
-  if (prefail)
-    {
-      /* Translators: Used in the tooltip for a row in the attribute treeview - please keep
-       * "(Pre-Fail)" in English
-       */
-      type_str = _("Failure is a sign the disk will fail within 24 hours (Pre-Fail)");
-    }
-  else
-    {
-      /* Translators: Used in the tooltip for a row in the attribute treeview - please keep
-       * "(Old-Age)" in English
-       */
-      type_str = _("Failure is a sign the disk exceeded its intended design life period (Old-Age)");
-    }
-
-  if (online)
-    {
-      /* Translators: Used in the tooltip for a row in the attribute treeview - please keep
-       * "(Online)" in English
-       */
-      updates_str = _("Every time data is collected (Online)");
-    }
-  else
-    {
-      /* Translators: Used in the tooltip for a row in the attribute treeview - please keep
-       * "(Not Online)" in English
-       */
-      updates_str = _("Only during off-line activities (Not Online)");
-    }
-
-  ret = g_strdup_printf ("<b>%s</b>: %s\n\n"
-                         "<b>%s</b>: %s\n\n"
-                         "<b>%s</b>: %s\n\n"
-                         "<b>%s</b>: %s",
-                         /* Translators: Used in the tooltip for a SMART attribute */
-                         _("Name"), n,
-                         /* Translators: Used in the tooltip for a SMART attribute */
-                         _("Type"), type_str,
-                         /* Translators: Used in the tooltip for a SMART attribute */
-                         _("Updates"), updates_str,
-                         /* Translators: Used in the tooltip for a SMART attribute */
-                         _("Description"), d);
-
-  g_free (n);
-  g_free (d);
-
-  return ret;
-}
-#endif
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 /* called whenever a new attribute is selected */
 static void
 update_attr (DialogData *data)
 {
   gboolean prefail;
   gboolean online;
-  const gchar *type_str = NULL;
-  const gchar *updates_str = NULL;
+  const gchar *prefail_str;
+  const gchar *online_str;
   gchar *pretty = NULL;
+  gchar *type_str = NULL;
   gint normalized, threshold, worst;
   gint flags;
   GtkTreeIter tree_iter;
   gchar *value_str = NULL;
-  gchar *normalized_str = NULL;
+  gchar *long_description_str = NULL;
 
   if (!gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->attributes_treeview)),
                                         NULL,
@@ -902,11 +819,17 @@ update_attr (DialogData *data)
                       THRESHOLD_COLUMN, &threshold,
                       WORST_COLUMN, &worst,
                       FLAGS_COLUMN, &flags,
+                      LONG_DESC_COLUMN, &long_description_str,
                       -1);
 
-  value_str = g_strdup (pretty);
-  normalized_str = g_strdup_printf (_("%d <span size=\"small\">(Worst:%d, Threshold: %d)</span>"),
-                                    normalized, worst, threshold);
+  /* Translators: The first %s is the pretty value (such as '300
+   * sectors' or '2.5 years' or '53° C / 127° F').
+   *
+   * The three %d are the normalized, threshold and worst values -
+   * these are all decimal numbers.
+   */
+  value_str = g_strdup_printf (_("%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"),
+                               pretty, normalized, threshold, worst);
 
   prefail = (flags & 0x0001);
   online = (flags & 0x0002);
@@ -915,36 +838,40 @@ update_attr (DialogData *data)
     {
       /* Translators: Please keep "(Pre-Fail)" in English
        */
-      type_str = _("Failure is a sign the disk will fail within 24 hours <span size=\"small\">(Pre-Fail)</span>");
+      prefail_str = _("Failure is a sign the disk will fail within 24 hours <span size=\"small\">(Pre-Fail)</span>");
     }
   else
     {
       /* Translators: Please keep "(Old-Age)" in English
        */
-      type_str = _("Failure is a sign the disk exceeded its intended design life period <span size=\"small\">(Old-Age)</span>");
+      prefail_str = _("Failure is a sign the disk exceeded its intended design life period <span size=\"small\">(Old-Age)</span>");
     }
 
   if (online)
     {
       /* Translators: Please keep "(Online)" in English
        */
-      updates_str = _("Every time data is collected <span size=\"small\">(Online)</span>");
+      online_str = _("Updated every time data is collected <span size=\"small\">(Online)</span>");
     }
   else
     {
       /* Translators: Please keep "(Not Online)" in English
        */
-      updates_str = _("Only during off-line activities <span size=\"small\">(Not Online)</span>");
+      online_str = _("Updated only during off-line activities <span size=\"small\">(Not Online)</span>");
     }
+
+  type_str = g_strdup_printf ("%s\n%s",
+                              prefail_str,
+                              online_str);
 
  out:
   gtk_label_set_markup (GTK_LABEL (data->attr_value_label), value_str);
-  gtk_label_set_markup (GTK_LABEL (data->attr_normalized_label), normalized_str);
   gtk_label_set_markup (GTK_LABEL (data->attr_type_label), type_str);
-  gtk_label_set_markup (GTK_LABEL (data->attr_updates_label), updates_str);
+  gtk_label_set_markup (GTK_LABEL (data->attr_long_description_label), long_description_str);
 
+  g_free (long_description_str);
   g_free (value_str);
-  g_free (normalized_str);
+  g_free (type_str);
   g_free (pretty);
 }
 
@@ -1305,13 +1232,13 @@ update_dialog (DialogData *data)
                                   &expansion))
         {
           GtkTreeIter titer;
-          gchar *tooltip_str;
+          gchar *long_desc_str;
           gchar *desc_str;
           gchar *assessment_str;
           gchar *pretty_str;
 
           desc_str = attr_format_desc (id, name);
-          tooltip_str = attr_format_tooltip (id, name);
+          long_desc_str = attr_format_long_desc (id, name);
           assessment_str = attr_format_assessment (current, worst, threshold, flags);
           pretty_str = pretty_to_string (pretty, pretty_unit);
 
@@ -1319,7 +1246,7 @@ update_dialog (DialogData *data)
           gtk_list_store_set (data->attributes_list, &titer,
                               ID_COLUMN, (gint) id,
                               DESC_COLUMN, desc_str,
-                              TOOLTIP_COLUMN, tooltip_str,
+                              LONG_DESC_COLUMN, long_desc_str,
                               ASSESSMENT_COLUMN, assessment_str,
                               PRETTY_COLUMN, pretty_str,
                               NORMALIZED_COLUMN, current,
@@ -1331,7 +1258,7 @@ update_dialog (DialogData *data)
           if (id == selected_id)
             tree_iter_to_select = gtk_tree_iter_copy (&titer);
 
-          g_free (tooltip_str);
+          g_free (long_desc_str);
           g_free (desc_str);
           g_free (assessment_str);
           g_free (pretty_str);
@@ -1572,7 +1499,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   data->attributes_list = gtk_list_store_new (N_COLUMNS,
                                               G_TYPE_INT,         /* id */
                                               G_TYPE_STRING,      /* desc */
-                                              G_TYPE_STRING,      /* tooltip */
+                                              G_TYPE_STRING,      /* long_desc */
                                               G_TYPE_STRING,      /* assessment */
                                               G_TYPE_STRING,      /* pretty */
                                               G_TYPE_INT,         /* normalized */
@@ -1586,7 +1513,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
                            GTK_TREE_MODEL (data->attributes_list));
 
   gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (data->attributes_treeview), TRUE);
-  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (data->attributes_treeview), TOOLTIP_COLUMN);
+  gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (data->attributes_treeview), LONG_DESC_COLUMN);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);

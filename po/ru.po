@@ -2,17 +2,17 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
+#
 # Leonid Kanter <leon@asplinux.ru>, 2009, 2010.
 # Andrey Sharoyko <rabidvan@mail.ru>, 2009.
-# Yuri Kozlov <yuray@komyakino.ru>, 2011.
+# Yuri Kozlov <yuray@komyakino.ru>, 2011, 2012.
 # Stas Solovey <whats_up@tut.by>, 2011.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-31 01:53+0000\n"
-"PO-Revision-Date: 2012-04-01 22:19+0300\n"
+"POT-Creation-Date: 2012-05-13 16:56+0000\n"
+"PO-Revision-Date: 2012-05-16 21:10+0300\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,15 +20,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Launchpad-Export-Date: 2011-06-15 15:18+0000\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.2\n"
+"Language: ru\n"
 
-#: ../data/palimpsest.desktop.in.h:1
+#: ../data/gnome-disk-image-mounter.desktop.in.h:1
+#: ../src/disk-image-mounter/main.c:98
+msgid "Disk Image Mounter"
+msgstr "Монтирование дискового образа"
+
+#: ../data/gnome-disk-image-mounter.desktop.in.h:2
+msgid "Mount Disk Images"
+msgstr "Монтирует дисковые образы"
+
+#: ../data/gnome-disks.desktop.in.h:1
 #: ../data/ui/about-dialog.ui.h:1
-#: ../src/palimpsest/gduwindow.c:888
+#: ../src/disks/gduwindow.c:897
 msgid "Disks"
 msgstr "Диски"
 
-#: ../data/palimpsest.desktop.in.h:2
+#: ../data/gnome-disks.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Управление дисками и носителями"
 
@@ -431,151 +441,160 @@ msgstr "_Разметка"
 msgid "<big>Format Volume</big>"
 msgstr "<big>Форматировать том</big>"
 
-#: ../data/ui/palimpsest.ui.h:1
+#: ../data/ui/disks.ui.h:1
 msgid "Create a new partition..."
 msgstr "Создать новый раздел…"
 
-#: ../data/ui/palimpsest.ui.h:2
+#: ../data/ui/disks.ui.h:2
 msgid "Mount the filesystem"
 msgstr "Подключить файловую систему"
 
-#: ../data/ui/palimpsest.ui.h:3
+#: ../data/ui/disks.ui.h:3
 msgid "Unmount the filesystem"
 msgstr "Отключить файловую систему"
 
-#: ../data/ui/palimpsest.ui.h:4
+#: ../data/ui/disks.ui.h:4
 msgid "Eject the media"
 msgstr "Извлечь носитель"
 
-#: ../data/ui/palimpsest.ui.h:5
+#: ../data/ui/disks.ui.h:5
 msgid "Unlock the encrypted device"
 msgstr "Разблокировать зашифрованное устройство"
 
-#: ../data/ui/palimpsest.ui.h:6
+#: ../data/ui/disks.ui.h:6
 msgid "Activate the swap space"
 msgstr "Включить область подкачки"
 
-#: ../data/ui/palimpsest.ui.h:7
+#: ../data/ui/disks.ui.h:7
 msgid "Deactivate the swap space"
 msgstr "Отключить область подкачки"
 
-#: ../data/ui/palimpsest.ui.h:8
+#: ../data/ui/disks.ui.h:8
 msgid "Lock the encrypted device"
 msgstr "Заблокировать зашифрованное устройство"
 
-#: ../data/ui/palimpsest.ui.h:9
+#: ../data/ui/disks.ui.h:9
 msgid "More actions..."
 msgstr "Дополнительные действия…"
 
-#: ../data/ui/palimpsest.ui.h:10
+#: ../data/ui/disks.ui.h:10
 msgid "Delete partition..."
 msgstr "Удалить раздел…"
 
-#: ../data/ui/palimpsest.ui.h:11
+#: ../data/ui/disks.ui.h:11
 msgid "Format Disk..."
 msgstr "Форматировать диск…"
 
-#: ../data/ui/palimpsest.ui.h:12
+#: ../data/ui/disks.ui.h:12
 msgid "Create Disk Image..."
 msgstr "Создать образ диска..."
 
-#: ../data/ui/palimpsest.ui.h:13
+#: ../data/ui/disks.ui.h:13
 msgid "Restore Disk Image..."
 msgstr "Восстановить образ диска..."
 
-#: ../data/ui/palimpsest.ui.h:14
+#: ../data/ui/disks.ui.h:14
 msgid "View SMART Data..."
 msgstr "Просмотр данных SMART…"
 
-#: ../data/ui/palimpsest.ui.h:15
+#: ../data/ui/disks.ui.h:15
 msgid "Format..."
 msgstr "Форматировать…"
 
-#: ../data/ui/palimpsest.ui.h:16
+#: ../data/ui/disks.ui.h:16
 msgid "Edit Partition Type..."
 msgstr "Изменить тип раздела…"
 
-#: ../data/ui/palimpsest.ui.h:17
+#: ../data/ui/disks.ui.h:17
 msgid "Edit Filesystem Label..."
 msgstr "Изменить метку файловой системы…"
 
-#: ../data/ui/palimpsest.ui.h:18
+#: ../data/ui/disks.ui.h:18
 msgid "Change Passphrase..."
 msgstr "Сменить пароль…"
 
-#: ../data/ui/palimpsest.ui.h:19
+#: ../data/ui/disks.ui.h:19
 msgid "Edit Mount Options..."
 msgstr "Изменить параметры монтирования..."
 
-#: ../data/ui/palimpsest.ui.h:20
+#: ../data/ui/disks.ui.h:20
 msgid "Edit Encryption Options..."
 msgstr "Изменить параметры шифрования..."
 
-#: ../data/ui/palimpsest.ui.h:21
+#: ../data/ui/disks.ui.h:21
 msgid "Attach Disk Image..."
 msgstr "Присоединить образ диска..."
 
-#: ../data/ui/palimpsest.ui.h:22
+#: ../data/ui/disks.ui.h:22
 msgid "Detach Disk Image"
 msgstr "Отсоединить образ диска"
 
-#: ../data/ui/palimpsest.ui.h:23
+#: ../data/ui/disks.ui.h:23
 msgid "Select a device"
 msgstr "Выберите устройство"
 
-#: ../data/ui/palimpsest.ui.h:24
+#: ../data/ui/disks.ui.h:24
 msgid "Model"
 msgstr "Модель"
 
-#: ../data/ui/palimpsest.ui.h:25
+#: ../data/ui/disks.ui.h:25
 msgid "Serial Number"
 msgstr "Серийный номер"
 
-#: ../data/ui/palimpsest.ui.h:26
+#: ../data/ui/disks.ui.h:26
 msgid "World Wide Name"
 msgstr "Идентификатор WWN"
 
-#: ../data/ui/palimpsest.ui.h:27
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: ../data/ui/disks.ui.h:28
+msgid "Location"
+msgstr "Расположение"
+
+#: ../data/ui/disks.ui.h:29
 msgid "Media"
 msgstr "Носитель"
 
-#: ../data/ui/palimpsest.ui.h:28
+#: ../data/ui/disks.ui.h:30
 msgid "Size"
 msgstr "Размер"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/palimpsest.ui.h:29
-#: ../src/palimpsest/gduatasmartdialog.c:1632
+#: ../data/ui/disks.ui.h:31
+#: ../src/disks/gduatasmartdialog.c:1559
 msgid "Assessment"
 msgstr "Оценка"
 
-#: ../data/ui/palimpsest.ui.h:30
+#: ../data/ui/disks.ui.h:32
 msgid "Eject media"
 msgstr "Извлечь носитель"
 
-#: ../data/ui/palimpsest.ui.h:31
+#: ../data/ui/disks.ui.h:33
 msgid "<b>_Volumes</b>"
 msgstr "<b>То_ма</b>"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/palimpsest.ui.h:33
+#: ../data/ui/disks.ui.h:35
 msgid "Contents"
 msgstr "Содержимое"
 
-#: ../data/ui/palimpsest.ui.h:34
+#: ../data/ui/disks.ui.h:36
 msgid "Device"
 msgstr "Устройство"
 
-#: ../data/ui/palimpsest.ui.h:35
+#: ../data/ui/disks.ui.h:37
 msgid "In Use"
 msgstr "Используется"
 
-#: ../data/ui/palimpsest.ui.h:36
+#: ../data/ui/disks.ui.h:38
+msgid "Auto-clear"
+msgstr "Автоочистка"
+
+#: ../data/ui/disks.ui.h:39
 msgid "Partition Type"
 msgstr "Тип раздела"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/palimpsest.ui.h:38
+#: ../data/ui/disks.ui.h:41
 msgid "Backing File"
 msgstr "Файл хранилища"
 
@@ -619,8 +638,8 @@ msgstr "Обновлено"
 #. * or the next string for a longer explanation.
 #.
 #: ../data/ui/smart-dialog.ui.h:5
-#: ../src/palimpsest/gduatasmartdialog.c:300
-#: ../src/palimpsest/gduatasmartdialog.c:519
+#: ../src/disks/gduatasmartdialog.c:298
+#: ../src/disks/gduatasmartdialog.c:517
 msgid "Temperature"
 msgstr "Температура устройства"
 
@@ -636,43 +655,34 @@ msgstr "Внутренняя оценка:"
 msgid "Overall Assessment"
 msgstr "Общая оценка"
 
-#. Translators: This string is used as the column title in the treeview for the value
 #: ../data/ui/smart-dialog.ui.h:9
-#: ../src/palimpsest/gduatasmartdialog.c:1620
+#| msgid "<b>SMART _Attributes</b>"
+msgid "SMART _Attributes"
+msgstr "Атрибуты _SMART"
+
+#. Translators: This string is used as the column title in the treeview for the value
+#: ../data/ui/smart-dialog.ui.h:10
+#: ../src/disks/gduatasmartdialog.c:1547
 msgid "Value"
 msgstr "Значение"
 
-#. How often the attribute is updated. The two possible values are 'Every time data is collected (online)' and 'Only during off-line activities (Not Online)'
-#. Translators: Used in the tooltip for a SMART attribute
 #: ../data/ui/smart-dialog.ui.h:11
-#: ../src/palimpsest/gduatasmartdialog.c:865
-msgid "Updates"
-msgstr "Обновления"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../data/ui/smart-dialog.ui.h:12
-#: ../src/palimpsest/gduatasmartdialog.c:863
 msgid "Type"
 msgstr "Тип"
 
-# Значение
+#: ../data/ui/smart-dialog.ui.h:12
+msgid "Description"
+msgstr "Описание"
+
 #: ../data/ui/smart-dialog.ui.h:13
-msgid "Normalized"
-msgstr "Нормализованное"
-
-#: ../data/ui/smart-dialog.ui.h:14
-msgid "<b>SMART _Attributes</b>"
-msgstr "<b>Атрибуты _SMART</b>"
-
-#: ../data/ui/smart-dialog.ui.h:15
 msgid "Short"
 msgstr "Короткая"
 
-#: ../data/ui/smart-dialog.ui.h:16
+#: ../data/ui/smart-dialog.ui.h:14
 msgid "Extended"
 msgstr "Расширенная"
 
-#: ../data/ui/smart-dialog.ui.h:17
+#: ../data/ui/smart-dialog.ui.h:15
 msgid "Conveyance"
 msgstr "Транспортировка"
 
@@ -684,559 +694,649 @@ msgstr "<big>Введите пароль для разблокирования</
 msgid "_Unlock"
 msgstr "_Разблокировать"
 
+#: ../src/disk-image-mounter/main.c:96
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: ../src/disk-image-mounter/main.c:118
+msgid "Allow writing to the image"
+msgstr "Разрешить запись в образ"
+
+#: ../src/disk-image-mounter/main.c:119
+msgid "Wait until created loop devices are cleared"
+msgstr "Ждать, пока очистятся созданные петлевые устройства"
+
+#: ../src/disk-image-mounter/main.c:139
+#: ../src/disks/gduutils.c:85
+msgid "All Files"
+msgstr "Все файлы"
+
+#: ../src/disk-image-mounter/main.c:143
+#: ../src/disks/gduutils.c:89
+msgid "Disk Images (*.img, *.iso)"
+msgstr "Образы дисков (*.img, *.iso)"
+
+#: ../src/disk-image-mounter/main.c:159
+msgid "Select Disk Image(s) to Mount"
+msgstr "Выберите образ(ы) диска для монтирования"
+
+#: ../src/disk-image-mounter/main.c:163
+msgid "_Mount"
+msgstr "_Монтировать"
+
+#. Add a RO check button that defaults to RO
+#: ../src/disk-image-mounter/main.c:169
+msgid "Set up _read-only mount"
+msgstr "Монтировать только для _чтения"
+
+#: ../src/disk-image-mounter/main.c:170
+msgid "If checked, the mount will be read-only. This is useful if you don't want the underlying disk image to be modified"
+msgstr "Если выбрано, то будет произведено монтирование только для чтения. Это полезно, когда вы хотите избежать изменения дискового образа"
+
+#: ../src/disk-image-mounter/main.c:213
+#, c-format
+msgid "Error connecting to udisks daemon: %s (%s, %d)"
+msgstr "Ошибка подключения к службе udisks: %s (%s, %d)"
+
+#: ../src/disk-image-mounter/main.c:221
+msgid "Attach and mount one or more disk image files."
+msgstr "Присоединить и смонтировать один или несколько файлов дисковых образов."
+
+#: ../src/disk-image-mounter/main.c:275
+#, c-format
+msgid "Cannot open `%s' - maybe the volume isn't mounted?"
+msgstr "Не удалось открыть «%s»: проверьте, смонтирован ли том"
+
+#: ../src/disk-image-mounter/main.c:282
+#, c-format
+msgid "Error opening `%s': %m"
+msgstr "Ошибка открытия «%s»: %m"
+
+#: ../src/disk-image-mounter/main.c:303
+#, c-format
+msgid "Error attaching disk image: %s (%s, %d)"
+msgstr "Ошибка присоединения дискового образа: %s (%s, %d)"
+
+#: ../src/disk-image-mounter/main.c:350
+#, c-format
+msgid "Error mounting filesystem on partition %d of disk image: %s (%s, %d)"
+msgstr "Ошибка монтирования файловой системы на разделе %d из дискового образа: %s (%s, %d)"
+
+#: ../src/disk-image-mounter/main.c:365
+#, c-format
+msgid "The file `%s' does not appear to contain a mountable filesystem or partition table"
+msgstr "Файл «%s» не содержит монтируемую файловую систему или таблицу разделов"
+
+#: ../src/disk-image-mounter/main.c:376
+#, c-format
+msgid "Error mounting filesystem: %s (%s, %d)"
+msgstr "Ошибка монтирования файловой системы: %s (%s, %d)"
+
+#. this is not fatal but can happen when using FUSE crap where uid 0 is
+#. * not permitted to view files on a FUSE mount
+#.
+#: ../src/disk-image-mounter/main.c:403
+#, c-format
+msgid "Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"
+msgstr "Не критическая ошибка: ошибка при установке автоочистки в значение TRUE: %s (%s, %d)\n"
+
+#: ../src/disk-image-mounter/main.c:418
+#, c-format
+msgid "Error cleaning up loop device: %s (%s, %d)"
+msgstr "Ошибка очистки петлевого устройства: %s (%s, %d)"
+
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:143
+#: ../src/disks/gduatasmartdialog.c:141
 msgid "Read Error Rate"
 msgstr "Ошибки чтения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:144
+#: ../src/disks/gduatasmartdialog.c:142
 msgid "Frequency of errors while reading raw data from the disk. A non-zero value indicates a problem with either the disk surface or read/write heads"
 msgstr "Количество ошибок чтения данных с диска. Отличное от нуля значение показывает, что есть проблемы либо с поверхностью диска, либо с головками чтения/записи"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:153
+#: ../src/disks/gduatasmartdialog.c:151
 msgid "Throughput Performance"
 msgstr "Пропускная способность"
 
-#: ../src/palimpsest/gduatasmartdialog.c:154
+#: ../src/disks/gduatasmartdialog.c:152
 msgid "Average efficiency of the disk"
 msgstr "Средняя эффективность диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:161
+#: ../src/disks/gduatasmartdialog.c:159
 msgid "Spinup Time"
 msgstr "Время раскрутки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:162
+#: ../src/disks/gduatasmartdialog.c:160
 msgid "Time needed to spin up the disk"
 msgstr "Время, необходимое диску для набора рабочей скорости вращения"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:169
+#: ../src/disks/gduatasmartdialog.c:167
 msgid "Start/Stop Count"
 msgstr "Циклы «запуск/останов»"
 
-#: ../src/palimpsest/gduatasmartdialog.c:170
+#: ../src/disks/gduatasmartdialog.c:168
 msgid "Number of spindle start/stop cycles"
 msgstr "Количество циклов шпинделя «запуск/останов»"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:177
+#: ../src/disks/gduatasmartdialog.c:175
 msgid "Reallocated Sector Count"
 msgstr "Перераспределения секторов"
 
-#: ../src/palimpsest/gduatasmartdialog.c:178
+#: ../src/disks/gduatasmartdialog.c:176
 msgid "Count of remapped sectors. When the hard drive finds a read/write/verification error, it marks the sector as \"reallocated\" and transfers data to a special reserved area (spare area)"
 msgstr "Количество перераспределённых секторов. Когда жёсткий диск находит ошибку чтения/записи/проверки, он помечает сектор как «перераспределённый» и перемещает данные в специальную резервную область"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:187
+#: ../src/disks/gduatasmartdialog.c:185
 msgid "Read Channel Margin"
 msgstr "Размер канала чтения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:188
+#: ../src/disks/gduatasmartdialog.c:186
 msgid "Margin of a channel while reading data."
 msgstr "Размер канала при чтении данных."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:195
+#: ../src/disks/gduatasmartdialog.c:193
 msgid "Seek Error Rate"
 msgstr "Ошибки позиционирования"
 
-#: ../src/palimpsest/gduatasmartdialog.c:196
+#: ../src/disks/gduatasmartdialog.c:194
 msgid "Frequency of errors while positioning"
 msgstr "Количество ошибок позиционирования"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:203
+#: ../src/disks/gduatasmartdialog.c:201
 msgid "Seek Timer Performance"
 msgstr "Время позиционирования"
 
-#: ../src/palimpsest/gduatasmartdialog.c:204
+#: ../src/disks/gduatasmartdialog.c:202
 msgid "Average efficiency of operations while positioning"
 msgstr "Средняя эффективность выполнения позиционирования"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:211
-#: ../src/palimpsest/gduatasmartdialog.c:536
+#: ../src/disks/gduatasmartdialog.c:209
+#: ../src/disks/gduatasmartdialog.c:534
 msgid "Power-On Hours"
 msgstr "Отработанное время"
 
-#: ../src/palimpsest/gduatasmartdialog.c:212
-#: ../src/palimpsest/gduatasmartdialog.c:537
+#: ../src/disks/gduatasmartdialog.c:210
+#: ../src/disks/gduatasmartdialog.c:535
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Количество времени во включённом состоянии"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:219
+#: ../src/disks/gduatasmartdialog.c:217
 msgid "Spinup Retry Count"
 msgstr "Попытки повторной раскрутки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:220
+#: ../src/disks/gduatasmartdialog.c:218
 msgid "Number of retry attempts to spin up"
 msgstr "Количество попыток повторного набора рабочей скорости вращения диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:227
+#: ../src/disks/gduatasmartdialog.c:225
 msgid "Calibration Retry Count"
 msgstr "Попытки калибровки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:228
+#: ../src/disks/gduatasmartdialog.c:226
 msgid "Number of attempts to calibrate the device"
 msgstr "Количество попыток калибровки устройства"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:235
+#: ../src/disks/gduatasmartdialog.c:233
 msgid "Power Cycle Count"
 msgstr "Цикл «включение/выключение»"
 
-#: ../src/palimpsest/gduatasmartdialog.c:236
+#: ../src/disks/gduatasmartdialog.c:234
 msgid "Number of power-on events"
 msgstr "Количество циклов «включение/выключение»"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:243
+#: ../src/disks/gduatasmartdialog.c:241
 msgid "Soft read error rate"
 msgstr "Программные ошибки чтения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:245
+#: ../src/disks/gduatasmartdialog.c:243
 msgid "Frequency of errors while reading from the disk"
 msgstr "Количество ошибок во время чтения данных с диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:252
+#: ../src/disks/gduatasmartdialog.c:250
 msgid "Reported Uncorrectable Errors"
 msgstr "Некорректируемые ошибки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:253
+#: ../src/disks/gduatasmartdialog.c:251
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Количество ошибок, не поддающихся аппаратной коррекции"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:260
+#: ../src/disks/gduatasmartdialog.c:258
 msgid "High Fly Writes"
 msgstr "Вылеты пишущей головки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:261
+#: ../src/disks/gduatasmartdialog.c:259
 msgid "Number of times a recording head is flying outside its normal operating range"
 msgstr "Количество случаев, когда пишущая головка поднималась выше своего допустимого уровня"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:268
+#: ../src/disks/gduatasmartdialog.c:266
 msgid "Airflow Temperature"
 msgstr "Температура воздушного потока"
 
-#: ../src/palimpsest/gduatasmartdialog.c:269
+#: ../src/disks/gduatasmartdialog.c:267
 msgid "Airflow temperature of the drive"
 msgstr "Температура воздушного потока внутри устройства"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:276
-#: ../src/palimpsest/gduatasmartdialog.c:446
+#: ../src/disks/gduatasmartdialog.c:274
+#: ../src/disks/gduatasmartdialog.c:444
 msgid "G-sense Error Rate"
 msgstr "Удары и сотрясения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:277
+#: ../src/disks/gduatasmartdialog.c:275
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Количество ошибок в результате нагрузок при ударе или падении"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:284
-#: ../src/palimpsest/gduatasmartdialog.c:503
+#: ../src/disks/gduatasmartdialog.c:282
+#: ../src/disks/gduatasmartdialog.c:501
 msgid "Power-off Retract Count"
 msgstr "Аварийные выключения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:285
+#: ../src/disks/gduatasmartdialog.c:283
 msgid "Number of power-off or emergency retract cycles"
 msgstr "Количество аварийных выключений"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:292
-#: ../src/palimpsest/gduatasmartdialog.c:479
+#: ../src/disks/gduatasmartdialog.c:290
+#: ../src/disks/gduatasmartdialog.c:477
 msgid "Load/Unload Cycle Count"
 msgstr "Циклы «загрузка/выгрузка»"
 
-#: ../src/palimpsest/gduatasmartdialog.c:293
+#: ../src/disks/gduatasmartdialog.c:291
 msgid "Number of cycles into landing zone position"
 msgstr "Количество циклов позиционирования пишущей головки в зону парковки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:301
+#: ../src/disks/gduatasmartdialog.c:299
 msgid "Current internal temperature of the drive"
 msgstr "Текущее значение внутренней температуры устройства"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:308
+#: ../src/disks/gduatasmartdialog.c:306
 msgid "Hardware ECC Recovered"
 msgstr "Аппаратная коррекция"
 
-#: ../src/palimpsest/gduatasmartdialog.c:309
+#: ../src/disks/gduatasmartdialog.c:307
 msgid "Number of ECC on-the-fly errors"
 msgstr "Количество ошибок, исправленных аппаратной коррекцией"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:316
+#: ../src/disks/gduatasmartdialog.c:314
 msgid "Reallocation Count"
 msgstr "Перераспределения секторов"
 
-#: ../src/palimpsest/gduatasmartdialog.c:317
+#: ../src/disks/gduatasmartdialog.c:315
 msgid "Number of remapping operations. The raw value of this attribute shows the total number of (successful and unsuccessful) attempts to transfer data from reallocated sectors to a spare area"
 msgstr "Количество операций перераспределения. Значение этого атрибута показывает количество удачных и неудачных попыток перемещения данных из поврежденных секторов в резервную область"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:327
+#: ../src/disks/gduatasmartdialog.c:325
 msgid "Current Pending Sector Count"
 msgstr "Неопределённые секторы"
 
-#: ../src/palimpsest/gduatasmartdialog.c:328
+#: ../src/disks/gduatasmartdialog.c:326
 msgid "Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt"
 msgstr "Количество секторов, ожидающих перераспределения. Если сектор, ожидающий перераспределения, успешно проходит тестирование на чтение/запись, это значение уменьшается, и сектор не перераспределяется. Ошибки чтения сектора не приводят к его перераспределению, он будет перераспределён только в случае ошибки при попытке записи"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:339
+#: ../src/disks/gduatasmartdialog.c:337
 msgid "Uncorrectable Sector Count"
 msgstr "Неисправные секторы"
 
-#: ../src/palimpsest/gduatasmartdialog.c:340
+#: ../src/disks/gduatasmartdialog.c:338
 msgid "The total number of uncorrectable errors when reading/writing a sector. A rise in the value of this attribute indicates defects of the disk surface and/or problems in the mechanical subsystem"
 msgstr "Количество некорректируемых ошибок при чтении/записи сектора. Прирост значения этого атрибута показывает наличие дефектов поверхности диска или проблемы с механикой устройства"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:349
+#: ../src/disks/gduatasmartdialog.c:347
 msgid "UDMA CRC Error Rate"
 msgstr "Ошибки CRC UDMA"
 
-#: ../src/palimpsest/gduatasmartdialog.c:350
+#: ../src/disks/gduatasmartdialog.c:348
 msgid "Number of CRC errors during UDMA mode"
 msgstr "Количество ошибок контрольных сумм в режиме UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:357
+#: ../src/disks/gduatasmartdialog.c:355
 msgid "Write Error Rate"
 msgstr "Ошибки записи"
 
-#: ../src/palimpsest/gduatasmartdialog.c:358
+#: ../src/disks/gduatasmartdialog.c:356
 msgid "Number of errors while writing to disk (or) multi-zone error rate (or) flying-height"
 msgstr "Количество ошибок записи на диск"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:365
+#: ../src/disks/gduatasmartdialog.c:363
 msgid "Soft Read Error Rate"
 msgstr "Программные ошибки чтения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:366
+#: ../src/disks/gduatasmartdialog.c:364
 msgid "Number of off-track errors"
 msgstr "Количество ошибок выхода за зону записи"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:373
+#: ../src/disks/gduatasmartdialog.c:371
 msgid "Data Address Mark Errors"
 msgstr "Ошибки регистрации адреса данных"
 
-#: ../src/palimpsest/gduatasmartdialog.c:374
+#: ../src/disks/gduatasmartdialog.c:372
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "Количество ошибок регистрации адреса данных (DAM)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:381
+#: ../src/disks/gduatasmartdialog.c:379
 msgid "Run Out Cancel"
 msgstr "Отмены раскрутки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:382
+#: ../src/disks/gduatasmartdialog.c:380
 msgid "Number of ECC errors"
 msgstr "Количество коррекций ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:389
+#: ../src/disks/gduatasmartdialog.c:387
 msgid "Soft ECC correction"
 msgstr "Программная коррекция ошибок"
 
-#: ../src/palimpsest/gduatasmartdialog.c:390
+#: ../src/disks/gduatasmartdialog.c:388
 msgid "Number of errors corrected by software ECC"
 msgstr "Количество ошибок, скорректированных программно"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:397
+#: ../src/disks/gduatasmartdialog.c:395
 msgid "Thermal Asperity Rate"
 msgstr "Перегревы"
 
-#: ../src/palimpsest/gduatasmartdialog.c:398
+#: ../src/disks/gduatasmartdialog.c:396
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Количество нештатных температурных режимов"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:405
+#: ../src/disks/gduatasmartdialog.c:403
 msgid "Flying Height"
 msgstr "Высота вылета"
 
-#: ../src/palimpsest/gduatasmartdialog.c:406
+#: ../src/disks/gduatasmartdialog.c:404
 msgid "Height of heads above the disk surface"
 msgstr "Высота головки над поверхностью диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:413
+#: ../src/disks/gduatasmartdialog.c:411
 msgid "Spin High Current"
 msgstr "Сила тока раскрутки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:414
+#: ../src/disks/gduatasmartdialog.c:412
 msgid "Amount of high current used to spin up the drive"
 msgstr "Сила тока, используемая для раскрутки диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:421
+#: ../src/disks/gduatasmartdialog.c:419
 msgid "Spin Buzz"
 msgstr "Шум раскрутки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:422
+#: ../src/disks/gduatasmartdialog.c:420
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Количество усилий раскрутки диска"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:429
+#: ../src/disks/gduatasmartdialog.c:427
 msgid "Offline Seek Performance"
 msgstr "Автономное позиционирование"
 
-#: ../src/palimpsest/gduatasmartdialog.c:430
+#: ../src/disks/gduatasmartdialog.c:428
 msgid "Drive's seek performance during offline operations"
 msgstr "Производительность позиционирования привода при автономных операциях"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:437
+#: ../src/disks/gduatasmartdialog.c:435
 msgid "Disk Shift"
 msgstr "Смещение диска"
 
-#: ../src/palimpsest/gduatasmartdialog.c:438
+#: ../src/disks/gduatasmartdialog.c:436
 msgid "Shift of disk is possible as a result of strong shock loading in the store, as a result of falling (or) temperature"
 msgstr "Смещение диска, предположительно, произошло вследствие сильных ударных нагрузок: падения или перегрева"
 
-#: ../src/palimpsest/gduatasmartdialog.c:447
+#: ../src/disks/gduatasmartdialog.c:445
 msgid "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "Количество ошибок в результате ударных нагрузок, зафиксированные шоковым датчиком"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:454
+#: ../src/disks/gduatasmartdialog.c:452
 msgid "Loaded Hours"
 msgstr "Часы нагрузки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:455
+#: ../src/disks/gduatasmartdialog.c:453
 msgid "Number of hours in general operational state"
 msgstr "Количество часов в основном рабочем состоянии"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:462
+#: ../src/disks/gduatasmartdialog.c:460
 msgid "Load/Unload Retry Count"
 msgstr "Попытки загрузки/выгрузки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:463
+#: ../src/disks/gduatasmartdialog.c:461
 msgid "Loading on drive caused by numerous recurrences of operations, like reading, recording, positioning of heads, etc"
 msgstr "Нагрузка на приводы, вызванная повторяющимися операциями, такими как чтение, запись, позиционирование головок и т.д."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:471
+#: ../src/disks/gduatasmartdialog.c:469
 msgid "Load Friction"
 msgstr "Нагрузки трением"
 
-#: ../src/palimpsest/gduatasmartdialog.c:472
+#: ../src/disks/gduatasmartdialog.c:470
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Нагрузка на привод, вызванная трением в механических частях накопителя"
 
-#: ../src/palimpsest/gduatasmartdialog.c:480
+#: ../src/disks/gduatasmartdialog.c:478
 msgid "Total number of load cycles"
 msgstr "Количество всех циклов загрузки"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:487
+#: ../src/disks/gduatasmartdialog.c:485
 msgid "Load-in Time"
 msgstr "Время загрузки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:488
+#: ../src/disks/gduatasmartdialog.c:486
 msgid "General time for loading in a drive"
 msgstr "Общее время загрузки в приводе"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:495
+#: ../src/disks/gduatasmartdialog.c:493
 msgid "Torque Amplification Count"
 msgstr "Усиление крутящего момента"
 
-#: ../src/palimpsest/gduatasmartdialog.c:496
+#: ../src/disks/gduatasmartdialog.c:494
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Количество усилий момента вращения привода"
 
-#: ../src/palimpsest/gduatasmartdialog.c:504
+#: ../src/disks/gduatasmartdialog.c:502
 msgid "Number of power-off retract events"
 msgstr "Количество аварийных выключений"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:511
+#: ../src/disks/gduatasmartdialog.c:509
 msgid "GMR Head Amplitude"
 msgstr "Амплитуда GMR-головки"
 
-#: ../src/palimpsest/gduatasmartdialog.c:512
+#: ../src/disks/gduatasmartdialog.c:510
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Амплитуда дрожания головок (GMR-головка) в подвижном режиме"
 
-#: ../src/palimpsest/gduatasmartdialog.c:520
+#: ../src/disks/gduatasmartdialog.c:518
 msgid "Temperature of the drive"
 msgstr "Температура привода"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:527
+#: ../src/disks/gduatasmartdialog.c:525
 msgid "Endurance Remaining"
 msgstr "Запас прочности"
 
-#: ../src/palimpsest/gduatasmartdialog.c:528
+#: ../src/disks/gduatasmartdialog.c:526
 msgid "Number of physical erase cycles completed on the drive as a percentage of the maximum physical erase cycles the drive supports"
 msgstr "Количество физических циклов стирания выполненных на приводе в процентном соотношении к максимальному числу физических циклов стирания, поддерживаемых приводом"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:544
+#: ../src/disks/gduatasmartdialog.c:542
 msgid "Uncorrectable ECC Count"
 msgstr "Некорректируемые ошибки ECC"
 
-#: ../src/palimpsest/gduatasmartdialog.c:545
+#: ../src/disks/gduatasmartdialog.c:543
 msgid "Number of uncorrectable ECC errors"
 msgstr "Количество некорректируемых ошибок ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:552
+#: ../src/disks/gduatasmartdialog.c:550
 msgid "Good Block Rate"
 msgstr "Процент хороших блоков"
 
-#: ../src/palimpsest/gduatasmartdialog.c:553
+#: ../src/disks/gduatasmartdialog.c:551
 msgid "Number of available reserved blocks as a percentage of the total number of reserved blocks"
 msgstr "Количество доступных резервных блоков в процентном соотношении к общему числу резервных блоков"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:561
+#: ../src/disks/gduatasmartdialog.c:559
 msgid "Head Flying Hours"
 msgstr "Время вылета пишущих головок"
 
-#: ../src/palimpsest/gduatasmartdialog.c:562
+#: ../src/disks/gduatasmartdialog.c:560
 msgid "Time while head is positioning"
 msgstr "Время позиционирования пишущей головки"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:569
+#: ../src/disks/gduatasmartdialog.c:567
 msgid "Read Error Retry Rate"
 msgstr "Попытки повторного чтения"
 
-#: ../src/palimpsest/gduatasmartdialog.c:570
+#: ../src/disks/gduatasmartdialog.c:568
 msgid "Number of errors while reading from a disk"
 msgstr "Количество ошибок чтения данных с диска"
 
-#: ../src/palimpsest/gduatasmartdialog.c:630
-#: ../src/palimpsest/gduatasmartdialog.c:820
+#: ../src/disks/gduatasmartdialog.c:628
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Нет описания для атрибута %d"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/palimpsest/gduatasmartdialog.c:681
+#: ../src/disks/gduatasmartdialog.c:679
 msgid "FAILING"
-msgstr "НЕ ИСПРАВЕН"
+msgstr "НЕИСПРАВЕН"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/palimpsest/gduatasmartdialog.c:690
+#: ../src/disks/gduatasmartdialog.c:688
 msgid "Failed in the past"
 msgstr "Неудачно в прошлом"
 
-#: ../src/palimpsest/gduatasmartdialog.c:694
+#: ../src/disks/gduatasmartdialog.c:692
 msgid "OK"
 msgstr "OK"
 
 #. Translators: Used for a time-based unit that exceed one year
-#: ../src/palimpsest/gduatasmartdialog.c:711
+#: ../src/disks/gduatasmartdialog.c:709
 #, c-format
 msgid "%.1f year"
 msgid_plural "%.1f years"
@@ -1245,7 +1345,7 @@ msgstr[1] "%.1f года"
 msgstr[2] "%.1f лет"
 
 #. Translators: Used for a time-based unit that exceed one day but not one year
-#: ../src/palimpsest/gduatasmartdialog.c:717
+#: ../src/disks/gduatasmartdialog.c:715
 #, c-format
 msgid "%.1f day"
 msgid_plural "%.1f days"
@@ -1254,7 +1354,7 @@ msgstr[1] "%.1f дня"
 msgstr[2] "%.1f дней"
 
 #. Translators: Used for a time-based unit that exceed one hour but not one day
-#: ../src/palimpsest/gduatasmartdialog.c:723
+#: ../src/disks/gduatasmartdialog.c:721
 #, c-format
 msgid "%.1f hour"
 msgid_plural "%.1f hours"
@@ -1263,7 +1363,7 @@ msgstr[1] "%.1f часа"
 msgstr[2] "%.1f часов"
 
 #. Translators: Used for a time-based unit that exceed one minute but not one hour
-#: ../src/palimpsest/gduatasmartdialog.c:729
+#: ../src/disks/gduatasmartdialog.c:727
 #, c-format
 msgid "%.1f minute"
 msgid_plural "%.1f minutes"
@@ -1272,7 +1372,7 @@ msgstr[1] "%.1f минуты"
 msgstr[2] "%.1f минут"
 
 #. Translators: Used for a time-based unit that exceed one second but not one minute
-#: ../src/palimpsest/gduatasmartdialog.c:735
+#: ../src/disks/gduatasmartdialog.c:733
 #, c-format
 msgid "%.1f second"
 msgid_plural "%.1f seconds"
@@ -1281,7 +1381,7 @@ msgstr[1] "%.1f секунды"
 msgstr[2] "%.1f секунд"
 
 #. Translators: Used for a time-based unit that is counted in milliseconds and doesn't exceed one second
-#: ../src/palimpsest/gduatasmartdialog.c:741
+#: ../src/disks/gduatasmartdialog.c:739
 #, c-format
 msgid "%.1f msec"
 msgid_plural "%.1f msecs"
@@ -1289,7 +1389,7 @@ msgstr[0] "%.1f мс"
 msgstr[1] "%.1f мс"
 msgstr[2] "%.1f мс"
 
-#: ../src/palimpsest/gduatasmartdialog.c:764
+#: ../src/disks/gduatasmartdialog.c:762
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1304,8 +1404,8 @@ msgstr[2] "%d секторов"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:776
-#: ../src/palimpsest/gduatasmartdialog.c:1058
+#: ../src/disks/gduatasmartdialog.c:774
+#: ../src/disks/gduatasmartdialog.c:985
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -1313,168 +1413,140 @@ msgstr "%.0f° C / %.0f° F"
 #. SK_SMART_ATTRIBUTE_UNIT_UNKNOWN
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/palimpsest/gduatasmartdialog.c:787
+#: ../src/disks/gduatasmartdialog.c:785
 msgid "N/A"
 msgstr "Н/Д"
 
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Pre-Fail)" in English
+#. Translators: The first %s is the pretty value (such as '300
+#. * sectors' or '2.5 years' or '53° C / 127° F').
+#. *
+#. * The three %d are the normalized, threshold and worst values -
+#. * these are all decimal numbers.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:831
-msgid "Failure is a sign the disk will fail within 24 hours (Pre-Fail)"
-msgstr "Ошибка означает, что диск откажет в течение 24 часов (Pre-Fail)"
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Old-Age)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:838
-msgid "Failure is a sign the disk exceeded its intended design life period (Old-Age)"
-msgstr "Сбой является признаком того, что диск превысил жизненный период (Old-Age)"
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Online)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:846
-msgid "Every time data is collected (Online)"
-msgstr "По мере накопления (на лету)"
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Not Online)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:853
-msgid "Only during off-line activities (Not Online)"
-msgstr "Только автономно (не на лету)"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../src/palimpsest/gduatasmartdialog.c:861
-msgid "Name"
-msgstr "Название"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../src/palimpsest/gduatasmartdialog.c:867
-msgid "Description"
-msgstr "Описание"
-
-#: ../src/palimpsest/gduatasmartdialog.c:908
+#: ../src/disks/gduatasmartdialog.c:831
 #, c-format
-msgid "%d <span size=\"small\">(Worst:%d, Threshold: %d)</span>"
-msgstr "%d <span size=\"small\">(худший:%d, порог: %d)</span>"
+#| msgid "%d <span size=\"small\">(Worst:%d, Threshold: %d)</span>"
+msgid "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
+msgstr "%s <span size=\"small\">(нормализованное: %d; пороговое: %d; наихудшее: %d)</span>"
 
 #. Translators: Please keep "(Pre-Fail)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:918
+#: ../src/disks/gduatasmartdialog.c:841
 msgid "Failure is a sign the disk will fail within 24 hours <span size=\"small\">(Pre-Fail)</span>"
 msgstr "Ошибка означает, что диск откажет в течение 24 часов <span size=\"small\">(Pre-Fail)</span>"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:924
+#: ../src/disks/gduatasmartdialog.c:847
 msgid "Failure is a sign the disk exceeded its intended design life period <span size=\"small\">(Old-Age)</span>"
 msgstr "Сбой является признаком того, что диск превысил жизненный период <span size=\"small\">(Old-Age)</span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:931
-msgid "Every time data is collected <span size=\"small\">(Online)</span>"
+#: ../src/disks/gduatasmartdialog.c:854
+#| msgid "Every time data is collected <span size=\"small\">(Online)</span>"
+msgid "Updated every time data is collected <span size=\"small\">(Online)</span>"
 msgstr "Данные собираются постоянно <span size=\"small\">(Online)</span>"
 
 #. Translators: Please keep "(Not Online)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:937
-msgid "Only during off-line activities <span size=\"small\">(Not Online)</span>"
-msgstr "Только во время автономной активности <span size=\"small\">(Not Online)</span>"
+#: ../src/disks/gduatasmartdialog.c:860
+#| msgid ""
+#| "Only during off-line activities <span size=\"small\">(Not Online)</span>"
+msgid "Updated only during off-line activities <span size=\"small\">(Not Online)</span>"
+msgstr "Данные собираются во время автономной работы <span size=\"small\">(Not Online)</span>"
 
-#: ../src/palimpsest/gduatasmartdialog.c:964
+#: ../src/disks/gduatasmartdialog.c:891
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Последняя самодиагностика завершена без ошибок"
 
-#: ../src/palimpsest/gduatasmartdialog.c:968
+#: ../src/disks/gduatasmartdialog.c:895
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Последняя самодиагностика была отменена"
 
-#: ../src/palimpsest/gduatasmartdialog.c:972
+#: ../src/disks/gduatasmartdialog.c:899
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Последняя самодиагностика была прервана"
 
-#: ../src/palimpsest/gduatasmartdialog.c:976
+#: ../src/disks/gduatasmartdialog.c:903
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Последняя самодиагностика не была выполнена"
 
-#: ../src/palimpsest/gduatasmartdialog.c:980
+#: ../src/disks/gduatasmartdialog.c:907
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Последняя самодиагностика завершилась с ошибкой"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: ../src/palimpsest/gduatasmartdialog.c:985
+#: ../src/disks/gduatasmartdialog.c:912
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (электроника)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: ../src/palimpsest/gduatasmartdialog.c:990
+#: ../src/disks/gduatasmartdialog.c:917
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (сервопривод)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: ../src/palimpsest/gduatasmartdialog.c:995
+#: ../src/disks/gduatasmartdialog.c:922
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (чтение)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: ../src/palimpsest/gduatasmartdialog.c:1000
+#: ../src/disks/gduatasmartdialog.c:927
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (обращение)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: ../src/palimpsest/gduatasmartdialog.c:1005
+#: ../src/disks/gduatasmartdialog.c:932
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Выполняется самодиагностика — осталось %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: ../src/palimpsest/gduatasmartdialog.c:1012
+#: ../src/disks/gduatasmartdialog.c:939
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Неизвестно (%s)"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1034
+#: ../src/disks/gduatasmartdialog.c:961
 #, c-format
 msgid "%s ago"
 msgstr "%s назад"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1091
+#: ../src/disks/gduatasmartdialog.c:1018
 msgid "SMART is not supported"
 msgstr "SMART не поддерживается"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1097
+#: ../src/disks/gduatasmartdialog.c:1024
 msgid "SMART is not enabled"
 msgstr "SMART отключён"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1109
+#: ../src/disks/gduatasmartdialog.c:1036
 #, c-format
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Выполняется самодиагностика — осталось %d%%"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1123
-#: ../src/palimpsest/gduatasmartdialog.c:1132
+#: ../src/disks/gduatasmartdialog.c:1050
+#: ../src/disks/gduatasmartdialog.c:1059
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "ВОЗМОЖНО, ДИСК СКОРО СЛОМАЕТСЯ"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1155
+#: ../src/disks/gduatasmartdialog.c:1082
 msgid "SELF-TEST FAILED"
 msgstr "ОШИБКА САМОДИАГНОСТИКИ"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1164
+#: ../src/disks/gduatasmartdialog.c:1091
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
@@ -1482,7 +1554,7 @@ msgstr[0] "Диск исправен, %d сбойный атрибут"
 msgstr[1] "Диск исправен, %d сбойных атрибута"
 msgstr[2] "Диск исправен, %d сбойных атрибутов"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1175
+#: ../src/disks/gduatasmartdialog.c:1102
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
@@ -1490,7 +1562,7 @@ msgstr[0] "Диск исправен, %d плохой сектор"
 msgstr[1] "Диск исправен, %d плохих сектора"
 msgstr[2] "Диск исправен, %d плохих секторов"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1186
+#: ../src/disks/gduatasmartdialog.c:1113
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -1499,8 +1571,7 @@ msgstr[1] "Диск исправен, ранее было %d сбойных ат
 msgstr[2] "Диск исправен, ранее было %d сбойных атрибутов"
 
 #. Otherwise, it's all honky dory
-#: ../src/palimpsest/gduatasmartdialog.c:1195
-#| msgid "Disks"
+#: ../src/disks/gduatasmartdialog.c:1122
 msgid "Disk is OK"
 msgstr "Диск исправен"
 
@@ -1508,66 +1579,66 @@ msgstr "Диск исправен"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:1209
+#: ../src/disks/gduatasmartdialog.c:1136
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
 #. Translators: XXX
-#: ../src/palimpsest/gduatasmartdialog.c:1364
+#: ../src/disks/gduatasmartdialog.c:1291
 msgid "Threshold exceeded"
 msgstr "Превышено пороговое значение"
 
 #. Translators: XXX
-#: ../src/palimpsest/gduatasmartdialog.c:1369
+#: ../src/disks/gduatasmartdialog.c:1296
 msgid "Threshold not exceeded"
 msgstr "Пороговое значение не превышено"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1428
+#: ../src/disks/gduatasmartdialog.c:1355
 msgid "Error refreshing SMART data"
 msgstr "Ошибка обновления данных SMART"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1460
+#: ../src/disks/gduatasmartdialog.c:1387
 msgid "Error aborting SMART self-test"
 msgstr "Ошибка отмены самодиагностики SMART"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1479
+#: ../src/disks/gduatasmartdialog.c:1406
 msgid "Error starting SMART self-test"
 msgstr "Ошибка запуска самодиагностики SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/palimpsest/gduatasmartdialog.c:1594
+#: ../src/disks/gduatasmartdialog.c:1521
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/palimpsest/gduatasmartdialog.c:1606
+#: ../src/disks/gduatasmartdialog.c:1533
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:171
+#: ../src/disks/gduchangepassphrasedialog.c:171
 msgid "Error updating /etc/crypttab"
 msgstr "Ошибка обновления /etc/crypttab"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:190
+#: ../src/disks/gduchangepassphrasedialog.c:190
 msgid "Error changing passphrase"
 msgstr "Ошибка смены пароля"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:277
-#: ../src/palimpsest/gducrypttabdialog.c:424
+#: ../src/disks/gduchangepassphrasedialog.c:277
+#: ../src/disks/gducrypttabdialog.c:424
 msgid "Error retrieving configuration data"
 msgstr "Ошибка получения конфигурационных данных"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:303
+#: ../src/disks/gduchangepassphrasedialog.c:303
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "Некорректные конфигурационные данные /etc/crypttab"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:336
+#: ../src/disks/gduchangepassphrasedialog.c:336
 msgid "Changing the passphrase for this device, will also update the passphrase referenced by the <i>/etc/crypttab</i> file"
 msgstr "Изменение пароля для этого устройства также обновит пароль в файле <i>/etc/crypttab</i>"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:355
-#: ../src/palimpsest/gducreatefilesystemwidget.c:503
+#: ../src/disks/gduchangepassphrasedialog.c:355
+#: ../src/disks/gducreatefilesystemwidget.c:503
 msgid "The strength of the passphrase"
 msgstr "Стойкость пароля"
 
@@ -1575,164 +1646,164 @@ msgstr "Стойкость пароля"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/palimpsest/gducreatediskimagedialog.c:196
+#: ../src/disks/gducreatediskimagedialog.c:196
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Образ диска %s (%s).img"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:233
-#: ../src/palimpsest/gdurestorediskimagedialog.c:274
+#: ../src/disks/gducreatediskimagedialog.c:233
+#: ../src/disks/gdurestorediskimagedialog.c:274
 msgid "Error writing to backup image"
 msgstr "Ошибка записи в образ резервной копии"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:313
-#: ../src/palimpsest/gdurestorediskimagedialog.c:353
+#: ../src/disks/gducreatediskimagedialog.c:313
+#: ../src/disks/gdurestorediskimagedialog.c:353
 msgid "Error reading from offset %"
 msgstr "Ошибка при чтении от смещения %"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:381
-#: ../src/palimpsest/gdurestorediskimagedialog.c:541
+#: ../src/disks/gducreatediskimagedialog.c:381
+#: ../src/disks/gdurestorediskimagedialog.c:541
 msgid "Error opening device"
 msgstr "Ошибка открытия устройства"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:396
-#: ../src/palimpsest/gdurestorediskimagedialog.c:557
+#: ../src/disks/gducreatediskimagedialog.c:396
+#: ../src/disks/gdurestorediskimagedialog.c:557
 msgid "Error determining size of device"
 msgstr "Ошибка определения размера устройства"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:446
+#: ../src/disks/gducreatediskimagedialog.c:446
 #, c-format
 msgid "A file named \"%s\" already exists.  Do you want to replace it?"
 msgstr "Файл с именем «%s» уже существует. Хотите его заменить?"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:449
+#: ../src/disks/gducreatediskimagedialog.c:449
 #, c-format
 msgid "The file already exists in \"%s\".  Replacing it will overwrite its contents."
 msgstr "Файл уже существует в каталоге «%s». Замена файла приведёт к полной перезаписи содержимого существующего файла."
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:453
+#: ../src/disks/gducreatediskimagedialog.c:453
 msgid "_Replace"
 msgstr "_Переместить"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:495
+#: ../src/disks/gducreatediskimagedialog.c:495
 msgid "Error opening file for writing"
 msgstr "Ошибка открытия файла для записи"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:564
+#: ../src/disks/gducreatediskimagedialog.c:564
 #, c-format
 msgid "Copying data from device <i>%s</i>..."
 msgstr "Копирование данных из устройства <i>%s</i>..."
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:388
-#: ../src/palimpsest/gduformatdiskdialog.c:130
+#: ../src/disks/gducreatefilesystemwidget.c:388
+#: ../src/disks/gduformatdiskdialog.c:130
 msgid "Compatible with all systems and devices"
 msgstr "Совместимо со всеми системами и устройствами"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:389
+#: ../src/disks/gducreatefilesystemwidget.c:389
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:394
+#: ../src/disks/gducreatefilesystemwidget.c:394
 msgid "Compatible with most systems"
 msgstr "Совместимо с большинством систем"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:395
+#: ../src/disks/gducreatefilesystemwidget.c:395
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:400
+#: ../src/disks/gducreatefilesystemwidget.c:400
 msgid "Compatible with Linux systems"
 msgstr "Совместимо с Linux-системами"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:401
+#: ../src/disks/gducreatefilesystemwidget.c:401
 msgid "Ext4"
 msgstr "Ext4"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:406
+#: ../src/disks/gducreatefilesystemwidget.c:406
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Зашифровано, совместимо с Linux-системами"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:407
+#: ../src/disks/gducreatefilesystemwidget.c:407
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:412
+#: ../src/disks/gducreatefilesystemwidget.c:412
 msgid "Custom"
 msgstr "Другой"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:413
+#: ../src/disks/gducreatefilesystemwidget.c:413
 msgid "Enter filesystem type"
 msgstr "Введите тип файловой системы"
 
 #. Translators: this is the default name for the filesystem
-#: ../src/palimpsest/gducreatefilesystemwidget.c:456
+#: ../src/disks/gducreatefilesystemwidget.c:456
 msgid "New Volume"
 msgstr "Новый"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:215
+#: ../src/disks/gducreatepartitiondialog.c:215
 msgid "Error formatting partition"
 msgstr "Ошибка форматирования раздела"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:242
+#: ../src/disks/gducreatepartitiondialog.c:242
 msgid "Error creating partition"
 msgstr "Ошибка при создании раздела"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:326
+#: ../src/disks/gducreatepartitiondialog.c:326
 msgid "Extended partition"
 msgstr "Расширенный раздел"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:327
+#: ../src/disks/gducreatepartitiondialog.c:327
 msgid "For logical partitions"
 msgstr "Для логических разделов"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:340
+#: ../src/disks/gducreatepartitiondialog.c:340
 msgid "Cannot create a new partition. There are already four primary partitions."
 msgstr "Невозможно создать новый раздел, т. к. уже создано четыре главных раздела."
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:344
+#: ../src/disks/gducreatepartitiondialog.c:344
 msgid "This is the last primary partition that can be created."
 msgstr "Это — последний главный раздел, который можно создать."
 
-#: ../src/palimpsest/gducrypttabdialog.c:122
-#: ../src/palimpsest/gducrypttabdialog.c:142
+#: ../src/disks/gducrypttabdialog.c:122
+#: ../src/disks/gducrypttabdialog.c:142
 msgid "Will be created"
 msgstr "Будет создано"
 
-#: ../src/palimpsest/gducrypttabdialog.c:124
-#: ../src/palimpsest/gducrypttabdialog.c:149
+#: ../src/disks/gducrypttabdialog.c:124
+#: ../src/disks/gducrypttabdialog.c:149
 msgid "None"
 msgstr "Нет"
 
-#: ../src/palimpsest/gducrypttabdialog.c:151
+#: ../src/disks/gducrypttabdialog.c:151
 msgid "Will be deleted"
 msgstr "Будет удалено"
 
-#: ../src/palimpsest/gducrypttabdialog.c:278
+#: ../src/disks/gducrypttabdialog.c:278
 msgid "Error removing /etc/crypttab entry"
 msgstr "Ошибка удаления записи из /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:363
+#: ../src/disks/gducrypttabdialog.c:363
 msgid "Error adding /etc/crypttab entry"
 msgstr "Ошибка добавления записи в /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:386
+#: ../src/disks/gducrypttabdialog.c:386
 msgid "Error updating /etc/crypttab entry"
 msgstr "Ошибка обновления записи в /etc/crypttab"
 
-#: ../src/palimpsest/gducrypttabdialog.c:509
+#: ../src/disks/gducrypttabdialog.c:509
 msgid "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
 msgstr "Будет изменён только пароль, на который ссылается файл <i>/etc/crypttab</i>. Чтобы изменить пароль для диска, нажмите <i>Сменить пароль…</i>"
 
-#: ../src/palimpsest/gdudevicetreemodel.c:410
+#: ../src/disks/gdudevicetreemodel.c:410
 msgid "Disk Drives"
 msgstr "Диски"
 
-#: ../src/palimpsest/gdudevicetreemodel.c:820
+#: ../src/disks/gdudevicetreemodel.c:820
 msgid "Other Devices"
 msgstr "Другие устройства"
 
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/palimpsest/gdudevicetreemodel.c:925
+#: ../src/disks/gdudevicetreemodel.c:925
 #, c-format
 msgid "%s Loop Device"
 msgstr "Loop-устройство (%s)"
@@ -1740,190 +1811,186 @@ msgstr "Loop-устройство (%s)"
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
-#: ../src/palimpsest/gdudevicetreemodel.c:946
+#: ../src/disks/gdudevicetreemodel.c:946
 #, c-format
 msgid "%s Block Device"
 msgstr "Блочное устройство (%s)"
 
-#: ../src/palimpsest/gdufilesystemdialog.c:74
+#: ../src/disks/gdufilesystemdialog.c:74
 msgid "Error setting label"
 msgstr "Ошибка при установке метки"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:131
+#: ../src/disks/gduformatdiskdialog.c:131
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:138
+#: ../src/disks/gduformatdiskdialog.c:138
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr "Совместимо с современными системами и накопителями > 2 ТБ"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:139
+#: ../src/disks/gduformatdiskdialog.c:139
 msgid "GPT"
 msgstr "GPT"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:151
+#: ../src/disks/gduformatdiskdialog.c:151
 msgid "No partitioning"
 msgstr "Нет разметки"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:152
+#: ../src/disks/gduformatdiskdialog.c:152
 msgid "Empty"
 msgstr "Пустой"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:186
+#: ../src/disks/gduformatdiskdialog.c:186
 msgid "Error formatting disk"
 msgstr "Ошибка форматирования диска"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:231
+#: ../src/disks/gduformatdiskdialog.c:231
 msgid "Are you sure you want to format the disk?"
 msgstr "Действительно форматировать диск?"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:232
-#: ../src/palimpsest/gduformatvolumedialog.c:158
+#: ../src/disks/gduformatdiskdialog.c:232
+#: ../src/disks/gduformatvolumedialog.c:158
 msgid "All data on the volume will be lost"
 msgstr "Все данные на этом томе будут потеряны"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:233
-#: ../src/palimpsest/gduformatvolumedialog.c:159
+#: ../src/disks/gduformatdiskdialog.c:233
+#: ../src/disks/gduformatvolumedialog.c:159
 msgid "_Format"
 msgstr "_Форматировать"
 
-#: ../src/palimpsest/gduformatvolumedialog.c:100
+#: ../src/disks/gduformatvolumedialog.c:100
 msgid "Error formatting volume"
 msgstr "Ошибка форматирования тома"
 
-#: ../src/palimpsest/gduformatvolumedialog.c:157
+#: ../src/disks/gduformatvolumedialog.c:157
 msgid "Are you sure you want to format the volume?"
 msgstr "Уверены, что хотите отформатировать том?"
 
-#: ../src/palimpsest/gdufstabdialog.c:166
+#: ../src/disks/gdufstabdialog.c:166
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
 msgstr "Соответствует разделу %d с данным VPD (vital product data)"
 
-#: ../src/palimpsest/gdufstabdialog.c:169
+#: ../src/disks/gdufstabdialog.c:169
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "Соответствует целому диску с данным VPD (vital product data)"
 
-#: ../src/palimpsest/gdufstabdialog.c:174
+#: ../src/disks/gdufstabdialog.c:174
 #, c-format
 msgid "Matches partition %d of any device connected at the given port or address"
 msgstr "Совпадает с разделом %d любого устройства, подключённого к указанному порту или адресу"
 
-#: ../src/palimpsest/gdufstabdialog.c:177
+#: ../src/disks/gdufstabdialog.c:177
 msgid "Matches the whole disk of any device connected at the given port or address"
 msgstr "Совпадает с целым диском любого устройства, подключённого к указанному порту или адресу"
 
-#: ../src/palimpsest/gdufstabdialog.c:181
+#: ../src/disks/gdufstabdialog.c:181
 msgid "Matches any device with the given label"
 msgstr "Совпадает с любым устройством с указанным именем"
 
-#: ../src/palimpsest/gdufstabdialog.c:185
+#: ../src/disks/gdufstabdialog.c:185
 msgid "Matches the device with the given UUID"
 msgstr "Совпадает с устройством с указанным UUID"
 
-#: ../src/palimpsest/gdufstabdialog.c:189
+#: ../src/disks/gdufstabdialog.c:189
 msgid "Matches the given device"
 msgstr "Совпадает с указанным устройством"
 
-#: ../src/palimpsest/gdufstabdialog.c:473
+#: ../src/disks/gdufstabdialog.c:473
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr "Система может работать неправильно, если эта запись будет изменена или удалена."
 
-#: ../src/palimpsest/gdufstabdialog.c:532
+#: ../src/disks/gdufstabdialog.c:532
 msgid "Error removing old /etc/fstab entry"
 msgstr "Ошибка удаления старой записи /etc/fstab"
 
-#: ../src/palimpsest/gdufstabdialog.c:588
+#: ../src/disks/gdufstabdialog.c:588
 msgid "Error adding new /etc/fstab entry"
 msgstr "Ошибка добавления новой записи /etc/fstab"
 
-#: ../src/palimpsest/gdufstabdialog.c:612
+#: ../src/disks/gdufstabdialog.c:612
 msgid "Error updating /etc/fstab entry"
 msgstr "Ошибка обновления записи /etc/fstab"
 
-#: ../src/palimpsest/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:369
 msgid "Error setting partition type"
 msgstr "Ошибка установки типа раздела"
 
-#: ../src/palimpsest/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:383
 msgid "Error setting partition name"
 msgstr "Ошибка установки названия раздела"
 
-#: ../src/palimpsest/gdupartitiondialog.c:397
+#: ../src/disks/gdupartitiondialog.c:397
 msgid "Error setting partition flags"
 msgstr "Ошибка установки флагов раздела"
 
 # Пароль
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:169
+#: ../src/disks/gdupasswordstrengthwidget.c:169
 msgid "Weak"
 msgstr "Слабый"
 
 # Пароль
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:170
+#: ../src/disks/gdupasswordstrengthwidget.c:170
 msgid "Fair"
 msgstr "Нормальный"
 
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:171
+#: ../src/disks/gdupasswordstrengthwidget.c:171
 msgid "Good"
 msgstr "Хорошо"
 
 # Пароль
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:172
+#: ../src/disks/gdupasswordstrengthwidget.c:172
 msgid "Strong"
 msgstr "Надёжный"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:167
+#: ../src/disks/gdurestorediskimagedialog.c:167
 msgid "Cannot restore image of size 0"
 msgstr "Невозможно восстановить образ нулевого размера"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:176
+#: ../src/disks/gdurestorediskimagedialog.c:176
 #, c-format
 msgid "The selected image is %s smaller than the device"
 msgstr "Размер выбранного образа на %s меньше, чем устройство"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:185
+#: ../src/disks/gdurestorediskimagedialog.c:185
 #, c-format
 msgid "The selected image is %s bigger than the device"
 msgstr "Размер выбранного образа на %s больше, чем устройство"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:416
+#: ../src/disks/gdurestorediskimagedialog.c:416
 msgid "Error opening file for reading"
 msgstr "Ошибка открытия файла для чтения"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:430
+#: ../src/disks/gdurestorediskimagedialog.c:430
 msgid "Error determing size of file"
 msgstr "Ошибка при определении размера файла"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:495
+#: ../src/disks/gdurestorediskimagedialog.c:495
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Действительно записать образ диска на устройство?"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:496
+#: ../src/disks/gdurestorediskimagedialog.c:496
 msgid "All existing data will be lost"
 msgstr "Все существующие данные будут потеряны"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:497
+#: ../src/disks/gdurestorediskimagedialog.c:497
 msgid "_Restore"
 msgstr "_Восстановить"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:500
+#: ../src/disks/gdurestorediskimagedialog.c:500
 #, c-format
 msgid "Copying data to device <i>%s</i>..."
 msgstr "Копирование данных на устройство <i>%s</i>…"
 
-#: ../src/palimpsest/gduunlockdialog.c:50
+#: ../src/disks/gduunlockdialog.c:99
 msgid "Error unlocking encrypted device"
 msgstr "Ошибка разблокирования зашифрованного устройства"
 
-#: ../src/palimpsest/gduutils.c:81
-msgid "All Files"
-msgstr "Все файлы"
+#: ../src/disks/gduunlockdialog.c:154
+msgid "The encryption passphrase was retrieved from the keyring"
+msgstr "Ключевая фраза для шифрования получена из связки ключей"
 
-#: ../src/palimpsest/gduutils.c:85
-msgid "Disk Images (*.img, *.iso)"
-msgstr "Образы дисков (*.img, *.iso)"
-
-#: ../src/palimpsest/gduutils.c:105
+#: ../src/disks/gduutils.c:109
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -1931,11 +1998,11 @@ msgstr[0] "%d секунда"
 msgstr[1] "%d секунды"
 msgstr[2] "%d секунд"
 
-#: ../src/palimpsest/gduutils.c:112
+#: ../src/disks/gduutils.c:116
 msgid "Less than a minute"
 msgstr "Менее минуты"
 
-#: ../src/palimpsest/gduutils.c:118
+#: ../src/disks/gduutils.c:122
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -1943,7 +2010,7 @@ msgstr[0] "%d минута"
 msgstr[1] "%d минуты"
 msgstr[2] "%d минут"
 
-#: ../src/palimpsest/gduutils.c:126
+#: ../src/disks/gduutils.c:130
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -1954,7 +2021,7 @@ msgstr[2] "%d часов"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1536
+#: ../src/disks/gduvolumegrid.c:1536
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -1963,86 +2030,93 @@ msgstr "Раздел %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1543
+#: ../src/disks/gduvolumegrid.c:1543
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Раздел %d"
 
-#: ../src/palimpsest/gduvolumegrid.c:1563
+#: ../src/disks/gduvolumegrid.c:1563
 msgid "No Media"
 msgstr "Нет носителя"
 
-#: ../src/palimpsest/gduvolumegrid.c:1580
+#: ../src/disks/gduvolumegrid.c:1580
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Свободное место"
 
-#: ../src/palimpsest/gduvolumegrid.c:1622
+#: ../src/disks/gduvolumegrid.c:1622
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Расширенный раздел"
 
-#: ../src/palimpsest/gduvolumegrid.c:1646
+#: ../src/disks/gduvolumegrid.c:1646
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Файловая система"
 
-#: ../src/palimpsest/gduvolumegrid.c:1665
+#: ../src/disks/gduvolumegrid.c:1665
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Подкачка"
 
-#: ../src/palimpsest/gduwindow.c:531
+#: ../src/disks/gduwindow.c:540
 msgid "Error deleting loop device"
-msgstr "Ошибка удаления loop-устройства"
+msgstr "Ошибка удаления петлевого устройства"
 
-#: ../src/palimpsest/gduwindow.c:602
-#: ../src/palimpsest/gduwindow.c:674
+#: ../src/disks/gduwindow.c:611
+#: ../src/disks/gduwindow.c:683
 msgid "Error attaching disk image"
 msgstr "Ошибка отключения образа диска"
 
-#: ../src/palimpsest/gduwindow.c:642
+#: ../src/disks/gduwindow.c:651
 msgid "Select Disk Image to Attach"
 msgstr "Выберите образ диска для присоединения"
 
-#: ../src/palimpsest/gduwindow.c:646
+#: ../src/disks/gduwindow.c:655
 msgid "_Attach"
 msgstr "_Подключить"
 
 #. Add a RO check button that defaults to RO
-#: ../src/palimpsest/gduwindow.c:652
+#: ../src/disks/gduwindow.c:661
 msgid "Set up _read-only loop device"
 msgstr "Настроить _петлевое устройство только для чтения"
 
-#: ../src/palimpsest/gduwindow.c:653
+#: ../src/disks/gduwindow.c:662
 msgid "If checked, the loop device will be read-only. This is useful if you don't want the underlying file to be modified"
-msgstr "Если выбрано, то устройство будет доступно только для чтения. Это полезно, когда вы хотите избежать изменения файлов"
+msgstr "Если выбрано, то петлевое устройство будет доступно только для чтения. Это полезно, когда вы хотите избежать изменения используемого для устройства файла"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/palimpsest/gduwindow.c:1515
+#: ../src/disks/gduwindow.c:1551
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(только для чтения)</span>"
 
+#. Translators: Shown in "Location" when drive is connected to another seat than where
+#. * our application is running.
+#.
+#: ../src/disks/gduwindow.c:1693
+msgid "Connected to another seat"
+msgstr "Подключён к другому рабочему месту"
+
 # Раздел
-#: ../src/palimpsest/gduwindow.c:1822
+#: ../src/disks/gduwindow.c:1910
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: ../src/palimpsest/gduwindow.c:1849
+#: ../src/disks/gduwindow.c:1943
 msgid "Extended Partition"
 msgstr "Расширенный раздел"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1890
+#: ../src/disks/gduwindow.c:1984
 msgid "Filesystem Root"
 msgstr "Корень файловой системы"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1898
+#: ../src/disks/gduwindow.c:1992
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Да, подключён как %s"
@@ -2050,69 +2124,75 @@ msgstr "Да, подключён как %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1904
-#: ../src/palimpsest/gduwindow.c:1940
-#: ../src/palimpsest/gduwindow.c:1966
+#: ../src/disks/gduwindow.c:1998
+#: ../src/disks/gduwindow.c:2034
+#: ../src/disks/gduwindow.c:2060
 msgid "No"
 msgstr "Нет"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1934
-#: ../src/palimpsest/gduwindow.c:1960
+#: ../src/disks/gduwindow.c:2028
+#: ../src/disks/gduwindow.c:2054
 msgid "Yes"
 msgstr "Да"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2039
+#: ../src/disks/gduwindow.c:2139
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Нераспределённое пространство (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2044
+#: ../src/disks/gduwindow.c:2144
 msgid "Unallocated Space"
 msgstr "Нераспределённое пространство"
 
-#: ../src/palimpsest/gduwindow.c:2400
+#: ../src/disks/gduwindow.c:2500
 msgid "Error mounting filesystem"
 msgstr "Ошибка подключения файловой системы"
 
-#: ../src/palimpsest/gduwindow.c:2440
+#: ../src/disks/gduwindow.c:2540
 msgid "Error unmounting filesystem"
 msgstr "Ошибка отключения файловой системы"
 
-#: ../src/palimpsest/gduwindow.c:2519
+#: ../src/disks/gduwindow.c:2619
 msgid "Error deleting partition"
 msgstr "Ошибка при удалении раздела"
 
-#: ../src/palimpsest/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2635
 msgid "Are you sure you want to delete the partition?"
 msgstr "Действительно удалить раздел?"
 
-#: ../src/palimpsest/gduwindow.c:2536
+#: ../src/disks/gduwindow.c:2636
 msgid "All data on the partition will be lost"
 msgstr "Все данные на разделе будут потеряны"
 
-#: ../src/palimpsest/gduwindow.c:2537
+#: ../src/disks/gduwindow.c:2637
 msgid "_Delete"
 msgstr "_Удалить"
 
-#: ../src/palimpsest/gduwindow.c:2568
+#: ../src/disks/gduwindow.c:2668
 msgid "Error ejecting media"
 msgstr "Ошибка извлечения носителя"
 
-#: ../src/palimpsest/gduwindow.c:2620
+#: ../src/disks/gduwindow.c:2720
 msgid "Error locking encrypted device"
-msgstr "Ошибка блокирования устройства с шифрованием"
+msgstr "Ошибка блокирования зашифрованного устройства"
 
-#: ../src/palimpsest/gduwindow.c:2661
+#: ../src/disks/gduwindow.c:2761
 msgid "Error starting swap"
 msgstr "Ошибка запуска области подкачки"
 
-#: ../src/palimpsest/gduwindow.c:2698
+#: ../src/disks/gduwindow.c:2798
 msgid "Error stopping swap"
 msgstr "Ошибка остановки области подкачки"
 
+#: ../src/disks/gduwindow.c:2840
+msgid "Error setting autoclear flag"
+msgstr "Ошибка установки флага автоочистки"
+
+#~ msgid "Updates"
+#~ msgstr "Обновления"

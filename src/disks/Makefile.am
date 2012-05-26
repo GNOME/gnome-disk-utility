@@ -64,6 +64,7 @@ gnome_disks_CFLAGS = 					\
 	$(GTK3_CFLAGS)					\
 	$(KEYRING1_CFLAGS)				\
 	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
+	$(PWQUALITY_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	-lm						\
 	$(NULL)
@@ -74,6 +75,7 @@ gnome_disks_LDADD = 					\
 	$(GTK3_LIBS)					\
 	$(KEYRING1_LIBS)				\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
+	$(PWQUALITY_LIBS)				\
 	$(NULL)
 
 EXTRA_DIST = 						\

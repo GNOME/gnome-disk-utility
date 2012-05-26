@@ -28,6 +28,8 @@
 #include <gdk/gdkx.h>
 #include <stdlib.h>
 
+#include <pwquality.h>
+
 #include "gdupasswordstrengthwidget.h"
 
 typedef struct _GduPasswordStrengthWidgetClass GduPasswordStrengthWidgetClass;
@@ -107,91 +109,87 @@ gdu_password_strength_widget_set_property (GObject      *object,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* TODO: probably do something more sophisticated here */
-
-/* This code is based on the Master Password dialog in Firefox
- * (pref-masterpass.js)
- * Original code triple-licensed under the MPL, GPL, and LGPL
- * so is license-compatible with this file
- */
-static gdouble
-compute_password_strength (const gchar *password)
+static pwquality_settings_t *
+get_pwq (void)
 {
-  gint length;
-  gint upper, lower, digit, misc;
-  gint i;
-  gdouble strength;
+  static pwquality_settings_t *settings = NULL;
 
-  length = strlen (password);
-  upper = 0;
-  lower = 0;
-  digit = 0;
-  misc = 0;
-
-  for (i = 0; i < length ; i++)
+  if (settings == NULL)
     {
-      if (g_ascii_isdigit (password[i]))
-        digit++;
-      else if (g_ascii_islower (password[i]))
-        lower++;
-      else if (g_ascii_isupper (password[i]))
-        upper++;
-      else
-        misc++;
+      gchar *err = NULL;
+      settings = pwquality_default_settings ();
+      if (pwquality_read_config (settings, NULL, (gpointer)&err) < 0)
+        {
+          g_error ("Failed to read pwquality configuration: %s\n", err);
+        }
     }
 
-  if (length > 5)
-    length = 5;
+  return settings;
+}
 
-  if (digit > 3)
-    digit = 3;
+enum {
+  HINT_WEAK,
+  HINT_FAIR,
+  HINT_GOOD,
+  HINT_STRONG,
+  HINT_LAST
+};
 
-  if (upper > 3)
-    upper = 3;
+static const gchar *hint_labels[HINT_LAST] = {
+  NC_("Password strength", "Weak"),
+  NC_("Password strength", "Fair"),
+  NC_("Password strength", "Good"),
+  NC_("Password strength", "Strong"),
+};
 
-  if (misc > 3)
-    misc = 3;
+static gdouble
+compute_password_strength (const gchar  *passphrase,
+                           gint         *out_hint)
+{
+  gint rv;
+  gdouble strength = 0.0;
+  void *auxerror;
+  gint hint;
 
-  strength = ((length * 0.1) - 0.2) +
-    (digit * 0.1) +
-    (misc * 0.15) +
-    (upper * 0.1);
+  rv = pwquality_check (get_pwq (),
+                        passphrase,
+                        NULL, /* old_password */
+                        NULL, /* username */
+                        &auxerror);
 
-  strength = CLAMP (strength, 0.0, 1.0);
+  /* we ignore things like MIN_LENGTH and NOT_GOOD_ENOUGH errors because
+   * this isn't about user accounts
+   */
+  strength = CLAMP (0.01 * rv, 0.0, 1.0);
 
+  if (strength < 0.50)
+    hint = HINT_WEAK;
+  else if (strength < 0.75)
+    hint = HINT_FAIR;
+  else if (strength < 0.90)
+    hint = HINT_GOOD;
+  else
+    hint = HINT_STRONG;
+
+  if (out_hint != NULL)
+    *out_hint = hint;
   return strength;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static const gchar *strengths[4] =
-{
-  N_("Weak"),
-  N_("Fair"),
-  N_("Good"),
-  N_("Strong"),
-};
-
-#define NUM_STRENGTH_LABELS 4
-
 static void
 update (GduPasswordStrengthWidget *widget)
 {
-  gdouble strength;
-  gint tab_num;
+  gdouble strength = 0.0;
+  gint tab_num = 0;
 
   if (widget->password != NULL)
-    strength = compute_password_strength (widget->password);
-  else
-    strength = 0.0;
+    strength = compute_password_strength (widget->password, &tab_num);
 
   g_warn_if_fail (strength >= 0.0 && strength <= 1.0);
+  g_warn_if_fail (tab_num >= 0 && tab_num < HINT_LAST);
 
-  tab_num = (gint) floor (NUM_STRENGTH_LABELS * strength);
-  if (tab_num < 0)
-    tab_num = 0;
-  if (tab_num > NUM_STRENGTH_LABELS - 1)
-    tab_num = NUM_STRENGTH_LABELS - 1;
   gtk_notebook_set_current_page (GTK_NOTEBOOK (widget->notebook), tab_num);
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (widget->progress_bar), strength);
 }
@@ -212,13 +210,14 @@ gdu_password_strength_widget_constructed (GObject *object)
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (widget->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (widget), widget->notebook, FALSE, TRUE, 0);
 
-  for (n = 0; n < NUM_STRENGTH_LABELS; n++)
+  for (n = 0; n < G_N_ELEMENTS (hint_labels); n++)
     {
       GtkWidget *label;
       gchar *s;
       label = gtk_label_new (NULL);
       gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-      s = g_strdup_printf ("<small>%s</small>", gettext (strengths[n]));
+      s = g_strdup_printf ("<small>%s</small>",
+                           g_dpgettext2 (NULL, "Password strength", hint_labels[n]));
       gtk_label_set_markup (GTK_LABEL (label), s);
       g_free (s);
       gtk_notebook_append_page (GTK_NOTEBOOK (widget->notebook), label, NULL);

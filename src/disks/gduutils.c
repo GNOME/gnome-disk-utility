@@ -124,13 +124,21 @@ gdu_utils_duration_to_string (guint    duration_sec,
                                         duration_sec / 60),
                            duration_sec / 60);
     }
-  else
+  else if (duration_sec < 86400)
     {
       s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
                                         "%d hour",
                                         "%d hours",
                                         duration_sec / 3600),
                            duration_sec / 3600);
+    }
+  else
+    {
+      s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                        "%d day",
+                                        "%d days",
+                                        duration_sec / 86400),
+                           duration_sec / 86400);
     }
   return s;
 }

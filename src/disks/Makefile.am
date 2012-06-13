@@ -33,6 +33,7 @@ gnome_disks_SOURCES = 							\
 	gduvolumegrid.h			gduvolumegrid.c			\
 	gduwindow.h			gduwindow.c			\
 	gduatasmartdialog.h		gduatasmartdialog.c		\
+	gdubenchmarkdialog.h		gdubenchmarkdialog.c		\
 	gducrypttabdialog.h		gducrypttabdialog.c		\
 	gdufilesystemdialog.h		gdufilesystemdialog.c		\
 	gdufstabdialog.h		gdufstabdialog.c		\

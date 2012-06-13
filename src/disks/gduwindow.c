@@ -38,6 +38,7 @@
 #include "gduutils.h"
 #include "gduvolumegrid.h"
 #include "gduatasmartdialog.h"
+#include "gdubenchmarkdialog.h"
 #include "gducrypttabdialog.h"
 #include "gdufstabdialog.h"
 #include "gdufilesystemdialog.h"
@@ -111,6 +112,7 @@ struct _GduWindow
   GtkWidget *generic_drive_menu_item_format_disk;
   GtkWidget *generic_drive_menu_item_create_disk_image;
   GtkWidget *generic_drive_menu_item_restore_disk_image;
+  GtkWidget *generic_drive_menu_item_benchmark;
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_configure_fstab;
@@ -121,6 +123,7 @@ struct _GduWindow
   GtkWidget *generic_menu_item_format_volume;
   GtkWidget *generic_menu_item_create_volume_image;
   GtkWidget *generic_menu_item_restore_volume_image;
+  GtkWidget *generic_menu_item_benchmark;
 
   GtkWidget *devtab_loop_autoclear_switch;
 
@@ -168,6 +171,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_restore_disk_image), "generic-drive-menu-item-restore-disk-image"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_benchmark), "generic-drive-menu-item-benchmark"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_view_smart), "generic-drive-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
 
@@ -180,6 +184,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_benchmark), "generic-menu-item-benchmark"},
 
   {0, NULL}
 };
@@ -217,20 +222,22 @@ typedef enum
   SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
 
   /* generic drive menu */
-  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<20),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<21),
-  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<22),
-  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<23),
+  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<10),
+  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<11),
+  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<12),
+  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<13),
+  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<14),
 
   /* generic volume menu */
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<24),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB    = (1<<25),
-  SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE     = (1<<26),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL            = (1<<27),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION        = (1<<28),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME         = (1<<29),
-  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE   = (1<<30),
-  SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<31),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<20),
+  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB    = (1<<21),
+  SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE     = (1<<22),
+  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL            = (1<<23),
+  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION        = (1<<24),
+  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME         = (1<<25),
+  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE   = (1<<26),
+  SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<27),
+  SHOW_FLAGS_POPUP_MENU_BENCHMARK             = (1<<28),
 } ShowFlags;
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
@@ -260,6 +267,8 @@ static void on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item
                                                           gpointer   user_data);
 static void on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
                                                            gpointer   user_data);
+static void on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
+                                                  gpointer   user_data);
 
 static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
@@ -277,6 +286,8 @@ static void on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
                                                       gpointer   user_data);
 static void on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
                                                        gpointer   user_data);
+static void on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
+                                            gpointer   user_data);
 
 static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
@@ -395,6 +406,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_restore_disk_image),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
+                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
@@ -412,6 +425,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_restore_volume_image),
                             show_flags & SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_benchmark),
+                            show_flags & SHOW_FLAGS_POPUP_MENU_BENCHMARK);
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
@@ -1090,6 +1105,10 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_restore_disk_image),
                     window);
+  g_signal_connect (window->generic_drive_menu_item_benchmark,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_benchmark),
+                    window);
 
   /* volume menu */
   g_signal_connect (window->generic_menu_item_configure_fstab,
@@ -1123,6 +1142,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_menu_item_restore_volume_image,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_restore_volume_image),
+                    window);
+  g_signal_connect (window->generic_menu_item_benchmark,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_benchmark),
                     window);
 
   /* loop's auto-clear switch */
@@ -1841,6 +1864,8 @@ update_device_page_for_block (GduWindow          *window,
   if (udisks_block_get_size (block) > 0 || (drive != NULL && !udisks_drive_get_media_change_detected (drive)))
     {
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
+      *show_flags |= SHOW_FLAGS_POPUP_MENU_BENCHMARK;
+      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK;
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
       if (!read_only)
         *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
@@ -2100,6 +2125,7 @@ update_device_page_for_free_space (GduWindow          *window,
   read_only = udisks_block_get_read_only (block);
   loop = udisks_object_peek_loop (window->current_object);
 
+  *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK;
   if (!read_only)
     {
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK;
@@ -2393,6 +2419,20 @@ on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
+                                      gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_benchmark_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
                                           gpointer   user_data)
 {
@@ -2416,6 +2456,20 @@ on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
   gdu_restore_disk_image_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
+                                gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_benchmark_dialog_show (window, object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

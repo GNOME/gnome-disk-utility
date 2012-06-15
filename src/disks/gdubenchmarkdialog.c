@@ -72,6 +72,7 @@ typedef struct
 
   GtkWidget *device_label;
   GtkWidget *updated_label;
+  GtkWidget *sample_size_label;
   GtkWidget *read_rate_label;
   GtkWidget *write_rate_label;
   GtkWidget *access_time_label;
@@ -99,6 +100,7 @@ typedef struct
 
   gint64 bm_time_benchmarked_usec; /* 0 if never benchmarked, otherwise micro-seconds since Epoch */
   guint64 bm_size;
+  guint64 bm_sample_size;
   GArray *bm_read_samples;
   GArray *bm_write_samples;
   GArray *bm_access_time_samples;
@@ -114,6 +116,7 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, graph_drawing_area), "graph-drawing-area"},
   {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
   {G_STRUCT_OFFSET (DialogData, updated_label), "updated-label"},
+  {G_STRUCT_OFFSET (DialogData, sample_size_label), "sample-size-label"},
   {G_STRUCT_OFFSET (DialogData, read_rate_label), "read-rate-label"},
   {G_STRUCT_OFFSET (DialogData, write_rate_label), "write-rate-label"},
   {G_STRUCT_OFFSET (DialogData, access_time_label), "access-time-label"},
@@ -653,6 +656,27 @@ format_transfer_rate (gdouble bytes_per_sec)
   return ret;
 }
 
+static gchar *
+format_transfer_rate_and_num_samples (gdouble bytes_per_sec,
+                                      guint   num_samples)
+{
+  gchar *ret = NULL;
+  gchar *s;
+  gchar *s2;
+
+  s = format_transfer_rate (bytes_per_sec);
+  s2 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                     "%d sample",
+                                     "%d samples",
+                                     num_samples),
+                        num_samples);
+  ret = g_strdup_printf ("%s <small>(%s)</small>", s, s2);
+  g_free (s2);
+  g_free (s);
+  return ret;
+}
+
+
 static void
 update_updated_label (DialogData *data)
 {
@@ -908,17 +932,24 @@ update_dialog (DialogData *data)
 
   G_UNLOCK (bm_lock);
 
+  if (data->bm_sample_size == 0)
+    s = g_strdup ("–");
+  else
+    s = g_format_size_full (data->bm_sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
+  gtk_label_set_markup (GTK_LABEL (data->sample_size_label), s);
+  g_free (s);
+
   if (read_avg == 0.0)
     s = g_strdup ("–");
   else
-    s = format_transfer_rate (read_avg);
+    s = format_transfer_rate_and_num_samples (read_avg, data->bm_read_samples->len);
   gtk_label_set_markup (GTK_LABEL (data->read_rate_label), s);
   g_free (s);
 
   if (write_avg == 0.0)
     s = g_strdup ("–");
   else
-    s = format_transfer_rate (write_avg);
+    s = format_transfer_rate_and_num_samples (write_avg, data->bm_write_samples->len);
   gtk_label_set_markup (GTK_LABEL (data->write_rate_label), s);
   g_free (s);
 
@@ -928,8 +959,18 @@ update_dialog (DialogData *data)
     }
   else
     {
+      gchar *s2;
+      gchar *s3;
       /* Translators: %d is number of milliseconds and msec means "milli-second" */
-      s = g_strdup_printf (C_("benchmark-access-time", "%.2f msec"), access_time_avg * 1000.0);
+      s2 = g_strdup_printf (C_("benchmark-access-time", "%.2f msec"), access_time_avg * 1000.0);
+      s3 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                         "%d sample",
+                                         "%d samples",
+                                         data->bm_access_time_samples->len),
+                            data->bm_access_time_samples->len);
+      s = g_strdup_printf ("%s <small>(%s)</small>", s2, s3);
+      g_free (s3);
+      g_free (s2);
     }
   gtk_label_set_markup (GTK_LABEL (data->access_time_label), s);
   g_free (s);
@@ -987,6 +1028,7 @@ maybe_load_data (DialogData  *data,
   gint32 version;
   gint64 timestamp_usec;
   guint64 device_size;
+  guint64 sample_size;
 
   filename = get_bm_filename (data);
   if (filename == NULL)
@@ -1066,8 +1108,16 @@ maybe_load_data (DialogData  *data,
       goto out;
     }
 
+  if (!g_variant_lookup (value, "sample-size", "t", &sample_size))
+    {
+      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
+                   "No sample-size");
+      goto out;
+    }
+
   data->bm_time_benchmarked_usec = timestamp_usec;
   data->bm_size = device_size;
+  data->bm_sample_size = sample_size;
   samples_from_gvariant (data->bm_read_samples, read_samples_variant);
   samples_from_gvariant (data->bm_write_samples, write_samples_variant);
   samples_from_gvariant (data->bm_access_time_samples, access_time_samples_variant);
@@ -1130,6 +1180,7 @@ maybe_save_data (DialogData  *data,
   g_variant_builder_add (&builder, "{sv}", "version", g_variant_new_int32 (1));
   g_variant_builder_add (&builder, "{sv}", "timestamp-usec", g_variant_new_int64 (data->bm_time_benchmarked_usec));
   g_variant_builder_add (&builder, "{sv}", "device-size", g_variant_new_uint64 (data->bm_size));
+  g_variant_builder_add (&builder, "{sv}", "sample-size", g_variant_new_uint64 (data->bm_sample_size));
   g_variant_builder_add (&builder, "{sv}", "read-samples", samples_to_gvariant (data->bm_read_samples));
   g_variant_builder_add (&builder, "{sv}", "write-samples", samples_to_gvariant (data->bm_write_samples));
   g_variant_builder_add (&builder, "{sv}", "access-time-samples", samples_to_gvariant (data->bm_access_time_samples));
@@ -1243,6 +1294,7 @@ benchmark_thread (gpointer user_data)
   /* transfer rate... */
   G_LOCK (bm_lock);
   data->bm_size = disk_size;
+  data->bm_sample_size = data->bm_sample_size_mib*1024*1024;
   data->bm_state = BM_STATE_TRANSFER_RATE;
   G_UNLOCK (bm_lock);
   for (n = 0; n < data->bm_num_samples; n++)
@@ -1466,6 +1518,8 @@ benchmark_thread (gpointer user_data)
       g_array_set_size (data->bm_write_samples, 0);
       g_array_set_size (data->bm_access_time_samples, 0);
       data->bm_time_benchmarked_usec = 0;
+      data->bm_sample_size = 0;
+      data->bm_size = 0;
       G_UNLOCK (bm_lock);
     }
 

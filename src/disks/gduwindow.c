@@ -50,6 +50,7 @@
 #include "gducreatediskimagedialog.h"
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
+#include "gdudisksettingsdialog.h"
 
 /* Keep in sync with tabs in disks.ui file */
 typedef enum
@@ -109,6 +110,8 @@ struct _GduWindow
 
   GtkWidget *generic_drive_menu;
   GtkWidget *generic_drive_menu_item_view_smart;
+  GtkWidget *generic_drive_menu_item_disk_settings;
+  GtkWidget *generic_drive_menu_item_standby_now;
   GtkWidget *generic_drive_menu_item_format_disk;
   GtkWidget *generic_drive_menu_item_create_disk_image;
   GtkWidget *generic_drive_menu_item_restore_disk_image;
@@ -126,8 +129,6 @@ struct _GduWindow
   GtkWidget *generic_menu_item_benchmark;
 
   GtkWidget *devtab_loop_autoclear_switch;
-
-  GHashTable *label_connections;
 };
 
 static const struct {
@@ -169,11 +170,13 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_restore_disk_image), "generic-drive-menu-item-restore-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_benchmark), "generic-drive-menu-item-benchmark"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_view_smart), "generic-drive-menu-item-view-smart"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_disk_settings), "generic-drive-menu-item-disk-settings"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
@@ -222,11 +225,13 @@ typedef enum
   SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
 
   /* generic drive menu */
-  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<10),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<11),
-  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<12),
-  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<13),
-  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<14),
+  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<10),
+  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<11),
+  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<12),
+  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<13),
+  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<14),
+  SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS         = (1<<15),
+  SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW           = (1<<16),
 
   /* generic volume menu */
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<20),
@@ -239,6 +244,7 @@ typedef enum
   SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<27),
   SHOW_FLAGS_POPUP_MENU_BENCHMARK             = (1<<28),
 } ShowFlags;
+
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
 static void update_device_page (GduWindow *window, ShowFlags *show_flags);
@@ -261,6 +267,10 @@ static void on_devtab_action_generic_drive_activated (GtkAction *action, gpointe
 
 static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
                                              gpointer   user_data);
+static void on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
+                                                      gpointer   user_data);
+static void on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
+                                                    gpointer   user_data);
 static void on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
                                               gpointer   user_data);
 static void on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
@@ -298,10 +308,6 @@ G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 static void
 gdu_window_init (GduWindow *window)
 {
-  window->label_connections = g_hash_table_new_full (g_str_hash,
-                                                     g_str_equal,
-                                                     g_free,
-                                                     NULL);
 }
 
 static void on_client_changed (UDisksClient  *client,
@@ -402,6 +408,10 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_view_smart),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_disk_settings),
+                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now),
+                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_create_disk_image),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_restore_disk_image),
@@ -1002,6 +1012,17 @@ gdu_window_constructed (GObject *object)
                                        "active", GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING,
                                        "pulse", GDU_DEVICE_TREE_MODEL_COLUMN_PULSE,
                                        NULL);
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  g_object_set (G_OBJECT (renderer),
+                "xalign", 1.0,
+                "stock-size", GTK_ICON_SIZE_MENU,
+                "icon-name", "gnome-disks-state-standby-symbolic",
+                NULL);
+  gtk_tree_view_column_pack_end (column, renderer, FALSE);
+  gtk_tree_view_column_set_attributes (column,
+                                       renderer,
+                                       "visible", GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING,
+                                       NULL);
 
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */
   g_signal_connect (window->model,
@@ -1092,6 +1113,14 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_drive_menu_item_view_smart,
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_view_smart),
+                    window);
+  g_signal_connect (window->generic_drive_menu_item_disk_settings,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_disk_settings),
+                    window);
+  g_signal_connect (window->generic_drive_menu_item_standby_now,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_standby_now),
                     window);
   g_signal_connect (window->generic_drive_menu_item_format_disk,
                     "activate",
@@ -1738,6 +1767,15 @@ update_device_page_for_drive (GduWindow      *window,
       if (smart_is_supported)
         *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART;
       g_free (s);
+    }
+
+  if (gdu_disk_settings_dialog_should_show (object))
+    *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS;
+
+  if (ata != NULL)
+    {
+      if (udisks_drive_ata_get_pm_supported (ata))
+        *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW;
     }
 
   size = udisks_drive_get_size (drive);
@@ -2506,6 +2544,58 @@ on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_ata_smart_dialog_show (window, window->current_object);
+}
+
+static void
+on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
+                                          gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gdu_disk_settings_dialog_show (window, window->current_object);
+}
+
+static void
+ata_pm_standby_cb (GObject      *source_object,
+                   GAsyncResult *res,
+                   gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  error = NULL;
+  if (!udisks_drive_ata_call_pm_standby_finish (UDISKS_DRIVE_ATA (source_object),
+                                                res,
+                                                &error))
+    {
+      gdu_window_show_error (window,
+                             _("An error occurred when trying to put the drive into standby mode"),
+                             error);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (window);
+}
+
+static void
+on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
+                                        gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksDriveAta *ata;
+
+  ata = udisks_object_peek_drive_ata (window->current_object);
+  if (ata != NULL)
+    {
+      udisks_drive_ata_call_pm_standby (ata,
+                                        g_variant_new ("a{sv}", NULL), /* options */
+                                        NULL, /* GCancellable */
+                                        (GAsyncReadyCallback) ata_pm_standby_cb,
+                                        g_object_ref (window));
+    }
+  else
+    {
+      g_warning ("object is not an ATA drive");
+    }
 }
 
 static void

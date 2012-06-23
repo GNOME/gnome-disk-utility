@@ -23,6 +23,8 @@
 #include "config.h"
 #include <glib/gi18n.h>
 
+#include <math.h>
+
 #include "gduutils.h"
 
 #if defined(HAVE_LIBSYSTEMD_LOGIN)
@@ -418,3 +420,156 @@ gdu_utils_get_seat (void)
 }
 
 #endif
+
+static gchar *
+years_to_string (gint value)
+{
+  /* Translators: Used for number of years */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d year", "%d years", value), value);
+}
+
+static gchar *
+months_to_string (gint value)
+{
+  /* Translators: Used for number of months */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d month", "%d months", value), value);
+}
+
+static gchar *
+days_to_string (gint value)
+{
+  /* Translators: Used for number of days */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d day", "%d days", value), value);
+}
+
+static gchar *
+hours_to_string (gint value)
+{
+  /* Translators: Used for number of hours */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d hour", "%d hours", value), value);
+}
+
+static gchar *
+minutes_to_string (gint value)
+{
+  /* Translators: Used for number of minutes */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d minute", "%d minutes", value), value);
+}
+
+static gchar *
+seconds_to_string (gint value)
+{
+  /* Translators: Used for number of seconds */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d second", "%d seconds", value), value);
+}
+
+static gchar *
+milliseconds_to_string (gint value)
+{
+  /* Translators: Used for number of milli-seconds */
+  return g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%d milli-second", "%d milli-seconds", value), value);
+}
+
+#define MSEC_PER_YEAR   (1000.0 * 60 * 60 * 24 * 365.25)
+#define MSEC_PER_MONTH  (1000.0 * 60 * 60 * 24 * 365.25 / 12.0)
+#define MSEC_PER_DAY    (1000.0 * 60 * 60 * 24)
+#define MSEC_PER_HOUR   (1000.0 * 60 * 60)
+#define MSEC_PER_MINUTE (1000.0 * 60)
+#define MSEC_PER_SECOND (1000.0)
+
+gchar *
+gdu_utils_format_duration_msec (guint64 msec)
+{
+  gchar *ret;
+  guint years = 0;
+  guint months = 0;
+  guint days = 0;
+  guint hours = 0;
+  guint minutes = 0;
+  guint seconds = 0;
+  guint milliseconds = 0;
+  gchar *years_str = NULL;
+  gchar *months_str = NULL;
+  gchar *days_str = NULL;
+  gchar *hours_str = NULL;
+  gchar *minutes_str = NULL;
+  gchar *seconds_str = NULL;
+  gchar *milliseconds_str = NULL;
+  guint64 t;
+
+  t = msec;
+
+  years  = floor (t / MSEC_PER_YEAR);
+  t -= years * MSEC_PER_YEAR;
+
+  months = floor (t / MSEC_PER_MONTH);
+  t -= months * MSEC_PER_MONTH;
+
+  days = floor (t / MSEC_PER_DAY);
+  t -= days * MSEC_PER_DAY;
+
+  hours = floor (t / MSEC_PER_HOUR);
+  t -= hours * MSEC_PER_HOUR;
+
+  minutes = floor (t / MSEC_PER_MINUTE);
+  t -= minutes * MSEC_PER_MINUTE;
+
+  seconds = floor (t / MSEC_PER_SECOND);
+  t -= seconds * MSEC_PER_SECOND;
+
+  milliseconds = floor (t);
+
+  years_str = years_to_string (years);
+  months_str = months_to_string (months);
+  days_str = days_to_string (days);
+  hours_str = hours_to_string (hours);
+  minutes_str = minutes_to_string (minutes);
+  seconds_str = seconds_to_string (seconds);
+  milliseconds_str = milliseconds_to_string (milliseconds);
+
+  if (years > 0)
+    {
+      /* Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days */
+      ret = g_strdup_printf (C_("duration-year-to-inf", "%s, %s and %s"), years_str, months_str, days_str);
+    }
+  else if (months > 0)
+    {
+      /* Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days */
+      ret = g_strdup_printf (C_("duration-months-to-year", "%s and %s"), months_str, days_str);
+    }
+  else if (days > 0)
+    {
+      /* Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours */
+      ret = g_strdup_printf (C_("duration-day-to-month", "%s and %s"), days_str, hours_str);
+    }
+  else if (hours > 0)
+    {
+      /* Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes */
+      ret = g_strdup_printf (C_("duration-hour-to-day", "%s and %s"), hours_str, minutes_str);
+    }
+  else if (minutes > 0)
+    {
+      /* Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds */
+      ret = g_strdup_printf (C_("duration-minute-to-hour", "%s and %s"), minutes_str, seconds_str);
+    }
+  else if (seconds > 0)
+    {
+      /* Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds */
+      ret = g_strdup_printf (C_("duration-second-to-minute", "%s"), seconds_str);
+    }
+  else
+    {
+      /* Translators: Used for durations less than one second. First %s is number of milli-seconds */
+      ret = g_strdup_printf (C_("duration-zero-to-second", "%s"), milliseconds_str);
+    }
+
+  g_free (years_str);
+  g_free (months_str);
+  g_free (days_str);
+  g_free (hours_str);
+  g_free (minutes_str);
+  g_free (seconds_str);
+  g_free (milliseconds_str);
+
+  return ret;
+}

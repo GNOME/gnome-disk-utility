@@ -44,6 +44,9 @@ struct _GduDeviceTreeModel
   gboolean block_iter_valid;
 
   guint spinner_timeout;
+
+  /* "Polling Every Few Seconds" ... e.g. power state */
+  guint pefs_timeout_id;
 };
 
 typedef struct
@@ -78,6 +81,8 @@ static void
 gdu_device_tree_model_finalize (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
+
+  g_source_remove (model->pefs_timeout_id);
 
   if (model->spinner_timeout != 0)
     g_source_remove (model->spinner_timeout);
@@ -301,6 +306,84 @@ _g_dbus_object_compare (GDBusObject *a,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+pm_get_state_cb (GObject       *source_object,
+                 GAsyncResult  *res,
+                 gpointer       user_data)
+{
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
+  GDBusObject *object;
+  gboolean sleeping;
+  guchar state;
+  GError *error = NULL;
+
+  if (!udisks_drive_ata_call_pm_get_state_finish (UDISKS_DRIVE_ATA (source_object),
+                                                  &state,
+                                                  res,
+                                                  &error))
+    {
+      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        {
+          g_printerr ("Error calling Drive.Ata.PmGetState: %s (%s, %d)\n",
+                      error->message, g_quark_to_string (error->domain), error->code);
+        }
+      g_clear_error (&error);
+      goto out;
+    }
+
+  sleeping = TRUE;
+  if (state == 0x80 || state == 0xff)
+    sleeping = FALSE;
+
+  object = g_dbus_interface_get_object (G_DBUS_INTERFACE (source_object));
+  if (object != NULL)
+    {
+      GtkTreeIter iter;
+      if (gdu_device_tree_model_get_iter_for_object (model, UDISKS_OBJECT (object), &iter))
+        {
+          gtk_tree_store_set (GTK_TREE_STORE (model),
+                              &iter,
+                              GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING, sleeping,
+                              -1);
+        }
+    }
+
+ out:
+  g_object_unref (model);
+}
+
+static gboolean
+on_pefs_timeout (gpointer user_data)
+{
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
+  GList *l;
+
+  for (l = model->current_drives; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksDriveAta *ata;
+
+      ata = udisks_object_peek_drive_ata (object);
+      if (ata != NULL &&
+          udisks_drive_ata_get_pm_supported (ata) &&
+          udisks_drive_ata_get_pm_enabled (ata))
+        {
+          GVariantBuilder options_builder;
+          g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+          g_variant_builder_add (&options_builder, "{sv}", "auth.no_user_interaction", g_variant_new_boolean (TRUE));
+          udisks_drive_ata_call_pm_get_state (ata,
+                                              g_variant_builder_end (&options_builder),
+                                              NULL, /* GCancellable */
+                                              pm_get_state_cb,
+                                              g_object_ref (model));
+        }
+    }
+
+  return TRUE; /* keep timeout around */
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 gdu_device_tree_model_constructed (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
@@ -315,7 +398,8 @@ gdu_device_tree_model_constructed (GObject *object)
   types[6] = G_TYPE_BOOLEAN;
   types[7] = G_TYPE_BOOLEAN;
   types[8] = G_TYPE_UINT;
-  G_STATIC_ASSERT (9 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+  types[9] = G_TYPE_BOOLEAN;
+  G_STATIC_ASSERT (10 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -327,6 +411,9 @@ gdu_device_tree_model_constructed (GObject *object)
                     G_CALLBACK (on_client_changed),
                     model);
   coldplug (model);
+
+  model->pefs_timeout_id = g_timeout_add_seconds (5, on_pefs_timeout, model);
+  on_pefs_timeout (model);
 
   if (G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed (object);

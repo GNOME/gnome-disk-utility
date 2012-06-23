@@ -23,6 +23,7 @@ ui_DATA = 				\
 	about-dialog.ui			\
 	app-menu.ui			\
 	benchmark-dialog.ui		\
+	disk-settings-dialog.ui		\
 	$(NULL)
 
 EXTRA_DIST = 				\

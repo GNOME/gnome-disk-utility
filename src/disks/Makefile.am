@@ -48,6 +48,7 @@ gnome_disks_SOURCES = 							\
 	gdupasswordstrengthwidget.h	gdupasswordstrengthwidget.c	\
 	gduestimator.h			gduestimator.c			\
 	gduchangepassphrasedialog.h	gduchangepassphrasedialog.c	\
+	gdudisksettingsdialog.h		gdudisksettingsdialog.c		\
 	$(enum_built_sources)						\
 	$(NULL)
 

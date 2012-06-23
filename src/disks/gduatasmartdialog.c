@@ -698,50 +698,6 @@ attr_format_assessment (gint     current,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
-format_duration_msec (guint64 msec)
-{
-  gchar *ret;
-  gdouble val;
-  if (msec > 1000 * 60 * 60 * 24 * 365.25)
-    {
-      val = msec / 1000.0 / 60.0 / 60.0 / 24.0 / 365.25;
-      /* Translators: Used for a time-based unit that exceed one year */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f year", "%.1f years", val), val);
-    }
-  else if (msec > 1000 * 60 * 60 * 24)
-    {
-      val = msec / 1000.0 / 60.0 / 60.0 / 24.0;
-      /* Translators: Used for a time-based unit that exceed one day but not one year */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f day", "%.1f days", val), val);
-    }
-  else if (msec > 1000 * 60 * 60)
-    {
-      val = msec / 1000.0 / 60.0 / 60.0;
-      /* Translators: Used for a time-based unit that exceed one hour but not one day */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f hour", "%.1f hours", val), val);
-    }
-  else if (msec > 1000 * 60)
-    {
-      val = msec / 1000.0 / 60.0;
-      /* Translators: Used for a time-based unit that exceed one minute but not one hour */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f minute", "%.1f minutes", val), val);
-    }
-  else if (msec > 1000)
-    {
-      val = msec / 1000.0;
-      /* Translators: Used for a time-based unit that exceed one second but not one minute */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f second", "%.1f seconds", val), val);
-    }
-  else
-    {
-      val = msec;
-      /* Translators: Used for a time-based unit that is counted in milliseconds and doesn't exceed one second */
-      ret = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE, "%.1f msec", "%.1f msecs", val), val);
-    }
-  return ret;
-}
-
-static gchar *
 pretty_to_string (guint64 pretty,
                   gint    pretty_unit)
 {
@@ -752,7 +708,7 @@ pretty_to_string (guint64 pretty,
   switch (pretty_unit)
     {
     case 2: /* SK_SMART_ATTRIBUTE_UNIT_MSECONDS */
-      ret = format_duration_msec (pretty);
+      ret = gdu_utils_format_duration_msec (pretty);
       break;
 
     case 3: /* SK_SMART_ATTRIBUTE_UNIT_SECTORS */
@@ -995,7 +951,7 @@ format_powered_on (UDisksDriveAta *ata)
 
   secs = udisks_drive_ata_get_smart_power_on_seconds (ata);
   if (secs > 0)
-    ret = format_duration_msec (secs * 1000);
+    ret = gdu_utils_format_duration_msec (secs * 1000);
   return ret;
 }
 

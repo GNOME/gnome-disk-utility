@@ -57,6 +57,8 @@ void gdu_options_update_entry_option (GtkWidget       *options_entry,
 
 const gchar *gdu_utils_get_seat (void);
 
+gchar *gdu_utils_format_duration_msec (guint64 msec);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

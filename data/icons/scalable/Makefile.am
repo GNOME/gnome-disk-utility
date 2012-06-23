@@ -1,7 +1,8 @@
 NULL =
 
 icondir = $(datadir)/icons/hicolor/scalable/apps
-icon_DATA =				\
+icon_DATA =									\
+	gnome-disks-state-standby-symbolic.svg	\
 	$(NULL)
 
 EXTRA_DIST = \

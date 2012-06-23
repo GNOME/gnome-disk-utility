@@ -804,6 +804,15 @@ init_css (GduWindow *window)
 "                                  to(shade (@theme_selected_bg_color, 0.80)));\n"
 "  -adwaita-focus-border-color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.30);\n"
 "}\n"
+"\n"
+".gnome-disk-utility-grid:selected:backdrop {\n"
+"  background-image: -gtk-gradient(radial,\n"
+"                                  center center, 0,\n"
+"                                  center center, 1,\n"
+"                                  from(@theme_unfocused_selected_bg_color),\n"
+"                                  to(shade (@theme_unfocused_selected_bg_color, 0.80)));\n"
+"  -adwaita-focus-border-color: mix(@theme_unfocused_selected_fg_color, @theme_unfocused_selected_bg_color, 0.30);\n"
+"}\n"
 ;
 
   provider = gtk_css_provider_new ();

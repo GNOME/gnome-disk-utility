@@ -112,6 +112,7 @@ struct _GduWindow
   GtkWidget *generic_drive_menu_item_view_smart;
   GtkWidget *generic_drive_menu_item_disk_settings;
   GtkWidget *generic_drive_menu_item_standby_now;
+  GtkWidget *generic_drive_menu_item_resume_now;
   GtkWidget *generic_drive_menu_item_format_disk;
   GtkWidget *generic_drive_menu_item_create_disk_image;
   GtkWidget *generic_drive_menu_item_restore_disk_image;
@@ -177,6 +178,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_view_smart), "generic-drive-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_disk_settings), "generic-drive-menu-item-disk-settings"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
@@ -232,6 +234,7 @@ typedef enum
   SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<14),
   SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS         = (1<<15),
   SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW           = (1<<16),
+  SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW            = (1<<17),
 
   /* generic volume menu */
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<20),
@@ -271,6 +274,8 @@ static void on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
                                                       gpointer   user_data);
 static void on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
                                                     gpointer   user_data);
+static void on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
+                                                   gpointer   user_data);
 static void on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
                                               gpointer   user_data);
 static void on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
@@ -410,14 +415,36 @@ update_for_show_flags (GduWindow *window,
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_disk_settings),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_create_disk_image),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_restore_disk_image),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
                             show_flags & SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK);
+
+  if (!(show_flags & (SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW|SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW)))
+    {
+      /* no PM capabilities... only show "standby" greyed out */
+      gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+      gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), FALSE);
+    }
+  else
+    {
+      /* Only show one of Standby and Resume (they are mutually exclusive) */
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_resume_now), TRUE);
+      if (show_flags & SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW)
+        {
+          gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+          gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+        }
+      else
+        {
+          gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+          gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+        }
+    }
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
@@ -1131,6 +1158,10 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_standby_now),
                     window);
+  g_signal_connect (window->generic_drive_menu_item_resume_now,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_resume_now),
+                    window);
   g_signal_connect (window->generic_drive_menu_item_format_disk,
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_format_disk),
@@ -1784,7 +1815,20 @@ update_device_page_for_drive (GduWindow      *window,
   if (ata != NULL)
     {
       if (udisks_drive_ata_get_pm_supported (ata))
-        *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW;
+        {
+          GtkTreeIter iter;
+          gboolean sleeping = FALSE;
+          if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
+            {
+              gtk_tree_model_get (GTK_TREE_MODEL (window->model), &iter,
+                                  GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING,
+                                  &sleeping, -1);
+            }
+          if (sleeping)
+            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW;
+          else
+            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW;
+        }
     }
 
   size = udisks_drive_get_size (drive);
@@ -2563,6 +2607,8 @@ on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
   gdu_disk_settings_dialog_show (window, window->current_object);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
 ata_pm_standby_cb (GObject      *source_object,
                    GAsyncResult *res,
@@ -2606,6 +2652,54 @@ on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
       g_warning ("object is not an ATA drive");
     }
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+ata_pm_wakeup_cb (GObject      *source_object,
+                  GAsyncResult *res,
+                  gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  error = NULL;
+  if (!udisks_drive_ata_call_pm_wakeup_finish (UDISKS_DRIVE_ATA (source_object),
+                                               res,
+                                               &error))
+    {
+      gdu_window_show_error (window,
+                             _("An error occurred when trying to wake up the drive from standby mode"),
+                             error);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (window);
+}
+
+static void
+on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
+                                       gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksDriveAta *ata;
+
+  ata = udisks_object_peek_drive_ata (window->current_object);
+  if (ata != NULL)
+    {
+      udisks_drive_ata_call_pm_wakeup (ata,
+                                       g_variant_new ("a{sv}", NULL), /* options */
+                                       NULL, /* GCancellable */
+                                       (GAsyncReadyCallback) ata_pm_wakeup_cb,
+                                       g_object_ref (window));
+    }
+  else
+    {
+      g_warning ("object is not an ATA drive");
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static void
 on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
@@ -2721,6 +2815,7 @@ on_devtab_action_generic_activated (GtkAction *action,
                                     gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  update_all (window);
   gtk_menu_popup (GTK_MENU (window->generic_menu),
                   NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
 }
@@ -2732,6 +2827,7 @@ on_devtab_action_generic_drive_activated (GtkAction *action,
                                           gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  update_all (window);
   gtk_menu_popup (GTK_MENU (window->generic_drive_menu),
                   NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
 }

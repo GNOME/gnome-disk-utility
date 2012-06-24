@@ -1671,6 +1671,7 @@ update_device_page_for_drive (GduWindow      *window,
   guint64 size;
   UDisksDriveAta *ata;
   const gchar *our_seat;
+  const gchar *serial;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1738,14 +1739,19 @@ update_device_page_for_drive (GduWindow      *window,
               "devtab-model-label",
               "devtab-model-value-label", str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_string_free (str, TRUE);
+
+  serial = udisks_drive_get_serial (drive);
   set_markup (window,
               "devtab-serial-number-label",
               "devtab-serial-number-value-label",
-              udisks_drive_get_serial (drive), SET_MARKUP_FLAGS_NONE);
-  set_markup (window,
-              "devtab-wwn-label",
-              "devtab-wwn-value-label",
-              udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
+              serial, SET_MARKUP_FLAGS_NONE);
+  if (serial == NULL || strlen (serial) == 0)
+    {
+      set_markup (window,
+                  "devtab-wwn-label",
+                  "devtab-wwn-value-label",
+                  udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
+    }
 
   /* Figure out Location ...
    *

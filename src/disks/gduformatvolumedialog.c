@@ -144,10 +144,12 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   if (response == GTK_RESPONSE_OK)
     {
       GVariantBuilder options_builder;
+      const gchar *erase;
       const gchar *fstype;
       const gchar *name;
       const gchar *passphrase;
 
+      erase = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
@@ -169,6 +171,9 @@ gdu_format_volume_dialog_show (GduWindow    *window,
         }
       if (passphrase != NULL && strlen (passphrase) > 0)
         g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
+
+      if (erase != NULL)
+        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase));
 
       udisks_block_call_format (data->block,
                                 fstype,

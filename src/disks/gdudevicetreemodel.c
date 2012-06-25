@@ -396,8 +396,8 @@ gdu_device_tree_model_constructed (GObject *object)
   types[4] = G_TYPE_STRING;
   types[5] = G_TYPE_DBUS_OBJECT;
   types[6] = G_TYPE_BOOLEAN;
-  types[7] = G_TYPE_BOOLEAN;
-  types[8] = G_TYPE_UINT;
+  types[7] = G_TYPE_UINT;
+  types[8] = G_TYPE_BOOLEAN;
   types[9] = G_TYPE_BOOLEAN;
   G_STATIC_ASSERT (10 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),

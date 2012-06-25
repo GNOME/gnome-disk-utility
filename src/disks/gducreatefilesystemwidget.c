@@ -44,6 +44,7 @@ struct _GduCreateFilesystemWidget
 
   GtkBuilder *builder;
   GtkWidget *grid;
+  GtkWidget *erase_combobox;
   GtkWidget *type_combobox;
   GtkWidget *name_label;
   GtkWidget *name_entry;
@@ -366,6 +367,9 @@ populate (GduCreateFilesystemWidget *widget)
   GtkCellRenderer *renderer;
   gchar *s;
 
+  /* ---------------------------------------------------------------------------------------------------- */
+  /* type combobox */
+
   model = gtk_list_store_new (MODEL_N_COLUMNS,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
@@ -468,6 +472,47 @@ populate (GduCreateFilesystemWidget *widget)
                           widget->confirm_passphrase_entry,
                           "visibility",
                           G_BINDING_SYNC_CREATE);
+
+  /* ---------------------------------------------------------------------------------------------------- */
+  /* erase combobox */
+
+  model = gtk_list_store_new (MODEL_N_COLUMNS,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_BOOLEAN);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (widget->erase_combobox), GTK_TREE_MODEL (model));
+  g_object_unref (model);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (widget->erase_combobox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget->erase_combobox), renderer,
+                                  "markup", MODEL_COLUMN_MARKUP,
+                                  NULL);
+
+  gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (widget->erase_combobox),
+                                        separator_func,
+                                        widget,
+                                        NULL); /* GDestroyNotify */
+
+  /* Quick */
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+                       _("Don't overwrite existing data"),
+                       _("Quick"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+
+  /* Full */
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+                       _("Overwrite existing data with zeroes"),
+                       _("Slow"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "zero", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+
+  /* TODO: include 7-pass and 35-pass (DoD 5220-22 M) */
+
+  gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->erase_combobox), "");
 }
 
 static void
@@ -481,6 +526,8 @@ gdu_create_filesystem_widget_constructed (GObject *object)
                                                          "filesystem-create-dummywindow",
                                                          &widget->builder));
   widget->grid = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-create-grid"));
+  widget->erase_combobox = GTK_WIDGET (gtk_builder_get_object (widget->builder, "erase-combobox"));
+  g_signal_connect (widget->erase_combobox, "notify::active", G_CALLBACK (on_property_changed), widget);
   widget->type_combobox = GTK_WIDGET (gtk_builder_get_object (widget->builder, "type-combobox"));
   g_signal_connect (widget->type_combobox, "notify::active", G_CALLBACK (on_property_changed), widget);
   widget->name_label = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-label"));
@@ -598,6 +645,20 @@ gdu_create_filesystem_widget_get_name (GduCreateFilesystemWidget *widget)
 {
   g_return_val_if_fail (GDU_IS_CREATE_FILESYSTEM_WIDGET (widget), NULL);
   return widget->name;
+}
+
+const gchar *
+gdu_create_filesystem_widget_get_erase (GduCreateFilesystemWidget *widget)
+{
+  const gchar *ret;
+
+  g_return_val_if_fail (GDU_IS_CREATE_FILESYSTEM_WIDGET (widget), NULL);
+
+  ret = gtk_combo_box_get_active_id (GTK_COMBO_BOX (widget->erase_combobox));
+  if (g_strcmp0 (ret, "") == 0)
+    ret = NULL;
+
+  return ret;
 }
 
 const gchar *

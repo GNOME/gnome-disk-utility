@@ -51,6 +51,7 @@ typedef struct
   GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *type_combobox;
+  GtkWidget *erase_combobox;
 } FormatDiskData;
 
 static void
@@ -101,7 +102,55 @@ separator_func (GtkTreeModel *model,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-format_disk_populate (FormatDiskData *data)
+populate_erase_combobox (FormatDiskData *data)
+{
+  GtkListStore *model;
+  GtkCellRenderer *renderer;
+  gchar *s;
+
+  model = gtk_list_store_new (MODEL_N_COLUMNS,
+                              G_TYPE_STRING,
+                              G_TYPE_STRING,
+                              G_TYPE_BOOLEAN);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (data->erase_combobox), GTK_TREE_MODEL (model));
+  g_object_unref (model);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->erase_combobox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (data->erase_combobox), renderer,
+                                  "markup", MODEL_COLUMN_MARKUP,
+                                  NULL);
+
+  gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (data->erase_combobox),
+                                        separator_func,
+                                        data,
+                                        NULL); /* GDestroyNotify */
+
+  /* Quick */
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+                       _("Don't overwrite existing data"),
+                       _("Quick"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+
+  /* Full */
+  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+                       _("Overwrite existing data with zeroes"),
+                       _("Slow"));
+  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+                                     MODEL_COLUMN_ID, "zero", MODEL_COLUMN_MARKUP, s, -1);
+  g_free (s);
+
+  /* TODO: include 7-pass and 35-pass (DoD 5220-22 M) */
+
+  /* TODO: include ATA SECURE ERASE */
+
+  gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->erase_combobox), "");
+}
+
+static void
+populate_partitioning_combobox (FormatDiskData *data)
 {
   GtkListStore *model;
   GtkCellRenderer *renderer;
@@ -168,6 +217,13 @@ format_disk_populate (FormatDiskData *data)
     }
 }
 
+static void
+format_disk_populate (FormatDiskData *data)
+{
+  populate_erase_combobox (data);
+  populate_partitioning_combobox (data);
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -208,6 +264,7 @@ gdu_format_disk_dialog_show (GduWindow    *window,
                                                          "format-disk-dialog",
                                                          &data->builder));
   data->type_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "type-combobox"));
+  data->erase_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "erase-combobox"));
   g_signal_connect (data->type_combobox, "notify::active", G_CALLBACK (on_property_changed), data);
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
@@ -223,6 +280,8 @@ gdu_format_disk_dialog_show (GduWindow    *window,
   if (response == GTK_RESPONSE_OK)
     {
       const gchar *partition_table_type;
+      const gchar *erase_type;
+      GVariantBuilder options_builder;
 
       partition_table_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->type_combobox));
 
@@ -233,9 +292,14 @@ gdu_format_disk_dialog_show (GduWindow    *window,
                                          _("_Format")))
         goto out;
 
+      erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
+
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      if (strlen (erase_type) > 0)
+        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
       udisks_block_call_format (data->block,
                                 partition_table_type,
-                                g_variant_new ("a{sv}", NULL), /* options */
+                                g_variant_builder_end (&options_builder),
                                 NULL, /* GCancellable */
                                 format_cb,
                                 data);

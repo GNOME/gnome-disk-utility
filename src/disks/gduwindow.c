@@ -91,6 +91,8 @@ struct _GduWindow
   GtkWidget *devtab_drive_name_label;
   GtkWidget *devtab_drive_devices_label;
   GtkWidget *devtab_drive_image;
+  GtkWidget *devtab_drive_job_cancel_label;
+  GtkWidget *devtab_job_cancel_label;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
   GtkWidget *devtab_grid_hbox;
@@ -152,6 +154,8 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_name_label), "devtab-drive-name-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_devices_label), "devtab-drive-devices-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_image), "devtab-drive-image"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_cancel_label), "devtab-drive-job-cancel-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_cancel_label), "devtab-job-cancel-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_hbox), "devtab-grid-hbox"},
   {G_STRUCT_OFFSET (GduWindow, devtab_volumes_label), "devtab-volumes-label"},
@@ -307,6 +311,14 @@ static void on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
 static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
                                                            gpointer    user_data);
+
+static void on_drive_job_cancel_label_activate_link (GtkLabel     *label,
+                                                     const gchar  *uri,
+                                                     gpointer      user_data);
+
+static void on_job_cancel_label_activate_link (GtkLabel     *label,
+                                               const gchar  *uri,
+                                               gpointer      user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -1223,6 +1235,18 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_devtab_loop_autoclear_switch_notify_active),
                     window);
 
+  /* cancel-button for drive job */
+  g_signal_connect (window->devtab_drive_job_cancel_label,
+                    "activate-link",
+                    G_CALLBACK (on_drive_job_cancel_label_activate_link),
+                    window);
+
+  /* cancel-button for job */
+  g_signal_connect (window->devtab_job_cancel_label,
+                    "activate-link",
+                    G_CALLBACK (on_job_cancel_label_activate_link),
+                    window);
+
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
 }
 
@@ -1672,6 +1696,7 @@ update_device_page_for_drive (GduWindow      *window,
   UDisksDriveAta *ata;
   const gchar *our_seat;
   const gchar *serial;
+  GList *jobs;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -1872,6 +1897,55 @@ update_device_page_for_drive (GduWindow      *window,
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+  /* if there are no jobs on the drive, look at the first block object if it's partitioned
+   * (because: if it's not partitioned, we'll see the job in Volumes below so no need to show it here)
+   */
+  if (jobs == NULL && blocks != NULL)
+    {
+      UDisksObject *block_object = UDISKS_OBJECT (blocks->data);
+      if (udisks_object_peek_partition_table (object) != NULL)
+        {
+          jobs = udisks_client_get_jobs_for_object (window->client, block_object);
+        }
+    }
+  if (jobs == NULL)
+    {
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-label")));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-box")));
+    }
+  else
+    {
+      UDisksJob *job = UDISKS_JOB (jobs->data);
+      GtkWidget *label;
+      GtkWidget *progress_bar;
+      gchar *desc;
+
+      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-label")));
+      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-box")));
+
+      label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-id-label"));
+      progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-progressbar"));
+      desc = udisks_client_get_job_description (window->client, job);
+      if (udisks_job_get_progress_valid (job))
+        {
+          gdouble progress = udisks_job_get_progress (job);
+          gtk_widget_show (progress_bar);
+          gtk_widget_hide (label);
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
+          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), desc);
+        }
+      else
+        {
+          gtk_widget_hide (progress_bar);
+          gtk_widget_show (label);
+          gtk_label_set_text (GTK_LABEL (label), desc);
+        }
+      g_free (desc);
+    }
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
 
   if (udisks_drive_get_ejectable (drive))
     {
@@ -1941,6 +2015,7 @@ update_device_page_for_block (GduWindow          *window,
   gchar *s;
   UDisksObject *drive_object;
   UDisksDrive *drive = NULL;
+  GList *jobs;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
@@ -2190,6 +2265,46 @@ update_device_page_for_block (GduWindow          *window,
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
       *show_flags |= SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE;
     }
+
+
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+  if (jobs == NULL)
+    {
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-label")));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-box")));
+    }
+  else
+    {
+      UDisksJob *job = UDISKS_JOB (jobs->data);
+      GtkWidget *label;
+      GtkWidget *progress_bar;
+      gchar *desc;
+
+      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-label")));
+      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-box")));
+
+      label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-id-label"));
+      progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-progressbar"));
+      desc = udisks_client_get_job_description (window->client, job);
+      if (udisks_job_get_progress_valid (job))
+        {
+          gdouble progress = udisks_job_get_progress (job);
+          gtk_widget_show (progress_bar);
+          gtk_widget_hide (label);
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
+          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), desc);
+        }
+      else
+        {
+          gtk_widget_hide (progress_bar);
+          gtk_widget_show (label);
+          gtk_label_set_text (GTK_LABEL (label), desc);
+        }
+      g_free (desc);
+    }
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
 }
 
 static void
@@ -2380,9 +2495,11 @@ gdu_window_show_error (GduWindow   *window,
 
   /* Never show an error if it's because the user dismissed the
    * authentication dialog himself
+   *
+   * ... or if the user cancelled the operation
    */
-  if (error->domain == UDISKS_ERROR &&
-      error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED)
+  if ((error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED) ||
+      (error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_CANCELLED))
     goto no_dialog;
 
   fixed_up_error = g_error_copy (error);
@@ -3133,3 +3250,103 @@ on_devtab_loop_autoclear_switch_notify_active (GObject    *gobject,
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void
+drive_job_cancel_cb (UDisksJob       *job,
+                     GAsyncResult    *res,
+                     gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  if (!udisks_job_call_cancel_finish (job, res, &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error canceling job"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_drive_job_cancel_label_activate_link (GtkLabel     *label,
+                                         const gchar  *uri,
+                                         gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GList *jobs;
+
+  jobs = udisks_client_get_jobs_for_object (window->client, window->current_object);
+  /* if there are no jobs on the drive, look at the first block object */
+  if (jobs == NULL)
+    {
+      GList *blocks;
+      blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (window->current_object)));
+      blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
+      if (blocks != NULL)
+        {
+          UDisksObject *block_object = UDISKS_OBJECT (blocks->data);
+          jobs = udisks_client_get_jobs_for_object (window->client, block_object);
+        }
+      g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
+      g_list_free (blocks);
+    }
+  if (jobs != NULL)
+    {
+      UDisksJob *job = UDISKS_JOB (jobs->data);
+      udisks_job_call_cancel (job,
+                              g_variant_new ("a{sv}", NULL), /* options */
+                              NULL, /* cancellable */
+                              (GAsyncReadyCallback) drive_job_cancel_cb,
+                              g_object_ref (window));
+    }
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+job_cancel_cb (UDisksJob       *job,
+               GAsyncResult    *res,
+               gpointer         user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  if (!udisks_job_call_cancel_finish (job, res, &error))
+    {
+      gdu_window_show_error (window,
+                             _("Error canceling job"),
+                             error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_job_cancel_label_activate_link (GtkLabel     *label,
+                                   const gchar  *uri,
+                                   gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GList *jobs;
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+  if (jobs != NULL)
+    {
+      UDisksJob *job = UDISKS_JOB (jobs->data);
+      udisks_job_call_cancel (job,
+                              g_variant_new ("a{sv}", NULL), /* options */
+                              NULL, /* cancellable */
+                              (GAsyncReadyCallback) job_cancel_cb,
+                              g_object_ref (window));
+    }
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
+}

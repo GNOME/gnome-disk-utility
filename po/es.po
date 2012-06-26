@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-15 15:00+0000\n"
-"PO-Revision-Date: 2012-06-18 13:33+0200\n"
+"POT-Creation-Date: 2012-06-26 16:26+0000\n"
+"PO-Revision-Date: 2012-06-26 20:41+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgid "Mount Disk Images"
 msgstr "Montar imágenes de discos"
 
 #: ../data/gnome-disks.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/disks/gduwindow.c:912
+#: ../src/disks/gduwindow.c:970
 msgid "Disks"
 msgstr "Discos"
 
@@ -98,7 +98,6 @@ msgid "Disk Drive or Device"
 msgstr "Unidades de disco o dispositivo"
 
 #: ../data/ui/benchmark-dialog.ui.h:8
-#| msgid "Sample S_ize (MiB)"
 msgid "Sample Size"
 msgstr "Tamaño de la muestra"
 
@@ -294,6 +293,226 @@ msgstr "El espacio libre después de la partición, en megabytes"
 #: ../data/ui/create-partition-dialog.ui.h:8
 msgid "<big>Contents</big>"
 msgstr "<big>Contenido</big>"
+
+#: ../data/ui/disk-settings-dialog.ui.h:1
+msgid "_Standby Timeout"
+msgstr "_Tiempo de espera para el reposo"
+
+#: ../data/ui/disk-settings-dialog.ui.h:2
+msgid "Enter Standby After"
+msgstr "Entrar en reposo después de"
+
+#: ../data/ui/disk-settings-dialog.ui.h:3
+msgid "_Advanced Power Management"
+msgstr "Gestión de energía _avanzada"
+
+#: ../data/ui/disk-settings-dialog.ui.h:4
+#| msgid "RAID Level"
+msgid "APM Level"
+msgstr "Nivel APM"
+
+#: ../data/ui/disk-settings-dialog.ui.h:5
+msgid ""
+"Agressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+"La reducción agresiva de la rotación puede desgastar la unidad antes de lo "
+"previsto. Verifique el atributo SMART «Start/Stop Count» de vez en cuando"
+
+#: ../data/ui/disk-settings-dialog.ui.h:6
+msgid "Automatic Aco_ustic Management"
+msgstr "Gestión a_cústica automática"
+
+#: ../data/ui/disk-settings-dialog.ui.h:7
+#| msgid "RAID Level"
+msgid "AAM Level"
+msgstr "Nivel AAM"
+
+#: ../data/ui/disks.ui.h:1
+msgid "Create a new partition..."
+msgstr "Crear una partición nueva…"
+
+#: ../data/ui/disks.ui.h:2
+msgid "Mount the filesystem"
+msgstr "Montar el sistema de archivos"
+
+#: ../data/ui/disks.ui.h:3
+msgid "Unmount the filesystem"
+msgstr "Desmontar el sistema de archivos"
+
+#: ../data/ui/disks.ui.h:4
+msgid "Eject the media"
+msgstr "Expulsar el soporte"
+
+#: ../data/ui/disks.ui.h:5
+msgid "Unlock the encrypted device"
+msgstr "Desbloquear el dispositivo cifrado"
+
+#: ../data/ui/disks.ui.h:6
+msgid "Activate the swap space"
+msgstr "Activar el espacio de intercambio"
+
+#: ../data/ui/disks.ui.h:7
+msgid "Deactivate the swap space"
+msgstr "Desactivar el espacio de intercambio"
+
+#: ../data/ui/disks.ui.h:8
+msgid "Lock the encrypted device"
+msgstr "Bloquear el dispositivo cifrado"
+
+#: ../data/ui/disks.ui.h:9
+msgid "More actions..."
+msgstr "Más acciones…"
+
+#: ../data/ui/disks.ui.h:10
+msgid "Delete partition..."
+msgstr "Eliminar partición…"
+
+#: ../data/ui/disks.ui.h:11
+msgid "Attach Disk Image..."
+msgstr "Acoplar imagen de disco…"
+
+#: ../data/ui/disks.ui.h:12
+msgid "Detach Disk Image"
+msgstr "Desacoplando imagen de disco"
+
+#: ../data/ui/disks.ui.h:13
+msgid "Select a device"
+msgstr "Seleccionar un dispositivo"
+
+#: ../data/ui/disks.ui.h:14
+msgid "Model"
+msgstr "Modelo"
+
+#: ../data/ui/disks.ui.h:15
+msgid "Serial Number"
+msgstr "Número de serie"
+
+#: ../data/ui/disks.ui.h:16
+msgid "World Wide Name"
+msgstr "Nombre a nivel mundial"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: ../data/ui/disks.ui.h:18
+msgid "Location"
+msgstr "Ubicación"
+
+#: ../data/ui/disks.ui.h:19
+msgid "Media"
+msgstr "Soporte"
+
+#: ../data/ui/disks.ui.h:20
+msgid "Size"
+msgstr "Tamaño"
+
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../data/ui/disks.ui.h:21 ../src/disks/gduatasmartdialog.c:1515
+msgid "Assessment"
+msgstr "Estimación"
+
+#: ../data/ui/disks.ui.h:22
+msgid "Eject media"
+msgstr "Expulsar soporte"
+
+#: ../data/ui/disks.ui.h:23
+msgid "Pending Job"
+msgstr "Trabajo pendiente"
+
+#: ../data/ui/disks.ui.h:24
+msgid "— <a href=\"app://cancel\">Cancel</a>"
+msgstr "— <a href=\"app://cancel\">Cancelar</a>"
+
+#: ../data/ui/disks.ui.h:25
+msgid "<b>_Volumes</b>"
+msgstr "<b>_Volúmenes</b>"
+
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: ../data/ui/disks.ui.h:27
+msgid "Contents"
+msgstr "Contenido"
+
+#: ../data/ui/disks.ui.h:28
+msgid "Device"
+msgstr "Dispositivo"
+
+#: ../data/ui/disks.ui.h:29
+msgid "In Use"
+msgstr "En uso"
+
+#: ../data/ui/disks.ui.h:30
+msgid "Auto-clear"
+msgstr "Limpieza automática"
+
+#: ../data/ui/disks.ui.h:31
+msgid "Partition Type"
+msgstr "Tipo de partición"
+
+#. The filename or URI of the file that is used as backing store for the loop device.
+#: ../data/ui/disks.ui.h:33
+msgid "Backing File"
+msgstr "Respaldando archivo"
+
+#: ../data/ui/disks.ui.h:34
+msgid "Format Disk..."
+msgstr "Formatear disco…"
+
+#: ../data/ui/disks.ui.h:35
+msgid "Create Disk Image..."
+msgstr "Crear imagen de disco…"
+
+#: ../data/ui/disks.ui.h:36
+msgid "Restore Disk Image..."
+msgstr "Restaurar imagen de disco…"
+
+#: ../data/ui/disks.ui.h:37
+msgid "Benchmark Drive..."
+msgstr "_Probar el rendimiento del dispositivo…"
+
+#: ../data/ui/disks.ui.h:38
+#| msgid "View SMART Data..."
+msgid "SMART Data and Tests..."
+msgstr "Datos y pruebas SMART…"
+
+#: ../data/ui/disks.ui.h:39
+#| msgid "More actions..."
+msgid "Drive Settings..."
+msgstr "Configuración de la unidad…"
+
+#: ../data/ui/disks.ui.h:40
+msgid "Standby Now"
+msgstr "Poner en reposo ahora"
+
+#: ../data/ui/disks.ui.h:41
+msgid "Wake-Up from Standby"
+msgstr "Salir del reposo"
+
+#: ../data/ui/disks.ui.h:42
+msgid "Format..."
+msgstr "Formatear…"
+
+#: ../data/ui/disks.ui.h:43
+msgid "Edit Partition Type..."
+msgstr "Editar tipo de partición…"
+
+#: ../data/ui/disks.ui.h:44
+msgid "Edit Filesystem Label..."
+msgstr "Editar la etiqueta del sistema de archivos…"
+
+#: ../data/ui/disks.ui.h:45
+msgid "Change Passphrase..."
+msgstr "Cambiar contraseña…"
+
+#: ../data/ui/disks.ui.h:46
+msgid "Edit Mount Options..."
+msgstr "Editar las acciones de montaje…"
+
+#: ../data/ui/disks.ui.h:47
+msgid "Edit Encryption Options..."
+msgstr "Editar las opciones de cifrado…"
+
+#: ../data/ui/disks.ui.h:48
+msgid "Benchmark Volume..."
+msgstr "_Probar el rendimiento del volumen…"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "_Automatic Encryption Options"
@@ -556,8 +775,8 @@ msgid ""
 "i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
 "BIOS heredada arrancable. Es el equivalente a la opción <i>arrancable</i> "
-"del «Master Boot Record». Normalmente se usa para particiones GPT en sistemas "
-"MBR"
+"del «Master Boot Record». Normalmente se usa para particiones GPT en "
+"sistemas MBR"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:11
 msgid "_Read-Only"
@@ -632,6 +851,10 @@ msgstr ""
 msgid "Enter passphrase used to protect the data"
 msgstr "Introduzca la contraseña usada para proteger los datos"
 
+#: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
+msgid "_Erase"
+msgstr "_Borrar"
+
 #: ../data/ui/format-disk-dialog.ui.h:1 ../data/ui/format-volume-dialog.ui.h:1
 msgid "_Format..."
 msgstr "_Formatear…"
@@ -647,170 +870,6 @@ msgstr "_Particionado"
 #: ../data/ui/format-volume-dialog.ui.h:2
 msgid "<big>Format Volume</big>"
 msgstr "<big>Formatear volumen</big>"
-
-#: ../data/ui/disks.ui.h:1
-msgid "Create a new partition..."
-msgstr "Crear una partición nueva…"
-
-#: ../data/ui/disks.ui.h:2
-msgid "Mount the filesystem"
-msgstr "Montar el sistema de archivos"
-
-#: ../data/ui/disks.ui.h:3
-msgid "Unmount the filesystem"
-msgstr "Desmontar el sistema de archivos"
-
-#: ../data/ui/disks.ui.h:4
-msgid "Eject the media"
-msgstr "Expulsar el soporte"
-
-#: ../data/ui/disks.ui.h:5
-msgid "Unlock the encrypted device"
-msgstr "Desbloquear el dispositivo cifrado"
-
-#: ../data/ui/disks.ui.h:6
-msgid "Activate the swap space"
-msgstr "Activar el espacio de intercambio"
-
-#: ../data/ui/disks.ui.h:7
-msgid "Deactivate the swap space"
-msgstr "Desactivar el espacio de intercambio"
-
-#: ../data/ui/disks.ui.h:8
-msgid "Lock the encrypted device"
-msgstr "Bloquear el dispositivo cifrado"
-
-#: ../data/ui/disks.ui.h:9
-msgid "More actions..."
-msgstr "Más acciones…"
-
-#: ../data/ui/disks.ui.h:10
-msgid "Delete partition..."
-msgstr "Eliminar partición…"
-
-#: ../data/ui/disks.ui.h:11
-msgid "Format Disk..."
-msgstr "Formatear disco…"
-
-#: ../data/ui/disks.ui.h:12
-msgid "Create Disk Image..."
-msgstr "Crear imagen de disco…"
-
-#: ../data/ui/disks.ui.h:13
-msgid "Restore Disk Image..."
-msgstr "Restaurar imagen de disco…"
-
-#: ../data/ui/disks.ui.h:14
-msgid "Benchmark Drive..."
-msgstr "_Probar el rendimiento del dispositivo…"
-
-#: ../data/ui/disks.ui.h:15
-msgid "View SMART Data..."
-msgstr "Ver datos SMART…"
-
-#: ../data/ui/disks.ui.h:16
-msgid "Format..."
-msgstr "Formatear…"
-
-#: ../data/ui/disks.ui.h:17
-msgid "Edit Partition Type..."
-msgstr "Editar tipo de partición…"
-
-#: ../data/ui/disks.ui.h:18
-msgid "Edit Filesystem Label..."
-msgstr "Editar la etiqueta del sistema de archivos…"
-
-#: ../data/ui/disks.ui.h:19
-msgid "Change Passphrase..."
-msgstr "Cambiar contraseña…"
-
-#: ../data/ui/disks.ui.h:20
-msgid "Edit Mount Options..."
-msgstr "Editar las acciones de montaje…"
-
-#: ../data/ui/disks.ui.h:21
-msgid "Edit Encryption Options..."
-msgstr "Editar las opciones de cifrado…"
-
-#: ../data/ui/disks.ui.h:22
-msgid "Benchmark Volume..."
-msgstr "_Probar el rendimiento del volumen…"
-
-#: ../data/ui/disks.ui.h:23
-msgid "Attach Disk Image..."
-msgstr "Acoplar imagen de disco…"
-
-#: ../data/ui/disks.ui.h:24
-msgid "Detach Disk Image"
-msgstr "Desacoplando imagen de disco"
-
-#: ../data/ui/disks.ui.h:25
-msgid "Select a device"
-msgstr "Seleccionar un dispositivo"
-
-#: ../data/ui/disks.ui.h:26
-msgid "Model"
-msgstr "Modelo"
-
-#: ../data/ui/disks.ui.h:27
-msgid "Serial Number"
-msgstr "Número de serie"
-
-#: ../data/ui/disks.ui.h:28
-msgid "World Wide Name"
-msgstr "Nombre a nivel mundial"
-
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:30
-msgid "Location"
-msgstr "Ubicación"
-
-#: ../data/ui/disks.ui.h:31
-msgid "Media"
-msgstr "Soporte"
-
-#: ../data/ui/disks.ui.h:32
-msgid "Size"
-msgstr "Tamaño"
-
-#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:33 ../src/disks/gduatasmartdialog.c:1559
-msgid "Assessment"
-msgstr "Estimación"
-
-#: ../data/ui/disks.ui.h:34
-msgid "Eject media"
-msgstr "Expulsar soporte"
-
-#: ../data/ui/disks.ui.h:35
-msgid "<b>_Volumes</b>"
-msgstr "<b>_Volúmenes</b>"
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/disks.ui.h:37
-msgid "Contents"
-msgstr "Contenido"
-
-#: ../data/ui/disks.ui.h:38
-msgid "Device"
-msgstr "Dispositivo"
-
-#: ../data/ui/disks.ui.h:39
-msgid "In Use"
-msgstr "En uso"
-
-#: ../data/ui/disks.ui.h:40
-msgid "Auto-clear"
-msgstr "Limpieza automática"
-
-#: ../data/ui/disks.ui.h:41
-msgid "Partition Type"
-msgstr "Tipo de partición"
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:43
-msgid "Backing File"
-msgstr "Respaldando archivo"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "<big>Restore Disk Image</big>"
@@ -873,7 +932,7 @@ msgid "SMART _Attributes"
 msgstr "_Atributos de SMART"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../data/ui/smart-dialog.ui.h:10 ../src/disks/gduatasmartdialog.c:1547
+#: ../data/ui/smart-dialog.ui.h:10 ../src/disks/gduatasmartdialog.c:1503
 msgid "Value"
 msgstr "Valor"
 
@@ -917,11 +976,11 @@ msgstr "Permitir escribir en la imagen"
 msgid "Wait until created loop devices are cleared"
 msgstr "Espere hasta que se limpien los dispositivos de «loop»"
 
-#: ../src/disk-image-mounter/main.c:139 ../src/disks/gduutils.c:85
+#: ../src/disk-image-mounter/main.c:139 ../src/disks/gduutils.c:87
 msgid "All Files"
 msgstr "Todos los archivos"
 
-#: ../src/disk-image-mounter/main.c:143 ../src/disks/gduutils.c:89
+#: ../src/disk-image-mounter/main.c:143 ../src/disks/gduutils.c:91
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imágenes de disco (*.img, *.iso)"
 
@@ -1069,8 +1128,8 @@ msgid ""
 "data to a special reserved area (spare area)"
 msgstr ""
 "Conteo de sectores remapeados. Cuando el disco duro halla un error de "
-"lectura/escritura/verificación, marca el sector como «reubicado» y transfiere "
-"los datos a un área reservada especial (área libre)."
+"lectura/escritura/verificación, marca el sector como «reubicado» y "
+"transfiere los datos a un área reservada especial (área libre)."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1614,55 +1673,7 @@ msgstr "Falló en el pasado"
 msgid "OK"
 msgstr "Aceptar"
 
-#. Translators: Used for a time-based unit that exceed one year
-#: ../src/disks/gduatasmartdialog.c:709
-#, c-format
-msgid "%.1f year"
-msgid_plural "%.1f years"
-msgstr[0] "%.1f año"
-msgstr[1] "%.1f años"
-
-#. Translators: Used for a time-based unit that exceed one day but not one year
-#: ../src/disks/gduatasmartdialog.c:715
-#, c-format
-msgid "%.1f day"
-msgid_plural "%.1f days"
-msgstr[0] "%.1f día"
-msgstr[1] "%.1f días"
-
-#. Translators: Used for a time-based unit that exceed one hour but not one day
-#: ../src/disks/gduatasmartdialog.c:721
-#, c-format
-msgid "%.1f hour"
-msgid_plural "%.1f hours"
-msgstr[0] "%.1f hora"
-msgstr[1] "%.1f horas"
-
-#. Translators: Used for a time-based unit that exceed one minute but not one hour
-#: ../src/disks/gduatasmartdialog.c:727
-#, c-format
-msgid "%.1f minute"
-msgid_plural "%.1f minutes"
-msgstr[0] "%.1f minuto"
-msgstr[1] "%.1f minutos"
-
-#. Translators: Used for a time-based unit that exceed one second but not one minute
-#: ../src/disks/gduatasmartdialog.c:733
-#, c-format
-msgid "%.1f second"
-msgid_plural "%.1f seconds"
-msgstr[0] "%.1f segundo"
-msgstr[1] "%.1f segundos"
-
-#. Translators: Used for a time-based unit that is counted in milliseconds and doesn't exceed one second
-#: ../src/disks/gduatasmartdialog.c:739
-#, c-format
-msgid "%.1f msec"
-msgid_plural "%.1f msecs"
-msgstr[0] "%.1f milisegundo"
-msgstr[1] "%.1f segundos"
-
-#: ../src/disks/gduatasmartdialog.c:762
+#: ../src/disks/gduatasmartdialog.c:718
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1676,7 +1687,7 @@ msgstr[1] "%d sectores"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: ../src/disks/gduatasmartdialog.c:774 ../src/disks/gduatasmartdialog.c:985
+#: ../src/disks/gduatasmartdialog.c:730 ../src/disks/gduatasmartdialog.c:941
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -1684,7 +1695,7 @@ msgstr "%.0f° C / %.0f° F"
 #. SK_SMART_ATTRIBUTE_UNIT_UNKNOWN
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/disks/gduatasmartdialog.c:785
+#: ../src/disks/gduatasmartdialog.c:741
 msgid "N/A"
 msgstr "N/D"
 
@@ -1694,7 +1705,7 @@ msgstr "N/D"
 #. * The three %d are the normalized, threshold and worst values -
 #. * these are all decimal numbers.
 #.
-#: ../src/disks/gduatasmartdialog.c:831
+#: ../src/disks/gduatasmartdialog.c:787
 #, c-format
 msgid ""
 "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
@@ -1702,7 +1713,7 @@ msgstr "%s <span size=\"small\">(Normalizado: %d, Umbral: %d, Peor: %d)</span>"
 
 #. Translators: Please keep "(Pre-Fail)" in English
 #.
-#: ../src/disks/gduatasmartdialog.c:841
+#: ../src/disks/gduatasmartdialog.c:797
 msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
@@ -1712,7 +1723,7 @@ msgstr ""
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
-#: ../src/disks/gduatasmartdialog.c:847
+#: ../src/disks/gduatasmartdialog.c:803
 msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
@@ -1722,7 +1733,7 @@ msgstr ""
 
 #. Translators: Please keep "(Online)" in English
 #.
-#: ../src/disks/gduatasmartdialog.c:854
+#: ../src/disks/gduatasmartdialog.c:810
 msgid ""
 "Updated every time data is collected <span size=\"small\">(Online)</span>"
 msgstr ""
@@ -1731,7 +1742,7 @@ msgstr ""
 
 #. Translators: Please keep "(Not Online)" in English
 #.
-#: ../src/disks/gduatasmartdialog.c:860
+#: ../src/disks/gduatasmartdialog.c:816
 msgid ""
 "Updated only during off-line activities <span size=\"small\">(Not Online)</"
 "span>"
@@ -1739,110 +1750,110 @@ msgstr ""
 "Actualizado sólo durante actividades desconectadas <span size=\"small\">(Not "
 "Online)</span>"
 
-#: ../src/disks/gduatasmartdialog.c:891
+#: ../src/disks/gduatasmartdialog.c:847
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "La última autocomprobación se completó correctamente"
 
-#: ../src/disks/gduatasmartdialog.c:895
+#: ../src/disks/gduatasmartdialog.c:851
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Se canceló la última autocomprobación"
 
-#: ../src/disks/gduatasmartdialog.c:899
+#: ../src/disks/gduatasmartdialog.c:855
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Se interrumpió la última autocomprobación"
 
-#: ../src/disks/gduatasmartdialog.c:903
+#: ../src/disks/gduatasmartdialog.c:859
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "La última autocomprobación no se completó"
 
-#: ../src/disks/gduatasmartdialog.c:907
+#: ../src/disks/gduatasmartdialog.c:863
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Falló la última autocomprobación"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: ../src/disks/gduatasmartdialog.c:912
+#: ../src/disks/gduatasmartdialog.c:868
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Falló la última autocomprobación (eléctrico)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: ../src/disks/gduatasmartdialog.c:917
+#: ../src/disks/gduatasmartdialog.c:873
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Falló la última autocomprobación (servo)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: ../src/disks/gduatasmartdialog.c:922
+#: ../src/disks/gduatasmartdialog.c:878
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Falló la última autocomprobación (lectura)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: ../src/disks/gduatasmartdialog.c:927
+#: ../src/disks/gduatasmartdialog.c:883
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Falló la última autocomprobación (manipulación)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: ../src/disks/gduatasmartdialog.c:932
+#: ../src/disks/gduatasmartdialog.c:888
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Autocomprobación en progreso: queda %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: ../src/disks/gduatasmartdialog.c:939
+#: ../src/disks/gduatasmartdialog.c:895
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Desconocida (%s)"
 
-#: ../src/disks/gduatasmartdialog.c:961
+#: ../src/disks/gduatasmartdialog.c:917
 #, c-format
 msgid "%s ago"
 msgstr "hace %s"
 
-#: ../src/disks/gduatasmartdialog.c:1018
+#: ../src/disks/gduatasmartdialog.c:974
 msgid "SMART is not supported"
 msgstr "SMART no está soportado"
 
-#: ../src/disks/gduatasmartdialog.c:1024
+#: ../src/disks/gduatasmartdialog.c:980
 msgid "SMART is not enabled"
 msgstr "SMART no está activado"
 
-#: ../src/disks/gduatasmartdialog.c:1036
+#: ../src/disks/gduatasmartdialog.c:992
 #, c-format
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Autocomprobación en progreso: queda %d%%"
 
-#: ../src/disks/gduatasmartdialog.c:1050 ../src/disks/gduatasmartdialog.c:1059
+#: ../src/disks/gduatasmartdialog.c:1006 ../src/disks/gduatasmartdialog.c:1015
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "ES PROBABLE QUE EL DISCO FALLE PRONTO"
 
-#: ../src/disks/gduatasmartdialog.c:1082
+#: ../src/disks/gduatasmartdialog.c:1038
 msgid "SELF-TEST FAILED"
 msgstr "FALLÓ LA AUTOCOMPROBACIÓN"
 
-#: ../src/disks/gduatasmartdialog.c:1091
+#: ../src/disks/gduatasmartdialog.c:1047
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "Disco correcto, está fallando un atributo"
 msgstr[1] "Disco correcto, están fallando %d atributos"
 
-#: ../src/disks/gduatasmartdialog.c:1102
+#: ../src/disks/gduatasmartdialog.c:1058
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "Disco correcto, un sector erróneo"
 msgstr[1] "Disco correcto, %d sectores erróneos"
 
-#: ../src/disks/gduatasmartdialog.c:1113
+#: ../src/disks/gduatasmartdialog.c:1069
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -1850,7 +1861,7 @@ msgstr[0] "Disco correcto, un atributo falló en el pasado"
 msgstr[1] "Disco correcto, %d atributos fallaron en el pasado"
 
 #. Otherwise, it's all honky dory
-#: ../src/disks/gduatasmartdialog.c:1122
+#: ../src/disks/gduatasmartdialog.c:1078
 msgid "Disk is OK"
 msgstr "El disco está correcto"
 
@@ -1858,40 +1869,40 @@ msgstr "El disco está correcto"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: ../src/disks/gduatasmartdialog.c:1136
+#: ../src/disks/gduatasmartdialog.c:1092
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
 #. Translators: XXX
-#: ../src/disks/gduatasmartdialog.c:1291
+#: ../src/disks/gduatasmartdialog.c:1247
 msgid "Threshold exceeded"
 msgstr "Umbral excedido"
 
 #. Translators: XXX
-#: ../src/disks/gduatasmartdialog.c:1296
+#: ../src/disks/gduatasmartdialog.c:1252
 msgid "Threshold not exceeded"
 msgstr "Umbral no excedido"
 
-#: ../src/disks/gduatasmartdialog.c:1355
+#: ../src/disks/gduatasmartdialog.c:1311
 msgid "Error refreshing SMART data"
 msgstr "Error al actualizar los datos SMART"
 
-#: ../src/disks/gduatasmartdialog.c:1387
+#: ../src/disks/gduatasmartdialog.c:1343
 msgid "Error aborting SMART self-test"
 msgstr "Error al cancelar la autocomprobación SMART"
 
-#: ../src/disks/gduatasmartdialog.c:1406
+#: ../src/disks/gduatasmartdialog.c:1362
 msgid "Error starting SMART self-test"
 msgstr "Error al iniciar la autocomprobación SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1521
+#: ../src/disks/gduatasmartdialog.c:1477
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1533
+#: ../src/disks/gduatasmartdialog.c:1489
 msgid "Attribute"
 msgstr "Atributo"
 
@@ -1918,7 +1929,6 @@ msgstr "%s/s"
 
 #: ../src/disks/gdubenchmarkdialog.c:669 ../src/disks/gdubenchmarkdialog.c:967
 #, c-format
-#| msgid "%d msec"
 msgid "%d sample"
 msgid_plural "%d samples"
 msgstr[0] "%d muestra"
@@ -2077,7 +2087,7 @@ msgstr ""
 "referenciada en el archivo <i>/etc/crypttab</i>"
 
 #: ../src/disks/gduchangepassphrasedialog.c:355
-#: ../src/disks/gducreatefilesystemwidget.c:503
+#: ../src/disks/gducreatefilesystemwidget.c:550
 msgid "The strength of the passphrase"
 msgstr "La fortaleza de la contraseña"
 
@@ -2135,75 +2145,97 @@ msgstr "Error al abrir el archivo para escritura"
 msgid "Copying data from device <i>%s</i>..."
 msgstr "Copiando datos desde el dispositivo <i>%s</i>…"
 
-#: ../src/disks/gducreatefilesystemwidget.c:388
-#: ../src/disks/gduformatdiskdialog.c:130
+#: ../src/disks/gducreatefilesystemwidget.c:392
+#: ../src/disks/gduformatdiskdialog.c:179
 msgid "Compatible with all systems and devices"
 msgstr "Compatible con todos los sistemas y dispositivos"
 
-#: ../src/disks/gducreatefilesystemwidget.c:389
+#: ../src/disks/gducreatefilesystemwidget.c:393
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/disks/gducreatefilesystemwidget.c:394
+#: ../src/disks/gducreatefilesystemwidget.c:398
 msgid "Compatible with most systems"
 msgstr "Compatible con la mayoría de los sistemas"
 
-#: ../src/disks/gducreatefilesystemwidget.c:395
+#: ../src/disks/gducreatefilesystemwidget.c:399
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/disks/gducreatefilesystemwidget.c:400
+#: ../src/disks/gducreatefilesystemwidget.c:404
 msgid "Compatible with Linux systems"
 msgstr "Compatible con sistemas Linux"
 
-#: ../src/disks/gducreatefilesystemwidget.c:401
+#: ../src/disks/gducreatefilesystemwidget.c:405
 msgid "Ext4"
 msgstr "Ext4"
 
-#: ../src/disks/gducreatefilesystemwidget.c:406
+#: ../src/disks/gducreatefilesystemwidget.c:410
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Cifrado, compatible con sistemas Linux"
 
-#: ../src/disks/gducreatefilesystemwidget.c:407
+#: ../src/disks/gducreatefilesystemwidget.c:411
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: ../src/disks/gducreatefilesystemwidget.c:412
+#: ../src/disks/gducreatefilesystemwidget.c:416
 msgid "Custom"
 msgstr "Personalizado"
 
-#: ../src/disks/gducreatefilesystemwidget.c:413
+#: ../src/disks/gducreatefilesystemwidget.c:417
 msgid "Enter filesystem type"
 msgstr "Introduzca el tipo de sistema de archivos"
 
 #. Translators: this is the default name for the filesystem
-#: ../src/disks/gducreatefilesystemwidget.c:456
+#: ../src/disks/gducreatefilesystemwidget.c:460
 msgid "New Volume"
 msgstr "Volumen nuevo"
+
+#: ../src/disks/gducreatefilesystemwidget.c:499
+#: ../src/disks/gduformatdiskdialog.c:131
+msgid "Don't overwrite existing data"
+msgstr "No sobreescribir datos existentes"
+
+#: ../src/disks/gducreatefilesystemwidget.c:500
+#: ../src/disks/gduformatdiskdialog.c:132
+#| msgid "Quit"
+msgid "Quick"
+msgstr "Rápido"
+
+#: ../src/disks/gducreatefilesystemwidget.c:507
+#: ../src/disks/gduformatdiskdialog.c:139
+#| msgid "All existing data will be lost"
+msgid "Overwrite existing data with zeroes"
+msgstr "Sobreescribir los datos existentes con ceros"
+
+#: ../src/disks/gducreatefilesystemwidget.c:508
+#: ../src/disks/gduformatdiskdialog.c:140
+msgid "Slow"
+msgstr "Lento"
 
 #: ../src/disks/gducreatepartitiondialog.c:215
 msgid "Error formatting partition"
 msgstr "Error al formatear la partición"
 
-#: ../src/disks/gducreatepartitiondialog.c:242
+#: ../src/disks/gducreatepartitiondialog.c:243
 msgid "Error creating partition"
 msgstr "Error al crear la partición"
 
-#: ../src/disks/gducreatepartitiondialog.c:326
+#: ../src/disks/gducreatepartitiondialog.c:331
 msgid "Extended partition"
 msgstr "Partición extendida"
 
-#: ../src/disks/gducreatepartitiondialog.c:327
+#: ../src/disks/gducreatepartitiondialog.c:332
 msgid "For logical partitions"
 msgstr "Para particiones lógicas"
 
-#: ../src/disks/gducreatepartitiondialog.c:340
+#: ../src/disks/gducreatepartitiondialog.c:345
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 "No se puede crear una partición nueva. Ya hay cuatro particiones primarias."
 
-#: ../src/disks/gducreatepartitiondialog.c:344
+#: ../src/disks/gducreatepartitiondialog.c:349
 msgid "This is the last primary partition that can be created."
 msgstr "Esta es la última partición primaria que se puede crear."
 
@@ -2239,16 +2271,16 @@ msgstr ""
 "Sólo se cambiará la contraseña referenciada en el archivo <i>/etc/crypttab</"
 "i>. Para cambiar la contraseña del disco, use <i>Cambiar contraseña...</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:410
+#: ../src/disks/gdudevicetreemodel.c:497
 msgid "Disk Drives"
 msgstr "Unidades de disco"
 
-#: ../src/disks/gdudevicetreemodel.c:820
+#: ../src/disks/gdudevicetreemodel.c:907
 msgid "Other Devices"
 msgstr "Otros dispositivos"
 
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/disks/gdudevicetreemodel.c:925
+#: ../src/disks/gdudevicetreemodel.c:1012
 #, c-format
 msgid "%s Loop Device"
 msgstr "Dispositivo «loop» de %s"
@@ -2256,50 +2288,153 @@ msgstr "Dispositivo «loop» de %s"
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
-#: ../src/disks/gdudevicetreemodel.c:946
+#: ../src/disks/gdudevicetreemodel.c:1033
 #, c-format
 msgid "%s Block Device"
 msgstr "Dispositivo de bloques de %s"
+
+#: ../src/disks/gdudisksettingsdialog.c:278
+#| msgid "Never"
+msgctxt "standby-value"
+msgid "Never"
+msgstr "Nunca"
+
+#: ../src/disks/gdudisksettingsdialog.c:294
+msgctxt "standby-value"
+msgid "Vendor-defined"
+msgstr "Definido por el fabricante"
+
+#: ../src/disks/gdudisksettingsdialog.c:298
+#| msgid "_Restore"
+msgctxt "standby-value"
+msgid "Reserved"
+msgstr "Reservado"
+
+#: ../src/disks/gdudisksettingsdialog.c:318
+#| msgctxt "Write Cache"
+#| msgid "Disabled"
+msgctxt "apm-level"
+msgid "255 (Disabled)"
+msgstr "(255) Desactivado"
+
+#: ../src/disks/gdudisksettingsdialog.c:322
+#, c-format
+msgctxt "apm-level"
+msgid "%d (Spin-down permitted)"
+msgstr "%d (reducción de la rotación permitida)"
+
+#: ../src/disks/gdudisksettingsdialog.c:326
+#, c-format
+msgctxt "apm-level"
+msgid "%d (Spin-down not permitted)"
+msgstr "%d (reducción de la rotación no permitida)"
+
+#: ../src/disks/gdudisksettingsdialog.c:341
+#| msgctxt "Write Cache"
+#| msgid "Disabled"
+msgctxt "aam-level"
+msgid "0 (Disabled)"
+msgstr "(0) Desactivado"
+
+#: ../src/disks/gdudisksettingsdialog.c:366
+#| msgid "Error retrieving configuration data"
+msgid "Error setting configuration"
+msgstr "Error al establecer la configuración"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:396
+msgid "Never"
+msgstr "Nunca"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:398
+#| msgid "%d minutes"
+msgid "5 minutes"
+msgstr "5 minutos"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:400
+#| msgid "%d minutes"
+msgid "10 minutes"
+msgstr "10 minutos"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:402
+#| msgid "%d minutes"
+msgid "15 minutes"
+msgstr "15 minutos"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:404
+#| msgid "%d hours"
+msgid "3 hours"
+msgstr "3 horas"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:408
+#| msgid "Save in _folder"
+msgid "Save Power"
+msgstr "Ahorro de energía"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
+#: ../src/disks/gdudisksettingsdialog.c:410
+msgid "← Spindown"
+msgstr "← Reducción de la rotación"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:412
+msgid "Perform Better"
+msgstr "Mejor resultado"
+
+#. Translators: This is a mark on the AAM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:416
+msgid "Quiet (Slow)"
+msgstr "Silencioso (Lento)"
+
+#. Translators: This is a mark on the AAM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:418
+msgid "Loud (Fast)"
+msgstr "Ruidoso (Rápido)"
 
 #: ../src/disks/gdufilesystemdialog.c:74
 msgid "Error setting label"
 msgstr "Error al establecer la etiqueta"
 
-#: ../src/disks/gduformatdiskdialog.c:131
+#: ../src/disks/gduformatdiskdialog.c:180
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: ../src/disks/gduformatdiskdialog.c:138
+#: ../src/disks/gduformatdiskdialog.c:187
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr "Compatible con sistemas modernos y discos duros > 2TB"
 
-#: ../src/disks/gduformatdiskdialog.c:139
+#: ../src/disks/gduformatdiskdialog.c:188
 msgid "GPT"
 msgstr "GPT"
 
-#: ../src/disks/gduformatdiskdialog.c:151
+#: ../src/disks/gduformatdiskdialog.c:200
 msgid "No partitioning"
 msgstr "Sin particionado"
 
-#: ../src/disks/gduformatdiskdialog.c:152
+#: ../src/disks/gduformatdiskdialog.c:201
 msgid "Empty"
 msgstr "Vacío"
 
-#: ../src/disks/gduformatdiskdialog.c:186
+#: ../src/disks/gduformatdiskdialog.c:242
 msgid "Error formatting disk"
 msgstr "Error al formatear el disco"
 
-#: ../src/disks/gduformatdiskdialog.c:231
+#: ../src/disks/gduformatdiskdialog.c:290
 msgid "Are you sure you want to format the disk?"
 msgstr "¿Está seguro de que quiere formatear el disco?"
 
-#: ../src/disks/gduformatdiskdialog.c:232
-#: ../src/disks/gduformatvolumedialog.c:158
+#: ../src/disks/gduformatdiskdialog.c:291
+#: ../src/disks/gduformatvolumedialog.c:160
 msgid "All data on the volume will be lost"
 msgstr "Se perderán todos los datos del disco"
 
-#: ../src/disks/gduformatdiskdialog.c:233
-#: ../src/disks/gduformatvolumedialog.c:159
+#: ../src/disks/gduformatdiskdialog.c:292
+#: ../src/disks/gduformatvolumedialog.c:161
 msgid "_Format"
 msgstr "_Formato"
 
@@ -2307,7 +2442,7 @@ msgstr "_Formato"
 msgid "Error formatting volume"
 msgstr "Error al formatear el volumen"
 
-#: ../src/disks/gduformatvolumedialog.c:157
+#: ../src/disks/gduformatvolumedialog.c:159
 msgid "Are you sure you want to format the volume?"
 msgstr "¿Está seguro de que quiere formatear el volumen?"
 
@@ -2449,37 +2584,127 @@ msgstr "Error al desbloquear el dispositivo cifrado"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Se obtuvo la contraseña de cifrado del depósito de claves"
 
-#: ../src/disks/gduutils.c:109
+#. Translators: Used for number of seconds
+#: ../src/disks/gduutils.c:111 ../src/disks/gduutils.c:463
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
-#: ../src/disks/gduutils.c:116
+#: ../src/disks/gduutils.c:118
 msgid "Less than a minute"
 msgstr "Menos de un minuto"
 
-#: ../src/disks/gduutils.c:122
+#. Translators: Used for number of minutes
+#: ../src/disks/gduutils.c:124 ../src/disks/gduutils.c:456
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
-#: ../src/disks/gduutils.c:130
+#. Translators: Used for number of hours
+#: ../src/disks/gduutils.c:132 ../src/disks/gduutils.c:449
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d hora"
 msgstr[1] "%d horas"
 
-#: ../src/disks/gduutils.c:138
+#. Translators: Used for number of days
+#: ../src/disks/gduutils.c:140 ../src/disks/gduutils.c:442
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d día"
 msgstr[1] "%d días"
+
+#. Translators: Used for number of years
+#: ../src/disks/gduutils.c:428
+#, c-format
+#| msgid "%.1f year"
+#| msgid_plural "%.1f years"
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d año"
+msgstr[1] "%d años"
+
+#. Translators: Used for number of months
+#: ../src/disks/gduutils.c:435
+#, c-format
+#| msgid "%d minute"
+#| msgid_plural "%d minutes"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d mes"
+msgstr[1] "%d meses"
+
+#. Translators: Used for number of milli-seconds
+#: ../src/disks/gduutils.c:470
+#, c-format
+#| msgid "%d second"
+#| msgid_plural "%d seconds"
+msgid "%d milli-second"
+msgid_plural "%d milli-seconds"
+msgstr[0] "%d milisegundo"
+msgstr[1] "%d milisegundos"
+
+#. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
+#: ../src/disks/gduutils.c:533
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-year-to-inf"
+msgid "%s, %s and %s"
+msgstr "%s, %s y %s"
+
+#. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
+#: ../src/disks/gduutils.c:538
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-months-to-year"
+msgid "%s and %s"
+msgstr "%s y %s"
+
+#. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
+#: ../src/disks/gduutils.c:543
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-day-to-month"
+msgid "%s and %s"
+msgstr "%s y %s"
+
+#. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
+#: ../src/disks/gduutils.c:548
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-hour-to-day"
+msgid "%s and %s"
+msgstr "%s y %s"
+
+#. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
+#: ../src/disks/gduutils.c:553
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-minute-to-hour"
+msgid "%s and %s"
+msgstr "%s y %s"
+
+#. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
+#: ../src/disks/gduutils.c:558
+#, c-format
+#| msgid "%"
+msgctxt "duration-second-to-minute"
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Used for durations less than one second. First %s is number of milli-seconds
+#: ../src/disks/gduutils.c:563
+#, c-format
+#| msgid "%"
+msgctxt "duration-zero-to-second"
+msgid "%s"
+msgstr "%s"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
@@ -2523,28 +2748,28 @@ msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Intercambio"
 
-#: ../src/disks/gduwindow.c:555
+#: ../src/disks/gduwindow.c:604
 msgid "Error deleting loop device"
 msgstr "Error al eliminar el dispositivo «loop»"
 
-#: ../src/disks/gduwindow.c:626 ../src/disks/gduwindow.c:698
+#: ../src/disks/gduwindow.c:675 ../src/disks/gduwindow.c:747
 msgid "Error attaching disk image"
 msgstr "Error al acoplar la imagen de disco"
 
-#: ../src/disks/gduwindow.c:666
+#: ../src/disks/gduwindow.c:715
 msgid "Select Disk Image to Attach"
 msgstr "Seleccionar la imagen de disco que acoplar"
 
-#: ../src/disks/gduwindow.c:670
+#: ../src/disks/gduwindow.c:719
 msgid "_Attach"
 msgstr "_Acoplar"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:676
+#: ../src/disks/gduwindow.c:725
 msgid "Set up _read-only loop device"
 msgstr "Establecer el dispositivo «loop» como solo lectura"
 
-#: ../src/disks/gduwindow.c:677
+#: ../src/disks/gduwindow.c:726
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
@@ -2553,7 +2778,7 @@ msgstr ""
 "no quiere que se modifique el archivo subyacente"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1574
+#: ../src/disks/gduwindow.c:1667
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Sólo lectura)</span>"
@@ -2561,27 +2786,27 @@ msgstr "%s <span size=\"smaller\">(Sólo lectura)</span>"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:1716
+#: ../src/disks/gduwindow.c:1816
 msgid "Connected to another seat"
 msgstr "Conectado a otra ubicación"
 
-#: ../src/disks/gduwindow.c:1935
+#: ../src/disks/gduwindow.c:2107
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconocido"
 
-#: ../src/disks/gduwindow.c:1968
+#: ../src/disks/gduwindow.c:2140
 msgid "Extended Partition"
 msgstr "Partición extendida"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2009
+#: ../src/disks/gduwindow.c:2181
 msgid "Filesystem Root"
 msgstr "Raíz del sistema de archivos"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2017
+#: ../src/disks/gduwindow.c:2189
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Sí, montado en %s"
@@ -2589,73 +2814,111 @@ msgstr "Sí, montado en %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2023 ../src/disks/gduwindow.c:2059
-#: ../src/disks/gduwindow.c:2085
+#: ../src/disks/gduwindow.c:2195 ../src/disks/gduwindow.c:2231
+#: ../src/disks/gduwindow.c:2257
 msgid "No"
 msgstr "No"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2053 ../src/disks/gduwindow.c:2079
+#: ../src/disks/gduwindow.c:2225 ../src/disks/gduwindow.c:2251
 msgid "Yes"
 msgstr "Sí"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/disks/gduwindow.c:2165
+#: ../src/disks/gduwindow.c:2377
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Espacio sin usar (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/disks/gduwindow.c:2170
+#: ../src/disks/gduwindow.c:2382
 msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
-#: ../src/disks/gduwindow.c:2554
+#: ../src/disks/gduwindow.c:2749
+msgid "An error occurred when trying to put the drive into standby mode"
+msgstr "Ocurrió un error al intentar poner la unidad en reposo"
+
+#: ../src/disks/gduwindow.c:2795
+msgid "An error occurred when trying to wake up the drive from standby mode"
+msgstr "Ocurrió un error al intentar que la unidad saliera del reposo"
+
+#: ../src/disks/gduwindow.c:2870
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: ../src/disks/gduwindow.c:2594
+#: ../src/disks/gduwindow.c:2910
 msgid "Error unmounting filesystem"
 msgstr "Error al desmontar el sistema de archivos"
 
-#: ../src/disks/gduwindow.c:2673
+#: ../src/disks/gduwindow.c:2991
 msgid "Error deleting partition"
 msgstr "Error al eliminar la partición"
 
-#: ../src/disks/gduwindow.c:2689
+#: ../src/disks/gduwindow.c:3007
 msgid "Are you sure you want to delete the partition?"
 msgstr "¿Está seguro de que quiere eliminar la partición?"
 
-#: ../src/disks/gduwindow.c:2690
+#: ../src/disks/gduwindow.c:3008
 msgid "All data on the partition will be lost"
 msgstr "Se perderán todos los datos de la partición"
 
-#: ../src/disks/gduwindow.c:2691
+#: ../src/disks/gduwindow.c:3009
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: ../src/disks/gduwindow.c:2722
+#: ../src/disks/gduwindow.c:3040
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: ../src/disks/gduwindow.c:2774
+#: ../src/disks/gduwindow.c:3092
 msgid "Error locking encrypted device"
 msgstr "Error al bloquear el dispositivo cifrado"
 
-#: ../src/disks/gduwindow.c:2815
+#: ../src/disks/gduwindow.c:3133
 msgid "Error starting swap"
 msgstr "Error al iniciar el intercambio"
 
-#: ../src/disks/gduwindow.c:2852
+#: ../src/disks/gduwindow.c:3170
 msgid "Error stopping swap"
 msgstr "Error al detener el intercambio"
 
-#: ../src/disks/gduwindow.c:2894
+#: ../src/disks/gduwindow.c:3212
 msgid "Error setting autoclear flag"
 msgstr "Error al establecer la opción de limpieza automática"
+
+#: ../src/disks/gduwindow.c:3265 ../src/disks/gduwindow.c:3321
+#| msgid "Error launching Brasero"
+msgid "Error canceling job"
+msgstr "Error al cancelar el trabajo"
+
+#~ msgid "%.1f day"
+#~ msgid_plural "%.1f days"
+#~ msgstr[0] "%.1f día"
+#~ msgstr[1] "%.1f días"
+
+#~ msgid "%.1f hour"
+#~ msgid_plural "%.1f hours"
+#~ msgstr[0] "%.1f hora"
+#~ msgstr[1] "%.1f horas"
+
+#~ msgid "%.1f minute"
+#~ msgid_plural "%.1f minutes"
+#~ msgstr[0] "%.1f minuto"
+#~ msgstr[1] "%.1f minutos"
+
+#~ msgid "%.1f second"
+#~ msgid_plural "%.1f seconds"
+#~ msgstr[0] "%.1f segundo"
+#~ msgstr[1] "%.1f segundos"
+
+#~ msgid "%.1f msec"
+#~ msgid_plural "%.1f msecs"
+#~ msgstr[0] "%.1f milisegundo"
+#~ msgstr[1] "%.1f segundos"
 
 #~ msgid "Updates"
 #~ msgstr "Actualizaciones"
@@ -2743,12 +3006,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 
 #~ msgid "%d seconds"
 #~ msgstr "%d segundos"
-
-#~ msgid "%d minutes"
-#~ msgstr "%d minutos"
-
-#~ msgid "%d hours"
-#~ msgstr "%d horas"
 
 #~ msgid "Disk Size"
 #~ msgstr "Tamaño del disco"
@@ -2880,8 +3137,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid ""
 #~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
-#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID «%"
-#~ "s» (%s)"
+#~ "Seleccionar un disco para crear el repuesto %s para el conjunto RAID "
+#~ "«%s» (%s)"
 
 #~ msgid "Expand %s"
 #~ msgstr "Expandir %s"
@@ -3131,9 +3388,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "The pool of devices"
 #~ msgstr "El conjunto de dispositivos"
 
-#~ msgid "RAID Level"
-#~ msgstr "Nivel de RAID"
-
 #~ msgid "The selected RAID level"
 #~ msgstr "El nivel de RAID seleccionado"
 
@@ -3363,9 +3617,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Measure read rate, write rate and access time"
 #~ msgstr ""
 #~ "Medir la tasa de lectura, la tasa de escritura y el tiempo de acceso"
-
-#~ msgid "Never"
-#~ msgstr "Nunca"
 
 #~ msgid "Cancels the currently running benchmark"
 #~ msgstr "Cancela la prueba de rendimiento actual en ejecución"
@@ -3986,7 +4237,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 
 #~ msgid "Unable to parse command-line `%s' (Malformed address?): %s"
 #~ msgstr ""
-#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): %s"
+#~ "No se pudo analizar la línea de comandos «%s» (¿dirección mal formada?): "
+#~ "%s"
 
 #~ msgid "Unable to spawn ssh program: %s"
 #~ msgstr "No se pudo iniciar el programa de SSH: %s"
@@ -4606,9 +4858,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Unknown"
 #~ msgstr "Desconocidas"
 
-#~ msgid "%s at %s"
-#~ msgstr "%s en %s"
-
 #~ msgctxt "RAID level"
 #~ msgid "Stripe (RAID-0)"
 #~ msgstr "Dividido (RAID-0)"
@@ -4949,10 +5198,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "Enabled"
 #~ msgstr "Activado"
 
-#~ msgctxt "Write Cache"
-#~ msgid "Disabled"
-#~ msgstr "Desactivado"
-
 #~ msgctxt "Rotation Rate"
 #~ msgid "%d RPM"
 #~ msgstr "%d RPM"
@@ -4960,9 +5205,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgctxt "Rotation Rate"
 #~ msgid "Solid-State Disk"
 #~ msgstr "Disco de estado sólido"
-
-#~ msgid "Error launching Brasero"
-#~ msgstr "Error al lanzar Brasero"
 
 #~ msgid "The application is not installed"
 #~ msgstr "Esta aplicación no está instalada"
@@ -5491,9 +5733,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgid "_Help"
 #~ msgstr "Ay_uda"
 
-#~ msgid "Quit"
-#~ msgstr "Salir"
-
 #~ msgid "Get Help on Disk Utility"
 #~ msgstr "Obtener ayuda acerca de la Utilidad de discos"
 
@@ -5916,8 +6155,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de «%"
-#~ "s».\n"
+#~ "Se borrarán de forma irrevocable todos los datos en la partición %d de "
+#~ "«%s».\n"
 #~ "\n"
 #~ "Asegúrese de respaldar los datos importantes. Esta acción no se puede "
 #~ "deshacer."
@@ -6023,7 +6262,8 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ msgstr "Dispositivo LUKS en texto"
 
 #~ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-#~ msgstr "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
+#~ msgstr ""
+#~ "¿Está seguro de que quiere iniciar la unidad «%s» en modo degradado?"
 
 #~ msgid ""
 #~ "Starting a RAID array in degraded mode means that the RAID volume is no "
@@ -6033,9 +6273,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 #~ "Iniciar el conjunto RAID en un modo degradado significa que el volumen "
 #~ "RAID no es tolerante a fallos de las unidades. Los datos en el volumen se "
 #~ "pueden perder de forma irrevocable si una unidad falla."
-
-#~ msgid "_Erase"
-#~ msgstr "_Borrar"
 
 #~ msgid "Palimpsest Disk Utility"
 #~ msgstr "Herramienta de discos Palimpsest"
@@ -6100,9 +6337,6 @@ msgstr "Error al establecer la opción de limpieza automática"
 
 #~ msgid "The pool of devices to show"
 #~ msgstr "El conjunto de dispositivos que mostrar"
-
-#~ msgid "%"
-#~ msgstr "%"
 
 #~ msgid "One or more attributes exceeding threshold."
 #~ msgstr "Uno o más atributos exceden el umbral."

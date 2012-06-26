@@ -50,30 +50,30 @@ typedef struct
 
   GVariant *orig_drive_configuration;
 
-  /* Power Management page */
-  GtkWidget *pm_page;
-  GtkWidget *pm_apply_settings_switch;
-  GtkWidget *pm_settings_box;
-
+  /* Standby */
   GtkWidget *standby_box;
-  GtkAdjustment *standby_adjustment;
+  GtkWidget *standby_switch;
+  GtkWidget *standby_widgets_box;
+  GtkWidget *standby_value_label;
   GtkWidget *standby_scale;
-  GtkWidget *standby_disable_checkbutton;
+  GtkAdjustment *standby_adjustment;
 
+  /* APM */
   GtkWidget *apm_box;
-  GtkAdjustment *apm_adjustment;
+  GtkWidget *apm_switch;
+  GtkWidget *apm_widgets_box;
+  GtkWidget *apm_value_label;
   GtkWidget *apm_scale;
-  GtkWidget *apm_disable_checkbutton;
+  GtkAdjustment *apm_adjustment;
 
-  /* Acoustic page */
-  GtkWidget *acoustic_page;
-  GtkWidget *acoustic_apply_settings_switch;
-  GtkWidget *acoustic_settings_box;
-
+  /* AAM */
   GtkWidget *aam_box;
-  GtkAdjustment *aam_adjustment;
+  GtkWidget *aam_switch;
+  GtkWidget *aam_widgets_box;
+  GtkWidget *aam_value_label;
   GtkWidget *aam_scale;
-  GtkWidget *aam_disable_checkbutton;
+  GtkAdjustment *aam_adjustment;
+
 } DialogData;
 
 G_LOCK_DEFINE (bm_lock);
@@ -82,34 +82,39 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
-  /* Power Management page */
-  {G_STRUCT_OFFSET (DialogData, pm_page), "power-management-page"},
-  {G_STRUCT_OFFSET (DialogData, pm_apply_settings_switch), "pm-apply-settings-switch"},
-  {G_STRUCT_OFFSET (DialogData, pm_settings_box), "pm-settings-box"},
+  /* Standby */
   {G_STRUCT_OFFSET (DialogData, standby_box), "standby-box"},
-  {G_STRUCT_OFFSET (DialogData, standby_adjustment), "standby-adjustment"},
+  {G_STRUCT_OFFSET (DialogData, standby_switch), "standby-switch"},
+  {G_STRUCT_OFFSET (DialogData, standby_widgets_box), "standby-widgets-box"},
+  {G_STRUCT_OFFSET (DialogData, standby_value_label), "standby-value-label"},
   {G_STRUCT_OFFSET (DialogData, standby_scale), "standby-scale"},
-  {G_STRUCT_OFFSET (DialogData, standby_disable_checkbutton), "standby-disable-checkbutton"},
-  {G_STRUCT_OFFSET (DialogData, apm_box), "apm-box"},
-  {G_STRUCT_OFFSET (DialogData, apm_adjustment), "apm-adjustment"},
-  {G_STRUCT_OFFSET (DialogData, apm_scale), "apm-scale"},
-  {G_STRUCT_OFFSET (DialogData, apm_disable_checkbutton), "apm-disable-checkbutton"},
+  {G_STRUCT_OFFSET (DialogData, standby_adjustment), "standby-adjustment"},
 
-  /* Acoustic page */
-  {G_STRUCT_OFFSET (DialogData, acoustic_page), "acoustic-page"},
-  {G_STRUCT_OFFSET (DialogData, acoustic_apply_settings_switch), "acoustic-apply-settings-switch"},
-  {G_STRUCT_OFFSET (DialogData, acoustic_settings_box), "acoustic-settings-box"},
+  /* APM */
+  {G_STRUCT_OFFSET (DialogData, apm_box), "apm-box"},
+  {G_STRUCT_OFFSET (DialogData, apm_switch), "apm-switch"},
+  {G_STRUCT_OFFSET (DialogData, apm_widgets_box), "apm-widgets-box"},
+  {G_STRUCT_OFFSET (DialogData, apm_value_label), "apm-value-label"},
+  {G_STRUCT_OFFSET (DialogData, apm_scale), "apm-scale"},
+  {G_STRUCT_OFFSET (DialogData, apm_adjustment), "apm-adjustment"},
+
+  /* AAM */
   {G_STRUCT_OFFSET (DialogData, aam_box), "aam-box"},
-  {G_STRUCT_OFFSET (DialogData, aam_adjustment), "aam-adjustment"},
+  {G_STRUCT_OFFSET (DialogData, aam_switch), "aam-switch"},
+  {G_STRUCT_OFFSET (DialogData, aam_widgets_box), "aam-widgets-box"},
+  {G_STRUCT_OFFSET (DialogData, aam_value_label), "aam-value-label"},
   {G_STRUCT_OFFSET (DialogData, aam_scale), "aam-scale"},
-  {G_STRUCT_OFFSET (DialogData, aam_disable_checkbutton), "aam-disable-checkbutton"},
+  {G_STRUCT_OFFSET (DialogData, aam_adjustment), "aam-adjustment"},
 
   {0, NULL}
 };
 
 static void update_dialog (DialogData *data);
+static void update_standby_label (DialogData *data);
+static void update_apm_label (DialogData *data);
+static void update_aam_label (DialogData *data);
 
-static void disable_unused_pages (DialogData *data);
+static void disable_unused_widgets (DialogData *data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -179,34 +184,36 @@ compute_configuration (DialogData *data)
         }
     }
 
-  /* Power Management page */
-  if (gtk_switch_get_active (GTK_SWITCH (data->pm_apply_settings_switch)))
+  /* Standby */
+  if (gtk_switch_get_active (GTK_SWITCH (data->standby_switch)))
     {
-      gint ata_pm_standby = 0;
-      gint ata_apm_level = 255;
-
-      if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->standby_disable_checkbutton)))
-        ata_pm_standby = (gint) gtk_adjustment_get_value (data->standby_adjustment);
-
-      if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->apm_disable_checkbutton)))
-        ata_apm_level = (gint) gtk_adjustment_get_value (data->apm_adjustment);
-
       if (udisks_drive_ata_get_pm_supported (data->ata))
-        g_variant_builder_add (&builder, "{sv}", "ata-pm-standby", g_variant_new_int32 (ata_pm_standby));
-      if (udisks_drive_ata_get_apm_supported (data->ata))
-        g_variant_builder_add (&builder, "{sv}", "ata-apm-level", g_variant_new_int32 (ata_apm_level));
+        {
+          gint value = (gint) gtk_adjustment_get_value (data->standby_adjustment);
+          g_variant_builder_add (&builder, "{sv}", "ata-pm-standby", g_variant_new_int32 (value));
+        }
     }
 
-  /* Acoustic page */
-  if (gtk_switch_get_active (GTK_SWITCH (data->acoustic_apply_settings_switch)))
+  /* APM */
+  if (gtk_switch_get_active (GTK_SWITCH (data->apm_switch)))
     {
-      gint ata_aam_level = 0;
+      if (udisks_drive_ata_get_pm_supported (data->ata))
+        {
+          gint value = (gint) gtk_adjustment_get_value (data->apm_adjustment);
+          g_variant_builder_add (&builder, "{sv}", "ata-apm-level", g_variant_new_int32 (value));
+        }
+    }
 
-      if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->aam_disable_checkbutton)))
-        ata_aam_level = (gint) gtk_adjustment_get_value (data->aam_adjustment);
-
-      if (udisks_drive_ata_get_aam_supported (data->ata))
-        g_variant_builder_add (&builder, "{sv}", "ata-aam-level", g_variant_new_int32 (ata_aam_level));
+  /* AAM */
+  if (gtk_switch_get_active (GTK_SWITCH (data->aam_switch)))
+    {
+      if (udisks_drive_ata_get_pm_supported (data->ata))
+        {
+          gint value = (gint) gtk_adjustment_get_value (data->aam_adjustment);
+          if (value < 128)
+            value = 0;
+          g_variant_builder_add (&builder, "{sv}", "ata-aam-level", g_variant_new_int32 (value));
+        }
     }
 
   return g_variant_builder_end (&builder);
@@ -240,6 +247,12 @@ update_dialog (DialogData *data)
     changed = TRUE;
   g_variant_unref (new_drive_configuration);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, changed);
+
+  /* update labels */
+
+  update_standby_label (data);
+  update_apm_label (data);
+  update_aam_label (data);
 }
 
 static void
@@ -253,94 +266,86 @@ on_property_changed (GObject     *object,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gchar *
-on_apm_scale_format_value (GtkScale *scale,
-                           gdouble   value,
-                           gpointer  user_data)
+static void
+update_standby_label (DialogData *data)
 {
-  DialogData *data = user_data;
-  gchar *ret = NULL;
+  gint value;
+  gchar *s = NULL;
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->apm_disable_checkbutton)))
+  value = gtk_adjustment_get_value (data->standby_adjustment);
+  if (value == 0)
     {
-      ret = g_strdup (C_("apm-level", "Disabled"));
-    }
-  else if (value <= 127)
-    {
-      ret = g_strdup_printf (C_("apm-level", "%d (Spin-down permitted)"), (gint) value);
-    }
-  else
-    {
-      ret = g_strdup_printf (C_("apm-level", "%d (Spin-down not permitted)"), (gint) value);
-    }
-
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static gchar *
-on_aam_scale_format_value (GtkScale *scale,
-                           gdouble   value,
-                           gpointer  user_data)
-{
-  DialogData *data = user_data;
-  gchar *ret = NULL;
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->aam_disable_checkbutton)))
-    {
-      ret = g_strdup (C_("aam-level", "Disabled"));
-    }
-  else
-    {
-      ret = g_strdup_printf ("%d", (gint) value);
-    }
-
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static gchar *
-on_standby_scale_format_value (GtkScale *scale,
-                               gdouble   value,
-                               gpointer  user_data)
-{
-  DialogData *data = user_data;
-  gchar *ret = NULL;
-
-  value = floor (value);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->standby_disable_checkbutton)))
-    {
-      ret = g_strdup (C_("standby-value", "Disabled"));
+      s = g_strdup (C_("standby-value", "Never"));
     }
   else if (value < 241)
     {
-      ret = gdu_utils_format_duration_msec (value * 5 * 1000);
+      s = gdu_utils_format_duration_msec (value * 5 * 1000);
     }
   else if (value < 252)
     {
-      ret = gdu_utils_format_duration_msec ((value - 240) * 30 * 60 * 1000);
+      s = gdu_utils_format_duration_msec ((value - 240) * 30 * 60 * 1000);
     }
   else if (value == 252)
     {
-      ret = gdu_utils_format_duration_msec (21 * 60 * 1000);
+      s = gdu_utils_format_duration_msec (21 * 60 * 1000);
     }
   else if (value == 253)
     {
-      ret = g_strdup (C_("standby-value", "Vendor-defined"));
+      s = g_strdup (C_("standby-value", "Vendor-defined"));
     }
   else if (value == 254)
     {
-      ret = g_strdup (C_("standby-value", "Reserved"));
+      s = g_strdup (C_("standby-value", "Reserved"));
     }
   else if (value == 255)
     {
-      ret = gdu_utils_format_duration_msec ((21 * 60 + 15) * 1000);
+      s = gdu_utils_format_duration_msec ((21 * 60 + 15) * 1000);
     }
+  gtk_label_set_text (GTK_LABEL (data->standby_value_label), s);
+  g_free (s);
+}
 
-  return ret;
+
+static void
+update_apm_label (DialogData *data)
+{
+  gint value;
+  gchar *s = NULL;
+
+  value = gtk_adjustment_get_value (data->apm_adjustment);
+  if (value == 255)
+    {
+      s = g_strdup (C_("apm-level", "255 (Disabled)"));
+    }
+  else if (value <= 127)
+    {
+      s = g_strdup_printf (C_("apm-level", "%d (Spin-down permitted)"), value);
+    }
+  else
+    {
+      s = g_strdup_printf (C_("apm-level", "%d (Spin-down not permitted)"), value);
+    }
+  gtk_label_set_text (GTK_LABEL (data->apm_value_label), s);
+  g_free (s);
+}
+
+static void
+update_aam_label (DialogData *data)
+{
+  gint value;
+  gchar *s = NULL;
+
+  value = gtk_adjustment_get_value (data->aam_adjustment);
+  if (value == 127)
+    {
+      s = g_strdup (C_("aam-level", "0 (Disabled)"));
+    }
+  else
+    {
+      s = g_strdup_printf ("%d", value);
+    }
+  gtk_label_set_text (GTK_LABEL (data->aam_value_label), s);
+  g_free (s);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -388,7 +393,7 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
   guint n;
   Mark standby_marks[5] = {
     /* Translators: This is a mark on the Standby scale. The string should be as short as possible */
-    { 12.0, N_("1 minute")},
+    { 0.0, N_("Never")},
     /* Translators: This is a mark on the Standby scale. The string should be as short as possible */
     { 60.0, N_("5 minutes")},
     /* Translators: This is a mark on the Standby scale. The string should be as short as possible */
@@ -400,17 +405,17 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
   };
   Mark apm_marks[3] = {
     /* Translators: This is a mark on the APM scale. The string should be as short as possible */
-    {  1.0, N_("Power Savings")},
+    {  1.0, N_("Save Power")},
     /* Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead. */
     {127.0, N_("← Spindown")},
     /* Translators: This is a mark on the APM scale. The string should be as short as possible */
-    {254.0, N_("Performance")}
+    {254.0, N_("Perform Better")},
   };
   Mark aam_marks[2] = {
     /* Translators: This is a mark on the AAM scale. The string should be as short as possible */
-    {128.0, N_("Quiet")},
+    {128.0, N_("Quiet (Slow)")},
     /* Translators: This is a mark on the AAM scale. The string should be as short as possible */
-    {254.0, N_("Loud")}
+    {254.0, N_("Loud (Fast)")}
   };
 
   data = g_new0 (DialogData, 1);
@@ -454,119 +459,98 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
       g_free (s);
     }
 
+#if 0
   g_signal_connect (data->standby_scale, "format-value", G_CALLBACK (on_standby_scale_format_value), data);
   g_signal_connect (data->apm_scale, "format-value", G_CALLBACK (on_apm_scale_format_value), data);
   g_signal_connect (data->aam_scale, "format-value", G_CALLBACK (on_aam_scale_format_value), data);
+#endif
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 
-  disable_unused_pages (data);
+  disable_unused_widgets (data);
 
   /* initialize dialog with values from current configuration */
   if (data->orig_drive_configuration != NULL)
     {
-      gint ata_pm_standby = -1;
-      gint ata_apm_level = -1;
-      gint ata_aam_level = -1;
+      gint standby_value = -1;
+      gint apm_value = -1;
+      gint aam_value = -1;
 
       /* Power Management page */
-      g_variant_lookup (data->orig_drive_configuration, "ata-pm-standby", "i", &ata_pm_standby);
-      g_variant_lookup (data->orig_drive_configuration, "ata-apm-level", "i", &ata_apm_level);
-      if (ata_pm_standby == -1 && ata_apm_level == -1)
+      g_variant_lookup (data->orig_drive_configuration, "ata-pm-standby", "i", &standby_value);
+      g_variant_lookup (data->orig_drive_configuration, "ata-apm-level", "i", &apm_value);
+      g_variant_lookup (data->orig_drive_configuration, "ata-aam-level", "i", &aam_value);
+
+      /* Standby (default to 10 minutes -> 120) */
+      if (standby_value == -1)
         {
-          /* No settings at all, set Switch to OFF and chose some good defaults */
-          gtk_switch_set_active (GTK_SWITCH (data->pm_apply_settings_switch), FALSE);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->standby_disable_checkbutton), FALSE);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->apm_disable_checkbutton), FALSE);
-          gtk_adjustment_set_value (data->standby_adjustment, 180);
+          gtk_switch_set_active (GTK_SWITCH (data->standby_switch), FALSE);
+          gtk_adjustment_set_value (data->standby_adjustment, 120);
+        }
+      else
+        {
+          gtk_adjustment_set_value (data->standby_adjustment, standby_value);
+          gtk_switch_set_active (GTK_SWITCH (data->standby_switch), TRUE);
+        }
+
+      /* APM (default to 127) */
+      if (apm_value == -1)
+        {
+          gtk_switch_set_active (GTK_SWITCH (data->apm_switch), FALSE);
           gtk_adjustment_set_value (data->apm_adjustment, 127);
         }
       else
         {
-          /* Set "Disable" buttons as appropriate and set slider values to something reasonable */
-          if (ata_pm_standby == 0 || ata_pm_standby == -1)
-            {
-              ata_pm_standby = 180;
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->standby_disable_checkbutton), TRUE);
-            }
-          if (ata_apm_level == 255 || ata_apm_level == -1)
-            {
-              ata_apm_level = 127;
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->apm_disable_checkbutton), TRUE);
-            }
-          gtk_adjustment_set_value (data->standby_adjustment, ata_pm_standby);
-          gtk_adjustment_set_value (data->apm_adjustment, ata_apm_level);
-          gtk_switch_set_active (GTK_SWITCH (data->pm_apply_settings_switch), TRUE);
+          gtk_adjustment_set_value (data->apm_adjustment, apm_value);
+          gtk_switch_set_active (GTK_SWITCH (data->apm_switch), TRUE);
         }
 
-      /* Acoustic page */
-      g_variant_lookup (data->orig_drive_configuration, "ata-aam-level", "i", &ata_aam_level);
-      if (ata_aam_level == -1)
+      /* AAM (default to 128) */
+      if (aam_value == -1)
         {
-          /* No settings at all, set Switch to OFF and chose some good defaults */
-          gtk_switch_set_active (GTK_SWITCH (data->acoustic_apply_settings_switch), FALSE);
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->aam_disable_checkbutton), FALSE);
+          gtk_switch_set_active (GTK_SWITCH (data->aam_switch), FALSE);
           gtk_adjustment_set_value (data->aam_adjustment, 128);
         }
       else
         {
-          /* Set "Disable" buttons as appropriate and set slider values to something reasonable */
-          if (ata_aam_level == 0 || ata_aam_level == -1)
-            {
-              ata_aam_level = 128;
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->aam_disable_checkbutton), TRUE);
-            }
-          gtk_adjustment_set_value (data->aam_adjustment, ata_aam_level);
-          gtk_switch_set_active (GTK_SWITCH (data->acoustic_apply_settings_switch), TRUE);
+          if (aam_value < 128)
+            aam_value = 127;
+          gtk_adjustment_set_value (data->aam_adjustment, aam_value);
+          gtk_switch_set_active (GTK_SWITCH (data->aam_switch), TRUE);
         }
     }
 
-  g_signal_connect (data->pm_apply_settings_switch,
+  g_signal_connect (data->standby_switch,
                     "notify::active", G_CALLBACK (on_property_changed), data);
-  g_signal_connect (data->acoustic_apply_settings_switch,
+  g_signal_connect (data->apm_switch,
                     "notify::active", G_CALLBACK (on_property_changed), data);
+  g_signal_connect (data->aam_switch,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
+
   g_signal_connect (data->standby_adjustment,
                     "notify::value", G_CALLBACK (on_property_changed), data);
-  g_signal_connect (data->standby_disable_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->apm_adjustment,
                     "notify::value", G_CALLBACK (on_property_changed), data);
-  g_signal_connect (data->apm_disable_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->aam_adjustment,
                     "notify::value", G_CALLBACK (on_property_changed), data);
-  g_signal_connect (data->aam_disable_checkbutton,
-                    "notify::active", G_CALLBACK (on_property_changed), data);
 
-  g_object_bind_property (data->pm_apply_settings_switch,
+  g_object_bind_property (data->standby_switch,
                           "active",
-                          data->pm_settings_box,
+                          data->standby_widgets_box,
                           "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  g_object_bind_property (data->acoustic_apply_settings_switch,
+  g_object_bind_property (data->apm_switch,
                           "active",
-                          data->acoustic_settings_box,
+                          data->apm_widgets_box,
                           "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  g_object_bind_property (data->standby_disable_checkbutton,
+  g_object_bind_property (data->aam_switch,
                           "active",
-                          data->standby_scale,
+                          data->aam_widgets_box,
                           "sensitive",
-                          G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
-
-  g_object_bind_property (data->apm_disable_checkbutton,
-                          "active",
-                          data->apm_scale,
-                          "sensitive",
-                          G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
-
-  g_object_bind_property (data->aam_disable_checkbutton,
-                          "active",
-                          data->aam_scale,
-                          "sensitive",
-                          G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
+                          G_BINDING_SYNC_CREATE);
 
   update_dialog (data);
 
@@ -605,24 +589,18 @@ hide_forever (GtkWidget *widget)
 }
 
 static void
-disable_unused_pages (DialogData *data)
+disable_unused_widgets (DialogData *data)
 {
-  /* Disable pages (and parts of pages) not relevant for a drive - see also gdu_disk_settings_dialog_should_show() */
+  /* Disable widgets not relevant for a drive - see also gdu_disk_settings_dialog_should_show() */
 
-  if (!(udisks_drive_ata_get_pm_supported (data->ata) || udisks_drive_ata_get_apm_supported (data->ata)))
-    {
-      hide_forever (data->pm_page);
-    }
-  else
-    {
-      if (!udisks_drive_ata_get_pm_supported (data->ata))
-        hide_forever (data->standby_box);
-      if (!udisks_drive_ata_get_apm_supported (data->ata))
-        hide_forever (data->apm_box);
-    }
+  if (!udisks_drive_ata_get_pm_supported (data->ata))
+    hide_forever (data->standby_box);
+
+  if (!udisks_drive_ata_get_apm_supported (data->ata))
+    hide_forever (data->apm_box);
 
   if (!udisks_drive_ata_get_aam_supported (data->ata))
-    hide_forever (data->acoustic_page);
+    hide_forever (data->aam_box);
 }
 
 gboolean
@@ -634,7 +612,7 @@ gdu_disk_settings_dialog_should_show (UDisksObject *object)
 
   g_return_val_if_fail (UDISKS_IS_OBJECT (object), FALSE);
 
-  /* see also disabled_unused_pages() above */
+  /* see also disabled_unused_widgets() above */
 
   drive = udisks_object_peek_drive (object);
   if (drive == NULL)

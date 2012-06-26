@@ -1674,6 +1674,39 @@ get_device_file_for_display (UDisksBlock *block)
   return ret;
 }
 
+static gchar *
+get_job_cancel_label (GduWindow *window,
+                      UDisksJob *job)
+{
+  gchar *s;
+  gint64 expected_end_time_usec;
+  const gchar *cancel_str;
+
+  cancel_str = C_("job-cancel", "Cancel");
+
+  expected_end_time_usec = udisks_job_get_expected_end_time (job);
+  if (expected_end_time_usec > 0)
+    {
+      gint64 usec_left;
+      gchar *s2, *s3;
+
+      usec_left = expected_end_time_usec - g_get_real_time ();
+      s2 = gdu_utils_duration_to_string (usec_left / G_USEC_PER_SEC, FALSE);
+      s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
+      s = g_strdup_printf ("— %s — <a href='app://cancel'>%s</a>",
+                           s3,
+                           cancel_str);
+      g_free (s2);
+    }
+  else
+    {
+      s = g_strdup_printf ("— <a href='app://cancel'>%s</a>", cancel_str);
+    }
+
+  return s;
+}
+
+
 static void
 update_device_page_for_drive (GduWindow      *window,
                               UDisksObject   *object,
@@ -1904,7 +1937,7 @@ update_device_page_for_drive (GduWindow      *window,
   if (jobs == NULL && blocks != NULL)
     {
       UDisksObject *block_object = UDISKS_OBJECT (blocks->data);
-      if (udisks_object_peek_partition_table (object) != NULL)
+      if (udisks_object_peek_partition_table (block_object) != NULL)
         {
           jobs = udisks_client_get_jobs_for_object (window->client, block_object);
         }
@@ -1919,14 +1952,14 @@ update_device_page_for_drive (GduWindow      *window,
       UDisksJob *job = UDISKS_JOB (jobs->data);
       GtkWidget *label;
       GtkWidget *progress_bar;
-      gchar *desc;
+      gchar *s;
 
       gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-label")));
       gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-box")));
 
       label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-id-label"));
       progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-progressbar"));
-      desc = udisks_client_get_job_description (window->client, job);
+      s = udisks_client_get_job_description (window->client, job);
       if (udisks_job_get_progress_valid (job))
         {
           gdouble progress = udisks_job_get_progress (job);
@@ -1934,15 +1967,19 @@ update_device_page_for_drive (GduWindow      *window,
           gtk_widget_hide (label);
           gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
           gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), desc);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), s);
         }
       else
         {
           gtk_widget_hide (progress_bar);
           gtk_widget_show (label);
-          gtk_label_set_text (GTK_LABEL (label), desc);
+          gtk_label_set_text (GTK_LABEL (label), s);
         }
-      g_free (desc);
+      g_free (s);
+
+      s = get_job_cancel_label (window, job);
+      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_job_cancel_label), s);
+      g_free (s);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -2278,14 +2315,14 @@ update_device_page_for_block (GduWindow          *window,
       UDisksJob *job = UDISKS_JOB (jobs->data);
       GtkWidget *label;
       GtkWidget *progress_bar;
-      gchar *desc;
+      gchar *s;
 
       gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-label")));
       gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-box")));
 
       label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-id-label"));
       progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-progressbar"));
-      desc = udisks_client_get_job_description (window->client, job);
+      s = udisks_client_get_job_description (window->client, job);
       if (udisks_job_get_progress_valid (job))
         {
           gdouble progress = udisks_job_get_progress (job);
@@ -2293,15 +2330,19 @@ update_device_page_for_block (GduWindow          *window,
           gtk_widget_hide (label);
           gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
           gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), desc);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), s);
         }
       else
         {
           gtk_widget_hide (progress_bar);
           gtk_widget_show (label);
-          gtk_label_set_text (GTK_LABEL (label), desc);
+          gtk_label_set_text (GTK_LABEL (label), s);
         }
-      g_free (desc);
+      g_free (s);
+
+      s = get_job_cancel_label (window, job);
+      gtk_label_set_markup (GTK_LABEL (window->devtab_job_cancel_label), s);
+      g_free (s);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);

@@ -591,9 +591,14 @@ hide_forever (GtkWidget *widget)
 static void
 disable_unused_widgets (DialogData *data)
 {
+  gboolean is_ssd = FALSE;
+
   /* Disable widgets not relevant for a drive - see also gdu_disk_settings_dialog_should_show() */
 
-  if (!udisks_drive_ata_get_pm_supported (data->ata))
+  if (udisks_drive_get_rotation_rate (data->drive) == 0)
+    is_ssd = TRUE;
+
+  if (!udisks_drive_ata_get_pm_supported (data->ata) || is_ssd)
     hide_forever (data->standby_box);
 
   if (!udisks_drive_ata_get_apm_supported (data->ata))
@@ -609,6 +614,7 @@ gdu_disk_settings_dialog_should_show (UDisksObject *object)
   gboolean ret = FALSE;
   UDisksDrive *drive;
   UDisksDriveAta *ata;
+  gboolean is_ssd = FALSE;
 
   g_return_val_if_fail (UDISKS_IS_OBJECT (object), FALSE);
 
@@ -622,7 +628,10 @@ gdu_disk_settings_dialog_should_show (UDisksObject *object)
   if (ata == NULL)
     goto out;
 
-  if (udisks_drive_ata_get_pm_supported (ata) ||
+  if (udisks_drive_get_rotation_rate (drive) == 0)
+    is_ssd = TRUE;
+
+  if ((udisks_drive_ata_get_pm_supported (ata) && !is_ssd) ||
       udisks_drive_ata_get_apm_supported (ata) ||
       udisks_drive_ata_get_aam_supported (ata))
     {

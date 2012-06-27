@@ -91,8 +91,6 @@ struct _GduWindow
   GtkWidget *devtab_drive_name_label;
   GtkWidget *devtab_drive_devices_label;
   GtkWidget *devtab_drive_image;
-  GtkWidget *devtab_drive_job_cancel_label;
-  GtkWidget *devtab_job_cancel_label;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
   GtkWidget *devtab_grid_hbox;
@@ -132,6 +130,20 @@ struct _GduWindow
   GtkWidget *generic_menu_item_benchmark;
 
   GtkWidget *devtab_loop_autoclear_switch;
+
+  GtkWidget *devtab_drive_job_label;
+  GtkWidget *devtab_drive_job_grid;
+  GtkWidget *devtab_drive_job_progressbar;
+  GtkWidget *devtab_drive_job_remaining_label;
+  GtkWidget *devtab_drive_job_no_progress_label;
+  GtkWidget *devtab_drive_job_cancel_button;
+
+  GtkWidget *devtab_job_label;
+  GtkWidget *devtab_job_grid;
+  GtkWidget *devtab_job_progressbar;
+  GtkWidget *devtab_job_remaining_label;
+  GtkWidget *devtab_job_no_progress_label;
+  GtkWidget *devtab_job_cancel_button;
 };
 
 static const struct {
@@ -154,8 +166,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_name_label), "devtab-drive-name-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_devices_label), "devtab-drive-devices-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_image), "devtab-drive-image"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_cancel_label), "devtab-drive-job-cancel-label"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_job_cancel_label), "devtab-job-cancel-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_hbox), "devtab-grid-hbox"},
   {G_STRUCT_OFFSET (GduWindow, devtab_volumes_label), "devtab-volumes-label"},
@@ -194,6 +204,20 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_benchmark), "generic-menu-item-benchmark"},
+
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_progressbar), "devtab-drive-job-progressbar"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_remaining_label), "devtab-drive-job-remaining-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_no_progress_label), "devtab-drive-job-no-progress-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_cancel_button), "devtab-drive-job-cancel-button"},
+
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_label), "devtab-job-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_grid), "devtab-job-grid"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_progressbar), "devtab-job-progressbar"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_remaining_label), "devtab-job-remaining-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_no_progress_label), "devtab-job-no-progress-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_job_cancel_button), "devtab-job-cancel-button"},
 
   {0, NULL}
 };
@@ -312,13 +336,11 @@ static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
                                                            gpointer    user_data);
 
-static void on_drive_job_cancel_label_activate_link (GtkLabel     *label,
-                                                     const gchar  *uri,
-                                                     gpointer      user_data);
+static void on_drive_job_cancel_button_clicked (GtkButton *button,
+                                                gpointer   user_data);
 
-static void on_job_cancel_label_activate_link (GtkLabel     *label,
-                                               const gchar  *uri,
-                                               gpointer      user_data);
+static void on_job_cancel_button_clicked (GtkButton     *button,
+                                          gpointer       user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -1236,15 +1258,15 @@ gdu_window_constructed (GObject *object)
                     window);
 
   /* cancel-button for drive job */
-  g_signal_connect (window->devtab_drive_job_cancel_label,
-                    "activate-link",
-                    G_CALLBACK (on_drive_job_cancel_label_activate_link),
+  g_signal_connect (window->devtab_drive_job_cancel_button,
+                    "clicked",
+                    G_CALLBACK (on_drive_job_cancel_button_clicked),
                     window);
 
   /* cancel-button for job */
-  g_signal_connect (window->devtab_job_cancel_label,
-                    "activate-link",
-                    G_CALLBACK (on_job_cancel_label_activate_link),
+  g_signal_connect (window->devtab_job_cancel_button,
+                    "clicked",
+                    G_CALLBACK (on_job_cancel_button_clicked),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -1675,14 +1697,14 @@ get_device_file_for_display (UDisksBlock *block)
 }
 
 static gchar *
-get_job_cancel_label (GduWindow *window,
-                      UDisksJob *job)
+get_job_progress_text (GduWindow *window,
+                       UDisksJob *job)
 {
   gchar *s;
+  gchar *desc;
   gint64 expected_end_time_usec;
-  const gchar *cancel_str;
 
-  cancel_str = C_("job-cancel", "Cancel");
+  desc = udisks_client_get_job_description (window->client, job);
 
   expected_end_time_usec = udisks_job_get_expected_end_time (job);
   if (expected_end_time_usec > 0)
@@ -1693,15 +1715,15 @@ get_job_cancel_label (GduWindow *window,
       usec_left = expected_end_time_usec - g_get_real_time ();
       s2 = gdu_utils_duration_to_string (usec_left / G_USEC_PER_SEC, FALSE);
       s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
-      s = g_strdup_printf ("— %s — <a href='app://cancel'>%s</a>",
-                           s3,
-                           cancel_str);
+      s = g_strdup_printf ("<small>%s — %s</small>", desc, s3);
       g_free (s2);
     }
   else
     {
-      s = g_strdup_printf ("— <a href='app://cancel'>%s</a>", cancel_str);
+      s = g_strdup_printf ("<small>%s</small>", desc);
     }
+
+  g_free (desc);
 
   return s;
 }
@@ -1944,42 +1966,43 @@ update_device_page_for_drive (GduWindow      *window,
     }
   if (jobs == NULL)
     {
-      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-label")));
-      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-box")));
+      gtk_widget_hide (window->devtab_drive_job_label);
+      gtk_widget_hide (window->devtab_drive_job_grid);
     }
   else
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      GtkWidget *label;
-      GtkWidget *progress_bar;
       gchar *s;
 
-      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-label")));
-      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-box")));
-
-      label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-id-label"));
-      progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-drive-job-progressbar"));
-      s = udisks_client_get_job_description (window->client, job);
+      gtk_widget_show (window->devtab_drive_job_label);
+      gtk_widget_show (window->devtab_drive_job_grid);
       if (udisks_job_get_progress_valid (job))
         {
           gdouble progress = udisks_job_get_progress (job);
-          gtk_widget_show (progress_bar);
-          gtk_widget_hide (label);
-          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
-          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), s);
+          gtk_widget_show (window->devtab_drive_job_progressbar);
+          gtk_widget_show (window->devtab_drive_job_remaining_label);
+          gtk_widget_hide (window->devtab_drive_job_no_progress_label);
+
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), progress);
+
+          s = g_strdup_printf ("%2.1f%%", 100.0 * progress);
+          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), TRUE);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), s);
+          g_free (s);
+
+          s = get_job_progress_text (window, job);
+          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_job_remaining_label), s);
+          g_free (s);
         }
       else
         {
-          gtk_widget_hide (progress_bar);
-          gtk_widget_show (label);
-          gtk_label_set_text (GTK_LABEL (label), s);
+          gtk_widget_hide (window->devtab_drive_job_progressbar);
+          gtk_widget_hide (window->devtab_drive_job_remaining_label);
+          gtk_widget_show (window->devtab_drive_job_no_progress_label);
+          s = udisks_client_get_job_description (window->client, job);
+          gtk_label_set_text (GTK_LABEL (window->devtab_drive_job_no_progress_label), s);
+          g_free (s);
         }
-      g_free (s);
-
-      s = get_job_cancel_label (window, job);
-      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_job_cancel_label), s);
-      g_free (s);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -2307,42 +2330,43 @@ update_device_page_for_block (GduWindow          *window,
   jobs = udisks_client_get_jobs_for_object (window->client, object);
   if (jobs == NULL)
     {
-      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-label")));
-      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-box")));
+      gtk_widget_hide (window->devtab_job_label);
+      gtk_widget_hide (window->devtab_job_grid);
     }
   else
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      GtkWidget *label;
-      GtkWidget *progress_bar;
       gchar *s;
 
-      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-label")));
-      gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-box")));
-
-      label = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-id-label"));
-      progress_bar = GTK_WIDGET (gtk_builder_get_object (window->builder, "devtab-job-progressbar"));
-      s = udisks_client_get_job_description (window->client, job);
+      gtk_widget_show (window->devtab_job_label);
+      gtk_widget_show (window->devtab_job_grid);
       if (udisks_job_get_progress_valid (job))
         {
           gdouble progress = udisks_job_get_progress (job);
-          gtk_widget_show (progress_bar);
-          gtk_widget_hide (label);
-          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress_bar), progress);
-          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progress_bar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progress_bar), s);
+          gtk_widget_show (window->devtab_job_progressbar);
+          gtk_widget_show (window->devtab_job_remaining_label);
+          gtk_widget_hide (window->devtab_job_no_progress_label);
+
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_job_progressbar), progress);
+
+          s = g_strdup_printf ("%2.1f%%", 100.0 * progress);
+          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_job_progressbar), TRUE);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_job_progressbar), s);
+          g_free (s);
+
+          s = get_job_progress_text (window, job);
+          gtk_label_set_markup (GTK_LABEL (window->devtab_job_remaining_label), s);
+          g_free (s);
         }
       else
         {
-          gtk_widget_hide (progress_bar);
-          gtk_widget_show (label);
-          gtk_label_set_text (GTK_LABEL (label), s);
+          gtk_widget_hide (window->devtab_job_progressbar);
+          gtk_widget_hide (window->devtab_job_remaining_label);
+          gtk_widget_show (window->devtab_job_no_progress_label);
+          s = udisks_client_get_job_description (window->client, job);
+          gtk_label_set_text (GTK_LABEL (window->devtab_job_no_progress_label), s);
+          g_free (s);
         }
-      g_free (s);
-
-      s = get_job_cancel_label (window, job);
-      gtk_label_set_markup (GTK_LABEL (window->devtab_job_cancel_label), s);
-      g_free (s);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -3311,9 +3335,8 @@ drive_job_cancel_cb (UDisksJob       *job,
 }
 
 static void
-on_drive_job_cancel_label_activate_link (GtkLabel     *label,
-                                         const gchar  *uri,
-                                         gpointer      user_data)
+on_drive_job_cancel_button_clicked (GtkButton   *button,
+                                    gpointer     user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GList *jobs;
@@ -3367,9 +3390,8 @@ job_cancel_cb (UDisksJob       *job,
 }
 
 static void
-on_job_cancel_label_activate_link (GtkLabel     *label,
-                                   const gchar  *uri,
-                                   gpointer      user_data)
+on_job_cancel_button_clicked (GtkButton    *button,
+                              gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GList *jobs;

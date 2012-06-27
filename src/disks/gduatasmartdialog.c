@@ -989,8 +989,7 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
 
   if (g_strcmp0 (udisks_drive_ata_get_smart_selftest_status (ata), "inprogress") == 0)
     {
-      selftest = g_strdup_printf (_("Self-test in progress — %d%% remaining"),
-                                  udisks_drive_ata_get_smart_selftest_percent_remaining (ata));
+      selftest = g_strdup (_("Self-test in progress"));
     }
 
   /* If self-assessment indicates failure, always return that */

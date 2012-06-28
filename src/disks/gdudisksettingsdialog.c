@@ -279,15 +279,18 @@ update_standby_label (DialogData *data)
     }
   else if (value < 241)
     {
-      s = gdu_utils_format_duration_msec (value * 5 * 1000);
+      s = gdu_utils_format_duration_usec (value * 5 * G_USEC_PER_SEC,
+                                          GDU_FORMAT_DURATION_FLAGS_NONE);
     }
   else if (value < 252)
     {
-      s = gdu_utils_format_duration_msec ((value - 240) * 30 * 60 * 1000);
+      s = gdu_utils_format_duration_usec ((value - 240) * 30 * 60 * G_USEC_PER_SEC,
+                                          GDU_FORMAT_DURATION_FLAGS_NONE);
     }
   else if (value == 252)
     {
-      s = gdu_utils_format_duration_msec (21 * 60 * 1000);
+      s = gdu_utils_format_duration_usec (21 * 60 * G_USEC_PER_SEC,
+                                          GDU_FORMAT_DURATION_FLAGS_NONE);
     }
   else if (value == 253)
     {
@@ -299,7 +302,8 @@ update_standby_label (DialogData *data)
     }
   else if (value == 255)
     {
-      s = gdu_utils_format_duration_msec ((21 * 60 + 15) * 1000);
+      s = gdu_utils_format_duration_usec ((21 * 60 + 15) * G_USEC_PER_SEC,
+                                          GDU_FORMAT_DURATION_FLAGS_NONE);
     }
   gtk_label_set_text (GTK_LABEL (data->standby_value_label), s);
   g_free (s);

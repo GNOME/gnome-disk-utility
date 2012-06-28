@@ -1713,7 +1713,7 @@ get_job_progress_text (GduWindow *window,
       gchar *s2, *s3;
 
       usec_left = expected_end_time_usec - g_get_real_time ();
-      s2 = gdu_utils_duration_to_string (usec_left / G_USEC_PER_SEC, FALSE);
+      s2 = gdu_utils_format_duration_usec (usec_left, GDU_FORMAT_DURATION_FLAGS_NONE);
       s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
       s = g_strdup_printf ("<small>%s — %s</small>", desc, s3);
       g_free (s2);

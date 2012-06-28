@@ -290,7 +290,8 @@ write_cb (GOutputStream  *output_stream,
     {
       s2 = g_format_size (data->total_bytes_read);
       s3 = g_format_size (data->file_size);
-      s4 = gdu_utils_duration_to_string (usec_remaining / G_USEC_PER_SEC, TRUE);
+      s4 = gdu_utils_format_duration_usec (usec_remaining,
+                                           GDU_FORMAT_DURATION_FLAGS_NONE);
       s5 = g_format_size (bytes_per_sec);
       s = g_strdup_printf ("%s of %s copied – %s remaining (%s/sec)", s2, s3, s4, s5);
       g_free (s5);

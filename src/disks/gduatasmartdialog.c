@@ -708,7 +708,8 @@ pretty_to_string (guint64 pretty,
   switch (pretty_unit)
     {
     case 2: /* SK_SMART_ATTRIBUTE_UNIT_MSECONDS */
-      ret = gdu_utils_format_duration_msec (pretty);
+      ret = gdu_utils_format_duration_usec (pretty * 1000,
+                                            GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION);
       break;
 
     case 3: /* SK_SMART_ATTRIBUTE_UNIT_SECTORS */
@@ -913,7 +914,8 @@ update_updated_label (DialogData *data)
 
   now = time (NULL);
   updated = udisks_drive_ata_get_smart_updated (data->ata);
-  s = gdu_utils_duration_to_string (now - updated, FALSE);
+  s = gdu_utils_format_duration_usec ((now - updated) * G_USEC_PER_SEC,
+                                      GDU_FORMAT_DURATION_FLAGS_NONE);
   s2 = g_strdup_printf (_("%s ago"), s);
   gtk_label_set_text (GTK_LABEL (data->updated_label), s2);
   g_free (s2);
@@ -951,7 +953,8 @@ format_powered_on (UDisksDriveAta *ata)
 
   secs = udisks_drive_ata_get_smart_power_on_seconds (ata);
   if (secs > 0)
-    ret = gdu_utils_format_duration_msec (secs * 1000);
+    ret = gdu_utils_format_duration_usec (secs * G_USEC_PER_SEC,
+                                          GDU_FORMAT_DURATION_FLAGS_NONE);
   return ret;
 }
 

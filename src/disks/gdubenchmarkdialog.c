@@ -700,7 +700,8 @@ update_updated_label (DialogData *data)
           time_benchmarked_dt_local = g_date_time_to_local (time_benchmarked_dt);
           time_benchmarked_str = g_date_time_format (time_benchmarked_dt_local, "%c");
 
-          s = gdu_utils_duration_to_string ((now_usec - data->bm_time_benchmarked_usec) / G_USEC_PER_SEC, FALSE);
+          s = gdu_utils_format_duration_usec ((now_usec - data->bm_time_benchmarked_usec),
+                                              GDU_FORMAT_DURATION_FLAGS_NONE);
           /* Translators: The first %s is the date and time the benchmark took place in the preferred
            * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
            * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right

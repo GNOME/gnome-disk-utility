@@ -34,9 +34,6 @@ gboolean gdu_utils_has_configuration (UDisksBlock  *block,
 
 void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser);
 
-gchar *gdu_utils_duration_to_string (guint    duration_sec,
-                                     gboolean include_second_precision);
-
 GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
                                       const gchar    *markup,
                                       GtkWidget     **out_label);
@@ -57,7 +54,8 @@ void gdu_options_update_entry_option (GtkWidget       *options_entry,
 
 const gchar *gdu_utils_get_seat (void);
 
-gchar *gdu_utils_format_duration_msec (guint64 msec);
+gchar *gdu_utils_format_duration_usec (guint64                usec,
+                                       GduFormatDurationFlags flags);
 
 G_END_DECLS
 

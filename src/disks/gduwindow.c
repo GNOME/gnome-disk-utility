@@ -1713,10 +1713,21 @@ get_job_progress_text (GduWindow *window,
       gchar *s2, *s3;
 
       usec_left = expected_end_time_usec - g_get_real_time ();
-      s2 = gdu_utils_format_duration_usec (usec_left, GDU_FORMAT_DURATION_FLAGS_NONE);
-      s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
+      if (usec_left < 0)
+        {
+          /* Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
+           * the expected end time...
+           */
+          s3 = g_strdup_printf (C_("job-remaining-exceeded", "Almost done..."));
+        }
+      else
+        {
+          s2 = gdu_utils_format_duration_usec (usec_left, GDU_FORMAT_DURATION_FLAGS_NONE);
+          s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
+          g_free (s2);
+        }
       s = g_strdup_printf ("<small>%s — %s</small>", desc, s3);
-      g_free (s2);
+      g_free (s3);
     }
   else
     {
@@ -2003,6 +2014,10 @@ update_device_page_for_drive (GduWindow      *window,
           gtk_label_set_text (GTK_LABEL (window->devtab_drive_job_no_progress_label), s);
           g_free (s);
         }
+      if (udisks_job_get_cancelable (job))
+        gtk_widget_show (window->devtab_drive_job_cancel_button);
+      else
+        gtk_widget_hide (window->devtab_drive_job_cancel_button);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -2367,6 +2382,10 @@ update_device_page_for_block (GduWindow          *window,
           gtk_label_set_text (GTK_LABEL (window->devtab_job_no_progress_label), s);
           g_free (s);
         }
+      if (udisks_job_get_cancelable (job))
+        gtk_widget_show (window->devtab_job_cancel_button);
+      else
+        gtk_widget_hide (window->devtab_job_cancel_button);
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);

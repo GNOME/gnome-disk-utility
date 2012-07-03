@@ -1911,7 +1911,10 @@ update_device_page_for_drive (GduWindow      *window,
 
   if (ata != NULL)
     {
-      if (udisks_drive_ata_get_pm_supported (ata))
+      gboolean is_ssd;
+      if (udisks_drive_get_rotation_rate (drive) == 0)
+        is_ssd = TRUE;
+      if (udisks_drive_ata_get_pm_supported (ata) && !is_ssd)
         {
           GtkTreeIter iter;
           gboolean sleeping = FALSE;

@@ -70,6 +70,7 @@ typedef struct
   GtkWidget *aam_box;
   GtkWidget *aam_switch;
   GtkWidget *aam_widgets_box;
+  GtkWidget *aam_vendor_recommended_value_label;
   GtkWidget *aam_value_label;
   GtkWidget *aam_scale;
   GtkAdjustment *aam_adjustment;
@@ -103,6 +104,7 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, aam_switch), "aam-switch"},
   {G_STRUCT_OFFSET (DialogData, aam_widgets_box), "aam-widgets-box"},
   {G_STRUCT_OFFSET (DialogData, aam_value_label), "aam-value-label"},
+  {G_STRUCT_OFFSET (DialogData, aam_vendor_recommended_value_label), "aam-vendor-recommended-value-label"},
   {G_STRUCT_OFFSET (DialogData, aam_scale), "aam-scale"},
   {G_STRUCT_OFFSET (DialogData, aam_adjustment), "aam-adjustment"},
 
@@ -350,6 +352,10 @@ update_aam_label (DialogData *data)
     }
   gtk_label_set_text (GTK_LABEL (data->aam_value_label), s);
   g_free (s);
+
+  s = g_strdup_printf ("%d", udisks_drive_ata_get_aam_vendor_recommended_value (data->ata));
+  gtk_label_set_text (GTK_LABEL (data->aam_vendor_recommended_value_label), s);
+  g_free (s);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -509,11 +515,14 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
           gtk_switch_set_active (GTK_SWITCH (data->apm_switch), TRUE);
         }
 
-      /* AAM (default to 128) */
+      /* AAM (default to vendor recommended value, if available, otherwise default to 254) */
       if (aam_value == -1)
         {
+          gint default_value = udisks_drive_ata_get_aam_vendor_recommended_value (data->ata);
+          if (default_value < 128 || default_value > 254)
+            default_value = 254;
           gtk_switch_set_active (GTK_SWITCH (data->aam_switch), FALSE);
-          gtk_adjustment_set_value (data->aam_adjustment, 128);
+          gtk_adjustment_set_value (data->aam_adjustment, default_value);
         }
       else
         {

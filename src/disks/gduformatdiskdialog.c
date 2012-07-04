@@ -400,12 +400,14 @@ gdu_format_disk_dialog_show (GduWindow    *window,
       if (g_strcmp0 (erase_type, "") == 0)
         {
           /* Translators: warning used for quick format */
-          str = g_string_new (_("All data on the disk will be lost"));
+          str = g_string_new (_("All data on the disk will be lost but may still be recoverable by data recovery services"));
+          g_string_append (str, "\n\n");
+          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more throrough erase type to keep your private information from falling into the wrong hands"));
         }
       else
         {
           /* Translators: warning used when overwriting data */
-          str = g_string_new (_("All data on the disk will be irrevocably lost and will likely not be recoverable by data recovery services"));
+          str = g_string_new (_("All data on the disk will be overwritten and will likely not be recoverable by data recovery services"));
         }
 
       if (data->ata != NULL &&

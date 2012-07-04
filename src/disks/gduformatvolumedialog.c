@@ -144,22 +144,43 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   if (response == GTK_RESPONSE_OK)
     {
       GVariantBuilder options_builder;
-      const gchar *erase;
+      const gchar *erase_type;
       const gchar *fstype;
       const gchar *name;
       const gchar *passphrase;
+      const gchar *primary_message;
+      GString *str;
 
-      erase = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+      erase_type = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
       passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
 
       gtk_widget_hide (data->dialog);
+
+      primary_message = _("Are you sure you want to format the volume?");
+      if (erase_type == NULL || g_strcmp0 (erase_type, "") == 0)
+        {
+          /* Translators: warning used for quick format of the volume*/
+          str = g_string_new (_("All data on the volume will be lost but may still be recoverable by data recovery services"));
+          g_string_append (str, "\n\n");
+          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more throrough erase type to keep your private information from falling into the wrong hands"));
+        }
+      else
+        {
+          /* Translators: warning used when overwriting data of the volume */
+          str = g_string_new (_("All data on the volume will be overwritten and will likely not be recoverable by data recovery services"));
+        }
+
       if (!gdu_window_show_confirmation (window,
-                                         _("Are you sure you want to format the volume?"),
-                                         _("All data on the volume will be lost"),
+                                         primary_message,
+                                         str->str,
                                          _("_Format")))
-        goto out;
+        {
+          g_string_free (str, TRUE);
+          goto out;
+        }
+      g_string_free (str, TRUE);
 
       g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
       if (name != NULL && strlen (name) > 0)
@@ -172,8 +193,8 @@ gdu_format_volume_dialog_show (GduWindow    *window,
       if (passphrase != NULL && strlen (passphrase) > 0)
         g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
 
-      if (erase != NULL)
-        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase));
+      if (erase_type != NULL)
+        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
 
       udisks_block_call_format (data->block,
                                 fstype,

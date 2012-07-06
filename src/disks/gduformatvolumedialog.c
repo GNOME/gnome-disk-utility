@@ -164,7 +164,7 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           /* Translators: warning used for quick format of the volume*/
           str = g_string_new (_("All data on the volume will be lost but may still be recoverable by data recovery services"));
           g_string_append (str, "\n\n");
-          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more throrough erase type to keep your private information from falling into the wrong hands"));
+          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more thorough erase type to keep your private information from falling into the wrong hands"));
         }
       else
         {

@@ -554,7 +554,7 @@ open_cb (UDisksBlock  *block,
    */
   if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
     {
-      error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), strerror (errno));
+      error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
       gdu_window_show_error (data->window, _("Error determining size of device"), error);
       g_error_free (error);
       restore_disk_image_data_complete (data);

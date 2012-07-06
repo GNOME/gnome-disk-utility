@@ -251,7 +251,6 @@ crypttab_dialog_present (CrypttabDialogData *data)
 
   if (response == GTK_RESPONSE_OK)
     {
-      gboolean configured;
       gboolean ui_configured;
       GError *error;
 
@@ -287,7 +286,6 @@ crypttab_dialog_present (CrypttabDialogData *data)
           const gchar *ui_options;
           const gchar *ui_passphrase_contents;
           const gchar *old_passphrase_path;
-          GError *error;
           GVariant *old_item = NULL;
           GVariant *new_item = NULL;
           GVariantBuilder builder;
@@ -300,11 +298,11 @@ crypttab_dialog_present (CrypttabDialogData *data)
           old_passphrase_path = NULL;
           if (data->orig_crypttab_entry != NULL)
             {
-              const gchar *s;
-              if (g_variant_lookup (data->orig_crypttab_entry, "passphrase-path", "^&ay", &s))
+              const gchar *path;
+              if (g_variant_lookup (data->orig_crypttab_entry, "passphrase-path", "^&ay", &path))
                 {
-                  if (strlen (s) > 0 && !g_str_has_prefix (s, "/dev"))
-                    old_passphrase_path = s;
+                  if (strlen (path) > 0 && !g_str_has_prefix (path, "/dev"))
+                    old_passphrase_path = path;
                 }
               error = NULL;
               old_item = g_variant_new ("(s@a{sv})", "crypttab",

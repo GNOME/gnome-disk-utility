@@ -642,8 +642,6 @@ recompute_size_for_slice (GList          *elements,
         extra -= get_num_elements_for_slice (element->embedded_elements) * ELEMENT_MINIMUM_WIDTH;
     }
 
-  g_warn_if_fail (width >= 0);
-
   x = 0;
   for (l = elements; l != NULL; l = l->next)
     {
@@ -798,13 +796,13 @@ render_element (GduVolumeGrid *grid,
   /* icons */
   icons_to_render = g_ptr_array_new_with_free_func (NULL);
   if (element->show_padlock_open)
-    g_ptr_array_add (icons_to_render, "changes-allow-symbolic");
+    g_ptr_array_add (icons_to_render, (gpointer) "changes-allow-symbolic");
   if (element->show_padlock_closed)
-    g_ptr_array_add (icons_to_render, "changes-prevent-symbolic");
+    g_ptr_array_add (icons_to_render, (gpointer) "changes-prevent-symbolic");
   if (element->show_mounted)
-    g_ptr_array_add (icons_to_render, "media-playback-start-symbolic");
+    g_ptr_array_add (icons_to_render, (gpointer) "media-playback-start-symbolic");
   if (element->show_configured)
-    g_ptr_array_add (icons_to_render, "user-bookmarks-symbolic");
+    g_ptr_array_add (icons_to_render, (gpointer) "user-bookmarks-symbolic");
   if (icons_to_render->len > 0)
     {
       guint icon_offset = 0;
@@ -1656,7 +1654,6 @@ grid_element_set_details (GduVolumeGrid  *grid,
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {
-            const gchar *label;
             UDisksSwapspace *swapspace;
 
             label = udisks_block_get_id_label (block);

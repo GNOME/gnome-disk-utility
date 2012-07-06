@@ -509,10 +509,10 @@ on_drawing_area_draw (GtkWidget      *widget,
   cairo_set_line_width (cr, 1.5);
   for (n = 0; n < data->bm_read_samples->len; n++)
     {
-      BMSample *s = &g_array_index (data->bm_read_samples, BMSample, n);
+      BMSample *sample = &g_array_index (data->bm_read_samples, BMSample, n);
 
-      x = gx + gw * s->offset / data->bm_size;
-      y = gy + gh - gh * s->value / max_visible_speed;
+      x = gx + gw * sample->offset / data->bm_size;
+      y = gy + gh - gh * sample->value / max_visible_speed;
 
       if (n == 0)
         cairo_move_to (cr, x, y);
@@ -526,9 +526,9 @@ on_drawing_area_draw (GtkWidget      *widget,
   cairo_set_line_width (cr, 1.5);
   for (n = 0; n < data->bm_write_samples->len; n++)
     {
-      BMSample *s = &g_array_index (data->bm_write_samples, BMSample, n);
-      x = gx + gw * s->offset / data->bm_size;
-      y = gy + gh - gh * s->value / max_visible_speed;
+      BMSample *sample = &g_array_index (data->bm_write_samples, BMSample, n);
+      x = gx + gw * sample->offset / data->bm_size;
+      y = gy + gh - gh * sample->value / max_visible_speed;
 
       if (n == 0)
         cairo_move_to (cr, x, y);
@@ -541,10 +541,10 @@ on_drawing_area_draw (GtkWidget      *widget,
   cairo_set_line_width (cr, 0.5);
   for (n = 0; n < data->bm_access_time_samples->len; n++)
     {
-      BMSample *s = &g_array_index (data->bm_access_time_samples, BMSample, n);
+      BMSample *sample = &g_array_index (data->bm_access_time_samples, BMSample, n);
 
-      x = gx + gw * s->offset / data->bm_size;
-      y = gy + gh - gh * s->value / max_visible_time;
+      x = gx + gw * sample->offset / data->bm_size;
+      y = gy + gh - gh * sample->value / max_visible_time;
 
       /*g_debug ("time = %f @ %f", point->value, x);*/
 
@@ -1144,7 +1144,7 @@ maybe_load_data (DialogData  *data,
 static GVariant *
 samples_to_gvariant (GArray *array)
 {
-  gint n;
+  guint n;
   GVariantBuilder builder;
 
   g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(td)"));
@@ -1244,7 +1244,7 @@ benchmark_thread (gpointer user_data)
   guchar *buffer = NULL;
   GRand *rand = NULL;
   int fd = -1;
-  guint n;
+  gint n;
   long page_size;
   guint64 disk_size;
   GVariantBuilder options_builder;
@@ -1302,7 +1302,7 @@ benchmark_thread (gpointer user_data)
     {
       gint64 begin_usec;
       gint64 end_usec;
-      guint64 offset;
+      gint64 offset;
       ssize_t num_read;
       BMSample sample = {0};
 
@@ -1448,7 +1448,7 @@ benchmark_thread (gpointer user_data)
     {
       gint64 begin_usec;
       gint64 end_usec;
-      guint64 offset;
+      gint64 offset;
       ssize_t num_read;
       BMSample sample = {0};
 

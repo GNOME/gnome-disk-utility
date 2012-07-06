@@ -389,6 +389,8 @@ gdu_device_tree_model_constructed (GObject *object)
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
 
+  G_STATIC_ASSERT (10 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+
   types[0] = G_TYPE_STRING;
   types[1] = G_TYPE_BOOLEAN;
   types[2] = G_TYPE_STRING;
@@ -399,7 +401,6 @@ gdu_device_tree_model_constructed (GObject *object)
   types[7] = G_TYPE_UINT;
   types[8] = G_TYPE_BOOLEAN;
   types[9] = G_TYPE_BOOLEAN;
-  G_STATIC_ASSERT (10 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -749,7 +750,6 @@ update_drive (GduDeviceTreeModel *model,
 
   if (ata != NULL)
     {
-      gchar *s;
       s = gdu_ata_smart_get_one_liner_assessment (ata, NULL /* out_smart_supported */, &warning);
       g_free (s);
     }

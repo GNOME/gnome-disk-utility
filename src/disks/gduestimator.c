@@ -136,7 +136,6 @@ update (GduEstimator *estimator)
   guint n;
   gdouble sum_of_speeds;
   guint num_speeds;
-  gdouble speed;
 
   num_speeds = 0;
   sum_of_speeds = 0.0;
@@ -153,6 +152,7 @@ update (GduEstimator *estimator)
   estimator->usec_remaining = 0;
   if (num_speeds > 0)
     {
+      gdouble speed;
       speed = sum_of_speeds / num_speeds;
       estimator->bytes_per_sec = speed;
       if (estimator->bytes_per_sec > 0)

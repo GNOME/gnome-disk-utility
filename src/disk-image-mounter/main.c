@@ -94,7 +94,7 @@ show_error (const gchar *format, ...)
                                                    GTK_BUTTONS_CLOSE,
                                                    "<big><b>%s</b></big>",
                                                    _("An error occurred"));
-      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog), s);
+      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog), "%s", s);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Disk Image Mounter"));
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
@@ -193,7 +193,7 @@ main (int argc, char *argv[])
   GError *error = NULL;
   gchar *s = NULL;
   GOptionContext *o = NULL;
-  guint n;
+  gint n;
   GSList *uris = NULL;
   GSList *l;
   GList *loop_device_objpaths = NULL;
@@ -256,7 +256,6 @@ main (int argc, char *argv[])
       GUnixFDList *fd_list = NULL;
       GVariantBuilder options_builder;
       gint fd;
-      GError *error;
       gchar *loop_object_path = NULL;
       UDisksObject *object;
       UDisksFilesystem *filesystem;
@@ -302,7 +301,7 @@ main (int argc, char *argv[])
         {
           show_error (_("Error attaching disk image: %s (%s, %d)"),
                       error->message, g_quark_to_string (error->domain), error->code);
-          g_error_free (error);
+          g_clear_error (&error);
           goto done_with_image;
         }
 
@@ -317,11 +316,11 @@ main (int argc, char *argv[])
       partition_table = udisks_object_peek_partition_table (object);
       if (partition_table != NULL)
         {
-          GList *partitions, *l;
+          GList *partitions, *ll;
           partitions = udisks_client_get_partitions (udisks_client, partition_table);
-          for (l = partitions; l != NULL; l = l->next)
+          for (ll = partitions; ll != NULL; ll = ll->next)
             {
-              UDisksPartition *partition = UDISKS_PARTITION (l->data);
+              UDisksPartition *partition = UDISKS_PARTITION (ll->data);
               UDisksObject *partition_object;
               UDisksBlock *partition_block;
               UDisksFilesystem *partition_filesystem;
@@ -350,7 +349,7 @@ main (int argc, char *argv[])
                   show_error (_("Error mounting filesystem on partition %d of disk image: %s (%s, %d)"),
                               udisks_partition_get_number (partition),
                               error->message, g_quark_to_string (error->domain), error->code);
-                  g_error_free (error);
+                  g_clear_error (&error);
                   goto done_with_image;
                 }
               num_mounts++;
@@ -375,7 +374,7 @@ main (int argc, char *argv[])
             {
               show_error (_("Error mounting filesystem: %s (%s, %d)"),
                           error->message, g_quark_to_string (error->domain), error->code);
-              g_error_free (error);
+              g_clear_error (&error);
               goto done_with_image;
             }
           num_mounts++;
@@ -402,7 +401,7 @@ main (int argc, char *argv[])
                */
               g_printerr (_("Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"),
                           error->message, g_quark_to_string (error->domain), error->code);
-              g_error_free (error);
+              g_clear_error (&error);
             }
           loop_device_objpaths = g_list_prepend (loop_device_objpaths, g_strdup (loop_object_path));
         }
@@ -417,7 +416,7 @@ main (int argc, char *argv[])
             {
               show_error (_("Error cleaning up loop device: %s (%s, %d)"),
                           error->message, g_quark_to_string (error->domain), error->code);
-              g_error_free (error);
+              g_clear_error (&error);
             }
         }
 

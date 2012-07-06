@@ -541,16 +541,16 @@ gdu_fstab_dialog_show (GduWindow    *window,
           const gchar *ui_dir;
           const gchar *ui_type;
           const gchar *ui_opts;
-          gint freq = 0;
-          gint passno = 0;
           GVariant *old_item = NULL;
           GVariant *new_item = NULL;
-          GVariantBuilder builder;
+          GVariantBuilder variant_builder;
 
           ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
           ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
           ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
           ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
+          freq = 0;
+          passno = 0;
           if (data.orig_fstab_entry != NULL)
             {
               g_variant_lookup (data.orig_fstab_entry, "freq", "i", &freq);
@@ -560,14 +560,14 @@ gdu_fstab_dialog_show (GduWindow    *window,
           if (data.orig_fstab_entry != NULL)
             old_item = g_variant_new ("(s@a{sv})", "fstab", data.orig_fstab_entry);
 
-          g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-          g_variant_builder_add (&builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
-          g_variant_builder_add (&builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
-          g_variant_builder_add (&builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
-          g_variant_builder_add (&builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
-          g_variant_builder_add (&builder, "{sv}", "freq", g_variant_new_int32 (freq));
-          g_variant_builder_add (&builder, "{sv}", "passno", g_variant_new_int32 (passno));
-          new_item = g_variant_new ("(sa{sv})", "fstab", &builder);
+          g_variant_builder_init (&variant_builder, G_VARIANT_TYPE_VARDICT);
+          g_variant_builder_add (&variant_builder, "{sv}", "fsname", g_variant_new_bytestring (ui_fsname));
+          g_variant_builder_add (&variant_builder, "{sv}", "dir", g_variant_new_bytestring (ui_dir));
+          g_variant_builder_add (&variant_builder, "{sv}", "type", g_variant_new_bytestring (ui_type));
+          g_variant_builder_add (&variant_builder, "{sv}", "opts", g_variant_new_bytestring (ui_opts));
+          g_variant_builder_add (&variant_builder, "{sv}", "freq", g_variant_new_int32 (freq));
+          g_variant_builder_add (&variant_builder, "{sv}", "passno", g_variant_new_int32 (passno));
+          new_item = g_variant_new ("(sa{sv})", "fstab", &variant_builder);
 
           if (old_item == NULL && new_item != NULL)
             {

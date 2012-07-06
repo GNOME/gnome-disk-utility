@@ -77,8 +77,6 @@ typedef struct
 
 } DialogData;
 
-G_LOCK_DEFINE (bm_lock);
-
 static const struct {
   goffset offset;
   const gchar *name;

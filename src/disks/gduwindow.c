@@ -1986,7 +1986,6 @@ update_device_page_for_drive (GduWindow      *window,
   else
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      gchar *s;
 
       gtk_widget_show (window->devtab_drive_job_label);
       gtk_widget_show (window->devtab_drive_job_grid);
@@ -2179,7 +2178,6 @@ update_device_page_for_block (GduWindow          *window,
 
   if (partition != NULL)
     {
-      gchar *s;
       s = udisks_client_get_partition_info (window->client, partition);
       if (s == NULL)
         s = g_strdup (C_("partition type", "Unknown"));
@@ -2192,7 +2190,6 @@ update_device_page_for_block (GduWindow          *window,
 
   if (loop != NULL)
     {
-      gchar *s;
       s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
       set_markup (window,
                   "devtab-backing-file-label",
@@ -2354,7 +2351,6 @@ update_device_page_for_block (GduWindow          *window,
   else
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      gchar *s;
 
       gtk_widget_show (window->devtab_job_label);
       gtk_widget_show (window->devtab_job_grid);
@@ -2433,7 +2429,6 @@ update_device_page_for_free_space (GduWindow          *window,
 
   if (loop != NULL)
     {
-      gchar *s;
       s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
       set_markup (window,
                   "devtab-backing-file-label",

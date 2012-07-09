@@ -38,11 +38,9 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -Werror=format-security                   \
         -Werror=implicit-function-declaration     \
         -Werror=overflow                          \
-        -Wextra                                   \
         -Wformat-nonliteral                       \
         -Wformat=2                                \
         -Wimplicit                                \
-        -Winit-self                               \
         -Winit-self                               \
         -Wlogical-op                              \
         -Wmissing-declarations                    \
@@ -61,7 +59,6 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -Wold-style-definition                    \
         -Wpacked                                  \
         -Wpointer-arith                           \
-        -Wredundant-decls                         \
         -Wshadow                                  \
         -Wsign-compare                            \
         -Wstrict-aliasing=2                       \
@@ -78,7 +75,6 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -ffunction-sections                       \
         -fno-common                               \
         -fno-strict-aliasing                      \
-        -fvisibility=hidden                       \
 ])
 
 # ***************************

@@ -59,7 +59,6 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -Wno-unused-parameter                     \
         -Wno-unused-result                        \
         -Wold-style-definition                    \
-        -Wp,-D_FORTIFY_SOURCE=2                   \
         -Wpacked                                  \
         -Wpointer-arith                           \
         -Wredundant-decls                         \

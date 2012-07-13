@@ -293,7 +293,12 @@ write_cb (GOutputStream  *output_stream,
       s4 = gdu_utils_format_duration_usec (usec_remaining,
                                            GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
       s5 = g_format_size (bytes_per_sec);
-      s = g_strdup_printf ("%s of %s copied – %s remaining (%s/sec)", s2, s3, s4, s5);
+      /* Translators: string used for conveying progress of copy operation.
+       * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
+       * The third %s is the estimated amount of time remaining (ex. "1 minute", "5 minutes" or "Less than a minute").
+       * The fourth %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+       */
+      s = g_strdup_printf (_("%s of %s copied – %s remaining (%s/sec)"), s2, s3, s4, s5);
       g_free (s5);
       g_free (s4);
       g_free (s3);
@@ -303,7 +308,10 @@ write_cb (GOutputStream  *output_stream,
     {
       s2 = g_format_size (data->total_bytes_read);
       s3 = g_format_size (data->file_size);
-      s = g_strdup_printf ("%s of %s copied", s2, s3);
+      /* Translators: string used for convey progress of a copy operation where we know time remaining / speed.
+       * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
+       */
+      s = g_strdup_printf (_("%s of %s copied"), s2, s3);
       g_free (s2);
       g_free (s3);
     }

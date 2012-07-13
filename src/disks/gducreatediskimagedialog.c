@@ -268,7 +268,7 @@ write_cb (GOutputStream  *output_stream,
     {
       s2 = g_format_size (data->total_bytes_read);
       s3 = g_format_size (data->block_size);
-      /* Translators: string used for convey progress of a copy operation where we know time remaining / speed.
+      /* Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
        * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
        */
       s = g_strdup_printf (_("%s of %s copied"), s2, s3);

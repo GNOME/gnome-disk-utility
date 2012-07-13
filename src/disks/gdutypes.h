@@ -55,7 +55,8 @@ typedef struct _GduEstimator GduEstimator;
 typedef enum
 {
   GDU_FORMAT_DURATION_FLAGS_NONE                 = 0,
-  GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION  = (1<<0)
+  GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION  = (1<<0),
+  GDU_FORMAT_DURATION_FLAGS_NO_SECONDS           = (1<<1)
 } GduFormatDurationFlags;
 
 G_END_DECLS

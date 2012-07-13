@@ -500,13 +500,29 @@ gdu_utils_format_duration_usec (guint64                usec,
     }
   else if (minutes > 0)
     {
-      /* Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds */
-      ret = g_strdup_printf (C_("duration-minute-to-hour", "%s and %s"), minutes_str, seconds_str);
+      if (flags & GDU_FORMAT_DURATION_FLAGS_NO_SECONDS)
+        {
+          ret = g_strdup (minutes_str);
+        }
+      else
+        {
+          /* Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds */
+          ret = g_strdup_printf (C_("duration-minute-to-hour", "%s and %s"), minutes_str, seconds_str);
+        }
     }
-  else if (seconds > 0 || !(flags & GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION))
+  else if (seconds > 0 ||
+           !(flags & GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION) ||
+           (flags & GDU_FORMAT_DURATION_FLAGS_NO_SECONDS))
     {
-      /* Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds */
-      ret = g_strdup_printf (C_("duration-second-to-minute", "%s"), seconds_str);
+      if (flags & GDU_FORMAT_DURATION_FLAGS_NO_SECONDS)
+        {
+          ret = g_strdup (C_("duration", "Less than a minute"));
+        }
+      else
+        {
+          /* Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds */
+          ret = g_strdup_printf (C_("duration-second-to-minute", "%s"), seconds_str);
+        }
     }
   else
     {

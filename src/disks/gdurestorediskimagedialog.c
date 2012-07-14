@@ -121,8 +121,32 @@ restore_disk_image_data_unref (RestoreDiskImageData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+rescan_cb (UDisksBlock   *block,
+           GAsyncResult  *res,
+           gpointer       user_data)
+{
+  RestoreDiskImageData *data = user_data;
+  GError *error = NULL;
+  if (!udisks_block_call_rescan_finish (block,
+                                        res,
+                                        &error))
+    {
+      if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
+        gdu_window_show_error (data->window, _("Error rescanning device"), error);
+      g_clear_error (&error);
+    }
+  restore_disk_image_data_unref (data);
+}
+
+static void
 restore_disk_image_data_complete (RestoreDiskImageData *data)
 {
+  /* request that the core OS / kernel rescans the device */
+  udisks_block_call_rescan (data->block,
+                            g_variant_new ("a{sv}", NULL), /* options */
+                            NULL, /* cancellable */
+                            (GAsyncReadyCallback) rescan_cb,
+                            restore_disk_image_data_ref (data));
   g_cancellable_cancel (data->cancellable);
   if (data->dialog != NULL)
     gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);

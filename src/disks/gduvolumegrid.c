@@ -1182,6 +1182,9 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
       size = udisks_partition_get_size (partition);
       end = begin + size;
 
+      if (begin < prev_end)
+        begin = prev_end;
+
       if (begin - prev_end > free_space_slack)
         {
           element = g_new0 (GridElement, 1);

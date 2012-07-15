@@ -1180,10 +1180,11 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
 
       begin = udisks_partition_get_offset (partition);
       size = udisks_partition_get_size (partition);
-      end = begin + size;
 
       if (begin < prev_end)
         begin = prev_end;
+
+      end = begin + size;
 
       if (begin - prev_end > free_space_slack)
         {

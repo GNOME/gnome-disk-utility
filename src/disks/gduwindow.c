@@ -2424,6 +2424,7 @@ update_device_page_for_free_space (GduWindow          *window,
   if (!read_only)
     {
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK;
+      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
       *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
     }
 

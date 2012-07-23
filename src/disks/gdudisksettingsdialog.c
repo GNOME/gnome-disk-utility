@@ -269,7 +269,7 @@ on_property_changed (GObject     *object,
 static void
 update_standby_label (DialogData *data)
 {
-  gint value;
+  gint64 value;
   gchar *s = NULL;
 
   value = gtk_adjustment_get_value (data->standby_adjustment);

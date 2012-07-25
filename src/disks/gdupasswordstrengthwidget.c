@@ -38,7 +38,7 @@ struct _GduPasswordStrengthWidget
 {
   GtkHBox parent;
 
-  GtkWidget *progress_bar;
+  GtkWidget *level_bar;
   GtkWidget *notebook;
 
   gchar *password;
@@ -191,7 +191,7 @@ update (GduPasswordStrengthWidget *widget)
   g_warn_if_fail (tab_num >= 0 && tab_num < HINT_LAST);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (widget->notebook), tab_num);
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (widget->progress_bar), strength);
+  gtk_level_bar_set_value (GTK_LEVEL_BAR (widget->level_bar), strength);
 }
 
 
@@ -203,8 +203,8 @@ gdu_password_strength_widget_constructed (GObject *object)
 
   gtk_box_set_spacing (GTK_BOX (widget), 6);
 
-  widget->progress_bar = gtk_progress_bar_new ();
-  gtk_box_pack_start (GTK_BOX (widget), widget->progress_bar, TRUE, TRUE, 0);
+  widget->level_bar = gtk_level_bar_new ();
+  gtk_box_pack_start (GTK_BOX (widget), widget->level_bar, TRUE, TRUE, 0);
 
   widget->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (widget->notebook), FALSE);

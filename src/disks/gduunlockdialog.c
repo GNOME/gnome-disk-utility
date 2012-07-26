@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-#include <gnome-keyring.h>
+#include <libsecret/secret.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -32,12 +32,13 @@
 #include "gduutils.h"
 
 /* From GVfs's monitor/udisks2/gvfsudisks2volume.c */
-static GnomeKeyringPasswordSchema luks_passphrase_schema =
+static const SecretSchema luks_passphrase_schema =
 {
-  GNOME_KEYRING_ITEM_GENERIC_SECRET,
+  "org.gnome.GVfs.Luks.Password",
+  SECRET_SCHEMA_DONT_MATCH_NAME,
   {
-    {"gvfs-luks-uuid", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING},
-    {NULL, 0}
+    { "gvfs-luks-uuid", SECRET_SCHEMA_ATTRIBUTE_STRING },
+    { NULL, 0 },
   }
 };
 
@@ -137,24 +138,26 @@ show_dialog (DialogData *data)
 }
 
 static void
-luks_find_passphrase_cb (GnomeKeyringResult result,
-                         const gchar       *string,
-                         gpointer           user_data)
+luks_find_passphrase_cb (GObject      *source,
+                         GAsyncResult *result,
+                         gpointer      user_data)
 {
   DialogData *data = user_data;
+  gchar *passphrase = NULL;
 
   /* Don't fail if a keyring error occured... but if we do find a
    * passphrase then put it into the entry field and show a
    * cluebar
    */
-  if (result == GNOME_KEYRING_RESULT_OK)
+  passphrase = secret_password_lookup_finish (result, NULL);
+  if (passphrase != NULL)
     {
       GtkWidget *infobar;
       infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
                                            _("The encryption passphrase was retrieved from the keyring"),
                                            NULL);
       gtk_box_pack_start (GTK_BOX (data->infobar_vbox), infobar, TRUE, TRUE, 0);
-      gtk_entry_set_text (GTK_ENTRY (data->entry), string);
+      gtk_entry_set_text (GTK_ENTRY (data->entry), passphrase);
     }
   else
     {
@@ -162,6 +165,7 @@ luks_find_passphrase_cb (GnomeKeyringResult result,
       gtk_widget_set_no_show_all (data->infobar_vbox, TRUE);
     }
   show_dialog (data);
+  g_free (passphrase);
 }
 
 void
@@ -206,11 +210,11 @@ gdu_unlock_dialog_show (GduWindow    *window,
   else
     {
       /* see if there's a passphrase in the keyring */
-      gnome_keyring_find_password (&luks_passphrase_schema,
-                                   luks_find_passphrase_cb,
-                                   data,
-                                   NULL, /* GDestroyNotify */
-                                   "gvfs-luks-uuid", udisks_block_get_id_uuid (data->block),
-                                   NULL); /* sentinel */
+      secret_password_lookup (&luks_passphrase_schema,
+                              NULL, /* GCancellable */
+                              luks_find_passphrase_cb,
+                              data,
+                              "gvfs-luks-uuid", udisks_block_get_id_uuid (data->block),
+                              NULL); /* sentinel */
     }
 }

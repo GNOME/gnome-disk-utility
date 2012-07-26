@@ -37,45 +37,6 @@ static GMainLoop *main_loop = NULL;
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_udisks_client_changed_check_loop_cleared (UDisksClient *client,
-                                             gpointer      user_data)
-{
-  GList *loop_device_objpaths = user_data;
-  GList *l;
-  guint num_loops = 0;
-  guint num_cleared = 0;
-
-  for (l = loop_device_objpaths; l != NULL; l = l->next)
-    {
-      const gchar *loop_object_path = l->data;
-      UDisksObject *object;
-      UDisksBlock *block;
-
-      num_loops++;
-      num_cleared++; /* assume clear */
-
-      object = udisks_client_peek_object (udisks_client, loop_object_path);
-      if (object == NULL)
-        continue;
-
-      block = udisks_object_peek_block (object);
-      if (block == NULL)
-        continue;
-
-      if (udisks_block_get_size (block) > 0)
-        {
-          /* nope, not clear */
-          num_cleared--;
-        }
-    }
-
-  if (num_cleared == num_loops)
-    g_main_loop_quit (main_loop);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
 show_error (const gchar *format, ...)
 {
   va_list var_args;
@@ -111,12 +72,10 @@ show_error (const gchar *format, ...)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean  opt_writable = FALSE;
-static gboolean  opt_wait_until_clear = FALSE;
 
 static const GOptionEntry opt_entries[] =
 {
   { "writable", 'w', 0, G_OPTION_ARG_NONE, &opt_writable, N_("Allow writing to the image"), NULL},
-  { "wait-until-clear", 0, 0, G_OPTION_ARG_NONE, &opt_wait_until_clear, N_("Wait until created loop devices are cleared"), NULL},
   { NULL }
 };
 
@@ -196,7 +155,6 @@ main (int argc, char *argv[])
   gint n;
   GSList *uris = NULL;
   GSList *l;
-  GList *loop_device_objpaths = NULL;
 
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -257,12 +215,7 @@ main (int argc, char *argv[])
       GVariantBuilder options_builder;
       gint fd;
       gchar *loop_object_path = NULL;
-      UDisksObject *object;
-      UDisksFilesystem *filesystem;
-      UDisksPartitionTable *partition_table;
       GFile *file;
-      UDisksLoop *loop = NULL;
-      guint num_mounts = 0;
 
       uri = l->data;
       file = g_file_new_for_commandline_arg (uri);
@@ -288,7 +241,7 @@ main (int argc, char *argv[])
 
       fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
 
-      /* first set up the disk image... */
+      /* Set up the disk image... */
       error = NULL;
       if (!udisks_manager_call_loop_setup_sync (udisks_client_get_manager (udisks_client),
                                                 g_variant_new_handle (0),
@@ -305,120 +258,11 @@ main (int argc, char *argv[])
           goto done_with_image;
         }
 
-      udisks_client_settle (udisks_client);
-
-      /* ... and then mount whatever is inside it */
-      object = udisks_client_peek_object (udisks_client, loop_object_path);
-      g_assert (object != NULL);
-      loop = udisks_object_peek_loop (object);
-      g_assert (loop != NULL);
-      filesystem = udisks_object_peek_filesystem (object);
-      partition_table = udisks_object_peek_partition_table (object);
-      if (partition_table != NULL)
-        {
-          GList *partitions, *ll;
-          partitions = udisks_client_get_partitions (udisks_client, partition_table);
-          for (ll = partitions; ll != NULL; ll = ll->next)
-            {
-              UDisksPartition *partition = UDISKS_PARTITION (ll->data);
-              UDisksObject *partition_object;
-              UDisksBlock *partition_block;
-              UDisksFilesystem *partition_filesystem;
-
-              partition_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (partition));
-              if (partition_object == NULL)
-                continue;
-
-              partition_block = udisks_object_peek_block (partition_object);
-              g_assert (partition_block != NULL);
-
-              if (udisks_block_get_hint_ignore (partition_block))
-                continue;
-
-              partition_filesystem = udisks_object_peek_filesystem (partition_object);
-              if (partition_filesystem == NULL)
-                continue;
-
-              error = NULL;
-              if (!udisks_filesystem_call_mount_sync (partition_filesystem,
-                                                      g_variant_new ("a{sv}", NULL), /* options */
-                                                      NULL, /* out_mount_path */
-                                                      NULL, /* cancellable */
-                                                      &error))
-                {
-                  show_error (_("Error mounting filesystem on partition %d of disk image: %s (%s, %d)"),
-                              udisks_partition_get_number (partition),
-                              error->message, g_quark_to_string (error->domain), error->code);
-                  g_clear_error (&error);
-                  goto done_with_image;
-                }
-              num_mounts++;
-            }
-          g_list_free_full (partitions, g_object_unref);
-        }
-      else
-        {
-          /* not partitioned */
-          if (filesystem == NULL)
-            {
-              show_error (_("The file `%s' does not appear to contain a mountable filesystem or partition table"), filename);
-              goto done_with_image;
-            }
-
-          error = NULL;
-          if (!udisks_filesystem_call_mount_sync (filesystem,
-                                                  g_variant_new ("a{sv}", NULL), /* options */
-                                                  NULL, /* out_mount_path */
-                                                  NULL, /* cancellable */
-                                                  &error))
-            {
-              show_error (_("Error mounting filesystem: %s (%s, %d)"),
-                          error->message, g_quark_to_string (error->domain), error->code);
-              g_clear_error (&error);
-              goto done_with_image;
-            }
-          num_mounts++;
-        }
+      /* Note that the desktop automounter is responsible for mounting,
+       * unlocking etc. partitions etc. inside the image...
+       */
 
     done_with_image:
-      /* We arrive here both if it worked or if something failed.
-       *
-       * Now, if we did mount anything, set Autoclear to TRUE to
-       * ensure that the loop device goes bye-bye when the last mount
-       * is unmounted
-       */
-      if (num_mounts > 0)
-        {
-          error = NULL;
-          if (!udisks_loop_call_set_autoclear_sync (loop,
-                                                    TRUE,
-                                                    g_variant_new ("a{sv}", NULL), /* options */
-                                                    NULL, /* cancellable */
-                                                    &error))
-            {
-              /* this is not fatal but can happen when using FUSE crap where uid 0 is
-               * not permitted to view files on a FUSE mount
-               */
-              g_printerr (_("Non-fatal error: error setting autoclear to TRUE: %s (%s, %d)\n"),
-                          error->message, g_quark_to_string (error->domain), error->code);
-              g_clear_error (&error);
-            }
-          loop_device_objpaths = g_list_prepend (loop_device_objpaths, g_strdup (loop_object_path));
-        }
-      else if (loop != NULL)
-        {
-          /* otherwise, if we didn't mount anything, nuke the loop device */
-          error = NULL;
-          if (!udisks_loop_call_delete_sync (loop,
-                                             g_variant_new ("a{sv}", NULL), /* options */
-                                             NULL, /* cancellable */
-                                             &error))
-            {
-              show_error (_("Error cleaning up loop device: %s (%s, %d)"),
-                          error->message, g_quark_to_string (error->domain), error->code);
-              g_clear_error (&error);
-            }
-        }
 
       g_clear_object (&fd_list);
       g_free (filename);
@@ -426,21 +270,11 @@ main (int argc, char *argv[])
 
     } /* for each image */
 
-  if (opt_wait_until_clear)
-    {
-      g_signal_connect (udisks_client,
-                        "changed",
-                        G_CALLBACK (on_udisks_client_changed_check_loop_cleared),
-                        loop_device_objpaths);
-      g_main_loop_run (main_loop);
-    }
-
   ret = 0;
 
  out:
   if (main_loop != NULL)
     g_main_loop_unref (main_loop);
-  g_list_free_full (loop_device_objpaths, g_free);
   g_slist_free_full (uris, g_free);
   g_clear_object (&udisks_client);
   return ret;

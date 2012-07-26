@@ -14,43 +14,29 @@
     <cmdsynopsis>
       <command>gnome-disk-image-mounter</command>
       <arg choice="opt">--writable</arg>
-      <arg choice="opt">--wait-until-clear</arg>
       <arg choice="opt" rep="repeat"><replaceable>URI</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      <command>gnome-disk-image-mounter</command> can be used to mount
-      disk images. Both regular files and <emphasis>GVfs</emphasis>
+      <command>gnome-disk-image-mounter</command> can be used to set
+      up disk images. Both regular files and <emphasis>GVfs</emphasis>
       URIs (such as <filename>smb://filer/media/file.iso</filename>)
       can be used in the <parameter>URI</parameter> parameter. If no
       <parameter>URI</parameter>s are given and a window server is
       running, a graphical file chooser will be presented.
     </para>
     <para>
-      If a disk image is partitioned, all mountable partitions in the
-      image will be mounted (except for e.g. firmware
-      partitions). Otherwise the whole disk image will be mounted. If
-      a disk image is not mountable or mounting fails, an error will
-      be presented either on <emphasis>standard error</emphasis> or in
-      a dialog box if a window server is running.
-    </para>
-    <para>
-      After mounting <command>gnome-disk-image-mounter</command> will
-      exit unless the option <option>--wait-until-clear</option> is
-      used, in which case the program will sit and wait until all loop
-      devices set up, are no longer in use.
+      Note that <command>gnome-disk-image-mounter</command> will not
+      mount filesystems or unlock encrypted volumes in the disk image
+      - this responsibility is left to the automounter in GNOME Shell
+      to ensure that the same interactions happen as if the disk image
+      was a regular physical device or disc.
     </para>
     <para>
       By default the disk images are attached read-only, use
       the option <option>--writable</option> to change this.
-    </para>
-    <para>
-      Loop devices will be set up using the
-      <emphasis>autoclear</emphasis> option. This means that the loop
-      device will be cleared when the last filesystem using it has
-      been unmounted.
     </para>
   </refsect1>
 
@@ -80,6 +66,7 @@
   <refsect1>
     <title>SEE ALSO</title>
     <para>
+      <citerefentry><refentrytitle>gnome-shell</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
       <link linkend="gnome-disks.1"><citerefentry><refentrytitle>gnome-disks</refentrytitle><manvolnum>1</manvolnum></citerefentry></link>,
       <citerefentry><refentrytitle>udisks</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>losetup</refentrytitle><manvolnum>8</manvolnum></citerefentry>

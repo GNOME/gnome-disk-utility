@@ -35,6 +35,21 @@ typedef enum
   GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE
 } GduVolumeGridElementType;
 
+typedef enum
+{
+  GDU_FORMAT_DURATION_FLAGS_NONE                 = 0,
+  GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION  = (1<<0),
+  GDU_FORMAT_DURATION_FLAGS_NO_SECONDS           = (1<<1)
+} GduFormatDurationFlags;
+
+typedef enum
+{
+  GDU_POWER_STATE_FLAGS_NONE              = 0,
+  GDU_POWER_STATE_FLAGS_STANDBY           = (1<<0),
+  GDU_POWER_STATE_FLAGS_CHECKING          = (1<<1),
+  GDU_POWER_STATE_FLAGS_FAILED            = (1<<2)
+} GduPowerStateFlags;
+
 G_END_DECLS
 
 #endif /* __GDU_ENUMS_H__ */

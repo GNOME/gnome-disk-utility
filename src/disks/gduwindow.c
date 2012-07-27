@@ -959,6 +959,26 @@ device_sort_function (GtkTreeModel *model,
   return g_strcmp0 (sa, sb);
 }
 
+static void
+power_state_cell_func (GtkTreeViewColumn *column,
+                       GtkCellRenderer   *renderer,
+                       GtkTreeModel      *model,
+                       GtkTreeIter       *iter,
+                       gpointer           user_data)
+{
+  gboolean visible = FALSE;
+  GduPowerStateFlags flags;
+
+  gtk_tree_model_get (model,
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS, &flags,
+                      -1);
+
+  if (flags & GDU_POWER_STATE_FLAGS_STANDBY)
+    visible = TRUE;
+
+  gtk_cell_renderer_set_visible (renderer, visible);
+}
 
 static void
 gdu_window_constructed (GObject *object)
@@ -1089,10 +1109,12 @@ gdu_window_constructed (GObject *object)
                 "icon-name", "gnome-disks-state-standby-symbolic",
                 NULL);
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (column,
-                                       renderer,
-                                       "visible", GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING,
-                                       NULL);
+
+  gtk_tree_view_column_set_cell_data_func (column,
+                                           renderer,
+                                           power_state_cell_func,
+                                           NULL,  /* user_data */
+                                           NULL); /* user_data GDestroyNotify */
 
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */
   g_signal_connect (window->model,
@@ -1917,14 +1939,14 @@ update_device_page_for_drive (GduWindow      *window,
       if (udisks_drive_ata_get_pm_supported (ata) && !is_ssd)
         {
           GtkTreeIter iter;
-          gboolean sleeping = FALSE;
+          GduPowerStateFlags power_state_flags = GDU_POWER_STATE_FLAGS_NONE;
           if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
             {
               gtk_tree_model_get (GTK_TREE_MODEL (window->model), &iter,
-                                  GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING,
-                                  &sleeping, -1);
+                                  GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS, &power_state_flags,
+                                  -1);
             }
-          if (sleeping)
+          if (power_state_flags & GDU_POWER_STATE_FLAGS_STANDBY)
             *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW;
           else
             *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW;

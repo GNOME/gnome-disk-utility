@@ -27,6 +27,7 @@
 
 #include "gdudevicetreemodel.h"
 #include "gduatasmartdialog.h"
+#include "gduenumtypes.h"
 #include "gduutils.h"
 
 struct _GduDeviceTreeModel
@@ -312,28 +313,41 @@ pm_get_state_cb (GObject       *source_object,
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   GDBusObject *object;
-  gboolean sleeping;
+  GduPowerStateFlags flags;
   guchar state;
   GError *error = NULL;
+
+  flags = GDU_POWER_STATE_FLAGS_NONE;
 
   if (!udisks_drive_ata_call_pm_get_state_finish (UDISKS_DRIVE_ATA (source_object),
                                                   &state,
                                                   res,
                                                   &error))
     {
-      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_DEVICE_BUSY))
         {
-          g_printerr ("Error calling Drive.Ata.PmGetState: %s (%s, %d)\n",
-                      error->message, g_quark_to_string (error->domain), error->code);
+          /* this means that a secure erase in progress.. so no error-spew and try again */
+        }
+      else
+        {
+          if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+            {
+              g_printerr ("Error calling Drive.Ata.PmGetState: %s (%s, %d)\n",
+                          error->message, g_quark_to_string (error->domain), error->code);
+              /* set a flag so we won't try again */
+              flags |= GDU_POWER_STATE_FLAGS_FAILED;
+            }
         }
       g_clear_error (&error);
       goto out;
     }
 
-  sleeping = TRUE;
-  if (state == 0x80 || state == 0xff)
-    sleeping = FALSE;
+  if (!(state == 0x80 || state == 0xff))
+    {
+      flags |= GDU_POWER_STATE_FLAGS_STANDBY;
+    }
 
+ out:
   object = g_dbus_interface_get_object (G_DBUS_INTERFACE (source_object));
   if (object != NULL)
     {
@@ -342,42 +356,80 @@ pm_get_state_cb (GObject       *source_object,
         {
           gtk_tree_store_set (GTK_TREE_STORE (model),
                               &iter,
-                              GDU_DEVICE_TREE_MODEL_COLUMN_SLEEPING, sleeping,
+                              GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS, flags,
                               -1);
         }
     }
 
- out:
   g_object_unref (model);
+}
+
+
+static gboolean
+pefs_timeout_foreach_cb (GtkTreeModel  *_model,
+                         GtkTreePath   *path,
+                         GtkTreeIter   *iter,
+                         gpointer       user_data)
+{
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (_model);
+  UDisksObject *object = NULL;
+  UDisksDriveAta *ata = NULL;
+  GduPowerStateFlags cur_flags = GDU_POWER_STATE_FLAGS_NONE;
+
+  gtk_tree_model_get (GTK_TREE_MODEL (model),
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, &object,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS, &cur_flags,
+                      -1);
+
+  if (object == NULL)
+    goto out;
+
+  /* Don't check power state if
+   *
+   *  - a check is already pending; or
+   *  - a check failed in the past
+   */
+  if (cur_flags & GDU_POWER_STATE_FLAGS_CHECKING || cur_flags & GDU_POWER_STATE_FLAGS_FAILED)
+    {
+      g_print ("nah cur_flags=%d\n", cur_flags);
+      goto out;
+    }
+
+  ata = udisks_object_peek_drive_ata (object);
+  if (ata != NULL && udisks_drive_ata_get_pm_supported (ata) && udisks_drive_ata_get_pm_enabled (ata))
+    {
+      GVariantBuilder options_builder;
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      g_variant_builder_add (&options_builder,
+                             "{sv}", "auth.no_user_interaction", g_variant_new_boolean (TRUE));
+      udisks_drive_ata_call_pm_get_state (ata,
+                                          g_variant_builder_end (&options_builder),
+                                          NULL, /* GCancellable */
+                                          pm_get_state_cb,
+                                          g_object_ref (model));
+
+      cur_flags |= GDU_POWER_STATE_FLAGS_CHECKING;
+      gtk_tree_store_set (GTK_TREE_STORE (model),
+                          iter,
+                          GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS, cur_flags,
+                          -1);
+    }
+
+  /* TODO: add support for other PM interfaces */
+
+ out:
+  g_clear_object (&object);
+  return FALSE; /* continue iterating */
 }
 
 static gboolean
 on_pefs_timeout (gpointer user_data)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
-  GList *l;
-
-  for (l = model->current_drives; l != NULL; l = l->next)
-    {
-      UDisksObject *object = UDISKS_OBJECT (l->data);
-      UDisksDriveAta *ata;
-
-      ata = udisks_object_peek_drive_ata (object);
-      if (ata != NULL &&
-          udisks_drive_ata_get_pm_supported (ata) &&
-          udisks_drive_ata_get_pm_enabled (ata))
-        {
-          GVariantBuilder options_builder;
-          g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-          g_variant_builder_add (&options_builder, "{sv}", "auth.no_user_interaction", g_variant_new_boolean (TRUE));
-          udisks_drive_ata_call_pm_get_state (ata,
-                                              g_variant_builder_end (&options_builder),
-                                              NULL, /* GCancellable */
-                                              pm_get_state_cb,
-                                              g_object_ref (model));
-        }
-    }
-
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model),
+                          pefs_timeout_foreach_cb,
+                          NULL);
   return TRUE; /* keep timeout around */
 }
 
@@ -400,7 +452,7 @@ gdu_device_tree_model_constructed (GObject *object)
   types[6] = G_TYPE_BOOLEAN;
   types[7] = G_TYPE_UINT;
   types[8] = G_TYPE_BOOLEAN;
-  types[9] = G_TYPE_BOOLEAN;
+  types[9] = GDU_TYPE_POWER_STATE_FLAGS;
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);

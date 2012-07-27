@@ -35,9 +35,9 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -Wcast-align                              \
         -Wdeclaration-after-statement             \
         -Wendif-labels                            \
-        -Werror=format-security                   \
-        -Werror=implicit-function-declaration     \
-        -Werror=overflow                          \
+        -Wformat-security                         \
+        -Wimplicit-function-declaration           \
+        -Woverflow                                \
         -Wformat-nonliteral                       \
         -Wformat=2                                \
         -Wimplicit                                \

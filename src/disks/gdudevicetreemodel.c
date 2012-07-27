@@ -391,10 +391,7 @@ pefs_timeout_foreach_cb (GtkTreeModel  *_model,
    *  - a check failed in the past
    */
   if (cur_flags & GDU_POWER_STATE_FLAGS_CHECKING || cur_flags & GDU_POWER_STATE_FLAGS_FAILED)
-    {
-      g_print ("nah cur_flags=%d\n", cur_flags);
-      goto out;
-    }
+    goto out;
 
   ata = udisks_object_peek_drive_ata (object);
   if (ata != NULL && udisks_drive_ata_get_pm_supported (ata) && udisks_drive_ata_get_pm_enabled (ata))

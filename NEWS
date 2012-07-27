@@ -1,4 +1,65 @@
 -------------------------
+gnome-disk-utility 3.5.3
+-------------------------
+
+The gnome-disk-utility project provides the Disks application for
+dealing with storage devices. It relies on the udisks project.
+
+Changes since gnome-disk-utility 3.5.2:
+
+David Zeuthen (39):
+      Post-release version bump to 3.5.3
+      about-dialog: use gnome-disks for the icon, not palimpsest
+      Add back Benchmark dialog
+      Show sample size and number of samples for benchmarks
+      Add a settings dialog for power management and acoustic levels
+      Make volume grid look right (grey, not blue) when selected and unfocused
+      Add a "Wake-up from Standby" menu item
+      Don't show WWN if we already show a serial
+      Add erase option when formatting, show job progress and allow job cancelation
+      Remove some "madness" from the Drive Settings dialog
+      Don't show "standby timeout" setting for SSD drives
+      Show estimated time remaining when a job is pending
+      Rework UI for pending jobs
+      Don't include SMART self-test percentage in one-liner summary
+      Streamline time duration routines
+      Use more sensible spacings in format disk and format volume dialogs
+      Add support for ATA secure erase and non-cancelable jobs
+      Show vendor recommended AAM level and use it as a default
+      Don't allow standby on SSD drives
+      Be a bit more precise in the warning dialog when formatting
+      Add more compiler warnings
+      Add more compiler warnings
+      Properly initialize variable
+      Don't define _FORTIFY_SOURCE
+      Update compiler warning flags once again
+      Don't show sub-minute precision for restoring/creating disk images
+      Mark strings for translation
+      Fix typo in previous commit
+      Rescan device when we're done restoring a disk image onto it
+      Handle partition setups with overlapping partitions
+      Refine handling of overlapping partitions
+      Show "Create Disk Image" even if free space on a drive is selected
+      Fix 64-bit extension of integer
+      Use GtkLevelBar widget for conveying passphrase strength
+      disk-image-mounter: leave mounting to gnome-shell
+      Port from libgnome-keyring-1 to libsecret-1
+      Be a bit more careful when checking power state
+      Nuke debug spew from last commit
+      Update NEWS for release
+
+Olav Vitters (1):
+      MimeType key in gnome-disk-image-mounter.desktop must end on semicolon
+
+Updated translations: Aurimas Černius, Chao-Hsiung Liao, Cheng Lu,
+   Daniel Mustieles, Fran Diéguez, Ihar Hrachyshka, Kjartan Maraas,
+   Milo Casagrande, Nilamdyuti Goswami, Piotr Drąg, Tom Tryfonidis,
+   Yuri Kozlov, Мирослав Николић
+
+David Zeuthen,
+July 27, 2012
+
+-------------------------
 gnome-disk-utility 3.5.2
 -------------------------
 

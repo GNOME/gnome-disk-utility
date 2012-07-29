@@ -218,7 +218,7 @@ create_disk_image_populate (CreateDiskImageData *data)
   g_time_zone_unref (tz);
   g_free (now_string);
 
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->destination_name_fcbutton), FALSE);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

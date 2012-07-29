@@ -268,7 +268,7 @@ on_notify (GObject    *object,
 static void
 restore_disk_image_populate (RestoreDiskImageData *data)
 {
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->source_file_fcbutton));
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->source_file_fcbutton), TRUE);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

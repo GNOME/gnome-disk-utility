@@ -72,7 +72,8 @@ gdu_utils_has_configuration (UDisksBlock  *block,
 }
 
 void
-gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
+gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
+                                                  gboolean        set_file_types)
 {
   GtkFileFilter *filter;
   gchar *folder;
@@ -94,16 +95,19 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
     gtk_file_chooser_set_current_folder (file_chooser, folder);
 
   /* TODO: define proper mime-types */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
-  gtk_file_filter_add_pattern (filter, "*.img");
-  gtk_file_filter_add_pattern (filter, "*.iso");
-  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
-  gtk_file_chooser_set_filter (file_chooser, filter);
+  if (set_file_types)
+    {
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, _("All Files"));
+      gtk_file_filter_add_pattern (filter, "*");
+      gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
+      gtk_file_filter_add_pattern (filter, "*.img");
+      gtk_file_filter_add_pattern (filter, "*.iso");
+      gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
+      gtk_file_chooser_set_filter (file_chooser, filter);
+    }
 
   g_clear_object (&settings);
   g_free (folder);

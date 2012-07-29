@@ -32,7 +32,8 @@ gboolean gdu_utils_has_configuration (UDisksBlock  *block,
                                       const gchar  *type,
                                       gboolean     *out_has_passphrase);
 
-void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser);
+void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
+                                                       gboolean        set_file_types);
 
 void gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_chooser);
 

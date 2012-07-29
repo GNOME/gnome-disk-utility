@@ -60,6 +60,15 @@ const gchar *gdu_utils_get_seat (void);
 gchar *gdu_utils_format_duration_usec (guint64                usec,
                                        GduFormatDurationFlags flags);
 
+void            gdu_utils_show_error      (GtkWindow      *parent_window,
+                                           const gchar    *message,
+                                           GError         *error);
+
+gboolean        gdu_utils_show_confirmation (GtkWindow   *parent_window,
+                                             const gchar *message,
+                                             const gchar *secondary_message,
+                                             const gchar *affirmative_verb);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

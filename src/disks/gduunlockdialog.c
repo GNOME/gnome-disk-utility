@@ -96,9 +96,9 @@ unlock_cb (UDisksEncrypted *encrypted,
                                             res,
                                             &error))
     {
-      gdu_window_show_error (data->window,
-                             _("Error unlocking encrypted device"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error unlocking encrypted device"),
+                            error);
       g_error_free (error);
     }
   dialog_data_free (data);

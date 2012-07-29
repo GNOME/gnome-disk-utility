@@ -70,9 +70,9 @@ change_filesystem_label_cb (UDisksFilesystem  *filesystem,
                                                 res,
                                                 &error))
     {
-      gdu_window_show_error (window,
-                             _("Error setting label"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error setting label"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);

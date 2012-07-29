@@ -366,7 +366,7 @@ gdu_partition_dialog_show (GduWindow    *window,
                                                     NULL, /* GCancellable */
                                                     &error))
             {
-              gdu_window_show_error (window, _("Error setting partition type"), error);
+              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition type"), error);
               g_error_free (error);
               goto set_out;
             }
@@ -380,7 +380,7 @@ gdu_partition_dialog_show (GduWindow    *window,
                                                     NULL, /* GCancellable */
                                                     &error))
             {
-              gdu_window_show_error (window, _("Error setting partition name"), error);
+              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition name"), error);
               g_error_free (error);
               goto set_out;
             }
@@ -394,7 +394,7 @@ gdu_partition_dialog_show (GduWindow    *window,
                                                      NULL, /* GCancellable */
                                                      &error))
             {
-              gdu_window_show_error (window, _("Error setting partition flags"), error);
+              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition flags"), error);
               g_error_free (error);
               goto set_out;
             }

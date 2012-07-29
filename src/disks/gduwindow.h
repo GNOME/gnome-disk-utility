@@ -38,15 +38,6 @@ GduWindow      *gdu_window_new             (GduApplication *application,
 GduApplication *gdu_window_get_application (GduWindow      *window);
 UDisksClient   *gdu_window_get_client      (GduWindow      *window);
 
-void            gdu_window_show_error      (GduWindow      *window,
-                                            const gchar    *message,
-                                            GError         *error);
-
-gboolean        gdu_window_show_confirmation (GduWindow   *window,
-                                              const gchar *message,
-                                              const gchar *secondary_message,
-                                              const gchar *affirmative_verb);
-
 gboolean        gdu_window_select_object     (GduWindow    *window,
                                               UDisksObject *object);
 

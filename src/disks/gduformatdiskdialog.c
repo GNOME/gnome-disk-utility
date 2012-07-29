@@ -339,7 +339,7 @@ format_cb (GObject      *source_object,
                                         res,
                                         &error))
     {
-      gdu_window_show_error (data->window, _("Error formatting disk"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error formatting disk"), error);
       g_error_free (error);
     }
   format_disk_data_free (data);
@@ -419,10 +419,10 @@ gdu_format_disk_dialog_show (GduWindow    *window,
         }
 
       gtk_widget_hide (data->dialog);
-      if (!gdu_window_show_confirmation (window,
-                                         primary_message,
-                                         str->str,
-                                         _("_Format")))
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                        primary_message,
+                                        str->str,
+                                        _("_Format")))
         {
           g_string_free (str, TRUE);
           goto out;

@@ -622,9 +622,9 @@ loop_delete_cb (UDisksLoop   *loop,
   error = NULL;
   if (!udisks_loop_call_delete_finish (loop, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error deleting loop device"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error deleting loop device"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -693,9 +693,9 @@ loop_setup_cb (UDisksManager  *manager,
   error = NULL;
   if (!udisks_manager_call_loop_setup_finish (manager, &out_loop_device_object_path, NULL, res, &error))
     {
-      gdu_window_show_error (data->window,
-                             _("Error attaching disk image"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error attaching disk image"),
+                            error);
       g_error_free (error);
     }
   else
@@ -765,9 +765,9 @@ gdu_window_show_attach_disk_image (GduWindow *window)
       error = g_error_new (G_IO_ERROR,
                            g_io_error_from_errno (errno),
                            "%s", strerror (errno));
-      gdu_window_show_error (window,
-                             _("Error attaching disk image"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error attaching disk image"),
+                            error);
       g_error_free (error);
       goto out;
     }
@@ -2592,84 +2592,6 @@ teardown_device_page (GduWindow *window)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* TODO: right now we show a MessageDialog but we could do things like an InfoBar etc */
-void
-gdu_window_show_error (GduWindow   *window,
-                       const gchar *message,
-                       GError      *error)
-{
-  GtkWidget *dialog;
-  GError *fixed_up_error;
-
-  /* Never show an error if it's because the user dismissed the
-   * authentication dialog himself
-   *
-   * ... or if the user cancelled the operation
-   */
-  if ((error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED) ||
-      (error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_CANCELLED))
-    goto no_dialog;
-
-  fixed_up_error = g_error_copy (error);
-  if (g_dbus_error_is_remote_error (fixed_up_error))
-    g_dbus_error_strip_remote_error (fixed_up_error);
-
-  /* TODO: probably provide the error-domain / error-code / D-Bus error name
-   * in a GtkExpander.
-   */
-  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
-                                               GTK_DIALOG_MODAL,
-                                               GTK_MESSAGE_ERROR,
-                                               GTK_BUTTONS_CLOSE,
-                                               "<big><b>%s</b></big>",
-                                               message);
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s (%s, %d)",
-                                              fixed_up_error->message,
-                                              g_quark_to_string (error->domain),
-                                              error->code);
-  g_error_free (fixed_up_error);
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (dialog);
-
- no_dialog:
-  ;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-gboolean
-gdu_window_show_confirmation (GduWindow   *window,
-                              const gchar *message,
-                              const gchar *secondary_message,
-                              const gchar *affirmative_verb)
-{
-  GtkWidget *dialog;
-  gint response;
-
-  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (window),
-                                               GTK_DIALOG_MODAL,
-                                               GTK_MESSAGE_INFO,
-                                               GTK_BUTTONS_CANCEL,
-                                               "<big><b>%s</b></big>",
-                                               message);
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s",
-                                              secondary_message);
-
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         affirmative_verb,
-                         GTK_RESPONSE_OK);
-
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-  gtk_widget_destroy (dialog);
-
-  return response == GTK_RESPONSE_OK;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 static void
 on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
                                  gpointer   user_data)
@@ -2853,9 +2775,9 @@ ata_pm_standby_cb (GObject      *source_object,
                                                 res,
                                                 &error))
     {
-      gdu_window_show_error (window,
-                             _("An error occurred when trying to put the drive into standby mode"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("An error occurred when trying to put the drive into standby mode"),
+                            error);
       g_clear_error (&error);
     }
 
@@ -2899,9 +2821,9 @@ ata_pm_wakeup_cb (GObject      *source_object,
                                                res,
                                                &error))
     {
-      gdu_window_show_error (window,
-                             _("An error occurred when trying to wake up the drive from standby mode"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("An error occurred when trying to wake up the drive from standby mode"),
+                            error);
       g_clear_error (&error);
     }
 
@@ -2974,9 +2896,9 @@ mount_cb (UDisksFilesystem *filesystem,
                                             res,
                                             &error))
     {
-      gdu_window_show_error (window,
-                             _("Error mounting filesystem"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error mounting filesystem"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3014,9 +2936,9 @@ unmount_cb (UDisksFilesystem *filesystem,
                                               res,
                                               &error))
     {
-      gdu_window_show_error (window,
-                             _("Error unmounting filesystem"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error unmounting filesystem"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3095,9 +3017,9 @@ partition_delete_cb (UDisksPartition *partition,
                                             res,
                                             &error))
     {
-      gdu_window_show_error (window,
-                             _("Error deleting partition"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error deleting partition"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3111,10 +3033,10 @@ on_devtab_action_partition_delete_activated (GtkAction *action,
   UDisksObject *object;
   UDisksPartition *partition;
 
-  if (!gdu_window_show_confirmation (window,
-                                     _("Are you sure you want to delete the partition?"),
-                                     _("All data on the partition will be lost"),
-                                     _("_Delete")))
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                    _("Are you sure you want to delete the partition?"),
+                                    _("All data on the partition will be lost"),
+                                    _("_Delete")))
     goto out;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
@@ -3144,9 +3066,9 @@ eject_cb (UDisksDrive  *drive,
                                        res,
                                        &error))
     {
-      gdu_window_show_error (window,
-                             _("Error ejecting media"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error ejecting media"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3196,9 +3118,9 @@ lock_cb (UDisksEncrypted *encrypted,
                                           res,
                                           &error))
     {
-      gdu_window_show_error (window,
-                             _("Error locking encrypted device"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error locking encrypted device"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3237,9 +3159,9 @@ swapspace_start_cb (UDisksSwapspace  *swapspace,
                                            res,
                                            &error))
     {
-      gdu_window_show_error (window,
-                             _("Error starting swap"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error starting swap"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3274,9 +3196,9 @@ swapspace_stop_cb (UDisksSwapspace  *swapspace,
                                           res,
                                           &error))
     {
-      gdu_window_show_error (window,
-                             _("Error stopping swap"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error stopping swap"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3316,9 +3238,9 @@ loop_set_autoclear_cb (UDisksLoop      *loop,
                                               res,
                                               &error))
     {
-      gdu_window_show_error (window,
-                             _("Error setting autoclear flag"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error setting autoclear flag"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3369,9 +3291,9 @@ drive_job_cancel_cb (UDisksJob       *job,
 
   if (!udisks_job_call_cancel_finish (job, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error canceling job"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error canceling job"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -3424,9 +3346,9 @@ job_cancel_cb (UDisksJob       *job,
 
   if (!udisks_job_call_cancel_finish (job, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error canceling job"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error canceling job"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);

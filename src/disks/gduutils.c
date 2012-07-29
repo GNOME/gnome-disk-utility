@@ -576,3 +576,82 @@ gdu_utils_format_duration_usec (guint64                usec,
 
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_utils_show_error (GtkWindow   *parent_window,
+                      const gchar *message,
+                      GError      *error)
+{
+  GtkWidget *dialog;
+  GError *fixed_up_error;
+
+  /* Never show an error if it's because the user dismissed the
+   * authentication dialog himself
+   *
+   * ... or if the user cancelled the operation
+   */
+  if ((error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED) ||
+      (error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_CANCELLED))
+    goto no_dialog;
+
+  fixed_up_error = g_error_copy (error);
+  if (g_dbus_error_is_remote_error (fixed_up_error))
+    g_dbus_error_strip_remote_error (fixed_up_error);
+
+  /* TODO: probably provide the error-domain / error-code / D-Bus error name
+   * in a GtkExpander.
+   */
+  dialog = gtk_message_dialog_new_with_markup (parent_window,
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_ERROR,
+                                               GTK_BUTTONS_CLOSE,
+                                               "<big><b>%s</b></big>",
+                                               message);
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s (%s, %d)",
+                                              fixed_up_error->message,
+                                              g_quark_to_string (error->domain),
+                                              error->code);
+  g_error_free (fixed_up_error);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+ no_dialog:
+  ;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+gdu_utils_show_confirmation (GtkWindow   *parent_window,
+                             const gchar *message,
+                             const gchar *secondary_message,
+                             const gchar *affirmative_verb)
+{
+  GtkWidget *dialog;
+  gint response;
+
+  dialog = gtk_message_dialog_new_with_markup (parent_window,
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_INFO,
+                                               GTK_BUTTONS_CANCEL,
+                                               "<big><b>%s</b></big>",
+                                               message);
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s",
+                                              secondary_message);
+
+  gtk_dialog_add_button (GTK_DIALOG (dialog),
+                         affirmative_verb,
+                         GTK_RESPONSE_OK);
+
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return response == GTK_RESPONSE_OK;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

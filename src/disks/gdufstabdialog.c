@@ -528,9 +528,9 @@ gdu_fstab_dialog_show (GduWindow    *window,
                   goto again;
                 }
               gtk_widget_hide (dialog);
-              gdu_window_show_error (window,
-                                     _("Error removing old /etc/fstab entry"),
-                                     error);
+              gdu_utils_show_error (GTK_WINDOW (window),
+                                    _("Error removing old /etc/fstab entry"),
+                                    error);
               g_error_free (error);
               goto out;
             }
@@ -584,9 +584,9 @@ gdu_fstab_dialog_show (GduWindow    *window,
                       goto again;
                     }
                   gtk_widget_hide (dialog);
-                  gdu_window_show_error (window,
-                                         _("Error adding new /etc/fstab entry"),
-                                         error);
+                  gdu_utils_show_error (GTK_WINDOW (window),
+                                        _("Error adding new /etc/fstab entry"),
+                                        error);
                   g_error_free (error);
                   g_free (ui_fsname);
                   goto out;
@@ -608,9 +608,9 @@ gdu_fstab_dialog_show (GduWindow    *window,
                       goto again;
                     }
                   gtk_widget_hide (dialog);
-                  gdu_window_show_error (window,
-                                         _("Error updating /etc/fstab entry"),
-                                         error);
+                  gdu_utils_show_error (GTK_WINDOW (window),
+                                        _("Error updating /etc/fstab entry"),
+                                        error);
                   g_error_free (error);
                   g_free (ui_fsname);
                   goto out;

@@ -88,6 +88,9 @@ typedef struct
   guint64 buffer_bytes_to_write;
 
   GduEstimator *estimator;
+
+  gulong response_signal_handler_id;
+  gboolean completed;
 } CreateDiskImageData;
 
 static CreateDiskImageData *
@@ -102,10 +105,16 @@ create_disk_image_data_unref (CreateDiskImageData *data)
 {
   if (g_atomic_int_dec_and_test (&data->ref_count))
     {
+      /* hide the dialog */
       if (data->dialog != NULL)
         {
-          gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          GtkWidget *dialog;
+          if (data->response_signal_handler_id != 0)
+            g_signal_handler_disconnect (data->dialog, data->response_signal_handler_id);
+          dialog = data->dialog;
+          data->dialog = NULL;
+          gtk_widget_hide (dialog);
+          gtk_widget_destroy (dialog);
         }
       g_clear_object (&data->cancellable);
       g_clear_object (&data->output_file_stream);
@@ -137,8 +146,12 @@ create_disk_image_data_unref (CreateDiskImageData *data)
 static void
 create_disk_image_data_complete (CreateDiskImageData *data)
 {
-  g_cancellable_cancel (data->cancellable);
-  gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
+  if (!data->completed)
+    {
+      data->completed = TRUE;
+      g_cancellable_cancel (data->cancellable);
+      create_disk_image_data_unref (data);
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -244,8 +257,8 @@ write_cb (GOutputStream  *output_stream,
   if (error != NULL)
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window,
-                               _("Error writing to backup image"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog),
+                              _("Error writing to image"), error);
       g_error_free (error);
       create_disk_image_data_complete (data);
       goto out;
@@ -338,7 +351,7 @@ read_cb (GInputStream  *input_stream,
                            (guint64) data->total_bytes_read,
                            udisks_block_get_preferred_device (data->block));
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, s, error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), s, error);
       g_free (s);
       g_error_free (error);
       create_disk_image_data_complete (data);
@@ -402,7 +415,7 @@ open_cb (UDisksBlock  *block,
                                                  &error))
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error opening device"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening device"), error);
       g_error_free (error);
       create_disk_image_data_complete (data);
       goto out;
@@ -417,7 +430,7 @@ open_cb (UDisksBlock  *block,
   if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
     {
       error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
-      gdu_window_show_error (data->window, _("Error determining size of device"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determining size of device"), error);
       g_error_free (error);
       create_disk_image_data_complete (data);
       goto out;
@@ -519,7 +532,7 @@ start_copying (CreateDiskImageData *data)
   if (data->output_file_stream == NULL)
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error opening file for writing"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening file for writing"), error);
       g_error_free (error);
       g_object_unref (folder);
       create_disk_image_data_complete (data);
@@ -540,12 +553,36 @@ start_copying (CreateDiskImageData *data)
   return ret;
 }
 
+static void
+on_dialog_response (GtkDialog     *dialog,
+                    gint           response,
+                    gpointer       user_data)
+{
+  CreateDiskImageData *data = user_data;
+  if (response == GTK_RESPONSE_OK)
+    {
+      if (check_overwrite (data))
+        {
+          gtk_label_set_markup (GTK_LABEL (data->copying_label), _("Copying data from device..."));
+
+          /* Advance to the progress page */
+          gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
+          gtk_widget_hide (data->start_copying_button);
+
+          start_copying (data);
+        }
+    }
+  else
+    {
+      create_disk_image_data_complete (data);
+    }
+}
+
 void
 gdu_create_disk_image_dialog_show (GduWindow    *window,
                                    UDisksObject *object)
 {
   CreateDiskImageData *data;
-  gint response;
   gchar *s;
 
   data = g_new0 (CreateDiskImageData, 1);
@@ -572,37 +609,21 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   create_disk_image_populate (data);
   create_disk_image_update (data);
 
-  /* Make sure we attach to parent */
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  /* Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device. */
+  s = g_strdup_printf (_("Create Disk Image (%s)"),
+                       udisks_block_get_preferred_device (data->block));
+  gtk_window_set_title (GTK_WINDOW (data->dialog), s);
+  g_free (s);
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-  gtk_widget_show_all (data->dialog);
-  /* Only select the precomputed filename, not the .img extension */
+  /* Only select the precomputed filename, not the .img / .iso extension */
   gtk_editable_select_region (GTK_EDITABLE (data->destination_name_entry), 0,
                               strlen (gtk_entry_get_text (GTK_ENTRY (data->destination_name_entry))) - 4);
 
- again:
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-  if (response != GTK_RESPONSE_OK)
-    goto out;
+  data->response_signal_handler_id = g_signal_connect (data->dialog,
+                                                       "response",
+                                                       G_CALLBACK (on_dialog_response),
+                                                       data);
 
-  if (!check_overwrite (data))
-    goto again;
-
-  s = g_strdup_printf (_("Copying data from device <i>%s</i>..."),
-                       udisks_block_get_preferred_device (data->block));
-  gtk_label_set_markup (GTK_LABEL (data->copying_label), s);
-  g_free (s);
-
-  /* Advance to the progress page */
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
-  gtk_widget_hide (data->start_copying_button);
-
-  if (!start_copying (data))
-    goto out;
-
-  gtk_dialog_run (GTK_DIALOG (data->dialog));
-  create_disk_image_data_complete (data);
-
- out:
-  create_disk_image_data_unref (data);
+  gtk_widget_show_all (data->dialog);
+  gtk_window_present (GTK_WINDOW (data->dialog));
 }

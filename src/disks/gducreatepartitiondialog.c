@@ -212,7 +212,7 @@ format_cb (GObject      *source_object,
                                         res,
                                         &error))
     {
-      gdu_window_show_error (data->window, _("Error formatting partition"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error formatting partition"), error);
       g_error_free (error);
     }
   create_partition_data_free (data);
@@ -240,7 +240,7 @@ create_partition_cb (GObject      *source_object,
                                                             res,
                                                             &error))
     {
-      gdu_window_show_error (data->window, _("Error creating partition"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error creating partition"), error);
       g_error_free (error);
       create_partition_data_free (data);
       goto out;

@@ -1309,9 +1309,9 @@ refresh_cb (UDisksDriveAta  *ata,
   error = NULL;
   if (!udisks_drive_ata_call_smart_update_finish (ata, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error refreshing SMART data"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error refreshing SMART data"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -1341,9 +1341,9 @@ smart_cancel_cb (UDisksDriveAta  *ata,
   error = NULL;
   if (!udisks_drive_ata_call_smart_selftest_abort_finish (ata, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error aborting SMART self-test"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error aborting SMART self-test"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);
@@ -1360,9 +1360,9 @@ smart_start_cb (UDisksDriveAta  *ata,
   error = NULL;
   if (!udisks_drive_ata_call_smart_selftest_start_finish (ata, res, &error))
     {
-      gdu_window_show_error (window,
-                             _("Error starting SMART self-test"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error starting SMART self-test"),
+                            error);
       g_error_free (error);
     }
   g_object_unref (window);

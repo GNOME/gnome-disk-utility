@@ -46,8 +46,6 @@ typedef struct
 {
   volatile gint ref_count;
 
-  gboolean destroying;
-
   GduWindow *window;
   UDisksObject *object;
   UDisksBlock *block;
@@ -83,6 +81,9 @@ typedef struct
   guint64 buffer_bytes_to_write;
 
   GduEstimator *estimator;
+
+  gulong response_signal_handler_id;
+  gboolean completed;
 } RestoreDiskImageData;
 
 static RestoreDiskImageData *
@@ -97,11 +98,16 @@ restore_disk_image_data_unref (RestoreDiskImageData *data)
 {
   if (g_atomic_int_dec_and_test (&data->ref_count))
     {
-      data->destroying = TRUE;
+      /* hide the dialog */
       if (data->dialog != NULL)
         {
-          gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          GtkWidget *dialog;
+          if (data->response_signal_handler_id != 0)
+            g_signal_handler_disconnect (data->dialog, data->response_signal_handler_id);
+          dialog = data->dialog;
+          data->dialog = NULL;
+          gtk_widget_hide (dialog);
+          gtk_widget_destroy (dialog);
         }
       g_clear_object (&data->cancellable);
       g_clear_object (&data->input_file_stream);
@@ -131,8 +137,7 @@ rescan_cb (UDisksBlock   *block,
                                         res,
                                         &error))
     {
-      if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error rescanning device"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error rescanning device"), error);
       g_clear_error (&error);
     }
   restore_disk_image_data_unref (data);
@@ -141,15 +146,18 @@ rescan_cb (UDisksBlock   *block,
 static void
 restore_disk_image_data_complete (RestoreDiskImageData *data)
 {
-  /* request that the core OS / kernel rescans the device */
-  udisks_block_call_rescan (data->block,
-                            g_variant_new ("a{sv}", NULL), /* options */
-                            NULL, /* cancellable */
-                            (GAsyncReadyCallback) rescan_cb,
-                            restore_disk_image_data_ref (data));
-  g_cancellable_cancel (data->cancellable);
-  if (data->dialog != NULL)
-    gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
+  if (!data->completed)
+    {
+      data->completed = TRUE;
+      /* request that the core OS / kernel rescans the device */
+      udisks_block_call_rescan (data->block,
+                                g_variant_new ("a{sv}", NULL), /* options */
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) rescan_cb,
+                                restore_disk_image_data_ref (data));
+      g_cancellable_cancel (data->cancellable);
+      restore_disk_image_data_unref (data);
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -162,7 +170,7 @@ restore_disk_image_update (RestoreDiskImageData *data)
   gchar *restore_error = NULL;
   GFile *restore_file = NULL;
 
-  if (data->destroying)
+  if (data->dialog == NULL)
     goto out;
 
   /* don't update if we're already copying */
@@ -294,8 +302,8 @@ write_cb (GOutputStream  *output_stream,
   if (error != NULL)
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window,
-                               _("Error writing to backup image"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog),
+                               _("Error writing to device"), error);
       g_error_free (error);
       restore_disk_image_data_complete (data);
       goto out;
@@ -386,7 +394,7 @@ read_cb (GInputStream  *input_stream,
       s = g_strdup_printf (_("Error reading from offset %" G_GUINT64_FORMAT " of file"),
                            (guint64) data->total_bytes_read);
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, s, error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), s, error);
       g_free (s);
       g_error_free (error);
       restore_disk_image_data_complete (data);
@@ -446,7 +454,7 @@ start_copying (RestoreDiskImageData *data)
   if (data->input_file_stream == NULL)
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error opening file for reading"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening file for reading"), error);
       g_error_free (error);
       restore_disk_image_data_complete (data);
       goto out;
@@ -460,8 +468,9 @@ start_copying (RestoreDiskImageData *data)
                             &error);
   if (info == NULL)
     {
-      gdu_window_show_error (data->window, _("Error determing size of file"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determing size of file"), error);
       g_error_free (error);
+      restore_disk_image_data_complete (data);
       goto out;
     }
   data->file_size = g_file_info_get_size (info);
@@ -481,9 +490,45 @@ start_copying (RestoreDiskImageData *data)
 }
 
 static void
+on_dialog_response (GtkDialog     *dialog,
+                    gint           response,
+                    gpointer       user_data)
+{
+  RestoreDiskImageData *data = user_data;
+  if (response == GTK_RESPONSE_OK)
+    {
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
+                                        _("Are you sure you want to write the disk image to the device?"),
+                                        _("All existing data will be lost"),
+                                        _("_Restore")))
+        {
+          restore_disk_image_data_complete (data);
+          goto out;
+        }
+
+      /* now that we know the user picked a folder, update file chooser settings */
+      gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->source_file_fcbutton));
+
+      gtk_label_set_markup (GTK_LABEL (data->copying_label), _("Copying data to device..."));
+
+      /* Advance to the progress page and hide infobars, if any */
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
+      gtk_widget_hide (data->start_copying_button);
+      gtk_widget_hide (data->infobar_vbox);
+
+      start_copying (data);
+    }
+  else
+    {
+      restore_disk_image_data_complete (data);
+    }
+ out:
+  ;
+}
+
+static void
 gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
 {
-  gint response;
   gchar *s;
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (data->window),
@@ -515,42 +560,19 @@ gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
   g_signal_connect (data->source_file_fcbutton, "notify",
                     G_CALLBACK (on_notify), data);
 
-  /* Make sure we attach to parent */
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (data->window));
-  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-  gtk_widget_show_all (data->dialog);
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
-  if (response != GTK_RESPONSE_OK)
-    goto out;
-
-  if (!gdu_window_show_confirmation (data->window,
-                                     _("Are you sure you want to write the disk image to the device?"),
-                                     _("All existing data will be lost"),
-                                     _("_Restore")))
-    goto out;
-
-  /* now that we know the user picked a folder, update file chooser settings */
-  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->source_file_fcbutton));
-
-  s = g_strdup_printf (_("Copying data to device <i>%s</i>..."),
+  /* Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device. */
+  s = g_strdup_printf (_("Restore Disk Image (%s)"),
                        udisks_block_get_preferred_device (data->block));
-  gtk_label_set_markup (GTK_LABEL (data->copying_label), s);
+  gtk_window_set_title (GTK_WINDOW (data->dialog), s);
   g_free (s);
 
-  /* Advance to the progress page and hide infobars, if any */
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
-  gtk_widget_hide (data->start_copying_button);
-  gtk_widget_hide (data->infobar_vbox);
-
-  if (!start_copying (data))
-    goto out;
-
-  gtk_dialog_run (GTK_DIALOG (data->dialog));
-  restore_disk_image_data_complete (data);
-
- out:
-  restore_disk_image_data_unref (data);
+  data->response_signal_handler_id = g_signal_connect (data->dialog,
+                                                       "response",
+                                                       G_CALLBACK (on_dialog_response),
+                                                       data);
+  gtk_widget_show_all (data->dialog);
+  gtk_window_present (GTK_WINDOW (data->dialog));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -574,10 +596,9 @@ open_cb (UDisksBlock  *block,
                                                   &error))
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-        gdu_window_show_error (data->window, _("Error opening device"), error);
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening device"), error);
       g_error_free (error);
       restore_disk_image_data_complete (data);
-      restore_disk_image_data_unref (data);
       goto out;
     }
 
@@ -590,10 +611,9 @@ open_cb (UDisksBlock  *block,
   if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
     {
       error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
-      gdu_window_show_error (data->window, _("Error determining size of device"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determining size of device"), error);
       g_error_free (error);
       restore_disk_image_data_complete (data);
-      restore_disk_image_data_unref (data);
       goto out;
     }
   data->block_stream = g_unix_output_stream_new (fd, TRUE);

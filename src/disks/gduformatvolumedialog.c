@@ -97,7 +97,7 @@ format_cb (GObject      *source_object,
                                         res,
                                         &error))
     {
-      gdu_window_show_error (data->window, _("Error formatting volume"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error formatting volume"), error);
       g_error_free (error);
     }
   format_volume_data_free (data);
@@ -172,10 +172,10 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           str = g_string_new (_("All data on the volume will be overwritten and will likely not be recoverable by data recovery services"));
         }
 
-      if (!gdu_window_show_confirmation (window,
-                                         primary_message,
-                                         str->str,
-                                         _("_Format")))
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                        primary_message,
+                                        str->str,
+                                        _("_Format")))
         {
           g_string_free (str, TRUE);
           goto out;

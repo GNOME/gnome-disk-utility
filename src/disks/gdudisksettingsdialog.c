@@ -370,9 +370,9 @@ on_set_configuration_cb (GObject      *source_object,
                                                    res,
                                                    &error))
     {
-      gdu_window_show_error (data->window,
-                             _("Error setting configuration"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error setting configuration"),
+                            error);
       g_clear_error (&error);
       goto out;
     }

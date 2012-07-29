@@ -851,7 +851,7 @@ update_dialog (DialogData *data)
       if (!data->closed)
         {
           if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-            gdu_window_show_error (data->window, C_("benchmarking", "An error occurred"), error);
+            gdu_utils_show_error (GTK_WINDOW (data->window), C_("benchmarking", "An error occurred"), error);
         }
       g_clear_error (&error);
 

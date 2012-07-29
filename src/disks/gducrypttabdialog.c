@@ -273,7 +273,7 @@ crypttab_dialog_present (CrypttabDialogData *data)
                   goto again;
                 }
               gtk_widget_hide (data->dialog);
-              gdu_window_show_error (data->window,
+              gdu_utils_show_error (GTK_WINDOW (data->window),
                                      _("Error removing /etc/crypttab entry"),
                                      error);
               g_error_free (error);
@@ -357,9 +357,9 @@ crypttab_dialog_present (CrypttabDialogData *data)
                       goto again;
                     }
                   gtk_widget_hide (data->dialog);
-                  gdu_window_show_error (data->window,
-                                         _("Error adding /etc/crypttab entry"),
-                                         error);
+                  gdu_utils_show_error (GTK_WINDOW (data->window),
+                                        _("Error adding /etc/crypttab entry"),
+                                        error);
                   g_error_free (error);
                   goto out;
                 }
@@ -380,9 +380,9 @@ crypttab_dialog_present (CrypttabDialogData *data)
                       goto again;
                     }
                   gtk_widget_hide (data->dialog);
-                  gdu_window_show_error (data->window,
-                                         _("Error updating /etc/crypttab entry"),
-                                         error);
+                  gdu_utils_show_error (GTK_WINDOW (data->window),
+                                        _("Error updating /etc/crypttab entry"),
+                                        error);
                   g_error_free (error);
                   goto out;
                 }
@@ -418,9 +418,9 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock       *block,
                                                           res,
                                                           &error))
     {
-      gdu_window_show_error (data->window,
-                             _("Error retrieving configuration data"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error retrieving configuration data"),
+                            error);
       g_error_free (error);
       crypttab_dialog_free (data);
       goto out;

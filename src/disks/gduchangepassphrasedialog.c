@@ -168,7 +168,7 @@ update_configuration_item_cb (GObject      *source_object,
                                                            res,
                                                            &error))
     {
-      gdu_window_show_error (data->window, _("Error updating /etc/crypttab"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error updating /etc/crypttab"), error);
       g_error_free (error);
     }
   change_passphrase_data_free (data);
@@ -187,7 +187,7 @@ change_passphrase_cb (GObject      *source_object,
                                                        res,
                                                        &error))
     {
-      gdu_window_show_error (data->window, _("Error changing passphrase"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error changing passphrase"), error);
       g_error_free (error);
     }
 
@@ -273,9 +273,9 @@ on_get_secret_configuration_cb (GObject      *source_object,
                                                           res,
                                                           &error))
     {
-      gdu_window_show_error (data->window,
-                             _("Error retrieving configuration data"),
-                             error);
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error retrieving configuration data"),
+                            error);
       g_error_free (error);
       change_passphrase_data_free (data);
       goto out;
@@ -300,7 +300,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
         }
     }
 
-  gdu_window_show_error (data->window, _("/etc/crypttab configuration data is malformed"), NULL);
+  gdu_utils_show_error (GTK_WINDOW (data->window), _("/etc/crypttab configuration data is malformed"), NULL);
   change_passphrase_data_free (data);
 
  out:

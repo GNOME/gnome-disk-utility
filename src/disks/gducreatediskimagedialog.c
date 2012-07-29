@@ -171,10 +171,12 @@ create_disk_image_populate (CreateDiskImageData *data)
 {
   gchar *device_name;
   gchar *now_string;
-  gchar *s;
+  gchar *proposed_filename = NULL;
   guint n;
   GTimeZone *tz;
   GDateTime *now;
+  const gchar *fstype;
+  const gchar *fslabel;
 
   device_name = udisks_block_dup_preferred_device (data->block);
   if (g_str_has_prefix (device_name, "/dev/"))
@@ -189,15 +191,28 @@ create_disk_image_populate (CreateDiskImageData *data)
   now = g_date_time_new_now (tz);
   now_string = g_date_time_format (now, "%Y-%m-%d %H%M");
 
-  /* Translators: The suggested name for the disk image to create.
-   *              The first %s is a name for the disk (e.g. 'sdb').
-   *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
-   */
-  s = g_strdup_printf (_("Disk Image of %s (%s).img"),
-                       device_name,
-                       now_string);
-  gtk_entry_set_text (GTK_ENTRY (data->destination_name_entry), s);
-  g_free (s);
+  /* If it's an ISO/UDF filesystem, suggest a filename ending in .iso */
+  fstype = udisks_block_get_id_type (data->block);
+  fslabel = udisks_block_get_id_label (data->block);
+  if (g_strcmp0 (fstype, "udf") == 0 || g_strcmp0 (fstype, "udf") == 0)
+    {
+      if (fslabel != NULL && strlen (fslabel) > 0)
+        proposed_filename = g_strdup_printf ("%s.iso", fslabel);
+    }
+
+  if (proposed_filename == NULL)
+    {
+      /* Translators: The suggested name for the disk image to create.
+       *              The first %s is a name for the disk (e.g. 'sdb').
+       *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
+       */
+      proposed_filename = g_strdup_printf (_("Disk Image of %s (%s).img"),
+                                           device_name,
+                                           now_string);
+    }
+
+  gtk_entry_set_text (GTK_ENTRY (data->destination_name_entry), proposed_filename);
+  g_free (proposed_filename);
   g_free (device_name);
   g_date_time_unref (now);
   g_time_zone_unref (tz);

@@ -772,6 +772,9 @@ gdu_window_show_attach_disk_image (GduWindow *window)
       goto out;
     }
 
+  /* now that we know the user picked a folder, update file chooser settings */
+  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (dialog));
+
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton)))
     g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));

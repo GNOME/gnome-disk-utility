@@ -423,6 +423,9 @@ open_cb (UDisksBlock  *block,
       goto out;
     }
 
+  /* now that we know the user picked a folder, update file chooser settings */
+  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
+
   data->block_stream = g_unix_input_stream_new (fd, TRUE);
 
   /* Alright, time to start copying! */

@@ -93,6 +93,8 @@ PKG_CHECK_MODULES(GTK3, [gtk+-3.0 >= $GTK3_REQUIRED])
 PKG_CHECK_MODULES(LIBSECRET1, [libsecret-1 >= $LIBSECRET1_REQUIRED])
 PKG_CHECK_MODULES(PWQUALITY, [pwquality >= $PWQUALITY_REQUIRED])
 
+GLIB_GSETTINGS
+
 dnl **********************************
 dnl *** Check for libsystemd-login ***
 dnl **********************************
@@ -150,6 +152,7 @@ data/icons/32x32/Makefile
 data/icons/48x48/Makefile
 data/icons/256x256/Makefile
 data/icons/scalable/Makefile
+data/org.gnome.Disks.gschema.xml.in
 data/ui/Makefile
 doc/Makefile
 doc/man/Makefile

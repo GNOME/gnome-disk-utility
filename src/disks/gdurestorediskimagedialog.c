@@ -530,6 +530,9 @@ gdu_restore_disk_image_dialog_show2 (RestoreDiskImageData *data)
                                      _("_Restore")))
     goto out;
 
+  /* now that we know the user picked a folder, update file chooser settings */
+  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->source_file_fcbutton));
+
   s = g_strdup_printf (_("Copying data to device <i>%s</i>..."),
                        udisks_block_get_preferred_device (data->block));
   gtk_label_set_markup (GTK_LABEL (data->copying_label), s);

@@ -75,11 +75,22 @@ void
 gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
 {
   GtkFileFilter *filter;
-  const gchar *folder;
+  gchar *folder;
+  GSettings *settings;
 
-  /* Default to the "Documents" folder since that's where we save such images */
-  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
-  if (folder != NULL)
+  /* Get folder from GSettings, and default to the "Documents" folder */
+
+  settings = g_settings_new ("org.gnome.Disks");
+  folder = g_settings_get_string (settings, "image-dir-uri");
+  if (folder == NULL || strlen (folder) == 0)
+    {
+      g_free (folder);
+      folder = g_strdup_printf ("file://%s", g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS));
+    }
+  g_object_set_data_full (G_OBJECT (file_chooser), "x-gdu-orig-folder", g_strdup (folder), g_free);
+  if (g_str_has_prefix (folder, "file://"))
+    gtk_file_chooser_set_current_folder (file_chooser, folder + strlen ("file://"));
+  else
     gtk_file_chooser_set_current_folder (file_chooser, folder);
 
   /* TODO: define proper mime-types */
@@ -93,6 +104,27 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
   gtk_file_filter_add_pattern (filter, "*.iso");
   gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
   gtk_file_chooser_set_filter (file_chooser, filter);
+
+  g_clear_object (&settings);
+  g_free (folder);
+}
+
+/* should be called when user chooses file/dir from @file_chooser */
+void
+gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_chooser)
+{
+  const gchar *orig_folder;
+  gchar *cur_folder;
+
+  orig_folder = g_object_get_data (G_OBJECT (file_chooser), "x-gdu-orig-folder");
+  cur_folder = gtk_file_chooser_get_uri (file_chooser);
+  if (g_strcmp0 (orig_folder, cur_folder) != 0)
+    {
+      GSettings *settings = g_settings_new ("org.gnome.Disks");
+      g_settings_set_string (settings, "image-dir-uri", cur_folder);
+      g_clear_object (&settings);
+    }
+  g_free (cur_folder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

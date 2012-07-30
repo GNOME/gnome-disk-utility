@@ -207,7 +207,7 @@ create_disk_image_populate (CreateDiskImageData *data)
   /* If it's an ISO/UDF filesystem, suggest a filename ending in .iso */
   fstype = udisks_block_get_id_type (data->block);
   fslabel = udisks_block_get_id_label (data->block);
-  if (g_strcmp0 (fstype, "udf") == 0 || g_strcmp0 (fstype, "udf") == 0)
+  if (g_strcmp0 (fstype, "iso9660") == 0 || g_strcmp0 (fstype, "udf") == 0)
     {
       if (fslabel != NULL && strlen (fslabel) > 0)
         proposed_filename = g_strdup_printf ("%s.iso", fslabel);

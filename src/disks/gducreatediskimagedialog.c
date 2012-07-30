@@ -26,6 +26,7 @@
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
 
+#include <gmodule.h>
 #include <glib-unix.h>
 #include <sys/ioctl.h>
 #include <linux/fs.h>
@@ -48,6 +49,166 @@
  * - Update time remaining / speed exactly every 1/10th second instead of when we've read a full buffer
  *
  */
+
+/* ---------------------------------------------------------------------------------------------------- */
+/* libdvdcss support - see http://www.videolan.org/developers/libdvdcss.html */
+
+#define DVDCSS_BLOCK_SIZE     2048
+#define DVDCSS_READ_DECRYPT   (1 << 0)
+
+struct dvdcss_s;
+typedef struct dvdcss_s * 	dvdcss_t;
+static dvdcss_t (*dvdcss_open)         (const char *psz_target) = NULL;
+static int      (*dvdcss_close)        (dvdcss_t ctx) = NULL;
+static int      (*dvdcss_seek)         (dvdcss_t ctx,
+                                        int i_blocks,
+                                        int i_flags ) = NULL;
+static int      (*dvdcss_read)         (dvdcss_t ctx,
+                                        void *p_buffer,
+                                        int i_blocks,
+                                        int i_flags ) = NULL;
+static int      (*dvdcss_readv)        (dvdcss_t ctx,
+                                        void *p_iovec,
+                                        int   i_blocks,
+                                        int   i_flags ) = NULL;
+static char *   (*dvdcss_error)        (dvdcss_t ctx) = NULL;
+
+static gboolean
+have_dvdcss (void)
+{
+  static gsize once = 0;
+  static gboolean available = FALSE;
+
+  if (g_once_init_enter (&once))
+    {
+      GModule *module = NULL;
+
+      module = g_module_open ("libdvdcss.so.2", G_MODULE_BIND_LOCAL);
+      if (module == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_open", (gpointer*) &dvdcss_open) || dvdcss_open == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_close", (gpointer*) &dvdcss_close) || dvdcss_close == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_seek", (gpointer*) &dvdcss_seek) || dvdcss_seek == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_read", (gpointer*) &dvdcss_read) || dvdcss_read == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_readv", (gpointer*) &dvdcss_readv) || dvdcss_readv == NULL)
+        goto out;
+      if (!g_module_symbol (module, "dvdcss_error", (gpointer*) &dvdcss_error) || dvdcss_error == NULL)
+        goto out;
+
+      available = TRUE;
+
+    out:
+      if (!available)
+        {
+          if (module != NULL)
+            g_module_close (module);
+        }
+      g_once_init_leave (&once, (gsize) 1);
+    }
+  return available;
+}
+
+/* async dvdcss_read(): */
+
+typedef struct
+{
+  dvdcss_t  ctx;
+  guchar   *buffer;
+  gsize     num_bytes;
+} ReadDVDCSSData;
+
+static void
+read_dvdcss_data_free (ReadDVDCSSData *data)
+{
+  g_slice_free (ReadDVDCSSData, data);
+}
+
+static void
+read_dvdcss_in_thread (GSimpleAsyncResult *simple,
+                       GObject            *object,
+                       GCancellable       *cancellable)
+{
+  ReadDVDCSSData *data;
+  int num_blocks_read;
+
+  data = g_object_get_data (G_OBJECT (simple), "x-data");
+  g_assert (data != NULL);
+
+  num_blocks_read = dvdcss_read (data->ctx,
+                                 data->buffer,
+                                 data->num_bytes / DVDCSS_BLOCK_SIZE,
+                                 DVDCSS_READ_DECRYPT);
+  if (num_blocks_read < 0)
+    {
+      g_simple_async_result_set_error (simple,
+                                       G_IO_ERROR,
+                                       G_IO_ERROR_FAILED,
+                                       "%s", dvdcss_error (data->ctx));
+    }
+  else
+    {
+      g_simple_async_result_set_op_res_gssize (simple, num_blocks_read * DVDCSS_BLOCK_SIZE);
+    }
+}
+
+static void
+read_dvdcss_async (dvdcss_t             ctx,
+                   guchar              *buffer,
+                   gsize                num_bytes,
+                   gint                 io_priority,
+                   GCancellable        *cancellable,
+                   GAsyncReadyCallback  callback,
+                   gpointer             user_data)
+{
+  GSimpleAsyncResult *simple;
+  ReadDVDCSSData *data;
+
+  g_return_if_fail (buffer != NULL);
+  g_return_if_fail ((num_bytes % DVDCSS_BLOCK_SIZE) == 0);
+
+  simple = g_simple_async_result_new (NULL,
+                                      callback,
+                                      user_data,
+                                      read_dvdcss_async);
+
+  data = g_slice_new0 (ReadDVDCSSData);
+  data->ctx = ctx;
+  data->buffer = buffer;
+  data->num_bytes = num_bytes;
+  g_object_set_data_full (G_OBJECT (simple), "x-data", data, (GDestroyNotify) read_dvdcss_data_free);
+
+  g_simple_async_result_set_check_cancellable (simple, cancellable);
+  g_simple_async_result_run_in_thread (simple,
+                                       read_dvdcss_in_thread,
+                                       io_priority,
+                                       cancellable);
+  g_object_unref (simple);
+}
+
+static gssize
+read_dvdcss_finish (GAsyncResult  *res,
+                    GError       **error)
+{
+  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+  gssize ret = -1;
+
+  g_return_val_if_fail (G_IS_ASYNC_RESULT (res), -1);
+  g_return_val_if_fail (error == NULL || *error == NULL, -1);
+
+  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == read_dvdcss_async);
+
+  if (g_simple_async_result_propagate_error (simple, error))
+    goto out;
+
+  ret = g_simple_async_result_get_op_res_gssize (simple);
+
+ out:
+  return ret;
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -76,11 +237,14 @@ typedef struct
   GtkWidget *copying_progress_label;
 
   GCancellable *cancellable;
+  int fd;
   GInputStream *block_stream;
   GFile *output_file;
   GFileOutputStream *output_file_stream;
   guint64 block_size;
   gboolean delete_on_free;
+
+  dvdcss_t dvdcss_ctx;
 
   guchar *buffer;
   guint64 total_bytes_read;
@@ -92,6 +256,8 @@ typedef struct
   gulong response_signal_handler_id;
   gboolean completed;
 } CreateDiskImageData;
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static CreateDiskImageData *
 create_disk_image_data_ref (CreateDiskImageData *data)
@@ -137,6 +303,10 @@ create_disk_image_data_unref (CreateDiskImageData *data)
         g_object_unref (data->builder);
       g_free (data->buffer);
       g_clear_object (&data->estimator);
+      if (data->dvdcss_ctx != NULL)
+        {
+          dvdcss_close (data->dvdcss_ctx);
+        }
       g_free (data);
     }
 }
@@ -332,6 +502,44 @@ write_more (CreateDiskImageData *data)
     }
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+read_dvdcss_cb (GObject       *source_object,
+                GAsyncResult  *res,
+                gpointer       user_data)
+{
+  CreateDiskImageData *data = user_data;
+  GError *error;
+  gssize bytes_read;
+
+  error = NULL;
+  bytes_read = read_dvdcss_finish (res, &error);
+  if (error != NULL)
+    {
+      gchar *s;
+      s = g_strdup_printf (_("Error reading with libdvdcss from offset %" G_GUINT64_FORMAT " of device %s"),
+                           (guint64) data->total_bytes_read,
+                           udisks_block_get_preferred_device (data->block));
+      if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
+        gdu_utils_show_error (GTK_WINDOW (data->dialog), s, error);
+      g_free (s);
+      g_error_free (error);
+      create_disk_image_data_complete (data);
+      goto out;
+    }
+
+  /* TODO: handle zero bytes being read */
+
+  data->total_bytes_read += bytes_read;
+
+  data->buffer_bytes_written = 0;
+  data->buffer_bytes_to_write = bytes_read;
+  write_more (data);
+
+ out:
+  create_disk_image_data_unref (data);
+}
 
 static void
 read_cb (GInputStream  *input_stream,
@@ -358,6 +566,8 @@ read_cb (GInputStream  *input_stream,
       goto out;
     }
 
+  /* TODO: handle zero bytes being read */
+
   data->total_bytes_read += bytes_read;
 
   data->buffer_bytes_written = 0;
@@ -383,18 +593,63 @@ copy_more (CreateDiskImageData *data)
   if (bytes_to_read > BUFFER_SIZE)
     bytes_to_read = BUFFER_SIZE;
 
-  g_input_stream_read_async (data->block_stream,
-                             data->buffer,
-                             bytes_to_read,
-                             G_PRIORITY_DEFAULT,
-                             data->cancellable,
-                             (GAsyncReadyCallback) read_cb,
-                             create_disk_image_data_ref (data));
+  if (data->dvdcss_ctx != NULL)
+    {
+      read_dvdcss_async (data->dvdcss_ctx,
+                         data->buffer,
+                         bytes_to_read,
+                         G_PRIORITY_DEFAULT,
+                         data->cancellable,
+                         (GAsyncReadyCallback) read_dvdcss_cb,
+                         create_disk_image_data_ref (data));
+    }
+  else
+    {
+      g_input_stream_read_async (data->block_stream,
+                                 data->buffer,
+                                 bytes_to_read,
+                                 G_PRIORITY_DEFAULT,
+                                 data->cancellable,
+                                 (GAsyncReadyCallback) read_cb,
+                                 create_disk_image_data_ref (data));
+    }
  out:
   ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void
+start_copying (CreateDiskImageData *data)
+{
+  g_assert (data->fd != 0);
+
+  /* We can't use udisks_block_get_size() because the media may have
+   * changed and udisks may not have noticed. TODO: maybe have a
+   * Block.GetSize() method instead...
+   */
+  if (ioctl (data->fd, BLKGETSIZE64, &data->block_size) != 0)
+    {
+      GError *error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determining size of device"), error);
+      g_error_free (error);
+      create_disk_image_data_complete (data);
+      goto out;
+    }
+
+  /* now that we know the user picked a folder, update file chooser settings */
+  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
+
+  data->cancellable = g_cancellable_new ();
+  data->buffer = g_new0 (guchar, BUFFER_SIZE);
+  data->estimator = gdu_estimator_new (data->block_size);
+  data->block_stream = g_unix_input_stream_new (data->fd, TRUE);
+
+  /* Alright, time to start copying! */
+  copy_more (data);
+ out:
+  ;
+}
 
 static void
 open_cb (UDisksBlock  *block,
@@ -405,7 +660,6 @@ open_cb (UDisksBlock  *block,
   GError *error;
   GUnixFDList *fd_list = NULL;
   GVariant *fd_index = NULL;
-  int fd;
 
   error = NULL;
   if (!udisks_block_call_open_for_backup_finish (block,
@@ -421,31 +675,9 @@ open_cb (UDisksBlock  *block,
       goto out;
     }
 
-  fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
+  data->fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
 
-  /* We can't use udisks_block_get_size() because the media may have
-   * changed and udisks may not have noticed. TODO: maybe have a
-   * Block.GetSize() method instead...
-   */
-  if (ioctl (fd, BLKGETSIZE64, &data->block_size) != 0)
-    {
-      error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
-      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determining size of device"), error);
-      g_error_free (error);
-      create_disk_image_data_complete (data);
-      goto out;
-    }
-
-  /* now that we know the user picked a folder, update file chooser settings */
-  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
-
-  data->block_stream = g_unix_input_stream_new (fd, TRUE);
-
-  /* Alright, time to start copying! */
-  data->cancellable = g_cancellable_new ();
-  data->buffer = g_new0 (guchar, BUFFER_SIZE);
-  data->estimator = gdu_estimator_new (data->block_size);
-  copy_more (data);
+  start_copying (data);
 
  out:
   if (fd_index != NULL)
@@ -511,7 +743,7 @@ check_overwrite (CreateDiskImageData *data)
 }
 
 static gboolean
-start_copying (CreateDiskImageData *data)
+open_device (CreateDiskImageData *data)
 {
   gboolean ret = TRUE;
   const gchar *name;
@@ -522,6 +754,7 @@ start_copying (CreateDiskImageData *data)
   folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->destination_name_fcbutton));
 
   error = NULL;
+  data->fd = -1;
   data->output_file = g_file_get_child (folder, name);
   data->output_file_stream = g_file_replace (data->output_file,
                                              NULL, /* etag */
@@ -541,12 +774,45 @@ start_copying (CreateDiskImageData *data)
     }
   data->delete_on_free = TRUE;
 
-  udisks_block_call_open_for_backup (data->block,
-                                     g_variant_new ("a{sv}", NULL), /* options */
-                                     NULL, /* fd_list */
-                                     NULL, /* cancellable */
-                                     (GAsyncReadyCallback) open_cb,
-                                     data);
+  /* Most OSes put ACLs for logged-in users on /dev/sr* nodes (this is
+   * so CD burning tools etc. works) so see if we can open the device
+   * file ourselves. If so, great, since this avoids a polkit dialog.
+   *
+   * As opposed to udisks' OpenForBackup() we also avoid O_EXCL since
+   * the disc is read-only by its very nature. As a side-effect this
+   * allows creating a disk image of a mounted disc.
+   */
+  if (g_str_has_prefix (udisks_block_get_device (data->block), "/dev/sr"))
+    {
+      data->fd = open (udisks_block_get_device (data->block), O_RDONLY);
+      if (data->fd != -1)
+        {
+          /* Great, that worked! Also use libdvdcss (if available) */
+          if (have_dvdcss ())
+            {
+              data->dvdcss_ctx = dvdcss_open (udisks_block_get_device (data->block));
+              if (data->dvdcss_ctx == NULL)
+                {
+                  g_printerr ("Error opening %s with dvdcss_open(). Falling back\n",
+                              udisks_block_get_device (data->block));
+                }
+            }
+        }
+    }
+
+  if (data->fd != -1)
+    {
+      start_copying (data);
+    }
+  else
+    {
+      udisks_block_call_open_for_backup (data->block,
+                                         g_variant_new ("a{sv}", NULL), /* options */
+                                         NULL, /* fd_list */
+                                         NULL, /* cancellable */
+                                         (GAsyncReadyCallback) open_cb,
+                                         data);
+    }
 
  out:
   g_clear_object (&folder);
@@ -569,7 +835,7 @@ on_dialog_response (GtkDialog     *dialog,
           gtk_notebook_set_current_page (GTK_NOTEBOOK (data->notebook), 1);
           gtk_widget_hide (data->start_copying_button);
 
-          start_copying (data);
+          open_device (data);
         }
     }
   else
@@ -586,6 +852,7 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   gchar *s;
 
   data = g_new0 (CreateDiskImageData, 1);
+  data->fd = -1;
   data->ref_count = 1;
   data->window = g_object_ref (window);
   data->object = g_object_ref (object);

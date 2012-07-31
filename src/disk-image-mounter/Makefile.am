@@ -13,7 +13,6 @@ gnome_disk_image_mounter_CPPFLAGS = 			\
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
 	-DG_LOG_DOMAIN=\"gnome-disk-image-mounter\"	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DUDISKS_API_IS_SUBJECT_TO_CHANGE		\
 	$(NULL)
 
 gnome_disk_image_mounter_CFLAGS = 			\
@@ -27,6 +26,7 @@ gnome_disk_image_mounter_LDADD = 			\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
+        $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 
 clean-local :

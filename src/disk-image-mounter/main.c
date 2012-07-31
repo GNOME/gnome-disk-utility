@@ -28,7 +28,7 @@
 
 #include <gtk/gtk.h>
 
-#include <udisks/udisks.h>
+#include <libgdu/libgdu.h>
 
 static gboolean have_gtk = FALSE;
 static UDisksClient *udisks_client = NULL;
@@ -81,31 +81,6 @@ static const GOptionEntry opt_entries[] =
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* TODO: keep in sync with src/disks/gduutils.c (ideally in shared lib) */
-static void
-_gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser)
-{
-  GtkFileFilter *filter;
-  const gchar *folder;
-
-  /* Default to the "Documents" folder since that's where we save such images */
-  folder = g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS);
-  if (folder != NULL)
-    gtk_file_chooser_set_current_folder (file_chooser, folder);
-
-  /* TODO: define proper mime-types */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
-  gtk_file_filter_add_pattern (filter, "*.img");
-  gtk_file_filter_add_pattern (filter, "*.iso");
-  gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
-  gtk_file_chooser_set_filter (file_chooser, filter);
-}
-
 static GSList *
 do_filechooser (void)
 {
@@ -121,7 +96,7 @@ do_filechooser (void)
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         _("_Mount"), GTK_RESPONSE_ACCEPT,
                                         NULL);
-  _gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog));
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog), TRUE);
   gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
 
   /* Add a RO check button that defaults to RO */

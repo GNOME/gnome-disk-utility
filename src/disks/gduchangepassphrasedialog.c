@@ -28,7 +28,6 @@
 #include "gduwindow.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdupasswordstrengthwidget.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

@@ -27,7 +27,6 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gduatasmartdialog.h"
-#include "gduutils.h"
 
 enum
 {

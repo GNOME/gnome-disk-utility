@@ -28,7 +28,6 @@
 #include "gduwindow.h"
 #include "gdufstabdialog.h"
 #include "gduvolumegrid.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

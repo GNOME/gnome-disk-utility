@@ -20,29 +20,12 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_ENUMS_H__
-#define __GDU_ENUMS_H__
+#ifndef __LIB_GDU_H__
+#define __LIB_GDU_H__
 
-#include <gtk/gtk.h>
+#include "libgdutypes.h"
+#include "libgduenums.h"
+#include "libgduenumtypes.h"
+#include "gduutils.h"
 
-G_BEGIN_DECLS
-
-typedef enum
-{
-  GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER,
-  GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA,
-  GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE,
-  GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE
-} GduVolumeGridElementType;
-
-typedef enum
-{
-  GDU_POWER_STATE_FLAGS_NONE              = 0,
-  GDU_POWER_STATE_FLAGS_STANDBY           = (1<<0),
-  GDU_POWER_STATE_FLAGS_CHECKING          = (1<<1),
-  GDU_POWER_STATE_FLAGS_FAILED            = (1<<2)
-} GduPowerStateFlags;
-
-G_END_DECLS
-
-#endif /* __GDU_ENUMS_H__ */
+#endif /* __LIB_GDU_H__ */

@@ -140,6 +140,7 @@ AC_SUBST([AM_LDFLAGS])
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
+src/libgdu/Makefile
 src/disks/Makefile
 src/disk-image-mounter/Makefile
 po/Makefile.in

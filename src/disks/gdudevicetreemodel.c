@@ -28,7 +28,6 @@
 #include "gdudevicetreemodel.h"
 #include "gduatasmartdialog.h"
 #include "gduenumtypes.h"
-#include "gduutils.h"
 
 struct _GduDeviceTreeModel
 {

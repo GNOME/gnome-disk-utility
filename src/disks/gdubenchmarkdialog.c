@@ -36,7 +36,6 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdubenchmarkdialog.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

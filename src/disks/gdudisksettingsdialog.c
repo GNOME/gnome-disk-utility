@@ -29,7 +29,6 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdudisksettingsdialog.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

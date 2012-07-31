@@ -27,6 +27,8 @@
 #define UDISKS_API_IS_SUBJECT_TO_CHANGE
 #include <udisks/udisks.h>
 
+#include <libgdu/libgdu.h>
+
 #include "gduenums.h"
 
 G_BEGIN_DECLS

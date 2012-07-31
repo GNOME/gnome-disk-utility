@@ -23,8 +23,7 @@
 #ifndef __GDU_UTILS_H__
 #define __GDU_UTILS_H__
 
-#include <gtk/gtk.h>
-#include "gdutypes.h"
+#include "libgdutypes.h"
 
 G_BEGIN_DECLS
 

@@ -28,7 +28,6 @@
 #include "gduwindow.h"
 #include "gducreatepartitiondialog.h"
 #include "gducreatefilesystemwidget.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

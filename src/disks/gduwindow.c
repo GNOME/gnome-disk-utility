@@ -35,7 +35,6 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdudevicetreemodel.h"
-#include "gduutils.h"
 #include "gduvolumegrid.h"
 #include "gduatasmartdialog.h"
 #include "gdubenchmarkdialog.h"

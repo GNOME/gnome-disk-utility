@@ -35,7 +35,6 @@
 #include "gduwindow.h"
 #include "gducreatediskimagedialog.h"
 #include "gduvolumegrid.h"
-#include "gduutils.h"
 #include "gducreatefilesystemwidget.h"
 #include "gduestimator.h"
 

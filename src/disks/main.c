@@ -23,7 +23,7 @@
 #include "config.h"
 #include <glib/gi18n.h>
 
-#include "gdu.h"
+#include "gduapplication.h"
 
 int
 main (int argc, char *argv[])

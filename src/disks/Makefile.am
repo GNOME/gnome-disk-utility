@@ -24,12 +24,10 @@ BUILT_SOURCES += $(enum_built_sources)
 
 gnome_disks_SOURCES = 							\
 					main.c				\
-	gdu.h								\
 	gduapplication.h		gduapplication.c		\
 	gdudevicetreemodel.h		gdudevicetreemodel.c		\
 	gdutypes.h							\
 	gduenums.h							\
-	gduutils.h			gduutils.c			\
 	gduvolumegrid.h			gduvolumegrid.c			\
 	gduwindow.h			gduwindow.c			\
 	gduatasmartdialog.h		gduatasmartdialog.c		\
@@ -78,6 +76,7 @@ gnome_disks_LDADD = 					\
 	$(LIBSECRET1_LIBS)				\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(PWQUALITY_LIBS)				\
+        $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 
 EXTRA_DIST = 						\

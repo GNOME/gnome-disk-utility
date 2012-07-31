@@ -20,16 +20,17 @@
  * Author: David Zeuthen <davidz@redhat.com>
  */
 
-#ifndef __GDU_H__
-#define __GDU_H__
+#ifndef __LIB_GDU_TYPES_H__
+#define __LIB_GDU_TYPES_H__
 
-#include "gdutypes.h"
-#include "gduenums.h"
-#include "gduenumtypes.h"
-#include "gduapplication.h"
-#include "gdudevicetreemodel.h"
-#include "gduutils.h"
-#include "gduvolumegrid.h"
-#include "gduwindow.h"
+#include <gtk/gtk.h>
+#define UDISKS_API_IS_SUBJECT_TO_CHANGE
+#include <udisks/udisks.h>
 
-#endif /* __GDU_H__ */
+#include "libgduenums.h"
+
+G_BEGIN_DECLS
+
+G_END_DECLS
+
+#endif /* __LIB_GDU_TYPES_H__ */

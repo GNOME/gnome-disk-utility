@@ -28,7 +28,6 @@
 #include "gduwindow.h"
 #include "gdupartitiondialog.h"
 #include "gduvolumegrid.h"
-#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

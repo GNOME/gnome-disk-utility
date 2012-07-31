@@ -448,7 +448,10 @@ populate (GduCreateFilesystemWidget *widget)
         }
       else
         {
-          gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "ntfs");
+          if (gdu_utils_is_ntfs_available ())
+            gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "ntfs");
+          else
+            gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "vfat");
         }
     }
   else

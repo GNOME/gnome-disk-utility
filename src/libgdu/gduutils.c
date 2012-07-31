@@ -655,3 +655,23 @@ gdu_utils_show_confirmation (GtkWindow   *parent_window,
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+gdu_utils_is_ntfs_available (void)
+{
+  static gsize once = 0;
+  static gboolean available = FALSE;
+
+  if (g_once_init_enter (&once))
+    {
+      gchar *path;
+      path = g_find_program_in_path ("mkntfs");
+      if (path != NULL)
+        available = TRUE;
+      g_free (path);
+      g_once_init_leave (&once, (gsize) 1);
+    }
+  return available;
+}
+
+

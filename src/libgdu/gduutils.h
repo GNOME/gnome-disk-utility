@@ -68,6 +68,8 @@ gboolean        gdu_utils_show_confirmation (GtkWindow   *parent_window,
                                              const gchar *secondary_message,
                                              const gchar *affirmative_verb);
 
+gboolean gdu_utils_is_ntfs_available (void);
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

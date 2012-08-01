@@ -4,7 +4,7 @@
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <davidz@redhat.com>
+ * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
 #ifndef __GDU_FORMAT_VOLUME_DIALOG_H__

@@ -4,7 +4,7 @@
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <davidz@redhat.com>
+ * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
 #ifndef __GDU_PASSWORD_STRENGTH_WIDGET_H__

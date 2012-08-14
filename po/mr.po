@@ -9,35 +9,61 @@ msgstr ""
 "Project-Id-Version: mr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-31 01:53+0000\n"
-"PO-Revision-Date: 2012-04-09 16:05+0530\n"
+"POT-Creation-Date: 2012-08-01 16:45+0000\n"
+"PO-Revision-Date: 2012-08-14 09:59+0530\n"
 "Last-Translator: Sandeep Shedmake <sshedmak@redhat.com>\n"
 "Language-Team: Marathi <fedora-trans-mr@redhat.com>\n"
+"Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Lokalize 1.2\n"
-"Language: mr\n"
+"X-Generator: Lokalize 1.4\n"
 
-#: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/palimpsest/gduwindow.c:888
+#: ../data/gnome-disk-image-mounter.desktop.in.h:1
+#: ../src/disk-image-mounter/main.c:59
+msgid "Disk Image Mounter"
+msgstr "डिस्क प्रतिमा माउंटकर्ता"
+
+#: ../data/gnome-disk-image-mounter.desktop.in.h:2
+#| msgid "Detach Disk Image"
+msgid "Mount Disk Images"
+msgstr "डिस्क प्रतिमा माउंट करा"
+
+#: ../data/gnome-disks.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
+#: ../src/disks/gduwindow.c:1014
 msgid "Disks"
 msgstr "डिस्कस्"
 
-#: ../data/palimpsest.desktop.in.h:2
+#: ../data/gnome-disks.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "ड्राइव्हस् व मिडीया व्यवस्थापीत करा"
+
+#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+msgid "Default location for the Create/Restore disk image dialogs"
+msgstr ""
+"डिस्क प्रतिमा संवादकरीता निर्माण करा/पूर्वस्थितीत आणाकरीता पूर्वनिर्धारित "
+"ठिकाण"
+
+#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+msgid ""
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
+msgstr ""
+"डिस्क प्रतिमा संवादकरीता निर्माण करा/पूर्वस्थितीत आणाकरीता पूर्वनिर्धारित "
+"ठिकाण. रिकामे असल्यास ~/Documents फोल्डरचा वापर केला जातो."
 
 #: ../data/ui/about-dialog.ui.h:2
 msgid ""
 "Copyright © 2008-2012 Red Hat, Inc.\n"
 "Copyright © 2008-2012 David Zeuthen"
 msgstr ""
+"सर्वहक्काधिकार © 2008-2012 Red Hat, Inc.\n"
+"सर्वहक्काधिकार © 2008-2012 डेव्हिड झ्युथेन"
 
 #: ../data/ui/about-dialog.ui.h:4
 msgid "View, modify and configure disks and media"
-msgstr ""
+msgstr "डिस्क्स् व मिडियाचे अवलोकन, संपादन व संरचना"
 
 #: ../data/ui/about-dialog.ui.h:5
 msgid "translator-credits"
@@ -45,10 +71,9 @@ msgstr "संदिप शेडमाके <sshedmak@redhat.com>, 2009."
 
 #: ../data/ui/app-menu.ui.h:1
 msgid "Attach Disk _Image..."
-msgstr ""
+msgstr "डिस्क प्रतिमा जोडा (_I)..."
 
 #: ../data/ui/app-menu.ui.h:2
-#| msgid "_About"
 msgid "_About Disks"
 msgstr "डिस्क्स् विषयी (_A)"
 
@@ -56,111 +81,218 @@ msgstr "डिस्क्स् विषयी (_A)"
 msgid "_Quit"
 msgstr "बाहेर पडा (_Q)"
 
+#: ../data/ui/benchmark-dialog.ui.h:1
+#| msgid "_Start Creating..."
+msgid "_Start Benchmark..."
+msgstr "बेंचमार्क सुरू करा (_S)..."
+
+#: ../data/ui/benchmark-dialog.ui.h:2
+msgid "_Abort Benchmark"
+msgstr "बेंचमार्क रद्द करा (_A)"
+
+#: ../data/ui/benchmark-dialog.ui.h:3
+msgid "Last Benchmarked"
+msgstr "शेवटच्यावेळी केलेले बेंचमार्क"
+
+#: ../data/ui/benchmark-dialog.ui.h:4
+msgid "Average Read Rate"
+msgstr "सरासर वाचन दर"
+
+#: ../data/ui/benchmark-dialog.ui.h:5
+#| msgid "Thermal Asperity Rate"
+msgid "Average Write Rate"
+msgstr "सरासर लेखन दर"
+
+#: ../data/ui/benchmark-dialog.ui.h:6
+msgid "Average Access Time"
+msgstr "सरासर प्रवेश वेळ"
+
+#: ../data/ui/benchmark-dialog.ui.h:7
+#| msgid "Disk Drives"
+msgid "Disk Drive or Device"
+msgstr "डिस्क ड्राइव्ह किंवा साधन"
+
+#: ../data/ui/benchmark-dialog.ui.h:8
+#| msgid "Stripe Size"
+msgid "Sample Size"
+msgstr "सॅम्पल आकार"
+
+#: ../data/ui/benchmark-dialog.ui.h:9
+#| msgid "_Start Creating..."
+msgid "_Start Benchmarking..."
+msgstr "बेंचमार्किंग सुरू करा (_S)..."
+
+#: ../data/ui/benchmark-dialog.ui.h:10
+msgid ""
+"Benchmarking involves measuring the transfer rate on various area of the "
+"device as well as measuring how long it takes to seek from one random area "
+"to another. Please back up important data before using the write benchmark."
+msgstr ""
+"बेंटमार्किंगमध्ये साधनावरील विविध क्षेत्राचे मोजमापकरीता ट्रांसफर दर तसेच एका "
+"विनाक्रम क्षेत्रापासून दुसऱ्या क्षेत्रपर्यंत सीककरीताच्या वेळेचे मोजमाप "
+"समाविष्टीत आहे. राइट बेंचमार्कचा वापर करण्यापूर्वी कृपया महत्वाच्या डाटाचे "
+"बॅकअप घ्या."
+
+#: ../data/ui/benchmark-dialog.ui.h:11
+msgid "<b>Transfer Rate</b>"
+msgstr "<b>ट्रांस्फर दर</b>"
+
+#: ../data/ui/benchmark-dialog.ui.h:12
+#| msgid "Number of ECC errors"
+msgid "Number of S_amples"
+msgstr "सॅम्पल्स्ची संख्या (_a)"
+
+#: ../data/ui/benchmark-dialog.ui.h:13
+msgid "Sample S_ize (MiB)"
+msgstr "सॅम्पल आकार (_i) (MiB)"
+
+#: ../data/ui/benchmark-dialog.ui.h:14
+msgid "Also perform _write-benchmark"
+msgstr "राइट-बेंचमार्क सुरू करा (_w)"
+
+#: ../data/ui/benchmark-dialog.ui.h:15
+msgid ""
+"Bechmarking the write-rate of a disk requires exclusive access to the disk "
+"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
+"reading data and then writing it back. As a result, the contents of the disk "
+"is not changed.\n"
+"\n"
+"If not checked, the write-part of the benchmark will not be done but on the "
+"other hand exclusive access to the device is not needed (e.g. the disk or "
+"device can be in use) ."
+msgstr ""
+"डिस्कच्या राइट-दरकरीता बेंचमार्किंगला डिस्ककरीता प्रवेश आवश्यक आहे (उ.दा. "
+"डिस्क किंवा विभाजनांना माउंट करणे अशक्य आहे) व डाटा वाचणे व पुनःलिहणे "
+"समाविष्टीत आहे. परिणामस्वरूपी, डिस्कवरील अंतर्भुत माहिती बदलणे अशक्य.\n"
+"\n"
+"नीवडले नसल्यास, बेंचमार्कचे राइट-भाग पूर्ण होणार नाही परंतु दुसऱ्या बाजूस "
+"साधनकरीता अनन्य प्रवेश आवश्यक नाही (उ.दा. डिस्क किंवा साधनाचा वापर शक्य आहे)."
+
+#: ../data/ui/benchmark-dialog.ui.h:18
+msgid ""
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
+msgstr ""
+"सॅम्पल्सची संख्या. मोठी संख्या ॲक्सेस् टाइम पॅटर्नस्ची तंतोतंत ग्राफ्स् तयार "
+"करते परंतु जास्त वेळ लागतो."
+
+#: ../data/ui/benchmark-dialog.ui.h:19
+msgid ""
+"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
+"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
+"taking more time."
+msgstr ""
+"प्रत्येक सॅम्पलकरीता लेखन/वाचनकरीता MiB (1048576 बाइट्स्). "
+"मोठे सॅम्पल आकार अधिक तंतोतंत बेंचमार्क्स् निर्माण करते, ज्याकरीता "
+"बेंचमार्ककरीताच अथिक वेळ लागतो."
+
+#: ../data/ui/benchmark-dialog.ui.h:20
+msgid "<b>Access Time</b>"
+msgstr "<b>प्रवेश वेळ</b>"
+
+#: ../data/ui/benchmark-dialog.ui.h:21
+#| msgid "Number of ECC errors"
+msgid "Number of Sampl_es"
+msgstr "सॅम्पल्स्ची संख्या (_e)"
+
+#: ../data/ui/benchmark-dialog.ui.h:22
+msgid ""
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
+msgstr ""
+"सॅम्पल्सची संख्या. मोठी संख्या सुरेख ग्राफ्स् तयार करते परंतु बेंचमार्कला "
+"जास्त वेळ लागू शकतो."
+
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
 #: ../data/ui/edit-filesystem-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:1
 #: ../data/ui/edit-partition-dialog.ui.h:1
-#, fuzzy
 #| msgid "Change"
 msgid "C_hange"
-msgstr "बदलवा"
+msgstr "बदला (_h)"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:2
-#, fuzzy
 #| msgid "Change _Passphrase"
 msgid "<big>Change Passphrase</big>"
-msgstr "गोपणीयवाक्य बदलवा (_P)"
+msgstr "<big>पासफ्रेज बदला</big>"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:3
-#, fuzzy
 #| msgid "C_urrent Passphrase:"
 msgid "Curr_ent Passphrase"
-msgstr "सध्याचे गोपणीयवाक्य (_u):"
+msgstr "सध्याचे पासफ्रेज (_e):"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:4
 msgid "Enter current passphrase used to protect the data"
-msgstr ""
+msgstr "डाटा सुरक्षित करण्यासाठी सध्याचे पासफ्रेज द्या"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:12
-#| msgid "_New Passphrase:"
 msgid "Sho_w Passphrases"
 msgstr "पासफ्रेजेस् दाखवा (_w):"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:6
 #: ../data/ui/filesystem-create.ui.h:13
 msgid "Check this box to see the passphrases entered above"
-msgstr ""
+msgstr "वरील प्रविष्ट केलेले पासफ्रेज पहाण्यासाठी या पेटीला तपासा"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:7
 #: ../data/ui/filesystem-create.ui.h:11
 msgid "Confirm passphrase entered above"
-msgstr ""
+msgstr "वर दिलेल्या पासफ्रेजची खात्री करा"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:8
 msgid "Enter new passphrase used to protect the data"
-msgstr ""
+msgstr "डाटा सुरक्षित करण्यासाठी नवीन पासफ्रेज द्या"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:9
 #: ../data/ui/filesystem-create.ui.h:9
-#| msgid "F_orget Passphrase"
 msgid "C_onfirm Passphrase"
 msgstr "पासफ्रेजची खात्री करा (_o)"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:10
-#| msgid "_New Passphrase:"
 msgid "New _Passphrase"
 msgstr "नविन पासफ्रेज (_N):"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:1
-msgid "<big>Create Disk Image</big>"
-msgstr ""
-
-#: ../data/ui/create-disk-image-dialog.ui.h:2
-#| msgid "Preparing..."
-msgid "_Start Creating..."
-msgstr "निर्माण करा (_S)..."
-
-#: ../data/ui/create-disk-image-dialog.ui.h:3
 #: ../data/ui/edit-crypttab-dialog.ui.h:3
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:2
-#, fuzzy
 #| msgid "_Name:"
 msgid "_Name"
-msgstr "नाव (_N):"
+msgstr "नाव (_N)"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:4
+#: ../data/ui/create-disk-image-dialog.ui.h:2
 msgid "Save in _folder"
 msgstr "फोल्डरमध्ये साठवा (_f)"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:5
+#: ../data/ui/create-disk-image-dialog.ui.h:3
 msgid "Select a Folder"
 msgstr "फोल्डर निवडा"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:6
-#| msgid "Writing data to \"%s\"..."
+#: ../data/ui/create-disk-image-dialog.ui.h:4
 msgid "Copying data to disk image..."
 msgstr "डाटाला डिस्क प्रतिमावर लिहत आहे..."
+
+#: ../data/ui/create-disk-image-dialog.ui.h:5
+msgid "_Start Creating..."
+msgstr "निर्माण करा (_S)..."
 
 #: ../data/ui/create-partition-dialog.ui.h:1
 msgid "C_reate"
 msgstr "निर्माण करा (_r)"
 
 #: ../data/ui/create-partition-dialog.ui.h:2
-#| msgid "Create Partition"
 msgid "<big>Create Partition</big>"
 msgstr "<big>विभाजन निर्माण करा</big>"
 
 #: ../data/ui/create-partition-dialog.ui.h:3
-#| msgid "Partitioned"
 msgid "Partition _Size"
 msgstr "विभाजन आकार (_S)"
 
 #: ../data/ui/create-partition-dialog.ui.h:4
 msgid "The size of the partition to create, in megabytes"
-msgstr ""
+msgstr "निर्माण करण्याजोगी विभाजनचे आकार, मेगाबाइट्स्मध्ये"
 
 #: ../data/ui/create-partition-dialog.ui.h:5
 msgid "MB"
@@ -168,19 +300,240 @@ msgstr "MB"
 
 #: ../data/ui/create-partition-dialog.ui.h:6
 msgid "Free Space _Following"
-msgstr ""
+msgstr "मोकळी जागा पाठोपाठ (_F)"
 
 #: ../data/ui/create-partition-dialog.ui.h:7
 msgid "The free space following the partition, in megabytes"
-msgstr ""
+msgstr "विभाजन पाठोपाठ मोकळी जागा, मेगाबाइट्स्मध्ये"
 
 #: ../data/ui/create-partition-dialog.ui.h:8
 msgid "<big>Contents</big>"
+msgstr "<big>अंतर्भुत माहिती</big>"
+
+#: ../data/ui/disk-settings-dialog.ui.h:1
+msgid "_Standby Timeout"
+msgstr "स्टँडबाय वेळसमाप्ति (_S)"
+
+#: ../data/ui/disk-settings-dialog.ui.h:2
+msgid "Enter Standby After"
+msgstr "यानंतर स्टँडबायमध्ये जा"
+
+#: ../data/ui/disk-settings-dialog.ui.h:3
+msgid "_Advanced Power Management"
+msgstr "प्रगत पावर व्यवस्थापन (_A)"
+
+#: ../data/ui/disk-settings-dialog.ui.h:4
+#| msgid "RAID Level"
+msgid "APM Level"
+msgstr "APM स्तर"
+
+#: ../data/ui/disk-settings-dialog.ui.h:5
+msgid ""
+"Agressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"अग्रेसिव्ह स्पिंडाउनमुळे ड्राइव्ह अपेक्षापेक्षा लवकर नष्ट होऊ शकते. कृपया "
+"वेळोवेळी “स्टार्ट/स्टॉप काउंट” SMART गुणधर्माची तपासणी करा"
+
+#: ../data/ui/disk-settings-dialog.ui.h:6
+msgid "Automatic Aco_ustic Management"
+msgstr "स्वयं अकुस्टिक व्यवस्थापन (_u)"
+
+#: ../data/ui/disk-settings-dialog.ui.h:7
+msgid "Vendor Recommended"
+msgstr "शिफारसीय विक्रेता"
+
+#: ../data/ui/disk-settings-dialog.ui.h:8
+#| msgid "RAID Level"
+msgid "AAM Level"
+msgstr "AAM स्तर"
+
+#: ../data/ui/disks.ui.h:1
+msgid "Create a new partition..."
+msgstr "नविन विभाजन निर्माण करा..."
+
+#: ../data/ui/disks.ui.h:2
+msgid "Mount the filesystem"
+msgstr "फाइलप्रणाली माऊंट करा"
+
+#: ../data/ui/disks.ui.h:3
+msgid "Unmount the filesystem"
+msgstr "फाइलप्रणालीचे माऊंट अशक्य करा"
+
+#: ../data/ui/disks.ui.h:4
+msgid "Eject the media"
+msgstr "मिडीया बाहेर काढा"
+
+#: ../data/ui/disks.ui.h:5
+msgid "Unlock the encrypted device"
+msgstr "एनक्रिप्टेड साधन कुलूपबंद अशक्य करा"
+
+#: ../data/ui/disks.ui.h:6
+msgid "Activate the swap space"
+msgstr "स्वॅप जागा सुरू करा"
+
+#: ../data/ui/disks.ui.h:7
+msgid "Deactivate the swap space"
+msgstr "स्वॅप जागा बंद करा"
+
+#: ../data/ui/disks.ui.h:8
+msgid "Lock the encrypted device"
+msgstr "एनक्रिप्टेड साधन कुलूपबंद करा"
+
+#: ../data/ui/disks.ui.h:9
+msgid "More actions..."
+msgstr "अधिक कृती..."
+
+#: ../data/ui/disks.ui.h:10
+msgid "Delete partition..."
+msgstr "विभाजन नष्ट करा..."
+
+#: ../data/ui/disks.ui.h:11
+msgid "Attach Disk Image..."
+msgstr "डिस्क प्रतिमा जोडा..."
+
+#: ../data/ui/disks.ui.h:12
+msgid "Detach Disk Image"
+msgstr "डिस्क प्रतिमा विलग करा"
+
+#: ../data/ui/disks.ui.h:13
+msgid "Select a device"
+msgstr "साधन निवडा"
+
+#: ../data/ui/disks.ui.h:14
+msgid "Model"
+msgstr "मॉडल"
+
+#: ../data/ui/disks.ui.h:15
+msgid "Serial Number"
+msgstr "सिरियल क्रमांक"
+
+#: ../data/ui/disks.ui.h:16
+msgid "World Wide Name"
+msgstr "वर्ल्ड वाइड नेम"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: ../data/ui/disks.ui.h:18
+#| msgid "Load Friction"
+msgid "Location"
+msgstr "ठिकाण"
+
+#: ../data/ui/disks.ui.h:19
+msgid "Media"
+msgstr "मिडीया"
+
+#: ../data/ui/disks.ui.h:20
+msgid "Size"
+msgstr "आकार"
+
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../data/ui/disks.ui.h:21 ../src/disks/gduatasmartdialog.c:1516
+msgid "Assessment"
+msgstr "विश्लेषण"
+
+#: ../data/ui/disks.ui.h:22
+msgid "Eject media"
+msgstr "मिडीया बाहेर काढा"
+
+#: ../data/ui/disks.ui.h:23
+msgid "Pending Operation"
+msgstr "उर्वरित कार्य"
+
+#: ../data/ui/disks.ui.h:24
+msgid "<b>_Volumes</b>"
+msgstr "<b>आवाज (_V)</b>"
+
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: ../data/ui/disks.ui.h:26
+msgid "Contents"
+msgstr "अंतर्भुत माहिती"
+
+#: ../data/ui/disks.ui.h:27
+msgid "Device"
+msgstr "उपकरण"
+
+#: ../data/ui/disks.ui.h:28
+msgid "In Use"
+msgstr "वापर"
+
+#: ../data/ui/disks.ui.h:29
+msgid "Auto-clear"
+msgstr "सव्यं नष्ट करा"
+
+#: ../data/ui/disks.ui.h:30
+msgid "Partition Type"
+msgstr "विभाजन प्रकार"
+
+#. The filename or URI of the file that is used as backing store for the loop device.
+#: ../data/ui/disks.ui.h:32
+msgid "Backing File"
+msgstr "बॅकिंग फाइल"
+
+#: ../data/ui/disks.ui.h:33
+msgid "Format Disk..."
+msgstr "डिस्कचे रूपण करा..."
+
+#: ../data/ui/disks.ui.h:34
+msgid "Create Disk Image..."
+msgstr "डिस्क प्रतिमा निर्माण करा..."
+
+#: ../data/ui/disks.ui.h:35
+msgid "Restore Disk Image..."
+msgstr "डिस्क प्रतिमा मूळस्थितीत आणा..."
+
+#: ../data/ui/disks.ui.h:36
+msgid "Benchmark Drive..."
+msgstr "बेंचमार्क ड्राइव्ह..."
+
+#: ../data/ui/disks.ui.h:37
+#| msgid "View SMART Data..."
+msgid "SMART Data and Tests..."
+msgstr "SMART डाटा व चाचणी..."
+
+#: ../data/ui/disks.ui.h:38
+#| msgid "More actions..."
+msgid "Drive Settings..."
+msgstr "ड्राइव्ह सेटिंग्स्..."
+
+#: ../data/ui/disks.ui.h:39
+msgid "Standby Now"
+msgstr "आता स्टँडबाय करा"
+
+#: ../data/ui/disks.ui.h:40
+msgid "Wake-Up from Standby"
+msgstr "स्टँडबायपासून सक्रिय व्हा"
+
+#: ../data/ui/disks.ui.h:41
+msgid "Format..."
+msgstr "रूपण..."
+
+#: ../data/ui/disks.ui.h:42
+msgid "Edit Partition Type..."
+msgstr "विभाजन प्रकार संपादित करा..."
+
+#: ../data/ui/disks.ui.h:43
+msgid "Edit Filesystem Label..."
+msgstr "फाइलप्रणाली लेबल संपादित करा..."
+
+#: ../data/ui/disks.ui.h:44
+msgid "Change Passphrase..."
+msgstr "पासफ्रेज बदला..."
+
+#: ../data/ui/disks.ui.h:45
+msgid "Edit Mount Options..."
+msgstr "माऊंट पर्याय संपादित करा..."
+
+#: ../data/ui/disks.ui.h:46
+msgid "Edit Encryption Options..."
+msgstr "एंक्रिप्शन पर्याय संपादित करा..."
+
+#: ../data/ui/disks.ui.h:47
+msgid "Benchmark Volume..."
+msgstr "बेंचमार्क आवाज..."
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "_Automatic Encryption Options"
-msgstr ""
+msgstr "स्वयं एंक्रिप्शन पर्याय (_A)"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid ""
@@ -188,29 +541,32 @@ msgid ""
 "and passphrase for the device. The options correspond to an entry in the <b>/"
 "etc/crypttab</b> file"
 msgstr ""
+"साधनकरीता एंक्रिप्शन पर्याय व पासफ्रेज व्यवस्थापीत करण्यासाठी <i>स्वयं "
+"एंक्रिप्शन पर्याय</i> बंद करा.  <b>/etc/cryttab</b> फाइलमध्ये पर्याय नोंदणीसह "
+"परस्पर आहेत"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:4
 msgid "Opt_ions"
-msgstr ""
+msgstr "पर्याय (_i)"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:5
 msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
+"विनाकुलूपबंद साधनकरीता वापरण्याजोगी नाव - साधनाला <b>/dev/mapper</b>/ सह "
+"प्रिफिक्स केलेल्या नावासह ठरवले आहे"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:6
 msgid "Options to use when unlocking the device"
-msgstr ""
+msgstr "साधनाला कुलूप अशक्य करतेवेळी वापरण्याजोगी पर्याय"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:7
-#| msgid "_Passphrase:"
 msgid "Passphrase File"
 msgstr "पासफ्रेज फाइल"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:3
-#| msgid "_New Passphrase:"
 msgid "Sho_w passphrase"
 msgstr "पासफ्रेज दाखवा (_w)"
 
@@ -219,48 +575,49 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
+"साधनाला ठरवतेवेळी वापरकर्त्यापासून विनंती करण्याजोगी साधनाचे पासफ्रेज किंवा "
+"काहिच नाही"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:10 ../data/ui/filesystem-create.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:2
-#| msgid "_Passphrase:"
 msgid "_Passphrase"
 msgstr "पासफ्रेज (_P):"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:11
 msgid "_Unlock at startup"
-msgstr ""
+msgstr "प्रारंभवेळी कुलूपबंद अशक्य (_U)"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:12
 msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr ""
+msgstr "नीवडले असल्यास, प्रारंभवेळी साधन कुलूपबंद अशक्य केले जाईल [!noauto]"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:13
 msgid "Require additional authori_zation to unlock"
-msgstr ""
+msgstr "कुलूपबंद अशक्य करण्यासाठी अगाऊ ऑथराइजेशन आवश्यक (_z)"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:14
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
 msgstr ""
+"नीवडले असल्यास, साधनाला कुलूपबंद अशक्य [x-udisks-auth] करण्यासाठी अगाऊ "
+"ऑथराइजेशन आवश्यक आहे"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:2
 #: ../data/ui/edit-partition-dialog.ui.h:2
-#| msgid "Empty Partition"
 msgid "<big>Edit Partition</big>"
 msgstr "<big>विभाजन संपादित करा</big>"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:3
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:3
 #: ../data/ui/edit-partition-dialog.ui.h:3 ../data/ui/filesystem-create.ui.h:1
-#| msgid "_Type:"
 msgid "_Type"
 msgstr "प्रकार (_T)"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:4
 msgid "The partition type as a 8-bit unsigned integer"
-msgstr ""
+msgstr "8-bit अनसाइंड इंटिजर स्वरूपातील विभाजन प्रकार"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:5
 msgid "_Bootable"
@@ -272,20 +629,20 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
+"OS कुठून लोड करायचे ते ओळण्यासाठी, प्लॅटफॉर्म बूटलोडरतर्फे वापरण्याजोगी "
+"फ्लॅग. कधिकधि ह्या फ्लॅग सेटसह विभाजनला <i>सक्रीय</i> विभाजन म्हणून ओळखले जाते"
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:1
-#| msgid "Filesystem label"
 msgid "<big>Change Filesystem Label</big>"
 msgstr "<big>फाइलप्रणाली लेबल बदला</big>"
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:3
-#| msgid "_Label:"
 msgid "_Label"
 msgstr "लेबल (_L)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
 msgid "_Automatic Mount Options"
-msgstr ""
+msgstr "स्वयं माउंट पर्याय (_A)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
 msgid ""
@@ -293,43 +650,46 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
+"माउंट पॉइंट व साधनकरीता माउंट पर्याय व्यवस्थापीत करण्यासाठी <i>स्वयं माउंट "
+"पर्याय</i> बंद करा. <b>/etc/fstab</b> फाइलमध्ये पर्याय नोंदणीसह परस्पर आहेत"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:3
 msgid "I_dentify As"
-msgstr ""
+msgstr "अशी ओळख पटवा (_d)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:4
 msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"<b>विशेष साधन फाइल</b> - नोंदणीची व्याप्ति नियंत्रीत ठेवण्याकरीता <b>"
+"/dev/disk</b> क्रमवारित सिमलिंक्स्चा वापर कराy"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:5
 msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"विशेष साधन फाइल - नोंदणीची व्याप्ति नियंत्रीत ठेवण्याकरीता <b>/dev/disk</b> "
+"क्रमवारित सिमलिंक्स्चा वापर कराy"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid "Mount _Point"
-msgstr ""
+msgstr "माऊंट पॉइंट (_P)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:7
-#| msgid "Filesystem type"
 msgid "Filesystem _Type"
 msgstr "फाइलप्रणाली प्रकार (_T)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:8
 msgid "The directory to mount the device in"
-msgstr ""
+msgstr "साधनाला माउंट करण्याजोगी डिरेक्ट्री"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:9
-#| msgid "The selected filesystem type"
 msgid "The filesystem type to use"
 msgstr "वापरण्याजोगी फाइलप्रणाली प्रकार"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:10
-#| msgid "Array _Name:"
 msgid "Display _Name"
 msgstr "डिस्पले नाव (_N)"
 
@@ -337,57 +697,63 @@ msgstr "डिस्पले नाव (_N)"
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
+"ठरवले असल्यास, साधनकरीता वापरकर्ता संवादात [x-gvfs-name=] वापरण्याजोगी नाव"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
 msgid "Icon Na_me"
-msgstr ""
+msgstr "चिन्हाचे नाव (_m)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:13
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
+"ठरवले असल्यास, साधनकरीता वापरकर्ता संवादात [x-gvfs-icon=] वापरण्याजोगी "
+"चिन्हाचे नाव"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:14
 msgid "Sho_w in user interface"
-msgstr ""
+msgstr "वापरकर्ता संवादात दाखवा (_w)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:15
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
+"ठरवले असल्यास, वापरकर्ता संवादात [x-gvfs-show] साधन नेहमी दाखवले जाते, "
+"कोणतिहि डिरेक्ट्री असल्यास"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:16
 msgid "Require additional authori_zation to mount"
-msgstr ""
+msgstr "माउंटकरीता अगाऊ ऑथराइजेशन आवश्यक (_z)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:17
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
+"नीवडले असल्यास, साधनाला माउंट [x-udisks-auth] करण्यासाठी अगाऊ ऑथराइजेशन "
+"आवश्यक आहे"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:18
 msgid "Mount at _startup"
-msgstr ""
+msgstr "प्रारंभवेळी माउंट करा (_s)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:19
 msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr ""
+msgstr "नीवडले असल्यास, प्रारंभवेळी साधन साधन माउंट केले जाईल [!noauto]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:20
-#| msgid "Don't partition"
 msgid "Mount Opt_ions"
 msgstr "माऊंट पर्याय (_i)"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+msgstr "<b>/etc/fstab</b> फाइलमध्ये साठवलेले माऊंट पर्याय"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
+msgstr "32-bit <i>GUID</i> स्वरूपातील विभाजन प्रकार"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:6
 msgid ""
@@ -395,9 +761,10 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
+"विभाजन नाव (36 युनिकोड अक्षरांपर्यंत). <b>/dev/disk/by-partlabel</b> "
+"डिरेक्ट्रीमध्ये सिमलिंकतर्फे साधनचा संदर्भ घ्यायचा असल्यास उपयोगी ठरते"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
-#| msgid "EFI System Partition"
 msgid "_System partition"
 msgstr "प्राणाली विभाजन (_S)"
 
@@ -407,9 +774,11 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
+"कार्य करण्यासाठी OS/प्लॅटफॉर्मकरीता विभाजन व त्यामधील अंतर्भुत माहिती आवश्यक "
+"आहे. अंतर्भुत माहिती नष्ट किंवा खोडून पुनः लिहले जाणार नाही याची विशेष काळजी "
+"घ्या"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
-#| msgid "_Bootable"
 msgid "Legacy BIOS _Bootable"
 msgstr "लेगसि BIOS बूटजोजगी (_B)"
 
@@ -418,9 +787,10 @@ msgid ""
 "Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
 "i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
+"लेगसि BIOS बूटेबल. हे मास्टर बूट रेकॉर्ड <i>बूटजोगी</i> फ्लॅगप्रमाणे आहे. हे "
+"सहसा MBR प्रणालींवरील GPT विभाजनांकरीता वापरले जाते"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:11
-#| msgid "%s (Read Only)"
 msgid "_Read-Only"
 msgstr "फक्त वाचणीय (_R)"
 
@@ -429,39 +799,48 @@ msgid ""
 "If set, some OSes may mount or use the contents of the partition as read-"
 "only instead of read-write"
 msgstr ""
+"नीवले असल्यास, काहिक OS विभाजनातील अंतर्भुत माहिती फक्त वाचनीय ऐवजी रिड-राइट "
+"स्वरूपात कदाचित माउंट किंवा वापरू शकतात"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 msgid "H_idden"
-msgstr ""
+msgstr "छुपे (_i)"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:14
 msgid ""
 "If set, some OSes may hide the contents of the partition in their user "
 "interfaces"
 msgstr ""
+"नीवले असल्यास, काहिक OS वापरकर्ता संवादात विभाजनातील अंतर्भुत माहिती कदाचित "
+"लपवू शकतात"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:15
 msgid "Do Not _Automount"
-msgstr ""
+msgstr "स्वयंमाउंट अशक्य करा (_A)"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:16
 msgid "If set, some OSes may not automount the contents of the partition"
 msgstr ""
+"नीवले असल्यास, काहिक OS विभाजनातील अंतर्भुत माहिती कदाचित स्वयंमाउंट करू "
+"शकणार नाही"
 
 #: ../data/ui/filesystem-create.ui.h:3
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the <b>/dev/disk/by-label</b> directory"
 msgstr ""
+"फाइलप्रणालीकरीता वापरण्याजोगी नाव. <b>/dev/disk/by-label</b> डिरेक्ट्रीमध्ये "
+"सिमलिंकतर्फे साधनचा संदर्भ घ्यायचा असल्यास उपयोगी ठरते"
 
 #: ../data/ui/filesystem-create.ui.h:4
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory"
 msgstr ""
+"फाइलप्रणालीकरीता वापरण्याजोगी नाव. /dev/disk/by-label डिरेक्ट्रीमध्ये "
+"सिमलिंकतर्फे साधनचा संदर्भ घ्यायचा असल्यास उपयोगी ठरते"
 
 #: ../data/ui/filesystem-create.ui.h:5
-#| msgid "%s Filesystem"
 msgid "F_ilesystem"
 msgstr "फाइलप्रणाली (_i)"
 
@@ -470,14 +849,21 @@ msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
 msgstr ""
+"निर्माण करण्याजोगी पसंतीचे फाइलप्रणाली प्रकार उ.दा. <i>btrfs</i>, <i>xfs</i> "
+"किंवा <i>swap</i>"
 
 #: ../data/ui/filesystem-create.ui.h:7
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
 msgstr ""
+"निर्माण करण्याजोगी पसंतीचे फाइलप्रणाली प्रकार उ.दा. btrfs, xfs किंवा swap"
 
 #: ../data/ui/filesystem-create.ui.h:10
 msgid "Enter passphrase used to protect the data"
-msgstr ""
+msgstr "डाटा सुरक्षित करण्यासाठी पासफ्रेज द्या"
+
+#: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
+msgid "_Erase"
+msgstr "खोडा (_E)"
 
 #: ../data/ui/format-disk-dialog.ui.h:1 ../data/ui/format-volume-dialog.ui.h:1
 msgid "_Format..."
@@ -485,296 +871,100 @@ msgstr "रूपण करा (_F)..."
 
 #: ../data/ui/format-disk-dialog.ui.h:2
 msgid "<big>Format Disk</big>"
-msgstr ""
+msgstr "<big>डिस्कचे रूपण करा</big>"
 
 #: ../data/ui/format-disk-dialog.ui.h:3
-#| msgid "Partition"
 msgid "_Partitioning"
 msgstr "विभाजन (_P)"
 
 #: ../data/ui/format-volume-dialog.ui.h:2
 msgid "<big>Format Volume</big>"
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:1
-#| msgid "Create partition"
-msgid "Create a new partition..."
-msgstr "नविन विभाजन निर्माण करा..."
-
-#: ../data/ui/palimpsest.ui.h:2
-#| msgid "Unmount the filesystem"
-msgid "Mount the filesystem"
-msgstr "फाइलप्रणाली माऊंट करा"
-
-#: ../data/ui/palimpsest.ui.h:3
-msgid "Unmount the filesystem"
-msgstr "फाइलप्रणालीचे माऊंट अशक्य करा"
-
-#: ../data/ui/palimpsest.ui.h:4
-#| msgid "Ejecting Media"
-msgid "Eject the media"
-msgstr "मिडीया बाहेर काढा"
-
-#: ../data/ui/palimpsest.ui.h:5
-#| msgid "Error locking encrypted device"
-msgid "Unlock the encrypted device"
-msgstr "एनक्रिप्टेड साधन कुलूपबंद अशक्य करा"
-
-#: ../data/ui/palimpsest.ui.h:6
-msgid "Activate the swap space"
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:7
-msgid "Deactivate the swap space"
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:8
-#| msgid "Error locking encrypted device"
-msgid "Lock the encrypted device"
-msgstr "एनक्रिप्टेड साधन कुलूपबंद करा"
-
-#: ../data/ui/palimpsest.ui.h:9
-#| msgid "More Information"
-msgid "More actions..."
-msgstr "अधिक कृती..."
-
-#: ../data/ui/palimpsest.ui.h:10
-#| msgid "_Delete Partition"
-msgid "Delete partition..."
-msgstr "विभाजन नष्ट करा..."
-
-#: ../data/ui/palimpsest.ui.h:11
-#| msgid "_Format..."
-msgid "Format Disk..."
-msgstr "डिस्कचे रूपण करा..."
-
-#: ../data/ui/palimpsest.ui.h:12
-msgid "Create Disk Image..."
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:13
-msgid "Restore Disk Image..."
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:14
-#| msgid "SMART Data"
-msgid "View SMART Data..."
-msgstr "SMART डाटाचे अवलोकन..."
-
-#: ../data/ui/palimpsest.ui.h:15
-#| msgid "_Format..."
-msgid "Format..."
-msgstr "रूपण..."
-
-#: ../data/ui/palimpsest.ui.h:16
-#| msgid "%s Partition Table"
-msgid "Edit Partition Type..."
-msgstr "विभाजन प्रकार संपादित करा..."
-
-#: ../data/ui/palimpsest.ui.h:17
-#| msgid "Filesystem label"
-msgid "Edit Filesystem Label..."
-msgstr "फाइलप्रणाली लेबल संपादित करा..."
-
-#: ../data/ui/palimpsest.ui.h:18
-#| msgid "Change Pa_ssphrase..."
-msgid "Change Passphrase..."
-msgstr "पासफ्रेज बदला..."
-
-#: ../data/ui/palimpsest.ui.h:19
-msgid "Edit Mount Options..."
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:20
-msgid "Edit Encryption Options..."
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:21
-msgid "Attach Disk Image..."
-msgstr ""
-
-#: ../data/ui/palimpsest.ui.h:22
-#| msgid "Detaching Device"
-msgid "Detach Disk Image"
-msgstr "डिस्क प्रतिमा विलग करा"
-
-#: ../data/ui/palimpsest.ui.h:23
-#| msgid "Error ejecting device"
-msgid "Select a device"
-msgstr "साधन निवडा"
-
-#: ../data/ui/palimpsest.ui.h:24
-#| msgid "Model Name:"
-msgid "Model"
-msgstr "मॉडल"
-
-#: ../data/ui/palimpsest.ui.h:25
-#| msgid "Serial Number:"
-msgid "Serial Number"
-msgstr "सिरियल क्रमांक"
-
-#: ../data/ui/palimpsest.ui.h:26
-#| msgid "Model Name:"
-msgid "World Wide Name"
-msgstr "वर्ल्ड वाइड नेम"
-
-#: ../data/ui/palimpsest.ui.h:27
-#| msgid "%s Media"
-msgid "Media"
-msgstr "मिडीया"
-
-#: ../data/ui/palimpsest.ui.h:28
-msgid "Size"
-msgstr "आकार"
-
-#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/palimpsest.ui.h:29 ../src/palimpsest/gduatasmartdialog.c:1632
-msgid "Assessment"
-msgstr "विश्लेषण"
-
-#: ../data/ui/palimpsest.ui.h:30
-#| msgid "Ejecting Media"
-msgid "Eject media"
-msgstr "मिडीया बाहेर काढा"
-
-#: ../data/ui/palimpsest.ui.h:31
-msgid "<b>_Volumes</b>"
-msgstr ""
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/palimpsest.ui.h:33
-#| msgid "Components:"
-msgid "Contents"
-msgstr "अंतर्भुत माहिती"
-
-#: ../data/ui/palimpsest.ui.h:34
-msgid "Device"
-msgstr "उपकरण"
-
-#: ../data/ui/palimpsest.ui.h:35
-#| msgid "Use"
-msgid "In Use"
-msgstr "वापर"
-
-#: ../data/ui/palimpsest.ui.h:36
-#| msgid "Partitioned"
-msgid "Partition Type"
-msgstr "विभाजन प्रकार"
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/palimpsest.ui.h:38
-#| msgid "Checking File System"
-msgid "Backing File"
-msgstr "बॅकिंग फाइल"
+msgstr "<big>आवाजाचे रूपण करा</big>"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
-msgid "<big>Restore Disk Image</big>"
-msgstr ""
+msgid "_Image to restore"
+msgstr "पूर्वस्थितीत आणण्याजोगी प्रतिमा (_I)"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:2
-msgid "_Image to restore"
-msgstr ""
+msgid "Select Disk Image to restore"
+msgstr "पुनःसाठवण्याकरीता डिस्क प्रतिमा नीवडा"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:3
-msgid "Select Disk Image to restore"
-msgstr ""
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:4
-#| msgid "Writing data to \"%s\"..."
+#: ../src/disks/gdurestorediskimagedialog.c:511
 msgid "Copying data to device..."
 msgstr "डाटाला साधनवर लिहत आहे..."
 
-#: ../data/ui/restore-disk-image-dialog.ui.h:5
+#: ../data/ui/restore-disk-image-dialog.ui.h:4
 msgid "_Start Restoring..."
-msgstr ""
+msgstr "पूर्वस्थितीत आणणे सुरू करा (_S)..."
 
 #: ../data/ui/smart-dialog.ui.h:1
-#| msgid "_Initiate Self Test"
 msgid "_Start Self-test..."
 msgstr "स्वयं चाचणी सुरू करा (_S)..."
 
 #: ../data/ui/smart-dialog.ui.h:2
-#| msgid "Self-tests:"
 msgid "_Stop Self-test"
 msgstr "स्वयं चाचणी थांबवा (_S)"
 
 #: ../data/ui/smart-dialog.ui.h:3
-#| msgid "Powered On:"
 msgid "Powered On"
 msgstr "सुरू केले"
 
 #: ../data/ui/smart-dialog.ui.h:4
-#| msgid "Updated:"
 msgid "Updated"
 msgstr "सुधारीत केले"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../data/ui/smart-dialog.ui.h:5 ../src/palimpsest/gduatasmartdialog.c:300
-#: ../src/palimpsest/gduatasmartdialog.c:519
+#: ../data/ui/smart-dialog.ui.h:5 ../src/disks/gduatasmartdialog.c:297
+#: ../src/disks/gduatasmartdialog.c:516
 msgid "Temperature"
 msgstr "तापमान"
 
 #: ../data/ui/smart-dialog.ui.h:6
-#| msgid "Self-tests:"
 msgid "Self-test Result"
 msgstr "स्वयं-चाचणी परिणाम"
 
 #: ../data/ui/smart-dialog.ui.h:7
-#, fuzzy
 #| msgid "Self Assessment:"
 msgid "Self-assessment"
-msgstr "स्वयं विश्लेषण:"
+msgstr "स्वयंविश्लेषण"
 
 #: ../data/ui/smart-dialog.ui.h:8
-#, fuzzy
 #| msgid "Overall Assessment:"
 msgid "Overall Assessment"
-msgstr "सरासर विश्लेषण:"
+msgstr "सरासर विश्लेषण"
+
+#: ../data/ui/smart-dialog.ui.h:9
+#| msgid "_Attributes"
+msgid "SMART _Attributes"
+msgstr "SMART गुणधर्म (_A)"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../data/ui/smart-dialog.ui.h:9 ../src/palimpsest/gduatasmartdialog.c:1620
+#: ../data/ui/smart-dialog.ui.h:10 ../src/disks/gduatasmartdialog.c:1504
 msgid "Value"
 msgstr "मूल्य"
 
-#. How often the attribute is updated. The two possible values are 'Every time data is collected (online)' and 'Only during off-line activities (Not Online)'
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../data/ui/smart-dialog.ui.h:11 ../src/palimpsest/gduatasmartdialog.c:865
-#, fuzzy
-#| msgid "Updated:"
-msgid "Updates"
-msgstr "सुधारीत:"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../data/ui/smart-dialog.ui.h:12 ../src/palimpsest/gduatasmartdialog.c:863
-#, fuzzy
+#: ../data/ui/smart-dialog.ui.h:11
 #| msgid "_Type:"
 msgid "Type"
-msgstr "प्रकार (_T):"
+msgstr "प्रकार"
+
+#: ../data/ui/smart-dialog.ui.h:12
+#| msgid "Encryption"
+msgid "Description"
+msgstr "वर्णन"
 
 #: ../data/ui/smart-dialog.ui.h:13
-#, fuzzy
-#| msgid "Normalized:"
-msgid "Normalized"
-msgstr "नॉर्मलाइज्ड्:"
-
-#: ../data/ui/smart-dialog.ui.h:14
-#, fuzzy
-#| msgid "_Attributes"
-msgid "<b>SMART _Attributes</b>"
-msgstr "गुणधर्म (_A)"
-
-#: ../data/ui/smart-dialog.ui.h:15
 msgid "Short"
 msgstr "छोटे"
 
-#: ../data/ui/smart-dialog.ui.h:16
+#: ../data/ui/smart-dialog.ui.h:14
 msgid "Extended"
 msgstr "विस्तारीत"
 
-#: ../data/ui/smart-dialog.ui.h:17
-#| msgid "Cancel"
+#: ../data/ui/smart-dialog.ui.h:15
 msgid "Conveyance"
 msgstr "वहन"
 
@@ -786,14 +976,71 @@ msgstr "<big>कुलूप बंद अशक्य करण्यासा�
 msgid "_Unlock"
 msgstr "कुलूपबंद अशक्य करा (_U)"
 
+#: ../src/disk-image-mounter/main.c:57
+#| msgid "An error occured"
+msgid "An error occurred"
+msgstr "त्रुटी आढळली"
+
+#: ../src/disk-image-mounter/main.c:78
+#| msgid "Error writing to backup image"
+msgid "Allow writing to the image"
+msgstr "प्रतिमाकरीता लिहतेवेळी त्रुटी"
+
+#: ../src/disk-image-mounter/main.c:93
+msgid "Select Disk Image(s) to Mount"
+msgstr "माउंट करण्याजोगी डिस्क प्रतिमा नीवडा"
+
+#: ../src/disk-image-mounter/main.c:97
+msgid "_Mount"
+msgstr "माऊंट (_M)"
+
+#. Add a RO check button that defaults to RO
+#: ../src/disk-image-mounter/main.c:103
+msgid "Set up _read-only mount"
+msgstr "फक्त वाचनजोगी माउंट, असे ठरवा (_r)"
+
+#: ../src/disk-image-mounter/main.c:104
+msgid ""
+"If checked, the mount will be read-only. This is useful if you don't want "
+"the underlying disk image to be modified"
+msgstr ""
+"तपासले असल्यास, माउंट फक्त वाचनीय राहेल. अंतर्भुत फाइल संपादित करायचे नसल्यास "
+"हे उपयोगी ठरते"
+
+#: ../src/disk-image-mounter/main.c:146
+#, c-format
+msgid "Error connecting to udisks daemon: %s (%s, %d)"
+msgstr "udisks डिमन: %s (%s, %d) सह जोडणी करतेवेळी त्रुटी"
+
+#: ../src/disk-image-mounter/main.c:154
+msgid "Attach and mount one or more disk image files."
+msgstr "एक किंवा त्यापेक्षा जास्त डिस्क प्रतिमा फाइल्स् जोडा व माउंट करा."
+
+#: ../src/disk-image-mounter/main.c:202
+#, c-format
+msgid "Cannot open `%s' - maybe the volume isn't mounted?"
+msgstr "`%s' उघडणे अशक्य - कदाचित खंड माउंट केले नसावे?"
+
+#: ../src/disk-image-mounter/main.c:209
+#, c-format
+#| msgid "Error mounting device"
+msgid "Error opening `%s': %m"
+msgstr "`%s': %m उघतेवेळी त्रुटी"
+
+#: ../src/disk-image-mounter/main.c:230
+#, c-format
+#| msgid "Error attaching disk image"
+msgid "Error attaching disk image: %s (%s, %d)"
+msgstr "डिस्क प्रतिमा: %s (%s, %d) जोडतेवेळी त्रुटी"
+
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:143
+#: ../src/disks/gduatasmartdialog.c:140
 msgid "Read Error Rate"
 msgstr "त्रुटी दर वाचा"
 
-#: ../src/palimpsest/gduatasmartdialog.c:144
+#: ../src/disks/gduatasmartdialog.c:141
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -805,48 +1052,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:153
+#: ../src/disks/gduatasmartdialog.c:150
 msgid "Throughput Performance"
 msgstr "त्रुपुट कार्यक्षमता"
 
-#: ../src/palimpsest/gduatasmartdialog.c:154
+#: ../src/disks/gduatasmartdialog.c:151
 msgid "Average efficiency of the disk"
 msgstr "डिस्कची सरासर कार्यक्षमता"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:161
+#: ../src/disks/gduatasmartdialog.c:158
 msgid "Spinup Time"
 msgstr "स्पीनअप वेळ"
 
-#: ../src/palimpsest/gduatasmartdialog.c:162
+#: ../src/disks/gduatasmartdialog.c:159
 msgid "Time needed to spin up the disk"
 msgstr "डिस्क फिरवण्यासाठी आवश्यक वेळ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:169
+#: ../src/disks/gduatasmartdialog.c:166
 msgid "Start/Stop Count"
 msgstr "स्टार्ट/स्टॉप प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:170
+#: ../src/disks/gduatasmartdialog.c:167
 msgid "Number of spindle start/stop cycles"
 msgstr "स्पिंडल स्टार्ट/स्टॉप चक्रांची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:177
+#: ../src/disks/gduatasmartdialog.c:174
 msgid "Reallocated Sector Count"
 msgstr "सेक्टर प्रमाण पुनःवाटप केले"
 
-#: ../src/palimpsest/gduatasmartdialog.c:178
-#| msgid ""
-#| "Count of remapped sectors. When the hard drive finds a read/write/"
-#| "verification error, it mark the sector as \"reallocated\" and transfers "
-#| "data to a special reserved area (spare area)"
+#: ../src/disks/gduatasmartdialog.c:175
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as \"reallocated\" and transfers "
@@ -855,121 +1098,118 @@ msgstr ""
 "पुनःमॅपेड् केलेल्या सेक्टर्स्चे प्रमाण. हार्ड ड्राइव्हला read/write/ तपासणी "
 "त्रुटी आढळल्यास, ते "
 "सेक्टरला \"reallocated\" म्हणून चिन्हाकृत करते व डाटा विशेष आरक्षीत क्षेत्र "
-"(स्पेअर क्षेत्र) करीता स्थानांतरीत करते"
+"(स्पेअर क्षेत्र) "
+"करीता स्थानांतरीत करते"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:187
+#: ../src/disks/gduatasmartdialog.c:184
 msgid "Read Channel Margin"
 msgstr "वाहिनीचे समास वाचा"
 
-#: ../src/palimpsest/gduatasmartdialog.c:188
+#: ../src/disks/gduatasmartdialog.c:185
 msgid "Margin of a channel while reading data."
 msgstr "डाटा वाचतेवेळी वाहिचीचे समास."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:195
+#: ../src/disks/gduatasmartdialog.c:192
 msgid "Seek Error Rate"
 msgstr "सीक त्रुटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:196
+#: ../src/disks/gduatasmartdialog.c:193
 msgid "Frequency of errors while positioning"
 msgstr "स्थान निश्चित करतेवेळी त्रुटींची फ्रिक्वेंसी"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:203
+#: ../src/disks/gduatasmartdialog.c:200
 msgid "Seek Timer Performance"
 msgstr "सीक टाइमर क्षमता"
 
-#: ../src/palimpsest/gduatasmartdialog.c:204
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:201
 #| msgid "Average efficiency of operatings while positioning"
 msgid "Average efficiency of operations while positioning"
-msgstr "स्थान निश्चित करतेवेळी ऑपरेटींग्स्ची सरासर क्षमता"
+msgstr "स्थान निश्चित करतेवेळी कार्यांची सरासर क्षमता"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:211
-#: ../src/palimpsest/gduatasmartdialog.c:536
+#: ../src/disks/gduatasmartdialog.c:208 ../src/disks/gduatasmartdialog.c:533
 msgid "Power-On Hours"
 msgstr "पावर-ऑन तास"
 
-#: ../src/palimpsest/gduatasmartdialog.c:212
-#: ../src/palimpsest/gduatasmartdialog.c:537
+#: ../src/disks/gduatasmartdialog.c:209 ../src/disks/gduatasmartdialog.c:534
 msgid "Number of hours elapsed in the power-on state"
 msgstr "पावर-ऑन स्तरकरीता लागणारे तास"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:219
+#: ../src/disks/gduatasmartdialog.c:216
 msgid "Spinup Retry Count"
 msgstr "स्पीनअप पुनःप्रयत्नाचे प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:220
+#: ../src/disks/gduatasmartdialog.c:217
 msgid "Number of retry attempts to spin up"
 msgstr "स्पीन अप करण्याजोगी पुनःप्रयत्नांचे प्रमाण"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:227
+#: ../src/disks/gduatasmartdialog.c:224
 msgid "Calibration Retry Count"
 msgstr "कॅलिब्रेशन पुनःप्रयत्न प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:228
+#: ../src/disks/gduatasmartdialog.c:225
 msgid "Number of attempts to calibrate the device"
 msgstr "उपकरनाला कॅलीब्रेट करण्यासाठी प्रयत्नांची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:235
+#: ../src/disks/gduatasmartdialog.c:232
 msgid "Power Cycle Count"
 msgstr "पावर चक्राचे प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:236
+#: ../src/disks/gduatasmartdialog.c:233
 msgid "Number of power-on events"
 msgstr "power-on घटनांची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:243
+#: ../src/disks/gduatasmartdialog.c:240
 msgid "Soft read error rate"
 msgstr "सॉफ्ट read त्रुटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:245
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:242
 #| msgid "Frequency of 'program' errors while reading from the disk"
 msgid "Frequency of errors while reading from the disk"
-msgstr "डिस्कपासून वाचतेवेळी 'कार्यक्रम' त्रुटींची फ्रिक्वेंसी"
+msgstr "डिस्कपासून वाचतेवेळी त्रुटींची वारंवारता"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:252
+#: ../src/disks/gduatasmartdialog.c:249
 msgid "Reported Uncorrectable Errors"
 msgstr "अनिवारण त्रुटी कळवल्यात"
 
-#: ../src/palimpsest/gduatasmartdialog.c:253
+#: ../src/disks/gduatasmartdialog.c:250
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "हार्डवेअर ECC चा वापर करून अनिवारण करण्याजोगी त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:260
+#: ../src/disks/gduatasmartdialog.c:257
 msgid "High Fly Writes"
 msgstr "हाय फ्लाय राईट्स्"
 
-#: ../src/palimpsest/gduatasmartdialog.c:261
+#: ../src/disks/gduatasmartdialog.c:258
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
@@ -978,73 +1218,70 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:268
+#: ../src/disks/gduatasmartdialog.c:265
 msgid "Airflow Temperature"
 msgstr "एयरफ्लो तापमान"
 
-#: ../src/palimpsest/gduatasmartdialog.c:269
+#: ../src/disks/gduatasmartdialog.c:266
 msgid "Airflow temperature of the drive"
 msgstr "ड्राइव्हचे एयरफ्लो तापमान"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:276
-#: ../src/palimpsest/gduatasmartdialog.c:446
+#: ../src/disks/gduatasmartdialog.c:273 ../src/disks/gduatasmartdialog.c:443
 msgid "G-sense Error Rate"
 msgstr "G-sense त्रुटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:277
+#: ../src/disks/gduatasmartdialog.c:274
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "इमपॅक्ट लोडस्च्या परिणाममुळे चुकींची फ्रिक्वेंसी"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:284
-#: ../src/palimpsest/gduatasmartdialog.c:503
+#: ../src/disks/gduatasmartdialog.c:281 ../src/disks/gduatasmartdialog.c:500
 msgid "Power-off Retract Count"
 msgstr "पावर-ऑफ रिट्रॅक्ट प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:285
+#: ../src/disks/gduatasmartdialog.c:282
 msgid "Number of power-off or emergency retract cycles"
 msgstr "पावर-ऑफ किंवा ताबडतोब रिट्रॅक्ट सायकल्स्ची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:292
-#: ../src/palimpsest/gduatasmartdialog.c:479
+#: ../src/disks/gduatasmartdialog.c:289 ../src/disks/gduatasmartdialog.c:476
 msgid "Load/Unload Cycle Count"
 msgstr "लोड/लोड अशक्य सायकल प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:293
+#: ../src/disks/gduatasmartdialog.c:290
 msgid "Number of cycles into landing zone position"
 msgstr "लँडींग क्षेत्र स्थानातील सायकल्स्ची संख्या"
 
-#: ../src/palimpsest/gduatasmartdialog.c:301
+#: ../src/disks/gduatasmartdialog.c:298
 msgid "Current internal temperature of the drive"
 msgstr "ड्राइव्हचे सध्याचे आंतरीक तापमान"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:308
+#: ../src/disks/gduatasmartdialog.c:305
 msgid "Hardware ECC Recovered"
 msgstr "हार्डवेअर ECC पुनःप्राप्त"
 
-#: ../src/palimpsest/gduatasmartdialog.c:309
+#: ../src/disks/gduatasmartdialog.c:306
 msgid "Number of ECC on-the-fly errors"
 msgstr "ECC चे on-the-fly त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:316
+#: ../src/disks/gduatasmartdialog.c:313
 msgid "Reallocation Count"
 msgstr "पुनःवाटपचे प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:317
+#: ../src/disks/gduatasmartdialog.c:314
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -1057,11 +1294,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:327
+#: ../src/disks/gduatasmartdialog.c:324
 msgid "Current Pending Sector Count"
 msgstr "सध्याचे उर्वरीत सेक्टरचे प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:328
+#: ../src/disks/gduatasmartdialog.c:325
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -1078,11 +1315,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:339
+#: ../src/disks/gduatasmartdialog.c:336
 msgid "Uncorrectable Sector Count"
 msgstr "अनिवारणजोगी सेक्टरचे प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:340
+#: ../src/disks/gduatasmartdialog.c:337
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -1095,22 +1332,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:349
+#: ../src/disks/gduatasmartdialog.c:346
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC त्रुटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:350
+#: ../src/disks/gduatasmartdialog.c:347
 msgid "Number of CRC errors during UDMA mode"
 msgstr "UDMA मोडवेळी CRC त्रुटींचे प्रमाण"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:357
+#: ../src/disks/gduatasmartdialog.c:354
 msgid "Write Error Rate"
 msgstr "त्रुटी दर लिहीत आहे"
 
-#: ../src/palimpsest/gduatasmartdialog.c:358
+#: ../src/disks/gduatasmartdialog.c:355
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -1121,110 +1358,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:365
+#: ../src/disks/gduatasmartdialog.c:362
 msgid "Soft Read Error Rate"
 msgstr "सॉफ्ट रिड त्रुटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:366
+#: ../src/disks/gduatasmartdialog.c:363
 msgid "Number of off-track errors"
 msgstr "ऑफ-ट्रॅक त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:373
+#: ../src/disks/gduatasmartdialog.c:370
 msgid "Data Address Mark Errors"
 msgstr "डाटा एड्रेस् मार्क त्रुटी"
 
-#: ../src/palimpsest/gduatasmartdialog.c:374
+#: ../src/disks/gduatasmartdialog.c:371
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "Data Address Mark (DAM) (किंवा) विक्रेता-निर्देशीत त्रुटी"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:381
+#: ../src/disks/gduatasmartdialog.c:378
 msgid "Run Out Cancel"
 msgstr "रन आऊट रद्द"
 
-#: ../src/palimpsest/gduatasmartdialog.c:382
+#: ../src/disks/gduatasmartdialog.c:379
 msgid "Number of ECC errors"
 msgstr "ECC त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:389
+#: ../src/disks/gduatasmartdialog.c:386
 msgid "Soft ECC correction"
 msgstr "सॉफ्ट ECC सुधार"
 
-#: ../src/palimpsest/gduatasmartdialog.c:390
+#: ../src/disks/gduatasmartdialog.c:387
 msgid "Number of errors corrected by software ECC"
 msgstr "सॉफ्टवेअर ECC द्वारे सुधारीत केलेली त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:397
+#: ../src/disks/gduatasmartdialog.c:394
 msgid "Thermal Asperity Rate"
 msgstr "थर्मल एस्पेरिटी दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:398
+#: ../src/disks/gduatasmartdialog.c:395
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "थर्मल एस्पेरिटी दर त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:405
+#: ../src/disks/gduatasmartdialog.c:402
 msgid "Flying Height"
 msgstr "फ्लायींग ऊंची"
 
-#: ../src/palimpsest/gduatasmartdialog.c:406
+#: ../src/disks/gduatasmartdialog.c:403
 msgid "Height of heads above the disk surface"
 msgstr "डिस्क पृष्ठस्तरावरील हेड्स्ची ऊंची"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:413
+#: ../src/disks/gduatasmartdialog.c:410
 msgid "Spin High Current"
 msgstr "स्पीन हाय करंट"
 
-#: ../src/palimpsest/gduatasmartdialog.c:414
+#: ../src/disks/gduatasmartdialog.c:411
 msgid "Amount of high current used to spin up the drive"
 msgstr "ड्राइव्ह स्पीन करण्यासाठी आवश्यक हाय करंटचे प्रमाण"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:421
+#: ../src/disks/gduatasmartdialog.c:418
 msgid "Spin Buzz"
 msgstr "स्पीन बझ्"
 
-#: ../src/palimpsest/gduatasmartdialog.c:422
+#: ../src/disks/gduatasmartdialog.c:419
 msgid "Number of buzz routines to spin up the drive"
 msgstr "ड्राइव्ह स्पीन अप करण्यासाठी बझ् रूटीन्स्ची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:429
+#: ../src/disks/gduatasmartdialog.c:426
 msgid "Offline Seek Performance"
 msgstr "ऑफलाइन सीक कृती"
 
-#: ../src/palimpsest/gduatasmartdialog.c:430
+#: ../src/disks/gduatasmartdialog.c:427
 msgid "Drive's seek performance during offline operations"
 msgstr "ऑफलाइन कार्यवेळी ड्राइव्हची सीक कृती"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:437
+#: ../src/disks/gduatasmartdialog.c:434
 msgid "Disk Shift"
 msgstr "डिस्क शीफ्ट्"
 
-#: ../src/palimpsest/gduatasmartdialog.c:438
+#: ../src/disks/gduatasmartdialog.c:435
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -1232,7 +1469,7 @@ msgstr ""
 "स्टोर मधील जबरदस्त शॉक लोडींगमुळे, तापमान कमी होत असल्यामुळे डिस्कचे शीफ्ट "
 "शक्य आहे"
 
-#: ../src/palimpsest/gduatasmartdialog.c:447
+#: ../src/disks/gduatasmartdialog.c:444
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "शॉक सेंसर द्वारे आढळलेल्या लोड परिणामामुळे त्रुटींची संख्या"
@@ -1240,22 +1477,22 @@ msgstr "शॉक सेंसर द्वारे आढळलेल्या
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:454
+#: ../src/disks/gduatasmartdialog.c:451
 msgid "Loaded Hours"
 msgstr "लोडेड् तास"
 
-#: ../src/palimpsest/gduatasmartdialog.c:455
+#: ../src/disks/gduatasmartdialog.c:452
 msgid "Number of hours in general operational state"
 msgstr "सर्वसाधारण कार्य स्तरमधील तासांची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:462
+#: ../src/disks/gduatasmartdialog.c:459
 msgid "Load/Unload Retry Count"
 msgstr "लोड/लोड अशक्य पुनःप्रयत्न प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:463
+#: ../src/disks/gduatasmartdialog.c:460
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -1265,69 +1502,68 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:471
+#: ../src/disks/gduatasmartdialog.c:468
 msgid "Load Friction"
 msgstr "लोड घर्षण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:472
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:469
 #| msgid "Load on drive cause by friction in mechanical parts of the store"
 msgid "Load on drive caused by friction in mechanical parts of the store"
-msgstr "स्टोरच्या मेकॅनीकल भागांवर घर्षणमुळे ड्राइव्हर पडणारे लोड"
+msgstr "स्टोरच्या मेकॅनीकल भागांमध्ये घर्षणामुळे ड्राइव्हर पडणारे लोड"
 
-#: ../src/palimpsest/gduatasmartdialog.c:480
+#: ../src/disks/gduatasmartdialog.c:477
 msgid "Total number of load cycles"
 msgstr "लोड सायकल्स्ची एकूण संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:487
+#: ../src/disks/gduatasmartdialog.c:484
 msgid "Load-in Time"
 msgstr "लोड-इन वेळ"
 
-#: ../src/palimpsest/gduatasmartdialog.c:488
+#: ../src/disks/gduatasmartdialog.c:485
 msgid "General time for loading in a drive"
 msgstr "ड्राइव्ह लोड करण्यासाठी आवश्यक वेळ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:495
+#: ../src/disks/gduatasmartdialog.c:492
 msgid "Torque Amplification Count"
 msgstr "टॉर्क् एम्प्लीफीकेशन प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:496
+#: ../src/disks/gduatasmartdialog.c:493
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "ड्राइव्हच्या गोलाकार फिरण्याच्या कृती करीता संख्यायीक प्रयत्न"
 
-#: ../src/palimpsest/gduatasmartdialog.c:504
+#: ../src/disks/gduatasmartdialog.c:501
 msgid "Number of power-off retract events"
 msgstr "पावर-ऑफ रिट्रॅक्ट घटनांची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:511
+#: ../src/disks/gduatasmartdialog.c:508
 msgid "GMR Head Amplitude"
 msgstr "GMR हेड एम्प्लीट्यूड"
 
-#: ../src/palimpsest/gduatasmartdialog.c:512
+#: ../src/disks/gduatasmartdialog.c:509
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "रनींग मोड मध्ये कार्यरत (GMR-head) हेडस्चे एम्प्लिट्यूड"
 
-#: ../src/palimpsest/gduatasmartdialog.c:520
+#: ../src/disks/gduatasmartdialog.c:517
 msgid "Temperature of the drive"
 msgstr "ड्राइव्हचे तापमान"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:527
+#: ../src/disks/gduatasmartdialog.c:524
 msgid "Endurance Remaining"
 msgstr "एड्यूरंस् उर्वरीत"
 
-#: ../src/palimpsest/gduatasmartdialog.c:528
+#: ../src/disks/gduatasmartdialog.c:525
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -1339,22 +1575,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:544
+#: ../src/disks/gduatasmartdialog.c:541
 msgid "Uncorrectable ECC Count"
 msgstr "असुधारीत ECC प्रमाण"
 
-#: ../src/palimpsest/gduatasmartdialog.c:545
+#: ../src/disks/gduatasmartdialog.c:542
 msgid "Number of uncorrectable ECC errors"
 msgstr "असुधारीत ECC त्रुटींची संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:552
+#: ../src/disks/gduatasmartdialog.c:549
 msgid "Good Block Rate"
 msgstr "योग्य ब्लॉक दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:553
+#: ../src/disks/gduatasmartdialog.c:550
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -1363,100 +1599,45 @@ msgstr "उपलब्ध आरक्षीत ब्लॉक्स्, ए�
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:561
+#: ../src/disks/gduatasmartdialog.c:558
 msgid "Head Flying Hours"
 msgstr "हेड फ्लायींग तास"
 
-#: ../src/palimpsest/gduatasmartdialog.c:562
+#: ../src/disks/gduatasmartdialog.c:559
 msgid "Time while head is positioning"
 msgstr "हेड स्थायीत करतेवेळी वेळ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:569
+#: ../src/disks/gduatasmartdialog.c:566
 msgid "Read Error Retry Rate"
 msgstr "रीड त्रुटी पुनःप्रयत्न दर"
 
-#: ../src/palimpsest/gduatasmartdialog.c:570
+#: ../src/disks/gduatasmartdialog.c:567
 msgid "Number of errors while reading from a disk"
 msgstr "डिस्क पासून वाचतेवेळी त्रुटींची संख्या"
 
-#: ../src/palimpsest/gduatasmartdialog.c:630
-#: ../src/palimpsest/gduatasmartdialog.c:820
+#: ../src/disks/gduatasmartdialog.c:627
 #, c-format
 msgid "No description for attribute %d"
 msgstr "गुणधर्म %d करीता वर्णन आढळले नाही"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/palimpsest/gduatasmartdialog.c:681
+#: ../src/disks/gduatasmartdialog.c:678
 msgid "FAILING"
 msgstr "अपयशी"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/palimpsest/gduatasmartdialog.c:690
+#: ../src/disks/gduatasmartdialog.c:687
 msgid "Failed in the past"
 msgstr "पूर्व अपयशी होते"
 
-#: ../src/palimpsest/gduatasmartdialog.c:694
+#: ../src/disks/gduatasmartdialog.c:691
 msgid "OK"
-msgstr ""
+msgstr "ठिक आहे"
 
-#. Translators: Used for a time-based unit that exceed one year
-#: ../src/palimpsest/gduatasmartdialog.c:711
-#, c-format
-#| msgid "%.1f years"
-msgid "%.1f year"
-msgid_plural "%.1f years"
-msgstr[0] "%.1f वर्ष"
-msgstr[1] "%.1f वर्षे"
-
-#. Translators: Used for a time-based unit that exceed one day but not one year
-#: ../src/palimpsest/gduatasmartdialog.c:717
-#, c-format
-#| msgid "%.1f days"
-msgid "%.1f day"
-msgid_plural "%.1f days"
-msgstr[0] "%.1f दिवस"
-msgstr[1] "%.1f दिवसे"
-
-#. Translators: Used for a time-based unit that exceed one hour but not one day
-#: ../src/palimpsest/gduatasmartdialog.c:723
-#, c-format
-#| msgid "%.1f hours"
-msgid "%.1f hour"
-msgid_plural "%.1f hours"
-msgstr[0] "%.1f तास"
-msgstr[1] "%.1f तास"
-
-#. Translators: Used for a time-based unit that exceed one minute but not one hour
-#: ../src/palimpsest/gduatasmartdialog.c:729
-#, c-format
-#| msgid "%.1f minutes"
-msgid "%.1f minute"
-msgid_plural "%.1f minutes"
-msgstr[0] "%.1f मिनीट"
-msgstr[1] "%.1f मिनीटे"
-
-#. Translators: Used for a time-based unit that exceed one second but not one minute
-#: ../src/palimpsest/gduatasmartdialog.c:735
-#, c-format
-#| msgid "%.1f seconds"
-msgid "%.1f second"
-msgid_plural "%.1f seconds"
-msgstr[0] "%.1f सेकंद"
-msgstr[1] "%.1f सेकंदे"
-
-#. Translators: Used for a time-based unit that is counted in milliseconds and doesn't exceed one second
-#: ../src/palimpsest/gduatasmartdialog.c:741
-#, c-format
-#| msgid "%.1f seconds"
-msgid "%.1f msec"
-msgid_plural "%.1f msecs"
-msgstr[0] "%.1f msec"
-msgstr[1] "%.1f msecs"
-
-#: ../src/palimpsest/gduatasmartdialog.c:764
+#: ../src/disks/gduatasmartdialog.c:718
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1470,8 +1651,7 @@ msgstr[1] "%d सेक्टरस्"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:776
-#: ../src/palimpsest/gduatasmartdialog.c:1058
+#: ../src/disks/gduatasmartdialog.c:730 ../src/disks/gduatasmartdialog.c:942
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -1479,228 +1659,188 @@ msgstr "%.0f° C / %.0f° F"
 #. SK_SMART_ATTRIBUTE_UNIT_UNKNOWN
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/palimpsest/gduatasmartdialog.c:787
+#: ../src/disks/gduatasmartdialog.c:741
 msgid "N/A"
 msgstr "N/A"
 
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Pre-Fail)" in English
+#. Translators: The first %s is the pretty value (such as '300
+#. * sectors' or '2.5 years' or '53° C / 127° F').
+#. *
+#. * The three %d are the normalized, threshold and worst values -
+#. * these are all decimal numbers.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:831
-#| msgid "Failure is a sign of imminent disk failure (Pre-Fail)"
-msgid "Failure is a sign the disk will fail within 24 hours (Pre-Fail)"
-msgstr ""
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Old-Age)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:838
-msgid ""
-"Failure is a sign the disk exceeded its intended design life period (Old-Age)"
-msgstr ""
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Online)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:846
-msgid "Every time data is collected (Online)"
-msgstr "प्रत्येकवेळी वेळ डाटा संग्रहीत होतो (ऑनलाइन)"
-
-#. Translators: Used in the tooltip for a row in the attribute treeview - please keep
-#. * "(Not Online)" in English
-#.
-#: ../src/palimpsest/gduatasmartdialog.c:853
-msgid "Only during off-line activities (Not Online)"
-msgstr "फक्त ऑफ-लाइन कार्य (ऑफलाइन नाही)"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../src/palimpsest/gduatasmartdialog.c:861
-msgid "Name"
-msgstr "नाव"
-
-#. Translators: Used in the tooltip for a SMART attribute
-#: ../src/palimpsest/gduatasmartdialog.c:867
-#, fuzzy
-#| msgid "Encryption"
-msgid "Description"
-msgstr "एनक्रिप्शन"
-
-#: ../src/palimpsest/gduatasmartdialog.c:908
+#: ../src/disks/gduatasmartdialog.c:787
 #, c-format
-msgid "%d <span size=\"small\">(Worst:%d, Threshold: %d)</span>"
+msgid ""
+"%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
 msgstr ""
+"%s <span size=\"small\">(नॉर्मलाइज केले: %d, मर्यादा: %d, सर्वात वाइट: %d)<"
+"/span>"
 
 #. Translators: Please keep "(Pre-Fail)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:918
+#: ../src/disks/gduatasmartdialog.c:797
 msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
 msgstr ""
+"डिस्क 24 तासाच्या आत डिस्क अपयशी ठरत असल्यास <span size=\"small\">(प्रि-फेल)<"
+"/span>, त्याला फेल्युअर म्हणतात"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:924
+#: ../src/disks/gduatasmartdialog.c:803
 msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
+"फेल्युअर चिन्ह म्हणजे डिस्क डिजाइन लाइफ पिरिअडपेक्षा <span size=\"small\">"
+"(ओल्ड-एज)</span> जास्त काळ कार्य करते"
 
 #. Translators: Please keep "(Online)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:931
-#| msgid "Every time data is collected (Online)"
-msgid "Every time data is collected <span size=\"small\">(Online)</span>"
-msgstr "प्रत्येकवेळी डाटा <span size=\"small\">(ऑनलाइन)</span> गोळा केला जातो"
+#: ../src/disks/gduatasmartdialog.c:810
+#| msgid "Every time data is collected <span size=\"small\">(Online)</span>"
+msgid ""
+"Updated every time data is collected <span size=\"small\">(Online)</span>"
+msgstr "प्रत्येकवेळी डाटा <span size=\"small\">(ऑनलाइन)</span>  केला जातो"
 
 #. Translators: Please keep "(Not Online)" in English
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:937
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:816
 #| msgid "Only during off-line activities (Not Online)"
 msgid ""
-"Only during off-line activities <span size=\"small\">(Not Online)</span>"
-msgstr "फक्त ऑफ-लाइन कार्य (ऑफलाइन नाही)"
+"Updated only during off-line activities <span size=\"small\">(Not Online)</"
+"span>"
+msgstr ""
+"फक्त ऑफलाइन क्रियावेळीच <span size=\"small\">(ऑनलाइन नाही)</span> सुधारित "
+"केले जाते"
 
-#: ../src/palimpsest/gduatasmartdialog.c:964
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:847
 #| msgid "Last self-test completed OK"
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
-msgstr "शेवटची स्वयं-चाचणी यशस्वीरित्या पूर्ण झाले"
+msgstr "शेवटची स्वयं-चाचणी यशस्वीरित्या पूर्ण झाली"
 
-#: ../src/palimpsest/gduatasmartdialog.c:968
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:851
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
-msgstr "शेवटची स्वयं-चाचणी रद्द झाले"
+msgstr "शेवटची स्वयं-चाचणी रद्द झाली"
 
-#: ../src/palimpsest/gduatasmartdialog.c:972
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:855
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
-msgstr "शेवटची स्वयं-चाचणी रद्द झाले"
+msgstr "शेवटची स्वयं-चाचणीमध्ये व्यत्यय आले"
 
-#: ../src/palimpsest/gduatasmartdialog.c:976
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:859
 #| msgid "Last self-test completed OK"
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
-msgstr "शेवटची स्वयं-चाचणी यशस्वीरित्या पूर्ण झाले"
+msgstr "शेवटची स्वयं-चाचणी पूर्ण झाली नाही"
 
-#: ../src/palimpsest/gduatasmartdialog.c:980
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:863
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
-msgstr "शेवटची स्वयं-चाचणी रद्द झाले"
+msgstr "शेवटची स्वयं-चाचणी अपयशी"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: ../src/palimpsest/gduatasmartdialog.c:985
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:868
 #| msgid "Last self-test FAILED (Electrical)"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "शेवटची स्वयं-चाचणी अपयशी (इलेक्ट्रीकल)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: ../src/palimpsest/gduatasmartdialog.c:990
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:873
 #| msgid "Last self-test FAILED (Servo)"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "शेवटची स्वयं-चाचणी अपयशी (सर्वो)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: ../src/palimpsest/gduatasmartdialog.c:995
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:878
 #| msgid "Last self-test FAILED (Read)"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
-msgstr "शेवटची स्वयं-चाचणी अपयशी (रीड)"
+msgstr "शेवटची स्वयं-चाचणी अपयशी (वाचन)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: ../src/palimpsest/gduatasmartdialog.c:1000
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:883
 #| msgid "Last self-test was cancelled"
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
-msgstr "शेवटची स्वयं-चाचणी रद्द झाले"
+msgstr "शेवटची स्वयं-चाचणी अपयशी (हाताळणी)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: ../src/palimpsest/gduatasmartdialog.c:1005
-#, fuzzy, c-format
+#: ../src/disks/gduatasmartdialog.c:888
+#, c-format
 #| msgid "Self-test is in progress"
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
-msgstr "स्वयं-चाचणी प्रगतीत आहे"
+msgstr "स्वयंचाचणीची प्रगती — %d%% उर्वरित"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: ../src/palimpsest/gduatasmartdialog.c:1012
-#, fuzzy, c-format
+#: ../src/disks/gduatasmartdialog.c:895
+#, c-format
 #| msgid "Unknown (%s)"
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "अपरिचीत (%s)"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1034
-#, fuzzy, c-format
+#: ../src/disks/gduatasmartdialog.c:918
+#, c-format
 #| msgid "%s Data"
 msgid "%s ago"
-msgstr "%s डाटा"
+msgstr "%s पूर्वी"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1091
-#, fuzzy
+#: ../src/disks/gduatasmartdialog.c:976
 #| msgid "SMART not supported"
 msgid "SMART is not supported"
 msgstr "SMART समर्थीत नाही"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1097
+#: ../src/disks/gduatasmartdialog.c:982
 msgid "SMART is not enabled"
 msgstr "SMART कार्यक्षम नाही"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1109
-#, fuzzy, c-format
-#| msgid "Self-test is in progress"
-msgid "Self-test in progress — %d%% remaining"
-msgstr "स्वयं-चाचणी प्रगतीत आहे"
+#: ../src/disks/gduatasmartdialog.c:994
+#| msgid "Short self-test in progress: "
+msgid "Self-test in progress"
+msgstr "स्वयंचाचणीची प्रगती"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1123
-#: ../src/palimpsest/gduatasmartdialog.c:1132
+#: ../src/disks/gduatasmartdialog.c:1007 ../src/disks/gduatasmartdialog.c:1016
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "डिस्क लवरकरच अपयशी होईल"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1155
+#: ../src/disks/gduatasmartdialog.c:1039
 msgid "SELF-TEST FAILED"
 msgstr "स्वयं चाचणी अपयशी"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1164
+#: ../src/disks/gduatasmartdialog.c:1048
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "डिस्क ठिक आहे, एक अपयशी गुणधर्म अपयशी होत आहे"
+msgstr[1] "डिस्क ठिक आहे, %d गुणधर्म अपयशी होत आहे"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1175
+#: ../src/disks/gduatasmartdialog.c:1059
 #, c-format
-#| msgid "Disk has a few bad sectors"
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "डिस्क टिक आहे, एक अयोग्य सेक्टर आढळले"
 msgstr[1] "डिस्क टिक आहे, %d अयोग्य सेक्टर आढळले"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1186
+#: ../src/disks/gduatasmartdialog.c:1070
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "डिस्क ठिक आहे, एक गुणधर्म भूतकाळात अपयशी ठरले"
+msgstr[1] "डिस्क ठिक आहे, %d गुणधर्म भूतकाळात अपयशी ठरले"
 
 #. Otherwise, it's all honky dory
-#: ../src/palimpsest/gduatasmartdialog.c:1195
-#| msgid "Disks"
+#: ../src/disks/gduatasmartdialog.c:1079
 msgid "Disk is OK"
 msgstr "डिस्क ठिक आहे"
 
@@ -1708,515 +1848,860 @@ msgstr "डिस्क ठिक आहे"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: ../src/palimpsest/gduatasmartdialog.c:1209
+#: ../src/disks/gduatasmartdialog.c:1093
 #, c-format
-#| msgid "Format %s (%s)"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
 #. Translators: XXX
-#: ../src/palimpsest/gduatasmartdialog.c:1364
-#| msgid "Threshold:"
+#: ../src/disks/gduatasmartdialog.c:1248
 msgid "Threshold exceeded"
 msgstr "थ्रेशहोल्ड वाढले"
 
 #. Translators: XXX
-#: ../src/palimpsest/gduatasmartdialog.c:1369
+#: ../src/disks/gduatasmartdialog.c:1253
 msgid "Threshold not exceeded"
-msgstr ""
+msgstr "मर्यादा वाढली नाही"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1428
-#| msgid "Error erasing data"
+#: ../src/disks/gduatasmartdialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "SMART डाटा पुनःताजे करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1460
-#| msgid "Running Short SMART Self-Test"
+#: ../src/disks/gduatasmartdialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "SMART स्वयं-चाचणी रद्द करत आहे"
 
-#: ../src/palimpsest/gduatasmartdialog.c:1479
+#: ../src/disks/gduatasmartdialog.c:1363
 msgid "Error starting SMART self-test"
-msgstr ""
+msgstr "SMART स्वयं-चाचणी सुरू करतेवेळी त्रुटी"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/palimpsest/gduatasmartdialog.c:1594
+#: ../src/disks/gduatasmartdialog.c:1478
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/palimpsest/gduatasmartdialog.c:1606
+#: ../src/disks/gduatasmartdialog.c:1490
 msgid "Attribute"
 msgstr "गुणधर्म"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:171
-msgid "Error updating /etc/crypttab"
-msgstr ""
+#. Translators: This is used in the benchmark graph - %d is megabytes per second
+#: ../src/disks/gdubenchmarkdialog.c:340
+#, c-format
+msgctxt "benchmark-graph"
+msgid "%d MB/s"
+msgstr "%d MB/s"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:190
-#| msgid "Error storing passphrase in keyring"
+#. Translators: This is used in the benchmark graph - %g is number of milliseconds
+#: ../src/disks/gdubenchmarkdialog.c:345
+#, c-format
+msgctxt "benchmark-graph"
+msgid "%3g ms"
+msgstr "%3g ms"
+
+#. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
+#: ../src/disks/gdubenchmarkdialog.c:653
+#, c-format
+msgctxt "benchmark-transfer-rate"
+msgid "%s/s"
+msgstr "%s/s"
+
+#: ../src/disks/gdubenchmarkdialog.c:668 ../src/disks/gdubenchmarkdialog.c:967
+#, c-format
+msgid "%d sample"
+msgid_plural "%d samples"
+msgstr[0] "%d सॅम्पल"
+msgstr[1] "%d सॅम्पल्स्"
+
+#. Translators: The first %s is the date and time the benchmark took place in the preferred
+#. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
+#. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
+#. * now, for example "3 days" or "2 hours" or "12 minutes".
+#.
+#: ../src/disks/gdubenchmarkdialog.c:709
+#, c-format
+#| msgid "%s (%s)"
+msgctxt "benchmark-updated"
+msgid "%s (%s ago)"
+msgstr "%s (%s पूर्वी)"
+
+#: ../src/disks/gdubenchmarkdialog.c:721
+msgctxt "benchmark-updated"
+msgid "No benchmark data available"
+msgstr "बेंचमार्क डाटा अनुपलब्ध"
+
+#: ../src/disks/gdubenchmarkdialog.c:726
+#| msgid "Error mounting device"
+msgctxt "benchmark-updated"
+msgid "Opening Device..."
+msgstr "साधन उघडत आहे..."
+
+#: ../src/disks/gdubenchmarkdialog.c:730
+#, c-format
+msgctxt "benchmark-updated"
+msgid "Measuring transfer rate (%2.1f%% complete)..."
+msgstr "ट्रांसफर दर (%2.1f%% पूर्ण) मोजत आहे..."
+
+#: ../src/disks/gdubenchmarkdialog.c:737
+#, c-format
+msgctxt "benchmark-updated"
+msgid "Measuring access time (%2.1f%% complete)..."
+msgstr "ॲक्सेस वेळ (%2.1f%% पूर्णपणे) मोजतेवेळी त्रुटी..."
+
+#: ../src/disks/gdubenchmarkdialog.c:853
+#| msgid "An error occured"
+msgctxt "benchmarking"
+msgid "An error occurred"
+msgstr "त्रुटी आढळली"
+
+#. Translators: The first %s is the partition size (e.g. "10.0 GB") and the two
+#. * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
+#.
+#: ../src/disks/gdubenchmarkdialog.c:889
+#, c-format
+#| msgid "Format partition %d of %s (%s)"
+msgctxt "benchmark-drive-name"
+msgid "%s partition on %s (%s)"
+msgstr "%s विभाजन %s (%s) वर"
+
+#. Translators: The first %s is the make/model (e.g. "ST 3160A"), the second %s is
+#. * the description (e.g. "60 GB Hard Disk")
+#.
+#: ../src/disks/gdubenchmarkdialog.c:899
+#, c-format
+#| msgid "%s (%s)"
+msgctxt "benchmark-drive-name"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#. Translators: %d is number of milliseconds and msec means "milli-second"
+#: ../src/disks/gdubenchmarkdialog.c:965
+#, c-format
+#| msgid "%.1f msec"
+#| msgid_plural "%.1f msecs"
+msgctxt "benchmark-access-time"
+msgid "%.2f msec"
+msgstr "%.2f msec"
+
+#: ../src/disks/gdubenchmarkdialog.c:1277
+#, c-format
+#| msgid "Error detaching device"
+msgctxt "benchmarking"
+msgid "Error getting size of device: %m"
+msgstr "साधनचा आकार प्राप्त करतेवेळी त्रुटी: %m"
+
+#: ../src/disks/gdubenchmarkdialog.c:1287
+#, c-format
+#| msgid "Error setting partition name"
+msgctxt "benchmarking"
+msgid "Error getting page size: %m\n"
+msgstr "पृष्ठ आकार: %m प्राप्त करतेवेळी त्रुटी\n"
+
+#: ../src/disks/gdubenchmarkdialog.c:1320
+#: ../src/disks/gdubenchmarkdialog.c:1339
+#: ../src/disks/gdubenchmarkdialog.c:1375
+#: ../src/disks/gdubenchmarkdialog.c:1394
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error seeking to offset %lld"
+msgstr "ऑफसेट %lld करीता सिक करतेवेळी त्रुटी"
+
+#: ../src/disks/gdubenchmarkdialog.c:1329
+#: ../src/disks/gdubenchmarkdialog.c:1384
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error pre-reading %lld bytes from offset %lld"
+msgstr "ऑफसेट %2$lld पासून %1$lld बाइट्स् पूर्वपणे वाचतेवेळी त्रुटी"
+
+#: ../src/disks/gdubenchmarkdialog.c:1350
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error reading %d MB from offset %lld"
+msgstr "%d MB वाचतेवेळी त्रुटी, ऑफसेट %lld पासून"
+
+#: ../src/disks/gdubenchmarkdialog.c:1405
+#, c-format
+msgctxt "benchmarking"
+msgid "Error writing %lld bytes at offset %lld: %m"
+msgstr "%lld बाइट्स् लिहतेवेळी त्रुटी, ऑफसेट %lld: %m करीता "
+
+#: ../src/disks/gdubenchmarkdialog.c:1415
+#, c-format
+msgctxt "benchmarking"
+msgid "Expected to write %lld bytes, only wrote %lld: %m"
+msgstr "%lld बाइट्स् लिहणे अपेक्षित, फक्त %lld: %m लिहिले"
+
+#: ../src/disks/gdubenchmarkdialog.c:1425
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error syncing (at offset %lld): %m"
+msgstr "(ऑफसेट %lld येथे): %m सिंक करतेवेळी त्रुटी"
+
+#: ../src/disks/gdubenchmarkdialog.c:1465
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error seeking to offset %lld: %m"
+msgstr "ऑफसेट %lld: %m करीता सिक करतेवेळी त्रुटी"
+
+#: ../src/disks/gdubenchmarkdialog.c:1477
+#, c-format
+#| msgid "Error adding component"
+msgctxt "benchmarking"
+msgid "Error reading %lld bytes from offset %lld"
+msgstr "ऑफसेट %2$lld पासून %1$lld बाइट्स् वाचतेवेळी त्रुटी"
+
+#: ../src/disks/gduchangepassphrasedialog.c:170
+msgid "Error updating /etc/crypttab"
+msgstr "/etc/crypttab सुधारित करतेवेळी त्रुटी"
+
+#: ../src/disks/gduchangepassphrasedialog.c:189
 msgid "Error changing passphrase"
 msgstr "पासफ्रेज बदलतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:277
-#: ../src/palimpsest/gducrypttabdialog.c:424
-#| msgid "Error creating partition table"
+#: ../src/disks/gduchangepassphrasedialog.c:276
+#: ../src/disks/gducrypttabdialog.c:421
 msgid "Error retrieving configuration data"
 msgstr "संरचना डाटा पुनःप्राप्त करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:303
+#: ../src/disks/gduchangepassphrasedialog.c:302
 msgid "/etc/crypttab configuration data is malformed"
-msgstr ""
+msgstr "/etc/crypttab संरचना डाटा सदोषीत आहे"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:336
+#: ../src/disks/gduchangepassphrasedialog.c:335
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
+"या साधनकरीता पासफ्रेज बदलवत आहे, <i>/etc/crypttab</i> फाइलतर्फे संदर्भ असलेले "
+"पासफ्रेज देखील सुधारित केले जाईल"
 
-#: ../src/palimpsest/gduchangepassphrasedialog.c:355
-#: ../src/palimpsest/gducreatefilesystemwidget.c:503
+#: ../src/disks/gduchangepassphrasedialog.c:354
+#: ../src/disks/gducreatefilesystemwidget.c:553
 msgid "The strength of the passphrase"
-msgstr ""
+msgstr "पासफ्रेजची मजबूती"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/palimpsest/gducreatediskimagedialog.c:196
+#: ../src/disks/gducreatediskimagedialog.c:225
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr ""
+msgstr "%s (%s).imgची डिस्क प्रतिमा"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:233
-#: ../src/palimpsest/gdurestorediskimagedialog.c:274
-#| msgid "Error formatting volume"
-msgid "Error writing to backup image"
-msgstr "बॅकअप प्रतिमाकरीता लिहतेवेळी त्रुटी"
+#: ../src/disks/gducreatediskimagedialog.c:264
+#| msgid "Error writing to backup image"
+msgid "Error writing to image"
+msgstr "प्रतिमाकरीता लिहतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:313
-#: ../src/palimpsest/gdurestorediskimagedialog.c:353
-#, fuzzy
+#. Translators: string used for conveying progress of copy operation.
+#. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
+#. * The third %s is the estimated amount of time remaining (ex. "1 minute", "5 minutes" or "Less than a minute").
+#. * The fourth %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+#.
+#: ../src/disks/gducreatediskimagedialog.c:292
+#: ../src/disks/gdurestorediskimagedialog.c:332
+#, c-format
+msgid "%s of %s copied – %s remaining (%s/sec)"
+msgstr "%s, %s पैकीचे प्रत बनवले – %s उर्वरित (%s/sec)"
+
+#. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
+#. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
+#.
+#: ../src/disks/gducreatediskimagedialog.c:305
+#: ../src/disks/gdurestorediskimagedialog.c:345
+#, c-format
+#| msgid "%s %s Drive"
+msgid "%s of %s copied"
+msgstr "%s, %s पैकी प्रत बनवले"
+
+#: ../src/disks/gducreatediskimagedialog.c:354
+#: ../src/disks/gdurestorediskimagedialog.c:393
 #| msgid "Error adding component"
 msgid "Error reading from offset %"
-msgstr "घटक समाविष्ट करतेवेळी त्रुटी"
+msgstr "ऑफसेट % पासून वाचतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:381
-#: ../src/palimpsest/gdurestorediskimagedialog.c:541
-#, fuzzy
-#| msgid "Error mounting device"
-msgid "Error opening device"
-msgstr "उपकरण माऊन्ट करतेवेळी त्रुटी"
-
-#: ../src/palimpsest/gducreatediskimagedialog.c:396
-#: ../src/palimpsest/gdurestorediskimagedialog.c:557
-#, fuzzy
+#: ../src/disks/gducreatediskimagedialog.c:417
+#: ../src/disks/gdurestorediskimagedialog.c:613
 #| msgid "Error detaching device"
 msgid "Error determining size of device"
-msgstr "उपकरण विलग करतेवेळी त्रुटी"
+msgstr "साधनाचे आकार ओळखताना त्रुटी"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:446
+#: ../src/disks/gducreatediskimagedialog.c:455
+#: ../src/disks/gdurestorediskimagedialog.c:598
+#| msgid "Error mounting device"
+msgid "Error opening device"
+msgstr "साधन उघडतेवेळी त्रुटी"
+
+#: ../src/disks/gducreatediskimagedialog.c:501
 #, c-format
 msgid "A file named \"%s\" already exists.  Do you want to replace it?"
 msgstr "\"%s\" नावाची फाइल आधिपासूनच अस्तित्वात आहे.  त्यास बदलायचे?"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:449
+#: ../src/disks/gducreatediskimagedialog.c:504
 #, c-format
 msgid ""
 "The file already exists in \"%s\".  Replacing it will overwrite its contents."
 msgstr ""
+"फाइल आधिपासूनच \"%s\" अस्तित्वात आहे. त्यास अदलाबदल केल्यास अंतर्भुत माहिती "
+"खोडून पुनः लिहले जाईल."
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:453
-#| msgid "_Repair"
+#: ../src/disks/gducreatediskimagedialog.c:508
 msgid "_Replace"
 msgstr "अदलाबदल करा (_R)"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:495
+#: ../src/disks/gducreatediskimagedialog.c:551
 msgid "Error opening file for writing"
-msgstr ""
+msgstr "लिहण्याकरीता फाइल उघडतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducreatediskimagedialog.c:564
+#: ../src/disks/gducreatediskimagedialog.c:602
+#| msgid "Copying data to device..."
+msgid "Copying data from device..."
+msgstr "साधनपासून डाटाचे प्रत बनवत आहे..."
+
+#. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
+#: ../src/disks/gducreatediskimagedialog.c:650
 #, c-format
-msgid "Copying data from device <i>%s</i>..."
-msgstr ""
+#| msgid "Detach Disk Image"
+msgid "Create Disk Image (%s)"
+msgstr "डिस्क प्रतिमा (%s) निर्माण करा"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:388
-#: ../src/palimpsest/gduformatdiskdialog.c:130
-#| msgid "Compatible with all systems (FAT)"
+#: ../src/disks/gducreatefilesystemwidget.c:392
+#: ../src/disks/gduformatdiskdialog.c:267
 msgid "Compatible with all systems and devices"
 msgstr "सर्व प्रणाली व साधनांसह सहत्व आहे"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:389
+#: ../src/disks/gducreatefilesystemwidget.c:393
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:394
-#| msgid "Compatible with all systems (FAT)"
+#: ../src/disks/gducreatefilesystemwidget.c:398
 msgid "Compatible with most systems"
 msgstr "बऱ्याच प्रणालींसह सहत्व"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:395
+#: ../src/disks/gducreatefilesystemwidget.c:399
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:400
-#| msgid "Compatible with Linux (ext2)"
+#: ../src/disks/gducreatefilesystemwidget.c:404
 msgid "Compatible with Linux systems"
 msgstr "Linux प्रणालींसह सहत्व"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:401
-#| msgid "ext4"
+#: ../src/disks/gducreatefilesystemwidget.c:405
 msgid "Ext4"
 msgstr "Ext4"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:406
-#| msgid "Encrypted, compatible with Linux (FAT)"
+#: ../src/disks/gducreatefilesystemwidget.c:410
 msgid "Encrypted, compatible with Linux systems"
 msgstr "एनक्रिप्टेड, Linux प्रणालींसह सहत्व"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:407
+#: ../src/disks/gducreatefilesystemwidget.c:411
 msgid "LUKS + Ext4"
-msgstr ""
+msgstr "LUKS + Ext4"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:412
+#: ../src/disks/gducreatefilesystemwidget.c:416
 msgid "Custom"
-msgstr ""
+msgstr "पसंतीचे"
 
-#: ../src/palimpsest/gducreatefilesystemwidget.c:413
-#| msgid "Filesystem type"
+#: ../src/disks/gducreatefilesystemwidget.c:417
 msgid "Enter filesystem type"
 msgstr "फाइलप्रणाली प्रकार द्या"
 
 #. Translators: this is the default name for the filesystem
-#: ../src/palimpsest/gducreatefilesystemwidget.c:456
+#: ../src/disks/gducreatefilesystemwidget.c:463
 msgid "New Volume"
 msgstr "नवीन खंड"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:215
-#| msgid "Error creating partition"
+#: ../src/disks/gducreatefilesystemwidget.c:502
+#: ../src/disks/gduformatdiskdialog.c:164
+msgid "Don't overwrite existing data"
+msgstr "अस्तित्वातील डाटा खोडून पुनः लिहू नका"
+
+#: ../src/disks/gducreatefilesystemwidget.c:503
+#: ../src/disks/gduformatdiskdialog.c:165
+msgid "Quick"
+msgstr "पटकन"
+
+#: ../src/disks/gducreatefilesystemwidget.c:510
+#: ../src/disks/gduformatdiskdialog.c:175
+msgid "Overwrite existing data with zeroes"
+msgstr "अस्तित्वातील डाटाला शून्यसह खोडून पुनः लिहा"
+
+#: ../src/disks/gducreatefilesystemwidget.c:511
+#: ../src/disks/gduformatdiskdialog.c:176
+msgid "Slow"
+msgstr "हळु"
+
+#: ../src/disks/gducreatepartitiondialog.c:214
 msgid "Error formatting partition"
 msgstr "विभाजनचे रूपण करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:242
+#: ../src/disks/gducreatepartitiondialog.c:242
 msgid "Error creating partition"
 msgstr "विभाजन बनवतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:326
-#| msgid "Extended Partition"
+#: ../src/disks/gducreatepartitiondialog.c:330
 msgid "Extended partition"
 msgstr "वाढिव विभाजन"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:327
-#| msgid "Contains logical partitions"
+#: ../src/disks/gducreatepartitiondialog.c:331
 msgid "For logical partitions"
 msgstr "लॉजिकल विभाजनांकरीता"
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:340
-#| msgid "Create an Extended Partition for logical partitions."
+#: ../src/disks/gducreatepartitiondialog.c:344
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr "नविन विभाजन निर्माण करणे अशक्य. आधिपासूनच चार प्राइमरि विभाजने आहेत."
 
-#: ../src/palimpsest/gducreatepartitiondialog.c:344
-#| msgid ""
-#| "This is the last primary partition that can be created. If you need more "
-#| "partitions, you can create an Extended Partition."
+#: ../src/disks/gducreatepartitiondialog.c:348
 msgid "This is the last primary partition that can be created."
 msgstr "हे निर्माण करण्याजोगी शेवटचे प्राइमरि विभाजन आहे."
 
-#: ../src/palimpsest/gducrypttabdialog.c:122
-#: ../src/palimpsest/gducrypttabdialog.c:142
-#| msgid "A partition will be created"
+#: ../src/disks/gducrypttabdialog.c:121 ../src/disks/gducrypttabdialog.c:141
 msgid "Will be created"
 msgstr "निर्माण केले जाईल"
 
-#: ../src/palimpsest/gducrypttabdialog.c:124
-#: ../src/palimpsest/gducrypttabdialog.c:149
+#: ../src/disks/gducrypttabdialog.c:123 ../src/disks/gducrypttabdialog.c:148
 msgid "None"
 msgstr "काहिच नाही"
 
-#: ../src/palimpsest/gducrypttabdialog.c:151
+#: ../src/disks/gducrypttabdialog.c:150
 msgid "Will be deleted"
-msgstr ""
+msgstr "नष्ट केले जाईल"
 
-#: ../src/palimpsest/gducrypttabdialog.c:278
-#| msgid "Error removing component"
+#: ../src/disks/gducrypttabdialog.c:276
 msgid "Error removing /etc/crypttab entry"
 msgstr "/etc/crypttab नोंदणी काढून टाकतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducrypttabdialog.c:363
-#| msgid "Error adding component"
+#: ../src/disks/gducrypttabdialog.c:360
 msgid "Error adding /etc/crypttab entry"
 msgstr "/etc/crypttab नोंदणी समाविष्ट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducrypttabdialog.c:386
+#: ../src/disks/gducrypttabdialog.c:383
 msgid "Error updating /etc/crypttab entry"
-msgstr ""
+msgstr "/etc/crypttab नोंदणी सुधारित करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gducrypttabdialog.c:509
+#: ../src/disks/gducrypttabdialog.c:506
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
 msgstr ""
+"फक्त <i>/etc/crypttab</i> फाइलतर्फे संदर्भ केलेले पासफ्रेज बदलले जाईल. "
+"डिस्कवरील पासफ्रेज बदलण्यासाठी, <i>पासफ्रेज बदला...</i> याचा वापर करा"
 
-#: ../src/palimpsest/gdudevicetreemodel.c:410
-#| msgid "%s Drive"
+#: ../src/disks/gdudevicetreemodel.c:546
 msgid "Disk Drives"
 msgstr "डिस्क ड्राइव्हस्"
 
-#: ../src/palimpsest/gdudevicetreemodel.c:820
-#| msgid "Device"
+#: ../src/disks/gdudevicetreemodel.c:955
 msgid "Other Devices"
 msgstr "इतर साधने"
 
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/palimpsest/gdudevicetreemodel.c:925
+#: ../src/disks/gdudevicetreemodel.c:1060
 #, c-format
-#| msgid "Device"
 msgid "%s Loop Device"
 msgstr "%s लूप साधन"
 
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
-#: ../src/palimpsest/gdudevicetreemodel.c:946
+#: ../src/disks/gdudevicetreemodel.c:1081
 #, c-format
-#| msgid "Unlocking LUKS Device"
 msgid "%s Block Device"
 msgstr "%s ब्लॉक साधन"
 
-#: ../src/palimpsest/gdufilesystemdialog.c:74
-#| msgid "Error setting file system label"
+#: ../src/disks/gdudisksettingsdialog.c:277
+#| msgid "_Revert"
+msgctxt "standby-value"
+msgid "Never"
+msgstr "कधिच नाही"
+
+#: ../src/disks/gdudisksettingsdialog.c:296
+msgctxt "standby-value"
+msgid "Vendor-defined"
+msgstr "विक्रेता-निर्देशीत"
+
+#: ../src/disks/gdudisksettingsdialog.c:300
+msgctxt "standby-value"
+msgid "Reserved"
+msgstr "आरक्षित"
+
+#: ../src/disks/gdudisksettingsdialog.c:321
+msgctxt "apm-level"
+msgid "255 (Disabled)"
+msgstr "255 (बंद केले)"
+
+#: ../src/disks/gdudisksettingsdialog.c:325
+#, c-format
+msgctxt "apm-level"
+msgid "%d (Spin-down permitted)"
+msgstr "%d (स्पिंडाउनकरीता परवानगी)"
+
+#: ../src/disks/gdudisksettingsdialog.c:329
+#, c-format
+msgctxt "apm-level"
+msgid "%d (Spin-down not permitted)"
+msgstr "%d (स्पिंडाउनकरीता परवानगी नाही)"
+
+#: ../src/disks/gdudisksettingsdialog.c:344
+msgctxt "aam-level"
+msgid "0 (Disabled)"
+msgstr "0 (बंद केले)"
+
+#: ../src/disks/gdudisksettingsdialog.c:373
+#| msgid "Error retrieving configuration data"
+msgid "Error setting configuration"
+msgstr "संरचना ठरवतेवेळी त्रुटी"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:403
+#| msgid "_Revert"
+msgid "Never"
+msgstr "कधिच नाही"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:405
+#| msgid "%d minute"
+#| msgid_plural "%d minutes"
+msgid "5 minutes"
+msgstr "5 मिनिटे"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:407
+#| msgid "%.1f minute"
+#| msgid_plural "%.1f minutes"
+msgid "10 minutes"
+msgstr "10 मिनिटे"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:409
+#| msgid "%.1f minute"
+#| msgid_plural "%.1f minutes"
+msgid "15 minutes"
+msgstr "15 मिनिटे"
+
+#. Translators: This is a mark on the Standby scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:411
+#| msgid "%d hour"
+#| msgid_plural "%d hours"
+msgid "3 hours"
+msgstr "3 तास"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:415
+#| msgid "Save in _folder"
+msgid "Save Power"
+msgstr "पावर साठवा"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
+#: ../src/disks/gdudisksettingsdialog.c:417
+msgid "← Spindown"
+msgstr "← स्पिंडाउन"
+
+#. Translators: This is a mark on the APM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:419
+msgid "Perform Better"
+msgstr "उत्तम कार्य करा"
+
+#. Translators: This is a mark on the AAM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:423
+msgid "Quiet (Slow)"
+msgstr "शांत (हळु)"
+
+#. Translators: This is a mark on the AAM scale. The string should be as short as possible
+#: ../src/disks/gdudisksettingsdialog.c:425
+msgid "Loud (Fast)"
+msgstr "मोठ्याने (पटकन)"
+
+#: ../src/disks/gdufilesystemdialog.c:73
 msgid "Error setting label"
 msgstr "लेबल सेट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:131
-msgid "MBR / DOS"
-msgstr ""
+#. Translators: Used to convey that something takes at least
+#. * some specificed duration but may take longer. The %s is a
+#. * time duration e.g. "8 hours and 28 minutes"
+#.
+#: ../src/disks/gduformatdiskdialog.c:118
+#, c-format
+#| msgid "%s at %s"
+msgid "At least %s"
+msgstr "किमान %s"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:138
-#| msgid "Compatible with all systems (FAT)"
+#. Translators: Used to convey that something takes
+#. * approximately some specificed duration. The %s is a time
+#. * duration e.g. "2 hours and 2 minutes"
+#.
+#: ../src/disks/gduformatdiskdialog.c:129
+#, c-format
+msgid "Approximately %s"
+msgstr "अंदाजे %s"
+
+#: ../src/disks/gduformatdiskdialog.c:208
+msgid "ATA Secure Erase"
+msgstr "ATA सेक्युर इरेज"
+
+#: ../src/disks/gduformatdiskdialog.c:223
+msgid "ATA Enhanced Secure Erase"
+msgstr "ATA एंहांस्ड् सेक्युर इरेज"
+
+#: ../src/disks/gduformatdiskdialog.c:268
+msgid "MBR / DOS"
+msgstr "MBR / DOS"
+
+#: ../src/disks/gduformatdiskdialog.c:278
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr "आधूनिक प्रणाली व हार्ड डिस्क्स् > 2TB सह सहत्व"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:139
+#: ../src/disks/gduformatdiskdialog.c:279
 msgid "GPT"
-msgstr ""
+msgstr "GPT"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:151
-#| msgid "Not Partitioned"
+#: ../src/disks/gduformatdiskdialog.c:296
 msgid "No partitioning"
 msgstr "विभाजन नाही"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:152
+#: ../src/disks/gduformatdiskdialog.c:297
 msgid "Empty"
 msgstr "रिकामी"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:186
-#| msgid "Error formatting volume"
+#: ../src/disks/gduformatdiskdialog.c:341
 msgid "Error formatting disk"
 msgstr "डिस्क रूपण करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:231
-#| msgid "Are you sure you want to erase the device ?"
+#: ../src/disks/gduformatdiskdialog.c:398
 msgid "Are you sure you want to format the disk?"
 msgstr "तुम्हाला नक्की डिस्कचे रूपण करायचे?"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:232
-#: ../src/palimpsest/gduformatvolumedialog.c:158
-#| msgid "Warning: All data on the volume will be irrevocably lost."
-msgid "All data on the volume will be lost"
-msgstr "वॉल्यूमवरील सर्व डाटा गमवाल"
+#. Translators: warning used for quick format
+#: ../src/disks/gduformatdiskdialog.c:402
+msgid ""
+"All data on the disk will be lost but may still be recoverable by data "
+"recovery services"
+msgstr ""
+"डिस्कवरील सर्व डाटा गमवले जाईल परंतु डाटा रिकव्हरि सर्व्हिसेस् तर्फे "
+"पुनःप्राप्त करण्याजोगी आहे"
 
-#: ../src/palimpsest/gduformatdiskdialog.c:233
-#: ../src/palimpsest/gduformatvolumedialog.c:159
+#: ../src/disks/gduformatdiskdialog.c:404
+#: ../src/disks/gduformatvolumedialog.c:166
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>टिप</b>: जुणे संगणक किंवा डिस्क रिसायकल, विकणे किंवा द्यायचे असल्यास, "
+"वैयक्तिक माहिती चुकिच्या हाती जाण्यापासून रोखण्याकरीता मजबूतीचे इरेज प्रकारचा "
+"वापर करावा"
+
+#. Translators: warning used when overwriting data
+#: ../src/disks/gduformatdiskdialog.c:409
+msgid ""
+"All data on the disk will be overwritten and will likely not be recoverable "
+"by data recovery services"
+msgstr ""
+"डिस्कवरील सर्व डाटा खोडून पुनः लिहला जाईल व डाटा रिकव्हरि सर्व्हिसेस् तर्फे "
+"पुनःप्राप्त करण्याजोगी राहणार नाही"
+
+#: ../src/disks/gduformatdiskdialog.c:417
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can't be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>सावधनता</b>: सेक्युर इरेज आदेशला पूर्ण होण्यास जास्त वेळ लागू शकतो, त्यास "
+"रद्द करणे शक्य नाही व काहिक हार्डवेअरसह योग्यरित्या कार्य करणार नाही. "
+"सर्वात वाइट परिस्थितमध्ये, ड्राइव्ह अवापरण्याजोगी असू शकते किंवा प्रणाली "
+"क्रॅश किंवा कुलूपबंद होऊ शकते. पुढे जाण्यापूर्वी, कृपया <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA सेक्युर "
+"इरेज</a> विषयी लेख वाचा व तुम्हाला धोका कळते याची काळजी घ्या"
+
+#: ../src/disks/gduformatdiskdialog.c:424
+#: ../src/disks/gduformatvolumedialog.c:177
 msgid "_Format"
 msgstr "रूपण (_F)"
 
-#: ../src/palimpsest/gduformatvolumedialog.c:100
+#: ../src/disks/gduformatvolumedialog.c:99
 msgid "Error formatting volume"
 msgstr "खंडाच्या रूपणवेळी त्रुटी"
 
-#: ../src/palimpsest/gduformatvolumedialog.c:157
-#| msgid "Are you sure you want to erase the device ?"
+#: ../src/disks/gduformatvolumedialog.c:160
 msgid "Are you sure you want to format the volume?"
 msgstr "तुम्हाला नक्की वॉल्यूमचे रूपण करायचे?"
 
-#: ../src/palimpsest/gdufstabdialog.c:166
+#. Translators: warning used for quick format of the volume
+#: ../src/disks/gduformatvolumedialog.c:164
+msgid ""
+"All data on the volume will be lost but may still be recoverable by data "
+"recovery services"
+msgstr ""
+"खंडवरील सर्व डाटा गमवले जाईल परंतु डाटा रिकव्हरि सर्व्हिसेस् तर्फे "
+"पुनःप्राप्त करण्याजोगी आहे"
+
+#. Translators: warning used when overwriting data of the volume
+#: ../src/disks/gduformatvolumedialog.c:171
+msgid ""
+"All data on the volume will be overwritten and will likely not be "
+"recoverable by data recovery services"
+msgstr ""
+"खंडवरील सर्व डाटा खोडून पुनः लिहला जाईल व डाटा रिकव्हरि सर्व्हिसेस् तर्फे "
+"पुनःप्राप्त करण्याजोगी राहणार नाही"
+
+#: ../src/disks/gdufstabdialog.c:165
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
-msgstr ""
+msgstr "दिलेल्या महत्वाचे उत्पादन डाटासह साधनाचे विभाजन %d जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:169
+#: ../src/disks/gdufstabdialog.c:168
 msgid "Matches the whole disk of the device with the given vital product data"
-msgstr ""
+msgstr "दिलेल्या महत्वाचे उत्पादन डाटासह साधनाचे संपूर्ण डिस्क जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:174
+#: ../src/disks/gdufstabdialog.c:173
 #, c-format
 msgid ""
 "Matches partition %d of any device connected at the given port or address"
-msgstr ""
+msgstr "दिलेल्या पोर्ट किंवा पत्तासह जुळलेले कोणत्याहि साधनसह विभाजन %d जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:177
+#: ../src/disks/gdufstabdialog.c:176
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
+"दिलेल्या पोर्ट किंवा पत्तासह जुळलेले कोणतेहि साधन संपूर्ण डिस्कसह जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:181
+#: ../src/disks/gdufstabdialog.c:180
 msgid "Matches any device with the given label"
-msgstr ""
+msgstr "दिलेल्या लेबलसह कोणतेहि साधन जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:185
+#: ../src/disks/gdufstabdialog.c:184
 msgid "Matches the device with the given UUID"
-msgstr ""
+msgstr "दिलेल्या UUID सह साधन जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:189
-#| msgid "Mount the filesystem on device"
+#: ../src/disks/gdufstabdialog.c:188
 msgid "Matches the given device"
 msgstr "दिलेल्या साधनसह जुळते"
 
-#: ../src/palimpsest/gdufstabdialog.c:473
+#: ../src/disks/gdufstabdialog.c:472
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
+"हि नोंदणी संपादित किंवा काढून टाकल्यास, प्रणाली योग्यरित्या कार्य करणे शक्य "
+"नाही."
 
-#: ../src/palimpsest/gdufstabdialog.c:532
-#| msgid "Error removing component"
+#: ../src/disks/gdufstabdialog.c:531
 msgid "Error removing old /etc/fstab entry"
 msgstr "जुणे /etc/fstab नोंदणी काढून टाकतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdufstabdialog.c:588
-#| msgid "Error adding component"
+#: ../src/disks/gdufstabdialog.c:587
 msgid "Error adding new /etc/fstab entry"
 msgstr "नविन /etc/fstab नोंदणी समाविष्ट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdufstabdialog.c:612
+#: ../src/disks/gdufstabdialog.c:611
 msgid "Error updating /etc/fstab entry"
-msgstr ""
+msgstr "/etc/fstab नोंदणी सुधारित करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdupartitiondialog.c:369
-#| msgid "Error creating partition table"
+#: ../src/disks/gdupartitiondialog.c:368
 msgid "Error setting partition type"
 msgstr "विभाजन प्रकार सेट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdupartitiondialog.c:383
-#| msgid "Error creating partition table"
+#: ../src/disks/gdupartitiondialog.c:382
 msgid "Error setting partition name"
 msgstr "विभाजनचे नाव सेट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdupartitiondialog.c:397
-#| msgid "Error deleting partition"
+#: ../src/disks/gdupartitiondialog.c:396
 msgid "Error setting partition flags"
 msgstr "विभाजन फ्लॅग्स् सेट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:169
+#: ../src/disks/gdupasswordstrengthwidget.c:139
+msgctxt "Password strength"
 msgid "Weak"
-msgstr ""
+msgstr "कमजोर"
 
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:170
+#: ../src/disks/gdupasswordstrengthwidget.c:140
+msgctxt "Password strength"
 msgid "Fair"
-msgstr ""
+msgstr "सुरेख"
 
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:171
+#: ../src/disks/gdupasswordstrengthwidget.c:141
+#| msgid "Good"
+msgctxt "Password strength"
 msgid "Good"
 msgstr "चांगले"
 
-#: ../src/palimpsest/gdupasswordstrengthwidget.c:172
+#: ../src/disks/gdupasswordstrengthwidget.c:142
+msgctxt "Password strength"
 msgid "Strong"
-msgstr ""
+msgstr "मजबूत"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:167
+#: ../src/disks/gdurestorediskimagedialog.c:139
+#| msgid "Error mounting device"
+msgid "Error rescanning device"
+msgstr "साधन पुनः स्कॅन करतेवेळी त्रुटी"
+
+#: ../src/disks/gdurestorediskimagedialog.c:198
 msgid "Cannot restore image of size 0"
-msgstr ""
+msgstr "आकार 0ची प्रतिमा पुनःस्थिपीत करण्यास अशक्य"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:176
+#: ../src/disks/gdurestorediskimagedialog.c:207
 #, c-format
 msgid "The selected image is %s smaller than the device"
-msgstr ""
+msgstr "नीवडलेली प्रतिमा साधनपेक्षा %s लहान आहे"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:185
+#: ../src/disks/gdurestorediskimagedialog.c:216
 #, c-format
 msgid "The selected image is %s bigger than the device"
-msgstr ""
+msgstr "नीवडलेली प्रतिमा साधनपेक्षा %s मोठे आहे"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:416
-#| msgid "Error checking file system on device"
+#: ../src/disks/gdurestorediskimagedialog.c:305
+#| msgid "Error deleting loop device"
+msgid "Error writing to device"
+msgstr "साधनकरीता लिहतेवेळी त्रुटी"
+
+#: ../src/disks/gdurestorediskimagedialog.c:456
 msgid "Error opening file for reading"
 msgstr "वाचनकरिता फाइल वाचतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:430
-#| msgid "Error detaching device"
+#: ../src/disks/gdurestorediskimagedialog.c:470
 msgid "Error determing size of file"
 msgstr "फाइलचे आकार ओळखतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:495
-#| msgid "Are you sure you want to erase the device ?"
+#: ../src/disks/gdurestorediskimagedialog.c:500
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "तुम्हाला नक्की डिस्क प्रतिमा साधनावर लिहायची?"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:496
+#: ../src/disks/gdurestorediskimagedialog.c:501
 msgid "All existing data will be lost"
-msgstr ""
+msgstr "सर्व अस्तित्वातील डाटा गमवाल"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:497
+#: ../src/disks/gdurestorediskimagedialog.c:502
 msgid "_Restore"
-msgstr ""
+msgstr "पुनःसाठवा (_R)"
 
-#: ../src/palimpsest/gdurestorediskimagedialog.c:500
+#. Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device.
+#: ../src/disks/gdurestorediskimagedialog.c:564
 #, c-format
-msgid "Copying data to device <i>%s</i>..."
-msgstr ""
+#| msgid "Detach Disk Image"
+msgid "Restore Disk Image (%s)"
+msgstr "डिस्क प्रतिमा (%s) मूळस्थितीत आणा"
 
-#: ../src/palimpsest/gduunlockdialog.c:50
-#| msgid "Error locking encrypted device"
+#: ../src/disks/gduunlockdialog.c:99
 msgid "Error unlocking encrypted device"
 msgstr "एनक्रिप्टेड साधन कुलूपबंद अशक्य करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduutils.c:81
-msgid "All Files"
-msgstr ""
-
-#: ../src/palimpsest/gduutils.c:85
-msgid "Disk Images (*.img, *.iso)"
-msgstr ""
-
-#: ../src/palimpsest/gduutils.c:105
-#, c-format
-#| msgid "%d sector"
-#| msgid_plural "%d sectors"
-msgid "%d second"
-msgid_plural "%d seconds"
-msgstr[0] "%d सेकंद"
-msgstr[1] "%d सेकंद"
-
-#: ../src/palimpsest/gduutils.c:112
-#| msgid "Less than a minute ago"
-msgid "Less than a minute"
-msgstr "मिनिटापेक्षा कमी"
-
-#: ../src/palimpsest/gduutils.c:118
-#, c-format
-#| msgid "%d minute ago"
-#| msgid_plural "%d minutes ago"
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d मिनीट"
-msgstr[1] "%d मिनीटे"
-
-#: ../src/palimpsest/gduutils.c:126
-#, c-format
-#| msgid "%d hour ago"
-#| msgid_plural "%d hours ago"
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d तास"
-msgstr[1] "%d तास"
+#: ../src/disks/gduunlockdialog.c:156
+msgid "The encryption passphrase was retrieved from the keyring"
+msgstr "एंक्रिप्शन पासफ्रेज किरिंगपासून प्राप्त केले"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1536
+#: ../src/disks/gduvolumegrid.c:1538
 #, c-format
-#| msgid "Partition %d (%s)"
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
 msgstr "विभाजन %d: (%s)"
@@ -2224,189 +2709,384 @@ msgstr "विभाजन %d: (%s)"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/palimpsest/gduvolumegrid.c:1543
+#: ../src/disks/gduvolumegrid.c:1545
 #, c-format
-#| msgid "Partition %d"
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "विभाजन %d"
 
-#: ../src/palimpsest/gduvolumegrid.c:1563
-#| msgid "%s Media"
+#: ../src/disks/gduvolumegrid.c:1565
 msgid "No Media"
 msgstr "मिडीया आढळले नाही"
 
-#: ../src/palimpsest/gduvolumegrid.c:1580
-#| msgid "Swap Space"
+#: ../src/disks/gduvolumegrid.c:1582
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "मोकळी जागा"
 
-#: ../src/palimpsest/gduvolumegrid.c:1622
-#| msgid "Extended Partition"
+#: ../src/disks/gduvolumegrid.c:1624
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "वाढिव विभाजन"
 
-#: ../src/palimpsest/gduvolumegrid.c:1646
-#| msgid "%s Filesystem"
+#: ../src/disks/gduvolumegrid.c:1648
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "फाइलप्रणाली"
 
-#: ../src/palimpsest/gduvolumegrid.c:1665
-#| msgid "swap"
+#: ../src/disks/gduvolumegrid.c:1666
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "स्वॅप"
 
-#: ../src/palimpsest/gduwindow.c:531
-#| msgid "Error ejecting device"
+#: ../src/disks/gduwindow.c:625
 msgid "Error deleting loop device"
 msgstr "लूप साधन नष्ट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:602 ../src/palimpsest/gduwindow.c:674
-#| msgid "Error detaching device"
+#: ../src/disks/gduwindow.c:696 ../src/disks/gduwindow.c:768
 msgid "Error attaching disk image"
 msgstr "डिस्क प्रतिमा जोडतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:642
+#: ../src/disks/gduwindow.c:736
 msgid "Select Disk Image to Attach"
-msgstr ""
+msgstr "जोडण्याजोगी डिस्क प्रतिमा नीवडा"
 
-#: ../src/palimpsest/gduwindow.c:646
-#, fuzzy
+#: ../src/disks/gduwindow.c:740
 #| msgid "A_ttach"
 msgid "_Attach"
-msgstr "जुळवा (_t)"
+msgstr "जोड (_A)"
 
 #. Add a RO check button that defaults to RO
-#: ../src/palimpsest/gduwindow.c:652
+#: ../src/disks/gduwindow.c:746
 msgid "Set up _read-only loop device"
-msgstr ""
+msgstr "फक्त वाचनीय लूप साधन ठरवा (_r)"
 
-#: ../src/palimpsest/gduwindow.c:653
+#: ../src/disks/gduwindow.c:747
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
 msgstr ""
+"तपासले असल्यास, लूप साधन फक्त वाचनीय असेल. अंतर्भुत फाइल संपादित करायचे "
+"नसल्यास हे उपयोगी ठरते"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/palimpsest/gduwindow.c:1515
+#: ../src/disks/gduwindow.c:1713
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr ""
+msgstr "%s <span size=\"smaller\">(फक्त वाचनीय)</span>"
 
-#: ../src/palimpsest/gduwindow.c:1822
-#, fuzzy
+#. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
+#. * the expected end time...
+#.
+#: ../src/disks/gduwindow.c:1745
+msgctxt "job-remaining-exceeded"
+msgid "Almost done..."
+msgstr "जवळपास झाले..."
+
+#: ../src/disks/gduwindow.c:1750
+#, c-format
+msgctxt "job-remaining"
+msgid "%s remaining"
+msgstr "%s उर्वरित"
+
+#. Translators: Shown in "Location" when drive is connected to another seat than where
+#. * our application is running.
+#.
+#: ../src/disks/gduwindow.c:1906
+msgid "Connected to another seat"
+msgstr "Connected to another seat"
+
+#: ../src/disks/gduwindow.c:2207
 #| msgid "Unknown"
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "अपरिचीत"
 
-#: ../src/palimpsest/gduwindow.c:1849
+#: ../src/disks/gduwindow.c:2239
 msgid "Extended Partition"
 msgstr "विस्तारीत विभाजन"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1890
-#, fuzzy
+#: ../src/disks/gduwindow.c:2280
 #| msgid "Filesystem type"
 msgid "Filesystem Root"
-msgstr "फाइलप्रणाली प्रकार"
+msgstr "फाइलप्रणाली रूट"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1898
+#: ../src/disks/gduwindow.c:2288
 #, c-format
 msgid "Yes, mounted at %s"
-msgstr ""
+msgstr "होय, %s येथे माउंट केले"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1904 ../src/palimpsest/gduwindow.c:1940
-#: ../src/palimpsest/gduwindow.c:1966
-#, fuzzy
+#: ../src/disks/gduwindow.c:2294 ../src/disks/gduwindow.c:2330
+#: ../src/disks/gduwindow.c:2356
 #| msgid "None"
 msgid "No"
-msgstr "काहिच नाही"
+msgstr "नाही"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1934 ../src/palimpsest/gduwindow.c:1960
+#: ../src/disks/gduwindow.c:2324 ../src/disks/gduwindow.c:2350
 msgid "Yes"
-msgstr ""
+msgstr "होय"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2039
-#, fuzzy, c-format
+#: ../src/disks/gduwindow.c:2484
+#, c-format
 #| msgid "Unallocated Space"
 msgid "Unallocated Space (%s)"
-msgstr "न वाटपकेलेली जागा"
+msgstr "न वाटप केलेली जागा (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2044
+#: ../src/disks/gduwindow.c:2489
 msgid "Unallocated Space"
 msgstr "न वाटपकेलेली जागा"
 
-#: ../src/palimpsest/gduwindow.c:2400
-#, fuzzy
+#: ../src/disks/gduwindow.c:2778
+msgid "An error occurred when trying to put the drive into standby mode"
+msgstr "ड्राइव्हला स्टँडबाय मोडमध्ये स्थित करतेवेळी त्रुटी आढळली"
+
+#: ../src/disks/gduwindow.c:2824
+msgid "An error occurred when trying to wake up the drive from standby mode"
+msgstr "ड्राइव्हला स्टँडबाय मोडपासून सक्रीय करतेवेळी त्रुटी आढळली"
+
+#: ../src/disks/gduwindow.c:2899
 #| msgid "Forcibly Unmounting Filesystem"
 msgid "Error mounting filesystem"
-msgstr "फाइलप्रणालीचे जबरन माऊंट अशक्य करत आहे"
+msgstr "फाइलप्रणाली माऊंट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:2440
-#, fuzzy
+#: ../src/disks/gduwindow.c:2939
 #| msgid "Forcibly Unmounting Filesystem"
 msgid "Error unmounting filesystem"
-msgstr "फाइलप्रणालीचे जबरन माऊंट अशक्य करत आहे"
+msgstr "अपरिचीत माउंट अशक्य फाइलप्रणाली"
 
-#: ../src/palimpsest/gduwindow.c:2519
+#: ../src/disks/gduwindow.c:3020
 msgid "Error deleting partition"
 msgstr "विभाजन नष्ट करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:2535
-#, fuzzy
+#: ../src/disks/gduwindow.c:3036
 #| msgid "Are you sure you want to erase the device ?"
 msgid "Are you sure you want to delete the partition?"
-msgstr "तुम्हाला नक्की उपकरण खोडायचे?"
+msgstr "तुम्हाला नक्की विभाजन नष्ट करायचे?"
 
-#: ../src/palimpsest/gduwindow.c:2536
-#, fuzzy
+#: ../src/disks/gduwindow.c:3037
 #| msgid "A %s partition will be created"
 msgid "All data on the partition will be lost"
-msgstr "%s विभाजन बनवली जाईल"
+msgstr "विभाजनवरील सर्व डाटा गमवाल"
 
-#: ../src/palimpsest/gduwindow.c:2537
-#, fuzzy
+#: ../src/disks/gduwindow.c:3038
 #| msgid "_Detect Media"
 msgid "_Delete"
-msgstr "मिडीया शोध (_D)"
+msgstr "नष्ट करा (_D)"
 
-#: ../src/palimpsest/gduwindow.c:2568
-#, fuzzy
+#: ../src/disks/gduwindow.c:3069
 #| msgid "Error ejecting device"
 msgid "Error ejecting media"
-msgstr "उपकरण बाहेर काढतेवेळी त्रुटी"
+msgstr "मिडिया बाहेर काढतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:2620
+#: ../src/disks/gduwindow.c:3121
 msgid "Error locking encrypted device"
 msgstr "एनक्रिप्टेड उपकरण कुलूपबंद करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:2661
-#, fuzzy
+#: ../src/disks/gduwindow.c:3162
 #| msgid "Error erasing data"
 msgid "Error starting swap"
-msgstr "डाटा खोडतेवेळी त्रुटी"
+msgstr "स्वॅप सुरू करतेवेळी त्रुटी"
 
-#: ../src/palimpsest/gduwindow.c:2698
-#, fuzzy
+#: ../src/disks/gduwindow.c:3199
 #| msgid "Error erasing data"
 msgid "Error stopping swap"
-msgstr "डाटा खोडतेवेळी त्रुटी"
+msgstr "स्वॅप थांबवतेवेळी त्रुटी"
+
+#: ../src/disks/gduwindow.c:3241
+#| msgid "Error setting partition flags"
+msgid "Error setting autoclear flag"
+msgstr "autoclear फ्लॅग ठरवतेवेळी त्रुटी"
+
+#: ../src/disks/gduwindow.c:3294 ../src/disks/gduwindow.c:3349
+#| msgid "Error setting label"
+msgid "Error canceling job"
+msgstr "कार्य रद्द करतेवेळी त्रुटी"
+
+#: ../src/libgdu/gduutils.c:101
+msgid "All Files"
+msgstr "सर्व फाइल्स्"
+
+#: ../src/libgdu/gduutils.c:105
+msgid "Disk Images (*.img, *.iso)"
+msgstr "डिस्क प्रतिमा (*.img, *.iso)"
+
+#. Translators: Used for number of years
+#: ../src/libgdu/gduutils.c:414
+#, c-format
+#| msgid "%.1f year"
+#| msgid_plural "%.1f years"
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d वर्ष"
+msgstr[1] "%d वर्षे"
+
+#. Translators: Used for number of months
+#: ../src/libgdu/gduutils.c:421
+#, c-format
+#| msgid "%d minute"
+#| msgid_plural "%d minutes"
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d महिना"
+msgstr[1] "%d महिने"
+
+#. Translators: Used for number of days
+#: ../src/libgdu/gduutils.c:428
+#, c-format
+#| msgid "%.1f day"
+#| msgid_plural "%.1f days"
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d दिवस"
+msgstr[1] "%d दिवस"
+
+#. Translators: Used for number of hours
+#: ../src/libgdu/gduutils.c:435
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d तास"
+msgstr[1] "%d तास"
+
+#. Translators: Used for number of minutes
+#: ../src/libgdu/gduutils.c:442
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d मिनीट"
+msgstr[1] "%d मिनीटे"
+
+#. Translators: Used for number of seconds
+#: ../src/libgdu/gduutils.c:449
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d सेकंद"
+msgstr[1] "%d सेकंद"
+
+#. Translators: Used for number of milli-seconds
+#: ../src/libgdu/gduutils.c:456
+#, c-format
+#| msgid "%d second"
+#| msgid_plural "%d seconds"
+msgid "%d milli-second"
+msgid_plural "%d milli-seconds"
+msgstr[0] "%d मिलि-सेकंद"
+msgstr[1] "%d मिलि-सेकंद"
+
+#. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
+#: ../src/libgdu/gduutils.c:520
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-year-to-inf"
+msgid "%s, %s and %s"
+msgstr "%s, %s व %s"
+
+#. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
+#: ../src/libgdu/gduutils.c:525
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-months-to-year"
+msgid "%s and %s"
+msgstr "%s व %s"
+
+#. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
+#: ../src/libgdu/gduutils.c:530
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-day-to-month"
+msgid "%s and %s"
+msgstr "%s व %s"
+
+#. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
+#: ../src/libgdu/gduutils.c:535
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-hour-to-day"
+msgid "%s and %s"
+msgstr "%s व %s"
+
+#. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
+#: ../src/libgdu/gduutils.c:546
+#, c-format
+#| msgid "%s at %s"
+msgctxt "duration-minute-to-hour"
+msgid "%s and %s"
+msgstr "%s व %s"
+
+#: ../src/libgdu/gduutils.c:555
+#| msgid "Less than a minute"
+msgctxt "duration"
+msgid "Less than a minute"
+msgstr "मिनिटापेक्षा कमी"
+
+#. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
+#: ../src/libgdu/gduutils.c:560
+#, c-format
+#| msgid "%"
+msgctxt "duration-second-to-minute"
+msgid "%s"
+msgstr "%s"
+
+#. Translators: Used for durations less than one second. First %s is number of milli-seconds
+#: ../src/libgdu/gduutils.c:566
+#, c-format
+#| msgid "%"
+msgctxt "duration-zero-to-second"
+msgid "%s"
+msgstr "%s"
+
+#, fuzzy
+#~| msgid "Updated:"
+#~ msgid "Updates"
+#~ msgstr "सुधारीत:"
+
+#, fuzzy
+#~| msgid "Normalized:"
+#~ msgid "Normalized"
+#~ msgstr "नॉर्मलाइज्ड्:"
+
+#~| msgid "%.1f hours"
+#~ msgid "%.1f hour"
+#~ msgid_plural "%.1f hours"
+#~ msgstr[0] "%.1f तास"
+#~ msgstr[1] "%.1f तास"
+
+#~| msgid "%.1f seconds"
+#~ msgid "%.1f second"
+#~ msgid_plural "%.1f seconds"
+#~ msgstr[0] "%.1f सेकंद"
+#~ msgstr[1] "%.1f सेकंदे"
+
+#~ msgid "Every time data is collected (Online)"
+#~ msgstr "प्रत्येकवेळी वेळ डाटा संग्रहीत होतो (ऑनलाइन)"
+
+#~ msgid "Only during off-line activities (Not Online)"
+#~ msgstr "फक्त ऑफ-लाइन कार्य (ऑफलाइन नाही)"
+
+#~ msgid "Name"
+#~ msgstr "नाव"
+
+#, fuzzy
+#~| msgid "Self-test is in progress"
+#~ msgid "Self-test in progress — %d%% remaining"
+#~ msgstr "स्वयं-चाचणी प्रगतीत आहे"
+
+#~| msgid "Warning: All data on the volume will be irrevocably lost."
+#~ msgid "All data on the volume will be lost"
+#~ msgstr "वॉल्यूमवरील सर्व डाटा गमवाल"
 
 #~ msgid "Disk Utility"
 #~ msgstr "डिस्क युटिलिटी"
@@ -2468,9 +3148,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "Gnome Disk Utility formatting tool"
 #~ msgstr "Gnome डिस्क युटिलिटी रूपण उपकरण"
-
-#~ msgid "Format partition %d of %s (%s)"
-#~ msgstr "%2$s (%3$s) पैकी विभाजन %1$d याचे रूपण करा"
 
 #~ msgid "Formatting partition %d of %s (%s)"
 #~ msgstr "%2$s (%3$s) पैकी विभाजन %1$d याचे रूपण करत आहे"
@@ -2537,9 +3214,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "HDDVD"
 #~ msgstr "HDDVD"
-
-#~ msgid "%s %s Drive"
-#~ msgstr "%s %s ड्राइव्ह"
 
 #~ msgid "%s Hard Disk"
 #~ msgstr "%s हार्ड डिस्क"
@@ -2773,7 +3447,7 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgstr "Apple UFS विभाजन"
 
 #~ msgid "Apple RAID Partition"
-#~ msgstr "२Apple RAID विभाजन"
+#~ msgstr "Apple RAID विभाजन"
 
 #~ msgid "Apple Partition Map"
 #~ msgstr "Apple विभाजन नकाशा"
@@ -3022,9 +3696,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgctxt "connection name"
 #~ msgid "Unknown"
 #~ msgstr "अपरिचीत"
-
-#~ msgid "%s at %s"
-#~ msgstr "%s चे %s"
 
 #~ msgctxt "RAID level"
 #~ msgid "Stripe (RAID-0)"
@@ -3423,9 +4094,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgid "Don't _warn me if the disk is failing"
 #~ msgstr "डिस्क अपयशी ठरत असल्यास मला सावध करू नका (_w)"
 
-#~ msgid "%"
-#~ msgstr "%"
-
 #~ msgid "Failure is a sign of old age (Old-Age)"
 #~ msgstr "अपयश जुणे होण्याचे चिन्ह आहे (ओल्ड-एज)"
 
@@ -3464,9 +4132,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgid "Last self-test FAILED (Suspected of having handled damage)"
 #~ msgstr "शेवटची स्वयं-चाचणी अपयशी (दोष हाताळण्याची शंका आहे)"
 
-#~ msgid "Short self-test in progress: "
-#~ msgstr "लहान स्वयं-चाचणी प्रगतीत: "
-
 #~ msgid "Extended self-test in progress: "
 #~ msgstr "विस्तारीत स्वयं-चाचणी प्रगतीत: "
 
@@ -3478,9 +4143,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "The pool of devices"
 #~ msgstr "उपकरनांचा संच"
-
-#~ msgid "RAID Level"
-#~ msgstr "RAID स्तर"
 
 #~ msgid "The selected RAID level"
 #~ msgstr "नीवडलेले RAID स्तर"
@@ -3496,9 +4158,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "The size of each component"
 #~ msgstr "प्रत्येक घटकाचे आकार"
-
-#~ msgid "Stripe Size"
-#~ msgstr "स्ट्राइप आकार"
 
 #~ msgid "The requested stripe size of the array"
 #~ msgstr "अर्रेची विनंतीकृत स्ट्राइप आकार"
@@ -4109,9 +4768,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgid "Delete the partition"
 #~ msgstr "विभाजन नष्ट करा"
 
-#~ msgid "_Revert"
-#~ msgstr "पूर्वस्थितीत आणा (_R)"
-
 #~ msgid "Apply the changes made"
 #~ msgstr "केलेले बदल लागू करा"
 
@@ -4263,9 +4919,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 #~ msgid "There was an error stopping the drive \"%s\"."
 #~ msgstr "ड्राइव्ह \"%s\" थांबवतेवेळी त्रुटी आढळली."
 
-#~ msgid "_Erase"
-#~ msgstr "खोडा (_E)"
-
 #~ msgid "Error creating component for RAID array"
 #~ msgstr "RAID अर्रे करीता घटक निर्माण करतेवेळी त्रुटी"
 
@@ -4301,9 +4954,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "Check the file system"
 #~ msgstr "फाइल प्रणाली तपासा"
-
-#~ msgid "_Mount"
-#~ msgstr "माऊंट (_M)"
 
 #~ msgid "_Eject"
 #~ msgstr "बाहेर काढा (_E)"
@@ -4343,9 +4993,6 @@ msgstr "डाटा खोडतेवेळी त्रुटी"
 
 #~ msgid "Get Help on Palimpsest Disk Utility"
 #~ msgstr "Palimpsest डिस्क युटिलिटी करीता मदत मिळवा"
-
-#~ msgid "An error occured"
-#~ msgstr "त्रुटी आढळली"
 
 #~ msgid "The operation failed."
 #~ msgstr "कार्य अपयशी ठरले."

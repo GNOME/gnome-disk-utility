@@ -66,8 +66,9 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
   gchar *folder;
   GSettings *settings;
 
-  /* Get folder from GSettings, and default to the "Documents" folder */
+  gtk_file_chooser_set_local_only (file_chooser, FALSE);
 
+  /* Get folder from GSettings, and default to the "Documents" folder */
   settings = g_settings_new ("org.gnome.Disks");
   folder = g_settings_get_string (settings, "image-dir-uri");
   if (folder == NULL || strlen (folder) == 0)
@@ -76,10 +77,7 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
       folder = g_strdup_printf ("file://%s", g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS));
     }
   g_object_set_data_full (G_OBJECT (file_chooser), "x-gdu-orig-folder", g_strdup (folder), g_free);
-  if (g_str_has_prefix (folder, "file://"))
-    gtk_file_chooser_set_current_folder (file_chooser, folder + strlen ("file://"));
-  else
-    gtk_file_chooser_set_current_folder (file_chooser, folder);
+  gtk_file_chooser_set_current_folder_uri (file_chooser, folder);
 
   /* TODO: define proper mime-types */
   if (set_file_types)

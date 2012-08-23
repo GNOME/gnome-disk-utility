@@ -727,7 +727,6 @@ gdu_window_show_attach_disk_image (GduWindow *window)
                                         _("_Attach"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog), TRUE);
-  gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
 
   /* Add a RO check button that defaults to RO */
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only loop device"));

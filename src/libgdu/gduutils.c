@@ -108,7 +108,7 @@ gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_cho
   gchar *cur_folder;
 
   orig_folder = g_object_get_data (G_OBJECT (file_chooser), "x-gdu-orig-folder");
-  cur_folder = gtk_file_chooser_get_uri (file_chooser);
+  cur_folder = gtk_file_chooser_get_current_folder_uri (file_chooser);
   if (g_strcmp0 (orig_folder, cur_folder) != 0)
     {
       GSettings *settings = g_settings_new ("org.gnome.Disks");

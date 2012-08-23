@@ -40,8 +40,8 @@ struct GridElement
   gint fixed_width;
   gdouble size_ratio;
   UDisksObject *object;
-  guint64 offset;
-  guint64 size;
+  gint64 offset;
+  gint64 size;
 
   GList *embedded_elements;
   GridElement *parent;
@@ -991,8 +991,8 @@ find_element_for_position (GduVolumeGrid *grid,
 }
 
 static GridElement *
-do_find_element_for_offset_and_object (GList *elements,
-                                       guint64 offset,
+do_find_element_for_offset_and_object (GList        *elements,
+                                       gint64        offset,
                                        UDisksObject *object)
 {
   GList *l;
@@ -1020,8 +1020,8 @@ do_find_element_for_offset_and_object (GList *elements,
 }
 
 static GridElement *
-find_element_for_offset_and_object (GduVolumeGrid  *grid,
-                                    guint64         offset,
+find_element_for_offset_and_object (GduVolumeGrid   *grid,
+                                    gint64           offset,
                                     UDisksObject    *object)
 {
   return do_find_element_for_offset_and_object (grid->elements, offset, object);
@@ -1031,8 +1031,8 @@ static gint
 partition_sort_by_offset_func (UDisksObject *a,
                                UDisksObject *b)
 {
-  guint64 oa;
-  guint64 ob;
+  gint64 oa;
+  gint64 ob;
   oa = udisks_partition_get_offset (udisks_object_peek_partition (a));
   ob = udisks_partition_get_offset (udisks_object_peek_partition (b));
   if (oa > ob)
@@ -1136,16 +1136,16 @@ maybe_add_crypto (GduVolumeGrid    *grid,
 
 static GList *
 recompute_grid_add_partitions (GduVolumeGrid  *grid,
-                               guint64         total_size,
+                               gint64          total_size,
                                GridElement    *parent,
-                               guint64         free_space_slack,
-                               guint64         top_offset,
-                               guint64         top_size,
+                               gint64          free_space_slack,
+                               gint64          top_offset,
+                               gint64          top_size,
                                GList          *partitions,
                                UDisksObject    *extended_partition,
                                GList          *logical_partitions)
 {
-  guint64 prev_end;
+  gint64 prev_end;
   GridElement *element;
   GridElement *prev_element;
   GList *l;
@@ -1161,7 +1161,7 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
     {
       UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksPartition *partition;
-      guint64 begin, end, size;
+      gint64 begin, end, size;
 
       partition = udisks_object_peek_partition (object);
 
@@ -1255,11 +1255,11 @@ recompute_grid (GduVolumeGrid *grid)
   const gchar *top_object_path;
   UDisksBlock *top_block;
   UDisksPartitionTable *partition_table;
-  guint64 top_size;
-  guint64 free_space_slack;
+  gint64 top_size;
+  gint64 free_space_slack;
   GridElement *element;
-  guint64 cur_selected_offset;
-  guint64 cur_focused_offset;
+  gint64 cur_selected_offset;
+  gint64 cur_focused_offset;
   UDisksObject *cur_selected_object;
   UDisksObject *cur_focused_object;
 
@@ -1490,14 +1490,14 @@ guint64
 gdu_volume_grid_get_selected_offset (GduVolumeGrid *grid)
 {
   g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), 0);
-  return grid->selected->offset;
+  return (guint64) grid->selected->offset;
 }
 
 guint64
 gdu_volume_grid_get_selected_size (GduVolumeGrid *grid)
 {
   g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), 0);
-  return grid->selected->size;
+  return (guint64) grid->selected->size;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

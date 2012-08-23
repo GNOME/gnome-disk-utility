@@ -68,7 +68,7 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
 
   gtk_file_chooser_set_local_only (file_chooser, FALSE);
 
-  /* Get folder from GSettings, and default to the "Documents" folder */
+  /* Get folder from GSettings, and default to the "Documents" folder if not set */
   settings = g_settings_new ("org.gnome.Disks");
   folder = g_settings_get_string (settings, "image-dir-uri");
   if (folder == NULL || strlen (folder) == 0)
@@ -107,7 +107,11 @@ gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_cho
 
   orig_folder = g_object_get_data (G_OBJECT (file_chooser), "x-gdu-orig-folder");
   cur_folder = gtk_file_chooser_get_current_folder_uri (file_chooser);
-  if (g_strcmp0 (orig_folder, cur_folder) != 0)
+  /* NOTE: cur_folder may be NULL if e.g. something in "Search" or
+   * "Recently Used" is selected... in that case, do not update
+   * the GSetting
+   */
+  if (cur_folder != NULL && g_strcmp0 (orig_folder, cur_folder) != 0)
     {
       GSettings *settings = g_settings_new ("org.gnome.Disks");
       g_settings_set_string (settings, "image-dir-uri", cur_folder);

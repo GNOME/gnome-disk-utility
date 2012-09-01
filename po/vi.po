@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-08-25 05:06+0000\n"
-"PO-Revision-Date: 2012-09-01 16:19+0700\n"
+"PO-Revision-Date: 2012-09-01 16:55+0700\n"
 "Last-Translator: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "Language: vi\n"
@@ -38,7 +38,7 @@ msgstr "Quản lý đĩa và các loại vật chứa"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
-msgstr ""
+msgstr "Vị trí mặc định cho hộp thoại Tạo/Phục hồi ảnh đĩa"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
 msgid ""
@@ -116,6 +116,9 @@ msgid ""
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
+"Đo tốc độ truyền trên nhiều phần khác nhau của thiết bị cũng như đo thời "
+"gian di chuyển từ một vùng ngẫu nhiên sang một vùng khác. Vui lòng sao lưu "
+"dữ liệu quan trọng trức khi tiến hành đo đạc ghi."
 
 #: ../data/ui/benchmark-dialog.ui.h:11
 msgid "Transfer Rate"
@@ -149,7 +152,7 @@ msgstr ""
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
-msgstr ""
+msgstr "Số mẫu. Số lớn cho một bức tranh chính xác hơn nhưng lâu hơn."
 
 #: ../data/ui/benchmark-dialog.ui.h:19
 msgid ""
@@ -157,6 +160,8 @@ msgid ""
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
+"Số MiB (1048576 byte) cần đọc/ghi cho mỗi mẫu. Kích thước mẫu lớn đo chính "
+"xác hơn nhưng lâu hơn."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
 msgid "Access Time"
@@ -170,7 +175,7 @@ msgstr "Số _mẫu"
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
-msgstr ""
+msgstr "Số mẫu. Số lớn cho một biểu đồ mượt hơn nhưng lâu hơn."
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
@@ -190,7 +195,7 @@ msgstr "Mật mã _hiện thời"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:4
 msgid "Enter current passphrase used to protect the data"
-msgstr ""
+msgstr "Nhập mật mã hiện thời dùng để bảo vệ dữ liệu"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:12
@@ -200,16 +205,16 @@ msgstr "_Hiện mật mã"
 #: ../data/ui/change-passphrase-dialog.ui.h:6
 #: ../data/ui/filesystem-create.ui.h:13
 msgid "Check this box to see the passphrases entered above"
-msgstr ""
+msgstr "Chọn ô này để xem mật mã nhập ở trên"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:7
 #: ../data/ui/filesystem-create.ui.h:11
 msgid "Confirm passphrase entered above"
-msgstr ""
+msgstr "Xác nhận mật mã nhập ở trên"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:8
 msgid "Enter new passphrase used to protect the data"
-msgstr ""
+msgstr "Nhập mật mã mới dùng để bảo vệ dữ liệu"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:9
 #: ../data/ui/filesystem-create.ui.h:9
@@ -483,11 +488,11 @@ msgstr "Sửa tuỳ chọn mã hoá..."
 
 #: ../data/ui/disks.ui.h:47
 msgid "Benchmark Volume..."
-msgstr ""
+msgstr "Đo đạc khối tin..."
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "_Automatic Encryption Options"
-msgstr ""
+msgstr "Tuỳ chọn _mã hoá tự động"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid ""
@@ -495,6 +500,8 @@ msgid ""
 "and passphrase for the device. The options correspond to an entry in the <b>/"
 "etc/crypttab</b> file"
 msgstr ""
+"Tắt <i>Tuỳ chọn mã hoá tự động</i> để quản lý tuỳ chọn mã hoá và mật mã "
+"thiết bị. Những tuỳ chọn này nằmtrong tập tin <b>/etc/crypttab</b>"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:4
 msgid "Opt_ions"
@@ -505,10 +512,12 @@ msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
+"Tên dùng cho thiết bị đã mở khoá - thiết bị được thiết lập với tên bắt đầu "
+"bằng <b>/dev/mapper</b>/"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:6
 msgid "Options to use when unlocking the device"
-msgstr ""
+msgstr "Tuỳ chọn để dùng khi mở khoá thiết bị"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:7
 msgid "Passphrase File"
@@ -523,7 +532,7 @@ msgstr "_Hiện mật mã"
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
-msgstr ""
+msgstr "Mật mã của thiết bị hoặc rỗng để hỏi người dùng khi thiết lập thiết bị"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:10 ../data/ui/filesystem-create.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:2
@@ -532,21 +541,21 @@ msgstr "_Mật mã"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:11
 msgid "_Unlock at startup"
-msgstr ""
+msgstr "_Mở khoá lúc khởi động"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:12
 msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr ""
+msgstr "Mở khoá lúc khởi động [!noauto]"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:13
 msgid "Require additional authori_zation to unlock"
-msgstr ""
+msgstr "Cần _xác thực bổ sung để mở khoá"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:14
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
-msgstr ""
+msgstr "Cần xác thực bổ sung để mở khoá [x-udisks-auth]"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:2
@@ -562,7 +571,7 @@ msgstr "_Loại"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:4
 msgid "The partition type as a 8-bit unsigned integer"
-msgstr ""
+msgstr "Loại phân vùng, dạng số nguyên không dấu 8-bit"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:5
 msgid "_Bootable"
@@ -603,12 +612,16 @@ msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"<b>Tập tin thiết bị đặc biệt</b> - dùng liên kết biểu tượng trong <b>/dev/"
+"disk</b> để điều khiển phạm vi"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:5
 msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"Tập tin thiết bị đặc biệt - dùng liên kết biểu tượng trong /dev/disk để điều "
+"khiển phạm vi"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid "Mount _Point"
@@ -620,11 +633,11 @@ msgstr "_Loại hệ tập tin"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:8
 msgid "The directory to mount the device in"
-msgstr ""
+msgstr "Thư mục cần gắn thiết bị vào"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:9
 msgid "The filesystem type to use"
-msgstr ""
+msgstr "Loại hệ tập tin cần dùng"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:10
 msgid "Display _Name"
@@ -633,7 +646,7 @@ msgstr "_Tên hiển thị"
 #: ../data/ui/edit-fstab-dialog.ui.h:11
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
+msgstr "Nếu đặt, đây là tên dùng cho thiết bị trên giao diện [x-gvfs-name=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
 msgid "Icon Na_me"
@@ -644,6 +657,8 @@ msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
+"Nếu đặt, đây là tên biểu tượng dùng cho thiết bị trên giao diện [x-gvfs-"
+"icon=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:14
 msgid "Sho_w in user interface"
@@ -654,6 +669,7 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
+"Nếu đặt, thiết bị luôn hiện trong giao diện bất kể nội dung [x-gvfs-show]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:16
 msgid "Require additional authori_zation to mount"
@@ -663,7 +679,7 @@ msgstr "_Cần quyền bổ sung để gắn kết"
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
-msgstr ""
+msgstr "Nếu đặt, cần xác thực bổ sung để gắn kết thiết bị [x-udisks-auth]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:18
 msgid "Mount at _startup"
@@ -671,7 +687,7 @@ msgstr "Gắn lúc _khởi động"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:19
 msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr ""
+msgstr "Nếu đặt, thiết bị được gắn kết lúc khởi động [!noauto]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:20
 msgid "Mount Opt_ions"
@@ -679,11 +695,11 @@ msgstr "_Tuỳ chọn gắn kết"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+msgstr "Tuỳ chọn gắn kết được lưu trong tập tin <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
+msgstr "Loại phân vùng dạng <i>GUID</i> 32-bit"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:6
 msgid ""
@@ -691,6 +707,8 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
+"Tên phân vùng (tối đa 36 ký tự unicode). Hữu dụng nếu bạn muốn tham khảo để "
+"thiết bị bằng liên kết biểu tượng trong thư mục <b>/dev/disk/by-partlabel</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
 msgid "_System partition"
@@ -762,14 +780,16 @@ msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
 msgstr ""
+"Loại hệ tập tin tự chọn cần tạo, ví dụ <i>btrfs</i>, <i>xfs</i> hoặc "
+"<i>swap</i>"
 
 #: ../data/ui/filesystem-create.ui.h:7
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
+msgstr "Loại hệ tập tin tự chọn cần tạo, ví dụ btrfs>, xfs hoặc swap"
 
 #: ../data/ui/filesystem-create.ui.h:10
 msgid "Enter passphrase used to protect the data"
-msgstr ""
+msgstr "Nhập mật mã bảo vệ dữ liệu"
 
 #: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
 msgid "_Erase"
@@ -810,11 +830,11 @@ msgstr "_Bắt đầu phục hồi..."
 
 #: ../data/ui/smart-dialog.ui.h:1
 msgid "_Start Self-test..."
-msgstr ""
+msgstr "_Bắt đầu tự kiểm thử..."
 
 #: ../data/ui/smart-dialog.ui.h:2
 msgid "_Stop Self-test"
-msgstr ""
+msgstr "_Dừng tự kiểm thử..."
 
 #: ../data/ui/smart-dialog.ui.h:3
 msgid "Powered On"
@@ -834,7 +854,7 @@ msgstr "Nhiệt độ"
 
 #: ../data/ui/smart-dialog.ui.h:6
 msgid "Self-test Result"
-msgstr ""
+msgstr "Kết quả tự kiểm thử"
 
 #: ../data/ui/smart-dialog.ui.h:7
 msgid "Self-assessment"
@@ -887,11 +907,11 @@ msgstr "Xảy ra lỗi"
 
 #: ../src/disk-image-mounter/main.c:65
 msgid "Allow writing to the image"
-msgstr ""
+msgstr "Cho phép ghi ra ảnh"
 
 #: ../src/disk-image-mounter/main.c:80
 msgid "Select Disk Image(s) to Mount"
-msgstr ""
+msgstr "Chọn ảnh đĩa cần gắn"
 
 #: ../src/disk-image-mounter/main.c:84
 msgid "_Mount"
@@ -900,7 +920,7 @@ msgstr "_Gắn kết"
 #. Add a RO check button that defaults to RO
 #: ../src/disk-image-mounter/main.c:90
 msgid "Set up _read-only mount"
-msgstr ""
+msgstr "Thiết lập gắn kết _chỉ đọc"
 
 #: ../src/disk-image-mounter/main.c:91
 msgid ""
@@ -911,16 +931,16 @@ msgstr ""
 #: ../src/disk-image-mounter/main.c:133
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr ""
+msgstr "Lỗi kết nối daemon udisks: %s (%s, %d)"
 
 #: ../src/disk-image-mounter/main.c:141
 msgid "Attach and mount one or more disk image files."
-msgstr ""
+msgstr "Gắn và kết nốt một hoặc nhiều tập tin ảnh đĩa."
 
 #: ../src/disk-image-mounter/main.c:189
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
-msgstr ""
+msgstr "Không thể mở `%s' - có thể chưa gắn?"
 
 #: ../src/disk-image-mounter/main.c:196
 #, c-format
@@ -930,7 +950,7 @@ msgstr "Lỗi mở `%s': %m"
 #: ../src/disk-image-mounter/main.c:217
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
-msgstr ""
+msgstr "Lỗi gắn ảnh đĩa: %s (%s, %d)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1509,7 +1529,7 @@ msgstr "Không có mô tả cho thuộc tính %d"
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/disks/gduatasmartdialog.c:665
 msgid "FAILING"
-msgstr ""
+msgstr "LỖI"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
 #: ../src/disks/gduatasmartdialog.c:674
@@ -1556,6 +1576,7 @@ msgstr "Không biết"
 msgid ""
 "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
 msgstr ""
+"%s <span size=\"small\">(Chuẩn hoá: %d, Ngưỡng: %d, Xấu nhất: %d)</span>"
 
 #. Translators: Please keep "(Pre-Fail)" in English
 #.
@@ -1564,6 +1585,8 @@ msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
 msgstr ""
+"Lỗi là dấu hiệu đĩa sẽ hư trong vòng 24 giờ <span size=\"small\">(Pre-Fail)</"
+"span>"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
@@ -1572,6 +1595,8 @@ msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
+"Lỗi là dấu hiệu đĩa sẽ vượt thời gian sử dụng thiết kế <span size=\"small\">"
+"(Old-Age)</span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
@@ -1579,6 +1604,8 @@ msgstr ""
 msgid ""
 "Updated every time data is collected <span size=\"small\">(Online)</span>"
 msgstr ""
+"Được cập nhật mỗi khi dữ liệu thời gian được thu thập <span size=\"small\">"
+"(Online)</span>"
 
 #. Translators: Please keep "(Not Online)" in English
 #.
@@ -1587,62 +1614,64 @@ msgid ""
 "Updated only during off-line activities <span size=\"small\">(Not Online)</"
 "span>"
 msgstr ""
+"Được cập nhật chỉ trong các hoạt động ngoại tuyến <span size=\"small\">(Not "
+"Online)</span>"
 
 #: ../src/disks/gduatasmartdialog.c:834
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
-msgstr ""
+msgstr "Lần tự thử cuối cùng hoàn tất thành công"
 
 #: ../src/disks/gduatasmartdialog.c:838
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
-msgstr ""
+msgstr "Lần tự thử cuối cùng bị huỷ"
 
 #: ../src/disks/gduatasmartdialog.c:842
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
-msgstr ""
+msgstr "Lần tự thử cuối cùng bị ngắt"
 
 #: ../src/disks/gduatasmartdialog.c:846
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
-msgstr ""
+msgstr "Lần tự thử cuối cùng không hoàn tất"
 
 #: ../src/disks/gduatasmartdialog.c:850
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
-msgstr ""
+msgstr "Lần tự thử cuối cùng thất bại"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
 #: ../src/disks/gduatasmartdialog.c:855
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
-msgstr ""
+msgstr "Lần tự thử cuối cùng thất bại (điện)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
 #: ../src/disks/gduatasmartdialog.c:860
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
-msgstr ""
+msgstr "Lần tự thử cuối cùng thất bại (servo)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
 #: ../src/disks/gduatasmartdialog.c:865
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
-msgstr ""
+msgstr "Lần tự thử cuối cùng thất bại (đọc)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
 #: ../src/disks/gduatasmartdialog.c:870
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
-msgstr ""
+msgstr "Lần tự thử cuối cùng thất bại (xử lý)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
 #: ../src/disks/gduatasmartdialog.c:875
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
-msgstr ""
+msgstr "Tự thử đang chạy - còn lại %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
 #: ../src/disks/gduatasmartdialog.c:882
@@ -1666,15 +1695,15 @@ msgstr "Chưa bật SMART"
 
 #: ../src/disks/gduatasmartdialog.c:981
 msgid "Self-test in progress"
-msgstr ""
+msgstr "Tự thử đang chạy"
 
 #: ../src/disks/gduatasmartdialog.c:994 ../src/disks/gduatasmartdialog.c:1003
 msgid "DISK IS LIKELY TO FAIL SOON"
-msgstr ""
+msgstr "ĐĨA NHIỀU KHẢ NĂNG SẼ HƯ SỚM"
 
 #: ../src/disks/gduatasmartdialog.c:1026
 msgid "SELF-TEST FAILED"
-msgstr ""
+msgstr "TỰ KIỂM THỬ THẤT BẠI"
 
 #: ../src/disks/gduatasmartdialog.c:1035
 #, c-format
@@ -1692,7 +1721,7 @@ msgstr[0] "Đĩa tốt, %d sector xấu"
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
-msgstr[0] ""
+msgstr[0] "Đĩa OK, %d thuộc tính thất bại trong quá khứ"
 
 #. Otherwise, it's all honky dory
 #: ../src/disks/gduatasmartdialog.c:1066
@@ -1781,7 +1810,7 @@ msgstr "%s (%s trước)"
 #: ../src/disks/gdubenchmarkdialog.c:708
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
-msgstr ""
+msgstr "Không có dữ liệu đo đạc"
 
 #: ../src/disks/gdubenchmarkdialog.c:713
 msgctxt "benchmark-updated"
@@ -1792,13 +1821,13 @@ msgstr "Đang mở thiết bị..."
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)..."
-msgstr ""
+msgstr "Đo tốc độ truyền (hoàn tất %2.1f%%)..."
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)..."
-msgstr ""
+msgstr "Đo thời gian truy cập (hoàn tất %2.1f%%)..."
 
 #: ../src/disks/gdubenchmarkdialog.c:840
 msgctxt "benchmarking"
@@ -1874,19 +1903,19 @@ msgstr "Lỗi ghi %lld byte tại vị trí %lld: %m"
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
+msgstr "Cần ghi %lld byte, chỉ ghi được %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1412
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
-msgstr ""
+msgstr "Lỗi đồng bộ (tại vị trí %lld): %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1452
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr ""
+msgstr "Lỗi di chuyển đến vị trí %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1464
 #, c-format
@@ -1896,7 +1925,7 @@ msgstr "Lỗi đọc %lld byte tại vị trí %lld"
 
 #: ../src/disks/gduchangepassphrasedialog.c:157
 msgid "Error updating /etc/crypttab"
-msgstr ""
+msgstr "Lỗi cập nhật /etc/crypttab"
 
 #: ../src/disks/gduchangepassphrasedialog.c:176
 msgid "Error changing passphrase"
@@ -1905,11 +1934,11 @@ msgstr "Lỗi thay đổi mật mã"
 #: ../src/disks/gduchangepassphrasedialog.c:263
 #: ../src/disks/gducrypttabdialog.c:408
 msgid "Error retrieving configuration data"
-msgstr ""
+msgstr "Lỗi lấy tập tin cấu hình"
 
 #: ../src/disks/gduchangepassphrasedialog.c:289
 msgid "/etc/crypttab configuration data is malformed"
-msgstr ""
+msgstr "dữ liệu cấu hình /etc/crypttab bị hư"
 
 #: ../src/disks/gduchangepassphrasedialog.c:322
 msgid ""
@@ -1929,7 +1958,7 @@ msgstr ""
 #: ../src/disks/gducreatediskimagedialog.c:212
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr ""
+msgstr "Ảnh đĩa của %s (%s).img"
 
 #: ../src/disks/gducreatediskimagedialog.c:251
 msgid "Error writing to image"
@@ -1944,7 +1973,7 @@ msgstr "Lỗi ghi vào ảnh"
 #: ../src/disks/gdurestorediskimagedialog.c:319
 #, c-format
 msgid "%s of %s copied – %s remaining (%s/sec)"
-msgstr ""
+msgstr "đã chép %s trên %s - còn %s (%s/giây)"
 
 #. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
 #. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
@@ -1973,13 +2002,13 @@ msgstr "Lỗi mở thiết bị"
 #: ../src/disks/gducreatediskimagedialog.c:488
 #, c-format
 msgid "A file named \"%s\" already exists.  Do you want to replace it?"
-msgstr ""
+msgstr "Đã có tập tin tên \"%s\". Thay thế nhé?"
 
 #: ../src/disks/gducreatediskimagedialog.c:491
 #, c-format
 msgid ""
 "The file already exists in \"%s\".  Replacing it will overwrite its contents."
-msgstr ""
+msgstr "Đã có tập tin tên \"%s\". Thay thế nghĩa là ghi đè nội dung của nó."
 
 #: ../src/disks/gducreatediskimagedialog.c:495
 msgid "_Replace"
@@ -1987,11 +2016,11 @@ msgstr "_Thay thế"
 
 #: ../src/disks/gducreatediskimagedialog.c:538
 msgid "Error opening file for writing"
-msgstr ""
+msgstr "Lỗi mở tập tin để ghi"
 
 #: ../src/disks/gducreatediskimagedialog.c:589
 msgid "Copying data from device..."
-msgstr ""
+msgstr "Chép dữ liệu từ thiết bị..."
 
 #. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
 #: ../src/disks/gducreatediskimagedialog.c:637
@@ -2002,7 +2031,7 @@ msgstr "Tạo ảnh đĩa (%s)"
 #: ../src/disks/gducreatefilesystemwidget.c:379
 #: ../src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
-msgstr ""
+msgstr "Tương thích với mọi hệ thống và thiết bị"
 
 #: ../src/disks/gducreatefilesystemwidget.c:380
 msgid "FAT"
@@ -2010,7 +2039,7 @@ msgstr "FAT"
 
 #: ../src/disks/gducreatefilesystemwidget.c:385
 msgid "Compatible with most systems"
-msgstr ""
+msgstr "Tương thích với nhiều hệ thống"
 
 #: ../src/disks/gducreatefilesystemwidget.c:386
 msgid "NTFS"
@@ -2018,7 +2047,7 @@ msgstr "NTFS"
 
 #: ../src/disks/gducreatefilesystemwidget.c:391
 msgid "Compatible with Linux systems"
-msgstr ""
+msgstr "Tương thích với Linux"
 
 #: ../src/disks/gducreatefilesystemwidget.c:392
 msgid "Ext4"
@@ -2026,7 +2055,7 @@ msgstr "Ext4"
 
 #: ../src/disks/gducreatefilesystemwidget.c:397
 msgid "Encrypted, compatible with Linux systems"
-msgstr ""
+msgstr "Mã hoá, tương thích với Linux"
 
 #: ../src/disks/gducreatefilesystemwidget.c:398
 msgid "LUKS + Ext4"
@@ -2043,12 +2072,12 @@ msgstr "Nhập loại hệ tập tin"
 #. Translators: this is the default name for the filesystem
 #: ../src/disks/gducreatefilesystemwidget.c:450
 msgid "New Volume"
-msgstr ""
+msgstr "Khối tin mới"
 
 #: ../src/disks/gducreatefilesystemwidget.c:489
 #: ../src/disks/gduformatdiskdialog.c:151
 msgid "Don't overwrite existing data"
-msgstr ""
+msgstr "Không ghi đè dữ liệu đã có"
 
 #: ../src/disks/gducreatefilesystemwidget.c:490
 #: ../src/disks/gduformatdiskdialog.c:152
@@ -2058,7 +2087,7 @@ msgstr "Nhanh"
 #: ../src/disks/gducreatefilesystemwidget.c:497
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
-msgstr ""
+msgstr "Ghi đè dữ liệu đã có với số không"
 
 #: ../src/disks/gducreatefilesystemwidget.c:498
 #: ../src/disks/gduformatdiskdialog.c:163
@@ -2071,7 +2100,7 @@ msgstr "Lỗi định dạng phân vùng"
 
 #: ../src/disks/gducreatepartitiondialog.c:229
 msgid "Error creating partition"
-msgstr ""
+msgstr "Lỗi tạo phân vùng"
 
 #: ../src/disks/gducreatepartitiondialog.c:317
 msgid "Extended partition"
@@ -2084,11 +2113,11 @@ msgstr "Cho phân vùng luận lý"
 #: ../src/disks/gducreatepartitiondialog.c:331
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
-msgstr ""
+msgstr "Không thể tạo phân vùng mới. Đã có bốn phân vùng chính."
 
 #: ../src/disks/gducreatepartitiondialog.c:335
 msgid "This is the last primary partition that can be created."
-msgstr ""
+msgstr "Đây là phân vùng chính cuối cùng có thể tạo."
 
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -2104,15 +2133,15 @@ msgstr "Sẽ bị xoá"
 
 #: ../src/disks/gducrypttabdialog.c:263
 msgid "Error removing /etc/crypttab entry"
-msgstr ""
+msgstr "Lỗi xoá mục trong /etc/crypttab"
 
 #: ../src/disks/gducrypttabdialog.c:347
 msgid "Error adding /etc/crypttab entry"
-msgstr ""
+msgstr "Lỗi thêm mục trong /etc/crypttab"
 
 #: ../src/disks/gducrypttabdialog.c:370
 msgid "Error updating /etc/crypttab entry"
-msgstr ""
+msgstr "Lỗi cập nhật mục trong /etc/crypttab"
 
 #: ../src/disks/gducrypttabdialog.c:493
 msgid ""
@@ -2181,7 +2210,7 @@ msgstr "0 (Tắt)"
 
 #: ../src/disks/gdudisksettingsdialog.c:360
 msgid "Error setting configuration"
-msgstr ""
+msgstr "Lỗi đặt cấu hình"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:390
@@ -2253,15 +2282,15 @@ msgstr "Ít nhất %s"
 #: ../src/disks/gduformatdiskdialog.c:116
 #, c-format
 msgid "Approximately %s"
-msgstr ""
+msgstr "Xấp xỉ %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr ""
+msgstr "Xoá an toàn ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr ""
+msgstr "Xoá an toàn cải thiện ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
@@ -2269,7 +2298,7 @@ msgstr "MBR / DOS"
 
 #: ../src/disks/gduformatdiskdialog.c:265
 msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr ""
+msgstr "Tương thích với hệ thống mới và ổ cứng > 2TB"
 
 #: ../src/disks/gduformatdiskdialog.c:266
 msgid "GPT"
@@ -2289,14 +2318,14 @@ msgstr "Lỗi định dạng đĩa"
 
 #: ../src/disks/gduformatdiskdialog.c:385
 msgid "Are you sure you want to format the disk?"
-msgstr ""
+msgstr "Bạn có muốn định dạng đĩa không?"
 
 #. Translators: warning used for quick format
 #: ../src/disks/gduformatdiskdialog.c:389
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
-msgstr ""
+msgstr "Mọi dữ liệu trên đĩa sẽ bị mất nhưng có thể phục hồi bằng dịch vụ"
 
 #: ../src/disks/gduformatdiskdialog.c:391
 #: ../src/disks/gduformatvolumedialog.c:153
@@ -2334,7 +2363,7 @@ msgstr "Lỗi định dạng khối tin"
 
 #: ../src/disks/gduformatvolumedialog.c:147
 msgid "Are you sure you want to format the volume?"
-msgstr ""
+msgstr "Bạn có chắc muốn định dạng khối tin?"
 
 #. Translators: warning used for quick format of the volume
 #: ../src/disks/gduformatvolumedialog.c:151
@@ -2454,19 +2483,19 @@ msgstr "Lỗi ghi vào thiết bị"
 
 #: ../src/disks/gdurestorediskimagedialog.c:443
 msgid "Error opening file for reading"
-msgstr ""
+msgstr "Lỗi mở tập tin để đọc"
 
 #: ../src/disks/gdurestorediskimagedialog.c:457
 msgid "Error determing size of file"
-msgstr ""
+msgstr "Lỗi xác định kích thước tập tin"
 
 #: ../src/disks/gdurestorediskimagedialog.c:487
 msgid "Are you sure you want to write the disk image to the device?"
-msgstr ""
+msgstr "Bạn có chắc muốn ghi ảnh đĩa vào thiết bị?"
 
 #: ../src/disks/gdurestorediskimagedialog.c:488
 msgid "All existing data will be lost"
-msgstr ""
+msgstr "Mọi dữ liệu hiện có sẽ bị mất"
 
 #: ../src/disks/gdurestorediskimagedialog.c:489
 msgid "_Restore"
@@ -2476,7 +2505,7 @@ msgstr "_Phục hồi"
 #: ../src/disks/gdurestorediskimagedialog.c:551
 #, c-format
 msgid "Restore Disk Image (%s)"
-msgstr ""
+msgstr "Phục hồi ảnh đĩa (%s)"
 
 #: ../src/disks/gduunlockdialog.c:86
 msgid "Error unlocking encrypted device"
@@ -2547,7 +2576,7 @@ msgstr "_Gắn"
 #. Add a RO check button that defaults to RO
 #: ../src/disks/gduwindow.c:732
 msgid "Set up _read-only loop device"
-msgstr ""
+msgstr "Thiết lập thiết bị lặp _chỉ đọc"
 
 #: ../src/disks/gduwindow.c:733
 msgid ""
@@ -2559,7 +2588,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:1699
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr ""
+msgstr "%s <span size=\"smaller\">(Chỉ đọc)</span>"
 
 #. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
 #. * the expected end time...
@@ -2656,7 +2685,7 @@ msgstr ""
 
 #: ../src/disks/gduwindow.c:3023
 msgid "All data on the partition will be lost"
-msgstr ""
+msgstr "Mọi dữ liệu trên phân vùng sẽ bị mất"
 
 #: ../src/disks/gduwindow.c:3024
 msgid "_Delete"
@@ -2664,7 +2693,7 @@ msgstr "_Xoá"
 
 #: ../src/disks/gduwindow.c:3055
 msgid "Error ejecting media"
-msgstr ""
+msgstr "Lỗi đẩy vật chứa ra"
 
 #: ../src/disks/gduwindow.c:3107
 msgid "Error locking encrypted device"
@@ -2672,7 +2701,7 @@ msgstr "Lỗi khoá thiết bị mã hoá"
 
 #: ../src/disks/gduwindow.c:3148
 msgid "Error starting swap"
-msgstr ""
+msgstr "Lỗi bật swap"
 
 #: ../src/disks/gduwindow.c:3185
 msgid "Error stopping swap"

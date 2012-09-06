@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: gnome-disk_utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-20 15:17+0000\n"
-"PO-Revision-Date: 2012-09-03 13:15+0300\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"POT-Creation-Date: 2012-09-03 10:18+0000\n"
+"PO-Revision-Date: 2012-09-06 02:59+0200\n"
+"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -19,8 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Virtaal 0.7.0\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Poedit-Language: Greek\n"
-"X-Poedit-Country: GREECE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
 
@@ -34,13 +32,26 @@ msgid "Mount Disk Images"
 msgstr "Προσάρτηση εικόνων δίσκων"
 
 #: ../data/gnome-disks.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/disks/gduwindow.c:1001
+#: ../src/disks/gduwindow.c:1000
 msgid "Disks"
 msgstr "Δίσκοι"
 
 #: ../data/gnome-disks.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Διαχείριση δίσκων και μέσων"
+
+#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+msgid "Default location for the Create/Restore disk image dialogs"
+msgstr ""
+"Προεπιλεγμένη τοποθεσία των διαλόγων Δημιουργία/Επαναφορά εικόνας δίσκου"
+
+#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+msgid ""
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
+msgstr ""
+"Προεπιλεγμένη τοποθεσία των διαλόγων Δημιουργία/Επαναφορά εικόνας δίσκου. Αν "
+"είναι κενή θα χρησιμοποιηθεί ο φάκελο ~/Έγγραφα"
 
 #: ../data/ui/about-dialog.ui.h:2
 msgid ""
@@ -125,7 +136,6 @@ msgstr ""
 "δεδομένα πριν τη χρήση της εγγραφής μέτρησης επιδόσεων."
 
 #: ../data/ui/benchmark-dialog.ui.h:11
-#| msgid "<b>Transfer Rate</b>"
 msgid "Transfer Rate"
 msgstr "Ρυθμός μεταφοράς"
 
@@ -159,8 +169,8 @@ msgstr ""
 "αλλάζουν.\n"
 "\n"
 "Εάν δεν σημειωθεί, το μέρος εγγραφής της μέτρησης επιδόσεων δεν θα γίνει, "
-"αλλά από την άλλη μεριά αποκλειστική πρόσβαση στη συσκευή δεν χρειάζεται "
-"(π.χ. ο δίσκος ή η συσκευή μπορεί να είναι σε χρήση)."
+"αλλά από την άλλη μεριά αποκλειστική πρόσβαση στη συσκευή δεν χρειάζεται (π."
+"χ. ο δίσκος ή η συσκευή μπορεί να είναι σε χρήση)."
 
 #: ../data/ui/benchmark-dialog.ui.h:18
 msgid ""
@@ -181,7 +191,6 @@ msgstr ""
 "επιδόσεων με κόστος τον περισσότερο απαιτούμενο χρόνο."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
-#| msgid "<b>Access Time</b>"
 msgid "Access Time"
 msgstr "Χρόνος πρόσβασης"
 
@@ -206,7 +215,6 @@ msgid "C_hange"
 msgstr "Α_λλαγή"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:2
-#| msgid "Change passphrase"
 msgid "Change Passphrase"
 msgstr "Αλλαγή συνθηματικού"
 
@@ -276,7 +284,6 @@ msgid "C_reate"
 msgstr "Δ_ημιουργία"
 
 #: ../data/ui/create-partition-dialog.ui.h:2
-#| msgid "Creating Partition"
 msgid "Create Partition"
 msgstr "Δημιουργία κατάτμησης"
 
@@ -433,7 +440,6 @@ msgid "Pending Operation"
 msgstr "Εκκρεμείς λειτουργίες"
 
 #: ../data/ui/disks.ui.h:24
-#| msgid "Add _Volume"
 msgid "_Volumes"
 msgstr "_Τόμοι"
 
@@ -593,7 +599,6 @@ msgstr ""
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:2
 #: ../data/ui/edit-partition-dialog.ui.h:2
-#| msgid "Empty Partition"
 msgid "Edit Partition"
 msgstr "Επεξεργασία κατάτμησης"
 
@@ -619,11 +624,9 @@ msgid ""
 msgstr ""
 "Μια χρησιμοποιούμενη σημαία από τον φορτωτή εκκίνησης του λειτουργικού για "
 "να ορίσει από πού πρέπει να φορτωθεί το λειτουργικό. Μερικές φορές η "
-"κατάτμηση με αυτή την ορισμένη σημαία αναφέρεται ως η <i>ενεργή</i> "
-"κατάτμηση"
+"κατάτμηση με αυτή την ορισμένη σημαία αναφέρεται ως η <i>ενεργή</i> κατάτμηση"
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:1
-#| msgid "<big>Change Filesystem Label</big>"
 msgid "Change Filesystem Label"
 msgstr "Αλλαγή ετικέτας συστήματος αρχείων"
 
@@ -868,7 +871,6 @@ msgid "_Format..."
 msgstr "Δια_μόρφωση"
 
 #: ../data/ui/format-disk-dialog.ui.h:2
-#| msgid "Format Disk..."
 msgid "Format Disk"
 msgstr "Διαμόρφωση δίσκου"
 
@@ -877,7 +879,6 @@ msgid "_Partitioning"
 msgstr "_Κατάτμηση"
 
 #: ../data/ui/format-volume-dialog.ui.h:2
-#| msgid "Format %s Volume (%s)"
 msgid "Format Volume"
 msgstr "Διαμόρφωση τόμου"
 
@@ -964,7 +965,6 @@ msgid "Conveyance"
 msgstr "Μεταφορά"
 
 #: ../data/ui/unlock-device-dialog.ui.h:1
-#| msgid "<big>Enter passphrase to unlock</big>"
 msgid "Enter passphrase to unlock"
 msgstr "Εισάγετε συνθηματικό για ξεκλείδωμα"
 
@@ -2064,7 +2064,6 @@ msgid "Disk Image of %s (%s).img"
 msgstr "Εικόνα δίσκου από %s (%s).img"
 
 #: ../src/disks/gducreatediskimagedialog.c:251
-#| msgid "Error writing to backup image"
 msgid "Error writing to image"
 msgstr "Σφάλμα εγγραφής στην εικόνα"
 
@@ -2125,14 +2124,12 @@ msgid "Error opening file for writing"
 msgstr "Σφάλμα στο άνοιγμα του αρχείου για εγγραφή"
 
 #: ../src/disks/gducreatediskimagedialog.c:589
-#| msgid "Copying data to device..."
 msgid "Copying data from device..."
 msgstr "Αντιγραφή δεδομένων από τη συσκευή..."
 
 #. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
 #: ../src/disks/gducreatediskimagedialog.c:637
 #, c-format
-#| msgid "Create Disk Image..."
 msgid "Create Disk Image (%s)"
 msgstr "Δημιουργία εικόνας δίσκου (%s)"
 
@@ -2474,12 +2471,12 @@ msgid ""
 "Erase</a> and make sure you understand the risks"
 msgstr ""
 "<b>ΠΡΟΕΙΔΟΠΟΙΗΣΗ</b>: Η εντολή ασφαλούς σβησίματος μπορεί να καθυστερήσει να "
-"ολοκληρωθεί, δεν μπορεί να ακυρωθεί και μπορεί να μην λειτουργήσει "
-"κατάλληλα με κάποιο υλικό. Στην χειρότερη περίπτωση, ο οδηγός σας μπορεί να "
-"γίνει άχρηστος ή το σύστημά σας μπορεί να καταρρεύσει ή να κλειδωθεί. Πριν "
-"συνεχίσετε, παρακαλώ διαβάστε το άρθρο σχετικά με το <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ασφαλές "
-"σβήσιμο ATA</a> και βεβαιωθείτε ότι καταλαβαίνετε τους κινδύνους"
+"ολοκληρωθεί, δεν μπορεί να ακυρωθεί και μπορεί να μην λειτουργήσει κατάλληλα "
+"με κάποιο υλικό. Στην χειρότερη περίπτωση, ο οδηγός σας μπορεί να γίνει "
+"άχρηστος ή το σύστημά σας μπορεί να καταρρεύσει ή να κλειδωθεί. Πριν "
+"συνεχίσετε, παρακαλώ διαβάστε το άρθρο σχετικά με το <a href='https://ata."
+"wiki.kernel.org/index.php/ATA_Secure_Erase'>ασφαλές σβήσιμο ATA</a> και "
+"βεβαιωθείτε ότι καταλαβαίνετε τους κινδύνους"
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2621,7 +2618,6 @@ msgid "The selected image is %s bigger than the device"
 msgstr "Η επιλεγμένη εικόνα %s είναι μεγαλύτερη από τη συσκευή"
 
 #: ../src/disks/gdurestorediskimagedialog.c:292
-#| msgid "Error deleting loop device"
 msgid "Error writing to device"
 msgstr "Σφάλμα εγγραφής στη συσκευή"
 
@@ -2648,7 +2644,6 @@ msgstr "Ε_παναφορά"
 #. Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device.
 #: ../src/disks/gdurestorediskimagedialog.c:551
 #, c-format
-#| msgid "Restore Disk Image..."
 msgid "Restore Disk Image (%s)"
 msgstr "Επαναφορά εικόνας δίσκου (%s)"
 
@@ -2706,7 +2701,7 @@ msgstr "Swap"
 msgid "Error deleting loop device"
 msgstr "Σφάλμα διαγραφής της συσκευής loop"
 
-#: ../src/disks/gduwindow.c:683 ../src/disks/gduwindow.c:755
+#: ../src/disks/gduwindow.c:683 ../src/disks/gduwindow.c:754
 msgid "Error attaching disk image"
 msgstr "Σφάλμα επισύναψης εικόνας δίσκου"
 
@@ -2719,11 +2714,11 @@ msgid "_Attach"
 msgstr "_Επισύναψη"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:733
+#: ../src/disks/gduwindow.c:732
 msgid "Set up _read-only loop device"
 msgstr "Ρύθμιση συσκευής βρόχου μόνο για _ανάγνωση"
 
-#: ../src/disks/gduwindow.c:734
+#: ../src/disks/gduwindow.c:733
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
@@ -2732,7 +2727,7 @@ msgstr ""
 "χρήσιμο εάν δεν θέλετε το υποκείμενο αρχείο να τροποποιηθεί"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1700
+#: ../src/disks/gduwindow.c:1699
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Μόνο για ανάγνωση)</span>"
@@ -2740,12 +2735,12 @@ msgstr "%s <span size=\"smaller\">(Μόνο για ανάγνωση)</span>"
 #. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
 #. * the expected end time...
 #.
-#: ../src/disks/gduwindow.c:1732
+#: ../src/disks/gduwindow.c:1731
 msgctxt "job-remaining-exceeded"
 msgid "Almost done..."
 msgstr "Σχεδόν ολοκληρώθηκε..."
 
-#: ../src/disks/gduwindow.c:1737
+#: ../src/disks/gduwindow.c:1736
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2754,27 +2749,27 @@ msgstr "Απομένει %s"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:1893
+#: ../src/disks/gduwindow.c:1892
 msgid "Connected to another seat"
 msgstr "Συνδέθηκε σε άλλη θέση"
 
-#: ../src/disks/gduwindow.c:2194
+#: ../src/disks/gduwindow.c:2193
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Άγνωστο"
 
-#: ../src/disks/gduwindow.c:2226
+#: ../src/disks/gduwindow.c:2225
 msgid "Extended Partition"
 msgstr "Εκτεταμένη κατάτμηση"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2267
+#: ../src/disks/gduwindow.c:2266
 msgid "Filesystem Root"
 msgstr "Σύστημα αρχείων υπερχρήστη"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2275
+#: ../src/disks/gduwindow.c:2274
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Ναι, προσαρτημένο στο %s"
@@ -2782,98 +2777,98 @@ msgstr "Ναι, προσαρτημένο στο %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2281 ../src/disks/gduwindow.c:2317
-#: ../src/disks/gduwindow.c:2343
+#: ../src/disks/gduwindow.c:2280 ../src/disks/gduwindow.c:2316
+#: ../src/disks/gduwindow.c:2342
 msgid "No"
 msgstr "Όχι"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2311 ../src/disks/gduwindow.c:2337
+#: ../src/disks/gduwindow.c:2310 ../src/disks/gduwindow.c:2336
 msgid "Yes"
 msgstr "Ναι"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/disks/gduwindow.c:2471
+#: ../src/disks/gduwindow.c:2470
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Χώρος μη εκχωρημένος (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/disks/gduwindow.c:2476
+#: ../src/disks/gduwindow.c:2475
 msgid "Unallocated Space"
 msgstr "Χώρος μη εκχωρημένος"
 
-#: ../src/disks/gduwindow.c:2765
+#: ../src/disks/gduwindow.c:2764
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ένα σφάλμα συνέβη βάζοντας τον οδηγό σε κατάσταση αναμονής"
 
-#: ../src/disks/gduwindow.c:2811
+#: ../src/disks/gduwindow.c:2810
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Ένα σφάλμα συνέβη προσπαθώντας να επαναφέρουμε τον οδηγό από την κατάσταση "
 "αναμονής"
 
-#: ../src/disks/gduwindow.c:2886
+#: ../src/disks/gduwindow.c:2885
 msgid "Error mounting filesystem"
 msgstr "Σφάλμα προσάρτησης του συστήματος αρχείων"
 
-#: ../src/disks/gduwindow.c:2926
+#: ../src/disks/gduwindow.c:2925
 msgid "Error unmounting filesystem"
 msgstr "Σφάλμα αποπροσάρτησης του συστήματος αρχείων"
 
-#: ../src/disks/gduwindow.c:3007
+#: ../src/disks/gduwindow.c:3006
 msgid "Error deleting partition"
 msgstr "Σφάλμα διαγραφής κατάτμησης"
 
-#: ../src/disks/gduwindow.c:3023
+#: ../src/disks/gduwindow.c:3022
 msgid "Are you sure you want to delete the partition?"
 msgstr "Είστε σίγουροι ότι θέλετε την διαγραφή της κατάτμησης;"
 
-#: ../src/disks/gduwindow.c:3024
+#: ../src/disks/gduwindow.c:3023
 msgid "All data on the partition will be lost"
 msgstr "Όλα τα δεδομένα στη κατάτμηση θα χαθούν"
 
-#: ../src/disks/gduwindow.c:3025
+#: ../src/disks/gduwindow.c:3024
 msgid "_Delete"
 msgstr "_Διαγραφή"
 
-#: ../src/disks/gduwindow.c:3056
+#: ../src/disks/gduwindow.c:3055
 msgid "Error ejecting media"
 msgstr "Σφάλμα αποβολής μέσου"
 
-#: ../src/disks/gduwindow.c:3108
+#: ../src/disks/gduwindow.c:3107
 msgid "Error locking encrypted device"
 msgstr "Σφάλμα κλειδώματος κρυπτογραφημένης συσκευής"
 
-#: ../src/disks/gduwindow.c:3149
+#: ../src/disks/gduwindow.c:3148
 msgid "Error starting swap"
 msgstr "Σφάλμα εκκίνησης του swap"
 
-#: ../src/disks/gduwindow.c:3186
+#: ../src/disks/gduwindow.c:3185
 msgid "Error stopping swap"
 msgstr "Σφάλμα διακοπής του swap"
 
-#: ../src/disks/gduwindow.c:3228
+#: ../src/disks/gduwindow.c:3227
 msgid "Error setting autoclear flag"
 msgstr "Σφάλμα ρύθμισης σημαίας αυτοκαθαρισμού"
 
-#: ../src/disks/gduwindow.c:3281 ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3280 ../src/disks/gduwindow.c:3335
 msgid "Error canceling job"
 msgstr "Σφάλμα ακύρωσης της εργασίας"
 
-#: ../src/libgdu/gduutils.c:88
+#: ../src/libgdu/gduutils.c:86
 msgid "All Files"
 msgstr "Όλα τα αρχεία"
 
-#: ../src/libgdu/gduutils.c:92
+#: ../src/libgdu/gduutils.c:90
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Εικόνας δίσκων (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:401
+#: ../src/libgdu/gduutils.c:403
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -2881,7 +2876,7 @@ msgstr[0] "%d χρόνος"
 msgstr[1] "%d χρόνια"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:410
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -2889,7 +2884,7 @@ msgstr[0] "%d μήνας"
 msgstr[1] "%d μήνες"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:417
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -2897,7 +2892,7 @@ msgstr[0] "%d ημέρα"
 msgstr[1] "%d ημέρες"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:424
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -2905,7 +2900,7 @@ msgstr[0] "%d ώρα"
 msgstr[1] "%d ώρες"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:431
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -2913,7 +2908,7 @@ msgstr[0] "%d λεπτό"
 msgstr[1] "%d λεπτά"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:438
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -2921,7 +2916,7 @@ msgstr[0] "%d δευτερόλεπτο"
 msgstr[1] "%d δευτερόλεπτα"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:445
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -2929,54 +2924,54 @@ msgstr[0] "%d χιλιοστό του δευτ."
 msgstr[1] "%d χιλιοστά του δευτ."
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:507
+#: ../src/libgdu/gduutils.c:509
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s και %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:512
+#: ../src/libgdu/gduutils.c:514
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s και %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:517
+#: ../src/libgdu/gduutils.c:519
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s και %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:522
+#: ../src/libgdu/gduutils.c:524
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s και %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:533
+#: ../src/libgdu/gduutils.c:535
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s και %s"
 
-#: ../src/libgdu/gduutils.c:542
+#: ../src/libgdu/gduutils.c:544
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Λιγότερο από ένα λεπτό"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:547
+#: ../src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:553
+#: ../src/libgdu/gduutils.c:555
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"

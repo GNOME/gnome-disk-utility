@@ -1065,7 +1065,7 @@ update_mdraid (GduDeviceTreeModel *model,
     }
 
 
-  icon = g_themed_icon_new ("drive-removable-media"); // MD-TODO
+  icon = g_themed_icon_new ("gdu-enclosure");
 
   /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
    * of hard-coding the color

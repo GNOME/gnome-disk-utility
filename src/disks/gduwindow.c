@@ -1790,7 +1790,7 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
 
-  icon = g_themed_icon_new ("drive-removable-media"); // MD-TODO
+  icon = g_themed_icon_new ("gdu-enclosure");
 
   desc = gdu_utils_get_mdraid_desc (window->client, mdraid);
 

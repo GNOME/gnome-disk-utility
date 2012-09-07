@@ -1684,8 +1684,7 @@ setup_device_page (GduWindow     *window,
     }
   else if (mdraid != NULL)
     {
-      /* MD-TODO */
-      gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), NULL);
+      /* happens in update_device_page_for_mdraid as the /dev/md* device can come and go */
     }
   else if (block != NULL)
     {
@@ -1760,6 +1759,21 @@ get_job_progress_text (GduWindow *window,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+update_grid_for_mdraid (GduWindow      *window,
+                        UDisksMDRaid   *mdraid)
+{
+  UDisksBlock *mdraid_block = NULL;
+  UDisksObject *mdraid_block_object = NULL;
+
+  mdraid_block = udisks_client_get_block_for_mdraid (window->client, mdraid);
+  if (mdraid_block != NULL)
+    mdraid_block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (mdraid_block));
+  gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), mdraid_block_object);
+  g_clear_object (&mdraid_block_object);
+  g_clear_object (&mdraid_block);
+}
+
+static void
 update_device_page_for_mdraid (GduWindow      *window,
                                UDisksObject   *object,
                                UDisksMDRaid   *mdraid,
@@ -1779,6 +1793,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   icon = g_themed_icon_new ("drive-removable-media"); // MD-TODO
 
   desc = gdu_utils_get_mdraid_desc (window->client, mdraid);
+
+  update_grid_for_mdraid (window, mdraid);
 
   if (block != NULL)
     {
@@ -2601,9 +2617,6 @@ update_device_page (GduWindow      *window,
   drive = udisks_object_peek_drive (window->current_object);
   mdraid = udisks_object_peek_mdraid (window->current_object);
 
-  type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
-  size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
-
   if (udisks_object_peek_loop (object) != NULL)
     *show_flags |= SHOW_FLAGS_DETACH_DISK_IMAGE;
 
@@ -2612,6 +2625,9 @@ update_device_page (GduWindow      *window,
 
   if (mdraid != NULL)
     update_device_page_for_mdraid (window, object, mdraid, show_flags);
+
+  type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
+  size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {

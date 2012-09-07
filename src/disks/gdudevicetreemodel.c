@@ -1394,6 +1394,10 @@ should_include_block (UDisksObject *object)
   if (g_str_has_prefix (device, "/dev/ram"))
     goto out;
 
+  /* MD-RAID devices (e.g. /dev/md0) are shown in their own section */
+  if (g_strcmp0 (udisks_block_get_mdraid (block), "/") != 0)
+    goto out;
+
   /* Don't show devices of size zero - otherwise we'd end up showing unused loop devices */
   size = udisks_block_get_size (block);
   if (size == 0)

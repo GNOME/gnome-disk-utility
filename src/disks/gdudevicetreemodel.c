@@ -1027,7 +1027,6 @@ update_mdraid (GduDeviceTreeModel *model,
                gboolean            from_timer)
 {
   UDisksMDRaid *mdraid = NULL;
-  const gchar *level;
   const gchar *name;
   GIcon *icon = NULL;
   gchar *desc = NULL;
@@ -1052,37 +1051,9 @@ update_mdraid (GduDeviceTreeModel *model,
 
   sort_key = g_strdup_printf ("01_mdraid_1_%s", udisks_mdraid_get_uuid (mdraid)); /* TODO: sort_key? */
 
-  level = udisks_mdraid_get_level (mdraid);
   name = udisks_mdraid_get_name (mdraid);
 
-  if (g_strcmp0 (level, "raid0") == 0)
-    {
-      desc = g_strdup ("RAID-0 Array");
-    }
-  else if (g_strcmp0 (level, "raid1") == 0)
-    {
-      desc = g_strdup ("RAID-1 Array");
-    }
-  else if (g_strcmp0 (level, "raid4") == 0)
-    {
-      desc = g_strdup ("RAID-4 Array");
-    }
-  else if (g_strcmp0 (level, "raid5") == 0)
-    {
-      desc = g_strdup ("RAID-5 Array");
-    }
-  else if (g_strcmp0 (level, "raid6") == 0)
-    {
-      desc = g_strdup ("RAID-6 Array");
-    }
-  else if (g_strcmp0 (level, "raid10") == 0)
-    {
-      desc = g_strdup ("RAID-10 Array");
-    }
-  else
-    {
-      desc = g_strdup_printf ("RAID (%s)", level);
-    }
+  desc = gdu_utils_get_mdraid_desc (model->client, mdraid);
 
   if (name != NULL && strlen (name) > 0)
     {
@@ -1094,7 +1065,7 @@ update_mdraid (GduDeviceTreeModel *model,
     }
 
 
-  icon = g_themed_icon_new ("drive-removable-media"); // TODO
+  icon = g_themed_icon_new ("drive-removable-media"); // MD-TODO
 
   /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
    * of hard-coding the color

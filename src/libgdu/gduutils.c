@@ -663,4 +663,68 @@ gdu_utils_is_ntfs_available (void)
   return available;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
 
+gchar *
+gdu_utils_format_mdraid_level (const gchar *level)
+{
+  gchar *ret = NULL;
+
+  if (g_strcmp0 (level, "raid0") == 0)
+    {
+      ret = g_strdup (_("RAID-0 Array"));
+    }
+  else if (g_strcmp0 (level, "raid1") == 0)
+    {
+      ret = g_strdup (_("RAID-1 Array"));
+    }
+  else if (g_strcmp0 (level, "raid4") == 0)
+    {
+      ret = g_strdup (_("RAID-4 Array"));
+    }
+  else if (g_strcmp0 (level, "raid5") == 0)
+    {
+      ret = g_strdup (_("RAID-5 Array"));
+    }
+  else if (g_strcmp0 (level, "raid6") == 0)
+    {
+      ret = g_strdup (_("RAID-6 Array"));
+    }
+  else if (g_strcmp0 (level, "raid10") == 0)
+    {
+      ret = g_strdup (_("RAID-10 Array"));
+    }
+
+  if (ret == NULL)
+    {
+      ret = g_strdup_printf (_("RAID (%s)"), level);
+    }
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gchar *
+gdu_utils_get_mdraid_desc (UDisksClient *client,
+                           UDisksMDRaid *raid)
+{
+  gchar *s;
+  gchar *s2;
+  gchar *ret;
+  guint64 size;
+
+  size = udisks_mdraid_get_size (raid);
+  if (size > 0)
+    {
+      s = udisks_client_get_size_for_display (client, size, FALSE, FALSE);
+      s2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (raid));
+      ret = g_strdup_printf ("%s %s", s, s2);
+      g_free (s);
+      g_free (s2);
+    }
+  else
+    {
+      ret = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (raid));
+    }
+  return ret;
+}

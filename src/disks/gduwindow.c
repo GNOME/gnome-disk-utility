@@ -521,7 +521,8 @@ set_selected_object (GduWindow    *window,
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
-          udisks_object_peek_block (object) != NULL)
+          udisks_object_peek_block (object) != NULL ||
+          udisks_object_peek_mdraid (object) != NULL)
         {
           select_details_page (window, object, DETAILS_PAGE_DEVICE, &show_flags);
         }
@@ -1657,9 +1658,11 @@ setup_device_page (GduWindow     *window,
                    UDisksObject  *object)
 {
   UDisksDrive *drive;
+  UDisksMDRaid *mdraid;
   UDisksBlock *block;
 
   drive = udisks_object_peek_drive (object);
+  mdraid = udisks_object_peek_mdraid (object);
   block = udisks_object_peek_block (object);
 
   gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
@@ -1678,6 +1681,11 @@ setup_device_page (GduWindow     *window,
 
       g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
       g_list_free (blocks);
+    }
+  else if (mdraid != NULL)
+    {
+      /* MD-TODO */
+      gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), NULL);
     }
   else if (block != NULL)
     {
@@ -1749,6 +1757,72 @@ get_job_progress_text (GduWindow *window,
   return s;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_device_page_for_mdraid (GduWindow      *window,
+                               UDisksObject   *object,
+                               UDisksMDRaid   *mdraid,
+                               ShowFlags      *show_flags)
+{
+  GIcon *icon = NULL;
+  gchar *s = NULL;
+  gchar *desc = NULL;
+  gchar *device_desc = NULL;
+  UDisksBlock *block = NULL;
+  guint64 size;
+
+  size = udisks_mdraid_get_size (mdraid);
+
+  block = udisks_client_get_block_for_mdraid (window->client, mdraid);
+
+  icon = g_themed_icon_new ("drive-removable-media"); // MD-TODO
+
+  desc = gdu_utils_get_mdraid_desc (window->client, mdraid);
+
+  if (block != NULL)
+    {
+      device_desc = get_device_file_for_display (block);
+    }
+  else
+    {
+      /* Translators: shown as the device for a RAID array that is not currently running */
+      device_desc = g_strdup (C_("mdraid", "Not Running"));
+    }
+
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (window->devtab_drive_image);
+
+  s = g_strdup_printf ("<big><b>%s</b></big>", desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_name_label), s);
+  gtk_widget_show (window->devtab_drive_name_label);
+  g_free (s);
+  s = g_strdup_printf ("<small>%s</small>", device_desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
+  gtk_widget_show (window->devtab_drive_devices_label);
+  g_free (s);
+
+  gtk_widget_show (window->devtab_drive_box);
+  gtk_widget_show (window->devtab_drive_vbox);
+  gtk_widget_show (window->devtab_drive_buttonbox);
+  gtk_widget_show (window->devtab_drive_generic_button);
+
+
+  set_size (window,
+            "devtab-drive-size-label",
+            "devtab-drive-size-value-label",
+            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+  /* -------------------------------------------------- */
+
+  g_free (device_desc);
+  g_free (desc);
+  g_clear_object (&icon);
+
+  g_clear_object (&block);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 static void
 update_device_page_for_drive (GduWindow      *window,
@@ -2504,6 +2578,7 @@ update_device_page (GduWindow      *window,
   GduVolumeGridElementType type;
   UDisksBlock *block;
   UDisksDrive *drive;
+  UDisksMDRaid *mdraid;
   guint64 size;
   GList *children;
   GList *l;
@@ -2522,8 +2597,10 @@ update_device_page (GduWindow      *window,
 
 
   object = window->current_object;
-  drive = udisks_object_peek_drive (window->current_object);
   block = udisks_object_peek_block (window->current_object);
+  drive = udisks_object_peek_drive (window->current_object);
+  mdraid = udisks_object_peek_mdraid (window->current_object);
+
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
 
@@ -2532,6 +2609,9 @@ update_device_page (GduWindow      *window,
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive, show_flags);
+
+  if (mdraid != NULL)
+    update_device_page_for_mdraid (window, object, mdraid, show_flags);
 
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {

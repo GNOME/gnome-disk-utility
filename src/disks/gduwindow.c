@@ -74,7 +74,7 @@ struct _GduWindow
   GtkWidget *devtab_drive_buttonbox;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_generic_button;
-  GtkWidget *devtab_drive_name_label;
+  GtkWidget *devtab_drive_desc_label;
   GtkWidget *devtab_drive_devices_label;
   GtkWidget *devtab_drive_image;
   GtkWidget *devtab_table;
@@ -149,7 +149,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_buttonbox), "devtab-drive-buttonbox"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_eject_button), "devtab-drive-eject-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_generic_button), "devtab-drive-generic-button"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_name_label), "devtab-drive-name-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_desc_label), "devtab-drive-desc-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_devices_label), "devtab-drive-devices-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_image), "devtab-drive-image"},
   {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
@@ -1784,15 +1784,16 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *desc = NULL;
   gchar *device_desc = NULL;
   UDisksBlock *block = NULL;
-  guint64 size;
+  guint64 size = 0;
+  gchar *name = NULL;
+  gchar *homehost = NULL;
+  gchar *level_desc = NULL;
 
   size = udisks_mdraid_get_size (mdraid);
-
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
-
   icon = g_themed_icon_new ("gdu-enclosure");
-
   desc = gdu_utils_get_mdraid_desc (window->client, mdraid);
+  level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), TRUE);
 
   update_grid_for_mdraid (window, mdraid);
 
@@ -1810,8 +1811,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_image);
 
   s = g_strdup_printf ("<big><b>%s</b></big>", desc);
-  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_name_label), s);
-  gtk_widget_show (window->devtab_drive_name_label);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
+  gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
   s = g_strdup_printf ("<small>%s</small>", device_desc);
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
@@ -1823,14 +1824,45 @@ update_device_page_for_mdraid (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-
   set_size (window,
             "devtab-drive-size-label",
             "devtab-drive-size-value-label",
             size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
 
+  homehost = udisks_mdraid_dup_name (mdraid);
+  s = strstr (homehost, ":");
+  if (s != NULL)
+    {
+      name = g_strdup (s + 1);
+      *s = '\0';
+    }
+  else
+    {
+      name = homehost;
+      homehost = NULL;
+    }
+
+  /* MD-TODO: don't show homehost if it matches hostname? */
+  set_markup (window,
+              "devtab-drive-homehost-label",
+              "devtab-drive-homehost-value-label",
+              homehost, SET_MARKUP_FLAGS_NONE);
+
+  set_markup (window,
+              "devtab-drive-arrayname-label",
+              "devtab-drive-arrayname-value-label",
+              name, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+  set_markup (window,
+              "devtab-drive-raidlevel-label",
+              "devtab-drive-raidlevel-value-label",
+              level_desc, SET_MARKUP_FLAGS_NONE);
+
   /* -------------------------------------------------- */
 
+  g_free (level_desc);
+  g_free (homehost);
+  g_free (name);
   g_free (device_desc);
   g_free (desc);
   g_clear_object (&icon);
@@ -1897,8 +1929,8 @@ update_device_page_for_drive (GduWindow      *window,
     }
   s = g_strdup_printf ("<big><b>%s</b></big>",
                        description);
-  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_name_label), s);
-  gtk_widget_show (window->devtab_drive_name_label);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
+  gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
   s = g_strdup_printf ("<small>%s</small>", str->str);
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
@@ -1927,20 +1959,20 @@ update_device_page_for_drive (GduWindow      *window,
   if (strlen (drive_revision) > 0)
     g_string_append_printf (str, " (%s)", drive_revision);
   set_markup (window,
-              "devtab-model-label",
-              "devtab-model-value-label", str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+              "devtab-drive-model-label",
+              "devtab-drive-model-value-label", str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_string_free (str, TRUE);
 
   serial = udisks_drive_get_serial (drive);
   set_markup (window,
-              "devtab-serial-number-label",
-              "devtab-serial-number-value-label",
+              "devtab-drive-serial-number-label",
+              "devtab-drive-serial-number-value-label",
               serial, SET_MARKUP_FLAGS_NONE);
   if (serial == NULL || strlen (serial) == 0)
     {
       set_markup (window,
-                  "devtab-wwn-label",
-                  "devtab-wwn-value-label",
+                  "devtab-drive-wwn-label",
+                  "devtab-drive-wwn-value-label",
                   udisks_drive_get_wwn (drive), SET_MARKUP_FLAGS_NONE);
     }
 
@@ -1986,8 +2018,8 @@ update_device_page_for_drive (GduWindow      *window,
   if (s != NULL)
     {
       set_markup (window,
-                  "devtab-location-label",
-                  "devtab-location-value-label",
+                  "devtab-drive-location-label",
+                  "devtab-drive-location-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
     }
@@ -2053,15 +2085,15 @@ update_device_page_for_drive (GduWindow      *window,
   if (udisks_drive_get_media_available (drive))
     {
       set_markup (window,
-                  "devtab-media-label",
-                  "devtab-media-value-label",
+                  "devtab-drive-media-label",
+                  "devtab-drive-media-value-label",
                   media_description, SET_MARKUP_FLAGS_NONE);
     }
   else
     {
       set_markup (window,
-                  "devtab-media-label",
-                  "devtab-media-value-label",
+                  "devtab-drive-media-label",
+                  "devtab-drive-media-value-label",
                   "",
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }

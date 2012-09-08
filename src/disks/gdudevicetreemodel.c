@@ -1052,6 +1052,13 @@ update_mdraid (GduDeviceTreeModel *model,
   sort_key = g_strdup_printf ("01_mdraid_1_%s", udisks_mdraid_get_uuid (mdraid)); /* TODO: sort_key? */
 
   name = udisks_mdraid_get_name (mdraid);
+  /* skip homehost, if any */
+  s = strstr (name, ":");
+  if (s != NULL)
+    {
+      name = s + 1;
+      s = NULL;
+    }
 
   desc = gdu_utils_get_mdraid_desc (model->client, mdraid);
 

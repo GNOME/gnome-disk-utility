@@ -1816,11 +1816,14 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *device_desc = NULL;
   UDisksBlock *block = NULL;
   guint64 size = 0;
+  gint num_devices = 0;
   gchar *name = NULL;
   gchar *homehost = NULL;
   gchar *level_desc = NULL;
+  char hostname[512];
 
   size = udisks_mdraid_get_size (mdraid);
+  num_devices = udisks_mdraid_get_num_devices (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
   icon = g_themed_icon_new ("gdu-enclosure");
 
@@ -1875,6 +1878,16 @@ update_device_page_for_mdraid (GduWindow      *window,
             "devtab-drive-size-value-label",
             size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
 
+
+  /* figure out hostname of this box */
+  hostname[sizeof hostname - 1] = '\0';
+  if (gethostname (hostname, sizeof hostname - 1) != 0)
+    {
+      g_warning ("Error getting hostname: %m");
+      hostname[0] = '\0';
+    }
+
+  /* figure out the hostname the array is local to */
   homehost = udisks_mdraid_dup_name (mdraid);
   s = strstr (homehost, ":");
   if (s != NULL)
@@ -1888,21 +1901,40 @@ update_device_page_for_mdraid (GduWindow      *window,
       homehost = NULL;
     }
 
-  /* MD-TODO: don't show homehost if it matches hostname? */
-  set_markup (window,
-              "devtab-drive-homehost-label",
-              "devtab-drive-homehost-value-label",
-              homehost, SET_MARKUP_FLAGS_NONE);
-
-  set_markup (window,
-              "devtab-drive-arrayname-label",
-              "devtab-drive-arrayname-value-label",
-              name, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  if (homehost != NULL && strlen (homehost) > 0 && g_strcmp0 (homehost, hostname) != 0)
+    {
+      /* Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
+       *              Search for "homehost" in the mdadm(8) documentation for more information.
+       *              The first %s is the array name (e.g. "My Raid Disk").
+       *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
+       */
+      s = g_strdup_printf (C_("mdraid", "%s (local to %s)"), name, homehost);
+      set_markup (window,
+                  "devtab-drive-arrayname-label",
+                  "devtab-drive-arrayname-value-label",
+                  s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      g_free (s);
+    }
+  else
+    {
+      set_markup (window,
+                  "devtab-drive-arrayname-label",
+                  "devtab-drive-arrayname-value-label",
+                  name, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+    }
 
   set_markup (window,
               "devtab-drive-raidlevel-label",
               "devtab-drive-raidlevel-value-label",
               level_desc, SET_MARKUP_FLAGS_NONE);
+
+  /* TODO: Do something like "8 (6 available)" if not all members are there */
+  s = g_strdup_printf ("%d", num_devices);
+  set_markup (window,
+              "devtab-drive-numdevices-label",
+              "devtab-drive-numdevices-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
 
   /* -------------------------------------------------- */
 

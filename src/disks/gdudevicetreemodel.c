@@ -1037,6 +1037,7 @@ update_mdraid (GduDeviceTreeModel *model,
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
   guint pulse;
+  guint64 size;
 
   if (!find_iter_for_object (model,
                              object,
@@ -1060,15 +1061,34 @@ update_mdraid (GduDeviceTreeModel *model,
       s = NULL;
     }
 
-  desc = gdu_utils_get_mdraid_desc (model->client, mdraid);
-
-  if (name != NULL && strlen (name) > 0)
+  size = udisks_mdraid_get_size (mdraid);
+  if (size > 0)
     {
-      desc2 = g_strdup (name);
+      s = udisks_client_get_size_for_display (model->client, size, FALSE, FALSE);
+      /* Translators: Used in the device tree for a RAID Array, the first %s is the size */
+      desc = g_strdup_printf (C_("md-raid-tree-primary", "%s RAID Array"), s);
+      g_free (s);
     }
   else
     {
-      desc2 = udisks_mdraid_dup_uuid (mdraid); /* TODO: not very friendly */
+      /* Translators: Used in the device tree for a RAID Array where the size is not known  */
+      desc = g_strdup (C_("md-raid-tree-primary", "RAID Array"));
+    }
+
+
+  if (name != NULL && strlen (name) > 0)
+    {
+      s = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE);
+      /* Translators: Used as a secondary line in device tree for RAID Array.
+       *              The first %s is the name of the array (e.g. "My RAID Array").
+       *              The second %s is the RAID level (e.g. "RAID-5").
+       */
+      desc2 = g_strdup_printf (C_("md-raid-tree-secondary", "%s (%s)"), name, s);
+      g_free (s);
+    }
+  else
+    {
+      desc2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE);
     }
 
 

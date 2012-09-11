@@ -60,9 +60,6 @@ gboolean gdu_utils_is_ntfs_available (void);
 gchar *gdu_utils_format_mdraid_level (const gchar *level,
                                       gboolean     long_desc);
 
-gchar *gdu_utils_get_mdraid_desc (UDisksClient *client,
-                                  UDisksMDRaid *raid);
-
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

@@ -674,80 +674,49 @@ gdu_utils_format_mdraid_level (const gchar *level,
   if (g_strcmp0 (level, "raid0") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-0 (Stripe)"));
+        ret = g_strdup (_("RAID 0 (Stripe)"));
       else
-        ret = g_strdup (_("RAID-0"));
+        ret = g_strdup (_("RAID 0"));
     }
   else if (g_strcmp0 (level, "raid1") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-1 (Mirror)"));
+        ret = g_strdup (_("RAID 1 (Mirror)"));
       else
-        ret = g_strdup (_("RAID-1"));
+        ret = g_strdup (_("RAID 1"));
     }
   else if (g_strcmp0 (level, "raid4") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-4 (Dedicated Parity)"));
+        ret = g_strdup (_("RAID 4 (Dedicated Parity)"));
       else
-        ret = g_strdup (_("RAID-4"));
+        ret = g_strdup (_("RAID 4"));
     }
   else if (g_strcmp0 (level, "raid5") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-5 (Distributed Parity)"));
+        ret = g_strdup (_("RAID 5 (Distributed Parity)"));
       else
-        ret = g_strdup (_("RAID-5"));
+        ret = g_strdup (_("RAID 5"));
     }
   else if (g_strcmp0 (level, "raid6") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-6 (Double Distributed Parity)"));
+        ret = g_strdup (_("RAID 6 (Double Distributed Parity)"));
       else
-        ret = g_strdup (_("RAID-6"));
+        ret = g_strdup (_("RAID 6"));
     }
   else if (g_strcmp0 (level, "raid10") == 0)
     {
       if (long_desc)
-        ret = g_strdup (_("RAID-10 (Stripe of Mirrors)"));
+        ret = g_strdup (_("RAID 10 (Stripe of Mirrors)"));
       else
-        ret = g_strdup (_("RAID-10"));
+        ret = g_strdup (_("RAID 10"));
     }
 
   if (ret == NULL)
     {
       ret = g_strdup_printf (_("RAID (%s)"), level);
-    }
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-gchar *
-gdu_utils_get_mdraid_desc (UDisksClient *client,
-                           UDisksMDRaid *raid)
-{
-  gchar *s;
-  gchar *s2;
-  gchar *ret;
-  guint64 size;
-
-  size = udisks_mdraid_get_size (raid);
-  if (size > 0)
-    {
-      s = udisks_client_get_size_for_display (client, size, FALSE, FALSE);
-      s2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (raid), FALSE);
-      /* Translators: The first %s is the size (e.g. "12 TB"), the second %s is the RAID level, e.g. 'RAID-5' */
-      ret = g_strdup_printf (C_("md-raid", "%s %s Array"), s, s2);
-      g_free (s);
-      g_free (s2);
-    }
-  else
-    {
-      s = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (raid), FALSE);
-      /* Translators: The first %s is the RAID level, e.g. 'RAID-5' */
-      ret = g_strdup_printf (C_("md-raid", "%s Array"), s);
-      g_free (s);
     }
   return ret;
 }

@@ -1823,7 +1823,20 @@ update_device_page_for_mdraid (GduWindow      *window,
   size = udisks_mdraid_get_size (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
   icon = g_themed_icon_new ("gdu-enclosure");
-  desc = gdu_utils_get_mdraid_desc (window->client, mdraid);
+
+  if (size > 0)
+    {
+      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
+      /* Translators: Used in the main window for a RAID Array, the first %s is the size */
+      desc = g_strdup_printf (C_("md-raid-window", "%s RAID Array"), s);
+      g_free (s);
+    }
+  else
+    {
+      /* Translators: Used in the main window for a RAID Array where the size is not known  */
+      desc = g_strdup (C_("md-raid-window", "RAID Array"));
+    }
+
   level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), TRUE);
 
   update_grid_for_mdraid (window, mdraid);

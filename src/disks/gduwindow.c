@@ -72,6 +72,8 @@ struct _GduWindow
   GtkWidget *devtab_drive_box;
   GtkWidget *devtab_drive_vbox;
   GtkWidget *devtab_drive_buttonbox;
+  GtkWidget *devtab_drive_raid_start_button;
+  GtkWidget *devtab_drive_raid_stop_button;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_generic_button;
   GtkWidget *devtab_drive_desc_label;
@@ -87,12 +89,15 @@ struct _GduWindow
   GtkWidget *devtab_action_partition_delete;
   GtkWidget *devtab_action_mount;
   GtkWidget *devtab_action_unmount;
-  GtkWidget *devtab_action_eject;
   GtkWidget *devtab_action_unlock;
   GtkWidget *devtab_action_lock;
   GtkWidget *devtab_action_activate_swap;
   GtkWidget *devtab_action_deactivate_swap;
-  GtkWidget *devtab_action_generic_drive;
+
+  GtkWidget *devtab_drive_action_raid_start;
+  GtkWidget *devtab_drive_action_raid_stop;
+  GtkWidget *devtab_drive_action_eject;
+  GtkWidget *devtab_drive_action_generic;
 
   GtkWidget *generic_drive_menu;
   GtkWidget *generic_drive_menu_item_view_smart;
@@ -147,6 +152,8 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_box), "devtab-drive-box"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_vbox), "devtab-drive-vbox"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_buttonbox), "devtab-drive-buttonbox"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_start_button), "devtab-drive-raid-start-button"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_stop_button), "devtab-drive-raid-stop-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_eject_button), "devtab-drive-eject-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_generic_button), "devtab-drive-generic-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_desc_label), "devtab-drive-desc-label"},
@@ -161,12 +168,15 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_action_partition_delete), "devtab-action-partition-delete"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_mount), "devtab-action-mount"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_unmount), "devtab-action-unmount"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_action_eject), "devtab-action-eject"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_unlock), "devtab-action-unlock"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_lock), "devtab-action-lock"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_activate_swap), "devtab-action-activate-swap"},
   {G_STRUCT_OFFSET (GduWindow, devtab_action_deactivate_swap), "devtab-action-deactivate-swap"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_action_generic_drive), "devtab-action-generic-drive"},
+
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_raid_start), "devtab-drive-action-raid-start"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_raid_stop), "devtab-drive-action-raid-stop"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_eject), "devtab-drive-action-eject"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_generic), "devtab-drive-action-generic"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
 
@@ -228,27 +238,29 @@ typedef enum
   SHOW_FLAGS_DETACH_DISK_IMAGE       = (1<<0),
 
   /* drive buttonbox */
-  SHOW_FLAGS_EJECT_BUTTON            = (1<<1),
+  SHOW_FLAGS_RAID_START_BUTTON       = (1<<1),
+  SHOW_FLAGS_RAID_STOP_BUTTON        = (1<<2),
+  SHOW_FLAGS_EJECT_BUTTON            = (1<<3),
 
   /* volume toolbar */
-  SHOW_FLAGS_PARTITION_CREATE_BUTTON = (1<<2),
-  SHOW_FLAGS_PARTITION_DELETE_BUTTON = (1<<3),
-  SHOW_FLAGS_MOUNT_BUTTON            = (1<<4),
-  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<5),
-  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<6),
-  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<7),
-  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<8),
-  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<9),
+  SHOW_FLAGS_PARTITION_CREATE_BUTTON = (1<<4),
+  SHOW_FLAGS_PARTITION_DELETE_BUTTON = (1<<5),
+  SHOW_FLAGS_MOUNT_BUTTON            = (1<<6),
+  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<7),
+  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<8),
+  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<9),
+  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<10),
+  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<11),
 
   /* generic drive menu */
-  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<10),
-  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<11),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<12),
-  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<13),
-  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<14),
-  SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS         = (1<<15),
-  SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW           = (1<<16),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW            = (1<<17),
+  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<12),
+  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<13),
+  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<14),
+  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<15),
+  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<16),
+  SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS         = (1<<17),
+  SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW           = (1<<18),
+  SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW            = (1<<19),
 
   /* generic volume menu */
   SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<20),
@@ -275,12 +287,15 @@ static void on_devtab_action_partition_create_activated (GtkAction *action, gpoi
 static void on_devtab_action_partition_delete_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_mount_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unmount_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_action_eject_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_unlock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_lock_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_activate_swap_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_action_generic_drive_activated (GtkAction *action, gpointer user_data);
+
+static void on_devtab_drive_action_raid_start_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_drive_action_raid_stop_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_drive_action_eject_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_drive_action_generic_activated (GtkAction *action, gpointer user_data);
 
 static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
                                              gpointer   user_data);
@@ -406,11 +421,17 @@ update_for_show_flags (GduWindow *window,
   gtk_widget_set_visible (GTK_WIDGET (window->device_toolbar_detach_disk_image_button),
                           show_flags & SHOW_FLAGS_DETACH_DISK_IMAGE);
 
-  gtk_action_set_sensitive (GTK_ACTION (window->devtab_action_eject),
-                            show_flags & SHOW_FLAGS_EJECT_BUTTON);
-  gtk_action_set_visible (GTK_ACTION (window->devtab_action_eject), TRUE);
-  gtk_widget_set_visible (window->devtab_drive_eject_button,
-                          show_flags & SHOW_FLAGS_EJECT_BUTTON);
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_start), show_flags & SHOW_FLAGS_RAID_START_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_start), TRUE);
+  gtk_widget_set_visible (window->devtab_drive_raid_start_button, show_flags & SHOW_FLAGS_RAID_START_BUTTON);
+
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_stop), show_flags & SHOW_FLAGS_RAID_STOP_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_stop), TRUE);
+  gtk_widget_set_visible (window->devtab_drive_raid_stop_button, show_flags & SHOW_FLAGS_RAID_STOP_BUTTON);
+
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_eject), show_flags & SHOW_FLAGS_EJECT_BUTTON);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_eject), TRUE);
+  gtk_widget_set_visible (window->devtab_drive_eject_button, show_flags & SHOW_FLAGS_EJECT_BUTTON);
 
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_partition_create),
                           show_flags & SHOW_FLAGS_PARTITION_CREATE_BUTTON);
@@ -1165,10 +1186,6 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_devtab_action_unmount_activated),
                     window);
-  g_signal_connect (window->devtab_action_eject,
-                    "activate",
-                    G_CALLBACK (on_devtab_action_eject_activated),
-                    window);
   g_signal_connect (window->devtab_action_unlock,
                     "activate",
                     G_CALLBACK (on_devtab_action_unlock_activated),
@@ -1185,9 +1202,23 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_devtab_action_deactivate_swap_activated),
                     window);
-  g_signal_connect (window->devtab_action_generic_drive,
+  g_signal_connect (window->devtab_drive_action_generic,
                     "activate",
-                    G_CALLBACK (on_devtab_action_generic_drive_activated),
+                    G_CALLBACK (on_devtab_drive_action_generic_activated),
+                    window);
+
+  /* drive actions */
+  g_signal_connect (window->devtab_drive_action_raid_start,
+                    "activate",
+                    G_CALLBACK (on_devtab_drive_action_raid_start_activated),
+                    window);
+  g_signal_connect (window->devtab_drive_action_raid_stop,
+                    "activate",
+                    G_CALLBACK (on_devtab_drive_action_raid_stop_activated),
+                    window);
+  g_signal_connect (window->devtab_drive_action_eject,
+                    "activate",
+                    G_CALLBACK (on_devtab_drive_action_eject_activated),
                     window);
 
   /* drive menu */
@@ -1800,11 +1831,13 @@ update_device_page_for_mdraid (GduWindow      *window,
   if (block != NULL)
     {
       device_desc = get_device_file_for_display (block);
+      *show_flags |= SHOW_FLAGS_RAID_STOP_BUTTON;
     }
   else
     {
       /* Translators: shown as the device for a RAID array that is not currently running */
       device_desc = g_strdup (C_("mdraid", "Not Running"));
+      *show_flags |= SHOW_FLAGS_RAID_START_BUTTON;
     }
 
   gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
@@ -3089,7 +3122,7 @@ on_devtab_action_generic_activated (GtkAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_devtab_action_generic_drive_activated (GtkAction *action,
+on_devtab_drive_action_generic_activated (GtkAction *action,
                                           gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
@@ -3188,8 +3221,8 @@ eject_cb (UDisksDrive  *drive,
 }
 
 static void
-on_devtab_action_eject_activated (GtkAction *action,
-                                  gpointer   user_data)
+on_devtab_drive_action_eject_activated (GtkAction *action,
+                                        gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksDrive *drive;
@@ -3200,6 +3233,82 @@ on_devtab_action_eject_activated (GtkAction *action,
                            NULL, /* cancellable */
                            (GAsyncReadyCallback) eject_cb,
                            g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+mdraid_start_cb (UDisksMDRaid  *mdraid,
+                 GAsyncResult  *res,
+                 gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_mdraid_call_start_finish (mdraid,
+                                        res,
+                                        &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error starting RAID Array"),
+                            error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_drive_action_raid_start_activated (GtkAction *action,
+                                             gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksMDRaid *mdraid;
+
+  mdraid = udisks_object_peek_mdraid (window->current_object);
+  udisks_mdraid_call_start (mdraid,
+                            g_variant_new ("a{sv}", NULL), /* options */
+                            NULL, /* cancellable */
+                            (GAsyncReadyCallback) mdraid_start_cb,
+                            g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+mdraid_stop_cb (UDisksMDRaid  *mdraid,
+                GAsyncResult  *res,
+                gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_mdraid_call_stop_finish (mdraid,
+                                        res,
+                                        &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error stopping RAID Array"),
+                            error);
+      g_error_free (error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_drive_action_raid_stop_activated (GtkAction *action,
+                                            gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksMDRaid *mdraid;
+
+  mdraid = udisks_object_peek_mdraid (window->current_object);
+  udisks_mdraid_call_stop (mdraid,
+                            g_variant_new ("a{sv}", NULL), /* options */
+                            NULL, /* cancellable */
+                            (GAsyncReadyCallback) mdraid_stop_cb,
+                            g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

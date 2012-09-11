@@ -21,7 +21,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="devtab-action-eject">
+      <object class="GtkAction" id="devtab-drive-action-eject">
         <property name="tooltip" translatable="yes">Eject the media</property>
         <property name="icon_name">media-eject-symbolic</property>
       </object>
@@ -63,9 +63,21 @@
       </object>
     </child>
     <child>
-      <object class="GtkAction" id="devtab-action-generic-drive">
+      <object class="GtkAction" id="devtab-drive-action-generic">
         <property name="tooltip" translatable="yes">More actions...</property>
         <property name="icon_name">system-run-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-drive-action-raid-start">
+        <property name="tooltip" translatable="yes">Start RAID Array</property>
+        <property name="icon_name">media-playback-start-symbolic</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkAction" id="devtab-drive-action-raid-stop">
+        <property name="tooltip" translatable="yes">Stop RAID Array</property>
+        <property name="icon_name">media-playback-stop-symbolic</property>
       </object>
     </child>
   </object>
@@ -535,17 +547,16 @@
                         </child>
                         <child>
                           <object class="GtkButtonBox" id="devtab-drive-buttonbox">
+                            <style><class name="linked"/></style>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="spacing">12</property>
                             <child>
                               <object class="GtkButton" id="devtab-drive-eject-button">
                                 <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-action-eject</property>
+                                <property name="related_action">devtab-drive-action-eject</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="related_action">devtab-action-eject</property>
                                 <property name="use_action_appearance">False</property>
                                 <child>
                                   <object class="GtkImage" id="image1">
@@ -565,13 +576,64 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkButton" id="devtab-drive-generic-button">
+                              <object class="GtkButton" id="devtab-drive-raid-start-button">
                                 <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-action-generic-drive</property>
+                                <property name="related_action">devtab-drive-action-raid-start</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="related_action">devtab-action-generic-drive</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
+                                <child>
+                                  <object class="GtkImage" id="image5">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">Start RAID Array</property>
+                                    <property name="pixel_size">16</property>
+                                    <property name="icon_name">media-playback-start-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                                <property name="non_homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="devtab-drive-raid-stop-button">
+                                <property name="use_action_appearance">False</property>
+                                <property name="related_action">devtab-drive-action-raid-stop</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_action_appearance">False</property>
+                                <property name="use_underline">True</property>
+                                <child>
+                                  <object class="GtkImage" id="image6">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">Stop RAID Array</property>
+                                    <property name="pixel_size">16</property>
+                                    <property name="icon_name">media-playback-stop-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
+                                <property name="non_homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="devtab-drive-generic-button">
+                                <property name="use_action_appearance">False</property>
+                                <property name="related_action">devtab-drive-action-generic</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
                                 <property name="use_action_appearance">False</property>
                                 <child>
                                   <object class="GtkImage" id="image2">
@@ -586,7 +648,8 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="pack_type">end</property>
+                                <property name="position">10</property>
                                 <property name="non_homogeneous">True</property>
                               </packing>
                             </child>

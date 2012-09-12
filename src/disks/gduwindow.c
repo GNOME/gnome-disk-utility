@@ -1696,7 +1696,6 @@ setup_device_page (GduWindow     *window,
   mdraid = udisks_object_peek_mdraid (object);
   block = udisks_object_peek_block (object);
 
-  gdu_volume_grid_set_container_visible (GDU_VOLUME_GRID (window->volume_grid), FALSE);
   if (drive != NULL)
     {
       GList *blocks;

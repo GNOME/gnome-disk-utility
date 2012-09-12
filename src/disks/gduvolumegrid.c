@@ -86,9 +86,6 @@ struct _GduVolumeGrid
   UDisksClient *client;
   UDisksObject *block_object;
 
-  gboolean container_visible;
-  gchar *container_markup;
-
   GList *elements;
 
   GridElement *selected;
@@ -109,7 +106,7 @@ enum
 {
   PROP_0,
   PROP_CLIENT,
-  PROP_BLOCK_OBJECT
+  PROP_BLOCK_OBJECT,
 };
 
 enum
@@ -146,8 +143,6 @@ static void
 gdu_volume_grid_finalize (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-
-  g_free (grid->container_markup);
 
   g_signal_handlers_disconnect_by_func (grid->client,
                                         G_CALLBACK (on_client_changed),
@@ -1283,21 +1278,9 @@ recompute_grid (GduVolumeGrid *grid)
   g_list_free (grid->elements);
   grid->elements = NULL;
 
-  //g_debug ("TODO: recompute grid for %s, container_visible=%d",
+  //g_debug ("TODO: recompute grid for %s",
   //         grid->block_object != NULL ?
-  //         g_dbus_object_get_object_path (grid->block_object) : "<nothing selected>",
-  //         grid->container_visible);
-
-  if (grid->container_visible)
-    {
-      element = g_new0 (GridElement, 1);
-      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER;
-      element->fixed_width = 40;
-      element->offset = 0;
-      element->size = 0;
-      element->markup = g_strdup (grid->container_markup);
-      grid->elements = g_list_append (grid->elements, element);
-    }
+  //         g_dbus_object_get_object_path (grid->block_object) : "<nothing selected>");
 
   if (grid->block_object == NULL)
     {
@@ -1824,31 +1807,4 @@ on_client_changed (UDisksClient   *client,
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
   recompute_grid (grid);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-void
-gdu_volume_grid_set_container_visible (GduVolumeGrid  *grid,
-                                       gboolean        visible)
-{
-  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
-  if (!!grid->container_visible != !!visible)
-    {
-      grid->container_visible = visible;
-      recompute_grid (grid);
-    }
-}
-
-void
-gdu_volume_grid_set_container_markup (GduVolumeGrid  *grid,
-                                      const gchar    *markup)
-{
-  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
-  if (g_strcmp0 (grid->container_markup, markup) != 0)
-    {
-      g_free (grid->container_markup);
-      grid->container_markup = g_strdup (markup);
-      recompute_grid (grid);
-    }
 }

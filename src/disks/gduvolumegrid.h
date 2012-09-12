@@ -25,6 +25,10 @@ void                      gdu_volume_grid_set_block_object      (GduVolumeGrid  
                                                                  UDisksObject        *block_device);
 UDisksObject             *gdu_volume_grid_get_block_object      (GduVolumeGrid      *grid);
 
+void                      gdu_volume_grid_set_no_media_string   (GduVolumeGrid       *grid,
+                                                                 const gchar         *str);
+const gchar              *gdu_volume_grid_get_no_media_string   (GduVolumeGrid      *grid);
+
 gboolean                  gdu_volume_grid_includes_object       (GduVolumeGrid       *grid,
                                                                  UDisksObject        *object);
 gboolean                  gdu_volume_grid_select_object         (GduVolumeGrid       *grid,

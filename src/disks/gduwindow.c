@@ -1821,6 +1821,9 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *level_desc = NULL;
   char hostname[512];
 
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("RAID Array is not running"));
+
   size = udisks_mdraid_get_size (mdraid);
   num_devices = udisks_mdraid_get_num_devices (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
@@ -1972,6 +1975,9 @@ update_device_page_for_drive (GduWindow      *window,
   const gchar *our_seat;
   const gchar *serial;
   GList *jobs;
+
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("No Media"));
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");

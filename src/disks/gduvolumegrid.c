@@ -92,6 +92,8 @@ struct _GduVolumeGrid
   GridElement *focused;
 
   gboolean animating_spinner;
+
+  gchar *no_media_string;
 };
 
 struct _GduVolumeGridClass
@@ -107,6 +109,7 @@ enum
   PROP_0,
   PROP_CLIENT,
   PROP_BLOCK_OBJECT,
+  PROP_NO_MEDIA_STRING,
 };
 
 enum
@@ -155,6 +158,8 @@ gdu_volume_grid_finalize (GObject *object)
     g_object_unref (grid->block_object);
   g_object_unref (grid->client);
 
+  g_free (grid->no_media_string);
+
   G_OBJECT_CLASS (gdu_volume_grid_parent_class)->finalize (object);
 }
 
@@ -174,6 +179,10 @@ gdu_volume_grid_get_property (GObject    *object,
 
     case PROP_BLOCK_OBJECT:
       g_value_set_object (value, grid->block_object);
+      break;
+
+    case PROP_NO_MEDIA_STRING:
+      g_value_set_string (value, grid->no_media_string);
       break;
 
     default:
@@ -198,6 +207,10 @@ gdu_volume_grid_set_property (GObject      *object,
 
     case PROP_BLOCK_OBJECT:
       gdu_volume_grid_set_block_object (grid, g_value_get_object (value));
+      break;
+
+    case PROP_NO_MEDIA_STRING:
+      gdu_volume_grid_set_no_media_string (grid, g_value_get_string (value));
       break;
 
     default:
@@ -511,6 +524,17 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_STATIC_STRINGS));
 
+  g_object_class_install_property (gobject_class,
+                                   PROP_NO_MEDIA_STRING,
+                                   g_param_spec_string ("no-media-string",
+                                                        "No Media String",
+                                                        "The string to show when there is no media or block device",
+                                                        _("No Media"),
+                                                        G_PARAM_READABLE |
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT |
+                                                        G_PARAM_STATIC_STRINGS));
+
   signals[CHANGED_SIGNAL] = g_signal_new ("changed",
                                           GDU_TYPE_VOLUME_GRID,
                                           G_SIGNAL_RUN_LAST,
@@ -724,6 +748,7 @@ render_element (GduVolumeGrid *grid,
   GtkStateFlags state;
   GtkJunctionSides sides;
   GtkBorder border;
+  const gchar *markup;
 
   animate_spinner = FALSE;
 
@@ -851,7 +876,10 @@ render_element (GduVolumeGrid *grid,
 
   /* text */
   layout = pango_cairo_create_layout (cr);
-  pango_layout_set_markup (layout, element->markup != NULL ? element->markup : "", -1);
+  markup = element->markup;
+  if (markup == NULL)
+    markup = grid->no_media_string;
+  pango_layout_set_markup (layout, markup, -1);
   desc = pango_font_description_from_string ("Sans 7.0");
   pango_layout_set_font_description (layout, desc);
   pango_font_description_free (desc);
@@ -1532,7 +1560,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
       {
-        element->markup = g_strdup (_("No Media"));
+        element->markup = NULL; /* means that grid->no_media_string will be used */
 
         if (grid->block_object != NULL)
           {
@@ -1808,3 +1836,32 @@ on_client_changed (UDisksClient   *client,
   GduVolumeGrid *grid = GDU_VOLUME_GRID (user_data);
   recompute_grid (grid);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_volume_grid_set_no_media_string   (GduVolumeGrid       *grid,
+                                       const gchar         *str)
+{
+  g_return_if_fail (GDU_IS_VOLUME_GRID (grid));
+  if (g_strcmp0 (grid->no_media_string, str) == 0)
+    goto out;
+
+  g_free (grid->no_media_string);
+  grid->no_media_string = g_strdup (str);
+
+  g_object_notify (G_OBJECT (grid), "no-media-string");
+
+  gtk_widget_queue_draw (GTK_WIDGET (grid));
+
+ out:
+  ;
+}
+
+const gchar *
+gdu_volume_grid_get_no_media_string   (GduVolumeGrid      *grid)
+{
+  g_return_val_if_fail (GDU_IS_VOLUME_GRID (grid), NULL);
+  return grid->no_media_string;
+}
+

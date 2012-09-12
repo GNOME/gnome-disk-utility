@@ -1862,17 +1862,19 @@ update_device_page_for_mdraid (GduWindow      *window,
                                ShowFlags      *show_flags)
 {
   GIcon *icon = NULL;
-  gchar *s = NULL;
+  gchar *s = NULL, *s2, *s3;
   gchar *desc = NULL;
   gchar *device_desc = NULL;
   UDisksBlock *block = NULL;
   guint64 size = 0;
-  gint num_devices = 0;
+  guint num_devices = 0;
+  guint num_members = 0;
   gchar *name = NULL;
   gchar *homehost = NULL;
   gchar *level_desc = NULL;
   char hostname[512];
   GList *jobs = NULL;
+  GList *members = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID Array is not running"));
@@ -1880,6 +1882,9 @@ update_device_page_for_mdraid (GduWindow      *window,
   size = udisks_mdraid_get_size (mdraid);
   num_devices = udisks_mdraid_get_num_devices (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
+  members = udisks_client_get_members_for_mdraid (window->client, mdraid);
+  num_members = g_list_length (members);
+
   icon = g_themed_icon_new ("gdu-enclosure");
 
   if (size > 0)
@@ -1983,8 +1988,36 @@ update_device_page_for_mdraid (GduWindow      *window,
               "devtab-drive-raidlevel-value-label",
               level_desc, SET_MARKUP_FLAGS_NONE);
 
-  /* TODO: Do something like "8 (6 available)" if not all members are there */
-  s = g_strdup_printf ("%d", num_devices);
+  if (num_members < num_devices)
+    {
+      /* Translators: Used to convey the number of required members for a RAID array.
+       *              The %d is the number of required members (always greater than 1).
+       */
+      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                       "%d required",
+                                       "%d required",
+                                       (gint) num_devices),
+                            (gint) num_devices);
+      /* Translators: Used to convey the number of available members for a RAID array.
+       *              The %d is the number of available members.
+       */
+      s3 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                       "%d detected",
+                                       "%d detected",
+                                       (gint) num_members),
+                            (gint) num_members);
+      /* Translators: Shown in the 'Members' field when not all RAID members are there.
+       *              The first %s conveys the number of required members (e.g. '8 required').
+       *              The second %s conveys the number of available members (e.g. '6 detected').
+       */
+      s = g_strdup_printf (C_("mdraid-members", "%s (%s)"), s2, s3);
+      g_free (s2);
+      g_free (s3);
+    }
+  else
+    {
+      s = g_strdup_printf ("%d", num_devices);
+    }
   set_markup (window,
               "devtab-drive-numdevices-label",
               "devtab-drive-numdevices-value-label",
@@ -2009,8 +2042,8 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   /* -------------------------------------------------- */
 
-  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-  g_list_free (jobs);
+  g_list_free_full (members, g_object_unref);
+  g_list_free_full (jobs, g_object_unref);
   g_free (level_desc);
   g_free (homehost);
   g_free (name);

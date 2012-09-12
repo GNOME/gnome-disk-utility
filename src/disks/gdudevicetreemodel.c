@@ -775,6 +775,8 @@ block_has_jobs (UDisksClient   *client,
   return ret;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 drive_has_jobs (UDisksClient   *client,
                 UDisksDrive    *drive)
@@ -790,6 +792,33 @@ drive_has_jobs (UDisksClient   *client,
 
   block = udisks_client_get_block_for_drive (client, drive, FALSE); /* get_physical */
   if (block_has_jobs (client, block))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  out:
+  g_clear_object (&block);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+mdraid_has_jobs (UDisksClient   *client,
+                 UDisksMDRaid   *mdraid)
+{
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+
+  if (iface_has_jobs (client, G_DBUS_INTERFACE (mdraid)))
+    {
+      ret = TRUE;
+      goto out;
+    }
+
+  block = udisks_client_get_block_for_mdraid (client, mdraid);
+  if (block != NULL && block_has_jobs (client, block))
     {
       ret = TRUE;
       goto out;
@@ -1102,7 +1131,7 @@ update_mdraid (GduDeviceTreeModel *model,
                        desc,
                        desc2);
 
-  jobs_running = FALSE; // TODO
+  jobs_running = mdraid_has_jobs (model->client, mdraid);
 
   gtk_tree_model_get (GTK_TREE_MODEL (model),
                       &iter,

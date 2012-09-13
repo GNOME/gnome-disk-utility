@@ -100,14 +100,17 @@ struct _GduWindow
   GtkWidget *devtab_drive_action_generic;
 
   GtkWidget *generic_drive_menu;
-  GtkWidget *generic_drive_menu_item_view_smart;
-  GtkWidget *generic_drive_menu_item_disk_settings;
-  GtkWidget *generic_drive_menu_item_standby_now;
-  GtkWidget *generic_drive_menu_item_resume_now;
   GtkWidget *generic_drive_menu_item_format_disk;
   GtkWidget *generic_drive_menu_item_create_disk_image;
   GtkWidget *generic_drive_menu_item_restore_disk_image;
   GtkWidget *generic_drive_menu_item_benchmark;
+  /* Drive-specific items */
+  GtkWidget *generic_drive_menu_item_drive_sep_1;
+  GtkWidget *generic_drive_menu_item_view_smart;
+  GtkWidget *generic_drive_menu_item_disk_settings;
+  GtkWidget *generic_drive_menu_item_drive_sep_2;
+  GtkWidget *generic_drive_menu_item_standby_now;
+  GtkWidget *generic_drive_menu_item_resume_now;
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_configure_fstab;
@@ -185,8 +188,11 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_restore_disk_image), "generic-drive-menu-item-restore-disk-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_benchmark), "generic-drive-menu-item-benchmark"},
+  /* Drive-specific items */
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_1), "generic-drive-menu-item-drive-sep-1"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_view_smart), "generic-drive-menu-item-view-smart"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_disk_settings), "generic-drive-menu-item-disk-settings"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_2), "generic-drive-menu-item-drive-sep-2"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
 
@@ -230,50 +236,64 @@ enum
   PROP_CLIENT
 };
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef enum {
+  SHOW_FLAGS_DRIVE_BUTTONS_RAID_START       = (1<<0),
+  SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP        = (1<<1),
+  SHOW_FLAGS_DRIVE_BUTTONS_EJECT            = (1<<2),
+} ShowFlagsDriveButtons;
+
 typedef enum
 {
-  SHOW_FLAGS_NONE                    = 0,
+  SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK           = (1<<0),
+  SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE     = (1<<1),
+  SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE    = (1<<2),
+  SHOW_FLAGS_DRIVE_MENU_BENCHMARK             = (1<<3),
+  SHOW_FLAGS_DRIVE_MENU_VIEW_SMART            = (1<<4),
+  SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS         = (1<<5),
+  SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW           = (1<<6),
+  SHOW_FLAGS_DRIVE_MENU_RESUME_NOW            = (1<<7),
+} ShowFlagsDriveMenu;
 
-  /* device toolbar */
-  SHOW_FLAGS_DETACH_DISK_IMAGE       = (1<<0),
+typedef enum {
+  SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_CREATE = (1<<0),
+  SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_DELETE = (1<<1),
+  SHOW_FLAGS_VOLUME_BUTTONS_MOUNT            = (1<<2),
+  SHOW_FLAGS_VOLUME_BUTTONS_UNMOUNT          = (1<<3),
+  SHOW_FLAGS_VOLUME_BUTTONS_ACTIVATE_SWAP    = (1<<4),
+  SHOW_FLAGS_VOLUME_BUTTONS_DEACTIVATE_SWAP  = (1<<5),
+  SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK = (1<<6),
+  SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK   = (1<<7),
+} ShowFlagsVolumeButtons;
 
-  /* drive buttonbox */
-  SHOW_FLAGS_RAID_START_BUTTON       = (1<<1),
-  SHOW_FLAGS_RAID_STOP_BUTTON        = (1<<2),
-  SHOW_FLAGS_EJECT_BUTTON            = (1<<3),
+typedef enum
+{
+  SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB       = (1<<0),
+  SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB    = (1<<1),
+  SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE     = (1<<2),
+  SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL            = (1<<3),
+  SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION        = (1<<4),
+  SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME         = (1<<5),
+  SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE   = (1<<6),
+  SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE  = (1<<7),
+  SHOW_FLAGS_VOLUME_MENU_BENCHMARK             = (1<<8),
+} ShowFlagsVolumeMenu;
 
-  /* volume toolbar */
-  SHOW_FLAGS_PARTITION_CREATE_BUTTON = (1<<4),
-  SHOW_FLAGS_PARTITION_DELETE_BUTTON = (1<<5),
-  SHOW_FLAGS_MOUNT_BUTTON            = (1<<6),
-  SHOW_FLAGS_UNMOUNT_BUTTON          = (1<<7),
-  SHOW_FLAGS_ACTIVATE_SWAP_BUTTON    = (1<<8),
-  SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON  = (1<<9),
-  SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON = (1<<10),
-  SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON   = (1<<11),
+typedef enum {
+  SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE  = (1<<0),
+} ShowFlagsDeviceTreeButtons;
 
-  /* generic drive menu */
-  SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK           = (1<<12),
-  SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE     = (1<<13),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE    = (1<<14),
-  SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK             = (1<<15),
-  SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART            = (1<<16),
-  SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS         = (1<<17),
-  SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW           = (1<<18),
-  SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW            = (1<<19),
-
-  /* generic volume menu */
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB       = (1<<20),
-  SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB    = (1<<21),
-  SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE     = (1<<22),
-  SHOW_FLAGS_POPUP_MENU_EDIT_LABEL            = (1<<23),
-  SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION        = (1<<24),
-  SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME         = (1<<25),
-  SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE   = (1<<26),
-  SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE  = (1<<27),
-  SHOW_FLAGS_POPUP_MENU_BENCHMARK             = (1<<28),
+typedef struct
+{
+  ShowFlagsDriveButtons      drive_buttons;
+  ShowFlagsDriveMenu         drive_menu;
+  ShowFlagsVolumeButtons     volume_buttons;
+  ShowFlagsVolumeMenu        volume_menu;
+  ShowFlagsDeviceTreeButtons device_tree_buttons;
 } ShowFlags;
 
+/* ---------------------------------------------------------------------------------------------------- */
 
 static void setup_device_page (GduWindow *window, UDisksObject *object);
 static void update_device_page (GduWindow *window, ShowFlags *show_flags);
@@ -416,95 +436,77 @@ static void select_details_page (GduWindow       *window,
 
 static void
 update_for_show_flags (GduWindow *window,
-                       ShowFlags  show_flags)
+                       ShowFlags *show_flags)
 {
   gtk_widget_set_visible (GTK_WIDGET (window->device_toolbar_detach_disk_image_button),
-                          show_flags & SHOW_FLAGS_DETACH_DISK_IMAGE);
+                          show_flags->device_tree_buttons & SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE);
 
-  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_start), show_flags & SHOW_FLAGS_RAID_START_BUTTON);
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_start),
+                            show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_START);
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_start), TRUE);
-  gtk_widget_set_visible (window->devtab_drive_raid_start_button, show_flags & SHOW_FLAGS_RAID_START_BUTTON);
+  gtk_widget_set_visible (window->devtab_drive_raid_start_button,
+                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_START);
 
-  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_stop), show_flags & SHOW_FLAGS_RAID_STOP_BUTTON);
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_stop),
+                            show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP);
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_stop), TRUE);
-  gtk_widget_set_visible (window->devtab_drive_raid_stop_button, show_flags & SHOW_FLAGS_RAID_STOP_BUTTON);
+  gtk_widget_set_visible (window->devtab_drive_raid_stop_button,
+                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP);
 
-  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_eject), show_flags & SHOW_FLAGS_EJECT_BUTTON);
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_eject),
+                            show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_EJECT);
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_eject), TRUE);
-  gtk_widget_set_visible (window->devtab_drive_eject_button, show_flags & SHOW_FLAGS_EJECT_BUTTON);
+  gtk_widget_set_visible (window->devtab_drive_eject_button,
+                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_EJECT);
 
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_partition_create),
-                          show_flags & SHOW_FLAGS_PARTITION_CREATE_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_CREATE);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_partition_delete),
-                          show_flags & SHOW_FLAGS_PARTITION_DELETE_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_DELETE);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_unmount),
-                          show_flags & SHOW_FLAGS_UNMOUNT_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_UNMOUNT);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_mount),
-                          show_flags & SHOW_FLAGS_MOUNT_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_MOUNT);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_activate_swap),
-                          show_flags & SHOW_FLAGS_ACTIVATE_SWAP_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_ACTIVATE_SWAP);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_deactivate_swap),
-                          show_flags & SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_DEACTIVATE_SWAP);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_unlock),
-                          show_flags & SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK);
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_lock),
-                          show_flags & SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON);
+                          show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_format_disk),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK);
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_view_smart),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART);
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_VIEW_SMART);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_disk_settings),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS);
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_create_disk_image),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE);
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_restore_disk_image),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE);
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
-                            show_flags & SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK);
-
-  if (!(show_flags & (SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW|SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW)))
-    {
-      /* no PM capabilities... only show "standby" greyed out */
-      gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
-      gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), FALSE);
-    }
-  else
-    {
-      /* Only show one of Standby and Resume (they are mutually exclusive) */
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), TRUE);
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_resume_now), TRUE);
-      if (show_flags & SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW)
-        {
-          gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
-          gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
-        }
-      else
-        {
-          gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
-          gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
-        }
-    }
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_change_passphrase),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_label),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_LABEL);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_partition),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_volume),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_create_volume_image),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_restore_volume_image),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_benchmark),
-                            show_flags & SHOW_FLAGS_POPUP_MENU_BENCHMARK);
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_BENCHMARK);
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
@@ -513,7 +515,7 @@ set_selected_object (GduWindow    *window,
                      UDisksObject *object)
 {
   gboolean ret = FALSE;
-  ShowFlags show_flags;
+  ShowFlags show_flags = {0};
   GtkTreeIter iter;
 
   if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
@@ -538,7 +540,6 @@ set_selected_object (GduWindow    *window,
       goto out;
     }
 
-  show_flags = SHOW_FLAGS_NONE;
   if (object != NULL)
     {
       if (udisks_object_peek_drive (object) != NULL ||
@@ -557,7 +558,7 @@ set_selected_object (GduWindow    *window,
     {
       select_details_page (window, NULL, DETAILS_PAGE_NOT_SELECTED, &show_flags);
     }
-  update_for_show_flags (window, show_flags);
+  update_for_show_flags (window, &show_flags);
  out:
   return ret;
 }
@@ -1644,7 +1645,7 @@ select_details_page (GduWindow      *window,
 static void
 update_all (GduWindow     *window)
 {
-  ShowFlags show_flags;
+  ShowFlags show_flags = {0};
 
   switch (window->current_page)
     {
@@ -1657,9 +1658,8 @@ update_all (GduWindow     *window)
       break;
 
     case DETAILS_PAGE_DEVICE:
-      show_flags = SHOW_FLAGS_NONE;
       update_details_page (window, window->current_page, &show_flags);
-      update_for_show_flags (window, show_flags);
+      update_for_show_flags (window, &show_flags);
       break;
     }
 }
@@ -1907,13 +1907,13 @@ update_device_page_for_mdraid (GduWindow      *window,
   if (block != NULL)
     {
       device_desc = get_device_file_for_display (block);
-      *show_flags |= SHOW_FLAGS_RAID_STOP_BUTTON;
+      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP;
     }
   else
     {
       /* Translators: shown as the device for a RAID array that is not currently running */
       device_desc = g_strdup (C_("mdraid", "Not Running"));
-      *show_flags |= SHOW_FLAGS_RAID_START_BUTTON;
+      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
     }
 
   gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
@@ -2221,12 +2221,12 @@ update_device_page_for_drive (GduWindow      *window,
                   "devtab-drive-smart-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       if (smart_is_supported)
-        *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_VIEW_SMART;
+        show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_VIEW_SMART;
       g_free (s);
     }
 
   if (gdu_disk_settings_dialog_should_show (object))
-    *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_DISK_SETTINGS;
+    show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS;
 
   if (ata != NULL)
     {
@@ -2244,9 +2244,9 @@ update_device_page_for_drive (GduWindow      *window,
                                   -1);
             }
           if (power_state_flags & GDU_POWER_STATE_FLAGS_STANDBY)
-            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESUME_NOW;
+            show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_RESUME_NOW;
           else
-            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_STANDBY_NOW;
+            show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW;
         }
     }
 
@@ -2303,8 +2303,31 @@ update_device_page_for_drive (GduWindow      *window,
 
   if (udisks_drive_get_ejectable (drive))
     {
-      *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
+      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
+
+  /* Show Drive-specific items */
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_1));
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_view_smart));
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_disk_settings));
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
+  if (!(show_flags->drive_menu & (SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW|SHOW_FLAGS_DRIVE_MENU_RESUME_NOW)))
+    {
+      /* no PM capabilities... only show "standby" greyed out */
+      gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), FALSE);
+    }
+  else
+    {
+      /* Only show one of Standby and Resume (they are mutually exclusive) */
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_resume_now), TRUE);
+      if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW)
+        gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+      else
+        gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+    }
+
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
@@ -2389,23 +2412,23 @@ update_device_page_for_block (GduWindow          *window,
   /* TODO: don't show on CD-ROM drives etc. */
   if (udisks_block_get_size (block) > 0 || (drive != NULL && !udisks_drive_get_media_change_detected (drive)))
     {
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_CREATE_VOLUME_IMAGE;
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_BENCHMARK;
-      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK;
-      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_BENCHMARK;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_BENCHMARK;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE;
       if (!read_only)
-        *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
+        show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE;
       if (!read_only)
         {
-          *show_flags |= SHOW_FLAGS_POPUP_MENU_RESTORE_VOLUME_IMAGE;
+          show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE;
           if (udisks_block_get_hint_partitionable (block))
-            *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK;
-          *show_flags |= SHOW_FLAGS_POPUP_MENU_FORMAT_VOLUME;
+            show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK;
+          show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME;
         }
     }
 
   if (partition != NULL && !read_only)
-    *show_flags |= SHOW_FLAGS_PARTITION_DELETE_BUTTON;
+    show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_DELETE;
 
   /* Since /etc/fstab, /etc/crypttab and so on can reference
    * any device regardless of its content ... we want to show
@@ -2413,19 +2436,19 @@ update_device_page_for_block (GduWindow          *window,
    * if the device matches the configuration....
    */
   if (gdu_utils_has_configuration (block, "fstab", NULL))
-    *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+    show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
   if (gdu_utils_has_configuration (block, "crypttab", NULL))
-    *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
+    show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB;
 
   /* if the device has no media and there is no existing configuration, then
    * show CONFIGURE_FSTAB since the user might want to add an entry for e.g.
    * /media/cdrom
    */
   if (udisks_block_get_size (block) == 0 &&
-      !(*show_flags & (SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB |
-                       SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB)))
+      !(show_flags->volume_menu & (SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB |
+                                   SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB)))
     {
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
     }
 
   //g_debug ("In update_device_page_for_block() - size=%" G_GUINT64_FORMAT " selected=%s",
@@ -2509,12 +2532,12 @@ update_device_page_for_block (GduWindow          *window,
   if (partition != NULL)
     {
       if (!read_only)
-        *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_PARTITION;
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION;
     }
   else
     {
       if (drive != NULL && udisks_drive_get_ejectable (drive))
-        *show_flags |= SHOW_FLAGS_EJECT_BUTTON;
+        show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
 
   if (filesystem != NULL)
@@ -2554,13 +2577,13 @@ update_device_page_for_block (GduWindow          *window,
       g_free (mount_point);
 
       if (g_strv_length ((gchar **) mount_points) > 0)
-        *show_flags |= SHOW_FLAGS_UNMOUNT_BUTTON;
+        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_UNMOUNT;
       else
-        *show_flags |= SHOW_FLAGS_MOUNT_BUTTON;
+        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_MOUNT;
 
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_FSTAB;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
       if (!read_only)
-        *show_flags |= SHOW_FLAGS_POPUP_MENU_EDIT_LABEL;
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL;
     }
   else if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
            g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
@@ -2572,13 +2595,13 @@ update_device_page_for_block (GduWindow          *window,
         {
           if (udisks_swapspace_get_active (swapspace))
             {
-              *show_flags |= SHOW_FLAGS_DEACTIVATE_SWAP_BUTTON;
+              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_DEACTIVATE_SWAP;
               /* Translators: Shown if the swap device is in use next to the "In Use" label */
               str = _("Yes");
             }
           else
             {
-              *show_flags |= SHOW_FLAGS_ACTIVATE_SWAP_BUTTON;
+              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ACTIVATE_SWAP;
               /* Translators: Shown if the swap device is not in use next to the "In Use" label */
               str = _("No");
             }
@@ -2598,13 +2621,13 @@ update_device_page_for_block (GduWindow          *window,
                                                                     g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       if (cleartext_device != NULL)
         {
-          *show_flags |= SHOW_FLAGS_ENCRYPTED_LOCK_BUTTON;
+          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK;
           /* Translators: Shown if the encrypted device is unlocked next to the "In Use" label */
           str = _("Yes");
         }
       else
         {
-          *show_flags |= SHOW_FLAGS_ENCRYPTED_UNLOCK_BUTTON;
+          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK;
           /* Translators: Shown if the encrypted device is not unlocked next to the "In Use" label */
           str = _("No");
         }
@@ -2614,8 +2637,8 @@ update_device_page_for_block (GduWindow          *window,
                   str,
                   SET_MARKUP_FLAGS_NONE);
 
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_CONFIGURE_CRYPTTAB;
-      *show_flags |= SHOW_FLAGS_POPUP_MENU_CHANGE_PASSPHRASE;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE;
     }
 
 
@@ -2697,12 +2720,12 @@ update_device_page_for_free_space (GduWindow          *window,
   read_only = udisks_block_get_read_only (block);
   loop = udisks_object_peek_loop (window->current_object);
 
-  *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_BENCHMARK;
+  show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_BENCHMARK;
   if (!read_only)
     {
-      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_FORMAT_DISK;
-      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_CREATE_DISK_IMAGE;
-      *show_flags |= SHOW_FLAGS_DISK_POPUP_MENU_RESTORE_DISK_IMAGE;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE;
     }
 
   if (loop != NULL)
@@ -2752,7 +2775,7 @@ update_device_page_for_free_space (GduWindow          *window,
               s,
               SET_MARKUP_FLAGS_NONE);
   if (!read_only)
-    *show_flags |= SHOW_FLAGS_PARTITION_CREATE_BUTTON;
+    show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_CREATE;
   g_free (s);
 
   s = get_device_file_for_display (block);
@@ -2784,6 +2807,14 @@ update_device_page (GduWindow      *window,
     gtk_action_set_visible (GTK_ACTION (l->data), FALSE);
   g_list_free (children);
 
+  /* Hide all Drive-specific items - will be turned on again in update_device_page_for_drive() */
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_1));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_view_smart));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_disk_settings));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+
   /* always show the generic toolbar item */
   gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                               "devtab-action-generic")), TRUE);
@@ -2795,7 +2826,7 @@ update_device_page (GduWindow      *window,
   mdraid = udisks_object_peek_mdraid (window->current_object);
 
   if (udisks_object_peek_loop (object) != NULL)
-    *show_flags |= SHOW_FLAGS_DETACH_DISK_IMAGE;
+    show_flags->device_tree_buttons |= SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE;
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive, show_flags);

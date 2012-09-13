@@ -1875,6 +1875,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   char hostname[512];
   GList *jobs = NULL;
   GList *members = NULL;
+  guint degraded;
+  const gchar *sync_action;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID Array is not running"));
@@ -1884,6 +1886,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
   members = udisks_client_get_members_for_mdraid (window->client, mdraid);
   num_members = g_list_length (members);
+  degraded = udisks_mdraid_get_degraded (mdraid);
+  sync_action = udisks_mdraid_get_sync_action (mdraid);
 
   icon = g_themed_icon_new ("gdu-enclosure");
 
@@ -1933,11 +1937,16 @@ update_device_page_for_mdraid (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
+  /* -------------------------------------------------- */
+  /* 'Size' field */
+
   set_size (window,
             "devtab-drive-size-label",
             "devtab-drive-size-value-label",
             size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
 
+  /* -------------------------------------------------- */
+  /* 'Name' field */
 
   /* figure out hostname of this box */
   hostname[sizeof hostname - 1] = '\0';
@@ -1983,48 +1992,123 @@ update_device_page_for_mdraid (GduWindow      *window,
                   name, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
+  /* -------------------------------------------------- */
+  /* 'Raid Level' field */
+
+  /* Translators: Used to convey the number of required disks for a RAID array
+   *              The %d is the number of required disks.
+   */
+  s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                   "%d disk",
+                                   "%d disks",
+                                   (gint) num_devices),
+                        (gint) num_devices);
+  /* Translators: Shown in the "RAID Level" field.
+   *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
+   *              The second %s is the number of RAID disks e.g. "8 disks".
+   */
+  s = g_strdup_printf (C_("mdraid", "%s — %s"),
+                       level_desc,
+                       s2);
+  g_free (s2);
   set_markup (window,
               "devtab-drive-raidlevel-label",
               "devtab-drive-raidlevel-value-label",
-              level_desc, SET_MARKUP_FLAGS_NONE);
-
-  if (num_members < num_devices)
-    {
-      /* Translators: Used to convey the number of required members for a RAID array.
-       *              The %d is the number of required members (always greater than 1).
-       */
-      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                       "%d required",
-                                       "%d required",
-                                       (gint) num_devices),
-                            (gint) num_devices);
-      /* Translators: Used to convey the number of available members for a RAID array.
-       *              The %d is the number of available members.
-       */
-      s3 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                       "%d detected",
-                                       "%d detected",
-                                       (gint) num_members),
-                            (gint) num_members);
-      /* Translators: Shown in the 'Members' field when not all RAID members are there.
-       *              The first %s conveys the number of required members (e.g. '8 required').
-       *              The second %s conveys the number of available members (e.g. '6 detected').
-       */
-      s = g_strdup_printf (C_("mdraid-members", "%s (%s)"), s2, s3);
-      g_free (s2);
-      g_free (s3);
-    }
-  else
-    {
-      s = g_strdup_printf ("%d", num_devices);
-    }
-  set_markup (window,
-              "devtab-drive-numdevices-label",
-              "devtab-drive-numdevices-value-label",
               s, SET_MARKUP_FLAGS_NONE);
   g_free (s);
 
   /* -------------------------------------------------- */
+  /* 'State' field */
+
+  if (sync_action == NULL || strlen (sync_action) == 0)
+    {
+      /* TODO: show "Not Running — Not enough disks available to start" if
+       *       we don't have enough members
+       */
+      if (num_members < num_devices)
+        {
+          /* Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded */
+          s = g_strdup (C_("mdraid-state", "Not Running — Can only start degraded"));
+        }
+      else
+        {
+          /* Translators: Shown in the 'State' field for MD-RAID when not running */
+          s = g_strdup (C_("mdraid-state", "Not Running"));
+        }
+    }
+  else if (g_strcmp0 (sync_action, "idle") == 0)
+    {
+      s = g_strdup (C_("mdraid-state", "Running"));
+    }
+  else if (g_strcmp0 (sync_action, "check") == 0)
+    {
+      /* TODO: include percentage + time remaining */
+      s = g_strdup (C_("mdraid-state", "Redundancy check underway"));
+    }
+  else if (g_strcmp0 (sync_action, "repair") == 0)
+    {
+      /* TODO: include percentage + time remaining */
+      s = g_strdup (C_("mdraid-state", "Redundancy check and repair underway"));
+    }
+  else if (g_strcmp0 (sync_action, "resync") == 0)
+    {
+      /* TODO: include percentage + time remaining */
+      s = g_strdup (C_("mdraid-state", "Resyncing"));
+    }
+  else if (g_strcmp0 (sync_action, "recover") == 0)
+    {
+      /* TODO: include percentage + time remaining */
+      s = g_strdup (C_("mdraid-state", "Recovering"));
+    }
+  else if (g_strcmp0 (sync_action, "frozen") == 0)
+    {
+      /* TODO: include percentage + time remaining */
+      s = g_strdup (C_("mdraid-state", "Frozen"));
+    }
+  else
+    {
+      g_warning ("unhandled sync action `%s'", sync_action);
+      s = g_strdup (sync_action);
+    }
+  set_markup (window,
+              "devtab-drive-raid-state-label",
+              "devtab-drive-raid-state-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
+
+  /* -------------------------------------------------- */
+  /* 'Degraded' field - only shown if actually degraded */
+
+  s = NULL;
+  if (degraded > 0)
+    {
+      /* Translators: Shown in the 'Degraded' field for a degraded RAID array.
+       *              The %d is the number of missing disks (always > 0).
+       */
+      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                       "%d disk is missing",
+                                       "%d disks are missing",
+                                       (gint) degraded),
+                            (gint) degraded);
+      /* Translators: string shown when the RAID array is degraded. All-caps is used for emphasis */
+      s3 = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
+                            C_("mdraid", "ARRAY IS DEGRADED"));
+      /* Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
+       *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
+       */
+      s = g_strdup_printf (C_("mdraid-degraded", "%s — %s"),
+                           s3, s2);
+      g_free (s2);
+      g_free (s3);
+    }
+  set_markup (window,
+              "devtab-drive-raid-degraded-label",
+              "devtab-drive-raid-degraded-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
+
+  /* -------------------------------------------------- */
+  /* 'Job' field - only shown if a job is running */
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
   /* if there are no jobs on the RAID Array, look at the block object if it's partitioned

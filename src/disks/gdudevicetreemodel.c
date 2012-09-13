@@ -1123,13 +1123,29 @@ update_mdraid (GduDeviceTreeModel *model,
 
   icon = g_themed_icon_new ("gdu-enclosure");
 
-  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-   * of hard-coding the color
-   */
-  s = g_strdup_printf ("%s\n"
-                       "<small><span foreground=\"#555555\">%s</span></small>",
-                       desc,
-                       desc2);
+  if (udisks_mdraid_get_degraded (mdraid) > 0)
+    warning = TRUE;
+
+  if (warning)
+    {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
+      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
+                           "<small><span foreground=\"#ff0000\">%s</span></small>",
+                           desc,
+                           desc2);
+    }
+  else
+    {
+      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
+       * of hard-coding the color
+       */
+      s = g_strdup_printf ("%s\n"
+                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           desc,
+                           desc2);
+    }
 
   jobs_running = mdraid_has_jobs (model->client, mdraid);
 
@@ -1139,6 +1155,8 @@ update_mdraid (GduDeviceTreeModel *model,
                       -1);
   if (from_timer)
     pulse += 1;
+
+
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,

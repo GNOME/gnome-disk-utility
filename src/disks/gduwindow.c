@@ -125,6 +125,12 @@ struct _GduWindow
 
   GtkWidget *devtab_loop_autoclear_switch;
 
+  GtkWidget *devtab_drive_raid_state_label;
+  GtkWidget *devtab_drive_raid_state_grid;
+  GtkWidget *devtab_drive_raid_state_progressbar;
+  GtkWidget *devtab_drive_raid_state_progress_label;
+  GtkWidget *devtab_drive_raid_state_no_progress_label;
+
   GtkWidget *devtab_drive_job_label;
   GtkWidget *devtab_drive_job_grid;
   GtkWidget *devtab_drive_job_progressbar;
@@ -206,6 +212,12 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_benchmark), "generic-menu-item-benchmark"},
+
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_label), "devtab-drive-raid-state-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_grid), "devtab-drive-raid-state-grid"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progressbar), "devtab-drive-raid-state-progressbar"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progress_label), "devtab-drive-raid-state-progress-label"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_no_progress_label), "devtab-drive-raid-state-no-progress-label"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -1877,6 +1889,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   GList *members = NULL;
   guint degraded;
   const gchar *sync_action;
+  gdouble sync_completed;
+  gboolean sync_show_completed = FALSE;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID Array is not running"));
@@ -1888,6 +1902,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   num_members = g_list_length (members);
   degraded = udisks_mdraid_get_degraded (mdraid);
   sync_action = udisks_mdraid_get_sync_action (mdraid);
+  sync_completed = udisks_mdraid_get_sync_completed (mdraid);
 
   icon = g_themed_icon_new ("gdu-enclosure");
 
@@ -2042,27 +2057,26 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
   else if (g_strcmp0 (sync_action, "check") == 0)
     {
-      /* TODO: include percentage + time remaining */
       s = g_strdup (C_("mdraid-state", "Redundancy check underway"));
+      sync_show_completed = TRUE;
     }
   else if (g_strcmp0 (sync_action, "repair") == 0)
     {
-      /* TODO: include percentage + time remaining */
       s = g_strdup (C_("mdraid-state", "Redundancy check and repair underway"));
+      sync_show_completed = TRUE;
     }
   else if (g_strcmp0 (sync_action, "resync") == 0)
     {
-      /* TODO: include percentage + time remaining */
       s = g_strdup (C_("mdraid-state", "Resyncing"));
+      sync_show_completed = TRUE;
     }
   else if (g_strcmp0 (sync_action, "recover") == 0)
     {
-      /* TODO: include percentage + time remaining */
       s = g_strdup (C_("mdraid-state", "Recovering"));
+      sync_show_completed = TRUE;
     }
   else if (g_strcmp0 (sync_action, "frozen") == 0)
     {
-      /* TODO: include percentage + time remaining */
       s = g_strdup (C_("mdraid-state", "Frozen"));
     }
   else
@@ -2070,11 +2084,35 @@ update_device_page_for_mdraid (GduWindow      *window,
       g_warning ("unhandled sync action `%s'", sync_action);
       s = g_strdup (sync_action);
     }
-  set_markup (window,
-              "devtab-drive-raid-state-label",
-              "devtab-drive-raid-state-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
-  g_free (s);
+
+  gtk_widget_show (window->devtab_drive_raid_state_label);
+  gtk_widget_show (window->devtab_drive_raid_state_grid);
+  if (sync_show_completed)
+    {
+      gtk_widget_show (window->devtab_drive_raid_state_progressbar);
+      gtk_widget_show (window->devtab_drive_raid_state_progress_label);
+      gtk_widget_hide (window->devtab_drive_raid_state_no_progress_label);
+
+      s2 = g_strdup_printf ("<small>%s</small>", s);
+      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_progress_label), s2);
+      g_free (s2);
+      g_free (s);
+
+      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), sync_completed);
+
+      s = g_strdup_printf ("%2.1f%%", 100.0 * sync_completed);
+      gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), TRUE);
+      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), s);
+      g_free (s);
+    }
+  else
+    {
+      gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
+      gtk_widget_hide (window->devtab_drive_raid_state_progress_label);
+      gtk_widget_show (window->devtab_drive_raid_state_no_progress_label);
+      gtk_label_set_text (GTK_LABEL (window->devtab_drive_raid_state_no_progress_label), s);
+      g_free (s);
+    }
 
   /* -------------------------------------------------- */
   /* 'Degraded' field - only shown if actually degraded */

@@ -24,6 +24,7 @@ ui_DATA = 				\
 	app-menu.ui			\
 	benchmark-dialog.ui		\
 	disk-settings-dialog.ui		\
+	md-raid-disks-dialog.ui		\
 	$(NULL)
 
 EXTRA_DIST = 				\

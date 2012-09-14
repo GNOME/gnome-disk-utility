@@ -47,6 +47,7 @@ gnome_disks_SOURCES = 							\
 	gduestimator.h			gduestimator.c			\
 	gduchangepassphrasedialog.h	gduchangepassphrasedialog.c	\
 	gdudisksettingsdialog.h		gdudisksettingsdialog.c		\
+	gdumdraiddisksdialog.h		gdumdraiddisksdialog.c		\
 	$(enum_built_sources)						\
 	$(NULL)
 

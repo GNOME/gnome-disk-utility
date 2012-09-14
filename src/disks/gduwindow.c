@@ -37,6 +37,7 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdudisksettingsdialog.h"
+#include "gdumdraiddisksdialog.h"
 
 /* Keep in sync with tabs in disks.ui file */
 typedef enum
@@ -111,6 +112,9 @@ struct _GduWindow
   GtkWidget *generic_drive_menu_item_drive_sep_2;
   GtkWidget *generic_drive_menu_item_standby_now;
   GtkWidget *generic_drive_menu_item_resume_now;
+  /* MDRaid-specific items */
+  GtkWidget *generic_drive_menu_item_mdraid_sep_1;
+  GtkWidget *generic_drive_menu_item_mdraid_disks;
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_configure_fstab;
@@ -201,6 +205,9 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_2), "generic-drive-menu-item-drive-sep-2"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
+  /* MDRaid-specific items */
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_sep_1), "generic-drive-menu-item-mdraid-sep-1"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_disks), "generic-drive-menu-item-mdraid-disks"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
@@ -266,6 +273,7 @@ typedef enum
   SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS         = (1<<5),
   SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW           = (1<<6),
   SHOW_FLAGS_DRIVE_MENU_RESUME_NOW            = (1<<7),
+  SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS          = (1<<8),
 } ShowFlagsDriveMenu;
 
 typedef enum {
@@ -345,6 +353,8 @@ static void on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_ite
                                                            gpointer   user_data);
 static void on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
+static void on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
+                                                     gpointer   user_data);
 
 static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
@@ -500,6 +510,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks),
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
@@ -1267,6 +1279,10 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_benchmark),
                     window);
+  g_signal_connect (window->generic_drive_menu_item_mdraid_disks,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_mdraid_disks),
+                    window);
 
   /* volume menu */
   g_signal_connect (window->generic_menu_item_configure_fstab,
@@ -1927,6 +1943,7 @@ update_device_page_for_mdraid (GduWindow      *window,
     {
       device_desc = get_device_file_for_display (block);
       show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP;
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS;
     }
   else
     {
@@ -2161,6 +2178,12 @@ update_device_page_for_mdraid (GduWindow      *window,
         }
     }
   update_drive_jobs (window, jobs);
+
+  /* -------------------------------------------------- */
+
+  /* Show MDRaid-specific items */
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
 
   /* -------------------------------------------------- */
 
@@ -2937,6 +2960,10 @@ update_device_page (GduWindow      *window,
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
 
+  /* Hide all MDRaid-specific items - will be turned on again in update_device_page_for_mdraid() */
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
+
   /* always show the generic toolbar item */
   gtk_action_set_visible (GTK_ACTION (gtk_builder_get_object (window->builder,
                                                               "devtab-action-generic")), TRUE);
@@ -3169,6 +3196,14 @@ on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_disk_settings_dialog_show (window, window->current_object);
+}
+
+static void
+on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
+                                         gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gdu_mdraid_disks_dialog_show (window, window->current_object);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

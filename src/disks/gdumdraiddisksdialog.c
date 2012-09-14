@@ -75,7 +75,7 @@ enum
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-G_GNUC_UNUSED static DialogData *
+static DialogData *
 dialog_data_ref (DialogData *data)
 {
   g_atomic_int_inc (&data->ref_count);
@@ -192,6 +192,112 @@ on_property_changed (GObject     *object,
 {
   DialogData *data = user_data;
   update_dialog (data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+remove_device_cb (GObject      *source_object,
+                  GAsyncResult *res,
+                  gpointer      user_data)
+{
+  DialogData *data = user_data;
+  GError *error = NULL;
+  error = NULL;
+  if (!udisks_mdraid_call_remove_device_finish (UDISKS_MDRAID (source_object),
+                                                res,
+                                                &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("An error occurred when removing a disk from RAID Array"),
+                            error);
+      g_clear_error (&error);
+    }
+  dialog_data_unref (data);
+}
+
+static void
+on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
+                              gpointer         user_data)
+{
+  DialogData *data = user_data;
+  GtkWidget *dialog;
+  GtkWidget *check_button;
+  gint response;
+  const gchar *message;
+  const gchar *secondary_message;
+  const gchar *affirmative_verb;
+  gboolean opt_wipe = FALSE;
+  GVariantBuilder options_builder;
+  UDisksBlock *selected_block = NULL;
+  UDisksObject *selected_block_object = NULL;
+  GtkTreeIter titer;
+
+  message = C_("mdraid-disks", "Are you sure you want to remove the disk?");
+  secondary_message = C_("mdraid-disks", "Removing a disk from a RAID array may degrade it");
+  affirmative_verb = C_("mdraid-disks", "_Remove");
+
+  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->dialog),
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_INFO,
+                                               GTK_BUTTONS_CANCEL,
+                                               "<big><b>%s</b></big>",
+                                               message);
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s",
+                                              secondary_message);
+
+  check_button = gtk_check_button_new_with_mnemonic (C_("mdraid-disks", "_Wipe disk after removal"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), TRUE);
+  gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                      check_button,
+                      FALSE, FALSE, 0);
+
+  gtk_dialog_add_button (GTK_DIALOG (dialog),
+                         affirmative_verb,
+                         GTK_RESPONSE_OK);
+
+  gtk_widget_show_all (dialog);
+  response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+  opt_wipe = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
+
+  gtk_widget_destroy (dialog);
+
+  if (response != GTK_RESPONSE_OK)
+    goto out;
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (opt_wipe)
+    g_variant_builder_add (&options_builder, "{sv}", "wipe", g_variant_new_boolean (TRUE));
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                       NULL, /* out_model */
+                                       &titer))
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (data->store),
+                          &titer,
+                          COLUMN_BLOCK, &selected_block,
+                          -1);
+      if (selected_block != NULL)
+        selected_block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (selected_block));
+    }
+
+  if (selected_block_object == NULL)
+    {
+      g_warning ("Cannot determine device to remove");
+      goto out;
+    }
+
+  udisks_mdraid_call_remove_device (data->mdraid,
+                                    g_dbus_object_get_object_path (G_DBUS_OBJECT (selected_block_object)),
+                                    g_variant_builder_end (&options_builder),
+                                    NULL, /* cancellable */
+                                    (GAsyncReadyCallback) remove_device_cb,
+                                    dialog_data_ref (data));
+
+ out:
+  g_clear_object (&selected_block_object);
+  g_clear_object (&selected_block);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -607,6 +713,16 @@ init_dialog (DialogData *data)
                                            data,  /* user_data */
                                            NULL); /* user_data GDestroyNotify */
 
+  /* ---------- */
+
+  g_signal_connect (data->remove_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_remove_toolbutton_clicked),
+                    data);
+
+
+  /* ---------- */
+
   g_signal_connect (data->client,
                     "changed",
                     G_CALLBACK (on_client_changed),
@@ -654,8 +770,6 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 
   init_dialog (data);
-
-  update_dialog (data);
 
   while (TRUE)
     {

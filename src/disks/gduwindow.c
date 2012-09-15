@@ -1896,7 +1896,6 @@ update_device_page_for_mdraid (GduWindow      *window,
   UDisksBlock *block = NULL;
   guint64 size = 0;
   guint num_devices = 0;
-  guint num_members = 0;
   gchar *name = NULL;
   gchar *homehost = NULL;
   gchar *level_desc = NULL;
@@ -1909,13 +1908,12 @@ update_device_page_for_mdraid (GduWindow      *window,
   gboolean sync_show_completed = FALSE;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
-                                       _("RAID Array is not running"));
+                                       _("RAID array is not running"));
 
   size = udisks_mdraid_get_size (mdraid);
   num_devices = udisks_mdraid_get_num_devices (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
   members = udisks_client_get_members_for_mdraid (window->client, mdraid);
-  num_members = g_list_length (members);
   degraded = udisks_mdraid_get_degraded (mdraid);
   sync_action = udisks_mdraid_get_sync_action (mdraid);
   sync_completed = udisks_mdraid_get_sync_completed (mdraid);
@@ -1925,13 +1923,13 @@ update_device_page_for_mdraid (GduWindow      *window,
   if (size > 0)
     {
       s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
-      /* Translators: Used in the main window for a RAID Array, the first %s is the size */
+      /* Translators: Used in the main window for a RAID array, the first %s is the size */
       desc = g_strdup_printf (C_("md-raid-window", "%s RAID Array"), s);
       g_free (s);
     }
   else
     {
-      /* Translators: Used in the main window for a RAID Array where the size is not known  */
+      /* Translators: Used in the main window for a RAID array where the size is not known  */
       desc = g_strdup (C_("md-raid-window", "RAID Array"));
     }
 
@@ -1948,8 +1946,10 @@ update_device_page_for_mdraid (GduWindow      *window,
   else
     {
       /* Translators: shown as the device for a RAID array that is not currently running */
-      device_desc = g_strdup (C_("mdraid", "Not Running"));
-      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
+      device_desc = g_strdup (C_("mdraid", "Not running"));
+      if (udisks_mdraid_get_can_start (mdraid) ||
+          udisks_mdraid_get_can_start_degraded (mdraid))
+        show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
     }
 
   gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
@@ -2054,18 +2054,20 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   if (sync_action == NULL || strlen (sync_action) == 0)
     {
-      /* TODO: show "Not Running — Not enough disks available to start" if
-       *       we don't have enough members
-       */
-      if (num_members < num_devices)
+      if (udisks_mdraid_get_can_start (mdraid))
+        {
+          /* Translators: Shown in the 'State' field for MD-RAID when not running and can be started */
+          s = g_strdup (C_("mdraid-state", "Not running"));
+        }
+      else if (udisks_mdraid_get_can_start_degraded (mdraid))
         {
           /* Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded */
-          s = g_strdup (C_("mdraid-state", "Not Running — Can only start degraded"));
+          s = g_strdup (C_("mdraid-state", "Not running — Can only start degraded"));
         }
       else
         {
           /* Translators: Shown in the 'State' field for MD-RAID when not running */
-          s = g_strdup (C_("mdraid-state", "Not Running"));
+          s = g_strdup (C_("mdraid-state", "Not running — Not enough disks to start"));
         }
     }
   else if (g_strcmp0 (sync_action, "idle") == 0)
@@ -2166,7 +2168,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   /* 'Job' field - only shown if a job is running */
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
-  /* if there are no jobs on the RAID Array, look at the block object if it's partitioned
+  /* if there are no jobs on the RAID array, look at the block object if it's partitioned
    * (because: if it's not partitioned, we'll see the job in Volumes below so no need to show it here)
    */
   if (jobs == NULL && block != NULL)
@@ -3552,7 +3554,7 @@ mdraid_start_cb (UDisksMDRaid  *mdraid,
                                         &error))
     {
       gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error starting RAID Array"),
+                            _("Error starting RAID array"),
                             error);
       g_error_free (error);
     }
@@ -3564,14 +3566,33 @@ on_devtab_drive_action_raid_start_activated (GtkAction *action,
                                              gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  GVariantBuilder options_builder;
   UDisksMDRaid *mdraid;
 
   mdraid = udisks_object_peek_mdraid (window->current_object);
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+
+  if (!udisks_mdraid_get_can_start (mdraid))
+    {
+      g_warn_if_fail (udisks_mdraid_get_can_start_degraded (mdraid));
+
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                        C_("mdraid", "Are you sure you want to start the RAID array degraded?"),
+                                        C_("mdraid", "A degraded RAID array is vulnerable to data- and performance-loss"),
+                                        C_("mdraid", "_Start"),
+                                        NULL, NULL))
+        goto out;
+
+      g_variant_builder_add (&options_builder, "{sv}", "start-degraded", g_variant_new_boolean (TRUE));
+    }
+
   udisks_mdraid_call_start (mdraid,
-                            g_variant_new ("a{sv}", NULL), /* options */
+                            g_variant_builder_end (&options_builder),
                             NULL, /* cancellable */
                             (GAsyncReadyCallback) mdraid_start_cb,
                             g_object_ref (window));
+ out:
+  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3590,7 +3611,7 @@ mdraid_stop_cb (UDisksMDRaid  *mdraid,
                                         &error))
     {
       gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error stopping RAID Array"),
+                            _("Error stopping RAID array"),
                             error);
       g_error_free (error);
     }

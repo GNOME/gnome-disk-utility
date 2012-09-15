@@ -486,7 +486,8 @@ on_dialog_response (GtkDialog     *dialog,
       if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
                                         _("Are you sure you want to write the disk image to the device?"),
                                         _("All existing data will be lost"),
-                                        _("_Restore")))
+                                        _("_Restore"),
+                                        NULL, NULL))
         {
           restore_disk_image_data_complete (data);
           goto out;

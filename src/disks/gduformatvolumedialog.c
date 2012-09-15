@@ -161,7 +161,8 @@ gdu_format_volume_dialog_show (GduWindow    *window,
       if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
                                         primary_message,
                                         str->str,
-                                        _("_Format")))
+                                        _("_Format"),
+                                        NULL, NULL))
         {
           g_string_free (str, TRUE);
           goto out;

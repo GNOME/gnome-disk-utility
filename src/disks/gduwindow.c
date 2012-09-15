@@ -3482,7 +3482,8 @@ on_devtab_action_partition_delete_activated (GtkAction *action,
   if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
                                     _("Are you sure you want to delete the partition?"),
                                     _("All data on the partition will be lost"),
-                                    _("_Delete")))
+                                    _("_Delete"),
+                                    NULL, NULL))
     goto out;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));

@@ -221,50 +221,18 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
                               gpointer         user_data)
 {
   DialogData *data = user_data;
-  GtkWidget *dialog;
-  GtkWidget *check_button;
-  gint response;
-  const gchar *message;
-  const gchar *secondary_message;
-  const gchar *affirmative_verb;
-  gboolean opt_wipe = FALSE;
+  gboolean opt_wipe = TRUE;
   GVariantBuilder options_builder;
   UDisksBlock *selected_block = NULL;
   UDisksObject *selected_block_object = NULL;
   GtkTreeIter titer;
 
-  message = C_("mdraid-disks", "Are you sure you want to remove the disk?");
-  secondary_message = C_("mdraid-disks", "Removing a disk from a RAID array may degrade it");
-  affirmative_verb = C_("mdraid-disks", "_Remove");
-
-  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->dialog),
-                                               GTK_DIALOG_MODAL,
-                                               GTK_MESSAGE_INFO,
-                                               GTK_BUTTONS_CANCEL,
-                                               "<big><b>%s</b></big>",
-                                               message);
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s",
-                                              secondary_message);
-
-  check_button = gtk_check_button_new_with_mnemonic (C_("mdraid-disks", "_Wipe disk after removal"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), TRUE);
-  gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                      check_button,
-                      FALSE, FALSE, 0);
-
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         affirmative_verb,
-                         GTK_RESPONSE_OK);
-
-  gtk_widget_show_all (dialog);
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-  opt_wipe = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
-
-  gtk_widget_destroy (dialog);
-
-  if (response != GTK_RESPONSE_OK)
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
+                                    C_("mdraid-disks", "Are you sure you want to remove the disk?"),
+                                    C_("mdraid-disks", "Removing a disk from a RAID array may degrade it"),
+                                    C_("mdraid-disks", "_Remove"),
+                                    C_("mdraid-disks", "_Quick-format after removal"),
+                                    &opt_wipe))
     goto out;
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);

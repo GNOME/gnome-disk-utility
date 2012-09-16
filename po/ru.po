@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-09-13 14:43+0000\n"
-"PO-Revision-Date: 2012-09-16 11:58+0400\n"
+"PO-Revision-Date: 2012-09-16 22:26+0400\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -322,41 +322,40 @@ msgid "Drive Settings"
 msgstr "Параметры привода"
 
 #: ../data/ui/disk-settings-dialog.ui.h:2
-#, fuzzy
 msgid "_Standby Timeout"
-msgstr "_Таймаут выключения"
+msgstr "_Таймаут режима ожидания"
 
 #: ../data/ui/disk-settings-dialog.ui.h:3
-#, fuzzy
 msgid "Enter Standby After"
-msgstr "Введите время выключения"
+msgstr "Введите время режима ожидания"
 
 #: ../data/ui/disk-settings-dialog.ui.h:4
-#, fuzzy
 msgid "_Advanced Power Management"
-msgstr "_Управление питанием"
+msgstr "_Дополнительное управление питанием"
 
 #: ../data/ui/disk-settings-dialog.ui.h:5
 msgid "APM Level"
-msgstr ""
+msgstr "Уровень APM"
 
 #: ../data/ui/disk-settings-dialog.ui.h:6
 msgid ""
 "Agressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"Агрессивное снижение оборотов может привести к преждевременному износу "
+"диска. Проверяйте периодически атрибут SMART циклов «запуск/останов»."
 
 #: ../data/ui/disk-settings-dialog.ui.h:7
 msgid "Automatic Aco_ustic Management"
-msgstr ""
+msgstr "_Автоматическое акустическое управление"
 
 #: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "Vendor Recommended"
-msgstr ""
+msgstr "Рекомендуемый вендором"
 
 #: ../data/ui/disk-settings-dialog.ui.h:9
 msgid "AAM Level"
-msgstr ""
+msgstr "Уровень AAM"
 
 #: ../data/ui/disks.ui.h:1
 msgid "Create a new partition..."
@@ -487,9 +486,8 @@ msgid "Restore Disk Image..."
 msgstr "Восстановить образ диска..."
 
 #: ../data/ui/disks.ui.h:36
-#, fuzzy
 msgid "Benchmark Drive..."
-msgstr "Оценить производительности привода..."
+msgstr "Производительность привода…"
 
 #: ../data/ui/disks.ui.h:37
 #| msgid "View SMART Data..."
@@ -497,10 +495,9 @@ msgid "SMART Data and Tests..."
 msgstr "Тесты и данные SMART…"
 
 #: ../data/ui/disks.ui.h:38
-#, fuzzy
 #| msgid "More actions..."
 msgid "Drive Settings..."
-msgstr "Дополнительные действия…"
+msgstr "Параметры привода…"
 
 #: ../data/ui/disks.ui.h:39
 msgid "Standby Now"
@@ -508,7 +505,7 @@ msgstr "Выключить сейчас"
 
 #: ../data/ui/disks.ui.h:40
 msgid "Wake-Up from Standby"
-msgstr ""
+msgstr "Вывести из режима ожидания"
 
 #: ../data/ui/disks.ui.h:41
 msgid "Format..."
@@ -1901,7 +1898,7 @@ msgstr "Атрибут"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
-msgstr ""
+msgstr "%d МБ/с"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: ../src/disks/gdubenchmarkdialog.c:332
@@ -1915,7 +1912,7 @@ msgstr ""
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
-msgstr ""
+msgstr "%s/с"
 
 #: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:954
 #, c-format
@@ -1940,14 +1937,13 @@ msgstr "%s (%s)"
 #: ../src/disks/gdubenchmarkdialog.c:708
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
-msgstr ""
+msgstr "Данные об оценке производительности недоступны"
 
 #: ../src/disks/gdubenchmarkdialog.c:713
-#, fuzzy
 #| msgid "Error opening device"
 msgctxt "benchmark-updated"
 msgid "Opening Device..."
-msgstr "Ошибка открытия устройства"
+msgstr "Открытие устройства..."
 
 #: ../src/disks/gdubenchmarkdialog.c:717
 #, c-format
@@ -1962,7 +1958,6 @@ msgid "Measuring access time (%2.1f%% complete)..."
 msgstr ""
 
 #: ../src/disks/gdubenchmarkdialog.c:840
-#, fuzzy
 #| msgid "An error occurred"
 msgctxt "benchmarking"
 msgid "An error occurred"
@@ -1983,7 +1978,7 @@ msgstr "Раздел %d: %s"
 #. * the description (e.g. "60 GB Hard Disk")
 #.
 #: ../src/disks/gdubenchmarkdialog.c:886
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s (%s)"
 msgctxt "benchmark-drive-name"
 msgid "%s (%s)"
@@ -1991,12 +1986,12 @@ msgstr "%s (%s)"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
 #: ../src/disks/gdubenchmarkdialog.c:952
-#, fuzzy, c-format
+#, c-format
 #| msgid "%.1f msec"
 #| msgid_plural "%.1f msecs"
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
-msgstr "%.1f мс"
+msgstr "%.2f мс"
 
 #: ../src/disks/gdubenchmarkdialog.c:1264
 #, fuzzy, c-format
@@ -2123,7 +2118,7 @@ msgstr "Ошибка записи образа"
 #: ../src/disks/gdurestorediskimagedialog.c:319
 #, c-format
 msgid "%s of %s copied – %s remaining (%s/sec)"
-msgstr ""
+msgstr "Скопировано %s из %s – осталось %s (%s/с)"
 
 #. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
 #. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
@@ -2132,7 +2127,7 @@ msgstr ""
 #: ../src/disks/gdurestorediskimagedialog.c:332
 #, c-format
 msgid "%s of %s copied"
-msgstr ""
+msgstr "Скопировано %s из %s"
 
 #: ../src/disks/gducreatediskimagedialog.c:341
 #: ../src/disks/gdurestorediskimagedialog.c:380
@@ -2177,10 +2172,10 @@ msgstr "Копирование данных с устройства…"
 
 #. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
 #: ../src/disks/gducreatediskimagedialog.c:637
-#, fuzzy, c-format
+#, c-format
 #| msgid "Create Disk Image..."
 msgid "Create Disk Image (%s)"
-msgstr "Создать образ диска..."
+msgstr "Создать образ диска (%s)"
 
 #: ../src/disks/gducreatefilesystemwidget.c:379
 #: ../src/disks/gduformatdiskdialog.c:254
@@ -2337,40 +2332,39 @@ msgstr "Никогда"
 #: ../src/disks/gdudisksettingsdialog.c:283
 msgctxt "standby-value"
 msgid "Vendor-defined"
-msgstr ""
+msgstr "Заводская установка"
 
 #: ../src/disks/gdudisksettingsdialog.c:287
 msgctxt "standby-value"
 msgid "Reserved"
-msgstr ""
+msgstr "Зарезервировано"
 
 #: ../src/disks/gdudisksettingsdialog.c:308
 msgctxt "apm-level"
 msgid "255 (Disabled)"
-msgstr ""
+msgstr "255 (отключено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:312
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
-msgstr ""
+msgstr "%d (снижение оборотов разрешено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:316
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
-msgstr ""
+msgstr "%d (снижение оборотов запрещено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:331
 msgctxt "aam-level"
 msgid "0 (Disabled)"
-msgstr ""
+msgstr "0 (отключено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:360
-#, fuzzy
 #| msgid "Error retrieving configuration data"
 msgid "Error setting configuration"
-msgstr "Ошибка получения конфигурационных данных"
+msgstr "Ошибка установки конфигурации"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:390
@@ -2379,62 +2373,57 @@ msgstr "Никогда"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:392
-#, fuzzy
 #| msgid "%d minute"
 #| msgid_plural "%d minutes"
 msgid "5 minutes"
-msgstr "%d минута"
+msgstr "5 минут"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:394
-#, fuzzy
 #| msgid "%.1f minute"
 #| msgid_plural "%.1f minutes"
 msgid "10 minutes"
-msgstr "%.1f минута"
+msgstr "10 минут"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:396
-#, fuzzy
 #| msgid "%.1f minute"
 #| msgid_plural "%.1f minutes"
 msgid "15 minutes"
-msgstr "%.1f минута"
+msgstr "15 минут"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:398
-#, fuzzy
 #| msgid "%d hour"
 #| msgid_plural "%d hours"
 msgid "3 hours"
-msgstr "%d час"
+msgstr "3 часа"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:402
-#, fuzzy
 #| msgid "Save in _folder"
 msgid "Save Power"
-msgstr "Сохранять в _папку"
+msgstr "Сохранение энергии"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
 #: ../src/disks/gdudisksettingsdialog.c:404
 msgid "← Spindown"
-msgstr ""
+msgstr "← Снижение оборотов"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:406
 msgid "Perform Better"
-msgstr ""
+msgstr "Скорость работы"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:410
 msgid "Quiet (Slow)"
-msgstr ""
+msgstr "Тихо (медленно)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:412
 msgid "Loud (Fast)"
-msgstr ""
+msgstr "Громко (быстро)"
 
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
@@ -2447,7 +2436,7 @@ msgstr "Ошибка при установке метки"
 #: ../src/disks/gduformatdiskdialog.c:105
 #, c-format
 msgid "At least %s"
-msgstr ""
+msgstr "Не менее %s"
 
 #. Translators: Used to convey that something takes
 #. * approximately some specificed duration. The %s is a time
@@ -2456,15 +2445,15 @@ msgstr ""
 #: ../src/disks/gduformatdiskdialog.c:116
 #, c-format
 msgid "Approximately %s"
-msgstr ""
+msgstr "Приблизительно %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr ""
+msgstr "ATA Secure Erase"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr ""
+msgstr "ATA Enhanced Secure Erase"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
@@ -2500,6 +2489,8 @@ msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
 msgstr ""
+"Все данные на диске будут утеряны, но их можно будет восстановить с помощью "
+"служб восстановления данных"
 
 #: ../src/disks/gduformatdiskdialog.c:391
 #: ../src/disks/gduformatvolumedialog.c:153
@@ -2545,6 +2536,8 @@ msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
 msgstr ""
+"Все данные на томе будут утеряны, но их можно будет восстановить с помощью "
+"служб восстановления данных"
 
 #. Translators: warning used when overwriting data of the volume
 #: ../src/disks/gduformatvolumedialog.c:158
@@ -2552,6 +2545,8 @@ msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
 msgstr ""
+"Все данные на томе будут перезаписаны, и скорее всего их нельзя будет "
+"восстановить с помощью служб восстановления данных"
 
 #: ../src/disks/gdufstabdialog.c:152
 #, c-format
@@ -2688,10 +2683,10 @@ msgstr "_Восстановить"
 
 #. Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device.
 #: ../src/disks/gdurestorediskimagedialog.c:551
-#, fuzzy, c-format
+#, c-format
 #| msgid "Restore Disk Image..."
 msgid "Restore Disk Image (%s)"
-msgstr "Восстановить образ диска..."
+msgstr "Восстановить образ диска (%s)"
 
 #: ../src/disks/gduunlockdialog.c:86
 msgid "Error unlocking encrypted device"
@@ -2785,13 +2780,13 @@ msgstr "%s <span size=\"smaller\">(только для чтения)</span>"
 #: ../src/disks/gduwindow.c:1731
 msgctxt "job-remaining-exceeded"
 msgid "Almost done..."
-msgstr ""
+msgstr "Почти готово..."
 
 #: ../src/disks/gduwindow.c:1736
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
-msgstr ""
+msgstr "Осталось %s"
 
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
@@ -2851,11 +2846,11 @@ msgstr "Нераспределённое пространство"
 
 #: ../src/disks/gduwindow.c:2764
 msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
+msgstr "При попытке перевести привод в режим ожидания произошла ошибка"
 
 #: ../src/disks/gduwindow.c:2810
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
+msgstr "При попытке вывести привод из режима ожидания произошла ошибка"
 
 #: ../src/disks/gduwindow.c:2885
 msgid "Error mounting filesystem"
@@ -2902,10 +2897,9 @@ msgid "Error setting autoclear flag"
 msgstr "Ошибка установки флага автоочистки"
 
 #: ../src/disks/gduwindow.c:3280 ../src/disks/gduwindow.c:3335
-#, fuzzy
 #| msgid "Error setting label"
 msgid "Error canceling job"
-msgstr "Ошибка при установке метки"
+msgstr "Ошибка отмены задания"
 
 #: ../src/libgdu/gduutils.c:86
 msgid "All Files"
@@ -2928,14 +2922,14 @@ msgstr[2] "%d лет"
 
 #. Translators: Used for number of months
 #: ../src/libgdu/gduutils.c:410
-#, fuzzy, c-format
+#, c-format
 #| msgid "%d minute"
 #| msgid_plural "%d minutes"
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] "%d минута"
-msgstr[1] "%d минуты"
-msgstr[2] "%d минут"
+msgstr[0] "%d месяц"
+msgstr[1] "%d месяца"
+msgstr[2] "%d месяцев"
 
 #. Translators: Used for number of days
 #: ../src/libgdu/gduutils.c:417
@@ -2975,49 +2969,49 @@ msgstr[2] "%d секунд"
 
 #. Translators: Used for number of milli-seconds
 #: ../src/libgdu/gduutils.c:445
-#, fuzzy, c-format
+#, c-format
 #| msgid "%d second"
 #| msgid_plural "%d seconds"
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
-msgstr[0] "%d секунда"
-msgstr[1] "%d секунды"
-msgstr[2] "%d секунд"
+msgstr[0] "%d миллисекунда"
+msgstr[1] "%d миллисекунды"
+msgstr[2] "%d миллисекунд"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
 #: ../src/libgdu/gduutils.c:509
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
-msgstr ""
+msgstr "%s, %s и %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
 #: ../src/libgdu/gduutils.c:514
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
 #: ../src/libgdu/gduutils.c:519
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
 #: ../src/libgdu/gduutils.c:524
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
 #: ../src/libgdu/gduutils.c:535
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #: ../src/libgdu/gduutils.c:544
 #| msgid "Less than a minute"
@@ -3030,14 +3024,14 @@ msgstr "Менее минуты"
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
 #: ../src/libgdu/gduutils.c:555
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #~ msgid "<big>Change Passphrase</big>"
 #~ msgstr "<big>Изменить пароль</big>"

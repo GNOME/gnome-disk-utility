@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-09-13 14:43+0000\n"
-"PO-Revision-Date: 2012-09-16 22:26+0400\n"
+"PO-Revision-Date: 2012-09-17 15:11+0400\n"
 "Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
 "Language-Team: русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -80,7 +80,7 @@ msgstr ""
 
 #: ../data/ui/app-menu.ui.h:1
 msgid "Attach Disk _Image..."
-msgstr "Подключить _образ диска..."
+msgstr "Подключить _образ диска…"
 
 #: ../data/ui/app-menu.ui.h:2
 msgid "_About Disks"
@@ -133,7 +133,7 @@ msgstr "Размер фрагмента"
 #: ../data/ui/benchmark-dialog.ui.h:10
 #| msgid "_Start Creating..."
 msgid "_Start Benchmarking..."
-msgstr "_Начать оценку производительности..."
+msgstr "_Оценка производительности…"
 
 #: ../data/ui/benchmark-dialog.ui.h:11
 msgid ""
@@ -175,6 +175,15 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use) ."
 msgstr ""
+"Для оценки производительности чтения/записи диска требуется исключительный "
+"доступ к диску (т. е. диск и его разделы не могут быть в этот момент "
+"смонтированы или использоваться каким-либо другим способом), данные будут "
+"сначала считаны, а потом записаны обратно, поэтому содержимое диска не "
+"изменится.\n"
+"\n"
+"Если не отмечено, то оценка производительности записи не будет выполнена, "
+"зато для этого не потребуется исключительный доступ к диску (т. е. диск или "
+"устройство можно продолжать использовать)."
 
 #: ../data/ui/benchmark-dialog.ui.h:19
 msgid ""
@@ -277,11 +286,11 @@ msgstr "Выберите папку"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:4
 msgid "Copying data to disk image..."
-msgstr "Копирование данных в образ диска..."
+msgstr "Копирование данных в образ диска…"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:5
 msgid "_Start Creating..."
-msgstr "_Начать создание..."
+msgstr "_Начать создание…"
 
 #: ../data/ui/create-partition-dialog.ui.h:1
 msgid "C_reate"
@@ -399,7 +408,7 @@ msgstr "Удалить раздел…"
 
 #: ../data/ui/disks.ui.h:11
 msgid "Attach Disk Image..."
-msgstr "Присоединить образ диска..."
+msgstr "Присоединить образ диска…"
 
 #: ../data/ui/disks.ui.h:12
 msgid "Detach Disk Image"
@@ -479,11 +488,11 @@ msgstr "Форматировать диск…"
 
 #: ../data/ui/disks.ui.h:34
 msgid "Create Disk Image..."
-msgstr "Создать образ диска..."
+msgstr "Создать образ диска…"
 
 #: ../data/ui/disks.ui.h:35
 msgid "Restore Disk Image..."
-msgstr "Восстановить образ диска..."
+msgstr "Восстановить образ диска…"
 
 #: ../data/ui/disks.ui.h:36
 msgid "Benchmark Drive..."
@@ -525,20 +534,20 @@ msgstr "Сменить пароль…"
 
 #: ../data/ui/disks.ui.h:45
 msgid "Edit Mount Options..."
-msgstr "Изменить параметры монтирования..."
+msgstr "Изменить параметры монтирования…"
 
 #: ../data/ui/disks.ui.h:46
 msgid "Edit Encryption Options..."
-msgstr "Изменить параметры шифрования..."
+msgstr "Изменить параметры шифрования…"
 
 #: ../data/ui/disks.ui.h:47
 msgid "Benchmark Volume..."
-msgstr "Оценить производительность тома..."
+msgstr "Производительность тома…"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 #| msgid "Edit Encryption Options..."
 msgid "Encryption Options"
-msgstr "Параметры шифрования..."
+msgstr "Параметры шифрования…"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid "_Automatic Encryption Options"
@@ -919,7 +928,7 @@ msgstr "Копирование данных на устройство…"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:4
 msgid "_Start Restoring..."
-msgstr "_Начать восстановление..."
+msgstr "_Начать восстановление…"
 
 #: ../data/ui/smart-dialog.ui.h:1
 #| msgid "View SMART Data..."
@@ -1905,7 +1914,7 @@ msgstr "%d МБ/с"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
-msgstr ""
+msgstr "%3g мс"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
 #: ../src/disks/gdubenchmarkdialog.c:640
@@ -1918,9 +1927,9 @@ msgstr "%s/с"
 #, c-format
 msgid "%d sample"
 msgid_plural "%d samples"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d фрагмент"
+msgstr[1] "%d фрагмента"
+msgstr[2] "%d фрагментов"
 
 #. Translators: The first %s is the date and time the benchmark took place in the preferred
 #. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
@@ -1928,11 +1937,11 @@ msgstr[2] ""
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
 #: ../src/disks/gdubenchmarkdialog.c:696
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s (%s)"
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
-msgstr "%s (%s)"
+msgstr "%s (%s) назад"
 
 #: ../src/disks/gdubenchmarkdialog.c:708
 msgctxt "benchmark-updated"
@@ -1943,19 +1952,19 @@ msgstr "Данные об оценке производительности не
 #| msgid "Error opening device"
 msgctxt "benchmark-updated"
 msgid "Opening Device..."
-msgstr "Открытие устройства..."
+msgstr "Открытие устройства…"
 
 #: ../src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)..."
-msgstr ""
+msgstr "Измерение скорости передачи (выполнено %2.1f%%)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)..."
-msgstr ""
+msgstr "Измерение времени доступа (выполнено %2.1f%%)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:840
 #| msgid "An error occurred"
@@ -1967,12 +1976,12 @@ msgstr "Произошла ошибка"
 #. * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
 #.
 #: ../src/disks/gdubenchmarkdialog.c:876
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "volume-grid"
 #| msgid "Partition %d: %s"
 msgctxt "benchmark-drive-name"
 msgid "%s partition on %s (%s)"
-msgstr "Раздел %d: %s"
+msgstr "Раздел %s на %s (%s)"
 
 #. Translators: The first %s is the make/model (e.g. "ST 3160A"), the second %s is
 #. * the description (e.g. "60 GB Hard Disk")
@@ -1994,76 +2003,76 @@ msgid "%.2f msec"
 msgstr "%.2f мс"
 
 #: ../src/disks/gdubenchmarkdialog.c:1264
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error determining size of device"
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
-msgstr "Ошибка определения размера устройства"
+msgstr "Ошибка определения размера устройства: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1274
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error setting partition name"
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
-msgstr "Ошибка установки названия раздела"
+msgstr "Ошибка определения размера страницы: %m\n"
 
 #: ../src/disks/gdubenchmarkdialog.c:1307
 #: ../src/disks/gdubenchmarkdialog.c:1326
 #: ../src/disks/gdubenchmarkdialog.c:1362
 #: ../src/disks/gdubenchmarkdialog.c:1381
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка перемещения к смещению %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1316
 #: ../src/disks/gdubenchmarkdialog.c:1371
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка предварительного чтения %lld байт от смещения %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1337
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error reading %d MB from offset %lld"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка чтения %d МБ от смещения %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1392
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr ""
+msgstr "Ошибка записи %lld байт от смещения %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1402
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
+msgstr "Ожидалось записать %lld байт, но было записано только %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1412
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка синхронизации (в смещении %lld): %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1452
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка перемещения к смещению %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1464
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
-msgstr "Ошибка при чтении от смещения %"
+msgstr "Ошибка чтения %lld байт от смещения %lld"
 
 #: ../src/disks/gduchangepassphrasedialog.c:157
 msgid "Error updating /etc/crypttab"
@@ -2499,6 +2508,9 @@ msgid ""
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
+"<b>Совет</b>: если вы планируете продать или отдать ваш старый компьютер или "
+"диск, рекомендуем использовать более тщательный тип удаления данных, чтобы "
+"предотвратить попадания вашей частной информации в плохие руки"
 
 #. Translators: warning used when overwriting data
 #: ../src/disks/gduformatdiskdialog.c:396
@@ -2506,6 +2518,8 @@ msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
 msgstr ""
+"Все данные на диске будут перезаписаны и, скорее всего, не смогут быть "
+"восстановлены с помощью служб восстановления данных"
 
 #: ../src/disks/gduformatdiskdialog.c:404
 msgid ""
@@ -2516,6 +2530,12 @@ msgid ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
 msgstr ""
+"<b>ПРЕДУПРЕЖДЕНИЕ</b>: команда Secure Erase может занять очень длительное "
+"время, на некотором оборудовании эта команда может работать неправильно. В "
+"наихудшем случае ваш привод испортится или произойдёт поломка вашей системы. "
+"Перед тем, как продолжить, прочтите статью <a href='https://ata.wiki.kernel."
+"org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> и удостверьтесь, что вы "
+"понимаете возможные риски"
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2780,7 +2800,7 @@ msgstr "%s <span size=\"smaller\">(только для чтения)</span>"
 #: ../src/disks/gduwindow.c:1731
 msgctxt "job-remaining-exceeded"
 msgid "Almost done..."
-msgstr "Почти готово..."
+msgstr "Почти готово…"
 
 #: ../src/disks/gduwindow.c:1736
 #, c-format

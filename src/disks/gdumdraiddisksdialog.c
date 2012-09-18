@@ -43,6 +43,7 @@ typedef struct
   GtkWidget *toolbar;
   GtkWidget *add_toolbutton;
   GtkWidget *remove_toolbutton;
+  GtkWidget *goto_disk_toolbutton;
 
   GtkWidget *model_label;
   GtkWidget *device_label;
@@ -64,6 +65,7 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, toolbar), "toolbar"},
   {G_STRUCT_OFFSET (DialogData, add_toolbutton), "add-toolbutton"},
   {G_STRUCT_OFFSET (DialogData, remove_toolbutton), "remove-toolbutton"},
+  {G_STRUCT_OFFSET (DialogData, goto_disk_toolbutton), "goto-disk-toolbutton"},
 
   {G_STRUCT_OFFSET (DialogData, model_label), "model-label"},
   {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
@@ -393,6 +395,43 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_goto_disk_toolbutton_clicked (GtkToolButton   *tool_button,
+                                 gpointer         user_data)
+{
+  DialogData *data = user_data;
+  UDisksBlock *selected_block = NULL;
+  UDisksObject *selected_block_object = NULL;
+  GtkTreeIter titer;
+
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                       NULL, /* out_model */
+                                       &titer))
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (data->store),
+                          &titer,
+                          COLUMN_BLOCK, &selected_block,
+                          -1);
+      if (selected_block != NULL)
+        selected_block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (selected_block));
+    }
+
+  if (selected_block_object == NULL)
+    {
+      g_warning ("Cannot determine device to go to");
+      goto out;
+    }
+
+  dialog_data_close (data);
+  gdu_window_select_object (data->window, selected_block_object);
+
+ out:
+  g_clear_object (&selected_block_object);
+  g_clear_object (&selected_block);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 slot_cell_func (GtkTreeViewColumn *column,
                 GtkCellRenderer   *renderer,
                 GtkTreeModel      *model,
@@ -705,7 +744,6 @@ init_dialog (DialogData *data)
   context = gtk_widget_get_style_context (data->toolbar);
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
-  gtk_widget_set_name (data->toolbar, "mdraid-disks-toolbar");
 
   data->store = gtk_list_store_new (5,
                                     G_TYPE_INT,
@@ -807,6 +845,11 @@ init_dialog (DialogData *data)
   g_signal_connect (data->remove_toolbutton,
                     "clicked",
                     G_CALLBACK (on_remove_toolbutton_clicked),
+                    data);
+
+  g_signal_connect (data->goto_disk_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_goto_disk_toolbutton_clicked),
                     data);
 
 

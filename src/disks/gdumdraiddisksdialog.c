@@ -16,12 +16,15 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdumdraiddisksdialog.h"
+#include "gduatasmartdialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct
 {
   volatile gint ref_count;
+
+  gboolean in_update;
 
   UDisksClient *client;
   UDisksObject *object;
@@ -36,9 +39,15 @@ typedef struct
   GtkWidget *close_button;
   GtkWidget *scrolledwindow;
   GtkWidget *treeview;
+
   GtkWidget *toolbar;
   GtkWidget *add_toolbutton;
   GtkWidget *remove_toolbutton;
+
+  GtkWidget *model_label;
+  GtkWidget *device_label;
+  GtkWidget *serial_label;
+  GtkWidget *assessment_label;
 
   GtkListStore *store;
 } DialogData;
@@ -51,9 +60,15 @@ static const struct {
 
   {G_STRUCT_OFFSET (DialogData, scrolledwindow), "scrolledwindow"},
   {G_STRUCT_OFFSET (DialogData, treeview), "treeview"},
+
   {G_STRUCT_OFFSET (DialogData, toolbar), "toolbar"},
   {G_STRUCT_OFFSET (DialogData, add_toolbutton), "add-toolbutton"},
   {G_STRUCT_OFFSET (DialogData, remove_toolbutton), "remove-toolbutton"},
+
+  {G_STRUCT_OFFSET (DialogData, model_label), "model-label"},
+  {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
+  {G_STRUCT_OFFSET (DialogData, serial_label), "serial-label"},
+  {G_STRUCT_OFFSET (DialogData, assessment_label), "assessment-label"},
 
   {0, NULL}
 };
@@ -63,6 +78,9 @@ static void update_dialog (DialogData *data);
 
 static void on_client_changed (UDisksClient  *client,
                                gpointer       user_data);
+
+static void on_tree_selection_changed (GtkTreeSelection *selection,
+                                       gpointer          user_data);
 
 enum
 {
@@ -87,6 +105,10 @@ dialog_data_unref (DialogData *data)
 {
   if (g_atomic_int_dec_and_test (&data->ref_count))
     {
+      g_signal_handlers_disconnect_by_func (data->treeview,
+                                            G_CALLBACK (on_tree_selection_changed),
+                                            data);
+
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
@@ -117,7 +139,7 @@ dialog_data_close (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_dialog (DialogData *data)
+update_dialog_treeview (DialogData *data)
 {
   GVariantIter iter;
   gint disk_slot;
@@ -184,6 +206,106 @@ update_dialog (DialogData *data)
     }
   g_clear_object (&selected_block);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_dialog_labels (DialogData *data)
+{
+  GtkTreeIter titer;
+  UDisksBlock *block = NULL;
+  UDisksDrive *drive = NULL;
+  gchar *model_markup = NULL;
+  gchar *device_markup = NULL;
+  gchar *serial_markup = NULL;
+  gchar *assessment_markup = NULL;
+
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                       NULL, /* out_model */
+                                       &titer))
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (data->store),
+                          &titer,
+                          COLUMN_BLOCK, &block,
+                          -1);
+    }
+
+  if (block == NULL)
+    goto out;
+
+  if (udisks_block_get_read_only (block))
+    {
+      /* Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1 */
+      device_markup = g_strdup_printf (_("%s <span size=\"smaller\">(Read-Only)</span>"),
+                                       udisks_block_get_preferred_device (block));
+    }
+  else
+    {
+      device_markup = g_strdup (udisks_block_get_preferred_device (block));
+    }
+
+  drive = udisks_client_get_drive_for_block (data->client, block);
+  if (drive != NULL)
+    {
+      UDisksObject *drive_object = NULL;
+      UDisksDriveAta *ata = NULL;
+      gchar *name = NULL;
+
+      udisks_client_get_drive_info (data->client,
+                                    drive,
+                                    &name,  /* out_name */
+                                    NULL,   /* out_description */
+                                    NULL,   /* out_drive_icon */
+                                    NULL,   /* out_media_description */
+                                    NULL);  /* out_media_icon */
+      model_markup = g_strdup_printf ("%s (%s)", name,
+                                      udisks_drive_get_revision (drive));
+      g_free (name);
+      serial_markup = udisks_drive_dup_serial (drive);
+
+      drive_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
+      ata = udisks_object_peek_drive_ata (drive_object);
+      if (ata != NULL && !udisks_drive_get_media_removable (drive))
+        {
+          assessment_markup = gdu_ata_smart_get_one_liner_assessment (ata,
+                                                                      NULL,  /* out_smart_is_supported */
+                                                                      NULL); /* out_warning */
+        }
+    }
+
+ out:
+  gtk_label_set_markup (GTK_LABEL (data->model_label),      model_markup != NULL ?      model_markup : "—");
+  gtk_label_set_markup (GTK_LABEL (data->device_label),     device_markup != NULL ?     device_markup : "—");
+  gtk_label_set_markup (GTK_LABEL (data->serial_label),     serial_markup != NULL ?     serial_markup : "—");
+  gtk_label_set_markup (GTK_LABEL (data->assessment_label), assessment_markup != NULL ? assessment_markup : "—");
+
+  g_free (model_markup);
+  g_free (device_markup);
+  g_free (serial_markup);
+  g_free (assessment_markup);
+  g_clear_object (&drive);
+  g_clear_object (&block);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_dialog (DialogData *data)
+{
+  /* don't recurse */
+  if (data->in_update)
+    goto out;
+
+  data->in_update = TRUE;
+  update_dialog_treeview (data);
+  update_dialog_labels (data);
+  data->in_update = FALSE;
+
+ out:
+  ;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 G_GNUC_UNUSED static void
 on_property_changed (GObject     *object,
@@ -377,37 +499,36 @@ name_cell_func (GtkTreeViewColumn *column,
   else
     {
       UDisksDrive *drive = NULL;
-      gchar *name = NULL;
-      gchar *desc = NULL;
 
       drive = udisks_client_get_drive_for_block (data->client, block);
       if (drive != NULL)
         {
           UDisksPartition *partition = NULL;
           UDisksObject *object = NULL;
+          gchar *desc = NULL;
 
           udisks_client_get_drive_info (data->client,
                                         drive,
-                                        &name,  /* out_name */
-                                        &desc,  /* out_description */
-                                        NULL,   /* out_drive_icon */
-                                        NULL,   /* out_media_description */
-                                        NULL);  /* out_media_icon */
+                                        NULL,     /* out_name */
+                                        &desc,    /* out_description */
+                                        NULL,     /* out_drive_icon */
+                                        NULL,     /* out_media_description */
+                                        NULL);    /* out_media_icon */
 
           object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
           if (object != NULL)
             partition = udisks_object_peek_partition (object);
-
           if (partition != NULL)
             {
-              s = g_strdup_printf (C_("mdraid-disks", "Partition %d of %s"),
-                                   udisks_partition_get_number (partition),
-                                   desc);
-              g_free (desc); desc = s;
+              markup = g_strdup_printf (C_("mdraid-disks", "Partition %d of %s"),
+                                        udisks_partition_get_number (partition),
+                                        desc);
+              g_free (desc);
             }
-
-          s = g_strdup_printf ("%s — %s", name, udisks_block_get_preferred_device (block));
-          g_free (name); name = s;
+          else
+            {
+              markup = desc;
+            }
 
           g_object_unref (drive);
         }
@@ -417,20 +538,9 @@ name_cell_func (GtkTreeViewColumn *column,
           /* Translators: Shown in list for a disk/member that is not a drive.
            *              The %s is the size (e.g. "42.0 GB").
            */
-          desc = g_strdup_printf (C_("mdraid-disks", "%s Block Device"), s);
+          markup = g_strdup_printf (C_("mdraid-disks", "%s Block Device"), s);
           g_free (s);
-          name = udisks_block_dup_preferred_device (block);
         }
-
-      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-       * of hard-coding the color
-       */
-      markup = g_strdup_printf ("%s\n"
-                                "<small><span foreground=\"#555555\">%s</span></small>",
-                                desc,
-                                name);
-      g_free (desc);
-      g_free (name);
     }
 
   g_object_set (renderer,
@@ -484,11 +594,13 @@ state_cell_func (GtkTreeViewColumn *column,
                  gpointer           user_data)
 {
   /* DialogData *data = user_data; */
+  gint slot = -1;
   gchar *state = NULL;
   gchar *markup = NULL;
 
   gtk_tree_model_get (model,
                       iter,
+                      COLUMN_SLOT, &slot,
                       COLUMN_STATE, &state,
                       -1);
 
@@ -499,8 +611,8 @@ state_cell_func (GtkTreeViewColumn *column,
   else if (g_strcmp0 (state, "faulty") == 0)
     {
       /* Translators: MD-RAID member state for 'faulty' */
-      markup = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n",
-                                C_("mdraid-disks-state", "FAILING"));
+      markup = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>",
+                                C_("mdraid-disks-state", "FAILED"));
     }
   else if (g_strcmp0 (state, "in_sync") == 0)
     {
@@ -519,8 +631,16 @@ state_cell_func (GtkTreeViewColumn *column,
     }
   else if (g_strcmp0 (state, "spare") == 0)
     {
-      /* Translators: MD-RAID member state for 'spare' */
-      markup = g_strdup (C_("mdraid-disks-state", "Spare"));
+      if (slot < 0)
+        {
+          /* Translators: MD-RAID member state for 'spare' */
+          markup = g_strdup (C_("mdraid-disks-state", "Spare"));
+        }
+      else
+        {
+          /* Translators: MD-RAID member state for 'spare' but is being recovered to  */
+          markup = g_strdup (C_("mdraid-disks-state", "Recovering"));
+        }
     }
   else
     {
@@ -628,7 +748,7 @@ init_dialog (DialogData *data)
   /* -- */
   renderer = gtk_cell_renderer_pixbuf_new ();
   g_object_set (G_OBJECT (renderer),
-                "stock-size", GTK_ICON_SIZE_DND,
+                "stock-size", GTK_ICON_SIZE_SMALL_TOOLBAR,
                 NULL);
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_cell_data_func (column,
@@ -641,6 +761,7 @@ init_dialog (DialogData *data)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   g_object_set (G_OBJECT (renderer),
                 "yalign", 0.5,
+                "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
                 NULL);
   gtk_tree_view_column_set_cell_data_func (column,
                                            renderer,
@@ -696,12 +817,25 @@ init_dialog (DialogData *data)
                     G_CALLBACK (on_client_changed),
                     data);
 
+  g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                    "changed",
+                    G_CALLBACK (on_tree_selection_changed),
+                    data);
+
   update_dialog (data);
 }
 
 static void
 on_client_changed (UDisksClient   *client,
                    gpointer        user_data)
+{
+  DialogData *data = user_data;
+  update_dialog (data);
+}
+
+static void
+on_tree_selection_changed (GtkTreeSelection *selection,
+                           gpointer          user_data)
 {
   DialogData *data = user_data;
   update_dialog (data);

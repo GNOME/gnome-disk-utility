@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-17 11:13+0000\n"
-"PO-Revision-Date: 2012-09-18 09:19+0100\n"
+"POT-Creation-Date: 2012-09-18 07:21+0000\n"
+"PO-Revision-Date: 2012-09-19 16:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -128,7 +128,7 @@ msgstr "_Začni primerjalni preizkus ..."
 
 #: ../data/ui/benchmark-dialog.ui.h:11
 msgid "Benchmarking involves measuring the transfer rate on various area of the device as well as measuring how long it takes to seek from one random area to another. Please back up important data before using the write benchmark."
-msgstr ""
+msgstr "Primerjalni preskus vključuje merjenje hitrosti prenosa podatkov na različnih območjih naprave kot tudi merjenje časa, potrebnega za iskanje z enega naključnega mesta do drugega. Pred uporabo primerjalnega preskusa pisanja zagotovo varnostno kopirajte pomembne podatke."
 
 #: ../data/ui/benchmark-dialog.ui.h:12
 msgid "Transfer Rate"
@@ -152,6 +152,8 @@ msgid ""
 "\n"
 "If not checked, the write-part of the benchmark will not be done but on the other hand exclusive access to the device is not needed (e.g. the disk or device can be in use) ."
 msgstr ""
+"Primerjalni preskus hitrosti pisanja diska zahteva izključen dostop do diska (npr. disk ali njegovih razdelkov ni mogoče priklopiti ali uporabljati) in vključuje branje podatkov in njihovo povratno pisanje. Rezultat tega je, da se vsebina diska ne spremeni.n\n"
+"Če možnost ni potrjena, pisalnega dela primerjalnega preskusa ne bo opravljen, zato izključni dostop do naprave ne bo potreben (npr. disk ali naprava je lahko v uporabi)."
 
 #: ../data/ui/benchmark-dialog.ui.h:19
 msgid "Number of samples. Bigger number produces a more accurate picture of access time patterns but takes more time."
@@ -304,7 +306,7 @@ msgstr "Agresivno varčevanje z ustavljanjem (spindown) lahko hitreje povzroči 
 
 #: ../data/ui/disk-settings-dialog.ui.h:7
 msgid "Automatic Aco_ustic Management"
-msgstr ""
+msgstr "Samodejno upravljanje _hrupa"
 
 #: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "Vendor Recommended"
@@ -2202,11 +2204,11 @@ msgstr "Približno %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr "Varni izbris ATA"
+msgstr "Varno brisanje ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr "Razširjeno ATA varno brisanje "
+msgstr "Razširjeno varno brisanje ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
@@ -2244,7 +2246,7 @@ msgstr "Vsi podatki na disku bodo prepisani, vendar jih bo najverjetneje še mog
 #: ../src/disks/gduformatdiskdialog.c:391
 #: ../src/disks/gduformatvolumedialog.c:153
 msgid "<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more thorough erase type to keep your private information from falling into the wrong hands"
-msgstr ""
+msgstr "<b>Namig</b>: če nameravate reciklirati, prodati ali podariti stari računalnik ali disk, je bolje, da uporabite bolj temeljito vrsto brisanja, da vaši zasebni podatki ne pridejo v napačne roke"
 
 #. Translators: warning used when overwriting data
 #: ../src/disks/gduformatdiskdialog.c:396
@@ -2253,7 +2255,7 @@ msgstr "Vsi podatki na disku bodo prepisani in jih najverjetneje na noben način
 
 #: ../src/disks/gduformatdiskdialog.c:404
 msgid "<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can't be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"
-msgstr ""
+msgstr "<b>OPOZORILO</b>: Ukaz Varno brisanje lahko vzame veliko časa, ga ni mogoče preklicati in ima lahko težave z delovanjem na določeni strojni opremi. V najslabšem primeru lahko vaš pogon postane neuporaben ali pa lahko vaš sistem sesuje ali zaklene. Pred nadaljevanjem si preberite članek o <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>Varno brisanje ATA</a> (v ang. jeziku) in se prepričajte, da razumete morebitno tveganje."
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2745,71 +2747,3 @@ msgstr "%s"
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
-
-#~ msgid "<big>Change Passphrase</big>"
-#~ msgstr "<big>Spreminjanje šifrirnega gesla</big>"
-
-#~ msgid "<big>Create Disk Image</big>"
-#~ msgstr "<big>Ustvarjanje odtisa diska</big>"
-
-#~ msgid "<big>Contents</big>"
-#~ msgstr "<big>Vsebina</big>"
-
-#~ msgid "<big>Edit Partition</big>"
-#~ msgstr "<big>Urejanje razdelka</big>"
-
-#~ msgid "<big>Format Disk</big>"
-#~ msgstr "<big>Formatiranje diska</big>"
-
-#~ msgid "<big>Restore Disk Image</big>"
-#~ msgstr "<big>Obnovi odtis diska</big>"
-
-#~ msgid "Updates"
-#~ msgstr "Posodobitve"
-
-#~ msgid "Normalized"
-#~ msgstr "Normalizirano"
-
-#~ msgid "%.1f hour"
-
-#~ msgid_plural "%.1f hours"
-#~ msgstr[0] "%.1f ur"
-#~ msgstr[1] "%.1f ura"
-#~ msgstr[2] "%.1f uri"
-#~ msgstr[3] "%.1f ure"
-
-#~ msgid "%.1f second"
-
-#~ msgid_plural "%.1f seconds"
-#~ msgstr[0] "%.1f sekund"
-#~ msgstr[1] "%.1f sekunda"
-#~ msgstr[2] "%.1f sekundi"
-#~ msgstr[3] "%.1f sekunde"
-
-#~ msgid "Failure is a sign the disk will fail within 24 hours (Pre-Fail)"
-#~ msgstr "Odpovedovanje je znak, da bo disk okvarjen v roku 24 ur (Pre-Fail)"
-
-#~ msgid ""
-#~ "Failure is a sign the disk exceeded its intended design life period (Old-"
-#~ "Age)"
-#~ msgstr ""
-#~ "Odpovedovanje je znak, da je disk prešel zasnovano življenjsko dobo "
-#~ "delovanja (Old-Age)"
-
-#~ msgid "Every time data is collected (Online)"
-#~ msgstr "Vsakič, ko so zbrani podatki (Online)"
-
-#~ msgid "Only during off-line activities (Not Online)"
-#~ msgstr "Samo med dejavnostmi brez povezave (Not Online)"
-
-#~ msgid "Name"
-#~ msgstr "Ime"
-
-#~ msgid "Copying data from device <i>%s</i>..."
-#~ msgstr "Kopiranje podatkov z naprave <i>%s</i> ..."
-
-#~ msgid "All data on the volume will be lost"
-#~ msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni"
-
-#~ msgid "Copying data to device <i>%s</i>..."
-#~ msgstr "Zapisovanje podatkov na napravo <i>%s</i> ..."

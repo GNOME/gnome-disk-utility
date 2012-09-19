@@ -88,7 +88,7 @@ enum
 {
   COLUMN_SLOT,
   COLUMN_BLOCK,
-  COLUMN_STATE,
+  COLUMN_STATES,
   COLUMN_NUM_ERRORS,
   COLUMN_EXPANSION,
 };
@@ -146,7 +146,7 @@ update_dialog_treeview (DialogData *data)
   GVariantIter iter;
   gint disk_slot;
   const gchar *disk_block_objpath;
-  const gchar *disk_state;
+  const gchar **disk_states;
   guint64 disk_num_errors;
   GtkTreeIter titer;
   UDisksBlock *selected_block = NULL;
@@ -166,10 +166,10 @@ update_dialog_treeview (DialogData *data)
     }
   gtk_list_store_clear (data->store);
   g_variant_iter_init (&iter, udisks_mdraid_get_active_devices (data->mdraid));
-  while (g_variant_iter_next (&iter, "(&oi&sta{sv})",
+  while (g_variant_iter_next (&iter, "(&oi^a&sta{sv})",
                               &disk_block_objpath,
                               &disk_slot,
-                              &disk_state,
+                              &disk_states,
                               &disk_num_errors,
                               NULL)) /* expansion */
     {
@@ -188,11 +188,13 @@ update_dialog_treeview (DialogData *data)
                                          -1,   /* position */
                                          COLUMN_SLOT, disk_slot,
                                          COLUMN_BLOCK, block,
-                                         COLUMN_STATE, disk_state,
+                                         COLUMN_STATES, disk_states,
                                          COLUMN_NUM_ERRORS, (guint64) disk_num_errors,
                                          -1);
       if (block == selected_block)
         iter_to_select = gtk_tree_iter_copy (&inserted_iter);
+
+      g_free (disk_states);
     }
   if (iter_to_select == NULL)
     {
@@ -634,57 +636,81 @@ state_cell_func (GtkTreeViewColumn *column,
 {
   /* DialogData *data = user_data; */
   gint slot = -1;
-  gchar *state = NULL;
+  gchar **states = NULL;
   gchar *markup = NULL;
 
   gtk_tree_model_get (model,
                       iter,
                       COLUMN_SLOT, &slot,
-                      COLUMN_STATE, &state,
+                      COLUMN_STATES, &states,
                       -1);
 
-  if (state == NULL || strlen (state) == 0)
+  if (states == NULL || g_strv_length (states) == 0)
     {
       markup = g_strdup ("—");
     }
-  else if (g_strcmp0 (state, "faulty") == 0)
-    {
-      /* Translators: MD-RAID member state for 'faulty' */
-      markup = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>",
-                                C_("mdraid-disks-state", "FAILED"));
-    }
-  else if (g_strcmp0 (state, "in_sync") == 0)
-    {
-      /* Translators: MD-RAID member state for 'in_sync' */
-      markup = g_strdup (C_("mdraid-disks-state", "In Sync"));
-    }
-  else if (g_strcmp0 (state, "writemostly") == 0)
-    {
-      /* Translators: MD-RAID member state for 'writemostly' */
-      markup = g_strdup (C_("mdraid-disks-state", "In Sync (Write-Mostly)"));
-    }
-  else if (g_strcmp0 (state, "blocked") == 0)
-    {
-      /* Translators: MD-RAID member state for 'blocked' */
-      markup = g_strdup (C_("mdraid-disks-state", "Blocked"));
-    }
-  else if (g_strcmp0 (state, "spare") == 0)
-    {
-      if (slot < 0)
-        {
-          /* Translators: MD-RAID member state for 'spare' */
-          markup = g_strdup (C_("mdraid-disks-state", "Spare"));
-        }
-      else
-        {
-          /* Translators: MD-RAID member state for 'spare' but is being recovered to  */
-          markup = g_strdup (C_("mdraid-disks-state", "Recovering"));
-        }
-    }
   else
     {
-      /* Translators: MD-RAID member state unknown. The %s is the raw state from sysfs */
-      markup = g_strdup_printf (C_("mdraid-disks-state", "Unknown (%s)"), state);
+      GString *str = g_string_new (NULL);
+      guint n;
+      for (n = 0; states[n] != NULL; n++)
+        {
+          const gchar *state = states[n];
+          if (g_strcmp0 (state, "faulty") == 0)
+            {
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: MD-RAID member state for 'faulty' */
+              g_string_append_printf (str, "<span foreground=\"#ff0000\">%s</span>",
+                                      C_("mdraid-disks-state", "FAILED"));
+            }
+          else if (g_strcmp0 (state, "in_sync") == 0)
+            {
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: MD-RAID member state for 'in_sync' */
+              g_string_append (str, C_("mdraid-disks-state", "In Sync"));
+            }
+          else if (g_strcmp0 (state, "spare") == 0)
+            {
+              if (slot < 0)
+                {
+                  if (str->len > 0)
+                    g_string_append (str, ", ");
+                  /* Translators: MD-RAID member state for 'spare' */
+                  g_string_append (str, C_("mdraid-disks-state", "Spare"));
+                }
+              else
+                {
+                  if (str->len > 0)
+                    g_string_append (str, ", ");
+                  /* Translators: MD-RAID member state for 'spare' but is being recovered to  */
+                  g_string_append (str, C_("mdraid-disks-state", "Recovering"));
+                }
+            }
+          else if (g_strcmp0 (state, "write_mostly") == 0)
+            {
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: MD-RAID member state for 'writemostly' */
+              g_string_append (str, C_("mdraid-disks-state", "Write-mostly"));
+            }
+          else if (g_strcmp0 (state, "blocked") == 0)
+            {
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: MD-RAID member state for 'blocked' */
+              g_string_append (str, C_("mdraid-disks-state", "Blocked"));
+            }
+          else
+            {
+              if (str->len > 0)
+                g_string_append (str, ", ");
+              /* Translators: MD-RAID member state unknown. The %s is the raw state from sysfs */
+              g_string_append_printf (str, C_("mdraid-disks-state", "Unknown (%s)"), state);
+            }
+        } /* for all states */
+      markup = g_string_free (str, FALSE);
     }
 
   g_object_set (renderer,
@@ -692,7 +718,7 @@ state_cell_func (GtkTreeViewColumn *column,
                 NULL);
 
   g_free (markup);
-  g_free (state);
+  g_strfreev (states);
 }
 
 
@@ -748,7 +774,7 @@ init_dialog (DialogData *data)
   data->store = gtk_list_store_new (5,
                                     G_TYPE_INT,
                                     UDISKS_TYPE_BLOCK,
-                                    G_TYPE_STRING,
+                                    G_TYPE_STRV,
                                     G_TYPE_UINT64,
                                     G_TYPE_VARIANT);
 

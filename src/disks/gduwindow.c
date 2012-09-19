@@ -131,9 +131,9 @@ struct _GduWindow
 
   GtkWidget *devtab_drive_raid_state_label;
   GtkWidget *devtab_drive_raid_state_grid;
+  GtkWidget *devtab_drive_raid_state_value_label;
   GtkWidget *devtab_drive_raid_state_progressbar;
   GtkWidget *devtab_drive_raid_state_progress_label;
-  GtkWidget *devtab_drive_raid_state_no_progress_label;
 
   GtkWidget *devtab_drive_job_label;
   GtkWidget *devtab_drive_job_grid;
@@ -222,9 +222,9 @@ static const struct {
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_label), "devtab-drive-raid-state-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_grid), "devtab-drive-raid-state-grid"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_value_label), "devtab-drive-raid-state-value-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progressbar), "devtab-drive-raid-state-progressbar"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progress_label), "devtab-drive-raid-state-progress-label"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_no_progress_label), "devtab-drive-raid-state-no-progress-label"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -1905,7 +1905,9 @@ update_device_page_for_mdraid (GduWindow      *window,
   guint degraded;
   const gchar *sync_action;
   gdouble sync_completed;
-  gboolean sync_show_completed = FALSE;
+  gchar *degraded_markup = NULL;
+  gchar *raid_state_upper = NULL;
+  gchar *raid_state_lower = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID array is not running"));
@@ -2052,6 +2054,29 @@ update_device_page_for_mdraid (GduWindow      *window,
   /* -------------------------------------------------- */
   /* 'State' field */
 
+  degraded_markup = NULL;
+  if (degraded > 0)
+    {
+      /* Translators: Shown in the 'Degraded' field for a degraded RAID array.
+       *              The %d is the number of missing disks (always > 0).
+       */
+      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                       "%d disk is missing",
+                                       "%d disks are missing",
+                                       (gint) degraded),
+                            (gint) degraded);
+      /* Translators: string shown when the RAID array is degraded. All-caps is used for emphasis */
+      s3 = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
+                            C_("mdraid", "ARRAY IS DEGRADED"));
+      /* Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
+       *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
+       */
+      degraded_markup = g_strdup_printf (C_("mdraid-degraded", "%s — %s"),
+                                         s3, s2);
+      g_free (s2);
+      g_free (s3);
+    }
+
   if (sync_action == NULL || strlen (sync_action) == 0)
     {
       if (udisks_mdraid_get_can_start (mdraid))
@@ -2070,51 +2095,60 @@ update_device_page_for_mdraid (GduWindow      *window,
           s = g_strdup (C_("mdraid-state", "Not running — Not enough disks to start"));
         }
     }
-  else if (g_strcmp0 (sync_action, "idle") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Running"));
-    }
-  else if (g_strcmp0 (sync_action, "check") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Redundancy check underway"));
-      sync_show_completed = TRUE;
-    }
-  else if (g_strcmp0 (sync_action, "repair") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Redundancy check and repair underway"));
-      sync_show_completed = TRUE;
-    }
-  else if (g_strcmp0 (sync_action, "resync") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Resyncing"));
-      sync_show_completed = TRUE;
-    }
-  else if (g_strcmp0 (sync_action, "recover") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Recovering"));
-      sync_show_completed = TRUE;
-    }
-  else if (g_strcmp0 (sync_action, "frozen") == 0)
-    {
-      s = g_strdup (C_("mdraid-state", "Frozen"));
-    }
   else
     {
-      g_warning ("unhandled sync action `%s'", sync_action);
-      s = g_strdup (sync_action);
+      if (degraded_markup != NULL)
+        {
+          raid_state_upper = g_strdup (degraded_markup);
+        }
+      else
+        {
+          raid_state_upper = g_strdup (C_("mdraid-state", "Running"));
+        }
+
+      if (g_strcmp0 (sync_action, "idle") == 0)
+        {
+          ;
+        }
+      else if (g_strcmp0 (sync_action, "check") == 0)
+        {
+          raid_state_lower = g_strdup (C_("mdraid-state", "Redundancy check underway"));
+        }
+      else if (g_strcmp0 (sync_action, "repair") == 0)
+        {
+          raid_state_lower = g_strdup (C_("mdraid-state", "Redundancy check and repair underway"));
+        }
+      else if (g_strcmp0 (sync_action, "resync") == 0)
+        {
+          raid_state_lower = g_strdup (C_("mdraid-state", "Resyncing"));
+        }
+      else if (g_strcmp0 (sync_action, "recover") == 0)
+        {
+          raid_state_lower = g_strdup (C_("mdraid-state", "Recovering"));
+        }
+      else if (g_strcmp0 (sync_action, "frozen") == 0)
+        {
+          raid_state_lower = g_strdup (C_("mdraid-state", "Frozen"));
+        }
+      else
+        {
+          g_warning ("unhandled sync action `%s'", sync_action);
+          raid_state_lower = g_strdup (sync_action);
+        }
     }
+
+  gtk_widget_show (window->devtab_drive_raid_state_value_label);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state_upper);
 
   gtk_widget_show (window->devtab_drive_raid_state_label);
   gtk_widget_show (window->devtab_drive_raid_state_grid);
-  if (sync_show_completed)
+  if (raid_state_lower != NULL)
     {
       gtk_widget_show (window->devtab_drive_raid_state_progressbar);
       gtk_widget_show (window->devtab_drive_raid_state_progress_label);
-      gtk_widget_hide (window->devtab_drive_raid_state_no_progress_label);
 
-      s2 = g_strdup_printf ("<small>%s</small>", s);
-      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_progress_label), s2);
-      g_free (s2);
+      s = g_strdup_printf ("<small>%s</small>", raid_state_lower);
+      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_progress_label), s);
       g_free (s);
 
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), sync_completed);
@@ -2128,41 +2162,10 @@ update_device_page_for_mdraid (GduWindow      *window,
     {
       gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
       gtk_widget_hide (window->devtab_drive_raid_state_progress_label);
-      gtk_widget_show (window->devtab_drive_raid_state_no_progress_label);
-      gtk_label_set_text (GTK_LABEL (window->devtab_drive_raid_state_no_progress_label), s);
-      g_free (s);
     }
 
   /* -------------------------------------------------- */
-  /* 'Degraded' field - only shown if actually degraded */
-
-  s = NULL;
-  if (degraded > 0)
-    {
-      /* Translators: Shown in the 'Degraded' field for a degraded RAID array.
-       *              The %d is the number of missing disks (always > 0).
-       */
-      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                       "%d disk is missing",
-                                       "%d disks are missing",
-                                       (gint) degraded),
-                            (gint) degraded);
-      /* Translators: string shown when the RAID array is degraded. All-caps is used for emphasis */
-      s3 = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
-                            C_("mdraid", "ARRAY IS DEGRADED"));
-      /* Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
-       *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
-       */
-      s = g_strdup_printf (C_("mdraid-degraded", "%s — %s"),
-                           s3, s2);
-      g_free (s2);
-      g_free (s3);
-    }
-  set_markup (window,
-              "devtab-drive-raid-degraded-label",
-              "devtab-drive-raid-degraded-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
-  g_free (s);
+  /* TODO: 'Intent Log' (e.g. bitmap) field */
 
   /* -------------------------------------------------- */
   /* 'Job' field - only shown if a job is running */
@@ -2189,6 +2192,9 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   /* -------------------------------------------------- */
 
+  g_free (raid_state_upper);
+  g_free (raid_state_lower);
+  g_free (degraded_markup);
   g_list_free_full (members, g_object_unref);
   g_list_free_full (jobs, g_object_unref);
   g_free (level_desc);

@@ -2037,8 +2037,8 @@ update_device_page_for_mdraid (GduWindow      *window,
    *              The %d is the number of required disks.
    */
   s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                   "%d disk",
-                                   "%d disks",
+                                   "%d Disk",
+                                   "%d Disks",
                                    (gint) num_devices),
                         (gint) num_devices);
   if (chunk_size > 0)

@@ -1902,7 +1902,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   char hostname[512];
   GList *jobs = NULL;
   GList *members = NULL;
-  guint degraded;
+  guint degraded = 0;
+  guint64 chunk_size = 0;
   const gchar *sync_action;
   gdouble sync_completed;
   const gchar *bitmap_location;
@@ -1921,6 +1922,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   sync_action = udisks_mdraid_get_sync_action (mdraid);
   sync_completed = udisks_mdraid_get_sync_completed (mdraid);
   bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
+  chunk_size = udisks_mdraid_get_chunk_size (mdraid);
 
   icon = g_themed_icon_new ("gdu-enclosure");
 
@@ -2039,9 +2041,20 @@ update_device_page_for_mdraid (GduWindow      *window,
                                    "%d disks",
                                    (gint) num_devices),
                         (gint) num_devices);
+  if (chunk_size > 0)
+    {
+      s3 = udisks_client_get_size_for_display (window->client, chunk_size, TRUE, FALSE);
+      /* Translators: Used to combine number of disks and the chunk size.
+       *              The first %s is the number of disks e.g. "3 disks".
+       *              The second %s is the chunk size e.g. "512 KiB".
+       */
+      s = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
+      s2 = s;
+      s = NULL;
+    }
   /* Translators: Shown in the "RAID Level" field.
    *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-   *              The second %s is the number of RAID disks e.g. "8 disks".
+   *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB chunk".
    */
   s = g_strdup_printf (C_("mdraid", "%s — %s"),
                        level_desc,

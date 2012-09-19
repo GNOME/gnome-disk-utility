@@ -1939,8 +1939,6 @@ update_device_page_for_mdraid (GduWindow      *window,
       desc = g_strdup (C_("md-raid-window", "RAID Array"));
     }
 
-  level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), TRUE);
-
   update_grid_for_mdraid (window, mdraid);
 
   if (block != NULL)
@@ -2032,6 +2030,8 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   /* -------------------------------------------------- */
   /* 'Raid Level' field */
+
+  level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE);
 
   /* Translators: Used to convey the number of required disks for a RAID array
    *              The %d is the number of required disks.

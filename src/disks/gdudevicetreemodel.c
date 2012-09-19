@@ -880,11 +880,7 @@ update_drive (GduDeviceTreeModel *model,
 {
   UDisksDrive *drive = NULL;
   UDisksDriveAta *ata = NULL;
-  GIcon *drive_icon = NULL;
-  GIcon *media_icon = NULL;
-  gchar *name = NULL;
-  gchar *description = NULL;
-  gchar *media_description = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
   gchar *sort_key = NULL;
   gboolean warning = FALSE;
@@ -912,13 +908,7 @@ update_drive (GduDeviceTreeModel *model,
       g_free (s);
     }
 
-  udisks_client_get_drive_info (model->client,
-                                drive,
-                                &name,
-                                &description,
-                                &drive_icon,
-                                &media_description,
-                                &media_icon);
+  info = udisks_client_get_object_info (model->client, object);
   if (warning)
     {
       /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
@@ -926,8 +916,8 @@ update_drive (GduDeviceTreeModel *model,
        */
       s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
                            "<small><span foreground=\"#ff0000\">%s</span></small>",
-                           description,
-                           name);
+                           info->description,
+                           info->name);
     }
   else
     {
@@ -936,8 +926,8 @@ update_drive (GduDeviceTreeModel *model,
        */
       s = g_strdup_printf ("%s\n"
                            "<small><span foreground=\"#555555\">%s</span></small>",
-                           description,
-                           name);
+                           info->description,
+                           info->name);
     }
 
   jobs_running = drive_has_jobs (model->client, drive);
@@ -951,7 +941,7 @@ update_drive (GduDeviceTreeModel *model,
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, drive_icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, info->icon,
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
@@ -969,15 +959,10 @@ update_drive (GduDeviceTreeModel *model,
     }
 
  out:
-  if (media_icon != NULL)
-    g_object_unref (media_icon);
-  if (drive_icon != NULL)
-    g_object_unref (drive_icon);
+  if (info != NULL)
+    udisks_object_info_unref (info);
   g_free (sort_key);
   g_free (s);
-  g_free (media_description);
-  g_free (description);
-  g_free (name);
   return jobs_running;
 }
 

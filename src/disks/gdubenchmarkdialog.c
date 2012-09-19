@@ -821,7 +821,8 @@ update_dialog (DialogData *data)
   gdouble access_time_avg = 0.0;
   gchar *s = NULL;
   UDisksDrive *drive = NULL;
-  UDisksPartition *partition = NULL;
+  const gchar *drive_revision = NULL;
+  UDisksObjectInfo *info = NULL;
 
   G_LOCK (bm_lock);
   if (data->bm_error != NULL)
@@ -855,42 +856,25 @@ update_dialog (DialogData *data)
 
   /* disk / device label */
   drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), data->block);
-  partition = udisks_object_get_partition (data->object);
   if (drive != NULL)
+    drive_revision = udisks_drive_get_revision (drive);
+  info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
+  if (drive_revision != NULL && strlen (drive_revision) > 0)
     {
-      gchar *name;
-      gchar *desc;
-      udisks_client_get_drive_info (gdu_window_get_client (data->window),
-                                    drive,
-                                    &name,
-                                    &desc,
-                                    NULL,   /* out_drive_icon */
-                                    NULL,   /* out_media_desc */
-                                    NULL);  /* out_media_icon */
-      if (partition != NULL)
-        {
-          gchar *str_size = g_format_size (udisks_block_get_size (data->block));
-          /* Translators: The first %s is the partition size (e.g. "10.0 GB") and the two
-           * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
-           */
-          s = g_strdup_printf (C_("benchmark-drive-name", "%s partition on %s (%s)"),
-                               str_size,
-                               name, desc);
-          g_free (str_size);
-        }
-      else
-        {
-          /* Translators: The first %s is the make/model (e.g. "ST 3160A"), the second %s is
-           * the description (e.g. "60 GB Hard Disk")
-           */
-          s = g_strdup_printf (C_("benchmark-drive-name", "%s (%s)"), name, desc);
-        }
-      g_free (name);
-      g_free (desc);
+      /* Translators: Shown for "Disk / Device" field.
+       *              The first %s is the description of the object (e.g. "80 GB Disk").
+       *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+       *              The third %s is the fw revision (e.g "45ABX21").
+       */
+      s = g_strdup_printf (C_("benchmark", "%s — %s (%s)"), info->description, info->name, drive_revision);
     }
   else
     {
-      s = udisks_block_dup_preferred_device (data->block);
+      /* Translators: Shown for "Disk / Device" field.
+       *              The first %s is the description of the object (e.g. "80 GB Disk").
+       *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+       */
+      s = g_strdup_printf (C_("benchmark", "%s — %s"), info->description, info->name);
     }
   gtk_label_set_text (GTK_LABEL (data->device_label), s);
   g_free (s);
@@ -968,7 +952,8 @@ update_dialog (DialogData *data)
     gdk_window_invalidate_rect (window, NULL, TRUE);
 
   g_clear_object (&drive);
-  g_clear_object (&partition);
+  if (info != NULL)
+    udisks_object_info_unref (info);
 }
 
 

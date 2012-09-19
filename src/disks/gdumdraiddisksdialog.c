@@ -217,12 +217,17 @@ static void
 update_dialog_labels (DialogData *data)
 {
   GtkTreeIter titer;
+  UDisksObject *object = NULL;
   UDisksBlock *block = NULL;
   UDisksDrive *drive = NULL;
   gchar *model_markup = NULL;
   gchar *device_markup = NULL;
   gchar *serial_markup = NULL;
   gchar *assessment_markup = NULL;
+  const gchar *drive_revision = NULL;
+  UDisksObjectInfo *info = NULL;
+  UDisksObject *drive_object = NULL;
+  UDisksDriveAta *ata = NULL;
 
   if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
                                        NULL, /* out_model */
@@ -233,8 +238,11 @@ update_dialog_labels (DialogData *data)
                           COLUMN_BLOCK, &block,
                           -1);
     }
-
   if (block == NULL)
+    goto out;
+
+  object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
+  if (object == NULL)
     goto out;
 
   if (udisks_block_get_read_only (block))
@@ -248,33 +256,33 @@ update_dialog_labels (DialogData *data)
       device_markup = g_strdup (udisks_block_get_preferred_device (block));
     }
 
+  info = udisks_client_get_object_info (data->client, object);
   drive = udisks_client_get_drive_for_block (data->client, block);
   if (drive != NULL)
     {
-      UDisksObject *drive_object = NULL;
-      UDisksDriveAta *ata = NULL;
-      gchar *name = NULL;
-
-      udisks_client_get_drive_info (data->client,
-                                    drive,
-                                    &name,  /* out_name */
-                                    NULL,   /* out_description */
-                                    NULL,   /* out_drive_icon */
-                                    NULL,   /* out_media_description */
-                                    NULL);  /* out_media_icon */
-      model_markup = g_strdup_printf ("%s (%s)", name,
-                                      udisks_drive_get_revision (drive));
-      g_free (name);
-      serial_markup = udisks_drive_dup_serial (drive);
-
+      drive_revision = udisks_drive_get_revision (drive);
       drive_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
       ata = udisks_object_peek_drive_ata (drive_object);
+      serial_markup = udisks_drive_dup_serial (drive);
       if (ata != NULL && !udisks_drive_get_media_removable (drive))
         {
           assessment_markup = gdu_ata_smart_get_one_liner_assessment (ata,
                                                                       NULL,  /* out_smart_is_supported */
                                                                       NULL); /* out_warning */
         }
+    }
+
+  if (drive_revision != NULL && strlen (drive_revision) > 0)
+    {
+      /* Translators: Shown for "Model" field.
+       *              The first %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+       *              The second %s is the fw revision (e.g "45ABX21").
+       */
+      model_markup = g_strdup_printf (C_("mdraid-disks", "%s (%s)"), info->name, drive_revision);
+    }
+  else
+    {
+      model_markup = g_strdup (info->name);
     }
 
  out:
@@ -287,7 +295,10 @@ update_dialog_labels (DialogData *data)
   g_free (device_markup);
   g_free (serial_markup);
   g_free (assessment_markup);
+  if (info != NULL)
+    udisks_object_info_unref (info);
   g_clear_object (&drive);
+  g_clear_object (&object);
   g_clear_object (&block);
 }
 
@@ -474,6 +485,8 @@ pixbuf_cell_func (GtkTreeViewColumn *column,
 {
   DialogData *data = user_data;
   UDisksBlock *block = NULL;
+  UDisksObject *object = NULL;
+  UDisksObjectInfo *info = NULL;
   GIcon *icon = NULL;
 
   gtk_tree_model_get (model,
@@ -482,36 +495,29 @@ pixbuf_cell_func (GtkTreeViewColumn *column,
                       -1);
 
   if (block == NULL)
-    {
-      icon = NULL;
-    }
-  else
-    {
-      UDisksDrive *drive;
-      drive = udisks_client_get_drive_for_block (data->client, block);
-      if (drive != NULL)
-        {
-          udisks_client_get_drive_info (data->client,
-                                        drive,
-                                        NULL,  /* out_name */
-                                        NULL,  /* out_description */
-                                        &icon, /* out_drive_icon */
-                                        NULL,  /* out_media_description */
-                                        NULL); /* out_media_icon */
-          g_object_unref (drive);
-        }
-      else
-        {
-          icon = g_themed_icon_new ("drive-removable-media"); /* for now */
-        }
-    }
+    goto out;
 
+  object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
+  if (object == NULL)
+    goto out;
+
+  info = udisks_client_get_object_info (data->client, object);
+  if (info->icon != NULL)
+    icon = g_object_ref (info->icon);
+
+  if (icon == NULL)
+    icon = g_themed_icon_new ("drive-removable-media"); /* fallback - for now */
+
+ out:
   g_object_set (renderer,
                 "gicon", icon,
                 NULL);
 
   g_clear_object (&icon);
+  g_clear_object (&object);
   g_clear_object (&block);
+  if (info != NULL)
+    udisks_object_info_unref (info);
 }
 
 static void
@@ -523,8 +529,9 @@ name_cell_func (GtkTreeViewColumn *column,
 {
   DialogData *data = user_data;
   UDisksBlock *block = NULL;
+  UDisksObject *object = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *markup = NULL;
-  gchar *s;
 
   gtk_tree_model_get (model,
                       iter,
@@ -532,64 +539,26 @@ name_cell_func (GtkTreeViewColumn *column,
                       -1);
 
   if (block == NULL)
-    {
-      /* Translators: Shown in 'Disk' column when there is no disk for the position in question */
-      markup = g_strdup_printf ("<i>%s</i>",
-                                C_("mdraid-disks", "None"));
-    }
-  else
-    {
-      UDisksDrive *drive = NULL;
+    goto out;
 
-      drive = udisks_client_get_drive_for_block (data->client, block);
-      if (drive != NULL)
-        {
-          UDisksPartition *partition = NULL;
-          UDisksObject *object = NULL;
-          gchar *desc = NULL;
+  object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
+  if (object == NULL)
+    goto out;
 
-          udisks_client_get_drive_info (data->client,
-                                        drive,
-                                        NULL,     /* out_name */
-                                        &desc,    /* out_description */
-                                        NULL,     /* out_drive_icon */
-                                        NULL,     /* out_media_description */
-                                        NULL);    /* out_media_icon */
+  info = udisks_client_get_object_info (data->client, object);
+  markup = g_strdup (info->description);
 
-          object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
-          if (object != NULL)
-            partition = udisks_object_peek_partition (object);
-          if (partition != NULL)
-            {
-              markup = g_strdup_printf (C_("mdraid-disks", "Partition %d of %s"),
-                                        udisks_partition_get_number (partition),
-                                        desc);
-              g_free (desc);
-            }
-          else
-            {
-              markup = desc;
-            }
-
-          g_object_unref (drive);
-        }
-      else
-        {
-          s = udisks_client_get_size_for_display (data->client, udisks_block_get_size (block), FALSE, FALSE);
-          /* Translators: Shown in list for a disk/member that is not a drive.
-           *              The %s is the size (e.g. "42.0 GB").
-           */
-          markup = g_strdup_printf (C_("mdraid-disks", "%s Block Device"), s);
-          g_free (s);
-        }
-    }
+ out:
 
   g_object_set (renderer,
                 "markup", markup,
                 NULL);
 
   g_free (markup);
+  g_clear_object (&object);
   g_clear_object (&block);
+  if (info != NULL)
+    udisks_object_info_unref (info);
 }
 
 static void

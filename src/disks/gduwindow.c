@@ -2263,11 +2263,7 @@ update_device_page_for_drive (GduWindow      *window,
   const gchar *drive_vendor;
   const gchar *drive_model;
   const gchar *drive_revision;
-  gchar *name;
-  gchar *description;
-  gchar *media_description;
-  GIcon *drive_icon;
-  GIcon *media_icon;
+  UDisksObjectInfo *info = NULL;
   guint64 size;
   UDisksDriveAta *ata;
   const gchar *our_seat;
@@ -2286,13 +2282,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   ata = udisks_object_peek_drive_ata (object);
 
-  udisks_client_get_drive_info (window->client,
-                                drive,
-                                &name,
-                                &description,
-                                &drive_icon,
-                                &media_description,
-                                &media_icon);
+  info = udisks_client_get_object_info (window->client, object);
 
   drive_vendor = udisks_drive_get_vendor (drive);
   drive_model = udisks_drive_get_model (drive);
@@ -2308,8 +2298,7 @@ update_device_page_for_drive (GduWindow      *window,
       g_string_append (str, s);
       g_free (s);
     }
-  s = g_strdup_printf ("<big><b>%s</b></big>",
-                       description);
+  s = g_strdup_printf ("<big><b>%s</b></big>", info->description);
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
   gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
@@ -2324,10 +2313,10 @@ update_device_page_for_drive (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_eject_button);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  if (media_icon != NULL)
-    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), media_icon, GTK_ICON_SIZE_DIALOG);
+  if (info->media_icon != NULL)
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), info->media_icon, GTK_ICON_SIZE_DIALOG);
   else
-    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), drive_icon, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), info->icon, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
   str = g_string_new (NULL);
@@ -2341,7 +2330,8 @@ update_device_page_for_drive (GduWindow      *window,
     g_string_append_printf (str, " (%s)", drive_revision);
   set_markup (window,
               "devtab-drive-model-label",
-              "devtab-drive-model-value-label", str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+              "devtab-drive-model-value-label",
+              str->str, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
   g_string_free (str, TRUE);
 
   serial = udisks_drive_get_serial (drive);
@@ -2468,7 +2458,7 @@ update_device_page_for_drive (GduWindow      *window,
       set_markup (window,
                   "devtab-drive-media-label",
                   "devtab-drive-media-value-label",
-                  media_description, SET_MARKUP_FLAGS_NONE);
+                  info->media_description, SET_MARKUP_FLAGS_NONE);
     }
   else
     {
@@ -2525,12 +2515,8 @@ update_device_page_for_drive (GduWindow      *window,
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
-  if (media_icon != NULL)
-    g_object_unref (media_icon);
-  g_object_unref (drive_icon);
-  g_free (description);
-  g_free (media_description);
-  g_free (name);
+  if (info != NULL)
+    udisks_object_info_unref (info);
 }
 
 static UDisksObject *

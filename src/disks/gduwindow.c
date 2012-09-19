@@ -1905,6 +1905,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   guint degraded;
   const gchar *sync_action;
   gdouble sync_completed;
+  const gchar *bitmap_location;
   gchar *degraded_markup = NULL;
   gchar *raid_state_upper = NULL;
   gchar *raid_state_lower = NULL;
@@ -1919,6 +1920,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   degraded = udisks_mdraid_get_degraded (mdraid);
   sync_action = udisks_mdraid_get_sync_action (mdraid);
   sync_completed = udisks_mdraid_get_sync_completed (mdraid);
+  bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
 
   icon = g_themed_icon_new ("gdu-enclosure");
 
@@ -2165,7 +2167,33 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
 
   /* -------------------------------------------------- */
-  /* TODO: 'Intent Log' (e.g. bitmap) field */
+  /* 'Intent Log' (e.g. bitmap) field */
+
+  if (bitmap_location == NULL || strlen (bitmap_location) == 0)
+    {
+      s = NULL;
+    }
+  else if (g_strcmp0 (bitmap_location, "none") == 0)
+    {
+      /* Translators: Value for the 'Intent Log' field when no write-intent bitmap is used */
+      s = g_strdup (C_("mdraid-bitmap", "None"));
+    }
+  else if (g_str_has_prefix (bitmap_location, "file"))
+    {
+      /* TODO: may be file:/foo/bar in the future - convey it */
+      /* Translators: Value for the 'Intent Log' field when an external write-intent bitmap is used */
+      s = g_strdup (C_("mdraid-bitmap", "Using External Bitmap"));
+    }
+  else
+    {
+      /* Translators: Value for the 'Intent Log' field when an internal write-intent bitmap is used */
+      s = g_strdup (C_("mdraid-bitmap", "Using Internal Bitmap"));
+    }
+  set_markup (window,
+              "devtab-drive-raid-bitmap-label",
+              "devtab-drive-raid-bitmap-value-label",
+              s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  g_free (s);
 
   /* -------------------------------------------------- */
   /* 'Job' field - only shown if a job is running */

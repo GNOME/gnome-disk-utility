@@ -558,6 +558,22 @@ set_selected_object (GduWindow    *window,
     }
   else
     {
+      UDisksBlock *block;
+
+      /* that didn't work, maybe it's a block device that is shown as another root object */
+      block = udisks_object_peek_block (object);
+      if (block != NULL)
+        {
+          UDisksObject *mdraid_object;
+          /* MD-RAID */
+          mdraid_object = udisks_client_peek_object (window->client, udisks_block_get_mdraid (block));
+          if (mdraid_object != NULL)
+            {
+              set_selected_object (window, mdraid_object);
+              goto out;
+            }
+        }
+
       if (object != NULL)
         g_warning ("Cannot display object with object path %s",
                    g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));

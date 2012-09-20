@@ -63,6 +63,8 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
 
+  GtkWidget *toolbutton_generic_menu;
+
   GtkWidget *main_hpane;
   GtkWidget *details_notebook;
   GtkWidget *device_scrolledwindow;
@@ -154,6 +156,7 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
+  {G_STRUCT_OFFSET (GduWindow, toolbutton_generic_menu), "toolbutton-generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_scrolledwindow), "device-tree-scrolledwindow"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar), "device-tree-add-remove-toolbar"},
@@ -335,7 +338,6 @@ static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpoin
 static void on_devtab_drive_action_raid_start_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_raid_stop_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_eject_activated (GtkAction *action, gpointer user_data);
-static void on_devtab_drive_action_generic_activated (GtkAction *action, gpointer user_data);
 
 static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
                                              gpointer   user_data);
@@ -1242,10 +1244,6 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_action_deactivate_swap,
                     "activate",
                     G_CALLBACK (on_devtab_action_deactivate_swap_activated),
-                    window);
-  g_signal_connect (window->devtab_drive_action_generic,
-                    "activate",
-                    G_CALLBACK (on_devtab_drive_action_generic_activated),
                     window);
 
   /* drive actions */
@@ -3469,25 +3467,91 @@ on_devtab_action_unmount_activated (GtkAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+generic_menu_position_func (GtkMenu       *menu,
+                            gint          *x,
+                            gint          *y,
+                            gboolean      *push_in,
+                            gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkWidget *align_widget;
+  GtkRequisition menu_req;
+  GtkTextDirection direction;
+  GdkRectangle monitor;
+  gint monitor_num;
+  GdkScreen *screen;
+  GdkWindow *gdk_window;
+  GtkAllocation allocation, arrow_allocation;
+  GtkAlign align;
+  GtkWidget *toplevel;
+
+  align_widget = window->toolbutton_generic_menu;
+  align = gtk_widget_get_halign (GTK_WIDGET (menu));
+  direction = gtk_widget_get_direction (align_widget);
+  gdk_window = gtk_widget_get_window (align_widget);
+
+  gtk_widget_get_preferred_size (GTK_WIDGET (menu),
+                                 &menu_req,
+                                 NULL);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (menu));
+  gtk_window_set_type_hint (GTK_WINDOW (toplevel), GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU);
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+  monitor_num = gdk_screen_get_monitor_at_window (screen, gdk_window);
+  if (monitor_num < 0)
+    monitor_num = 0;
+  gdk_screen_get_monitor_workarea (screen, monitor_num, &monitor);
+
+  gtk_widget_get_allocation (align_widget, &allocation);
+  gtk_widget_get_allocation (align_widget, &arrow_allocation);
+
+  gdk_window_get_origin (gdk_window, x, y);
+  *x += allocation.x;
+  *y += allocation.y;
+
+  /* treat the default align value like START */
+  if (align == GTK_ALIGN_FILL)
+    align = GTK_ALIGN_START;
+
+  if (align == GTK_ALIGN_CENTER)
+    *x -= (menu_req.width - allocation.width) / 2;
+  else if ((align == GTK_ALIGN_START && direction == GTK_TEXT_DIR_LTR) ||
+           (align == GTK_ALIGN_END && direction == GTK_TEXT_DIR_RTL))
+    *x += MAX (allocation.width - menu_req.width, 0);
+  else if (menu_req.width > allocation.width)
+    *x -= menu_req.width - allocation.width;
+
+  if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height)
+    *y += arrow_allocation.height;
+  else if ((*y - menu_req.height) >= monitor.y)
+    *y -= menu_req.height;
+  else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y)
+    *y += arrow_allocation.height;
+  else
+    *y -= menu_req.height;
+
+  *push_in = FALSE;
+}
+
+static void
 on_devtab_action_generic_activated (GtkAction *action,
                                     gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  update_all (window);
-  gtk_menu_popup (GTK_MENU (window->generic_menu),
-                  NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
-}
+  GdkEventButton *event = NULL;
 
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_devtab_drive_action_generic_activated (GtkAction *action,
-                                          gpointer   user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
   update_all (window);
-  gtk_menu_popup (GTK_MENU (window->generic_drive_menu),
-                  NULL, NULL, NULL, NULL, 1, gtk_get_current_event_time ());
+
+  gtk_menu_popup_for_device (GTK_MENU (window->generic_menu),
+                             event != NULL ? event->device : NULL,
+                             NULL, /* parent_menu_shell */
+                             NULL, /* parent_menu_item */
+                             generic_menu_position_func,
+                             window,
+                             NULL, /* user_data GDestroyNotify */
+                             event != NULL ? event->button : 0,
+                             event != NULL ? event->time : gtk_get_current_event_time ());
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

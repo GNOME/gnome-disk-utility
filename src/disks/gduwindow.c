@@ -544,7 +544,7 @@ set_selected_object (GduWindow    *window,
   ShowFlags show_flags = {0};
   GtkTreeIter iter;
 
-  if (gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
+  if (object != NULL && gdu_device_tree_model_get_iter_for_object (window->model, object, &iter))
     {
       GtkTreePath *path;
       GtkTreeSelection *tree_selection;
@@ -558,7 +558,7 @@ set_selected_object (GduWindow    *window,
       gtk_tree_path_free (path);
       ret = TRUE;
     }
-  else
+  else if (object != NULL)
     {
       UDisksBlock *block;
 

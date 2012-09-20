@@ -1,4 +1,65 @@
 -------------------------
+gnome-disk-utility 3.6.0
+-------------------------
+
+The gnome-disk-utility project provides the Disks application for
+dealing with storage devices. It relies on the udisks project.
+
+Changes since gnome-disk-utility 3.5.3:
+
+David Zeuthen (33):
+      Post-release version bump to 3.5.4
+      Replace -Werror=foo with -Wfoo
+      If creating an image from iso9660/udf, suggest Disc_Label.iso as the filename
+      Remember the last-used directory for disk images
+      Also update disk image directory when attaching disk images
+      Don't force file types when selecting a folder
+      Make Create/Restore Disk Image dialogs non-modal
+      Fix typo in iso9660 detection
+      Try opening the device file directly when creating images of CD/DVD discs
+      Factor out common code and put it in a static library
+      Use libgdu in gnome-disk-image-mounter
+      Don't default to NTFS unless the mkntfs(8) command exists
+      Remove css bits for now
+      Relicense from LGPLv2+ to GPLv2+
+      Update copyright years
+      Update my email address
+      Forgot to update license in about dialog
+      Store directory of last image file chosen, not the full path
+      Use set_current_folder_uri(), not set_current_folder()
+      Fix problems with overlapping partitions in disk images
+      Handle gtk_file_chooser_get_current_folder_uri() returning NULL
+      Remove work-around for program name
+      Add window title to Format Disk dialog
+      Add window title to Benchmark dialog
+      Add window title to SMART dialog
+      Add window title to Format Volume dialog
+      Add window title to Edit Partition dialogs
+      Add window title to Change Filesystem Label dialog
+      Add window title to Mount Options dialog
+      Add window title to Encryption Options dialog
+      Add window title to Drive Settings dialog
+      Update version to 3.6.0
+      Update NEWS for release
+
+Matthias Clasen (1):
+      Remove markup from translated strings
+
+Updated translations: A S Alam, Akom Chotiphantawanon, Alexandre
+  Franke, Andika Triwidada, Ani Peter, António Lima, Ask H. Larsen,
+  Aurimas Černius, Bruce Cowan, CHANDAN KUMAR, Chao-Hsiung Liao,
+  Daniel Korostil, Daniel Mustieles, Dimitris Spingos, Dirgita,
+  Dr.T.Vasudevan, Fran Diéguez, Gabor Kelemen, Ihar Hrachyshka, Ivaylo
+  Valkov, Krishnababu Krothapalli, Mario Blättermann, Martin
+  Srebotnjak, Matej Urbančič, Milo Casagrande, Nguyễn Thái Ngọc Duy,
+  Nilamdyuti Goswami, Piotr Drąg, Sandeep Sheshrao Shedmake, Seong-ho
+  Cho, Sweta Kothari, Tom Tryfonidis, Ville-Pekka Vainio, Yaron
+  Shahrabani, Yuri Myasoedov, tuhaihe, Мирослав Николић
+
+David Zeuthen,
+September 20, 2012
+
+-------------------------
 gnome-disk-utility 3.5.3
 -------------------------
 

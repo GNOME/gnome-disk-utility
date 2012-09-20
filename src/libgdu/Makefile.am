@@ -24,6 +24,8 @@ BUILT_SOURCES += $(enum_built_sources)
 
 libgdu_la_SOURCES = 							\
 	libgdu.h							\
+	libgduenums.h							\
+	libgdutypes.h							\
 	gduutils.h			gduutils.c			\
 	$(enum_built_sources)						\
 	$(NULL)

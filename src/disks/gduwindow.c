@@ -2094,20 +2094,28 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   if (sync_action == NULL || strlen (sync_action) == 0)
     {
-      if (udisks_mdraid_get_can_start (mdraid))
+      /* could be we're already running but don't have any redundancy built-in */
+      if (block != NULL)
         {
-          /* Translators: Shown in the 'State' field for MD-RAID when not running and can be started */
-          raid_state_upper = g_strdup (C_("mdraid-state", "Not running"));
-        }
-      else if (udisks_mdraid_get_can_start_degraded (mdraid))
-        {
-          /* Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded */
-          raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Can only start degraded"));
+          raid_state_upper = g_strdup (C_("mdraid-state", "Running"));
         }
       else
         {
-          /* Translators: Shown in the 'State' field for MD-RAID when not running */
-          raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Not enough disks to start"));
+          if (udisks_mdraid_get_can_start (mdraid))
+            {
+              /* Translators: Shown in the 'State' field for MD-RAID when not running and can be started */
+              raid_state_upper = g_strdup (C_("mdraid-state", "Not running"));
+            }
+          else if (udisks_mdraid_get_can_start_degraded (mdraid))
+            {
+              /* Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded */
+              raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Can only start degraded"));
+            }
+          else
+            {
+              /* Translators: Shown in the 'State' field for MD-RAID when not running */
+              raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Not enough disks to start"));
+            }
         }
     }
   else

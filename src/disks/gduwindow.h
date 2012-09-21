@@ -30,6 +30,7 @@ gboolean        gdu_window_select_object     (GduWindow    *window,
 
 
 void            gdu_window_show_attach_disk_image (GduWindow *window);
+void            gdu_window_show_create_raid_array (GduWindow *window);
 
 G_END_DECLS
 

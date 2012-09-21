@@ -70,7 +70,7 @@ struct _GduWindow
   GtkWidget *device_scrolledwindow;
   GtkWidget *device_treeview;
   GtkWidget *device_toolbar;
-  GtkWidget *device_toolbar_attach_disk_image_button;
+  GtkWidget *device_toolbar_add_menu_button;
   GtkWidget *device_toolbar_detach_disk_image_button;
   GtkWidget *devtab_drive_box;
   GtkWidget *devtab_drive_vbox;
@@ -153,6 +153,10 @@ struct _GduWindow
 
   /* GtkLabel instances we need to handle ::activate-link for */
   GtkWidget *devtab_volume_type_value_label;
+
+  GtkWidget *device_tree_menu;
+  GtkWidget *device_tree_menu_item_attach_disk_image;
+  GtkWidget *device_tree_menu_item_create_raid_array;
 };
 
 static const struct {
@@ -163,7 +167,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_scrolledwindow), "device-tree-scrolledwindow"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar), "device-tree-add-remove-toolbar"},
-  {G_STRUCT_OFFSET (GduWindow, device_toolbar_attach_disk_image_button), "device-tree-attach-disk-image-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_toolbar_add_menu_button), "device-tree-add-menu-button"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar_detach_disk_image_button), "device-tree-detach-disk-image-button"},
   {G_STRUCT_OFFSET (GduWindow, device_treeview), "device-tree-treeview"},
   {G_STRUCT_OFFSET (GduWindow, details_notebook), "disks-notebook"},
@@ -249,6 +253,10 @@ static const struct {
   /* GtkLabel instances we need to handle ::activate-link for */
   {G_STRUCT_OFFSET (GduWindow, devtab_volume_type_value_label), "devtab-volume-type-value-label"},
 
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu), "device-tree-menu"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_attach_disk_image), "device-tree-menu-item-attach-disk-image"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_create_raid_array), "device-tree-menu-item-create-raid-array"},
+
   {0, NULL}
 };
 
@@ -321,6 +329,12 @@ typedef struct
   ShowFlagsVolumeMenu        volume_menu;
   ShowFlagsDeviceTreeButtons device_tree_buttons;
 } ShowFlags;
+
+static void generic_menu_position_func (GtkMenu       *menu,
+                                        gint          *x,
+                                        gint          *y,
+                                        gboolean      *push_in,
+                                        gpointer       user_data);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -396,6 +410,12 @@ static void on_job_cancel_button_clicked (GtkButton     *button,
 static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
+
+static void on_device_tree_menu_item_attach_disk_image (GtkMenuItem *menu_item,
+                                                        gpointer   user_data);
+
+static void on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
+                                                        gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -853,12 +873,49 @@ gdu_window_show_attach_disk_image (GduWindow *window)
   g_free (filename);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
-on_device_tree_attach_disk_image_button_clicked (GtkToolButton *button,
-                                                 gpointer       user_data)
+on_device_tree_menu_item_attach_disk_image (GtkMenuItem *menu_item,
+                                            gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_window_show_attach_disk_image (window);
+}
+
+static void
+on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
+                                            gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gdu_window_show_create_raid_array (window);
+}
+
+void
+gdu_window_show_create_raid_array (GduWindow *window)
+{
+  g_print ("TODO: show create RAID array dialog\n");
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+
+static void
+on_device_tree_add_menu_button_clicked (GtkToolButton *button,
+                                        gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GdkEventButton *event = NULL;
+
+  gtk_menu_popup_for_device (GTK_MENU (window->device_tree_menu),
+                             event != NULL ? event->device : NULL,
+                             NULL, /* parent_menu_shell */
+                             NULL, /* parent_menu_item */
+                             generic_menu_position_func,
+                             button,
+                             NULL, /* user_data GDestroyNotify */
+                             event != NULL ? event->button : 0,
+                             event != NULL ? event->time : gtk_get_current_event_time ());
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1209,9 +1266,9 @@ gdu_window_constructed (GObject *object)
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   /* main toolbar */
-  g_signal_connect (window->device_toolbar_attach_disk_image_button,
+  g_signal_connect (window->device_toolbar_add_menu_button,
                     "clicked",
-                    G_CALLBACK (on_device_tree_attach_disk_image_button_clicked),
+                    G_CALLBACK (on_device_tree_add_menu_button_clicked),
                     window);
   g_signal_connect (window->device_toolbar_detach_disk_image_button,
                     "clicked",
@@ -1368,6 +1425,16 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_volume_type_value_label,
                     "activate-link",
                     G_CALLBACK (on_activate_link),
+                    window);
+
+  /* device-tree add menu */
+  g_signal_connect (window->device_tree_menu_item_attach_disk_image,
+                    "activate",
+                    G_CALLBACK (on_device_tree_menu_item_attach_disk_image),
+                    window);
+  g_signal_connect (window->device_tree_menu_item_create_raid_array,
+                    "activate",
+                    G_CALLBACK (on_device_tree_menu_item_create_raid_array),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -3502,8 +3569,7 @@ generic_menu_position_func (GtkMenu       *menu,
                             gboolean      *push_in,
                             gpointer       user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
-  GtkWidget *align_widget;
+  GtkWidget *align_widget = GTK_WIDGET (user_data);
   GtkRequisition menu_req;
   GtkTextDirection direction;
   GdkRectangle monitor;
@@ -3514,7 +3580,6 @@ generic_menu_position_func (GtkMenu       *menu,
   GtkAlign align;
   GtkWidget *toplevel;
 
-  align_widget = window->toolbutton_generic_menu;
   align = gtk_widget_get_halign (GTK_WIDGET (menu));
   direction = gtk_widget_get_direction (align_widget);
   gdk_window = gtk_widget_get_window (align_widget);
@@ -3577,7 +3642,7 @@ on_devtab_action_generic_activated (GtkAction *action,
                              NULL, /* parent_menu_shell */
                              NULL, /* parent_menu_item */
                              generic_menu_position_func,
-                             window,
+                             window->toolbutton_generic_menu,
                              NULL, /* user_data GDestroyNotify */
                              event != NULL ? event->button : 0,
                              event != NULL ? event->time : gtk_get_current_event_time ());

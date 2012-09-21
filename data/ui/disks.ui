@@ -128,13 +128,13 @@
                 <property name="can_focus">False</property>
                 <property name="icon_size">1</property>
                 <child>
-                  <object class="GtkToolButton" id="device-tree-attach-disk-image-button">
+                  <object class="GtkToolButton" id="device-tree-add-menu-button">
                     <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_markup" translatable="yes">Attach Disk Image...</property>
-                    <property name="tooltip_text" translatable="yes">Attach Disk Image...</property>
+                    <property name="tooltip_markup" translatable="yes">Attach or Create...</property>
+                    <property name="tooltip_text" translatable="yes">Attach or Create...</property>
                     <property name="use_action_appearance">False</property>
                     <property name="icon_name">list-add-symbolic</property>
                   </object>
@@ -1793,6 +1793,28 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Benchmark...</property>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="device-tree-menu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="device-tree-menu-item-attach-disk-image">
+        <property name="use_action_appearance">False</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Attach Disk Image...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="device-tree-menu-item-create-raid-array">
+        <property name="use_action_appearance">False</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Create RAID Array...</property>
+        <property name="use_underline">True</property>
       </object>
     </child>
   </object>

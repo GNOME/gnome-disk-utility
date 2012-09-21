@@ -150,6 +150,9 @@ struct _GduWindow
   GtkWidget *devtab_job_remaining_label;
   GtkWidget *devtab_job_no_progress_label;
   GtkWidget *devtab_job_cancel_button;
+
+  /* GtkLabel instances we need to handle ::activate-link for */
+  GtkWidget *devtab_volume_type_value_label;
 };
 
 static const struct {
@@ -242,6 +245,9 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_job_remaining_label), "devtab-job-remaining-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_job_no_progress_label), "devtab-job-no-progress-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_job_cancel_button), "devtab-job-cancel-button"},
+
+  /* GtkLabel instances we need to handle ::activate-link for */
+  {G_STRUCT_OFFSET (GduWindow, devtab_volume_type_value_label), "devtab-volume-type-value-label"},
 
   {0, NULL}
 };
@@ -386,6 +392,10 @@ static void on_drive_job_cancel_button_clicked (GtkButton *button,
 
 static void on_job_cancel_button_clicked (GtkButton     *button,
                                           gpointer       user_data);
+
+static gboolean on_activate_link (GtkLabel    *label,
+                                  const gchar *uri,
+                                  gpointer     user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -1352,6 +1362,12 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_job_cancel_button,
                     "clicked",
                     G_CALLBACK (on_job_cancel_button_clicked),
+                    window);
+
+  /* GtkLabel instances we need to handle ::activate-link for */
+  g_signal_connect (window->devtab_volume_type_value_label,
+                    "activate-link",
+                    G_CALLBACK (on_activate_link),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -2591,7 +2607,7 @@ update_device_page_for_block (GduWindow          *window,
   UDisksPartition *partition;
   UDisksLoop *loop;
   gboolean read_only;
-  gchar *s;
+  gchar *s, *s2, *s3;
   UDisksObject *drive_object;
   UDisksDrive *drive = NULL;
   GList *jobs;
@@ -2719,6 +2735,19 @@ update_device_page_for_block (GduWindow          *window,
       else
         {
           s = udisks_client_get_id_for_display (window->client, usage, type, version, TRUE);
+          if (g_strcmp0 (udisks_block_get_mdraid_member (block), "/") != 0)
+            {
+              s2 = g_strdup_printf ("<a href=\"x-udisks://%s\">%s</a>",
+                                    udisks_block_get_mdraid_member (block),
+                                    /* Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array */
+                                    C_("raid-member", "Go To Array"));
+              /* Translators: Shown in the 'Contents' field for a member of an RAID array.
+               *              The first %s is the usual contents string (e.g. "Linux RAID Member").
+               *              The second %s is the hyperlink "Go To Array".
+               */
+              s3 = g_strdup_printf (C_("raid-member", "%s — %s"), s, s2);
+              g_free (s); s = s3;
+            }
         }
     }
   else
@@ -4042,4 +4071,27 @@ on_job_cancel_button_clicked (GtkButton    *button,
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+on_activate_link (GtkLabel    *label,
+                  const gchar *uri,
+                  gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  gboolean handled = FALSE;
+
+  if (g_str_has_prefix (uri, "x-udisks://"))
+    {
+      UDisksObject *object = udisks_client_peek_object (window->client, uri + strlen ("x-udisks://"));
+      if (object != NULL)
+        {
+          set_selected_object (window, object);
+          handled = TRUE;
+        }
+    }
+
+  return handled;
 }

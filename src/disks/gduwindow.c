@@ -2226,19 +2226,19 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
   else if (g_strcmp0 (bitmap_location, "none") == 0)
     {
-      /* Translators: Value for the 'Intent Log' field when no write-intent bitmap is used */
+      /* Translators: Value for the 'Write Intent Log' field when no write-intent bitmap is used */
       s = g_strdup (C_("mdraid-bitmap", "None"));
     }
   else if (g_str_has_prefix (bitmap_location, "file"))
     {
       /* TODO: may be file:/foo/bar in the future - convey it */
-      /* Translators: Value for the 'Intent Log' field when an external write-intent bitmap is used */
-      s = g_strdup (C_("mdraid-bitmap", "Using External Bitmap"));
+      /* Translators: Value for the 'Write Intent Log' field when an external write-intent bitmap is used */
+      s = g_strdup (C_("mdraid-bitmap", "External Bitmap"));
     }
   else
     {
-      /* Translators: Value for the 'Intent Log' field when an internal write-intent bitmap is used */
-      s = g_strdup (C_("mdraid-bitmap", "Using Internal Bitmap"));
+      /* Translators: Value for the 'Write Intent Log' field when an internal write-intent bitmap is used */
+      s = g_strdup (C_("mdraid-bitmap", "Internal Bitmap"));
     }
   set_markup (window,
               "devtab-drive-raid-bitmap-label",

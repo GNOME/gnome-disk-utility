@@ -2068,9 +2068,9 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
   /* Translators: Shown in the "RAID Level" field.
    *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-   *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB chunk".
+   *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
    */
-  s = g_strdup_printf (C_("mdraid", "%s — %s"),
+  s = g_strdup_printf (C_("mdraid", "%s, %s"),
                        level_desc,
                        s2);
   g_free (s2);

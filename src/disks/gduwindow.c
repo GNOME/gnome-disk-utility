@@ -38,6 +38,7 @@
 #include "gduchangepassphrasedialog.h"
 #include "gdudisksettingsdialog.h"
 #include "gdumdraiddisksdialog.h"
+#include "gducreateraidarraydialog.h"
 
 /* Keep in sync with tabs in disks.ui file */
 typedef enum
@@ -894,7 +895,7 @@ on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
 void
 gdu_window_show_create_raid_array (GduWindow *window)
 {
-  g_print ("TODO: show create RAID array dialog\n");
+  gdu_create_raid_array_dialog_show (window);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

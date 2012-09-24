@@ -435,7 +435,7 @@ gdu_device_tree_model_constructed (GObject *object)
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
 
-  G_STATIC_ASSERT (10 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+  G_STATIC_ASSERT (11 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
 
   types[0] = G_TYPE_STRING;
   types[1] = G_TYPE_BOOLEAN;
@@ -447,6 +447,7 @@ gdu_device_tree_model_constructed (GObject *object)
   types[7] = G_TYPE_UINT;
   types[8] = G_TYPE_BOOLEAN;
   types[9] = GDU_TYPE_POWER_STATE_FLAGS;
+  types[10] = G_TYPE_UINT64;
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -887,6 +888,7 @@ update_drive (GduDeviceTreeModel *model,
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
   guint pulse;
+  guint64 size = 0;
 
   if (!find_iter_for_object (model,
                              object,
@@ -932,6 +934,8 @@ update_drive (GduDeviceTreeModel *model,
 
   jobs_running = drive_has_jobs (model->client, drive);
 
+  size = udisks_drive_get_size (drive);
+
   gtk_tree_model_get (GTK_TREE_MODEL (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, &pulse,
@@ -947,6 +951,7 @@ update_drive (GduDeviceTreeModel *model,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SIZE, size,
                       -1);
 
   /* update spinner, if jobs are running */
@@ -1041,6 +1046,7 @@ update_mdraid (GduDeviceTreeModel *model,
                gboolean            from_timer)
 {
   UDisksMDRaid *mdraid = NULL;
+  UDisksBlock *block = NULL;
   const gchar *name;
   GIcon *icon = NULL;
   gchar *desc = NULL;
@@ -1051,7 +1057,7 @@ update_mdraid (GduDeviceTreeModel *model,
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
   guint pulse;
-  guint64 size;
+  guint64 size = 0;
 
   if (!find_iter_for_object (model,
                              object,
@@ -1063,6 +1069,8 @@ update_mdraid (GduDeviceTreeModel *model,
     }
 
   mdraid = udisks_object_peek_mdraid (object);
+
+  block = udisks_client_get_block_for_mdraid (model->client, mdraid);
 
   sort_key = g_strdup_printf ("01_mdraid_1_%s", udisks_mdraid_get_uuid (mdraid)); /* TODO: sort_key? */
 
@@ -1132,6 +1140,9 @@ update_mdraid (GduDeviceTreeModel *model,
                            desc2);
     }
 
+  if (block != NULL)
+    size = udisks_block_get_size (block);
+
   jobs_running = mdraid_has_jobs (model->client, mdraid);
 
   gtk_tree_model_get (GTK_TREE_MODEL (model),
@@ -1141,8 +1152,6 @@ update_mdraid (GduDeviceTreeModel *model,
   if (from_timer)
     pulse += 1;
 
-
-
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
@@ -1151,6 +1160,7 @@ update_mdraid (GduDeviceTreeModel *model,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SIZE, size,
                       -1);
 
   /* update spinner, if jobs are running */
@@ -1168,6 +1178,7 @@ update_mdraid (GduDeviceTreeModel *model,
   g_free (s);
   g_free (desc);
   g_free (desc2);
+  g_clear_object (&block);
   return jobs_running;
 }
 
@@ -1413,6 +1424,7 @@ update_block (GduDeviceTreeModel  *model,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SIZE, size,
                       -1);
 
   /* update spinner, if jobs are running */

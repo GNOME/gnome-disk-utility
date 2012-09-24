@@ -16,6 +16,7 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreateraidarraydialog.h"
+#include "gduselectdiskdialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -141,6 +142,22 @@ on_property_changed (GObject     *object,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_add_toolbutton_clicked (GtkToolButton   *tool_button,
+                           gpointer         user_data)
+{
+  DialogData *data = user_data;
+  GList *disks;
+
+  disks = gdu_select_disk_dialog_show (gdu_window_get_application (data->window),
+                                       GTK_WINDOW (data->dialog),
+                                       GDU_SELECT_DISK_FLAGS_ALLOW_MULTIPLE);
+  /* TODO: look at @disks */
+  g_list_free_full (disks, g_object_unref);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 enum
 {
   COMBOBOX_MODEL_COLUMN_ID,
@@ -251,6 +268,15 @@ init_dialog (DialogData *data)
   /* defaults: RAID6, 512 KiB Chunk */
   gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid6");
   gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->chunk_combobox), "chunk_512");
+
+  /* ---------- */
+
+  g_signal_connect (data->add_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_add_toolbutton_clicked),
+                    data);
+
+  /* ---------- */
 
   update_dialog (data);
 }

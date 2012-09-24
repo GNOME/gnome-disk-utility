@@ -30,6 +30,12 @@ typedef enum
   GDU_POWER_STATE_FLAGS_FAILED            = (1<<2)
 } GduPowerStateFlags;
 
+typedef enum
+{
+  GDU_SELECT_DISK_FLAGS_NONE              = 0,
+  GDU_SELECT_DISK_FLAGS_ALLOW_MULTIPLE    = (1<<0),
+} GduSelectDiskFlags;
+
 G_END_DECLS
 
 #endif /* __GDU_ENUMS_H__ */

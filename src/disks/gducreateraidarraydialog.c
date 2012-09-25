@@ -239,6 +239,34 @@ update_dialog_labels (DialogData *data)
 }
 
 static void
+update_dialog_toolbuttons (DialogData *data)
+{
+  gboolean remove_sensitive = FALSE;
+  gboolean up_sensitive = FALSE;
+  gboolean down_sensitive = FALSE;
+  GtkTreeIter iter;
+
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                       NULL, /* out_model */
+                                       &iter))
+    {
+      GtkTreeIter iter2;
+      remove_sensitive = TRUE;
+      iter2 = iter;
+      if (gtk_tree_model_iter_previous (GTK_TREE_MODEL (data->store), &iter2))
+        up_sensitive = TRUE;
+      iter2 = iter;
+      if (gtk_tree_model_iter_next (GTK_TREE_MODEL (data->store), &iter2))
+        down_sensitive = TRUE;
+    }
+
+  gtk_widget_set_sensitive (data->remove_toolbutton, remove_sensitive);
+  gtk_widget_set_sensitive (data->up_toolbutton, up_sensitive);
+  gtk_widget_set_sensitive (data->down_toolbutton, down_sensitive);
+}
+
+
+static void
 update_dialog (DialogData *data)
 {
   /* don't recurse */
@@ -247,6 +275,7 @@ update_dialog (DialogData *data)
 
   data->in_update = TRUE;
   update_dialog_labels (data);
+  update_dialog_toolbuttons (data);
   data->in_update = FALSE;
 
  out:
@@ -352,6 +381,96 @@ on_add_toolbutton_clicked (GtkToolButton   *tool_button,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
+                              gpointer         user_data)
+{
+  DialogData *data = user_data;
+  GtkTreeIter iter;
+
+  if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                       NULL, /* out_model */
+                                       &iter))
+    {
+      if (gtk_list_store_remove (data->store, &iter))
+        {
+          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                          &iter);
+        }
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gint
+disks_row_sort_func (GtkTreeModel *model,
+                     GtkTreeIter  *a,
+                     GtkTreeIter  *b,
+                     gpointer      user_data);
+
+static void
+on_updown_toolbutton_clicked (GtkToolButton   *tool_button,
+                              DialogData      *data,
+                              gboolean         is_up)
+{
+  GtkTreeIter iter1;
+  GtkTreeIter iter2;
+  gint slot1, slot2;
+
+  if (!gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                        NULL, /* out_model */
+                                        &iter1))
+    goto out;
+
+  iter2 = iter1;
+  if (is_up)
+    {
+      if (!gtk_tree_model_iter_previous (GTK_TREE_MODEL (data->store), &iter2))
+        goto out;
+    }
+  else
+    {
+      if (!gtk_tree_model_iter_next (GTK_TREE_MODEL (data->store), &iter2))
+        goto out;
+    }
+
+  gtk_tree_model_get (GTK_TREE_MODEL (data->store), &iter1,
+                      DISKS_MODEL_COLUMN_SLOT, &slot1,
+                      -1);
+  gtk_tree_model_get (GTK_TREE_MODEL (data->store), &iter2,
+                      DISKS_MODEL_COLUMN_SLOT, &slot2,
+                      -1);
+
+  gtk_list_store_set (data->store, &iter1,
+                      DISKS_MODEL_COLUMN_SLOT, slot2,
+                      -1);
+  gtk_list_store_set (data->store, &iter2,
+                      DISKS_MODEL_COLUMN_SLOT, slot1,
+                      -1);
+
+  update_dialog (data);
+ out:
+  ;
+}
+
+static void
+on_down_toolbutton_clicked (GtkToolButton   *tool_button,
+                            gpointer         user_data)
+{
+  DialogData *data = user_data;
+  on_updown_toolbutton_clicked (tool_button, data, FALSE);
+}
+
+static void
+on_up_toolbutton_clicked (GtkToolButton   *tool_button,
+                          gpointer         user_data)
+{
+  DialogData *data = user_data;
+  on_updown_toolbutton_clicked (tool_button, data, TRUE);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gint
 disks_row_sort_func (GtkTreeModel *model,
                      GtkTreeIter  *a,
@@ -366,7 +485,7 @@ disks_row_sort_func (GtkTreeModel *model,
                       DISKS_MODEL_COLUMN_SLOT, &slot_a,
                       DISKS_MODEL_COLUMN_BLOCK, &block_a,
                       -1);
-  gtk_tree_model_get (model, a,
+  gtk_tree_model_get (model, b,
                       DISKS_MODEL_COLUMN_SLOT, &slot_b,
                       DISKS_MODEL_COLUMN_BLOCK, &block_b,
                       -1);
@@ -682,6 +801,21 @@ init_dialog (DialogData *data)
   g_signal_connect (data->add_toolbutton,
                     "clicked",
                     G_CALLBACK (on_add_toolbutton_clicked),
+                    data);
+
+  g_signal_connect (data->remove_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_remove_toolbutton_clicked),
+                    data);
+
+  g_signal_connect (data->up_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_up_toolbutton_clicked),
+                    data);
+
+  g_signal_connect (data->down_toolbutton,
+                    "clicked",
+                    G_CALLBACK (on_down_toolbutton_clicked),
                     data);
 
   g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),

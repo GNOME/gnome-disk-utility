@@ -28,6 +28,7 @@ typedef struct
   GduApplication *application;
   GtkBuilder *builder;
 
+  guint64 size;
   GduSelectDiskFlags flags;
 
   GtkWidget *dialog;
@@ -37,6 +38,7 @@ typedef struct
 
   GduDeviceTreeModel *model;
 
+  GList *ret;
 } DialogData;
 
 static const struct {
@@ -45,7 +47,6 @@ static const struct {
 } widget_mapping[] = {
   {G_STRUCT_OFFSET (DialogData, scrolledwindow), "scrolledwindow"},
   {G_STRUCT_OFFSET (DialogData, treeview), "treeview"},
-
   {0, NULL}
 };
 
@@ -160,25 +161,31 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 }
 
 static gboolean
-dont_select_headings (GtkTreeSelection *selection,
+treeview_select_func (GtkTreeSelection *selection,
                       GtkTreeModel     *model,
                       GtkTreePath      *path,
                       gboolean          selected,
                       gpointer          user_data)
 {
+  /* DialogData *data = user_data; */
+  gboolean selectable = FALSE;
+  gboolean is_heading = FALSE;
   GtkTreeIter iter;
-  gboolean is_heading;
 
-  gtk_tree_model_get_iter (model,
-                           &iter,
-                           path);
+  gtk_tree_model_get_iter (model, &iter, path);
   gtk_tree_model_get (model,
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING,
-                      &is_heading,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_IS_HEADING, &is_heading,
                       -1);
 
-  return !is_heading;
+  /* headers are never selectable */
+  if (is_heading)
+    goto out;
+
+  selectable = TRUE;
+
+ out:
+  return selectable;
 }
 
 static void
@@ -248,7 +255,7 @@ init_dialog (DialogData *data)
   gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)));
 
   gtk_tree_selection_set_select_function (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
-                                          dont_select_headings,
+                                          treeview_select_func,
                                           data,
                                           NULL); /* GDestroyNotify */
   g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
@@ -263,6 +270,17 @@ init_dialog (DialogData *data)
                     data);
   gtk_tree_view_expand_all (GTK_TREE_VIEW (data->treeview));
 
+
+  /* Dialog title */
+  if (data->flags & GDU_SELECT_DISK_FLAGS_ALLOW_MULTIPLE)
+    {
+      gtk_window_set_title (GTK_WINDOW (data->dialog), C_("select-disk-dialog", "Select Disks"));
+    }
+  else
+    {
+      gtk_window_set_title (GTK_WINDOW (data->dialog), C_("select-disk-dialog", "Select Disk"));
+    }
+
   update_dialog (data);
 }
 
@@ -276,10 +294,28 @@ on_client_changed (UDisksClient   *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+add_block_func (GtkTreeModel *model,
+                GtkTreePath  *path,
+                GtkTreeIter  *iter,
+                gpointer      user_data)
+{
+  DialogData *data = user_data;
+  UDisksBlock *block = NULL;
+
+  gtk_tree_model_get (model, iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_BLOCK, &block,
+                      -1);
+  if (block != NULL)
+    {
+      data->ret = g_list_prepend (data->ret, block); /* adopts block */
+    }
+}
 
 GList *
 gdu_select_disk_dialog_show (GduApplication     *application,
                              GtkWindow          *parent_window,
+                             guint64             size,
                              GduSelectDiskFlags  flags)
 {
   GList *ret = NULL;
@@ -290,6 +326,7 @@ gdu_select_disk_dialog_show (GduApplication     *application,
   data->ref_count = 1;
   data->application = g_object_ref (application);
   data->client = gdu_application_get_client (data->application);
+  data->size = size;
   data->flags = flags;
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget (data->application,
@@ -301,11 +338,6 @@ gdu_select_disk_dialog_show (GduApplication     *application,
       gpointer *p = (gpointer *) ((char *) data + widget_mapping[n].offset);
       *p = gtk_builder_get_object (data->builder, widget_mapping[n].name);
     }
-
-  if (data->flags & GDU_SELECT_DISK_FLAGS_ALLOW_MULTIPLE)
-    gtk_window_set_title (GTK_WINDOW (data->dialog), C_("select-disk-dialog", "Select Disks"));
-  else
-    gtk_window_set_title (GTK_WINDOW (data->dialog), C_("select-disk-dialog", "Select Disk"));
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
 
@@ -322,7 +354,13 @@ gdu_select_disk_dialog_show (GduApplication     *application,
           break;
 
         case GTK_RESPONSE_OK:
-          g_print ("TODO: set ret\n");
+          gtk_tree_selection_selected_foreach (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
+                                               add_block_func,
+                                               data);
+          ret = g_list_reverse (data->ret);
+          /* TODO: ensure @ret is sorted according to sort function.
+           *       Or does selected_foreach() guarantee that?
+           */
           goto out;
 
         default:

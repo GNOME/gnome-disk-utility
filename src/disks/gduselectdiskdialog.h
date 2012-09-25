@@ -17,6 +17,7 @@ G_BEGIN_DECLS
 
 GList *gdu_select_disk_dialog_show (GduApplication     *application,
                                     GtkWindow          *parent_window,
+                                    guint64             size,
                                     GduSelectDiskFlags  flags);
 
 G_END_DECLS

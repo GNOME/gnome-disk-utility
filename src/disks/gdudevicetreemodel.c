@@ -539,10 +539,7 @@ get_drive_header_iter (GduDeviceTreeModel *model)
   if (model->drive_iter_valid)
     goto out;
 
-  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-   * of hard-coding the color
-   */
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+  s = g_strdup_printf ("<small>%s</small>",
                        _("Disk Drives"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &model->drive_iter,
@@ -615,10 +612,7 @@ get_mdraid_header_iter (GduDeviceTreeModel *model)
   if (model->mdraid_iter_valid)
     goto out;
 
-  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-   * of hard-coding the color
-   */
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+  s = g_strdup_printf ("<small>%s</small>",
                        _("RAID Arrays"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &model->mdraid_iter,
@@ -927,11 +921,8 @@ update_drive (GduDeviceTreeModel *model,
     }
   else
     {
-      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-       * of hard-coding the color
-       */
       s = g_strdup_printf ("%s\n"
-                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           "<small>%s</small>",
                            info->description,
                            info->name);
     }
@@ -1137,11 +1128,8 @@ update_mdraid (GduDeviceTreeModel *model,
     }
   else
     {
-      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-       * of hard-coding the color
-       */
       s = g_strdup_printf ("%s\n"
-                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           "<small>%s</small>",
                            desc,
                            desc2);
     }
@@ -1266,10 +1254,7 @@ get_block_header_iter (GduDeviceTreeModel *model)
   if (model->block_iter_valid)
     goto out;
 
-  /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-   * of hard-coding the color
-   */
-  s = g_strdup_printf ("<small><span foreground=\"#555555\">%s</span></small>",
+  s = g_strdup_printf ("<small>%s</small>",
                        _("Other Devices"));
   gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
                                      &model->block_iter,
@@ -1379,11 +1364,8 @@ update_block (GduDeviceTreeModel  *model,
 
       /* loop devices */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
-      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-       * of hard-coding the color
-       */
       s = g_strdup_printf ("%s\n"
-                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           "<small>%s</small>",
                            loop_name,
                            backing_file_unfused);
       g_free (loop_name);
@@ -1401,12 +1383,8 @@ update_block (GduDeviceTreeModel  *model,
 
       /* fallback: preferred device and drive-harddisk icon */
       icon = g_themed_icon_new ("drive-removable-media"); /* for now */
-
-      /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
-       * of hard-coding the color
-       */
       s = g_strdup_printf ("%s\n"
-                           "<small><span foreground=\"#555555\">%s</span></small>",
+                           "<small>%s</small>",
                            block_name,
                            preferred_device);
     }

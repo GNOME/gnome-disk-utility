@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-16 11:20+0000\n"
-"PO-Revision-Date: 2012-09-18 20:38+0700\n"
+"POT-Creation-Date: 2012-09-21 02:30+0000\n"
+"PO-Revision-Date: 2012-09-21 17:15+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -40,13 +40,15 @@ msgstr "จัดการไดรว์และสื่อ"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
-msgstr ""
+msgstr "ตำแหน่งโดยปริยายสำหรับกล่องโต้ตอบ สร้าง/เขียนคืน อิมเมจของดิสก์"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
 msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
+"ตำแหน่งโดยปริยายสำหรับกล่องโต้ตอบ สร้าง/เขียนคืน อิมเมจของดิสก์ ถ้าปล่อยว่างไว้ จะใช้โฟลเดอร์ "
+"~/เอกสาร"
 
 #: ../data/ui/about-dialog.ui.h:2
 msgid ""
@@ -69,7 +71,7 @@ msgstr ""
 
 #: ../data/ui/app-menu.ui.h:1
 msgid "Attach Disk _Image..."
-msgstr ""
+msgstr "แนบ_อิมเมจของดิสก์..."
 
 #: ../data/ui/app-menu.ui.h:2
 msgid "_About Disks"
@@ -451,7 +453,7 @@ msgstr "ชนิดพาร์ทิชัน"
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: ../data/ui/disks.ui.h:32
 msgid "Backing File"
-msgstr ""
+msgstr "แฟ้มเบื้องหลัง"
 
 #: ../data/ui/disks.ui.h:33
 msgid "Format Disk..."
@@ -463,17 +465,15 @@ msgstr "สร้างอิมเมจของดิสก์..."
 
 #: ../data/ui/disks.ui.h:35
 msgid "Restore Disk Image..."
-msgstr ""
+msgstr "เขียนคืนอิมเมจของดิสก์..."
 
 #: ../data/ui/disks.ui.h:36
 msgid "Benchmark Drive..."
 msgstr "วัดสมรรถนะไดรว์..."
 
 #: ../data/ui/disks.ui.h:37
-#, fuzzy
-#| msgid "View SMART data and run self-tests"
 msgid "SMART Data and Tests..."
-msgstr "ดูข้อมูล SMART และเรียกการทดสอบตัวเอง"
+msgstr "ข้อมูล SMART และการทดสอบ..."
 
 #: ../data/ui/disks.ui.h:38
 msgid "Drive Settings..."
@@ -481,11 +481,11 @@ msgstr "ตั้งค่าไดรว์..."
 
 #: ../data/ui/disks.ui.h:39
 msgid "Standby Now"
-msgstr ""
+msgstr "พักคอยเดี๋ยวนี้"
 
 #: ../data/ui/disks.ui.h:40
 msgid "Wake-Up from Standby"
-msgstr ""
+msgstr "ปลุกจากพักคอย"
 
 #: ../data/ui/disks.ui.h:41
 msgid "Format..."
@@ -542,8 +542,8 @@ msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
-"ชื่อที่จะใช้สำหรับอุปกรณ์ที่ปลดล็อคแล้ว - ชื่อเต็มที่ใช้อ้างอุปกรณ์จะได้จากชื่อนี้ โดยนำหน้าด้วย "
-"<b>/dev/mapper</b>/"
+"ชื่อที่จะใช้สำหรับอุปกรณ์ที่ปลดล็อคแล้ว - ชื่อเต็มที่ใช้อ้างอุปกรณ์จะได้จากชื่อนี้ โดยนำหน้าด้วย <b>/dev/"
+"mapper</b>/"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:7
 msgid "Options to use when unlocking the device"
@@ -626,11 +626,11 @@ msgstr "_ป้ายชื่อ"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
 msgid "Mount Options"
-msgstr ""
+msgstr "ตัวเลือกของการเมานท์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
 msgid "_Automatic Mount Options"
-msgstr ""
+msgstr "ตัวเลือกของการเมานท์_อัตโนมัติ"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:3
 msgid ""
@@ -638,107 +638,103 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
+"ปิด <i>ตัวเลือกของการเมานท์อัตโนมัติ</i> "
+"เพื่อจัดการจุดเมานท์และตัวเลือกของการเมานท์สำหรับอุปกรณ์ ตัวเลือกนี้ตรงกับกับรายการในแฟ้ม "
+"<b>/etc/fstab</b>"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:4
 msgid "I_dentify As"
-msgstr ""
+msgstr "อ้า_งถึงโดย"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:5
 msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"<b>แฟ้มอุปกรณ์พิเศษ</b> - ใช้ลิงก์สัญลักษณ์ในลำดับชั้น <b>/dev/disk</b> "
+"ในการกำหนดขอบเขตของชื่ออุปกรณ์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"แฟ้มอุปกรณ์พิเศษ - ใช้ลิงก์สัญลักษณ์ในลำดับชั้น /dev/disk ในการกำหนดขอบเขตของชื่ออุปกรณ์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:7
-#, fuzzy
-#| msgid "Mount Point:"
 msgid "Mount _Point"
-msgstr "จุดเมานท์:"
+msgstr "จุดเ_มานท์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:8
-#, fuzzy
-#| msgid "Filesystem type"
 msgid "Filesystem _Type"
-msgstr "ชนิดของระบบแฟ้ม"
+msgstr "ชนิดของ_ระบบแฟ้ม"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:9
 msgid "The directory to mount the device in"
-msgstr ""
+msgstr "ไดเรกทอรีที่จะใช้เมานท์อุปกรณ์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:10
-#, fuzzy
-#| msgid "The selected filesystem type"
 msgid "The filesystem type to use"
-msgstr "ชนิดของระบบแฟ้มที่เลือก"
+msgstr "ชนิดของระบบแฟ้มที่จะใช้"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:11
 msgid "Display _Name"
-msgstr ""
+msgstr "_ชื่อสำหรับแสดงผล"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:12
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
+msgstr "ถ้ากำหนด ชื่อที่ใช้สำหรับอุปกรณ์ในส่วนติดต่อผู้ใช้ [x-gvfs-name=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:13
 msgid "Icon Na_me"
-msgstr ""
+msgstr "ชื่อไอ_คอน"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:14
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
-msgstr ""
+msgstr "ถ้ากำหนด จะเป็นชื่อของไอคอนที่ใช้กับอุปกรณ์นั้นในส่วนติดต่อผู้ใช้ [x-gvfs-icon=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:15
 msgid "Sho_w in user interface"
-msgstr ""
+msgstr "แส_ดงในส่วนติดต่อผู้ใช้"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:16
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
-msgstr ""
+msgstr "ถ้าเลือก จะแสดงอุปกรณ์ในส่วนติดต่อผู้ใช้เสมอ ไม่ว่าไดเรกทอรีจะเป็นอะไร [x-gvfs-show]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:17
 msgid "Require additional authori_zation to mount"
-msgstr ""
+msgstr "ต้องยื_นยันสิทธิ์เพิ่มเพื่อเมานท์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:18
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
-msgstr ""
+msgstr "ถ้าเลือก จะต้องยืนยันสิทธิ์เพิ่มเติมเพื่อเมานท์อุปกรณ์ [x-udisks-auth]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:19
-#, fuzzy
-#| msgid "Mounted at %s"
 msgid "Mount at _startup"
-msgstr "เมานท์ไว้ที่ %s"
+msgstr "เมานท์เมื่อเ_ริ่มระบบ"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:20
 msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr ""
+msgstr "ถ้าเลือก อุปกรณ์ก็จะถูกเมานท์เมื่อบูตระบบ [!noauto]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
-#, fuzzy
-#| msgid "Mount Point:"
 msgid "Mount Opt_ions"
-msgstr "จุดเมานท์:"
+msgstr "ตัวเ_ลือกของการเมานท์"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:22
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+msgstr "ตัวเลือกของการเมานท์ที่เก็บไว้ในแฟ้ม <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
+msgstr "ชนิดของพาร์ทิชันในรูป <i>GUID</i> 32 บิต "
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:6
 msgid ""
@@ -746,12 +742,13 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
+"ชื่อพาร์ทิชัน (ไม่เกิน 36 อักขระยูนิโค้ด) "
+"ชื่อพาร์ทิชันนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี <b>/dev/"
+"disk/by-partlabel</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
-#, fuzzy
-#| msgid "EFI System Partition"
 msgid "_System partition"
-msgstr "พาร์ทิชันระบบ EFI"
+msgstr "พาร์ทิชัน_ระบบ"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:8
 msgid ""
@@ -759,74 +756,79 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
+"ใช้บ่งชี้ว่าพาร์ทิชันและเนื้อหาของพาร์ทิชันจำเป็นสำหรับการทำงานของ OS หรือแพลตฟอร์ม "
+"ต้องระวังเป็นพิเศษที่จะไม่ลบหรือเขียนทับเนื้อหา"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
-#, fuzzy
-#| msgid "_Bootable"
 msgid "Legacy BIOS _Bootable"
-msgstr "บู_ตได้"
+msgstr "บู_ตได้สำหรับ BIOS แบบเก่า"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:10
 msgid ""
 "Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
 "i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
+"บูตได้สำหรับ BIOS แบบเก่า เทียบเท่ากับแฟล็ก <i>bootable</i> ใน Master Boot Record "
+"ซึ่งโดยปกติจะใช้กับพาร์ทิชัน GPT ในระบบที่เป็น MBR เท่านั้น"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:11
 msgid "_Read-Only"
-msgstr ""
+msgstr "_อ่านอย่างเดียว"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:12
 msgid ""
 "If set, some OSes may mount or use the contents of the partition as read-"
 "only instead of read-write"
-msgstr ""
+msgstr "ถ้ากำหนด บาง OS จะเมานท์หรือใช้เนื้อหาของพาร์ทิชันแบบอ่านอย่างเดียวแทนการอ่าน-เขียน"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:13
 msgid "H_idden"
-msgstr ""
+msgstr "ซ่อ_น"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:14
 msgid ""
 "If set, some OSes may hide the contents of the partition in their user "
 "interfaces"
-msgstr ""
+msgstr "ถ้ากำหนด บาง OS จะซ่อนเนื้อหาของพาร์ทิชันในส่วนติดต่อผู้ใช้"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:15
 msgid "Do Not _Automount"
-msgstr ""
+msgstr "ไม่เมานท์_อัตโนมัติ"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:16
 msgid "If set, some OSes may not automount the contents of the partition"
-msgstr ""
+msgstr "ถ้ากำหนด บาง OS จะไม่เมานท์เนื้อหาของพาร์ทิชันโดยอัตโนมัติ"
 
 #: ../data/ui/filesystem-create.ui.h:3
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the <b>/dev/disk/by-label</b> directory"
 msgstr ""
+"ชื่อที่จะใช้สำหรับระบบแฟ้ม ชื่อนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี "
+"<b>/dev/disk/by-label</b>"
 
 #: ../data/ui/filesystem-create.ui.h:4
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory"
 msgstr ""
+"ชื่อที่จะใช้สำหรับระบบแฟ้ม ชื่อนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี "
+"/dev/disk/by-label"
 
 #: ../data/ui/filesystem-create.ui.h:5
-#, fuzzy
-#| msgid "Filesystem"
 msgid "F_ilesystem"
-msgstr "ระบบแฟ้ม"
+msgstr "_ระบบแฟ้ม"
 
 #: ../data/ui/filesystem-create.ui.h:6
 msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
 msgstr ""
+"กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น <i>btrfs</i>, <i>xfs</i> หรือ <i>swap</i>"
 
 #: ../data/ui/filesystem-create.ui.h:7
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
+msgstr "กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น btrfs, xfs หรือ swap"
 
 #: ../data/ui/filesystem-create.ui.h:10
 msgid "Enter passphrase used to protect the data"
@@ -854,11 +856,11 @@ msgstr "ฟอร์แมตโวลุม"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "_Image to restore"
-msgstr ""
+msgstr "_อิมเมจที่เขียนคืน"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:2
 msgid "Select Disk Image to restore"
-msgstr ""
+msgstr "เลือกอิมเมจของดิสก์ที่จะเขียนคืน"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:3
 #: ../src/disks/gdurestorediskimagedialog.c:498
@@ -867,7 +869,7 @@ msgstr "กำลังคัดลอกข้อมูลไปยังอุ
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:4
 msgid "_Start Restoring..."
-msgstr ""
+msgstr "เ_ริ่มเขียนคืน..."
 
 #: ../data/ui/smart-dialog.ui.h:1
 msgid "SMART Data"
@@ -952,7 +954,7 @@ msgstr "เกิดข้อผิดพลาด"
 
 #: ../src/disk-image-mounter/main.c:65
 msgid "Allow writing to the image"
-msgstr ""
+msgstr "ยอมให้เขียนข้อมูลลงในอิมเมจได้"
 
 #: ../src/disk-image-mounter/main.c:80
 msgid "Select Disk Image(s) to Mount"
@@ -965,37 +967,39 @@ msgstr "เ_มานท์"
 #. Add a RO check button that defaults to RO
 #: ../src/disk-image-mounter/main.c:90
 msgid "Set up _read-only mount"
-msgstr ""
+msgstr "ตั้งค่าเมานท์แบบ_อ่านอย่างเดียว"
 
 #: ../src/disk-image-mounter/main.c:91
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
 msgstr ""
+"ถ้าเลือก การเมานท์จะเป็นแบบอ่านได้อย่างเดียวเท่านั้น "
+"ซึ่งจะมีประโยชน์ถ้าคุณไม่ต้องการเปลี่ยนแปลงอิมเมจของดิสก์"
 
 #: ../src/disk-image-mounter/main.c:133
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเชื่อมต่อไปยังดีมอน udisks: %s (%s, %d)"
 
 #: ../src/disk-image-mounter/main.c:141
 msgid "Attach and mount one or more disk image files."
-msgstr ""
+msgstr "แนบและเมานท์แฟ้มอิมเมจของดิสก์ตั้งแต่หนึ่งแฟ้มขึ้นไป"
 
 #: ../src/disk-image-mounter/main.c:189
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
-msgstr ""
+msgstr "ไม่สามารถเปิด `%s' - บางทีโวลุมอาจจะไม่ได้เมานท์"
 
 #: ../src/disk-image-mounter/main.c:196
 #, c-format
 msgid "Error opening `%s': %m"
-msgstr "เกิดข้อผิดพลาดขณะส่ง `%s': %m"
+msgstr "เกิดข้อผิดพลาดขณะเปิด `%s': %m"
 
 #: ../src/disk-image-mounter/main.c:217
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะแนบอิมเมจของดิสก์: %s (%s, %d)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1067,11 +1071,11 @@ msgstr ""
 #.
 #: ../src/disks/gduatasmartdialog.c:171
 msgid "Read Channel Margin"
-msgstr ""
+msgstr "ผลต่างของช่องการอ่าน"
 
 #: ../src/disks/gduatasmartdialog.c:172
 msgid "Margin of a channel while reading data."
-msgstr ""
+msgstr "ผลต่างของช่องข้อมูลขณะอ่านข้อมูล"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1338,7 +1342,7 @@ msgstr "จำนวนข้อผิดพลาดของ Data Address Mark
 #.
 #: ../src/disks/gduatasmartdialog.c:365
 msgid "Run Out Cancel"
-msgstr ""
+msgstr "จำนวนข้อผิดพลาด ECC"
 
 #: ../src/disks/gduatasmartdialog.c:366
 msgid "Number of ECC errors"
@@ -1584,11 +1588,11 @@ msgstr "ล้มเหลว"
 #. Translators: Shown in the treeview for an attribute that failed in the past
 #: ../src/disks/gduatasmartdialog.c:674
 msgid "Failed in the past"
-msgstr "ล้มเหลวที่ผ่านมา"
+msgstr "ล้มเหลวในอดีต"
 
 #: ../src/disks/gduatasmartdialog.c:678
 msgid "OK"
-msgstr ""
+msgstr "เรียบร้อยดี"
 
 #: ../src/disks/gduatasmartdialog.c:705
 #, c-format
@@ -1626,6 +1630,7 @@ msgstr "N/A"
 msgid ""
 "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
 msgstr ""
+"%s <span size=\"small\">(ปรับฐานแล้ว: %d, ขีดเริ่ม: %d, แย่ที่สุด: %d)</span>"
 
 #. Translators: Please keep "(Pre-Fail)" in English
 #.
@@ -1634,6 +1639,8 @@ msgid ""
 "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 "(Pre-Fail)</span>"
 msgstr ""
+"ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์จะเสียภายใน 24 ชั่วโมง <span size=\"small\">(Pre-Fail)"
+"</span>"
 
 #. Translators: Please keep "(Old-Age)" in English
 #.
@@ -1642,25 +1649,23 @@ msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
+"ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์ใช้งานเกินช่วงอายุที่ได้ออกแบบไว้แล้ว <span "
+"size=\"small\">(Old-Age)</span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
 #: ../src/disks/gduatasmartdialog.c:797
-#, fuzzy
-#| msgid "Every time data is collected (Online)"
 msgid ""
 "Updated every time data is collected <span size=\"small\">(Online)</span>"
-msgstr "ข้อมูลทุกครั้งจะถูกเก็บ (Online)"
+msgstr "ปรับข้อมูลทุกครั้งที่เก็บข้อมูล <span size=\"small\">(Online)</span>"
 
 #. Translators: Please keep "(Not Online)" in English
 #.
 #: ../src/disks/gduatasmartdialog.c:803
-#, fuzzy
-#| msgid "Only during off-line activities (Not Online)"
 msgid ""
 "Updated only during off-line activities <span size=\"small\">(Not Online)</"
 "span>"
-msgstr "เฉพาะระหว่างการกระทำออฟไลน์เท่านั้น (Not Online)"
+msgstr "ปรับข้อมูลเฉพาะระหว่างการกระทำออฟไลน์เท่านั้น (Not Online)"
 
 #: ../src/disks/gduatasmartdialog.c:834
 msgctxt "smart-self-test-result"
@@ -1744,23 +1749,23 @@ msgstr "อยู่ระหว่างทดสอบตัวเอง"
 
 #: ../src/disks/gduatasmartdialog.c:994 ../src/disks/gduatasmartdialog.c:1003
 msgid "DISK IS LIKELY TO FAIL SOON"
-msgstr ""
+msgstr "ดิสก์มีทีท่าจะเสียในไม่ช้า"
 
 #: ../src/disks/gduatasmartdialog.c:1026
 msgid "SELF-TEST FAILED"
-msgstr ""
+msgstr "ทดสอบตัวเองล้มเหลว"
 
 #: ../src/disks/gduatasmartdialog.c:1035
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
-msgstr[0] ""
+msgstr[0] "ดิสก์มีสภาพดี มีแอตทริบิวต์ล้มเหลว %d แอตทริบิวต์"
 
 #: ../src/disks/gduatasmartdialog.c:1046
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
-msgstr[0] "ดิสก์มีสภาพดี เซ็กเตอร์เสีย %d เซ็กเตอร์"
+msgstr[0] "ดิสก์มีสภาพดี มีเซ็กเตอร์เสีย %d เซ็กเตอร์"
 
 #: ../src/disks/gduatasmartdialog.c:1057
 #, c-format
@@ -1784,33 +1789,25 @@ msgstr "%s (%s)"
 
 #. Translators: XXX
 #: ../src/disks/gduatasmartdialog.c:1235
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Threshold exceeded"
-msgstr "ขีดเริ่ม:"
+msgstr "เกินขีดเริ่ม"
 
 #. Translators: XXX
 #: ../src/disks/gduatasmartdialog.c:1240
 msgid "Threshold not exceeded"
-msgstr ""
+msgstr "ไม่เกินขีดเริ่ม"
 
 #: ../src/disks/gduatasmartdialog.c:1299
-#, fuzzy
-#| msgid "Error reading SMART data"
 msgid "Error refreshing SMART data"
-msgstr "เกิดข้อผิดพลาดขณะอ่านข้อมูล SMART"
+msgstr "เกิดข้อผิดพลาดขณะเรียกข้อมูล SMART ใหม่"
 
 #: ../src/disks/gduatasmartdialog.c:1331
-#, fuzzy
-#| msgid "Error reading SMART data"
 msgid "Error aborting SMART self-test"
-msgstr "เกิดข้อผิดพลาดขณะอ่านข้อมูล SMART"
+msgstr "เกิดข้อผิดพลาดขณะยกเลิกการทดสอบตัวเองของ SMART"
 
 #: ../src/disks/gduatasmartdialog.c:1350
-#, fuzzy
-#| msgid "Error reading SMART data"
 msgid "Error starting SMART self-test"
-msgstr "เกิดข้อผิดพลาดขณะอ่านข้อมูล SMART"
+msgstr "เกิดข้อผิดพลาดขณะเริ่มการทดสอบตัวเองของ SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/disks/gduatasmartdialog.c:1465
@@ -1913,108 +1910,98 @@ msgid "%.2f msec"
 msgstr "%.2f มิลลิวินาที"
 
 #: ../src/disks/gdubenchmarkdialog.c:1264
-#, fuzzy, c-format
-#| msgid "Error enumerating devices: %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
-msgstr "เกิดข้อผิดพลาดขณะแจงนับอุปกรณ์: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่านขนาดของอุปกรณ์: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1274
-#, fuzzy, c-format
-#| msgid "Error enumerating devices: %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
-msgstr "เกิดข้อผิดพลาดขณะแจงนับอุปกรณ์: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่านขนาดของเพจ: %m\n"
 
 #: ../src/disks/gdubenchmarkdialog.c:1307
 #: ../src/disks/gdubenchmarkdialog.c:1326
 #: ../src/disks/gdubenchmarkdialog.c:1362
 #: ../src/disks/gdubenchmarkdialog.c:1381
-#, fuzzy, c-format
-#| msgid "Error sending `%s': %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
-msgstr "เกิดข้อผิดพลาดขณะส่ง `%s': %s"
+msgstr "เกิดข้อผิดพลาดขณะเลื่อนไปยังออฟเซต %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1316
 #: ../src/disks/gdubenchmarkdialog.c:1371
-#, fuzzy, c-format
-#| msgid "Error reading stderr from: %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "เกิดข้อผิดพลาดขณะอ่าน stderr จาก: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่านขั้นต้น %lld ไบต์ จากออฟเซต %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1337
-#, fuzzy, c-format
-#| msgid "Error reading stderr from: %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error reading %d MB from offset %lld"
-msgstr "เกิดข้อผิดพลาดขณะอ่าน stderr จาก: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่าน %d MB จากออฟเซต %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1392
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเขียน %lld ไบต์ ที่ออฟเซต %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1402
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
+msgstr "ต้องการเขียน %lld ไบต์ แต่เขียนได้เพียง %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1412
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะ sync (ที่ออฟเซต %lld): %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1452
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเลื่อนไปยังออฟเซต %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1464
-#, fuzzy, c-format
-#| msgid "Error reading stderr from: %s"
+#, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
-msgstr "เกิดข้อผิดพลาดขณะอ่าน stderr จาก: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่าน %lld ไบต์ จากออฟเซต %lld"
 
 #: ../src/disks/gduchangepassphrasedialog.c:157
 msgid "Error updating /etc/crypttab"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะปรับข้อมูล /etc/crypttab"
 
 #: ../src/disks/gduchangepassphrasedialog.c:176
-#, fuzzy
-#| msgid "Error changing label"
 msgid "Error changing passphrase"
-msgstr "เกิดข้อผิดพลาดขณะเปลี่ยนป้ายชื่อ"
+msgstr "เกิดข้อผิดพลาดขณะเปลี่ยนวลีรหัสผ่าน"
 
 #: ../src/disks/gduchangepassphrasedialog.c:263
 #: ../src/disks/gducrypttabdialog.c:408
-#, fuzzy
-#| msgid "Error creating partition"
 msgid "Error retrieving configuration data"
-msgstr "เกิดข้อผิดพลาดขณะสร้างพาร์ทิชัน"
+msgstr "เกิดข้อผิดพลาดขณะดึงข้อมูลค่าตั้ง"
 
 #: ../src/disks/gduchangepassphrasedialog.c:289
 msgid "/etc/crypttab configuration data is malformed"
-msgstr ""
+msgstr "ข้อมูลค่าตั้งใน /etc/crypttab ผิดรูปแบบ"
 
 #: ../src/disks/gduchangepassphrasedialog.c:322
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
+"การเปลี่ยนวลีรหัสผ่านสำหรับอุปกรณ์นี้ จะปรับวลีรหัสผ่านที่อ้างถึงจากแฟ้ม <i>/etc/crypttab</i> "
+"ด้วย"
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
 #: ../src/disks/gducreatefilesystemwidget.c:540
-#, fuzzy
-#| msgid "Are you sure you want to forget the passphrase?"
 msgid "The strength of the passphrase"
-msgstr "คุณแน่ใจหรือไม่ว่าต้องการทิ้งวลีรหัสผ่านนี้?"
+msgstr "ความแน่นหนาของวลีรหัสผ่าน"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
@@ -2023,13 +2010,11 @@ msgstr "คุณแน่ใจหรือไม่ว่าต้องกา
 #: ../src/disks/gducreatediskimagedialog.c:212
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr ""
+msgstr "Disk Image of %s (%s).img"
 
 #: ../src/disks/gducreatediskimagedialog.c:251
-#, fuzzy
-#| msgid "Error formatting volume"
 msgid "Error writing to image"
-msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตโวลุม"
+msgstr "เกิดข้อผิดพลาดขณะเขียนลงในอิมเมจ"
 
 #. Translators: string used for conveying progress of copy operation.
 #. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
@@ -2040,38 +2025,31 @@ msgstr "เกิดข้อผิดพลาดขณะฟอร์แมต
 #: ../src/disks/gdurestorediskimagedialog.c:319
 #, c-format
 msgid "%s of %s copied – %s remaining (%s/sec)"
-msgstr ""
+msgstr "คัดลอกแล้ว %s จาก %s – เหลืออีก %s (%s/วินาที)"
 
 #. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
 #. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
 #.
 #: ../src/disks/gducreatediskimagedialog.c:292
 #: ../src/disks/gdurestorediskimagedialog.c:332
-#, fuzzy, c-format
-#| msgid "%s %s Drive"
+#, c-format
 msgid "%s of %s copied"
-msgstr "ไดรว์ %2$s ขนาด %1$s"
+msgstr "คัดลอกแล้ว %s จาก %s"
 
 #: ../src/disks/gducreatediskimagedialog.c:341
 #: ../src/disks/gdurestorediskimagedialog.c:380
-#, fuzzy
-#| msgid "Error reading stderr from: %s"
 msgid "Error reading from offset %"
-msgstr "เกิดข้อผิดพลาดขณะอ่าน stderr จาก: %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่านจากออฟเซต %"
 
 #: ../src/disks/gducreatediskimagedialog.c:404
 #: ../src/disks/gdurestorediskimagedialog.c:600
-#, fuzzy
-#| msgid "Error mounting device"
 msgid "Error determining size of device"
-msgstr "เกิดข้อผิดพลาดขณะเมานท์อุปกรณ์"
+msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของอุปกรณ์"
 
 #: ../src/disks/gducreatediskimagedialog.c:442
 #: ../src/disks/gdurestorediskimagedialog.c:585
-#, fuzzy
-#| msgid "Error mounting device"
 msgid "Error opening device"
-msgstr "เกิดข้อผิดพลาดขณะเมานท์อุปกรณ์"
+msgstr "เกิดข้อผิดพลาดขณะเปิดอุปกรณ์"
 
 #: ../src/disks/gducreatediskimagedialog.c:488
 #, c-format
@@ -2090,7 +2068,7 @@ msgstr "เขียน_ทับ"
 
 #: ../src/disks/gducreatediskimagedialog.c:538
 msgid "Error opening file for writing"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะเปิดแฟ้มสำหรับเขียน"
 
 #: ../src/disks/gducreatediskimagedialog.c:589
 msgid "Copying data from device..."
@@ -2098,10 +2076,9 @@ msgstr "กำลังคัดลอกข้อมูลจากอุปก
 
 #. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
 #: ../src/disks/gducreatediskimagedialog.c:637
-#, fuzzy, c-format
-#| msgid "Format %s Volume (%s)"
+#, c-format
 msgid "Create Disk Image (%s)"
-msgstr "ฟอร์แมตโวลุม %s (%s)"
+msgstr "สร้างอิมเมจของดิสก์ (%s)"
 
 #: ../src/disks/gducreatefilesystemwidget.c:379
 #: ../src/disks/gduformatdiskdialog.c:254
@@ -2223,6 +2200,8 @@ msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
 msgstr ""
+"จะเปลี่ยนเฉพาะวลีรหัสผ่านที่อ้างถึงจากแฟ้ม <i>/etc/crypttab</i> เท่านั้น "
+"หากต้องการเปลี่ยนวลีรหัสผ่านบนดิสก์ ใช้ <i>เปลี่ยนวลีรหัสผ่าน...</i>"
 
 #: ../src/disks/gdudevicetreemodel.c:533
 msgid "Disk Drives"
@@ -2234,75 +2213,63 @@ msgstr "อุปกรณ์อื่น"
 
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
 #: ../src/disks/gdudevicetreemodel.c:1047
-#, fuzzy, c-format
-#| msgid "Device"
+#, c-format
 msgid "%s Loop Device"
-msgstr "อุปกรณ์"
+msgstr "อุปกรณ์วนกลับ %s"
 
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
 #: ../src/disks/gdudevicetreemodel.c:1068
-#, fuzzy, c-format
-#| msgid "Unlocking LUKS Device"
+#, c-format
 msgid "%s Block Device"
-msgstr "กำลังปลดล็อคอุปกรณ์ LUKS"
+msgstr "อุปกรณ์บล็อค %s"
 
 #: ../src/disks/gdudisksettingsdialog.c:264
-#, fuzzy
-#| msgid "Never"
 msgctxt "standby-value"
 msgid "Never"
-msgstr "ไม่เคย"
+msgstr "ไม่ทำ"
 
 #: ../src/disks/gdudisksettingsdialog.c:283
 msgctxt "standby-value"
 msgid "Vendor-defined"
-msgstr ""
+msgstr "ผู้จำหน่ายกำหนด"
 
 #: ../src/disks/gdudisksettingsdialog.c:287
 msgctxt "standby-value"
 msgid "Reserved"
-msgstr ""
+msgstr "สงวน"
 
 #: ../src/disks/gdudisksettingsdialog.c:308
-#, fuzzy
-#| msgctxt "Write Cache"
-#| msgid "Disabled"
 msgctxt "apm-level"
 msgid "255 (Disabled)"
-msgstr "ปิด"
+msgstr "255 (ปิดใช้งาน)"
 
 #: ../src/disks/gdudisksettingsdialog.c:312
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
-msgstr ""
+msgstr "%d (ชะลอดิสก์หมุนได้)"
 
 #: ../src/disks/gdudisksettingsdialog.c:316
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
-msgstr ""
+msgstr "%d (ห้ามชะลอดิสก์หมุน)"
 
 #: ../src/disks/gdudisksettingsdialog.c:331
-#, fuzzy
-#| msgctxt "Write Cache"
-#| msgid "Disabled"
 msgctxt "aam-level"
 msgid "0 (Disabled)"
-msgstr "ปิด"
+msgstr "0 (ปิดใช้งาน)"
 
 #: ../src/disks/gdudisksettingsdialog.c:360
-#, fuzzy
-#| msgid "Error deleting partition"
 msgid "Error setting configuration"
-msgstr "เกิดข้อผิดพลาดขณะลบพาร์ทิชัน"
+msgstr "เกิดข้อผิดพลาดขณะตั้งค่าตั้ง"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:390
 msgid "Never"
-msgstr "ไม่เคย"
+msgstr "ไม่ทำ"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:392
@@ -2350,20 +2317,17 @@ msgid "Loud (Fast)"
 msgstr "ดัง (เร็ว)"
 
 #: ../src/disks/gdufilesystemdialog.c:60
-#, fuzzy
-#| msgid "Error changing label"
 msgid "Error setting label"
-msgstr "เกิดข้อผิดพลาดขณะเปลี่ยนป้ายชื่อ"
+msgstr "เกิดข้อผิดพลาดขณะตั้งป้ายชื่อ"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
 #: ../src/disks/gduformatdiskdialog.c:105
-#, fuzzy, c-format
-#| msgid "%s at %s"
+#, c-format
 msgid "At least %s"
-msgstr "%s ที่ %s"
+msgstr "อย่างน้อย %s"
 
 #. Translators: Used to convey that something takes
 #. * approximately some specificed duration. The %s is a time
@@ -2372,45 +2336,39 @@ msgstr "%s ที่ %s"
 #: ../src/disks/gduformatdiskdialog.c:116
 #, c-format
 msgid "Approximately %s"
-msgstr ""
+msgstr "ประมาณ %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr ""
+msgstr "การลบแบบปลอดภัยของ ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr ""
+msgstr "การลบแบบปลอดภัยพิเศษของ ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
-msgstr ""
+msgstr "MBR / DOS"
 
 #: ../src/disks/gduformatdiskdialog.c:265
-#, fuzzy
-#| msgid "Compatible with all systems (FAT)"
 msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr "เข้ากับทุกระบบ (FAT)"
+msgstr "เข้ากับระบบสมัยใหม่และฮาร์ดดิสก์ > 2TB"
 
 #: ../src/disks/gduformatdiskdialog.c:266
 msgid "GPT"
 msgstr "GPT"
 
 #: ../src/disks/gduformatdiskdialog.c:283
-#, fuzzy
-#| msgid "Partitioning:"
 msgid "No partitioning"
-msgstr "การจัดพาร์ทิชัน:"
+msgstr "ไม่มีการแบ่งพาร์ทิชัน"
 
 #: ../src/disks/gduformatdiskdialog.c:284
 msgid "Empty"
 msgstr "ว่างเปล่า"
 
 #: ../src/disks/gduformatdiskdialog.c:328
-#, fuzzy
-#| msgid "Error formatting drive"
 msgid "Error formatting disk"
-msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตไดรว์"
+msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตดิสก์"
 
 #: ../src/disks/gduformatdiskdialog.c:385
 msgid "Are you sure you want to format the disk?"
@@ -2453,9 +2411,8 @@ msgstr ""
 "<b>คำเตือน</b>: คำสั่งลบแบบปลอดภัย (Secure Erase) อาจใช้เวลาทำงานนานมาก "
 "โดยไม่สามารถยกเลิกได้ และอาจไม่ทำงานอย่างถูกต้องกับฮาร์ดแวร์บางรุ่น ในกรณีที่เลวร้ายที่สุด "
 "ไดรว์ของคุณอาจใช้การไม่ได้ไปเลย หรือระบบของคุณอาจพังหรือค้าง ก่อนจะดำเนินการต่อไป "
-"กรุณาอ่านบทความเกี่ยวกับ <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> เพื่อให้แน่ใจว่าคุณเข้าใจความเสี่ยงเหล่านี้"
+"กรุณาอ่านบทความเกี่ยวกับ <a href='https://ata.wiki.kernel.org/index.php/"
+"ATA_Secure_Erase'>ATA Secure Erase</a> เพื่อให้แน่ใจว่าคุณเข้าใจความเสี่ยงเหล่านี้"
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2487,34 +2444,34 @@ msgstr "ข้อมูลทั้งหมดในโวลุมจะถู
 #: ../src/disks/gdufstabdialog.c:152
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
-msgstr ""
+msgstr "ตรงกับพาร์ทิชัน %d ของอุปกรณ์ที่มีข้อมูลผลิตภัณฑ์ที่สำคัญตามที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:155
 msgid "Matches the whole disk of the device with the given vital product data"
-msgstr ""
+msgstr "ตรงกับดิสก์ทั้งลูกของอุปกรณ์ที่มีข้อมูลผลิตภัณฑ์ที่สำคัญตามที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:160
 #, c-format
 msgid ""
 "Matches partition %d of any device connected at the given port or address"
-msgstr ""
+msgstr "ตรงกับพาร์ทิชัน %d ของอุปกรณ์ที่เชื่อมต่อที่พอร์ตหรือแอดเดรสที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:163
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
-msgstr ""
+msgstr "ตรงกับดิสก์ทั้งลูกของอุปกรณ์ที่เชื่อมต่อที่พอร์ตหรือแอดเดรสที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:167
 msgid "Matches any device with the given label"
-msgstr ""
+msgstr "ตรงกับอุปกรณ์ที่มีป้ายชื่อตามที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:171
 msgid "Matches the device with the given UUID"
-msgstr ""
+msgstr "ตรงกับอุปกรณ์ที่มี UUID ตามที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:175
 msgid "Matches the given device"
-msgstr ""
+msgstr "ตรงกับอุปกรณ์ที่กำหนด"
 
 #: ../src/disks/gdufstabdialog.c:459
 msgid "The system may not work correctly if this entry is modified or removed."
@@ -2570,17 +2527,17 @@ msgstr "เกิดข้อผิดพลาดขณะสแกนอุป
 
 #: ../src/disks/gdurestorediskimagedialog.c:185
 msgid "Cannot restore image of size 0"
-msgstr ""
+msgstr "ไม่สามารถเขียนคืนอิมเมจขนาด 0"
 
 #: ../src/disks/gdurestorediskimagedialog.c:194
 #, c-format
 msgid "The selected image is %s smaller than the device"
-msgstr ""
+msgstr "อิมเมจที่เลือกมีขนาดเล็กกว่าอุปกรณ์อยู่ %s"
 
 #: ../src/disks/gdurestorediskimagedialog.c:203
 #, c-format
 msgid "The selected image is %s bigger than the device"
-msgstr ""
+msgstr "อิมเมจที่เลือกมีขนาดใหญ่กว่าอุปกรณ์อยู่ %s"
 
 #: ../src/disks/gdurestorediskimagedialog.c:292
 msgid "Error writing to device"
@@ -2768,11 +2725,11 @@ msgstr "พื้นที่ว่าง"
 
 #: ../src/disks/gduwindow.c:2764
 msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะพยายามเปลี่ยนโหมดของไดรว์เป็นโหมดพักคอย"
 
 #: ../src/disks/gduwindow.c:2810
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดขณะพยายามปลุกไดรว์จากโหมดพักคอย"
 
 #: ../src/disks/gduwindow.c:2885
 msgid "Error mounting filesystem"
@@ -2828,7 +2785,7 @@ msgstr "ทุกแฟ้ม"
 
 #: ../src/libgdu/gduutils.c:90
 msgid "Disk Images (*.img, *.iso)"
-msgstr ""
+msgstr "อิมเมจของดิสก์ (*.img, *.iso)"
 
 #. Translators: Used for number of years
 #: ../src/libgdu/gduutils.c:403

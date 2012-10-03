@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-15 10:18+0300\n"
-"PO-Revision-Date: 2012-08-16 12:54+0300\n"
+"POT-Creation-Date: 2012-10-03 06:08+0300\n"
+"PO-Revision-Date: 2012-10-03 06:08+0300\n"
 "Last-Translator: Ivaylo Valkov <ivaylo@e-valkov.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -39,12 +39,17 @@ msgstr "Управление на устройства и носители"
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
 msgstr ""
+"Стандартно местоположение за прозорците за създаване/възстановяване на "
+"файловете с образи на дискове"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
 msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
+"Стандартно местоположение за прозорците за създаване/възстановяване на "
+"файловете с образи на дискове. Ако не е зададено, ще се използва папката ~/"
+"Документи."
 
 #: ../data/ui/about-dialog.ui.h:2
 msgid ""
@@ -84,7 +89,7 @@ msgstr "_Спиране на програмата"
 
 #: ../data/ui/benchmark-dialog.ui.h:1
 msgid "Benchmark"
-msgstr "Тест за производителност…"
+msgstr "Тест за производителност"
 
 #: ../data/ui/benchmark-dialog.ui.h:2
 msgid "_Start Benchmark..."
@@ -92,15 +97,15 @@ msgstr "_Стартиране на тест за производителнос�
 
 #: ../data/ui/benchmark-dialog.ui.h:3
 msgid "_Abort Benchmark"
-msgstr ""
+msgstr "Относно _теста за производителност"
 
 #: ../data/ui/benchmark-dialog.ui.h:4
 msgid "Last Benchmarked"
-msgstr ""
+msgstr "Последен тест за производителност"
 
 #: ../data/ui/benchmark-dialog.ui.h:5
 msgid "Average Read Rate"
-msgstr ""
+msgstr "Средна скорост при четене"
 
 #: ../data/ui/benchmark-dialog.ui.h:6
 msgid "Average Write Rate"
@@ -108,7 +113,7 @@ msgstr "Средна скорост при запис"
 
 #: ../data/ui/benchmark-dialog.ui.h:7
 msgid "Average Access Time"
-msgstr ""
+msgstr "Средно време за достъп"
 
 #: ../data/ui/benchmark-dialog.ui.h:8
 msgid "Disk Drive or Device"
@@ -116,7 +121,7 @@ msgstr "Диск или устройство"
 
 #: ../data/ui/benchmark-dialog.ui.h:9
 msgid "Sample Size"
-msgstr ""
+msgstr "Размер на отчета"
 
 #: ../data/ui/benchmark-dialog.ui.h:10
 msgid "_Start Benchmarking..."
@@ -128,11 +133,14 @@ msgid ""
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
+"Тестът за производителност включва измерването на скоростта на обмен на "
+"данни от различни области на устройството и времето за търсене от една "
+"област към друга. Преди да започнете теста с писане, направете резервно "
+"копие на важните данни от устройството."
 
 #: ../data/ui/benchmark-dialog.ui.h:12
-#, fuzzy
 msgid "Transfer Rate"
-msgstr "Честота на резките температурни промени"
+msgstr "Скорост на обмен"
 
 #: ../data/ui/benchmark-dialog.ui.h:13
 msgid "Number of S_amples"
@@ -140,11 +148,11 @@ msgstr "Брой на _отчетите"
 
 #: ../data/ui/benchmark-dialog.ui.h:14
 msgid "Sample S_ize (MiB)"
-msgstr ""
+msgstr "Ра_змер на отчета (MiB)"
 
 #: ../data/ui/benchmark-dialog.ui.h:15
 msgid "Also perform _write-benchmark"
-msgstr ""
+msgstr "Да се изпълни и тест за производителност на _записа (write-benchmark)"
 
 #: ../data/ui/benchmark-dialog.ui.h:16
 msgid ""
@@ -157,12 +165,22 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use) ."
 msgstr ""
+"Тестът на скоростта на запис на диск изисква изключващ достъп до него (т.е. "
+"дискът или неговите дялове не може да са монтирани или да се ползват). "
+"Тестът включва прочитането на данни и презаписване със същото съдържание, в "
+"резултат на което данните на диска остават непроменени.\n"
+"\n"
+"Етапът с презаписването се пропуска, ако отметката не е избрана. Това "
+"позволява ползването на диска по време на теста (т.е. устройството или "
+"негови дялове може да са монтирани)."
 
 #: ../data/ui/benchmark-dialog.ui.h:19
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
 msgstr ""
+"Брой отчети. При по-голям брой ще се създаде по-точна картина за времето за "
+"достъп, но ще отнеме повече време."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
@@ -170,10 +188,13 @@ msgid ""
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
+"Размер на областите за отчет на писането и записа в MiB (1048576 = 1024 * "
+"1024 байта). Големите размери дават по-точни отчети, но тестът продължава по-"
+"дълго време."
 
 #: ../data/ui/benchmark-dialog.ui.h:21
 msgid "Access Time"
-msgstr ""
+msgstr "Време за достъп"
 
 #: ../data/ui/benchmark-dialog.ui.h:22
 msgid "Number of Sampl_es"
@@ -184,6 +205,8 @@ msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr ""
+"Броят на отчетите. Големият брой изглажда графиките, но тестът продължава по-"
+"дълго време."
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
@@ -194,9 +217,8 @@ msgid "C_hange"
 msgstr "_Промяна"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:2
-#, fuzzy
 msgid "Change Passphrase"
-msgstr "Смяна на паролата…"
+msgstr "Смяна на паролата"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:3
 msgid "Curr_ent Passphrase"
@@ -258,13 +280,12 @@ msgid "_Start Creating..."
 msgstr "_Стартиране на създаването…"
 
 #: ../data/ui/create-partition-dialog.ui.h:1
-msgid "C_reate"
-msgstr "_Създаване"
+msgid "Create Partition"
+msgstr "Създаване на дял"
 
 #: ../data/ui/create-partition-dialog.ui.h:2
-#, fuzzy
-msgid "Create Partition"
-msgstr "<big>Създаване на дял</big>"
+msgid "C_reate"
+msgstr "_Създаване"
 
 #: ../data/ui/create-partition-dialog.ui.h:3
 msgid "Partition _Size"
@@ -297,37 +318,40 @@ msgstr "Настройки на устройството"
 
 #: ../data/ui/disk-settings-dialog.ui.h:2
 msgid "_Standby Timeout"
-msgstr ""
+msgstr "Време за изчакване преди _приспиване"
 
 #: ../data/ui/disk-settings-dialog.ui.h:3
 msgid "Enter Standby After"
-msgstr ""
+msgstr "Приспиване след"
 
 #: ../data/ui/disk-settings-dialog.ui.h:4
 msgid "_Advanced Power Management"
-msgstr ""
+msgstr "_Разширено управление на захранването"
 
 #: ../data/ui/disk-settings-dialog.ui.h:5
 msgid "APM Level"
-msgstr ""
+msgstr "Ниво — APM"
 
 #: ../data/ui/disk-settings-dialog.ui.h:6
 msgid ""
 "Agressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"Честото принудително спиране на въртенето на диска може да доведе до по-"
+"бързо износване от очакваното. Преглеждайте стойността на атрибута „Брой "
+"пускания/спирания“ в данните от SMART от време на време."
 
 #: ../data/ui/disk-settings-dialog.ui.h:7
 msgid "Automatic Aco_ustic Management"
-msgstr ""
+msgstr "Автоматично управление на а_кустиката"
 
 #: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "Vendor Recommended"
-msgstr ""
+msgstr "Стойност зададена от производителя"
 
 #: ../data/ui/disk-settings-dialog.ui.h:9
 msgid "AAM Level"
-msgstr ""
+msgstr "Ниво — AAM"
 
 #: ../data/ui/disks.ui.h:1
 msgid "Create a new partition..."
@@ -417,12 +441,11 @@ msgstr "Изваждане на носителя"
 
 #: ../data/ui/disks.ui.h:23
 msgid "Pending Operation"
-msgstr ""
+msgstr "Чакаща операция"
 
 #: ../data/ui/disks.ui.h:24
-#, fuzzy
 msgid "_Volumes"
-msgstr "<big>_Томове</big>"
+msgstr "_Томове"
 
 #: ../data/ui/disks.ui.h:27
 msgid "Device"
@@ -438,7 +461,7 @@ msgstr "Приложение"
 
 #: ../data/ui/disks.ui.h:29
 msgid "Auto-clear"
-msgstr ""
+msgstr "Автоматично изчистване (auto-clear)"
 
 #: ../data/ui/disks.ui.h:30
 msgid "Partition Type"
@@ -463,11 +486,11 @@ msgstr "Възстановяване на файл с образ…"
 
 #: ../data/ui/disks.ui.h:36
 msgid "Benchmark Drive..."
-msgstr ""
+msgstr "Тестване на производителността на диска…"
 
 #: ../data/ui/disks.ui.h:37
 msgid "SMART Data and Tests..."
-msgstr "Тестове и данни от S.M.A.R.T.…"
+msgstr "Тестове и данни от SMART…"
 
 #: ../data/ui/disks.ui.h:38
 msgid "Drive Settings..."
@@ -475,11 +498,11 @@ msgstr "Настройки на устройството…"
 
 #: ../data/ui/disks.ui.h:39
 msgid "Standby Now"
-msgstr ""
+msgstr "Приспиване сега"
 
 #: ../data/ui/disks.ui.h:40
 msgid "Wake-Up from Standby"
-msgstr ""
+msgstr "Събуждане"
 
 #: ../data/ui/disks.ui.h:41
 msgid "Format..."
@@ -507,12 +530,11 @@ msgstr "Редактиране на настройките за шифриран
 
 #: ../data/ui/disks.ui.h:47
 msgid "Benchmark Volume..."
-msgstr ""
+msgstr "Тестване на производителността на тома…"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
-#, fuzzy
 msgid "Encryption Options"
-msgstr "Редактиране на настройките за шифриране…"
+msgstr "Настройките за шифрирането"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid "_Automatic Encryption Options"
@@ -590,9 +612,8 @@ msgstr ""
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:1
 #: ../data/ui/edit-partition-dialog.ui.h:1
-#, fuzzy
 msgid "Edit Partition"
-msgstr "Вид на дяла…"
+msgstr "Редактиране на дяла"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:3
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:3
@@ -618,18 +639,16 @@ msgstr ""
 "система. Дял с този флаг се нарича още <i>активен</i> дял."
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:1
-#, fuzzy
 msgid "Change Filesystem Label"
-msgstr "<big>Редактиране на етикета на файловата система</big>"
+msgstr "Редактиране на етикета на файловата система"
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:3
 msgid "_Label"
 msgstr "_Етикет"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
-#, fuzzy
 msgid "Mount Options"
-msgstr "_Настройки за монтиране"
+msgstr "Настройки за монтиране"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
 msgid "_Automatic Mount Options"
@@ -864,12 +883,11 @@ msgstr "Въведете парола за защита на данните"
 
 #: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
 msgid "_Erase"
-msgstr ""
+msgstr "_Изтриване"
 
 #: ../data/ui/format-disk-dialog.ui.h:1
-#, fuzzy
 msgid "Format Disk"
-msgstr "Форматиране на диск…"
+msgstr "Форматиране на диск"
 
 #: ../data/ui/format-disk-dialog.ui.h:2 ../data/ui/format-volume-dialog.ui.h:2
 msgid "_Format..."
@@ -880,9 +898,8 @@ msgid "_Partitioning"
 msgstr "_Разделяне"
 
 #: ../data/ui/format-volume-dialog.ui.h:1
-#, fuzzy
 msgid "Format Volume"
-msgstr "<big>Форматиране на тома</big>"
+msgstr "Форматиране на тома"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "_Image to restore"
@@ -903,7 +920,7 @@ msgstr "_Стартиране на възстановяването…"
 
 #: ../data/ui/smart-dialog.ui.h:1
 msgid "SMART Data"
-msgstr "Данни от S.M.A.R.T."
+msgstr "Данни от SMART…"
 
 #: ../data/ui/smart-dialog.ui.h:2
 msgid "_Start Self-test..."
@@ -943,7 +960,7 @@ msgstr "Пълна оценка"
 
 #: ../data/ui/smart-dialog.ui.h:10
 msgid "SMART _Attributes"
-msgstr "_Атрибути на S.M.A.R.T."
+msgstr "_Атрибути на SMART"
 
 #. Translators: This string is used as the column title in the treeview for the value
 #: ../data/ui/smart-dialog.ui.h:11 ../src/disks/gduatasmartdialog.c:1491
@@ -972,9 +989,8 @@ msgid "Conveyance"
 msgstr "Транспортна"
 
 #: ../data/ui/unlock-device-dialog.ui.h:1
-#, fuzzy
 msgid "Enter passphrase to unlock"
-msgstr "<big>Въведете парола, за да бъде отключено</big>"
+msgstr "Въведете парола, за да бъде отключено"
 
 #: ../data/ui/unlock-device-dialog.ui.h:4
 msgid "_Unlock"
@@ -982,7 +998,7 @@ msgstr "_Отключване"
 
 #: ../src/disk-image-mounter/main.c:44
 msgid "An error occurred"
-msgstr ""
+msgstr "Възникна грешка"
 
 #: ../src/disk-image-mounter/main.c:65
 msgid "Allow writing to the image"
@@ -1012,16 +1028,16 @@ msgstr ""
 #: ../src/disk-image-mounter/main.c:133
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr ""
+msgstr "Грешка при свързване към демона udisks: %s (%s, %d)"
 
 #: ../src/disk-image-mounter/main.c:141
 msgid "Attach and mount one or more disk image files."
-msgstr ""
+msgstr "Закачане и монтиране на един или повече файл с образ на диск."
 
 #: ../src/disk-image-mounter/main.c:189
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
-msgstr ""
+msgstr "Неуспешно отваряне на „%s“. Може би томът не е монтиран?"
 
 #: ../src/disk-image-mounter/main.c:196
 #, c-format
@@ -1789,11 +1805,11 @@ msgstr "Преди %s"
 
 #: ../src/disks/gduatasmartdialog.c:963
 msgid "SMART is not supported"
-msgstr "Не се поддържа самодиагностика (S.M.A.R.T.)"
+msgstr "Не се поддържа самодиагностика (SMART)"
 
 #: ../src/disks/gduatasmartdialog.c:969
 msgid "SMART is not enabled"
-msgstr "Не е включена поддръжката за самодиагностика (S.M.A.R.T.)"
+msgstr "Не е включена поддръжката за самодиагностика (SMART)"
 
 #: ../src/disks/gduatasmartdialog.c:981
 msgid "Self-test in progress"
@@ -1854,15 +1870,15 @@ msgstr "Прагът не е преминат"
 
 #: ../src/disks/gduatasmartdialog.c:1299
 msgid "Error refreshing SMART data"
-msgstr "Грешка при опресняване на данни от самодиагностика (S.M.A.R.T)"
+msgstr "Грешка при опресняване на данни от самодиагностика (SMART)"
 
 #: ../src/disks/gduatasmartdialog.c:1331
 msgid "Error aborting SMART self-test"
-msgstr "Грешка при спиране на самодиагностика (S.M.A.R.T)"
+msgstr "Грешка при спиране на самодиагностика (SMART)"
 
 #: ../src/disks/gduatasmartdialog.c:1350
 msgid "Error starting SMART self-test"
-msgstr "Грешка при стартиране на самодиагностика (S.M.A.R.T)"
+msgstr "Грешка при стартиране на самодиагностика (SMART)"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/disks/gduatasmartdialog.c:1465
@@ -1879,28 +1895,28 @@ msgstr "Атрибут"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
-msgstr ""
+msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: ../src/disks/gdubenchmarkdialog.c:332
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
-msgstr ""
+msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
 #: ../src/disks/gdubenchmarkdialog.c:640
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
-msgstr ""
+msgstr "%s/s"
 
 #: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:954
 #, c-format
 msgid "%d sample"
 msgid_plural "%d samples"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d отчет"
+msgstr[1] "%d отчета"
 
 #. Translators: The first %s is the date and time the benchmark took place in the preferred
 #. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
@@ -1927,18 +1943,18 @@ msgstr "Отваряне на устройството…"
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)..."
-msgstr ""
+msgstr "Изчисляване на скоростта на обмен (завършени са %2.1f %%)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)..."
-msgstr ""
+msgstr "Изчисляване на времето за достъп (завършени са %2.1f %%)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:840
 msgctxt "benchmarking"
 msgid "An error occurred"
-msgstr ""
+msgstr "Възникна грешка"
 
 #. Translators: The first %s is the partition size (e.g. "10.0 GB") and the two
 #. * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
@@ -1960,10 +1976,10 @@ msgstr "%s (%s)"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
 #: ../src/disks/gdubenchmarkdialog.c:952
-#, fuzzy, c-format
+#, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
-msgstr "%.2f милисекунда"
+msgstr "%.2f ms"
 
 #: ../src/disks/gdubenchmarkdialog.c:1264
 #, c-format
@@ -1984,7 +2000,7 @@ msgstr "Грешка при определяне на размера на стр
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
-msgstr "Грешка при търсене при отместване %lld"
+msgstr "Грешка при търсене в отместване %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1316
 #: ../src/disks/gdubenchmarkdialog.c:1371
@@ -2004,25 +2020,25 @@ msgstr "Грешка при четене на %d MB от отместване %l
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr ""
+msgstr "Грешка при запис на %lld байта на отместване %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1402
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
+msgstr "Трябваше да бъдат записани %lld байта, а не само %lld: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1412
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
-msgstr "Грешка при синхронизиране (при отместване %lld): %m"
+msgstr "Грешка при синхронизиране (на отместване %lld): %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1452
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr "Грешка при търсене до отместване %lld:%m"
+msgstr "Грешка при търсене в отместване %lld:%m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1464
 #, c-format
@@ -2082,7 +2098,7 @@ msgstr "Грешка при записване на файла с образ"
 #: ../src/disks/gdurestorediskimagedialog.c:319
 #, c-format
 msgid "%s of %s copied – %s remaining (%s/sec)"
-msgstr ""
+msgstr "Копирани са %s от %s. Остават %s (%s/секунда)"
 
 #. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
 #. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
@@ -2091,7 +2107,7 @@ msgstr ""
 #: ../src/disks/gdurestorediskimagedialog.c:332
 #, c-format
 msgid "%s of %s copied"
-msgstr ""
+msgstr "Копирани са %s от %s"
 
 #: ../src/disks/gducreatediskimagedialog.c:341
 #: ../src/disks/gdurestorediskimagedialog.c:380
@@ -2188,22 +2204,22 @@ msgstr "Нов том"
 #: ../src/disks/gducreatefilesystemwidget.c:489
 #: ../src/disks/gduformatdiskdialog.c:151
 msgid "Don't overwrite existing data"
-msgstr ""
+msgstr "Да не се презаписват съществуващите данни"
 
 #: ../src/disks/gducreatefilesystemwidget.c:490
 #: ../src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
-msgstr ""
+msgstr "Бързо"
 
 #: ../src/disks/gducreatefilesystemwidget.c:497
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
-msgstr "Записване на нули върху всички налични данни"
+msgstr "Записване на нула върху всички съществуващи данни"
 
 #: ../src/disks/gducreatefilesystemwidget.c:498
 #: ../src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
-msgstr ""
+msgstr "Бавно"
 
 #: ../src/disks/gducreatepartitiondialog.c:201
 msgid "Error formatting partition"
@@ -2291,39 +2307,39 @@ msgstr "Блоково устройство (%s)"
 #: ../src/disks/gdudisksettingsdialog.c:264
 msgctxt "standby-value"
 msgid "Never"
-msgstr ""
+msgstr "Никога"
 
 #: ../src/disks/gdudisksettingsdialog.c:283
 msgctxt "standby-value"
 msgid "Vendor-defined"
-msgstr ""
+msgstr "Зададено от производителя"
 
 #: ../src/disks/gdudisksettingsdialog.c:287
 msgctxt "standby-value"
 msgid "Reserved"
-msgstr ""
+msgstr "Запазено"
 
 #: ../src/disks/gdudisksettingsdialog.c:308
 msgctxt "apm-level"
 msgid "255 (Disabled)"
-msgstr ""
+msgstr "255 (Изключено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:312
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
-msgstr ""
+msgstr "%d (спирането на въртенето е разрешено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:316
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
-msgstr ""
+msgstr "%d (спирането на въртенето не е разрешено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:331
 msgctxt "aam-level"
 msgid "0 (Disabled)"
-msgstr ""
+msgstr "0 (Изключено)"
 
 #: ../src/disks/gdudisksettingsdialog.c:360
 msgid "Error setting configuration"
@@ -2332,7 +2348,7 @@ msgstr "Грешка при задаване на настройките"
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:390
 msgid "Never"
-msgstr ""
+msgstr "Никога"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:392
@@ -2362,22 +2378,22 @@ msgstr "Спестяване на енергия"
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
 #: ../src/disks/gdudisksettingsdialog.c:404
 msgid "← Spindown"
-msgstr ""
+msgstr "← Спиране на въртенето"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:406
 msgid "Perform Better"
-msgstr ""
+msgstr "По-добра производителност"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:410
 msgid "Quiet (Slow)"
-msgstr ""
+msgstr "Тихо (бавно)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:412
 msgid "Loud (Fast)"
-msgstr ""
+msgstr "Шумно (бързо)"
 
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
@@ -2390,7 +2406,7 @@ msgstr "Грешка при запазване на етикет"
 #: ../src/disks/gduformatdiskdialog.c:105
 #, c-format
 msgid "At least %s"
-msgstr ""
+msgstr "Поне %s"
 
 #. Translators: Used to convey that something takes
 #. * approximately some specificed duration. The %s is a time
@@ -2399,15 +2415,15 @@ msgstr ""
 #: ../src/disks/gduformatdiskdialog.c:116
 #, c-format
 msgid "Approximately %s"
-msgstr ""
+msgstr "Приблизително %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr ""
+msgstr "Защитено изтриване на ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr ""
+msgstr "Разширено защитено изтриване на ATA"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
@@ -2445,6 +2461,8 @@ msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
 msgstr ""
+"Всички данни на диска ще бъдат загубени, но е възможно да бъдат възстановени "
+"чрез програми за възстановяване на данни."
 
 #: ../src/disks/gduformatdiskdialog.c:391
 #: ../src/disks/gduformatvolumedialog.c:153
@@ -2453,6 +2471,10 @@ msgid ""
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
+"<b>Съвет</b>: Ако възнамерявате да рециклирате, продадете или подарите "
+"стария си компютър или диск, е добре да използвате по-надежден метод за "
+"изтриване на данни, за да е сигурно, че личната ви информация няма да бъде "
+"достъпна за злонамерени хора."
 
 #. Translators: warning used when overwriting data
 #: ../src/disks/gduformatdiskdialog.c:396
@@ -2460,6 +2482,8 @@ msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
 msgstr ""
+"Всички данни на диска ще бъдат презаписани и е малко вероятно да бъдат "
+"възстановен чрез програми за възстановяване на данни."
 
 #: ../src/disks/gduformatdiskdialog.c:404
 msgid ""
@@ -2470,6 +2494,13 @@ msgid ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
 msgstr ""
+"<b>Предупреждение:</b>: Изпълнението на командата за сигурно изтриване на "
+"данните може да отнеме много време. Командата не може да бъде спряна и е "
+"възможно да не работи правилно с някои видове хардуер. В най-лошият случай, "
+"дискът може да стане неизползваем или системата да е (временно) недостъпна. "
+"Преди да използвате командата прочетете статията „<a href='https://ata.wiki."
+"kernel.org/index.php/ATA_Secure_Erase'>Сигурно изтриване на АТА</a>“ и се "
+"уверете, че разбирате риска."
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2490,6 +2521,8 @@ msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
 msgstr ""
+"Всички данни на тома ще бъдат загубени, но е възможно да бъдат възстановени "
+"чрез програми за възстановяване на данни."
 
 #. Translators: warning used when overwriting data of the volume
 #: ../src/disks/gduformatvolumedialog.c:158
@@ -2497,6 +2530,8 @@ msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
 msgstr ""
+"Всички данни на тома ще бъдат презаписани и е малко вероятно да бъдат "
+"възстановен чрез програми за възстановяване на данни."
 
 #: ../src/disks/gdufstabdialog.c:152
 #, c-format
@@ -2635,7 +2670,7 @@ msgstr "Грешка при отключване на шифрирано уст�
 
 #: ../src/disks/gduunlockdialog.c:143
 msgid "The encryption passphrase was retrieved from the keyring"
-msgstr ""
+msgstr "Паролата за шифриране беше получена от ключодържателя"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
@@ -2723,20 +2758,20 @@ msgstr "%s <span size=\"smaller\">(само за четене)</span>"
 #: ../src/disks/gduwindow.c:1731
 msgctxt "job-remaining-exceeded"
 msgid "Almost done..."
-msgstr ""
+msgstr "Почти приключила…"
 
 #: ../src/disks/gduwindow.c:1736
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
-msgstr ""
+msgstr "Остават %s"
 
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
 #: ../src/disks/gduwindow.c:1892
 msgid "Connected to another seat"
-msgstr ""
+msgstr "Свързан на друг порт"
 
 #: ../src/disks/gduwindow.c:2193
 msgctxt "partition type"
@@ -2788,11 +2823,11 @@ msgstr "Незаделено пространство"
 
 #: ../src/disks/gduwindow.c:2764
 msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
+msgstr "Възникна грешка при приспиване на диска"
 
 #: ../src/disks/gduwindow.c:2810
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
+msgstr " Възникна грешка при събуждане на диска"
 
 #: ../src/disks/gduwindow.c:2885
 msgid "Error mounting filesystem"
@@ -2911,35 +2946,35 @@ msgstr[1] "%d милисекунди"
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
-msgstr ""
+msgstr "%s, %s и %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
 #: ../src/libgdu/gduutils.c:514
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
 #: ../src/libgdu/gduutils.c:519
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
 #: ../src/libgdu/gduutils.c:524
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
 #: ../src/libgdu/gduutils.c:535
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
-msgstr ""
+msgstr "%s и %s"
 
 #: ../src/libgdu/gduutils.c:544
 msgctxt "duration"
@@ -2951,23 +2986,11 @@ msgstr "По-малко от минута"
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
 #: ../src/libgdu/gduutils.c:555
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
-msgstr ""
-
-#~ msgid "<big>Change Passphrase</big>"
-#~ msgstr "<big>Смяна на паролата</big>"
-
-#~ msgid "<big>Contents</big>"
-#~ msgstr "<big>Съдържание</big>"
-
-#~ msgid "<big>Edit Partition</big>"
-#~ msgstr "<big>Редактиране на дяла</big>"
-
-#~ msgid "<big>Format Disk</big>"
-#~ msgstr "<big>Форматиране на диска</big>"
+msgstr "%s"

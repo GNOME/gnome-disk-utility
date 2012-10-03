@@ -11,7 +11,6 @@
 #define __LIB_GDU_TYPES_H__
 
 #include <gtk/gtk.h>
-#define UDISKS_API_IS_SUBJECT_TO_CHANGE
 #include <udisks/udisks.h>
 
 #include "libgduenums.h"

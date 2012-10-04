@@ -117,12 +117,24 @@ about_activated (GSimpleAction *action,
 {
   GduApplication *app = GDU_APPLICATION (user_data);
   GtkWidget *dialog;
+  gchar *s;
 
   dialog = GTK_WIDGET (gdu_application_new_widget (app,
                                                    "about-dialog.ui",
                                                    "about-dialog",
                                                    NULL));
-  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), PACKAGE_VERSION);
+  /* Translators: Shown in the About dialog to convey version numbers.
+   *              The first %s is the version of Disks (for example "3.6").
+   *              The second %s is the version of the running udisks daemon (for example "2.0.90").
+   *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
+   */
+  s = g_strdup_printf (_("gnome-disk-utility %s\nUDisks %s (built against %d.%d.%d)"),
+                       PACKAGE_VERSION,
+                       udisks_manager_get_version (udisks_client_get_manager (app->client)),
+                       UDISKS_MAJOR_VERSION, UDISKS_MINOR_VERSION, UDISKS_MICRO_VERSION);
+  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), s);
+  g_free (s);
+
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_widget_show_all (dialog);

@@ -2608,6 +2608,173 @@ update_device_page_for_drive (GduWindow      *window,
     udisks_object_info_unref (info);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+update_device_page_for_loop (GduWindow      *window,
+                             UDisksObject   *object,
+                             UDisksBlock    *block,
+                             UDisksLoop     *loop,
+                             ShowFlags      *show_flags)
+{
+  GIcon *icon = NULL;
+  gchar *s = NULL;
+  gchar *desc = NULL;
+  gchar *device_desc = NULL;
+  guint64 size = 0;
+  GList *jobs = NULL;
+
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("Loop device is empty"));
+
+  size = udisks_block_get_size (block);
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+
+  icon = g_themed_icon_new ("drive-removable-media"); /* for now */
+
+  if (size > 0)
+    {
+      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
+      /* Translators: Used in the main window for a loop device, the first %s is the size */
+      desc = g_strdup_printf (C_("loop-window", "%s Loop Device"), s);
+      g_free (s);
+    }
+  else
+    {
+      /* Translators: Used in the main window for a block device where the size is not known  */
+      desc = g_strdup (C_("loop-window", "Loop Device"));
+    }
+  device_desc = get_device_file_for_display (block);
+
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (window->devtab_drive_image);
+
+  s = g_strdup_printf ("<big><b>%s</b></big>", desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
+  gtk_widget_show (window->devtab_drive_desc_label);
+  g_free (s);
+  s = g_strdup_printf ("<small>%s</small>", device_desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
+  gtk_widget_show (window->devtab_drive_devices_label);
+  g_free (s);
+
+  gtk_widget_show (window->devtab_drive_box);
+  gtk_widget_show (window->devtab_drive_vbox);
+  gtk_widget_show (window->devtab_drive_buttonbox);
+  gtk_widget_show (window->devtab_drive_generic_button);
+
+  /* -------------------------------------------------- */
+  /* 'Size' field */
+
+  set_size (window,
+            "devtab-drive-size-label",
+            "devtab-drive-size-value-label",
+            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+  /* -------------------------------------------------- */
+  /* 'Auto-clear' and 'Backing File' fields */
+
+  if (loop != NULL)
+    {
+      s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
+      set_markup (window,
+                  "devtab-backing-file-label",
+                  "devtab-backing-file-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
+
+      set_switch (window,
+                  "devtab-loop-autoclear-label",
+                  "devtab-loop-autoclear-switch-box",
+                  "devtab-loop-autoclear-switch",
+                  udisks_loop_get_autoclear (loop));
+    }
+
+  /* -------------------------------------------------- */
+  /* 'Job' field - only shown if a job is running */
+
+  update_drive_jobs (window, jobs);
+
+  /* cleanup */
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
+  g_clear_object (&icon);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* this is for setting the drive stuff for things any random block
+ * device that we don't have explicit support for... (typically things
+ * like LVM)
+ */
+static void
+update_device_page_for_fake_block (GduWindow      *window,
+                                   UDisksObject   *object,
+                                   UDisksBlock    *block,
+                                   ShowFlags      *show_flags)
+{
+  GIcon *icon = NULL;
+  gchar *s = NULL;
+  gchar *desc = NULL;
+  gchar *device_desc = NULL;
+  guint64 size = 0;
+  GList *jobs = NULL;
+
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("Block device is empty"));
+
+  size = udisks_block_get_size (block);
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+
+  icon = g_themed_icon_new ("drive-removable-media"); /* for now */
+
+  if (size > 0)
+    {
+      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
+      /* Translators: Used in the main window for a block device, the first %s is the size */
+      desc = g_strdup_printf (C_("block-window", "%s Block Device"), s);
+      g_free (s);
+    }
+  else
+    {
+      /* Translators: Used in the main window for a block device where the size is not known  */
+      desc = g_strdup (C_("block-window", "Block Device"));
+    }
+  device_desc = get_device_file_for_display (block);
+
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_widget_show (window->devtab_drive_image);
+
+  s = g_strdup_printf ("<big><b>%s</b></big>", desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
+  gtk_widget_show (window->devtab_drive_desc_label);
+  g_free (s);
+  s = g_strdup_printf ("<small>%s</small>", device_desc);
+  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_devices_label), s);
+  gtk_widget_show (window->devtab_drive_devices_label);
+  g_free (s);
+
+  gtk_widget_show (window->devtab_drive_box);
+  gtk_widget_show (window->devtab_drive_vbox);
+  gtk_widget_show (window->devtab_drive_buttonbox);
+  gtk_widget_show (window->devtab_drive_generic_button);
+
+  /* -------------------------------------------------- */
+  /* 'Size' field */
+
+  set_size (window,
+            "devtab-drive-size-label",
+            "devtab-drive-size-value-label",
+            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+  /* cleanup */
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
+  g_clear_object (&icon);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static UDisksObject *
 lookup_cleartext_device_for_crypto_device (UDisksClient  *client,
                                            const gchar   *object_path)
@@ -2656,7 +2823,6 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *version;
   UDisksFilesystem *filesystem;
   UDisksPartition *partition;
-  UDisksLoop *loop;
   gboolean read_only;
   gchar *s, *s2, *s3;
   UDisksObject *drive_object;
@@ -2666,9 +2832,6 @@ update_device_page_for_block (GduWindow          *window,
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
-
-  /* loop device of main block device (not partition) */
-  loop = udisks_object_peek_loop (window->current_object);
 
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
                                                                         udisks_block_get_drive (block));
@@ -2755,22 +2918,6 @@ update_device_page_for_block (GduWindow          *window,
                   "devtab-partition-value-label",
                   s, SET_MARKUP_FLAGS_NONE);
       g_free (s);
-    }
-
-  if (loop != NULL)
-    {
-      s = gdu_utils_unfuse_path (udisks_loop_get_backing_file (loop));
-      set_markup (window,
-                  "devtab-backing-file-label",
-                  "devtab-backing-file-value-label",
-                  s, SET_MARKUP_FLAGS_NONE);
-      g_free (s);
-
-      set_switch (window,
-                  "devtab-loop-autoclear-label",
-                  "devtab-loop-autoclear-switch-box",
-                  "devtab-loop-autoclear-switch",
-                  udisks_loop_get_autoclear (loop));
     }
 
   usage = udisks_block_get_id_usage (block);
@@ -3077,6 +3224,7 @@ update_device_page (GduWindow      *window,
   UDisksBlock *block;
   UDisksDrive *drive;
   UDisksMDRaid *mdraid;
+  UDisksLoop *loop = NULL;
   guint64 size;
   GList *children;
   GList *l;
@@ -3110,15 +3258,20 @@ update_device_page (GduWindow      *window,
   block = udisks_object_peek_block (window->current_object);
   drive = udisks_object_peek_drive (window->current_object);
   mdraid = udisks_object_peek_mdraid (window->current_object);
+  if (block != NULL)
+    loop = udisks_client_get_loop_for_block (window->client, block);
 
   if (udisks_object_peek_loop (object) != NULL)
     show_flags->device_tree_buttons |= SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE;
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive, show_flags);
-
-  if (mdraid != NULL)
+  else if (mdraid != NULL)
     update_device_page_for_mdraid (window, object, mdraid, show_flags);
+  else if (loop != NULL)
+    update_device_page_for_loop (window, object, block, loop, show_flags);
+  else
+    update_device_page_for_fake_block (window, object, block, show_flags);
 
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
@@ -3157,6 +3310,8 @@ update_device_page (GduWindow      *window,
             }
         }
     }
+
+  g_clear_object (&loop);
 }
 
 static void

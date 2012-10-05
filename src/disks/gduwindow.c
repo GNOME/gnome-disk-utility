@@ -2146,10 +2146,22 @@ update_device_page_for_mdraid (GduWindow      *window,
        *              The first %s is the number of disks e.g. "3 disks".
        *              The second %s is the chunk size e.g. "512 KiB".
        */
-      s = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
-      s2 = s;
-      s = NULL;
+      s = s2;
+      s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
+      g_free (s);
+      g_free (s3);
     }
+
+  if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
+    {
+      /* Translators: Used to convey that bitmap is enabled for the disk.
+       *              The first %s is the number of disks e.g. "3 disks, 512 KiB".
+       */
+      s = s2;
+      s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size-and-bitmap", "%s, Bitmap"), s2);
+      g_free (s);
+    }
+
   /* Translators: Shown in the "RAID Level" field.
    *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
    *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
@@ -2284,35 +2296,6 @@ update_device_page_for_mdraid (GduWindow      *window,
       gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
       gtk_widget_hide (window->devtab_drive_raid_state_progress_label);
     }
-
-  /* -------------------------------------------------- */
-  /* 'Intent Log' (e.g. bitmap) field */
-
-  if (bitmap_location == NULL || strlen (bitmap_location) == 0)
-    {
-      s = NULL;
-    }
-  else if (g_strcmp0 (bitmap_location, "none") == 0)
-    {
-      /* Translators: Value for the 'Write Intent Log' field when no write-intent bitmap is used */
-      s = g_strdup (C_("mdraid-bitmap", "None"));
-    }
-  else if (g_str_has_prefix (bitmap_location, "file"))
-    {
-      /* TODO: may be file:/foo/bar in the future - convey it */
-      /* Translators: Value for the 'Write Intent Log' field when an external write-intent bitmap is used */
-      s = g_strdup (C_("mdraid-bitmap", "External Bitmap"));
-    }
-  else
-    {
-      /* Translators: Value for the 'Write Intent Log' field when an internal write-intent bitmap is used */
-      s = g_strdup (C_("mdraid-bitmap", "Internal Bitmap"));
-    }
-  set_markup (window,
-              "devtab-drive-raid-bitmap-label",
-              "devtab-drive-raid-bitmap-value-label",
-              s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-  g_free (s);
 
   /* -------------------------------------------------- */
   /* 'Job' field - only shown if a job is running */

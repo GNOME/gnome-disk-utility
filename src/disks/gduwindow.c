@@ -2857,6 +2857,7 @@ update_device_page_for_block (GduWindow          *window,
   UDisksPartitionTable *partition_table = NULL;
   gboolean read_only;
   gchar *s, *s2, *s3;
+  gchar *in_use_markup = NULL;
   UDisksObject *drive_object;
   UDisksDrive *drive = NULL;
   GList *jobs;
@@ -2956,15 +2957,99 @@ update_device_page_for_block (GduWindow          *window,
       g_free (s);
     }
 
+  /* ------------------------------ */
+  /* 'Contents' field */
+
   usage = udisks_block_get_id_usage (block);
   type = udisks_block_get_id_type (block);
   version = udisks_block_get_id_version (block);
+
+  /* Figure out in use */
+  in_use_markup = NULL;
+  if (filesystem != NULL)
+    {
+      const gchar *const *mount_points;
+      mount_points = udisks_filesystem_get_mount_points (filesystem);
+      if (g_strv_length ((gchar **) mount_points) > 0)
+        {
+          /* TODO: right now we only display the first mount point */
+          if (g_strcmp0 (mount_points[0], "/") == 0)
+            {
+              /* Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
+               */
+              s = g_strdup_printf ("<a href=\"file:///\">%s</a>", C_("volume-content-fs", "Filesystem Root"));
+            }
+          else
+            {
+              s = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+                                   mount_points[0], mount_points[0]);
+            }
+          /* Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar */
+          in_use_markup = g_strdup_printf (C_("volume-content-fs", "Mounted at %s"), s);
+          g_free (s);
+        }
+      else
+        {
+          /* Translators: Shown when the device is not mounted next to the "In Use" label */
+          in_use_markup = g_strdup (C_("volume-content-fs", "Not Mounted"));
+        }
+
+      if (g_strv_length ((gchar **) mount_points) > 0)
+        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_UNMOUNT;
+      else
+        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_MOUNT;
+
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
+      if (!read_only)
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL;
+    }
+  else if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
+           g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
+    {
+      UDisksSwapspace *swapspace;
+      swapspace = udisks_object_peek_swapspace (object);
+      if (swapspace != NULL)
+        {
+          if (udisks_swapspace_get_active (swapspace))
+            {
+              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_DEACTIVATE_SWAP;
+              /* Translators: Shown as in-use part of 'Contents' if the swap device is in use */
+              in_use_markup = g_strdup (C_("volume-content-swap", "Active"));
+            }
+          else
+            {
+              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ACTIVATE_SWAP;
+              /* Translators: Shown as in-use part of 'Contents' if the swap device is not in use */
+              in_use_markup = g_strdup (C_("volume-content-swap", "Not Active"));
+            }
+        }
+    }
+  else if (g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0)
+    {
+      UDisksObject *cleartext_device;
+      cleartext_device = lookup_cleartext_device_for_crypto_device (window->client,
+                                                                    g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      if (cleartext_device != NULL)
+        {
+          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK;
+          /* Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked */
+          in_use_markup = g_strdup (C_("volume-content-luks", "Unlocked"));
+        }
+      else
+        {
+          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK;
+          /* Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked */
+          in_use_markup = g_strdup (C_("volume-content-luks", "Locked"));
+        }
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB;
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE;
+    }
 
   if (size > 0)
     {
       if (partition != NULL && udisks_partition_get_is_container (partition))
         {
-          s = g_strdup (_("Extended Partition"));
+          s = g_strdup (C_("volume-contents-msdos-ext", "Extended Partition"));
         }
       else
         {
@@ -2974,12 +3059,12 @@ update_device_page_for_block (GduWindow          *window,
               s2 = g_strdup_printf ("<a href=\"x-udisks://%s\">%s</a>",
                                     udisks_block_get_mdraid_member (block),
                                     /* Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array */
-                                    C_("raid-member", "Go To Array"));
+                                    C_("volume-contents-raid", "Go To Array"));
               /* Translators: Shown in the 'Contents' field for a member of an RAID array.
                *              The first %s is the usual contents string (e.g. "Linux RAID Member").
                *              The second %s is the hyperlink "Go To Array".
                */
-              s3 = g_strdup_printf (C_("raid-member", "%s — %s"), s, s2);
+              s3 = g_strdup_printf (C_("volume-contents-raid", "%s — %s"), s, s2);
               g_free (s); s = s3;
             }
         }
@@ -2987,6 +3072,16 @@ update_device_page_for_block (GduWindow          *window,
   else
     {
       s = NULL;
+    }
+
+  if (in_use_markup != NULL)
+    {
+      /* Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
+       *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
+       *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
+       */
+      s2 = g_strdup_printf (C_("volume-contents-combiner", "%s — %s"), s, in_use_markup);
+      g_free (s); s = s2;
     }
   set_markup (window,
               "devtab-volume-type-label",
@@ -3003,107 +3098,6 @@ update_device_page_for_block (GduWindow          *window,
     {
       if (drive != NULL && udisks_drive_get_ejectable (drive))
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
-    }
-
-  if (filesystem != NULL)
-    {
-      const gchar *const *mount_points;
-      gchar *mount_point;
-
-      mount_points = udisks_filesystem_get_mount_points (filesystem);
-      if (g_strv_length ((gchar **) mount_points) > 0)
-        {
-          /* TODO: right now we only display the first mount point */
-          if (g_strcmp0 (mount_points[0], "/") == 0)
-            {
-              /* Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
-               */
-              s = g_strdup_printf ("<a href=\"file:///\">%s</a>", _("Filesystem Root"));
-            }
-          else
-            {
-              s = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
-                                   mount_points[0], mount_points[0]);
-            }
-          /* Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar */
-          mount_point = g_strdup_printf (_("Yes, mounted at %s"), s);
-          g_free (s);
-        }
-      else
-        {
-          /* Translators: Shown when the device is not mounted next to the "In Use" label */
-          mount_point = g_strdup (_("No"));
-        }
-      set_markup (window,
-                  "devtab-volume-in-use-label",
-                  "devtab-volume-in-use-value-label",
-                  mount_point,
-                  SET_MARKUP_FLAGS_NONE);
-      g_free (mount_point);
-
-      if (g_strv_length ((gchar **) mount_points) > 0)
-        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_UNMOUNT;
-      else
-        show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_MOUNT;
-
-      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
-      if (!read_only)
-        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL;
-    }
-  else if (g_strcmp0 (udisks_block_get_id_usage (block), "other") == 0 &&
-           g_strcmp0 (udisks_block_get_id_type (block), "swap") == 0)
-    {
-      UDisksSwapspace *swapspace;
-      const gchar *str;
-      swapspace = udisks_object_peek_swapspace (object);
-      if (swapspace != NULL)
-        {
-          if (udisks_swapspace_get_active (swapspace))
-            {
-              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_DEACTIVATE_SWAP;
-              /* Translators: Shown if the swap device is in use next to the "In Use" label */
-              str = _("Yes");
-            }
-          else
-            {
-              show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ACTIVATE_SWAP;
-              /* Translators: Shown if the swap device is not in use next to the "In Use" label */
-              str = _("No");
-            }
-          set_markup (window,
-                      "devtab-volume-in-use-label",
-                      "devtab-volume-in-use-value-label",
-                      str,
-                      SET_MARKUP_FLAGS_NONE);
-        }
-    }
-  else if (g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0)
-    {
-      UDisksObject *cleartext_device;
-      const gchar *str;
-
-      cleartext_device = lookup_cleartext_device_for_crypto_device (window->client,
-                                                                    g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-      if (cleartext_device != NULL)
-        {
-          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK;
-          /* Translators: Shown if the encrypted device is unlocked next to the "In Use" label */
-          str = _("Yes");
-        }
-      else
-        {
-          show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK;
-          /* Translators: Shown if the encrypted device is not unlocked next to the "In Use" label */
-          str = _("No");
-        }
-      set_markup (window,
-                  "devtab-volume-in-use-label",
-                  "devtab-volume-in-use-value-label",
-                  str,
-                  SET_MARKUP_FLAGS_NONE);
-
-      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB;
-      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE;
     }
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
@@ -3153,6 +3147,7 @@ update_device_page_for_block (GduWindow          *window,
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
   g_clear_object (&partition_table);
+  g_free (in_use_markup);
 }
 
 static void

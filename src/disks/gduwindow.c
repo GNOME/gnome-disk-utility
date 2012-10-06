@@ -1967,6 +1967,61 @@ update_drive_jobs (GduWindow *window,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+update_drive_part_for_block (GduWindow      *window,
+                             UDisksBlock    *block,       /* should be the whole disk */
+                             ShowFlags      *show_flags)
+{
+  gchar *s = NULL;
+  guint64 size = 0;
+  UDisksObject *object = NULL;
+  UDisksPartitionTable *partition_table = NULL;
+
+  object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+  if (object == NULL)
+    goto out;
+  partition_table = udisks_object_get_partition_table (object);
+
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("Block device is empty"));
+
+  size = udisks_block_get_size (block);
+
+  /* -------------------------------------------------- */
+  /* 'Size' field */
+
+  set_size (window,
+            "devtab-drive-size-label",
+            "devtab-drive-size-value-label",
+            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+  /* -------------------------------------------------- */
+  /* 'Partitioning' field - only show if actually partitioned */
+
+  s = NULL;
+  if (partition_table != NULL)
+    {
+      const gchar *table_type = udisks_partition_table_get_type_ (partition_table);
+      s = g_strdup (udisks_client_get_partition_table_type_for_display (window->client, table_type));
+      if (s == NULL)
+        {
+          /* Translators: Shown for unknown partitioning type. The first %s is the low-level type. */
+          s = g_strdup_printf (C_("partitioning", "Unknown (%s)"), table_type);
+        }
+    }
+  set_markup (window,
+              "devtab-drive-partitioning-label",
+              "devtab-drive-partitioning-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
+
+ out:
+  /* cleanup */
+  g_clear_object (&partition_table);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 update_grid_for_mdraid (GduWindow      *window,
                         UDisksMDRaid   *mdraid)
 {
@@ -2053,6 +2108,9 @@ update_device_page_for_mdraid (GduWindow      *window,
           udisks_mdraid_get_can_start_degraded (mdraid))
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
     }
+
+  if (block != NULL)
+    update_drive_part_for_block (window, block, show_flags);
 
   gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
@@ -2352,6 +2410,7 @@ update_device_page_for_drive (GduWindow      *window,
   const gchar *drive_vendor;
   const gchar *drive_model;
   const gchar *drive_revision;
+  UDisksBlock *block = NULL; /* first block */
   UDisksObjectInfo *info = NULL;
   guint64 size;
   UDisksDriveAta *ata;
@@ -2368,6 +2427,11 @@ update_device_page_for_drive (GduWindow      *window,
   /* TODO: for multipath, ensure e.g. mpathk is before sda, sdb */
   blocks = get_top_level_blocks_for_drive (window, g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
   blocks = g_list_sort (blocks, (GCompareFunc) block_compare_on_preferred);
+  if (blocks != NULL)
+    block = udisks_object_peek_block (UDISKS_OBJECT (blocks->data));
+
+  if (block != NULL)
+    update_drive_part_for_block (window, block, show_flags);
 
   ata = udisks_object_peek_drive_ata (object);
 
@@ -2559,20 +2623,12 @@ update_device_page_for_drive (GduWindow      *window,
     }
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
-  /* if there are no jobs on the drive, look at the first block object if it's partitioned
-   * (because: if it's not partitioned, we'll see the job in Volumes below so no need to show it here)
-   */
-  if (jobs == NULL && blocks != NULL)
+  if (jobs != NULL)
     {
-      UDisksObject *block_object = UDISKS_OBJECT (blocks->data);
-      if (udisks_object_peek_partition_table (block_object) != NULL)
-        {
-          jobs = udisks_client_get_jobs_for_object (window->client, block_object);
-        }
+      update_drive_jobs (window, jobs);
+      g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+      g_list_free (jobs);
     }
-  update_drive_jobs (window, jobs);
-  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-  g_list_free (jobs);
 
   if (udisks_drive_get_ejectable (drive))
     {
@@ -2622,13 +2678,11 @@ update_device_page_for_loop (GduWindow      *window,
   gchar *desc = NULL;
   gchar *device_desc = NULL;
   guint64 size = 0;
-  GList *jobs = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Loop device is empty"));
 
   size = udisks_block_get_size (block);
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
 
   icon = g_themed_icon_new ("drive-removable-media"); /* for now */
 
@@ -2663,13 +2717,7 @@ update_device_page_for_loop (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  /* -------------------------------------------------- */
-  /* 'Size' field */
-
-  set_size (window,
-            "devtab-drive-size-label",
-            "devtab-drive-size-value-label",
-            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  update_drive_part_for_block (window, block, show_flags);
 
   /* -------------------------------------------------- */
   /* 'Auto-clear' and 'Backing File' fields */
@@ -2690,14 +2738,7 @@ update_device_page_for_loop (GduWindow      *window,
                   udisks_loop_get_autoclear (loop));
     }
 
-  /* -------------------------------------------------- */
-  /* 'Job' field - only shown if a job is running */
-
-  update_drive_jobs (window, jobs);
-
   /* cleanup */
-  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-  g_list_free (jobs);
   g_clear_object (&icon);
 }
 
@@ -2718,13 +2759,11 @@ update_device_page_for_fake_block (GduWindow      *window,
   gchar *desc = NULL;
   gchar *device_desc = NULL;
   guint64 size = 0;
-  GList *jobs = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Block device is empty"));
 
   size = udisks_block_get_size (block);
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
 
   icon = g_themed_icon_new ("drive-removable-media"); /* for now */
 
@@ -2759,17 +2798,9 @@ update_device_page_for_fake_block (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  /* -------------------------------------------------- */
-  /* 'Size' field */
-
-  set_size (window,
-            "devtab-drive-size-label",
-            "devtab-drive-size-value-label",
-            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+  update_drive_part_for_block (window, block, show_flags);
 
   /* cleanup */
-  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-  g_list_free (jobs);
   g_clear_object (&icon);
 }
 
@@ -2823,6 +2854,7 @@ update_device_page_for_block (GduWindow          *window,
   const gchar *version;
   UDisksFilesystem *filesystem;
   UDisksPartition *partition;
+  UDisksPartitionTable *partition_table = NULL;
   gboolean read_only;
   gchar *s, *s2, *s3;
   UDisksObject *drive_object;
@@ -2832,6 +2864,10 @@ update_device_page_for_block (GduWindow          *window,
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
   filesystem = udisks_object_peek_filesystem (object);
+
+  partition_table = udisks_object_get_partition_table (object);
+  if (partition_table == NULL && partition != NULL)
+    partition_table = udisks_client_get_partition_table (window->client, partition);
 
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (window->client),
                                                                         udisks_block_get_drive (block));
@@ -3070,7 +3106,6 @@ update_device_page_for_block (GduWindow          *window,
       show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE;
     }
 
-
   jobs = udisks_client_get_jobs_for_object (window->client, object);
   if (jobs == NULL)
     {
@@ -3117,6 +3152,7 @@ update_device_page_for_block (GduWindow          *window,
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
+  g_clear_object (&partition_table);
 }
 
 static void

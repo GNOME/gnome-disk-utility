@@ -2418,9 +2418,6 @@ update_device_page_for_drive (GduWindow      *window,
   const gchar *serial;
   GList *jobs;
 
-  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
-                                       _("No Media"));
-
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
 
@@ -2432,6 +2429,9 @@ update_device_page_for_drive (GduWindow      *window,
 
   if (block != NULL)
     update_drive_part_for_block (window, block, show_flags);
+
+  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                       _("No Media"));
 
   ata = udisks_object_peek_drive_ata (object);
 

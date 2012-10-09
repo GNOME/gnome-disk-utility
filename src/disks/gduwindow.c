@@ -905,9 +905,11 @@ device_tree_toolbar_update_label (GduWindow *window)
       UDisksObject *object = UDISKS_OBJECT (l->data);
       UDisksDrive *drive = NULL;
       UDisksBlock *block = NULL;
+      UDisksMDRaid *mdraid = NULL;
 
       drive = udisks_object_peek_drive (object);
       block = udisks_object_peek_block (object);
+      mdraid = udisks_object_peek_mdraid (object);
 
       if (drive != NULL)
         {
@@ -917,6 +919,11 @@ device_tree_toolbar_update_label (GduWindow *window)
       else if (block != NULL)
         {
           total_size += udisks_block_get_size (block);
+          num_disks++;
+        }
+      else if (mdraid != NULL)
+        {
+          total_size += udisks_mdraid_get_size (mdraid);
           num_disks++;
         }
       else

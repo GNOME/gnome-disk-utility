@@ -162,7 +162,6 @@ struct _GduWindow
   GtkWidget *devtab_volume_type_value_label;
 
   GtkWidget *device_tree_menu;
-  GtkWidget *device_tree_menu_item_status;
   GtkWidget *device_tree_menu_item_create_raid_array;
   GtkWidget *device_tree_menu_item_erase_disks;
   GtkWidget *device_tree_menu_item_abort_selection;
@@ -266,7 +265,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_volume_type_value_label), "devtab-volume-type-value-label"},
 
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu), "device-tree-menu"},
-  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_status), "device-tree-menu-item-status"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_create_raid_array), "device-tree-menu-item-create-raid-array"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_erase_disks), "device-tree-menu-item-erase-disks"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_abort_selection), "device-tree-menu-item-abort-selection"},
@@ -893,7 +891,7 @@ gdu_window_show_attach_disk_image (GduWindow *window)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-device_tree_toolbar_update_status_item (GduWindow *window)
+device_tree_toolbar_update_label (GduWindow *window)
 {
   GList *selected;
   GList *l;
@@ -930,24 +928,26 @@ device_tree_toolbar_update_status_item (GduWindow *window)
 
   if (num_disks == 0)
     {
-      /* Translators: Shown in the top of the "Done..." menu when no disks are selected */
-      s = g_strdup (C_("multi-disk-menu", "No Disks are Selected"));
+      /* Translators: Shown in the device tree toolbar when no disks are selected but
+       *              multiple selection is active.
+       */
+      s = g_strdup (C_("multi-disk-menu", "Select Disks Above"));
     }
   else
     {
       s2 = udisks_client_get_size_for_display (window->client, total_size, FALSE, FALSE);
-      /* Translators: Shown in the top of the "Done..." menu when %d disks are selected.
+      /* Translators: Shown in the device tree toolbar when N>=1 disks are selected.
        *              The %d is the number of disks selected (e.g. 4).
        *              The %s is a string with the combined size (e.g. '42.0 GB').
        */
       s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
-                                        "%d Disk is Selected, %s Total Size",
-                                        "%d Disks are Selected, %s Total Size",
+                                        "%d Disk Selected (%s)",
+                                        "%d Disks Selected (%s)",
                                         num_disks),
                               num_disks, s2);
       g_free (s2);
     }
-  gtk_menu_item_set_label (GTK_MENU_ITEM (window->device_tree_menu_item_status), s);
+  gtk_label_set_text (GTK_LABEL (window->device_tree_toolbar_label), s);
   g_free (s);
 }
 
@@ -964,10 +964,8 @@ device_tree_toolbar_select_done_toggle (GduWindow *window,
       gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_select_button), FALSE);
       gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_done_button), TRUE);
       gtk_style_context_add_class (context, "selection-mode");
-      gtk_label_set_markup (GTK_LABEL (window->device_tree_toolbar_label),
-                            /* Translators: shown in toolbar when entering selection-mode */
-                            _("(Click on disks to select them)"));
       gdu_device_tree_model_clear_selected (window->model);
+      device_tree_toolbar_update_label (window);
     }
   else
     {
@@ -981,7 +979,6 @@ device_tree_toolbar_select_done_toggle (GduWindow *window,
 
   gtk_tree_view_column_set_visible (window->selection_column, window->in_selection_mode);
 
-  device_tree_toolbar_update_status_item (window);
 }
 
 static void
@@ -1242,7 +1239,7 @@ on_selected_toggled (GtkCellRendererToggle *renderer,
 
   gdu_device_tree_model_toggle_selected (window->model, &iter);
 
-  device_tree_toolbar_update_status_item (window);
+  device_tree_toolbar_update_label (window);
 
  out:
   ;

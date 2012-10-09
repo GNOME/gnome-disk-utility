@@ -80,23 +80,57 @@
         <property name="icon_name">media-playback-stop-symbolic</property>
       </object>
     </child>
+    <child>
+      <object class="GtkAction" id="devtab-drive-action-loop-detach">
+        <property name="tooltip" translatable="yes">Detach Loop Device</property>
+        <property name="icon_name">list-remove-symbolic</property>
+      </object>
+    </child>
   </object>
   <object class="GtkMenu" id="device-tree-menu">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkMenuItem" id="device-tree-menu-item-attach-disk-image">
+      <object class="GtkMenuItem" id="device-tree-menu-item-status">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="can_focus">False</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem7">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Attach Disk Image...</property>
-        <property name="use_underline">True</property>
       </object>
     </child>
     <child>
       <object class="GtkMenuItem" id="device-tree-menu-item-create-raid-array">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Create RAID Array...</property>
+        <property name="label" translatable="yes">Create RAID Array on Selected Disks...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="device-tree-menu-item-erase-disks">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Erase Selected Disks...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkSeparatorMenuItem" id="menuitem5">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="device-tree-menu-item-abort-selection">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Abort Selection</property>
         <property name="use_underline">True</property>
       </object>
     </child>
@@ -146,33 +180,110 @@
               <object class="GtkToolbar" id="device-tree-add-remove-toolbar">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="toolbar_style">icons</property>
+                <property name="show_arrow">False</property>
                 <property name="icon_size">1</property>
+                <style>
+                  <class name="menubar"/>
+                </style>
                 <child>
-                  <object class="GtkToolButton" id="device-tree-add-menu-button">
+                  <object class="GtkToolItem" id="device-tree-left-toolbar-part">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="tooltip_markup" translatable="yes">Attach or Create...</property>
-                    <property name="tooltip_text" translatable="yes">Attach or Create...</property>
-                    <property name="icon_name">list-add-symbolic</property>
+                    <child>
+                      <placeholder/>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkToolButton" id="device-tree-detach-disk-image-button">
+                  <object class="GtkSeparatorToolItem" id="toolbutton2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="tooltip_markup" translatable="yes">Detach Disk Image</property>
-                    <property name="tooltip_text" translatable="yes">Detach Disk Image</property>
-                    <property name="icon_name">list-remove-symbolic</property>
+                    <property name="draw">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolItem" id="device-tree-center-toolbar-part">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkLabel" id="device-tree-toolbar-label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="homogeneous">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparatorToolItem" id="toolbutton1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="draw">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToolItem" id="device-tree-right-toolbar-part">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkBox" id="box2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkButton" id="device-tree-toolbar-select-button">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <child>
+                              <object class="GtkImage" id="image8">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">Click to select multiple disks to perform operations on</property>
+                                <property name="icon_name">object-select-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkMenuButton" id="device-tree-toolbar-done-button">
+                            <property name="menu">device-tree-menu</property>
+                            <property name="label" translatable="yes">Done...</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <style>
+                              <class name="suggested-action"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
                   </packing>
                 </child>
               </object>
@@ -622,6 +733,33 @@
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
                                 <property name="position">2</property>
+                                <property name="non_homogeneous">True</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="devtab-drive-loop-detach-button">
+                                <property name="use_action_appearance">False</property>
+                                <property name="related_action">devtab-drive-action-loop-detach</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_underline">True</property>
+                                <child>
+                                  <object class="GtkImage" id="image7">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">Detach Loop Device</property>
+                                    <property name="margin_top">5</property>
+                                    <property name="margin_bottom">5</property>
+                                    <property name="pixel_size">16</property>
+                                    <property name="icon_name">list-remove-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">3</property>
                                 <property name="non_homogeneous">True</property>
                               </packing>
                             </child>

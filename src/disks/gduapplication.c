@@ -102,15 +102,6 @@ attach_disk_image_activated (GSimpleAction *action,
 }
 
 static void
-create_raid_array_activated (GSimpleAction *action,
-                             GVariant      *parameter,
-                             gpointer       user_data)
-{
-  GduApplication *app = GDU_APPLICATION (user_data);
-  gdu_window_show_create_raid_array (app->window);
-}
-
-static void
 about_activated (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
@@ -157,7 +148,6 @@ quit_activated (GSimpleAction *action,
 static GActionEntry app_entries[] =
 {
   { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
-  { "create_raid_array", create_raid_array_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
   { "quit", quit_activated, NULL, NULL, NULL }
 };

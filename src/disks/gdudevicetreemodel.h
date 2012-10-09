@@ -33,6 +33,7 @@ enum
   GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING,
   GDU_DEVICE_TREE_MODEL_COLUMN_POWER_STATE_FLAGS,
   GDU_DEVICE_TREE_MODEL_COLUMN_SIZE,
+  GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED,
   GDU_DEVICE_TREE_MODEL_N_COLUMNS
 };
 
@@ -42,6 +43,11 @@ UDisksClient       *gdu_device_tree_model_get_client          (GduDeviceTreeMode
 gboolean            gdu_device_tree_model_get_iter_for_object (GduDeviceTreeModel *model,
                                                                UDisksObject       *object,
                                                                GtkTreeIter        *iter);
+
+void                gdu_device_tree_model_clear_selected      (GduDeviceTreeModel *model);
+void                gdu_device_tree_model_toggle_selected     (GduDeviceTreeModel *model,
+                                                               GtkTreeIter        *iter);
+GList              *gdu_device_tree_model_get_selected        (GduDeviceTreeModel *model);
 
 
 G_END_DECLS

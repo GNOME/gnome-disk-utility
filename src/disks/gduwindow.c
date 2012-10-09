@@ -52,6 +52,9 @@ struct _GduWindow
 {
   GtkApplicationWindow parent_instance;
 
+  gboolean in_selection_mode;
+  GtkTreeViewColumn *selection_column;
+
   GduApplication *application;
   UDisksClient *client;
 
@@ -71,13 +74,15 @@ struct _GduWindow
   GtkWidget *device_scrolledwindow;
   GtkWidget *device_treeview;
   GtkWidget *device_toolbar;
-  GtkWidget *device_toolbar_add_menu_button;
-  GtkWidget *device_toolbar_detach_disk_image_button;
+  GtkWidget *device_tree_toolbar_label;
+  GtkWidget *device_tree_toolbar_select_button;
+  GtkWidget *device_tree_toolbar_done_button;
   GtkWidget *devtab_drive_box;
   GtkWidget *devtab_drive_vbox;
   GtkWidget *devtab_drive_buttonbox;
   GtkWidget *devtab_drive_raid_start_button;
   GtkWidget *devtab_drive_raid_stop_button;
+  GtkWidget *devtab_drive_loop_detach_button;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_generic_button;
   GtkWidget *devtab_drive_desc_label;
@@ -100,6 +105,7 @@ struct _GduWindow
 
   GtkWidget *devtab_drive_action_raid_start;
   GtkWidget *devtab_drive_action_raid_stop;
+  GtkWidget *devtab_drive_action_loop_detach;
   GtkWidget *devtab_drive_action_eject;
   GtkWidget *devtab_drive_action_generic;
 
@@ -156,8 +162,10 @@ struct _GduWindow
   GtkWidget *devtab_volume_type_value_label;
 
   GtkWidget *device_tree_menu;
-  GtkWidget *device_tree_menu_item_attach_disk_image;
+  GtkWidget *device_tree_menu_item_status;
   GtkWidget *device_tree_menu_item_create_raid_array;
+  GtkWidget *device_tree_menu_item_erase_disks;
+  GtkWidget *device_tree_menu_item_abort_selection;
 };
 
 static const struct {
@@ -168,8 +176,9 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_scrolledwindow), "device-tree-scrolledwindow"},
   {G_STRUCT_OFFSET (GduWindow, device_toolbar), "device-tree-add-remove-toolbar"},
-  {G_STRUCT_OFFSET (GduWindow, device_toolbar_add_menu_button), "device-tree-add-menu-button"},
-  {G_STRUCT_OFFSET (GduWindow, device_toolbar_detach_disk_image_button), "device-tree-detach-disk-image-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_toolbar_label), "device-tree-toolbar-label"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_toolbar_select_button), "device-tree-toolbar-select-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_toolbar_done_button), "device-tree-toolbar-done-button"},
   {G_STRUCT_OFFSET (GduWindow, device_treeview), "device-tree-treeview"},
   {G_STRUCT_OFFSET (GduWindow, details_notebook), "disks-notebook"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_table), "devtab-drive-table"},
@@ -178,6 +187,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_buttonbox), "devtab-drive-buttonbox"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_start_button), "devtab-drive-raid-start-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_stop_button), "devtab-drive-raid-stop-button"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_loop_detach_button), "devtab-drive-loop-detach-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_eject_button), "devtab-drive-eject-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_generic_button), "devtab-drive-generic-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_desc_label), "devtab-drive-desc-label"},
@@ -199,6 +209,7 @@ static const struct {
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_raid_start), "devtab-drive-action-raid-start"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_raid_stop), "devtab-drive-action-raid-stop"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_loop_detach), "devtab-drive-action-loop-detach"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_eject), "devtab-drive-action-eject"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_generic), "devtab-drive-action-generic"},
 
@@ -255,8 +266,10 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_volume_type_value_label), "devtab-volume-type-value-label"},
 
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu), "device-tree-menu"},
-  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_attach_disk_image), "device-tree-menu-item-attach-disk-image"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_status), "device-tree-menu-item-status"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_create_raid_array), "device-tree-menu-item-create-raid-array"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_erase_disks), "device-tree-menu-item-erase-disks"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_menu_item_abort_selection), "device-tree-menu-item-abort-selection"},
 
   {0, NULL}
 };
@@ -279,6 +292,7 @@ typedef enum {
   SHOW_FLAGS_DRIVE_BUTTONS_RAID_START       = (1<<0),
   SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP        = (1<<1),
   SHOW_FLAGS_DRIVE_BUTTONS_EJECT            = (1<<2),
+  SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH      = (1<<3),
 } ShowFlagsDriveButtons;
 
 typedef enum
@@ -318,17 +332,12 @@ typedef enum
   SHOW_FLAGS_VOLUME_MENU_BENCHMARK             = (1<<8),
 } ShowFlagsVolumeMenu;
 
-typedef enum {
-  SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE  = (1<<0),
-} ShowFlagsDeviceTreeButtons;
-
 typedef struct
 {
   ShowFlagsDriveButtons      drive_buttons;
   ShowFlagsDriveMenu         drive_menu;
   ShowFlagsVolumeButtons     volume_buttons;
   ShowFlagsVolumeMenu        volume_menu;
-  ShowFlagsDeviceTreeButtons device_tree_buttons;
 } ShowFlags;
 
 static void generic_menu_position_func (GtkMenu       *menu,
@@ -358,6 +367,7 @@ static void on_devtab_action_deactivate_swap_activated (GtkAction *action, gpoin
 
 static void on_devtab_drive_action_raid_start_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_raid_stop_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_drive_action_loop_detach_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_eject_activated (GtkAction *action, gpointer user_data);
 
 static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
@@ -412,11 +422,14 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
 
-static void on_device_tree_menu_item_attach_disk_image (GtkMenuItem *menu_item,
-                                                        gpointer   user_data);
-
 static void on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
                                                         gpointer   user_data);
+
+static void on_device_tree_menu_item_erase_disks (GtkMenuItem *menu_item,
+                                                  gpointer   user_data);
+
+static void on_device_tree_menu_item_abort_selection (GtkMenuItem *menu_item,
+                                                      gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -493,9 +506,6 @@ static void
 update_for_show_flags (GduWindow *window,
                        ShowFlags *show_flags)
 {
-  gtk_widget_set_visible (GTK_WIDGET (window->device_toolbar_detach_disk_image_button),
-                          show_flags->device_tree_buttons & SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE);
-
   gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_raid_start),
                             show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_START);
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_start), TRUE);
@@ -507,6 +517,12 @@ update_for_show_flags (GduWindow *window,
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_raid_stop), TRUE);
   gtk_widget_set_visible (window->devtab_drive_raid_stop_button,
                           show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP);
+
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_loop_detach),
+                            show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_loop_detach), TRUE);
+  gtk_widget_set_visible (window->devtab_drive_loop_detach_button,
+                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH);
 
   gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_eject),
                             show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_EJECT);
@@ -713,8 +729,8 @@ loop_delete_cb (UDisksLoop   *loop,
 }
 
 static void
-on_device_tree_detach_disk_image_button_clicked (GtkToolButton *button,
-                                                 gpointer       user_data)
+on_devtab_drive_action_loop_detach_activated (GtkAction *action,
+                                              gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksLoop *loop;
@@ -877,11 +893,113 @@ gdu_window_show_attach_disk_image (GduWindow *window)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_device_tree_menu_item_attach_disk_image (GtkMenuItem *menu_item,
-                                            gpointer   user_data)
+device_tree_toolbar_update_status_item (GduWindow *window)
+{
+  GList *selected;
+  GList *l;
+  guint num_disks = 0;
+  guint64 total_size = 0;
+  gchar *s, *s2;
+
+  selected = gdu_device_tree_model_get_selected (window->model);
+  for (l = selected; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksDrive *drive = NULL;
+      UDisksBlock *block = NULL;
+
+      drive = udisks_object_peek_drive (object);
+      block = udisks_object_peek_block (object);
+
+      if (drive != NULL)
+        {
+          total_size += udisks_drive_get_size (drive);
+          num_disks++;
+        }
+      else if (block != NULL)
+        {
+          total_size += udisks_block_get_size (block);
+          num_disks++;
+        }
+      else
+        {
+          g_warning ("unhandled object of with path %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+        }
+    }
+  g_list_free_full (selected, g_object_unref);
+
+  if (num_disks == 0)
+    {
+      /* Translators: Shown in the top of the "Done..." menu when no disks are selected */
+      s = g_strdup (C_("multi-disk-menu", "No Disks are Selected"));
+    }
+  else
+    {
+      s2 = udisks_client_get_size_for_display (window->client, total_size, FALSE, FALSE);
+      /* Translators: Shown in the top of the "Done..." menu when %d disks are selected.
+       *              The %d is the number of disks selected (e.g. 4).
+       *              The %s is a string with the combined size (e.g. '42.0 GB').
+       */
+      s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
+                                        "%d Disk is Selected, %s Total Size",
+                                        "%d Disks are Selected, %s Total Size",
+                                        num_disks),
+                              num_disks, s2);
+      g_free (s2);
+    }
+  gtk_menu_item_set_label (GTK_MENU_ITEM (window->device_tree_menu_item_status), s);
+  g_free (s);
+}
+
+static void
+device_tree_toolbar_select_done_toggle (GduWindow *window,
+                                        gboolean   set_clicked)
+{
+  GtkStyleContext *context;
+
+  context = gtk_widget_get_style_context (window->device_toolbar);
+  if (set_clicked)
+    {
+      window->in_selection_mode = TRUE;
+      gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_select_button), FALSE);
+      gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_done_button), TRUE);
+      gtk_style_context_add_class (context, "selection-mode");
+      gtk_label_set_markup (GTK_LABEL (window->device_tree_toolbar_label),
+                            /* Translators: shown in toolbar when entering selection-mode */
+                            _("(Click on disks to select them)"));
+      gdu_device_tree_model_clear_selected (window->model);
+    }
+  else
+    {
+      window->in_selection_mode = FALSE;
+      gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_select_button), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (window->device_tree_toolbar_done_button), FALSE);
+      gtk_label_set_markup (GTK_LABEL (window->device_tree_toolbar_label), "");
+      gtk_style_context_remove_class (context, "selection-mode");
+      gtk_label_set_markup_with_mnemonic (GTK_LABEL (window->device_tree_toolbar_label), "");
+    }
+
+  gtk_tree_view_column_set_visible (window->selection_column, window->in_selection_mode);
+
+  device_tree_toolbar_update_status_item (window);
+}
+
+static void
+on_device_tree_toolbar_select_button_clicked (GtkButton *button,
+                                              gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  gdu_window_show_attach_disk_image (window);
+  device_tree_toolbar_select_done_toggle (window, TRUE);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_device_tree_menu_item_erase_disks (GtkMenuItem *menu_item,
+                                      gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  g_print ("TODO: erase multiple disks %p\n", window);
 }
 
 static void
@@ -889,34 +1007,15 @@ on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
                                             gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  gdu_window_show_create_raid_array (window);
-}
-
-void
-gdu_window_show_create_raid_array (GduWindow *window)
-{
   gdu_create_raid_array_dialog_show (window);
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-
-
 static void
-on_device_tree_add_menu_button_clicked (GtkToolButton *button,
-                                        gpointer       user_data)
+on_device_tree_menu_item_abort_selection (GtkMenuItem *menu_item,
+                                          gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GdkEventButton *event = NULL;
-
-  gtk_menu_popup_for_device (GTK_MENU (window->device_tree_menu),
-                             event != NULL ? event->device : NULL,
-                             NULL, /* parent_menu_shell */
-                             NULL, /* parent_menu_item */
-                             generic_menu_position_func,
-                             button,
-                             NULL, /* user_data GDestroyNotify */
-                             event != NULL ? event->button : 0,
-                             event != NULL ? event->time : gtk_get_current_event_time ());
+  device_tree_toolbar_select_done_toggle (window, FALSE);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1059,6 +1158,7 @@ on_constructed_in_idle (gpointer user_data)
   GduWindow *window = GDU_WINDOW (user_data);
   /* select something sensible */
   ensure_something_selected (window);
+  device_tree_toolbar_select_done_toggle (window, FALSE);
   return FALSE; /* remove source */
 }
 
@@ -1099,6 +1199,53 @@ power_state_cell_func (GtkTreeViewColumn *column,
     visible = TRUE;
 
   gtk_cell_renderer_set_visible (renderer, visible);
+}
+
+static void
+selected_cell_func (GtkTreeViewColumn *column,
+                    GtkCellRenderer   *renderer,
+                    GtkTreeModel      *model,
+                    GtkTreeIter       *iter,
+                    gpointer           user_data)
+{
+  gboolean visible = FALSE;
+  gboolean selected = FALSE;
+  UDisksObject *object = NULL;
+
+  gtk_tree_model_get (model,
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, &object,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, &selected,
+                      -1);
+
+  if (object != NULL)
+    visible = TRUE;
+
+  gtk_cell_renderer_set_visible (renderer, visible);
+  gtk_cell_renderer_toggle_set_active (GTK_CELL_RENDERER_TOGGLE (renderer), selected);
+
+  g_clear_object (&object);
+}
+
+static void
+on_selected_toggled (GtkCellRendererToggle *renderer,
+                     const gchar           *path_string,
+                     gpointer               user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkTreeIter iter;
+
+  if (!gtk_tree_model_get_iter_from_string (GTK_TREE_MODEL (window->model),
+                                            &iter,
+                                            path_string))
+    goto out;
+
+  gdu_device_tree_model_toggle_selected (window->model, &iter);
+
+  device_tree_toolbar_update_status_item (window);
+
+ out:
+  ;
 }
 
 static void
@@ -1183,7 +1330,10 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_tree_selection_changed),
                     window);
 
+  /* -------------------- */
+
   column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_expand (column, TRUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (window->device_treeview), column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -1237,6 +1387,26 @@ gdu_window_constructed (GObject *object)
                                            NULL,  /* user_data */
                                            NULL); /* user_data GDestroyNotify */
 
+  /* -------------------- */
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (window->device_treeview), column);
+  renderer = gtk_cell_renderer_toggle_new ();
+  //g_object_set (G_OBJECT (renderer), "indicator-size", 20, NULL);
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_set_cell_data_func (column,
+                                           renderer,
+                                           selected_cell_func,
+                                           window,  /* user_data */
+                                           NULL); /* user_data GDestroyNotify */
+  window->selection_column = column;
+  g_signal_connect (renderer,
+                    "toggled",
+                    G_CALLBACK (on_selected_toggled),
+                    window);
+
+  /* -------------------- */
+
   /* expand on insertion - hmm, I wonder if there's an easier way to do this */
   g_signal_connect (window->model,
                     "row-inserted",
@@ -1267,13 +1437,9 @@ gdu_window_constructed (GObject *object)
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   /* main toolbar */
-  g_signal_connect (window->device_toolbar_add_menu_button,
+  g_signal_connect (window->device_tree_toolbar_select_button,
                     "clicked",
-                    G_CALLBACK (on_device_tree_add_menu_button_clicked),
-                    window);
-  g_signal_connect (window->device_toolbar_detach_disk_image_button,
-                    "clicked",
-                    G_CALLBACK (on_device_tree_detach_disk_image_button_clicked),
+                    G_CALLBACK (on_device_tree_toolbar_select_button_clicked),
                     window);
 
   /* actions */
@@ -1322,6 +1488,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_drive_action_raid_stop,
                     "activate",
                     G_CALLBACK (on_devtab_drive_action_raid_stop_activated),
+                    window);
+  g_signal_connect (window->devtab_drive_action_loop_detach,
+                    "activate",
+                    G_CALLBACK (on_devtab_drive_action_loop_detach_activated),
                     window);
   g_signal_connect (window->devtab_drive_action_eject,
                     "activate",
@@ -1429,13 +1599,17 @@ gdu_window_constructed (GObject *object)
                     window);
 
   /* device-tree add menu */
-  g_signal_connect (window->device_tree_menu_item_attach_disk_image,
-                    "activate",
-                    G_CALLBACK (on_device_tree_menu_item_attach_disk_image),
-                    window);
   g_signal_connect (window->device_tree_menu_item_create_raid_array,
                     "activate",
                     G_CALLBACK (on_device_tree_menu_item_create_raid_array),
+                    window);
+  g_signal_connect (window->device_tree_menu_item_erase_disks,
+                    "activate",
+                    G_CALLBACK (on_device_tree_menu_item_erase_disks),
+                    window);
+  g_signal_connect (window->device_tree_menu_item_abort_selection,
+                    "activate",
+                    G_CALLBACK (on_device_tree_menu_item_abort_selection),
                     window);
 
   g_idle_add (on_constructed_in_idle, g_object_ref (window));
@@ -3270,7 +3444,7 @@ update_device_page (GduWindow      *window,
     loop = udisks_client_get_loop_for_block (window->client, block);
 
   if (udisks_object_peek_loop (object) != NULL)
-    show_flags->device_tree_buttons |= SHOW_FLAGS_DEVICE_TREE_BUTTON_DETACH_DISK_IMAGE;
+    show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH;
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive, show_flags);

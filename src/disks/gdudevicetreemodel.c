@@ -435,7 +435,7 @@ gdu_device_tree_model_constructed (GObject *object)
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
   GType types[GDU_DEVICE_TREE_MODEL_N_COLUMNS];
 
-  G_STATIC_ASSERT (12 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
+  G_STATIC_ASSERT (13 == GDU_DEVICE_TREE_MODEL_N_COLUMNS);
 
   types[0] = G_TYPE_STRING;
   types[1] = G_TYPE_BOOLEAN;
@@ -449,6 +449,7 @@ gdu_device_tree_model_constructed (GObject *object)
   types[9] = G_TYPE_BOOLEAN;
   types[10] = GDU_TYPE_POWER_STATE_FLAGS;
   types[11] = G_TYPE_UINT64;
+  types[12] = G_TYPE_BOOLEAN;
   gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
                                    GDU_DEVICE_TREE_MODEL_N_COLUMNS,
                                    types);
@@ -1573,4 +1574,85 @@ on_client_changed (UDisksClient  *client,
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   update_all (model);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+clear_selected_cb (GtkTreeModel  *model,
+                   GtkTreePath   *path,
+                   GtkTreeIter   *iter,
+                   gpointer       user_data)
+{
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, FALSE,
+                      -1);
+  return FALSE; /* keep iterating */
+}
+
+void
+gdu_device_tree_model_clear_selected (GduDeviceTreeModel *model)
+{
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model), clear_selected_cb, NULL);
+}
+
+void
+gdu_device_tree_model_toggle_selected (GduDeviceTreeModel *model,
+                                       GtkTreeIter        *iter)
+{
+  gboolean selected = FALSE;
+
+  g_return_if_fail (GDU_IS_DEVICE_TREE_MODEL (model));
+
+  gtk_tree_model_get (GTK_TREE_MODEL (model),
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, &selected,
+                      -1);
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, !selected,
+                      -1);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+get_selected_cb (GtkTreeModel  *model,
+                 GtkTreePath   *path,
+                 GtkTreeIter   *iter,
+                 gpointer       user_data)
+{
+  UDisksObject *object = NULL;
+  gboolean selected = FALSE;
+  GList **ret = user_data;
+
+  gtk_tree_model_get (model,
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_OBJECT, &object,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, &selected,
+                      -1);
+
+  if (selected)
+    {
+      *ret = g_list_prepend (*ret, object); /* adopts ownership of @object */
+    }
+  else
+    {
+      g_clear_object (&object);
+    }
+
+  return FALSE; /* keep iterating */
+}
+
+GList *
+gdu_device_tree_model_get_selected (GduDeviceTreeModel *model)
+{
+  GList *ret = NULL;
+
+  g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
+
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model), get_selected_cb, &ret);
+
+  return ret;
 }

@@ -1065,16 +1065,6 @@ init_css (GduWindow *window)
 }
 
 
-static gboolean
-on_constructed_in_idle (gpointer user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  /* select something sensible */
-  ensure_something_selected (window);
-  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
-  return FALSE; /* remove source */
-}
-
 static gint
 device_sort_function (GtkTreeModel *model,
                       GtkTreeIter *a,
@@ -1362,6 +1352,7 @@ gdu_window_constructed (GObject *object)
   /* set up non-standard widgets that isn't in the .ui file */
 
   window->volume_grid = gdu_volume_grid_new (window->client);
+  gtk_widget_show (window->volume_grid);
   gtk_box_pack_start (GTK_BOX (window->devtab_grid_hbox),
                       window->volume_grid,
                       TRUE, TRUE, 0);
@@ -1542,7 +1533,10 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_activate_link),
                     window);
 
-  g_idle_add (on_constructed_in_idle, g_object_ref (window));
+  ensure_something_selected (window);
+  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
+  gtk_widget_grab_focus (window->device_tree_treeview);
+  update_all (window);
 }
 
 static void

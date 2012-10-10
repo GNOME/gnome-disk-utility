@@ -84,7 +84,7 @@ gdu_application_activate (GApplication *_app)
   app->window = gdu_window_new (app, app->client);
   gtk_application_add_window (GTK_APPLICATION (app),
                               GTK_WINDOW (app->window));
-  gtk_widget_show_all (GTK_WIDGET (app->window));
+  gtk_widget_show (GTK_WIDGET (app->window));
 
  out:
   ;

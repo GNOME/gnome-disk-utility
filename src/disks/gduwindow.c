@@ -62,7 +62,9 @@ struct _GduWindow
 
   GtkWidget *overlay_toolbar;
   GtkWidget *overlay_toolbar_erase_button;
-  GtkWidget *overlay_toolbar_create_raid_button;
+  GtkWidget *overlay_toolbar_raid_button;
+  GtkWidget *ms_raid_menu_item_create;
+  GtkWidget *ms_raid_menu_item_add_to;
 
   GtkWidget *main_hpane;
   GtkWidget *details_notebook;
@@ -168,7 +170,10 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, toolbutton_generic_menu), "toolbutton-generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, overlay_toolbar), "overlay-toolbar"},
   {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_erase_button), "overlay-toolbar-erase-button"},
-  {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_create_raid_button), "overlay-toolbar-create-raid-button"},
+  {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_raid_button), "overlay-toolbar-raid-button"},
+  {G_STRUCT_OFFSET (GduWindow, ms_raid_menu_item_create), "ms-raid-menu-item-create"},
+  {G_STRUCT_OFFSET (GduWindow, ms_raid_menu_item_add_to), "ms-raid-menu-item-add-to"},
+
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_overlay), "device-tree-overlay"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_scrolledwindow), "device-tree-scrolledwindow"},
@@ -4418,10 +4423,9 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
     {
       gtk_widget_show (window->overlay_toolbar);
       gtk_widget_show (window->overlay_toolbar_erase_button);
-      if (num_disks > 1)
-        gtk_widget_show (window->overlay_toolbar_create_raid_button);
-      else
-        gtk_widget_hide (window->overlay_toolbar_create_raid_button);
+      gtk_widget_show (window->overlay_toolbar_raid_button);
+      gtk_widget_set_sensitive (window->ms_raid_menu_item_add_to, TRUE);
+      gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_disks > 1);
     }
   else
     {

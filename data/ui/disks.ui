@@ -1875,6 +1875,26 @@
       </object>
     </child>
   </object>
+  <object class="GtkMenu" id="ms-raid-menu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkMenuItem" id="ms-raid-menu-item-create">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Create New RAID Array...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="ms-raid-menu-item-add-to">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Add To Existing RAID Array...</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+  </object>
   <object class="GtkWindow" id="overlay-toolbar-dummy-window">
     <property name="can_focus">False</property>
     <child>
@@ -1916,7 +1936,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="overlay-toolbar-create-raid-button">
+                  <object class="GtkMenuButton" id="overlay-toolbar-raid-button">
+                    <property name="menu">ms-raid-menu</property>
                     <property name="label" translatable="yes">RAID</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

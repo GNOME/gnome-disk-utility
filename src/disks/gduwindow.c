@@ -73,6 +73,7 @@ struct _GduWindow
   GtkWidget *device_tree_selection_toolbar_center_notebook;
   GtkWidget *device_tree_selection_toolbar_select_button;
   GtkWidget *device_tree_selection_toolbar_done_button;
+  GtkWidget *device_tree_selection_toolbar_static_label;
   GtkWidget *device_tree_selection_toolbar_label;
 
   GtkWidget *devtab_drive_box;
@@ -175,6 +176,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, device_tree_selection_toolbar_center_notebook), "device-tree-selection-toolbar-center-notebook"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_selection_toolbar_select_button), "device-tree-selection-toolbar-select-button"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_selection_toolbar_done_button), "device-tree-selection-toolbar-done-button"},
+  {G_STRUCT_OFFSET (GduWindow, device_tree_selection_toolbar_static_label), "device-tree-selection-toolbar-static-label"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_selection_toolbar_label), "device-tree-selection-toolbar-label"},
 
   {G_STRUCT_OFFSET (GduWindow, device_tree_treeview), "device-tree-treeview"},
@@ -1201,6 +1203,10 @@ gdu_window_constructed (GObject *object)
       *p = G_OBJECT (gtk_builder_get_object (window->builder, widget_mapping[n].name));
       g_warn_if_fail (*p != NULL);
     }
+
+  /* bah, glade deletes this because it does not known about GtkOverlay :-/ */
+  gtk_label_set_mnemonic_widget (GTK_LABEL (window->device_tree_selection_toolbar_label), window->device_tree_treeview);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (window->device_tree_selection_toolbar_static_label), window->device_tree_treeview);
 
   gtk_widget_reparent (window->main_hpane, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));

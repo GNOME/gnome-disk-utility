@@ -1204,7 +1204,7 @@ gdu_window_constructed (GObject *object)
       g_warn_if_fail (*p != NULL);
     }
 
-  /* bah, glade deletes this because it does not known about GtkOverlay :-/ */
+  /* bah, glade deletes this property because it does not know about GtkOverlay :-/ */
   gtk_label_set_mnemonic_widget (GTK_LABEL (window->device_tree_selection_toolbar_label), window->device_tree_treeview);
   gtk_label_set_mnemonic_widget (GTK_LABEL (window->device_tree_selection_toolbar_static_label), window->device_tree_treeview);
 

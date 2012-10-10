@@ -4388,7 +4388,7 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
     {
       /* Translators: Shown when no devices are selected but multiple selection is active.
        */
-      s = g_strdup (C_("multi-disk-menu", "No Devices Selected"));
+      s = g_strdup (C_("multi-disk-menu", "No _Devices Selected"));
     }
   else
     {
@@ -4398,13 +4398,13 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
        *              The %s is a string with the combined size (e.g. '42.0 GB').
        */
       s = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
-                                        "%d Device Selected (%s)",
-                                        "%d Devices Selected (%s)",
+                                        "%d _Device Selected (%s)",
+                                        "%d _Devices Selected (%s)",
                                         num_disks),
                               num_disks, s2);
       g_free (s2);
     }
-  gtk_label_set_text (GTK_LABEL (window->device_tree_selection_toolbar_label), s);
+  gtk_label_set_markup_with_mnemonic (GTK_LABEL (window->device_tree_selection_toolbar_label), s);
   g_free (s);
 
   /* visibility - TODO: use ShowFlags instead */

@@ -419,6 +419,15 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
 
+static void on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
+                                                     gpointer   user_data);
+
+static void on_ms_raid_menu_item_add_to_activated (GtkMenuItem *menu_item,
+                                                   gpointer   user_data);
+
+static void on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
+                                                   gpointer   user_data);
+
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
 static void
@@ -926,8 +935,6 @@ static void
 on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
                                             gpointer   user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
-  gdu_create_raid_array_dialog_show (window);
 }
 #endif
 
@@ -1531,6 +1538,22 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_volume_type_value_label,
                     "activate-link",
                     G_CALLBACK (on_activate_link),
+                    window);
+
+  /* multiple-selection toolbar */
+  g_signal_connect (window->overlay_toolbar_erase_button,
+                    "clicked",
+                    G_CALLBACK (on_overlay_toolbar_erase_button_clicked),
+                    window);
+
+  /* multiple-selection RAID menu */
+  g_signal_connect (window->ms_raid_menu_item_add_to,
+                    "activate",
+                    G_CALLBACK (on_ms_raid_menu_item_add_to_activated),
+                    window);
+  g_signal_connect (window->ms_raid_menu_item_create,
+                    "activate",
+                    G_CALLBACK (on_ms_raid_menu_item_create_activated),
                     window);
 
   ensure_something_selected (window);
@@ -4428,3 +4451,35 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
+                                         gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  g_print ("TODO: erase multiple %p\n", window);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_ms_raid_menu_item_add_to_activated (GtkMenuItem *menu_item,
+                                       gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  g_print ("TODO: add to RAID array %p\n", window);
+}
+
+static void
+on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
+                                       gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GList *selected;
+
+  selected = gdu_device_tree_model_get_selected (window->model);
+  /* exit multiple selection mode */
+  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
+  gdu_create_raid_array_dialog_show (window, selected);
+  g_list_free_full (selected, g_object_unref);
+}

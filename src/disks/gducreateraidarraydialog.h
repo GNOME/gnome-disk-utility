@@ -15,7 +15,8 @@
 
 G_BEGIN_DECLS
 
-void   gdu_create_raid_array_dialog_show (GduWindow    *window);
+void   gdu_create_raid_array_dialog_show (GduWindow *window,
+                                          GList     *objects);
 
 G_END_DECLS
 

@@ -1656,3 +1656,47 @@ gdu_device_tree_model_get_selected (GduDeviceTreeModel *model)
 
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+get_selected_blocks_cb (GtkTreeModel  *model,
+                        GtkTreePath   *path,
+                        GtkTreeIter   *iter,
+                        gpointer       user_data)
+{
+  UDisksBlock *block = NULL;
+  gboolean selected = FALSE;
+  GList **ret = user_data;
+
+  gtk_tree_model_get (model,
+                      iter,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_BLOCK, &block,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SELECTED, &selected,
+                      -1);
+
+  if (selected && block != NULL)
+    {
+      *ret = g_list_prepend (*ret, block); /* adopts ownership of @block */
+    }
+  else
+    {
+      g_clear_object (&block);
+    }
+
+  return FALSE; /* keep iterating */
+}
+
+GList *
+gdu_device_tree_model_get_selected_blocks (GduDeviceTreeModel *model)
+{
+  GList *ret = NULL;
+
+  g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
+
+  gtk_tree_model_foreach (GTK_TREE_MODEL (model), get_selected_blocks_cb, &ret);
+
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

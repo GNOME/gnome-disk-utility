@@ -25,9 +25,11 @@ typedef struct
 {
   volatile gint ref_count;
 
-  gboolean in_update;
+  gboolean disks_not_same_size;
 
-  GList *objects;
+  GList *blocks;
+  guint64 disk_size;
+  guint num_disks;
 
   UDisksClient *client;
   GduWindow *window;
@@ -37,6 +39,7 @@ typedef struct
 
   GtkWidget *infobar_vbox;
 
+  GtkWidget *grid;
   GtkWidget *level_combobox;
   GtkWidget *chunk_combobox;
   GtkWidget *name_entry;
@@ -51,6 +54,7 @@ static const struct {
 
   {G_STRUCT_OFFSET (DialogData, infobar_vbox), "infobar-vbox"},
 
+  {G_STRUCT_OFFSET (DialogData, grid), "grid"},
   {G_STRUCT_OFFSET (DialogData, level_combobox), "level-combobox"},
   {G_STRUCT_OFFSET (DialogData, chunk_combobox), "chunk-combobox"},
   {G_STRUCT_OFFSET (DialogData, name_entry), "name-entry"},
@@ -95,7 +99,7 @@ dialog_data_unref (DialogData *data)
       g_clear_object (&data->window);
       g_clear_object (&data->builder);
 
-      g_list_free_full (data->objects, g_object_unref);
+      g_list_free_full (data->blocks, g_object_unref);
       g_free (data);
     }
 }
@@ -112,21 +116,73 @@ dialog_data_close (DialogData *data)
 static void
 update_dialog (DialogData *data)
 {
-  /* don't recurse */
-  if (data->in_update)
+  gboolean create_sensitive = FALSE;
+  gboolean chunk_level_sensitive = TRUE;
+  const gchar *raid_level;
+  guint64 raid_size;
+  gchar *s;
+
+  if (data->disks_not_same_size)
     goto out;
 
-  data->in_update = TRUE;
-  /* TODO */
-  data->in_update = FALSE;
+  create_sensitive = TRUE;
+
+  raid_level = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->level_combobox));
+  if (g_strcmp0 (raid_level, "raid0") == 0)
+    {
+      raid_size = data->disk_size * data->num_disks;
+    }
+  else if (g_strcmp0 (raid_level, "raid1") == 0)
+    {
+      chunk_level_sensitive = FALSE; /* does not make sense on RAID-1 */
+      raid_size = data->disk_size;
+    }
+  else if (g_strcmp0 (raid_level, "raid4") == 0)
+    {
+      raid_size = data->disk_size * (data->num_disks - 1);
+    }
+  else if (g_strcmp0 (raid_level, "raid5") == 0)
+    {
+      raid_size = data->disk_size * (data->num_disks - 1);
+    }
+  else if (g_strcmp0 (raid_level, "raid6") == 0)
+    {
+      raid_size = data->disk_size * (data->num_disks - 2);
+    }
+  else if (g_strcmp0 (raid_level, "raid10") == 0)
+    {
+      /* Yes, MD RAID-10 makes sense with two drives - also see drivers/md/raid10.c
+       * function raid10_size() for the formula
+       *
+       * The constants below stems from the fact that the default for
+       * RAID-10 creation is "n2", e.g. two near copies.
+       */
+      gint num_far_copies = 1;
+      gint num_near_copies = 2;
+      raid_size  = data->disk_size / num_far_copies;
+      raid_size *= data->num_disks;
+      raid_size /= num_near_copies;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  s = udisks_client_get_size_for_display (data->client, raid_size, FALSE, FALSE);
+  gtk_label_set_text (GTK_LABEL (data->size_label), s);
+  g_free (s);
 
  out:
-  ;
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
+                                     GTK_RESPONSE_OK,
+                                     create_sensitive);
+  gtk_widget_set_sensitive (data->chunk_combobox, chunk_level_sensitive);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-G_GNUC_UNUSED static void
+static void
 on_property_changed (GObject     *object,
                      GParamSpec  *pspec,
                      gpointer     user_data)
@@ -193,12 +249,13 @@ combobox_init (DialogData  *data,
 static void
 combobox_add_item (GtkListStore *model,
                    const gchar  *markup,
-                   const gchar  *id)
+                   const gchar  *id,
+                   gboolean      sensitive)
 {
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      COMBOBOX_MODEL_COLUMN_ID, id,
                                      COMBOBOX_MODEL_COLUMN_MARKUP, markup,
-                                     COMBOBOX_MODEL_COLUMN_SENSITIVE, TRUE,
+                                     COMBOBOX_MODEL_COLUMN_SENSITIVE, sensitive,
                                      -1);
 }
 
@@ -216,41 +273,147 @@ combobox_add_separator (GtkListStore *model)
 static void
 init_dialog (DialogData *data)
 {
-  gchar *s;
+  gchar *s, *s2, *s3;
   GtkListStore *model;
+  guint64 min_size;
+  guint64 max_size;
+  GList *l;
+
+  /* ---------- */
+  /* check disk size and get block objects */
+
+  min_size = G_MAXUINT64;
+  max_size = 0;
+  data->num_disks = 0;
+  for (l = data->blocks; l != NULL; l = l->next)
+    {
+      UDisksBlock *block = UDISKS_BLOCK (l->data);
+      guint64 block_size = udisks_block_get_size (block);
+      if (block_size > max_size)
+        max_size = block_size;
+      if (block_size < min_size)
+        min_size = block_size;
+      data->num_disks += 1;
+    }
+  /* Bail if there is more than a 1% difference and at least 1MiB */
+  if (max_size - min_size > min_size * 101LL / 100LL &&
+      max_size - min_size > 1048576)
+    {
+      GtkWidget *infobar;
+      infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,
+                                           /* Shown in error info-bar if trying to create a RAID array on disks of different size */
+                                           _("All disks in a RAID Array must be the same size"),
+                                           NULL);
+      gtk_box_pack_start (GTK_BOX (data->infobar_vbox), infobar, TRUE, TRUE, 0);
+      gtk_widget_show_all (infobar);
+      gtk_widget_set_sensitive (data->grid, FALSE);
+      data->disks_not_same_size = TRUE;
+      gtk_label_set_text (GTK_LABEL (data->num_disks_label), "—");
+      gtk_label_set_text (GTK_LABEL (data->size_label), "—");
+    }
+  else
+    {
+      data->disk_size = min_size;
+
+      /* Translators: Shown in "Create RAID Array" dialog.
+       *              The %d is number of disks and is always >= 2.
+       */
+      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                       "%d disk",
+                                       "%d disks",
+                                       (gint) data->num_disks),
+                            (gint) data->num_disks);
+      s3 = udisks_client_get_size_for_display (data->client, data->disk_size, FALSE, FALSE);
+      /* Translators: Shown in "Create RAID Array" dialog.
+       *              The first %s is the number of disks e.g. '3 disks'.
+       *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
+       */
+      s = g_strdup_printf (_("%s of %s each"), s2, s3);
+      gtk_label_set_text (GTK_LABEL (data->num_disks_label), s);
+      /* size_label is set in update_dialog() */
+      g_free (s3);
+      g_free (s2);
+      g_free (s);
+    }
 
   /* ---------- */
   /* 'RAID Level' combobox */
   model = combobox_init (data, data->level_combobox);
-  s = gdu_utils_format_mdraid_level ("raid0", TRUE);  combobox_add_item (model, s, "raid0");  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid1", TRUE);  combobox_add_item (model, s, "raid1");  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid4", TRUE);  combobox_add_item (model, s, "raid4");  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid5", TRUE);  combobox_add_item (model, s, "raid5");  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid6", TRUE);  combobox_add_item (model, s, "raid6");  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid10", TRUE); combobox_add_item (model, s, "raid10"); g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid0", TRUE);
+  combobox_add_item (model, s, "raid0", TRUE);  g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid1", TRUE);
+  combobox_add_item (model, s, "raid1", TRUE);  g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid4", TRUE);
+  combobox_add_item (model, s, "raid4", TRUE);  g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid5", TRUE);
+  combobox_add_item (model, s, "raid5", TRUE);  g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid6", TRUE);
+  combobox_add_item (model, s, "raid6", data->num_disks > 2);  g_free (s);
+  s = gdu_utils_format_mdraid_level ("raid10", TRUE);
+  combobox_add_item (model, s, "raid10", TRUE); g_free (s);
 
   /* ---------- */
   /* 'Chunk Size' combobox */
   model = combobox_init (data, data->chunk_combobox);
-  s = udisks_client_get_size_for_display (data->client,   4*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_4"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,   8*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_8"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,  16*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_16"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,  32*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_32"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,  64*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_64"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client, 128*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_128"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client, 256*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_256"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client, 512*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_512"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,1024*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_1024"); g_free (s);
-  s = udisks_client_get_size_for_display (data->client,2048*1024, TRUE, FALSE); combobox_add_item (model, s, "chunk_2048"); g_free (s);
-
+  s = udisks_client_get_size_for_display (data->client,   4*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_4", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,   8*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_8", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,  16*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_16", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,  32*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_32", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,  64*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_64", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client, 128*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_128", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client, 256*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_256", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client, 512*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_512", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,1024*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_1024", TRUE); g_free (s);
+  s = udisks_client_get_size_for_display (data->client,2048*1024, TRUE, FALSE);
+  combobox_add_item (model, s, "chunk_2048", TRUE); g_free (s);
 
 
   /* ---------- */
-  /* defaults: RAID6, 512 KiB Chunk */
-  gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid6");
+  /* defaults: RAID-1 for two disks, RAID-5 for three disks, RAID-6 otherwise, 512 KiB Chunk */
+  if (data->num_disks == 2)
+    gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid1");
+  else if (data->num_disks == 3)
+    gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid5");
+  else
+    gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid6");
   gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->chunk_combobox), "chunk_512");
+  /* Translators: this is the default name for the RAID Array */
+  gtk_entry_set_text (GTK_ENTRY (data->name_entry), _("New RAID Array"));
 
   /* ---------- */
+
+  g_signal_connect (data->level_combobox,
+                    "notify::active",
+                    G_CALLBACK (on_property_changed),
+                    data);
+
+  g_signal_connect (data->chunk_combobox,
+                    "notify::active",
+                    G_CALLBACK (on_property_changed),
+                    data);
+
+  g_signal_connect (data->name_entry,
+                    "notify::text",
+                    G_CALLBACK (on_property_changed),
+                    data);
+
+  g_signal_connect (data->client,
+                    "changed",
+                    G_CALLBACK (on_client_changed),
+                    data);
+
+  /* ---------- */
+
+  gtk_widget_grab_focus (data->name_entry);
 
   update_dialog (data);
 }
@@ -268,7 +431,7 @@ on_client_changed (UDisksClient   *client,
 
 void
 gdu_create_raid_array_dialog_show (GduWindow *window,
-                                   GList     *objects)
+                                   GList     *blocks)
 {
   DialogData *data;
   guint n;
@@ -277,7 +440,8 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
   data->ref_count = 1;
   data->window = g_object_ref (window);
   data->client = gdu_window_get_client (data->window);
-  data->objects = g_list_copy_deep (objects, (GCopyFunc) g_object_ref, NULL);
+  data->blocks = g_list_copy_deep (blocks, (GCopyFunc) g_object_ref, NULL);
+  g_assert_cmpint (g_list_length (data->blocks), >, 0);
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
                                                          "create-raid-array-dialog.ui",
@@ -290,6 +454,7 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
     }
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
 
   init_dialog (data);
 

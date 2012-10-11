@@ -4375,8 +4375,19 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
   GList *selected;
   GList *l;
   guint num_disks = 0;
+  guint num_blocks = 0;
   guint64 total_size = 0;
+  guint64 total_size_block = 0;
   gchar *s, *s2;
+
+  selected = gdu_device_tree_model_get_selected_blocks (window->model);
+  for (l = selected; l != NULL; l = l->next)
+    {
+      UDisksBlock *block = UDISKS_BLOCK (l->data);
+      total_size_block += udisks_block_get_size (block);
+      num_blocks++;
+    }
+  g_list_free_full (selected, g_object_unref);
 
   selected = gdu_device_tree_model_get_selected (window->model);
   for (l = selected; l != NULL; l = l->next)
@@ -4441,8 +4452,9 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
       gtk_widget_show (window->overlay_toolbar);
       gtk_widget_show (window->overlay_toolbar_erase_button);
       gtk_widget_show (window->overlay_toolbar_raid_button);
+      /* TODO: check that appropriate RAID array exist and size is right before setting this to TRUE */
       gtk_widget_set_sensitive (window->ms_raid_menu_item_add_to, TRUE);
-      gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_disks > 1);
+      gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_blocks > 1);
     }
   else
     {
@@ -4475,11 +4487,11 @@ on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
                                        gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GList *selected;
+  GList *selected_blocks;
 
-  selected = gdu_device_tree_model_get_selected (window->model);
+  selected_blocks = gdu_device_tree_model_get_selected_blocks (window->model);
   /* exit multiple selection mode */
   device_tree_selection_toolbar_select_done_toggle (window, FALSE);
-  gdu_create_raid_array_dialog_show (window, selected);
-  g_list_free_full (selected, g_object_unref);
+  gdu_create_raid_array_dialog_show (window, selected_blocks);
+  g_list_free_full (selected_blocks, g_object_unref);
 }

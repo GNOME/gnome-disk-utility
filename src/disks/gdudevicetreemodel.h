@@ -48,6 +48,7 @@ void                gdu_device_tree_model_clear_selected      (GduDeviceTreeMode
 void                gdu_device_tree_model_toggle_selected     (GduDeviceTreeModel *model,
                                                                GtkTreeIter        *iter);
 GList              *gdu_device_tree_model_get_selected        (GduDeviceTreeModel *model);
+GList              *gdu_device_tree_model_get_selected_blocks (GduDeviceTreeModel *model);
 
 
 G_END_DECLS

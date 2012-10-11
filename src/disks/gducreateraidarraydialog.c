@@ -37,8 +37,6 @@ typedef struct
 
   GtkWidget *dialog;
 
-  GtkWidget *infobar_vbox;
-
   GtkWidget *grid;
   GtkWidget *level_combobox;
   GtkWidget *chunk_combobox;
@@ -51,8 +49,6 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
-
-  {G_STRUCT_OFFSET (DialogData, infobar_vbox), "infobar-vbox"},
 
   {G_STRUCT_OFFSET (DialogData, grid), "grid"},
   {G_STRUCT_OFFSET (DialogData, level_combobox), "level-combobox"},
@@ -295,46 +291,28 @@ init_dialog (DialogData *data)
         min_size = block_size;
       data->num_disks += 1;
     }
-  /* Bail if there is more than a 1% difference and at least 1MiB */
-  if (max_size - min_size > min_size * 101LL / 100LL &&
-      max_size - min_size > 1048576)
-    {
-      GtkWidget *infobar;
-      infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,
-                                           /* Shown in error info-bar if trying to create a RAID array on disks of different size */
-                                           _("All disks in a RAID Array must be the same size"),
-                                           NULL);
-      gtk_box_pack_start (GTK_BOX (data->infobar_vbox), infobar, TRUE, TRUE, 0);
-      gtk_widget_show_all (infobar);
-      gtk_widget_set_sensitive (data->grid, FALSE);
-      data->disks_not_same_size = TRUE;
-      gtk_label_set_text (GTK_LABEL (data->num_disks_label), "—");
-      gtk_label_set_text (GTK_LABEL (data->size_label), "—");
-    }
-  else
-    {
-      data->disk_size = min_size;
 
-      /* Translators: Shown in "Create RAID Array" dialog.
-       *              The %d is number of disks and is always >= 2.
-       */
-      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                       "%d disk",
-                                       "%d disks",
-                                       (gint) data->num_disks),
-                            (gint) data->num_disks);
-      s3 = udisks_client_get_size_for_display (data->client, data->disk_size, FALSE, FALSE);
-      /* Translators: Shown in "Create RAID Array" dialog.
-       *              The first %s is the number of disks e.g. '3 disks'.
-       *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
-       */
-      s = g_strdup_printf (_("%s of %s each"), s2, s3);
-      gtk_label_set_text (GTK_LABEL (data->num_disks_label), s);
-      /* size_label is set in update_dialog() */
-      g_free (s3);
-      g_free (s2);
-      g_free (s);
-    }
+  data->disk_size = min_size;
+
+  /* Translators: Shown in "Create RAID Array" dialog.
+   *              The %d is number of disks and is always >= 2.
+   */
+  s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                   "%d disk",
+                                   "%d disks",
+                                   (gint) data->num_disks),
+                        (gint) data->num_disks);
+  s3 = udisks_client_get_size_for_display (data->client, data->disk_size, FALSE, FALSE);
+  /* Translators: Shown in "Create RAID Array" dialog.
+   *              The first %s is the number of disks e.g. '3 disks'.
+   *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
+   */
+  s = g_strdup_printf (_("%s of %s each"), s2, s3);
+  gtk_label_set_text (GTK_LABEL (data->num_disks_label), s);
+  /* size_label is set in update_dialog() */
+  g_free (s3);
+  g_free (s2);
+  g_free (s);
 
   /* ---------- */
   /* 'RAID Level' combobox */
@@ -441,7 +419,14 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
   data->window = g_object_ref (window);
   data->client = gdu_window_get_client (data->window);
   data->blocks = g_list_copy_deep (blocks, (GCopyFunc) g_object_ref, NULL);
-  g_assert_cmpint (g_list_length (data->blocks), >, 0);
+  data->num_disks = g_list_length (data->blocks);
+  g_assert_cmpint (data->num_disks, >, 0);
+
+  if (!gdu_util_is_same_size (blocks, &data->disk_size))
+    {
+      g_warning ("Disks are not the same size");
+      goto out;
+    }
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
                                                          "create-raid-array-dialog.ui",
@@ -477,4 +462,3 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
   dialog_data_close (data);
   dialog_data_unref (data);
 }
-

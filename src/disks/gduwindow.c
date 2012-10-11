@@ -4373,6 +4373,7 @@ static void
 update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
 {
   GList *selected;
+  GList *selected_blocks;
   GList *l;
   guint num_disks = 0;
   guint num_blocks = 0;
@@ -4380,14 +4381,13 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
   guint64 total_size_block = 0;
   gchar *s, *s2;
 
-  selected = gdu_device_tree_model_get_selected_blocks (window->model);
-  for (l = selected; l != NULL; l = l->next)
+  selected_blocks = gdu_device_tree_model_get_selected_blocks (window->model);
+  for (l = selected_blocks; l != NULL; l = l->next)
     {
       UDisksBlock *block = UDISKS_BLOCK (l->data);
       total_size_block += udisks_block_get_size (block);
       num_blocks++;
     }
-  g_list_free_full (selected, g_object_unref);
 
   selected = gdu_device_tree_model_get_selected (window->model);
   for (l = selected; l != NULL; l = l->next)
@@ -4421,7 +4421,6 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
           g_warning ("unhandled object of with path %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
         }
     }
-  g_list_free_full (selected, g_object_unref);
 
   if (num_disks == 0)
     {
@@ -4449,17 +4448,29 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
   /* visibility - TODO: use ShowFlags instead */
   if (window->in_selection_mode && num_disks > 0)
     {
+      guint64 disk_size;
       gtk_widget_show (window->overlay_toolbar);
       gtk_widget_show (window->overlay_toolbar_erase_button);
-      gtk_widget_show (window->overlay_toolbar_raid_button);
-      /* TODO: check that appropriate RAID array exist and size is right before setting this to TRUE */
-      gtk_widget_set_sensitive (window->ms_raid_menu_item_add_to, TRUE);
-      gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_blocks > 1);
+      /* RAID requires at all disks are the same size */
+      if (gdu_util_is_same_size (selected_blocks, &disk_size))
+        {
+          gtk_widget_show (window->overlay_toolbar_raid_button);
+          /* TODO: check that appropriate RAID array exist and size is right before setting this to TRUE */
+          gtk_widget_set_sensitive (window->ms_raid_menu_item_add_to, TRUE);
+          gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_blocks > 1);
+        }
+      else
+        {
+          gtk_widget_hide (window->overlay_toolbar_raid_button);
+        }
     }
   else
     {
       gtk_widget_hide (window->overlay_toolbar);
     }
+
+  g_list_free_full (selected, g_object_unref);
+  g_list_free_full (selected_blocks, g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

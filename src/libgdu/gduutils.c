@@ -738,3 +738,38 @@ gdu_utils_format_mdraid_level (const gchar *level,
     }
   return ret;
 }
+
+gboolean
+gdu_util_is_same_size (GList   *blocks,
+                       guint64 *out_min_size)
+{
+  gboolean ret = FALSE;
+  guint64 min_size = G_MAXUINT64;
+  guint64 max_size = 0;
+  GList *l;
+
+  if (blocks == NULL)
+    goto out;
+
+  for (l = blocks; l != NULL; l = l->next)
+    {
+      UDisksBlock *block = UDISKS_BLOCK (l->data);
+      guint64 block_size = udisks_block_get_size (block);
+      if (block_size > max_size)
+        max_size = block_size;
+      if (block_size < min_size)
+        min_size = block_size;
+    }
+
+  /* Bail if there is more than a 1% difference and at least 1MiB */
+  if (max_size - min_size > min_size * 101LL / 100LL &&
+      max_size - min_size > 1048576)
+    goto out;
+
+  ret = TRUE;
+
+ out:
+  if (out_min_size != NULL)
+    *out_min_size = min_size;
+  return ret;
+}

@@ -39,6 +39,7 @@
 #include "gdudisksettingsdialog.h"
 #include "gdumdraiddisksdialog.h"
 #include "gducreateraidarraydialog.h"
+#include "gduerasemultipledisksdialog.h"
 
 struct _GduWindow
 {
@@ -919,24 +920,6 @@ on_device_tree_selection_toolbar_done_button_clicked (GtkButton *button,
   device_tree_selection_toolbar_select_done_toggle (window, FALSE);
   update_all (window);
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-#if 0
-static void
-on_device_tree_menu_item_erase_disks (GtkMenuItem *menu_item,
-                                      gpointer   user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  g_print ("TODO: erase multiple disks %p\n", window);
-}
-
-static void
-on_device_tree_menu_item_create_raid_array (GtkMenuItem *menu_item,
-                                            gpointer   user_data)
-{
-}
-#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -4461,11 +4444,13 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
   g_free (s);
 
   /* visibility - TODO: use ShowFlags instead */
-  if (window->in_selection_mode && num_disks > 0)
+  if (window->in_selection_mode && num_blocks > 0)
     {
       guint64 disk_size;
       gtk_widget_show (window->overlay_toolbar);
+
       gtk_widget_show (window->overlay_toolbar_erase_button);
+
       /* RAID requires at all disks are the same size */
       if (gdu_util_is_same_size (selected_blocks, &disk_size))
         {
@@ -4495,7 +4480,13 @@ on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
                                          gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  g_print ("TODO: erase multiple %p\n", window);
+  GList *selected_blocks;
+
+  selected_blocks = gdu_device_tree_model_get_selected_blocks (window->model);
+  /* exit multiple selection mode */
+  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
+  gdu_erase_multiple_disks_dialog_show (window, selected_blocks);
+  g_list_free_full (selected_blocks, g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

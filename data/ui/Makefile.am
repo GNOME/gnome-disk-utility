@@ -27,6 +27,7 @@ ui_DATA = 				\
 	md-raid-disks-dialog.ui		\
 	create-raid-array-dialog.ui	\
 	select-disk-dialog.ui		\
+	erase-multiple-disks-dialog.ui	\
 	$(NULL)
 
 EXTRA_DIST = 				\

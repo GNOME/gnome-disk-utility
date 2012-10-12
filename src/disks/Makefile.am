@@ -50,6 +50,7 @@ gnome_disks_SOURCES = 							\
 	gdumdraiddisksdialog.h		gdumdraiddisksdialog.c		\
 	gducreateraidarraydialog.h	gducreateraidarraydialog.c	\
 	gduselectdiskdialog.h		gduselectdiskdialog.c		\
+	gduerasemultipledisksdialog.h	gduerasemultipledisksdialog.c	\
 	$(enum_built_sources)						\
 	$(NULL)
 

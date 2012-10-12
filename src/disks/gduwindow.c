@@ -947,7 +947,22 @@ gdu_window_select_object (GduWindow    *window,
   gboolean ret = FALSE;
   UDisksPartition *partition;
   UDisksPartitionTable *table = NULL;
+  UDisksMDRaid *mdraid = NULL;
   UDisksDrive *drive = NULL;
+
+  mdraid = udisks_object_peek_mdraid (object);
+  if (mdraid != NULL)
+    {
+      select_object (window, object);
+      goto out;
+    }
+
+  drive = udisks_object_peek_drive (object);
+  if (drive != NULL)
+    {
+      select_object (window, object);
+      goto out;
+    }
 
   partition = udisks_object_peek_partition (object);
 

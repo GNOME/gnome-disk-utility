@@ -12,6 +12,7 @@
 #include <glib/gi18n.h>
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -69,7 +70,7 @@ static void on_client_changed (UDisksClient  *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-G_GNUC_UNUSED static DialogData *
+static DialogData *
 dialog_data_ref (DialogData *data)
 {
   g_atomic_int_inc (&data->ref_count);
@@ -406,6 +407,35 @@ on_client_changed (UDisksClient   *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+mdraid_create_cb (GObject      *source_object,
+                  GAsyncResult *res,
+                  gpointer      user_data)
+{
+  DialogData *data = user_data;
+  GError *error;
+  gchar *array_objpath = NULL;
+
+  error = NULL;
+  if (!udisks_manager_call_mdraid_create_finish (UDISKS_MANAGER (source_object),
+                                                 &array_objpath,
+                                                 res,
+                                                 &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error creating RAID array"), error);
+      g_error_free (error);
+    }
+  else
+    {
+      UDisksObject *object;
+      udisks_client_settle (data->client);
+      object = udisks_client_get_object (data->client, array_objpath);
+      gdu_window_select_object (data->window, object);
+      g_object_unref (object);
+    }
+  dialog_data_unref (data);
+  g_free (array_objpath);
+}
 
 void
 gdu_create_raid_array_dialog_show (GduWindow *window,
@@ -452,6 +482,56 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
         {
         case GTK_RESPONSE_CLOSE: /* Close */
           goto out;
+          break;
+
+        case GTK_RESPONSE_OK:
+          {
+            GVariantBuilder options_builder;
+            const gchar *name;
+            const gchar *level;
+            guint64 chunk;
+            GPtrArray *p;
+            GList *l;
+
+            if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
+                                              _("Are you sure you want to use the disks for a RAID array?"),
+                                              _("Existing content on the devices will be erased"),
+                                              _("C_reate"),
+                                              NULL, NULL))
+              {
+                continue;
+              }
+
+            name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
+            level = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->level_combobox));
+            chunk = atoi (gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->chunk_combobox)) + strlen ("chunk_"));
+            chunk *= 1024;
+            if (g_strcmp0 (level, "raid1") == 0)
+              chunk = 0;
+
+            p = g_ptr_array_new ();
+            for (l = data->blocks; l != NULL; l = l->next)
+              {
+                UDisksBlock *block = UDISKS_BLOCK (l->data);
+                GDBusObject *object;
+                object = g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+                g_ptr_array_add (p, (gpointer) g_dbus_object_get_object_path (object));
+              }
+            g_ptr_array_add (p, NULL);
+
+            g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+            udisks_manager_call_mdraid_create (udisks_client_get_manager (data->client),
+                                               (const gchar* const *) p->pdata,
+                                               level,
+                                               name,
+                                               chunk,
+                                               g_variant_builder_end (&options_builder),
+                                               NULL,                       /* GCancellable */
+                                               (GAsyncReadyCallback) mdraid_create_cb,
+                                               dialog_data_ref (data));
+            g_ptr_array_free (p, TRUE);
+            goto out;
+          }
           break;
 
         default:

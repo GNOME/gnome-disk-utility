@@ -437,10 +437,11 @@ mdraid_create_cb (GObject      *source_object,
   g_free (array_objpath);
 }
 
-void
+gboolean
 gdu_create_raid_array_dialog_show (GduWindow *window,
                                    GList     *blocks)
 {
+  gboolean ret = FALSE;
   DialogData *data;
   guint n;
 
@@ -530,6 +531,7 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
                                                (GAsyncReadyCallback) mdraid_create_cb,
                                                dialog_data_ref (data));
             g_ptr_array_free (p, TRUE);
+            ret = TRUE;
             goto out;
           }
           break;
@@ -541,4 +543,5 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
  out:
   dialog_data_close (data);
   dialog_data_unref (data);
+  return ret;
 }

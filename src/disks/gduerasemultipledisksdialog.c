@@ -238,11 +238,12 @@ erase_devices (DialogData  *data,
     }
 }
 
-void
+gboolean
 gdu_erase_multiple_disks_dialog_show (GduWindow *window,
                                       GList     *blocks)
 {
   DialogData *data;
+  gboolean ret = FALSE;
 
   data = g_new0 (DialogData, 1);
   data->ref_count = 1;
@@ -313,10 +314,12 @@ gdu_erase_multiple_disks_dialog_show (GduWindow *window,
           g_string_free (str, TRUE);
           gtk_widget_hide (data->dialog);
           erase_devices (data, erase_type);
+          ret = TRUE;
           goto out;
         }
     }
 
  out:
   dialog_data_unref (data);
+  return ret;
 }

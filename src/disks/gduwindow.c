@@ -4483,9 +4483,9 @@ on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
   GList *selected_blocks;
 
   selected_blocks = gdu_device_tree_model_get_selected_blocks (window->model);
-  /* exit multiple selection mode */
-  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
-  gdu_erase_multiple_disks_dialog_show (window, selected_blocks);
+  /* exit multiple selection mode UNLESS user cancelled */
+  if (gdu_erase_multiple_disks_dialog_show (window, selected_blocks))
+    device_tree_selection_toolbar_select_done_toggle (window, FALSE);
   g_list_free_full (selected_blocks, g_object_unref);
 }
 
@@ -4507,8 +4507,8 @@ on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
   GList *selected_blocks;
 
   selected_blocks = gdu_device_tree_model_get_selected_blocks (window->model);
-  /* exit multiple selection mode */
-  device_tree_selection_toolbar_select_done_toggle (window, FALSE);
-  gdu_create_raid_array_dialog_show (window, selected_blocks);
+  /* exit multiple selection mode UNLESS user cancelled */
+  if (gdu_create_raid_array_dialog_show (window, selected_blocks))
+    device_tree_selection_toolbar_select_done_toggle (window, FALSE);
   g_list_free_full (selected_blocks, g_object_unref);
 }

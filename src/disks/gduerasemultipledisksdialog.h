@@ -15,7 +15,7 @@
 
 G_BEGIN_DECLS
 
-void     gdu_erase_multiple_disks_dialog_show (GduWindow  *window,
+gboolean gdu_erase_multiple_disks_dialog_show (GduWindow  *window,
                                                GList      *blocks);
 
 G_END_DECLS

@@ -14,6 +14,11 @@
 
 #include "gduutils.h"
 
+/* For __GNUC_PREREQ usage below */
+#ifdef __GNUC__
+# include <features.h>
+#endif
+
 #if defined(HAVE_LIBSYSTEMD_LOGIN)
 #include <systemd/sd-login.h>
 #endif
@@ -685,51 +690,67 @@ gdu_utils_is_ntfs_available (void)
 
 gchar *
 gdu_utils_format_mdraid_level (const gchar *level,
-                               gboolean     long_desc)
+                               gboolean     long_desc,
+                               gboolean     use_markup)
 {
   gchar *ret = NULL;
+  const gchar *markup_format;
+
+  if (long_desc)
+    {
+      if (use_markup)
+        markup_format = "%s <span size=\"small\">(%s)</span>";
+      else
+        markup_format = "%s (%s)";
+    }
+  else
+    {
+      markup_format = "%s";
+    }
+
+  /* we know better than the compiler here */
+#ifdef __GNUC_PREREQ
+# if __GNUC_PREREQ(4,6)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
+# endif
+#endif
 
   if (g_strcmp0 (level, "raid0") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 0 (Stripe)"));
-      else
-        ret = g_strdup (_("RAID 0"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 0"),
+                             _("Stripe"));
     }
   else if (g_strcmp0 (level, "raid1") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 1 (Mirror)"));
-      else
-        ret = g_strdup (_("RAID 1"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 1"),
+                             _("Mirror"));
     }
   else if (g_strcmp0 (level, "raid4") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 4 (Dedicated Parity)"));
-      else
-        ret = g_strdup (_("RAID 4"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 4"),
+                             _("Dedicated Parity"));
     }
   else if (g_strcmp0 (level, "raid5") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 5 (Distributed Parity)"));
-      else
-        ret = g_strdup (_("RAID 5"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 5"),
+                             _("Distributed Parity"));
     }
   else if (g_strcmp0 (level, "raid6") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 6 (Double Distributed Parity)"));
-      else
-        ret = g_strdup (_("RAID 6"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 6"),
+                             _("Double Distributed Parity"));
     }
   else if (g_strcmp0 (level, "raid10") == 0)
     {
-      if (long_desc)
-        ret = g_strdup (_("RAID 10 (Stripe of Mirrors)"));
-      else
-        ret = g_strdup (_("RAID 10"));
+      ret = g_strdup_printf (markup_format,
+                             _("RAID 10"),
+                             _("Stripe of Mirrors"));
     }
 
   if (ret == NULL)
@@ -738,6 +759,12 @@ gdu_utils_format_mdraid_level (const gchar *level,
     }
   return ret;
 }
+
+#ifdef __GNUC_PREREQ
+# if __GNUC_PREREQ(4,6)
+#  pragma GCC diagnostic pop
+# endif
+#endif
 
 gboolean
 gdu_util_is_same_size (GList   *blocks,

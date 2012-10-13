@@ -318,17 +318,17 @@ init_dialog (DialogData *data)
   /* ---------- */
   /* 'RAID Level' combobox */
   model = combobox_init (data, data->level_combobox);
-  s = gdu_utils_format_mdraid_level ("raid0", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid0", TRUE, TRUE);
   combobox_add_item (model, s, "raid0", TRUE);  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid1", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid1", TRUE, TRUE);
   combobox_add_item (model, s, "raid1", TRUE);  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid4", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid4", TRUE, TRUE);
   combobox_add_item (model, s, "raid4", TRUE);  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid5", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid5", TRUE, TRUE);
   combobox_add_item (model, s, "raid5", TRUE);  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid6", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid6", TRUE, TRUE);
   combobox_add_item (model, s, "raid6", data->num_disks > 2);  g_free (s);
-  s = gdu_utils_format_mdraid_level ("raid10", TRUE);
+  s = gdu_utils_format_mdraid_level ("raid10", TRUE, TRUE);
   combobox_add_item (model, s, "raid10", TRUE); g_free (s);
 
   /* ---------- */

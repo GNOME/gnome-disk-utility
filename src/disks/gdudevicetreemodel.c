@@ -1098,7 +1098,7 @@ update_mdraid (GduDeviceTreeModel *model,
 
   if (name != NULL && strlen (name) > 0)
     {
-      s = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE);
+      s = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE, FALSE);
       /* Translators: Used as a secondary line in device tree for RAID Array.
        *              The first %s is the name of the array (e.g. "My RAID Array").
        *              The second %s is the RAID level (e.g. "RAID-5").
@@ -1108,7 +1108,7 @@ update_mdraid (GduDeviceTreeModel *model,
     }
   else
     {
-      desc2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE);
+      desc2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE, FALSE);
     }
 
 

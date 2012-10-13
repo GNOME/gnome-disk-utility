@@ -33,6 +33,9 @@ typedef struct
   GduWindow *window;
   GList *blocks;
 
+  GList *blocks_erase_iter;
+  gchar *erase_type;
+
   GtkBuilder *builder;
   GtkWidget *dialog;
   GtkWidget *erase_combobox;
@@ -53,6 +56,7 @@ dialog_data_unref (DialogData *data)
     {
       g_object_unref (data->window);
       g_list_free_full (data->blocks, g_object_unref);
+      g_free (data->erase_type);
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
@@ -161,6 +165,8 @@ populate (DialogData *data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void erase_next (DialogData *data);
+
 static void
 format_cb (GObject      *source_object,
            GAsyncResult *res,
@@ -179,64 +185,87 @@ format_cb (GObject      *source_object,
       gdu_utils_show_error (GTK_WINDOW (data->window), s, error);
       g_free (s);
       g_clear_error (&error);
+      /* Bail on first error */
+      dialog_data_unref (data);
+      return;
     }
-  dialog_data_unref (data);
+
+  if (data->blocks_erase_iter != NULL)
+    erase_next (data);
+  else
+    dialog_data_unref (data);
+
+}
+
+static void
+erase_next (DialogData  *data)
+{
+  UDisksBlock *block = NULL;
+  GVariantBuilder options_builder;
+  const gchar *erase_type;
+
+  g_assert (data->blocks_erase_iter != NULL);
+
+  block = UDISKS_BLOCK (data->blocks_erase_iter->data);
+  data->blocks_erase_iter = data->blocks_erase_iter->next;
+
+  erase_type = data->erase_type;
+
+  /* Fall back to 'zero' if secure erase is not available */
+  if (g_strcmp0 (erase_type, "secure-erase") == 0)
+    {
+      UDisksDrive *drive = NULL;
+      UDisksDriveAta *ata = NULL;
+
+      /* assume not available, then adjust below if available */
+      erase_type = "zero";
+
+      drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), block);
+      if (drive != NULL)
+        {
+          GDBusObject *drive_object;
+          drive_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
+          if (drive_object != NULL)
+            ata = udisks_object_get_drive_ata (UDISKS_OBJECT (drive_object));
+        }
+
+      if (ata != NULL)
+        {
+          if (!udisks_drive_ata_get_security_frozen (ata))
+            {
+              if (udisks_drive_ata_get_security_enhanced_erase_unit_minutes (ata) > 0)
+                erase_type = "ata-secure-erase-enhanced";
+              else if (udisks_drive_ata_get_security_erase_unit_minutes (ata) > 0)
+                erase_type = "ata-secure-erase";
+            }
+        }
+      g_clear_object (&ata);
+      g_clear_object (&drive);
+    }
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  g_variant_builder_add (&options_builder, "{sv}", "no-block", g_variant_new_boolean (TRUE));
+  if (strlen (erase_type) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
+  udisks_block_call_format (block,
+                            "empty",
+                            g_variant_builder_end (&options_builder),
+                            NULL, /* GCancellable */
+                            format_cb,
+                            data);
 }
 
 static void
 erase_devices (DialogData  *data,
                const gchar *erase_type)
 {
-  GList *l;
-
-  for (l = data->blocks; l != NULL; l = l->next)
-    {
-      UDisksBlock *block = l->data;
-      GVariantBuilder options_builder;
-
-      /* Fall back to 'zero' if secure erase is not available */
-      if (g_strcmp0 (erase_type, "secure-erase") == 0)
-        {
-          UDisksDrive *drive = NULL;
-          UDisksDriveAta *ata = NULL;
-
-          /* assume not available, then adjust below if available */
-          erase_type = "zero";
-
-          drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), block);
-          if (drive != NULL)
-            {
-              GDBusObject *drive_object;
-              drive_object = g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
-              if (drive_object != NULL)
-                ata = udisks_object_get_drive_ata (UDISKS_OBJECT (drive_object));
-            }
-
-          if (ata != NULL)
-            {
-              if (!udisks_drive_ata_get_security_frozen (ata))
-                {
-                  if (udisks_drive_ata_get_security_enhanced_erase_unit_minutes (ata) > 0)
-                    erase_type = "ata-secure-erase-enhanced";
-                  else if (udisks_drive_ata_get_security_erase_unit_minutes (ata) > 0)
-                    erase_type = "ata-secure-erase";
-                }
-            }
-          g_clear_object (&ata);
-          g_clear_object (&drive);
-        }
-
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      if (strlen (erase_type) > 0)
-        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
-      udisks_block_call_format (block,
-                                "empty",
-                                g_variant_builder_end (&options_builder),
-                                NULL, /* GCancellable */
-                                format_cb,
-                                dialog_data_ref (data));
-    }
+  dialog_data_ref (data);
+  data->erase_type = g_strdup (erase_type);
+  data->blocks_erase_iter = data->blocks;
+  erase_next (data);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
 
 gboolean
 gdu_erase_multiple_disks_dialog_show (GduWindow *window,

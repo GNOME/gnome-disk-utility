@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-16 03:19+0200\n"
-"PO-Revision-Date: 2012-09-16 02:15+0200\n"
+"POT-Creation-Date: 2012-10-15 06:35+0200\n"
+"PO-Revision-Date: 2012-10-14 19:03+0200\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -39,7 +39,7 @@ msgid "Mount Disk Images"
 msgstr "Montér diskaftryk"
 
 #: ../data/gnome-disks.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/disks/gduwindow.c:1000
+#: ../src/disks/gduwindow.c:1212
 msgid "Disks"
 msgstr "Diske"
 
@@ -93,9 +93,8 @@ msgid "_Quit"
 msgstr "_Afslut"
 
 #: ../data/ui/benchmark-dialog.ui.h:1
-#, fuzzy
 msgid "Benchmark"
-msgstr "_Afbryd benchmark"
+msgstr "Benchmark"
 
 #: ../data/ui/benchmark-dialog.ui.h:2
 msgid "_Start Benchmark..."
@@ -130,10 +129,15 @@ msgid "Sample Size"
 msgstr "Prøvestørrelse"
 
 #: ../data/ui/benchmark-dialog.ui.h:10
+#, fuzzy
+msgid "Benchmark Settings"
+msgstr "Benchmark"
+
+#: ../data/ui/benchmark-dialog.ui.h:11
 msgid "_Start Benchmarking..."
 msgstr "_Start ydelsesprøve..."
 
-#: ../data/ui/benchmark-dialog.ui.h:11
+#: ../data/ui/benchmark-dialog.ui.h:12
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
@@ -144,23 +148,23 @@ msgstr ""
 "søge fra et vilkårligt område til et andet. Tag venligst sikkerhedskopier af "
 "vigtige data før du bruger skriveprøven."
 
-#: ../data/ui/benchmark-dialog.ui.h:12
+#: ../data/ui/benchmark-dialog.ui.h:13
 msgid "Transfer Rate"
 msgstr "Overførselshastighed"
 
-#: ../data/ui/benchmark-dialog.ui.h:13
+#: ../data/ui/benchmark-dialog.ui.h:14
 msgid "Number of S_amples"
 msgstr "Antal _prøver"
 
-#: ../data/ui/benchmark-dialog.ui.h:14
+#: ../data/ui/benchmark-dialog.ui.h:15
 msgid "Sample S_ize (MiB)"
 msgstr "Prøve_størrelse (MiB)"
 
-#: ../data/ui/benchmark-dialog.ui.h:15
+#: ../data/ui/benchmark-dialog.ui.h:16
 msgid "Also perform _write-benchmark"
 msgstr "Udfør også _skrivebenchmark"
 
-#: ../data/ui/benchmark-dialog.ui.h:16
+#: ../data/ui/benchmark-dialog.ui.h:17
 msgid ""
 "Bechmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -180,7 +184,7 @@ msgstr ""
 "side behøves der ikke eksklusiv adgang til enheden (f.eks. kan disken eller "
 "enheden være i brug)."
 
-#: ../data/ui/benchmark-dialog.ui.h:19
+#: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -188,7 +192,7 @@ msgstr ""
 "Antal prøver. Et større tal giver et mere præcist billede af mønstre i "
 "tilgangstid, men tager længere tid at gennemføre."
 
-#: ../data/ui/benchmark-dialog.ui.h:20
+#: ../data/ui/benchmark-dialog.ui.h:21
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
@@ -198,15 +202,15 @@ msgstr ""
 "prøvestørrelser vil normalt give mere præcise resultater, men vil på den "
 "anden side tage længere tid."
 
-#: ../data/ui/benchmark-dialog.ui.h:21
+#: ../data/ui/benchmark-dialog.ui.h:22
 msgid "Access Time"
 msgstr "Tilgangstid"
 
-#: ../data/ui/benchmark-dialog.ui.h:22
+#: ../data/ui/benchmark-dialog.ui.h:23
 msgid "Number of Sampl_es"
 msgstr "Antal _prøver"
 
-#: ../data/ui/benchmark-dialog.ui.h:23
+#: ../data/ui/benchmark-dialog.ui.h:24
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
@@ -215,16 +219,16 @@ msgstr ""
 "længere."
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
+msgid "Change Passphrase"
+msgstr "Ændr adgangsfrase"
+
+#: ../data/ui/change-passphrase-dialog.ui.h:2
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
 #: ../data/ui/edit-filesystem-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:2
 #: ../data/ui/edit-partition-dialog.ui.h:2
 msgid "C_hange"
 msgstr "_Ændr"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:2
-msgid "Change Passphrase"
-msgstr "Ændr adgangsfrase"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:3
 msgid "Curr_ent Passphrase"
@@ -263,6 +267,7 @@ msgid "New _Passphrase"
 msgstr "Ny _adgangsfrase"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:1
+#: ../data/ui/create-raid-array-dialog.ui.h:5
 #: ../data/ui/edit-crypttab-dialog.ui.h:4
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:2
@@ -286,12 +291,13 @@ msgid "_Start Creating..."
 msgstr "_Start oprettelse..."
 
 #: ../data/ui/create-partition-dialog.ui.h:1
-msgid "C_reate"
-msgstr "Op_ret"
-
-#: ../data/ui/create-partition-dialog.ui.h:2
 msgid "Create Partition"
 msgstr "Opret partition"
+
+#: ../data/ui/create-partition-dialog.ui.h:2
+#: ../src/disks/gducreateraidarraydialog.c:500
+msgid "C_reate"
+msgstr "Op_ret"
 
 #: ../data/ui/create-partition-dialog.ui.h:3
 msgid "Partition _Size"
@@ -314,14 +320,42 @@ msgid "The free space following the partition, in megabytes"
 msgstr "Den fri plads, der følger efter partitionen, i megabyte"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/create-partition-dialog.ui.h:8 ../data/ui/disks.ui.h:26
+#: ../data/ui/create-partition-dialog.ui.h:8 ../data/ui/disks.ui.h:37
 msgid "Contents"
 msgstr "Indhold"
 
-#: ../data/ui/disk-settings-dialog.ui.h:1
+#: ../data/ui/create-raid-array-dialog.ui.h:1
+msgid "Create RAID Array"
+msgstr "Opret RAID-array"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:2
 #, fuzzy
+msgid "C_reate..."
+msgstr "Op_ret"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:3
+#, fuzzy
+msgid "RAID _Level"
+msgstr "RAID-_niveau:"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:4
+#, fuzzy
+msgid "Chunk _Size"
+msgstr "Ukendt størrelse"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:6
+#, fuzzy
+msgid "Usable Size"
+msgstr "Prøvestørrelse"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:7
+#, fuzzy
+msgid "Number of Disks"
+msgstr "Antal porte:"
+
+#: ../data/ui/disk-settings-dialog.ui.h:1
 msgid "Drive Settings"
-msgstr "Drevindstillinger..."
+msgstr "Drevindstillinger"
 
 #: ../data/ui/disk-settings-dialog.ui.h:2
 msgid "_Standby Timeout"
@@ -400,144 +434,192 @@ msgid "Delete partition..."
 msgstr "Slet partition..."
 
 #: ../data/ui/disks.ui.h:11
-msgid "Attach Disk Image..."
-msgstr "Tilkobl diskaftryk..."
+#, fuzzy
+msgid "Start RAID Array"
+msgstr "St_art RAID-række"
 
 #: ../data/ui/disks.ui.h:12
-msgid "Detach Disk Image"
-msgstr "Frakobl diskaftryk"
+#, fuzzy
+msgid "Stop RAID Array"
+msgstr "St_op RAID-række"
 
+# ?
 #: ../data/ui/disks.ui.h:13
+#, fuzzy
+msgid "Detach Loop Device"
+msgstr "%s løkkeenhed"
+
+#: ../data/ui/disks.ui.h:14
+#, fuzzy
+msgid "_Devices"
+msgstr "_Enhed"
+
+#: ../data/ui/disks.ui.h:15
+msgid "Click to select multiple disks to perform operations on"
+msgstr ""
+
+#: ../data/ui/disks.ui.h:16
+msgid "Done"
+msgstr ""
+
+#: ../data/ui/disks.ui.h:17
 msgid "Select a device"
 msgstr "Vælg et drev"
 
-#: ../data/ui/disks.ui.h:14
+#: ../data/ui/disks.ui.h:18
 msgid "Model"
 msgstr "Model"
 
-#: ../data/ui/disks.ui.h:15
+#: ../data/ui/disks.ui.h:19 ../data/ui/md-raid-disks-dialog.ui.h:5
 msgid "Serial Number"
 msgstr "Serienummer"
 
-#: ../data/ui/disks.ui.h:16
+#: ../data/ui/disks.ui.h:20
 msgid "World Wide Name"
 msgstr "Verdensomspændende navn (WWN)"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:18
+#: ../data/ui/disks.ui.h:22
 msgid "Location"
 msgstr "Placering"
 
-#: ../data/ui/disks.ui.h:19
+#: ../data/ui/disks.ui.h:23
 msgid "Media"
 msgstr "Medie"
 
-#: ../data/ui/disks.ui.h:20
-msgid "Size"
-msgstr "Størrelse"
-
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:21 ../src/disks/gduatasmartdialog.c:1503
+#: ../data/ui/disks.ui.h:24 ../data/ui/md-raid-disks-dialog.ui.h:6
+#: ../src/disks/gduatasmartdialog.c:1503
 msgid "Assessment"
 msgstr "Vurdering"
 
-#: ../data/ui/disks.ui.h:22
+#: ../data/ui/disks.ui.h:25
 msgid "Eject media"
 msgstr "Skub medie ud"
 
-#: ../data/ui/disks.ui.h:23
-msgid "Pending Operation"
-msgstr "Afventende operation"
-
-#: ../data/ui/disks.ui.h:24
-msgid "_Volumes"
-msgstr "_Diskenheder"
+#: ../data/ui/disks.ui.h:26
+msgid "Job"
+msgstr ""
 
 #: ../data/ui/disks.ui.h:27
-msgid "Device"
-msgstr "Enhed"
+msgid "Name"
+msgstr "Navn"
 
 #: ../data/ui/disks.ui.h:28
-msgid "In Use"
-msgstr "I brug"
+#, fuzzy
+msgid "RAID Level"
+msgstr "RAID-_niveau:"
 
 #: ../data/ui/disks.ui.h:29
+msgid "Size"
+msgstr "Størrelse"
+
+#: ../data/ui/disks.ui.h:30
+msgid "State"
+msgstr "Tilstand"
+
+#: ../data/ui/disks.ui.h:31
 msgid "Auto-clear"
 msgstr "Auto-ryd"
 
-#: ../data/ui/disks.ui.h:30
-msgid "Partition Type"
-msgstr "Partitionstype"
-
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:32
+#: ../data/ui/disks.ui.h:33
 msgid "Backing File"
 msgstr "Bagvedliggende fil"
 
-#: ../data/ui/disks.ui.h:33
-msgid "Format Disk..."
-msgstr "Formatér disk..."
-
 #: ../data/ui/disks.ui.h:34
-msgid "Create Disk Image..."
-msgstr "Opret diskaftryk..."
+#, fuzzy
+msgid "Partitioning"
+msgstr "_Partitionering"
 
 #: ../data/ui/disks.ui.h:35
-msgid "Restore Disk Image..."
-msgstr "Genskab diskaftryk..."
+msgid "_Volumes"
+msgstr "_Diskenheder"
 
-#: ../data/ui/disks.ui.h:36
-msgid "Benchmark Drive..."
-msgstr "Ydelsestest drev..."
-
-#: ../data/ui/disks.ui.h:37
-msgid "SMART Data and Tests..."
-msgstr "SMART-data og test..."
-
-#: ../data/ui/disks.ui.h:38
-msgid "Drive Settings..."
-msgstr "Drevindstillinger..."
+#: ../data/ui/disks.ui.h:38 ../data/ui/md-raid-disks-dialog.ui.h:8
+msgid "Device"
+msgstr "Enhed"
 
 #: ../data/ui/disks.ui.h:39
-msgid "Standby Now"
-msgstr "Gå i hviletilstand"
+msgid "Partition Type"
+msgstr "Partitionstype"
 
 #: ../data/ui/disks.ui.h:40
-msgid "Wake-Up from Standby"
-msgstr "Vågn op fra hviletilstand"
-
-#: ../data/ui/disks.ui.h:41
 msgid "Format..."
 msgstr "Formatér..."
 
+#: ../data/ui/disks.ui.h:41
+msgid "Create Disk Image..."
+msgstr "Opret diskaftryk..."
+
 #: ../data/ui/disks.ui.h:42
+msgid "Restore Disk Image..."
+msgstr "Genskab diskaftryk..."
+
+#: ../data/ui/disks.ui.h:43
+#, fuzzy
+msgid "Benchmark..."
+msgstr "Benchmark"
+
+#: ../data/ui/disks.ui.h:44
+#, fuzzy
+msgid "SMART Data..."
+msgstr "SMART-data"
+
+#: ../data/ui/disks.ui.h:45
+msgid "Drive Settings..."
+msgstr "Drevindstillinger..."
+
+#: ../data/ui/disks.ui.h:46
+msgid "Standby Now"
+msgstr "Gå i hviletilstand"
+
+#: ../data/ui/disks.ui.h:47
+msgid "Wake-Up from Standby"
+msgstr "Vågn op fra hviletilstand"
+
+#: ../data/ui/disks.ui.h:48
+msgid "RAID Disks..."
+msgstr ""
+
+#: ../data/ui/disks.ui.h:49
 msgid "Edit Partition Type..."
 msgstr "Redigér partitionstype..."
 
-#: ../data/ui/disks.ui.h:43
+#: ../data/ui/disks.ui.h:50
 msgid "Edit Filesystem Label..."
 msgstr "Redigér filsystem_etiket..."
 
-#: ../data/ui/disks.ui.h:44
+#: ../data/ui/disks.ui.h:51
 msgid "Change Passphrase..."
 msgstr "Ændr Adgangsfrase..."
 
-#: ../data/ui/disks.ui.h:45
+#: ../data/ui/disks.ui.h:52
 msgid "Edit Mount Options..."
 msgstr "Redigér monteringsindstillinger..."
 
-#: ../data/ui/disks.ui.h:46
+#: ../data/ui/disks.ui.h:53
 msgid "Edit Encryption Options..."
 msgstr "Redigér krypteringsindstillinger..."
 
-#: ../data/ui/disks.ui.h:47
-msgid "Benchmark Volume..."
-msgstr "Ydelsestest diskenhed..."
+#: ../data/ui/disks.ui.h:54
+#, fuzzy
+msgid "Create New RAID Array..."
+msgstr "Opret RAID-array"
+
+#: ../data/ui/disks.ui.h:55
+#, fuzzy
+msgid "Add To Existing RAID Array..."
+msgstr "Starter RAID-række"
+
+#: ../data/ui/disks.ui.h:56
+#, fuzzy
+msgid "RAID"
+msgstr "RAID"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
-#, fuzzy
 msgid "Encryption Options"
-msgstr "Redigér krypteringsindstillinger..."
+msgstr "Krypteringsindstillinger"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:2
 msgid "_Automatic Encryption Options"
@@ -650,9 +732,8 @@ msgid "_Label"
 msgstr "_Etiket"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:1
-#, fuzzy
 msgid "Mount Options"
-msgstr "Monteringstil_valg"
+msgstr "Monteringsindstillinger"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:2
 msgid "_Automatic Mount Options"
@@ -840,6 +921,20 @@ msgstr "_Automontér ikke"
 msgid "If set, some OSes may not automount the contents of the partition"
 msgstr "Hvis givet, vil visse OS'er ikke automontere indholdet af partitionen"
 
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:1
+msgid "Erase Multiple Disks"
+msgstr ""
+
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:2
+#, fuzzy
+msgid "_Erase..."
+msgstr "_Slet"
+
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:3
+#, fuzzy
+msgid "Erase _Type"
+msgstr "_Type"
+
 #: ../data/ui/filesystem-create.ui.h:3
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
@@ -879,6 +974,7 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Indtast adgangsfrase, der bruges til at beskytte dataene"
 
 #: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
+#: ../src/disks/gduerasemultipledisksdialog.c:337
 msgid "_Erase"
 msgstr "_Slet"
 
@@ -898,6 +994,30 @@ msgstr "_Partitionering"
 msgid "Format Volume"
 msgstr "Formater diskenhed"
 
+#: ../data/ui/md-raid-disks-dialog.ui.h:1
+#, fuzzy
+msgid "RAID Disks"
+msgstr "Diske"
+
+#: ../data/ui/md-raid-disks-dialog.ui.h:2
+#, fuzzy
+msgid "Add Disk..."
+msgstr "Formatér disk..."
+
+#: ../data/ui/md-raid-disks-dialog.ui.h:3
+#, fuzzy
+msgid "Remove Disk..."
+msgstr "Genskab diskaftryk..."
+
+#: ../data/ui/md-raid-disks-dialog.ui.h:4
+msgid "Go To Disk"
+msgstr ""
+
+#: ../data/ui/md-raid-disks-dialog.ui.h:7
+#, fuzzy
+msgid "Model or Name"
+msgstr "Brugernavn"
+
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "_Image to restore"
 msgstr "_Aftryk der skal genskabes"
@@ -907,7 +1027,7 @@ msgid "Select Disk Image to restore"
 msgstr "Vælg diskaftryk, der skal genskabes"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:3
-#: ../src/disks/gdurestorediskimagedialog.c:498
+#: ../src/disks/gdurestorediskimagedialog.c:499
 msgid "Copying data to device..."
 msgstr "Kopierer data til enhed..."
 
@@ -915,10 +1035,13 @@ msgstr "Kopierer data til enhed..."
 msgid "_Start Restoring..."
 msgstr "_Start genskabelse..."
 
+#: ../data/ui/select-disk-dialog.ui.h:1
+msgid "_Select"
+msgstr ""
+
 #: ../data/ui/smart-dialog.ui.h:1
-#, fuzzy
 msgid "SMART Data"
-msgstr "SMART-status:"
+msgstr "SMART-data"
 
 #: ../data/ui/smart-dialog.ui.h:2
 msgid "_Start Self-test..."
@@ -1046,6 +1169,18 @@ msgstr "Fejl ved åbning af \"%s\": %m"
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Fejl ved tilkobling af diskaftryk: %s (%s, %d)"
+
+#. Translators: Shown in the About dialog to convey version numbers.
+#. *              The first %s is the version of Disks (for example "3.6").
+#. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
+#. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
+#.
+#: ../src/disks/gduapplication.c:122
+#, c-format
+msgid ""
+"gnome-disk-utility %s\n"
+"UDisks %s (built against %d.%d.%d)"
+msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1905,7 +2040,7 @@ msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:954
+#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:938
 #, c-format
 msgid "%d sample"
 msgid_plural "%d samples"
@@ -1945,95 +2080,98 @@ msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)..."
 msgstr "Måler tilgangstid (%2.1f%% færdig)..."
 
-#: ../src/disks/gdubenchmarkdialog.c:840
+#: ../src/disks/gdubenchmarkdialog.c:841
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
-#. Translators: The first %s is the partition size (e.g. "10.0 GB") and the two
-#. * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
+#. Translators: Shown for "Disk / Device" field.
+#. *              The first %s is the description of the object (e.g. "80 GB Disk").
+#. *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+#. *              The third %s is the fw revision (e.g "45ABX21").
 #.
-#: ../src/disks/gdubenchmarkdialog.c:876
-#, c-format
-msgctxt "benchmark-drive-name"
-msgid "%s partition on %s (%s)"
-msgstr "%s-partition på %s (%s)"
-
-#. Translators: The first %s is the make/model (e.g. "ST 3160A"), the second %s is
-#. * the description (e.g. "60 GB Hard Disk")
-#.
-#: ../src/disks/gdubenchmarkdialog.c:886
-#, c-format
-msgctxt "benchmark-drive-name"
-msgid "%s (%s)"
+#: ../src/disks/gdubenchmarkdialog.c:869
+#, fuzzy, c-format
+msgctxt "benchmark"
+msgid "%s — %s (%s)"
 msgstr "%s (%s)"
 
+#. Translators: Shown for "Disk / Device" field.
+#. *              The first %s is the description of the object (e.g. "80 GB Disk").
+#. *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+#.
+#: ../src/disks/gdubenchmarkdialog.c:877
+#, c-format
+msgctxt "benchmark"
+msgid "%s — %s"
+msgstr ""
+
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:952
+#: ../src/disks/gdubenchmarkdialog.c:936
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f msek"
 
-#: ../src/disks/gdubenchmarkdialog.c:1264
+#: ../src/disks/gdubenchmarkdialog.c:1249
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Fejl under bestemmelse af størrelse af enhed: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1274
+#: ../src/disks/gdubenchmarkdialog.c:1259
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Fejl ved bestemmelse af sidestørrelse: %m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1307
-#: ../src/disks/gdubenchmarkdialog.c:1326
-#: ../src/disks/gdubenchmarkdialog.c:1362
-#: ../src/disks/gdubenchmarkdialog.c:1381
+#: ../src/disks/gdubenchmarkdialog.c:1292
+#: ../src/disks/gdubenchmarkdialog.c:1311
+#: ../src/disks/gdubenchmarkdialog.c:1347
+#: ../src/disks/gdubenchmarkdialog.c:1366
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Fejl under søgning til position %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1316
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1301
+#: ../src/disks/gdubenchmarkdialog.c:1356
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Fejl under forudindlæsning af %lld byte fra position %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1337
+#: ../src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %d MB from offset %lld"
 msgstr "Fejl under læsning af %d MB fra position %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1392
+#: ../src/disks/gdubenchmarkdialog.c:1377
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Fejl ved skrivning af %lld byte ved position %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1402
+#: ../src/disks/gdubenchmarkdialog.c:1387
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Forventede at skrive %lld byte, men skrev kun %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1412
+#: ../src/disks/gdubenchmarkdialog.c:1397
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Synkroniseringsfejl (ved position %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1452
+#: ../src/disks/gdubenchmarkdialog.c:1437
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Fejl ved søgning fra position %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1464
+#: ../src/disks/gdubenchmarkdialog.c:1449
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -2108,12 +2246,12 @@ msgid "Error reading from offset %"
 msgstr "Fejl under læsning fra position %"
 
 #: ../src/disks/gducreatediskimagedialog.c:404
-#: ../src/disks/gdurestorediskimagedialog.c:600
+#: ../src/disks/gdurestorediskimagedialog.c:601
 msgid "Error determining size of device"
 msgstr "Fejl under bestemmelse af størrelse af enhed"
 
 #: ../src/disks/gducreatediskimagedialog.c:442
-#: ../src/disks/gdurestorediskimagedialog.c:585
+#: ../src/disks/gdurestorediskimagedialog.c:586
 msgid "Error opening device"
 msgstr "Fejl ved åbning af enhed"
 
@@ -2195,21 +2333,25 @@ msgid "New Volume"
 msgstr "Ny diskenhed"
 
 #: ../src/disks/gducreatefilesystemwidget.c:489
+#: ../src/disks/gduerasemultipledisksdialog.c:130
 #: ../src/disks/gduformatdiskdialog.c:151
 msgid "Don't overwrite existing data"
 msgstr "Overskriv ikke eksisterende data"
 
 #: ../src/disks/gducreatefilesystemwidget.c:490
+#: ../src/disks/gduerasemultipledisksdialog.c:131
 #: ../src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "Hurtig"
 
 #: ../src/disks/gducreatefilesystemwidget.c:497
+#: ../src/disks/gduerasemultipledisksdialog.c:141
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Overskriv eksisterende data med nuller"
 
 #: ../src/disks/gducreatefilesystemwidget.c:498
+#: ../src/disks/gduerasemultipledisksdialog.c:142
 #: ../src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "Langsom"
@@ -2239,6 +2381,41 @@ msgstr ""
 #: ../src/disks/gducreatepartitiondialog.c:335
 msgid "This is the last primary partition that can be created."
 msgstr "Dette er den sidste primære partition, der kan oprettes."
+
+#: ../src/disks/gducreateraidarraydialog.c:302
+#, fuzzy, c-format
+msgid "%d disk"
+msgid_plural "%d disks"
+msgstr[0] "%d dag"
+msgstr[1] "%d dage"
+
+#. Translators: Shown in "Create RAID Array" dialog.
+#. *              The first %s is the number of disks e.g. '3 disks'.
+#. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
+#.
+#: ../src/disks/gducreateraidarraydialog.c:311
+#, fuzzy, c-format
+msgid "%s of %s each"
+msgstr "%s af %s kopieret"
+
+#. Translators: this is the default name for the RAID Array
+#: ../src/disks/gducreateraidarraydialog.c:369
+msgid "New RAID Array"
+msgstr "Ny RAID-række"
+
+#: ../src/disks/gducreateraidarraydialog.c:425
+msgid "Error creating RAID array"
+msgstr "Fejl under oprettelse af RAID-række"
+
+#: ../src/disks/gducreateraidarraydialog.c:498
+#, fuzzy
+msgid "Are you sure you want to use the disks for a RAID array?"
+msgstr "Er du sikker på, at du vil formatere disken?"
+
+#: ../src/disks/gducreateraidarraydialog.c:499
+#, fuzzy
+msgid "Existing content on the devices will be erased"
+msgstr "Slet enhedens indhold"
 
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -2273,17 +2450,46 @@ msgstr ""
 "ændret. For at ændre adgangsfrasen på disken, skal du bruge <i>Ændr "
 "adgangsfrase...</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:533
+#: ../src/disks/gdudevicetreemodel.c:544
 msgid "Disk Drives"
 msgstr "Diskdrev"
 
-#: ../src/disks/gdudevicetreemodel.c:942
+#: ../src/disks/gdudevicetreemodel.c:617
+#, fuzzy
+msgid "RAID Arrays"
+msgstr "RAID-række"
+
+#. Translators: Used in the device tree for a RAID Array, the first %s is the size
+#: ../src/disks/gdudevicetreemodel.c:1089
+#, fuzzy, c-format
+msgctxt "md-raid-tree-primary"
+msgid "%s RAID Array"
+msgstr "RAID-række"
+
+#. Translators: Used in the device tree for a RAID Array where the size is not known
+#: ../src/disks/gdudevicetreemodel.c:1095
+#, fuzzy
+msgctxt "md-raid-tree-primary"
+msgid "RAID Array"
+msgstr "RAID-række"
+
+#. Translators: Used as a secondary line in device tree for RAID Array.
+#. *              The first %s is the name of the array (e.g. "My RAID Array").
+#. *              The second %s is the RAID level (e.g. "RAID-5").
+#.
+#: ../src/disks/gdudevicetreemodel.c:1106
+#, fuzzy, c-format
+msgctxt "md-raid-tree-secondary"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: ../src/disks/gdudevicetreemodel.c:1259
 msgid "Other Devices"
 msgstr "Andre enheder"
 
 # ?
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/disks/gdudevicetreemodel.c:1047
+#: ../src/disks/gdudevicetreemodel.c:1364
 #, c-format
 msgid "%s Loop Device"
 msgstr "%s løkkeenhed"
@@ -2291,7 +2497,7 @@ msgstr "%s løkkeenhed"
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
-#: ../src/disks/gdudevicetreemodel.c:1068
+#: ../src/disks/gdudevicetreemodel.c:1382
 #, c-format
 msgid "%s Block Device"
 msgstr "%s blokenhed"
@@ -2387,6 +2593,75 @@ msgstr "Stille (langsom)"
 msgid "Loud (Fast)"
 msgstr "Støjende (hurtig)"
 
+#: ../src/disks/gduerasemultipledisksdialog.c:153
+#, fuzzy
+msgid "ATA Secure Erase / Enhanced Secure Erase"
+msgstr "ATA udvidet sikker sletning"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:154
+#, fuzzy
+msgid "If Available, Slow"
+msgstr "Tilgængelig:"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:184
+#, fuzzy, c-format
+msgid "Error erasing device %s"
+msgstr "Fejl ved optælling af enheder: %s"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:314
+#, fuzzy
+msgid "Are you sure you want to erase the disks?"
+msgstr "Er du sikker på, at du vil formatere disken?"
+
+#. Translators: warning used for erasure of multiple disks
+#: ../src/disks/gduerasemultipledisksdialog.c:318
+#, fuzzy
+msgid ""
+"All data on the selected disks will be lost but may still be recoverable by "
+"data recovery services"
+msgstr ""
+"Alle data på disken vil gå tabt, men vil måske stadig kunne genskabes af "
+"datagenskabelsestjenester"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:320
+#: ../src/disks/gduformatdiskdialog.c:391
+#: ../src/disks/gduformatvolumedialog.c:153
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>Fif</b>: Hvis du har planer om at genbruge, sælge eller give din gamle "
+"computer eller disk væk, bør du bruge en mere grundig slettemetode for at "
+"forhindre dine private informationer i at falde i de forkerte hænder"
+
+#. Translators: warning used when overwriting data on multiple disks
+#: ../src/disks/gduerasemultipledisksdialog.c:325
+#, fuzzy
+msgid ""
+"All data on the selected disks will be overwritten and will likely not be "
+"recoverable by data recovery services"
+msgstr ""
+"Alle data på disken vil blive overskrevet og vil sandsynligvis ikke kunne "
+"genskabes af datagenskabelsestjenester"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:331
+#: ../src/disks/gduformatdiskdialog.c:404
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can't be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>ADVARSEL</b>: Den sikre slettekommando kan bruge meget lang tid om at "
+"blive færdig, kan ikke annulleres og vil måske ikke fungere korrekt med "
+"visse typer hardware. I værste fald vil dit drev blive ubrugeligt, eller "
+"systemet kan gå ned eller fryse. Før du fortsætter, så læs venligst artiklen "
+"om <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
+"Secure Erase</a>, og sikr dig at du forstår risikoerne"
+
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
 msgstr "Fejl ved ændring af etiket"
@@ -2454,17 +2729,6 @@ msgstr ""
 "Alle data på disken vil gå tabt, men vil måske stadig kunne genskabes af "
 "datagenskabelsestjenester"
 
-#: ../src/disks/gduformatdiskdialog.c:391
-#: ../src/disks/gduformatvolumedialog.c:153
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
-"<b>Fif</b>: Hvis du har planer om at genbruge, sælge eller give din gamle "
-"computer eller disk væk, bør du bruge en mere grundig slettemetode for at "
-"forhindre dine private informationer i at falde i de forkerte hænder"
-
 #. Translators: warning used when overwriting data
 #: ../src/disks/gduformatdiskdialog.c:396
 msgid ""
@@ -2473,22 +2737,6 @@ msgid ""
 msgstr ""
 "Alle data på disken vil blive overskrevet og vil sandsynligvis ikke kunne "
 "genskabes af datagenskabelsestjenester"
-
-#: ../src/disks/gduformatdiskdialog.c:404
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can't be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-"<b>ADVARSEL</b>: Den sikre slettekommando kan bruge meget lang tid om at "
-"blive færdig, kan ikke annulleres og vil måske ikke fungere korrekt med "
-"visse typer hardware. I værste fald vil dit drev blive ubrugeligt, eller "
-"systemet kan gå ned eller fryse. Før du fortsætter, så læs venligst artiklen "
-"om <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
-"Secure Erase</a>, og sikr dig at du forstår risikoerne"
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2574,6 +2822,124 @@ msgstr "Fejl ved tilføjelse af ny indgang i /etc/fstab"
 msgid "Error updating /etc/fstab entry"
 msgstr "Fejl ved opdatering af indgang i /etc/fstab"
 
+#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:1879
+#, c-format
+msgid "%s <span size=\"smaller\">(Read-Only)</span>"
+msgstr "%s <span size=\"smaller\">(Skrivebeskyttet)</span>"
+
+#. Translators: Shown for "Model" field.
+#. *              The first %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
+#. *              The second %s is the fw revision (e.g "45ABX21").
+#.
+#: ../src/disks/gdumdraiddisksdialog.c:281
+#, fuzzy, c-format
+msgctxt "mdraid-disks"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: ../src/disks/gdumdraiddisksdialog.c:349
+#, fuzzy
+msgid "An error occurred when removing a disk from RAID Array"
+msgstr "Der opstod en fejl ved forsøg på at vække drevet fra hviletilstand"
+
+#: ../src/disks/gdumdraiddisksdialog.c:368
+#, fuzzy
+msgctxt "mdraid-disks"
+msgid "Are you sure you want to remove the disk?"
+msgstr "Er du sikker på, at du vil formatere disken?"
+
+#: ../src/disks/gdumdraiddisksdialog.c:369
+msgctxt "mdraid-disks"
+msgid "Removing a disk from a RAID array may degrade it"
+msgstr ""
+
+#: ../src/disks/gdumdraiddisksdialog.c:370
+msgctxt "mdraid-disks"
+msgid "_Remove"
+msgstr ""
+
+#: ../src/disks/gdumdraiddisksdialog.c:371
+msgctxt "mdraid-disks"
+msgid "_Quick-format after removal"
+msgstr ""
+
+# Bemærk at det er et testresultat, så grammatik er ligegyldigt
+#: ../src/disks/gdumdraiddisksdialog.c:634
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "FAILED"
+msgstr "FEJL"
+
+#. Translators: MD-RAID member state for 'in_sync'
+#: ../src/disks/gdumdraiddisksdialog.c:641
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "In Sync"
+msgstr "Synkroniseret"
+
+#. Translators: MD-RAID member state for 'spare'
+#: ../src/disks/gdumdraiddisksdialog.c:650
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "Spare"
+msgstr "Spare"
+
+#. Translators: MD-RAID member state for 'spare' but is being recovered to
+#: ../src/disks/gdumdraiddisksdialog.c:657
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "Recovering"
+msgstr "Genskaber"
+
+#. Translators: MD-RAID member state for 'writemostly'
+#: ../src/disks/gdumdraiddisksdialog.c:665
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "Write-mostly"
+msgstr "Writemostly"
+
+#. Translators: MD-RAID member state for 'blocked'
+#: ../src/disks/gdumdraiddisksdialog.c:672
+#, fuzzy
+msgctxt "mdraid-disks-state"
+msgid "Blocked"
+msgstr "Blokeret"
+
+#. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
+#: ../src/disks/gdumdraiddisksdialog.c:679
+#, fuzzy, c-format
+msgctxt "mdraid-disks-state"
+msgid "Unknown (%s)"
+msgstr "Ukendt (%s)"
+
+#. Translators: column name for the position of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:763
+#, fuzzy
+msgctxt "mdraid-disks"
+msgid "Position"
+msgstr "Position"
+
+#. Translators: column name for the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:779
+#, fuzzy
+msgctxt "mdraid-disks"
+msgid "Disk"
+msgstr "Disk"
+
+#. Translators: column name for the state of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:809
+#, fuzzy
+msgctxt "mdraid-disks"
+msgid "State"
+msgstr "Tilstand"
+
+#. Translators: column name for the number of read errors of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:825
+msgctxt "mdraid-disks"
+msgid "Errors"
+msgstr ""
+
 #: ../src/disks/gdupartitiondialog.c:355
 msgid "Error setting partition type"
 msgstr "Fejl under indstilling af partitionstype"
@@ -2649,10 +3015,22 @@ msgid "_Restore"
 msgstr "_Genskab"
 
 #. Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device.
-#: ../src/disks/gdurestorediskimagedialog.c:551
+#: ../src/disks/gdurestorediskimagedialog.c:552
 #, c-format
 msgid "Restore Disk Image (%s)"
 msgstr "Genskab diskaftryk (%s)"
+
+#: ../src/disks/gduselectdiskdialog.c:277
+#, fuzzy
+msgctxt "select-disk-dialog"
+msgid "Select Disks"
+msgstr "Vælg diskaftryk, der skal genskabes"
+
+#: ../src/disks/gduselectdiskdialog.c:281
+#, fuzzy
+msgctxt "select-disk-dialog"
+msgid "Select Disk"
+msgstr "Vælg et drev"
 
 #: ../src/disks/gduunlockdialog.c:86
 msgid "Error unlocking encrypted device"
@@ -2662,10 +3040,14 @@ msgstr "Fejl ved oplåsning af krypteret enhed"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Krypteringsadgangsfrasen blev hentet fra nøgleringen"
 
+#: ../src/disks/gduvolumegrid.c:532 ../src/disks/gduwindow.c:2451
+msgid "No Media"
+msgstr "Intet medie"
+
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1525
+#: ../src/disks/gduvolumegrid.c:1536
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -2674,58 +3056,65 @@ msgstr "Partition %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1532
+#: ../src/disks/gduvolumegrid.c:1543
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Partition %d"
 
-#: ../src/disks/gduvolumegrid.c:1552
-msgid "No Media"
-msgstr "Intet medie"
-
-#: ../src/disks/gduvolumegrid.c:1569
+#: ../src/disks/gduvolumegrid.c:1580
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Fri plads"
 
-#: ../src/disks/gduvolumegrid.c:1611
+#: ../src/disks/gduvolumegrid.c:1622
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Udvidet partition"
 
-#: ../src/disks/gduvolumegrid.c:1635
+#: ../src/disks/gduvolumegrid.c:1646
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Filsystem"
 
-#: ../src/disks/gduvolumegrid.c:1653
+#: ../src/disks/gduvolumegrid.c:1664
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Swap"
 
-#: ../src/disks/gduwindow.c:612
+#. Translators: Shown in volume grid for Linux RAID members. Please
+#. *              keep this as short as possible.
+#. *              The first %s is the array name (e.g. 'MirrorOnTheWall').
+#. *              The second %s is the homehost (e.g. 'thinkpad').
+#.
+#: ../src/disks/gduvolumegrid.c:1693
+#, c-format
+msgctxt "volume-grid"
+msgid "%s [local to %s]"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:702
 msgid "Error deleting loop device"
 msgstr "Fejl under sletning af løkkeenhed"
 
-#: ../src/disks/gduwindow.c:683 ../src/disks/gduwindow.c:754
+#: ../src/disks/gduwindow.c:773 ../src/disks/gduwindow.c:844
 msgid "Error attaching disk image"
 msgstr "Fejl ved tilkobling af diskaftryk"
 
-#: ../src/disks/gduwindow.c:723
+#: ../src/disks/gduwindow.c:813
 msgid "Select Disk Image to Attach"
 msgstr "Vælg diskaftryk der skal tilkobles"
 
-#: ../src/disks/gduwindow.c:727
+#: ../src/disks/gduwindow.c:817
 msgid "_Attach"
 msgstr "_Tilkobl"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:732
+#: ../src/disks/gduwindow.c:822
 msgid "Set up _read-only loop device"
 msgstr "Opsæt skrive_beskyttet løkkeenhed"
 
-#: ../src/disks/gduwindow.c:733
+#: ../src/disks/gduwindow.c:823
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
@@ -2733,147 +3122,419 @@ msgstr ""
 "Hvis afkrydset, vil løkkeenheden være skrivebeskyttet. Dette er nyttigt, "
 "hvis du ikke vil have at den underliggende fil ændres"
 
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1699
-#, c-format
-msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr "%s <span size=\"smaller\">(Skrivebeskyttet)</span>"
-
 #. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
 #. * the expected end time...
 #.
-#: ../src/disks/gduwindow.c:1731
+#: ../src/disks/gduwindow.c:1911
 msgctxt "job-remaining-exceeded"
 msgid "Almost done..."
 msgstr "Næsten færdig..."
 
-#: ../src/disks/gduwindow.c:1736
+#: ../src/disks/gduwindow.c:1916
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
 msgstr "%s tilbage"
 
+#: ../src/disks/gduwindow.c:2002 ../src/disks/gduwindow.c:2781
+#, fuzzy
+msgid "Block device is empty"
+msgstr "Enheden er optaget"
+
+#. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
+#: ../src/disks/gduwindow.c:2025
+#, fuzzy, c-format
+msgctxt "partitioning"
+msgid "Unknown (%s)"
+msgstr "Ukendt (%s)"
+
+#: ../src/disks/gduwindow.c:2085
+#, fuzzy
+msgid "RAID array is not running"
+msgstr "RAID-rækken kører ikke"
+
+#. Translators: Used in the main window for a RAID array, the first %s is the size
+#: ../src/disks/gduwindow.c:2103
+#, fuzzy, c-format
+msgctxt "md-raid-window"
+msgid "%s RAID Array"
+msgstr "RAID-række"
+
+#. Translators: Used in the main window for a RAID array where the size is not known
+#: ../src/disks/gduwindow.c:2109
+#, fuzzy
+msgctxt "md-raid-window"
+msgid "RAID Array"
+msgstr "RAID-række"
+
+#. Translators: shown as the device for a RAID array that is not currently running
+#: ../src/disks/gduwindow.c:2123
+#, fuzzy
+msgctxt "mdraid"
+msgid "Not running"
+msgstr "Kører ikke"
+
+#. Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
+#. *              Search for "homehost" in the mdadm(8) documentation for more information.
+#. *              The first %s is the array name (e.g. "My Raid Disk").
+#. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
+#.
+#: ../src/disks/gduwindow.c:2189
+#, fuzzy, c-format
+msgctxt "mdraid"
+msgid "%s (local to %s)"
+msgstr "%s (%s)"
+
+#: ../src/disks/gduwindow.c:2213
+#, fuzzy, c-format
+msgid "%d Disk"
+msgid_plural "%d Disks"
+msgstr[0] "Harddisk"
+msgstr[1] "Harddisk"
+
+#: ../src/disks/gduwindow.c:2225
+#, fuzzy, c-format
+msgctxt "mdraid-disks-and-chunk-size"
+msgid "%s, %s Chunk"
+msgstr "%s, %s og %s"
+
+#: ../src/disks/gduwindow.c:2236
+#, c-format
+msgctxt "mdraid-disks-and-chunk-size-and-bitmap"
+msgid "%s, Bitmap"
+msgstr ""
+
+#. Translators: Shown in the "RAID Level" field.
+#. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
+#. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
+#.
+#: ../src/disks/gduwindow.c:2244
+#, fuzzy, c-format
+msgctxt "mdraid"
+msgid "%s, %s"
+msgstr "%s, %s og %s"
+
+#: ../src/disks/gduwindow.c:2264
+#, c-format
+msgid "%d disk is missing"
+msgid_plural "%d disks are missing"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/disks/gduwindow.c:2270
+#, fuzzy
+msgctxt "mdraid"
+msgid "ARRAY IS DEGRADED"
+msgstr "DEGRADERET"
+
+#. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
+#. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
+#.
+#: ../src/disks/gduwindow.c:2274
+#, c-format
+msgctxt "mdraid-degraded"
+msgid "%s — %s"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:2285 ../src/disks/gduwindow.c:2314
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Running"
+msgstr "Kører"
+
+#. Translators: Shown in the 'State' field for MD-RAID when not running and can be started
+#: ../src/disks/gduwindow.c:2292
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Not running"
+msgstr "Kører ikke"
+
+#. Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded
+#: ../src/disks/gduwindow.c:2297
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Not running — Can only start degraded"
+msgstr "Kører ikke. Kan kun startes som degraderet"
+
+#. Translators: Shown in the 'State' field for MD-RAID when not running
+#: ../src/disks/gduwindow.c:2302
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Not running — Not enough disks to start"
+msgstr "Kører ikke. Ikke nok komponenter til at starte"
+
+#: ../src/disks/gduwindow.c:2323
+msgctxt "mdraid-state"
+msgid "Redundancy check underway"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:2327
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Redundancy check and repair underway"
+msgstr "Kontrollér og reparér rækken"
+
+#: ../src/disks/gduwindow.c:2331
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Resyncing"
+msgstr "Gensynkroniserer"
+
+#: ../src/disks/gduwindow.c:2335
+#, fuzzy
+msgctxt "mdraid-state"
+msgid "Recovering"
+msgstr "Genskaber"
+
+#: ../src/disks/gduwindow.c:2339
+msgctxt "mdraid-state"
+msgid "Frozen"
+msgstr ""
+
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:1892
+#: ../src/disks/gduwindow.c:2555
 msgid "Connected to another seat"
 msgstr "Forbundet til at andet sæde"
 
-#: ../src/disks/gduwindow.c:2193
+#: ../src/disks/gduwindow.c:2700
+#, fuzzy
+msgid "Loop device is empty"
+msgstr "Enheden er optaget"
+
+# ?
+#. Translators: Used in the main window for a loop device, the first %s is the size
+#: ../src/disks/gduwindow.c:2710
+#, fuzzy, c-format
+msgctxt "loop-window"
+msgid "%s Loop Device"
+msgstr "%s løkkeenhed"
+
+# ?
+#. Translators: Used in the main window for a block device where the size is not known
+#: ../src/disks/gduwindow.c:2716
+#, fuzzy
+msgctxt "loop-window"
+msgid "Loop Device"
+msgstr "%s løkkeenhed"
+
+#. Translators: Used in the main window for a block device, the first %s is the size
+#: ../src/disks/gduwindow.c:2791
+#, fuzzy, c-format
+msgctxt "block-window"
+msgid "%s Block Device"
+msgstr "%s blokenhed"
+
+#. Translators: Used in the main window for a block device where the size is not known
+#: ../src/disks/gduwindow.c:2797
+#, fuzzy
+msgctxt "block-window"
+msgid "Block Device"
+msgstr "%s blokenhed"
+
+#: ../src/disks/gduwindow.c:2969
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: ../src/disks/gduwindow.c:2225
-msgid "Extended Partition"
-msgstr "Udvidet partition"
-
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2266
+#: ../src/disks/gduwindow.c:2997
+#, fuzzy
+msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Filsystemrod"
 
-#. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2274
-#, c-format
-msgid "Yes, mounted at %s"
+#. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
+#: ../src/disks/gduwindow.c:3005
+#, fuzzy, c-format
+msgctxt "volume-content-fs"
+msgid "Mounted at %s"
 msgstr "Ja, monteret som %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#. Translators: Shown if the swap device is not in use next to the "In Use" label
-#. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2280 ../src/disks/gduwindow.c:2316
-#: ../src/disks/gduwindow.c:2342
-msgid "No"
-msgstr "Nej"
+#: ../src/disks/gduwindow.c:3011
+#, fuzzy
+msgctxt "volume-content-fs"
+msgid "Not Mounted"
+msgstr "Ikke monteret"
 
-#. Translators: Shown if the swap device is in use next to the "In Use" label
-#. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2310 ../src/disks/gduwindow.c:2336
-msgid "Yes"
-msgstr "Ja"
+#. Translators: Shown as in-use part of 'Contents' if the swap device is in use
+#: ../src/disks/gduwindow.c:3034
+#, fuzzy
+msgctxt "volume-content-swap"
+msgid "Active"
+msgstr "Handling:"
 
-#. Translators: used to convey free space for partitions - the %s is the
-#. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
+# Her mener jeg ikke, at vedlæg eller vedhæft kan bruges
+#. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
+#: ../src/disks/gduwindow.c:3040
+#, fuzzy
+msgctxt "volume-content-swap"
+msgid "Not Active"
+msgstr "Ikke tilkoblet"
+
+#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
+#: ../src/disks/gduwindow.c:3053
+#, fuzzy
+msgctxt "volume-content-luks"
+msgid "Unlocked"
+msgstr "Lås _op"
+
+#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
+#: ../src/disks/gduwindow.c:3059
+#, fuzzy
+msgctxt "volume-content-luks"
+msgid "Locked"
+msgstr "Blokeret"
+
+#: ../src/disks/gduwindow.c:3069
+#, fuzzy
+msgctxt "volume-contents-msdos-ext"
+msgid "Extended Partition"
+msgstr "Udvidet partition"
+
+#. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
+#: ../src/disks/gduwindow.c:3079
+#, fuzzy
+msgctxt "volume-contents-raid"
+msgid "Go To Array"
+msgstr "Spring til række"
+
+#. Translators: Shown in the 'Contents' field for a member of an RAID array.
+#. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
+#. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:2470
+#: ../src/disks/gduwindow.c:3084
 #, c-format
-msgid "Unallocated Space (%s)"
-msgstr "Uallokeret område (%s)"
+msgctxt "volume-contents-raid"
+msgid "%s — %s"
+msgstr ""
 
-#. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/disks/gduwindow.c:2475
+#. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
+#. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
+#. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
+#.
+#: ../src/disks/gduwindow.c:3100
+#, c-format
+msgctxt "volume-contents-combiner"
+msgid "%s — %s"
+msgstr ""
+
+#. Translators: used to convey free space for partitions
+#: ../src/disks/gduwindow.c:3230
 msgid "Unallocated Space"
 msgstr "Uallokeret område"
 
-#: ../src/disks/gduwindow.c:2764
+#: ../src/disks/gduwindow.c:3582
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Der opstod en fejl ved forsøg på at sætte drevet i hviletilstand"
 
-#: ../src/disks/gduwindow.c:2810
+#: ../src/disks/gduwindow.c:3628
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Der opstod en fejl ved forsøg på at vække drevet fra hviletilstand"
 
-#: ../src/disks/gduwindow.c:2885
+#: ../src/disks/gduwindow.c:3703
 msgid "Error mounting filesystem"
 msgstr "Fejl under montering af filsystem"
 
-#: ../src/disks/gduwindow.c:2925
+#: ../src/disks/gduwindow.c:3743
 msgid "Error unmounting filesystem"
 msgstr "Fejl under afmontering af filsystem"
 
-#: ../src/disks/gduwindow.c:3006
+#: ../src/disks/gduwindow.c:3888
 msgid "Error deleting partition"
 msgstr "Fejl under sletning af partition"
 
-#: ../src/disks/gduwindow.c:3022
+#: ../src/disks/gduwindow.c:3904
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på, at du vil slette partitionen?"
 
-#: ../src/disks/gduwindow.c:3023
+#: ../src/disks/gduwindow.c:3905
 msgid "All data on the partition will be lost"
 msgstr "Alle data på partitionen vil gå tabt"
 
-#: ../src/disks/gduwindow.c:3024
+#: ../src/disks/gduwindow.c:3906
 msgid "_Delete"
 msgstr "_Slet"
 
-#: ../src/disks/gduwindow.c:3055
+#: ../src/disks/gduwindow.c:3938
 msgid "Error ejecting media"
 msgstr "Fejl under forsøg på at skubbe medie ud"
 
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:3976
+#, fuzzy
+msgid "Error starting RAID array"
+msgstr "Fejl under oprettelse af RAID-række"
+
+#: ../src/disks/gduwindow.c:3999
+#, fuzzy
+msgctxt "mdraid"
+msgid "Are you sure you want to start the RAID array degraded?"
+msgstr "Er du sikker på, at du vil have RAID-rækken degraderet?"
+
+#: ../src/disks/gduwindow.c:4000
+msgctxt "mdraid"
+msgid "A degraded RAID array is vulnerable to data- and performance-loss"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:4001
+#, fuzzy
+msgctxt "mdraid"
+msgid "_Start"
+msgstr "_Start"
+
+#: ../src/disks/gduwindow.c:4033
+#, fuzzy
+msgid "Error stopping RAID array"
+msgstr "Fejl under oprettelse af RAID-række"
+
+#: ../src/disks/gduwindow.c:4085
 msgid "Error locking encrypted device"
 msgstr "Fejl under låsning af krypteret enhed"
 
-#: ../src/disks/gduwindow.c:3148
+#: ../src/disks/gduwindow.c:4126
 msgid "Error starting swap"
 msgstr "Fejl ved start af swap"
 
-#: ../src/disks/gduwindow.c:3185
+#: ../src/disks/gduwindow.c:4163
 msgid "Error stopping swap"
 msgstr "Fejl ved standsning af swap"
 
-#: ../src/disks/gduwindow.c:3227
+#: ../src/disks/gduwindow.c:4205
 msgid "Error setting autoclear flag"
 msgstr "Fejl ved ændring af autorydningsflag"
 
-#: ../src/disks/gduwindow.c:3280 ../src/disks/gduwindow.c:3335
+#: ../src/disks/gduwindow.c:4258 ../src/disks/gduwindow.c:4313
 msgid "Error canceling job"
 msgstr "Fejl ved annullering af job"
 
-#: ../src/libgdu/gduutils.c:86
+#. Translators: Shown when no devices are selected but multiple selection is active.
+#.
+#: ../src/disks/gduwindow.c:4427
+#, fuzzy
+msgctxt "multi-disk-menu"
+msgid "No _Devices Selected"
+msgstr "Intet medie fundet"
+
+#: ../src/disks/gduwindow.c:4437
+#, c-format
+msgid "%d _Device Selected (%s)"
+msgid_plural "%d _Devices Selected (%s)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/libgdu/gduutils.c:91
 msgid "All Files"
 msgstr "Alle filer"
 
-#: ../src/libgdu/gduutils.c:90
+#: ../src/libgdu/gduutils.c:95
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Diskaftryk (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:403
+#: ../src/libgdu/gduutils.c:408
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -2881,7 +3542,7 @@ msgstr[0] "%d år"
 msgstr[1] "%d år"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:410
+#: ../src/libgdu/gduutils.c:415
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -2889,7 +3550,7 @@ msgstr[0] "%d måned"
 msgstr[1] "%d måneder"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:417
+#: ../src/libgdu/gduutils.c:422
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -2897,7 +3558,7 @@ msgstr[0] "%d dag"
 msgstr[1] "%d dage"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:424
+#: ../src/libgdu/gduutils.c:429
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -2905,7 +3566,7 @@ msgstr[0] "%d time"
 msgstr[1] "%d timer"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:431
+#: ../src/libgdu/gduutils.c:436
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -2913,7 +3574,7 @@ msgstr[0] "%d minut"
 msgstr[1] "%d minutter"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:438
+#: ../src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -2921,7 +3582,7 @@ msgstr[0] "%d sekund"
 msgstr[1] "%d sekunder"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:445
+#: ../src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -2929,58 +3590,160 @@ msgstr[0] "%d millisekund"
 msgstr[1] "%d millisekunder"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:509
+#: ../src/libgdu/gduutils.c:514
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s og %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:519
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:524
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:529
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:535
+#: ../src/libgdu/gduutils.c:540
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s og %s"
 
-#: ../src/libgdu/gduutils.c:544
+#: ../src/libgdu/gduutils.c:549
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mindre end et minut"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:554
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:555
+#: ../src/libgdu/gduutils.c:560
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
+
+#: ../src/libgdu/gduutils.c:722
+#, fuzzy
+msgid "RAID 0"
+msgstr "RAID-0"
+
+#: ../src/libgdu/gduutils.c:723
+#, fuzzy
+msgid "Stripe"
+msgstr "Stribe_størrelse:"
+
+#: ../src/libgdu/gduutils.c:728
+#, fuzzy
+msgid "RAID 1"
+msgstr "RAID-1"
+
+#: ../src/libgdu/gduutils.c:729
+msgid "Mirror"
+msgstr ""
+
+#: ../src/libgdu/gduutils.c:734
+#, fuzzy
+msgid "RAID 4"
+msgstr "RAID-4"
+
+#: ../src/libgdu/gduutils.c:735
+#, fuzzy
+msgid "Dedicated Parity"
+msgstr "Opret partition"
+
+#: ../src/libgdu/gduutils.c:740
+#, fuzzy
+msgid "RAID 5"
+msgstr "RAID-5"
+
+#: ../src/libgdu/gduutils.c:741
+#, fuzzy
+msgid "Distributed Parity"
+msgstr "Distribueret paritet (RAID-5)"
+
+#: ../src/libgdu/gduutils.c:746
+#, fuzzy
+msgid "RAID 6"
+msgstr "RAID-6"
+
+#: ../src/libgdu/gduutils.c:747
+#, fuzzy
+msgid "Double Distributed Parity"
+msgstr "Dobbelt distribueret paritet (RAID-6)"
+
+#: ../src/libgdu/gduutils.c:752
+#, fuzzy
+msgid "RAID 10"
+msgstr "RAID-10"
+
+#: ../src/libgdu/gduutils.c:753
+#, fuzzy
+msgid "Stripe of Mirrors"
+msgstr "Stribe af spejl (RAID-10)"
+
+#: ../src/libgdu/gduutils.c:758
+#, fuzzy, c-format
+msgid "RAID (%s)"
+msgstr "RAID-række %s (%s)"
+
+#~ msgid "Attach Disk Image..."
+#~ msgstr "Tilkobl diskaftryk..."
+
+#~ msgid "Detach Disk Image"
+#~ msgstr "Frakobl diskaftryk"
+
+#~ msgid "Pending Operation"
+#~ msgstr "Afventende operation"
+
+#~ msgid "In Use"
+#~ msgstr "I brug"
+
+#~ msgid "Benchmark Drive..."
+#~ msgstr "Ydelsestest drev..."
+
+#~ msgid "SMART Data and Tests..."
+#~ msgstr "SMART-data og test..."
+
+#~ msgid "Benchmark Volume..."
+#~ msgstr "Ydelsestest diskenhed..."
+
+#~ msgctxt "benchmark-drive-name"
+#~ msgid "%s partition on %s (%s)"
+#~ msgstr "%s-partition på %s (%s)"
+
+#~ msgctxt "benchmark-drive-name"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgid "No"
+#~ msgstr "Nej"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "Unallocated Space (%s)"
+#~ msgstr "Uallokeret område (%s)"
 
 #~ msgid "<big>Change Passphrase</big>"
 #~ msgstr "<big>Ændr adgangsfrase</big>"
@@ -3045,9 +3808,6 @@ msgstr "%s"
 #~ msgid "Only during off-line activities (Not Online)"
 #~ msgstr "Kun under offline-aktiviteter (Not Online)"
 
-#~ msgid "Name"
-#~ msgstr "Navn"
-
 #~ msgid "Self-test in progress — %d%% remaining"
 #~ msgstr "Selvtest i gang — %d%% tilbage"
 
@@ -3099,9 +3859,6 @@ msgstr "%s"
 #~ msgstr ""
 #~ "Hvis afkrydset vil enheden aldrig blive vist i brugergrænsefladen, uanset "
 #~ "hvad kataloget er [x-gvfs-hide]"
-
-#~ msgid "_Device"
-#~ msgstr "_Enhed"
 
 #~ msgid "Disk Size"
 #~ msgstr "Diskstørrelse"
@@ -3403,9 +4160,6 @@ msgstr "%s"
 #~ msgid "This operation concerns \"%s\" (%s)"
 #~ msgstr "Denne operation angår \"%s\" (%s)"
 
-#~ msgid "User Name"
-#~ msgstr "Brugernavn"
-
 #~ msgid "The chosen user name"
 #~ msgstr "Det valgte brugernavn"
 
@@ -3491,20 +4245,8 @@ msgstr "%s"
 #~ msgid "Array of drives to use for the array"
 #~ msgstr "Række af drev, der skal bruges"
 
-#~ msgid "Create RAID Array"
-#~ msgstr "Opret RAID-array"
-
 #~ msgid "General"
 #~ msgstr "Generelt"
-
-#~ msgid "RAID _Level:"
-#~ msgstr "RAID-_niveau:"
-
-#~ msgid "New RAID Array"
-#~ msgstr "Ny RAID-række"
-
-#~ msgid "Stripe S_ize:"
-#~ msgstr "Stribe_størrelse:"
 
 #~ msgid "4 KiB"
 #~ msgstr "4 KiB"
@@ -3746,14 +4488,8 @@ msgstr "%s"
 #~ msgid "Edit components on %s (%s)"
 #~ msgstr "Redigér komponenter på %s (%s)"
 
-#~ msgid "Position"
-#~ msgstr "Position"
-
 #~ msgid "Component"
 #~ msgstr "Komponent"
-
-#~ msgid "State"
-#~ msgstr "Tilstand"
 
 #~ msgid "Position:"
 #~ msgstr "Position:"
@@ -3796,9 +4532,6 @@ msgstr "%s"
 
 #~ msgid "The operation failed"
 #~ msgstr "Fejl under operationen"
-
-#~ msgid "The device is busy"
-#~ msgstr "Enheden er optaget"
 
 #~ msgid "The operation was canceled"
 #~ msgstr "Operationen blev annulleret"
@@ -4090,12 +4823,6 @@ msgstr "%s"
 #~ msgid "Drive to show volumes for"
 #~ msgstr "Drev, hvis diskenheder skal vises"
 
-#~ msgid "RAID Array is not running"
-#~ msgstr "RAID-rækken kører ikke"
-
-#~ msgid "No Media Detected"
-#~ msgstr "Intet medie fundet"
-
 #~ msgid "Encrypted"
 #~ msgstr "Krypteret"
 
@@ -4149,9 +4876,6 @@ msgstr "%s"
 
 #~ msgid "%s Hard Disk"
 #~ msgstr "%s harddisk"
-
-#~ msgid "Hard Disk"
-#~ msgstr "Harddisk"
 
 #~ msgid "%s Solid-State Disk"
 #~ msgstr "%s faststofdisk"
@@ -4219,23 +4943,8 @@ msgstr "%s"
 #~ msgid "%s Array"
 #~ msgstr "%s-række"
 
-#~ msgid "RAID Array %s (%s)"
-#~ msgstr "RAID-række %s (%s)"
-
 #~ msgid "RAID device %s"
 #~ msgstr "RAID-enhed %s"
-
-#~ msgctxt "RAID Level fallback"
-#~ msgid "RAID"
-#~ msgstr "RAID"
-
-#~ msgid "RAID Array"
-#~ msgstr "RAID-række"
-
-# Her mener jeg ikke, at vedlæg eller vedhæft kan bruges
-#~ msgctxt "Linux MD slave state"
-#~ msgid "Not Attached"
-#~ msgstr "Ikke tilkoblet"
 
 #~ msgctxt "Linux MD slave state"
 #~ msgid "Faulty"
@@ -4246,20 +4955,8 @@ msgstr "%s"
 #~ msgstr "Fuldt synkroniseret"
 
 #~ msgctxt "Linux MD slave state"
-#~ msgid "Writemostly"
-#~ msgstr "Writemostly"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "Blocked"
-#~ msgstr "Blokeret"
-
-#~ msgctxt "Linux MD slave state"
 #~ msgid "Partially Synchronized"
 #~ msgstr "Delvist synkroniseret"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "Spare"
-#~ msgstr "Spare"
 
 #~ msgid "Local Storage"
 #~ msgstr "Lokalt lager"
@@ -4284,9 +4981,6 @@ msgstr "%s"
 
 #~ msgid "USB, FireWire and other peripherals"
 #~ msgstr "USB, FireWire og andre ydre enheder"
-
-#~ msgid "Error enumerating devices: %s"
-#~ msgstr "Fejl ved optælling af enheder: %s"
 
 #~ msgid "Error enumerating adapters: %s"
 #~ msgstr "Fejl ved optælling af adaptere: %s"
@@ -4501,9 +5195,6 @@ msgstr "%s"
 
 #~ msgid "Stopping RAID Array"
 #~ msgstr "Stopper RAID-række"
-
-#~ msgid "Starting RAID Array"
-#~ msgstr "Starter RAID-række"
 
 #~ msgid "Checking RAID Array"
 #~ msgstr "Kontrollerer RAID-række"
@@ -4932,48 +5623,12 @@ msgstr "%s"
 #~ msgstr "Stribet (RAID-0)"
 
 #~ msgctxt "RAID level"
-#~ msgid "RAID-0"
-#~ msgstr "RAID-0"
-
-#~ msgctxt "RAID level"
 #~ msgid "Mirror (RAID-1)"
 #~ msgstr "Spejl (RAID-1)"
 
 #~ msgctxt "RAID level"
-#~ msgid "RAID-1"
-#~ msgstr "RAID-1"
-
-#~ msgctxt "RAID level"
 #~ msgid "Parity Disk (RAID-4)"
 #~ msgstr "Paritetsdisk (RAID-4)"
-
-#~ msgctxt "RAID level"
-#~ msgid "RAID-4"
-#~ msgstr "RAID-4"
-
-#~ msgctxt "RAID level"
-#~ msgid "Distributed Parity (RAID-5)"
-#~ msgstr "Distribueret paritet (RAID-5)"
-
-#~ msgctxt "RAID level"
-#~ msgid "RAID-5"
-#~ msgstr "RAID-5"
-
-#~ msgctxt "RAID level"
-#~ msgid "Dual Distributed Parity (RAID-6)"
-#~ msgstr "Dobbelt distribueret paritet (RAID-6)"
-
-#~ msgctxt "RAID level"
-#~ msgid "RAID-6"
-#~ msgstr "RAID-6"
-
-#~ msgctxt "RAID level"
-#~ msgid "Stripe of Mirrors (RAID-10)"
-#~ msgstr "Stribe af spejl (RAID-10)"
-
-#~ msgctxt "RAID level"
-#~ msgid "RAID-10"
-#~ msgstr "RAID-10"
 
 #~ msgctxt "RAID level"
 #~ msgid "Concatenated (Linear)"
@@ -5363,9 +6018,6 @@ msgstr "%s"
 #~ msgid "Fabric:"
 #~ msgstr "Struktur:"
 
-#~ msgid "Number of Ports:"
-#~ msgstr "Antal porte:"
-
 #~ msgid "Error starting Volume Group"
 #~ msgstr "Fejl ved opstart af diskenhedsgruppe"
 
@@ -5399,9 +6051,6 @@ msgstr "%s"
 
 #~ msgid "Partially Running"
 #~ msgstr "Kører delvist"
-
-#~ msgid "Running"
-#~ msgstr "Kører"
 
 #~ msgid "Unknown (%d)"
 #~ msgstr "Ukendt (%d)"
@@ -5447,22 +6096,6 @@ msgstr "%s"
 #~ msgstr "Kører ikke, delvist samlet"
 
 #~ msgctxt "RAID status"
-#~ msgid "Not running"
-#~ msgstr "Kører ikke"
-
-#~ msgctxt "RAID status"
-#~ msgid "Not running, can only start degraded"
-#~ msgstr "Kører ikke. Kan kun startes som degraderet"
-
-#~ msgctxt "RAID status"
-#~ msgid "Not running, not enough components to start"
-#~ msgstr "Kører ikke. Ikke nok komponenter til at starte"
-
-#~ msgctxt "RAID status"
-#~ msgid "DEGRADED"
-#~ msgstr "DEGRADERET"
-
-#~ msgctxt "RAID status"
 #~ msgid "Running"
 #~ msgstr "Kører"
 
@@ -5471,16 +6104,8 @@ msgstr "%s"
 #~ msgstr "Omformer"
 
 #~ msgctxt "RAID action"
-#~ msgid "Resyncing"
-#~ msgstr "Gensynkroniserer"
-
-#~ msgctxt "RAID action"
 #~ msgid "Repairing"
 #~ msgstr "Reparerer"
-
-#~ msgctxt "RAID action"
-#~ msgid "Recovering"
-#~ msgstr "Genskaber"
 
 #~ msgctxt "RAID action"
 #~ msgid "Checking"
@@ -5493,12 +6118,6 @@ msgstr "%s"
 
 #~ msgid "Not enough components available to start the RAID Array"
 #~ msgstr "Der er ikke nok tilgængelige komponenter til at starte RAID-rækken"
-
-#~ msgid "Are you sure you want the RAID Array degraded?"
-#~ msgstr "Er du sikker på, at du vil have RAID-rækken degraderet?"
-
-#~ msgid "_Start"
-#~ msgstr "_Start"
 
 #~ msgid "Error deleting partition for component in RAID Array"
 #~ msgstr "Fejl under sletning af partition for komponent i RAID-række"
@@ -5527,20 +6146,11 @@ msgstr "%s"
 #~ msgid "Metadata Version:"
 #~ msgstr "Version af metadata:"
 
-#~ msgid "Action:"
-#~ msgstr "Handling:"
-
 #~ msgid "Components:"
 #~ msgstr "Komponenter:"
 
-#~ msgid "St_art RAID Array"
-#~ msgstr "St_art RAID-række"
-
 #~ msgid "Bring up the RAID Array"
 #~ msgstr "Starter RAID-rækken"
-
-#~ msgid "St_op RAID Array"
-#~ msgstr "St_op RAID-række"
 
 #~ msgid "Tear down the RAID Array"
 #~ msgstr "Riv RAID-rækken ned"
@@ -5553,9 +6163,6 @@ msgstr "%s"
 
 #~ msgid "Chec_k Array"
 #~ msgstr "_Kontrollér række"
-
-#~ msgid "Check and repair the array"
-#~ msgstr "Kontrollér og reparér rækken"
 
 #~ msgid "Edit Com_ponents"
 #~ msgstr "Redigér kom_ponenter"
@@ -5633,9 +6240,6 @@ msgstr "%s"
 #~ msgid "Partition Flags:"
 #~ msgstr "Partitionsflag:"
 
-#~ msgid "Available:"
-#~ msgstr "Tilgængelig:"
-
 #~ msgid "Label:"
 #~ msgstr "Etiket:"
 
@@ -5672,17 +6276,11 @@ msgstr "%s"
 #~ msgid "View files on the volume"
 #~ msgstr "Vis filer på diskenheden"
 
-#~ msgid "Not Mounted"
-#~ msgstr "Ikke monteret"
-
 #~ msgid "Encrypted Volume (Locked)"
 #~ msgstr "Krypteret diskenhed (låst)"
 
 #~ msgid "Encrypted Volume (Unlocked)"
 #~ msgstr "Krypteret diskenhed (låst op)"
-
-#~ msgid "Go to array"
-#~ msgstr "Spring til række"
 
 #~ msgid "Container for Logical Partitions"
 #~ msgstr "Indeholder logiske partitioner"
@@ -5770,9 +6368,6 @@ msgstr "%s"
 
 #~ msgid "%s (%s) — Disk Utility"
 #~ msgstr "%s (%s) — Diskredskab"
-
-#~ msgid "Error creating RAID array"
-#~ msgstr "Fejl under oprettelse af RAID-række"
 
 #~ msgid "Error connecting to “%s”"
 #~ msgstr "Fejl ved forbindelse til “%s”"
@@ -5957,9 +6552,6 @@ msgstr "%s"
 #~ msgid "Conveyance self-test in progress: "
 #~ msgstr "Transport-selvtest i gang: "
 
-#~ msgid "Disk"
-#~ msgstr "Disk"
-
 #~ msgid "Are you sure you want to format the disk, deleting existing data ?"
 #~ msgstr ""
 #~ "Er du sikker på, at du vil formatere disken, hvilket vil slette "
@@ -6046,10 +6638,6 @@ msgstr "%s"
 #~ msgctxt "RAID status"
 #~ msgid " @ %3.01f%% (%s)"
 #~ msgstr " @ %3.01f%% (%s)"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "In Sync"
-#~ msgstr "Synkroniseret"
 
 #~ msgid "Array Name:"
 #~ msgstr "Rækkenavn:"
@@ -6256,9 +6844,6 @@ msgstr "%s"
 #~ msgid "Create File System"
 #~ msgstr "Opret filsystem"
 
-#~ msgid "Unknown Size"
-#~ msgstr "Ukendt størrelse"
-
 #~ msgid "Partitioned Media (%s)"
 #~ msgstr "Partitioneret medie (%s)"
 
@@ -6331,9 +6916,6 @@ msgstr "%s"
 #~ msgid "_Stop"
 #~ msgstr "_Stop"
 
-#~ msgid "Erase the contents of the device"
-#~ msgstr "Slet enhedens indhold"
-
 #~ msgid "<small>_Cancel</small>"
 #~ msgstr "<small>_Annullér</small>"
 
@@ -6378,11 +6960,6 @@ msgstr "%s"
 #~ msgctxt "ATA SMART status"
 #~ msgid "Unknown"
 #~ msgstr "Ukendt"
-
-# Bemærk at det er et testresultat, så grammatik er ligegyldigt
-#~ msgctxt "ATA SMART test result"
-#~ msgid "FAILED"
-#~ msgstr "FEJL"
 
 #~ msgctxt "ATA SMART test result"
 #~ msgid "(Read)"

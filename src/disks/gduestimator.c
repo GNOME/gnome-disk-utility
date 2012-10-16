@@ -17,7 +17,8 @@
 
 #include "gduestimator.h"
 
-#define MAX_SAMPLES 100
+//#define MAX_SAMPLES 100
+#define MAX_SAMPLES 50
 
 typedef struct
 {

@@ -69,6 +69,7 @@ gnome_disks_CFLAGS = 					\
 	$(LIBSECRET1_CFLAGS)				\
 	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
 	$(PWQUALITY_CFLAGS)				\
+	$(CANBERRA_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	-lm						\
 	$(NULL)
@@ -80,6 +81,7 @@ gnome_disks_LDADD = 					\
 	$(LIBSECRET1_LIBS)				\
 	$(LIBSYSTEMD_LOGIN_LIBS)			\
 	$(PWQUALITY_LIBS)				\
+	$(CANBERRA_LIBS)				\
         $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 

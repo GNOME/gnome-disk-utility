@@ -87,6 +87,8 @@ typedef struct
 
   gulong response_signal_handler_id;
   gboolean completed;
+
+  guint inhibit_cookie;
 } DialogData;
 
 static const struct {
@@ -175,8 +177,14 @@ dialog_data_complete_and_unref (DialogData *data)
     {
       data->completed = TRUE;
       g_cancellable_cancel (data->cancellable);
-      gtk_widget_hide (data->dialog);
     }
+  if (data->inhibit_cookie > 0)
+    {
+      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                 data->inhibit_cookie);
+      data->inhibit_cookie = 0;
+    }
+  gtk_widget_hide (data->dialog);
   dialog_data_unref (data);
 }
 
@@ -370,15 +378,23 @@ update_gui (DialogData *data,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-play_complete_sound (DialogData *data)
+play_complete_sound_and_uninhibit (DialogData *data)
 {
   const gchar *sound_message;
+
   /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
-  sound_message = _("Disk image creation complete");
+  sound_message = _("Disk image copying complete");
   ca_gtk_play_for_widget (GTK_WIDGET (data->dialog), 0,
                           CA_PROP_EVENT_ID, "complete",
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
+
+  if (data->inhibit_cookie > 0)
+    {
+      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                 data->inhibit_cookie);
+      data->inhibit_cookie = 0;
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -399,7 +415,7 @@ on_show_error (gpointer user_data)
 {
   DialogData *data = user_data;
 
-  play_complete_sound (data);
+  play_complete_sound_and_uninhibit (data);
 
   g_assert (data->copy_error != NULL);
   gdu_utils_show_error (GTK_WINDOW (data->dialog),
@@ -426,7 +442,7 @@ on_success (gpointer user_data)
   gtk_widget_show (data->close_button);
   gtk_widget_show (data->show_in_folder_button);
 
-  play_complete_sound (data);
+  play_complete_sound_and_uninhibit (data);
 
   dialog_data_unref (data);
   return FALSE; /* remove source */
@@ -820,6 +836,13 @@ start_copying (DialogData *data)
 
   /* now that we know the user picked a folder, update file chooser settings */
   gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->folder_fcbutton));
+
+  data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                                  GTK_WINDOW (data->dialog),
+                                                  GTK_APPLICATION_INHIBIT_SUSPEND |
+                                                  GTK_APPLICATION_INHIBIT_LOGOUT,
+                                                  /* Translators: Reason why suspend/logout is being inhibited */
+                                                  C_("create-inhibit-message", "Copying device to disk image"));
 
   g_thread_new ("copy-disk-image-thread",
                 copy_thread_func,

@@ -263,40 +263,7 @@ create_disk_image_populate (DialogData *data)
   /* Source label */
   info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
   gtk_label_set_text (GTK_LABEL (data->source_label), info->one_liner);
-  if (info != NULL)
-    udisks_object_info_unref (info);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static gchar *
-get_pretty_uri (GFile *file)
-{
-  gchar *ret;
-  gchar *s;
-
-  if (g_file_is_native (file))
-    {
-      const gchar *homedir;
-
-      ret = g_file_get_path (file);
-
-      homedir = g_get_home_dir ();
-      if (g_str_has_prefix (ret, homedir))
-        {
-          s = ret;
-          ret = g_strdup_printf ("~/%s", ret + strlen (homedir) + 1);
-          g_free (s);
-        }
-    }
-  else
-    {
-      s = g_file_get_uri (file);
-      ret = g_uri_unescape_string (s, NULL);
-      g_free (s);
-    }
-
-  return ret;
+  udisks_object_info_unref (info);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -400,6 +367,22 @@ update_gui (DialogData *data,
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->copying_progressbar), progress);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+play_complete_sound (DialogData *data)
+{
+  const gchar *sound_message;
+  /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
+  sound_message = _("Disk image creation complete");
+  ca_gtk_play_for_widget (GTK_WIDGET (data->dialog), 0,
+                          CA_PROP_EVENT_ID, "complete",
+                          CA_PROP_EVENT_DESCRIPTION, sound_message,
+                          NULL);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 on_update_ui (gpointer user_data)
 {
@@ -415,6 +398,8 @@ static gboolean
 on_show_error (gpointer user_data)
 {
   DialogData *data = user_data;
+
+  play_complete_sound (data);
 
   g_assert (data->copy_error != NULL);
   gdu_utils_show_error (GTK_WINDOW (data->dialog),
@@ -434,7 +419,6 @@ static gboolean
 on_success (gpointer user_data)
 {
   DialogData *data = user_data;
-  const gchar *sound_message;
 
   update_gui (data, TRUE);
 
@@ -442,12 +426,7 @@ on_success (gpointer user_data)
   gtk_widget_show (data->close_button);
   gtk_widget_show (data->show_in_folder_button);
 
-  /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
-  sound_message = _("Disk image creation complete");
-  ca_gtk_play_for_widget (GTK_WIDGET (data->dialog), 0,
-                          CA_PROP_EVENT_ID, "complete",
-                          CA_PROP_EVENT_DESCRIPTION, sound_message,
-                          NULL);
+  play_complete_sound (data);
 
   dialog_data_unref (data);
   return FALSE; /* remove source */
@@ -707,7 +686,7 @@ copy_thread_func (gpointer user_data)
                               &error2))
     {
       g_warning ("Error closing file output stream: %s (%s, %d)",
-                 error2->message, g_quark_to_string (error->domain), error->code);
+                 error2->message, g_quark_to_string (error2->domain), error2->code);
       g_clear_error (&error2);
     }
   g_clear_object (&data->output_file_stream);
@@ -807,7 +786,7 @@ check_overwrite (DialogData *data)
 }
 
 static gboolean
-open_device (DialogData *data)
+start_copying (DialogData *data)
 {
   gboolean ret = TRUE;
   const gchar *name;
@@ -836,7 +815,7 @@ open_device (DialogData *data)
       goto out;
     }
 
-  uri = get_pretty_uri (data->output_file);
+  uri = gdu_utils_get_pretty_uri (data->output_file);
   gtk_label_set_text (GTK_LABEL (data->destination_label), uri);
 
   /* now that we know the user picked a folder, update file chooser settings */
@@ -926,12 +905,8 @@ on_dialog_response (GtkDialog     *dialog,
 
           gtk_widget_hide (data->start_copying_button);
 
-          open_device (data);
+          start_copying (data);
         }
-      break;
-
-    case GTK_RESPONSE_CANCEL:
-      dialog_data_complete_and_unref (data);
       break;
 
     case GTK_RESPONSE_CLOSE:
@@ -940,6 +915,11 @@ on_dialog_response (GtkDialog     *dialog,
 
     case 1: /* show_in_folder */
       show_in_folder (data);
+      break;
+
+    default: /* explicit fallthrough */
+    case GTK_RESPONSE_CANCEL:
+      dialog_data_complete_and_unref (data);
       break;
     }
 }

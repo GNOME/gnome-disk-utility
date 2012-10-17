@@ -800,3 +800,37 @@ gdu_util_is_same_size (GList   *blocks,
     *out_min_size = min_size;
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gchar *
+gdu_utils_get_pretty_uri (GFile *file)
+{
+  gchar *ret;
+  gchar *s;
+
+  if (g_file_is_native (file))
+    {
+      const gchar *homedir;
+
+      ret = g_file_get_path (file);
+
+      homedir = g_get_home_dir ();
+      if (g_str_has_prefix (ret, homedir))
+        {
+          s = ret;
+          ret = g_strdup_printf ("~/%s", ret + strlen (homedir) + 1);
+          g_free (s);
+        }
+    }
+  else
+    {
+      s = g_file_get_uri (file);
+      ret = g_uri_unescape_string (s, NULL);
+      g_free (s);
+    }
+
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

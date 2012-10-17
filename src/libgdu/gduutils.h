@@ -66,6 +66,9 @@ gchar *gdu_utils_format_mdraid_level (const gchar *level,
 gboolean gdu_util_is_same_size (GList   *blocks,
                                 guint64 *out_min_size);
 
+gchar *gdu_utils_get_pretty_uri (GFile *file);
+
+
 G_END_DECLS
 
 #endif /* __GDU_UTILS_H__ */

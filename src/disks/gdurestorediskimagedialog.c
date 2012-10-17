@@ -27,9 +27,6 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* TODO: make dynamic? */
-#define BUFFER_SIZE (1*1024*1024)
-
 typedef struct
 {
   volatile gint ref_count;

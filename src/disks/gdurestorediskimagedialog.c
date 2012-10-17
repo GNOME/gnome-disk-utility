@@ -82,6 +82,8 @@ typedef struct
   guint update_id;
   GError *copy_error;
 
+  guint inhibit_cookie;
+
   gboolean completed;
 } DialogData;
 
@@ -178,16 +180,13 @@ dialog_data_complete_and_unref (DialogData *data)
     {
       data->completed = TRUE;
       g_cancellable_cancel (data->cancellable);
-      gtk_widget_hide (data->dialog);
     }
-  dialog_data_unref (data);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-dialog_data_dismiss_and_unref (DialogData *data)
-{
+  if (data->inhibit_cookie > 0)
+    {
+      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                 data->inhibit_cookie);
+      data->inhibit_cookie = 0;
+    }
   gtk_widget_hide (data->dialog);
   dialog_data_unref (data);
 }
@@ -411,15 +410,23 @@ update_gui (DialogData *data,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-play_complete_sound (DialogData *data)
+play_complete_sound_and_uninhibit (DialogData *data)
 {
   const gchar *sound_message;
+
   /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
   sound_message = _("Disk image copying complete");
   ca_gtk_play_for_widget (GTK_WIDGET (data->dialog), 0,
                           CA_PROP_EVENT_ID, "complete",
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
+
+  if (data->inhibit_cookie > 0)
+    {
+      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                 data->inhibit_cookie);
+      data->inhibit_cookie = 0;
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -440,7 +447,7 @@ on_show_error (gpointer user_data)
 {
   DialogData *data = user_data;
 
-  play_complete_sound (data);
+  play_complete_sound_and_uninhibit (data);
 
   g_assert (data->copy_error != NULL);
   gdu_utils_show_error (GTK_WINDOW (data->dialog),
@@ -466,7 +473,7 @@ on_success (gpointer user_data)
   gtk_widget_hide (data->cancel_button);
   gtk_widget_show (data->close_button);
 
-  play_complete_sound (data);
+  play_complete_sound_and_uninhibit (data);
 
   dialog_data_unref (data);
   return FALSE; /* remove source */
@@ -722,7 +729,7 @@ start_copying (DialogData *data)
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
         gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening file for reading"), error);
       g_error_free (error);
-      dialog_data_dismiss_and_unref (data);
+      dialog_data_complete_and_unref (data);
       goto out;
     }
 
@@ -736,7 +743,7 @@ start_copying (DialogData *data)
     {
       gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determing size of file"), error);
       g_error_free (error);
-      dialog_data_dismiss_and_unref (data);
+      dialog_data_complete_and_unref (data);
       goto out;
     }
   data->file_size = g_file_info_get_size (info);
@@ -744,6 +751,13 @@ start_copying (DialogData *data)
 
   uri = gdu_utils_get_pretty_uri (file);
   gtk_label_set_text (GTK_LABEL (data->source_label), uri);
+
+  data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                                  GTK_WINDOW (data->dialog),
+                                                  GTK_APPLICATION_INHIBIT_SUSPEND |
+                                                  GTK_APPLICATION_INHIBIT_LOGOUT,
+                                                  /* Translators: Reason why suspend/logout is being inhibited */
+                                                  C_("restore-inhibit-message", "Copying disk image to device"));
 
   g_thread_new ("copy-disk-image-thread",
                 copy_thread_func,
@@ -776,7 +790,7 @@ on_dialog_response (GtkDialog     *dialog,
                                         _("_Restore"),
                                         NULL, NULL))
         {
-          dialog_data_dismiss_and_unref (data);
+          dialog_data_complete_and_unref (data);
           goto out;
         }
 
@@ -797,7 +811,7 @@ on_dialog_response (GtkDialog     *dialog,
       break;
 
     case GTK_RESPONSE_CLOSE:
-      dialog_data_dismiss_and_unref (data);
+      dialog_data_complete_and_unref (data);
       break;
 
     default: /* explicit fallthrough */

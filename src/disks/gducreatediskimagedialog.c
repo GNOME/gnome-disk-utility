@@ -13,7 +13,6 @@
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
 
-#include <gmodule.h>
 #include <glib-unix.h>
 #include <sys/ioctl.h>
 #include <linux/fs.h>
@@ -26,6 +25,8 @@
 #include "gduvolumegrid.h"
 #include "gducreatefilesystemwidget.h"
 #include "gduestimator.h"
+
+#include "gdudvdsupport.h"
 
 /* TODOs / ideas for Disk Image creation
  *
@@ -78,6 +79,7 @@ typedef struct
   GMutex copy_lock;
   GduEstimator *estimator;
 
+  gboolean retrieving_dvd_keys;
   guint64 num_error_bytes;
   gint64 start_time_usec;
   gint64 end_time_usec;
@@ -316,6 +318,10 @@ update_gui (DialogData *data,
       g_free (s3);
       g_free (s2);
     }
+  else if (data->retrieving_dvd_keys)
+    {
+      s = g_strdup (_("Retrieving DVD keys"));
+    }
   else if (bytes_per_sec > 0 && usec_remaining > 0)
     {
       s2 = g_format_size (bytes_completed);
@@ -464,6 +470,7 @@ copy_span (int              fd,
            guint64          size,
            guchar          *buffer,
            gboolean         pad_with_zeroes,
+           GduDVDSupport   *dvd_support,
            GCancellable    *cancellable,
            GError         **error)
 {
@@ -477,35 +484,45 @@ copy_span (int              fd,
   g_return_val_if_fail (-1, cancellable == NULL || G_IS_CANCELLABLE (cancellable));
   g_return_val_if_fail (-1, error == NULL || *error == NULL);
 
-  if (lseek (fd, offset, SEEK_SET) == (off_t) -1)
+  if (dvd_support != NULL)
     {
-      g_set_error (error,
-                   G_IO_ERROR, g_io_error_from_errno (errno),
-                   "Error seeking to offset %" G_GUINT64_FORMAT ": %s",
-                   offset, strerror (errno));
-      goto out;
-    }
-
- copy_read_again:
-  num_bytes_read = read (fd, buffer, size);
-  if (num_bytes_read < 0)
-    {
-      if (errno == EAGAIN || errno == EINTR)
-        goto copy_read_again;
-      /* do not consider this an error - treat as zero bytes read */
-      num_bytes_read = 0;
+      num_bytes_read = gdu_dvd_support_read (dvd_support, fd, buffer, offset, size);
     }
   else
     {
-      /* EOF */
-      if (num_bytes_read == 0)
+      if (lseek (fd, offset, SEEK_SET) == (off_t) -1)
         {
           g_set_error (error,
-                       G_IO_ERROR, G_IO_ERROR_FAILED,
-                       "Reading from offset %" G_GUINT64_FORMAT " returned zero bytes",
-                       offset);
+                       G_IO_ERROR, g_io_error_from_errno (errno),
+                       "Error seeking to offset %" G_GUINT64_FORMAT ": %s",
+                       offset, strerror (errno));
           goto out;
         }
+    read_again:
+      num_bytes_read = read (fd, buffer, size);
+      if (num_bytes_read < 0)
+        {
+          if (errno == EAGAIN || errno == EINTR)
+            goto read_again;
+        }
+      else
+        {
+          /* EOF */
+          if (num_bytes_read == 0)
+            {
+              g_set_error (error,
+                           G_IO_ERROR, G_IO_ERROR_FAILED,
+                           "Reading from offset %" G_GUINT64_FORMAT " returned zero bytes",
+                           offset);
+              goto out;
+            }
+        }
+    }
+
+  if (num_bytes_read < 0)
+    {
+      /* do not consider this an error - treat as zero bytes read */
+      num_bytes_read = 0;
     }
 
   num_bytes_to_write = num_bytes_read;
@@ -554,6 +571,7 @@ static gpointer
 copy_thread_func (gpointer user_data)
 {
   DialogData *data = user_data;
+  GduDVDSupport *dvd_support = NULL;
   guchar *buffer_unaligned = NULL;
   guchar *buffer = NULL;
   guint64 block_device_size = 0;
@@ -578,7 +596,29 @@ copy_thread_func (gpointer user_data)
    */
   if (g_str_has_prefix (udisks_block_get_device (data->block), "/dev/sr"))
     {
-      fd = open (udisks_block_get_device (data->block), O_RDONLY);
+      const gchar *device_file = udisks_block_get_device (data->block);
+      fd = open (device_file, O_RDONLY);
+
+      /* Use libdvdcss (if available on the system) on DVDs with UDF
+       * filesystems - otherwise the backup process may fail because
+       * of unreadable/scrambled sectors
+       */
+      if (g_strcmp0 (udisks_block_get_id_usage (data->block), "filesystem") == 0 &&
+          g_strcmp0 (udisks_block_get_id_type (data->block), "udf") == 0 &&
+          g_str_has_prefix (udisks_drive_get_media (data->drive), "optical_dvd"))
+        {
+          g_mutex_lock (&data->copy_lock);
+          data->retrieving_dvd_keys = TRUE;
+          g_mutex_unlock (&data->copy_lock);
+          g_idle_add (on_update_ui, dialog_data_ref (data));
+
+          dvd_support = gdu_dvd_support_new (device_file, udisks_block_get_size (data->block));
+
+          g_mutex_lock (&data->copy_lock);
+          data->retrieving_dvd_keys = FALSE;
+          g_mutex_unlock (&data->copy_lock);
+          g_idle_add (on_update_ui, dialog_data_ref (data));
+        }
     }
 
   /* Otherwise, request the fd from udisks */
@@ -673,6 +713,7 @@ copy_thread_func (gpointer user_data)
                                   num_bytes_to_read,
                                   buffer,
                                   TRUE, /* pad_with_zeroes */
+                                  dvd_support,
                                   data->cancellable,
                                   &error);
       if (num_bytes_read < 0)
@@ -694,6 +735,9 @@ copy_thread_func (gpointer user_data)
     }
 
  out:
+  if (dvd_support != NULL)
+    gdu_dvd_support_free (dvd_support);
+
   data->end_time_usec = g_get_real_time ();
 
   /* in either case, close the stream */

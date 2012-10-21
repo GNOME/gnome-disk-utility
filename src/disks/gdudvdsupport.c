@@ -216,6 +216,9 @@ gdu_dvd_support_new  (const gchar *device_file,
           if (dvdcss_seek (support->dvdcss, vob_sector_offset, DVDCSS_SEEK_KEY) != (int) vob_sector_offset)
             goto fail;
 
+          if (vob_size == 0)
+            continue;
+
           /* round up VOB size to nearest 2048-byte sector */
           rounded_vob_size = vob_size + 0x7ff;
           rounded_vob_size &= ~0x7ff;
@@ -236,7 +239,10 @@ gdu_dvd_support_new  (const gchar *device_file,
   if (scrambled_ranges == NULL)
     goto fail;
 
-  /* Otherwise, build an array of ranges */
+  /* Otherwise, build an array of ranges
+   *
+   * TODO: ensure ranges are not overlapping
+   */
   scrambled_ranges = g_list_sort (scrambled_ranges, (GCompareFunc) range_compare_func);
   a = g_array_new (FALSE, /* zero-terminated */
                    FALSE, /* clear */
@@ -363,8 +369,8 @@ gdu_dvd_support_read (GduDVDSupport *support,
 
       if (G_UNLIKELY (support->debug))
         {
-          g_print ("reading %" G_GUINT64_FORMAT " from %" G_GUINT64_FORMAT " (scrambled=%d)\n",
-                   num_to_read_in_range, cur_offset, r->scrambled);
+          g_print ("reading %" G_GUINT64_FORMAT " from %" G_GUINT64_FORMAT " (scrambled=%d) from range %d\n",
+                   num_to_read_in_range, cur_offset, r->scrambled, n);
         }
 
       /* now read @num_to_read_in_range from @cur_offset into @cur_buffer */

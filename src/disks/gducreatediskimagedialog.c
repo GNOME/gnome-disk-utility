@@ -1023,9 +1023,6 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   create_disk_image_update (data);
 
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-  /* Only select the precomputed filename, not the .img / .iso extension */
-  gtk_editable_select_region (GTK_EDITABLE (data->name_entry), 0,
-                              strlen (gtk_entry_get_text (GTK_ENTRY (data->name_entry))) - 4);
 
   data->response_signal_handler_id = g_signal_connect (data->dialog,
                                                        "response",
@@ -1041,4 +1038,8 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   gtk_widget_hide (data->close_button);
   gtk_widget_hide (data->show_in_folder_button);
   gtk_window_present (GTK_WINDOW (data->dialog));
+
+  /* Only select the precomputed filename, not the .img / .iso extension */
+  gtk_editable_select_region (GTK_EDITABLE (data->name_entry), 0,
+                              strlen (gtk_entry_get_text (GTK_ENTRY (data->name_entry))) - 4);
 }

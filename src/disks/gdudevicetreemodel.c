@@ -311,7 +311,7 @@ pm_get_state_cb (GObject       *source_object,
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
   GDBusObject *object;
   GduPowerStateFlags flags;
-  guchar state;
+  guchar state = 0x80;
   GError *error = NULL;
 
   flags = GDU_POWER_STATE_FLAGS_NONE;
@@ -323,20 +323,33 @@ pm_get_state_cb (GObject       *source_object,
     {
       if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_DEVICE_BUSY))
         {
-          /* this means that a secure erase in progress.. so no error-spew and try again */
+          /* can happen if a secure erase in progress.. */
+          g_clear_error (&error);
+          goto out;
+        }
+      else if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED) ||
+               g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_CAN_OBTAIN) ||
+               g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+        {
+          /* can happen e.g. if the session is fast-user-switched away from - for example a VT-switch */
+          g_clear_error (&error);
+          goto out;
+        }
+      else if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        {
+          /* can happen if method call is being canceled */
+          g_clear_error (&error);
+          goto out;
         }
       else
         {
-          if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-            {
-              g_printerr ("Error calling Drive.Ata.PmGetState: %s (%s, %d)\n",
-                          error->message, g_quark_to_string (error->domain), error->code);
-              /* set a flag so we won't try again */
-              flags |= GDU_POWER_STATE_FLAGS_FAILED;
-            }
+          /* Otherwise report and stop trying */
+          g_printerr ("Error calling Drive.Ata.PmGetState: %s (%s, %d)\n",
+                      error->message, g_quark_to_string (error->domain), error->code);
+          flags |= GDU_POWER_STATE_FLAGS_FAILED; /* so we won't try again */
+          g_clear_error (&error);
+          goto out;
         }
-      g_clear_error (&error);
-      goto out;
     }
 
   if (!(state == 0x80 || state == 0xff))

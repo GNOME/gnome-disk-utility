@@ -780,7 +780,6 @@ on_dialog_response (GtkDialog     *dialog,
   if (data->dialog == NULL)
     goto out;
 
-  g_print ("response = %d\n", response);
   switch (response)
     {
     case GTK_RESPONSE_OK:

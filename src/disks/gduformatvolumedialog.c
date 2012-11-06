@@ -183,6 +183,8 @@ gdu_format_volume_dialog_show (GduWindow    *window,
       if (erase_type != NULL)
         g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
 
+      g_variant_builder_add (&options_builder, "{sv}", "update-partition-type", g_variant_new_boolean (TRUE));
+
       udisks_block_call_format (data->block,
                                 fstype,
                                 g_variant_builder_end (&options_builder),

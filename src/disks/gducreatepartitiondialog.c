@@ -272,6 +272,8 @@ create_partition_cb (GObject      *source_object,
       if (erase != NULL)
         g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase));
 
+      g_variant_builder_add (&options_builder, "{sv}", "update-partition-type", g_variant_new_boolean (TRUE));
+
       udisks_block_call_format (partition_block,
                                 fstype,
                                 g_variant_builder_end (&options_builder),

@@ -4106,21 +4106,45 @@ lock_cb (UDisksEncrypted *encrypted,
 }
 
 static void
+lock_ensure_unused_cb (GduWindow     *window,
+                       GAsyncResult  *res,
+                       gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      UDisksEncrypted *encrypted = udisks_object_peek_encrypted (object);
+      udisks_encrypted_call_lock (encrypted,
+                                  g_variant_new ("a{sv}", NULL), /* options */
+                                  NULL, /* cancellable */
+                                  (GAsyncReadyCallback) lock_cb,
+                                  g_object_ref (window));
+    }
+  g_object_unref (object);
+}
+
+static void
 on_devtab_action_lock_activated (GtkAction *action,
                                  gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
-  UDisksEncrypted *encrypted;
+  UDisksBlock *block;
+  UDisksBlock *cleartext;
+  UDisksObject *cleartext_object;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  encrypted = udisks_object_peek_encrypted (object);
+  block = udisks_object_peek_block (object);
 
-  udisks_encrypted_call_lock (encrypted,
-                              g_variant_new ("a{sv}", NULL), /* options */
-                              NULL, /* cancellable */
-                              (GAsyncReadyCallback) lock_cb,
-                              g_object_ref (window));
+  /* ensure the cleartext object is unused (e.g. unmounted) before tearing down the encrypted device... */
+  cleartext = udisks_client_get_cleartext_block (window->client, block);
+  cleartext_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (cleartext));
+  gdu_window_ensure_unused (window,
+                            cleartext_object,
+                            (GAsyncReadyCallback) lock_ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            g_object_ref (object));
+  g_object_unref (cleartext);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

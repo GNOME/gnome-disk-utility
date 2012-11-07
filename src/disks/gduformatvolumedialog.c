@@ -89,6 +89,56 @@ format_cb (GObject      *source_object,
   format_volume_data_free (data);
 }
 
+static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  FormatVolumeData *data = user_data;
+  GVariantBuilder options_builder;
+  const gchar *erase_type;
+  const gchar *fstype;
+  const gchar *name;
+  const gchar *passphrase;
+
+  if (!gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      format_volume_data_free (data);
+      goto out;
+    }
+
+  erase_type = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (name != NULL && strlen (name) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "label", g_variant_new_string (name));
+  if (!(g_strcmp0 (fstype, "vfat") == 0 || g_strcmp0 (fstype, "ntfs") == 0))
+    {
+      /* TODO: need a better way to determine if this should be TRUE */
+      g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
+    }
+  if (passphrase != NULL && strlen (passphrase) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
+
+  if (erase_type != NULL)
+    g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
+
+  g_variant_builder_add (&options_builder, "{sv}", "update-partition-type", g_variant_new_boolean (TRUE));
+
+  udisks_block_call_format (data->block,
+                            fstype,
+                            g_variant_builder_end (&options_builder),
+                            NULL, /* GCancellable */
+                            format_cb,
+                            data);
+
+ out:
+  ;
+}
+
 void
 gdu_format_volume_dialog_show (GduWindow    *window,
                                UDisksObject *object)
@@ -129,20 +179,13 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)
     {
-      GVariantBuilder options_builder;
-      const gchar *erase_type;
-      const gchar *fstype;
-      const gchar *name;
-      const gchar *passphrase;
       const gchar *primary_message;
+      const gchar *erase_type;
       GString *str;
 
-      erase_type = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
-      fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
-      name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
-      passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
-
       gtk_widget_hide (data->dialog);
+
+      erase_type = gdu_create_filesystem_widget_get_erase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
 
       primary_message = _("Are you sure you want to format the volume?");
       if (erase_type == NULL || g_strcmp0 (erase_type, "") == 0)
@@ -169,27 +212,11 @@ gdu_format_volume_dialog_show (GduWindow    *window,
         }
       g_string_free (str, TRUE);
 
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      if (name != NULL && strlen (name) > 0)
-        g_variant_builder_add (&options_builder, "{sv}", "label", g_variant_new_string (name));
-      if (!(g_strcmp0 (fstype, "vfat") == 0 || g_strcmp0 (fstype, "ntfs") == 0))
-        {
-          /* TODO: need a better way to determine if this should be TRUE */
-          g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
-        }
-      if (passphrase != NULL && strlen (passphrase) > 0)
-        g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
-
-      if (erase_type != NULL)
-        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
-
-      g_variant_builder_add (&options_builder, "{sv}", "update-partition-type", g_variant_new_boolean (TRUE));
-
-      udisks_block_call_format (data->block,
-                                fstype,
-                                g_variant_builder_end (&options_builder),
+      /* ensure the volume is unused (e.g. unmounted) before formatting it... */
+      gdu_window_ensure_unused (data->window,
+                                data->object,
+                                (GAsyncReadyCallback) ensure_unused_cb,
                                 NULL, /* GCancellable */
-                                format_cb,
                                 data);
       return;
     }

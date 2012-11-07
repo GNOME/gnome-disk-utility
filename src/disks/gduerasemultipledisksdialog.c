@@ -33,6 +33,7 @@ typedef struct
   GduWindow *window;
   GList *blocks;
 
+  GList *blocks_ensure_iter;
   GList *blocks_erase_iter;
   gchar *erase_type;
 
@@ -165,6 +166,7 @@ populate (DialogData *data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void ensure_next (DialogData *data);
 static void erase_next (DialogData *data);
 
 static void
@@ -194,7 +196,6 @@ format_cb (GObject      *source_object,
     erase_next (data);
   else
     dialog_data_unref (data);
-
 }
 
 static void
@@ -247,6 +248,8 @@ erase_next (DialogData  *data)
   g_variant_builder_add (&options_builder, "{sv}", "no-block", g_variant_new_boolean (TRUE));
   if (strlen (erase_type) > 0)
     g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
+
+
   udisks_block_call_format (block,
                             "empty",
                             g_variant_builder_end (&options_builder),
@@ -256,13 +259,62 @@ erase_next (DialogData  *data)
 }
 
 static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  DialogData *data = user_data;
+
+  if (!gdu_window_ensure_unused_finish (data->window, res, NULL))
+    {
+      /* fail */
+      dialog_data_unref (data);
+    }
+  else
+    {
+      if (data->blocks_ensure_iter != NULL)
+        {
+          ensure_next (data);
+        }
+      else
+        {
+          /* done ensuring, now erase */
+          data->blocks_erase_iter = data->blocks;
+          erase_next (data);
+        }
+    }
+}
+
+static void
+ensure_next (DialogData *data)
+{
+  UDisksBlock *block;
+  UDisksObject *object;
+
+  g_assert (data->blocks_ensure_iter != NULL);
+
+  block = UDISKS_BLOCK (data->blocks_ensure_iter->data);
+  data->blocks_ensure_iter = data->blocks_ensure_iter->next;
+
+  object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+  gdu_window_ensure_unused (data->window,
+                            object,
+                            (GAsyncReadyCallback) ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            data);
+}
+
+static void
 erase_devices (DialogData  *data,
                const gchar *erase_type)
 {
   dialog_data_ref (data);
+
   data->erase_type = g_strdup (erase_type);
-  data->blocks_erase_iter = data->blocks;
-  erase_next (data);
+
+  /* First ensure all are unused... then if all that works, erase them */
+  data->blocks_ensure_iter = data->blocks;
+  ensure_next (data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

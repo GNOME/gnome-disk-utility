@@ -3942,19 +3942,35 @@ eject_cb (UDisksDrive  *drive,
   g_object_unref (window);
 }
 
+
+static void
+eject_ensure_unused_cb (GduWindow     *window,
+                        GAsyncResult  *res,
+                        gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      UDisksDrive *drive = udisks_object_peek_drive (object);
+      udisks_drive_call_eject (drive,
+                               g_variant_new ("a{sv}", NULL), /* options */
+                               NULL, /* cancellable */
+                               (GAsyncReadyCallback) eject_cb,
+                               g_object_ref (window));
+    }
+  g_object_unref (object);
+}
+
 static void
 on_devtab_drive_action_eject_activated (GtkAction *action,
                                         gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  UDisksDrive *drive;
-
-  drive = udisks_object_peek_drive (window->current_object);
-  udisks_drive_call_eject (drive,
-                           g_variant_new ("a{sv}", NULL), /* options */
-                           NULL, /* cancellable */
-                           (GAsyncReadyCallback) eject_cb,
-                           g_object_ref (window));
+  gdu_window_ensure_unused (window,
+                            window->current_object,
+                            (GAsyncReadyCallback) eject_ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            g_object_ref (window->current_object));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

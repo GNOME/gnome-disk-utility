@@ -331,6 +331,41 @@ format_cb (GObject      *source_object,
   format_disk_data_free (data);
 }
 
+
+static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  FormatDiskData *data = user_data;
+  const gchar *partition_table_type;
+  const gchar *erase_type;
+  GVariantBuilder options_builder;
+
+
+  if (!gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      format_disk_data_free (data);
+      goto out;
+    }
+
+  partition_table_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->type_combobox));
+  erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (strlen (erase_type) > 0)
+    g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
+  udisks_block_call_format (data->block,
+                            partition_table_type,
+                            g_variant_builder_end (&options_builder),
+                            NULL, /* GCancellable */
+                            format_cb,
+                            data);
+
+ out:
+  ;
+}
+
 void
 gdu_format_disk_dialog_show (GduWindow    *window,
                                UDisksObject *object)
@@ -373,13 +408,10 @@ gdu_format_disk_dialog_show (GduWindow    *window,
   response = gtk_dialog_run (GTK_DIALOG (data->dialog));
   if (response == GTK_RESPONSE_OK)
     {
-      const gchar *partition_table_type;
       const gchar *erase_type;
       const gchar *primary_message;
-      GVariantBuilder options_builder;
       GString *str;
 
-      partition_table_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->type_combobox));
       erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
 
       primary_message = _("Are you sure you want to format the disk?");
@@ -416,14 +448,11 @@ gdu_format_disk_dialog_show (GduWindow    *window,
         }
       g_string_free (str, TRUE);
 
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      if (strlen (erase_type) > 0)
-        g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
-      udisks_block_call_format (data->block,
-                                partition_table_type,
-                                g_variant_builder_end (&options_builder),
+      /* ensure the volume is unused (e.g. unmounted) before formatting it... */
+      gdu_window_ensure_unused (data->window,
+                                data->object,
+                                (GAsyncReadyCallback) ensure_unused_cb,
                                 NULL, /* GCancellable */
-                                format_cb,
                                 data);
       return;
     }

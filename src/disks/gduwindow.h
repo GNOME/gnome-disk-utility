@@ -31,6 +31,16 @@ gboolean        gdu_window_select_object     (GduWindow    *window,
 
 void            gdu_window_show_attach_disk_image (GduWindow *window);
 
+void            gdu_window_ensure_unused (GduWindow            *window,
+                                          UDisksObject         *object,
+                                          GAsyncReadyCallback   callback,
+                                          GCancellable         *cancellable,
+                                          gpointer              user_data);
+
+gboolean        gdu_window_ensure_unused_finish (GduWindow     *window,
+                                                 GAsyncResult  *res,
+                                                 GError       **error);
+
 G_END_DECLS
 
 #endif /* __GDU_WINDOW_H__ */

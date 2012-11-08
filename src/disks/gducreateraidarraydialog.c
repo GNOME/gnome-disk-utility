@@ -26,8 +26,6 @@ typedef struct
 {
   volatile gint ref_count;
 
-  gboolean disks_not_same_size;
-
   GList *blocks;
   guint64 disk_size;
   guint num_disks;
@@ -44,6 +42,8 @@ typedef struct
   GtkWidget *name_entry;
   GtkWidget *num_disks_label;
   GtkWidget *size_label;
+
+  GList *blocks_ensure_iter;
 } DialogData;
 
 static const struct {
@@ -119,9 +119,6 @@ update_dialog (DialogData *data)
   guint64 raid_size;
   gchar *s;
 
-  if (data->disks_not_same_size)
-    goto out;
-
   create_sensitive = TRUE;
 
   raid_level = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->level_combobox));
@@ -168,8 +165,6 @@ update_dialog (DialogData *data)
   s = udisks_client_get_size_for_display (data->client, raid_size, FALSE, FALSE);
   gtk_label_set_text (GTK_LABEL (data->size_label), s);
   g_free (s);
-
- out:
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),
                                      GTK_RESPONSE_OK,
@@ -437,6 +432,88 @@ mdraid_create_cb (GObject      *source_object,
   g_free (array_objpath);
 }
 
+static void ensure_next (DialogData *data);
+
+static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  DialogData *data = user_data;
+  GVariantBuilder options_builder;
+  const gchar *name;
+  const gchar *level;
+  guint64 chunk;
+  GPtrArray *p;
+  GList *l;
+
+  if (!gdu_window_ensure_unused_finish (data->window, res, NULL))
+    {
+      /* fail and error dialog has already been presented */
+      goto out;
+    }
+  else
+    {
+      if (data->blocks_ensure_iter != NULL)
+        {
+          ensure_next (dialog_data_ref (data));
+          goto out;
+        }
+    }
+
+  /* done ensuring all devices are not in use... now create the RAID array... */
+  name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
+  level = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->level_combobox));
+  chunk = atoi (gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->chunk_combobox)) + strlen ("chunk_"));
+  chunk *= 1024;
+  if (g_strcmp0 (level, "raid1") == 0)
+    chunk = 0;
+
+  p = g_ptr_array_new ();
+  for (l = data->blocks; l != NULL; l = l->next)
+    {
+      UDisksBlock *block = UDISKS_BLOCK (l->data);
+      GDBusObject *object;
+      object = g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+      g_ptr_array_add (p, (gpointer) g_dbus_object_get_object_path (object));
+    }
+  g_ptr_array_add (p, NULL);
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  udisks_manager_call_mdraid_create (udisks_client_get_manager (data->client),
+                                     (const gchar* const *) p->pdata,
+                                     level,
+                                     name,
+                                     chunk,
+                                     g_variant_builder_end (&options_builder),
+                                     NULL,                       /* GCancellable */
+                                     (GAsyncReadyCallback) mdraid_create_cb,
+                                     dialog_data_ref (data));
+  g_ptr_array_free (p, TRUE);
+
+ out:
+  dialog_data_unref (data);
+}
+
+static void
+ensure_next (DialogData *data)
+{
+  UDisksBlock *block;
+  UDisksObject *object;
+
+  g_assert (data->blocks_ensure_iter != NULL);
+
+  block = UDISKS_BLOCK (data->blocks_ensure_iter->data);
+  data->blocks_ensure_iter = data->blocks_ensure_iter->next;
+
+  object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+  gdu_window_ensure_unused (data->window,
+                            object,
+                            (GAsyncReadyCallback) ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            data);
+}
+
 gboolean
 gdu_create_raid_array_dialog_show (GduWindow *window,
                                    GList     *blocks)
@@ -487,13 +564,6 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
 
         case GTK_RESPONSE_OK:
           {
-            GVariantBuilder options_builder;
-            const gchar *name;
-            const gchar *level;
-            guint64 chunk;
-            GPtrArray *p;
-            GList *l;
-
             if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
                                               _("Are you sure you want to use the disks for a RAID array?"),
                                               _("Existing content on the devices will be erased"),
@@ -503,34 +573,11 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
                 continue;
               }
 
-            name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
-            level = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->level_combobox));
-            chunk = atoi (gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->chunk_combobox)) + strlen ("chunk_"));
-            chunk *= 1024;
-            if (g_strcmp0 (level, "raid1") == 0)
-              chunk = 0;
-
-            p = g_ptr_array_new ();
-            for (l = data->blocks; l != NULL; l = l->next)
-              {
-                UDisksBlock *block = UDISKS_BLOCK (l->data);
-                GDBusObject *object;
-                object = g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
-                g_ptr_array_add (p, (gpointer) g_dbus_object_get_object_path (object));
-              }
-            g_ptr_array_add (p, NULL);
-
-            g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-            udisks_manager_call_mdraid_create (udisks_client_get_manager (data->client),
-                                               (const gchar* const *) p->pdata,
-                                               level,
-                                               name,
-                                               chunk,
-                                               g_variant_builder_end (&options_builder),
-                                               NULL,                       /* GCancellable */
-                                               (GAsyncReadyCallback) mdraid_create_cb,
-                                               dialog_data_ref (data));
-            g_ptr_array_free (p, TRUE);
+            /* First ensure all disks are unused... then if all that works, we
+             * create the array - see ensure_unused_cb() above...
+             */
+            data->blocks_ensure_iter = data->blocks;
+            ensure_next (dialog_data_ref (data));
             ret = TRUE;
             goto out;
           }

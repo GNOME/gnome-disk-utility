@@ -411,6 +411,7 @@ gdu_format_disk_dialog_show (GduWindow    *window,
       const gchar *erase_type;
       const gchar *primary_message;
       GString *str;
+      GList *objects = NULL;
 
       erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
 
@@ -436,16 +437,20 @@ gdu_format_disk_dialog_show (GduWindow    *window,
           g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can't be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
         }
 
+      objects = g_list_append (NULL, object);
       gtk_widget_hide (data->dialog);
       if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
                                         primary_message,
                                         str->str,
                                         _("_Format"),
-                                        NULL, NULL))
+                                        NULL, NULL,
+                                        gdu_window_get_client (data->window), objects))
         {
+          g_list_free (objects);
           g_string_free (str, TRUE);
           goto out;
         }
+      g_list_free (objects);
       g_string_free (str, TRUE);
 
       /* ensure the volume is unused (e.g. unmounted) before formatting it... */

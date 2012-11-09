@@ -360,6 +360,7 @@ gdu_erase_multiple_disks_dialog_show (GduWindow *window,
           const gchar *primary_message;
           GString *str;
           const gchar *erase_type;
+          GList *objects = NULL, *l;
 
           erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
 
@@ -383,16 +384,25 @@ gdu_erase_multiple_disks_dialog_show (GduWindow *window,
               g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can't be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
             }
 
+          for (l = data->blocks; l != NULL; l = l->next)
+            {
+              UDisksObject *object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (l->data));
+              if (object != NULL)
+                objects = g_list_append (objects, object);
+            }
           if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
                                             primary_message,
                                             str->str,
                                             _("_Erase"),
-                                            NULL, NULL))
+                                            NULL, NULL,
+                                            gdu_window_get_client (data->window), objects))
             {
               g_string_free (str, TRUE);
+              g_list_free (objects);
               continue;
             }
           g_string_free (str, TRUE);
+          g_list_free (objects);
           gtk_widget_hide (data->dialog);
           erase_devices (data, erase_type);
           ret = TRUE;

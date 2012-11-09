@@ -3899,16 +3899,20 @@ on_devtab_action_partition_delete_activated (GtkAction *action,
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   UDisksPartition *partition;
+  GList *objects = NULL;
 
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  partition = udisks_object_peek_partition (object);
+
+  objects = g_list_append (NULL, object);
   if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
                                     _("Are you sure you want to delete the partition?"),
                                     _("All data on the partition will be lost"),
                                     _("_Delete"),
-                                    NULL, NULL))
+                                    NULL, NULL,
+                                    window->client, objects))
     goto out;
 
-  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  partition = udisks_object_peek_partition (object);
   udisks_partition_call_delete (partition,
                                 g_variant_new ("a{sv}", NULL), /* options */
                                 NULL, /* cancellable */
@@ -3916,7 +3920,7 @@ on_devtab_action_partition_delete_activated (GtkAction *action,
                                 g_object_ref (window));
 
  out:
-  ;
+  g_list_free (objects);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -4015,7 +4019,8 @@ on_devtab_drive_action_raid_start_activated (GtkAction *action,
                                         C_("mdraid", "Are you sure you want to start the RAID array degraded?"),
                                         C_("mdraid", "A degraded RAID array is vulnerable to data- and performance-loss"),
                                         C_("mdraid", "_Start"),
-                                        NULL, NULL))
+                                        NULL, NULL,
+                                        window->client, NULL))
         goto out;
 
       g_variant_builder_add (&options_builder, "{sv}", "start-degraded", g_variant_new_boolean (TRUE));

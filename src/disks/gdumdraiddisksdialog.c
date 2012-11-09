@@ -363,18 +363,8 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
   UDisksBlock *selected_block = NULL;
   UDisksObject *selected_block_object = NULL;
   GtkTreeIter titer;
+  GList *objects = NULL;
 
-  if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
-                                    C_("mdraid-disks", "Are you sure you want to remove the disk?"),
-                                    C_("mdraid-disks", "Removing a disk from a RAID array may degrade it"),
-                                    C_("mdraid-disks", "_Remove"),
-                                    C_("mdraid-disks", "_Quick-format after removal"),
-                                    &opt_wipe))
-    goto out;
-
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  if (opt_wipe)
-    g_variant_builder_add (&options_builder, "{sv}", "wipe", g_variant_new_boolean (TRUE));
   if (gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->treeview)),
                                        NULL, /* out_model */
                                        &titer))
@@ -393,6 +383,19 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
       goto out;
     }
 
+  objects = g_list_append (NULL, selected_block_object);
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
+                                    C_("mdraid-disks", "Are you sure you want to remove the disk?"),
+                                    C_("mdraid-disks", "Removing a disk from a RAID array may degrade it"),
+                                    C_("mdraid-disks", "_Remove"),
+                                    C_("mdraid-disks", "_Quick-format after removal"), &opt_wipe,
+                                    gdu_window_get_client (data->window), objects))
+    goto out;
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (opt_wipe)
+    g_variant_builder_add (&options_builder, "{sv}", "wipe", g_variant_new_boolean (TRUE));
+
   udisks_mdraid_call_remove_device (data->mdraid,
                                     g_dbus_object_get_object_path (G_DBUS_OBJECT (selected_block_object)),
                                     g_variant_builder_end (&options_builder),
@@ -403,6 +406,7 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
  out:
   g_clear_object (&selected_block_object);
   g_clear_object (&selected_block);
+  g_list_free (objects);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

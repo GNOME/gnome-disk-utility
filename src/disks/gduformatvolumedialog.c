@@ -182,6 +182,7 @@ gdu_format_volume_dialog_show (GduWindow    *window,
       const gchar *primary_message;
       const gchar *erase_type;
       GString *str;
+      GList *objects = NULL;
 
       gtk_widget_hide (data->dialog);
 
@@ -201,15 +202,19 @@ gdu_format_volume_dialog_show (GduWindow    *window,
           str = g_string_new (_("All data on the volume will be overwritten and will likely not be recoverable by data recovery services"));
         }
 
-      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+      objects = g_list_append (NULL, object);
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
                                         primary_message,
                                         str->str,
                                         _("_Format"),
-                                        NULL, NULL))
+                                        NULL, NULL,
+                                        gdu_window_get_client (data->window), objects))
         {
+          g_list_free (objects);
           g_string_free (str, TRUE);
           goto out;
         }
+      g_list_free (objects);
       g_string_free (str, TRUE);
 
       /* ensure the volume is unused (e.g. unmounted) before formatting it... */

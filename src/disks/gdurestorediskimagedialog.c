@@ -776,9 +776,12 @@ on_dialog_response (GtkDialog     *dialog,
                     gpointer       user_data)
 {
   DialogData *data = user_data;
+  GList *objects = NULL;
 
   if (data->dialog == NULL)
     goto out;
+
+  objects = g_list_append (NULL, data->object);
 
   switch (response)
     {
@@ -787,7 +790,8 @@ on_dialog_response (GtkDialog     *dialog,
                                         _("Are you sure you want to write the disk image to the device?"),
                                         _("All existing data will be lost"),
                                         _("_Restore"),
-                                        NULL, NULL))
+                                        NULL, NULL,
+                                        gdu_window_get_client (data->window), objects))
         {
           dialog_data_complete_and_unref (data);
           goto out;
@@ -819,7 +823,7 @@ on_dialog_response (GtkDialog     *dialog,
       break;
     }
  out:
-  ;
+  g_list_free (objects);
 }
 
 void

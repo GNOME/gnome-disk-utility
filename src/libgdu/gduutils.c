@@ -618,13 +618,41 @@ gdu_utils_show_error (GtkWindow   *parent_window,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GtkWidget *
+get_widget_for_object (UDisksClient *client,
+                       UDisksObject *object)
+{
+  UDisksObjectInfo *info;
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *label;
+
+  info = udisks_client_get_object_info (client, object);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+
+  image = gtk_image_new_from_gicon (info->icon, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+  label = gtk_label_new (info->one_liner);
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+  udisks_object_info_unref (info);
+
+  return hbox;
+}
+
 gboolean
-gdu_utils_show_confirmation (GtkWindow   *parent_window,
-                             const gchar *message,
-                             const gchar *secondary_message,
-                             const gchar *affirmative_verb,
-                             const gchar *checkbox_mnemonic,
-                             gboolean    *inout_checkbox_value)
+gdu_utils_show_confirmation (GtkWindow    *parent_window,
+                             const gchar  *message,
+                             const gchar  *secondary_message,
+                             const gchar  *affirmative_verb,
+                             const gchar  *checkbox_mnemonic,
+                             gboolean     *inout_checkbox_value,
+                             UDisksClient *client,
+                             GList        *objects)
 {
   GtkWidget *check_button = NULL;
   GtkWidget *dialog;
@@ -648,6 +676,48 @@ gdu_utils_show_confirmation (GtkWindow   *parent_window,
                           FALSE, FALSE, 0);
       if (inout_checkbox_value != NULL)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), *inout_checkbox_value);
+    }
+
+  if (objects != NULL)
+    {
+      GtkWidget *label;
+      GtkWidget *vbox;
+      GtkWidget *scrolled_window;
+      GList *l;
+      PangoAttrList *attrs;
+
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+      for (l = objects; l != NULL; l = l->next)
+        {
+          UDisksObject *object = UDISKS_OBJECT (l->data);
+          gtk_box_pack_start (GTK_BOX (vbox),
+                              get_widget_for_object (client, object),
+                              FALSE, FALSE, 0);
+        }
+
+      label = gtk_label_new (NULL);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      /* Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action */
+      gtk_label_set_markup (GTK_LABEL (label), C_("confirmation-list-of-devices", "Affected Devices"));
+      attrs = pango_attr_list_new ();
+      pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
+      gtk_label_set_attributes (GTK_LABEL (label), attrs);
+      pango_attr_list_unref (attrs);
+
+      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
+      gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
+      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window), vbox);
+      gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
+      gtk_widget_set_margin_left (scrolled_window, 24);
+
+      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                          label,
+                          FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                          scrolled_window,
+                          FALSE, FALSE, 0);
     }
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),

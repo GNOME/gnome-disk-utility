@@ -564,14 +564,25 @@ gdu_create_raid_array_dialog_show (GduWindow *window,
 
         case GTK_RESPONSE_OK:
           {
+            GList *objects = NULL, *l;
+
+            for (l = data->blocks; l != NULL; l = l->next)
+              {
+                UDisksObject *object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (l->data));
+                if (object != NULL)
+                  objects = g_list_append (objects, object);
+              }
             if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
                                               _("Are you sure you want to use the disks for a RAID array?"),
                                               _("Existing content on the devices will be erased"),
                                               _("C_reate"),
-                                              NULL, NULL))
+                                              NULL, NULL,
+                                              gdu_window_get_client (data->window), objects))
               {
+                g_list_free (objects);
                 continue;
               }
+            g_list_free (objects);
 
             /* First ensure all disks are unused... then if all that works, we
              * create the array - see ensure_unused_cb() above...
